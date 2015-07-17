@@ -102,6 +102,11 @@ ourselves too badly. Approaches vary, from compiler plugins that scour your
 dependency tree to Twitter's new build system, `pants`, which assumes all code
 in a single repo and takes slices across to assemble finished packages.
 
+I briefly looked in to doing something like this with JavaScript. For instance:
+could we make a build tool for `victory` that constructs the AST of your code,
+finds the parts of `victory` you're using, and prunes the rest from your build?
+My research indicates: augh augh augh my eyes. You may know something I don't.
+
 Point is: what do y'all have in mind?
 
 #### Question Three: Data and Audience
