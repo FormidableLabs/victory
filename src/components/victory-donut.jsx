@@ -1,29 +1,39 @@
+import d3 from "d3";
 import React from "react";
 import Radium from "radium";
 
-
 @Radium
 class VictoryDonut extends React.Component {
-  getStyles() {
-    return {
-      base: {
-        color: "#000",
-        fontSize: 12,
-        textDecoration: "underline"
-      },
-      red: {
-        color: "#d71920",
-        fontSize: 30
-      }
-    };
+
+  drawSlices(slices) {
+    var radius = Math.min(this.props.width, this.props.height) / 2;
+
+    var pie = d3.layout.pie()
+      .sort(null)
+      .value(function(d) { return d.population; });
+
+    var arcData = pie(slices);
+
+    var arc = d3.svg.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(radius - 70);
+
+    var sliceComponents = slices.map((slice, index) => {
+      return this.props.slice(slice, arc, radius, arcData[index], index);
+    });
+
+    return (
+      <g>
+        {sliceComponents}
+      </g>
+    );
   }
 
   render() {
-    const styles = this.getStyles();
     return (
-      <div style={[styles.base, this.props.color === "red" && styles.red]}>
-        Edit me!
-      </div>
+      <g transform={"translate(" + this.props.width / 2 + "," + this.props.height / 2 + ")"}>
+        {this.drawSlices(this.props.data)}
+      </g>
     );
   }
 }
