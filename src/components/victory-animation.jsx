@@ -1,5 +1,6 @@
 import React from "react";
-import d3 from "d3";
+import { interpolate } from "d3-interpolate";
+import  { ease } from "d3-ease";
 
 class VictoryAnimation extends React.Component {
   constructor(props) {
@@ -7,20 +8,23 @@ class VictoryAnimation extends React.Component {
     this.state = this.props.data;
     this.interpolator = null;
     this.step = 0;
+    this.ease = ease(this.props.easing);
     this.startRaf = this.startRaf.bind(this);
   }
   componentWillReceiveProps(nextProps) {
     this.raf && cancelAnimationFrame(this.raf);
-    this.interpolator = d3.interpolate(this.state, nextProps.data);
+    this.interpolator = interpolate(this.state, nextProps.data);
+    this.step = 0;
     this.startRaf();
   }
   startRaf() {
     if (this.step >= 1) {
-      this.step = 0;
+      this.step = 1;
+      this.setState(this.interpolator(this.step));
       return;
     }
-    this.setState(this.interpolator(this.step))
-    this.step += 0.06;
+    this.setState(this.interpolator(this.ease(this.step)));
+    this.step += this.props.velocity;
     this.raf = requestAnimationFrame(this.startRaf);
   }
   render() {
@@ -29,15 +33,15 @@ class VictoryAnimation extends React.Component {
 }
 
 VictoryAnimation.propTypes = {
-  duration: React.PropTypes.number,
-  data: React.PropTypes.object,
-  transition: React.PropTypes.array
+  velocity: React.PropTypes.number,
+  easing: React.PropTypes.string,
+  data: React.PropTypes.object
 }
 
 VictoryAnimation.defaultProps = {
-  duration: 300,
-  data: {},
-  transition: []
+  velocity: 0.02,
+  easing: "poly-in-out",
+  data: {}
 }
 
 export default VictoryAnimation;
