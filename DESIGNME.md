@@ -1,3 +1,23 @@
+### Design Decisions
+
+As Lauren and I have worked with `victory-line`, we've hit the following:
+
+#### The Line Data API
+
+We agree: a `victory-component` should have default data to draw itself with, so
+you can see that the component is rendering. Additionally, a `victory-line`
+should be able to overcome one of `d3`'s shortcomings: plotting functions. To
+that end, `victory-line` should be able to accept either:
+
+- `data` -- an array of objects to be plotted
+
+OR some combination of:
+
+- `x` -- an array of points
+- `y` -- an array of points OR a function that takes an `x` and returns a `y`
+
+
+
 ### Proto-Readme
 
 I had a long talk with Colin the other night, and agreed to take a few notes to
