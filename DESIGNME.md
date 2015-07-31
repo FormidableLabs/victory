@@ -16,6 +16,8 @@ OR some combination of:
 - `x` -- an array of points
 - `y` -- an array of points OR a function that takes an `x` and returns a `y`
 
+Further, we've included a data generation function that can spit out `n` random
+points, so that you can tell if the Thing is On and Rendering.
 
 
 ### Proto-Readme
