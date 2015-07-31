@@ -95,10 +95,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var VictoryDonut = (function (_React$Component) {
 	  _inherits(VictoryDonut, _React$Component);
 	
-	  function VictoryDonut() {
+	  function VictoryDonut(props) {
 	    _classCallCheck(this, _VictoryDonut);
 	
-	    _get(Object.getPrototypeOf(_VictoryDonut.prototype), "constructor", this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(_VictoryDonut.prototype), "constructor", this).call(this, props);
+	    this.color = _d32["default"].scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 	  }
 	
 	  _createClass(VictoryDonut, [{
@@ -117,7 +118,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var arc = _d32["default"].svg.arc().outerRadius(radius - 10).innerRadius(radius - 70);
 	
 	      var sliceComponents = slices.map(function (slice, index) {
-	        return _this.props.slice(slice, arc, radius, arcData[index], index);
+	        return _this.props.slice({
+	          index: index,
+	          slice: slice,
+	          arc: arc,
+	          fill: _this.color(slice.age),
+	          arcData: arcData[index]
+	        });
 	      });
 	
 	      return _react2["default"].createElement(
@@ -143,7 +150,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	})(_react2["default"].Component);
 	
 	VictoryDonut.propTypes = {
-	  color: _react2["default"].PropTypes.string
+	  height: _react2["default"].PropTypes.number,
+	  width: _react2["default"].PropTypes.number,
+	  slice: _react2["default"].PropTypes.func,
+	  data: _react2["default"].PropTypes.arr
 	};
 	
 	exports["default"] = VictoryDonut;
