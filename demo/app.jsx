@@ -2,6 +2,23 @@
 import React from "react";
 import Radium from  "radium";
 import {VictoryDonut} from "../src/index";
+import {VictoryAnimation} from 'victory-animation';
+
+function rand () {
+  return Math.floor(Math.random() * 10000000)
+}
+
+function getData() {
+  return [
+    {"age":"<5","population" : rand() },
+    {"age":"5-13","population" : rand() },
+    {"age":"14-17","population" : rand() },
+    {"age":"18-24","population" : rand() },
+    {"age":"25-44","population" : rand() },
+    {"age":"45-64","population" : rand() },
+    {"age":"≥65","population" : rand() }
+  ]
+}
 
 @Radium
 class App extends React.Component {
@@ -10,12 +27,21 @@ class App extends React.Component {
     this.getStyles = this.getStyles.bind(this);
 
     this.state = {
+      data: this.props.data,
       height: 1000,
       width: 1000
     };
 
     this.color = d3.scale.ordinal()
       .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        data: getData()
+      })
+    }, 2000);
   }
 
   getStyles(age) {
@@ -39,19 +65,23 @@ class App extends React.Component {
 
   slice(slice, arc, radius, arcData, index) {
     const styles = this.getStyles(slice.age);
-
     return (
-      <g key={index}>
-        <path
-          d={arc(arcData)}
-          style={styles.path}/>
-        <text
-          dy=".35em"
-          transform={"translate(" + arc.centroid(arcData) + ")"}
-          style={styles.text}>
-          {slice.age}
-        </text>
-      </g>
+      <VictoryAnimation data={arcData}>
+        {(data) => {
+          return <g key={index}>
+          <path
+            d={arc(data)}
+            style={styles.path}/>
+          <text
+            dy=".35em"
+            transform={"translate(" + arc.centroid(data) + ")"}
+            style={styles.text}>
+            {slice.age}
+          </text>
+        </g>
+        }}
+      </VictoryAnimation>
+
     );
   }
 
@@ -67,7 +97,7 @@ class App extends React.Component {
             height={this.state.height}
             width={this.state.width}
             slice={this.slice.bind(this)}
-            data={this.props.data}/>
+            data={this.state.data}/>
       </svg>
     );
   }
@@ -77,9 +107,4 @@ const content = document.getElementById("content");
 
 /* go get the example data */
 
-d3.csv("https://rawgit.com/mbostock/3887193/raw/98e6eebc502876a73ae177c0e4073ae0b5f6effe/data.csv", function(error, csv) {
-  if (error) {
-    return console.warn(error);
-  }
-  React.render(<App data={csv}/>, content);
-});
+React.render(<App data={getData()}/>, content);
