@@ -72,9 +72,13 @@ class VictoryDonut extends React.Component {
 
   render() {
     return (
-      <g transform={"translate(" + this.props.width / 2 + "," + this.props.height / 2 + ")"}>
-        {this.drawSlices(this.props.data)}
-      </g>
+      <svg
+        width={this.props.width}
+        height={this.props.height}>
+        <g transform={"translate(" + this.props.width / 2 + "," + this.props.height / 2 + ")"}>
+          {this.drawSlices(this.props.data)}
+        </g>
+      </svg>
     );
   }
 }
@@ -94,17 +98,17 @@ VictoryDonut.propTypes = {
 };
 
 VictoryDonut.defaultProps = {
-  data: [{ x: "A", y: 1 }, { x: "B", y: 3 }, { x: "C", y: 2 }, { x: "D", y: 1 }, { x: "E", y: 2 }],
+  data: [{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }],
   fontColor: "black",
   fontFamily: "Helvetica",
   fontSize: 10,
   fontWeight: 400,
-  height: 300,
-  sliceColors: ["#6391E7", "#7ED2E6", "#A2AED9", "#6A9CAC", "#59A5D9"],
+  height: 400,
+  sliceColors: ["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"],
   sliceWidth: 70,
   strokeColor: "white",
   strokeWidth: 1,
-  width: 300
+  width: 400
 };
 
 export default VictoryDonut;
