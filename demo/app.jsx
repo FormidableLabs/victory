@@ -21,16 +21,24 @@ const getData = function () {
 
 @Radium
 class App extends React.Component {
+
   constructor(props) {
     super(props);
     this.state = {
       data: this.props.data,
       height: 500,
+      arcColors: [
+        "#D85F49",
+        "#F66D3B",
+        "#D92E1D",
+        "#D73C4C",
+        "#FFAF59",
+        "#E28300",
+        "#F6A57F"
+      ],
+      arcWidth: 60,
       width: 500
     };
-
-    this.sliceColors =
-      ["#D85F49", "#F66D3B", "#D92E1D", "#D73C4C", "#FFAF59", "#E28300", "#F6A57F"];
   }
 
   componentDidMount() {
@@ -45,14 +53,32 @@ class App extends React.Component {
     return {
       height: this.state.height,
       margin: "0 auto",
-      width: this.state.width
+      width: this.state.width,
+      position: "relative",
+      top: this.state.height / 4 - this.state.arcWidth / 2
     };
   }
 
   render() {
     return (
-      <div style={this.getStyles()}>
-        <VictoryDonut/>
+      <div style={{height: "600px", width: "1200px", border: "1px solid #ccc"}}>
+        <div style={this.getStyles()}>
+          <VictoryDonut
+            data={this.state.data}
+            fontColor="white"
+            fontWeight={200}
+            arcColors={[
+              "#D85F49",
+              "#F66D3B",
+              "#D92E1D",
+              "#D73C4C",
+              "#FFAF59",
+              "#E28300",
+              "#F6A57F"
+            ]}
+            arcWidth={50}
+            edgeWidth={2}/>
+        </div>
       </div>
     );
   }

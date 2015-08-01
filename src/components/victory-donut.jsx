@@ -8,18 +8,10 @@ import {VictoryAnimation} from "victory-animation";
 class VictoryDonut extends React.Component {
   constructor(props) {
     super(props);
-
     const radius = Math.min(this.props.width, this.props.height) / 2;
-
-    this.colors = d3.scale.ordinal().range(this.props.sliceColors);
-
-    this.arc = d3.svg.arc()
-      .outerRadius(radius - 10)
-      .innerRadius(radius - this.props.sliceWidth);
-
-    this.pie = d3.layout.pie()
-      .sort(null)
-      .value((d) => { return d.y; });
+    this.arc = d3.svg.arc().outerRadius(radius).innerRadius(radius - this.props.arcWidth);
+    this.colors = d3.scale.ordinal().range(this.props.arcColors);
+    this.pie = d3.layout.pie().sort(null).value((d) => { return d.y; });
   }
 
   getStyles(fill) {
@@ -33,17 +25,17 @@ class VictoryDonut extends React.Component {
       },
       path: {
         fill,
-        stroke: this.props.strokeColor,
-        strokeWidth: this.props.strokeWidth
+        stroke: this.props.edgeColor,
+        strokeWidth: this.props.edgeWidth
       }
     };
   }
 
-  drawSlices(slices) {
+  drawArcs(arcs) {
     const arcData = this.pie(this.props.data);
 
-    const sliceComponents = _.map(slices, (slice, index) => {
-      const fill = this.colors(slice.x);
+    const arcComponents = _.map(arcs, (arc, index) => {
+      const fill = this.colors(arc.x);
       const styles = this.getStyles(fill);
 
       return (
@@ -56,9 +48,9 @@ class VictoryDonut extends React.Component {
                   style={styles.path}/>
                 <text
                   dy=".35em"
-                  transform={"translate(" + this.arc.centroid(data) + ")"}
-                  style={styles.text}>
-                  {slice.x}
+                  style={styles.text}
+                  transform={"translate(" + this.arc.centroid(data) + ")"}>
+                  {arc.x}
                 </text>
               </g>
             );
@@ -67,16 +59,16 @@ class VictoryDonut extends React.Component {
       );
     });
 
-    return (<g>{sliceComponents}</g>);
+    return (<g>{arcComponents}</g>);
   }
 
   render() {
     return (
       <svg
-        width={this.props.width}
-        height={this.props.height}>
+        height={this.props.height}
+        width={this.props.width}>
         <g transform={"translate(" + this.props.width / 2 + "," + this.props.height / 2 + ")"}>
-          {this.drawSlices(this.props.data)}
+          {this.drawArcs(this.props.data)}
         </g>
       </svg>
     );
@@ -84,30 +76,44 @@ class VictoryDonut extends React.Component {
 }
 
 VictoryDonut.propTypes = {
+  arcColors: React.PropTypes.array,
+  arcWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   data: React.PropTypes.array,
+  edgeColor: React.PropTypes.string,
+  edgeWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   fontColor: React.PropTypes.string,
   fontFamily: React.PropTypes.string,
   fontSize: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  fontWeight: React.PropTypes.number,
+  fontWeight: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   height: React.PropTypes.number,
-  sliceColors: React.PropTypes.array,
-  sliceWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  strokeColor: React.PropTypes.string,
-  strokeWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   width: React.PropTypes.number
 };
 
 VictoryDonut.defaultProps = {
-  data: [{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }],
+  arcColors: [
+    "#75C776",
+    "#39B6C5",
+    "#78CCC4",
+    "#62C3A4",
+    "#64A8D1",
+    "#8C95C8",
+    "#3BAF74"
+  ],
+  arcWidth: 60,
+  data: [
+    { x: "A", y: 1 },
+    { x: "B", y: 2 },
+    { x: "C", y: 3 },
+    { x: "D", y: 1 },
+    { x: "E", y: 2 }
+  ],
+  edgeColor: "white",
+  edgeWidth: 1,
   fontColor: "black",
-  fontFamily: "Helvetica",
+  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
   fontSize: 10,
   fontWeight: 400,
   height: 400,
-  sliceColors: ["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"],
-  sliceWidth: 70,
-  strokeColor: "white",
-  strokeWidth: 1,
   width: 400
 };
 
