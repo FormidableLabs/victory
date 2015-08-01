@@ -52,11 +52,7 @@ class App extends React.Component {
   render() {
     return (
       <div style={this.getStyles()}>
-        <VictoryDonut
-          height={this.state.height}
-          width={this.state.width}
-          data={this.state.data}
-          sliceColors={this.sliceColors}/>
+        <VictoryDonut/>
       </div>
     );
   }
