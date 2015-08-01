@@ -4,7 +4,7 @@
 Victory Donut
 ============
 
-`victory-donut` draws an SVG donut chart with your data.
+`victory-donut` draws an SVG donut chart.
 Styles and data can be overridden by passing in new values.
 Data changes are animated with `victory-animation`.
 
@@ -84,7 +84,7 @@ If the data changes, the donut updates seamlessly.
 
 ### Props
 
-All props are **optional**. They can be omitted, and the component will
+All props are **optional**. They can be omitted and the component will
 still render.
 
 The following props are supported:
