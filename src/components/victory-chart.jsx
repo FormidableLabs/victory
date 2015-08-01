@@ -81,8 +81,6 @@ class VictoryChart extends React.Component {
     const styles = this.getStyles();
     const lineStyle = _.merge(styles, {svg: {margin: (styles.svg.margin * 2) + 2}});
 
-    console.log(this.state.data);
-
     const lines = _.map(this.state.data, (data, key) => {
       return (
         <VictoryLine {...this.props}
@@ -142,6 +140,7 @@ VictoryChart.propTypes = {
   yMin: React.PropTypes.number,
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
+    React.PropTypes.func,
     React.PropTypes.arrayOf(React.PropTypes.func)
   ])
 };
