@@ -1,16 +1,13 @@
 [![Travis Status][trav_img]][trav_site]
 
-
 Victory Donut
-============
+=============
 
-`victory-donut` draws an SVG donut chart.
-Styles and data can be overridden by passing in new values.
-Data changes are animated with `victory-animation`.
+`victory-donut` draws an SVG donut chart with [React](https://github.com/facebook/react) and [D3](https://github.com/mbostock/d3). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
 
-## Examples
+##Examples
 
-The plain component has sample data, so rendering the component with no passed in properties:
+The plain component has baked-in sample data and style defaults, so rendering the donut with no custom properties, like so:
 
 ``` javascript
 <VictoryDonut/>
@@ -18,36 +15,46 @@ The plain component has sample data, so rendering the component with no passed i
 
 Will look like this:
 
-![Donut!](victory-donut-sample.png)
+![basic donut chart](victory-donut-sample.png)
 
-All applied styles (fontColor, fontFamily, fontSize, fontWeight, height, sliceColors,
-sliceWidth, strokeColor, strokeWidth, width) can be overridden.
+All applied styles (arcColors, arcWidth, edgeColor, edgeWidth, fontColor, fontFamily, fontSize, fontWeight, height, width) can be overridden by specifying your own props:
 
 ``` javascript
 <VictoryDonut
-  fontWeight={200}
-  sliceWidth={120}/>
+  arcWidth={120}
+  fontSize={16}
+  fontWeight={200}/>
 ```
 
 Makes this:
 
-![Ooooh!](victory-donut-thick.png)
+![donut with thicker arcs](victory-donut-thick.png)
 
 Similarly,
 
 ``` javascript
 <VictoryDonut
-  fontColor="white"
-  strokeWidth={2}/>
+  edgeWidth={2}
+  fontColor="white"/>
 ```
-Makes this:
+Makes:
 
-![Ahhhh!](victory-donut-white.png)
+![donut with white text](victory-donut-white.png)
 
-Or you can pass in your own data and sliceColors arrays:
+Custom data and colors:
 
 ``` javascript
 <VictoryDonut
+  arcColors={[
+    "#D85F49",
+    "#F66D3B",
+    "#D92E1D",
+    "#D73C4C",
+    "#FFAF59",
+    "#E28300",
+    "#F6A57F"
+  ]}
+  arcWidth={50}
   data={[
     {x: "<5", y: 6279},
     {x: "5-13", y: 9182},
@@ -57,107 +64,98 @@ Or you can pass in your own data and sliceColors arrays:
     {x: "45-64", y: 4263},
     {x: "≥65", y: 7502}
   ]}
+  edgeWidth={2}
   fontColor="white"
-  fontWeight={200}
-  sliceColors={[
-    "#D85F49",
-    "#F66D3B",
-    "#D92E1D",
-    "#D73C4C",
-    "#FFAF59",
-    "#E28300",
-    "#F6A57F"
-  ]}
-  sliceWidth={50}
-  strokeWidth={2}/>
+  fontWeight={200}/>
 ```
 
-Makes:
+Snazzes things up a bit:
 
-![Victory!](victory-donut-data.png)
+![donut with data and custom colors](victory-donut-data.png)
 
-If the data changes, the donut updates seamlessly.
+If the data changes, the donut updates seamlessly:
 
-![Moving!](victory-donut-animation.gif)
+![donut data change animated](victory-donut-animation.gif)
 
 ## The API
 
 ### Props
 
-All props are **optional**. They can be omitted and the component will
+All props are *optional*. They can be omitted and the component will
 still render.
 
 The following props are supported:
 
-#### `data`
+**`arcColors`**
 
-Primary way to pass in a data set for plotting. If the `data` prop is omitted,
-`victory-donut` will render sample data.
+*An array of color strings.* The donut uses [d3.scale.ordinal](https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal) for color encoding. If the `data` array is longer than its corresponding `arcColors` array, arc color assignments will continue by looping through the array.
 
-`data`, must be of the form `[{x: <x val>, y: <y-val>}]`, where `<x-val>` and `<y-val>` are numbers.
+*Default value:* `["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"]`
 
-#### `fontColor`
+**`arcWidth`**
 
-A string: "#ff0000", rgba(255, 0, 0, 1)", "red" all work.
+*A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
-**Defaults to:** `"black"`
+*Default value:*  `60`
 
-#### `fontFamily`
+**`data`**
 
-A string.
+*An array of objects.* If the `data` prop is omitted, the donut will render sample data.
 
-**Defaults to:** `"Helvetica"`
+`data` must be of the form `[{ x: <x-val>, y: <y-val> }]`, where `<x-val>` is the arc label (string or number), and `<y-val>` is the corresponding number used to calculate arc length as a proportion of the whole donut.
 
-#### `fontSize`
+*Default value:* `[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]`
 
-A number or string. Numbers will automatically be assigned as pixels.
-Other units are accepted, but the value needs to be passed in as a string. Example: `"2em"`.
+**`edgeColor`**
 
-**Defaults to:** `10`
+*A string.* All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: `"#ff0000"`, `"rgba(255, 0, 0, 1)"`, `"red"`.
 
-#### `fontWeight`
+*Default value:* `"white"`
 
-A number.
+**`edgeWidth`**
 
-**Defaults to:** `200`
+*A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
-#### `height`
+*Default value:* `1`
 
-A number.
+**`fontColor`**
 
-**Defaults to:** `400`
+*A string.* All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: `"#ff0000"`, `"rgba(255, 0, 0, 1)"`, `"red"`.
 
-#### `sliceColors`
+*Default value:* `"black"`
 
-An array.
+**`fontFamily`**
 
-**Defaults to:** `["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"]`
+*A string.* Single font names or font stacks are accepted.
 
-#### `sliceWidth`
+*Default value:* `"'Helvetica Neue', Helvetica, Arial, sans-serif"`
 
-A number or string. Numbers will automatically be assigned as pixels.
-Other units are accepted, but the value needs to be passed in as a string. Example: `"2em"`.
+**`fontSize`**
 
-**Defaults to:** `70`
+*A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
-#### `strokeColor`
+*Default value:* `10`
 
-A string: "#ff0000", rgba(255, 0, 0, 1)", "red" all work.
+**`fontWeight`**
 
-**Defaults to:** `"white"`
+*A number or string.* All CSS `font-weight` properties (`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`, `"normal"`, `"bold"`, `"bolder"`, `"lighter"`, `"initial"`, `"inherit"`) are accepted.
 
-#### `strokeWidth`
+*Default value:* `400`
 
-A number or string. Numbers will automatically be assigned as pixels.
-Other units are accepted, but the value needs to be passed in as a string. Example: `"2em"`.
+**`height`**
 
-**Defaults to:** `1`
+*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `width` and `height`, will be used as the diameter (outer radius) of the donut.
 
-#### `width`
+*Default value:* `400`
+
+**`width`**
 
 A number.
 
-**Defaults to:** `400`
+*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `width` and `height`, will be used as the diameter (outer radius) of the donut.
+
+*Default value:* `400`
+
 
 ## Build
 
