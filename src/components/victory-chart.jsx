@@ -28,10 +28,12 @@ class VictoryChart extends React.Component {
       this.state.x = this.returnOrGenerateX();
       this.state.y = this.returnOrGenerateY();
 
-      const inter = _.zip(this.state.x, this.state.y);
-      const objs = _.map(inter, (obj) => { return {x: obj[0], y: obj[1]}; });
+      const inter = _.map(this.state.y, (y) => _.zip(this.state.x, y));
+      const objs = _.map(inter, (objArray) => {
+        return (_.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; }));
+      });
 
-      this.state.data = [objs];
+      this.state.data = objs;
     }
   }
 
@@ -43,11 +45,17 @@ class VictoryChart extends React.Component {
   }
 
   returnOrGenerateY() {
+    // Always return an array of arrays.
     const y = this.props.y;
-    if (typeof y === "object" && y.isArray()) {
-      return y;
+
+    if (typeof y === "object") {
+      if (typeof y[0] === "function") {
+        return _.map(y, (yFn) => _.map(this.state.x, (x) => yFn(x)));
+      } else {
+        return [y];
+      }
     } else if (typeof y === "function") {
-      return _.map(this.state.x, (x) => y(x));
+      return [_.map(this.state.x, (x) => y(x))];
     } else {
       // asplode
       return null;
@@ -137,7 +145,7 @@ VictoryChart.propTypes = {
   yMin: React.PropTypes.number,
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
-    React.PropTypes.func
+    React.PropTypes.arrayOf(React.PropTypes.func)
   ])
 };
 
