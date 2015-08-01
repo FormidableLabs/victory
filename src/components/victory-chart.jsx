@@ -2,6 +2,8 @@ import React from "react";
 import Radium from "radium";
 import d3 from "d3";
 import _ from "lodash";
+import {VictoryLine} from "victory-line";
+import {VictoryAxis} from "victory-axis";
 
 @Radium
 class VictoryChart extends React.Component {
@@ -70,7 +72,8 @@ class VictoryChart extends React.Component {
     const styles = this.getStyles();
     return (
       <g>
-        <VictoryChart style={[style.text]}
+        <VictoryLine data={this.state.data} />
+        <VictoryAxis data={this.state.data} />
       </g>
     );
   }
