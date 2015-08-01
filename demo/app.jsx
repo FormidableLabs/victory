@@ -18,7 +18,8 @@ class App extends React.Component {
           <VictoryChart />
           <VictoryChart y={(x) => Math.sin(x)}/>
           <VictoryChart y={[(x) => Math.sin(x),
-                            (x) => Math.sin(x + 5)]}
+                            (x) => Math.sin(x + 5)
+                            (x) => Math.sin(x + 10)]}
                         sample={25} />
           <VictoryChart data={twoLinesData}/>
         </p>
