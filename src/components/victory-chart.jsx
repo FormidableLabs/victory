@@ -9,6 +9,10 @@ import {VictoryAxis} from "victory-axis";
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
+
+    // Initialize state
+    this.state = {};
+
     /*
        Our use-cases are:
        1. The user passes in data as an array of {x: 1, y: 2}
@@ -18,11 +22,7 @@ class VictoryChart extends React.Component {
        5. The user provides y as a function; use x to generate y
      */
     if (this.props.data) {
-      this.state = {
-        data: this.props.data,
-        x: this.props.data.map(row => row.x),
-        y: this.props.data.map(row => row.y)
-      };
+      this.state.data = this.props.data;
     } else {
       this.state = {};
       this.state.x = this.returnOrGenerateX();
@@ -31,7 +31,7 @@ class VictoryChart extends React.Component {
       const inter = _.zip(this.state.x, this.state.y);
       const objs = _.map(inter, (obj) => { return {x: obj[0], y: obj[1]}; });
 
-      this.state.data = objs;
+      this.state.data = [objs];
     }
   }
 
@@ -64,17 +64,37 @@ class VictoryChart extends React.Component {
       red: {
         color: "#d71920",
         fontSize: 30
+      },
+      svg: {
+        "border": "2px solid black",
+        "margin": "20",
+        "width": "500",
+        "height": "200"
       }
     }, this.props.style);
   }
 
   render() {
     const styles = this.getStyles();
+    const lineStyle = _.merge(styles, {svg: {margin: (styles.svg.margin * 2) + 2}});
+
+    const lines = this.state.data.map((data) => {
+      console.log(data);
+      return (
+        <VictoryLine {...this.props}
+                     data={data}
+                     style={lineStyle}
+        />
+      );
+    });
+
     return (
-      <g>
-        <VictoryLine data={this.state.data} />
-        <VictoryAxis data={this.state.data} />
-      </g>
+      <svg style={styles.svg}>
+        {lines}
+        <VictoryAxis {...this.props}
+                     style={styles}
+        />
+      </svg>
     );
   }
 }
@@ -85,10 +105,12 @@ VictoryChart.propTypes = {
 
 VictoryChart.propTypes = {
   data: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
-    })
+    React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        x: React.PropTypes.number,
+        y: React.PropTypes.number
+      })
+    )
   ),
   interpolation: React.PropTypes.oneOf([
     "linear",
