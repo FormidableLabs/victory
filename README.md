@@ -1,18 +1,163 @@
 [![Travis Status][trav_img]][trav_site]
 
 
-Victory Component Boilerplate
-===========================
+Victory Donut
+============
 
-Boilerplate for developing a Victory Component!
+`victory-donut` draws an SVG donut chart with your data.
+Styles and data can be overridden by passing in new values.
+Data changes are animated with `victory-animation`.
 
-## The Generator
+## Examples
 
-We expect these opinions to change *often*.  We've written a yeoman generator to
-pull down the freshest copy of this repo whenever you use it.  It just copies
-this repo so you don't have to. Check it out
-[here](https://github.com/FormidableLabs/generator-formidable-react-component)
+The plain component has sample data, so rendering the component with no passed in properties:
 
+``` javascript
+<VictoryDonut/>
+```
+
+Will look like this:
+
+![Donut!](victory-donut-sample.png)
+
+All applied styles (fontColor, fontFamily, fontSize, fontWeight, height, sliceColors,
+sliceWidth, strokeColor, strokeWidth, width) can be overridden.
+
+``` javascript
+<VictoryDonut
+  fontWeight={200}
+  sliceWidth={120}/>
+```
+
+Makes this:
+
+![Ooooh!](victory-donut-thick.png)
+
+Similarly,
+
+``` javascript
+<VictoryDonut
+  fontColor="white"
+  strokeWidth={2}/>
+```
+Makes this:
+
+![Ahhhh!](victory-donut-white.png)
+
+Or you can pass in your own data and sliceColors arrays:
+
+``` javascript
+<VictoryDonut
+  data={[
+    {x: "<5", y: 6279},
+    {x: "5-13", y: 9182},
+    {x: "14-17", y: 5511},
+    {x: "18-24", y: 7164},
+    {x: "25-44", y: 6716},
+    {x: "45-64", y: 4263},
+    {x: "≥65", y: 7502}
+  ]}
+  fontColor="white"
+  fontWeight={200}
+  sliceColors={[
+    "#D85F49",
+    "#F66D3B",
+    "#D92E1D",
+    "#D73C4C",
+    "#FFAF59",
+    "#E28300",
+    "#F6A57F"
+  ]}
+  sliceWidth={50}
+  strokeWidth={2}/>
+```
+
+Makes:
+
+![Victory!](victory-donut-data.png)
+
+If the data changes, the donut updates seamlessly.
+
+![Moving!](victory-donut-animation.gif)
+
+## The API
+
+### Props
+
+All props are **optional**. They can be omitted, and the component will
+still render.
+
+The following props are supported:
+
+#### `data`
+
+Primary way to pass in a data set for plotting. If the `data` prop is omitted,
+`victory-donut` will render sample data.
+
+`data`, must be of the form `[{x: <x val>, y: <y-val>}]`, where `<x-val>` and `<y-val>` are numbers.
+
+#### `fontColor`
+
+A string: "#ff0000", rgba(255, 0, 0, 1)", "red" all work.
+
+**Defaults to:** `"black"`
+
+#### `fontFamily`
+
+A string.
+
+**Defaults to:** `"Helvetica"`
+
+#### `fontSize`
+
+A number or string. Numbers will automatically be assigned as pixels.
+Other units are accepted, but the value needs to be passed in as a string. Example: `"2em"`.
+
+**Defaults to:** `10`
+
+#### `fontWeight`
+
+A number.
+
+**Defaults to:** `200`
+
+#### `height`
+
+A number.
+
+**Defaults to:** `400`
+
+#### `sliceColors`
+
+An array.
+
+**Defaults to:** `["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"]`
+
+#### `sliceWidth`
+
+A number or string. Numbers will automatically be assigned as pixels.
+Other units are accepted, but the value needs to be passed in as a string. Example: `"2em"`.
+
+**Defaults to:** `70`
+
+#### `strokeColor`
+
+A string: "#ff0000", rgba(255, 0, 0, 1)", "red" all work.
+
+**Defaults to:** `"white"`
+
+#### `strokeWidth`
+
+A number or string. Numbers will automatically be assigned as pixels.
+Other units are accepted, but the value needs to be passed in as a string. Example: `"2em"`.
+
+**Defaults to:** `1`
+
+#### `width`
+
+A number.
+
+**Defaults to:** `400`
 
 ## Build
 

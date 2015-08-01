@@ -30,7 +30,7 @@ class App extends React.Component {
     };
 
     this.sliceColors =
-      ["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"];
+      ["#D85F49", "#F66D3B", "#D92E1D", "#D73C4C", "#FFAF59", "#E28300", "#F6A57F"];
   }
 
   componentDidMount() {
@@ -43,23 +43,21 @@ class App extends React.Component {
 
   getStyles() {
     return {
-      border: "1px solid #ccc",
-      margin: "20px"
+      height: this.state.height,
+      margin: "0 auto",
+      width: this.state.width
     };
   }
 
   render() {
     return (
-      <svg
-        style={this.getStyles()}
-        width={this.state.width}
-        height={this.state.height}>
-          <VictoryDonut
-            height={this.state.height}
-            width={this.state.width}
-            data={this.state.data}
-            sliceColors={this.sliceColors}/>
-      </svg>
+      <div style={this.getStyles()}>
+        <VictoryDonut
+          height={this.state.height}
+          width={this.state.width}
+          data={this.state.data}
+          sliceColors={this.sliceColors}/>
+      </div>
     );
   }
 }
