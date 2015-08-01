@@ -4,9 +4,10 @@ import {VictoryChart} from "../src/index";
 import _ from "lodash";
 
 const twoLinesData = [
-  _.range(0, 100, 1).map((x) => {return {x: x, y: Math.sin(x)}}),
-  _.range(0, 100, 1).map((x) => {return {x: x, y: Math.cos(x)}}),
-]
+  _.range(0, 100, 1).map((x) => {return {x, y: Math.sin(x)}}),
+  _.range(0, 100, 1).map((x) => {return {x, y: Math.sin(x + 5)}}),
+  _.range(0, 100, 1).map((x) => {return {x, y: Math.sin(x + 10)}})
+];
 
 class App extends React.Component {
 
@@ -15,12 +16,10 @@ class App extends React.Component {
       <div className="demo">
         <p>
           <VictoryChart />
-        </p>
-        <p>
           <VictoryChart y={(x) => Math.sin(x)}/>
-          <VictoryChart y={(x) => Math.sin(x)}
-                        sample={25}
-          />
+          <VictoryChart y={[(x) => Math.sin(x),
+                            (x) => Math.sin(x + 5)]}
+                        sample={25} />
           <VictoryChart data={twoLinesData}/>
         </p>
       </div>

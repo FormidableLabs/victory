@@ -13,14 +13,6 @@ class VictoryChart extends React.Component {
     // Initialize state
     this.state = {};
 
-    /*
-       Our use-cases are:
-       1. The user passes in data as an array of {x: 1, y: 2}
-       2. The user provides no x; make it from xMin and xMax
-       3. The user provides x as an array of points; leave it be
-       4. The user provides y as an array of points; leave it be
-       5. The user provides y as a function; use x to generate y
-     */
     if (this.props.data) {
       this.state.data = this.props.data;
     } else {
@@ -68,10 +60,6 @@ class VictoryChart extends React.Component {
         color: "#000",
         fontSize: 12,
         textDecoration: "underline"
-      },
-      red: {
-        color: "#d71920",
-        fontSize: 30
       },
       svg: {
         "border": "2px solid black",
