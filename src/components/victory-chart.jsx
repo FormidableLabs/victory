@@ -13,6 +13,9 @@ class VictoryChart extends React.Component {
     // Initialize state
     this.state = {};
 
+    // Either we get data, or we get X/Y.
+    // `y` will either be none, a function, an array of numbers,
+    // or an array of functions.
     if (this.props.data) {
       this.state.data = this.props.data;
     } else {
@@ -21,8 +24,12 @@ class VictoryChart extends React.Component {
       this.state.y = this.returnOrGenerateY();
 
       const inter = _.map(this.state.y, (y) => _.zip(this.state.x, y));
-      const objs = _.map(inter, (objArray) => {
-        return (_.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; }));
+
+      const objs = {};
+
+      _.forEach(inter, (objArray, idx) => {
+        const k = "line-" + idx;
+        objs[k] = (_.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; }));
       });
 
       this.state.data = objs;
@@ -74,12 +81,14 @@ class VictoryChart extends React.Component {
     const styles = this.getStyles();
     const lineStyle = _.merge(styles, {svg: {margin: (styles.svg.margin * 2) + 2}});
 
-    const lines = this.state.data.map((data) => {
-      console.log(data);
+    console.log(this.state.data);
+
+    const lines = _.map(this.state.data, (data, key) => {
       return (
         <VictoryLine {...this.props}
                      data={data}
                      style={lineStyle}
+                     ref={key ? typeof key === "string" : "line-" + key}
         />
       );
     });
