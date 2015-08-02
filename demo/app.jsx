@@ -21,21 +21,29 @@ class App extends React.Component {
       <div className="demo">
         <p>
           <VictoryChart />
-          <VictoryChart y={(x) => Math.sin(x)}/>
-          <VictoryChart y={[(x) => Math.sin(x),
-                            (x) => Math.sin(x + 5),
-                            (x) => Math.sin(x + 10)]}
-                        sample={25}
-                        lineStyles={[{"stroke": "blue"},
-                                     {"stroke": "red"},
-                                     {"stroke": "orange"}]} />
-          <VictoryChart data={twoLinesData}
-                        lineStyles={[{"stroke": "green"},
-                                     {"stroke": "blue"}]} />
-          <VictoryChart data={namedData}
-                        lineStyles={{lineOne: {"stroke": "orange"},
-                                     lineThree: {stroke: "lightblue"},
-                                     lineTwo: {"stroke": "red"}}} />
+          <VictoryChart
+            y={(x) => Math.sin(x)}
+          />
+          <VictoryChart
+            y={[(x) => Math.sin(x),
+                (x) => Math.sin(x + 5),
+                (x) => Math.sin(x + 10)]}
+            sample={25}
+            lineStyles={[{"stroke": "blue"},
+                         {"stroke": "red"},
+                         {"stroke": "orange"}]}
+          />
+          <VictoryChart
+            data={twoLinesData}
+            lineStyles={[{"stroke": "green"},
+                         {"stroke": "blue"}]}
+          />
+          <VictoryChart
+            data={namedData}
+            lineStyles={{lineOne: {"stroke": "orange"},
+                         lineThree: {stroke: "lightblue"},
+                         lineTwo: {"stroke": "red"}}}
+          />
         </p>
       </div>
     );

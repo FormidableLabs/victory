@@ -25,13 +25,13 @@ class VictoryChart extends React.Component {
 
       const inter = _.map(this.state.y, (y) => _.zip(this.state.x, y));
 
-      const objs = {};
-
       // Create a map {line-number: dataForLine}
-      _.forEach(inter, (objArray, idx) => {
-        const k = "line-" + idx;
-        objs[k] = (_.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; }));
-      });
+      const objs = _.chain(inter)
+                    .map((objArray, idx) => {
+                      return ["line-" + idx,  _.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; })];
+                    })
+                    .object()
+                    .value();
 
       this.state.data = objs;
     }
@@ -50,9 +50,9 @@ class VictoryChart extends React.Component {
 
     if (_.isFunction(y)) {
       return [_.map(this.state.x, (x) => y(x))];
-    } else if (typeof y === "object") {
+    } else if (_.isObject(y)) {
       // y is an array of functions
-      if (typeof y[0] === "function") {
+      if (_.isFunction(y[0])) {
         return _.map(y, (yFn) => _.map(this.state.x, (x) => yFn(x)));
       } else {
         return [y];
@@ -97,7 +97,7 @@ class VictoryChart extends React.Component {
         <VictoryLine {...this.props}
                      data={data}
                      style={lineStyle}
-                     ref={key ? typeof key === "string" : "line-" + key}
+                     ref={key ? _.isString(key) : "line-" + key}
                      key={Math.random()}
         />
       );
