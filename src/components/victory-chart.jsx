@@ -27,6 +27,7 @@ class VictoryChart extends React.Component {
 
       const objs = {};
 
+      // Create a map {line-number: dataForLine}
       _.forEach(inter, (objArray, idx) => {
         const k = "line-" + idx;
         objs[k] = (_.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; }));
@@ -47,14 +48,15 @@ class VictoryChart extends React.Component {
     // Always return an array of arrays.
     const y = this.props.y;
 
-    if (typeof y === "object") {
+    if (_.isFunction(y)) {
+      return [_.map(this.state.x, (x) => y(x))];
+    } else if (typeof y === "object") {
+      // y is an array of functions
       if (typeof y[0] === "function") {
         return _.map(y, (yFn) => _.map(this.state.x, (x) => yFn(x)));
       } else {
         return [y];
       }
-    } else if (typeof y === "function") {
-      return [_.map(this.state.x, (x) => y(x))];
     } else {
       // asplode
       return null;
@@ -78,15 +80,25 @@ class VictoryChart extends React.Component {
   }
 
   render() {
+
     const styles = this.getStyles();
-    const lineStyle = _.merge(styles, {svg: {margin: (styles.svg.margin * 2) + 2}});
+
+    // Lines need 2x + a lil' margin to line up nicely.
+    const lineStyleBase = _.merge(
+      styles, {svg: {margin: (styles.svg.margin * 2) + 2}}
+    );
 
     const lines = _.map(this.state.data, (data, key) => {
+      // Make sure we aren't mutating base styles.
+      const lineStyle = _.clone(lineStyleBase);
+
+      lineStyle.path = this.props.lineStyles[key];
       return (
         <VictoryLine {...this.props}
                      data={data}
                      style={lineStyle}
                      ref={key ? typeof key === "string" : "line-" + key}
+                     key={Math.random()}
         />
       );
     });
@@ -130,6 +142,20 @@ VictoryChart.propTypes = {
     "cardinal-closed",
     "monotone"
   ]),
+  lineStyles: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        "stroke": React.PropTypes.string,
+        "strokeWidth": React.PropTypes.string
+      })
+    ),
+    React.PropTypes.objectOf(
+      React.PropTypes.shape({
+        "stroke": React.PropTypes.string,
+        "strokeWidth": React.PropTypes.string
+      })
+    )
+  ]),
   sample: React.PropTypes.number,
   scale: React.PropTypes.func,
   style: React.PropTypes.node,
@@ -148,6 +174,7 @@ VictoryChart.propTypes = {
 VictoryChart.defaultProps = {
   data: null,
   interpolation: "basis",
+  lineStyles: [{}],
   sample: 100,
   scale: (min, max) => d3.scale.linear().range([min, max]),
   x: null,
