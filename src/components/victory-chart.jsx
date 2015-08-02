@@ -27,11 +27,19 @@ class VictoryChart extends React.Component {
 
       // Create a map {line-number: dataForLine}
       const objs = _.chain(inter)
-                    .map((objArray, idx) => {
-                      return ["line-" + idx,  _.map(objArray, (obj) => {return {x: obj[0], y: obj[1]}; })];
-                    })
-                    .object()
-                    .value();
+        .map((objArray, idx) => {
+          return [
+            "line-" + idx,
+            _.map(
+              objArray,
+              (obj) => {
+                return {x: obj[0], y: obj[1]};
+              }
+            )
+          ];
+        })
+        .object()
+        .value();
 
       this.state.data = objs;
     }
@@ -40,8 +48,8 @@ class VictoryChart extends React.Component {
   returnOrGenerateX() {
     const step = Math.round(this.props.xMax / this.props.sample, 4);
     return this.props.x
-         ? this.props.x
-         : _.range(this.props.xMin, this.props.xMax, step);
+     ? this.props.x
+     : _.range(this.props.xMin, this.props.xMax, step);
   }
 
   returnOrGenerateY() {
@@ -85,7 +93,12 @@ class VictoryChart extends React.Component {
 
     // Lines need 2x + a lil' margin to line up nicely.
     const lineStyleBase = _.merge(
-      styles, {svg: {margin: (styles.svg.margin * 2) + 2}}
+      styles,
+      {
+        svg: {
+          margin: (styles.svg.margin * 2) + 2
+        }
+      }
     );
 
     const lines = _.map(this.state.data, (data, key) => {
@@ -95,20 +108,17 @@ class VictoryChart extends React.Component {
       lineStyle.path = this.props.lineStyles[key];
       return (
         <VictoryLine {...this.props}
-                     data={data}
-                     style={lineStyle}
-                     ref={key ? _.isString(key) : "line-" + key}
-                     key={Math.random()}
-        />
+          data={data}
+          style={lineStyle}
+          ref={key ? _.isString(key) : "line-" + key}
+          key={Math.random()}/>
       );
     });
 
     return (
       <svg style={styles.svg}>
         {lines}
-        <VictoryAxis {...this.props}
-                     style={styles}
-        />
+        <VictoryAxis {...this.props} style={styles}/>
       </svg>
     );
   }
