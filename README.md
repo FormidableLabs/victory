@@ -7,7 +7,7 @@ Victory Donut
 
 ##Examples
 
-The plain component has baked-in sample data and style defaults, so rendering the donut with no custom properties, like so:
+The plain component has baked-in sample data, style, angle, and sort defaults, so rendering the donut with no custom properties, like so:
 
 ``` javascript
 <VictoryDonut/>
@@ -17,7 +17,7 @@ Will look like this:
 
 ![basic donut chart](victory-donut-sample.png)
 
-All applied styles (arcColors, arcWidth, edgeColor, edgeWidth, fontColor, fontFamily, fontSize, fontWeight, height, width) can be overridden by specifying your own props:
+All default styles (`arcColors`, `arcWidth`, `edgeColor`, `edgeWidth`, `fontColor`, `fontFamily`, `fontSize`, `fontWeight`, `height`, `width`), angles (`startAngle`, `endAngle`, `padAngle`) and sorting (`sort`) can be overridden by specifying your own props:
 
 ``` javascript
 <VictoryDonut
@@ -40,6 +40,30 @@ Similarly,
 Makes:
 
 ![donut with white text](victory-donut-white.png)
+
+Want a half donut? Specify a `startAngle` and `endAngle`:
+
+``` javascript
+<VictoryDonut
+  edgeWidth={2}
+  endAngle={90}
+  fontColor="white"
+  startAngle={-90}/>
+```
+Voilà:
+![half donut](victory-donut-half.png)
+
+Specify a `padAngle` to add space between adjacent arcs:
+
+``` javascript
+<VictoryDonut
+  edgeWidth={2}
+  endAngle={90}
+  fontColor="white"
+  padAngle={5}
+  startAngle={-90}/>
+```
+![donut with padding](victory-donut-padding.png)
 
 Custom data and colors:
 
@@ -86,73 +110,93 @@ still render.
 
 The following props are supported:
 
-**`arcColors`**
+####**arcColors**
 
-*An array of color strings.* The donut uses [d3.scale.ordinal](https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal) for color encoding. If the `data` array is longer than its corresponding `arcColors` array, arc color assignments will continue by looping through the array.
+*An array of strings.* If the `data` array is longer than its corresponding `arcColors` array, arc color assignments will continue by looping through the array.
 
 *Default value:* `["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"]`
 
-**`arcWidth`**
+####**arcWidth**
 
 *A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
 *Default value:*  `60`
 
-**`data`**
+####**data**
 
-*An array of objects.* If the `data` prop is omitted, the donut will render sample data.
-
-`data` must be of the form `[{ x: <x-val>, y: <y-val> }]`, where `<x-val>` is the arc label (string or number), and `<y-val>` is the corresponding number used to calculate arc length as a proportion of the whole donut.
+*An array of objects.* If the `data` prop is omitted, the donut will render sample data. Objects in the `data` array must be of the form `{ x: <x-val>, y: <y-val> }`, where `<x-val>` is the arc label (string or number), and `<y-val>` is the corresponding number used to calculate arc length as a proportion of the whole donut.
 
 *Default value:* `[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]`
 
-**`edgeColor`**
+####**edgeColor**
 
 *A string.* All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: `"#ff0000"`, `"rgba(255, 0, 0, 1)"`, `"red"`.
 
 *Default value:* `"white"`
 
-**`edgeWidth`**
+####**edgeWidth**
 
 *A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
 *Default value:* `1`
 
-**`fontColor`**
+####**endAngle**
+
+*A number.* The overall end angle of the donut in degrees.
+
+*Default value:* `360`
+
+####**fontColor**
 
 *A string.* All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: `"#ff0000"`, `"rgba(255, 0, 0, 1)"`, `"red"`.
 
 *Default value:* `"black"`
 
-**`fontFamily`**
+####**fontFamily**
 
 *A string.* Single font names or font stacks are accepted.
 
 *Default value:* `"'Helvetica Neue', Helvetica, Arial, sans-serif"`
 
-**`fontSize`**
+####**fontSize**
 
 *A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
 *Default value:* `10`
 
-**`fontWeight`**
+####**fontWeight**
 
 *A number or string.* All CSS `font-weight` properties (`100`, `200`, `300`, `400`, `500`, `600`, `700`, `800`, `900`, `"normal"`, `"bold"`, `"bolder"`, `"lighter"`, `"initial"`, `"inherit"`) are accepted.
 
 *Default value:* `400`
 
-**`height`**
+####**height**
 
-*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `width` and `height`, will be used as the diameter (outer radius) of the donut.
+*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `height` and `width`, will be used as the diameter.
 
 *Default value:* `400`
 
-**`width`**
+####**padAngle**
 
-A number.
+*A number.* The pad angle of the donut in degrees. Adjacent arcs will be separated by the pad angle.
 
-*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `width` and `height`, will be used as the diameter (outer radius) of the donut.
+*Default value:* `0`
+
+####**sort**
+
+*A string or function.* Sort order strings `"ascending"` and `"descending"`are accepted, as are custom comparator functions.
+
+*Default value:* `null`
+
+####**startAngle**
+
+*A number.* The overall start angle of the donut in degrees.
+
+*Default value:* `0`
+
+####**width**
+
+*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `height` and `width`, will be used as the diameter.
 
 *Default value:* `400`
 
