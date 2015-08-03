@@ -61,24 +61,13 @@ class App extends React.Component {
 
   render() {
     return (
-      <div style={{height: "600px", width: "1200px", border: "1px solid #ccc"}}>
-        <div style={this.getStyles()}>
-          <VictoryDonut
-            data={this.state.data}
-            fontColor="white"
-            fontWeight={200}
-            arcColors={[
-              "#D85F49",
-              "#F66D3B",
-              "#D92E1D",
-              "#D73C4C",
-              "#FFAF59",
-              "#E28300",
-              "#F6A57F"
-            ]}
-            arcWidth={50}
-            edgeWidth={2}/>
-        </div>
+      <div style={this.getStyles()}>
+        <VictoryDonut
+          arcColors={this.state.arcColors}
+          borderWidth={2}
+          data={this.state.data}
+          fontColor="white"
+          fontWeight={200}/>
       </div>
     );
   }
