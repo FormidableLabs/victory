@@ -17,7 +17,7 @@ Will look like this:
 
 ![basic donut chart](victory-donut-sample.png)
 
-All default styles (`arcColors`, `arcWidth`, `edgeColor`, `edgeWidth`, `fontColor`, `fontFamily`, `fontSize`, `fontWeight`, `height`, `width`), angles (`startAngle`, `endAngle`, `padAngle`) and sorting (`sort`) can be overridden by specifying your own props:
+All default styles (`arcColors`, `arcWidth`, `borderColor`, `borderWidth`, `fontColor`, `fontFamily`, `fontSize`, `fontWeight`, `height`, `width`), angles (`startAngle`, `endAngle`, `padAngle`) and sorting (`sort`) can be overridden by specifying your own props:
 
 ``` javascript
 <VictoryDonut
@@ -34,7 +34,7 @@ Similarly,
 
 ``` javascript
 <VictoryDonut
-  edgeWidth={2}
+  borderWidth={2}
   fontColor="white"/>
 ```
 Makes:
@@ -45,7 +45,7 @@ Want a half donut? Specify a `startAngle` and `endAngle`:
 
 ``` javascript
 <VictoryDonut
-  edgeWidth={2}
+  borderWidth={2}
   endAngle={90}
   fontColor="white"
   startAngle={-90}/>
@@ -57,7 +57,7 @@ Specify a `padAngle` to add space between adjacent arcs:
 
 ``` javascript
 <VictoryDonut
-  edgeWidth={2}
+  borderWidth={2}
   endAngle={90}
   fontColor="white"
   padAngle={5}
@@ -79,6 +79,7 @@ Custom data and colors:
     "#F6A57F"
   ]}
   arcWidth={50}
+  borderWidth={2}
   data={[
     {x: "<5", y: 6279},
     {x: "5-13", y: 9182},
@@ -88,7 +89,6 @@ Custom data and colors:
     {x: "45-64", y: 4263},
     {x: "≥65", y: 7502}
   ]}
-  edgeWidth={2}
   fontColor="white"
   fontWeight={200}/>
 ```
@@ -122,23 +122,23 @@ The following props are supported:
 
 *Default value:*  `60`
 
-####**data**
-
-*An array of objects.* If the `data` prop is omitted, the donut will render sample data. Objects in the `data` array must be of the form `{ x: <x-val>, y: <y-val> }`, where `<x-val>` is the arc label (string or number), and `<y-val>` is the corresponding number used to calculate arc length as a proportion of the whole donut.
-
-*Default value:* `[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]`
-
-####**edgeColor**
+####**borderColor**
 
 *A string.* All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: `"#ff0000"`, `"rgba(255, 0, 0, 1)"`, `"red"`.
 
 *Default value:* `"white"`
 
-####**edgeWidth**
+####**borderWidth**
 
 *A number or string.* Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as `"2em"`.
 
 *Default value:* `1`
+
+####**data**
+
+*An array of objects.* If the `data` prop is omitted, the donut will render sample data. Objects in the `data` array must be of the form `{ x: <x-val>, y: <y-val> }`, where `<x-val>` is the arc label (string or number), and `<y-val>` is the corresponding number used to calculate arc length as a proportion of the whole donut.
+
+*Default value:* `[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]`
 
 ####**endAngle**
 
