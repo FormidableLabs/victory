@@ -108,12 +108,12 @@ class VictoryDonut extends React.Component {
 VictoryDonut.propTypes = {
   arcColors: React.PropTypes.arrayOf(React.PropTypes.string),
   arcWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  borderColor: React.PropTypes.string,
+  borderWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   data: React.PropTypes.arrayOf(React.PropTypes.shape({
     x: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     y: React.PropTypes.number
   })),
-  borderColor: React.PropTypes.string,
-  borderWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   endAngle: React.PropTypes.number,
   fontColor: React.PropTypes.string,
   fontFamily: React.PropTypes.string,
@@ -140,6 +140,8 @@ VictoryDonut.defaultProps = {
     "#3BAF74"
   ],
   arcWidth: 60,
+  borderColor: "white",
+  borderWidth: 1,
   data: [
     { x: "A", y: 1 },
     { x: "B", y: 2 },
@@ -147,8 +149,6 @@ VictoryDonut.defaultProps = {
     { x: "D", y: 1 },
     { x: "E", y: 2 }
   ],
-  borderColor: "white",
-  borderWidth: 1,
   endAngle: 360,
   fontColor: "black",
   fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
