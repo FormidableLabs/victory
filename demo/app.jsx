@@ -1,7 +1,7 @@
 /*global document:false window:false*/
 import React from "react";
 import Radium from "radium";
-import {VictoryDonut} from "../src/index";
+import {VictoryPie} from "../src/index";
 
 const rand = function () {
   return Math.max(Math.floor(Math.random() * 10000), 1000);
@@ -27,7 +27,7 @@ class App extends React.Component {
     this.state = {
       data: this.props.data,
       height: 500,
-      arcColors: [
+      sliceColors: [
         "#D85F49",
         "#F66D3B",
         "#D92E1D",
@@ -36,7 +36,7 @@ class App extends React.Component {
         "#E28300",
         "#F6A57F"
       ],
-      arcWidth: 60,
+      sliceWidth: 60,
       width: 500
     };
   }
@@ -55,19 +55,16 @@ class App extends React.Component {
       margin: "0 auto",
       width: this.state.width,
       position: "relative",
-      top: this.state.height / 4 - this.state.arcWidth / 2
+      top: this.state.height / 4 - this.state.sliceWidth / 2
     };
   }
 
   render() {
     return (
       <div style={this.getStyles()}>
-        <VictoryDonut
-          arcColors={this.state.arcColors}
-          borderWidth={2}
-          data={this.state.data}
-          fontColor="white"
-          fontWeight={200}/>
+        <VictoryPie
+          labelPadding={180}
+          padding={30}/>
       </div>
     );
   }
