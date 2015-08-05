@@ -1,3 +1,4 @@
+/*global console:false*/
 import d3 from "d3";
 import _ from "lodash";
 import React from "react";
@@ -40,7 +41,13 @@ class VictoryPie extends React.Component {
       if (comparator === "ascending" || comparator === "descending") {
         comparator = (a, b) => { return d3[this.props.sort](a.y, b.y); };
       } else {
-        // console.error("Invalid sort order string. Try 'ascending' or 'descending'.");
+        if (process.env.NODE_ENV !== "production") {
+          /* eslint-disable no-console */
+          if (typeof console !== "undefined" && console.warn) {
+            console.error("Victory Pie: Invalid sort string. Try 'ascending' or 'descending'.");
+          }
+          /* eslint-enable no-console */
+        }
         comparator = null;
       }
     }
