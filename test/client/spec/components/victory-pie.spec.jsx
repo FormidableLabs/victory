@@ -2,13 +2,13 @@
  * Client tests
  */
 import React from "react/addons";
-import Component from "src/components/victory-donut";
+import Component from "src/components/victory-pie";
 
 // Use `TestUtils` to inject into DOM, simulate events, etc.
 // See: https://facebook.github.io/react/docs/test-utils.html
 const TestUtils = React.addons.TestUtils;
 
-describe("components/victory-donut", function () {
+describe("components/victory-pie", function () {
 
   it("has expected content with deep render", function () {
     // This is a "deep" render that renders children + all into an actual

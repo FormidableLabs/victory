@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["VictoryDonut"] = factory(require("react"));
+		exports["VictoryPie"] = factory(require("react"));
 	else
-		root["VictoryDonut"] = factory(root["React"]);
+		root["VictoryPie"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -57,7 +57,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"use strict";
 	
 	module.exports = {
-	  VictoryDonut: __webpack_require__(1)
+	  VictoryPie: __webpack_require__(1)
 	};
 
 /***/ },
@@ -92,17 +92,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var VictoryDonut = (function (_React$Component) {
-	  _inherits(VictoryDonut, _React$Component);
+	var VictoryPie = (function (_React$Component) {
+	  _inherits(VictoryPie, _React$Component);
 	
-	  function VictoryDonut(props) {
-	    _classCallCheck(this, _VictoryDonut);
+	  function VictoryPie(props) {
+	    _classCallCheck(this, _VictoryPie);
 	
-	    _get(Object.getPrototypeOf(_VictoryDonut.prototype), "constructor", this).call(this, props);
+	    _get(Object.getPrototypeOf(_VictoryPie.prototype), "constructor", this).call(this, props);
 	    this.color = _d32["default"].scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
 	  }
 	
-	  _createClass(VictoryDonut, [{
+	  _createClass(VictoryPie, [{
 	    key: "drawSlices",
 	    value: function drawSlices(slices) {
 	      var _this = this;
@@ -144,19 +144,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }]);
 	
-	  var _VictoryDonut = VictoryDonut;
-	  VictoryDonut = (0, _radium2["default"])(VictoryDonut) || VictoryDonut;
-	  return VictoryDonut;
+	  var _VictoryPie = VictoryPie;
+	  VictoryPie = (0, _radium2["default"])(VictoryPie) || VictoryPie;
+	  return VictoryPie;
 	})(_react2["default"].Component);
 	
-	VictoryDonut.propTypes = {
+	VictoryPie.propTypes = {
 	  height: _react2["default"].PropTypes.number,
 	  width: _react2["default"].PropTypes.number,
 	  slice: _react2["default"].PropTypes.func,
 	  data: _react2["default"].PropTypes.arr
 	};
 	
-	exports["default"] = VictoryDonut;
+	exports["default"] = VictoryPie;
 	module.exports = exports["default"];
 
 /***/ },
@@ -10966,4 +10966,4 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-//# sourceMappingURL=victory-donut.js.map
+//# sourceMappingURL=victory-pie.js.map

@@ -5,17 +5,21 @@ import Radium from "radium";
 import {VictoryAnimation} from "victory-animation";
 
 @Radium
-class VictoryDonut extends React.Component {
+class VictoryPie extends React.Component {
   constructor(props) {
     super(props);
     const radius = Math.min(this.props.width, this.props.height) / 2;
     const sortOrder = this.getSortOrder();
 
-    this.colors = d3.scale.ordinal().range(this.props.arcColors);
+    this.colors = d3.scale.ordinal().range(this.props.sliceColors);
 
-    this.arc = d3.svg.arc()
+    this.slice = d3.svg.arc()
+      .outerRadius(radius - this.props.padding)
+      .innerRadius(this.props.innerRadius);
+
+    this.label = d3.svg.arc()
       .outerRadius(radius)
-      .innerRadius(radius - this.props.arcWidth);
+      .innerRadius(this.props.labelPadding || this.props.innerRadius);
 
     this.pie = d3.layout.pie()
       .sort(sortOrder)
@@ -61,26 +65,26 @@ class VictoryDonut extends React.Component {
     };
   }
 
-  drawArcs(arcs) {
-    const arcData = this.pie(this.props.data);
+  drawArcs(slices) {
+    const sliceData = this.pie(this.props.data);
 
-    const arcComponents = _.map(arcs, (arc, index) => {
-      const fill = this.colors(arc.x);
+    const sliceComponents = _.map(slices, (slice, index) => {
+      const fill = this.colors(slice.x);
       const styles = this.getStyles(fill);
 
       return (
-        <VictoryAnimation data={arcData[index]} key={index}>
+        <VictoryAnimation data={sliceData[index]} key={index}>
           {(data) => {
             return (
               <g>
                 <path
-                  d={this.arc(data)}
+                  d={this.slice(data)}
                   style={styles.path}/>
                 <text
                   dy=".35em"
                   style={styles.text}
-                  transform={"translate(" + this.arc.centroid(data) + ")"}>
-                  {arc.x}
+                  transform={"translate(" + this.label.centroid(data) + ")"}>
+                  {slice.x}
                 </text>
               </g>
             );
@@ -89,7 +93,7 @@ class VictoryDonut extends React.Component {
       );
     });
 
-    return (<g>{arcComponents}</g>);
+    return (<g>{sliceComponents}</g>);
   }
 
   render() {
@@ -105,9 +109,7 @@ class VictoryDonut extends React.Component {
   }
 }
 
-VictoryDonut.propTypes = {
-  arcColors: React.PropTypes.arrayOf(React.PropTypes.string),
-  arcWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+VictoryPie.propTypes = {
   borderColor: React.PropTypes.string,
   borderWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   data: React.PropTypes.arrayOf(React.PropTypes.shape({
@@ -120,7 +122,11 @@ VictoryDonut.propTypes = {
   fontSize: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   fontWeight: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   height: React.PropTypes.number,
+  innerRadius: React.PropTypes.number,
+  labelPadding: React.PropTypes.number,
   padAngle: React.PropTypes.number,
+  padding: React.PropTypes.number,
+  sliceColors: React.PropTypes.arrayOf(React.PropTypes.string),
   sort: React.PropTypes.oneOfType([
     React.PropTypes.oneOf(["ascending", "descending"]),
     React.PropTypes.func
@@ -129,17 +135,7 @@ VictoryDonut.propTypes = {
   width: React.PropTypes.number
 };
 
-VictoryDonut.defaultProps = {
-  arcColors: [
-    "#75C776",
-    "#39B6C5",
-    "#78CCC4",
-    "#62C3A4",
-    "#64A8D1",
-    "#8C95C8",
-    "#3BAF74"
-  ],
-  arcWidth: 60,
+VictoryPie.defaultProps = {
   borderColor: "white",
   borderWidth: 1,
   data: [
@@ -155,10 +151,22 @@ VictoryDonut.defaultProps = {
   fontSize: 10,
   fontWeight: 400,
   height: 400,
+  innerRadius: 0,
+  labelPadding: 0,
   padAngle: 0,
+  padding: 0,
+  sliceColors: [
+    "#75C776",
+    "#39B6C5",
+    "#78CCC4",
+    "#62C3A4",
+    "#64A8D1",
+    "#8C95C8",
+    "#3BAF74"
+  ],
   sort: null,
   startAngle: 0,
   width: 400
 };
 
-export default VictoryDonut;
+export default VictoryPie;

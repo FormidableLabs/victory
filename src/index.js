@@ -1,3 +1,3 @@
 module.exports = {
-  VictoryDonut: require("./components/victory-donut")
+  VictoryPie: require("./components/victory-pie")
 };
