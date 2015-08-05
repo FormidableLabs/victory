@@ -63,8 +63,13 @@ class App extends React.Component {
     return (
       <div style={this.getStyles()}>
         <VictoryPie
-          labelPadding={180}
-          padding={30}/>
+          borderWidth={2}
+          data={this.state.data}
+          fontColor="white"
+          fontWeight={200}
+          innerRadius={150}
+          sliceColors={this.state.sliceColors}
+          sort="descending"/>
       </div>
     );
   }
