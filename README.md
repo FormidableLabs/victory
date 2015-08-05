@@ -90,7 +90,7 @@ Specify a `padAngle` to add space between adjacent slices:
 ```
 ![donut with padding](victory-donut-padding.png)
 
-Custom data and colors:
+Custom data (age vs population) and colors:
 
 ``` javascript
 <VictoryPie
@@ -125,6 +125,39 @@ Snazzes things up a bit:
 If the data changes, the donut updates seamlessly:
 
 ![donut data change animated](victory-donut-animation.gif)
+
+Set the `sort` prop to `"ascending"`, `"descending"`, or your own comparator:
+
+``` javascript
+<VictoryPie
+  borderWidth={2}
+  data={[
+    { x: "<5", y: 4577 },
+    { x: "5-13", y: 5661 },
+    { x: "14-17", y: 3038 },
+    { x: "18-24", y: 8151 },
+    { x: "25-44", y: 7785 },
+    { x: "45-64", y: 1911 },
+    { x: "≥65", y: 7665 }
+  ]}
+  fontColor="white"
+  fontWeight={200}
+  innerRadius={150}
+  sliceColors={[
+    "#D85F49",
+    "#F66D3B",
+    "#D92E1D",
+    "#D73C4C",
+    "#FFAF59",
+    "#E28300",
+    "#F6A57F"
+  ]}
+  sort="descending"/>
+```
+
+To organize by slice size:
+
+![donut descending sort](victory-donut-sort.png)
 
 ## The API
 
@@ -185,7 +218,7 @@ The following props are supported:
 
 ####**height**
 
-*A number.* A pixel amount used to calculate size. The smaller of the two dimension properties, `height` and `width`, will be used as the diameter. Note that any specified `padding` is included overall chart dimensions, so the diameter of the pie will be smaller if `padding` is greater than 0.
+*A number.* A pixel amount used to calculate chart size. The smaller of the two dimension properties, `height` and `width`, will be used to set diameter. Note that any specified `padding` is included in overall chart dimensions, so the diameter of the pie will be smaller if `padding` is greater than 0.
 
 *Default value:* `400`
 
@@ -233,7 +266,7 @@ The following props are supported:
 
 ####**width**
 
-*A number.* A pixel amount used to calculate size of the chart. The smaller of the two dimension properties, `height` and `width`, will be used as the diameter of the pie. Note that any specified `padding` is included overall chart dimensions, so the diameter of the pie will be smaller if `padding` is greater than 0.
+*A number.* A pixel amount used to calculate chart size. The smaller of the two dimension properties, `height` and `width`, will be used to set diameter. Note that any specified `padding` is included in overall chart dimensions, so the diameter of the pie will be smaller if `padding` is greater than 0.
 
 *Default value:* `400`
 
