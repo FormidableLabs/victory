@@ -1,0 +1,27 @@
+# Cruft
+*.sublime-workspace
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.tmp
+npm-debug.log
+
+# Code / build
+coverage
+node_modules
+bower_components
+demo
+test
+karma*
+webpack*
+.eslint*
+.editor*
+.travis*
