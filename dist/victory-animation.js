@@ -64,7 +64,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*global requestAnimationFrame, cancelAnimationFrame*/
+	/*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
 	
 	"use strict";
 	
@@ -129,7 +129,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /* reset step to zero */
 	        this.step = 0;
 	        /* start request animation frame */
-	        this.raf = this.functionToBeRunEachFrame();
+	        setTimeout(function () {
+	          _this.raf = _this.functionToBeRunEachFrame();
+	        }, this.props.delay);
 	        /* If an array was supplied */
 	      } else {
 	          /* Build our tween queue */
@@ -145,6 +147,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "traverseQueue",
 	    value: function traverseQueue() {
+	      var _this2 = this;
+	
 	      if (this.queue.length > 0) {
 	        /* Get the next index */
 	        var data = this.queue[0];
@@ -152,7 +156,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.interpolator = (0, _d3Interpolate.interpolate)(this.state, data);
 	        /* reset step to zero */
 	        this.step = 0;
-	        this.raf = this.functionToBeRunEachFrame();
+	        setTimeout(function () {
+	          _this2.raf = _this2.functionToBeRunEachFrame();
+	        }, this.props.delay);
 	      }
 	    }
 	
@@ -201,6 +207,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	VictoryAnimation.propTypes = {
 	  velocity: _react2["default"].PropTypes.number,
 	  easing: _react2["default"].PropTypes.string,
+	  delay: _react2["default"].PropTypes.number,
 	  data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
 	};
 	
@@ -209,6 +216,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  velocity: 0.02,
 	  /* easing modifies step each frame */
 	  easing: "poly-in-out",
+	  /* delay between transitions */
+	  delay: 0,
 	  /* we got nothin' */
 	  data: {}
 	};

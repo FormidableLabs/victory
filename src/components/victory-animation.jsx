@@ -1,4 +1,4 @@
-/*global requestAnimationFrame, cancelAnimationFrame*/
+/*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
 
 import React from "react";
 import {interpolate} from "d3-interpolate";
@@ -34,7 +34,9 @@ class VictoryAnimation extends React.Component {
       /* reset step to zero */
       this.step = 0;
       /* start request animation frame */
-      this.raf = this.functionToBeRunEachFrame();
+      setTimeout(() => {
+        this.raf = this.functionToBeRunEachFrame();
+      }, this.props.delay);
     /* If an array was supplied */
     } else {
       /* Build our tween queue */
@@ -54,7 +56,9 @@ class VictoryAnimation extends React.Component {
       this.interpolator = interpolate(this.state, data);
       /* reset step to zero */
       this.step = 0;
-      this.raf = this.functionToBeRunEachFrame();
+      setTimeout(() => {
+        this.raf = this.functionToBeRunEachFrame();
+      }, this.props.delay);
     }
   }
   /* every frame we... */
@@ -95,6 +99,7 @@ class VictoryAnimation extends React.Component {
 VictoryAnimation.propTypes = {
   velocity: React.PropTypes.number,
   easing: React.PropTypes.string,
+  delay: React.PropTypes.number,
   data: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.array
@@ -106,6 +111,8 @@ VictoryAnimation.defaultProps = {
   velocity: 0.02,
   /* easing modifies step each frame */
   easing: "poly-in-out",
+  /* delay between transitions */
+  delay: 0,
   /* we got nothin' */
   data: {}
 };
