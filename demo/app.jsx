@@ -57,7 +57,7 @@ class App extends React.Component {
                   fontSize: 40,
                   transform: "rotate(" + data.rotate + "deg)"
                 }}>
-                <div style={{textAlign: 'center', width: "100%"}}>Test</div>
+                <div style={{textAlign: "center", width: "100%"}}>Test</div>
               </div>
             );
           }}

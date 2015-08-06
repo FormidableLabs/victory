@@ -2,7 +2,7 @@
 
 import React from "react";
 import {interpolate} from "d3-interpolate";
-import  {ease} from "d3-ease";
+import {ease} from "d3-ease";
 
 class VictoryAnimation extends React.Component {
   constructor(props) {
