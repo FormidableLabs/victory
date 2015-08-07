@@ -59,7 +59,7 @@
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-animation": "0.0.2",
+    "victory-animation": "^0.0.4",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
