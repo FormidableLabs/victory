@@ -1,8 +1,7 @@
 /*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
 
 import React from "react";
-import {interpolate} from "d3-interpolate";
-import {ease} from "d3-ease";
+import d3 from "d3";
 
 class VictoryAnimation extends React.Component {
   constructor(props) {
@@ -14,7 +13,7 @@ class VictoryAnimation extends React.Component {
     this.step = 0;
     this.queue = [];
     /* build easing function */
-    this.ease = ease(this.props.easing);
+    this.ease = d3.ease(this.props.easing);
     /*
       unlike React.createClass({}), there is no autobinding of this in ES6 classes
       so we bind functionToBeRunEachFrame to current instance of victory animation class
@@ -30,7 +29,7 @@ class VictoryAnimation extends React.Component {
     /* If an object was supplied */
     if (Array.isArray(nextProps.data) === false) {
       /* compare cached version to next props */
-      this.interpolator = interpolate(this.state, nextProps.data);
+      this.interpolator = d3.interpolate(this.state, nextProps.data);
       /* reset step to zero */
       this.step = 0;
       /* start request animation frame */
@@ -53,7 +52,7 @@ class VictoryAnimation extends React.Component {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
-      this.interpolator = interpolate(this.state, data);
+      this.interpolator = d3.interpolate(this.state, data);
       /* reset step to zero */
       this.step = 0;
       setTimeout(() => {
@@ -110,7 +109,7 @@ VictoryAnimation.defaultProps = {
   /* velocity modifies step each frame */
   velocity: 0.02,
   /* easing modifies step each frame */
-  easing: "poly-in-out",
+  easing: "quad-in-out",
   /* delay between transitions */
   delay: 0,
   /* we got nothin' */
