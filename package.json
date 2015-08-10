@@ -1,7 +1,7 @@
 {
   "name": "victory-chart",
-  "version": "0.0.2",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -14,13 +14,16 @@
   },
   "homepage": "https://github.com/foridable-labs/victory-chart",
   "scripts": {
-    "prepublish": "npm run build",
+     "postinstall": "npm run build-lib",
+    "preversion": "npm run check",
+    "version": "npm run clean && npm run build && git add -A dist",
     "clean-dist": "rimraf dist",
     "build-dist-min": "webpack --config webpack.config.js",
     "build-dist-dev": "webpack --config webpack.config.dev.js",
     "build-dist": "npm run clean-dist && npm run build-dist-min && npm run build-dist-dev",
     "clean-lib": "rimraf lib",
     "build-lib": "npm run clean-lib && babel --stage 0 src -d lib",
+    "clean": "npm run clean-lib && npm run clean-dist",
     "build": "npm run build-lib && npm run build-dist",
     "server-dev": "webpack-dev-server --port 3000 --config demo/webpack.config.dev.js --content-base demo",
     "server-hot": "webpack-dev-server --port 3000 --config demo/webpack.config.hot.js --hot --content-base demo",
