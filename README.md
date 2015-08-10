@@ -6,12 +6,12 @@ Victory is an opinionated set of data visualization tools built in React and bas
 
 ## Components
 
-    - [VictoryLine](http://github.com/formidablelabs/victory-line)
-    - [VictoryPie](http://github.com/formidablelabs/victory-pie)
-    - [VictoryTree](http://github.com/formidablelabs/victory-tree)
-    - [VictoryTreemap](http://github.com/formidablelabs/victory-treemap)
-    - [VictoryScatter](http://github.com/formidablelabs/victory-scatter)
-    - [VictoryAxis](http://github.com/formidablelabs/victory-axis)
+[VictoryLine](http://github.com/formidablelabs/victory-line)
+[VictoryPie](http://github.com/formidablelabs/victory-pie)
+[VictoryTree](http://github.com/formidablelabs/victory-tree)
+[VictoryTreemap](http://github.com/formidablelabs/victory-treemap)
+[VictoryScatter](http://github.com/formidablelabs/victory-scatter)
+[VictoryAxis](http://github.com/formidablelabs/victory-axis)
 
 ## Animation
   Wrap any Victory component with [VictoryAnimation](http://github.com/formidablelabs/victory-animation), and it will transition smoothly between states whenever data changes.  VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
