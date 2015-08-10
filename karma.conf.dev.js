@@ -14,6 +14,8 @@ module.exports = function (config) {
     browsers: ["PhantomJS"],
     basePath: ".", // repository root.
     files: [
+      // es6 polyfill for phantom
+      "node_modules/babel-core/browser-polyfill.js",
       // Sinon has issues with webpack. Do global include.
       "node_modules/sinon/pkg/sinon.js",
 

@@ -24,6 +24,8 @@ module.exports = function (config) {
       "test/client/main.js": ["webpack"]
     },
     files: [
+      // es6 polyfill for phantom
+      "node_modules/babel-core/browser-polyfill.js",
       // Sinon has issues with webpack. Do global include.
       "node_modules/sinon/pkg/sinon.js",
 
