@@ -15,14 +15,20 @@ describe("components/victory-animation", function () {
     // browser DOM node.
     //
     // https://facebook.github.io/react/docs/test-utils.html#renderintodocument
-    const rendered = TestUtils.renderIntoDocument(<Component />);
+    const rendered = TestUtils.renderIntoDocument(
+      <Component data={{test: true}}>
+        {()=> {
+          return <div>I rendered!</div>
+        }}
+      </Component>
+    );
 
     // This is a real DOM node to assert on.
     const divNode = TestUtils
       .findRenderedDOMComponentWithTag(rendered, "div")
       .getDOMNode();
 
-    expect(divNode).to.have.property("innerHTML", "Edit me!");
+    expect(divNode).to.have.property("innerHTML", "I rendered!");
   });
 
   it("has expected content with shallow render", function () {
@@ -31,10 +37,16 @@ describe("components/victory-animation", function () {
     //
     // https://facebook.github.io/react/docs/test-utils.html#shallow-rendering
     const renderer = TestUtils.createRenderer();
-    renderer.render(<Component />);
+    renderer.render(
+      <Component data={{test: true}}>
+        {()=> {
+          return <div>I rendered!</div>
+        }}
+      </Component>
+    );
     const output = renderer.getRenderOutput();
 
     expect(output.type).to.equal("div");
-    expect(output.props.children).to.contain("Edit me");
+    expect(output.props.children).to.contain("I rendered!");
   });
 });
