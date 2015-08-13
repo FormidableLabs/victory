@@ -170,10 +170,8 @@ VictoryChart.propTypes = {
   scale: React.PropTypes.func,
   style: React.PropTypes.node,
   x: React.PropTypes.array,
-  xMax: React.PropTypes.number,
-  xMin: React.PropTypes.number,
-  yMax: React.PropTypes.number,
-  yMin: React.PropTypes.number,
+  xDomain: React.PropTypes.array,
+  yDomain: React.PropTypes.array,
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.func,
@@ -186,13 +184,11 @@ VictoryChart.defaultProps = {
   interpolation: "basis",
   lineStyles: [{}],
   sample: 100,
-  scale: (min, max) => d3.scale.linear().range([min, max]),
+  scale: () => d3.scale.linear(),
   x: null,
-  xMax: 100,
-  xMin: 0,
+  xDomain: [0, 100],
   y: () => Math.random(),
-  yMax: 100,
-  yMin: 0
+  yDomain: [0, 100]
 };
 
 export default VictoryChart;
