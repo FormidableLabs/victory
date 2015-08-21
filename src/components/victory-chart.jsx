@@ -42,30 +42,46 @@ class VictoryChart extends React.Component {
 
       // for each dataArray create an array of data points and add it to
       // the consolidated datasets
-      _.each(dataArrays, (dataArray) => {
-        datasets.push(_.map(dataArray, (datum) => {
-          return {x: datum[0], y: datum[1]};
-        }));
+      _.each(dataArrays, (dataArray, index) => {
+        const attributes = this.props.yAttributes && this.props.yAttributes[index] ?
+            this.props.yAttributes[index] : this.props.yAttributes;
+        datasets.push({
+          attrs: attributes,
+          name: attributes && attributes.name ? attributes.name : "y-data-" + index,
+          data: _.map(dataArray, (datum) => {
+            return {
+              x: datum[0],
+              y: datum[1],
+            };
+          })
+        });
       });
     }
     // if data is given in this.props.data, add it to the cosolidated datasets
     if (this.props.data) {
+
       if (_.isArray(this.props.data[0])) {
-        _.each(this.props.data, (data) => {
-          datasets.push(data);
+        _.each(this.props.data, (data, index) => {
+          const attributes = this.props.dataAttributes && this.props.dataAttributes[index] ?
+            this.props.dataAttributes[index] : this.props.dataAttributes;
+          datasets.push({
+            attrs: attributes,
+            data: data,
+            name: attributes && attributes.name ? attributes.name : "data-" + index
+          });
         });
       } else {
-        datasets.push(this.props.data);
+        const attributes = this.props.dataAttributes && this.props.dataAttributes[0] ?
+            this.props.dataAttributes[0] : this.props.dataAttributes;
+        datasets.push({
+          attrs: attributes,
+          data: this.props.data,
+          name: attributes && attributes.name ? attributes.name : "data-0"
+        });
       }
     }
 
-    // return an object containing each dataset with a unique name
-    return _.map(datasets, (dataset, index) => {
-      return {
-        name: "data-" + index,
-        data: dataset
-      };
-    });
+    return datasets;
   }
 
   returnOrGenerateX() {
@@ -178,7 +194,7 @@ class VictoryChart extends React.Component {
         <VictoryLine
           {...this.props}
           data={data.data} // TODO: ugh
-          style={styles}
+          style={data.attrs}
           domain={{x: this.getDomain("x"), y: this.getDomain("y")}} // maybe unnecessary
           range={{x: this.getRange("x"), y: this.getRange("y")}} // maybe unnecessary
           ref={data.name}
@@ -223,10 +239,18 @@ VictoryChart.propTypes = {
       )
     )
   ]),
+  dataAttributes: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.arrayOf(React.PropTypes.object)
+  ]),
   x: React.PropTypes.array,
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.func
+  ]),
+  yAttributes: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
   domain: React.PropTypes.oneOfType([
     React.PropTypes.array,

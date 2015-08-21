@@ -20,11 +20,16 @@ class App extends React.Component {
             y={(x) => x}/>
           <VictoryChart
             y={(x) => 3 * x + 0.5}
-            domain={[0, 10]}/>
+            yAttributes={{stroke: "red"}}/>
           <VictoryChart y={[
             (x) => 3 * x + 0.5,
             (x) => 4 * x + 0.5,
             (x) => Math.sin(x)
+          ]}
+          yAttributes={[
+            {stroke: "red"},
+            {stroke: "green"},
+            {stroke: "blue"}
           ]}/>
 
         </p>
