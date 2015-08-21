@@ -11,38 +11,47 @@ class VictoryChart extends React.Component {
     super(props);
     // Initialize state
     this.state = {};
-    this.state.data = [];
-    // if data is given in props, add it to this.state.data
-    if (this.props.data) {
-      this.state.data.push(this.props.data);
-    }
-    // if y is given in props, construct data for all y, and add it to this.state.data
-    if (this.props.y) {
+    // if no data is given as this.props.data or this.props.y, use some default data
+    this.state.y = (!this.props.data && !this.props.y) ? (x) => x * x : this.props.y;
+    this.state.data = this.consolidateData();
+  }
+
+  consolidateData() {
+    let datasets = [];
+    // if y is given, construct data for all y, and add it to this.state.data
+    if (this.state.y) {
       const xArray = this.returnOrGenerateX(); // returns an array
       const yArray = this.returnOrGenerateY(); // returns an array of arrays
       let n;
-      // create a dataset from x and y with n points
-      const datasets = _.map(yArray, (y) => {
+      // create a dataArray from x and y with n points
+      const dataArrays = _.map(yArray, (y) => {
         n = _.min([xArray.length, y.length]);
         return _.zip(_.take(xArray, n), _.take(y, n));
       });
 
-      const objs = _.chain(datasets)
-        .map((objArray, idx) => {
-          return [
-            "data-" + idx,
-            _.map(
-              objArray,
-              (obj) => {
-                return {x: obj[0], y: obj[1]};
-              }
-            )
-          ];
-        })
-        .object()
-        .value();
-      this.state.data.push(objs);
+      _.each(dataArrays, (dataArray) => {
+        datasets.push(_.map(dataArray, (datum) => {
+          return {x: datum[0], y: datum[1]};
+        }));
+      });
     }
+    // if data is given in this.props.data, add that to the dataset
+    if (this.props.data) {
+      if (_.isArray(this.props.data[0])) {
+        _.each(this.props.data, (data) => {
+          datasets.push(data);
+        })
+      } else {
+        datasets.push(this.props.data);
+      }
+    }
+
+    return _.map(datasets, (dataset, index) => {
+      return {
+        name: "data-" + index,
+        data: dataset
+      };
+    });
   }
 
   returnOrGenerateX() {
@@ -53,27 +62,34 @@ class VictoryChart extends React.Component {
     // spaced across the x domain
     const domainFromProps = (this.props.domain && this.props.domain.x) ?
       this.props.domain.x : this.props.domain;
+    const domainFromData = this.props.data ? this._getXDomainFromDataProps() : undefined;
     // note: scale will never be undefined thanks to default props
     const domainFromScale = this.props.scale.x ?
       this.props.scale.x().domain() : this.props.scale().domain();
     // use this.props.domain if specified
-    const domain = domainFromProps || domainFromScale;
+    const domain = domainFromProps || domainFromData || domainFromScale;
     const samples = this._getSampleNumber();
     const step = _.max(domain) / samples;
     return _.range(_.min(domain), _.max(domain), step);
   }
 
   // helper for returnOrGenerateX
+  _getXDomainFromDataProps() {
+    const data = _.flatten(this.props.data);
+    return [_.min(_.pluck(data, "x")), _.max(_.pluck(data, "x"))];
+  }
+
+  // helper for returnOrGenerateX
   _getSampleNumber() {
-    if (_.isArray(this.props.y) && _.isNumber(this.props.y[0])) {
-      return this.props.y.length;
+    if (_.isArray(this.state.y) && _.isNumber(this.state.y[0])) {
+      return this.state.y.length;
     }
     return this.props.samples;
   }
 
   returnOrGenerateY() {
     // Always return an array of arrays.
-    const y = this.props.y;
+    const y = this.state.y;
     const x = this.returnOrGenerateX();
 
     if (_.isFunction(y)) {
@@ -121,7 +137,7 @@ class VictoryChart extends React.Component {
   // helper method for getDomain
   _getDomainFromData(type) {
     const data = _.map(this.state.data, (dataset) => {
-      return _.flatten(_.values(dataset));
+      return dataset.data;
     });
     let min = [];
     let max = [];
@@ -146,10 +162,10 @@ class VictoryChart extends React.Component {
   render() {
     const styles = this.getStyles();
     const lines = _.map(this.state.data, (data, index) => {
-
       return (
         <VictoryLine
-          data={_.values(data)[0]}
+          {...this.props}
+          data={data.data}
           style={styles}
           domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
           range={{x: this.getRange("x"), y: this.getRange("y")}}
@@ -161,10 +177,12 @@ class VictoryChart extends React.Component {
       <svg style={{width: styles.width, height: styles.height}}>
         {lines}
         <VictoryAxis
+          {...this.props}
           domain={this.getDomain("x")}
           orientation="bottom"
           style={styles}/>
         <VictoryAxis
+          {...this.props}
           domain={this.getDomain("y")}
           orientation="left"
           style={styles}/>
@@ -179,12 +197,22 @@ VictoryChart.propTypes = {
 
 VictoryChart.propTypes = {
   style: React.PropTypes.node,
-  data: React.PropTypes.arrayOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
-    })
-  ),
+  data: React.PropTypes.oneOfType([
+    React.PropTypes.arrayOf(
+      React.PropTypes.shape({
+        x: React.PropTypes.number,
+        y: React.PropTypes.number
+      })
+    ),
+    React.PropTypes.arrayOf(
+      React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+          x: React.PropTypes.number,
+          y: React.PropTypes.number
+        })
+      )
+    )
+  ]),
   x: React.PropTypes.array,
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
@@ -287,7 +315,6 @@ VictoryChart.defaultProps = {
   interpolation: "basis",
   samples: 100,
   scale: () => d3.scale.linear(),
-  y: (x) => (x * x),
   axisOrientation: {
     x: "bottom",
     y: "left"
