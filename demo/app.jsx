@@ -17,6 +17,7 @@ class App extends React.Component {
             ]}/>
           <VictoryChart
             data={[{x: 1, y: 5}, {x: 2, y: 3}, {x: 3, y: 4}]}
+            dataAttributes={{type: "scatter", color: "blue"}}
             y={(x) => x}/>
           <VictoryChart
             y={(x) => 3 * x + 0.5}
@@ -27,9 +28,9 @@ class App extends React.Component {
             (x) => Math.sin(x)
           ]}
           yAttributes={[
-            {stroke: "red"},
-            {stroke: "green"},
-            {stroke: "blue"}
+            {name: "line-one", type: "line", stroke: "red", strokeWidth: 5},
+            {name: "line-two", type: "line", stroke: "green"},
+            {name: "line-3", type: "line", stroke: "blue"}
           ]}/>
 
         </p>

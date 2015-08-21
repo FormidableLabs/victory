@@ -43,15 +43,12 @@ class VictoryChart extends React.Component {
       // for each dataArray create an array of data points and add it to
       // the consolidated datasets
       _.each(dataArrays, (dataArray, index) => {
-        const attributes = this.props.yAttributes && this.props.yAttributes[index] ?
-            this.props.yAttributes[index] : this.props.yAttributes;
         datasets.push({
-          attrs: attributes,
-          name: attributes && attributes.name ? attributes.name : "y-data-" + index,
+          attrs: this._getAttributes("y", index),
           data: _.map(dataArray, (datum) => {
             return {
               x: datum[0],
-              y: datum[1],
+              y: datum[1]
             };
           })
         });
@@ -59,29 +56,33 @@ class VictoryChart extends React.Component {
     }
     // if data is given in this.props.data, add it to the cosolidated datasets
     if (this.props.data) {
-
       if (_.isArray(this.props.data[0])) {
-        _.each(this.props.data, (data, index) => {
-          const attributes = this.props.dataAttributes && this.props.dataAttributes[index] ?
-            this.props.dataAttributes[index] : this.props.dataAttributes;
+        _.each(this.props.data, (dataset, index) => {
           datasets.push({
-            attrs: attributes,
-            data: data,
-            name: attributes && attributes.name ? attributes.name : "data-" + index
+            attrs: this._getAttributes("data", index),
+            data: dataset
           });
         });
       } else {
-        const attributes = this.props.dataAttributes && this.props.dataAttributes[0] ?
-            this.props.dataAttributes[0] : this.props.dataAttributes;
         datasets.push({
-          attrs: attributes,
-          data: this.props.data,
-          name: attributes && attributes.name ? attributes.name : "data-0"
+          attrs: this._getAttributes("data", 0),
+          data: this.props.data
         });
       }
     }
-
     return datasets;
+  }
+
+  // helper for consolidateData
+  _getAttributes(type, index) {
+    const source = type + "Attributes";
+    const attributes = this.props[source] && this.props[source][index] ?
+      this.props[source][index] : this.props[source];
+    const requiredAttributes = {
+      name: attributes && attributes.name ? attributes.name : type + "-" + index,
+      type: attributes && attributes.type ? attributes.type : "line"
+    };
+    return _.merge(requiredAttributes, attributes);
   }
 
   returnOrGenerateX() {
@@ -189,21 +190,21 @@ class VictoryChart extends React.Component {
 
   render() {
     const styles = this.getStyles();
-    const lines = _.map(this.state.data, (data, index) => {
+    const lines = _.map(this.state.data, (dataset, index) => {
+      const {name, type, ...attrs} = dataset.attrs;
       return (
         <VictoryLine
           {...this.props}
-          data={data.data} // TODO: ugh
-          style={data.attrs}
+          data={dataset.data} // TODO: ugh
+          style={_.merge(this.getStyles(), attrs)}
           domain={{x: this.getDomain("x"), y: this.getDomain("y")}} // maybe unnecessary
           range={{x: this.getRange("x"), y: this.getRange("y")}} // maybe unnecessary
-          ref={data.name}
+          ref={name}
           key={index}/>
       );
     });
     return (
       <svg style={{width: styles.width, height: styles.height}}>
-        {lines}
         <VictoryAxis
           {...this.props}
           domain={this.getDomain("x")} // maybe unnecessary
@@ -216,6 +217,7 @@ class VictoryChart extends React.Component {
           range={this.getRange("y")} // maybe unnecessary
           orientation="left"
           style={styles}/>
+          {lines}
       </svg>
     );
   }

@@ -61,6 +61,7 @@
     "url-loader": "~0.5.5",
     "victory-axis": "0.0.3",
     "victory-line": "0.0.5",
+    "victory-scatter": "0.0.1",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
