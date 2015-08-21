@@ -177,11 +177,11 @@ class VictoryChart extends React.Component {
       return (
         <VictoryLine
           {...this.props}
-          data={data.data}
+          data={data.data} // TODO: ugh
           style={styles}
-          domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-          range={{x: this.getRange("x"), y: this.getRange("y")}}
-          ref={_.isString(_.keys(data)) ? _.keys(data) : "data-" + _.keys(data)}
+          domain={{x: this.getDomain("x"), y: this.getDomain("y")}} // maybe unnecessary
+          range={{x: this.getRange("x"), y: this.getRange("y")}} // maybe unnecessary
+          ref={data.name}
           key={index}/>
       );
     });
@@ -190,12 +190,14 @@ class VictoryChart extends React.Component {
         {lines}
         <VictoryAxis
           {...this.props}
-          domain={this.getDomain("x")}
+          domain={this.getDomain("x")} // maybe unnecessary
+          range={this.getRange("x")} // maybe unnecessary
           orientation="bottom"
           style={styles}/>
         <VictoryAxis
           {...this.props}
-          domain={this.getDomain("y")}
+          domain={this.getDomain("y")} // maybe unnecessary
+          range={this.getRange("y")} // maybe unnecessary
           orientation="left"
           style={styles}/>
       </svg>
@@ -209,7 +211,7 @@ VictoryChart.propTypes = {
 
 VictoryChart.propTypes = {
   style: React.PropTypes.node,
-  data: React.PropTypes.oneOfType([
+  data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
         x: React.PropTypes.number,
@@ -230,18 +232,24 @@ VictoryChart.propTypes = {
     React.PropTypes.array,
     React.PropTypes.func
   ]),
-  domain: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.arrayOf(React.PropTypes.number),
-      y: React.PropTypes.arrayOf(React.PropTypes.number)
-    })
-  ),
-  range: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.arrayOf(React.PropTypes.number),
-      y: React.PropTypes.arrayOf(React.PropTypes.number)
-    })
-  ),
+  domain: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.objectOf(
+      React.PropTypes.shape({
+        x: React.PropTypes.arrayOf(React.PropTypes.number),
+        y: React.PropTypes.arrayOf(React.PropTypes.number)
+      })
+    )
+  ]),
+  range: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.objectOf(
+      React.PropTypes.shape({
+        x: React.PropTypes.arrayOf(React.PropTypes.number),
+        y: React.PropTypes.arrayOf(React.PropTypes.number)
+      })
+    )
+  ]),
   scale: React.PropTypes.oneOfType([
     React.PropTypes.func,
     React.PropTypes.objectOf(

@@ -18,7 +18,9 @@ class App extends React.Component {
           <VictoryChart
             data={[{x: 1, y: 5}, {x: 2, y: 3}, {x: 3, y: 4}]}
             y={(x) => x}/>
-          <VictoryChart y={(x) => 3 * x + 0.5}/>
+          <VictoryChart
+            y={(x) => 3 * x + 0.5}
+            domain={[0, 10]}/>
           <VictoryChart y={[
             (x) => 3 * x + 0.5,
             (x) => 4 * x + 0.5,
