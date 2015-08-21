@@ -206,10 +206,6 @@ class VictoryChart extends React.Component {
 }
 
 VictoryChart.propTypes = {
-  color: React.PropTypes.string
-};
-
-VictoryChart.propTypes = {
   style: React.PropTypes.node,
   data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
