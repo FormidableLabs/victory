@@ -1,7 +1,6 @@
 /*global document:false*/
 import React from "react";
 import {VictoryChart} from "../src/index";
-import _ from "lodash";
 
 
 class App extends React.Component {

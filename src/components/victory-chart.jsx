@@ -28,7 +28,7 @@ class VictoryChart extends React.Component {
   }
 
   consolidateData() {
-    let datasets = [];
+    const datasets = [];
     // if y is given, construct data for all y, and add it to this.state.data
     if (this.state.y) {
       const xArray = this.returnOrGenerateX(); // returns an array
@@ -53,7 +53,7 @@ class VictoryChart extends React.Component {
       if (_.isArray(this.props.data[0])) {
         _.each(this.props.data, (data) => {
           datasets.push(data);
-        })
+        });
       } else {
         datasets.push(this.props.data);
       }
@@ -151,8 +151,8 @@ class VictoryChart extends React.Component {
     const data = _.map(this.state.data, (dataset) => {
       return dataset.data;
     });
-    let min = [];
-    let max = [];
+    const min = [];
+    const max = [];
     _.each(data, (datum) => {
       min.push(_.min(_.pluck(datum, type)));
       max.push(_.max(_.pluck(datum, type)));
@@ -320,7 +320,7 @@ VictoryChart.propTypes = {
       x: React.PropTypes.number,
       y: React.PropTypes.number
     })
-  ),
+  )
 };
 
 VictoryChart.defaultProps = {
