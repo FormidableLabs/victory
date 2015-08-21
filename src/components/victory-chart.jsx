@@ -9,11 +9,22 @@ import {VictoryAxis} from "victory-axis";
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
+    const defaultData = (x) => x;
     // Initialize state
     this.state = {};
-    // if no data is given as this.props.data or this.props.y, use some default data
-    this.state.y = (!this.props.data && !this.props.y) ? (x) => x * x : this.props.y;
+    // if no data is given as this.props.data or this.props.y, assign default data
+    this.state.y = (!this.props.data && !this.props.y) ? defaultData : this.props.y;
     this.state.data = this.consolidateData();
+  }
+
+  getStyles() {
+    return _.merge({
+      color: "#000",
+      fontSize: 12,
+      margin: 50,
+      width: 500,
+      height: 300
+    }, this.props.style);
   }
 
   consolidateData() {
@@ -23,19 +34,21 @@ class VictoryChart extends React.Component {
       const xArray = this.returnOrGenerateX(); // returns an array
       const yArray = this.returnOrGenerateY(); // returns an array of arrays
       let n;
-      // create a dataArray from x and y with n points
+      // create dataArrays of n points from the x array and each y array
       const dataArrays = _.map(yArray, (y) => {
         n = _.min([xArray.length, y.length]);
         return _.zip(_.take(xArray, n), _.take(y, n));
       });
 
+      // for each dataArray create an array of data points and add it to
+      // the consolidated datasets
       _.each(dataArrays, (dataArray) => {
         datasets.push(_.map(dataArray, (datum) => {
           return {x: datum[0], y: datum[1]};
         }));
       });
     }
-    // if data is given in this.props.data, add that to the dataset
+    // if data is given in this.props.data, add it to the cosolidated datasets
     if (this.props.data) {
       if (_.isArray(this.props.data[0])) {
         _.each(this.props.data, (data) => {
@@ -46,6 +59,7 @@ class VictoryChart extends React.Component {
       }
     }
 
+    // return an object containing each dataset with a unique name
     return _.map(datasets, (dataset, index) => {
       return {
         name: "data-" + index,
@@ -60,27 +74,35 @@ class VictoryChart extends React.Component {
     }
     // if x is not given in props, create an array of values evenly
     // spaced across the x domain
+
+    // Determine how to calculate the domain:
+    // domain based on this.props.domain if it is given
     const domainFromProps = (this.props.domain && this.props.domain.x) ?
       this.props.domain.x : this.props.domain;
-    const domainFromData = this.props.data ? this._getXDomainFromDataProps() : undefined;
-    // note: scale will never be undefined thanks to default props
+
+    // domain based on this.props.data if it is given
+    const domainFromData = this.props.data ?
+      this._getDomainFromDataProps("x") : undefined;
+
+    // domain based on this.props.scale
+    // note: this.props.scale  will never be undefined thanks to default props
     const domainFromScale = this.props.scale.x ?
       this.props.scale.x().domain() : this.props.scale().domain();
-    // use this.props.domain if specified
+
     const domain = domainFromProps || domainFromData || domainFromScale;
-    const samples = this._getSampleNumber();
-    const step = _.max(domain) / samples;
+    const samples = this._getNumSamples();
+    const step = (_.max(domain) - _.min(domain)) / samples;
     return _.range(_.min(domain), _.max(domain), step);
   }
 
   // helper for returnOrGenerateX
-  _getXDomainFromDataProps() {
+  _getDomainFromDataProps(type) {
     const data = _.flatten(this.props.data);
-    return [_.min(_.pluck(data, "x")), _.max(_.pluck(data, "x"))];
+    return [_.min(_.pluck(data, type)), _.max(_.pluck(data, type))];
   }
 
   // helper for returnOrGenerateX
-  _getSampleNumber() {
+  _getNumSamples() {
     if (_.isArray(this.state.y) && _.isNumber(this.state.y[0])) {
       return this.state.y.length;
     }
@@ -107,21 +129,11 @@ class VictoryChart extends React.Component {
     }
   }
 
-  getStyles() {
-    return _.merge({
-      color: "#000",
-      fontSize: 12,
-      margin: 50,
-      width: 500,
-      height: 300
-    }, this.props.style);
-  }
-
   getDomain(type) {
     if (this.props.domain) {
       return this._getDomainFromProps(type);
     }
-    return this._getDomainFromData(type);
+    return this._getDomainFromDataState(type);
   }
 
   // helper method for getDomain
@@ -135,7 +147,7 @@ class VictoryChart extends React.Component {
   }
 
   // helper method for getDomain
-  _getDomainFromData(type) {
+  _getDomainFromDataState(type) {
     const data = _.map(this.state.data, (dataset) => {
       return dataset.data;
     });
