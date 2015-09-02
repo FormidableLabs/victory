@@ -2,19 +2,16 @@ import React from "react";
 import Radium from "radium";
 import d3 from "d3";
 import _ from "lodash";
+import log from "../log";
 import {VictoryLine} from "victory-line";
 import {VictoryAxis} from "victory-axis";
+import {VictoryScatter} from "victory-scatter";
 
 @Radium
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
-    const defaultData = (x) => x;
-    // Initialize state
-    this.state = {};
-    // if no data is given as this.props.data or this.props.y, assign default data
-    this.state.y = (!this.props.data && !this.props.y) ? defaultData : this.props.y;
-    this.state.data = this.consolidateData();
+    this.defaultData = (x) => x;
   }
 
   getStyles() {
@@ -29,13 +26,16 @@ class VictoryChart extends React.Component {
 
   consolidateData() {
     const datasets = [];
-    // if y is given, construct data for all y, and add it to this.state.data
-    if (this.state.y) {
-      const xArray = this.returnOrGenerateX(); // returns an array
-      const yArray = this.returnOrGenerateY(); // returns an array of arrays
+    const yData = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
+    // if y is given, construct data for all y, and add it to the dataset
+    if (yData) {
+      const xArrays = this.returnOrGenerateX(); // returns an array of arrays
+      const yArrays = this.returnOrGenerateY(); // returns an array of arrays
       let n;
-      // create dataArrays of n points from the x array and each y array
-      const dataArrays = _.map(yArray, (y) => {
+      let xArray;
+      // create dataArrays of n points from each x array and each y array
+      const dataArrays = _.map(yArrays, (y, index) => {
+        xArray = xArrays[index] || xArrays[0];
         n = _.min([xArray.length, y.length]);
         return _.zip(_.take(xArray, n), _.take(y, n));
       });
@@ -75,6 +75,7 @@ class VictoryChart extends React.Component {
 
   // helper for consolidateData
   _getAttributes(type, index) {
+    // type is y or data
     const source = type + "Attributes";
     const attributes = this.props[source] && this.props[source][index] ?
       this.props[source][index] : this.props[source];
@@ -87,7 +88,7 @@ class VictoryChart extends React.Component {
 
   returnOrGenerateX() {
     if (this.props.x) {
-      return this.props.x;
+      return _.isArray(this.props.x[0]) ? this.props.x : [this.props.x];
     }
     // if x is not given in props, create an array of values evenly
     // spaced across the x domain
@@ -109,7 +110,8 @@ class VictoryChart extends React.Component {
     const domain = domainFromProps || domainFromData || domainFromScale;
     const samples = this._getNumSamples();
     const step = (_.max(domain) - _.min(domain)) / samples;
-    return _.range(_.min(domain), _.max(domain), step);
+    // always return an array of arrays
+    return [_.range(_.min(domain), _.max(domain), step)];
   }
 
   // helper for returnOrGenerateX
@@ -120,52 +122,56 @@ class VictoryChart extends React.Component {
 
   // helper for returnOrGenerateX
   _getNumSamples() {
-    if (_.isArray(this.state.y) && _.isNumber(this.state.y[0])) {
-      return this.state.y.length;
+    const y = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
+    if (_.isArray(y) && _.isNumber(y[0])) {
+      return y.length;
     }
     return this.props.samples;
   }
 
   returnOrGenerateY() {
     // Always return an array of arrays.
-    const y = this.state.y;
-    const x = this.returnOrGenerateX();
-
+    const y = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
+    const xArray = this.returnOrGenerateX();
     if (_.isFunction(y)) {
-      return [_.map(x, (datum) => y(datum))];
-    } else if (_.isArray(y)) {
-      // y is an array of functions
-      if (_.isFunction(y[0])) {
-        return _.map(y, (yFn) => _.map(x, (datum) => yFn(datum)));
-      } else {
-        return [y];
-      }
+      // if y is a function, apply it to each element in each x array
+      return _.map(xArray, (xSegment) => {
+        return _.map(xSegment, (datum) => y(datum));
+      });
+    } else if (_.isNumber(y[0])) {
+      // if y is an array of numbers, return it wrapped in an array
+      return [y];
     } else {
-      // asplode
-      return null;
+      // if y is an array of arrays and/or functions return the arrays,
+      // and return the result of applying the functions to corresponding x arrays
+      let x;
+      return _.map(y, (yElement, index) => {
+        x = xArray[index] || xArray[0];
+        return _.isFunction(yElement) ?
+          _.map(x, (datum) => yElement(datum)) : yElement;
+      });
     }
   }
 
   getDomain(type) {
+    let domain;
     if (this.props.domain) {
-      return this._getDomainFromProps(type);
+      domain = this.props.domain[type] || this.props.domain;
+    } else {
+      domain = this._getDomainFromData(type);
     }
-    return this._getDomainFromDataState(type);
+
+    // If this other axis is in a reversed orientation, the domain of this axis
+    // needs to be reversed
+    const otherAxis = type === "x" ? "y" : "x";
+    const orientation = this.props.axisOrientation[otherAxis];
+    return orientation === "bottom" || orientation === "left" ?
+      domain : domain.concat().reverse();
   }
 
   // helper method for getDomain
-  _getDomainFromProps(type) {
-    if (this.props.domain[type]) {
-      // if the domain for this type is given, return it
-      return this.props.domain[type];
-    }
-    // if the domain is given without the type specified, return the domain (reversed for y)
-    return type === "x" ? this.props.domain : this.props.domain.concat().reverse();
-  }
-
-  // helper method for getDomain
-  _getDomainFromDataState(type) {
-    const data = _.map(this.state.data, (dataset) => {
+  _getDomainFromData(type) {
+    const data = _.map(this.consolidateData(), (dataset) => {
       return dataset.data;
     });
     const min = [];
@@ -174,7 +180,7 @@ class VictoryChart extends React.Component {
       min.push(_.min(_.pluck(datum, type)));
       max.push(_.max(_.pluck(datum, type)));
     });
-    return type === "x" ? [_.min(min), _.max(max)] : [_.max(max), _.min(min)];
+    return [_.min(min), _.max(max)];
   }
 
   getRange(type) {
@@ -183,41 +189,105 @@ class VictoryChart extends React.Component {
     }
     // if the range is not given in props, calculate it from width, height and margin
     const style = this.getStyles();
-    const dimension = type === "x" ? "width" : "height";
-    return [style.margin, style[dimension] - style.margin];
+    return type === "x" ?
+      [style.margin, style.width - style.margin] :
+      [style.height - style.margin, style.margin];
   }
 
+  getScale(type) {
+    const scale = this.props.scale[type] ? this.props.scale[type]().copy() :
+      this.props.scale().copy();
+    const range = this.getRange(type);
+    const domain = this.getDomain(type);
+    scale.range(range);
+    scale.domain(domain);
+    // hacky check for identity scale
+    if (_.difference(scale.range(), range).length !== 0) {
+      // identity scale, reset the domain and range
+      scale.range(range);
+      scale.domain(range);
+      log.warn("Identity Scale: domain and range must be identical. " +
+        "Domain has been reset to match range.");
+    }
+    return scale;
+  }
+
+  getAxisOffset() {
+    // make the axes line up, and cross when appropriate
+    const style = this.getStyles();
+    const scale = {
+      x: this.getScale("x"),
+      y: this.getScale("y")
+    };
+    const origin = {
+      x: _.max([_.min(this.getDomain("x")), 0]),
+      y: _.max([_.min(this.getDomain("y")), 0])
+    };
+    const orientationOffset = {
+      x: this.props.axisOrientation.y === "left" ? 0 : style.width,
+      y: this.props.axisOrientation.x === "bottom" ? style.height : 0
+    };
+    return {
+      x: Math.abs(orientationOffset.x - scale.x.call(this, origin.x)),
+      y: Math.abs(orientationOffset.y - scale.y.call(this, origin.y))
+    };
+  }
 
   render() {
     const styles = this.getStyles();
-    const lines = _.map(this.state.data, (dataset, index) => {
-      const {name, type, ...attrs} = dataset.attrs;
-      return (
-        <VictoryLine
-          {...this.props}
-          data={dataset.data} // TODO: ugh
-          style={_.merge(this.getStyles(), attrs)}
-          domain={{x: this.getDomain("x"), y: this.getDomain("y")}} // maybe unnecessary
-          range={{x: this.getRange("x"), y: this.getRange("y")}} // maybe unnecessary
-          ref={name}
-          key={index}/>
-      );
+    const plots = _.map(this.consolidateData(), (dataset, index) => {
+      const {name, type, size, symbol, ...attrs} = dataset.attrs;
+      if (type === "line") {
+        return (
+          <VictoryLine
+            {...this.props}
+            containerElement="g"
+            data={dataset.data}
+            style={_.merge(this.getStyles(), attrs)}
+            domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+            range={{x: this.getRange("x"), y: this.getRange("y")}}
+            ref={name}
+            key={index}/>
+        );
+      } else if (type === "scatter") {
+        return (
+          <VictoryScatter
+            {...this.props}
+            containerElement="g"
+            data={dataset.data}
+            size={size || 3}
+            symbol={symbol || "circle"}
+            style={_.merge(this.getStyles(), attrs)}
+            domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+            range={{x: this.getRange("x"), y: this.getRange("y")}}
+            ref={name}
+            key={index}/>
+        );
+      }
     });
     return (
       <svg style={{width: styles.width, height: styles.height}}>
         <VictoryAxis
           {...this.props}
-          domain={this.getDomain("x")} // maybe unnecessary
-          range={this.getRange("x")} // maybe unnecessary
-          orientation="bottom"
+          containerElement="g"
+          offsetY={this.getAxisOffset().y}
+          crossAxis={true}
+          domain={this.getDomain("x")}
+          range={this.getRange("x")}
+          orientation={this.props.axisOrientation.x}
+          showGridLines={this.props.showGridLines.x}
           style={styles}/>
         <VictoryAxis
           {...this.props}
-          domain={this.getDomain("y")} // maybe unnecessary
-          range={this.getRange("y")} // maybe unnecessary
-          orientation="left"
+          containerElement="g"
+          offsetX={this.getAxisOffset().x}
+          crossAxis={true}
+          domain={this.getDomain("y")}
+          range={this.getRange("y")}
+          orientation={this.props.axisOrientation.y}
+          showGridLines={this.props.showGridLines.y}
           style={styles}/>
-          {lines}
+          {plots}
       </svg>
     );
   }
@@ -256,30 +326,24 @@ VictoryChart.propTypes = {
   ]),
   domain: React.PropTypes.oneOfType([
     React.PropTypes.array,
-    React.PropTypes.objectOf(
-      React.PropTypes.shape({
-        x: React.PropTypes.arrayOf(React.PropTypes.number),
-        y: React.PropTypes.arrayOf(React.PropTypes.number)
-      })
-    )
+    React.PropTypes.shape({
+      x: React.PropTypes.arrayOf(React.PropTypes.number),
+      y: React.PropTypes.arrayOf(React.PropTypes.number)
+    })
   ]),
   range: React.PropTypes.oneOfType([
     React.PropTypes.array,
-    React.PropTypes.objectOf(
-      React.PropTypes.shape({
-        x: React.PropTypes.arrayOf(React.PropTypes.number),
-        y: React.PropTypes.arrayOf(React.PropTypes.number)
-      })
-    )
+    React.PropTypes.shape({
+      x: React.PropTypes.arrayOf(React.PropTypes.number),
+      y: React.PropTypes.arrayOf(React.PropTypes.number)
+    })
   ]),
   scale: React.PropTypes.oneOfType([
     React.PropTypes.func,
-    React.PropTypes.objectOf(
-      React.PropTypes.shape({
-        x: React.PropTypes.func,
-        y: React.PropTypes.func
-      })
-    )
+    React.PropTypes.shape({
+      x: React.PropTypes.func,
+      y: React.PropTypes.func
+    })
   ]),
   samples: React.PropTypes.number,
   interpolation: React.PropTypes.oneOf([
@@ -297,69 +361,47 @@ VictoryChart.propTypes = {
     "cardinal-closed",
     "monotone"
   ]),
-  axisOrientation: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.string,
-      y: React.PropTypes.string
-    })
-  ),
-  axisLabels: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.string,
-      y: React.PropTypes.string
-    })
-  ),
-  labelPadding: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
-    })
-  ),
-  gridLines: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.bool,
-      y: React.PropTypes.bool
-    })
-  ),
-  tickValues: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.arrayOf(React.PropTypes.number),
-      y: React.PropTypes.arrayOf(React.PropTypes.number)
-    })
-  ),
-  tickFormat: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.func,
-      y: React.PropTypes.func
-    })
-  ),
-  tickCount: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
-    })
-  ),
-  tickSize: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
-    })
-  ),
-  tickPadding: React.PropTypes.objectOf(
-    React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
-    })
-  )
+  axisOrientation: React.PropTypes.shape({
+    x: React.PropTypes.oneOf(["top", "bottom"]),
+    y: React.PropTypes.oneOf(["left", "right"])
+  }),
+  showGridLines: React.PropTypes.shape({
+    x: React.PropTypes.bool,
+    y: React.PropTypes.bool
+  }),
+  tickValues: React.PropTypes.shape({
+    x: React.PropTypes.arrayOf(React.PropTypes.number),
+    y: React.PropTypes.arrayOf(React.PropTypes.number)
+  }),
+  tickFormat: React.PropTypes.shape({
+    x: React.PropTypes.func,
+    y: React.PropTypes.func
+  }),
+  tickCount: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
+  }),
+  tickSize: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
+  }),
+  tickPadding: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
+  })
 };
 
 VictoryChart.defaultProps = {
   interpolation: "basis",
-  samples: 100,
+  samples: 50,
   scale: () => d3.scale.linear(),
   axisOrientation: {
     x: "bottom",
     y: "left"
+  },
+  showGridLines: {
+    x: false,
+    y: false
   }
 };
 
