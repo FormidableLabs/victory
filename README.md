@@ -125,6 +125,6 @@ Please see [DEVELOPMENT](DEVELOPMENT.md)
 
 Please see [CONTRIBUTING](CONTRIBUTING.md)
 
-[trav_img]: https://api.travis-ci.org/FormidableLabs/victory-chart.svg
-[trav_site]: https://travis-ci.org/FormidableLabs/victory-chart
+[trav_img]: https://api.travis-ci.org/formidableLabs/victory-chart.svg
+[trav_site]: https://travis-ci.org/formidableLabs/victory-chart
 
