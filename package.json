@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/foridable-labs/victory-chart",
   "scripts": {
-     "postinstall": "npm run build-lib",
+    "postinstall": "npm run build-lib",
     "preversion": "npm run check",
     "version": "npm run clean && npm run build && git add -A dist",
     "clean-dist": "rimraf dist",
