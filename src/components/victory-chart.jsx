@@ -267,11 +267,13 @@ class VictoryChart extends React.Component {
 
   drawLine(dataset, index) {
     const style = this.getStyles();
-    const {name, ...attrs} = dataset.attrs;
+    const {type, name, ...attrs} = dataset.attrs;
+    const animate = (this.props.animate.line !== undefined) ?
+      this.props.animate.line : this.props.animate;
     return (
       <VictoryLine
         {...this.props}
-        animate={this.props.animate.line || this.props.animate}
+        animate={animate}
         containerElement="g"
         data={dataset.data}
         style={_.merge(style, attrs)}
@@ -284,11 +286,13 @@ class VictoryChart extends React.Component {
 
   drawScatter(dataset, index) {
     const style = this.getStyles();
-    const {name, symbol, size, ...attrs} = dataset.attrs;
+    const {type, name, symbol, size, ...attrs} = dataset.attrs;
+    const animate = (this.props.animate.scatter !== undefined) ?
+      this.props.animate.scatter : this.props.animate;
     return (
       <VictoryScatter
         {...this.props}
-        animate={this.props.animate.scatter || this.props.animate}
+        animate={animate}
         containerElement="g"
         data={dataset.data}
         size={size || 3}
@@ -317,10 +321,15 @@ class VictoryChart extends React.Component {
     const style = this.getStyles();
     const offsetY = axis === "y" ? undefined : this.getAxisOffset().y;
     const offsetX = axis === "x" ? undefined : this.getAxisOffset().x;
+    const axisStyle = this.props.axisStyle ? axisStyle[axis] : undefined;
+    const tickStyle = this.props.tickStyle ? tickStyle[axis] : undefined;
+    const gridStyle = this.props.gridStyle ? gridStyle[axis] : undefined;
+    const animate = (this.props.animate.axis !== undefined) ?
+      this.props.animate.axis : this.props.animate;
     return (
       <VictoryAxis
         {...this.props}
-        animate={this.props.animate.axis || this.props.animate}
+        animate={animate}
         containerElement="g"
         offsetY={offsetY}
         offsetX={offsetX}
@@ -331,10 +340,11 @@ class VictoryChart extends React.Component {
         orientation={this.props.axisOrientation[axis]}
         showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
-        tickSize={this.props.tickSize[axis]}
-        tickPadding={this.props.tickPadding[axis]}
         tickValues={this.getTickValues(axis)}
         tickFormat={this.props.tickFormat[axis]}
+        axisStyle={axisStyle}
+        gridStyle={gridStyle}
+        tickStyle={tickStyle}
         style={style}/>
     );
   }
@@ -366,15 +376,15 @@ VictoryChart.propTypes = {
   data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
-        x: React.PropTypes.number,
-        y: React.PropTypes.number
+        x: React.PropTypes.any,
+        y: React.PropTypes.any
       })
     ),
     React.PropTypes.arrayOf(
       React.PropTypes.arrayOf(
         React.PropTypes.shape({
-          x: React.PropTypes.number,
-          y: React.PropTypes.number
+          x: React.PropTypes.any,
+          y: React.PropTypes.any
         })
       )
     )
@@ -395,8 +405,8 @@ VictoryChart.propTypes = {
   domain: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.shape({
-      x: React.PropTypes.arrayOf(React.PropTypes.number),
-      y: React.PropTypes.arrayOf(React.PropTypes.number)
+      x: React.PropTypes.array,
+      y: React.PropTypes.array
     })
   ]),
   range: React.PropTypes.oneOfType([
@@ -438,8 +448,8 @@ VictoryChart.propTypes = {
     y: React.PropTypes.bool
   }),
   tickValues: React.PropTypes.shape({
-    x: React.PropTypes.arrayOf(React.PropTypes.number),
-    y: React.PropTypes.arrayOf(React.PropTypes.number)
+    x: React.PropTypes.arrayOf(React.PropTypes.any),
+    y: React.PropTypes.arrayOf(React.PropTypes.any)
   }),
   tickFormat: React.PropTypes.shape({
     x: React.PropTypes.func,
@@ -449,13 +459,17 @@ VictoryChart.propTypes = {
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
-  tickSize: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number
+  axisStyle: React.PropTypes.shape({
+    x: React.PropTypes.node,
+    y: React.PropTypes.node
   }),
-  tickPadding: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number
+  tickStyle: React.PropTypes.shape({
+    x: React.PropTypes.node,
+    y: React.PropTypes.node
+  }),
+  gridStyle: React.PropTypes.shape({
+    x: React.PropTypes.node,
+    y: React.PropTypes.node
   }),
   animate: React.PropTypes.oneOfType([
     React.PropTypes.bool,
@@ -483,14 +497,6 @@ VictoryChart.defaultProps = {
   tickCount: {
     x: 7,
     y: 5
-  },
-  tickSize: {
-    x: 4,
-    y: 4
-  },
-  tickPadding: {
-    x: 3,
-    y: 3
   },
   tickFormat: {
     x: () => d3.scale.linear().tickFormat(),

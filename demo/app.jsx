@@ -71,7 +71,7 @@ class App extends React.Component {
           <VictoryChart {...this.state}
             data={this.state.lineData}
             showGridLines={{x: false, y: true}}
-            animate={{line: true}}/>
+            animate={true}/>
 
           <VictoryChart interpolation="linear"
             scale={{
@@ -105,7 +105,7 @@ class App extends React.Component {
 
           <VictoryChart
             data={this.state.scatterData}
-            animate={{scatter: true}}
+            animate={{scatter: true, axis: false, line: false}}
             dataAttributes={{type: "scatter"}}
             y={(x) => x}/>
 
