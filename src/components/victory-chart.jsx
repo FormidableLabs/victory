@@ -11,13 +11,11 @@ import {VictoryScatter} from "victory-scatter";
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
-    this.defaultData = (x) => x;
   }
 
   getStyles() {
     return _.merge({
       color: "#000",
-      fontSize: 12,
       margin: 50,
       width: 500,
       height: 300
@@ -25,8 +23,13 @@ class VictoryChart extends React.Component {
   }
 
   consolidateData() {
+    // build all of the types of data into one consistent dataset for easy plotting
+    // data can exist as this.props.data, this.props.x, and this.props.y
     const datasets = [];
-    const yData = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
+
+    // if no data is passed in, plot a straight line
+    const defaultData = (x) => x;
+    const yData = (!this.props.data && !this.props.y) ? defaultData : this.props.y;
     // if y is given, construct data for all y, and add it to the dataset
     if (yData) {
       const xArrays = this.returnOrGenerateX(); // returns an array of arrays
@@ -54,6 +57,7 @@ class VictoryChart extends React.Component {
         });
       });
     }
+
     // if data is given in this.props.data, add it to the cosolidated datasets
     if (this.props.data) {
       if (_.isArray(this.props.data[0])) {
@@ -98,6 +102,10 @@ class VictoryChart extends React.Component {
     const domainFromProps = (this.props.domain && this.props.domain.x) ?
       this.props.domain.x : this.props.domain;
 
+    // domain based on tickValues if they are given
+    const domainFromTicks = this.props.tickValues ?
+      [_.min(this.props.tickValues.x), _.max(this.props.tickValues.x)] : undefined;
+
     // domain based on this.props.data if it is given
     const domainFromData = this.props.data ?
       this._getDomainFromDataProps("x") : undefined;
@@ -107,11 +115,13 @@ class VictoryChart extends React.Component {
     const domainFromScale = this.props.scale.x ?
       this.props.scale.x().domain() : this.props.scale().domain();
 
-    const domain = domainFromProps || domainFromData || domainFromScale;
+    // determin3 which domain to use in order of preference
+    const domain = domainFromProps || domainFromTicks || domainFromData || domainFromScale;
     const samples = this._getNumSamples();
     const step = (_.max(domain) - _.min(domain)) / samples;
-    // always return an array of arrays
-    return [_.range(_.min(domain), _.max(domain), step)];
+    // return an array of an array of x values spaced scross the domain,
+    // include the maximum of the domain
+    return [_.union(_.range(_.min(domain), _.max(domain), step), [_.max(domain)])];
   }
 
   // helper for returnOrGenerateX
@@ -122,10 +132,18 @@ class VictoryChart extends React.Component {
 
   // helper for returnOrGenerateX
   _getNumSamples() {
-    const y = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
-    if (_.isArray(y) && _.isNumber(y[0])) {
-      return y.length;
+    // if y props exist and have some sensible length, return that length
+    const yArray = _.isArray(this.props.y) ? this.props.y : undefined;
+    if (yArray && !_.isArray(yArray[0]) && !_.isFunction(yArray[0])) {
+      return yArray.length;
+    } else if (yArray) {
+      const arrayLengths = _.map(yArray, (element) => {
+        return _.isArray(element) ? element.length : 0;
+      });
+      const max = _.max(arrayLengths.concat(0));
+      return max > 1 ? max : this.props.samples;
     }
+    // otherwise just use this.props.samples (default value: 50)
     return this.props.samples;
   }
 
@@ -157,11 +175,13 @@ class VictoryChart extends React.Component {
     let domain;
     if (this.props.domain) {
       domain = this.props.domain[type] || this.props.domain;
+    } else if (this.props.tickValues) {
+      domain = [_.min(this.props.tickValues[type]), _.max(this.props.tickValues[type])];
     } else {
       domain = this._getDomainFromData(type);
     }
 
-    // If this other axis is in a reversed orientation, the domain of this axis
+    // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = type === "x" ? "y" : "x";
     const orientation = this.props.axisOrientation[otherAxis];
@@ -233,63 +253,111 @@ class VictoryChart extends React.Component {
     };
   }
 
-  render() {
-    const styles = this.getStyles();
-    const plots = _.map(this.consolidateData(), (dataset, index) => {
-      const {name, type, size, symbol, ...attrs} = dataset.attrs;
+  getTickValues(type) {
+    const scale = this.getScale(type);
+    if (this.props.tickValues) {
+      return this.props.tickValues[type];
+    } else if (_.isFunction(scale.ticks)) {
+      const ticks = scale.ticks(this.props.tickCount[type]);
+      return _.without(ticks, 0);
+    } else {
+      return scale.domain();
+    }
+  }
+
+  drawLine(dataset, index) {
+    const style = this.getStyles();
+    const {name, ...attrs} = dataset.attrs;
+    return (
+      <VictoryLine
+        {...this.props}
+        animate={this.props.animate.line || this.props.animate}
+        containerElement="g"
+        data={dataset.data}
+        style={_.merge(style, attrs)}
+        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+        range={{x: this.getRange("x"), y: this.getRange("y")}}
+        ref={name}
+        key={index}/>
+    );
+  }
+
+  drawScatter(dataset, index) {
+    const style = this.getStyles();
+    const {name, symbol, size, ...attrs} = dataset.attrs;
+    return (
+      <VictoryScatter
+        {...this.props}
+        animate={this.props.animate.scatter || this.props.animate}
+        containerElement="g"
+        data={dataset.data}
+        size={size || 3}
+        symbol={symbol || "circle"}
+        style={_.merge(style, attrs)}
+        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+        range={{x: this.getRange("x"), y: this.getRange("y")}}
+        ref={name}
+        key={index}/>
+    );
+  }
+
+  drawData() {
+    let type;
+    return _.map(this.consolidateData(), (dataset, index) => {
+      type = dataset.attrs.type;
       if (type === "line") {
-        return (
-          <VictoryLine
-            {...this.props}
-            containerElement="g"
-            data={dataset.data}
-            style={_.merge(this.getStyles(), attrs)}
-            domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-            range={{x: this.getRange("x"), y: this.getRange("y")}}
-            ref={name}
-            key={index}/>
-        );
+        return this.drawLine(dataset, index);
       } else if (type === "scatter") {
-        return (
-          <VictoryScatter
-            {...this.props}
-            containerElement="g"
-            data={dataset.data}
-            size={size || 3}
-            symbol={symbol || "circle"}
-            style={_.merge(this.getStyles(), attrs)}
-            domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-            range={{x: this.getRange("x"), y: this.getRange("y")}}
-            ref={name}
-            key={index}/>
-        );
+        return this.drawScatter(dataset, index);
       }
     });
+  }
+
+  drawAxis(axis) {
+    const style = this.getStyles();
+    const offsetY = axis === "y" ? undefined : this.getAxisOffset().y;
+    const offsetX = axis === "x" ? undefined : this.getAxisOffset().x;
     return (
-      <svg style={{width: styles.width, height: styles.height}}>
-        <VictoryAxis
-          {...this.props}
-          containerElement="g"
-          offsetY={this.getAxisOffset().y}
-          crossAxis={true}
-          domain={this.getDomain("x")}
-          range={this.getRange("x")}
-          orientation={this.props.axisOrientation.x}
-          showGridLines={this.props.showGridLines.x}
-          style={styles}/>
-        <VictoryAxis
-          {...this.props}
-          containerElement="g"
-          offsetX={this.getAxisOffset().x}
-          crossAxis={true}
-          domain={this.getDomain("y")}
-          range={this.getRange("y")}
-          orientation={this.props.axisOrientation.y}
-          showGridLines={this.props.showGridLines.y}
-          style={styles}/>
-          {plots}
-      </svg>
+      <VictoryAxis
+        {...this.props}
+        animate={this.props.animate.axis || this.props.animate}
+        containerElement="g"
+        offsetY={offsetY}
+        offsetX={offsetX}
+        crossAxis={true}
+        domain={this.getDomain(axis)}
+        range={this.getRange(axis)}
+        scale={this.props.scale[axis]}
+        orientation={this.props.axisOrientation[axis]}
+        showGridLines={this.props.showGridLines[axis]}
+        tickCount={this.props.tickCount[axis]}
+        tickSize={this.props.tickSize[axis]}
+        tickPadding={this.props.tickPadding[axis]}
+        tickValues={this.getTickValues(axis)}
+        tickFormat={this.props.tickFormat[axis]}
+        style={style}/>
     );
+  }
+
+  render() {
+    const style = this.getStyles();
+    if (this.props.containerElement === "svg") {
+      return (
+        <svg style={{width: style.width, height: style.height}}>
+          {this.drawAxis("x")}
+          {this.drawAxis("y")}
+          {this.drawData()}
+        </svg>
+      );
+    } else {
+      return (
+        <g>
+          {this.drawAxis("x")}
+          {this.drawAxis("y")}
+          {this.drawData()}
+        </g>
+      );
+    }
   }
 }
 
@@ -388,7 +456,16 @@ VictoryChart.propTypes = {
   tickPadding: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number
-  })
+  }),
+  animate: React.PropTypes.oneOfType([
+    React.PropTypes.bool,
+    React.PropTypes.shape({
+      line: React.PropTypes.bool,
+      scatter: React.PropTypes.bool,
+      axis: React.PropTypes.bool
+    })
+  ]),
+  containerElement: React.PropTypes.oneOf(["svg", "g"])
 };
 
 VictoryChart.defaultProps = {
@@ -402,7 +479,25 @@ VictoryChart.defaultProps = {
   showGridLines: {
     x: false,
     y: false
-  }
+  },
+  tickCount: {
+    x: 7,
+    y: 5
+  },
+  tickSize: {
+    x: 4,
+    y: 4
+  },
+  tickPadding: {
+    x: 3,
+    y: 3
+  },
+  tickFormat: {
+    x: () => d3.scale.linear().tickFormat(),
+    y: () => d3.scale.linear().tickFormat()
+  },
+  animate: false,
+  containerElement: "svg"
 };
 
 export default VictoryChart;

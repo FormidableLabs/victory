@@ -1,31 +1,117 @@
-/*global document:false*/
+/*global document:false */
+/*global window:false */
 import React from "react";
+import d3 from "d3";
+import _ from "lodash";
 import {VictoryChart} from "../src/index";
 
 
 class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      scatterData: this.getScatterData(),
+      lineData: this.getData(),
+      dataAttributes: {
+        stroke: "blue",
+        strokeWidth: 2
+      }
+    };
+  }
+
+  getData() {
+    return _.map(_.range(20), (i) => {
+      return {
+        x: i,
+        y: Math.random()
+      };
+    });
+  }
+
+  getScatterData() {
+    const colors =
+      ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
+    const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
+    // symbol: symbols[scaledIndex],
+    return _.map(_.range(20), (index) => {
+      const scaledIndex = _.floor(index % 7);
+      return {
+        x: _.random(20),
+        y: _.random(20),
+        size: _.random(8) + 3,
+        symbol: symbols[scaledIndex],
+        color: colors[_.random(0, 6)],
+        opacity: _.random(0.3, 1)
+      };
+    });
+  }
+
+  getStyles() {
+    const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
+    return {
+      stroke: colors[_.random(0, 5)],
+      strokeWidth: [_.random(1, 3)]
+    };
+  }
+
+  componentWillMount() {
+    window.setInterval(() => {
+      this.setState({
+        scatterData: this.getScatterData(),
+        lineData: this.getData(),
+        dataAttributes: this.getStyles()
+      });
+    }, 4000);
+  }
 
   render() {
     return (
       <div className="demo">
         <p>
-          <VictoryChart />
+          <VictoryChart {...this.state}
+            data={this.state.lineData}
+            showGridLines={{x: false, y: true}}
+            animate={{line: true}}/>
+
           <VictoryChart interpolation="linear"
+            scale={{
+              x: () => d3.time.scale(),
+              y: () => d3.scale.linear()
+            }}
+            tickValues={{
+              x: [
+                new Date(1980, 1, 1),
+                new Date(1990, 1, 1),
+                new Date(2000, 1, 1),
+                new Date(2010, 1, 1),
+                new Date(2020, 1, 1)
+              ],
+              y: [100, 200, 300, 400, 500]
+            }}
+            tickFormat={{
+              x: () => d3.time.format("%Y"),
+              y: () => d3.scale.linear().tickFormat()
+            }}
             data={[
-              [{x: -3, y: -2}, {x: 1, y: -1.5}, {x: 2, y: 3}, {x: 3, y: 4}],
-              [{x: 0, y: 0}, {x: 1, y: 5}, {x: 4, y: 8}, {x: 5, y: 6}]
+              {x: new Date(1982, 1, 1), y: 125},
+              {x: new Date(1987, 1, 1), y: 257},
+              {x: new Date(1993, 1, 1), y: 345},
+              {x: new Date(1997, 1, 1), y: 515},
+              {x: new Date(2001, 1, 1), y: 132},
+              {x: new Date(2005, 1, 1), y: 305},
+              {x: new Date(2011, 1, 1), y: 270},
+              {x: new Date(2015, 1, 1), y: 470}
             ]}/>
+
           <VictoryChart
-          showGridLines={{x: true, y: true}}
-            data={[
-              {x: 1, y: 4, size: 3, symbol: "circle", color: "red"},
-              {x: 2, y: 3, size: 5, symbol: "triangleUp", color: "green"},
-              {x: 4, y: 4, size: 7, symbol: "star"}
-            ]}
+            data={this.state.scatterData}
+            animate={{scatter: true}}
             dataAttributes={{type: "scatter"}}
             y={(x) => x}/>
+
           <VictoryChart
-          showGridLines={{x: true, y: true}}
+            showGridLines={{x: true, y: true}}
+            samples={20}
             axisOrientation={{x: "top", y: "right"}}
             y={[
               (x) => 0.5 * x + 0.5,
@@ -35,12 +121,13 @@ class App extends React.Component {
               {stroke: "red"},
               {type: "scatter"}
             ]}/>
+
           <VictoryChart
             showGridLines={{x: true, y: true}}
             axisLabels={{x: "x axis", y: "y axis"}}
             x={[
               [1, 2, 3, 4],
-              [-2, -1, 0, 1, 3, 4],
+              [-2, -1, 0, 1, 3],
               [3, 4, 6]
             ]}
             y={[
