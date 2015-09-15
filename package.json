@@ -59,8 +59,9 @@
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-axis": "^1.0.3",
-    "victory-line": "^0.0.6",
+    "victory-axis": "",
+    "victory-bar": "~1.0.0",
+    "victory-line": "",
     "victory-scatter": "^0.0.3",
     "webpack": "^1.10.0"
   },

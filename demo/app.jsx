@@ -1,10 +1,9 @@
 /*global document:false */
-/*global window:false */
+
 import React from "react";
 import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
-
 
 class App extends React.Component {
   constructor(props) {
@@ -54,20 +53,39 @@ class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    window.setInterval(() => {
-      this.setState({
-        scatterData: this.getScatterData(),
-        lineData: this.getData(),
-        dataAttributes: this.getStyles()
-      });
-    }, 4000);
-  }
+  // componentWillMount() {
+  //   window.setInterval(() => {
+  //     this.setState({
+  //       scatterData: this.getScatterData(),
+  //       lineData: this.getData(),
+  //       dataAttributes: this.getStyles()
+  //     });
+  //   }, 4000);
+  // }
 
   render() {
     return (
       <div className="demo">
         <p>
+        <VictoryChart
+            data={this.state.scatterData}
+            animate={{scatter: true, axis: false, line: false}}
+            dataAttributes={{type: "scatter"}}
+            y={(x) => x}/>
+
+          <VictoryChart
+            showGridLines={{x: true, y: true}}
+            samples={20}
+            axisOrientation={{x: "top", y: "right"}}
+            y={[
+              (x) => 0.5 * x + 0.5,
+              (x) => x * x
+            ]}
+            yAttributes={[
+              {stroke: "red"},
+              {type: "scatter"}
+            ]}/>
+
           <VictoryChart {...this.state}
             data={this.state.lineData}
             showGridLines={{x: false, y: true}}
@@ -104,25 +122,6 @@ class App extends React.Component {
             ]}/>
 
           <VictoryChart
-            data={this.state.scatterData}
-            animate={{scatter: true, axis: false, line: false}}
-            dataAttributes={{type: "scatter"}}
-            y={(x) => x}/>
-
-          <VictoryChart
-            showGridLines={{x: true, y: true}}
-            samples={20}
-            axisOrientation={{x: "top", y: "right"}}
-            y={[
-              (x) => 0.5 * x + 0.5,
-              (x) => x * x
-            ]}
-            yAttributes={[
-              {stroke: "red"},
-              {type: "scatter"}
-            ]}/>
-
-          <VictoryChart
             showGridLines={{x: true, y: true}}
             axisLabels={{x: "x axis", y: "y axis"}}
             x={[
@@ -140,7 +139,6 @@ class App extends React.Component {
             {name: "line-two", type: "line", stroke: "green"},
             {name: "line-3", type: "scatter", color: "blue"}
           ]}/>
-
         </p>
       </div>
     );
@@ -150,3 +148,5 @@ class App extends React.Component {
 const content = document.getElementById("content");
 
 React.render(<App/>, content);
+
+

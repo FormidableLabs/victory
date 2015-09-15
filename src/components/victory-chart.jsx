@@ -6,6 +6,7 @@ import log from "../log";
 import {VictoryLine} from "victory-line";
 import {VictoryAxis} from "victory-axis";
 import {VictoryScatter} from "victory-scatter";
+import {VictoryBar} from "victory-bar";
 
 @Radium
 class VictoryChart extends React.Component {
@@ -22,40 +23,56 @@ class VictoryChart extends React.Component {
     }, this.props.style);
   }
 
+  // look out for scope errors, this was removed from consolidateData()
+  inCaseOfYData(datasets) {
+    const xArrays = this.returnOrGenerateX(); // returns an array of arrays
+    const yArrays = this.returnOrGenerateY(); // returns an array of arrays
+    let n;
+    let xArray;
+    // create dataArrays of n points from each x array and each y array
+    const dataArrays = _.map(yArrays, (y, index) => {
+      xArray = xArrays[index] || xArrays[0];
+      n = _.min([xArray.length, y.length]);
+      return _.zip(_.take(xArray, n), _.take(y, n));
+    });
+
+    // for each dataArray create an array of data points and add it to
+    // the consolidated datasets
+    _.each(dataArrays, (dataArray, index) => {
+      datasets.push({
+        attrs: this._getAttributes("y", index),
+        data: _.map(dataArray, (datum) => {
+          return {
+            x: datum[0],
+            y: datum[1]
+          };
+        })
+      });
+    });
+    return datasets;
+  }
+
   consolidateData() {
+
+    // Lauren && Colin to reconcile upon her return...
+    if (this.props.dataAttributes && this.props.dataAttributes.type === "bar") {
+      return [{
+        attrs: this._getAttributes("data", 0),
+        data: this.props.barData
+      }];
+    }
+
     // build all of the types of data into one consistent dataset for easy plotting
     // data can exist as this.props.data, this.props.x, and this.props.y
-    const datasets = [];
+    let datasets = [];
 
     // if no data is passed in, plot a straight line
     const defaultData = (x) => x;
     const yData = (!this.props.data && !this.props.y) ? defaultData : this.props.y;
     // if y is given, construct data for all y, and add it to the dataset
     if (yData) {
-      const xArrays = this.returnOrGenerateX(); // returns an array of arrays
-      const yArrays = this.returnOrGenerateY(); // returns an array of arrays
-      let n;
-      let xArray;
-      // create dataArrays of n points from each x array and each y array
-      const dataArrays = _.map(yArrays, (y, index) => {
-        xArray = xArrays[index] || xArrays[0];
-        n = _.min([xArray.length, y.length]);
-        return _.zip(_.take(xArray, n), _.take(y, n));
-      });
-
-      // for each dataArray create an array of data points and add it to
-      // the consolidated datasets
-      _.each(dataArrays, (dataArray, index) => {
-        datasets.push({
-          attrs: this._getAttributes("y", index),
-          data: _.map(dataArray, (datum) => {
-            return {
-              x: datum[0],
-              y: datum[1]
-            };
-          })
-        });
-      });
+      // eslint made me do this. too many statements in one function?
+      datasets = this.inCaseOfYData(datasets);
     }
 
     // if data is given in this.props.data, add it to the cosolidated datasets
@@ -77,6 +94,7 @@ class VictoryChart extends React.Component {
     return datasets;
   }
 
+  // https://github.com/FormidableLabs/victory-chart/issues/5
   // helper for consolidateData
   _getAttributes(type, index) {
     // type is y or data
@@ -185,6 +203,7 @@ class VictoryChart extends React.Component {
     // needs to be reversed
     const otherAxis = type === "x" ? "y" : "x";
     const orientation = this.props.axisOrientation[otherAxis];
+
     return orientation === "bottom" || orientation === "left" ?
       domain : domain.concat().reverse();
   }
@@ -209,6 +228,7 @@ class VictoryChart extends React.Component {
     }
     // if the range is not given in props, calculate it from width, height and margin
     const style = this.getStyles();
+
     return type === "x" ?
       [style.margin, style.width - style.margin] :
       [style.height - style.margin, style.margin];
@@ -229,6 +249,7 @@ class VictoryChart extends React.Component {
       log.warn("Identity Scale: domain and range must be identical. " +
         "Domain has been reset to match range.");
     }
+
     return scale;
   }
 
@@ -305,6 +326,24 @@ class VictoryChart extends React.Component {
     );
   }
 
+  drawBar(dataset, index) {
+    const style = this.getStyles();
+    const axisWidth = 1; // placeholder, connect to variable above later
+    return (
+      <VictoryBar
+        svg={false}
+        colorCategories={this.props.barColors}
+        data={this.props.barData}
+        width={style.width}
+        height={style.height}
+        totalReductionInX={2 * style.margin}
+        totalReductionInY={2 * style.margin}
+        translateX={style.margin}
+        translateY={style.margin - axisWidth}
+        key={index}/>
+    );
+  }
+
   drawData() {
     let type;
     return _.map(this.consolidateData(), (dataset, index) => {
@@ -313,6 +352,8 @@ class VictoryChart extends React.Component {
         return this.drawLine(dataset, index);
       } else if (type === "scatter") {
         return this.drawScatter(dataset, index);
+      } else if (type === "bar") {
+        return this.drawBar(dataset, index);
       }
     });
   }
@@ -321,11 +362,12 @@ class VictoryChart extends React.Component {
     const style = this.getStyles();
     const offsetY = axis === "y" ? undefined : this.getAxisOffset().y;
     const offsetX = axis === "x" ? undefined : this.getAxisOffset().x;
-    const axisStyle = this.props.axisStyle ? axisStyle[axis] : undefined;
-    const tickStyle = this.props.tickStyle ? tickStyle[axis] : undefined;
-    const gridStyle = this.props.gridStyle ? gridStyle[axis] : undefined;
+    const axisStyle = this.props.axisStyle ? this.props.axisStyle : undefined;
+    const tickStyle = this.props.tickStyle ? this.props.tickStyle : undefined;
+    const gridStyle = this.props.gridStyle ? this.props.gridStyle : undefined;
     const animate = (this.props.animate.axis !== undefined) ?
       this.props.animate.axis : this.props.animate;
+
     return (
       <VictoryAxis
         {...this.props}
@@ -373,6 +415,8 @@ class VictoryChart extends React.Component {
 
 VictoryChart.propTypes = {
   style: React.PropTypes.node,
+  barColors: React.PropTypes.array,
+  barData: React.PropTypes.array,
   data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
