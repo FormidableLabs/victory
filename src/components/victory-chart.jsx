@@ -365,12 +365,18 @@ class VictoryChart extends React.Component {
     const axisStyle = this.props.axisStyle ? this.props.axisStyle : undefined;
     const tickStyle = this.props.tickStyle ? this.props.tickStyle : undefined;
     const gridStyle = this.props.gridStyle ? this.props.gridStyle : undefined;
+    const axisLabel = this.props.axisLabels && this.props.axisLabels[axis] ?
+      this.props.axisLabels[axis] : undefined;
+    const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding ?
+      this.props.axisLabels.labelPadding : undefined;
     const animate = (this.props.animate.axis !== undefined) ?
       this.props.animate.axis : this.props.animate;
 
     return (
       <VictoryAxis
         {...this.props}
+        label={axisLabel}
+        labelPadding={labelPadding}
         animate={animate}
         containerElement="g"
         offsetY={offsetY}
@@ -483,6 +489,7 @@ VictoryChart.propTypes = {
     "cardinal-closed",
     "monotone"
   ]),
+  axisLabels: React.PropTypes.object,
   axisOrientation: React.PropTypes.shape({
     x: React.PropTypes.oneOf(["top", "bottom"]),
     y: React.PropTypes.oneOf(["left", "right"])
