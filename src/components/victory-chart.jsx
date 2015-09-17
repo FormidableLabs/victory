@@ -332,6 +332,7 @@ class VictoryChart extends React.Component {
     return (
       <VictoryBar
         svg={false}
+        barPadding={this.props.barPadding}
         colorCategories={this.props.barColors}
         data={this.props.barData}
         width={style.width}
@@ -423,6 +424,7 @@ VictoryChart.propTypes = {
   style: React.PropTypes.node,
   barColors: React.PropTypes.array,
   barData: React.PropTypes.array,
+  barPadding: React.PropTypes.number,
   data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
