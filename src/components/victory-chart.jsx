@@ -401,7 +401,7 @@ class VictoryChart extends React.Component {
     const style = this.getStyles();
     if (this.props.containerElement === "svg") {
       return (
-        <svg style={{width: style.width, height: style.height}}>
+        <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
           {this.drawAxis("x")}
           {this.drawAxis("y")}
           {this.drawData()}

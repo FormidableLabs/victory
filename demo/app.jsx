@@ -102,12 +102,12 @@ class App extends React.Component {
             [1, 2, 10, 4],
             (x) => x * x,
             [-5, -4, -3, -2, 2, 3]
-          ]}
-          yAttributes={[
-            {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
-            {name: "line-two", type: "line", stroke: "green"},
-            {name: "line-3", type: "scatter", color: "blue"}
-          ]}/>
+            ]}
+            yAttributes={[
+              {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
+              {name: "line-two", type: "line", stroke: "green"},
+              {name: "line-3", type: "scatter", color: "blue"}
+            ]}/>
         </p>
       </div>
     );
