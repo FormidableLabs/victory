@@ -4,6 +4,30 @@ import React from "react";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 
+const showSnapshotShows = 17;
+
+function generateShowSnapshotBarChartData(shows) {
+  const arr = [];
+  for (let i = 1; i < shows; i++) {
+    arr.push({
+      label: 'S02 E' + i,
+      'L+3': Math.floor(Math.random() * 100 * 50),
+      'Beyond L+3': Math.floor(Math.random() * 1000),
+    });
+  }
+  return arr;
+}
+
+function generateShowSnapshotXAxisCategories(shows) {
+  let arr = [];
+  for (let i = 1; i < shows; i++) {
+    arr.push("E" + i)
+  }
+  return arr;
+}
+
+console.log(generateShowSnapshotXAxisCategories(showSnapshotShows))
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -102,12 +126,56 @@ class App extends React.Component {
             [1, 2, 10, 4],
             (x) => x * x,
             [-5, -4, -3, -2, 2, 3]
-            ]}
-            yAttributes={[
-              {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
-              {name: "line-two", type: "line", stroke: "green"},
-              {name: "line-3", type: "scatter", color: "blue"}
-            ]}/>
+          ]}
+          yAttributes={[
+            {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
+            {name: "line-two", type: "line", stroke: "green"},
+            {name: "line-3", type: "scatter", color: "blue"}
+          ]}/>
+           <VictoryChart
+              dataAttributes={{ type: 'bar' }}
+              barColors={['#07458B', '#50ADD7']}
+              axisLabels={{ y: 'Minutes Viewed (Millions)' }}
+              scale={{
+                x: () => d3.scale.ordinal(),
+                y: () => d3.scale.linear(),
+              }}
+              domain={{
+                y: [0, 8000],
+              }}
+              showGridLines={{ y: true }}
+              style={{
+                fill: "black",
+                fontFamily: 'Montserrat, sans-serif',
+                fontSize: 12,
+                width: 600,
+                height: 350,
+              }}
+              axisStyle={{
+                x: {
+                  stroke: 'none',
+                  fill: 'none',
+                },
+                y: {
+                  stroke: 'none',
+                  fill: 'none',
+                },
+              }}
+              tickValues={{
+                y: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000],
+                x: generateShowSnapshotXAxisCategories(showSnapshotShows)
+              }}
+              tickStyle={{
+                x: {
+                  stroke: 'none',
+                  fill: 'none',
+                },
+                y: {
+                  stroke: 'none',
+                  fill: 'none',
+                },
+              }}
+              barData={generateShowSnapshotBarChartData(showSnapshotShows)}/>
         </p>
       </div>
     );
