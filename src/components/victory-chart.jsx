@@ -3,10 +3,10 @@ import Radium from "radium";
 import d3 from "d3";
 import _ from "lodash";
 import log from "../log";
-import {VictoryLine} from "victory-line";
-import {VictoryAxis} from "victory-axis";
-import {VictoryScatter} from "victory-scatter";
-import {VictoryBar} from "victory-bar";
+import {VictoryLine} from "victory-line/src";
+import {VictoryAxis} from "victory-axis/src";
+import {VictoryScatter} from "victory-scatter/src";
+import {VictoryBar} from "victory-bar/src";
 
 @Radium
 class VictoryChart extends React.Component {

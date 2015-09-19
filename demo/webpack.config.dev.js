@@ -17,7 +17,7 @@ module.exports = {
   },
 
   cache: true,
-  devtool: "eval-source-map",
+  devtool: "source-map",
   entry: {
     app: ["./demo/app.jsx"]
   },
