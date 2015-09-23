@@ -1,32 +1,30 @@
 /*global document:false */
 import React from "react";
-// import d3 from "d3";
+import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 
 const showSnapshotShows = 17;
 
-function generateShowSnapshotBarChartData(shows) {
+const generateShowSnapshotBarChartData = function (shows) {
   const arr = [];
   for (let i = 1; i < shows; i++) {
     arr.push({
-      label: 'S02 E' + i,
-      'L+3': Math.floor(Math.random() * 100 * 50),
-      'Beyond L+3': Math.floor(Math.random() * 1000),
+      label: "S02 E" + i,
+      "L+3": Math.floor(Math.random() * 100 * 50),
+      "Beyond L+3": Math.floor(Math.random() * 1000)
     });
   }
   return arr;
-}
+};
 
-function generateShowSnapshotXAxisCategories(shows) {
-  let arr = [];
+const generateShowSnapshotXAxisCategories = function (shows) {
+  const arr = [];
   for (let i = 1; i < shows; i++) {
-    arr.push("E" + i)
+    arr.push("E" + i);
   }
   return arr;
-}
-
-console.log(generateShowSnapshotXAxisCategories(showSnapshotShows))
+};
 
 class App extends React.Component {
   constructor(props) {
@@ -132,50 +130,81 @@ class App extends React.Component {
             {name: "line-two", type: "line", stroke: "green"},
             {name: "line-3", type: "scatter", color: "blue"}
           ]}/>
-           <VictoryChart
-              dataAttributes={{ type: 'bar' }}
-              barColors={['#07458B', '#50ADD7']}
-              axisLabels={{ y: 'Minutes Viewed (Millions)' }}
-              scale={{
-                x: () => d3.scale.ordinal(),
-                y: () => d3.scale.linear(),
-              }}
-              domain={{
-                y: [0, 8000],
-              }}
-              showGridLines={{ y: true }}
-              style={{
-                fill: "black",
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: 12,
-                width: 600,
-                height: 350,
-              }}
-              axisStyle={{
-                x: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-                y: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-              }}
-              tickValues={{
-                y: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000],
-                x: generateShowSnapshotXAxisCategories(showSnapshotShows)
-              }}
-              tickStyle={{
-                x: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-                y: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-              }}
-              barData={generateShowSnapshotBarChartData(showSnapshotShows)}/>
+
+          <VictoryChart
+            dataAttributes={{ type: "bar" }}
+            barColors={["#07458B", "#50ADD7"]}
+            axisLabels={{ y: "Minutes Viewed (Millions)" }}
+            scale={{
+              x: () => d3.scale.ordinal(),
+              y: () => d3.scale.linear()
+            }}
+            domain={{
+              y: [0, 8000]
+            }}
+            showGridLines={{ y: true }}
+            style={{
+              fill: "black",
+              fontFamily: "Montserrat, sans-serif",
+              fontSize: 12,
+              width: 600,
+              height: 350
+            }}
+            axisStyle={{
+              x: {
+                stroke: "none",
+                fill: "none"
+              },
+              y: {
+                stroke: "none",
+                fill: "none"
+              }
+            }}
+            tickValues={{
+              y: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000],
+              x: generateShowSnapshotXAxisCategories(showSnapshotShows)
+            }}
+            tickStyle={{
+              x: {
+                stroke: "none",
+                fill: "none"
+              },
+              y: {
+                stroke: "none",
+                fill: "none"
+              }
+            }}
+            barData={generateShowSnapshotBarChartData(showSnapshotShows)}/>
+
+          <VictoryChart interpolation="linear"
+            scale={{
+              x: () => d3.time.scale(),
+              y: () => d3.scale.linear()
+            }}
+            tickValues={{
+              x: [
+                new Date(1980, 1, 1),
+                new Date(1990, 1, 1),
+                new Date(2000, 1, 1),
+                new Date(2010, 1, 1),
+                new Date(2020, 1, 1)
+              ],
+              y: [100, 200, 300, 400, 500]
+            }}
+            tickFormat={{
+              x: () => d3.time.format("%Y"),
+              y: () => d3.scale.linear().tickFormat()
+            }}
+            data={[
+              {x: new Date(1982, 1, 1), y: 125},
+              {x: new Date(1987, 1, 1), y: 257},
+              {x: new Date(1993, 1, 1), y: 345},
+              {x: new Date(1997, 1, 1), y: 515},
+              {x: new Date(2001, 1, 1), y: 132},
+              {x: new Date(2005, 1, 1), y: 305},
+              {x: new Date(2011, 1, 1), y: 270},
+              {x: new Date(2015, 1, 1), y: 470}
+            ]}/>
         </p>
       </div>
     );
@@ -185,33 +214,3 @@ class App extends React.Component {
 const content = document.getElementById("content");
 
 React.render(<App/>, content);
-
-// <VictoryChart interpolation="linear"
-//   scale={{
-//     x: () => d3.time.scale(),
-//     y: () => d3.scale.linear()
-//   }}
-//   tickValues={{
-//     x: [
-//       new Date(1980, 1, 1),
-//       new Date(1990, 1, 1),
-//       new Date(2000, 1, 1),
-//       new Date(2010, 1, 1),
-//       new Date(2020, 1, 1)
-//     ],
-//     y: [100, 200, 300, 400, 500]
-//   }}
-//   tickFormat={{
-//     x: () => d3.time.format("%Y"),
-//     y: () => d3.scale.linear().tickFormat()
-//   }}
-//   data={[
-//     {x: new Date(1982, 1, 1), y: 125},
-//     {x: new Date(1987, 1, 1), y: 257},
-//     {x: new Date(1993, 1, 1), y: 345},
-//     {x: new Date(1997, 1, 1), y: 515},
-//     {x: new Date(2001, 1, 1), y: 132},
-//     {x: new Date(2005, 1, 1), y: 305},
-//     {x: new Date(2011, 1, 1), y: 270},
-//     {x: new Date(2015, 1, 1), y: 470}
-//   ]}/>

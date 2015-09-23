@@ -63,7 +63,7 @@
     "url-loader": "~0.5.5",
     "victory-bar": "^1.0.3",
     "victory-axis": "FormidableLabs/victory-axis",
-    "victory-line": "",
+    "victory-line": "^0.0.6",
     "victory-scatter": "^0.0.3",
     "webpack": "^1.10.0"
   },
