@@ -1,0 +1,220 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 16px;
+  font-family: 'Oswald', sans-serif;
+}
+
+body {
+  background: #efefef;
+}
+
+header, footer {
+  width: 100%;
+  background-image: -ms-linear-gradient(left, #3498DB 0%, #9B59B6 100%);
+  background-image: -moz-linear-gradient(left, #3498DB 0%, #9B59B6 100%);
+  background-image: -o-linear-gradient(left, #3498DB 0%, #9B59B6 100%);
+  background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #3498DB), color-stop(1, #9B59B6));
+  background-image: -webkit-linear-gradient(left, #3498DB 0%, #9B59B6 100%);
+  background-image: linear-gradient(to right, #3498DB 0%, #9B59B6 100%);
+  display: table;
+  padding: 80px 40px;
+}
+
+header .header-content {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+header h1 {
+  margin: 0 auto;
+  padding: 0;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+  font-weight: 700;
+  font-size: 55px;
+}
+
+footer {
+  padding: 40px;
+  color: white;
+}
+
+footer p a {
+  color: white;
+}
+
+footer p {
+  display: block;
+}
+
+a.button {
+  text-decoration: none;
+  color: white;
+  padding: 20px;
+  margin: 0px auto;
+  display: block;
+  background: #3498DB;
+  box-shadow: 0px 5px 0px #2980b9;
+  border-radius: 3px;
+  max-width: 200px;
+  text-align: center;
+}
+
+a.button:hover {
+  background: #2980b9;
+  box-shadow: 0px 5px 0px #1070a9;
+}
+
+a.button:active {
+  position: relative;
+  box-shadow: none;
+  top: 5px;
+}
+
+footer .footer-content {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+}
+
+p.desc {
+  font-style: italic;
+  margin: 40px;
+  font-size: 18px;
+}
+
+code.hljs {
+  font-size: 14px;
+  padding: 20px;
+}
+
+@media (max-width: 800px) {
+  header, footer {
+    padding: 40px 20px;
+  }
+  header h1 {
+    font-size: 36px;
+  }
+}
+
+header p {
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  margin-bottom: 40px;
+}
+
+header pre {
+  display: inline;
+}
+
+header .hljs {
+  display: inline;
+  border-radius: 3px;
+  padding: 20px;
+  font-size: 14px;
+  color: white;
+}
+
+h2 {
+  margin: 25px 0px 15px;
+  font-size: 24px;
+  color: #222;
+  font-family: 'Oswald', sans-serif;
+}
+
+h4 {
+  margin: 0;
+  color: #222;
+  font-size: 18px;
+}
+
+em {
+  font-size: 14px;
+  margin-top: 10px;
+  display: block;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: #aaa;
+  margin-top: 20px;
+}
+
+.main {
+  max-width: 800px;
+  margin: 0px auto;
+  padding: 20px;
+}
+
+.in-use {
+  text-align: center;
+  margin: 50px 0px 20px;
+}
+
+.in-use h4 {
+  color: #555;
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.playground {
+  overflow: hidden;
+  font-size: 14px;
+}
+
+.playgroundCode .CodeMirror{
+
+}
+
+.playground.collapsableCode .playgroundCode {
+  height: 0;
+  overflow: hidden;
+}
+
+.playground.collapsableCode .playgroundCode.expandedCode {
+  height: auto;
+}
+
+.playgroundToggleCodeLink {
+  cursor: pointer;
+  font-family: monospace;
+  position: relative;
+  right: 0;
+  display: inline-block;
+  padding: 5px;
+}
+
+.playgroundToggleCodeLink:hover {
+  color: #aaa;
+}
+
+.CodeMirror {
+  padding: 10px;
+}
+
+.playgroundPreview {
+  position: relative;
+  background: white;
+  overflow: auto;
+}
+
+.playgroundPreview .previewArea {
+  padding: 10px;
+}
+
+.playgroundError {
+  position: absolute;
+  width: 100%;
+  padding: 10px;
+  font-size: 12px;
+  color: white;
+  background: #F2777A;
+}
