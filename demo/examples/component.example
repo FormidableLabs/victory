@@ -2,7 +2,7 @@ var ComponentExample = React.createClass(Radium.wrap({
     render: function() {
       return (
         <button type="button" style={[styles]}>
-          <p>Hover Me</p>
+          <p>Button</p>
         </button>
       )
     }

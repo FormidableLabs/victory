@@ -15,9 +15,9 @@
   <![endif]-->
   <header>
     <div class="header-content">
-      <h1>component playground</h1>
-      <p>Render React components with editable source and live preview </p>
-      <pre><code class="hljs javascript">npm install component-playground</code></pre>
+      <h1>Victory</h1>
+      <p>This page is a placeholder.</p>
+      <pre><code class="hljs javascript">npm install </code></pre>
     </div>
   </header>
   <div class="main">
@@ -25,136 +25,7 @@
     <!-- this is where the root react component will get rendered -->
     </div>
 
-    <p class="desc">Component playground is a React component that renders editable source code and a live preview of other React components. We have found it is helpful for component documentation and demos.</p>
-
-    <a class="button" href="https://www.github.com/formidablelabs/component-playground">View On Github</a>
-
-    <h2>Set up</h2>
-
-    <p>In your html document, add the required CodeMirror scripts at the bottom, before your bundle script:</p>
-
-<pre><code class="hljs">&lt;script type=&quot;text/javascript&quot; src=&quot;//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js&quot;&gt;&lt;/script&gt;
-&lt;script type=&quot;text/javascript&quot; src=&quot;//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-
-    <p>In the head of your document, either add the css files from the demo or from a CDN like:</p>
-
-<pre><code class="hljs">&lt;link rel=&quot;stylesheet&quot; href=&quot;//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css&quot;/&gt;
-&lt;link rel=&quot;stylesheet&quot; href=&quot;//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css&quot;/&gt;
-</code></pre>
-
-    <p>In your JSX, require the component as use it like this:</p>
-
-<pre><code class="hljs javascript">'use strict';
-
-var React = require('react/addons');
-var Playground = require('component-playground');
-var Button = require('./components/button');
-
-var componentExample = require("raw!./examples/component.example");
-
-var Index = React.createClass({
-  render() {
-    return (
-      &lt;div className=&quot;component-documentation&quot;&gt;
-        &lt;Playground codeText={componentExample} scope={{React: React, Button: Button}}/&gt;
-      &lt;/div&gt;
-    );
-  }
-});
-
-React.render(&lt;Index/&gt;, document.getElementById('root'));
-</code></pre>
-
-  <h2>Props</h2>
-
-  <h4>codeText</h4>
-
-  <em>React.PropTypes.string.isRequired</em>
-
-  <p>codeText takes a string of JSX markup as its value. While you can just pass it a string, I find it is easier to make a separate file and use Webpack's raw loader to load in the raw source. In the example above I use the .example extension, and an examples folder to organize my samples. The only requirement for this code is that at the bottom you need to add:</p>
-
-<pre><code class="hljs">React.render(&lt;YourComponentName/&gt;, mountNode);</code></pre>
-
-  <p>An example file would look like:</p>
-
-<pre><code class="hljs">var ComponentExample = React.createClass({
-  render: function() {
-    return (
-        &lt;p&gt;Hi&lt;/p&gt;
-    )
-  }
-});
-
-React.render(&lt;ComponentExample/&gt;, mountNode);
-</code></pre>
-
-  <h4>scope</h4>
-
-  <em>React.PropTypes.object.isRequired</em>
-
-  <p>When evaluating the JSX, it needs to be provided a scope object. At the very least, React needs to be provided to the scope, if any custom tags aren't being used. See below:</p>
-
-  <pre><code class="hljs">&lt;Playground codeText={componentExample} scope={{React: React}}/&gt;</code></pre>
-
-  <p>Any module/component that is used inside the playground needs to be added to the scope object. See /demo for an example of how this works.</p>
-
-  <h4>theme</h4>
-
-  <em>React.PropTypes.string</em>
-
-  <p>String specifying which CodeMirror theme to initialize with. Defaults to 'monokai'.</p>
-
-  <h4>noRender</h4>
-
-  <em>React.PropTypes.bool</em>
-
-  <p>If set to true, removes the need to create a class or call React.render within the example code. When true, examples should be structured as the interior of a render method, see below:</p>
-
-<pre><code class="hljs">&lt;Button buttonStyle={this._getButtonStyle()}&gt;
-  &lt;p&gt;My Button&lt;/p&gt;
-&lt;/Button&gt;
-</code></pre>
-
-  <h4>collapsableCode</h4>
-
-  <em>React.PropTypes.bool</em>
-
-  <p>Allows the user to collapse the code block.</p>
-
-<pre><code class="hljs">&lt;Playground collapsableCode={true} codeText={componentExample} scope={{React: React}}/&gt;
-</code></pre>
-
-  <h4>docClass</h4>
-
-  <em>React.PropTypes.renderable</em>
-
-  <p>A component class that will be used to auto-generate docs based on that component's propTypes. See propDescriptionMap below for how to annotate the generate prop docs.</p>
-
-<pre><code class="hljs">&lt;Playground docClass={MyComponent} codeText={componentExample} scope={{React: React}}/&gt;
-</code></pre>
-
-  <h4>propDescriptionMap</h4>
-
-  <em>React.PropTypes.string</em>
-
-  <p>Annotation map for the docClass. The key is the prop to annotate, the value is the description of that prop.</p>
-
-<pre><code class="hljs">&lt;Playground
-  docClass={MyComponent}
-  propDescriptionMap={{
-    collapsableCode: &quot;Allows the user to collapse the code block&quot;
-  }}
-  codeText={componentExample}
-  scope={{React: React}}/&gt;
-</code></pre>
-
-  <div class="in-use">
-    <h4>In use at</h4>
-    <img width="300" src="demo/img/wl.png" alt="Walmart Labs">
-  </div>
-
-  </div>
+    <p class="desc">Please check back later.</p>
 
   <footer>
     <div class="footer-content">
