@@ -1,14 +1,4 @@
-var ComponentExample = React.createClass(Radium.wrap({
-    render: function() {
-      return (
-        <button type="button" style={[styles]}>
-          <p>Button</p>
-        </button>
-      )
-    }
-}));
-
-var styles = {
+<Button type="button" style={{
   background: '#c0392b',
   border: 0,
   color: 'white',
@@ -31,6 +21,6 @@ var styles = {
     MozTransform: 'scale(1.1)',
     transform: 'scale(1.1)'
   }
-}
-
-React.render(<ComponentExample/>, mountNode);
+}}>
+  <p>Button</p>
+</Button>

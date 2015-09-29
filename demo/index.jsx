@@ -2,7 +2,7 @@
 'use strict';
 
 var React = require('react/addons');
-var Playground = require('playground');
+var Playground = require('component-playground');
 var Button = require('./components/button');
 var Radium = require('radium');
 
