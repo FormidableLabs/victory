@@ -28,6 +28,7 @@
     "babel-eslint": "^2.0.2",
     "babel-loader": "^5.0.0",
     "chai": "^2.2.0",
+    "component-playground": "^0.1.1",
     "css-loader": "~0.10.1",
     "del": "^1.1.1",
     "gulp": "^3.8.11",
