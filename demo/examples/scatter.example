@@ -1,0 +1,13 @@
+var ScattterExample = React.createClass(Radium.wrap({
+    render: function() {
+      return (
+        <VictoryScatter
+          containerElement="g"
+          domain={[0, 600]}
+          animate={true}
+          data={this.state.data}/>
+      );
+    }
+}));
+
+React.render(<ScattterExample/>, mountNode);
