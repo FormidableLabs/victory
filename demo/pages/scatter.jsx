@@ -3,21 +3,20 @@
 
 var React = require('react/addons');
 var Playground = require('component-playground');
-// var Button = require('./components/button');
 var {VictoryScatter} = require('victory-scatter');
 var Radium = require('radium');
 
 require('./styles/syntax.css');
 require('./styles/codemirror.css');
 
-var componentExample = require("raw!./examples/scatter.example");
+var scatterExample = require("raw!./examples/scatter.example");
 
 var Index = React.createClass({
   render() {
     return (
       <div className="component-documentation">
         <Playground
-          codeText={componentExample}
+          codeText={scatterExample}
           scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}/>
       </div>
     );
