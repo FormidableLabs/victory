@@ -25,10 +25,17 @@ module.exports = webpack({
         loader: "style-loader!css-loader"
       }, {
         test: /\.styl$/,
-        loader: "style-loader!css-loader!stylus-loader"
+        loader: "style-loader!css-loader!autoprefixer-loader!stylus-loader"
       }, {
         test: /\.json$/,
         loader: "json-loader"
+      }, {
+        test: /\.md$/,
+        loader: "html!markdown"
+      },
+      {
+        test: /\.(eot|ico|gif|png|svg|woff)$/,
+        loader: "file-loader?name=[name].[ext]"
       }
     ]
   },
