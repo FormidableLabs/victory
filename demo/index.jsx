@@ -14,6 +14,9 @@ require('./styles/codemirror.css');
 var scatterExample = require("raw!./examples/scatter.example");
 var pieExample = require("raw!./examples/pie.example");
 
+var scatterDocs = require("./docs/scatter.md");
+var pieDocs = require("./docs/pie.md");
+
 var Index = React.createClass({
   render() {
     return (
@@ -24,11 +27,20 @@ var Index = React.createClass({
             scope={{React: React, VictoryPie: VictoryPie, Radium: Radium}}
             theme="base16-ocean-dark"/>
         </div>
+
+        <div className="Copy">
+          {pieDocs}
+        </div>
+
         <div className="Interactive">
           <Playground
             codeText={scatterExample}
             scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}
             theme="base16-ocean-dark"/>
+        </div>
+
+        <div className="Copy">
+          {scatterDocs}
         </div>
       </div>
     );

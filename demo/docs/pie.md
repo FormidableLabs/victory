@@ -13,7 +13,7 @@ The plain component has baked-in sample data, style, angle, and sort defaults, s
 
 Will look like this:
 
-![basic pie chart](victory-pie-sample.png)
+![basic pie chart](./pie/victory-pie-sample.png)
 
 Labels, by default, are placed at the centroid of each pie slice, which can look a little strange sometimes. Apply `padding` and `labelPadding` like so:
 
@@ -25,7 +25,7 @@ Labels, by default, are placed at the centroid of each pie slice, which can look
 
 To move your labels out from the centroid:
 
-![pie chart with labels outside](victory-pie-labels.png)
+![pie chart with labels outside](./pie/victory-pie-labels.png)
 
 But really, who wants a pie chart? Specify an `innerRadius` greater than 0 to turn the pie into a donut:
 
@@ -35,7 +35,7 @@ But really, who wants a pie chart? Specify an `innerRadius` greater than 0 to tu
 
 Yum:
 
-![basic donut chart](victory-donut-sample.png)
+![basic donut chart](./pie/victory-donut-sample.png)
 
 All default styles (`borderColor`, `borderWidth`, `fontColor`, `fontFamily`, `fontSize`, `fontWeight`, `height`,  `innerRadius`, `labelPadding`, `padding`, `sliceColors`, `width`), angles (`startAngle`, `endAngle`, `padAngle`) and sorting (`sort`) can be overridden by specifying your own props:
 
@@ -48,7 +48,7 @@ All default styles (`borderColor`, `borderWidth`, `fontColor`, `fontFamily`, `fo
 
 Makes this:
 
-![donut with thicker slices](victory-donut-thick.png)
+![donut with thicker slices](./pie/victory-donut-thick.png)
 
 Similarly,
 
@@ -60,7 +60,7 @@ Similarly,
 ```
 Makes:
 
-![donut with white text](victory-donut-white.png)
+![donut with white text](./pie/victory-donut-white.png)
 
 Want a half donut? Specify a `startAngle` and `endAngle`:
 
@@ -73,7 +73,7 @@ Want a half donut? Specify a `startAngle` and `endAngle`:
   startAngle={-90}/>
 ```
 Voilà:
-![half donut](victory-donut-half.png)
+![half donut](./pie/victory-donut-half.png)
 
 Specify a `padAngle` to add space between adjacent slices:
 
@@ -86,7 +86,7 @@ Specify a `padAngle` to add space between adjacent slices:
   padAngle={5}
   startAngle={-90}/>
 ```
-![donut with padding](victory-donut-padding.png)
+![donut with padding](./pie/victory-donut-padding.png)
 
 Custom data (age vs population) and colors:
 
@@ -118,11 +118,11 @@ Custom data (age vs population) and colors:
 
 Snazzes things up a bit:
 
-![donut with data and custom colors](victory-donut-data.png)
+![donut with data and custom colors](./pie/victory-donut-data.png)
 
 If the data changes, the donut updates seamlessly:
 
-![donut data change animated](victory-donut-animation.gif)
+![donut data change animated](./pie/victory-donut-animation.gif)
 
 Set the `sort` prop to `"ascending"`, `"descending"`, or your own comparator:
 
@@ -155,7 +155,7 @@ Set the `sort` prop to `"ascending"`, `"descending"`, or your own comparator:
 
 To organize by slice size:
 
-![donut descending sort](victory-donut-sort.png)
+![donut descending sort](./pie/victory-donut-sort.png)
 
 ## The API
 

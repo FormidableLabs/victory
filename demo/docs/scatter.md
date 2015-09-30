@@ -13,11 +13,11 @@ Victory Scatter is written to be highly configurable, but it also includes a set
 
 Victory Scatter will render mock data to help you get started
 
-![Default scatter](default-scatter.png)
+![Default scatter](./scatter/default-scatter.png)
 
 If you set `animate={true}` Victory Scatter will smoothly transition to a new state as data changes. Supported interpolation attributes are position, color, opacity, and size.  Shape interpolation coming soon.
 
-![Animated scatter](animated-scatter.gif)
+![Animated scatter](./scatter/animated-scatter.gif)
 
 ---
 
@@ -146,7 +146,7 @@ This prop determines whether or not to animate transitions as data changes.  Ani
 
 This prop determines which symbol to use each data point. Supported options are "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp". The rendered symbols look like this:
 
-![Symbols](symbols.png)
+![Symbols](./scatter/symbols.png)
 
 **PropTypes** "circle", "diamond", "plus", "square", "star", "triangleDown", or "triangleUp"
 
