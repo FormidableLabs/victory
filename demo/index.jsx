@@ -3,22 +3,33 @@
 
 var React = require('react/addons');
 var Playground = require('component-playground');
-var {VictoryScatter} = require('victory-scatter');
 var Radium = require('radium');
+
+var {VictoryPie} = require('victory-pie');
+var {VictoryScatter} = require('victory-scatter');
 
 require('./styles/syntax.css');
 require('./styles/codemirror.css');
 
 var scatterExample = require("raw!./examples/scatter.example");
+var pieExample = require("raw!./examples/pie.example");
 
 var Index = React.createClass({
   render() {
     return (
-      <div className="Interactive">
-        <Playground
-          codeText={scatterExample}
-          scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}
-          theme="base16-ocean-dark"/>
+      <div>
+        <div className="Interactive">
+          <Playground
+            codeText={pieExample}
+            scope={{React: React, VictoryPie: VictoryPie, Radium: Radium}}
+            theme="base16-ocean-dark"/>
+        </div>
+        <div className="Interactive">
+          <Playground
+            codeText={scatterExample}
+            scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}
+            theme="base16-ocean-dark"/>
+        </div>
       </div>
     );
   }

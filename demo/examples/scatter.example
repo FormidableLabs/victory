@@ -1,5 +1,5 @@
 <VictoryScatter
-  style={{color: "#FF4136", opacity: 1}}
+  style={{color: "#1A1A1A", opacity: 1}}
   animate={false}
   bubbleProperty="z"
   maxBubbleSize={20}
