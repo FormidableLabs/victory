@@ -24,7 +24,7 @@ gulp.task("babel", ['clean'], function() {
         .pipe(gulp.dest('lib'));
 });
 
-// TODO: Figure out if this is dead code. No build task calls pages. 
+// TODO: Figure out if this is dead code. No build task calls pages.
 gulp.task('pages', function(){
   return gulp.src('demo/index.jsx')
     .pipe(gwebpack(webpackDistConfig))

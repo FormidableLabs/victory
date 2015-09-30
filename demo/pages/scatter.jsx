@@ -14,7 +14,7 @@ var scatterExample = require("raw!./examples/scatter.example");
 var Index = React.createClass({
   render() {
     return (
-      <div className="component-documentation">
+      <div className="Interactive">
         <Playground
           codeText={scatterExample}
           scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}/>
@@ -23,4 +23,4 @@ var Index = React.createClass({
   }
 });
 
-React.render(<Index/>, document.getElementById('component-demo'));
+React.render(<Index/>, document.getElementById('playground'));

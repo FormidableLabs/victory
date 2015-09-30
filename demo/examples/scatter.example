@@ -1,1 +1,43 @@
-<VictoryScatter/>
+<VictoryScatter
+  style={{color: "#FF4136", opacity: 1}}
+  animate={false}
+  bubbleProperty="z"
+  maxBubbleSize={20}
+  showLabels={false}
+  data={[
+    {
+      name: "Australia",
+      label: "AUS",
+      y: 82.0,
+      x: 3800,
+      z: 22340024
+    },
+    {
+      name: "Austria",
+      label: "AUT",
+      y: 81.1,
+      x: 4546,
+      z: 8391643
+    },
+    {
+      name: "Belgium",
+      label: "BEL",
+      y: 80.5,
+      x: 4061,
+      z: 11047744
+    },
+    {
+      name: "Brazil",
+      label: "BRA",
+      y: 73.4,
+      x: 1043,
+      z: 196935134
+    },
+    {
+      name: "Canada",
+      label: "CAN",
+      y: 81.0,
+      x: 4522,
+      z: 34342780
+    }
+  ]}/>

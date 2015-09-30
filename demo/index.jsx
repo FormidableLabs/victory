@@ -3,25 +3,25 @@
 
 var React = require('react/addons');
 var Playground = require('component-playground');
-// var Button = require('./components/button');
 var {VictoryScatter} = require('victory-scatter');
 var Radium = require('radium');
 
 require('./styles/syntax.css');
 require('./styles/codemirror.css');
 
-var componentExample = require("raw!./examples/scatter.example");
+var scatterExample = require("raw!./examples/scatter.example");
 
 var Index = React.createClass({
   render() {
     return (
-      <div className="component-documentation">
+      <div className="Interactive">
         <Playground
-          codeText={componentExample}
-          scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}/>
+          codeText={scatterExample}
+          scope={{React: React, VictoryScatter: VictoryScatter, Radium: Radium}}
+          theme="base16-ocean-dark"/>
       </div>
     );
   }
 });
 
-React.render(<Index/>, document.getElementById('component-demo'));
+React.render(<Index/>, document.getElementById('playground'));

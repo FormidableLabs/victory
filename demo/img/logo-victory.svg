@@ -1,39 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Generator: Adobe Illustrator 19.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 viewBox="0 0 500 500" style="enable-background:new 0 0 500 500;" xml:space="preserve">
 <style type="text/css">
-	.st0{display:none;}
-	.st1{display:inline;opacity:0.5;}
-	.st2{fill:#FF3A41;}
-	.st3{display:inline;opacity:0.5;fill:#FF00FF;}
+	.st0{fill:#1B2633;}
 </style>
-<g id="Layer_1">
-	<polygon points="458.5,30 388,63.2 395.5,68.4 439.9,47.8 274.7,286.9 257.6,262.6 160,402.6 160.3,402.6 160.3,44.9 224,44.9 
-		226.4,36.4 39.9,36.4 37.5,44.9 103.3,44.9 105.7,475 121.4,475 257.5,279.9 274.7,303.2 448.6,53.9 444.7,102.5 452.1,107.6 	"/>
-</g>
-<g id="Layer_2" class="st0">
-	<g class="st1">
-		<g>
-			<polygon class="st2" points="452.1,107.6 455.3,68.8 458.5,29.9 423.3,46.6 388,63.2 415.4,82.2 342.9,186.9 352.1,193.3 
-				424.7,88.6 			"/>
-		</g>
-	</g>
-	<g class="st1">
-		<g>
-			<polygon class="st2" points="456.1,59.1 457.3,44.5 458.5,29.9 445.3,36.2 432.1,42.4 442.3,49.5 345.8,188.9 349.2,191.3 
-				445.8,51.9 			"/>
-		</g>
-	</g>
-	<rect x="450.4" y="48.2" transform="matrix(0.8214 0.5704 -0.5704 0.8214 111.334 -250.0754)" class="st3" width="9" height="9"/>
-	<rect x="434.1" y="37.1" transform="matrix(0.8214 0.5704 -0.5704 0.8214 102.0802 -242.7767)" class="st3" width="9" height="9"/>
-	<rect x="384.7" y="65" transform="matrix(0.8214 0.5704 -0.5704 0.8214 109.1668 -209.5929)" class="st3" width="9" height="9"/>
-	
-		<rect x="441.3" y="104.3" transform="matrix(0.8214 0.5704 -0.5704 0.8214 141.6876 -234.8747)" class="st3" width="9" height="9"/>
-	<rect x="281" y="275" transform="matrix(0.8214 0.5704 -0.5704 0.8214 210.4014 -112.9222)" class="st3" width="9" height="9"/>
-	<rect x="235.6" y="291.7" transform="matrix(0.8214 0.5704 -0.5704 0.8214 211.8608 -84.0653)" class="st3" width="9" height="9"/>
-	
-		<rect x="261.5" y="278.9" transform="matrix(-0.8048 0.5936 -0.5936 -0.8048 648.3875 353.5098)" class="st3" width="9" height="9"/>
-</g>
+<polygon class="st0" points="458.5,30 388,63.2 395.5,68.4 439.9,47.8 274.7,286.9 257.6,262.6 160,402.6 160.3,402.6 160.3,44.9
+	224,44.9 226.4,36.4 39.9,36.4 37.5,44.9 103.3,44.9 105.7,475 121.4,475 257.5,279.9 274.7,303.2 448.6,53.9 444.7,102.5
+	452.1,107.6 "/>
 </svg>

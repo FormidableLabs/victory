@@ -12,10 +12,11 @@ html {
 }
 
 body {
-  font-family: Whitney SSm A, Whitney SSm B, Helvetica Neue, Helvetica, Arial, sans-serif;
+  background-color: #f6f2ee;
+  font-family: "Karla", "Helvetica Neue", Helvetica, Arial, sans-serif;
   line-height: 1.5;
   margin: 0;
-  color: #2b303b;
+  color: #1b2633;
 
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -61,9 +62,13 @@ img {
   max-width: 100%;
 }
 
+svg, img {
+  fill: currentColor;
+}
+
 h2 {
-  font-size: 32px;
-  font-size: 2rem;
+  font-size: 48px;
+  font-size: 3rem;
 }
 
 h3 {
@@ -74,6 +79,22 @@ h3 {
 h4 {
   font-size: 21px;
   font-size: 1.3125rem;
+}
+
+/* Headlines */
+
+.Headline {
+  font-family: "Didot", "Cochin", serif;
+  font-size: 48px;
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+.Headline--major {
+  font-size: 56px;
+  font-size: 3.5rem;
+  line-height: 1.2;
+  font-style: italic;
 }
 
 /* Layout */
@@ -125,50 +146,14 @@ h4 {
   position: relative;
   padding-top: 70px;
   padding-bottom: 45px;
-  margin-bottom: 3rem;
-}
-
-.Header:before {
-  content: "";
-  background: #FF4136;
-  box-shadow: 0 15px 0 #CC342B, 0 30px 0 #B22D26, 0 45px 0 #992720;
-  -webkit-transform: rotate(-5deg);
-  -moz-transform: rotate(-5deg);
-  transform: rotate(-5deg);
-  margin-top: -170px;
-
-  position: absolute;
-  top: 0;
-  right: -20%;
-  left: -20%;
-  bottom: 0;
 }
 
 .Logo {
   font-size: 24px;
   font-size: 1.5rem;
   line-height: 1;
-  height: 230px;
   margin: 0 auto;
-  padding: 15px;
-  position: relative;
   text-align: center;
-  width: 230px;
-  background: #FF4136;
-  color: #fff;
-  border: 22px solid #fff;
-  text-rendering: optimizeLegibility;
-}
-
-.Logo:before {
-  content: "R";
-  font-size: 140px;
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  line-height: 1;
-  pointer-events: none;
 }
 
 /* Footer */
@@ -224,12 +209,12 @@ h4 {
 
 @media only screen and (min-width: 44em) {
   .Copy {
-    font-size: 21px;
-    font-size: 1.3125rem;
+    font-size: 18px;
+    font-size: 1.125rem;
   }
 }
 
-.Copy .highlight {
+.Copy .highlight, .Copy .Interactive {
   margin-left: -16px;
   margin-right: -16px;
 }
@@ -249,7 +234,7 @@ h4 {
 }
 
 @media only screen and (min-width: 44em) {
-  .Copy .highlight {
+  .Copy .highlight, .Copy .Interactive {
     margin: 36px -24px;
   }
 
@@ -335,6 +320,53 @@ h4 {
   text-decoration: none;
   text-align: center;
   background: rgb(43, 48, 59);
+}
+
+/* Component Playground */
+
+.Row .Interactive {
+  margin-top: -24px;
+  margin-top: -1.5rem;
+}
+
+.Interactive:before {
+  content: "Interactive Code";
+  font-weight: bold;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.Interactive .playgroundCode {
+  background: #2b303b;
+  font-family: "Source Code Pro", monospace;
+  font-size: 16px;
+  line-height: 1.2;
+  padding-bottom: 16px 16px 0 16px;
+  margin-bottom: 30px;
+}
+
+.Interactive .playgroundPreview {
+  background: #fff;
+  position: relative;
+}
+
+.Interactive .playgroundPreview:before {
+  content: "Live Preview";
+  font-weight: bold;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1;
+  position: absolute;
+  top: -18px;
+  text-transform: uppercase;
+}
+
+.Interactive pre, .CodeMirror-code {
+  font-family: "Source Code Pro", monospace;
+  font-size: 16px;
+  line-height: 1.2;
 }
 
 /* Utilities */
@@ -465,3 +497,34 @@ Created with Base16 Builder by Chris Kempson (https://github.com/chriskempson/ba
 .highlight .vg { color: #bf616a } /* Name.Variable.Global */
 .highlight .vi { color: #bf616a } /* Name.Variable.Instance */
 .highlight .il { color: #d08770 } /* Literal.Number.Integer.Long */
+
+/*
+    Name:       Base16 Ocean Dark
+    Author:     Chris Kempson (http://chriskempson.com)
+    CodeMirror template by Jan T. Sott (https://github.com/idleberg/base16-codemirror)
+    Original Base16 color scheme by Chris Kempson (https://github.com/chriskempson/base16)
+*/
+
+.cm-s-base16-ocean-dark.CodeMirror {background: #2b303b; color: #dfe1e8;}
+.cm-s-base16-ocean-dark div.CodeMirror-selected {background: #343d46 !important;}
+.cm-s-base16-ocean-dark .CodeMirror-gutters {background: #2b303b; border-right: 0px;}
+.cm-s-base16-ocean-dark .CodeMirror-linenumber {color: #65737e;}
+.cm-s-base16-ocean-dark .CodeMirror-cursor {border-left: 1px solid #a7adba !important;}
+
+.cm-s-base16-ocean-dark span.cm-comment {color: #ab7967;}
+.cm-s-base16-ocean-dark span.cm-atom {color: #b48ead;}
+.cm-s-base16-ocean-dark span.cm-number {color: #b48ead;}
+
+.cm-s-base16-ocean-dark span.cm-property, .cm-s-base16-ocean-dark span.cm-attribute {color: #a3be8c;}
+.cm-s-base16-ocean-dark span.cm-keyword {color: #bf616a;}
+.cm-s-base16-ocean-dark span.cm-string {color: #ebcb8b;}
+
+.cm-s-base16-ocean-dark span.cm-variable {color: #a3be8c;}
+.cm-s-base16-ocean-dark span.cm-variable-2 {color: #8fa1b3;}
+.cm-s-base16-ocean-dark span.cm-def {color: #d08770;}
+.cm-s-base16-ocean-dark span.cm-error {background: #bf616a; color: #a7adba;}
+.cm-s-base16-ocean-dark span.cm-bracket {color: #dfe1e8;}
+.cm-s-base16-ocean-dark span.cm-tag {color: #bf616a;}
+.cm-s-base16-ocean-dark span.cm-link {color: #b48ead;}
+
+.cm-s-base16-ocean-dark .CodeMirror-matchingbracket { text-decoration: underline; color: white !important;}
