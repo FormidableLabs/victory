@@ -1,32 +1,10 @@
 /*global document:false */
+/*global window:false */
 import React from "react";
-// import d3 from "d3";
+import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 
-const showSnapshotShows = 17;
-
-function generateShowSnapshotBarChartData(shows) {
-  const arr = [];
-  for (let i = 1; i < shows; i++) {
-    arr.push({
-      label: 'S02 E' + i,
-      'L+3': Math.floor(Math.random() * 100 * 50),
-      'Beyond L+3': Math.floor(Math.random() * 1000),
-    });
-  }
-  return arr;
-}
-
-function generateShowSnapshotXAxisCategories(shows) {
-  let arr = [];
-  for (let i = 1; i < shows; i++) {
-    arr.push("E" + i)
-  }
-  return arr;
-}
-
-console.log(generateShowSnapshotXAxisCategories(showSnapshotShows))
 
 class App extends React.Component {
   constructor(props) {
@@ -76,20 +54,55 @@ class App extends React.Component {
     };
   }
 
-  // componentWillMount() {
-  //   window.setInterval(() => {
-  //     this.setState({
-  //       scatterData: this.getScatterData(),
-  //       lineData: this.getData(),
-  //       dataAttributes: this.getStyles()
-  //     });
-  //   }, 4000);
-  // }
+  componentWillMount() {
+    window.setInterval(() => {
+      this.setState({
+        scatterData: this.getScatterData(),
+        lineData: this.getData(),
+        dataAttributes: this.getStyles()
+      });
+    }, 4000);
+  }
 
   render() {
     return (
       <div className="demo">
         <p>
+          <VictoryChart {...this.state}
+            data={this.state.lineData}
+            showGridLines={{x: false, y: true}}
+            animate={true}/>
+
+          <VictoryChart interpolation="linear"
+            scale={{
+              x: () => d3.time.scale(),
+              y: () => d3.scale.linear()
+            }}
+            tickValues={{
+              x: [
+                new Date(1980, 1, 1),
+                new Date(1990, 1, 1),
+                new Date(2000, 1, 1),
+                new Date(2010, 1, 1),
+                new Date(2020, 1, 1)
+              ],
+              y: [100, 200, 300, 400, 500]
+            }}
+            tickFormat={{
+              x: () => d3.time.format("%Y"),
+              y: () => d3.scale.linear().tickFormat()
+            }}
+            data={[
+              {x: new Date(1982, 1, 1), y: 125},
+              {x: new Date(1987, 1, 1), y: 257},
+              {x: new Date(1993, 1, 1), y: 345},
+              {x: new Date(1997, 1, 1), y: 515},
+              {x: new Date(2001, 1, 1), y: 132},
+              {x: new Date(2005, 1, 1), y: 305},
+              {x: new Date(2011, 1, 1), y: 270},
+              {x: new Date(2015, 1, 1), y: 470}
+            ]}/>
+
           <VictoryChart
             data={this.state.scatterData}
             animate={{scatter: true, axis: false, line: false}}
@@ -109,14 +122,9 @@ class App extends React.Component {
               {type: "scatter"}
             ]}/>
 
-          <VictoryChart {...this.state}
-            data={this.state.lineData}
-            showGridLines={{x: false, y: true}}
-            animate={true}/>
-
           <VictoryChart
             showGridLines={{x: true, y: true}}
-            axisLabels={{ x: "x axis", y: "y axis", labelPadding: 20 }}
+            axisLabels={{x: "x axis", y: "y axis"}}
             x={[
               [1, 2, 3, 4],
               [-2, -1, 0, 1, 3],
@@ -132,50 +140,24 @@ class App extends React.Component {
             {name: "line-two", type: "line", stroke: "green"},
             {name: "line-3", type: "scatter", color: "blue"}
           ]}/>
-           <VictoryChart
-              dataAttributes={{ type: 'bar' }}
-              barColors={['#07458B', '#50ADD7']}
-              axisLabels={{ y: 'Minutes Viewed (Millions)' }}
-              scale={{
-                x: () => d3.scale.ordinal(),
-                y: () => d3.scale.linear(),
-              }}
-              domain={{
-                y: [0, 8000],
-              }}
-              showGridLines={{ y: true }}
-              style={{
-                fill: "black",
-                fontFamily: 'Montserrat, sans-serif',
-                fontSize: 12,
-                width: 600,
-                height: 350,
-              }}
-              axisStyle={{
-                x: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-                y: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-              }}
-              tickValues={{
-                y: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000],
-                x: generateShowSnapshotXAxisCategories(showSnapshotShows)
-              }}
-              tickStyle={{
-                x: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-                y: {
-                  stroke: 'none',
-                  fill: 'none',
-                },
-              }}
-              barData={generateShowSnapshotBarChartData(showSnapshotShows)}/>
+          <VictoryChart
+            data={[
+              {x: "red", y: 2},
+              {x: "green", y: 4},
+              {x: "green", y: 1},
+              {x: "green", y: 2},
+              {x: "blue", y: 5},
+              {x: "blue", y: 3},
+            ]}
+            dataAttributes={[
+              {name: "nameData", type: "scatter", color: "red"}
+            ]}
+            animate={false}
+            y={(x) => x}
+            yAttributes={[
+              {name: "line-two", type: "line", stroke: "green"}
+            ]}/>
+
         </p>
       </div>
     );
@@ -185,33 +167,3 @@ class App extends React.Component {
 const content = document.getElementById("content");
 
 React.render(<App/>, content);
-
-// <VictoryChart interpolation="linear"
-//   scale={{
-//     x: () => d3.time.scale(),
-//     y: () => d3.scale.linear()
-//   }}
-//   tickValues={{
-//     x: [
-//       new Date(1980, 1, 1),
-//       new Date(1990, 1, 1),
-//       new Date(2000, 1, 1),
-//       new Date(2010, 1, 1),
-//       new Date(2020, 1, 1)
-//     ],
-//     y: [100, 200, 300, 400, 500]
-//   }}
-//   tickFormat={{
-//     x: () => d3.time.format("%Y"),
-//     y: () => d3.scale.linear().tickFormat()
-//   }}
-//   data={[
-//     {x: new Date(1982, 1, 1), y: 125},
-//     {x: new Date(1987, 1, 1), y: 257},
-//     {x: new Date(1993, 1, 1), y: 345},
-//     {x: new Date(1997, 1, 1), y: 515},
-//     {x: new Date(2001, 1, 1), y: 132},
-//     {x: new Date(2005, 1, 1), y: 305},
-//     {x: new Date(2011, 1, 1), y: 270},
-//     {x: new Date(2015, 1, 1), y: 470}
-//   ]}/>

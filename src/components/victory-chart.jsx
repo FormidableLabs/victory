@@ -7,11 +7,18 @@ import {VictoryLine} from "victory-line/src";
 import {VictoryAxis} from "victory-axis/src";
 import {VictoryScatter} from "victory-scatter/src";
 import {VictoryBar} from "victory-bar/src";
+import Util from "../util";
 
 @Radium
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {};
+    this.state.data = this.consolidateData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({data: this.consolidateData(nextProps)});
   }
 
   getStyles() {
@@ -23,119 +30,135 @@ class VictoryChart extends React.Component {
     }, this.props.style);
   }
 
-  // look out for scope errors, this was removed from consolidateData()
-  inCaseOfYData(datasets) {
-    const xArrays = this.returnOrGenerateX(); // returns an array of arrays
-    const yArrays = this.returnOrGenerateY(); // returns an array of arrays
-    let n;
-    let xArray;
-    // create dataArrays of n points from each x array and each y array
-    const dataArrays = _.map(yArrays, (y, index) => {
-      xArray = xArrays[index] || xArrays[0];
-      n = _.min([xArray.length, y.length]);
-      return _.zip(_.take(xArray, n), _.take(y, n));
-    });
-
-    // for each dataArray create an array of data points and add it to
-    // the consolidated datasets
-    _.each(dataArrays, (dataArray, index) => {
-      datasets.push({
-        attrs: this._getAttributes("y", index),
-        data: _.map(dataArray, (datum) => {
-          return {
-            x: datum[0],
-            y: datum[1]
-          };
-        })
-      });
-    });
-    return datasets;
-  }
-
-  consolidateData() {
-
-    // Lauren && Colin to reconcile upon her return...
-    if (this.props.dataAttributes && this.props.dataAttributes.type === "bar") {
-      return [{
-        attrs: this._getAttributes("data", 0),
-        data: this.props.barData
-      }];
-    }
-
+  consolidateData(props) {
     // build all of the types of data into one consistent dataset for easy plotting
-    // data can exist as this.props.data, this.props.x, and this.props.y
-    let datasets = [];
+    // data can exist as props.data, this.props.x, and this.props.y
+    const datasets = [];
 
     // if no data is passed in, plot a straight line
     const defaultData = (x) => x;
-    const yData = (!this.props.data && !this.props.y) ? defaultData : this.props.y;
+    const yData = (!props.data && !props.y) ? defaultData : props.y;
     // if y is given, construct data for all y, and add it to the dataset
     if (yData) {
-      // eslint made me do this. too many statements in one function?
-      datasets = this.inCaseOfYData(datasets);
+      const xArrays = this.returnOrGenerateX(props); // returns an array of arrays
+      const yArrays = this.returnOrGenerateY(props); // returns an array of arrays
+      let n;
+      let xArray;
+      // create dataArrays of n points from each x array and each y array
+      const dataArrays = _.map(yArrays, (y, index) => {
+        xArray = xArrays[index] || xArrays[0];
+        n = _.min([xArray.length, y.length]);
+        return _.zip(_.take(xArray, n), _.take(y, n));
+      });
+
+      // for each dataArray create an array of data points and add it to
+      // the consolidated datasets
+      _.each(dataArrays, (dataArray, index) => {
+        datasets.push({
+          attrs: this._getAttributes(props, "y", index),
+          data: _.map(dataArray, (datum) => {
+            return {
+              x: datum[0],
+              y: datum[1]
+            };
+          })
+        });
+      });
     }
 
-    // if data is given in this.props.data, add it to the cosolidated datasets
-    if (this.props.data) {
-      if (_.isArray(this.props.data[0])) {
-        _.each(this.props.data, (dataset, index) => {
+    // if data is given in props.data, add it to the cosolidated datasets
+    if (props.data) {
+      if (_.isArray(props.data[0])) {
+        _.each(props.data, (dataset, index) => {
           datasets.push({
-            attrs: this._getAttributes("data", index),
+            attrs: this._getAttributes(props, "data", index),
             data: dataset
           });
         });
       } else {
         datasets.push({
-          attrs: this._getAttributes("data", 0),
-          data: this.props.data
+          attrs: this._getAttributes(props, "data", 0),
+          data: props.data
         });
       }
     }
-    return datasets;
+    return this._handleStringData(datasets);
+  }
+
+  _handleStringData(datasets) {
+    const data = _.flatten(_.pluck(datasets, "data"));
+    const xData = this._getUniqueStrings(data, "x");
+    const yData = this._getUniqueStrings(data, "y");
+    const formattedData = _.map(datasets, (dataset) => {
+      return {
+        attrs: dataset.attrs,
+        data: _.map(dataset.data, (data) => {
+          return _.merge(data, {
+            x: _.isString(data.x) ? _.indexOf(xData, data.x) : data.x,
+            xName: _.isString(data.x) ? data.x : undefined,
+            y: _.isString(data.y) ? _.indexOf(yData, data.y) : data.y,
+            yName: _.isString(data.y) ? data.y : undefined
+          });
+        })
+      };
+    })
+    return formattedData
+  }
+
+  _getUniqueStrings(data, type) {
+    return _.chain(data)
+      .pluck(type)
+      .map((datum) => {
+        return _.isString(datum) ? datum : 0;
+      })
+      .compact()
+      .uniq()
+      .sort()
+      .value();
   }
 
   // https://github.com/FormidableLabs/victory-chart/issues/5
   // helper for consolidateData
-  _getAttributes(type, index) {
+  _getAttributes(props, type, index) {
     // type is y or data
     const source = type + "Attributes";
-    const attributes = this.props[source] && this.props[source][index] ?
-      this.props[source][index] : this.props[source];
+    const attributes = props[source] && props[source][index] ?
+      props[source][index] : props[source];
     const requiredAttributes = {
       name: attributes && attributes.name ? attributes.name : type + "-" + index,
-      type: attributes && attributes.type ? attributes.type : "line"
+      type: attributes && attributes.type ? attributes.type : props.chartType
     };
     return _.merge(requiredAttributes, attributes);
   }
 
-  returnOrGenerateX() {
-    if (this.props.x) {
-      return _.isArray(this.props.x[0]) ? this.props.x : [this.props.x];
+  returnOrGenerateX(props) {
+    if (props.x) {
+      return _.isArray(props.x[0]) ? props.x : [props.x];
     }
     // if x is not given in props, create an array of values evenly
     // spaced across the x domain
 
     // Determine how to calculate the domain:
-    // domain based on this.props.domain if it is given
-    const domainFromProps = (this.props.domain && this.props.domain.x) ?
-      this.props.domain.x : this.props.domain;
+    // domain based on props.domain if it is given
+    const domainFromProps = (props.domain && props.domain.x) ?
+      props.domain.x : props.domain;
 
     // domain based on tickValues if they are given
-    const domainFromTicks = this.props.tickValues ?
-      [_.min(this.props.tickValues.x), _.max(this.props.tickValues.x)] : undefined;
+    const domainFromTicks = props.tickValues ?
+      this._getDomainFromTickValues(props, "x") : undefined;
 
-    // domain based on this.props.data if it is given
-    const domainFromData = this.props.data ?
-      this._getDomainFromDataProps("x") : undefined;
+    // domain based on props.data if it is given
+    const domainFromData = props.data ?
+      this._getDomainFromDataProps(props) : undefined;
 
-    // domain based on this.props.scale
-    // note: this.props.scale  will never be undefined thanks to default props
-    const domainFromScale = this.props.scale.x ?
-      this.props.scale.x().domain() : this.props.scale().domain();
+    // domain based on props.scale
+    // note: props.scale will never be undefined thanks to default props
+    const domainFromScale = props.scale.x ?
+      props.scale.x().domain() : props.scale().domain();
 
     // determin3 which domain to use in order of preference
     const domain = domainFromProps || domainFromTicks || domainFromData || domainFromScale;
-    const samples = this._getNumSamples();
+    const samples = this._getNumSamples(props);
     const step = (_.max(domain) - _.min(domain)) / samples;
     // return an array of an array of x values spaced scross the domain,
     // include the maximum of the domain
@@ -143,15 +166,20 @@ class VictoryChart extends React.Component {
   }
 
   // helper for returnOrGenerateX
-  _getDomainFromDataProps(type) {
-    const data = _.flatten(this.props.data);
-    return [_.min(_.pluck(data, type)), _.max(_.pluck(data, type))];
+  _getDomainFromDataProps(props) {
+    const xData = _.pluck(_.flatten(props.data), "x");
+    if (Util.containsStrings(xData)) {
+      const dataNames = this._getUniqueStrings(props.data, "x");
+      return [0, dataNames.length - 1];
+    } else {
+      return [_.min(xData), _.max(xData)];
+    }
   }
 
   // helper for returnOrGenerateX
-  _getNumSamples() {
+  _getNumSamples(props) {
     // if y props exist and have some sensible length, return that length
-    const yArray = _.isArray(this.props.y) ? this.props.y : undefined;
+    const yArray = _.isArray(props.y) ? props.y : undefined;
     if (yArray && !_.isArray(yArray[0]) && !_.isFunction(yArray[0])) {
       return yArray.length;
     } else if (yArray) {
@@ -159,16 +187,16 @@ class VictoryChart extends React.Component {
         return _.isArray(element) ? element.length : 0;
       });
       const max = _.max(arrayLengths.concat(0));
-      return max > 1 ? max : this.props.samples;
+      return max > 1 ? max : props.samples;
     }
-    // otherwise just use this.props.samples (default value: 50)
-    return this.props.samples;
+    // otherwise just use props.samples (default value: 50)
+    return props.samples;
   }
 
-  returnOrGenerateY() {
+  returnOrGenerateY(props) {
     // Always return an array of arrays.
-    const y = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
-    const xArray = this.returnOrGenerateX();
+    const y = (!props.data && !props.y) ? this.defaultData : props.y;
+    const xArray = this.returnOrGenerateX(props);
     if (_.isFunction(y)) {
       // if y is a function, apply it to each element in each x array
       return _.map(xArray, (xSegment) => {
@@ -194,7 +222,7 @@ class VictoryChart extends React.Component {
     if (this.props.domain) {
       domain = this.props.domain[type] || this.props.domain;
     } else if (this.props.tickValues) {
-      domain = [_.min(this.props.tickValues[type]), _.max(this.props.tickValues[type])];
+      domain = this._getDomainFromTickValues(this.props, type)
     } else {
       domain = this._getDomainFromData(type);
     }
@@ -209,10 +237,21 @@ class VictoryChart extends React.Component {
   }
 
   // helper method for getDomain
+  _getDomainFromTickValues(props, type) {
+    const ticks = this.props.tickValues[type];
+    if (Util.containsStrings(ticks)) {
+      return [0, ticks.length - 1];
+    }
+    return [_.min(ticks), _.max(ticks)];
+  }
+
+  // helper method for getDomain
   _getDomainFromData(type) {
-    const data = _.map(this.consolidateData(), (dataset) => {
-      return dataset.data;
-    });
+    const data = _.pluck(this.state.data, "data")
+    const dataNames = this._getDataNames();
+    if (!_.isEmpty(dataNames[type])) {
+      return [0, dataNames[type].length - 1];
+    }
     const min = [];
     const max = [];
     _.each(data, (datum) => {
@@ -220,6 +259,24 @@ class VictoryChart extends React.Component {
       max.push(_.max(_.pluck(datum, type)));
     });
     return [_.min(min), _.max(max)];
+  }
+
+  _getDataNames() {
+    const data = _.flatten(_.pluck(this.state.data, "data"));
+    return {
+      x: _.chain(data)
+        .pluck("xName")
+        .uniq()
+        .compact()
+        .sort()
+        .value(),
+      y: _.chain(data)
+        .pluck("yName")
+        .uniq()
+        .compact()
+        .sort()
+        .value()
+    };
   }
 
   getRange(type) {
@@ -276,13 +333,30 @@ class VictoryChart extends React.Component {
 
   getTickValues(type) {
     const scale = this.getScale(type);
+    const dataNames = this._getDataNames();
     if (this.props.tickValues) {
       return this.props.tickValues[type];
+    } else if (!_.isEmpty(dataNames[type])) {
+      return _.range(dataNames[type].length);
     } else if (_.isFunction(scale.ticks)) {
       const ticks = scale.ticks(this.props.tickCount[type]);
       return _.without(ticks, 0);
     } else {
       return scale.domain();
+    }
+  }
+
+  getTickFormat(type) {
+    const dataNames = this._getDataNames();
+    const scale = this.getScale(type);
+    if (this.props.tickFormat) {
+      return this.props.tickFormat[type]();
+    } else if (this.props.tickValues && Util.containsStrings(this.props.tickValues[type])) {
+      return (x) => x;
+    } else if (!_.isEmpty(dataNames[type])) {
+      return (x) => dataNames[type][x];
+    } else {
+      return scale.tickFormat();
     }
   }
 
@@ -328,26 +402,28 @@ class VictoryChart extends React.Component {
 
   drawBar(dataset, index) {
     const style = this.getStyles();
-    const axisWidth = 1; // placeholder, connect to variable above later
+    const {type, name, ...attrs} = dataset.attrs;
+    const animate = (this.props.animate.scatter !== undefined) ?
+      this.props.animate.scatter : this.props.animate;
     return (
       <VictoryBar
-        svg={false}
-        barPadding={this.props.barPadding}
+        {...this.props}
+        animate={animate}
+        containerElement="g"
+        data={dataset.data}
+        style={_.merge(style, attrs)}
+        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+        range={{x: this.getRange("x"), y: this.getRange("y")}}
+        barPadding={this.props.barPadding || 5}
         colorCategories={this.props.barColors}
-        data={this.props.barData}
-        width={style.width}
-        height={style.height}
-        totalReductionInX={2 * style.margin}
-        totalReductionInY={2 * style.margin}
-        translateX={style.margin}
-        translateY={style.margin - axisWidth}
+        ref={name}
         key={index}/>
     );
   }
 
   drawData() {
     let type;
-    return _.map(this.consolidateData(), (dataset, index) => {
+    return _.map(this.state.data, (dataset, index) => {
       type = dataset.attrs.type;
       if (type === "line") {
         return this.drawLine(dataset, index);
@@ -372,7 +448,6 @@ class VictoryChart extends React.Component {
       this.props.axisLabels.labelPadding : undefined;
     const animate = (this.props.animate.axis !== undefined) ?
       this.props.animate.axis : this.props.animate;
-
     return (
       <VictoryAxis
         {...this.props}
@@ -390,7 +465,7 @@ class VictoryChart extends React.Component {
         showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
         tickValues={this.getTickValues(axis)}
-        tickFormat={this.props.tickFormat[axis]}
+        tickFormat={this.getTickFormat(axis)}
         axisStyle={axisStyle}
         gridStyle={gridStyle}
         tickStyle={tickStyle}
@@ -422,8 +497,8 @@ class VictoryChart extends React.Component {
 
 VictoryChart.propTypes = {
   style: React.PropTypes.node,
+  chartType: React.PropTypes.string,
   barColors: React.PropTypes.array,
-  barData: React.PropTypes.array,
   barPadding: React.PropTypes.number,
   data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
@@ -536,6 +611,7 @@ VictoryChart.propTypes = {
 };
 
 VictoryChart.defaultProps = {
+  chartType: "line",
   interpolation: "basis",
   samples: 50,
   scale: () => d3.scale.linear(),
@@ -550,10 +626,6 @@ VictoryChart.defaultProps = {
   tickCount: {
     x: 7,
     y: 5
-  },
-  tickFormat: {
-    x: () => d3.scale.linear().tickFormat(),
-    y: () => d3.scale.linear().tickFormat()
   },
   animate: false,
   containerElement: "svg"
