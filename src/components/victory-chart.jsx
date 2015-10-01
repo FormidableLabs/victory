@@ -14,11 +14,21 @@ class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.state.data = this.consolidateData(this.props);
+    this.state.stringMap = {
+      x: this.createStringMap(props, "x"),
+      y: this.createStringMap(props, "y")
+    };
+    this.state.data = this.consolidateData(props);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({data: this.consolidateData(nextProps)});
+    this.setState({
+      stringMap: {
+        x: this.createStringMap(nextProps, "x"),
+        y: this.createStringMap(nextProps, "y")
+      },
+      data: this.consolidateData(nextProps)
+    });
   }
 
   getStyles() {
@@ -34,7 +44,7 @@ class VictoryChart extends React.Component {
     // build all of the types of data into one consistent dataset for easy plotting
     // data can exist as props.data, this.props.x, and this.props.y
     const datasets = [];
-
+    const stringMap = this.state.stringMap;
     // if no data is passed in, plot a straight line
     const defaultData = (x) => x;
     const yData = (!props.data && !props.y) ? defaultData : props.y;
@@ -58,63 +68,95 @@ class VictoryChart extends React.Component {
           attrs: this._getAttributes(props, "y", index),
           data: _.map(dataArray, (datum) => {
             return {
-              x: datum[0],
-              y: datum[1]
+              x: _.isString(datum[0]) ? stringMap.x[datum[0]] : datum[0],
+              xName: _.isString(datum[0]) ? datum[0] : undefined,
+              y: _.isString(datum[1]) ? stringMap.y[datum[1]] : datum[1],
+              yName: _.isString(datum[1]) ? datum[1] : undefined
             };
           })
         });
       });
     }
-
     // if data is given in props.data, add it to the cosolidated datasets
     if (props.data) {
+      const getDataValues = (data) => {
+        return {}
+      }
       if (_.isArray(props.data[0])) {
         _.each(props.data, (dataset, index) => {
           datasets.push({
             attrs: this._getAttributes(props, "data", index),
-            data: dataset
+            data: _.map(dataset, (data) => {
+              return _.merge(data, {
+                // map string data to numeric values, and add names
+                x: _.isString(data.x) ? stringMap.x[data.x] : data.x,
+                xName: _.isString(data.x) ? data.x : undefined,
+                y: _.isString(data.y) ? stringMap.y[data.y] : data.y,
+                yName: _.isString(data.y) ? data.y : undefined
+              });
+            })
           });
         });
       } else {
         datasets.push({
           attrs: this._getAttributes(props, "data", 0),
-          data: props.data
+          data: _.map(props.data, (data) => {
+              return _.merge(data, {
+                // map string data to numeric values, and add names
+                x: _.isString(data.x) ? stringMap.x[data.x] : data.x,
+                xName: _.isString(data.x) ? data.x : undefined,
+                y: _.isString(data.y) ? stringMap.y[data.y] : data.y,
+                yName: _.isString(data.y) ? data.y : undefined
+              });
+            })
         });
       }
     }
-    return this._handleStringData(datasets);
+    return datasets;
   }
 
-  _handleStringData(datasets) {
-    const data = _.flatten(_.pluck(datasets, "data"));
-    const xData = this._getUniqueStrings(data, "x");
-    const yData = this._getUniqueStrings(data, "y");
-    const formattedData = _.map(datasets, (dataset) => {
-      return {
-        attrs: dataset.attrs,
-        data: _.map(dataset.data, (data) => {
-          return _.merge(data, {
-            x: _.isString(data.x) ? _.indexOf(xData, data.x) : data.x,
-            xName: _.isString(data.x) ? data.x : undefined,
-            y: _.isString(data.y) ? _.indexOf(yData, data.y) : data.y,
-            yName: _.isString(data.y) ? data.y : undefined
-          });
+  createStringMap(props, type) {
+    // if tick values exist and are strings, create a map using only those strings
+    if (props.tickValues && Util.containsStrings(props.tickValues[type])) {
+      return _.zipObject(_.map(props.tickValues[type], (tick, index) => {
+        return ["" + tick, index + 1];
+      }));
+    }
+
+    // otherwise, collect strings from data sources
+    const allStrings = [];
+    // collect strings from props.data
+    if (props.data) {
+      const data = _.isArray(props.data) ? _.flatten(props.data) : props.data
+      let stringData = _.chain(data)
+        .pluck(type)
+        .map((datum) => {
+          return _.isString(datum) ? datum : null;
         })
-      };
-    })
-    return formattedData
-  }
-
-  _getUniqueStrings(data, type) {
-    return _.chain(data)
-      .pluck(type)
-      .map((datum) => {
-        return _.isString(datum) ? datum : 0;
+        .value();
+      allStrings.push(stringData);
+    }
+    // collect strings from props[type]
+    if (props[type] && _.isArray(props[type])) {
+      _.each(_.flatten(props[type]), (element) => {
+        if (_.isString(element)) {
+          allStrings.push(element);
+        }
       })
+    }
+    // create a unique, sorted set of strings
+    const uniqueStrings  = _.chain(allStrings)
+      .flatten()
       .compact()
       .uniq()
       .sort()
       .value();
+
+    return _.isEmpty(uniqueStrings) ?
+      null :
+      _.zipObject(_.map(uniqueStrings, (string, index) => {
+        return [string, index + 1];
+      }));
   }
 
   // https://github.com/FormidableLabs/victory-chart/issues/5
@@ -169,8 +211,8 @@ class VictoryChart extends React.Component {
   _getDomainFromDataProps(props) {
     const xData = _.pluck(_.flatten(props.data), "x");
     if (Util.containsStrings(xData)) {
-      const dataNames = this._getUniqueStrings(props.data, "x");
-      return [0, dataNames.length - 1];
+      const mapValues = _.values(this.state.stringMap.x)
+      return [this.props.tickMargin.x, _.max(mapValues) + this.props.tickMargin.x];
     } else {
       return [_.min(xData), _.max(xData)];
     }
@@ -231,7 +273,6 @@ class VictoryChart extends React.Component {
     // needs to be reversed
     const otherAxis = type === "x" ? "y" : "x";
     const orientation = this.props.axisOrientation[otherAxis];
-
     return orientation === "bottom" || orientation === "left" ?
       domain : domain.concat().reverse();
   }
@@ -240,18 +281,23 @@ class VictoryChart extends React.Component {
   _getDomainFromTickValues(props, type) {
     const ticks = this.props.tickValues[type];
     if (Util.containsStrings(ticks)) {
-      return [0, ticks.length - 1];
+      const tickValues = _.map(this.props.tickValues[type], (tick) => {
+        return this.state.stringMap[type][tick];
+      });
+      const margin = this.props.tickMargin[type];
+      return [margin, _.max(tickValues) + margin];
     }
     return [_.min(ticks), _.max(ticks)];
   }
 
   // helper method for getDomain
   _getDomainFromData(type) {
-    const data = _.pluck(this.state.data, "data")
-    const dataNames = this._getDataNames();
-    if (!_.isEmpty(dataNames[type])) {
-      return [0, dataNames[type].length - 1];
+    if (!!this.state.stringMap[type]) {
+      const mapValues = _.values(this.state.stringMap[type]);
+      const margin = this.props.tickMargin[type];
+      return [margin, _.max(mapValues) + margin];
     }
+    const data = _.pluck(this.state.data, "data")
     const min = [];
     const max = [];
     _.each(data, (datum) => {
@@ -259,24 +305,6 @@ class VictoryChart extends React.Component {
       max.push(_.max(_.pluck(datum, type)));
     });
     return [_.min(min), _.max(max)];
-  }
-
-  _getDataNames() {
-    const data = _.flatten(_.pluck(this.state.data, "data"));
-    return {
-      x: _.chain(data)
-        .pluck("xName")
-        .uniq()
-        .compact()
-        .sort()
-        .value(),
-      y: _.chain(data)
-        .pluck("yName")
-        .uniq()
-        .compact()
-        .sort()
-        .value()
-    };
   }
 
   getRange(type) {
@@ -306,7 +334,6 @@ class VictoryChart extends React.Component {
       log.warn("Identity Scale: domain and range must be identical. " +
         "Domain has been reset to match range.");
     }
-
     return scale;
   }
 
@@ -333,11 +360,15 @@ class VictoryChart extends React.Component {
 
   getTickValues(type) {
     const scale = this.getScale(type);
-    const dataNames = this._getDataNames();
-    if (this.props.tickValues) {
+    if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[type])) {
       return this.props.tickValues[type];
-    } else if (!_.isEmpty(dataNames[type])) {
-      return _.range(dataNames[type].length);
+    } else if (!!this.state.stringMap[type]) {
+      // category values should have one tick of padding on either side
+      const tickValues = this.props.tickValues ?
+        _.map(this.props.tickValues[type], (tick) => this.state.stringMap[type][tick]) :
+        _.values(this.state.stringMap[type]);
+      const margin = this.props.tickMargin[type];
+      return [margin, ...tickValues, _.max(tickValues) + margin];
     } else if (_.isFunction(scale.ticks)) {
       const ticks = scale.ticks(this.props.tickCount[type]);
       return _.without(ticks, 0);
@@ -347,60 +378,67 @@ class VictoryChart extends React.Component {
   }
 
   getTickFormat(type) {
-    const dataNames = this._getDataNames();
     const scale = this.getScale(type);
     if (this.props.tickFormat) {
       return this.props.tickFormat[type]();
     } else if (this.props.tickValues && Util.containsStrings(this.props.tickValues[type])) {
       return (x) => x;
-    } else if (!_.isEmpty(dataNames[type])) {
-      return (x) => dataNames[type][x];
+    } else if (!!this.state.stringMap[type]) {
+      const dataNames = _.keys(this.state.stringMap[type])
+      // string ticks should have one tick of padding on either side
+      const dataTicks = ["", ...dataNames, ""];
+      return (x) => dataTicks[x];
     } else {
       return scale.tickFormat();
     }
   }
 
-  drawLine(dataset, index) {
+  drawLines(datasets) {
     const style = this.getStyles();
-    const {type, name, ...attrs} = dataset.attrs;
     const animate = (this.props.animate.line !== undefined) ?
       this.props.animate.line : this.props.animate;
-    return (
-      <VictoryLine
-        {...this.props}
-        animate={animate}
-        containerElement="g"
-        data={dataset.data}
-        style={_.merge(style, attrs)}
-        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-        range={{x: this.getRange("x"), y: this.getRange("y")}}
-        ref={name}
-        key={index}/>
-    );
+
+    return _.map(datasets, (dataset, index) => {
+      const {type, name, ...attrs} = dataset.attrs;
+      return (
+        <VictoryLine
+          {...this.props}
+          animate={animate}
+          containerElement="g"
+          data={dataset.data}
+          style={_.merge(style, attrs)}
+          domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+          range={{x: this.getRange("x"), y: this.getRange("y")}}
+          ref={name}
+          key={index}/>
+      );
+    });
   }
 
-  drawScatter(dataset, index) {
+  drawScatters(datasets) {
     const style = this.getStyles();
-    const {type, name, symbol, size, ...attrs} = dataset.attrs;
     const animate = (this.props.animate.scatter !== undefined) ?
       this.props.animate.scatter : this.props.animate;
-    return (
-      <VictoryScatter
-        {...this.props}
-        animate={animate}
-        containerElement="g"
-        data={dataset.data}
-        size={size || 3}
-        symbol={symbol || "circle"}
-        style={_.merge(style, attrs)}
-        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-        range={{x: this.getRange("x"), y: this.getRange("y")}}
-        ref={name}
-        key={index}/>
-    );
+    return _.map(datasets, (dataset, index) => {
+      const {type, name, symbol, size, ...attrs} = dataset.attrs;
+      return (
+        <VictoryScatter
+          {...this.props}
+          animate={animate}
+          containerElement="g"
+          data={dataset.data}
+          size={size || 3}
+          symbol={symbol || "circle"}
+          style={_.merge(style, attrs)}
+          domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+          range={{x: this.getRange("x"), y: this.getRange("y")}}
+          ref={name}
+          key={"scatter-" + index}/>
+      );
+    });
   }
 
-  drawBar(dataset, index) {
+  drawBars(datasets) {
     const style = this.getStyles();
     const {type, name, ...attrs} = dataset.attrs;
     const animate = (this.props.animate.scatter !== undefined) ?
@@ -422,15 +460,17 @@ class VictoryChart extends React.Component {
   }
 
   drawData() {
-    let type;
-    return _.map(this.state.data, (dataset, index) => {
-      type = dataset.attrs.type;
+    const dataByType = _.groupBy(this.state.data, (data) => {
+      return data.attrs.type;
+    });
+
+    return _.map(_.keys(dataByType), (type) => {
       if (type === "line") {
-        return this.drawLine(dataset, index);
+        return this.drawLines(dataByType.line);
       } else if (type === "scatter") {
-        return this.drawScatter(dataset, index);
+        return this.drawScatters(dataByType.scatter);
       } else if (type === "bar") {
-        return this.drawBar(dataset, index);
+        return this.drawBars(dataByType.bar);
       }
     });
   }
@@ -583,6 +623,10 @@ VictoryChart.propTypes = {
     x: React.PropTypes.func,
     y: React.PropTypes.func
   }),
+  tickMargin: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
+  }),
   tickCount: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number
@@ -626,6 +670,10 @@ VictoryChart.defaultProps = {
   tickCount: {
     x: 7,
     y: 5
+  },
+  tickMargin: {
+    x: 0.5,
+    y: 0.5
   },
   animate: false,
   containerElement: "svg"
