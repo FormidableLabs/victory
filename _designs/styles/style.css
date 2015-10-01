@@ -47,6 +47,57 @@ summary {
   display: block;
 }
 
+/* Table */
+table {
+  border-collapse: collapse;
+  display: block;
+  overflow: auto;
+  width: 100%;
+}
+
+thead, tbody {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  font-size: 100%;
+}
+
+thead {
+  font: inherit;
+  vertical-align: baseline;
+}
+
+tbody {
+  vertical-align: middle;
+}
+
+/* dark: #ebe3db darker: e6dcd1 */
+th, td {
+  border: 1px solid #ebe3db;
+  padding: 0.425em 0.75em;
+  vertical-align: top;
+}
+
+th code, td code {
+  background: none !important;
+}
+
+th {
+  font-weight: bold;
+  text-align: left;
+}
+
+.Cell-secondary {
+  margin-left: 12px;
+}
+
+.Cell-heading {
+  text-transform: uppercase;
+  font-size: 0.85em;
+  font-weight: bold;
+  color: #91887e;
+}
+
 /* Single Direction Margins */
 
 h1,h2,h3,h4,h5,h6,hgroup,
@@ -91,10 +142,17 @@ h4 {
 }
 
 .Headline--major {
-  font-size: 56px;
-  font-size: 3.5rem;
-  line-height: 1.2;
+  line-height: 1.3;
   font-style: italic;
+}
+
+@media only screen and (min-width: 44em) {
+  .Headline--major {
+    font-size: 56px;
+    font-size: 3.5rem;
+    line-height: 1.2;
+    font-style: italic;
+  }
 }
 
 /* Layout */
@@ -144,8 +202,15 @@ h4 {
 
 .Header {
   position: relative;
-  padding-top: 70px;
-  padding-bottom: 45px;
+  padding-top: 40px;
+  padding-bottom: 24px;
+}
+
+@media only screen and (min-width: 44em) {
+  .Header {
+    padding-top: 135px;
+    padding-bottom: 45px;
+  }
 }
 
 .Logo {
@@ -154,6 +219,16 @@ h4 {
   line-height: 1;
   margin: 0 auto;
   text-align: center;
+}
+
+.Logo img {
+  width: 150px;
+}
+
+@media only screen and (min-width: 44em) {
+  .Logo img {
+    width: 230px;
+  }
 }
 
 /* Footer */
@@ -286,7 +361,8 @@ h4 {
 
 .Copy code {
   font-family: "Source Code Pro", monospace;
-  background: #eee;
+  background: #f0eae4;
+  border-radius: 2px;
   padding: 0 3px;
 }
 
@@ -420,6 +496,70 @@ h4 {
   .u-noMargin-l {
     margin-bottom: 0;
   }
+}
+
+/* Arrange */
+.Arrange {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  display: table; /
+  margin: 0;
+  min-width: 100%;
+  padding: 0;
+  table-layout: auto;
+}
+
+.Arrange-fill,
+.Arrange-fit {
+  display: table-cell;
+  padding: 0; /* 1 */
+  vertical-align: top; /* 2 */
+}
+
+.Arrange-fill {
+  width: 100%;
+}
+
+.Arrange-fill img {
+  height: auto;
+  max-width: 100%;
+}
+
+.Arrange-fit img {
+  max-width: none !important;
+  width: auto !important;
+}
+
+/* Vertical alignment modifiers */
+
+.Arrange--middle > .Arrange-fill,
+.Arrange--middle > .Arrange-fit {
+  vertical-align: middle;
+}
+
+.Arrange--bottom > .Arrange-fill,
+.Arrange--bottom > .Arrange-fit {
+  vertical-align: bottom;
+}
+
+.Arrange--equal {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.Arrange--equal > .Arrange-fill,
+.Arrange--equal > .Arrange-fit {
+  width: 1%;
+}
+
+.Arrange--withGutter {
+  margin: 0 calc(-0.5 * 24px);
+}
+
+.Arrange--withGutter > .Arrange-fit,
+.Arrange--withGutter > .Arrange-fill {
+  padding: 0 calc(0.5 * 24px);
 }
 
 /* Syntax Highlighting */
