@@ -8,6 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link href='https://fonts.googleapis.com/css?family=Karla:400,400italic,700,700italic' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="styles/style.css"/>
+  <!-- <script src="lib/marked.js"></script> -->
+  <script src="lib/require.js"></script>
+  <script src="./md-to-html.js"></script>
 </head>
 <body>
   <!--[if lt IE 8]>
@@ -53,6 +56,283 @@
       </div>
     </div>
 
+    <div id="markdown" class="Copy Row Documentation">
+    </div>
+
+    <div class="Copy Row Documentation">
+
+      <article class="markdown-body entry-content" itemprop="mainContentOfPage">
+        <p>
+          <a href="https://travis-ci.org/FormidableLabs/victory-pie"><img src="https://camo.githubusercontent.com/c7131a872aab25235ff462b6ea8065546ef4b738/68747470733a2f2f6170692e7472617669732d63692e6f72672f466f726d696461626c654c6162732f766963746f72792d7069652e737667" alt="Travis Status" data-canonical-src="https://api.travis-ci.org/FormidableLabs/victory-pie.svg" style="max-width:100%;">
+          </a>
+        </p>
+
+      <h1><a id="user-content-victory-pie" class="anchor" href="#victory-pie" aria-hidden="true"><span class="octicon octicon-link"></span></a>Victory Pie</h1>
+
+      <p><code>victory-pie</code> draws an SVG pie or donut chart with <a href="https://github.com/facebook/react">React</a> and <a href="https://github.com/mbostock/d3">D3</a>. Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with <a href="https://github.com/FormidableLabs/victory-animation">victory-animation</a>.</p>
+
+      <h2><a id="user-content-examples" class="anchor" href="#examples" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples</h2>
+
+      <p>The plain component has baked-in sample data, style, angle, and sort defaults, so rendering the pie with no custom properties, like so:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>Will look like this:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-pie-sample.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-pie-sample.png" alt="basic pie chart" style="max-width:100%;"></a></p>
+
+      <p>Labels, by default, are placed at the centroid of each pie slice, which can look a little strange sometimes. Apply <code>padding</code> and <code>labelPadding</code> like so:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        labelPadding<span class="pl-k">=</span>{<span class="pl-c1">180</span>}
+        padding<span class="pl-k">=</span>{<span class="pl-c1">30</span>}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>To move your labels out from the centroid:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-pie-labels.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-pie-labels.png" alt="pie chart with labels outside" style="max-width:100%;"></a></p>
+
+      <p>But really, who wants a pie chart? Specify an <code>innerRadius</code> greater than 0 to turn the pie into a donut:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie innerRadius<span class="pl-k">=</span>{<span class="pl-c1">140</span>}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>Yum:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-donut-sample.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-sample.png" alt="basic donut chart" style="max-width:100%;"></a></p>
+
+      <p>All default styles (<code>borderColor</code>, <code>borderWidth</code>, <code>fontColor</code>, <code>fontFamily</code>, <code>fontSize</code>, <code>fontWeight</code>, <code>height</code>,  <code>innerRadius</code>, <code>labelPadding</code>, <code>padding</code>, <code>sliceColors</code>, <code>width</code>), angles (<code>startAngle</code>, <code>endAngle</code>, <code>padAngle</code>) and sorting (<code>sort</code>) can be overridden by specifying your own props:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        fontSize<span class="pl-k">=</span>{<span class="pl-c1">16</span>}
+        fontWeight<span class="pl-k">=</span>{<span class="pl-c1">200</span>}
+        innerRadius<span class="pl-k">=</span>{<span class="pl-c1">80</span>}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>Makes this:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-donut-thick.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-thick.png" alt="donut with thicker slices" style="max-width:100%;"></a></p>
+
+      <p>Similarly,</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        borderWidth<span class="pl-k">=</span>{<span class="pl-c1">2</span>}
+        fontColor<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>white<span class="pl-pds">"</span></span>
+        innerRadius<span class="pl-k">=</span>{<span class="pl-c1">140</span>}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>Makes:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-donut-white.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-white.png" alt="donut with white text" style="max-width:100%;"></a></p>
+
+      <p>Want a half donut? Specify a <code>startAngle</code> and <code>endAngle</code>:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        borderWidth<span class="pl-k">=</span>{<span class="pl-c1">2</span>}
+        endAngle<span class="pl-k">=</span>{<span class="pl-c1">90</span>}
+        fontColor<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>white<span class="pl-pds">"</span></span>
+        innerRadius<span class="pl-k">=</span>{<span class="pl-c1">140</span>}
+        startAngle<span class="pl-k">=</span>{<span class="pl-k">-</span><span class="pl-c1">90</span>}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>Voilà:
+      <a href="/FormidableLabs/victory-pie/blob/master/victory-donut-half.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-half.png" alt="half donut" style="max-width:100%;"></a></p>
+
+      <p>Specify a <code>padAngle</code> to add space between adjacent slices:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        borderWidth<span class="pl-k">=</span>{<span class="pl-c1">2</span>}
+        endAngle<span class="pl-k">=</span>{<span class="pl-c1">90</span>}
+        fontColor<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>white<span class="pl-pds">"</span></span>
+        innerRadius<span class="pl-k">=</span>{<span class="pl-c1">140</span>}
+        padAngle<span class="pl-k">=</span>{<span class="pl-c1">5</span>}
+        startAngle<span class="pl-k">=</span>{<span class="pl-k">-</span><span class="pl-c1">90</span>}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-donut-padding.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-padding.png" alt="donut with padding" style="max-width:100%;"></a></p>
+
+      <p>Custom data (age vs population) and colors:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        borderWidth<span class="pl-k">=</span>{<span class="pl-c1">2</span>}
+        data<span class="pl-k">=</span>{[
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;5<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">6279</span>},
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>5-13<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">9182</span>},
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>14-17<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">5511</span>},
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>18-24<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">7164</span>},
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>25-44<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">6716</span>},
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>45-64<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">4263</span>},
+          {x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>≥65<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">7502</span>}
+        ]}
+        fontColor<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>white<span class="pl-pds">"</span></span>
+        fontWeight<span class="pl-k">=</span>{<span class="pl-c1">200</span>}
+        innerRadius<span class="pl-k">=</span>{<span class="pl-c1">150</span>}
+        sliceColors<span class="pl-k">=</span>{[
+          <span class="pl-s"><span class="pl-pds">"</span>#D85F49<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#F66D3B<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#D92E1D<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#D73C4C<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#FFAF59<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#E28300<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#F6A57F<span class="pl-pds">"</span></span>
+        ]}<span class="pl-k">/&gt;</span></pre></div>
+
+      <p>Snazzes things up a bit:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-donut-data.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-data.png" alt="donut with data and custom colors" style="max-width:100%;"></a></p>
+
+      <p>If the data changes, the donut updates seamlessly:</p>
+
+      <p><a href="/FormidableLabs/victory-pie/blob/master/victory-donut-animation.gif" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-animation.gif" alt="donut data change animated" style="max-width:100%;"></a></p>
+
+      <p>Set the <code>sort</code> prop to <code>"ascending"</code>, <code>"descending"</code>, or your own comparator:</p>
+
+      <div class="highlight highlight-source-js"><pre><span class="pl-k">&lt;</span>VictoryPie
+        borderWidth<span class="pl-k">=</span>{<span class="pl-c1">2</span>}
+        data<span class="pl-k">=</span>{[
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;5<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">4577</span> },
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>5-13<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">5661</span> },
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>14-17<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">3038</span> },
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>18-24<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">8151</span> },
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>25-44<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">7785</span> },
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>45-64<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">1911</span> },
+          { x<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>≥65<span class="pl-pds">"</span></span>, y<span class="pl-k">:</span> <span class="pl-c1">7665</span> }
+        ]}
+        fontColor<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>white<span class="pl-pds">"</span></span>
+        fontWeight<span class="pl-k">=</span>{<span class="pl-c1">200</span>}
+        innerRadius<span class="pl-k">=</span>{<span class="pl-c1">150</span>}
+        sliceColors<span class="pl-k">=</span>{[
+          <span class="pl-s"><span class="pl-pds">"</span>#D85F49<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#F66D3B<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#D92E1D<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#D73C4C<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#FFAF59<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#E28300<span class="pl-pds">"</span></span>,
+          <span class="pl-s"><span class="pl-pds">"</span>#F6A57F<span class="pl-pds">"</span></span>
+        ]}
+        sort<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>descending<span class="pl-pds">"</span></span><span class="pl-k">/&gt;</span></pre></div>
+
+      <p>To organize by slice size:</p>
+
+      <p><a href="https://raw.githubusercontent.com/FormidableLabs/victory-pie/blob/master/victory-donut-sort.png" target="_blank"><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-sort.png" alt="donut descending sort" style="max-width:100%;"></a></p>
+
+      <h2><a id="user-content-the-api" class="anchor" href="#the-api" aria-hidden="true"><span class="octicon octicon-link"></span></a>The API</h2>
+
+      <h3><a id="user-content-props" class="anchor" href="#props" aria-hidden="true"><span class="octicon octicon-link"></span></a>Props</h3>
+
+      <p>All props are <em>optional</em>. They can be omitted and the component will
+      still render.</p>
+
+      <p>The following props are supported:</p>
+
+      <h4><a id="user-content-bordercolor" class="anchor" href="#bordercolor" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>borderColor</strong></h4>
+
+      <p><em>A string.</em> All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: <code>"#ff0000"</code>, <code>"rgba(255, 0, 0, 1)"</code>, <code>"red"</code>.</p>
+
+      <p><em>Default value:</em> <code>"white"</code></p>
+
+      <h4><a id="user-content-borderwidth" class="anchor" href="#borderwidth" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>borderWidth</strong></h4>
+
+      <p><em>A number or string.</em> Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as <code>"2em"</code>.</p>
+
+      <p><em>Default value:</em> <code>1</code></p>
+
+      <h4><a id="user-content-data" class="anchor" href="#data" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>data</strong></h4>
+
+      <p><em>An array of objects.</em> If the <code>data</code> prop is omitted, the pie will render sample data. Objects in the <code>data</code> array must be of the form <code>{ x: &lt;x-val&gt;, y: &lt;y-val&gt; }</code>, where <code>&lt;x-val&gt;</code> is the slice label (string or number), and <code>&lt;y-val&gt;</code> is the corresponding number used to calculate arc length as a proportion of the pie's circumference.</p>
+
+      <p><em>Default value:</em> <code>[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]</code></p>
+
+      <h4><a id="user-content-endangle" class="anchor" href="#endangle" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>endAngle</strong></h4>
+
+      <p><em>A number.</em> The overall end angle of the pie in degrees.</p>
+
+      <p><em>Default value:</em> <code>360</code></p>
+
+      <h4><a id="user-content-fontcolor" class="anchor" href="#fontcolor" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>fontColor</strong></h4>
+
+      <p><em>A string.</em> All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: <code>"#ff0000"</code>, <code>"rgba(255, 0, 0, 1)"</code>, <code>"red"</code>.</p>
+
+      <p><em>Default value:</em> <code>"black"</code></p>
+
+      <h4><a id="user-content-fontfamily" class="anchor" href="#fontfamily" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>fontFamily</strong></h4>
+
+      <p><em>A string.</em> Single font names or font stacks are accepted.</p>
+
+      <p><em>Default value:</em> <code>"'Helvetica Neue', Helvetica, Arial, sans-serif"</code></p>
+
+      <h4><a id="user-content-fontsize" class="anchor" href="#fontsize" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>fontSize</strong></h4>
+
+      <p><em>A number or string.</em> Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as <code>"2em"</code>.</p>
+
+      <p><em>Default value:</em> <code>10</code></p>
+
+      <h4><a id="user-content-fontweight" class="anchor" href="#fontweight" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>fontWeight</strong></h4>
+
+      <p><em>A number or string.</em> All CSS <code>font-weight</code> properties (<code>100</code>, <code>200</code>, <code>300</code>, <code>400</code>, <code>500</code>, <code>600</code>, <code>700</code>, <code>800</code>, <code>900</code>, <code>"normal"</code>, <code>"bold"</code>, <code>"bolder"</code>, <code>"lighter"</code>, <code>"initial"</code>, <code>"inherit"</code>) are accepted.</p>
+
+      <p><em>Default value:</em> <code>400</code></p>
+
+      <h4><a id="user-content-height" class="anchor" href="#height" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>height</strong></h4>
+
+      <p><em>A number.</em> A pixel amount used to calculate chart size. The smaller of the two dimension properties, <code>height</code> and <code>width</code>, will be used to set diameter. Note that any specified <code>padding</code> is included in overall chart dimensions, so the diameter of the pie will be smaller if <code>padding</code> is greater than 0.</p>
+
+      <p><em>Default value:</em> <code>400</code></p>
+
+      <h4><a id="user-content-innerradius" class="anchor" href="#innerradius" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>innerRadius</strong></h4>
+
+      <p><em>A number.</em> A pixel amount used to calculate the distance between the center of the chart and the inner edge of a donut.</p>
+
+      <p><em>Default value:</em>  <code>0</code></p>
+
+      <h4><a id="user-content-labelpadding" class="anchor" href="#labelpadding" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>labelPadding</strong></h4>
+
+      <p><em>A number.</em> A pixel amount used to position labels further out from the centroid of a pie slice.</p>
+
+      <p><em>Default value:</em>  <code>0</code></p>
+
+      <h4><a id="user-content-padangle" class="anchor" href="#padangle" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>padAngle</strong></h4>
+
+      <p><em>A number.</em> The pad angle of the pie in degrees. Adjacent slices will be separated by the pad angle.</p>
+
+      <p><em>Default value:</em> <code>0</code></p>
+
+      <h4><a id="user-content-padding" class="anchor" href="#padding" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>padding</strong></h4>
+
+      <p><em>A number.</em> A pixel amount used to add padding around the outer edge of the pie.</p>
+
+      <p><em>Default value:</em> <code>0</code></p>
+
+      <h4><a id="user-content-slicecolors" class="anchor" href="#slicecolors" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>sliceColors</strong></h4>
+
+      <p><em>An array of strings.</em> If the <code>data</code> array is longer than its corresponding <code>sliceColors</code> array, slice color assignments will continue by looping through the array.</p>
+
+      <p><em>Default value:</em> <code>["#75C776", "#39B6C5", "#78CCC4", "#62C3A4", "#64A8D1", "#8C95C8", "#3BAF74"]</code></p>
+
+      <h4><a id="user-content-sort" class="anchor" href="#sort" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>sort</strong></h4>
+
+      <p><em>A string or function.</em> Sort order strings <code>"ascending"</code> and <code>"descending"</code>are accepted, as are custom comparator functions.</p>
+
+      <p><em>Default value:</em> <code>null</code></p>
+
+      <h4><a id="user-content-startangle" class="anchor" href="#startangle" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>startAngle</strong></h4>
+
+      <p><em>A number.</em> The overall start angle of the pie in degrees.</p>
+
+      <p><em>Default value:</em> <code>0</code></p>
+
+      <h4><a id="user-content-width" class="anchor" href="#width" aria-hidden="true"><span class="octicon octicon-link"></span></a><strong>width</strong></h4>
+
+      <p><em>A number.</em> A pixel amount used to calculate chart size. The smaller of the two dimension properties, <code>height</code> and <code>width</code>, will be used to set diameter. Note that any specified <code>padding</code> is included in overall chart dimensions, so the diameter of the pie will be smaller if <code>padding</code> is greater than 0.</p>
+
+      <p><em>Default value:</em> <code>400</code></p>
+
+      <h2><a id="user-content-development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+
+      <p>Please see <a href="https://raw.githubusercontent.com/FormidableLabs/victory-pie/blob/master/DEVELOPMENT.md">DEVELOPMENT</a></p>
+
+      <h2><a id="user-content-contributing" class="anchor" href="#contributing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contributing</h2>
+
+      <p>Please see <a href="https://raw.githubusercontent.com/FormidableLabs/victory-pie/blob/master/CONTRIBUTING.md">CONTRIBUTING</a></p>
+      </article>
+
+
+    </div>
+
     <div class="Copy Row">
       <h2 class="Headline">API</h2>
       <p>All props are <em>optional</em>. They can be omitted and the component will still render.</p>
@@ -71,10 +351,10 @@
             </td>
             <td>
               All color formats, including HEX, RGB/RGBA, and HTML color names are accepted.
-              <div class="Cell-secondary">
-                <span class="Cell-heading">Examples:</span> <code>"#ff0000"</code>, <code>"rgba(255, 0, 0, 1)"</code>, <code>"red"</code>.
+              <div class="u-textIndent">
+                <span class="Smallcaps">Examples:</span> <code>"#ff0000"</code>, <code>"rgba(255, 0, 0, 1)"</code>, <code>"red"</code>.
                 <br/>
-                <span class="Cell-heading">Default value:</span> <code>"white"</code>
+                <span class="Smallcaps">Default value:</span> <code>"white"</code>
               </div>
             </td>
           </tr>
@@ -85,8 +365,8 @@
             </td>
             <td>
               Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as "2em".
-              <div class="Cell-secondary">
-                <span class="Cell-heading">Default value:</span> <code>1</code>
+              <div class="u-textIndent">
+                <span class="Smallcaps">Default value:</span> <code>1</code>
               </div>
             </td>
           </tr>
@@ -98,8 +378,8 @@
             <td>
               If the <code>data</code> prop is omitted, the pie will render sample data. Objects in the <code>data</code> array must be of the form <code>{ x: &lt;x-val&gt;, y: &lt;y-val&gt; }</code>, where <code>&lt;x-val&gt;</code> is the slice label (string or number), and <code>&lt;y-val&gt;</code> is the corresponding number used to calculate arc length as a proportion of the pie’s circumference.
 
-              <div class="Cell-secondary">
-                <span class="Cell-heading">Default value:</span> <code>[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]</code>
+              <div class="u-textIndent">
+                <span class="Smallcaps">Default value:</span> <code>[{ x: "A", y: 1 }, { x: "B", y: 2 }, { x: "C", y: 3 }, { x: "D", y: 1 }, { x: "E", y: 2 }]</code>
               </div>
             </td>
           </tr>
@@ -121,6 +401,12 @@
       </p>
     </div>
   </footer>
+
+  <!-- <script type="text/javascript">
+    var markdownFile = require('./docs/pie.md');
+    document.getElementById('markdown').innerHTML =
+      marked(markdownFile);
+  </script> -->
 
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.5/highlight.min.js"></script>
   <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script>
