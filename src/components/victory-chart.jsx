@@ -13,6 +13,8 @@ import Util from "../util";
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
+    // warn about bad data
+    this.validateData(this.props);
     // provide default data for the component to render
     this.defaultData = (x) => x;
     this.state = {};
@@ -25,6 +27,8 @@ class VictoryChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    // warn about bad data
+    this.validateData(nextProps);
     this.setState({
       stringMap: {
         x: this.createStringMap(nextProps, "x"),
@@ -33,6 +37,33 @@ class VictoryChart extends React.Component {
       data: this.consolidateData(nextProps),
       stackedData: this.getStackedData(nextProps)
     });
+  }
+
+  validateData(originalProps) {
+    const props = _.cloneDeep(originalProps);
+    const axes = ["x", "y"];
+    _.each(axes, (axis) => {
+      // check for mixed string and numeric data
+      const data = props.data ? _.pluck(_.flatten(props.data), axis) : [];
+      const typeData = props[axis] && _.isArray(props[axis]) ?
+        _.flatten(_.map(props[axis], (element) => {
+          return _.isFunction(element) ? [] : element;
+        })) : [];
+      const allData = data.concat(typeData);
+      if (Util.containsStrings(allData) && !Util.containsOnlyStrings(allData)) {
+        log.warn("Don't mix string data with numeric data on the same axis!")
+      }
+      // check for mixed bar and stackedBar chart types
+      const dataTypes = this.props.dataAttributes ?
+        _.pluck(_.flatten(this.props.dataAttributes), "type") : [];
+      const yTypes = this.props.yAttributes ?
+        _.pluck(_.flatten(this.props.yAttributes), "type") : [];
+      const globalType = this.props.chartType || [];
+      const types = dataTypes.concat(yTypes, globalType);
+      if (_.includes(types, "bar") && _.includes(types, "stackedBar")) {
+        log.warn("Don't mix bar with stackedBar in the same chart!")
+      }
+    })
   }
 
   getStyles() {
@@ -201,14 +232,11 @@ class VictoryChart extends React.Component {
   _getDomainFromDataProps(props) {
     const xData = _.pluck(_.flatten(props.data), "x");
     if (Util.containsStrings(xData)) {
-      const mapValues = _.values(this.state.stringMap.x)
-      return [
-        _.min(mapValues) - this.props.tickMargin.x,
-        _.max(mapValues) + this.props.tickMargin.x
-      ];
-    } else {
-      return [_.min(xData), _.max(xData)];
+      // TODO: this is wonky
+      const data = _.values(this.state.stringMap.x);
+      return [_.min(data), _.max(data)];
     }
+    return this._padDomain([_.min(xData), _.max(xData)], "x");
   }
 
   // helper for returnOrGenerateX
@@ -278,35 +306,45 @@ class VictoryChart extends React.Component {
       domain = this._getDomainFromData(axis);
     }
 
+    const paddedDomain = this.props.domain ? domain : this._padDomain(domain, axis);
+
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
     const orientation = this.props.axisOrientation[otherAxis];
     return orientation === "bottom" || orientation === "left" ?
-      domain : domain.concat().reverse();
+      paddedDomain : paddedDomain.concat().reverse();
+  }
+
+  _padDomain(domain, axis) {
+    // don't pad non-numeric domains
+    if (_.some(domain, (element) => !_.isNumber(element))) {
+      return domain;
+    }
+    const min = _.min(domain);
+    const max = _.max(domain);
+    const extent = Math.abs(max - min);
+    const percentPadding = this.props.domainOffset ? this.props.domainOffset[axis] : 0;
+    const padding = extent * percentPadding;
+    const adjustedMin = min === 0 ? min : min - padding;
+    const adjustedMax = max === 0 ? max : max + padding;
+    return [adjustedMin, adjustedMax];
   }
 
   // helper method for getDomain
   _getDomainFromTickValues(props, axis) {
     const ticks = this.props.tickValues[axis];
-    if (Util.containsStrings(ticks)) {
-      const tickValues = _.map(this.props.tickValues[axis], (tick) => {
-        return this.state.stringMap[axis][tick];
-      });
-      const margin = this.props.tickMargin[axis];
-      return [_.max(tickValues) - margin, _.max(tickValues) + margin];
-    }
-    return [_.min(ticks), _.max(ticks)];
+    const data = Util.containsStrings(ticks) ?
+      _.map(ticks, (tick) => this.state.stringMap[axis][tick]) : ticks;
+    return [_.min(data), _.max(data)];
   }
 
   // helper method for getDomain
   _getDomainFromData(axis) {
     // if a sensible string map exists, return the minimum and maximum values
-    // offset by the tick margin value
     if (!!this.state.stringMap[axis]) {
       const mapValues = _.values(this.state.stringMap[axis]);
-      const margin = this.props.tickMargin[axis];
-      return [_.min(mapValues) - margin, _.max(mapValues) + margin];
+      return [_.min(mapValues), _.max(mapValues)];
     } else {
       // find the global min and max
       const allData =  _.flatten(_.pluck(this.state.data, "data"));
@@ -380,11 +418,9 @@ class VictoryChart extends React.Component {
       return this.props.tickValues[axis];
     } else if (!!this.state.stringMap[axis]) {
       // category values should have one tick of padding on either side
-      const tickValues = this.props.tickValues ?
+      return this.props.tickValues ?
         _.map(this.props.tickValues[axis], (tick) => this.state.stringMap[axis][tick]) :
         _.values(this.state.stringMap[axis]);
-      const margin = this.props.tickMargin[axis];
-      return [_.min(tickValues) - margin, ...tickValues, _.max(tickValues) + margin];
     } else if (_.isFunction(scale.ticks)) {
       const ticks = scale.ticks(this.props.tickCount[axis]);
       return _.without(ticks, 0);
@@ -460,7 +496,7 @@ class VictoryChart extends React.Component {
       this.props.animate.bar : this.props.animate;
     const categories = {
       x: this.state.stringMap.x ? _.keys(this.state.stringMap.x) : undefined,
-      y: this.state.stringMap.x ? _.keys(this.state.stringMap.y) : undefined
+      y: this.state.stringMap.y ? _.keys(this.state.stringMap.y) : undefined
     }
     return (
       <VictoryBar
@@ -474,7 +510,7 @@ class VictoryChart extends React.Component {
         domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
         range={{x: this.getRange("x"), y: this.getRange("y")}}
         categories={categories}
-        barPadding={this.props.barPadding || 5}
+        categoryOffset={this.props.domainOffset.x}
         key={"bar"}/>
     );
   }
@@ -564,8 +600,6 @@ class VictoryChart extends React.Component {
 VictoryChart.propTypes = {
   style: React.PropTypes.node,
   chartType: React.PropTypes.string,
-  barColors: React.PropTypes.array,
-  barPadding: React.PropTypes.number,
   data: React.PropTypes.oneOfType([ // maybe this should just be "node"
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
@@ -632,6 +666,7 @@ VictoryChart.propTypes = {
     "cardinal-closed",
     "monotone"
   ]),
+  // axis props
   axisLabels: React.PropTypes.object,
   axisOrientation: React.PropTypes.shape({
     x: React.PropTypes.oneOf(["top", "bottom"]),
@@ -649,10 +684,6 @@ VictoryChart.propTypes = {
     x: React.PropTypes.func,
     y: React.PropTypes.func
   }),
-  tickMargin: React.PropTypes.shape({
-    x: React.PropTypes.number,
-    y: React.PropTypes.number
-  }),
   tickCount: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number
@@ -668,6 +699,13 @@ VictoryChart.propTypes = {
   gridStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
+  }),
+  // bar props
+  barWidth: React.PropTypes.number,
+  barPadding: React.PropTypes.number,
+  domainOffset: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
   }),
   animate: React.PropTypes.oneOfType([
     React.PropTypes.bool,
@@ -695,10 +733,6 @@ VictoryChart.defaultProps = {
   tickCount: {
     x: 7,
     y: 5
-  },
-  tickMargin: {
-    x: 0.5,
-    y: 0.5
   },
   animate: false,
   containerElement: "svg"

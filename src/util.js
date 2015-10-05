@@ -5,5 +5,11 @@ module.exports = {
     return _.some(collection, function (item) {
       return _.isString(item);
     })
+  },
+
+  containsOnlyStrings: function (collection) {
+    return _.every(collection, function (item) {
+      return _.isString(item);
+    })
   }
 };

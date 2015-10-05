@@ -61,7 +61,7 @@ class App extends React.Component {
         lineData: this.getData(),
         dataAttributes: this.getStyles()
       });
-    }, 4000);
+    }, 20000);
   }
 
   render() {
@@ -142,21 +142,36 @@ class App extends React.Component {
           ]}/>
           <VictoryChart
             data={[
-              {x: "red", y: 2},
-              {x: "green", y: 4},
-              {x: "green", y: 1},
-              {x: "green", y: 2},
-              {x: "blue", y: 5},
-              {x: "blue", y: 3},
+              [
+                {x: "red", y: 2},
+                {x: "green", y: 4},
+                {x: "blue", y: 2},
+              ], [
+                {x: "red", y: 1},
+                {x: "green", y: 2},
+                {x: "blue", y: 3},
+              ], [
+                {x: "red", y: 4},
+                {x: "green", y: 1},
+                {x: "blue", y: 2},
+              ]
             ]}
             dataAttributes={[
-              {name: "nameData", type: "scatter", color: "red"}
+              {name: "series1", type: "bar", color: "blue"},
+              {name: "series2", type: "bar", color: "green"},
+              {name: "series2", type: "bar", color: "red"}
             ]}
-            animate={false}
-            y={(x) => x}
-            yAttributes={[
-              {name: "line-two", type: "line", stroke: "green"}
-            ]}/>
+            y={[1, 2, 1]}
+            yAttributes={{name: "line1", type: "line", stroke: "blue"}}
+            domainOffset={{
+              x: 0.2,
+              y: 0.1
+            }}
+            axisOrientation={{
+              x: "top",
+              y: "left"
+            }}
+            animate={false}/>
 
         </p>
       </div>
