@@ -51,7 +51,7 @@ class VictoryChart extends React.Component {
         })) : [];
       const allData = data.concat(typeData);
       if (Util.containsStrings(allData) && !Util.containsOnlyStrings(allData)) {
-        log.warn("Don't mix string data with numeric data on the same axis!")
+        log.warn("Don't mix string data with numeric data on the same axis!");
       }
       // check for mixed bar and stackedBar chart types
       const dataTypes = this.props.dataAttributes ?
@@ -61,9 +61,9 @@ class VictoryChart extends React.Component {
       const globalType = this.props.chartType || [];
       const types = dataTypes.concat(yTypes, globalType);
       if (_.includes(types, "bar") && _.includes(types, "stackedBar")) {
-        log.warn("Don't mix bar with stackedBar in the same chart!")
+        log.warn("Don't mix bar with stackedBar in the same chart!");
       }
-    })
+    });
   }
 
   getStyles() {
@@ -76,7 +76,7 @@ class VictoryChart extends React.Component {
   }
 
   createStringMap(originalProps, axis) {
-    const props = _.cloneDeep(originalProps)
+    const props = _.cloneDeep(originalProps);
     // if tick values exist and are strings, create a map using only those strings
     // dont alter the order.
     if (props.tickValues && Util.containsStrings(props.tickValues[axis])) {
@@ -89,7 +89,7 @@ class VictoryChart extends React.Component {
     const allStrings = [];
     // collect strings from props.data
     if (props.data) {
-      const data = _.isArray(props.data) ? _.flatten(props.data) : props.data
+      const data = _.isArray(props.data) ? _.flatten(props.data) : props.data;
       const stringData = _.chain(data)
         .pluck(axis)
         .map((datum) => {
@@ -104,10 +104,10 @@ class VictoryChart extends React.Component {
         if (_.isString(element)) {
           allStrings.push(element);
         }
-      })
+      });
     }
     // create a unique, sorted set of strings
-    const uniqueStrings  = _.chain(allStrings)
+    const uniqueStrings = _.chain(allStrings)
       .flatten()
       .compact()
       .uniq()
@@ -123,7 +123,6 @@ class VictoryChart extends React.Component {
 
   consolidateData(originalProps) {
     const props = _.cloneDeep(originalProps);
-    const stringMap = this.state.stringMap;
     // build all of the types of data into one consistent dataset for easy plotting
     // data can exist as props.data, this.props.x, and this.props.y
     const datasets = [];
@@ -131,52 +130,39 @@ class VictoryChart extends React.Component {
     const yData = (!props.data && !props.y) ? this.defaultData : props.y;
     // if y is given, construct data for all y, and add it to the dataset
     if (yData) {
-      const xArrays = this.returnOrGenerateX(props); // returns an array of arrays
-      const yArrays = this.returnOrGenerateY(props, xArrays); // returns an array of arrays
-      let n;
-      let xArray;
-      // create dataArrays of n points from each x array and each y array
-      const dataArrays = _.map(yArrays, (y, index) => {
-        xArray = xArrays[index] || xArrays[0];
-        n = _.min([xArray.length, y.length]);
-        return _.zip(_.take(xArray, n), _.take(y, n));
-      });
-
-      // for each dataArray create an array of data points and add it to
-      // the consolidated datasets
+      const dataArrays = this.generateDataFromXY(props);
+      let attributes;
       _.each(dataArrays, (dataArray, index) => {
-        datasets.push({
-          attrs: this._getAttributes(props, "y", index),
-          data: _.map(dataArray, (datum) => {
-            return {
-              x: _.isString(datum[0]) ? stringMap.x[datum[0]] : datum[0],
-              xName: _.isString(datum[0]) ? datum[0] : undefined,
-              y: _.isString(datum[1]) ? stringMap.y[datum[1]] : datum[1],
-              yName: _.isString(datum[1]) ? datum[1] : undefined
-            };
-          })
-        });
+        attributes = this._getAttributes(props, "y", index);
+        datasets.push(this._formatDataset(dataArray, attributes));
       });
     }
     // if data is given in props.data, add it to the cosolidated datasets
     if (props.data) {
       const dataFromProps = _.isArray(props.data[0]) ? props.data : [props.data];
+      let attributes;
       _.each(dataFromProps, (dataset, index) => {
-        datasets.push({
-          attrs: this._getAttributes(props, "data", index),
-          data: _.map(dataset, (data) => {
-            return _.merge(data, {
-              // map string data to numeric values, and add names
-              x: _.isString(data.x) ? stringMap.x[data.x] : data.x,
-              xName: _.isString(data.x) ? data.x : undefined,
-              y: _.isString(data.y) ? stringMap.y[data.y] : data.y,
-              yName: _.isString(data.y) ? data.y : undefined
-            });
-          })
-        });
+        attributes = this._getAttributes(props, "data", index);
+        datasets.push(this._formatDataset(dataset, attributes));
       });
     }
     return datasets;
+  }
+
+  _formatDataset(dataset, attributes) {
+    const stringMap = this.state.stringMap;
+    return {
+      attrs: attributes,
+      data: _.map(dataset, (data) => {
+        return _.merge(data, {
+          // map string data to numeric values, and add names
+          x: _.isString(data.x) ? stringMap.x[data.x] : data.x,
+          xName: _.isString(data.x) ? data.x : undefined,
+          y: _.isString(data.y) ? stringMap.y[data.y] : data.y,
+          yName: _.isString(data.y) ? data.y : undefined
+        });
+      })
+    };
   }
 
   // https://github.com/FormidableLabs/victory-chart/issues/5
@@ -193,13 +179,8 @@ class VictoryChart extends React.Component {
     return _.merge(requiredAttributes, attributes);
   }
 
-  returnOrGenerateX(props) {
-    // if x is defined in props, return it as an array of arrays
-    if (props.x) {
-      return _.isArray(props.x[0]) ? props.x : [props.x];
-    }
-    // if x is not given in props, create an array of values evenly
-    // spaced across the x domain
+  generateXFromDomain(props) {
+    //create an array of values evenly spaced across the x domain
 
     // Determine how to calculate the domain:
     // domain based on props.domain if it is given
@@ -228,18 +209,17 @@ class VictoryChart extends React.Component {
     return [_.union(_.range(_.min(domain), _.max(domain), step), [_.max(domain)])];
   }
 
-  // helper for returnOrGenerateX
+  // helper for generateXFromDomain
   _getDomainFromDataProps(props) {
     const xData = _.pluck(_.flatten(props.data), "x");
     if (Util.containsStrings(xData)) {
-      // TODO: this is wonky
       const data = _.values(this.state.stringMap.x);
       return [_.min(data), _.max(data)];
     }
     return this._padDomain([_.min(xData), _.max(xData)], "x");
   }
 
-  // helper for returnOrGenerateX
+  // helper for generateXFromDomain
   _getNumSamples(props) {
     // if props.samples is defined, return it:
     if (props.samples) {
@@ -260,25 +240,54 @@ class VictoryChart extends React.Component {
     }
   }
 
-  returnOrGenerateY(props, xArrays) {
-    // Always return an array of arrays.
+  generateDataFromXY(props) {
+    // Always return an array of arrays of {x, y} datasets
+
+    // determine possible values of an x array:
+    const xFromProps = (props.x && _.isNumber(props.x[0])) ? [props.x] : props.x;
+    const xFromStringMap = this.state.stringMap.x ? [_.values(this.state.stringMap.x)] : undefined;
+    const xFromDomain = this.generateXFromDomain(props);
+    let xArrays;
+    let xArray;
+    let n;
+
+    // determine y
     const y = (!props.data && !props.y) ? this.defaultData : props.y;
+
     if (_.isFunction(y)) {
       // if y is a function, apply it to each element in each x array
-      return _.map(xArrays, (xArray) => {
-        return _.map(xArray, (x) => y(x));
+      xArrays = xFromProps || xFromDomain;
+      return _.map(xArrays, (xArr) => {
+        return _.map(xArr, (x) => {
+          return {x, y: y(x)};
+        });
       });
     } else if (_.isNumber(y[0])) {
-      // if y is an array of numbers, return it wrapped in an array
-      return [y];
+      // if y is an array of numbers, create an object with the first xArray
+      xArrays = xFromProps || xFromStringMap || xFromDomain;
+      n = _.min([xArrays[0].length, y.length]);
+      return _.map(_.take(xArray[0], n), (x, index) => {
+        return { x, y: y[index]};
+      });
     } else {
       // if y is an array of arrays and/or functions return the arrays,
       // and return the result of applying the functions to corresponding x arrays
-      let xArray;
+
       return _.map(y, (yElement, index) => {
-        xArray = xArrays[index] || xArrays[0];
-        return _.isFunction(yElement) ?
-          _.map(xArray, (x) => yElement(x)) : yElement;
+        if (_.isArray(yElement)) {
+          xArrays = xFromProps || xFromStringMap || xFromDomain;
+          xArray = xArrays[index] || xArrays[0];
+          n = _.min([xArray.length, yElement.length]);
+          return _.map(_.take(xArray, n), (x, i) => {
+            return {x, y: yElement[i]};
+          });
+        } else {
+          xArrays = xFromProps || xFromDomain;
+          xArray = xArrays[index] || xArrays[0];
+          return _.map(xArray, (x) => {
+            return {x, y: yElement(x)};
+          });
+        }
       });
     }
   }
@@ -289,7 +298,7 @@ class VictoryChart extends React.Component {
     if (_.includes(stackedTypes, props.chartType)) {
       return this.state.data;
     } else {
-      const stackedData =  _.filter(this.state.data, (dataset) => {
+      const stackedData = _.filter(this.state.data, (dataset) => {
         return _.includes(stackedTypes, dataset.attrs.type) ? dataset : null;
       });
       return _.isEmpty(stackedData) ? undefined : stackedData;
@@ -301,7 +310,7 @@ class VictoryChart extends React.Component {
     if (this.props.domain) {
       domain = this.props.domain[axis] || this.props.domain;
     } else if (this.props.tickValues) {
-      domain = this._getDomainFromTickValues(this.props, axis)
+      domain = this._getDomainFromTickValues(this.props, axis);
     } else {
       domain = this._getDomainFromData(axis);
     }
@@ -342,12 +351,12 @@ class VictoryChart extends React.Component {
   // helper method for getDomain
   _getDomainFromData(axis) {
     // if a sensible string map exists, return the minimum and maximum values
-    if (!!this.state.stringMap[axis]) {
+    if (this.state.stringMap[axis] !== null) {
       const mapValues = _.values(this.state.stringMap[axis]);
       return [_.min(mapValues), _.max(mapValues)];
     } else {
       // find the global min and max
-      const allData =  _.flatten(_.pluck(this.state.data, "data"));
+      const allData = _.flatten(_.pluck(this.state.data, "data"));
       const min = _.min(_.pluck(allData, axis));
       const max = _.max(_.pluck(allData, axis));
       // find the cumulative max for stacked chart types
@@ -355,7 +364,7 @@ class VictoryChart extends React.Component {
       const cumulativeMax = (this.state.stackedData && axis === "y") ?
         _.reduce(this.state.stackedData, (memo, dataset) => {
           return memo + (_.max(_.pluck(dataset.data, axis)) - _.min(_.pluck(dataset.data, axis)));
-        }, 0) : -Infinity
+        }, 0) : -Infinity;
       return [min, _.max([max, cumulativeMax])];
     }
   }
@@ -416,7 +425,7 @@ class VictoryChart extends React.Component {
     // if tickValues are defines in props, and dont contain strings, just return them
     if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
       return this.props.tickValues[axis];
-    } else if (!!this.state.stringMap[axis]) {
+    } else if (this.state.stringMap[axis] !== null) {
       // category values should have one tick of padding on either side
       return this.props.tickValues ?
         _.map(this.props.tickValues[axis], (tick) => this.state.stringMap[axis][tick]) :
@@ -435,8 +444,8 @@ class VictoryChart extends React.Component {
       return this.props.tickFormat[axis]();
     } else if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
       return (x) => x;
-    } else if (!!this.state.stringMap[axis]) {
-      const dataNames = _.keys(this.state.stringMap[axis])
+    } else if (this.state.stringMap[axis] !== null) {
+      const dataNames = _.keys(this.state.stringMap[axis]);
       // string ticks should have one tick of padding on either side
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
@@ -497,7 +506,7 @@ class VictoryChart extends React.Component {
     const categories = {
       x: this.state.stringMap.x ? _.keys(this.state.stringMap.x) : undefined,
       y: this.state.stringMap.y ? _.keys(this.state.stringMap.y) : undefined
-    }
+    };
     return (
       <VictoryBar
         {...this.props}
@@ -523,16 +532,12 @@ class VictoryChart extends React.Component {
       switch (type) {
         case "line":
           return this.drawLines(dataByType[type]);
-          break;
         case "scatter":
           return this.drawScatters(dataByType[type]);
-          break;
         case "bar":
           return this.drawBars(dataByType[type]);
-          break;
         case "stackedBar":
           return this.drawBars(dataByType[type], {stacked: true});
-          break;
       }
     });
   }

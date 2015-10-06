@@ -145,15 +145,15 @@ class App extends React.Component {
               [
                 {x: "red", y: 2},
                 {x: "green", y: 4},
-                {x: "blue", y: 2},
+                {x: "blue", y: 2}
               ], [
                 {x: "red", y: 1},
                 {x: "green", y: 2},
-                {x: "blue", y: 3},
+                {x: "blue", y: 3}
               ], [
                 {x: "red", y: 4},
                 {x: "green", y: 1},
-                {x: "blue", y: 2},
+                {x: "blue", y: 2}
               ]
             ]}
             dataAttributes={[
@@ -161,7 +161,7 @@ class App extends React.Component {
               {name: "series2", type: "bar", color: "green"},
               {name: "series2", type: "bar", color: "red"}
             ]}
-            y={[1, 2, 1]}
+            y={[[1, 2, 1], [2, 3, 3]]}
             yAttributes={{name: "line1", type: "line", stroke: "blue"}}
             domainOffset={{
               x: 0.2,
