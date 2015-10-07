@@ -5,7 +5,6 @@ import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 
-
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -109,7 +108,7 @@ class App extends React.Component {
     return (
       <div className="demo">
         <p>
-          <VictoryChart {...this.state}
+          <VictoryChart
             data={this.state.lineData}
             showGridLines={{x: false, y: true}}
             animate={true}/>
@@ -146,7 +145,7 @@ class App extends React.Component {
 
           <VictoryChart
             data={this.state.scatterData}
-            animate={{scatter: true, axis: false, line: false}}
+            animate={true}
             dataAttributes={{type: "scatter"}}
             y={(x) => x}/>
 
