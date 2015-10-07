@@ -78,8 +78,8 @@ class VictoryChart extends React.Component {
       y: this.getDomain("y")
     };
     this.scale = {
-      x: this.getScale("x"),
-      y: this.getScale("y")
+      x: this.getScale(props, "x"),
+      y: this.getScale(props, "y")
     };
   }
 
@@ -403,9 +403,9 @@ class VictoryChart extends React.Component {
       [style.height - style.margin, style.margin];
   }
 
-  getScale(axis) {
-    const scale = this.props.scale[axis] ? this.props.scale[axis]().copy() :
-      this.props.scale().copy();
+  getScale(props, axis) {
+    const scale = props.scale[axis] ? props.scale[axis]().copy() :
+      props.scale().copy();
     const range = this.range[axis];
     const domain = this.getDomain(axis);
     scale.range(range);
@@ -424,10 +424,6 @@ class VictoryChart extends React.Component {
   getAxisOffset() {
     // make the axes line up, and cross when appropriate
     const style = this.getStyles();
-    const scale = {
-      x: this.getScale("x"),
-      y: this.getScale("y")
-    };
     const origin = {
       x: _.max([_.min(this.getDomain("x")), 0]),
       y: _.max([_.min(this.getDomain("y")), 0])
@@ -437,8 +433,8 @@ class VictoryChart extends React.Component {
       y: this.props.axisOrientation.x === "bottom" ? style.height : 0
     };
     return {
-      x: Math.abs(orientationOffset.x - scale.x.call(this, origin.x)),
-      y: Math.abs(orientationOffset.y - scale.y.call(this, origin.y))
+      x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
+      y: Math.abs(orientationOffset.y - this.scale.y.call(this, origin.y))
     };
   }
 
@@ -463,7 +459,6 @@ class VictoryChart extends React.Component {
   }
 
   getTickFormat(axis) {
-    const scale = this.getScale(axis);
     if (this.props.tickFormat) {
       return this.props.tickFormat[axis]();
     } else if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
@@ -474,7 +469,7 @@ class VictoryChart extends React.Component {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return scale.tickFormat();
+      return this.scale[axis].tickFormat();
     }
   }
 
