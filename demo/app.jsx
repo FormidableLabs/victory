@@ -12,6 +12,7 @@ class App extends React.Component {
     this.state = {
       scatterData: this.getScatterData(),
       lineData: this.getData(),
+      numericBarData: this.getNumericBarData(),
       barData: this.getBarData(),
       dataAttributes: {
         stroke: "blue",
@@ -29,20 +30,38 @@ class App extends React.Component {
     });
   }
 
-  getBarData() {
-    const categories = ["red", "green", "blue"];
-    return _.map(_.range(5), (index) => {
+  getNumericBarData() {
+    return _.map(_.range(5), () => {
       return [
         {
-          x: "red",
+          x: _.random(1, 3),
           y: _.random(1, 5)
         },
         {
-          x: "green",
+          x: _.random(4, 7),
           y: _.random(1, 10)
         },
         {
-          x: "blue",
+          x: _.random(9, 11),
+          y: _.random(1, 15)
+        }
+      ];
+    });
+  }
+
+  getBarData() {
+    return _.map(_.range(5), () => {
+      return [
+        {
+          x: "first",
+          y: _.random(1, 5)
+        },
+        {
+          x: "second",
+          y: _.random(1, 10)
+        },
+        {
+          x: "third",
           y: _.random(1, 15)
         }
       ];
@@ -80,6 +99,7 @@ class App extends React.Component {
         scatterData: this.getScatterData(),
         lineData: this.getData(),
         barData: this.getBarData(),
+        numericBarData: this.getNumericBarData(),
         dataAttributes: this.getStyles()
       });
     }, 4000);
@@ -126,7 +146,7 @@ class App extends React.Component {
 
           <VictoryChart
             data={this.state.scatterData}
-            animate={true}
+            animate={{scatter: true, axis: false, line: false}}
             dataAttributes={{type: "scatter"}}
             y={(x) => x}/>
 
@@ -161,7 +181,24 @@ class App extends React.Component {
             {name: "line-two", type: "line", stroke: "green"},
             {name: "line-3", type: "scatter", color: "blue"}
           ]}/>
+
           <VictoryChart
+            data={this.state.numericBarData}
+            dataAttributes={[
+              {type: "bar", color: "cornflowerblue"},
+              {type: "bar", color: "orange"},
+              {type: "bar", color: "greenyellow"},
+              {type: "bar", color: "gold"},
+              {type: "bar", color: "tomato"}
+            ]}
+            barCategories={[[1, 3], [4, 7], [9, 11]]}
+            domainOffset={{
+              x: 0.2,
+              y: 0
+            }}
+            animate={true}/>
+
+            <VictoryChart
             data={this.state.barData}
             dataAttributes={[
               {type: "stackedBar", color: "cornflowerblue"},
@@ -175,7 +212,6 @@ class App extends React.Component {
               y: 0
             }}
             animate={true}/>
-
         </p>
       </div>
     );

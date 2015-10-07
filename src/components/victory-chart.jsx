@@ -70,6 +70,13 @@ class VictoryChart extends React.Component {
       }));
     }
 
+    // if categories exist and are strings, create a map from those strings
+    if (props.barCategories && Util.containsStrings(props.barCategories)) {
+      return _.zipObject(_.map(props.barCategories, (category, index) => {
+        return ["" + category, index + 1];
+      }));
+    }
+
     // otherwise, collect strings from data sources
     const allStrings = [];
     // collect strings from props.data
@@ -304,6 +311,8 @@ class VictoryChart extends React.Component {
       domain = this.props.domain[axis] || this.props.domain;
     } else if (this.props.tickValues) {
       domain = this._getDomainFromTickValues(this.props, axis);
+    } else if (this.props.barCategories && axis === "x") {
+      domain = this._getDomainFromCategories();
     } else {
       domain = this._getDomainFromData(axis);
     }
@@ -342,6 +351,14 @@ class VictoryChart extends React.Component {
     const data = Util.containsStrings(ticks) ?
       _.map(ticks, (tick) => stringMap[axis][tick]) : ticks;
     return [_.min(data), _.max(data)];
+  }
+
+  _getDomainFromCategories() {
+    const categories = _.flatten(this.props.barCategories);
+    if (Util.containsStrings(categories)) {
+      return undefined;
+    }
+    return [_.min(categories), _.max(categories)];
   }
 
   // helper method for getDomain
@@ -421,14 +438,19 @@ class VictoryChart extends React.Component {
 
   getTickValues(axis) {
     const stringMap = this.getStringMap();
-    // if tickValues are defines in props, and dont contain strings, just return them
+    const categories = this.props.barCategories;
+    // if tickValues are defined in props, and dont contain strings, just return them
     if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
       return this.props.tickValues[axis];
     } else if (stringMap[axis] !== null) {
-      // category values should have one tick of padding on either side
+      // return the values from the string map
       return this.props.tickValues ?
         _.map(this.props.tickValues[axis], (tick) => stringMap[axis][tick]) :
         _.values(stringMap[axis]);
+    } else if (axis === "x" && categories && !Util.containsStrings(categories)) {
+      // return tick values based on the bar categories
+      return _.isArray(categories[0]) ?
+        _.map(categories, (arr) => (_.sum(arr) / arr.length)) : categories;
     } else {
       // let axis determine it's own ticks
       return undefined;
@@ -502,10 +524,7 @@ class VictoryChart extends React.Component {
     const stringMap = this.getStringMap();
     const animate = (this.props.animate.bar !== undefined) ?
       this.props.animate.bar : this.props.animate;
-    const categories = {
-      x: stringMap.x ? _.keys(stringMap.x) : undefined,
-      y: stringMap.y ? _.keys(stringMap.y) : undefined
-    };
+    const categories = (stringMap.x) ? _.keys(stringMap.x) : undefined;
     return (
       <VictoryBar
         {...this.props}
@@ -517,7 +536,7 @@ class VictoryChart extends React.Component {
         style={style}
         domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
         range={{x: this.getRange("x"), y: this.getRange("y")}}
-        categories={categories}
+        categories={this.props.barCategories || categories}
         categoryOffset={this.props.domainOffset.x}
         key={"bar"}/>
     );
@@ -711,6 +730,7 @@ VictoryChart.propTypes = {
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
+  barCategories: React.PropTypes.array,
   animate: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.shape({
