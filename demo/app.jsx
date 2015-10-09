@@ -52,15 +52,15 @@ class App extends React.Component {
     return _.map(_.range(5), () => {
       return [
         {
-          x: "first",
+          x: "apples",
           y: _.random(1, 5)
         },
         {
-          x: "second",
+          x: "oranges",
           y: _.random(1, 10)
         },
         {
-          x: "third",
+          x: "bananas",
           y: _.random(1, 15)
         }
       ];
@@ -190,9 +190,10 @@ class App extends React.Component {
               {type: "bar", color: "gold"},
               {type: "bar", color: "tomato"}
             ]}
+            axisOrientation={{x: "top", y: "right"}}
             barCategories={[[1, 3], [4, 7], [9, 11]]}
             domainOffset={{
-              x: 0.2,
+              x: 20,
               y: 0
             }}
             animate={true}/>
@@ -207,7 +208,7 @@ class App extends React.Component {
               {type: "stackedBar", color: "tomato"}
             ]}
             domainOffset={{
-              x: 0.2,
+              x: 100,
               y: 0
             }}
             animate={true}/>

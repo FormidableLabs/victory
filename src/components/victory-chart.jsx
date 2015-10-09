@@ -4,39 +4,38 @@ import d3 from "d3";
 import _ from "lodash";
 import log from "../log";
 import Util from "../util";
-import { VictoryLine } from "victory-line";
-import { VictoryAxis } from "victory-axis";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryBar } from "victory-bar";
+import {VictoryLine} from "victory-line";
+import {VictoryAxis} from "victory-axis";
+import {VictoryScatter} from "victory-scatter";
+import {VictoryBar} from "victory-bar";
 
 @Radium
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
     // warn about bad data
-    this.validateData(this.props);
+    this.validateData(props);
     // provide default data for the component to render
     this.defaultData = (x) => x;
-    this.getCaluclatedValues(this.props)
+    this.getCalculatedValues(props);
   }
 
   componentWillReceiveProps(nextProps) {
     // warn about bad data
     this.validateData(nextProps);
-    this.getCaluclatedValues(nextProps);
+    this.getCalculatedValues(nextProps);
   }
 
-  getStyles() {
+  getStyles(props) {
     return _.merge({
       color: "#000",
       margin: 50,
       width: 500,
       height: 300
-    }, this.props.style);
+    }, props.style);
   }
 
-  validateData(originalProps) {
-    const props = _.cloneDeep(originalProps);
+  validateData(props) {
     const axes = ["x", "y"];
     _.each(axes, (axis) => {
       // check for mixed string and numeric data
@@ -62,7 +61,8 @@ class VictoryChart extends React.Component {
     });
   }
 
-  getCaluclatedValues(props) {
+  getCalculatedValues(props) {
+    this.style = this.getStyles(props);
     this.stringMap = {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
@@ -74,13 +74,22 @@ class VictoryChart extends React.Component {
       y: this.getRange(props, "y")
     };
     this.domain = {
-      x: this.getDomain("x"),
-      y: this.getDomain("y")
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
     };
     this.scale = {
       x: this.getScale(props, "x"),
       y: this.getScale(props, "y")
     };
+    this.tickValues = {
+      x: this.getTickValues(props, "x"),
+      y: this.getTickValues(props, "y")
+    };
+    this.tickFormat = {
+      x: this.getTickFormat(props, "x"),
+      y: this.getTickFormat(props, "y")
+    };
+    this.axisOffset = this.getAxisOffset(props);
   }
 
   createStringMap(props, axis) {
@@ -228,7 +237,7 @@ class VictoryChart extends React.Component {
       const data = _.values(this.stringMap.x);
       return [_.min(data), _.max(data)];
     }
-    return this._padDomain([_.min(xData), _.max(xData)], "x");
+    return this._padDomain(props, [_.min(xData), _.max(xData)], "x");
   }
 
   // helper for generateXFromDomain
@@ -315,39 +324,40 @@ class VictoryChart extends React.Component {
     }
   }
 
-  getDomain(axis) {
+  getDomain(props, axis) {
     let domain;
-    if (this.props.domain) {
-      domain = this.props.domain[axis] || this.props.domain;
-    } else if (this.props.tickValues) {
-      domain = this._getDomainFromTickValues(this.props, axis);
-    } else if (this.props.barCategories && axis === "x") {
-      domain = this._getDomainFromCategories();
+    if (props.domain) {
+      domain = props.domain[axis] || props.domain;
+    } else if (props.tickValues) {
+      domain = this._getDomainFromTickValues(props, axis);
+    } else if (props.barCategories && axis === "x") {
+      domain = this._getDomainFromCategories(props);
     } else {
       domain = this._getDomainFromData(axis);
     }
 
-    const paddedDomain = this.props.domain ? domain : this._padDomain(domain, axis);
+    const paddedDomain = props.domain ? domain : this._padDomain(props, domain, axis);
 
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
-    const orientation = this.props.axisOrientation[otherAxis];
+    const orientation = props.axisOrientation[otherAxis];
     return orientation === "bottom" || orientation === "left" ?
       paddedDomain : paddedDomain.concat().reverse();
   }
 
-  _padDomain(domain, axis) {
+  _padDomain(props, domain, axis) {
     // don't pad non-numeric domains
     if (_.some(domain, (element) => !_.isNumber(element))) {
       return domain;
-    } else if (!this.props.domainOffset || this.props.domainOffset[axis] === 0) {
+    } else if (!props.domainOffset || props.domainOffset[axis] === 0) {
       return domain;
     }
     const min = _.min(domain);
     const max = _.max(domain);
+    const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
     const extent = Math.abs(max - min);
-    const percentPadding = this.props.domainOffset ? this.props.domainOffset[axis] : 0;
+    const percentPadding = props.domainOffset ? props.domainOffset[axis] / rangeExtent : 0;
     const padding = extent * percentPadding;
     const adjustedMin = min === 0 ? min : min - padding;
     const adjustedMax = max === 0 ? max : max + padding;
@@ -356,14 +366,14 @@ class VictoryChart extends React.Component {
 
   // helper method for getDomain
   _getDomainFromTickValues(props, axis) {
-    const ticks = this.props.tickValues[axis];
+    const ticks = props.tickValues[axis];
     const data = Util.containsStrings(ticks) ?
       _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
     return [_.min(data), _.max(data)];
   }
 
-  _getDomainFromCategories() {
-    const categories = _.flatten(this.props.barCategories);
+  _getDomainFromCategories(props) {
+    const categories = _.flatten(props.barCategories);
     if (Util.containsStrings(categories)) {
       return undefined;
     }
@@ -396,18 +406,16 @@ class VictoryChart extends React.Component {
       return props.range[axis] ? props.range[axis] : props.range;
     }
     // if the range is not given in props, calculate it from width, height and margin
-    const style = this.getStyles();
-
     return axis === "x" ?
-      [style.margin, style.width - style.margin] :
-      [style.height - style.margin, style.margin];
+      [this.style.margin, this.style.width - this.style.margin] :
+      [this.style.height - this.style.margin, this.style.margin];
   }
 
   getScale(props, axis) {
     const scale = props.scale[axis] ? props.scale[axis]().copy() :
       props.scale().copy();
     const range = this.range[axis];
-    const domain = this.getDomain(axis);
+    const domain = this.domain[axis];
     scale.range(range);
     scale.domain(domain);
     // hacky check for identity scale
@@ -421,16 +429,15 @@ class VictoryChart extends React.Component {
     return scale;
   }
 
-  getAxisOffset() {
+  getAxisOffset(props) {
     // make the axes line up, and cross when appropriate
-    const style = this.getStyles();
     const origin = {
-      x: _.max([_.min(this.getDomain("x")), 0]),
-      y: _.max([_.min(this.getDomain("y")), 0])
+      x: _.max([_.min(this.domain.x), 0]),
+      y: _.max([_.min(this.domain.y), 0])
     };
     const orientationOffset = {
-      x: this.props.axisOrientation.y === "left" ? 0 : style.width,
-      y: this.props.axisOrientation.x === "bottom" ? style.height : 0
+      x: props.axisOrientation.y === "left" ? 0 : this.style.width,
+      y: props.axisOrientation.x === "bottom" ? this.style.height : 0
     };
     return {
       x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
@@ -438,14 +445,14 @@ class VictoryChart extends React.Component {
     };
   }
 
-  getTickValues(axis) {
-    const categories = this.props.barCategories;
+  getTickValues(props, axis) {
+    const categories = props.barCategories;
     // if tickValues are defined in props, and dont contain strings, just return them
-    if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
-      return this.props.tickValues[axis];
+    if (props.tickValues && !Util.containsStrings(props.tickValues[axis])) {
+      return props.tickValues[axis];
     } else if (this.stringMap[axis] !== null) {
       // return the values from the string map
-      return this.props.tickValues ?
+      return props.tickValues ?
         _.map(this.props.tickValues[axis], (tick) => this.stringMap[axis][tick]) :
         _.values(this.stringMap[axis]);
     } else if (axis === "x" && categories && !Util.containsStrings(categories)) {
@@ -458,10 +465,10 @@ class VictoryChart extends React.Component {
     }
   }
 
-  getTickFormat(axis) {
-    if (this.props.tickFormat) {
-      return this.props.tickFormat[axis]();
-    } else if (this.props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
+  getTickFormat(props, axis) {
+    if (props.tickFormat) {
+      return props.tickFormat[axis]();
+    } else if (props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
       return (x) => x;
     } else if (this.stringMap[axis] !== null) {
       const dataNames = _.keys(this.stringMap[axis]);
@@ -474,7 +481,6 @@ class VictoryChart extends React.Component {
   }
 
   drawLines(datasets) {
-    const style = this.getStyles();
     const animate = (this.props.animate.line !== undefined) ?
       this.props.animate.line : this.props.animate;
 
@@ -486,8 +492,8 @@ class VictoryChart extends React.Component {
           animate={animate}
           containerElement="g"
           data={dataset.data}
-          style={_.merge(style, attrs)}
-          domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+          style={_.merge(this.style, attrs)}
+          domain={{x: this.domain.x, y: this.domain.y}}
           range={{x: this.range.x, y: this.range.y}}
           ref={name}
           key={index}/>
@@ -496,7 +502,6 @@ class VictoryChart extends React.Component {
   }
 
   drawScatters(datasets) {
-    const style = this.getStyles();
     const animate = (this.props.animate.scatter !== undefined) ?
       this.props.animate.scatter : this.props.animate;
     return _.map(datasets, (dataset, index) => {
@@ -509,8 +514,8 @@ class VictoryChart extends React.Component {
           data={dataset.data}
           size={size || 3}
           symbol={symbol || "circle"}
-          style={_.merge(style, attrs)}
-          domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+          style={_.merge(this.style, attrs)}
+          domain={{x: this.domain.x, y: this.domain.y}}
           range={{x: this.range.x, y: this.range.y}}
           ref={name}
           key={"scatter-" + index}/>
@@ -519,10 +524,10 @@ class VictoryChart extends React.Component {
   }
 
   drawBars(datasets, options) {
-    const style = this.getStyles();
     const animate = (this.props.animate.bar !== undefined) ?
       this.props.animate.bar : this.props.animate;
-    const categories = (this.stringMap.x) ? _.keys(this.stringMap.x) : undefined;
+    const categories = (this.stringMap.x) && _.keys(this.stringMap.x);
+    const offset = this.props.domainOffset && this.props.domainOffset.x;
     return (
       <VictoryBar
         {...this.props}
@@ -531,11 +536,11 @@ class VictoryChart extends React.Component {
         data={_.pluck(datasets, "data")}
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
-        style={style}
-        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
+        style={this.style}
+        domain={{x: this.domain.x, y: this.domain.y}}
         range={{x: this.range.x, y: this.range.y}}
         categories={this.props.barCategories || categories}
-        categoryOffset={this.props.domainOffset.x}
+        categoryOffset={offset}
         key={"bar"}/>
     );
   }
@@ -559,16 +564,16 @@ class VictoryChart extends React.Component {
   }
 
   drawAxis(axis) {
-    const style = this.getStyles();
-    const offsetY = axis === "y" ? undefined : this.getAxisOffset().y;
-    const offsetX = axis === "x" ? undefined : this.getAxisOffset().x;
-    const axisStyle = this.props.axisStyle ? this.props.axisStyle : undefined;
-    const tickStyle = this.props.tickStyle ? this.props.tickStyle : undefined;
-    const gridStyle = this.props.gridStyle ? this.props.gridStyle : undefined;
-    const axisLabel = this.props.axisLabels && this.props.axisLabels[axis] ?
-      this.props.axisLabels[axis] : undefined;
-    const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding ?
-      this.props.axisLabels.labelPadding : undefined;
+    // TODO: styles still need to be calculated on the fly here,
+    // or the axes will be incorrectly styled. investigate!
+    const style = this.getStyles(this.props);
+    const offsetY = axis === "y" ? undefined : this.axisOffset.y;
+    const offsetX = axis === "x" ? undefined : this.axisOffset.x;
+    const axisStyle = this.props.axisStyle && this.props.axisStyle[axis];
+    const tickStyle = this.props.tickStyle && this.props.tickStyle[axis];
+    const gridStyle = this.props.gridStyle && this.props.gridStyle[axis];
+    const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
+    const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding;
     const animate = (this.props.animate.axis !== undefined) ?
       this.props.animate.axis : this.props.animate;
     return (
@@ -581,14 +586,14 @@ class VictoryChart extends React.Component {
         offsetY={offsetY}
         offsetX={offsetX}
         crossAxis={true}
-        domain={this.getDomain(axis)}
+        domain={this.domain[axis]}
         range={this.range[axis]}
         scale={this.props.scale[axis]}
         orientation={this.props.axisOrientation[axis]}
         showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
-        tickValues={this.getTickValues(axis)}
-        tickFormat={this.getTickFormat(axis)}
+        tickValues={this.tickValues[axis]}
+        tickFormat={this.tickFormat[axis]}
         axisStyle={axisStyle}
         gridStyle={gridStyle}
         tickStyle={tickStyle}
@@ -597,10 +602,9 @@ class VictoryChart extends React.Component {
   }
 
   render() {
-    const style = this.getStyles();
     if (this.props.containerElement === "svg") {
       return (
-        <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
+        <svg style={{ width: this.style.width, height: this.style.height, overflow: "visible" }}>
           {this.drawAxis("x")}
           {this.drawAxis("y")}
           {this.drawData()}
