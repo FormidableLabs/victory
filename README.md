@@ -7,7 +7,7 @@ VictoryChart is an intelligent, flexible charting component for React. VictoryCh
 
 ## API
 
-There are several configuration options for Victory Scatter, but if only the `data` is prop is provided, a sensible scatter will still be rendered.
+There are several configuration options for VictoryChart, but if only the `data` is prop is provided, a sensible chart will still be rendered.
 
 ### Props
 
