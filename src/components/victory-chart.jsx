@@ -3,155 +3,251 @@ import Radium from "radium";
 import d3 from "d3";
 import _ from "lodash";
 import log from "../log";
-import { VictoryLine } from "victory-line";
-import { VictoryAxis } from "victory-axis";
-import { VictoryScatter } from "victory-scatter";
-import { VictoryBar } from "victory-bar";
+import Util from "../util";
+import {VictoryLine} from "victory-line";
+import {VictoryAxis} from "victory-axis";
+import {VictoryScatter} from "victory-scatter";
+import {VictoryBar} from "victory-bar";
 
 @Radium
 class VictoryChart extends React.Component {
   constructor(props) {
     super(props);
+    // warn about bad data
+    this.validateData(props);
+    // provide default data for the component to render
+    this.defaultData = (x) => x;
+    this.getCalculatedValues(props);
   }
 
-  getStyles() {
+  componentWillReceiveProps(nextProps) {
+    // warn about bad data
+    this.validateData(nextProps);
+    this.getCalculatedValues(nextProps);
+  }
+
+  getStyles(props) {
     return _.merge({
       color: "#000",
       margin: 50,
       width: 500,
       height: 300
-    }, this.props.style);
+    }, props.style);
   }
 
-  // look out for scope errors, this was removed from consolidateData()
-  inCaseOfYData(datasets) {
-    const xArrays = this.returnOrGenerateX(); // returns an array of arrays
-    const yArrays = this.returnOrGenerateY(); // returns an array of arrays
-    let n;
-    let xArray;
-    // create dataArrays of n points from each x array and each y array
-    const dataArrays = _.map(yArrays, (y, index) => {
-      xArray = xArrays[index] || xArrays[0];
-      n = _.min([xArray.length, y.length]);
-      return _.zip(_.take(xArray, n), _.take(y, n));
+  validateData(props) {
+    const axes = ["x", "y"];
+    _.each(axes, (axis) => {
+      // check for mixed string and numeric data
+      const data = props.data ? _.pluck(_.flatten(props.data), axis) : [];
+      const typeData = props[axis] && _.isArray(props[axis]) ?
+        _.flatten(_.map(props[axis], (element) => {
+          return _.isFunction(element) ? [] : element;
+        })) : [];
+      const allData = data.concat(typeData);
+      if (Util.containsStrings(allData) && !Util.containsOnlyStrings(allData)) {
+        log.warn("Don't mix string data with numeric data on the same axis!");
+      }
+      // check for mixed bar and stackedBar chart types
+      const dataTypes = this.props.dataAttributes ?
+        _.pluck(_.flatten(this.props.dataAttributes), "type") : [];
+      const yTypes = this.props.yAttributes ?
+        _.pluck(_.flatten(this.props.yAttributes), "type") : [];
+      const globalType = this.props.chartType || [];
+      const types = dataTypes.concat(yTypes, globalType);
+      if (_.includes(types, "bar") && _.includes(types, "stackedBar")) {
+        log.warn("Don't mix bar with stackedBar in the same chart!");
+      }
     });
-
-    // for each dataArray create an array of data points and add it to
-    // the consolidated datasets
-    _.each(dataArrays, (dataArray, index) => {
-      datasets.push({
-        attrs: this._getAttributes("y", index),
-        data: _.map(dataArray, (datum) => {
-          return {
-            x: datum[0],
-            y: datum[1]
-          };
-        })
-      });
-    });
-    return datasets;
   }
 
-  consolidateData() {
+  getCalculatedValues(props) {
+    this.style = this.getStyles(props);
+    this.stringMap = {
+      x: this.createStringMap(props, "x"),
+      y: this.createStringMap(props, "y")
+    };
+    this.datasets = this.consolidateData(props);
+    this.stackedData = this.getStackedData(props);
+    this.range = {
+      x: this.getRange(props, "x"),
+      y: this.getRange(props, "y")
+    };
+    this.domain = {
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
+    };
+    this.scale = {
+      x: this.getScale(props, "x"),
+      y: this.getScale(props, "y")
+    };
+    this.tickValues = {
+      x: this.getTickValues(props, "x"),
+      y: this.getTickValues(props, "y")
+    };
+    this.tickFormat = {
+      x: this.getTickFormat(props, "x"),
+      y: this.getTickFormat(props, "y")
+    };
+    this.axisOffset = this.getAxisOffset(props);
+  }
 
-    // Lauren && Colin to reconcile upon her return...
-    if (this.props.dataAttributes && this.props.dataAttributes.type === "bar") {
-      return [{
-        attrs: this._getAttributes("data", 0),
-        data: this.props.barData
-      }];
+  createStringMap(props, axis) {
+    // if tick values exist and are strings, create a map using only those strings
+    // dont alter the order.
+    if (props.tickValues && Util.containsStrings(props.tickValues[axis])) {
+      return _.zipObject(_.map(props.tickValues[axis], (tick, index) => {
+        return ["" + tick, index + 1];
+      }));
     }
 
-    // build all of the types of data into one consistent dataset for easy plotting
-    // data can exist as this.props.data, this.props.x, and this.props.y
-    let datasets = [];
+    // if categories exist and are strings, create a map from those strings
+    if (props.categories && Util.containsStrings(props.categories)) {
+      return _.zipObject(_.map(props.categories, (category, index) => {
+        return ["" + category, index + 1];
+      }));
+    }
 
+    // otherwise, collect strings from data sources
+    const allStrings = [];
+    // collect strings from props.data
+    if (props.data) {
+      const data = _.isArray(props.data) ? _.flatten(props.data) : props.data;
+      const stringData = _.chain(data)
+        .pluck(axis)
+        .map((datum) => {
+          return _.isString(datum) ? datum : null;
+        })
+        .value();
+      allStrings.push(stringData);
+    }
+    // collect strings from props x or props y
+    if (props[axis] && _.isArray(props[axis])) {
+      _.each(_.flatten(props[axis]), (element) => {
+        if (_.isString(element)) {
+          allStrings.push(element);
+        }
+      });
+    }
+    // create a unique, sorted set of strings
+    const uniqueStrings = _.chain(allStrings)
+      .flatten()
+      .compact()
+      .uniq()
+      .sort()
+      .value();
+
+    return _.isEmpty(uniqueStrings) ?
+      null :
+      _.zipObject(_.map(uniqueStrings, (string, index) => {
+        return [string, index + 1];
+      }));
+  }
+
+  consolidateData(props) {
+    // build all of the types of data into one consistent dataset for easy plotting
+    // data can exist as props.data, this.props.x, and this.props.y
+    const datasets = [];
     // if no data is passed in, plot a straight line
-    const defaultData = (x) => x;
-    const yData = (!this.props.data && !this.props.y) ? defaultData : this.props.y;
+    const yData = (!props.data && !props.y) ? this.defaultData : props.y;
     // if y is given, construct data for all y, and add it to the dataset
     if (yData) {
-      // eslint made me do this. too many statements in one function?
-      datasets = this.inCaseOfYData(datasets);
+      const dataArrays = this.generateDataFromXY(props);
+      let attributes;
+      _.each(dataArrays, (dataArray, index) => {
+        attributes = this._getAttributes(props, "y", index);
+        datasets.push(this._formatDataset(dataArray, attributes));
+      });
     }
-
-    // if data is given in this.props.data, add it to the cosolidated datasets
-    if (this.props.data) {
-      if (_.isArray(this.props.data[0])) {
-        _.each(this.props.data, (dataset, index) => {
-          datasets.push({
-            attrs: this._getAttributes("data", index),
-            data: dataset
-          });
-        });
-      } else {
-        datasets.push({
-          attrs: this._getAttributes("data", 0),
-          data: this.props.data
-        });
-      }
+    // if data is given in props.data, add it to the cosolidated datasets
+    if (props.data) {
+      const dataFromProps = _.isArray(props.data[0]) ? props.data : [props.data];
+      let attributes;
+      _.each(dataFromProps, (dataset, index) => {
+        attributes = this._getAttributes(props, "data", index);
+        datasets.push(this._formatDataset(dataset, attributes));
+      });
     }
     return datasets;
+  }
+
+  _formatDataset(dataset, attributes) {
+    return {
+      attrs: attributes,
+      data: _.map(dataset, (data) => {
+        return _.merge(data, {
+          // map string data to numeric values, and add names
+          x: _.isString(data.x) ? this.stringMap.x[data.x] : data.x,
+          xName: _.isString(data.x) ? data.x : undefined,
+          y: _.isString(data.y) ? this.stringMap.y[data.y] : data.y,
+          yName: _.isString(data.y) ? data.y : undefined
+        });
+      })
+    };
   }
 
   // https://github.com/FormidableLabs/victory-chart/issues/5
   // helper for consolidateData
-  _getAttributes(type, index) {
+  _getAttributes(props, type, index) {
     // type is y or data
     const source = type + "Attributes";
-    const attributes = this.props[source] && this.props[source][index] ?
-      this.props[source][index] : this.props[source];
+    const attributes = props[source] && props[source][index] ?
+      props[source][index] : props[source];
     const requiredAttributes = {
       name: attributes && attributes.name ? attributes.name : type + "-" + index,
-      type: attributes && attributes.type ? attributes.type : "line"
+      type: attributes && attributes.type ? attributes.type : props.chartType
     };
     return _.merge(requiredAttributes, attributes);
   }
 
-  returnOrGenerateX() {
-    if (this.props.x) {
-      return _.isArray(this.props.x[0]) ? this.props.x : [this.props.x];
-    }
-    // if x is not given in props, create an array of values evenly
-    // spaced across the x domain
+  generateXFromDomain(props) {
+    //create an array of values evenly spaced across the x domain
 
     // Determine how to calculate the domain:
-    // domain based on this.props.domain if it is given
-    const domainFromProps = (this.props.domain && this.props.domain.x) ?
-      this.props.domain.x : this.props.domain;
+    // domain based on props.domain if it is given
+    const domainFromProps = (props.domain && props.domain.x) ?
+      props.domain.x : props.domain;
 
     // domain based on tickValues if they are given
-    const domainFromTicks = this.props.tickValues ?
-      [_.min(this.props.tickValues.x), _.max(this.props.tickValues.x)] : undefined;
+    const domainFromTicks = props.tickValues ?
+      this._getDomainFromTickValues(props, "x") : undefined;
 
-    // domain based on this.props.data if it is given
-    const domainFromData = this.props.data ?
-      this._getDomainFromDataProps("x") : undefined;
+    // domain based on props.data if it is given
+    const domainFromData = props.data ?
+      this._getDomainFromDataProps(props) : undefined;
 
-    // domain based on this.props.scale
-    // note: this.props.scale  will never be undefined thanks to default props
-    const domainFromScale = this.props.scale.x ?
-      this.props.scale.x().domain() : this.props.scale().domain();
+    // domain based on props.scale
+    // note: props.scale will never be undefined thanks to default props
+    const domainFromScale = props.scale.x ?
+      props.scale.x().domain() : props.scale().domain();
 
-    // determin3 which domain to use in order of preference
+    // determine which domain to use in order of preference
     const domain = domainFromProps || domainFromTicks || domainFromData || domainFromScale;
-    const samples = this._getNumSamples();
+    const samples = this._getNumSamples(props);
     const step = (_.max(domain) - _.min(domain)) / samples;
     // return an array of an array of x values spaced scross the domain,
     // include the maximum of the domain
     return [_.union(_.range(_.min(domain), _.max(domain), step), [_.max(domain)])];
   }
 
-  // helper for returnOrGenerateX
-  _getDomainFromDataProps(type) {
-    const data = _.flatten(this.props.data);
-    return [_.min(_.pluck(data, type)), _.max(_.pluck(data, type))];
+  // helper for generateXFromDomain
+  _getDomainFromDataProps(props) {
+    const xData = _.pluck(_.flatten(props.data), "x");
+    if (Util.containsStrings(xData)) {
+      const data = _.values(this.stringMap.x);
+      return [_.min(data), _.max(data)];
+    }
+    return this._padDomain(props, [_.min(xData), _.max(xData)], "x");
   }
 
-  // helper for returnOrGenerateX
-  _getNumSamples() {
+  // helper for generateXFromDomain
+  _getNumSamples(props) {
+    // if props.samples is defined, return it:
+    if (props.samples) {
+      return props.samples;
+    }
     // if y props exist and have some sensible length, return that length
-    const yArray = _.isArray(this.props.y) ? this.props.y : undefined;
+    const yArray = _.isArray(props.y) ? props.y : undefined;
     if (yArray && !_.isArray(yArray[0]) && !_.isFunction(yArray[0])) {
       return yArray.length;
     } else if (yArray) {
@@ -159,86 +255,167 @@ class VictoryChart extends React.Component {
         return _.isArray(element) ? element.length : 0;
       });
       const max = _.max(arrayLengths.concat(0));
-      return max > 1 ? max : this.props.samples;
+      // return a default length of 50 if the number of samples would otherwise
+      // be 1 or fewer
+      return max > 1 ? max : 50;
     }
-    // otherwise just use this.props.samples (default value: 50)
-    return this.props.samples;
   }
 
-  returnOrGenerateY() {
-    // Always return an array of arrays.
-    const y = (!this.props.data && !this.props.y) ? this.defaultData : this.props.y;
-    const xArray = this.returnOrGenerateX();
+  generateDataFromXY(props) {
+    // Always return an array of arrays of {x, y} datasets
+    // determine possible values of an x array:
+    const xFromProps = (props.x && _.isNumber(props.x[0])) ? [props.x] : props.x;
+    const xFromStringMap = this.stringMap.x ? [_.values(this.stringMap.x)] : undefined;
+    const xFromDomain = this.generateXFromDomain(props);
+    let xArrays;
+    let xArray;
+    let n;
+
+    // determine y
+    const y = (!props.data && !props.y) ? this.defaultData : props.y;
+
     if (_.isFunction(y)) {
       // if y is a function, apply it to each element in each x array
-      return _.map(xArray, (xSegment) => {
-        return _.map(xSegment, (datum) => y(datum));
+      xArrays = xFromProps || xFromDomain;
+      return _.map(xArrays, (xArr) => {
+        return _.map(xArr, (x) => {
+          return {x, y: y(x)};
+        });
       });
     } else if (_.isNumber(y[0])) {
-      // if y is an array of numbers, return it wrapped in an array
-      return [y];
+      // if y is an array of numbers, create an object with the first xArray
+      xArrays = xFromProps || xFromStringMap || xFromDomain;
+      n = _.min([xArrays[0].length, y.length]);
+      return _.map(_.take(xArray[0], n), (x, index) => {
+        return { x, y: y[index]};
+      });
     } else {
       // if y is an array of arrays and/or functions return the arrays,
       // and return the result of applying the functions to corresponding x arrays
-      let x;
+
       return _.map(y, (yElement, index) => {
-        x = xArray[index] || xArray[0];
-        return _.isFunction(yElement) ?
-          _.map(x, (datum) => yElement(datum)) : yElement;
+        if (_.isArray(yElement)) {
+          xArrays = xFromProps || xFromStringMap || xFromDomain;
+          xArray = xArrays[index] || xArrays[0];
+          n = _.min([xArray.length, yElement.length]);
+          return _.map(_.take(xArray, n), (x, i) => {
+            return {x, y: yElement[i]};
+          });
+        } else {
+          xArrays = xFromProps || xFromDomain;
+          xArray = xArrays[index] || xArrays[0];
+          return _.map(xArray, (x) => {
+            return {x, y: yElement(x)};
+          });
+        }
       });
     }
   }
 
-  getDomain(type) {
-    let domain;
-    if (this.props.domain) {
-      domain = this.props.domain[type] || this.props.domain;
-    } else if (this.props.tickValues) {
-      domain = [_.min(this.props.tickValues[type]), _.max(this.props.tickValues[type])];
+  getStackedData(props) {
+    const stackedTypes = ["stackedBar"];
+    if (_.includes(stackedTypes, props.chartType)) {
+      return this.datasets;
     } else {
-      domain = this._getDomainFromData(type);
+      const stackedData = _.filter(this.datasets, (dataset) => {
+        return _.includes(stackedTypes, dataset.attrs.type) ? dataset : null;
+      });
+      return _.isEmpty(stackedData) ? undefined : stackedData;
     }
+  }
+
+  getDomain(props, axis) {
+    let domain;
+    if (props.domain) {
+      domain = props.domain[axis] || props.domain;
+    } else if (props.tickValues) {
+      domain = this._getDomainFromTickValues(props, axis);
+    } else if (props.categories && axis === "x") {
+      domain = this._getDomainFromCategories(props);
+    } else {
+      domain = this._getDomainFromData(axis);
+    }
+
+    const paddedDomain = props.domain ? domain : this._padDomain(props, domain, axis);
 
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
-    const otherAxis = type === "x" ? "y" : "x";
-    const orientation = this.props.axisOrientation[otherAxis];
-
+    const otherAxis = axis === "x" ? "y" : "x";
+    const orientation = props.axisOrientation[otherAxis];
     return orientation === "bottom" || orientation === "left" ?
-      domain : domain.concat().reverse();
+      paddedDomain : paddedDomain.concat().reverse();
+  }
+
+  _padDomain(props, domain, axis) {
+    // don't pad non-numeric domains
+    if (_.some(domain, (element) => !_.isNumber(element))) {
+      return domain;
+    } else if (!props.domainPadding || props.domainPadding[axis] === 0) {
+      return domain;
+    }
+    const min = _.min(domain);
+    const max = _.max(domain);
+    const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
+    const extent = Math.abs(max - min);
+    const percentPadding = props.domainPadding ? props.domainPadding[axis] / rangeExtent : 0;
+    const padding = extent * percentPadding;
+    const adjustedMin = min === 0 ? min : min - padding;
+    const adjustedMax = max === 0 ? max : max + padding;
+    return [adjustedMin, adjustedMax];
   }
 
   // helper method for getDomain
-  _getDomainFromData(type) {
-    const data = _.map(this.consolidateData(), (dataset) => {
-      return dataset.data;
-    });
-    const min = [];
-    const max = [];
-    _.each(data, (datum) => {
-      min.push(_.min(_.pluck(datum, type)));
-      max.push(_.max(_.pluck(datum, type)));
-    });
-    return [_.min(min), _.max(max)];
+  _getDomainFromTickValues(props, axis) {
+    const ticks = props.tickValues[axis];
+    const data = Util.containsStrings(ticks) ?
+      _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
+    return [_.min(data), _.max(data)];
   }
 
-  getRange(type) {
-    if (this.props.range) {
-      return this.props.range[type] ? this.props.range[type] : this.props.range;
+  _getDomainFromCategories(props) {
+    const categories = _.flatten(props.categories);
+    if (Util.containsStrings(categories)) {
+      return undefined;
+    }
+    return [_.min(categories), _.max(categories)];
+  }
+
+  // helper method for getDomain
+  _getDomainFromData(axis) {
+    // if a sensible string map exists, return the minimum and maximum values
+    if (this.stringMap[axis] !== null) {
+      const mapValues = _.values(this.stringMap[axis]);
+      return [_.min(mapValues), _.max(mapValues)];
+    } else {
+      // find the global min and max
+      const allData = _.flatten(_.pluck(this.datasets, "data"));
+      const min = _.min(_.pluck(allData, axis));
+      const max = _.max(_.pluck(allData, axis));
+      // find the cumulative max for stacked chart types
+      // this is only sensible for the y domain
+      const cumulativeMax = (this.stackedData && axis === "y") ?
+        _.reduce(this.stackedData, (memo, dataset) => {
+          return memo + (_.max(_.pluck(dataset.data, "y")));
+        }, 0) : -Infinity;
+      return [min, _.max([max, cumulativeMax])];
+    }
+  }
+
+  getRange(props, axis) {
+    if (props.range) {
+      return props.range[axis] ? props.range[axis] : props.range;
     }
     // if the range is not given in props, calculate it from width, height and margin
-    const style = this.getStyles();
-
-    return type === "x" ?
-      [style.margin, style.width - style.margin] :
-      [style.height - style.margin, style.margin];
+    return axis === "x" ?
+      [this.style.margin, this.style.width - this.style.margin] :
+      [this.style.height - this.style.margin, this.style.margin];
   }
 
-  getScale(type) {
-    const scale = this.props.scale[type] ? this.props.scale[type]().copy() :
-      this.props.scale().copy();
-    const range = this.getRange(type);
-    const domain = this.getDomain(type);
+  getScale(props, axis) {
+    const scale = props.scale[axis] ? props.scale[axis]().copy() :
+      props.scale().copy();
+    const range = this.range[axis];
+    const domain = this.domain[axis];
     scale.range(range);
     scale.domain(domain);
     // hacky check for identity scale
@@ -249,130 +426,155 @@ class VictoryChart extends React.Component {
       log.warn("Identity Scale: domain and range must be identical. " +
         "Domain has been reset to match range.");
     }
-
     return scale;
   }
 
-  getAxisOffset() {
+  getAxisOffset(props) {
     // make the axes line up, and cross when appropriate
-    const style = this.getStyles();
-    const scale = {
-      x: this.getScale("x"),
-      y: this.getScale("y")
-    };
     const origin = {
-      x: _.max([_.min(this.getDomain("x")), 0]),
-      y: _.max([_.min(this.getDomain("y")), 0])
+      x: _.max([_.min(this.domain.x), 0]),
+      y: _.max([_.min(this.domain.y), 0])
     };
     const orientationOffset = {
-      x: this.props.axisOrientation.y === "left" ? 0 : style.width,
-      y: this.props.axisOrientation.x === "bottom" ? style.height : 0
+      x: props.axisOrientation.y === "left" ? 0 : this.style.width,
+      y: props.axisOrientation.x === "bottom" ? this.style.height : 0
     };
     return {
-      x: Math.abs(orientationOffset.x - scale.x.call(this, origin.x)),
-      y: Math.abs(orientationOffset.y - scale.y.call(this, origin.y))
+      x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
+      y: Math.abs(orientationOffset.y - this.scale.y.call(this, origin.y))
     };
   }
 
-  getTickValues(type) {
-    const scale = this.getScale(type);
-    if (this.props.tickValues) {
-      return this.props.tickValues[type];
-    } else if (_.isFunction(scale.ticks)) {
-      const ticks = scale.ticks(this.props.tickCount[type]);
-      return _.without(ticks, 0);
+  getTickValues(props, axis) {
+    // if tickValues are defined in props, and dont contain strings, just return them
+    if (props.tickValues && !Util.containsStrings(props.tickValues[axis])) {
+      return props.tickValues[axis];
+    } else if (this.stringMap[axis] !== null) {
+      // return the values from the string map
+      return props.tickValues ?
+        _.map(this.props.tickValues[axis], (tick) => this.stringMap[axis][tick]) :
+        _.values(this.stringMap[axis]);
+    } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
+      // return tick values based on the bar categories
+      return _.isArray(props.categories[0]) ?
+        _.map(props.categories, (arr) => (_.sum(arr) / arr.length)) : props.categories;
     } else {
-      return scale.domain();
+      // let axis determine it's own ticks
+      return undefined;
     }
   }
 
-  drawLine(dataset, index) {
-    const style = this.getStyles();
-    const {type, name, ...attrs} = dataset.attrs;
+  getTickFormat(props, axis) {
+    if (props.tickFormat) {
+      return props.tickFormat[axis]();
+    } else if (props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
+      return (x) => x;
+    } else if (this.stringMap[axis] !== null) {
+      const dataNames = _.keys(this.stringMap[axis]);
+      // string ticks should have one tick of padding on either side
+      const dataTicks = ["", ...dataNames, ""];
+      return (x) => dataTicks[x];
+    } else {
+      return this.scale[axis].tickFormat();
+    }
+  }
+
+  drawLines(datasets) {
     const animate = (this.props.animate.line !== undefined) ?
       this.props.animate.line : this.props.animate;
-    return (
-      <VictoryLine
-        {...this.props}
-        animate={animate}
-        containerElement="g"
-        data={dataset.data}
-        style={_.merge(style, attrs)}
-        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-        range={{x: this.getRange("x"), y: this.getRange("y")}}
-        ref={name}
-        key={index}/>
-    );
+
+    return _.map(datasets, (dataset, index) => {
+      const {type, name, ...attrs} = dataset.attrs;
+      return (
+        <VictoryLine
+          {...this.props}
+          animate={animate}
+          containerElement="g"
+          data={dataset.data}
+          style={_.merge(this.style, attrs)}
+          domain={{x: this.domain.x, y: this.domain.y}}
+          range={{x: this.range.x, y: this.range.y}}
+          ref={name}
+          key={index}/>
+      );
+    });
   }
 
-  drawScatter(dataset, index) {
-    const style = this.getStyles();
-    const {type, name, symbol, size, ...attrs} = dataset.attrs;
+  drawScatters(datasets) {
     const animate = (this.props.animate.scatter !== undefined) ?
       this.props.animate.scatter : this.props.animate;
+    return _.map(datasets, (dataset, index) => {
+      const {type, name, symbol, size, ...attrs} = dataset.attrs;
+      return (
+        <VictoryScatter
+          {...this.props}
+          animate={animate}
+          containerElement="g"
+          data={dataset.data}
+          size={size || 3}
+          symbol={symbol || "circle"}
+          style={_.merge(this.style, attrs)}
+          domain={{x: this.domain.x, y: this.domain.y}}
+          range={{x: this.range.x, y: this.range.y}}
+          ref={name}
+          key={"scatter-" + index}/>
+      );
+    });
+  }
+
+  drawBars(datasets, options) {
+    const animate = (this.props.animate.bar !== undefined) ?
+      this.props.animate.bar : this.props.animate;
+    const categories = (this.stringMap.x) && _.keys(this.stringMap.x);
+    const offset = this.props.domainPadding && this.props.domainPadding.x;
     return (
-      <VictoryScatter
+      <VictoryBar
         {...this.props}
         animate={animate}
         containerElement="g"
-        data={dataset.data}
-        size={size || 3}
-        symbol={symbol || "circle"}
-        style={_.merge(style, attrs)}
-        domain={{x: this.getDomain("x"), y: this.getDomain("y")}}
-        range={{x: this.getRange("x"), y: this.getRange("y")}}
-        ref={name}
-        key={index}/>
-    );
-  }
-
-  drawBar(dataset, index) {
-    const style = this.getStyles();
-    const axisWidth = 1; // placeholder, connect to variable above later
-    return (
-      <VictoryBar
-        svg={false}
-        barPadding={this.props.barPadding}
-        colorCategories={this.props.barColors}
-        data={this.props.barData}
-        width={style.width}
-        height={style.height}
-        totalReductionInX={2 * style.margin}
-        totalReductionInY={2 * style.margin}
-        translateX={style.margin}
-        translateY={style.margin - axisWidth}
-        key={index}/>
+        data={_.pluck(datasets, "data")}
+        dataAttributes={_.pluck(datasets, "attrs")}
+        stacked={(options && !!options.stacked) ? options.stacked : false}
+        style={this.style}
+        domain={{x: this.domain.x, y: this.domain.y}}
+        range={{x: this.range.x, y: this.range.y}}
+        categories={this.props.categories || categories}
+        categoryOffset={offset}
+        key={"bar"}/>
     );
   }
 
   drawData() {
-    let type;
-    return _.map(this.consolidateData(), (dataset, index) => {
-      type = dataset.attrs.type;
-      if (type === "line") {
-        return this.drawLine(dataset, index);
-      } else if (type === "scatter") {
-        return this.drawScatter(dataset, index);
-      } else if (type === "bar") {
-        return this.drawBar(dataset, index);
+    const dataByType = _.groupBy(this.datasets, (data) => {
+      return data.attrs.type;
+    });
+    return _.map(_.keys(dataByType), (type) => {
+      switch (type) {
+        case "line":
+          return this.drawLines(dataByType[type]);
+        case "scatter":
+          return this.drawScatters(dataByType[type]);
+        case "bar":
+          return this.drawBars(dataByType[type]);
+        case "stackedBar":
+          return this.drawBars(dataByType[type], {stacked: true});
       }
     });
   }
 
   drawAxis(axis) {
-    const style = this.getStyles();
-    const offsetY = axis === "y" ? undefined : this.getAxisOffset().y;
-    const offsetX = axis === "x" ? undefined : this.getAxisOffset().x;
-    const axisStyle = this.props.axisStyle ? this.props.axisStyle : undefined;
-    const tickStyle = this.props.tickStyle ? this.props.tickStyle : undefined;
-    const gridStyle = this.props.gridStyle ? this.props.gridStyle : undefined;
-    const axisLabel = this.props.axisLabels && this.props.axisLabels[axis] ?
-      this.props.axisLabels[axis] : undefined;
-    const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding ?
-      this.props.axisLabels.labelPadding : undefined;
+    // TODO: styles still need to be calculated on the fly here,
+    // or the axes will be incorrectly styled. investigate!
+    const style = this.getStyles(this.props);
+    const offsetY = axis === "y" ? undefined : this.axisOffset.y;
+    const offsetX = axis === "x" ? undefined : this.axisOffset.x;
+    const axisStyle = this.props.axisStyle && this.props.axisStyle[axis];
+    const tickStyle = this.props.tickStyle && this.props.tickStyle[axis];
+    const gridStyle = this.props.gridStyle && this.props.gridStyle[axis];
+    const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
+    const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding;
     const animate = (this.props.animate.axis !== undefined) ?
       this.props.animate.axis : this.props.animate;
-
     return (
       <VictoryAxis
         {...this.props}
@@ -383,14 +585,14 @@ class VictoryChart extends React.Component {
         offsetY={offsetY}
         offsetX={offsetX}
         crossAxis={true}
-        domain={this.getDomain(axis)}
-        range={this.getRange(axis)}
+        domain={this.domain[axis]}
+        range={this.range[axis]}
         scale={this.props.scale[axis]}
         orientation={this.props.axisOrientation[axis]}
         showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
-        tickValues={this.getTickValues(axis)}
-        tickFormat={this.props.tickFormat[axis]}
+        tickValues={this.tickValues[axis]}
+        tickFormat={this.tickFormat[axis]}
         axisStyle={axisStyle}
         gridStyle={gridStyle}
         tickStyle={tickStyle}
@@ -399,10 +601,9 @@ class VictoryChart extends React.Component {
   }
 
   render() {
-    const style = this.getStyles();
     if (this.props.containerElement === "svg") {
       return (
-        <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
+        <svg style={{ width: this.style.width, height: this.style.height, overflow: "visible" }}>
           {this.drawAxis("x")}
           {this.drawAxis("y")}
           {this.drawData()}
@@ -421,11 +622,34 @@ class VictoryChart extends React.Component {
 }
 
 VictoryChart.propTypes = {
-  style: React.PropTypes.node,
-  barColors: React.PropTypes.array,
-  barData: React.PropTypes.array,
-  barPadding: React.PropTypes.number,
-  data: React.PropTypes.oneOfType([ // maybe this should just be "node"
+  /**
+   * The chartType prop specifies how data should be plotted.
+   */
+  chartType: React.PropTypes.oneOf([
+    "line",
+    "scatter",
+    "bar",
+    "stackedBar"
+  ]),
+  /**
+   * The data prop specifies the data to be plotted. Data should be in the form of an array
+   * of data points, or an array of arrays of data points for multiple datasets.
+   * Each data point should be an object with x and y properties. Other properties may
+   * be added to the data point object, such as label, color, size, symbol or opacity.
+   * These properties will be interpreted and applied to the individual data point
+   * in chart types that support them.
+   * @exampes [
+   *   {x: new Date(1982, 1, 1), y: 125, color: "red", symbol: "plus"},
+   *   {x: new Date(1987, 1, 1), y: 257, color: "blue", symbol: "star"},
+   *   {x: new Date(1993, 1, 1), y: 345, color: "green", symbol: "circle"},
+   * ],
+   * [
+   *   [{x: 5, y: 3}, {x: 4, y: 2}, {x: 3, y: 1}],
+   *   [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 4}],
+   *   [{x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2}]
+   * ]
+   */
+  data: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
         x: React.PropTypes.any,
@@ -441,41 +665,58 @@ VictoryChart.propTypes = {
       )
     )
   ]),
+  /**
+   * The dataAttributes prop describes how a data set should be plotted and styled.
+   * This prop can be given as an object, or an array of objects. If this prop is
+   * given as an array of objects, the properties of each object in the array will
+   * be applied to the data points in the corresponding array of the data prop.
+   * @exampes {type: "scatter", symbol: "square", color: "blue"},
+   * [{type: "line", stroke: "green", width: 3}, {type: "bar", color: "orange"}]
+   */
   dataAttributes: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
+  /**
+   * The x props provides another way to supply data for chart to plot. This prop can be given
+   * as an array of values or an array of arrays, and it will be plotted against whatever
+   * y prop is provided. If no props are provided for y, the values in x will be plotted
+   * as the identity function (x) => x.
+   * @examples ["apples", "oranges", "bananas"], [[1, 2, 3], [2, 3, 4], [4, 5, 6]]
+   */
   x: React.PropTypes.array,
+  /**
+   * The y props provides another way to supply data for chart to plot. This prop can be given
+   * as a function of x, or an array of values, or an array of functions and / or values.
+   * if x props are given, they will be used in plotting (x, y) data points. If x props are not
+   * provided, a set of x values evenly spaced across the x domain will be calculated, and used
+   * for plotting data points.
+   * @examples (x) => x + 5, [1, 2, 3], [(x) => x, [2, 3, 4], (x) => Math.sin(x)]
+   */
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.func
   ]),
+  /**
+   * The yAttributes prop describes how a data set should be plotted and styled.
+   * This prop behaves identically to the dataAttributes prop, but is applied to
+   * any data provided via the y prop
+   * @exampes {type: "scatter", symbol: "square", color: "blue"},
+   * [{type: "line", stroke: "green", width: 3}, {type: "bar", color: "orange"}]
+   */
   yAttributes: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
-  domain: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      x: React.PropTypes.array,
-      y: React.PropTypes.array
-    })
-  ]),
-  range: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      x: React.PropTypes.arrayOf(React.PropTypes.number),
-      y: React.PropTypes.arrayOf(React.PropTypes.number)
-    })
-  ]),
-  scale: React.PropTypes.oneOfType([
-    React.PropTypes.func,
-    React.PropTypes.shape({
-      x: React.PropTypes.func,
-      y: React.PropTypes.func
-    })
-  ]),
+  /**
+   * The samples prop specifies how many individual points to plot when plotting
+   * y as a function of x. Samples is ignored if x props are provided instead.
+   */
   samples: React.PropTypes.number,
+  /**
+   * The interpolation prop determines how data points should be connected
+   * when plotting a line
+   */
   interpolation: React.PropTypes.oneOf([
     "linear",
     "linear-closed",
@@ -491,53 +732,191 @@ VictoryChart.propTypes = {
     "cardinal-closed",
     "monotone"
   ]),
+  /**
+   * The scale prop determines which scales your chart should use. This prop can be
+   * given as a function, or as an object that specifies separate functions for x and y.
+   * @exampes () => d3.time.scale(), {x: () => d3.scale.linear(), y: () => d3.scale.log()}
+   */
+  scale: React.PropTypes.oneOfType([
+    React.PropTypes.func,
+    React.PropTypes.shape({
+      x: React.PropTypes.func,
+      y: React.PropTypes.func
+    })
+  ]),
+  /**
+   * The domain prop describes the range of values your chart will include. This prop can be
+   * given as a array of the minimum and maximum expected values for your chart,
+   * or as an object that specifies separate arrays for x and y.
+   * If this prop is not provided, a domain will be calculated from data, or other
+   * available information.
+   * @exampes [-1, 1], {x: [0, 100], y: [0, 1]}
+   */
+  domain: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.shape({
+      x: React.PropTypes.array,
+      y: React.PropTypes.array
+    })
+  ]),
+  /**
+   * The range prop describes the range of pixels your chart will cover. This prop can be
+   * given as a array of the minimum and maximum expected values for your chart,
+   * or as an object that specifies separate arrays for x and y.
+   * If this prop is not provided, a range will be calculated based on the height,
+   * width, and margin provided in the style prop, or in default styles. It is usually
+   * a good idea to let the chart component calculate its own range.
+   * @exampes [0, 500], {x: [0, 500], y: [500, 300]}
+   */
+  range: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.shape({
+      x: React.PropTypes.arrayOf(React.PropTypes.number),
+      y: React.PropTypes.arrayOf(React.PropTypes.number)
+    })
+  ]),
+  /**
+   * The containerElement prop specifies which element the compnent will render.
+   * For standalone charts, the containerElement prop should be "svg". If you need to
+   * compose a chart with some other svg element, the containerElement prop should
+   * be "g", and will need to be rendered within an svg tag.
+   */
+  containerElement: React.PropTypes.oneOf(["svg", "g"]),
+  /**
+   * The style prop specifies styles for your chart. Victory Chart relies on Radium,
+   * so valid Radium style objects should work for this prop, however height, width, and margin
+   * are used to calculate range, and need to be expressed as a number of pixels
+   * @example {fontSize: 15, fontFamily: "helvetica", width: 500, height: 300}
+   */
+  style: React.PropTypes.node,
+  /**
+   * The axisLabels prop specifies the labels for your axes. It should be given as
+   * an object with x and y properties.
+   * @example {x: "years", y: "cats"}
+   */
   axisLabels: React.PropTypes.object,
+  /**
+   * The axisOrientation prop specifies the layout of your axes. It should be given as
+   * an object with x and y properties. Currently, Victory Chart only suppotys vertical y axes
+   * and horizontal x axes
+   * @example {x: "bottom", y: "right"}
+   */
   axisOrientation: React.PropTypes.shape({
     x: React.PropTypes.oneOf(["top", "bottom"]),
     y: React.PropTypes.oneOf(["left", "right"])
   }),
+  /**
+   * The showGridLines prop specifies whether or not to draw grid lines for a particular axis.
+   * It should be given as an object with x and y properties.
+   * Note: grid lines for a particular axis extend perpendicularly from that axis
+   * @example {x: false, y: true}
+   */
   showGridLines: React.PropTypes.shape({
     x: React.PropTypes.bool,
     y: React.PropTypes.bool
   }),
+  /**
+   * The tickValues prop explicity specifies which ticks values to draw on each axis.
+   * This prop should be given as an object with arrays specified for x and y
+   * @example {x: ["apples", "bananas", "oranges"] y: [2, 4, 6, 8]}
+   */
   tickValues: React.PropTypes.shape({
     x: React.PropTypes.arrayOf(React.PropTypes.any),
     y: React.PropTypes.arrayOf(React.PropTypes.any)
   }),
+  /**
+   * The tickFormat prop specifies how tick values should be expressed visually.
+   * This prop should be given as an object with functions specified for x and y
+   * @example {x: () => d3.time.format("%Y"), y: (x) => x.toPrecision(2)}
+   */
   tickFormat: React.PropTypes.shape({
     x: React.PropTypes.func,
     y: React.PropTypes.func
   }),
+  /**
+   * The tickCount prop specifies how many ticks should be drawn on each axis if
+   * ticksValues are not explicitly provided. This prop shouls be given as an object
+   * with numbers specified for x and y
+   * @example {x: 7, y: 5}
+   */
   tickCount: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
+  /**
+   * The axisStyle prop specifies styles scoped only to the axis lines.
+   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
+   * @example {strokeWidth: 2, stroke: "black"}
+   */
   axisStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
   }),
+  /**
+   * The tickStyle prop specifies styles scoped only to the axis ticks.
+   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
+   * @example {fontSize: 15, fontFamily: "helvetica"}
+   */
   tickStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
   }),
+  /**
+   * The gridStyle prop specifies styles scoped only to the grid lines.
+   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
+   * @example {strokeWidth: 1, stroke: "#c9c5bb"}
+   */
   gridStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
   }),
+  /**
+   * The barWidth prop specifies the width in number of pixels for bars rendered in a bar chart.
+   */
+  barWidth: React.PropTypes.number,
+  /**
+   * The barPadding prop specifies the padding in number of pixels between bars
+   * rendered in a bar chart.
+   */
+  barPadding: React.PropTypes.number,
+  /**
+   * The domainPadding prop specifies a number of pixels of padding to add to the
+   * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+   * from the origin to prevent crowding. This prop should be given as an object with
+   * numbers specified for x and y.
+   */
+  domainPadding: React.PropTypes.shape({
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
+  }),
+  /**
+   * The categories prop specifies the categories for a bar chart. This prop should
+   * be given as an array of string values, numeric values, or arrays. When this prop is
+   * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
+   * allowing numeric data to be grouped into segments.
+   * @example ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+   */
+  categories: React.PropTypes.array,
+  /**
+   * The animate prop determines whether the chart should animate with changing data.
+   * This prop can be given as a boolean, or an object with boolean values specified for each
+   * supported chart type.
+   * @example {line: true, scatter: true, axis: false, bar: true}
+   */
   animate: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.shape({
       line: React.PropTypes.bool,
       scatter: React.PropTypes.bool,
-      axis: React.PropTypes.bool
+      axis: React.PropTypes.bool,
+      bar: React.PropTypes.bool
     })
-  ]),
-  containerElement: React.PropTypes.oneOf(["svg", "g"])
+  ])
 };
 
 VictoryChart.defaultProps = {
+  chartType: "line",
   interpolation: "basis",
-  samples: 50,
   scale: () => d3.scale.linear(),
   axisOrientation: {
     x: "bottom",
@@ -550,10 +929,6 @@ VictoryChart.defaultProps = {
   tickCount: {
     x: 7,
     y: 5
-  },
-  tickFormat: {
-    x: () => d3.scale.linear().tickFormat(),
-    y: () => d3.scale.linear().tickFormat()
   },
   animate: false,
   containerElement: "svg"

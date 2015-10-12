@@ -1,30 +1,9 @@
 /*global document:false */
+/*global window:false */
 import React from "react";
 import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
-
-const showSnapshotShows = 17;
-
-const generateShowSnapshotBarChartData = function (shows) {
-  const arr = [];
-  for (let i = 1; i < shows; i++) {
-    arr.push({
-      label: "S02 E" + i,
-      "L+3": Math.floor(Math.random() * 100 * 50),
-      "Beyond L+3": Math.floor(Math.random() * 1000)
-    });
-  }
-  return arr;
-};
-
-const generateShowSnapshotXAxisCategories = function (shows) {
-  const arr = [];
-  for (let i = 1; i < shows; i++) {
-    arr.push("E" + i);
-  }
-  return arr;
-};
 
 class App extends React.Component {
   constructor(props) {
@@ -32,6 +11,8 @@ class App extends React.Component {
     this.state = {
       scatterData: this.getScatterData(),
       lineData: this.getData(),
+      numericBarData: this.getNumericBarData(),
+      barData: this.getBarData(),
       dataAttributes: {
         stroke: "blue",
         strokeWidth: 2
@@ -48,11 +29,48 @@ class App extends React.Component {
     });
   }
 
+  getNumericBarData() {
+    return _.map(_.range(5), () => {
+      return [
+        {
+          x: _.random(1, 3),
+          y: _.random(1, 5)
+        },
+        {
+          x: _.random(4, 7),
+          y: _.random(1, 10)
+        },
+        {
+          x: _.random(9, 11),
+          y: _.random(1, 15)
+        }
+      ];
+    });
+  }
+
+  getBarData() {
+    return _.map(_.range(5), () => {
+      return [
+        {
+          x: "apples",
+          y: _.random(1, 5)
+        },
+        {
+          x: "oranges",
+          y: _.random(1, 10)
+        },
+        {
+          x: "bananas",
+          y: _.random(1, 15)
+        }
+      ];
+    });
+  }
+
   getScatterData() {
     const colors =
       ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
     const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
-    // symbol: symbols[scaledIndex],
     return _.map(_.range(20), (index) => {
       const scaledIndex = _.floor(index % 7);
       return {
@@ -74,107 +92,26 @@ class App extends React.Component {
     };
   }
 
-  // componentWillMount() {
-  //   window.setInterval(() => {
-  //     this.setState({
-  //       scatterData: this.getScatterData(),
-  //       lineData: this.getData(),
-  //       dataAttributes: this.getStyles()
-  //     });
-  //   }, 4000);
-  // }
+  componentWillMount() {
+    window.setInterval(() => {
+      this.setState({
+        scatterData: this.getScatterData(),
+        lineData: this.getData(),
+        barData: this.getBarData(),
+        numericBarData: this.getNumericBarData(),
+        dataAttributes: this.getStyles()
+      });
+    }, 4000);
+  }
 
   render() {
     return (
       <div className="demo">
         <p>
           <VictoryChart
-            data={this.state.scatterData}
-            animate={{scatter: true, axis: false, line: false}}
-            dataAttributes={{type: "scatter"}}
-            y={(x) => x}/>
-
-          <VictoryChart
-            showGridLines={{x: true, y: true}}
-            samples={20}
-            axisOrientation={{x: "top", y: "right"}}
-            y={[
-              (x) => 0.5 * x + 0.5,
-              (x) => x * x
-            ]}
-            yAttributes={[
-              {stroke: "red"},
-              {type: "scatter"}
-            ]}/>
-
-          <VictoryChart {...this.state}
             data={this.state.lineData}
             showGridLines={{x: false, y: true}}
             animate={true}/>
-
-          <VictoryChart
-            showGridLines={{x: true, y: true}}
-            axisLabels={{ x: "x axis", y: "y axis", labelPadding: 20 }}
-            x={[
-              [1, 2, 3, 4],
-              [-2, -1, 0, 1, 3],
-              [3, 4, 6]
-            ]}
-            y={[
-            [1, 2, 10, 4],
-            (x) => x * x,
-            [-5, -4, -3, -2, 2, 3]
-          ]}
-          yAttributes={[
-            {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
-            {name: "line-two", type: "line", stroke: "green"},
-            {name: "line-3", type: "scatter", color: "blue"}
-          ]}/>
-
-          <VictoryChart
-            dataAttributes={{ type: "bar" }}
-            barColors={["#07458B", "#50ADD7"]}
-            axisLabels={{ y: "Minutes Viewed (Millions)" }}
-            scale={{
-              x: () => d3.scale.ordinal(),
-              y: () => d3.scale.linear()
-            }}
-            domain={{
-              y: [0, 8000]
-            }}
-            showGridLines={{ y: true }}
-            style={{
-              fill: "black",
-              fontFamily: "Montserrat, sans-serif",
-              fontSize: 12,
-              width: 600,
-              height: 350
-            }}
-            axisStyle={{
-              x: {
-                stroke: "none",
-                fill: "none"
-              },
-              y: {
-                stroke: "none",
-                fill: "none"
-              }
-            }}
-            tickValues={{
-              y: [1000, 2000, 3000, 4000, 5000, 6000, 7000, 8000],
-              x: generateShowSnapshotXAxisCategories(showSnapshotShows)
-            }}
-            tickStyle={{
-              x: {
-                stroke: "none",
-                fill: "none"
-              },
-              y: {
-                stroke: "none",
-                fill: "none"
-              }
-            }}
-            barData={generateShowSnapshotBarChartData(showSnapshotShows)}/>
 
           <VictoryChart interpolation="linear"
             scale={{
@@ -205,6 +142,76 @@ class App extends React.Component {
               {x: new Date(2011, 1, 1), y: 270},
               {x: new Date(2015, 1, 1), y: 470}
             ]}/>
+
+          <VictoryChart
+            data={this.state.scatterData}
+            animate={true}
+            dataAttributes={{type: "scatter"}}
+            y={(x) => x}/>
+
+          <VictoryChart
+            showGridLines={{x: true, y: true}}
+            samples={20}
+            axisOrientation={{x: "top", y: "right"}}
+            y={[
+              (x) => 0.5 * x + 0.5,
+              (x) => x * x
+            ]}
+            yAttributes={[
+              {stroke: "red"},
+              {type: "scatter"}
+            ]}/>
+
+          <VictoryChart
+            showGridLines={{x: true, y: true}}
+            axisLabels={{x: "x axis", y: "y axis"}}
+            x={[
+              [1, 2, 3, 4],
+              [-2, -1, 0, 1, 3],
+              [3, 4, 6]
+            ]}
+            y={[
+            [1, 2, 10, 4],
+            (x) => x * x,
+            [-5, -4, -3, -2, 2, 3]
+          ]}
+          yAttributes={[
+            {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
+            {name: "line-two", type: "line", stroke: "green"},
+            {name: "line-3", type: "scatter", color: "blue"}
+          ]}/>
+
+          <VictoryChart
+            data={this.state.numericBarData}
+            dataAttributes={[
+              {type: "bar", color: "cornflowerblue"},
+              {type: "bar", color: "orange"},
+              {type: "bar", color: "greenyellow"},
+              {type: "bar", color: "gold"},
+              {type: "bar", color: "tomato"}
+            ]}
+            axisOrientation={{x: "top", y: "right"}}
+            categories={[[1, 3], [4, 7], [9, 11]]}
+            domainPadding={{
+              x: 20,
+              y: 0
+            }}
+            animate={true}/>
+
+            <VictoryChart
+            data={this.state.barData}
+            dataAttributes={[
+              {type: "stackedBar", color: "cornflowerblue"},
+              {type: "stackedBar", color: "orange"},
+              {type: "stackedBar", color: "greenyellow"},
+              {type: "stackedBar", color: "gold"},
+              {type: "stackedBar", color: "tomato"}
+            ]}
+            domainPadding={{
+              x: 100,
+              y: 0
+            }}
+            animate={true}/>
         </p>
       </div>
     );
