@@ -102,8 +102,8 @@ class VictoryChart extends React.Component {
     }
 
     // if categories exist and are strings, create a map from those strings
-    if (props.barCategories && Util.containsStrings(props.barCategories)) {
-      return _.zipObject(_.map(props.barCategories, (category, index) => {
+    if (props.categories && Util.containsStrings(props.categories)) {
+      return _.zipObject(_.map(props.categories, (category, index) => {
         return ["" + category, index + 1];
       }));
     }
@@ -330,7 +330,7 @@ class VictoryChart extends React.Component {
       domain = props.domain[axis] || props.domain;
     } else if (props.tickValues) {
       domain = this._getDomainFromTickValues(props, axis);
-    } else if (props.barCategories && axis === "x") {
+    } else if (props.categories && axis === "x") {
       domain = this._getDomainFromCategories(props);
     } else {
       domain = this._getDomainFromData(axis);
@@ -373,7 +373,7 @@ class VictoryChart extends React.Component {
   }
 
   _getDomainFromCategories(props) {
-    const categories = _.flatten(props.barCategories);
+    const categories = _.flatten(props.categories);
     if (Util.containsStrings(categories)) {
       return undefined;
     }
@@ -446,7 +446,6 @@ class VictoryChart extends React.Component {
   }
 
   getTickValues(props, axis) {
-    const categories = props.barCategories;
     // if tickValues are defined in props, and dont contain strings, just return them
     if (props.tickValues && !Util.containsStrings(props.tickValues[axis])) {
       return props.tickValues[axis];
@@ -455,10 +454,10 @@ class VictoryChart extends React.Component {
       return props.tickValues ?
         _.map(this.props.tickValues[axis], (tick) => this.stringMap[axis][tick]) :
         _.values(this.stringMap[axis]);
-    } else if (axis === "x" && categories && !Util.containsStrings(categories)) {
-      // return tick values based on the bar categories
-      return _.isArray(categories[0]) ?
-        _.map(categories, (arr) => (_.sum(arr) / arr.length)) : categories;
+    } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
+      // return tick values based on the categories
+      return _.isArray(props.categories[0]) ?
+        _.map(props.categories, (arr) => (_.sum(arr) / arr.length)) : props.categories;
     } else {
       // let axis determine it's own ticks
       return undefined;
@@ -539,7 +538,7 @@ class VictoryChart extends React.Component {
         style={this.style}
         domain={{x: this.domain.x, y: this.domain.y}}
         range={{x: this.range.x, y: this.range.y}}
-        categories={this.props.barCategories || categories}
+        categories={this.props.categories || categories}
         categoryOffset={offset}
         key={"bar"}/>
     );
@@ -679,7 +678,7 @@ VictoryChart.propTypes = {
     React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
   /**
-   * The x props provides another way to supply data for chart to plot. This prop can be given
+   * The x prop provides another way to supply data for chart to plot. This prop can be given
    * as an array of values or an array of arrays, and it will be plotted against whatever
    * y prop is provided. If no props are provided for y, the values in x will be plotted
    * as the identity function (x) => x.
@@ -687,7 +686,7 @@ VictoryChart.propTypes = {
    */
   x: React.PropTypes.array,
   /**
-   * The y props provides another way to supply data for chart to plot. This prop can be given
+   * The y prop provides another way to supply data for chart to plot. This prop can be given
    * as a function of x, or an array of values, or an array of functions and / or values.
    * if x props are given, they will be used in plotting (x, y) data points. If x props are not
    * provided, a set of x values evenly spaced across the x domain will be calculated, and used
@@ -891,13 +890,13 @@ VictoryChart.propTypes = {
     y: React.PropTypes.number
   }),
   /**
-   * The barCategories prop specifies the categories for a bar chart. This prop should
+   * The categories prop specifies the categories for a bar chart. This prop should
    * be given as an array of string values, numeric values, or arrays. When this prop is
    * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
    * allowing numeric data to be grouped into segments.
    * @example ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
    */
-  barCategories: React.PropTypes.array,
+  categories: React.PropTypes.array,
   /**
    * The animate prop determines whether the chart should animate with changing data.
    * This prop can be given as a boolean, or an object with boolean values specified for each
