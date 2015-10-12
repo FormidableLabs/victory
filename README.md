@@ -247,7 +247,7 @@ example: `{x: 20, y: 0}`
 
 ### categories
 
-The barCategories prop specifies the categories for a bar chart. This prop should be given as an array of string values, numeric values, or arrays. When this prop is given as an array of arrays, the minimum and maximum values of the arrays define range bands, allowing numeric data to be grouped into segments.
+The categories prop specifies the categories for a bar chart. This prop should be given as an array of string values, numeric values, or arrays. When this prop is given as an array of arrays, the minimum and maximum values of the arrays define range bands, allowing numeric data to be grouped into segments.
 
 examples:
 
