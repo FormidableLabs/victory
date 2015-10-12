@@ -466,7 +466,7 @@ class VictoryChart extends React.Component {
 
   getTickFormat(props, axis) {
     if (props.tickFormat) {
-      return props.tickFormat[axis]();
+      return props.tickFormat[axis];
     } else if (props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
       return (x) => x;
     } else if (this.stringMap[axis] !== null) {
@@ -592,7 +592,7 @@ class VictoryChart extends React.Component {
         showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
         tickValues={this.tickValues[axis]}
-        tickFormat={this.tickFormat[axis]}
+        tickFormat={() => this.tickFormat[axis]} // TODO: standardize function props
         axisStyle={axisStyle}
         gridStyle={gridStyle}
         tickStyle={tickStyle}
@@ -827,7 +827,7 @@ VictoryChart.propTypes = {
   /**
    * The tickFormat prop specifies how tick values should be expressed visually.
    * This prop should be given as an object with functions specified for x and y
-   * @example {x: () => d3.time.format("%Y"), y: (x) => x.toPrecision(2)}
+   * @example {x: d3.time.format("%Y"), y: return (x) => x.toPrecision(2)}
    */
   tickFormat: React.PropTypes.shape({
     x: React.PropTypes.func,

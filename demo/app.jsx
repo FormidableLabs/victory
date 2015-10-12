@@ -129,8 +129,8 @@ class App extends React.Component {
               y: [100, 200, 300, 400, 500]
             }}
             tickFormat={{
-              x: () => d3.time.format("%Y"),
-              y: () => d3.scale.linear().tickFormat()
+              x: d3.time.format("%Y"),
+              y: d3.scale.linear().tickFormat()
             }}
             data={[
               {x: new Date(1982, 1, 1), y: 125},
