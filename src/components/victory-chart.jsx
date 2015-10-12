@@ -455,7 +455,7 @@ class VictoryChart extends React.Component {
         _.map(this.props.tickValues[axis], (tick) => this.stringMap[axis][tick]) :
         _.values(this.stringMap[axis]);
     } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
-      // return tick values based on the categories
+      // return tick values based on the bar categories
       return _.isArray(props.categories[0]) ?
         _.map(props.categories, (arr) => (_.sum(arr) / arr.length)) : props.categories;
     } else {
@@ -678,7 +678,7 @@ VictoryChart.propTypes = {
     React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
   /**
-   * The x prop provides another way to supply data for chart to plot. This prop can be given
+   * The x props provides another way to supply data for chart to plot. This prop can be given
    * as an array of values or an array of arrays, and it will be plotted against whatever
    * y prop is provided. If no props are provided for y, the values in x will be plotted
    * as the identity function (x) => x.
@@ -686,7 +686,7 @@ VictoryChart.propTypes = {
    */
   x: React.PropTypes.array,
   /**
-   * The y prop provides another way to supply data for chart to plot. This prop can be given
+   * The y props provides another way to supply data for chart to plot. This prop can be given
    * as a function of x, or an array of values, or an array of functions and / or values.
    * if x props are given, they will be used in plotting (x, y) data points. If x props are not
    * provided, a set of x values evenly spaced across the x domain will be calculated, and used

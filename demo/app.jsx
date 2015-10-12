@@ -191,7 +191,7 @@ class App extends React.Component {
               {type: "bar", color: "tomato"}
             ]}
             axisOrientation={{x: "top", y: "right"}}
-            barCategories={[[1, 3], [4, 7], [9, 11]]}
+            categories={[[1, 3], [4, 7], [9, 11]]}
             domainPadding={{
               x: 20,
               y: 0
