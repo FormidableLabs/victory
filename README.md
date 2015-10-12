@@ -228,6 +228,9 @@ The following props are supported:
 
 *Default value:* `0.02`
 
+####**onEnd**
+
+*A Function.* This function gets called when the current animation is complete. If the animation is interrupted with new values, it fires after all values have been traversed.
 
 ## Development
 

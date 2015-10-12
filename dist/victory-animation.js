@@ -159,6 +159,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        setTimeout(function () {
 	          _this2.raf = _this2.functionToBeRunEachFrame();
 	        }, this.props.delay);
+	      } else {
+	        if (this.props.onEnd) {
+	          this.props.onEnd();
+	        }
 	      }
 	    }
 	
@@ -177,6 +181,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	          cancelAnimationFrame(this.raf);
 	          this.queue.shift();
 	          this.traverseQueue();
+	        } else {
+	          if (this.props.onEnd) {
+	            this.props.onEnd();
+	          }
 	        }
 	        return;
 	      }
@@ -208,6 +216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  velocity: _react2["default"].PropTypes.number,
 	  easing: _react2["default"].PropTypes.string,
 	  delay: _react2["default"].PropTypes.number,
+	  onEnd: _react2["default"].PropTypes.func,
 	  data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
 	};
 	

@@ -58,6 +58,10 @@ class VictoryAnimation extends React.Component {
       setTimeout(() => {
         this.raf = this.functionToBeRunEachFrame();
       }, this.props.delay);
+    } else {
+      if (this.props.onEnd) {
+        this.props.onEnd()
+      }
     }
   }
   /* every frame we... */
@@ -73,6 +77,10 @@ class VictoryAnimation extends React.Component {
         cancelAnimationFrame(this.raf);
         this.queue.shift();
         this.traverseQueue();
+      } else {
+        if (this.props.onEnd) {
+          this.props.onEnd()
+        }
       }
       return;
     }
@@ -99,6 +107,7 @@ VictoryAnimation.propTypes = {
   velocity: React.PropTypes.number,
   easing: React.PropTypes.string,
   delay: React.PropTypes.number,
+  onEnd: React.PropTypes.func,
   data: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.array
