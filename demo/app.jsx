@@ -192,7 +192,7 @@ class App extends React.Component {
             ]}
             axisOrientation={{x: "top", y: "right"}}
             barCategories={[[1, 3], [4, 7], [9, 11]]}
-            domainOffset={{
+            domainPadding={{
               x: 20,
               y: 0
             }}
@@ -207,7 +207,7 @@ class App extends React.Component {
               {type: "stackedBar", color: "gold"},
               {type: "stackedBar", color: "tomato"}
             ]}
-            domainOffset={{
+            domainPadding={{
               x: 100,
               y: 0
             }}

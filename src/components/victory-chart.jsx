@@ -350,14 +350,14 @@ class VictoryChart extends React.Component {
     // don't pad non-numeric domains
     if (_.some(domain, (element) => !_.isNumber(element))) {
       return domain;
-    } else if (!props.domainOffset || props.domainOffset[axis] === 0) {
+    } else if (!props.domainPadding || props.domainPadding[axis] === 0) {
       return domain;
     }
     const min = _.min(domain);
     const max = _.max(domain);
     const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
     const extent = Math.abs(max - min);
-    const percentPadding = props.domainOffset ? props.domainOffset[axis] / rangeExtent : 0;
+    const percentPadding = props.domainPadding ? props.domainPadding[axis] / rangeExtent : 0;
     const padding = extent * percentPadding;
     const adjustedMin = min === 0 ? min : min - padding;
     const adjustedMax = max === 0 ? max : max + padding;
@@ -527,7 +527,7 @@ class VictoryChart extends React.Component {
     const animate = (this.props.animate.bar !== undefined) ?
       this.props.animate.bar : this.props.animate;
     const categories = (this.stringMap.x) && _.keys(this.stringMap.x);
-    const offset = this.props.domainOffset && this.props.domainOffset.x;
+    const offset = this.props.domainPadding && this.props.domainPadding.x;
     return (
       <VictoryBar
         {...this.props}
@@ -623,9 +623,34 @@ class VictoryChart extends React.Component {
 }
 
 VictoryChart.propTypes = {
-  style: React.PropTypes.node,
-  chartType: React.PropTypes.string,
-  data: React.PropTypes.oneOfType([ // maybe this should just be "node"
+  /**
+   * The chartType prop specifies how data should be plotted.
+   */
+  chartType: React.PropTypes.oneOf([
+    "line",
+    "scatter",
+    "bar",
+    "stackedBar"
+  ]),
+  /**
+   * The data prop specifies the data to be plotted. Data should be in the form of an array
+   * of data points, or an array of arrays of data points for multiple datasets.
+   * Each data point should be an object with x and y properties. Other properties may
+   * be added to the data point object, such as label, color, size, symbol or opacity.
+   * These properties will be interpreted and applied to the individual data point
+   * in chart types that support them.
+   * @exampes [
+   *   {x: new Date(1982, 1, 1), y: 125, color: "red", symbol: "plus"},
+   *   {x: new Date(1987, 1, 1), y: 257, color: "blue", symbol: "star"},
+   *   {x: new Date(1993, 1, 1), y: 345, color: "green", symbol: "circle"},
+   * ],
+   * [
+   *   [{x: 5, y: 3}, {x: 4, y: 2}, {x: 3, y: 1}],
+   *   [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 4}],
+   *   [{x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2}]
+   * ]
+   */
+  data: React.PropTypes.oneOfType([
     React.PropTypes.arrayOf(
       React.PropTypes.shape({
         x: React.PropTypes.any,
@@ -641,41 +666,58 @@ VictoryChart.propTypes = {
       )
     )
   ]),
+  /**
+   * The dataAttributes prop describes how a data set should be plotted and styled.
+   * This prop can be given as an object, or an array of objects. If this prop is
+   * given as an array of objects, the properties of each object in the array will
+   * be applied to the data points in the corresponding array of the data prop.
+   * @exampes {type: "scatter", symbol: "square", color: "blue"},
+   * [{type: "line", stroke: "green", width: 3}, {type: "bar", color: "orange"}]
+   */
   dataAttributes: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
+  /**
+   * The x props provides another way to supply data for chart to plot. This prop can be given
+   * as an array of values or an array of arrays, and it will be plotted against whatever
+   * y prop is provided. If no props are provided for y, the values in x will be plotted
+   * as the identity function (x) => x.
+   * @examples ["apples", "oranges", "bananas"], [[1, 2, 3], [2, 3, 4], [4, 5, 6]]
+   */
   x: React.PropTypes.array,
+  /**
+   * The y props provides another way to supply data for chart to plot. This prop can be given
+   * as a function of x, or an array of values, or an array of functions and / or values.
+   * if x props are given, they will be used in plotting (x, y) data points. If x props are not
+   * provided, a set of x values evenly spaced across the x domain will be calculated, and used
+   * for plotting data points.
+   * @examples (x) => x + 5, [1, 2, 3], [(x) => x, [2, 3, 4], (x) => Math.sin(x)]
+   */
   y: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.func
   ]),
+  /**
+   * The yAttributes prop describes how a data set should be plotted and styled.
+   * This prop behaves identically to the dataAttributes prop, but is applied to
+   * any data provided via the y prop
+   * @exampes {type: "scatter", symbol: "square", color: "blue"},
+   * [{type: "line", stroke: "green", width: 3}, {type: "bar", color: "orange"}]
+   */
   yAttributes: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.arrayOf(React.PropTypes.object)
   ]),
-  domain: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      x: React.PropTypes.array,
-      y: React.PropTypes.array
-    })
-  ]),
-  range: React.PropTypes.oneOfType([
-    React.PropTypes.array,
-    React.PropTypes.shape({
-      x: React.PropTypes.arrayOf(React.PropTypes.number),
-      y: React.PropTypes.arrayOf(React.PropTypes.number)
-    })
-  ]),
-  scale: React.PropTypes.oneOfType([
-    React.PropTypes.func,
-    React.PropTypes.shape({
-      x: React.PropTypes.func,
-      y: React.PropTypes.func
-    })
-  ]),
+  /**
+   * The samples prop specifies how many individual points to plot when plotting
+   * y as a function of x. Samples is ignored if x props are provided instead.
+   */
   samples: React.PropTypes.number,
+  /**
+   * The interpolation prop determines how data points should be connected
+   * when plotting a line
+   */
   interpolation: React.PropTypes.oneOf([
     "linear",
     "linear-closed",
@@ -691,57 +733,186 @@ VictoryChart.propTypes = {
     "cardinal-closed",
     "monotone"
   ]),
-  // axis props
+  /**
+   * The scale prop determines which scales your chart should use. This prop can be
+   * given as a function, or as an object that specifies separate functions for x and y.
+   * @exampes () => d3.time.scale(), {x: () => d3.scale.linear(), y: () => d3.scale.log()}
+   */
+  scale: React.PropTypes.oneOfType([
+    React.PropTypes.func,
+    React.PropTypes.shape({
+      x: React.PropTypes.func,
+      y: React.PropTypes.func
+    })
+  ]),
+  /**
+   * The domain prop describes the range of values your chart will include. This prop can be
+   * given as a array of the minimum and maximum expected values for your chart,
+   * or as an object that specifies separate arrays for x and y.
+   * If this prop is not provided, a domain will be calculated from data, or other
+   * available information.
+   * @exampes [-1, 1], {x: [0, 100], y: [0, 1]}
+   */
+  domain: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.shape({
+      x: React.PropTypes.array,
+      y: React.PropTypes.array
+    })
+  ]),
+  /**
+   * The range prop describes the range of pixels your chart will cover. This prop can be
+   * given as a array of the minimum and maximum expected values for your chart,
+   * or as an object that specifies separate arrays for x and y.
+   * If this prop is not provided, a range will be calculated based on the height,
+   * width, and margin provided in the style prop, or in default styles. It is usually
+   * a good idea to let the chart component calculate its own range.
+   * @exampes [0, 500], {x: [0, 500], y: [500, 300]}
+   */
+  range: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.shape({
+      x: React.PropTypes.arrayOf(React.PropTypes.number),
+      y: React.PropTypes.arrayOf(React.PropTypes.number)
+    })
+  ]),
+  /**
+   * The containerElement prop specifies which element the compnent will render.
+   * For standalone charts, the containerElement prop should be "svg". If you need to
+   * compose a chart with some other svg element, the containerElement prop should
+   * be "g", and will need to be rendered within an svg tag.
+   */
+  containerElement: React.PropTypes.oneOf(["svg", "g"]),
+  /**
+   * The style prop specifies styles for your chart. Victory Chart relies on Radium,
+   * so valid Radium style objects should work for this prop, however height, width, and margin
+   * are used to calculate range, and need to be expressed as a number of pixels
+   * @example {fontSize: 15, fontFamily: "helvetica", width: 500, height: 300}
+   */
+  style: React.PropTypes.node,
+  /**
+   * The axisLabels prop specifies the labels for your axes. It should be given as
+   * an object with x and y properties.
+   * @example {x: "years", y: "cats"}
+   */
   axisLabels: React.PropTypes.object,
+  /**
+   * The axisOrientation prop specifies the layout of your axes. It should be given as
+   * an object with x and y properties. Currently, Victory Chart only suppotys vertical y axes
+   * and horizontal x axes
+   * @example {x: "bottom", y: "right"}
+   */
   axisOrientation: React.PropTypes.shape({
     x: React.PropTypes.oneOf(["top", "bottom"]),
     y: React.PropTypes.oneOf(["left", "right"])
   }),
+  /**
+   * The showGridLines prop specifies whether or not to draw grid lines for a particular axis.
+   * It should be given as an object with x and y properties.
+   * Note: grid lines for a particular axis extend perpendicularly from that axis
+   * @example {x: false, y: true}
+   */
   showGridLines: React.PropTypes.shape({
     x: React.PropTypes.bool,
     y: React.PropTypes.bool
   }),
+  /**
+   * The tickValues prop explicity specifies which ticks values to draw on each axis.
+   * This prop should be given as an object with arrays specified for x and y
+   * @example {x: ["apples", "bananas", "oranges"] y: [2, 4, 6, 8]}
+   */
   tickValues: React.PropTypes.shape({
     x: React.PropTypes.arrayOf(React.PropTypes.any),
     y: React.PropTypes.arrayOf(React.PropTypes.any)
   }),
+  /**
+   * The tickFormat prop specifies how tick values should be expressed visually.
+   * This prop should be given as an object with functions specified for x and y
+   * @example {x: () => d3.time.format("%Y"), y: (x) => x.toPrecision(2)}
+   */
   tickFormat: React.PropTypes.shape({
     x: React.PropTypes.func,
     y: React.PropTypes.func
   }),
+  /**
+   * The tickCount prop specifies how many ticks should be drawn on each axis if
+   * ticksValues are not explicitly provided. This prop shouls be given as an object
+   * with numbers specified for x and y
+   * @example {x: 7, y: 5}
+   */
   tickCount: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
+  /**
+   * The axisStyle prop specifies styles scoped only to the axis lines.
+   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
+   * @example {strokeWidth: 2, stroke: "black"}
+   */
   axisStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
   }),
+  /**
+   * The tickStyle prop specifies styles scoped only to the axis ticks.
+   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
+   * @example {fontSize: 15, fontFamily: "helvetica"}
+   */
   tickStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
   }),
+  /**
+   * The gridStyle prop specifies styles scoped only to the grid lines.
+   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
+   * @example {strokeWidth: 1, stroke: "#c9c5bb"}
+   */
   gridStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
     y: React.PropTypes.node
   }),
-  // bar props
+  /**
+   * The barWidth prop specifies the width in number of pixels for bars rendered in a bar chart.
+   */
   barWidth: React.PropTypes.number,
+  /**
+   * The barPadding prop specifies the padding in number of pixels between bars
+   * rendered in a bar chart.
+   */
   barPadding: React.PropTypes.number,
-  domainOffset: React.PropTypes.shape({
+  /**
+   * The domainPadding prop specifies a number of pixels of padding to add to the
+   * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+   * from the origin to prevent crowding. This prop should be given as an object with
+   * numbers specified for x and y.
+   */
+  domainPadding: React.PropTypes.shape({
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
+  /**
+   * The barCategories prop specifies the categories for a bar chart. This prop should
+   * be given as an array of string values, numeric values, or arrays. When this prop is
+   * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
+   * allowing numeric data to be grouped into segments.
+   * @example ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+   */
   barCategories: React.PropTypes.array,
+  /**
+   * The animate prop determines whether the chart should animate with changing data.
+   * This prop can be given as a boolean, or an object with boolean values specified for each
+   * supported chart type.
+   * @example {line: true, scatter: true, axis: false, bar: true}
+   */
   animate: React.PropTypes.oneOfType([
     React.PropTypes.bool,
     React.PropTypes.shape({
       line: React.PropTypes.bool,
       scatter: React.PropTypes.bool,
-      axis: React.PropTypes.bool
+      axis: React.PropTypes.bool,
+      bar: React.PropTypes.bool
     })
-  ]),
-  containerElement: React.PropTypes.oneOf(["svg", "g"])
+  ])
 };
 
 VictoryChart.defaultProps = {
