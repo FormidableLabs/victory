@@ -214,7 +214,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function createStringMap(props, axis) {
 	      // if tick values exist and are strings, create a map using only those strings
 	      // dont alter the order.
-	      if (props.tickValues && _util2["default"].containsStrings(props.tickValues[axis])) {
+	      var tickValues = props.tickValues && props.tickValues[axis];
+	      if (tickValues && _util2["default"].containsStrings(tickValues)) {
 	        return _lodash2["default"].zipObject(_lodash2["default"].map(props.tickValues[axis], function (tick, index) {
 	          return ["" + tick, index + 1];
 	        }));
@@ -329,7 +330,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var domainFromProps = props.domain && props.domain.x ? props.domain.x : props.domain;
 	
 	      // domain based on tickValues if they are given
-	      var domainFromTicks = props.tickValues ? this._getDomainFromTickValues(props, "x") : undefined;
+	      var domainFromTicks = props.tickValues && props.tickValues.x ? this._getDomainFromTickValues(props, "x") : undefined;
 	
 	      // domain based on props.data if it is given
 	      var domainFromData = props.data ? this._getDomainFromDataProps(props) : undefined;
@@ -579,11 +580,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this5 = this;
 	
 	      // if tickValues are defined in props, and dont contain strings, just return them
-	      if (props.tickValues && !_util2["default"].containsStrings(props.tickValues[axis])) {
-	        return props.tickValues[axis];
+	      var ticks = props.tickValues && props.tickValues[axis];
+	      if (ticks && !_util2["default"].containsStrings(ticks)) {
+	        return ticks;
 	      } else if (this.stringMap[axis] !== null) {
 	        // return the values from the string map
-	        return props.tickValues && props.tickValues[axis] ? _lodash2["default"].map(this.props.tickValues[axis], function (tick) {
+	        return ticks ? _lodash2["default"].map(ticks, function (tick) {
 	          return _this5.stringMap[axis][tick];
 	        }) : _lodash2["default"].values(this.stringMap[axis]);
 	      } else if (axis === "x" && props.categories && !_util2["default"].containsStrings(props.categories)) {
@@ -601,15 +603,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getTickFormat(props, axis) {
 	      var _this6 = this;
 	
-	      if (props.tickFormat) {
-	        return props.tickFormat[axis];
-	      } else if (props.tickValues && !_util2["default"].containsStrings(this.props.tickValues[axis])) {
+	      var tickFormat = props.tickFormat && props.tickFormat[axis];
+	      var tickValues = props.tickValues && props.tickValues[axis];
+	      if (tickFormat) {
+	        return tickFormat;
+	      } else if (tickValues && !_util2["default"].containsStrings(tickValues)) {
 	        return function (x) {
 	          return x;
 	        };
 	      } else if (this.stringMap[axis] !== null) {
 	        var _ret3 = (function () {
-	          var dataNames = _lodash2["default"].keys(_this6.stringMap[axis]);
+	          var tickValueArray = _lodash2["default"].sortBy(_lodash2["default"].values(_this6.stringMap[axis]), function (n) {
+	            return n;
+	          });
+	          var invertedStringMap = _lodash2["default"].invert(_this6.stringMap[axis]);
+	          var dataNames = _lodash2["default"].map(tickValueArray, function (tick) {
+	            return invertedStringMap[tick];
+	          });
 	          // string ticks should have one tick of padding on either side
 	          var dataTicks = [""].concat(_toConsumableArray(dataNames), [""]);
 	          return {
