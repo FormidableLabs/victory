@@ -61,10 +61,10 @@
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-bar": "^2.0.0",
-    "victory-axis": "^1.1.0",
-    "victory-line": "^0.1.0",
-    "victory-scatter": "^0.1.0",
+    "victory-bar": "^2.1.0",
+    "victory-axis": "^1.2.0",
+    "victory-line": "^0.2.0",
+    "victory-scatter": "^0.2.0",
     "webpack": "^1.10.0"
   },
   "devDependencies": {

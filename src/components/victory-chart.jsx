@@ -63,16 +63,16 @@ class VictoryChart extends React.Component {
 
   getCalculatedValues(props) {
     this.style = this.getStyles(props);
+    this.range = {
+      x: this.getRange(props, "x"),
+      y: this.getRange(props, "y")
+    };
     this.stringMap = {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
     this.datasets = this.consolidateData(props);
     this.stackedData = this.getStackedData(props);
-    this.range = {
-      x: this.getRange(props, "x"),
-      y: this.getRange(props, "y")
-    };
     this.domain = {
       x: this.getDomain(props, "x"),
       y: this.getDomain(props, "y")
@@ -219,15 +219,19 @@ class VictoryChart extends React.Component {
     // domain based on props.scale
     // note: props.scale will never be undefined thanks to default props
     const domainFromScale = props.scale.x ?
-      props.scale.x().domain() : props.scale().domain();
+      props.scale.x.domain() : props.scale.domain();
 
     // determine which domain to use in order of preference
     const domain = domainFromProps || domainFromTicks || domainFromData || domainFromScale;
+    const paddedDomain = props.domain ? domain : this._padDomain(props, domain, "x");
     const samples = this._getNumSamples(props);
-    const step = (_.max(domain) - _.min(domain)) / samples;
+    const step = (_.max(paddedDomain) - _.min(paddedDomain)) / samples;
     // return an array of an array of x values spaced scross the domain,
     // include the maximum of the domain
-    return [_.union(_.range(_.min(domain), _.max(domain), step), [_.max(domain)])];
+    return [_.union(_.range(_.min(paddedDomain),
+      _.max(paddedDomain), step),
+      [_.max(paddedDomain)]
+    )];
   }
 
   // helper for generateXFromDomain
@@ -237,7 +241,7 @@ class VictoryChart extends React.Component {
       const data = _.values(this.stringMap.x);
       return [_.min(data), _.max(data)];
     }
-    return this._padDomain(props, [_.min(xData), _.max(xData)], "x");
+    return [_.min(xData), _.max(xData)];
   }
 
   // helper for generateXFromDomain
@@ -265,18 +269,15 @@ class VictoryChart extends React.Component {
     // Always return an array of arrays of {x, y} datasets
     // determine possible values of an x array:
     const xFromProps = (props.x && _.isNumber(props.x[0])) ? [props.x] : props.x;
-    const xFromStringMap = this.stringMap.x ? [_.values(this.stringMap.x)] : undefined;
     const xFromDomain = this.generateXFromDomain(props);
-    let xArrays;
+    const xArrays = xFromProps || xFromDomain;
     let xArray;
     let n;
 
     // determine y
     const y = (!props.data && !props.y) ? this.defaultData : props.y;
-
     if (_.isFunction(y)) {
       // if y is a function, apply it to each element in each x array
-      xArrays = xFromProps || xFromDomain;
       return _.map(xArrays, (xArr) => {
         return _.map(xArr, (x) => {
           return {x, y: y(x)};
@@ -284,25 +285,23 @@ class VictoryChart extends React.Component {
       });
     } else if (_.isNumber(y[0])) {
       // if y is an array of numbers, create an object with the first xArray
-      xArrays = xFromProps || xFromStringMap || xFromDomain;
-      n = _.min([xArrays[0].length, y.length]);
-      return _.map(_.take(xArray[0], n), (x, index) => {
+
+      xArray = xArrays[0];
+      n = _.min([xArray.length, y.length]);
+      return [_.map(_.take(xArray, n), (x, index) => {
         return { x, y: y[index]};
-      });
+      })];
     } else {
       // if y is an array of arrays and/or functions return the arrays,
       // and return the result of applying the functions to corresponding x arrays
-
       return _.map(y, (yElement, index) => {
         if (_.isArray(yElement)) {
-          xArrays = xFromProps || xFromStringMap || xFromDomain;
           xArray = xArrays[index] || xArrays[0];
           n = _.min([xArray.length, yElement.length]);
           return _.map(_.take(xArray, n), (x, i) => {
             return {x, y: yElement[i]};
           });
         } else {
-          xArrays = xFromProps || xFromDomain;
           xArray = xArrays[index] || xArrays[0];
           return _.map(xArray, (x) => {
             return {x, y: yElement(x)};
@@ -328,22 +327,20 @@ class VictoryChart extends React.Component {
     let domain;
     if (props.domain) {
       domain = props.domain[axis] || props.domain;
-    } else if (props.tickValues) {
+    } else if (props.tickValues && props.tickValues[axis]) {
       domain = this._getDomainFromTickValues(props, axis);
     } else if (props.categories && axis === "x") {
       domain = this._getDomainFromCategories(props);
     } else {
-      domain = this._getDomainFromData(axis);
+      domain = this._getDomainFromData(props, axis);
     }
-
-    const paddedDomain = props.domain ? domain : this._padDomain(props, domain, axis);
 
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
     const orientation = props.axisOrientation[otherAxis];
     return orientation === "bottom" || orientation === "left" ?
-      paddedDomain : paddedDomain.concat().reverse();
+      domain : domain.concat().reverse();
   }
 
   _padDomain(props, domain, axis) {
@@ -369,7 +366,10 @@ class VictoryChart extends React.Component {
     const ticks = props.tickValues[axis];
     const data = Util.containsStrings(ticks) ?
       _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
-    return [_.min(data), _.max(data)];
+    const domain = [_.min(data), _.max(data)];
+    // dont pad the domain twice!
+    return (axis === "x" && props.y && !props.x) ? domain :
+      this._padDomain(props, domain, axis);
   }
 
   _getDomainFromCategories(props) {
@@ -377,15 +377,16 @@ class VictoryChart extends React.Component {
     if (Util.containsStrings(categories)) {
       return undefined;
     }
-    return [_.min(categories), _.max(categories)];
+    return this._padDomain(props, [_.min(categories), _.max(categories)], "x");
   }
 
   // helper method for getDomain
-  _getDomainFromData(axis) {
+  _getDomainFromData(props, axis) {
+    let domain;
     // if a sensible string map exists, return the minimum and maximum values
     if (this.stringMap[axis] !== null) {
       const mapValues = _.values(this.stringMap[axis]);
-      return [_.min(mapValues), _.max(mapValues)];
+      domain = [_.min(mapValues), _.max(mapValues)];
     } else {
       // find the global min and max
       const allData = _.flatten(_.pluck(this.datasets, "data"));
@@ -397,8 +398,11 @@ class VictoryChart extends React.Component {
         _.reduce(this.stackedData, (memo, dataset) => {
           return memo + (_.max(_.pluck(dataset.data, "y")));
         }, 0) : -Infinity;
-      return [min, _.max([max, cumulativeMax])];
+      domain = [min, _.max([max, cumulativeMax])];
     }
+    // dont pad the domain twice
+    return (axis === "x" && props.y && !props.x) ? domain :
+      this._padDomain(props, domain, axis);
   }
 
   getRange(props, axis) {
@@ -412,19 +416,16 @@ class VictoryChart extends React.Component {
   }
 
   getScale(props, axis) {
-    const scale = props.scale[axis] ? props.scale[axis]().copy() :
-      props.scale().copy();
+    const scale = props.scale[axis] ? props.scale[axis].copy() :
+      props.scale.copy();
     const range = this.range[axis];
     const domain = this.domain[axis];
     scale.range(range);
     scale.domain(domain);
     // hacky check for identity scale
     if (_.difference(scale.range(), range).length !== 0) {
-      // identity scale, reset the domain and range
-      scale.range(range);
-      scale.domain(range);
-      log.warn("Identity Scale: domain and range must be identical. " +
-        "Domain has been reset to match range.");
+      // Warn identity scale, reset the domain and range
+      log.warn("This scale is not supported");
     }
     return scale;
   }
@@ -451,7 +452,7 @@ class VictoryChart extends React.Component {
       return props.tickValues[axis];
     } else if (this.stringMap[axis] !== null) {
       // return the values from the string map
-      return props.tickValues ?
+      return (props.tickValues && props.tickValues[axis]) ?
         _.map(this.props.tickValues[axis], (tick) => this.stringMap[axis][tick]) :
         _.values(this.stringMap[axis]);
     } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
@@ -480,9 +481,7 @@ class VictoryChart extends React.Component {
   }
 
   drawLines(datasets) {
-    const animate = (this.props.animate.line !== undefined) ?
-      this.props.animate.line : this.props.animate;
-
+    const animate = this.props.animate && (this.props.animate.line || this.props.animate);
     return _.map(datasets, (dataset, index) => {
       const {type, name, ...attrs} = dataset.attrs;
       return (
@@ -491,7 +490,8 @@ class VictoryChart extends React.Component {
           animate={animate}
           containerElement="g"
           data={dataset.data}
-          style={_.merge(this.style, attrs)}
+          interpolation={attrs.interpolation || this.props.interpolation}
+          style={_.merge(attrs, this.style)}
           domain={{x: this.domain.x, y: this.domain.y}}
           range={{x: this.range.x, y: this.range.y}}
           ref={name}
@@ -501,8 +501,7 @@ class VictoryChart extends React.Component {
   }
 
   drawScatters(datasets) {
-    const animate = (this.props.animate.scatter !== undefined) ?
-      this.props.animate.scatter : this.props.animate;
+    const animate = this.props.animate && (this.props.animate.scatter || this.props.animate);
     return _.map(datasets, (dataset, index) => {
       const {type, name, symbol, size, ...attrs} = dataset.attrs;
       return (
@@ -513,7 +512,7 @@ class VictoryChart extends React.Component {
           data={dataset.data}
           size={size || 3}
           symbol={symbol || "circle"}
-          style={_.merge(this.style, attrs)}
+          style={_.merge(attrs, this.style)}
           domain={{x: this.domain.x, y: this.domain.y}}
           range={{x: this.range.x, y: this.range.y}}
           ref={name}
@@ -523,8 +522,7 @@ class VictoryChart extends React.Component {
   }
 
   drawBars(datasets, options) {
-    const animate = (this.props.animate.bar !== undefined) ?
-      this.props.animate.bar : this.props.animate;
+    const animate = this.props.animate && (this.props.animate.bar || this.props.animate);
     const categories = (this.stringMap.x) && _.keys(this.stringMap.x);
     const offset = this.props.domainPadding && this.props.domainPadding.x;
     return (
@@ -536,8 +534,8 @@ class VictoryChart extends React.Component {
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
         style={this.style}
-        domain={{x: this.domain.x, y: this.domain.y}}
-        range={{x: this.range.x, y: this.range.y}}
+        domain={this.domain}
+        range={this.range}
         categories={this.props.categories || categories}
         categoryOffset={offset}
         key={"bar"}/>
@@ -563,9 +561,6 @@ class VictoryChart extends React.Component {
   }
 
   drawAxis(axis) {
-    // TODO: styles still need to be calculated on the fly here,
-    // or the axes will be incorrectly styled. investigate!
-    const style = this.getStyles(this.props);
     const offsetY = axis === "y" ? undefined : this.axisOffset.y;
     const offsetX = axis === "x" ? undefined : this.axisOffset.x;
     const axisStyle = this.props.axisStyle && this.props.axisStyle[axis];
@@ -573,8 +568,7 @@ class VictoryChart extends React.Component {
     const gridStyle = this.props.gridStyle && this.props.gridStyle[axis];
     const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
     const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding;
-    const animate = (this.props.animate.axis !== undefined) ?
-      this.props.animate.axis : this.props.animate;
+    const animate = this.props.animate && (this.props.animate.axis || this.props.animate);
     return (
       <VictoryAxis
         {...this.props}
@@ -585,18 +579,18 @@ class VictoryChart extends React.Component {
         offsetY={offsetY}
         offsetX={offsetX}
         crossAxis={true}
+        scale={this.scale[axis]}
         domain={this.domain[axis]}
         range={this.range[axis]}
-        scale={this.props.scale[axis]}
         orientation={this.props.axisOrientation[axis]}
         showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
         tickValues={this.tickValues[axis]}
-        tickFormat={() => this.tickFormat[axis]} // TODO: standardize function props
+        tickFormat={this.tickFormat[axis]}
         axisStyle={axisStyle}
         gridStyle={gridStyle}
         tickStyle={tickStyle}
-        style={style}/>
+        style={this.style}/>
     );
   }
 
@@ -735,7 +729,7 @@ VictoryChart.propTypes = {
   /**
    * The scale prop determines which scales your chart should use. This prop can be
    * given as a function, or as an object that specifies separate functions for x and y.
-   * @exampes () => d3.time.scale(), {x: () => d3.scale.linear(), y: () => d3.scale.log()}
+   * @exampes d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
    */
   scale: React.PropTypes.oneOfType([
     React.PropTypes.func,
@@ -786,20 +780,20 @@ VictoryChart.propTypes = {
    * The style prop specifies styles for your chart. Victory Chart relies on Radium,
    * so valid Radium style objects should work for this prop, however height, width, and margin
    * are used to calculate range, and need to be expressed as a number of pixels
-   * @example {fontSize: 15, fontFamily: "helvetica", width: 500, height: 300}
+   * @examples {fontSize: 15, fontFamily: "helvetica", width: 500, height: 300}
    */
   style: React.PropTypes.node,
   /**
    * The axisLabels prop specifies the labels for your axes. It should be given as
    * an object with x and y properties.
-   * @example {x: "years", y: "cats"}
+   * @examples {x: "years", y: "cats"}
    */
   axisLabels: React.PropTypes.object,
   /**
    * The axisOrientation prop specifies the layout of your axes. It should be given as
    * an object with x and y properties. Currently, Victory Chart only suppotys vertical y axes
    * and horizontal x axes
-   * @example {x: "bottom", y: "right"}
+   * @examples {x: "bottom", y: "right"}
    */
   axisOrientation: React.PropTypes.shape({
     x: React.PropTypes.oneOf(["top", "bottom"]),
@@ -809,7 +803,7 @@ VictoryChart.propTypes = {
    * The showGridLines prop specifies whether or not to draw grid lines for a particular axis.
    * It should be given as an object with x and y properties.
    * Note: grid lines for a particular axis extend perpendicularly from that axis
-   * @example {x: false, y: true}
+   * @examples {x: false, y: true}
    */
   showGridLines: React.PropTypes.shape({
     x: React.PropTypes.bool,
@@ -818,7 +812,7 @@ VictoryChart.propTypes = {
   /**
    * The tickValues prop explicity specifies which ticks values to draw on each axis.
    * This prop should be given as an object with arrays specified for x and y
-   * @example {x: ["apples", "bananas", "oranges"] y: [2, 4, 6, 8]}
+   * @examples {x: ["apples", "bananas", "oranges"] y: [2, 4, 6, 8]}
    */
   tickValues: React.PropTypes.shape({
     x: React.PropTypes.arrayOf(React.PropTypes.any),
@@ -827,7 +821,7 @@ VictoryChart.propTypes = {
   /**
    * The tickFormat prop specifies how tick values should be expressed visually.
    * This prop should be given as an object with functions specified for x and y
-   * @example {x: d3.time.format("%Y"), y: return (x) => x.toPrecision(2)}
+   * @examples {x: d3.time.format("%Y"), y: (x) => x.toPrecision(2)}
    */
   tickFormat: React.PropTypes.shape({
     x: React.PropTypes.func,
@@ -837,7 +831,7 @@ VictoryChart.propTypes = {
    * The tickCount prop specifies how many ticks should be drawn on each axis if
    * ticksValues are not explicitly provided. This prop shouls be given as an object
    * with numbers specified for x and y
-   * @example {x: 7, y: 5}
+   * @examples {x: 7, y: 5}
    */
   tickCount: React.PropTypes.shape({
     x: React.PropTypes.number,
@@ -846,7 +840,7 @@ VictoryChart.propTypes = {
   /**
    * The axisStyle prop specifies styles scoped only to the axis lines.
    * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
-   * @example {strokeWidth: 2, stroke: "black"}
+   * @examples {strokeWidth: 2, stroke: "black"}
    */
   axisStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
@@ -855,7 +849,7 @@ VictoryChart.propTypes = {
   /**
    * The tickStyle prop specifies styles scoped only to the axis ticks.
    * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
-   * @example {fontSize: 15, fontFamily: "helvetica"}
+   * @examples {fontSize: 15, fontFamily: "helvetica"}
    */
   tickStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
@@ -864,7 +858,7 @@ VictoryChart.propTypes = {
   /**
    * The gridStyle prop specifies styles scoped only to the grid lines.
    * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
-   * @example {strokeWidth: 1, stroke: "#c9c5bb"}
+   * @examples {strokeWidth: 1, stroke: "#c9c5bb"}
    */
   gridStyle: React.PropTypes.shape({
     x: React.PropTypes.node,
@@ -894,22 +888,22 @@ VictoryChart.propTypes = {
    * be given as an array of string values, numeric values, or arrays. When this prop is
    * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
    * allowing numeric data to be grouped into segments.
-   * @example ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+   * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
    */
   categories: React.PropTypes.array,
   /**
-   * The animate prop determines whether the chart should animate with changing data.
-   * This prop can be given as a boolean, or an object with boolean values specified for each
-   * supported chart type.
-   * @example {line: true, scatter: true, axis: false, bar: true}
+   * The animate prop specifies props for victory-animation to use. It this prop is
+   * not given, the chart will not tween between changing data / style props.
+   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+   * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
    */
   animate: React.PropTypes.oneOfType([
-    React.PropTypes.bool,
+    React.PropTypes.object,
     React.PropTypes.shape({
-      line: React.PropTypes.bool,
-      scatter: React.PropTypes.bool,
-      axis: React.PropTypes.bool,
-      bar: React.PropTypes.bool
+      line: React.PropTypes.object,
+      scatter: React.PropTypes.object,
+      axis: React.PropTypes.object,
+      bar: React.PropTypes.object
     })
   ])
 };
@@ -917,7 +911,7 @@ VictoryChart.propTypes = {
 VictoryChart.defaultProps = {
   chartType: "line",
   interpolation: "basis",
-  scale: () => d3.scale.linear(),
+  scale: d3.scale.linear(),
   axisOrientation: {
     x: "bottom",
     y: "left"
@@ -930,7 +924,6 @@ VictoryChart.defaultProps = {
     x: 7,
     y: 5
   },
-  animate: false,
   containerElement: "svg"
 };
 
