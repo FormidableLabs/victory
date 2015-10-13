@@ -240,5 +240,5 @@ Please see [DEVELOPMENT](DEVELOPMENT.md)
 
 Please see [CONTRIBUTING](CONTRIBUTING.md)
 
-[trav_img]: https://api.travis-ci.org/FormidableLabs/victory-pie.svg
-[trav_site]: https://travis-ci.org/FormidableLabs/victory-pie
+[trav_img]: https://api.travis-ci.org/FormidableLabs/victory-animation.svg
+[trav_site]: https://travis-ci.org/FormidableLabs/victory-animation
