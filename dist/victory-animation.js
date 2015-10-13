@@ -159,10 +159,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        setTimeout(function () {
 	          _this2.raf = _this2.functionToBeRunEachFrame();
 	        }, this.props.delay);
-	      } else {
-	        if (this.props.onEnd) {
-	          this.props.onEnd();
-	        }
+	      } else if (this.props.onEnd) {
+	        this.props.onEnd();
 	      }
 	    }
 	
@@ -181,10 +179,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          cancelAnimationFrame(this.raf);
 	          this.queue.shift();
 	          this.traverseQueue();
-	        } else {
-	          if (this.props.onEnd) {
-	            this.props.onEnd();
-	          }
+	        } else if (this.props.onEnd) {
+	          this.props.onEnd();
 	        }
 	        return;
 	      }
