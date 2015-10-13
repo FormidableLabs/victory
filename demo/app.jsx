@@ -234,7 +234,7 @@ class App extends React.Component {
             }}
             tickFormat={{
               x: (x) => x,
-              y: (x) => ""
+              y: () => ""
             }}
             axisStyle={{
               x: {stroke: "transparent", fill: "none"},
