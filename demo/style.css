@@ -1,0 +1,7 @@
+.test {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  display: block;
+  background: gray;
+}

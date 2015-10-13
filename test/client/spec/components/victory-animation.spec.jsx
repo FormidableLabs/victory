@@ -18,7 +18,7 @@ describe("components/victory-animation", function () {
     const rendered = TestUtils.renderIntoDocument(
       <Component data={{test: true}}>
         {()=> {
-          return <div>I rendered!</div>
+          return <div>I rendered!</div>;
         }}
       </Component>
     );
@@ -40,7 +40,7 @@ describe("components/victory-animation", function () {
     renderer.render(
       <Component data={{test: true}}>
         {()=> {
-          return <div>I rendered!</div>
+          return <div>I rendered!</div>;
         }}
       </Component>
     );
