@@ -95,7 +95,8 @@ class VictoryChart extends React.Component {
   createStringMap(props, axis) {
     // if tick values exist and are strings, create a map using only those strings
     // dont alter the order.
-    if (props.tickValues && Util.containsStrings(props.tickValues[axis])) {
+    const tickValues = props.tickValues && props.tickValues[axis];
+    if (tickValues && Util.containsStrings(tickValues)) {
       return _.zipObject(_.map(props.tickValues[axis], (tick, index) => {
         return ["" + tick, index + 1];
       }));
@@ -209,7 +210,7 @@ class VictoryChart extends React.Component {
       props.domain.x : props.domain;
 
     // domain based on tickValues if they are given
-    const domainFromTicks = props.tickValues ?
+    const domainFromTicks = (props.tickValues && props.tickValues.x) ?
       this._getDomainFromTickValues(props, "x") : undefined;
 
     // domain based on props.data if it is given
@@ -448,12 +449,13 @@ class VictoryChart extends React.Component {
 
   getTickValues(props, axis) {
     // if tickValues are defined in props, and dont contain strings, just return them
-    if (props.tickValues && !Util.containsStrings(props.tickValues[axis])) {
-      return props.tickValues[axis];
+    const ticks = props.tickValues && props.tickValues[axis];
+    if (ticks && !Util.containsStrings(ticks)) {
+      return ticks;
     } else if (this.stringMap[axis] !== null) {
       // return the values from the string map
-      return (props.tickValues && props.tickValues[axis]) ?
-        _.map(this.props.tickValues[axis], (tick) => this.stringMap[axis][tick]) :
+      return (ticks) ?
+        _.map(ticks, (tick) => this.stringMap[axis][tick]) :
         _.values(this.stringMap[axis]);
     } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
       // return tick values based on the bar categories
@@ -466,12 +468,18 @@ class VictoryChart extends React.Component {
   }
 
   getTickFormat(props, axis) {
-    if (props.tickFormat) {
-      return props.tickFormat[axis];
-    } else if (props.tickValues && !Util.containsStrings(this.props.tickValues[axis])) {
+    const tickFormat = props.tickFormat && props.tickFormat[axis];
+    const tickValues = props.tickValues && props.tickValues[axis];
+    if (tickFormat) {
+      return tickFormat;
+    } else if (tickValues && !Util.containsStrings(tickValues)) {
       return (x) => x;
     } else if (this.stringMap[axis] !== null) {
-      const dataNames = _.keys(this.stringMap[axis]);
+      const tickValueArray = _.sortBy(_.values(this.stringMap[axis]), (n) => n);
+      const invertedStringMap = _.invert(this.stringMap[axis]);
+      const dataNames = _.map(tickValueArray, (tick) => {
+        return invertedStringMap[tick];
+      });
       // string ticks should have one tick of padding on either side
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
