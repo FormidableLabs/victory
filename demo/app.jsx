@@ -56,11 +56,11 @@ class App extends React.Component {
           y: _.random(1, 5)
         },
         {
-          x: "oranges",
+          x: "bananas",
           y: _.random(1, 10)
         },
         {
-          x: "bananas",
+          x: "oranges",
           y: _.random(1, 15)
         }
       ];
@@ -108,15 +108,16 @@ class App extends React.Component {
     return (
       <div className="demo">
         <p>
+
           <VictoryChart
-            data={this.state.lineData}
-            showGridLines={{x: false, y: true}}
-            animate={true}/>
+              data={this.state.lineData}
+              showGridLines={{x: false, y: true}}
+              animate={{velocity: 0.02}}/>
 
           <VictoryChart interpolation="linear"
             scale={{
-              x: () => d3.time.scale(),
-              y: () => d3.scale.linear()
+              x: d3.time.scale(),
+              y: d3.scale.linear()
             }}
             tickValues={{
               x: [
@@ -145,7 +146,7 @@ class App extends React.Component {
 
           <VictoryChart
             data={this.state.scatterData}
-            animate={true}
+            animate={{velocity: 0.02}}
             dataAttributes={{type: "scatter"}}
             y={(x) => x}/>
 
@@ -196,7 +197,7 @@ class App extends React.Component {
               x: 20,
               y: 0
             }}
-            animate={true}/>
+            animate={{velocity: 0.02}}/>
 
             <VictoryChart
             data={this.state.barData}
@@ -211,7 +212,46 @@ class App extends React.Component {
               x: 100,
               y: 0
             }}
-            animate={true}/>
+            animate={{velocity: 0.02}}/>
+          <VictoryChart
+            data={[
+              {x: 1, y: 1},
+              {x: 2, y: 2},
+              {x: 3, y: 3},
+              {x: 4, y: 2},
+              {x: 5, y: 1},
+              {x: 6, y: 2},
+              {x: 7, y: 3},
+              {x: 8, y: 2},
+              {x: 9, y: 1},
+              {x: 10, y: 2},
+              {x: 11, y: 3},
+              {x: 12, y: 2},
+              {x: 13, y: 1}
+            ]}
+            tickValues={{
+              x: _.range(1, 14)
+            }}
+            tickFormat={{
+              x: (x) => x,
+              y: (x) => ""
+            }}
+            axisStyle={{
+              x: {stroke: "transparent", fill: "none"},
+              y: {stroke: "transparent", fill: "none"}
+            }}
+            tickStyle={{
+              x: {stroke: "transparent", fill: "none"},
+              y: {stroke: "transparent", fill: "none"}
+            }}
+            domainPadding={{
+              x: 20,
+              y: 10
+            }}
+            dataAttributes={{type: "bar", color: "orange"}}
+            barWidth={5}
+            y={() => 0.5}
+            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3}}/>
         </p>
       </div>
     );
