@@ -685,24 +685,16 @@ class VictoryChart extends React.Component {
   }
 
   render() {
-    if (this.props.containerElement === "svg") {
-      const style = this.style.base;
-      return (
-        <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
-          {this.drawAxis("x")}
-          {this.drawAxis("y")}
-          {this.drawData()}
-        </svg>
-      );
-    } else {
-      return (
-        <g>
-          {this.drawAxis("x")}
-          {this.drawAxis("y")}
-          {this.drawData()}
-        </g>
-      );
-    }
+    const style = this.style.base;
+    const props = this.props.containerElement === 'svg' ? {
+      style: { width: style.width, height: style.height, overflow: 'visible' }
+    } : {};
+    return React.createElement(
+      this.props.containerElement, props,
+      this.drawAxis("x"),
+      this.drawAxis("y"),
+      this.drawData()
+    );
   }
 }
 
