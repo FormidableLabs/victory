@@ -570,7 +570,7 @@ class VictoryChart extends React.Component {
         return invertedStringMap[tick];
       });
       // string ticks should have one tick of padding at the beginning
-      const dataTicks = ["", ...dataNames];
+      const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
       return this.scale[axis].tickFormat();
