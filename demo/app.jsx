@@ -109,6 +109,96 @@ class App extends React.Component {
       <div className="demo">
         <p>
 
+          <VictoryChart
+              data={this.state.lineData}
+              dataAttributes={this.state.dataAttributes}
+              showGridLines={{x: false, y: true}}
+              animate={{velocity: 0.02}}/>
+
+          <VictoryChart interpolation="linear"
+            scale={{
+              x: d3.time.scale(),
+              y: d3.scale.linear()
+            }}
+            tickValues={{
+              x: [
+                new Date(1980, 1, 1),
+                new Date(1990, 1, 1),
+                new Date(2000, 1, 1),
+                new Date(2010, 1, 1),
+                new Date(2020, 1, 1)
+              ],
+              y: [100, 200, 300, 400, 500]
+            }}
+            tickFormat={{
+              x: d3.time.format("%Y"),
+              y: d3.scale.linear().tickFormat()
+            }}
+            data={[
+              {x: new Date(1982, 1, 1), y: 125},
+              {x: new Date(1987, 1, 1), y: 257},
+              {x: new Date(1993, 1, 1), y: 345},
+              {x: new Date(1997, 1, 1), y: 515},
+              {x: new Date(2001, 1, 1), y: 132},
+              {x: new Date(2005, 1, 1), y: 305},
+              {x: new Date(2011, 1, 1), y: 270},
+              {x: new Date(2015, 1, 1), y: 470}
+            ]}/>
+
+          <VictoryChart
+            data={this.state.scatterData}
+            animate={{velocity: 0.02}}
+            dataAttributes={{type: "scatter"}}
+            y={(x) => x}/>
+
+          <VictoryChart
+            showGridLines={{x: true, y: true}}
+            samples={20}
+            axisOrientation={{x: "top", y: "right"}}
+            y={[
+              (x) => 0.5 * x + 0.5,
+              (x) => x * x
+            ]}
+            yAttributes={[
+              {stroke: "red"},
+              {type: "scatter"}
+            ]}/>
+
+          <VictoryChart
+            showGridLines={{x: true, y: true}}
+            axisLabels={{x: "x axis", y: "y axis"}}
+            x={[
+              [1, 2, 3, 4],
+              [-2, -1, 0, 1, 3],
+              [3, 4, 6]
+            ]}
+            y={[
+            [1, 2, 10, 4],
+            (x) => x * x,
+            [-5, -4, -3, -2, 2, 3]
+          ]}
+          yAttributes={[
+            {name: "line-one", type: "scatter", fill: "red", symbol: "triangleUp"},
+            {name: "line-two", type: "line", stroke: "green"},
+            {name: "line-3", type: "scatter", fill: "blue"}
+          ]}/>
+
+          <VictoryChart
+            data={this.state.numericBarData}
+            dataAttributes={[
+              {type: "bar", fill: "cornflowerblue"},
+              {type: "bar", fill: "orange"},
+              {type: "bar", fill: "greenyellow"},
+              {type: "bar", fill: "gold"},
+              {type: "bar", fill: "tomato"}
+            ]}
+            axisOrientation={{x: "top", y: "right"}}
+            categories={[[1, 3], [4, 7], [9, 11]]}
+            domainPadding={{
+              x: 20,
+              y: 0
+            }}
+            animate={{velocity: 0.02}}/>
 
             <VictoryChart
             data={this.state.barData}

@@ -108,7 +108,7 @@ class VictoryChart extends React.Component {
 
   getStyles(props) {
     if (!props.style) {
-      return styles
+      return styles;
     }
     const {axis, line, scatter, bar, ...attrs} = props.style;
     return {
@@ -120,7 +120,7 @@ class VictoryChart extends React.Component {
       line: _.merge({}, styles.line, line),
       scatter: _.merge({}, styles.scatter, scatter),
       bar: _.merge({}, styles.bar, bar)
-    }
+    };
   }
 
   validateData(props) {
@@ -447,8 +447,7 @@ class VictoryChart extends React.Component {
     const padding = extent * percentPadding;
     const adjustedMin = min === 0 ? min : min - padding;
     const adjustedMax = max === 0 ? max : max + padding;
-    const adjusted =  [adjustedMin, adjustedMax];
-    return adjusted;
+    return [adjustedMin, adjustedMax];
   }
 
   // helper method for getDomain
@@ -549,7 +548,7 @@ class VictoryChart extends React.Component {
         _.values(this.stringMap[axis]);
     } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
       // return tick values based on the bar categories
-       _.isArray(props.categories[0]) ?
+      return _.isArray(props.categories[0]) ?
         _.map(props.categories, (arr) => (_.sum(arr) / arr.length)) : props.categories;
     } else {
       // let axis determine it's own ticks
