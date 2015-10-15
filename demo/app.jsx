@@ -1,6 +1,7 @@
 /*global document:false */
 /*global window:false */
 import React from "react";
+import ReactDOM from "react-dom";
 import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
@@ -78,7 +79,7 @@ class App extends React.Component {
         y: _.random(20),
         size: _.random(8) + 3,
         symbol: symbols[scaledIndex],
-        color: colors[_.random(0, 6)],
+        fill: colors[_.random(0, 6)],
         opacity: _.random(0.3, 1)
       };
     });
@@ -111,6 +112,7 @@ class App extends React.Component {
 
           <VictoryChart
               data={this.state.lineData}
+              dataAttributes={this.state.dataAttributes}
               showGridLines={{x: false, y: true}}
               animate={{velocity: 0.02}}/>
 
@@ -177,19 +179,19 @@ class App extends React.Component {
             [-5, -4, -3, -2, 2, 3]
           ]}
           yAttributes={[
-            {name: "line-one", type: "scatter", color: "red", symbol: "triangleUp"},
+            {name: "line-one", type: "scatter", fill: "red", symbol: "triangleUp"},
             {name: "line-two", type: "line", stroke: "green"},
-            {name: "line-3", type: "scatter", color: "blue"}
+            {name: "line-3", type: "scatter", fill: "blue"}
           ]}/>
 
           <VictoryChart
             data={this.state.numericBarData}
             dataAttributes={[
-              {type: "bar", color: "cornflowerblue"},
-              {type: "bar", color: "orange"},
-              {type: "bar", color: "greenyellow"},
-              {type: "bar", color: "gold"},
-              {type: "bar", color: "tomato"}
+              {type: "bar", fill: "cornflowerblue"},
+              {type: "bar", fill: "orange"},
+              {type: "bar", fill: "greenyellow"},
+              {type: "bar", fill: "gold"},
+              {type: "bar", fill: "tomato"}
             ]}
             axisOrientation={{x: "top", y: "right"}}
             categories={[[1, 3], [4, 7], [9, 11]]}
@@ -202,11 +204,11 @@ class App extends React.Component {
             <VictoryChart
             data={this.state.barData}
             dataAttributes={[
-              {type: "stackedBar", color: "cornflowerblue"},
-              {type: "stackedBar", color: "orange"},
-              {type: "stackedBar", color: "greenyellow"},
-              {type: "stackedBar", color: "gold"},
-              {type: "stackedBar", color: "tomato"}
+              {type: "stackedBar", fill: "cornflowerblue"},
+              {type: "stackedBar", fill: "orange"},
+              {type: "stackedBar", fill: "greenyellow"},
+              {type: "stackedBar", fill: "gold"},
+              {type: "stackedBar", fill: "tomato"}
             ]}
             domainPadding={{
               x: 100,
@@ -232,19 +234,23 @@ class App extends React.Component {
             tickValues={{
               x: ["12", "13", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
             }}
-            axisStyle={{
-              x: {stroke: "transparent", fill: "none"},
-              y: {stroke: "transparent", fill: "none"}
-            }}
-            tickStyle={{
-              x: {stroke: "transparent", fill: "none"},
-              y: {stroke: "transparent", fill: "none", padding: 20}
+            style={{
+              axis: {
+                x: {
+                  axis: {stroke: "black", strokeWidth: 2},
+                  ticks: {stroke: "transparent"}
+                },
+                y: {
+                  axis: {stroke: "transparent"},
+                  ticks: {stroke: "transparent", padding: 15}
+                }
+              }
             }}
             domainPadding={{
               x: 20,
               y: 10
             }}
-            dataAttributes={{type: "bar", color: "orange"}}
+            dataAttributes={{type: "bar", fill: "orange"}}
             barWidth={5}
             y={() => 0.5}
             yAttributes={{type: "line", stroke: "gold", strokeWidth: 3}}/>
@@ -256,4 +262,4 @@ class App extends React.Component {
 
 const content = document.getElementById("content");
 
-React.render(<App/>, content);
+ReactDOM.render(<App/>, content);

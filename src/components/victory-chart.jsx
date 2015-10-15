@@ -9,6 +9,84 @@ import {VictoryAxis} from "victory-axis";
 import {VictoryScatter} from "victory-scatter";
 import {VictoryBar} from "victory-bar";
 
+const styles = {
+  base: {
+    width: 500,
+    height: 300,
+    margin: 50
+  },
+  axis: {
+    axis: {
+      stroke: "#756f6a",
+      fill: "#756f6a",
+      strokeWidth: 2,
+      strokeLinecap: "round"
+    },
+    grid: {
+      stroke: "#c9c5bb",
+      fill: "#c9c5bb",
+      strokeWidth: 1,
+      strokeLinecap: "round"
+    },
+    ticks: {
+      stroke: "#756f6a",
+      fill: "#756f6a",
+      strokeWidth: 2,
+      strokeLinecap: "round",
+      size: 4,
+      padding: 5
+    },
+    axisLabels: {
+      stroke: "#756f6a",
+      fill: "none",
+      fontSize: 16,
+      fontFamily: "Helvetica"
+    },
+    tickLabels: {
+      stroke: "#756f6a",
+      fill: "none",
+      fontFamily: "Helvetica",
+      fontSize: 10,
+      padding: 5
+    }
+  },
+  line: {
+    data: {
+      strokeWidth: 2,
+      fill: "none",
+      stroke: "#756f6a",
+      opacity: 1
+    },
+    labels: {}
+  },
+  scatter: {
+    data: {
+      fill: "#756f6a",
+      opacity: 1,
+      stroke: "transparent",
+      strokeWidth: 0
+    },
+    labels: {
+      stroke: "none",
+      fill: "black",
+      fontFamily: "Helvetica",
+      fontSize: 10,
+      textAnchor: "middle"
+    }
+  },
+  bar: {
+    data: {
+      width: 8,
+      padding: 6,
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#756f6a",
+      opacity: 1
+    },
+    labels: {}
+  }
+};
+
 @Radium
 class VictoryChart extends React.Component {
   constructor(props) {
@@ -27,12 +105,20 @@ class VictoryChart extends React.Component {
   }
 
   getStyles(props) {
-    return _.merge({
-      color: "#000",
-      margin: 50,
-      width: 500,
-      height: 300
-    }, props.style);
+    if (!props.style) {
+      return styles;
+    }
+    const {axis, line, scatter, bar, ...attrs} = props.style;
+    return {
+      base: _.merge({}, styles.base, attrs),
+      axis: {
+        x: _.merge({}, styles.axis, (axis && axis.x)),
+        y: _.merge({}, styles.axis, (axis && axis.y))
+      },
+      line: _.merge({}, styles.line, line),
+      scatter: _.merge({}, styles.scatter, scatter),
+      bar: _.merge({}, styles.bar, bar)
+    };
   }
 
   validateData(props) {
@@ -224,7 +310,8 @@ class VictoryChart extends React.Component {
 
     // determine which domain to use in order of preference
     const domain = domainFromProps || domainFromTicks || domainFromData || domainFromScale;
-    const paddedDomain = props.domain ? domain : this._padDomain(props, domain, "x");
+    const paddedDomain = (domainFromProps || domainFromTicks) ?
+      domain : this._padDomain(props, domain, "x");
     const samples = this._getNumSamples(props);
     const step = (_.max(paddedDomain) - _.min(paddedDomain)) / samples;
     // return an array of an array of x values spaced scross the domain,
@@ -335,7 +422,6 @@ class VictoryChart extends React.Component {
     } else {
       domain = this._getDomainFromData(props, axis);
     }
-
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
@@ -369,8 +455,8 @@ class VictoryChart extends React.Component {
       _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
     const domain = [_.min(data), _.max(data)];
     // dont pad the domain twice!
-    return (axis === "x" && props.y && !props.x) ? domain :
-      this._padDomain(props, domain, axis);
+    // return (axis === "x" && props.y && !props.x) ? domain :
+    return this._padDomain(props, domain, axis);
   }
 
   _getDomainFromCategories(props) {
@@ -411,9 +497,10 @@ class VictoryChart extends React.Component {
       return props.range[axis] ? props.range[axis] : props.range;
     }
     // if the range is not given in props, calculate it from width, height and margin
+    const style = this.style.base;
     return axis === "x" ?
-      [this.style.margin, this.style.width - this.style.margin] :
-      [this.style.height - this.style.margin, this.style.margin];
+      [style.margin, style.width - style.margin] :
+      [style.height - style.margin, style.margin];
   }
 
   getScale(props, axis) {
@@ -438,8 +525,8 @@ class VictoryChart extends React.Component {
       y: _.max([_.min(this.domain.y), 0])
     };
     const orientationOffset = {
-      x: props.axisOrientation.y === "left" ? 0 : this.style.width,
-      y: props.axisOrientation.x === "bottom" ? this.style.height : 0
+      x: props.axisOrientation.y === "left" ? 0 : this.style.base.width,
+      y: props.axisOrientation.x === "bottom" ? this.style.base.height : 0
     };
     return {
       x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
@@ -480,7 +567,7 @@ class VictoryChart extends React.Component {
       const dataNames = _.map(tickValueArray, (tick) => {
         return invertedStringMap[tick];
       });
-      // string ticks should have one tick of padding on either side
+      // string ticks should have one tick of padding at the beginning
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
@@ -492,6 +579,8 @@ class VictoryChart extends React.Component {
     const animate = this.props.animate && (this.props.animate.line || this.props.animate);
     return _.map(datasets, (dataset, index) => {
       const {type, name, ...attrs} = dataset.attrs;
+      const lineStyle = {data: _.merge({}, this.style.line.data, attrs)};
+      const style = _.merge({}, this.style.base, this.style.line, lineStyle);
       return (
         <VictoryLine
           {...this.props}
@@ -499,9 +588,9 @@ class VictoryChart extends React.Component {
           containerElement="g"
           data={dataset.data}
           interpolation={attrs.interpolation || this.props.interpolation}
-          style={_.merge(attrs, this.style)}
-          domain={{x: this.domain.x, y: this.domain.y}}
-          range={{x: this.range.x, y: this.range.y}}
+          style={style}
+          domain={this.domain}
+          range={this.range}
           ref={name}
           key={index}/>
       );
@@ -512,6 +601,8 @@ class VictoryChart extends React.Component {
     const animate = this.props.animate && (this.props.animate.scatter || this.props.animate);
     return _.map(datasets, (dataset, index) => {
       const {type, name, symbol, size, ...attrs} = dataset.attrs;
+      const scatterStyle = {data: _.merge({}, this.style.scatter.data, attrs)};
+      const style = _.merge({}, this.style.base, this.style.scatter, scatterStyle);
       return (
         <VictoryScatter
           {...this.props}
@@ -520,9 +611,9 @@ class VictoryChart extends React.Component {
           data={dataset.data}
           size={size || 3}
           symbol={symbol || "circle"}
-          style={_.merge(attrs, this.style)}
-          domain={{x: this.domain.x, y: this.domain.y}}
-          range={{x: this.range.x, y: this.range.y}}
+          style={style}
+          domain={this.domain}
+          range={this.range}
           ref={name}
           key={"scatter-" + index}/>
       );
@@ -532,7 +623,6 @@ class VictoryChart extends React.Component {
   drawBars(datasets, options) {
     const animate = this.props.animate && (this.props.animate.bar || this.props.animate);
     const categories = (this.stringMap.x) && _.keys(this.stringMap.x);
-    const offset = this.props.domainPadding && this.props.domainPadding.x;
     return (
       <VictoryBar
         {...this.props}
@@ -541,11 +631,10 @@ class VictoryChart extends React.Component {
         data={_.pluck(datasets, "data")}
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
-        style={this.style}
+        style={_.merge({}, this.style.base, this.style.bar)}
         domain={this.domain}
         range={this.range}
         categories={this.props.categories || categories}
-        categoryOffset={offset}
         key={"bar"}/>
     );
   }
@@ -571,17 +660,13 @@ class VictoryChart extends React.Component {
   drawAxis(axis) {
     const offsetY = axis === "y" ? undefined : this.axisOffset.y;
     const offsetX = axis === "x" ? undefined : this.axisOffset.x;
-    const axisStyle = this.props.axisStyle && this.props.axisStyle[axis];
-    const tickStyle = this.props.tickStyle && this.props.tickStyle[axis];
-    const gridStyle = this.props.gridStyle && this.props.gridStyle[axis];
     const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
-    const labelPadding = this.props.axisLabels && this.props.axisLabels.labelPadding;
     const animate = this.props.animate && (this.props.animate.axis || this.props.animate);
+    const style = _.merge({}, this.style.base, this.style.axis[axis]);
     return (
       <VictoryAxis
         {...this.props}
         label={axisLabel}
-        labelPadding={labelPadding}
         animate={animate}
         containerElement="g"
         offsetY={offsetY}
@@ -595,17 +680,15 @@ class VictoryChart extends React.Component {
         tickCount={this.props.tickCount[axis]}
         tickValues={this.tickValues[axis]}
         tickFormat={this.tickFormat[axis]}
-        axisStyle={axisStyle}
-        gridStyle={gridStyle}
-        tickStyle={tickStyle}
-        style={this.style}/>
+        style={style}/>
     );
   }
 
   render() {
     if (this.props.containerElement === "svg") {
+      const style = this.style.base;
       return (
-        <svg style={{ width: this.style.width, height: this.style.height, overflow: "visible" }}>
+        <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
           {this.drawAxis("x")}
           {this.drawAxis("y")}
           {this.drawData()}
@@ -788,9 +871,10 @@ VictoryChart.propTypes = {
    * The style prop specifies styles for your chart. Victory Chart relies on Radium,
    * so valid Radium style objects should work for this prop, however height, width, and margin
    * are used to calculate range, and need to be expressed as a number of pixels
-   * @examples {fontSize: 15, fontFamily: "helvetica", width: 500, height: 300}
+   * @examples {width: 500, height: 300, axis: {x: {...}, y: {...}},
+   * line: {data: {...}, labels: {...}}, scatter: {...}, bar: {...}}
    */
-  style: React.PropTypes.node,
+  style: React.PropTypes.object,
   /**
    * The axisLabels prop specifies the labels for your axes. It should be given as
    * an object with x and y properties.
@@ -845,42 +929,6 @@ VictoryChart.propTypes = {
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
-  /**
-   * The axisStyle prop specifies styles scoped only to the axis lines.
-   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
-   * @examples {strokeWidth: 2, stroke: "black"}
-   */
-  axisStyle: React.PropTypes.shape({
-    x: React.PropTypes.node,
-    y: React.PropTypes.node
-  }),
-  /**
-   * The tickStyle prop specifies styles scoped only to the axis ticks.
-   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
-   * @examples {fontSize: 15, fontFamily: "helvetica"}
-   */
-  tickStyle: React.PropTypes.shape({
-    x: React.PropTypes.node,
-    y: React.PropTypes.node
-  }),
-  /**
-   * The gridStyle prop specifies styles scoped only to the grid lines.
-   * Victory Chart relies on Radium, so valid Radium style objects should work for this prop.
-   * @examples {strokeWidth: 1, stroke: "#c9c5bb"}
-   */
-  gridStyle: React.PropTypes.shape({
-    x: React.PropTypes.node,
-    y: React.PropTypes.node
-  }),
-  /**
-   * The barWidth prop specifies the width in number of pixels for bars rendered in a bar chart.
-   */
-  barWidth: React.PropTypes.number,
-  /**
-   * The barPadding prop specifies the padding in number of pixels between bars
-   * rendered in a bar chart.
-   */
-  barPadding: React.PropTypes.number,
   /**
    * The domainPadding prop specifies a number of pixels of padding to add to the
    * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
