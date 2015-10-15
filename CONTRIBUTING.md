@@ -30,6 +30,61 @@ Victory components should:
 - Produce sensible results if _only_ data is provided _i.e_ set the domain based on whatever data was provided
 - Have attractive default styling
 - Take a `style` prop, and intelligently merge provided (and scoped) styles with default styles
+
+```
+// default styles
+const styles = {
+  base: {
+    width: 500,
+    height: 300,
+    margin: 50
+  },
+  data: {
+    fill: "#756f6a",
+    opacity: 1,
+    stroke: "transparent",
+    strokeWidth: 0
+  },
+  labels: {
+    stroke: "none",
+    fill: "black",
+    fontFamily: "Helvetica",
+    fontSize: 10,
+    textAnchor: "middle"
+  }
+};
+
+// merging styles:
+getStyles(props) {
+  if (!props.style) {
+    return styles;
+  }
+  const {data, labels, ...base} = props.style;
+  return {
+    base: _.merge({}, styles.base, base),
+    labels: _.merge({}, styles.labels, labels),
+    data: _.merge({}, styles.data, data)
+  };
+}
+
+// example style prop
+style={{
+  border: "1px solid #ccc",
+  height: 500,
+  margin: 50,
+  width: 500,
+  data: {
+    fill: "red",
+    opacity: 0.8
+  },
+  labels: {
+    fontSize: 15,
+    padding: 20,
+    fill: "grey"
+  }
+}}
+```
+
 - Support animating and static visualizations
 - Take an `animate` prop as an object that can be passed as props to [victory-animation](https://github.com/FormidableLabs/victory-animation)
 - Support rendering svg and g tags via a `containerElement` prop
