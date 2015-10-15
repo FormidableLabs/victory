@@ -1,6 +1,7 @@
 /*global document:false */
 /*global window:false */
 import React from "react";
+import ReactDOM from "react-dom";
 import d3 from "d3";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
@@ -261,4 +262,4 @@ class App extends React.Component {
 
 const content = document.getElementById("content");
 
-React.render(<App/>, content);
+ReactDOM.render(<App/>, content);
