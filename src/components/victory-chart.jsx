@@ -686,8 +686,8 @@ class VictoryChart extends React.Component {
 
   render() {
     const style = this.style.base;
-    const props = this.props.containerElement === 'svg' ? {
-      style: { width: style.width, height: style.height, overflow: 'visible' }
+    const props = this.props.containerElement === "svg" ? {
+      style: { width: style.width, height: style.height, overflow: "visible" }
     } : {};
     return React.createElement(
       this.props.containerElement, props,
