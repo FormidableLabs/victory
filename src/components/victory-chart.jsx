@@ -13,9 +13,7 @@ const styles = {
   base: {
     width: 500,
     height: 300,
-    margin: 50,
-    fontFamily: "Helvetica",
-    fontSize: 15
+    margin: 50
   },
   axis: {
     axis: {
@@ -35,8 +33,6 @@ const styles = {
       fill: "#756f6a",
       strokeWidth: 2,
       strokeLinecap: "round",
-      color: "#756f6a",
-      fontFamily: "sans-serif",
       size: 4,
       padding: 5
     },
@@ -80,9 +76,11 @@ const styles = {
   },
   bar: {
     data: {
-      borderColor: "transparent",
-      borderWidth: 0,
-      color: "#756f6a",
+      width: 8,
+      padding: 6,
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#756f6a",
       opacity: 1
     },
     labels: {}
@@ -873,7 +871,8 @@ VictoryChart.propTypes = {
    * The style prop specifies styles for your chart. Victory Chart relies on Radium,
    * so valid Radium style objects should work for this prop, however height, width, and margin
    * are used to calculate range, and need to be expressed as a number of pixels
-   * @examples {fontSize: 15, fontFamily: "helvetica", width: 500, height: 300}
+   * @examples {width: 500, height: 300, axis: {x: {...}, y: {...}},
+   * line: {data: {...}, labels: {...}}, scatter: {...}, bar: {...}}
    */
   style: React.PropTypes.object,
   /**
@@ -930,15 +929,6 @@ VictoryChart.propTypes = {
     x: React.PropTypes.number,
     y: React.PropTypes.number
   }),
-  /**
-   * The barWidth prop specifies the width in number of pixels for bars rendered in a bar chart.
-   */
-  barWidth: React.PropTypes.number,
-  /**
-   * The barPadding prop specifies the padding in number of pixels between bars
-   * rendered in a bar chart.
-   */
-  barPadding: React.PropTypes.number,
   /**
    * The domainPadding prop specifies a number of pixels of padding to add to the
    * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
