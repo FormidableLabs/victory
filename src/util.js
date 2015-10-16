@@ -25,8 +25,9 @@ let interpolatorAdded = false;
  */
 export const victoryInterpolator = function (a, b) {
   // If the values are strictly equal, or either value is null or undefined,
-  // just use the end value `b` at every step. The value will jump no matter
-  // what, but we can try to jump at a good time (like the halfway point).
+  // just use the start value `a` or end value `b` at every step, as there is
+  // no reasonable in-between value. The value will jump, but we can try to
+  // jump at a good time (like the halfway point).
   if (a === b || a == null || b == null) {
     return function (t) {
       // Switch to `b` halfway through the interpolation.
