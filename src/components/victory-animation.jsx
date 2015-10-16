@@ -73,8 +73,7 @@ class VictoryAnimation extends React.Component {
     */
     if (this.step >= 1) {
       this.step = 1;
-      const newState = this.interpolator(this.step);
-      this.setState(newState);
+      this.setState(this.interpolator(this.step));
       if (this.queue.length > 0) {
         cancelAnimationFrame(this.raf);
         this.queue.shift();
@@ -89,9 +88,7 @@ class VictoryAnimation extends React.Component {
       current step value that's transformed by the ease function to the
       interpolator, which is cached for performance whenever props are received
     */
-    const easedStep = this.ease(this.step);
-    const newState = this.interpolator(easedStep);
-    this.setState(newState);
+    this.setState(this.interpolator(this.ease(this.step)));
     /* increase step by velocity */
     this.step += this.props.velocity;
     /*
