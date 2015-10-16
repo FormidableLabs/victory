@@ -210,12 +210,19 @@ class App extends React.Component {
               {type: "stackedBar", fill: "gold"},
               {type: "stackedBar", fill: "tomato"}
             ]}
+            tickValues={{
+              x: ["apples", "bananas", "oranges"]
+            }}
+            tickFormat={{
+              x: ["apples\n(fuji)", "bananas", "oranges\n(navel)"]
+            }}
             domainPadding={{
               x: 100,
               y: 0
             }}
             animate={{velocity: 0.02}}/>
           <VictoryChart
+          chartType="stackedBar"
             data={[
               {x: 1, y: 1},
               {x: 2, y: 2},
@@ -250,7 +257,7 @@ class App extends React.Component {
               x: 20,
               y: 10
             }}
-            dataAttributes={{type: "bar", fill: "orange"}}
+            dataAttributes={{fill: "orange"}}
             barWidth={5}
             y={() => 0.5}
             yAttributes={{type: "line", stroke: "gold", strokeWidth: 3}}/>
