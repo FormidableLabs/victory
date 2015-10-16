@@ -4,14 +4,15 @@ import React from "react";
 import d3 from "d3";
 
 /**
- * By default, `d3.interpolate` does not handle interpolation to or from null
- * or undefined values in a nice way. They end up getting handled by
- * `d3.interpolateNumber`, which tries to perform arithmetic on them, resulting
- * in NaN. Without this custom interpolator, `VictoryAnimation` turns such
- * values into NaNs and happily passes them along as props to whatever component
- * it's animating. The component will then warn that it received props with
- * invalid types, since `typeof NaN === 'number'` and it was expecting either
- * some other type or null or undefined.
+ * By default, `d3.interpolate` turns null start/end values into 0 and undefined
+ * values into NaN (because it tries to do arithmetic on them). Without this
+ * custom interpolator, `VictoryAnimation` turns such values into 0s or NaNs
+ * and happily passes them along as props to whatever component it's animating.
+ * The component will then warn that it received props with invalid types,
+ * since `typeof NaN === 'number'` and it was expecting either some other type,
+ * or null or undefined. This custom interpolator prevents null from becoming
+ * 0 and undefined becoming NaN. We can't assume that the wrapped component
+ * accepts numerical values for whatever prop is being interpolated.
  */
 d3.interpolators.push(function (a, b) {
   // If either value is null, go directly to the end value `b`.
