@@ -1,5 +1,6 @@
 /*global document:false*/
 import React from "react";
+import ReactDOM from "react-dom";
 import {VictoryAnimation} from "../src/index";
 
 class App extends React.Component {
@@ -69,4 +70,4 @@ class App extends React.Component {
 
 const content = document.getElementById("content");
 
-React.render(<App/>, content);
+ReactDOM.render(<App/>, content);
