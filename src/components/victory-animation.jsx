@@ -2,6 +2,9 @@
 
 import React from "react";
 import d3 from "d3";
+import { addVictoryInterpolator } from "../util";
+
+addVictoryInterpolator();
 
 class VictoryAnimation extends React.Component {
   constructor(props) {
