@@ -399,7 +399,7 @@ class VictoryChart extends React.Component {
     }
   }
 
-  getStackedData(props) {
+  getStackedData() {
     const stackedTypes = ["stackedBar"];
     const stackedData = _.filter(this.datasets, (dataset) => {
       return _.includes(stackedTypes, dataset.attrs.type) ? dataset : null;
