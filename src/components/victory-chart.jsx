@@ -399,16 +399,12 @@ class VictoryChart extends React.Component {
     }
   }
 
-  getStackedData(props) {
+  getStackedData() {
     const stackedTypes = ["stackedBar"];
-    if (_.includes(stackedTypes, props.chartType)) {
-      return this.datasets;
-    } else {
-      const stackedData = _.filter(this.datasets, (dataset) => {
-        return _.includes(stackedTypes, dataset.attrs.type) ? dataset : null;
-      });
-      return _.isEmpty(stackedData) ? undefined : stackedData;
-    }
+    const stackedData = _.filter(this.datasets, (dataset) => {
+      return _.includes(stackedTypes, dataset.attrs.type) ? dataset : null;
+    });
+    return _.isEmpty(stackedData) ? undefined : stackedData;
   }
 
   getDomain(props, axis) {
@@ -587,6 +583,7 @@ class VictoryChart extends React.Component {
           animate={animate}
           containerElement="g"
           data={dataset.data}
+          label={attrs.label}
           interpolation={attrs.interpolation || this.props.interpolation}
           style={style}
           domain={this.domain}
@@ -912,12 +909,14 @@ VictoryChart.propTypes = {
   }),
   /**
    * The tickFormat prop specifies how tick values should be expressed visually.
-   * This prop should be given as an object with functions specified for x and y
-   * @examples {x: d3.time.format("%Y"), y: (x) => x.toPrecision(2)}
+   * This prop should be given as an object with functions or arrays of display
+   * values specified for x and y
+   * @examples {x: d3.time.format("%Y"), y: (x) => x.toPrecision(2)}, {
+   * x: ["dogs", "cats", "birds"]}
    */
   tickFormat: React.PropTypes.shape({
-    x: React.PropTypes.func,
-    y: React.PropTypes.func
+    x: React.PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.array]),
+    y: React.PropTypes.oneOfType([React.PropTypes.func, React.PropTypes.array])
   }),
   /**
    * The tickCount prop specifies how many ticks should be drawn on each axis if
