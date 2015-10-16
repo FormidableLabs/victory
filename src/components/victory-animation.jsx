@@ -2,26 +2,9 @@
 
 import React from "react";
 import d3 from "d3";
+import { addVictoryInterpolator } from "../util";
 
-/**
- * By default, `d3.interpolate` turns null start/end values into 0 and undefined
- * values into NaN (because it tries to do arithmetic on them). Without this
- * custom interpolator, `VictoryAnimation` turns such values into 0s or NaNs
- * and happily passes them along as props to whatever component it's animating.
- * The component will then warn that it received props with invalid types,
- * since `typeof NaN === 'number'` and it was expecting either some other type,
- * or null or undefined. This custom interpolator prevents null from becoming
- * 0 and undefined becoming NaN. We can't assume that the wrapped component
- * accepts numerical values for whatever prop is being interpolated.
- */
-d3.interpolators.push(function (a, b) {
-  // If either value is null, go directly to the end value `b`.
-  if (a == null || b == null) {
-    return function () {
-      return b;
-    };
-  }
-});
+addVictoryInterpolator();
 
 class VictoryAnimation extends React.Component {
   constructor(props) {
@@ -90,7 +73,8 @@ class VictoryAnimation extends React.Component {
     */
     if (this.step >= 1) {
       this.step = 1;
-      this.setState(this.interpolator(this.step));
+      const newState = this.interpolator(this.step);
+      this.setState(newState);
       if (this.queue.length > 0) {
         cancelAnimationFrame(this.raf);
         this.queue.shift();
@@ -105,7 +89,9 @@ class VictoryAnimation extends React.Component {
       current step value that's transformed by the ease function to the
       interpolator, which is cached for performance whenever props are received
     */
-    this.setState(this.interpolator(this.ease(this.step)));
+    const easedStep = this.ease(this.step);
+    const newState = this.interpolator(easedStep);
+    this.setState(newState);
     /* increase step by velocity */
     this.step += this.props.velocity;
     /*
