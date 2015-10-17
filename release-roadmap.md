@@ -16,12 +16,10 @@ Release Roadmap: October 19th
 ### victory-animation
 
 needs docs and gh-pages 
-should rely on d3 modules instead of entire d3
 
 ### victory-chart
 
 needs docs and gh-pages 
-should rely on d3 modules instead of entire d3
 `tickValues` should support objects
 needs an color picker for auto-coloring data series.
 needs performance improvement
@@ -31,28 +29,24 @@ needs native support
 ### victory-axis
 
 needs docs and gh-pages 
-should rely on d3 modules instead of entire d3
 needs performance improvement
 needs native support
 
 ### victory-bar
 
 needs docs and gh-pages 
-should rely on d3 modules instead of entire d3
 needs native support
 needs labels for groups of bars
 
 ### victory-line
 
 needs docs and gh-pages 
-should rely on d3 modules instead of entire d3
 needs native support
 needs performance improvement
 needs labels for lines, with a position property
 
 ### victory-pie
 
-should rely on d3 modules instead of entire d3
 needs to be audited for code consistency
 
 ### victory-area
@@ -62,7 +56,6 @@ needs everything. Maybe this should just be "coming soon"
 ### victory-treemap
 
 needs docs and gh-pages 
-should rely on d3 modules instead of entire d3
 needs to be audited for code consistency
 needs native support
 
