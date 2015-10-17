@@ -87,7 +87,7 @@ style={{
 
 - Support animating and static visualizations
 - Take an `animate` prop as an object that can be passed as props to [victory-animation](https://github.com/FormidableLabs/victory-animation)
-- Support rendering svg and g tags via a `containerElement` prop
+- Support rendering svg and g tags via a `standalone` prop (renders svg when true, g when false).
 - Not require users to write d3 or have d3 domain knowledge
 - Be accessable and usable for junior developers
 - Have an intuitive api
