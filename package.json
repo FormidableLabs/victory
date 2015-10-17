@@ -1,6 +1,6 @@
 {
   "name": "victory-pie",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "D3 pie & donut chart component for React",
   "main": "lib/index.js",
   "repository": {
@@ -64,7 +64,7 @@
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-animation": "^0.0.4",
+    "victory-animation": "latest",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
