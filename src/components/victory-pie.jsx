@@ -1,102 +1,142 @@
-/*global console:false*/
 import d3 from "d3";
 import _ from "lodash";
+import log from "../log";
 import React from "react";
 import Radium from "radium";
+import Util from "../util";
 import {VictoryAnimation} from "victory-animation";
+
+const defaultStyles = {
+  base: {
+    width: 400,
+    height: 400,
+    margin: 20
+  },
+  data: {
+    padding: 5,
+    stroke: "white",
+    strokeWidth: 1
+  },
+  labels: {
+    padding: 10,
+    fill: "black",
+    strokeWidth: 0,
+    stroke: "transparent",
+    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+    fontSize: 10
+  }
+};
 
 @Radium
 class VictoryPie extends React.Component {
   constructor(props) {
     super(props);
-    const radius = Math.min(this.props.width, this.props.height) / 2;
-    const sortOrder = this.getSortOrder();
+    this.getCalculatedValues(props);
+  }
 
-    this.colors = d3.scale.ordinal().range(this.props.sliceColors);
+  componentWillReceiveProps(nextProps) {
+    this.getCalculatedValues(nextProps);
+  }
 
+  getCalculatedValues(props) {
+    this.style = this.getStyles(props);
+    this.radius = this.getRadius();
+    this.sortOrder = this.getSortOrder(props);
+    this.colors = d3.scale.ordinal().range(props.sliceColors);
     this.slice = d3.svg.arc()
-      .outerRadius(radius - this.props.padding)
+      .outerRadius(this.radius)
       .innerRadius(this.props.innerRadius);
-
-    this.label = d3.svg.arc()
-      .outerRadius(radius)
-      .innerRadius(this.props.labelPadding || this.props.innerRadius);
-
+    this.labelPosition = this.getLabelPosition(props);
     this.pie = d3.layout.pie()
-      .sort(sortOrder)
-      .startAngle(this.convertToRadians(this.props.startAngle))
-      .endAngle(this.convertToRadians(this.props.endAngle))
-      .padAngle(this.convertToRadians(this.props.padAngle))
-      .value((d) => { return d.y; });
+      .sort(this.sortOrder)
+      .startAngle(Util.degreesToRadians(props.startAngle))
+      .endAngle(Util.degreesToRadians(props.endAngle))
+      .padAngle(Util.degreesToRadians(props.padAngle))
+      .value((data) => { return data.y; });
   }
 
-  convertToRadians(degrees) {
-    return degrees * (Math.PI / 180);
+  getStyles(props) {
+    if (!props.style) {
+      return defaultStyles;
+    }
+    const {data, labels, ...base} = props.style;
+    return {
+      base: _.merge({}, defaultStyles.base, base),
+      data: _.merge({}, defaultStyles.data, data),
+      labels: _.merge({}, defaultStyles.labels, labels)
+    };
   }
 
-  getSortOrder() {
-    let comparator = this.props.sort;
+  getRadius() {
+    return _.min([
+      this.style.base.width - this.style.base.margin,
+      this.style.base.height - this.style.base.margin
+    ]) / 2;
+  }
 
+  getLabelPosition(props) {
+    // TODO: better label positioning
+    const innerRadius = props.innerRadius ?
+      props.innerRadius + this.style.labels.padding :
+      this.style.labels.padding;
+    return d3.svg.arc()
+      .outerRadius(this.radius)
+      .innerRadius(innerRadius);
+  }
+
+  getSortOrder(props) {
+    let comparator = props.sort;
     if (!_.isNull(comparator) && _.isString(comparator)) {
       if (comparator === "ascending" || comparator === "descending") {
-        comparator = (a, b) => { return d3[this.props.sort](a.y, b.y); };
+        comparator = (a, b) => { return d3[props.sort](a.y, b.y); };
       } else {
-        if (process.env.NODE_ENV !== "production") {
-          /* eslint-disable no-console */
-          if (typeof console !== "undefined" && console.warn) {
-            console.error("Victory Pie: Invalid sort string. Try 'ascending' or 'descending'.");
-          }
-          /* eslint-enable no-console */
-        }
+        log.warn("Victory Pie: Invalid sort string. Try 'ascending' or 'descending'.");
         comparator = null;
       }
     }
-
     return comparator;
-  }
-
-  getStyles(fill) {
-    return {
-      text: {
-        fill: this.props.fontColor,
-        fontFamily: this.props.fontFamily,
-        fontSize: this.props.fontSize,
-        fontWeight: this.props.fontWeight,
-        textAnchor: "middle"
-      },
-      path: {
-        fill,
-        stroke: this.props.borderColor,
-        strokeWidth: this.props.borderWidth
-      }
-    };
   }
 
   drawArcs(slices) {
     const sliceData = this.pie(this.props.data);
-
     const sliceComponents = _.map(slices, (slice, index) => {
       const fill = this.colors(slice.x);
-      const styles = this.getStyles(fill);
+      const style = _.merge({}, this.style.data, {fill});
 
+      if (this.props.animate) {
+        return (
+          <VictoryAnimation {...this.props.animate} data={sliceData[index]} key={index}>
+            {(data) => {
+              return (
+                <g>
+                  <path
+                    d={this.slice(data)}
+                    style={style}/>
+                  <text
+                    dy=".35em"
+                    style={this.style.labels}
+                    transform={"translate(" + this.labelPosition.centroid(data) + ")"}>
+                    {slice.x}
+                  </text>
+                </g>
+              );
+            }}
+          </VictoryAnimation>
+        );
+      }
+      const data = sliceData[index];
       return (
-        <VictoryAnimation data={sliceData[index]} key={index}>
-          {(data) => {
-            return (
-              <g>
-                <path
-                  d={this.slice(data)}
-                  style={styles.path}/>
-                <text
-                  dy=".35em"
-                  style={styles.text}
-                  transform={"translate(" + this.label.centroid(data) + ")"}>
-                  {slice.x}
-                </text>
-              </g>
-            );
-          }}
-        </VictoryAnimation>
+        <g key={index}>
+          <path
+            d={this.slice(data)}
+            style={style}/>
+          <text
+            dy=".35em"
+            style={this.style.labels}
+            transform={"translate(" + this.labelPosition.centroid(data) + ")"}>
+            {slice.x}
+          </text>
+        </g>
       );
     });
 
@@ -104,47 +144,94 @@ class VictoryPie extends React.Component {
   }
 
   render() {
+    const style = this.style.base;
+    if (this.props.standalone) {
+      return (
+        <svg style={style}>
+          <g transform={"translate(" + style.width / 2 + "," + style.height / 2 + ")"}>
+            {this.drawArcs(this.props.data)}
+          </g>
+        </svg>
+      );
+    }
     return (
-      <svg
-        height={this.props.height}
-        width={this.props.width}>
-        <g transform={"translate(" + this.props.width / 2 + "," + this.props.height / 2 + ")"}>
-          {this.drawArcs(this.props.data)}
-        </g>
-      </svg>
+      <g style={style}
+        transform={"translate(" + style.width / 2 + "," + style.height / 2 + ")"}>
+        {this.drawArcs(this.props.data)}
+      </g>
     );
   }
 }
 
 VictoryPie.propTypes = {
-  borderColor: React.PropTypes.string,
-  borderWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
+  /**
+   * Objects in the data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val>
+   * is the slice label (string or number), and <y-val> is the corresponding number
+   * used to calculate arc length as a proportion of the pie's circumference.
+   * If the data prop is omitted, the pie will render sample data.
+   */
   data: React.PropTypes.arrayOf(React.PropTypes.shape({
     x: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
     y: React.PropTypes.number
   })),
+  /**
+   * The style prop specifies styles for your pie. VictoryPie relies on Radium,
+   * so valid Radium style objects should work for this prop, however properties like
+   * height, width, padding and margin are used to calculate the radius of the pi, and need to be
+   * expressed as a number of pixels
+   * @example {width: 500, height: 300, label: {fill: "black", fontSize: 10}}
+   */
+  style: React.PropTypes.object,
+  /**
+   * The overall start angle of the pie in degrees. This prop is used in conjunction with
+   * `endAngle` to create a pie that spans only a segment of a circle.
+   */
+  startAngle: React.PropTypes.number,
+  /**
+   * The overall end angle of the pie in degrees. This prop is used in conjunction with
+   * `startAngle` to create a pie that spans only a segment of a circle.
+   */
   endAngle: React.PropTypes.number,
-  fontColor: React.PropTypes.string,
-  fontFamily: React.PropTypes.string,
-  fontSize: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  fontWeight: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
-  height: React.PropTypes.number,
+  /**
+   * When creating a donut chart, this prop determines the number of pixels between
+   * the center of the chart and the inner edge of a donut. When this prop is set to zero
+   * a regular pie chart is rendered.
+   */
   innerRadius: React.PropTypes.number,
-  labelPadding: React.PropTypes.number,
+  /**
+   * The padAngle prop determines the amount of separation between adjacent data slices
+   * in number of degrees
+   */
   padAngle: React.PropTypes.number,
-  padding: React.PropTypes.number,
+  /**
+   * The sliceColors prop defines an array of colors to use for distinguishing data
+   * segments in a pie chart. If the data array is longer than the sliceColors array,
+   * colors will be reused.
+   */
   sliceColors: React.PropTypes.arrayOf(React.PropTypes.string),
+  /**
+   * The sort prop determines how to order data. This prop can be given as "ascending"
+   * or "descending", or as a custom comparator function
+   */
   sort: React.PropTypes.oneOfType([
     React.PropTypes.oneOf(["ascending", "descending"]),
     React.PropTypes.func
   ]),
-  startAngle: React.PropTypes.number,
-  width: React.PropTypes.number
+  /**
+   * The animate prop specifies props for victory-animation to use. If this prop is
+   * not given, the pie chart will not tween between changing data / style props.
+   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+   * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
+   */
+  animate: React.PropTypes.object,
+  /**
+   * The standalone prop determines whether VictoryPie should render as a standalone
+   * svg, or in a g tag to be included in an svg
+   */
+  standalone: React.PropTypes.bool
 };
 
 VictoryPie.defaultProps = {
-  borderColor: "white",
-  borderWidth: 1,
   data: [
     { x: "A", y: 1 },
     { x: "B", y: 2 },
@@ -153,15 +240,8 @@ VictoryPie.defaultProps = {
     { x: "E", y: 2 }
   ],
   endAngle: 360,
-  fontColor: "black",
-  fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-  fontSize: 10,
-  fontWeight: 400,
-  height: 400,
   innerRadius: 0,
-  labelPadding: 0,
   padAngle: 0,
-  padding: 0,
   sliceColors: [
     "#75C776",
     "#39B6C5",
@@ -173,7 +253,7 @@ VictoryPie.defaultProps = {
   ],
   sort: null,
   startAngle: 0,
-  width: 400
+  standalone: true
 };
 
 export default VictoryPie;

@@ -26,7 +26,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       data: this.props.data,
-      height: 500,
       sliceColors: [
         "#D85F49",
         "#F66D3B",
@@ -37,7 +36,17 @@ class App extends React.Component {
         "#F6A57F"
       ],
       sliceWidth: 60,
-      width: 500
+      style: {
+        width: 400,
+        height: 400,
+        data: {
+          strokeWidth: 2
+        },
+        labels: {
+          fill: "white",
+          padding: 10
+        }
+      }
     };
   }
 
@@ -51,11 +60,11 @@ class App extends React.Component {
 
   getStyles() {
     return {
-      height: this.state.height,
+      height: this.state.style.height,
       margin: "0 auto",
-      width: this.state.width,
+      width: this.state.style.width,
       position: "relative",
-      top: this.state.height / 4 - this.state.sliceWidth / 2
+      top: this.state.style.height / 4 - this.state.sliceWidth / 2
     };
   }
 
@@ -63,11 +72,10 @@ class App extends React.Component {
     return (
       <div style={this.getStyles()}>
         <VictoryPie
-          borderWidth={2}
+          style={this.state.style}
           data={this.state.data}
-          fontColor="white"
-          fontWeight={200}
-          innerRadius={150}
+          innerRadius={100}
+          animate={{velocity: 0.03}}
           sliceColors={this.state.sliceColors}
           sort="descending"/>
       </div>
