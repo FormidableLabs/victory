@@ -245,7 +245,8 @@ class App extends React.Component {
               axis: {
                 x: {
                   axis: {stroke: "black", strokeWidth: 2},
-                  ticks: {stroke: "transparent"}
+                  ticks: {stroke: "black"},
+                  tickLabels: {fill: "black"}
                 },
                 y: {
                   axis: {stroke: "transparent"},
@@ -260,7 +261,7 @@ class App extends React.Component {
             dataAttributes={{fill: "orange"}}
             barWidth={5}
             y={() => 0.5}
-            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3}}/>
+            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3, label: "LINE"}}/>
         </p>
       </div>
     );
