@@ -2,7 +2,7 @@ import d3 from "d3";
 import _ from "lodash";
 
 export const isInterpolatable = function (obj) {
-  // d3 turns null into 0, which we don't want.
+  // d3 turns null into 0 and undefined into NaN, which we don't want.
   if (obj != null) {
     switch (typeof obj) {
       case "number":
@@ -17,9 +17,6 @@ export const isInterpolatable = function (obj) {
         // d3 turns Booleans into integers, which we don't want. Sure, we could
         // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
         // something expecting a Boolean.
-        return false;
-      case "undefined":
-        // d3 turns undefined into NaN, which we don't want.
         return false;
       case "object":
         // Don't try to interpolate class instances (except Date or Array).
@@ -88,11 +85,13 @@ export const interpolateFunction = function (a, b) {
 };
 
 /**
- * By default, the list of interpolators used by `d3.interpolate` have a few
+ * By default, the list of interpolators used by `d3.interpolate` has a few
  * downsides:
  *
  * - `null` values get turned into 0.
  * - `undefined`, `function`, and some other value types get turned into NaN.
+ * - Boolean types get turned into numbers, which probably will be meaningless
+ *   to whatever is consuming them.
  * - It tries to interpolate between identical start and end values, doing
  *   unnecessary calculations that sometimes result in floating point rounding
  *   errors.
