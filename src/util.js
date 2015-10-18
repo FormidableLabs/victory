@@ -1,14 +1,99 @@
 import d3 from "d3";
+import _ from "lodash";
 
-let interpolatorAdded = false;
+export const isInterpolatable = function (obj) {
+  // d3 turns null into 0, which we don't want.
+  if (obj != null) {
+    switch (typeof obj) {
+      case "number":
+        // The standard `isNaN` is fine in this case since we already know the
+        // type is number.
+        return !isNaN(obj) && _.isFinite(obj);
+      case "string":
+        // d3 might not *actually* be able to interpolate the string, but it
+        // won't cause any issues to let it try.
+        return true;
+      case "boolean":
+        // d3 turns Booleans into integers, which we don't want. Sure, we could
+        // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
+        // something expecting a Boolean.
+        return false;
+      case "undefined":
+        // d3 turns undefined into NaN, which we don't want.
+        return false;
+      case "object":
+        // Don't try to interpolate class instances (except Date or Array).
+        return _.isDate(obj) || _.isArray(obj) || _.isPlainObject(obj);
+      case "function":
+        // Careful! There may be extra properties on function objects that the
+        // component expects to access - for instance, it may be a `d3.scale()`
+        // function, which has its own methods attached. We don't know if the
+        // component is only going to call the function (in which case it's
+        // safely interpolatable) or if it's going to access special properties
+        // (in which case our function generated from `interpolateFunction` will
+        // most likely cause an error. We could check for enumerable properties
+        // on the function object here to see if it's a "plain" function, but
+        // let's just require that components prevent such function props from
+        // being animated in the first place.
+        return true;
+    }
+  }
+  return false;
+};
 
 /**
- * By default, `d3.interpolate` (which cycles through a list of interpolators)
- * has a few downsides:
+ * Interpolate immediately to the end value at the given step `when`.
+ * Some nicer default behavior might be to jump at the halfway point or return
+ * `a` if `t` is 0 (instead of always returning `b`). But d3's default
+ * interpolator does not do these things:
+ *
+ *   d3.interpolate('aaa', 'bbb')(0) === 'bbb'
+ *
+ * ...and things might get wonky if we don't replicate that behavior.
+ *
+ * @param {any} a - Start value.
+ * @param {any} b - End value.
+ * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
+ * @returns {Function} An interpolation function.
+ */
+export const interpolateImmediate = function (a, b, when = 0) {
+  return function (t) {
+    return (t < when) ? a : b;
+  };
+};
+
+/**
+ * Interpolate to or from a function. The interpolated value will be a function
+ * that calls `a` (if it's a function) and `b` (if it's a function) and calls
+ * `d3.interpolate` on the resulting values. Note that our function won't
+ * necessarily be called (that's up to the component this eventually gets
+ * passed to) - but if it does get called, it will return an appropriately
+ * interpolated value.
+ *
+ * @param {any} a - Start value.
+ * @param {any} b - End value.
+ * @returns {Function} An interpolation function.
+ */
+export const interpolateFunction = function (a, b) {
+  return function (t) {
+    if (t >= 1) {
+      return b;
+    }
+    return function () {
+      const aval = (typeof a === "function") ? a.apply(this, arguments) : a;
+      const bval = (typeof b === "function") ? b.apply(this, arguments) : b;
+      return d3.interpolate(aval, bval)(t);
+    };
+  };
+};
+
+/**
+ * By default, `d3.interpolate` (which then tries a list of interpolators) has
+ * a few downsides:
  *
  * - `null` values get turned into 0.
  * - `undefined`, `function`, and some other value types get turned into NaN.
- * - It tries to interpolate between identical start->end values, doing
+ * - It tries to interpolate between identical start and end values, doing
  *   unnecessary calculations that sometimes result in floating point rounding
  *   errors.
  *
@@ -21,35 +106,21 @@ let interpolatorAdded = false;
  *
  * @param {any} a - Start value.
  * @param {any} b - End value.
- * @returns {Function} Returns an interpolation function, if possible.
+ * @returns {Function|undefined} An interpolation function, if necessary.
  */
 export const victoryInterpolator = function (a, b) {
-  // If the values are strictly equal, or either value is null or undefined,
-  // just use the start value `a` or end value `b` at every step, as there is
-  // no reasonable in-between value. The value will jump, but we can try to
-  // jump at a good time (like the halfway point).
-  if (a === b || a == null || b == null) {
-    return function (t) {
-      // Switch to `b` halfway through the interpolation.
-      return (t < 0.5) ? a : b;
-    };
+  // If the values are strictly equal, or either value is not interpolatable,
+  // just use either the start value `a` or end value `b` at every step, as
+  // there is no reasonable in-between value.
+  if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
+    return interpolateImmediate(a, b);
   }
   if (typeof a === "function" || typeof b === "function") {
-    return function (t) {
-      // We're interpolating to or from a function. The interpolated value will
-      // be a function that calls `a` (if it's a function) and `b` (if it's a
-      // function) and calls `d3.interpolate` on the resulting values.
-      // Note that our function won't necessarily be called (that's up to the
-      // component) - but if it does get called, it will return an
-      // appropriately interpolated value.
-      return function () {
-        const aval = (typeof a === "function") ? a.apply(this, arguments) : a;
-        const bval = (typeof b === "function") ? b.apply(this, arguments) : b;
-        return d3.interpolate(aval, bval)(t);
-      };
-    };
+    return interpolateFunction(a, b);
   }
 };
+
+let interpolatorAdded = false;
 
 export const addVictoryInterpolator = function () {
   if (!interpolatorAdded) {
