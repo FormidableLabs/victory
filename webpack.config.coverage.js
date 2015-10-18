@@ -13,7 +13,7 @@ module.exports = _.merge({}, testCfg, {
       {
         test: /src\/.*\.jsx?$/,
         exclude: /(test|node_modules)\//,
-        loader: "isparta?{ babel: { stage: 1 } }"
+        loader: "isparta?{ babel: { stage: 0 } }"
       }
     ]
   }
