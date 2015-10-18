@@ -76,7 +76,7 @@ const styles = {
       strokeWidth: 0
     },
     labels: {
-      stroke: "transparent" ,
+      stroke: "transparent",
       strokeWidth: 0,
       fill: "black",
       fontFamily: "Helvetica",
