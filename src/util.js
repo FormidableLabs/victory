@@ -88,8 +88,8 @@ export const interpolateFunction = function (a, b) {
 };
 
 /**
- * By default, `d3.interpolate` (which then tries a list of interpolators) has
- * a few downsides:
+ * By default, the list of interpolators used by `d3.interpolate` have a few
+ * downsides:
  *
  * - `null` values get turned into 0.
  * - `undefined`, `function`, and some other value types get turned into NaN.
