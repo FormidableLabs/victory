@@ -244,12 +244,11 @@ export default class VictoryChart extends React.Component {
       })
     ]),
     /**
-     * The containerElement prop specifies which element the compnent will render.
-     * For standalone charts, the containerElement prop should be "svg". If you need to
-     * compose a chart with some other svg element, the containerElement prop should
-     * be "g", and will need to be rendered within an svg tag.
+     * The standalone prop determines whether the component will render a standalone svg
+     * or a <g> tag that will be included in an external svg. Set standalone to false to
+     * compose VictoryChart with other components within an enclosing <svg> tag.
      */
-    containerElement: React.PropTypes.oneOf(["svg", "g"]),
+    standalone: React.PropTypes.bool,
     /**
      * The style prop specifies styles for your chart. Victory Chart relies on Radium,
      * so valid Radium style objects should work for this prop, however height, width, and margin
@@ -365,7 +364,7 @@ export default class VictoryChart extends React.Component {
       x: 7,
       y: 5
     },
-    containerElement: "svg"
+    standalone: true
   };
 
   constructor(props) {
@@ -860,7 +859,7 @@ export default class VictoryChart extends React.Component {
         <VictoryLine
           {...this.props}
           animate={animate}
-          containerElement="g"
+          standalone={false}
           data={dataset.data}
           label={attrs.label}
           interpolation={attrs.interpolation || this.props.interpolation}
@@ -883,7 +882,7 @@ export default class VictoryChart extends React.Component {
         <VictoryScatter
           {...this.props}
           animate={animate}
-          containerElement="g"
+          standalone={false}
           data={dataset.data}
           size={size || 3}
           symbol={symbol || "circle"}
@@ -903,7 +902,7 @@ export default class VictoryChart extends React.Component {
       <VictoryBar
         {...this.props}
         animate={animate}
-        containerElement="g"
+        standalone={false}
         data={_.pluck(datasets, "data")}
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
@@ -944,7 +943,7 @@ export default class VictoryChart extends React.Component {
         {...this.props}
         label={axisLabel}
         animate={animate}
-        containerElement="g"
+        standalone={false}
         offsetY={offsetY}
         offsetX={offsetX}
         crossAxis={true}
@@ -961,7 +960,7 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
-    if (this.props.containerElement === "svg") {
+    if (this.props.standalone === true) {
       const style = this.style.base;
       return (
         <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
