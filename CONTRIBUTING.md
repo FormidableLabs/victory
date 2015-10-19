@@ -25,6 +25,7 @@ Victory components should:
 - Be created from the [FormidableLabs component generator](https://github.com/FormidableLabs/generator-formidable-react-component)
 - Be very well documented with [ecology](https://github.com/FormidableLabs/ecology)
 - Be named consistently _i.e._ `victory-bar`
+- Be React 0.14 compatible
 - *NOT* let 3rd party libraries like d3 interact with the DOM
 - Have sensible default props / fallback behaviors so that _something_ is rendered even when no props are provided
 - Produce sensible results if _only_ data is provided _i.e_ set the domain based on whatever data was provided
