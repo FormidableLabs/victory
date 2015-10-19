@@ -35,7 +35,7 @@ Victory components should:
 ```
 // default styles
 const styles = {
-  base: {
+  parent: {
     width: 500,
     height: 300,
     margin: 50
@@ -60,9 +60,9 @@ getStyles(props) {
   if (!props.style) {
     return styles;
   }
-  const {data, labels, ...base} = props.style;
+  const {data, labels, parent} = props.style;
   return {
-    base: _.merge({}, styles.base, base),
+    parent: _.merge({}, styles.parent, parent),
     labels: _.merge({}, styles.labels, labels),
     data: _.merge({}, styles.data, data)
   };
@@ -70,10 +70,12 @@ getStyles(props) {
 
 // example style prop
 style={{
-  border: "1px solid #ccc",
-  height: 500,
-  margin: 50,
-  width: 500,
+  parent: {
+    border: "1px solid #ccc",
+    height: 500,
+    margin: 50,
+    width: 500
+  },
   data: {
     fill: "red",
     opacity: 0.8
