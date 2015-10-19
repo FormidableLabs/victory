@@ -116,7 +116,7 @@ class App extends React.Component {
               showGridLines={{x: false, y: true}}
               animate={{velocity: 0.02}}/>
 
-          <VictoryChart interpolation="linear"
+          <VictoryChart
             scale={{
               x: d3.time.scale(),
               y: d3.scale.linear()
@@ -153,7 +153,6 @@ class App extends React.Component {
             y={(x) => x}/>
 
           <VictoryChart
-            showGridLines={{x: true, y: true}}
             samples={20}
             axisOrientation={{x: "top", y: "right"}}
             y={[
@@ -166,7 +165,7 @@ class App extends React.Component {
             ]}/>
 
           <VictoryChart
-            showGridLines={{x: true, y: true}}
+            interpolation="basis"
             axisLabels={{x: "x axis", y: "y axis"}}
             x={[
               [1, 2, 3, 4],
@@ -245,9 +244,9 @@ class App extends React.Component {
               axis: {
                 x: {
                   axis: {stroke: "black", strokeWidth: 2},
-                  ticks: {stroke: "transparent"}
                 },
                 y: {
+                  grid: {strokeWidth: 1},
                   axis: {stroke: "transparent"},
                   ticks: {stroke: "transparent", padding: 15}
                 }

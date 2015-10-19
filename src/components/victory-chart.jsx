@@ -10,7 +10,7 @@ import {VictoryScatter} from "victory-scatter";
 import {VictoryBar} from "victory-bar";
 
 const styles = {
-  base: {
+  parent: {
     width: 500,
     height: 300,
     margin: 50
@@ -24,8 +24,8 @@ const styles = {
     },
     grid: {
       stroke: "#c9c5bb",
-      fill: "#c9c5bb",
-      strokeWidth: 1,
+      fill: "none",
+      strokeWidth: 0,
       strokeLinecap: "round"
     },
     ticks: {
@@ -37,14 +37,14 @@ const styles = {
       padding: 5
     },
     axisLabels: {
-      stroke: "#756f6a",
-      fill: "none",
+      stroke: "transparent",
+      fill: "#756f6a",
       fontSize: 16,
       fontFamily: "Helvetica"
     },
     tickLabels: {
-      stroke: "#756f6a",
-      fill: "none",
+      stroke: "transparent",
+      fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 10,
       padding: 5
@@ -275,16 +275,6 @@ export default class VictoryChart extends React.Component {
       y: React.PropTypes.oneOf(["left", "right"])
     }),
     /**
-     * The showGridLines prop specifies whether or not to draw grid lines for a particular axis.
-     * It should be given as an object with x and y properties.
-     * Note: grid lines for a particular axis extend perpendicularly from that axis
-     * @examples {x: false, y: true}
-     */
-    showGridLines: React.PropTypes.shape({
-      x: React.PropTypes.bool,
-      y: React.PropTypes.bool
-    }),
-    /**
      * The tickValues prop explicity specifies which ticks values to draw on each axis.
      * This prop should be given as an object with arrays specified for x and y
      * @examples {x: ["apples", "bananas", "oranges"] y: [2, 4, 6, 8]}
@@ -351,15 +341,11 @@ export default class VictoryChart extends React.Component {
 
   static defaultProps = {
     chartType: "line",
-    interpolation: "basis",
+    interpolation: "linear",
     scale: d3.scale.linear(),
     axisOrientation: {
       x: "bottom",
       y: "left"
-    },
-    showGridLines: {
-      x: false,
-      y: false
     },
     tickCount: {
       x: 7,
@@ -387,9 +373,9 @@ export default class VictoryChart extends React.Component {
     if (!props.style) {
       return styles;
     }
-    const {axis, line, scatter, bar, ...attrs} = props.style;
+    const {axis, line, scatter, bar, parent} = props.style;
     return {
-      base: _.merge({}, styles.base, attrs),
+      parent: _.merge({}, styles.parent, parent),
       axis: {
         x: _.merge({}, styles.axis, (axis && axis.x)),
         y: _.merge({}, styles.axis, (axis && axis.y))
@@ -772,7 +758,7 @@ export default class VictoryChart extends React.Component {
       return props.range[axis] ? props.range[axis] : props.range;
     }
     // if the range is not given in props, calculate it from width, height and margin
-    const style = this.style.base;
+    const style = this.style.parent;
     return axis === "x" ?
       [style.margin, style.width - style.margin] :
       [style.height - style.margin, style.margin];
@@ -800,8 +786,8 @@ export default class VictoryChart extends React.Component {
       y: _.max([_.min(this.domain.y), 0])
     };
     const orientationOffset = {
-      x: props.axisOrientation.y === "left" ? 0 : this.style.base.width,
-      y: props.axisOrientation.x === "bottom" ? this.style.base.height : 0
+      x: props.axisOrientation.y === "left" ? 0 : this.style.parent.width,
+      y: props.axisOrientation.x === "bottom" ? this.style.parent.height : 0
     };
     return {
       x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
@@ -855,7 +841,7 @@ export default class VictoryChart extends React.Component {
     return _.map(datasets, (dataset, index) => {
       const {type, name, ...attrs} = dataset.attrs;
       const lineStyle = {data: _.merge({}, this.style.line.data, attrs)};
-      const style = _.merge({}, this.style.base, this.style.line, lineStyle);
+      const style = _.merge({}, this.style.parent, this.style.line, lineStyle);
       return (
         <VictoryLine
           {...this.props}
@@ -878,7 +864,7 @@ export default class VictoryChart extends React.Component {
     return _.map(datasets, (dataset, index) => {
       const {type, name, symbol, size, ...attrs} = dataset.attrs;
       const scatterStyle = {data: _.merge({}, this.style.scatter.data, attrs)};
-      const style = _.merge({}, this.style.base, this.style.scatter, scatterStyle);
+      const style = _.merge({}, this.style.parent, this.style.scatter, scatterStyle);
       return (
         <VictoryScatter
           {...this.props}
@@ -907,7 +893,7 @@ export default class VictoryChart extends React.Component {
         data={_.pluck(datasets, "data")}
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
-        style={_.merge({}, this.style.base, this.style.bar)}
+        style={_.merge({}, this.style.parent, this.style.bar)}
         domain={this.domain}
         range={this.range}
         categories={this.props.categories || categories}
@@ -938,7 +924,7 @@ export default class VictoryChart extends React.Component {
     const offsetX = axis === "x" ? undefined : this.axisOffset.x;
     const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
     const animate = this.props.animate && (this.props.animate.axis || this.props.animate);
-    const style = _.merge({}, this.style.base, this.style.axis[axis]);
+    const style = _.merge({}, this.style.parent, this.style.axis, this.style.axis[axis]);
     return (
       <VictoryAxis
         {...this.props}
@@ -952,7 +938,7 @@ export default class VictoryChart extends React.Component {
         domain={this.domain[axis]}
         range={this.range[axis]}
         orientation={this.props.axisOrientation[axis]}
-        showGridLines={this.props.showGridLines[axis]}
+        showGridLines={true} // temporary, deprecate this prop in favor of styles
         tickCount={this.props.tickCount[axis]}
         tickValues={this.tickValues[axis]}
         tickFormat={this.tickFormat[axis]}
@@ -962,7 +948,7 @@ export default class VictoryChart extends React.Component {
 
   render() {
     if (this.props.containerElement === "svg") {
-      const style = this.style.base;
+      const style = this.style.parent;
       return (
         <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
           {this.drawAxis("x")}
