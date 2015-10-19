@@ -243,7 +243,7 @@ class App extends React.Component {
             style={{
               axis: {
                 x: {
-                  axis: {stroke: "black", strokeWidth: 2},
+                  axis: {stroke: "black", strokeWidth: 2}
                 },
                 y: {
                   grid: {strokeWidth: 1},
