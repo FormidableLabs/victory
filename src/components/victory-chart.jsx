@@ -533,7 +533,9 @@ export default class VictoryChart extends React.Component {
         datasets.push(this._formatDataset(dataset, attributes));
       });
     }
-    return datasets;
+    return _.map(datasets, (dataset, index) => {
+      return _.merge({index}, dataset);
+    });
   }
 
   _formatDataset(dataset, attributes) {
@@ -849,50 +851,46 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  drawLines(datasets) {
+  drawLine(dataset) {
     const animate = this.props.animate && (this.props.animate.line || this.props.animate);
-    return _.map(datasets, (dataset, index) => {
-      const {type, name, ...attrs} = dataset.attrs;
-      const lineStyle = {data: _.merge({}, this.style.line.data, attrs)};
-      const style = _.merge({}, this.style.base, this.style.line, lineStyle);
-      return (
-        <VictoryLine
-          {...this.props}
-          animate={animate}
-          standalone={false}
-          data={dataset.data}
-          label={attrs.label}
-          interpolation={attrs.interpolation || this.props.interpolation}
-          style={style}
-          domain={this.domain}
-          range={this.range}
-          ref={name}
-          key={index}/>
-      );
-    });
+    const {type, name, ...attrs} = dataset.attrs;
+    const lineStyle = {data: _.merge({}, this.style.line.data, attrs)};
+    const style = _.merge({}, this.style.parent, this.style.line, lineStyle);
+    return (
+      <VictoryLine
+        {...this.props}
+        animate={animate}
+        standalone={false}
+        data={dataset.data}
+        label={attrs.label}
+        interpolation={attrs.interpolation || this.props.interpolation}
+        style={style}
+        domain={this.domain}
+        range={this.range}
+        ref={name}
+        key={"line-" + dataset.index}/>
+    );
   }
 
-  drawScatters(datasets) {
+  drawScatter(dataset) {
     const animate = this.props.animate && (this.props.animate.scatter || this.props.animate);
-    return _.map(datasets, (dataset, index) => {
-      const {type, name, symbol, size, ...attrs} = dataset.attrs;
-      const scatterStyle = {data: _.merge({}, this.style.scatter.data, attrs)};
-      const style = _.merge({}, this.style.base, this.style.scatter, scatterStyle);
-      return (
-        <VictoryScatter
-          {...this.props}
-          animate={animate}
-          standalone={false}
-          data={dataset.data}
-          size={size || 3}
-          symbol={symbol || "circle"}
-          style={style}
-          domain={this.domain}
-          range={this.range}
-          ref={name}
-          key={"scatter-" + index}/>
-      );
-    });
+    const {type, name, symbol, size, ...attrs} = dataset.attrs;
+    const scatterStyle = {data: _.merge({}, this.style.scatter.data, attrs)};
+    const style = _.merge({}, this.style.parent, this.style.scatter, scatterStyle);
+    return (
+      <VictoryScatter
+        {...this.props}
+        animate={animate}
+        standalone={false}
+        data={dataset.data}
+        size={size || 3}
+        symbol={symbol || "circle"}
+        style={style}
+        domain={this.domain}
+        range={this.range}
+        ref={name}
+        key={"scatter-" + dataset.index}/>
+    );
   }
 
   drawBars(datasets, options) {
@@ -914,21 +912,48 @@ export default class VictoryChart extends React.Component {
     );
   }
 
+  drawStackedBars(datasets) {
+    return this.drawBars(datasets, {stacked: true});
+  }
+
   drawData() {
+    const functionMap = {
+      line: this.drawLine,
+      scatter: this.drawScatter,
+      bar: this.drawBars,
+      stackedBar: this.drawStackedBars
+    };
+
     const dataByType = _.groupBy(this.datasets, (data) => {
       return data.attrs.type;
     });
-    return _.map(_.keys(dataByType), (type) => {
-      switch (type) {
-        case "line":
-          return this.drawLines(dataByType[type]);
-        case "scatter":
-          return this.drawScatters(dataByType[type]);
-        case "bar":
-          return this.drawBars(dataByType[type]);
-        case "stackedBar":
-          return this.drawBars(dataByType[type], {stacked: true});
-      }
+    // stackedBar and bar data must be treated as a group, and will
+    // be rendered in the order determined by the highest z-index
+    // in the group
+    const {stackedBar, bar, ...rest} = dataByType;
+    const stackedBarZ = stackedBar ? {
+      data: stackedBar,
+      z: _.max(_.map(stackedBar, "attrs.zIndex")) || this.style.bar.data.zIndex,
+      type: "stackedBar"
+    } : [];
+    const barZ = bar ? {
+      data: bar,
+      z: _.max(_.map(bar, "attrs.zIndex")) || this.style.bar.data.zIndex,
+      type: "bar"
+    } : [];
+
+    // the other data is dealt with independently
+    const otherData = _.flatten(_.values(rest));
+    const dataWithZ = _.isEmpty(otherData) ? [] :
+      _.map(otherData, (data) => {
+        const type = data.attrs.type;
+        const z = data.attrs.zIndex || this.style[type].data.zIndex;
+        return {data, z, type};
+      });
+    // Put it all together, and sort the array of objects by z
+    const orderedDatasets = _.sortBy(dataWithZ.concat(stackedBarZ, barZ), "z");
+    return _.map(orderedDatasets, (dataset) => {
+      return functionMap[dataset.type].call(this, dataset.data);
     });
   }
 
