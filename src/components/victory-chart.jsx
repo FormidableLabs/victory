@@ -10,7 +10,7 @@ import {VictoryScatter} from "victory-scatter";
 import {VictoryBar} from "victory-bar";
 
 const styles = {
-  base: {
+  parent: {
     width: 500,
     height: 300,
     margin: 50
@@ -24,8 +24,8 @@ const styles = {
     },
     grid: {
       stroke: "#c9c5bb",
-      fill: "#c9c5bb",
-      strokeWidth: 1,
+      fill: "none",
+      strokeWidth: 0,
       strokeLinecap: "round"
     },
     ticks: {
@@ -38,14 +38,12 @@ const styles = {
     },
     axisLabels: {
       stroke: "transparent",
-      strokeWidth: 0,
       fill: "#756f6a",
       fontSize: 16,
       fontFamily: "Helvetica"
     },
     tickLabels: {
       stroke: "transparent",
-      strokeWidth: 0,
       fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 10,
@@ -78,7 +76,7 @@ const styles = {
     labels: {
       stroke: "transparent",
       strokeWidth: 0,
-      fill: "black",
+      fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 10,
       textAnchor: "middle"
@@ -93,7 +91,14 @@ const styles = {
       fill: "#756f6a",
       opacity: 1
     },
-    labels: {}
+    labels: {
+      padding: 5,
+      fontFamily: "Helvetica",
+      fontSize: 10,
+      strokeWidth: 0,
+      stroke: "transparent",
+      textAnchor: "middle"
+    }
   }
 };
 
@@ -284,16 +289,6 @@ export default class VictoryChart extends React.Component {
       y: React.PropTypes.oneOf(["left", "right"])
     }),
     /**
-     * The showGridLines prop specifies whether or not to draw grid lines for a particular axis.
-     * It should be given as an object with x and y properties.
-     * Note: grid lines for a particular axis extend perpendicularly from that axis
-     * @examples {x: false, y: true}
-     */
-    showGridLines: React.PropTypes.shape({
-      x: React.PropTypes.bool,
-      y: React.PropTypes.bool
-    }),
-    /**
      * The tickValues prop explicity specifies which ticks values to draw on each axis.
      * This prop should be given as an object with arrays specified for x and y
      * @examples {x: ["apples", "bananas", "oranges"] y: [2, 4, 6, 8]}
@@ -342,6 +337,16 @@ export default class VictoryChart extends React.Component {
      */
     categories: React.PropTypes.array,
     /**
+     * The categories prop specifies category labels for a bar chart. This prop should be
+     * given as an array of values. The number of elements in the label array should be
+     * equal to number of elements in the categories array, or if categories is not defined,
+     * to the number of unique x values in your data. Use this prop to add labels to
+     * stacked bars and groups of bars. Adding labels to individual bars can be accomplished
+     * by adding a label property directly to the data object.
+     * @examples: ["spring", "summer", "fall", "winter"]
+     */
+    categoryLabels: React.PropTypes.array,
+    /**
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the chart will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
@@ -360,15 +365,11 @@ export default class VictoryChart extends React.Component {
 
   static defaultProps = {
     chartType: "line",
-    interpolation: "basis",
+    interpolation: "linear",
     scale: d3.scale.linear(),
     axisOrientation: {
       x: "bottom",
       y: "left"
-    },
-    showGridLines: {
-      x: false,
-      y: false
     },
     tickCount: {
       x: 7,
@@ -396,9 +397,9 @@ export default class VictoryChart extends React.Component {
     if (!props.style) {
       return styles;
     }
-    const {axis, line, scatter, bar, ...attrs} = props.style;
+    const {axis, line, scatter, bar, parent} = props.style;
     return {
-      base: _.merge({}, styles.base, attrs),
+      parent: _.merge({}, styles.parent, parent),
       axis: {
         x: _.merge({}, styles.axis, (axis && axis.x)),
         y: _.merge({}, styles.axis, (axis && axis.y))
@@ -769,9 +770,15 @@ export default class VictoryChart extends React.Component {
       // this is only sensible for the y domain
       const cumulativeMax = (this.stackedData && axis === "y") ?
         _.reduce(this.stackedData, (memo, dataset) => {
-          return memo + (_.max(_.pluck(dataset.data, "y")));
+          const localMax = (_.max(_.pluck(dataset.data, "y")));
+          return localMax > 0 ? memo + localMax : memo;
         }, 0) : -Infinity;
-      domain = [min, _.max([max, cumulativeMax])];
+      const cumulativeMin = (this.stackedData && axis === "y") ?
+        _.reduce(this.stackedData, (memo, dataset) => {
+          const localMin = (_.min(_.pluck(dataset.data, "y")));
+          return localMin < 0 ? memo + localMin : memo;
+        }, 0) : Infinity;
+      domain = [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
     }
     // dont pad the domain twice
     return (axis === "x" && props.y && !props.x) ? domain :
@@ -783,7 +790,7 @@ export default class VictoryChart extends React.Component {
       return props.range[axis] ? props.range[axis] : props.range;
     }
     // if the range is not given in props, calculate it from width, height and margin
-    const style = this.style.base;
+    const style = this.style.parent;
     return axis === "x" ?
       [style.margin, style.width - style.margin] :
       [style.height - style.margin, style.margin];
@@ -811,8 +818,8 @@ export default class VictoryChart extends React.Component {
       y: _.max([_.min(this.domain.y), 0])
     };
     const orientationOffset = {
-      x: props.axisOrientation.y === "left" ? 0 : this.style.base.width,
-      y: props.axisOrientation.x === "bottom" ? this.style.base.height : 0
+      x: props.axisOrientation.y === "left" ? 0 : this.style.parent.width,
+      y: props.axisOrientation.x === "bottom" ? this.style.parent.height : 0
     };
     return {
       x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
@@ -914,10 +921,11 @@ export default class VictoryChart extends React.Component {
         data={_.pluck(datasets, "data")}
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
-        style={_.merge({}, this.style.base, this.style.bar)}
+        style={_.merge({}, this.style.parent, this.style.bar)}
         domain={this.domain}
         range={this.range}
         categories={this.props.categories || categories}
+        categoryLabels={this.props.categoryLabels}
         key={"bar"}/>
     );
   }
@@ -943,12 +951,12 @@ export default class VictoryChart extends React.Component {
     const {stackedBar, bar, ...rest} = dataByType;
     const stackedBarZ = stackedBar ? {
       data: stackedBar,
-      z: _.max(_.map(stackedBar, "attrs.zIndex")) || this.style.bar.data.zIndex,
+      z: _.max(_.map(stackedBar, "attrs.zIndex")) || this.style.bar.data.zIndex || 0,
       type: "stackedBar"
     } : [];
     const barZ = bar ? {
       data: bar,
-      z: _.max(_.map(bar, "attrs.zIndex")) || this.style.bar.data.zIndex,
+      z: _.max(_.map(bar, "attrs.zIndex")) || this.style.bar.data.zIndex || 0,
       type: "bar"
     } : [];
 
@@ -957,7 +965,7 @@ export default class VictoryChart extends React.Component {
     const dataWithZ = _.isEmpty(otherData) ? [] :
       _.map(otherData, (data) => {
         const type = data.attrs.type;
-        const z = data.attrs.zIndex || this.style[type].data.zIndex;
+        const z = data.attrs.zIndex || this.style[type].data.zIndex || 0;
         return {data, z, type};
       });
     // Put it all together, and sort the array of objects by z
@@ -972,7 +980,7 @@ export default class VictoryChart extends React.Component {
     const offsetX = axis === "x" ? undefined : this.axisOffset.x;
     const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
     const animate = this.props.animate && (this.props.animate.axis || this.props.animate);
-    const style = _.merge({}, this.style.base, this.style.axis[axis]);
+    const style = _.merge({}, this.style.parent, this.style.axis, this.style.axis[axis]);
     return (
       <VictoryAxis
         {...this.props}
@@ -986,7 +994,6 @@ export default class VictoryChart extends React.Component {
         domain={this.domain[axis]}
         range={this.range[axis]}
         orientation={this.props.axisOrientation[axis]}
-        showGridLines={this.props.showGridLines[axis]}
         tickCount={this.props.tickCount[axis]}
         tickValues={this.tickValues[axis]}
         tickFormat={this.tickFormat[axis]}
@@ -996,7 +1003,7 @@ export default class VictoryChart extends React.Component {
 
   render() {
     if (this.props.standalone === true) {
-      const style = this.style.base;
+      const style = this.style.parent;
       return (
         <svg style={{ width: style.width, height: style.height, overflow: "visible" }}>
           {this.drawAxis("x")}

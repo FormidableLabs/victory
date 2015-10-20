@@ -54,15 +54,15 @@ class App extends React.Component {
       return [
         {
           x: "apples",
-          y: _.random(1, 5)
+          y: _.random(2, 5)
         },
         {
           x: "bananas",
-          y: _.random(1, 10)
+          y: _.random(2, 10)
         },
         {
           x: "oranges",
-          y: _.random(1, 15)
+          y: _.random(-15, 5)
         }
       ];
     });
@@ -116,7 +116,7 @@ class App extends React.Component {
               showGridLines={{x: false, y: true}}
               animate={{velocity: 0.02}}/>
 
-          <VictoryChart interpolation="linear"
+          <VictoryChart
             scale={{
               x: d3.time.scale(),
               y: d3.scale.linear()
@@ -153,7 +153,6 @@ class App extends React.Component {
             y={(x) => x}/>
 
           <VictoryChart
-            showGridLines={{x: true, y: true}}
             samples={20}
             axisOrientation={{x: "top", y: "right"}}
             y={[
@@ -166,7 +165,7 @@ class App extends React.Component {
             ]}/>
 
           <VictoryChart
-            showGridLines={{x: true, y: true}}
+            interpolation="basis"
             axisLabels={{x: "x axis", y: "y axis"}}
             x={[
               [1, 2, 3, 4],
@@ -205,17 +204,18 @@ class App extends React.Component {
             data={this.state.barData}
             dataAttributes={[
               {type: "stackedBar", fill: "cornflowerblue"},
-              {type: "stackedBar", fill: "orange"},
               {type: "stackedBar", fill: "greenyellow"},
               {type: "stackedBar", fill: "gold"},
+              {type: "stackedBar", fill: "orange"},
               {type: "stackedBar", fill: "tomato"}
             ]}
             tickValues={{
               x: ["apples", "bananas", "oranges"]
             }}
             tickFormat={{
-              x: ["apples\n(fuji)", "bananas", "oranges\n(navel)"]
+              x: () => ""
             }}
+            categoryLabels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
             domainPadding={{
               x: 100,
               y: 0
@@ -249,6 +249,7 @@ class App extends React.Component {
                   tickLabels: {fill: "black"}
                 },
                 y: {
+                  grid: {strokeWidth: 1},
                   axis: {stroke: "transparent"},
                   ticks: {stroke: "transparent", padding: 15}
                 }
@@ -261,7 +262,13 @@ class App extends React.Component {
             dataAttributes={{fill: "orange"}}
             barWidth={5}
             y={() => 0.5}
-            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3, label: "LINE"}}/>
+            yAttributes={{
+              type: "line",
+              stroke: "gold",
+              strokeWidth: 3,
+              label: "LINE",
+              zIndex: 1
+            }}/>
         </p>
       </div>
     );
