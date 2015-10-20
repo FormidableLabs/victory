@@ -770,12 +770,12 @@ export default class VictoryChart extends React.Component {
       // this is only sensible for the y domain
       const cumulativeMax = (this.stackedData && axis === "y") ?
         _.reduce(this.stackedData, (memo, dataset) => {
-          const localMax = (_.max(_.pluck(dataset.data, "y")))
+          const localMax = (_.max(_.pluck(dataset.data, "y")));
           return localMax > 0 ? memo + localMax : memo;
         }, 0) : -Infinity;
       const cumulativeMin = (this.stackedData && axis === "y") ?
         _.reduce(this.stackedData, (memo, dataset) => {
-          const localMin = (_.min(_.pluck(dataset.data, "y")))
+          const localMin = (_.min(_.pluck(dataset.data, "y")));
           return localMin < 0 ? memo + localMin : memo;
         }, 0) : Infinity;
       domain = [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
