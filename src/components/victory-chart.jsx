@@ -37,14 +37,16 @@ const styles = {
       padding: 5
     },
     axisLabels: {
-      stroke: "#756f6a",
-      fill: "none",
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#756f6a",
       fontSize: 16,
       fontFamily: "Helvetica"
     },
     tickLabels: {
-      stroke: "#756f6a",
-      fill: "none",
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 10,
       padding: 5
@@ -57,7 +59,14 @@ const styles = {
       stroke: "#756f6a",
       opacity: 1
     },
-    labels: {}
+    labels: {
+      padding: 5,
+      fontFamily: "Helvetica",
+      fontSize: 10,
+      strokeWidth: 0,
+      stroke: "transparent",
+      textAnchor: "start"
+    }
   },
   scatter: {
     data: {
@@ -67,7 +76,8 @@ const styles = {
       strokeWidth: 0
     },
     labels: {
-      stroke: "none",
+      stroke: "transparent",
+      strokeWidth: 0,
       fill: "black",
       fontFamily: "Helvetica",
       fontSize: 10,
