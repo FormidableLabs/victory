@@ -54,15 +54,15 @@ class App extends React.Component {
       return [
         {
           x: "apples",
-          y: _.random(1, 5)
+          y: _.random(2, 5)
         },
         {
           x: "bananas",
-          y: _.random(1, 10)
+          y: _.random(2, 10)
         },
         {
           x: "oranges",
-          y: _.random(1, 15)
+          y: _.random(-15, 5)
         }
       ];
     });
@@ -204,9 +204,9 @@ class App extends React.Component {
             data={this.state.barData}
             dataAttributes={[
               {type: "stackedBar", fill: "cornflowerblue"},
-              {type: "stackedBar", fill: "orange"},
               {type: "stackedBar", fill: "greenyellow"},
               {type: "stackedBar", fill: "gold"},
+              {type: "stackedBar", fill: "orange"},
               {type: "stackedBar", fill: "tomato"}
             ]}
             tickValues={{
