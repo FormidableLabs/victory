@@ -8,12 +8,14 @@ import theme from './theme';
 class Docs extends React.Component {
   render() {
     return (
-      <div className="container">
-        <Ecology
-          overview={require('!!raw!./ecology.md')}
-          source={require('json!./victory-pie.json')}
-          scope={{React, VictoryPie: require('../src/components/victory-pie')}}/>
-        <Style rules={theme}/>
+      <div className="Container">
+        <div className="Copy">
+          <Ecology
+            overview={require('!!raw!./ecology.md')}
+            source={require('json!./victory-pie.json')}
+            scope={{React, VictoryPie: require('../src/components/victory-pie')}}/>
+          <Style rules={theme}/>
+        </div>
       </div>
     )
   }
