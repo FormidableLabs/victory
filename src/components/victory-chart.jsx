@@ -76,7 +76,7 @@ const styles = {
     labels: {
       stroke: "transparent",
       strokeWidth: 0,
-      fill: "black",
+      fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 10,
       textAnchor: "middle"
@@ -91,7 +91,14 @@ const styles = {
       fill: "#756f6a",
       opacity: 1
     },
-    labels: {}
+    labels: {
+      padding: 5,
+      fontFamily: "Helvetica",
+      fontSize: 10,
+      strokeWidth: 0,
+      stroke: "transparent",
+      textAnchor: "middle"
+    }
   }
 };
 
@@ -329,6 +336,16 @@ export default class VictoryChart extends React.Component {
      * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
      */
     categories: React.PropTypes.array,
+    /**
+     * The categories prop specifies category labels for a bar chart. This prop should be
+     * given as an array of values. The number of elements in the label array should be
+     * equal to number of elements in the categories array, or if categories is not defined,
+     * to the number of unique x values in your data. Use this prop to add labels to
+     * stacked bars and groups of bars. Adding labels to individual bars can be accomplished
+     * by adding a label property directly to the data object.
+     * @examples: ["spring", "summer", "fall", "winter"]
+     */
+    categoryLabels: React.PropTypes.array,
     /**
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the chart will not tween between changing data / style props.
@@ -908,6 +925,7 @@ export default class VictoryChart extends React.Component {
         domain={this.domain}
         range={this.range}
         categories={this.props.categories || categories}
+        categoryLabels={this.props.categoryLabels}
         key={"bar"}/>
     );
   }
@@ -933,12 +951,12 @@ export default class VictoryChart extends React.Component {
     const {stackedBar, bar, ...rest} = dataByType;
     const stackedBarZ = stackedBar ? {
       data: stackedBar,
-      z: _.max(_.map(stackedBar, "attrs.zIndex")) || this.style.bar.data.zIndex,
+      z: _.max(_.map(stackedBar, "attrs.zIndex")) || this.style.bar.data.zIndex || 0,
       type: "stackedBar"
     } : [];
     const barZ = bar ? {
       data: bar,
-      z: _.max(_.map(bar, "attrs.zIndex")) || this.style.bar.data.zIndex,
+      z: _.max(_.map(bar, "attrs.zIndex")) || this.style.bar.data.zIndex || 0,
       type: "bar"
     } : [];
 
@@ -947,7 +965,7 @@ export default class VictoryChart extends React.Component {
     const dataWithZ = _.isEmpty(otherData) ? [] :
       _.map(otherData, (data) => {
         const type = data.attrs.type;
-        const z = data.attrs.zIndex || this.style[type].data.zIndex;
+        const z = data.attrs.zIndex || this.style[type].data.zIndex || 0;
         return {data, z, type};
       });
     // Put it all together, and sort the array of objects by z
@@ -976,7 +994,6 @@ export default class VictoryChart extends React.Component {
         domain={this.domain[axis]}
         range={this.range[axis]}
         orientation={this.props.axisOrientation[axis]}
-        showGridLines={true} // temporary, deprecate this prop in favor of styles
         tickCount={this.props.tickCount[axis]}
         tickValues={this.tickValues[axis]}
         tickFormat={this.tickFormat[axis]}

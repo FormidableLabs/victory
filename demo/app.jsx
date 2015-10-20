@@ -213,8 +213,9 @@ class App extends React.Component {
               x: ["apples", "bananas", "oranges"]
             }}
             tickFormat={{
-              x: ["apples\n(fuji)", "bananas", "oranges\n(navel)"]
+              x: (x) => ""
             }}
+            categoryLabels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
             domainPadding={{
               x: 100,
               y: 0
@@ -261,7 +262,13 @@ class App extends React.Component {
             dataAttributes={{fill: "orange"}}
             barWidth={5}
             y={() => 0.5}
-            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3, label: "LINE"}}/>
+            yAttributes={{
+              type: "line",
+              stroke: "gold",
+              strokeWidth: 3,
+              label: "LINE",
+              zIndex: 1
+            }}/>
         </p>
       </div>
     );
