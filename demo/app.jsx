@@ -243,7 +243,9 @@ class App extends React.Component {
             style={{
               axis: {
                 x: {
-                  axis: {stroke: "black", strokeWidth: 2}
+                  axis: {stroke: "black", strokeWidth: 2},
+                  ticks: {stroke: "black"},
+                  tickLabels: {fill: "black"}
                 },
                 y: {
                   grid: {strokeWidth: 1},
@@ -259,7 +261,7 @@ class App extends React.Component {
             dataAttributes={{fill: "orange"}}
             barWidth={5}
             y={() => 0.5}
-            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3}}/>
+            yAttributes={{type: "line", stroke: "gold", strokeWidth: 3, label: "LINE"}}/>
         </p>
       </div>
     );
