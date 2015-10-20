@@ -213,7 +213,7 @@ class App extends React.Component {
               x: ["apples", "bananas", "oranges"]
             }}
             tickFormat={{
-              x: (x) => ""
+              x: () => ""
             }}
             categoryLabels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
             domainPadding={{
