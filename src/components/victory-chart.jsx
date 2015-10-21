@@ -872,7 +872,7 @@ export default class VictoryChart extends React.Component {
     const animate = this.props.animate && (this.props.animate.line || this.props.animate);
     const {type, name, ...attrs} = dataset.attrs;
     const lineStyle = {data: _.merge({}, this.style.line.data, attrs)};
-    const style = _.merge({}, this.style.parent, this.style.line, lineStyle);
+    const style = _.merge({}, {parent: this.style.parent}, this.style.line, lineStyle);
     return (
       <VictoryLine
         {...this.props}
@@ -893,7 +893,7 @@ export default class VictoryChart extends React.Component {
     const animate = this.props.animate && (this.props.animate.scatter || this.props.animate);
     const {type, name, symbol, size, ...attrs} = dataset.attrs;
     const scatterStyle = {data: _.merge({}, this.style.scatter.data, attrs)};
-    const style = _.merge({}, this.style.parent, this.style.scatter, scatterStyle);
+    const style = _.merge({}, {parent: this.style.parent}, this.style.scatter, scatterStyle);
     return (
       <VictoryScatter
         {...this.props}
@@ -921,7 +921,7 @@ export default class VictoryChart extends React.Component {
         data={_.pluck(datasets, "data")}
         dataAttributes={_.pluck(datasets, "attrs")}
         stacked={(options && !!options.stacked) ? options.stacked : false}
-        style={_.merge({}, this.style.parent, this.style.bar)}
+        style={_.merge({}, {parent: this.style.parent}, this.style.bar)}
         domain={this.domain}
         range={this.range}
         categories={this.props.categories || categories}
@@ -980,7 +980,7 @@ export default class VictoryChart extends React.Component {
     const offsetX = axis === "x" ? undefined : this.axisOffset.x;
     const axisLabel = this.props.axisLabels && this.props.axisLabels[axis];
     const animate = this.props.animate && (this.props.animate.axis || this.props.animate);
-    const style = _.merge({}, this.style.parent, this.style.axis, this.style.axis[axis]);
+    const style = _.merge({}, {parent: this.style.parent}, this.style.axis[axis]);
     return (
       <VictoryAxis
         {...this.props}
