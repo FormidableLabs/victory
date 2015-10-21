@@ -222,7 +222,6 @@ class App extends React.Component {
             }}
             animate={{velocity: 0.02}}/>
           <VictoryChart
-          chartType="stackedBar"
             data={[
               {x: 1, y: 1},
               {x: 2, y: 2},
@@ -239,13 +238,23 @@ class App extends React.Component {
               {x: 13, y: 1}
             ]}
             tickValues={{
-              x: ["12", "13", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"]
+              x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
+            }}
+            tickFormat={{
+              x: (x) => x + "\ntick"
+            }}
+            axisLabels={{
+              y: "Y Axis"
             }}
             style={{
+              parent: {
+                width: 500,
+                height: 500
+              },
               axis: {
                 x: {
                   axis: {stroke: "black", strokeWidth: 2},
-                  ticks: {stroke: "black"},
+                  ticks: {stroke: "transparent"},
                   tickLabels: {fill: "black"}
                 },
                 y: {
@@ -253,14 +262,12 @@ class App extends React.Component {
                   axis: {stroke: "transparent"},
                   ticks: {stroke: "transparent", padding: 15}
                 }
+              },
+              bar: {
+                data: {width: 25}
               }
             }}
-            domainPadding={{
-              x: 20,
-              y: 10
-            }}
-            dataAttributes={{fill: "orange"}}
-            barWidth={5}
+            dataAttributes={{type: "bar", fill: "orange"}}
             y={() => 0.5}
             yAttributes={{
               type: "line",
