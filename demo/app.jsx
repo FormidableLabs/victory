@@ -62,7 +62,7 @@ class App extends React.Component {
         },
         {
           x: "oranges",
-          y: _.random(-15, 5)
+          y: _.random(0, 15)
         }
       ];
     });
@@ -239,7 +239,7 @@ class App extends React.Component {
             ]}
             tickValues={{
               x: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13],
-              y: [0.5, 1.5, 2.5]
+              y: [0, 1.5, 3, 4.5]
             }}
             tickFormat={{
               x: (x) => x + "\ntick"

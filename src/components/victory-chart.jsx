@@ -699,18 +699,24 @@ export default class VictoryChart extends React.Component {
   }
 
   getDomain(props, axis) {
-    let domain;
-    if (props.domain) {
-      domain = props.domain[axis] || props.domain;
-    } else if (this.props.data) {
-      domain = this._getDomainFromData(props, axis);
-    } else if (props.tickValues && props.tickValues[axis]) {
-      domain = this._getDomainFromTickValues(props, axis);
-    } else if (props.categories && axis === "x") {
-      domain = this._getDomainFromCategories(props);
+    const domainExtent = (arr) => {
+      return _.max(arr) - _.min(arr);
+    };
+    const propsDomain = (props.domain && props.domain[axis]) || props.domain;
+    const dataDomain = this._getDomainFromData(props, axis);
+    const tickDomain = this._getDomainFromTickValues(props, axis);
+    const categoryDomain = this._getDomainFromCategories(props);
+    // Find which domain covers the widest range of values
+    let biggestDomain;
+    if (domainExtent(dataDomain) > domainExtent(tickDomain)) {
+      biggestDomain = domainExtent(dataDomain) > domainExtent(categoryDomain) ?
+        dataDomain : categoryDomain;
     } else {
-      domain = this._getDomainFromData(props, axis);
+      biggestDomain = domainExtent(tickDomain) > domainExtent(categoryDomain) ?
+        tickDomain : categoryDomain;
     }
+    // if the domain is passed in props, always use it, otherwise use the biggest domain
+    const domain = propsDomain || biggestDomain;
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
@@ -739,21 +745,25 @@ export default class VictoryChart extends React.Component {
 
   // helper method for getDomain
   _getDomainFromTickValues(props, axis) {
-    const ticks = props.tickValues[axis];
-    const data = Util.containsStrings(ticks) ?
-      _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
-    const domain = [_.min(data), _.max(data)];
-    // dont pad the domain twice!
-    // return (axis === "x" && props.y && !props.x) ? domain :
-    return this._padDomain(props, domain, axis);
+    if (props.tickValues && props.tickValues[axis]) {
+      const ticks = props.tickValues[axis];
+      const data = Util.containsStrings(ticks) ?
+        _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
+      const domain = [_.min(data), _.max(data)];
+      // dont pad the domain twice!
+      // return (axis === "x" && props.y && !props.x) ? domain :
+      return this._padDomain(props, domain, axis);
+    }
   }
 
   _getDomainFromCategories(props) {
-    const categories = _.flatten(props.categories);
-    if (Util.containsStrings(categories)) {
-      return undefined;
+    if (props.categories) {
+      const categories = _.flatten(props.categories);
+      if (Util.containsStrings(categories)) {
+        return undefined;
+      }
+      return this._padDomain(props, [_.min(categories), _.max(categories)], "x");
     }
-    return this._padDomain(props, [_.min(categories), _.max(categories)], "x");
   }
 
   // helper method for getDomain
