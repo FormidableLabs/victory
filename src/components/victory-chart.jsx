@@ -702,6 +702,8 @@ export default class VictoryChart extends React.Component {
     let domain;
     if (props.domain) {
       domain = props.domain[axis] || props.domain;
+    } else if (this.props.data) {
+      domain = this._getDomainFromData(props, axis);
     } else if (props.tickValues && props.tickValues[axis]) {
       domain = this._getDomainFromTickValues(props, axis);
     } else if (props.categories && axis === "x") {
