@@ -1,10 +1,7 @@
-// .prop__name, .prop__default-value, .prop__examples-value
-// .prop__type
-// .prop__required
-// .prop__examples
-// .prop__default
-// .prop__default-title, .prop__examples-title
 export default {
+	/*
+	 * Normalize & Element Selectors
+	 */
 	'*, *:before, *:after': {
 		webkitboxsizing: 'inherit',
 		mozboxsizing: 'inherit',
@@ -321,6 +318,11 @@ export default {
 	'.Row .Interactive': {
 		marginTop: '-1.5rem'
 	},
+	'.Interactive .playground': {
+		alignItems: 'flex-start',
+		display: 'flex',
+		marginBottom: '24px'
+	},
   '.Interactive:before, .Interactive .playgroundPreview:before': {
     fontFamily: '"Karla", "Helvetica Neue", Helvetica, Arial, sans-serif',
     fontWeight: 'bold',
@@ -333,26 +335,32 @@ export default {
 		content: '"Interactive Code"'
 	},
 	'.Interactive .playgroundCode': {
+		flex: 'none',
+		width: '50%',
+		verticalAlign: 'top',
 		background: '#2b303b',
 		fontFamily: '"Source Code Pro", monospace',
-		fontSize: 16,
+		fontSize: '1rem',
 		lineHeight: 1.2,
-		paddingBottom: '16px 16px 0 16px',
-		marginBottom: 30
+		padding: '16px 16px 0 16px',
+		marginRight: '12px'
 	},
 	'.Interactive .playgroundPreview': {
+		flex: 'none',
+		width: '50%',
+		verticalAlign: 'top',
 		background: '#fff',
-		marginBottom: 24,
+		marginLeft: '12px',
 		position: 'relative'
 	},
 	'.Interactive .playgroundPreview:before': {
 		content: '"Live Preview"',
 		position: 'absolute',
-		top: -18
+		top: '-18px'
 	},
 	'.Interactive pre, .CodeMirror-code': {
 		fontFamily: '"Source Code Pro", monospace',
-		fontSize: 16,
+		fontSize: '1rem',
 		lineHeight: 1.2
 	},
   '.CodeMirror': {
