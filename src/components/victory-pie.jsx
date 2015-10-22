@@ -123,11 +123,15 @@ VictoryPie.propTypes = {
    */
   borderColor: React.PropTypes.string,
   /**
-   * Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as "2em".
+   * Numbers are assigned as pixels. Numbers with specified units can be passed in
+   * as a string, such as "2em".
    */
   borderWidth: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   /**
-   * If the data prop is omitted, the pie will render sample data. Objects in the data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val> is the slice label (string or number), and <y-val> is the corresponding number used to calculate arc length as a proportion of the pie's circumference.
+   * If the data prop is omitted, the pie will render sample data. Objects in the
+   * data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val> is
+   * the slice label (string or number), and <y-val> is the corresponding number used
+   *  to calculate arc length as a proportion of the pie's circumference.
    */
   data: React.PropTypes.arrayOf(React.PropTypes.shape({
     x: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
@@ -146,19 +150,25 @@ VictoryPie.propTypes = {
    */
   fontFamily: React.PropTypes.string,
   /**
-   *  Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as "2em".
+   *  Numbers are assigned as pixels. Numbers with specified units can be passed in
+   *  as a string, such as "2em".
    */
   fontSize: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   /**
-   *   All CSS font-weight properties (100, 200, 300, 400, 500, 600, 700, 800, 900, "normal", "bold", "bolder", "lighter", "initial", "inherit") are accepted.
+   *   All CSS font-weight properties (100, 200, 300, 400, 500, 600, 700, 800, 900,
+   * "normal", "bold", "bolder", "lighter", "initial", "inherit") are accepted.
    */
   fontWeight: React.PropTypes.oneOfType([React.PropTypes.string, React.PropTypes.number]),
   /**
-   *  A pixel amount used to calculate chart size. The smaller of the two dimension properties, height and width, will be used to set diameter. Note that any specified padding is included in overall chart dimensions, so the diameter of the pie will be smaller if padding is greater than 0.
+   *  A pixel amount used to calculate chart size. The smaller of the two dimension
+   * properties, height and width, will be used to set diameter. Note that any specified
+   * padding is included in overall chart dimensions, so the diameter of the pie
+   * will be smaller if padding is greater than 0.
    */
   height: React.PropTypes.number,
   /**
-   *  A pixel amount used to calculate the distance between the center of the chart and the inner edge of a donut.
+   *  A pixel amount used to calculate the distance between the center of the chart
+   * and the inner edge of a donut.
    */
   innerRadius: React.PropTypes.number,
   /**
@@ -174,11 +184,13 @@ VictoryPie.propTypes = {
    */
   padding: React.PropTypes.number,
   /**
-   *  If the data array is longer than its corresponding sliceColors array, slice color assignments will continue by looping through the array.
+   *  If the data array is longer than its corresponding sliceColors array, slice
+   * color assignments will continue by looping through the array.
    */
   sliceColors: React.PropTypes.arrayOf(React.PropTypes.string),
   /**
-   *  Sort order strings "ascending" and "descending"are accepted, as are custom comparator functions.
+   *  Sort order strings "ascending" and "descending"are accepted, as are custom
+   * comparator functions.
    */
   sort: React.PropTypes.oneOfType([
     React.PropTypes.oneOf(["ascending", "descending"]),
@@ -189,7 +201,10 @@ VictoryPie.propTypes = {
    */
   startAngle: React.PropTypes.number,
   /**
-   *  A pixel amount used to calculate chart size. The smaller of the two dimension properties, height and width, will be used to set diameter. Note that any specified padding is included in overall chart dimensions, so the diameter of the pie will be smaller if padding is greater than 0.
+   *  A pixel amount used to calculate chart size. The smaller of the two dimension
+   * properties, height and width, will be used to set diameter. Note that any specified
+   * padding is included in overall chart dimensions, so the diameter of the pie will be
+   * smaller if padding is greater than 0.
    */
   width: React.PropTypes.number
 };
