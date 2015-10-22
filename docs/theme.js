@@ -101,31 +101,6 @@ export default {
 		lineHeight: 1.3,
 		fontStyle: 'italic'
 	},
-	mediaQueries: {
-		'only screen and (min-width: 44em)': {
-			'.Headline--major': {
-				fontSize: '3.5rem',
-				lineHeight: 1.2,
-				fontStyle: 'italic'
-			},
-			'.Header': {
-				paddingTop: 135,
-				paddingBottom: 45
-			},
-			'.Logo img': {
-				width: 230
-			},
-			'.Copy': {
-				fontSize: '1.125rem'
-			},
-			'.Copy .highlight': {
-				margin: '36px -24px'
-			},
-			'.Copy .highlight pre': {
-				padding: 24
-			}
-		}
-	},
 	'.Smallcaps': {
 		textTransform: 'uppercase',
 		fontSize: '0.85em',
@@ -259,6 +234,7 @@ export default {
 	'.Interactive .playground': {
 		alignItems: 'flex-start',
 		display: 'flex',
+		flexWrap: 'wrap',
 		marginBottom: '24px'
 	},
   '.Interactive:before, .Interactive .playgroundPreview:before': {
@@ -273,22 +249,19 @@ export default {
 		content: '"Interactive Code"'
 	},
 	'.Interactive .playgroundCode': {
-		flex: 'none',
-		width: '50%',
+		flex: '0 0 100%',
 		verticalAlign: 'top',
 		background: '#2b303b',
 		fontFamily: '"Source Code Pro", monospace',
 		fontSize: '1rem',
 		lineHeight: 1.2,
-		padding: '16px 16px 0 16px',
-		marginRight: '12px'
+		marginBottom: '30px',
+		padding: '16px 16px 0 16px'
 	},
 	'.Interactive .playgroundPreview': {
-		flex: 'none',
-		width: '50%',
+		flex: '0 0 100%',
 		verticalAlign: 'top',
 		background: '#fff',
-		marginLeft: '12px',
 		position: 'relative'
 	},
 	'.Interactive .playgroundPreview:before': {
@@ -343,6 +316,44 @@ export default {
     fontFamily: '"Source Code Pro", monospace',
     color: '#4d4945'
   },
+	mediaQueries: {
+		'only screen and (min-width: 44em)': {
+			'.Headline--major': {
+				fontSize: '3.5rem',
+				lineHeight: 1.2,
+				fontStyle: 'italic'
+			},
+			'.Header': {
+				paddingTop: 135,
+				paddingBottom: 45
+			},
+			'.Logo img': {
+				width: 230
+			},
+			'.Copy': {
+				fontSize: '1.125rem'
+			},
+			'.Copy .highlight': {
+				margin: '36px -24px'
+			},
+			'.Copy .highlight pre': {
+				padding: 24
+			},
+			'.Interactive .playground': {
+				flexWrap: 'nowrap'
+			},
+			'.Interactive .playgroundCode': {
+				flex: 'none',
+				width: '50%',
+				marginRight: '12px'
+			},
+			'.Interactive .playgroundPreview': {
+				flex: 'none',
+				width: '50%',
+				marginLeft: '12px'
+			}
+		}
+	},
   /* Syntax Highlighting */
   /*
   Name:       Base16 Ocean Dark
