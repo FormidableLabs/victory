@@ -375,7 +375,8 @@ export default class VictoryChart extends React.Component {
       x: 7,
       y: 5
     },
-    standalone: true
+    standalone: true,
+    samples: 50
   };
 
   constructor(props) {
