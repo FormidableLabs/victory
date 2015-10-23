@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Ecology from 'ecology';
 import Radium, { Style } from 'radium';
 
@@ -13,7 +14,8 @@ class Docs extends React.Component {
           <Ecology
             overview={require('!!raw!./ecology.md')}
             source={require('json!./victory-pie.json')}
-            scope={{React, VictoryPie: require('../src/components/victory-pie')}}/>
+            scope={{React, ReactDOM, VictoryPie: require('../src/components/victory-pie')}}
+            playgroundtheme='base16-ocean-dark' />
           <Style rules={theme}/>
         </div>
       </div>
