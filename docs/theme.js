@@ -117,42 +117,6 @@ export default {
 		paddingRight: '1em'
 	},
   /*
-   * Header & Footer
-   */
-	'.Header': {
-		position: 'relative',
-		paddingTop: 40,
-		paddingBottom: 24
-	},
-	'.Logo': {
-		fontSize: '1.5rem',
-		lineHeight: 1,
-		margin: '0 auto',
-		textAlign: 'center'
-	},
-	'.Logo img': {
-		width: 150
-	},
-	'.Footer': {
-		background: '#2b303b',
-		color: '#fff'
-	},
-	'.Footer a': {
-		fontWeight: 700,
-		color: '#FF4136'
-	},
-	'.Footer a:hover, .Footer a:focus': {
-		color: '#fff'
-	},
-	'.FooterLogo': {
-		display: 'block',
-		margin: '16px 0'
-	},
-	'.FooterLogo img': {
-		display: 'block',
-		margin: '0 auto'
-	},
-  /*
    * Copy
    */
 	'.Copy .highlight': {
@@ -435,61 +399,61 @@ export default {
 
     (The default theme for component playground is .cm-s-monokai, so you
      can hackily rename any theme class name to apply its colors.) */
-  '.cm-s-monokai.CodeMirror': {
+  '.cm-s-base16-ocean-dark.CodeMirror': {
 		background: '#2b303b', color: '#dfe1e8'
 	},
-  '.cm-s-monokai div.CodeMirror-selected': {
+  '.cm-s-base16-ocean-dark div.CodeMirror-selected': {
 		background: '#343d46'
 	},
-  '.cm-s-monokai .CodeMirror-gutters': {
+  '.cm-s-base16-ocean-dark .CodeMirror-gutters': {
 		background: '#2b303b', 'border-right': '0px'
 	},
-  '.cm-s-monokai .CodeMirror-linenumber': {
+  '.cm-s-base16-ocean-dark .CodeMirror-linenumber': {
 		color: '#65737e'
 	},
-  '.cm-s-monokai .CodeMirror-cursor': {
+  '.cm-s-base16-ocean-dark .CodeMirror-cursor': {
 		'border-left': '1px solid #a7adba'
 	},
-  '.cm-s-monokai span.cm-comment': {
+  '.cm-s-base16-ocean-dark span.cm-comment': {
 		color: '#ab7967'
 	},
-  '.cm-s-monokai span.cm-atom': {
+  '.cm-s-base16-ocean-dark span.cm-atom': {
 		color: '#b48ead'
 	},
-  '.cm-s-monokai span.cm-number': {
+  '.cm-s-base16-ocean-dark span.cm-number': {
 		color: '#b48ead'
 	},
-  '.cm-s-monokai span.cm-property, .cm-s-monokai span.cm-attribute': {
+  '.cm-s-base16-ocean-dark span.cm-property, .cm-s-base16-ocean-dark span.cm-attribute': {
 		color: '#a3be8c'
 	},
-  '.cm-s-monokai span.cm-keyword': {
+  '.cm-s-base16-ocean-dark span.cm-keyword': {
 		color: '#bf616a'
 	},
-  '.cm-s-monokai span.cm-string': {
+  '.cm-s-base16-ocean-dark span.cm-string': {
 		color: '#ebcb8b'
 	},
-  '.cm-s-monokai span.cm-variable': {
+  '.cm-s-base16-ocean-dark span.cm-variable': {
 		color: '#a3be8c'
 	},
-  '.cm-s-monokai span.cm-variable-2': {
+  '.cm-s-base16-ocean-dark span.cm-variable-2': {
 		color: '#8fa1b3'
 	},
-  '.cm-s-monokai span.cm-def': {
+  '.cm-s-base16-ocean-dark span.cm-def': {
 		color: '#d08770'
 	},
-  '.cm-s-monokai span.cm-error': {
+  '.cm-s-base16-ocean-dark span.cm-error': {
 		background: '#bf616a', color: '#a7adba'
 	},
-  '.cm-s-monokai span.cm-bracket': {
+  '.cm-s-base16-ocean-dark span.cm-bracket': {
 		color: '#dfe1e8'
 	},
-  '.cm-s-monokai span.cm-tag': {
+  '.cm-s-base16-ocean-dark span.cm-tag': {
 		color: '#bf616a'
 	},
-  '.cm-s-monokai span.cm-link': {
+  '.cm-s-base16-ocean-dark span.cm-link': {
 		color: '#b48ead'
 	},
-  '.cm-s-monokai .CodeMirror-matchingbracket': {
+  '.cm-s-base16-ocean-dark .CodeMirror-matchingbracket': {
 		'text-decoration': 'underline', color: 'white'
 	}
 }
