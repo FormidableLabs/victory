@@ -1,5 +1,6 @@
 /*global document:false window:false*/
 import React from "react";
+import ReactDOM from "react-dom";
 import Radium from "radium";
 import {VictoryPie} from "../src/index";
 
@@ -80,4 +81,4 @@ App.propTypes = {
 };
 
 const content = document.getElementById("content");
-React.render(<App data={getData()}/>, content);
+ReactDOM.render(<App data={getData()}/>, content);

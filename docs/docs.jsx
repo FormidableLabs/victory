@@ -24,4 +24,4 @@ class Docs extends React.Component {
 }
 
 const content = document.getElementById("content");
-React.render(<Docs/>, content);
+ReactDOM.render(<Docs/>, content);
