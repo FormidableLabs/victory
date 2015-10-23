@@ -12,18 +12,58 @@ import {VictoryScatter} from "victory-scatter";
 
 class App extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      lineData: this.getData(),
+    };
+  }
+
+   getData() {
+    return _.map(_.range(20), (i) => {
+      return {
+        x: i,
+        y: Math.random()
+      };
+    });
+  }
+
+  componentWillMount() {
+    window.setInterval(() => {
+      this.setState({
+        lineData: this.getData()
+      });
+    }, 40000);
+  }
+
+
   render() {
     return (
       <div className="demo">
         <p>
           <VictoryChart
             domain={{
-              x: [0, 5],
-              y: [0, 10]
+              x: [0, 20],
+              y: [0, 1]
             }}
             style={{width: 500, height: 300, margin: 50}}
           >
-            <VictoryLine style={{data: {stroke: "red"}}}/>
+            <VictoryAxis orientation="bottom"/>
+            <VictoryAxis orientation="left"/>
+            <VictoryLine
+              data={this.state.lineData}
+              animate={{velocity: 0.02}}
+              style={{data: {stroke: "red"}}}/>
+
+            <VictoryBar
+              data={this.state.lineData}
+              animate={{velocity: 0.02}}
+              style={{data: {fill: "blue"}}}/>
+
+            <VictoryScatter
+              data={this.state.lineData}
+              animate={{velocity: 0.02}}
+              style={{data: {fill: "gold"}}}/>
           </VictoryChart>
         </p>
       </div>
