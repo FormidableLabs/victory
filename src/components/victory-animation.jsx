@@ -71,6 +71,11 @@ export default class VictoryAnimation extends React.Component {
       this.traverseQueue();
     }
   }
+  componentWillUnmount() {
+    if (this.raf) {
+      cancelAnimationFrame(this.raf);
+    }
+  }
   /* Traverse the tween queue */
   traverseQueue() {
     if (this.queue.length > 0) {
