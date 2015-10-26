@@ -12,5 +12,15 @@ module.exports = {
     return _.every(collection, function (item) {
       return _.isString(item);
     });
+  },
+
+  isArrayOfArrays: function (collection) {
+    return _.isArray(collection) && _.every(collection, function (item) {
+      return _.isArray(item);
+    });
+  },
+
+  removeUndefined: function(arr) {
+    return _.filter(arr, (el) => el !== undefined);
   }
 };

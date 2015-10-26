@@ -16,6 +16,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       lineData: this.getData(),
+      stringData: this.getStringData(),
     };
   }
 
@@ -28,10 +29,30 @@ class App extends React.Component {
     });
   }
 
+  getStringData() {
+    return _.map(_.range(5), () => {
+      return [
+        {
+          x: "apples",
+          y: _.random(2, 5)
+        },
+        {
+          x: "bananas",
+          y: _.random(2, 10)
+        },
+        {
+          x: "oranges",
+          y: _.random(0, 15)
+        }
+      ];
+    });
+  }
+
   componentWillMount() {
     window.setInterval(() => {
       this.setState({
-        lineData: this.getData()
+        lineData: this.getData(),
+        stringData: this.getStringData()
       });
     }, 40000);
   }
@@ -42,14 +63,10 @@ class App extends React.Component {
       <div className="demo">
         <p>
           <VictoryChart
-            domain={{
-              x: [0, 20],
-              y: [0, 1]
-            }}
             style={{width: 500, height: 300, margin: 50}}
           >
-            <VictoryAxis orientation="bottom"/>
-            <VictoryAxis orientation="left"/>
+            <VictoryAxis axisType="x" orientation="bottom"/>
+            <VictoryAxis axisType="y" orientation="left"/>
             <VictoryLine
               data={this.state.lineData}
               animate={{velocity: 0.02}}

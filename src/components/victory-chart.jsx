@@ -21,7 +21,7 @@ const defaultAxes = {
 };
 
 const defaultData = (
-  <VictoryLine/>
+  <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>
 );
 
 @Radium
@@ -121,12 +121,15 @@ export default class VictoryChart extends React.Component {
       x: this.getAxisComponents(props, "x"),
       y: this.getAxisComponents(props, "y")
     };
-    // this.stringMap = {
-    //   x: this.createStringMap(props, "x"),
-    //   y: this.createStringMap(props, "y")
-    // };
-    // this.datasets = this.consolidateData(props);
-    // this.stackedData = this.getStackedData(props);
+    this.stringMap = {
+      x: this.createStringMap("x"),
+      y: this.createStringMap("y")
+    };
+    this.domain = {
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
+    }
+    this.scale = this.props.scale;
     // this.domain = {
     //   x: this.getDomain(props, "x"),
     //   y: this.getDomain(props, "y")
@@ -171,7 +174,9 @@ export default class VictoryChart extends React.Component {
     });
     const barData = _.filter(this.props.children, (child) => {
       return child.type.displayName === "VictoryBar";
-    })
+    });
+    // TODO: what is the correct behavior when more than one barComponent child
+    // is present? Use the first one? use none? throw an error?
     if (barData.length > 1) {
       log.warn("Only one VictoryBar component is allowed per chart. If you are trying " +
         "to plot several datasets as bars, please pass an array of data arrays directly " +
@@ -188,13 +193,16 @@ export default class VictoryChart extends React.Component {
     const childAxis = _.filter(this.props.children, (child) => {
       return child.props.axisType === axis;
     });
+    // TODO: what is the correct behavior when more than one axis of a given type
+    // is present? Use the first one? use none? throw an error?
+    // TODO: axisType should be a required prop on VictoryAxis
     if (childAxis.length > 1) {
       log.warn("Only one VictoryAxis component of each axis type is allowed when using. " +
        "the VictoryChart wrapper. Only the first axis will be used. Please compose " +
        "multi-axis charts manually");
       return childAxis[0];
     }
-    return childAxis || defaultAxes[axis];
+    return childAxis[0] || defaultAxes[axis];
   }
 
   // validateData(props) {
@@ -225,104 +233,169 @@ export default class VictoryChart extends React.Component {
 
 
 
-  // createStringMap(props, axis) {
-  //   // if tick values exist and are strings, create a map using only those strings
-  //   // dont alter the order.
-  //   const tickValues = props.tickValues && props.tickValues[axis];
-  //   if (tickValues && Util.containsStrings(tickValues)) {
-  //     return _.zipObject(_.map(props.tickValues[axis], (tick, index) => {
-  //       return ["" + tick, index + 1];
-  //     }));
-  //   }
+  createStringMap(axis) {
+    // if tick values exist and are strings, create a map using only those strings
+    // dont alter the order.
+    const axisComponent = this.axisComponents[axis];
+    const tickValues = axisComponent.props.tickValues ?
+      axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
+    if (tickValues && Util.containsStrings(tickValues)) {
+      return _.zipObject(_.map(props.tickValues[axis], (tick, index) => {
+        return ["" + tick, index + 1];
+      }));
+    }
 
-  //   // if categories exist and are strings, create a map from those strings
-  //   if (props.categories && Util.containsStrings(props.categories)) {
-  //     return _.zipObject(_.map(props.categories, (category, index) => {
-  //       return ["" + category, index + 1];
-  //     }));
-  //   }
+    const barComponent = _.filter(this.dataComponents, (child) => {
+      return child.type.displayName === "VictoryBar";
+    });
+    const categories = barComponent[0] && barComponent[0].props.categories;
+    // if categories exist and are strings, create a map from those strings
+    if (categories && Util.containsStrings(categories)) {
+      return _.zipObject(_.map(categories, (category, index) => {
+        return ["" + category, index + 1];
+      }));
+    }
 
-  //   // otherwise, collect strings from data sources
-  //   const allStrings = [];
-  //   // collect strings from props.data
-  //   if (props.data) {
-  //     const data = _.isArray(props.data) ? _.flatten(props.data) : props.data;
-  //     const stringData = _.chain(data)
-  //       .pluck(axis)
-  //       .map((datum) => {
-  //         return _.isString(datum) ? datum : null;
-  //       })
-  //       .value();
-  //     allStrings.push(stringData);
-  //   }
-  //   // collect strings from props x or props y
-  //   if (props[axis] && _.isArray(props[axis])) {
-  //     _.each(_.flatten(props[axis]), (element) => {
-  //       if (_.isString(element)) {
-  //         allStrings.push(element);
-  //       }
-  //     });
-  //   }
-  //   // create a unique, sorted set of strings
-  //   const uniqueStrings = _.chain(allStrings)
-  //     .flatten()
-  //     .compact()
-  //     .uniq()
-  //     .sort()
-  //     .value();
+    // otherwise, collect strings from dataComponents props.data
+    const allStrings = [];
+    const allData = _.map(this.dataComponents, (dataComponent) => {
+      return dataComponent.props.data;
+    });
 
-  //   return _.isEmpty(uniqueStrings) ?
-  //     null :
-  //     _.zipObject(_.map(uniqueStrings, (string, index) => {
-  //       return [string, index + 1];
-  //     }));
-  // }
+    // collect strings from allData
+    if (allData) {
+      const data = _.flatten(allData);
+      const stringData = _.chain(data)
+        .pluck(axis)
+        .map((datum) => {
+          return _.isString(datum) ? datum : null;
+        })
+        .value();
+      allStrings.push(stringData);
+    }
+    // collect strings from props x or props y
 
-  // consolidateData(props) {
-  //   // build all of the types of data into one consistent dataset for easy plotting
-  //   // data can exist as props.data, this.props.x, and this.props.y
-  //   const datasets = [];
-  //   // if no data is passed in, plot a straight line
-  //   const yData = (!props.data && !props.y) ? this.defaultData : props.y;
-  //   // if y is given, construct data for all y, and add it to the dataset
-  //   if (yData) {
-  //     const dataArrays = this.generateDataFromXY(props);
-  //     let attributes;
-  //     _.each(dataArrays, (dataArray, index) => {
-  //       attributes = this._getAttributes(props, "y", index);
-  //       datasets.push(this._formatDataset(dataArray, attributes));
-  //     });
-  //   }
-  //   // if data is given in props.data, add it to the cosolidated datasets
-  //   if (props.data) {
-  //     const dataFromProps = _.isArray(props.data[0]) ? props.data : [props.data];
-  //     let attributes;
-  //     _.each(dataFromProps, (dataset, index) => {
-  //       attributes = this._getAttributes(props, "data", index);
-  //       datasets.push(this._formatDataset(dataset, attributes));
-  //     });
-  //   }
-  //   return _.map(datasets, (dataset, index) => {
-  //     return _.merge({index}, dataset);
-  //   });
-  // }
+    const allXYData = _.map(this.dataComponents, (dataComponent) => {
+      return dataComponent.props[axis];
+    });
+    if (allXYData) {
+      _.each(_.flatten(allXYData), (element) => {
+        if (_.isString(element)) {
+          allStrings.push(element);
+        }
+      });
+    }
+    // create a unique, sorted set of strings
+    const uniqueStrings = _.chain(allStrings)
+      .flatten()
+      .compact()
+      .uniq()
+      .sort()
+      .value();
 
-  // _formatDataset(dataset, attributes) {
-  //   return {
-  //     attrs: attributes,
-  //     data: _.map(dataset, (data) => {
-  //       return _.merge(data, {
-  //         // map string data to numeric values, and add names
-  //         x: _.isString(data.x) ? this.stringMap.x[data.x] : data.x,
-  //         xName: _.isString(data.x) ? data.x : undefined,
-  //         y: _.isString(data.y) ? this.stringMap.y[data.y] : data.y,
-  //         yName: _.isString(data.y) ? data.y : undefined
-  //       });
-  //     })
-  //   };
-  // }
+    return _.isEmpty(uniqueStrings) ?
+      null :
+      _.zipObject(_.map(uniqueStrings, (string, index) => {
+        return [string, index + 1];
+      }));
+  }
 
+  formatChildData(childData) {
+    const _formatData = (dataset) => {
+      return _.map(dataset, (data) => {
+        return _.merge({}, data, {
+          // map string data to numeric values, and add names
+          x: _.isString(data.x) ? this.stringMap.x[data.x] : data.x,
+          xName: _.isString(data.x) ? data.x : undefined,
+          y: _.isString(data.y) ? this.stringMap.y[data.y] : data.y,
+          yName: _.isString(data.y) ? data.y : undefined
+        });
+      });
+    }
+    if (Util.isArrayOfArrays(childData)) {
+      return _.map(childData, (dataset) => _formatData(dataset));
+    }
+    return _formatData(childData);
+  }
 
+  getDomain(props, axis) {
+    if (props.domain) {
+      return props.domain[axis] || props.domain;
+    }
+    const dataComponentDomains = _.map(this.dataComponents, (component) => {
+      return this.getDomainFromDataComponent(component, axis);
+    });
+    const axisComponentDomain = this.getDomainFromAxisComponent(axis);
+    const domainFromChildren = Util.removeUndefined(
+      _.flatten(dataComponentDomains.concat(axisComponentDomain))
+    );
+    return _.isEmpty(domainFromChildren) ?
+      [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
+  }
+
+  _isStackedComponentData(component, axis) {
+    // This method will get more complicated as more stacked types are supported
+    // for now it only checks whether the component is a stacked bar, and axis is y.
+    // only vertical stacked bars are currently supported
+    const componentType = component.type.displayName;
+    const stacked = component.props.stacked;
+    return (componentType === "VictoryBar")
+      && (stacked === true)
+      && (axis === "y")
+      && Util.isArrayOfArrays(component.props.data);
+  }
+
+  getDomainFromDataComponent(component, axis) {
+    // TODO: break this up into smaller methods
+    if (component.props.domain) {
+      return component.props.domain[axis] || component.props.domain;
+    } else if (this._isStackedComponentData(component, axis)){
+      const formattedData = this.formatChildData(component.props.data);
+      // find the global min and max
+      const allData = _.flatten(formattedData);
+      const min = _.min(_.pluck(allData, axis));
+      const max = _.max(_.pluck(allData, axis));
+      // find the cumulative max and min for stacked chart types
+      // TODO: clean up cumulative max / min check assumptions.
+      const cumulativeMax =  _.reduce(formattedData[0], (memo, data, index) => {
+        const total =  _.reduce(formattedData, (memo, dataset) => {
+          return dataset[index][axis] > 0 ? memo + dataset[index][axis] : memo;
+        }, 0);
+        return total > memo ? total : memo;
+      }, 0);
+      const cumulativeMin =  _.reduce(formattedData[0], (memo, data, index) => {
+        const total =  _.reduce(formattedData, (memo, dataset) => {
+          return dataset[index][axis] < 0 ? memo + dataset[index][axis] : memo;
+        }, 0);
+        return total > memo ? total : memo;
+      }, 0);
+      return [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
+    } else if (component.props.data) {
+      const formattedData = this.formatChildData(component.props.data);
+      const dataByAxis = _.map(_.flatten(formattedData), (data) => {
+        return data[axis];
+      });
+      return [_.min(dataByAxis), _.max(dataByAxis)];
+   } else {
+    return undefined;
+   }
+
+  }
+
+  getDomainFromAxisComponent(axis) {
+    const component = this.axisComponents[axis];
+    if (component.props.domain) {
+      return component.props.domain;
+    }
+    const ticks = component.props.tickValues;
+    if (ticks) {
+      const tickValues = Util.containsStrings(ticks) ?
+        _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
+      return [_.min(ticks), _.max(ticks)];
+    } else {
+      return undefined;
+    }
+  }
 
   // getScale(props, axis) {
   //   const scale = props.scale[axis] ? props.scale[axis].copy() :
@@ -566,19 +639,33 @@ export default class VictoryChart extends React.Component {
 
 
 
+  getNewProps(child) {
+    const type = child.type.displayName;
+    if (type === "VictoryAxis") {
+      const axis = child.props.axisType;
+      return {
+        domain: this.domain[axis],
+        range: this.range[axis],
+      };
+    }
+    return {
+      domain: this.domain,
+      range: this.range,
+    };
 
+  }
 
-
+  // the old ones were bad
   getNewChildren() {
-    return  React.Children.map(this.childData, (child, index) => {
-      const style = _.merge({}, {parent: this.props.style}, child.props.style)
-      return React.cloneElement(child, {
+    return  React.Children.map(this.props.children, (child, index) => {
+      const style = _.merge({}, {parent: this.props.style}, child.props.style);
+      const newProps = this.getNewProps(child);
+      return React.cloneElement(child, _.merge(newProps, {
         ref: index,
         key: index,
-        domain: this.props.domain,
         standalone: false,
         style: style
-      })
+      }));
     });
   }
 
@@ -589,5 +676,4 @@ export default class VictoryChart extends React.Component {
       </svg>
     );
   }
-
 };
