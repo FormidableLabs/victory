@@ -15,7 +15,7 @@ class Docs extends React.Component {
             overview={require('!!raw!./ecology.md')}
             source={require('json!./victory-pie.json')}
             scope={{React, ReactDOM, VictoryPie: require('../src/components/victory-pie')}}
-            playgroundtheme='base16-ocean-dark' />
+            playgroundtheme='elegant' />
           <Style rules={theme}/>
         </div>
       </div>
