@@ -20,9 +20,9 @@ const defaultAxes = {
   y: <VictoryAxis axisType="y" orientation="left"/>
 };
 
-const defaultData = (
+const defaultData = [
   <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>
-);
+];
 
 @Radium
 export default class VictoryChart extends React.Component {
@@ -97,7 +97,6 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    scale: d3.scale.linear(),
     standalone: true,
   };
 
@@ -117,6 +116,7 @@ export default class VictoryChart extends React.Component {
       y: this.getRange(props, "y")
     };
     this.dataComponents = this.getDataComponents(props);
+    this.groupedDataComponents = this.getGroupedDataComponents(props);
     this.axisComponents = {
       x: this.getAxisComponents(props, "x"),
       y: this.getAxisComponents(props, "y")
@@ -129,15 +129,10 @@ export default class VictoryChart extends React.Component {
       x: this.getDomain(props, "x"),
       y: this.getDomain(props, "y")
     }
-    this.scale = this.props.scale;
-    // this.domain = {
-    //   x: this.getDomain(props, "x"),
-    //   y: this.getDomain(props, "y")
-    // };
-    // this.scale = {
-    //   x: this.getScale(props, "x"),
-    //   y: this.getScale(props, "y")
-    // };
+    this.scale = {
+      x: this.getScale(props, "x"),
+      y: this.getScale(props, "y")
+    };
     // this.tickValues = {
     //   x: this.getTickValues(props, "x"),
     //   y: this.getTickValues(props, "y")
@@ -166,24 +161,39 @@ export default class VictoryChart extends React.Component {
   }
 
   getDataComponents(props) {
-    if (!this.props.children) {
+    if (!props.children) {
       return defaultData;
     }
-    const childData = _.filter(this.props.children, (child) => {
-      return child.type.displayName !== "VictoryAxis";
+    const dataNames = ["VictoryLine", "VictoryScatter"]
+    const childData = _.filter(props.children, (child) => {
+      return _.includes(dataNames, child.type.displayName);
     });
-    const barData = _.filter(this.props.children, (child) => {
-      return child.type.displayName === "VictoryBar";
+    return childData || defaultData;
+  }
+
+  getGroupedDataComponents(props) {
+    const groupedDataNames = ["VictoryBar"];
+    const groupedData = _.filter(props.children, (child) => {
+      return _.includes(groupedDataNames, child.type.displayName);
     });
+    if (_.isEmpty(groupedData)) {
+      return undefined;
+    }
     // TODO: what is the correct behavior when more than one barComponent child
     // is present? Use the first one? use none? throw an error?
-    if (barData.length > 1) {
-      log.warn("Only one VictoryBar component is allowed per chart. If you are trying " +
-        "to plot several datasets as bars, please pass an array of data arrays directly " +
-        "into VictoryBar.");
-      return _.difference(childData, barData) || defaultData;
-    }
-    return childData || defaultData;
+    const dataByGroup = _.groupBy(groupedData, (component) => {
+      return component.type.displayName;
+    });
+    return _.map(dataByGroup, (group) => {
+      const components = _.values(group);
+      const name = _.keys(group)[0];
+      if (components.length > 1) {
+        log.warn("Only one " + name + "component is allowed per chart. If you are trying " +
+          "to plot several datasets, please pass an array of data arrays directly " +
+          "into " + name + ".");
+      }
+      return components[0];
+    });
   }
 
   getAxisComponents(props, axis) {
@@ -234,29 +244,31 @@ export default class VictoryChart extends React.Component {
 
 
   createStringMap(axis) {
-    // if tick values exist and are strings, create a map using only those strings
+    // if tick values exist and are strings, create a map using those strings
     // dont alter the order.
     const axisComponent = this.axisComponents[axis];
     const tickValues = axisComponent.props.tickValues ?
       axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
-    if (tickValues && Util.containsStrings(tickValues)) {
-      return _.zipObject(_.map(props.tickValues[axis], (tick, index) => {
+    const tickMap = (tickValues && Util.containsStrings(tickValues)) ?
+      _.zipObject(_.map(props.tickValues[axis], (tick, index) => {
         return ["" + tick, index + 1];
-      }));
+      })) : undefined;
+
+    let categoryMap;
+    // TODO categories only apply to x for bar at the moment.
+    if (this.groupedDataComponents && axis === "x") {
+      const allCategories = _.map(this.groupedDataComponents, (component) => {
+        const categories = component.props.categories;
+        return (categories && Util.containsStrings(categories)) ? categories : undefined;
+      });
+      const stringCategories = _.compact(_.flatten(allCategories));
+      categoryMap = _.isEmpty(stringCategories) ? undefined :
+        _.zipObject(_.map(stringCategories, (category, index) => {
+          return ["" + category, index + 1];
+        }));
     }
 
-    const barComponent = _.filter(this.dataComponents, (child) => {
-      return child.type.displayName === "VictoryBar";
-    });
-    const categories = barComponent[0] && barComponent[0].props.categories;
-    // if categories exist and are strings, create a map from those strings
-    if (categories && Util.containsStrings(categories)) {
-      return _.zipObject(_.map(categories, (category, index) => {
-        return ["" + category, index + 1];
-      }));
-    }
-
-    // otherwise, collect strings from dataComponents props.data
+    // Collect strings from dataComponents props.data
     const allStrings = [];
     const allData = _.map(this.dataComponents, (dataComponent) => {
       return dataComponent.props.data;
@@ -274,7 +286,6 @@ export default class VictoryChart extends React.Component {
       allStrings.push(stringData);
     }
     // collect strings from props x or props y
-
     const allXYData = _.map(this.dataComponents, (dataComponent) => {
       return dataComponent.props[axis];
     });
@@ -294,9 +305,12 @@ export default class VictoryChart extends React.Component {
       .value();
 
     return _.isEmpty(uniqueStrings) ?
-      null :
+      tickMap || categoryMap || null :
       _.zipObject(_.map(uniqueStrings, (string, index) => {
-        return [string, index + 1];
+        const tickValue = tickMap && tickMap[string];
+        const categoryValue = categoryMap && categoryMap[string];
+        const value = tickValue || categoryValue || index + 1;
+        return [string, value];
       }));
   }
 
@@ -322,39 +336,52 @@ export default class VictoryChart extends React.Component {
     if (props.domain) {
       return props.domain[axis] || props.domain;
     }
-    const dataComponentDomains = _.map(this.dataComponents, (component) => {
-      return this.getDomainFromDataComponent(component, axis);
+    const dataDomains = _.map(this.dataComponents, (component) => {
+      return this.getDomainFromData(component, axis);
     });
-    const axisComponentDomain = this.getDomainFromAxisComponent(axis);
+    const groupedDataDomains = _.map(this.groupedDataComponents, (component) => {
+      return this.getDomainFromGroupedData(component, axis);
+    });
+    const axisDomain = this.getDomainFromAxis(axis);
     const domainFromChildren = Util.removeUndefined(
-      _.flatten(dataComponentDomains.concat(axisComponentDomain))
+      _.flatten(dataDomains.concat(groupedDataDomains, axisDomain))
     );
-    return _.isEmpty(domainFromChildren) ?
+    const domain =  _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
+    return this.padDomain(props, domain, axis);
+  }
+
+  getDomainFromData(component, axis) {
+    if (component.props.domain) {
+      return component.props.domain[axis] || component.props.domain;
+    } else if (component.props.data) {
+      const formattedData = this.formatChildData(component.props.data);
+      const dataByAxis = _.map(_.flatten(formattedData), (data) => {
+        return data[axis];
+      });
+      return [_.min(dataByAxis), _.max(dataByAxis)];
+   } else {
+    return undefined;
+   }
   }
 
   _isStackedComponentData(component, axis) {
-    // This method will get more complicated as more stacked types are supported
-    // for now it only checks whether the component is a stacked bar, and axis is y.
-    // only vertical stacked bars are currently supported
-    const componentType = component.type.displayName;
-    const stacked = component.props.stacked;
-    return (componentType === "VictoryBar")
-      && (stacked === true)
-      && (axis === "y")
-      && Util.isArrayOfArrays(component.props.data);
+    // checks whether grouped data is stacked, and whether there are multiple
+    // datasets to stack.
+    // TODO: only vertical stacking is currently supported. remove y-axis check
+    // when horizontal stacking is supported
+    return (component.props.stacked === true)
+      && Util.isArrayOfArrays(component.props.data)
+      && (axis === "y");
   }
 
-  getDomainFromDataComponent(component, axis) {
-    // TODO: break this up into smaller methods
-    if (component.props.domain) {
-      return component.props.domain[axis] || component.props.domain;
-    } else if (this._isStackedComponentData(component, axis)){
-      const formattedData = this.formatChildData(component.props.data);
-      // find the global min and max
-      const allData = _.flatten(formattedData);
-      const min = _.min(_.pluck(allData, axis));
-      const max = _.max(_.pluck(allData, axis));
+  getDomainFromGroupedData(component, axis) {
+    const formattedData = this.formatChildData(component.props.data);
+    // find the global min and max
+    const allData = _.flatten(formattedData);
+    const min = _.min(_.pluck(allData, axis));
+    const max = _.max(_.pluck(allData, axis));
+    if (this._isStackedComponentData(component, axis)) {
       // find the cumulative max and min for stacked chart types
       // TODO: clean up cumulative max / min check assumptions.
       const cumulativeMax =  _.reduce(formattedData[0], (memo, data, index) => {
@@ -370,19 +397,11 @@ export default class VictoryChart extends React.Component {
         return total > memo ? total : memo;
       }, 0);
       return [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
-    } else if (component.props.data) {
-      const formattedData = this.formatChildData(component.props.data);
-      const dataByAxis = _.map(_.flatten(formattedData), (data) => {
-        return data[axis];
-      });
-      return [_.min(dataByAxis), _.max(dataByAxis)];
-   } else {
-    return undefined;
-   }
-
+    }
+    return [min, max];
   }
 
-  getDomainFromAxisComponent(axis) {
+  getDomainFromAxis(axis) {
     const component = this.axisComponents[axis];
     if (component.props.domain) {
       return component.props.domain;
@@ -397,130 +416,65 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  // getScale(props, axis) {
-  //   const scale = props.scale[axis] ? props.scale[axis].copy() :
-  //     props.scale.copy();
-  //   const range = this.range[axis];
-  //   const domain = this.domain[axis];
-  //   scale.range(range);
-  //   scale.domain(domain);
-  //   // hacky check for identity scale
-  //   if (_.difference(scale.range(), range).length !== 0) {
-  //     // Warn identity scale, reset the domain and range
-  //     log.warn("This scale is not supported");
-  //   }
-  //   return scale;
-  // }
+  padDomain(props, domain, axis) {
+    // don't pad non-numeric domains
+    if (_.some(domain, (element) => !_.isNumber(element))) {
+      return domain;
+    } else if (!props.domainPadding || props.domainPadding[axis] === 0) {
+      return domain;
+    }
+    const min = _.min(domain);
+    const max = _.max(domain);
+    const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
+    const extent = Math.abs(max - min);
+    const percentPadding = props.domainPadding ? props.domainPadding[axis] / rangeExtent : 0;
+    const padding = extent * percentPadding;
+    const adjustedMin = min === 0 ? min : min - padding;
+    const adjustedMax = max === 0 ? max : max + padding;
+    return [adjustedMin, adjustedMax];
+  }
 
-  // getDomain(props, axis) {
-  //   let domain;
-  //   if (props.domain) {
-  //     domain = props.domain[axis] || props.domain;
-  //   } else if (this.props.data) {
-  //     domain = this._getDomainFromData(props, axis);
-  //   } else if (props.tickValues && props.tickValues[axis]) {
-  //     domain = this._getDomainFromTickValues(props, axis);
-  //   } else if (props.categories && axis === "x") {
-  //     domain = this._getDomainFromCategories(props);
-  //   } else {
-  //     domain = this._getDomainFromData(props, axis);
-  //   }
-  //   // If the other axis is in a reversed orientation, the domain of this axis
-  //   // needs to be reversed
-  //   const otherAxis = axis === "x" ? "y" : "x";
-  //   const orientation = props.axisOrientation[otherAxis];
-  //   return orientation === "bottom" || orientation === "left" ?
-  //     domain : domain.concat().reverse();
-  // }
+  getScale(props, axis) {
+    let baseScale;
+    if (this.props.scale) {
+      baseScale = this.props.scale[axis] || this.props.scale;
+    } else {
+      baseScale = this.axisComponents[axis].scale;
+    }
+    const scale = baseScale ? baseScale.copy() : d3.scale.linear();
+    scale.range(this.range[axis]);
+    scale.domain(this.domain[axis]);
+    return scale;
+  }
 
-  // _padDomain(props, domain, axis) {
-  //   // don't pad non-numeric domains
-  //   if (_.some(domain, (element) => !_.isNumber(element))) {
-  //     return domain;
-  //   } else if (!props.domainPadding || props.domainPadding[axis] === 0) {
-  //     return domain;
-  //   }
-  //   const min = _.min(domain);
-  //   const max = _.max(domain);
-  //   const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
-  //   const extent = Math.abs(max - min);
-  //   const percentPadding = props.domainPadding ? props.domainPadding[axis] / rangeExtent : 0;
-  //   const padding = extent * percentPadding;
-  //   const adjustedMin = min === 0 ? min : min - padding;
-  //   const adjustedMax = max === 0 ? max : max + padding;
-  //   return [adjustedMin, adjustedMax];
-  // }
-
-  // // helper method for getDomain
-  // _getDomainFromTickValues(props, axis) {
-  //   const ticks = props.tickValues[axis];
-  //   const data = Util.containsStrings(ticks) ?
-  //     _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
-  //   const domain = [_.min(data), _.max(data)];
-  //   // dont pad the domain twice!
-  //   // return (axis === "x" && props.y && !props.x) ? domain :
-  //   return this._padDomain(props, domain, axis);
-  // }
-
-  // _getDomainFromCategories(props) {
-  //   const categories = _.flatten(props.categories);
-  //   if (Util.containsStrings(categories)) {
-  //     return undefined;
-  //   }
-  //   return this._padDomain(props, [_.min(categories), _.max(categories)], "x");
-  // }
-
-  // // helper method for getDomain
-  // _getDomainFromData(props, axis) {
-  //   let domain;
-  //   // if a sensible string map exists, return the minimum and maximum values
-  //   if (this.stringMap[axis] !== null) {
-  //     const mapValues = _.values(this.stringMap[axis]);
-  //     domain = [_.min(mapValues), _.max(mapValues)];
-  //   } else {
-  //     // find the global min and max
-  //     const allData = _.flatten(_.pluck(this.datasets, "data"));
-  //     const min = _.min(_.pluck(allData, axis));
-  //     const max = _.max(_.pluck(allData, axis));
-  //     // find the cumulative max for stacked chart types
-  //     // this is only sensible for the y domain
-  //     const cumulativeMax = (this.stackedData && axis === "y") ?
-  //       _.reduce(this.stackedData, (memo, dataset) => {
-  //         const localMax = (_.max(_.pluck(dataset.data, "y")));
-  //         return localMax > 0 ? memo + localMax : memo;
-  //       }, 0) : -Infinity;
-  //     const cumulativeMin = (this.stackedData && axis === "y") ?
-  //       _.reduce(this.stackedData, (memo, dataset) => {
-  //         const localMin = (_.min(_.pluck(dataset.data, "y")));
-  //         return localMin < 0 ? memo + localMin : memo;
-  //       }, 0) : Infinity;
-  //     domain = [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
-  //   }
-  //   // dont pad the domain twice
-  //   return (axis === "x" && props.y && !props.x) ? domain :
-  //     this._padDomain(props, domain, axis);
-  // }
-
-
-  // getAxisOffset(props) {
-  //   // make the axes line up, and cross when appropriate
-  //   const origin = {
-  //     x: _.max([_.min(this.domain.x), 0]),
-  //     y: _.max([_.min(this.domain.y), 0])
-  //   };
-  //   const orientationOffset = {
-  //     x: props.axisOrientation.y === "left" ? 0 : this.style.parent.width,
-  //     y: props.axisOrientation.x === "bottom" ? this.style.parent.height : 0
-  //   };
-  //   return {
-  //     x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
-  //     y: Math.abs(orientationOffset.y - this.scale.y.call(this, origin.y))
-  //   };
-  // }
+  getAxisOffset(props) {
+    // make the axes line up, and cross when appropriate
+    const origin = {
+      x: _.max([_.min(this.domain.x), 0]),
+      y: _.max([_.min(this.domain.y), 0])
+    };
+    const orientation = {
+      x: this.axisComponents.x.props.orientation || "bottom",
+      y: this.axisComponents.y.props.orientation || "left"
+    };
+    const orientationOffset = {
+      x: orientation.y === "left" ? 0 : this.style.parent.width,
+      y: orientation.x === "bottom" ? this.style.parent.height : 0
+    };
+    return {
+      x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
+      y: Math.abs(orientationOffset.y - this.scale.y.call(this, origin.y))
+    };
+  }
 
   // getTickValues(props, axis) {
   //   // if tickValues are defined in props, and dont contain strings, just return them
-  //   const ticks = props.tickValues && props.tickValues[axis];
+  //   const ticks = this.axisComponents[axis].props.tickValues;
+
+  //   const barComponent = _.filter(this.dataComponents, (child) => {
+  //     return child.type.displayName === "VictoryBar";
+  //   });
+
   //   if (ticks && !Util.containsStrings(ticks)) {
   //     return ticks;
   //   } else if (this.stringMap[axis] !== null) {
@@ -528,7 +482,9 @@ export default class VictoryChart extends React.Component {
   //     return (ticks) ?
   //       _.map(ticks, (tick) => this.stringMap[axis][tick]) :
   //       _.values(this.stringMap[axis]);
-  //   } else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
+  //   } else if ()
+
+  //   else if (axis === "x" && props.categories && !Util.containsStrings(props.categories)) {
   //     // return tick values based on the bar categories
   //     return _.isArray(props.categories[0]) ?
   //       _.map(props.categories, (arr) => (_.sum(arr) / arr.length)) : props.categories;
