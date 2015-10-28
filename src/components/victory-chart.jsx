@@ -369,10 +369,14 @@ export default class VictoryChart extends React.Component {
     );
     const domain =  _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
+    // const functionDomains = _.map(this.dataComponents, (component) => {
+    //   return this.getDomainFromFunctions(component, axis, domain);
+    // });
     return this.padDomain(props, domain, axis);
   }
 
   getDomainFromData(component, axis) {
+    // TODO refactor for code cleanliness
     if (component.props.domain) {
       return component.props.domain[axis] || component.props.domain;
     } else if (component.props.data) {
@@ -380,11 +384,21 @@ export default class VictoryChart extends React.Component {
       const dataByAxis = _.map(_.flatten(formattedData), (data) => {
         return data[axis];
       });
-      return [_.min(dataByAxis), _.max(dataByAxis)];
-   } else {
-    return undefined;
-   }
+      return dataByAxis ? [_.min(dataByAxis), _.max(dataByAxis)] : undefined;
+    }
   }
+   // getDomainFromFunctions(component, axis, domain) {
+   //  if (component.props.data || !component.props.y) {
+   //    return;
+   //  } else {
+   //    const data = this.generateData(component, domain);
+   //    const formattedData = this.formatChildData(data);
+   //    const dataByAxis = _.map(_.flatten(formattedData), (data) => {
+   //      return data[axis];
+   //    });
+   //    return dataByAxis ? [_.min(dataByAxis), _.max(dataByAxis)] : undefined;
+   //  }
+   // }
 
   _isStackedComponentData(component, axis) {
     // checks whether grouped data is stacked, and whether there are multiple
@@ -545,84 +559,31 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  // drawLine(dataset) {
-  //   const animate = this.props.animate && (this.props.animate.line || this.props.animate);
-  //   const {type, name, ...attrs} = dataset.attrs;
-  //   const lineStyle = {data: _.merge({}, this.style.line.data, attrs)};
-  //   const style = _.merge({}, {parent: this.style.parent}, this.style.line, lineStyle);
-  //   return (
-  //     <VictoryLine
-  //       {...this.props}
-  //       animate={animate}
-  //       standalone={false}
-  //       data={dataset.data}
-  //       label={attrs.label}
-  //       interpolation={attrs.interpolation || this.props.interpolation}
-  //       style={style}
-  //       domain={this.domain}
-  //       range={this.range}
-  //       ref={name}
-  //       key={"line-" + dataset.index}/>
-  //   );
-  // }
-
-  // drawScatter(dataset) {
-  //   const animate = this.props.animate && (this.props.animate.scatter || this.props.animate);
-  //   const {type, name, symbol, size, ...attrs} = dataset.attrs;
-  //   const scatterStyle = {data: _.merge({}, this.style.scatter.data, attrs)};
-  //   const style = _.merge({}, {parent: this.style.parent}, this.style.scatter, scatterStyle);
-  //   return (
-  //     <VictoryScatter
-  //       {...this.props}
-  //       standalone={false}
-  //       style={style}
-  //       domain={this.domain}
-  //       range={this.range}
-  //       ref={name}
-  //       key={"scatter-" + dataset.index}/>
-  //   );
-  // }
-
-  // drawBars(datasets, options) {
-  //   const animate = this.props.animate && (this.props.animate.bar || this.props.animate);
-  //   const categories = (this.stringMap.x) && _.keys(this.stringMap.x);
-  //   return (
-  //     <VictoryBar
-  //       {...this.props}
-  //       standalone={false}
-  //       style={_.merge({}, {parent: this.style.parent}, this.style.bar)}
-  //       domain={this.domain}
-  //       range={this.range}
-  //       key={"bar"}/>
-  //   );
-  // }
-
-  // drawStackedBars(datasets) {
-  //   return this.drawBars(datasets, {stacked: true});
-  // }
-
-  // drawAxis(axis) {
-  //   const offsetY = axis === "y" ? undefined : this.axisOffset.y;
-  //   const offsetX = axis === "x" ? undefined : this.axisOffset.x;
-  //   const animate = this.props.animate && (this.props.animate.axis || this.props.animate);
-  //   const style = _.merge({}, {parent: this.style.parent}, this.style.axis[axis]);
-  //   return (
-  //     <VictoryAxis
-  //       {...this.props}
-  //       standalone={false}
-  //       offsetY={offsetY}
-  //       offsetX={offsetX}
-  //       crossAxis={true}
-  //       scale={this.scale[axis]}
-  //       domain={this.domain[axis]}
-  //       range={this.range[axis]}
-  //       tickValues={this.tickValues[axis]}
-  //       tickFormat={this.tickFormat[axis]}
-  //       style={style}/>
-  //   );
-  // }
-
-
+  generateData(child) {
+    if (!child.props.y) {
+      return;
+    }
+    const generateX = (child) => {
+      const domain = this.domain.x
+      const samples = _.isArray(child.props.y) ? child.props.y.length : 50;
+      const step = _.max(domain) / samples;
+      // return an array of x values spaced across the domain,
+      // include the maximum of the domain
+      return _.union(_.range(_.min(domain), _.max(domain), step), [_.max(domain)]);
+    };
+    const y = child.props.y;
+    const xArray = child.props.x || generateX(child);
+    if (_.isFunction(y)) {
+      return _.map(xArray, (x) => {
+        return {x, y: y(x)};
+      });
+    } else {
+      const n = _.min([xArray.length, y.length]);
+      return _.map(_.take(xArray, n), (x, index) => {
+        return { x, y: y[index]};
+      });
+    }
+  }
 
 
   getNewProps(child) {
@@ -653,7 +614,9 @@ export default class VictoryChart extends React.Component {
         categories: child.props.categories || categories
       };
     }
+    const data = !child.props.data && child.props.y ? this.generateData(child) : undefined;
     return {
+      data: data,
       animate: animate,
       domain: this.domain,
       range: this.range,

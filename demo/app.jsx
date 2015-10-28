@@ -112,7 +112,6 @@ class App extends React.Component {
     return (
       <div className="demo">
         <p>
-
           <VictoryChart style={chartStyle}>
             <VictoryLine
               data={this.state.lineData}
@@ -146,6 +145,13 @@ class App extends React.Component {
                 {x: new Date(2011, 1, 1), y: 270},
                 {x: new Date(2015, 1, 1), y: 470}
               ]}/>
+          </VictoryChart>
+
+          <VictoryChart animate={{velocity: 0.02}}>
+            <VictoryScatter
+              data={this.state.scatterData}/>
+            <VictoryLine
+              y={(x) => x}/>
           </VictoryChart>
 
           <VictoryChart
