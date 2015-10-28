@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/FormidableLabs/victory-pie",
   "scripts": {
-    "postinstall": "npm run build-lib",
+    "postinstall": "node -e \"require('fs').stat('lib', function(e,s){process.exit(e || !s.isDirectory() ? 1 : 0)})\" || npm run build-lib",
     "preversion": "npm run check",
     "version": "npm run clean && npm run build && git add -A dist",
     "clean-dist": "rimraf dist",
@@ -60,11 +60,11 @@
     "babel-core": "^5.5.8",
     "babel-loader": "^5.3.2",
     "d3": "^3.5.6",
-    "radium": "^0.13.4",
+    "radium": "^0.14.1",
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-animation": "latest",
+    "victory-animation": "^0.0.10",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
@@ -94,8 +94,9 @@
     "opener": "^1.4.1",
     "phantomjs": "^1.9.17",
     "raw-loader": "^0.5.1",
-    "react": "0.13.x",
+    "react": "0.14.x",
     "react-docgen": "^2.2.0",
+    "react-dom": "0.14.x",
     "react-hot-loader": "^1.2.8",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",

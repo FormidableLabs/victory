@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Ecology from 'ecology';
 import Radium, { Style } from 'radium';
 
@@ -22,4 +23,4 @@ class Docs extends React.Component {
 }
 
 const content = document.getElementById("content");
-React.render(<Docs/>, content);
+ReactDOM.render(<Docs/>, content);
