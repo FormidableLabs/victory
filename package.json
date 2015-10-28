@@ -64,13 +64,13 @@
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-animation": "^0.0.10",
+    "victory-animation": "^0.0.11",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
     "babel-eslint": "^3.1.25",
     "chai": "^3.2.0",
-    "ecology": "0.0.6",
+    "ecology": "git+https://github.com/formidablelabs/ecology#master",
     "eslint": "^0.24.1",
     "eslint-config-defaults": "^3.0.3",
     "eslint-plugin-filenames": "^0.1.1",
