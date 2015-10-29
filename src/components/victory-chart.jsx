@@ -127,10 +127,9 @@ export default class VictoryChart extends React.Component {
       x: this.createStringMap("x"),
       y: this.createStringMap("y")
     };
-    this.domain = {
-      x: this.getDomain(props, "x"),
-      y: this.getDomain(props, "y")
-    }
+    this.domain = {};
+    this.domain.x = this.getDomain(props, "x");
+    this.domain.y = this.getDomain(props, "y");
     this.scale = {
       x: this.getScale(props, "x"),
       y: this.getScale(props, "y")
@@ -369,23 +368,24 @@ export default class VictoryChart extends React.Component {
     );
     const domain =  _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    // const functionDomains = _.map(this.dataComponents, (component) => {
-    //   return this.getDomainFromFunctions(component, axis, domain);
-    // });
     return this.padDomain(props, domain, axis);
   }
 
   getDomainFromData(component, axis) {
     // TODO refactor for code cleanliness
+    let dataByAxis;
     if (component.props.domain) {
       return component.props.domain[axis] || component.props.domain;
     } else if (component.props.data) {
       const formattedData = this.formatChildData(component.props.data);
-      const dataByAxis = _.map(_.flatten(formattedData), (data) => {
+      dataByAxis = _.map(_.flatten(formattedData), (data) => {
         return data[axis];
       });
-      return dataByAxis ? [_.min(dataByAxis), _.max(dataByAxis)] : undefined;
+    } else if (component.props[axis]) {
+      dataByAxis = _.isFunction(component.props[axis]) ?
+        _.pluck(this.generateData(component), axis) : component.props[axis];
     }
+    return dataByAxis ? [_.min(dataByAxis), _.max(dataByAxis)] : undefined;
   }
    // getDomainFromFunctions(component, axis, domain) {
    //  if (component.props.data || !component.props.y) {

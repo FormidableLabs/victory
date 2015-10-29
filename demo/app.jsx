@@ -154,6 +154,8 @@ class App extends React.Component {
               y={(x) => x}/>
           </VictoryChart>
 
+
+
           <VictoryChart
             style={chartStyle}
             animate={{velocity: 0.02}}>
