@@ -155,6 +155,19 @@ class App extends React.Component {
               y={(x) => x}/>
           </VictoryChart>
 
+          <VictoryChart animate={{velocity: 0.02}} domainPadding={{x: 20}}>
+            <VictoryBar
+              data={this.state.numericBarData}
+              dataAttributes={[
+                {fill: "cornflowerblue"},
+                {fill: "orange"},
+                {fill: "greenyellow"},
+                {fill: "gold"},
+                {fill: "tomato"}
+              ]}
+              categories={[[1, 3], [4, 7], [9, 11]]}/>
+          </VictoryChart>
+
           <VictoryChart animate={{velocity: 0.02}}
             domainPadding={{x: 100, y: 0}}>
             <VictoryAxis independentAxis
@@ -173,7 +186,8 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart>
-            <VictoryScatter style={{data: {fill: "red", symbol: "triangleUp"}}}
+            <VictoryScatter style={{data: {fill: "red"}}}
+              symbol="star"
               x={[1, 2, 3, 4]} y={[1, 2, 10, 4]}/>
             <VictoryLine style={{data: {stroke: "green"}}} interpolation="basis"
               x={[-2, -1, 0, 1, 3]} y={(x) => x * x}/>
@@ -181,23 +195,44 @@ class App extends React.Component {
               x={[3, 4, 6]} y={[-5, -4, -3, -2, 2, 3]}/>
           </VictoryChart>
 
-          <VictoryChart
-            style={chartStyle}
-            animate={{velocity: 0.02}}>
-            <VictoryAxis independentAxis orientation="bottom"/>
-            <VictoryAxis orientation="left"/>
-            <VictoryLine
-              data={this.state.lineData}
-              style={{data: {stroke: "red"}}}/>
+          <VictoryChart domainPadding={{x: 30, y: 30}}>
+            <VictoryAxis independentAxis
+              tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
+              tickFormat={(x) => x + "\ntick"}
+              style={{data: {
+                axis: {stroke: "black", strokeWidth: 2},
+                ticks: {stroke: "transparent"},
+                tickLabels: {fill: "black"}
+              }}}/>
+            <VictoryAxis label="y axis" orientation="left"
+              tickValues={[0, 1.5, 3, 4.5]}
+              style={{data: {
+                grid: {strokeWidth: 1},
+                axis: {stroke: "transparent"},
+                ticks: {stroke: "transparent", padding: 15}
+              }}}/>
+            <VictoryBar style={{data: {width: 15, fill: "orange"}}}
+              data={[
+                {x: 1, y: 1},
+                {x: 2, y: 2},
+                {x: 3, y: 3},
+                {x: 4, y: 2},
+                {x: 5, y: 1},
+                {x: 6, y: 2},
+                {x: 7, y: 3},
+                {x: 8, y: 2},
+                {x: 9, y: 1},
+                {x: 10, y: 2},
+                {x: 11, y: 3},
+                {x: 12, y: 2},
+                {x: 13, y: 1}
+              ]}/>
+          <VictoryLine y={() => 0.5}
+            style={{data: {stroke: "gold", strokeWidth: 3}}}
+            label="LINE"/>
+        </VictoryChart>
 
-            <VictoryBar
-              data={this.state.lineData}
-              style={{data: {fill: "blue"}}}/>
 
-            <VictoryScatter
-              data={this.state.lineData}
-              style={{data: {fill: "gold"}}}/>
-          </VictoryChart>
         </p>
       </div>
     );
