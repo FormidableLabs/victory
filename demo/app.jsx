@@ -113,6 +113,7 @@ class App extends React.Component {
       <div className="demo">
         <p>
           <VictoryChart style={chartStyle}>
+            <VictoryAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
               data={this.state.lineData}
               style={{data: this.state.lineStyle}}
@@ -154,7 +155,31 @@ class App extends React.Component {
               y={(x) => x}/>
           </VictoryChart>
 
+          <VictoryChart animate={{velocity: 0.02}}
+            domainPadding={{x: 100, y: 0}}>
+            <VictoryAxis independentAxis
+              tickValues={["apples", "bananas", "oranges"]}
+              tickFormat={(x) => ""}/>
+            <VictoryBar stacked
+              data={this.state.barData}
+              dataAttributes={[
+                {fill: "cornflowerblue"},
+                {fill: "greenyellow"},
+                {fill: "gold"},
+                {fill: "orange"},
+                {fill: "tomato"}
+              ]}
+            categoryLabels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}/>
+          </VictoryChart>
 
+          <VictoryChart>
+            <VictoryScatter style={{data: {fill: "red", symbol: "triangleUp"}}}
+              x={[1, 2, 3, 4]} y={[1, 2, 10, 4]}/>
+            <VictoryLine style={{data: {stroke: "green"}}} interpolation="basis"
+              x={[-2, -1, 0, 1, 3]} y={(x) => x * x}/>
+            <VictoryScatter style={{data: {fill: "blue"}}}
+              x={[3, 4, 6]} y={[-5, -4, -3, -2, 2, 3]}/>
+          </VictoryChart>
 
           <VictoryChart
             style={chartStyle}
