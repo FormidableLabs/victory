@@ -1,6 +1,5 @@
 import React from "react";
 import Radium from "radium";
-import d3 from "d3";
 import _ from "lodash";
 import log from "../log";
 import Util from "../util";
@@ -93,11 +92,19 @@ export default class VictoryChart extends React.Component {
     domainPadding: React.PropTypes.shape({
       x: React.PropTypes.number,
       y: React.PropTypes.number
-    })
+    }),
+    /**
+     * The animate prop specifies props for victory-animation to use. It this prop is
+     * given, all children defined in chart will pass the options specified in this prop to
+     * victory-animation, unless they have animation props of their own specified.
+     * Large datasets might animate slowly due to the inherent limits of svg rendering.
+     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
+     */
+    animate: React.PropTypes.object
   };
 
   static defaultProps = {
-    standalone: true,
+    standalone: true
   };
 
   constructor(props) {
@@ -162,8 +169,9 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisType(child) {
-    if (child.type.displayName !== "VictoryAxis") {
-      return;
+    const type = child.type.displayName;
+    if (type !== "VictoryAxis") {
+      return undefined;
     }
     return child.props.independentAxis ? "x" : "y";
   }
@@ -171,7 +179,7 @@ export default class VictoryChart extends React.Component {
   getChildComponents(props) {
     // set up a counter for component types
     const count = () => {
-      let counts = {};
+      const counts = {};
       return {
         add: (child) => {
           const type = child.type.displayName;
@@ -180,9 +188,9 @@ export default class VictoryChart extends React.Component {
             counts[type] = axis ? {x: 0, y: 0} : 0;
           }
           if (axis) {
-            counts[type][axis] = counts[type][axis] + 1;
+            counts[type][axis] = counts[type][axis] += 1;
           } else {
-            counts[type] = counts[type] + 1;
+            counts[type] = counts[type] += 1;
           }
 
         },
@@ -200,11 +208,11 @@ export default class VictoryChart extends React.Component {
           return false;
         },
         total: (type, axis) => {
-          const totalCount =  (axis && counts[type]) ?
+          const totalCount = (axis && counts[type]) ?
             counts[type][axis] : counts[type];
           return totalCount || 0;
         }
-      }
+      };
     }();
 
     const childComponents = [];
@@ -212,15 +220,14 @@ export default class VictoryChart extends React.Component {
     // unless the limit for that child type has already been reached.
     React.Children.forEach(props.children, (child) => {
       const type = child.type.displayName;
-      const axis = this.getAxisType(child);
       if (count.limitReached(child)) {
         const msg = type === "VictoryAxis" ?
           "Only one VictoryAxis component of each axis type is allowed when using the " +
           "VictoryChart wrapper. Only the first axis will be used. Please compose " +
           "multi-axis charts manually" :
-          "Only one " + name + "component is allowed per chart. If you are trying " +
+          "Only one " + type + "component is allowed per chart. If you are trying " +
           "to plot several datasets, please pass an array of data arrays directly " +
-          "into " + name + "."
+          "into " + type + ".";
         log.warn(msg);
       }
       childComponents.push(child);
@@ -229,15 +236,15 @@ export default class VictoryChart extends React.Component {
 
     // Add default axis components if necessary
     // TODO: should we add both axes by default?
-    if (count.total("VictoryAxis", "x") < 1) childComponents.push(defaultAxes.x);
-    if (count.total("VictoryAxis", "y") < 1) childComponents.push(defaultAxes.y);
+    if (count.total("VictoryAxis", "x") < 1) { childComponents.push(defaultAxes.x); }
+    if (count.total("VictoryAxis", "y") < 1) { childComponents.push(defaultAxes.y); }
 
     // Add defaut data if no data is provided
     const dataComponents = _.filter(childComponents, (child) => {
       return child.type.displayName !== "VictoryAxis";
     });
 
-    if (dataComponents.length === 0) childComponents.push(defaultData);
+    if (dataComponents.length === 0) { childComponents.push(defaultData); }
     return childComponents;
   }
 
@@ -250,7 +257,7 @@ export default class VictoryChart extends React.Component {
 
   getGroupedDataComponents() {
     return _.filter(this.childComponents, (child) => {
-      const type = child.type.displayName
+      const type = child.type.displayName;
       return _.includes(this.groupedDataTypes, type);
     });
   }
@@ -259,24 +266,44 @@ export default class VictoryChart extends React.Component {
     return _.filter(this.childComponents, (child) => {
       return axis === "x" ?
       child.props.independentAxis && child.type.displayName === "VictoryAxis" :
-      child.type.displayName === "VictoryAxis" && !child.props.independentAxis
+      child.type.displayName === "VictoryAxis" && !child.props.independentAxis;
     });
   }
 
   createStringMap(axis) {
     // if tick values exist and are strings, create a map using those strings
     // dont alter the order.
-    const axisComponent = this.axisComponents[axis];
-    const tickValues = axisComponent.props.tickValues ?
-      axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
-    const tickMap = (tickValues && Util.containsStrings(tickValues)) ?
-      _.zipObject(_.map(tickValues, (tick, index) => {
-        return ["" + tick, index + 1];
-      })) : undefined;
+    const tickMap = this._getStringsFromAxes(axis);
 
     // if categories exist in grouped data, create a string map based on
     // categories which preserves order
-    let categoryMap;
+    const categoryMap = this._getStringsFromCategories(axis);
+
+    // collect all the strings from data and x / y props, and return a
+    // unique sorted set of strings
+    const dataStrings = this._getStringsFromData(axis);
+
+    return _.isEmpty(dataStrings) ?
+      tickMap || categoryMap || null :
+      _.zipObject(_.map(dataStrings, (string, index) => {
+        const tickValue = tickMap && tickMap[string];
+        const categoryValue = categoryMap && categoryMap[string];
+        const value = tickValue || categoryValue || index + 1;
+        return [string, value];
+      }));
+  }
+
+  _getStringsFromAxes(axis) {
+    const axisComponent = this.axisComponents[axis];
+    const tickValues = axisComponent.props.tickValues ?
+      axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
+    return (tickValues && Util.containsStrings(tickValues)) ?
+      _.zipObject(_.map(tickValues, (tick, index) => {
+        return ["" + tick, index + 1];
+      })) : undefined;
+  }
+
+  _getStringsFromCategories(axis) {
     // TODO categories only apply to x for bar at the moment.
     if (this.groupedDataComponents && axis === "x") {
       const allCategories = _.map(this.groupedDataComponents, (component) => {
@@ -284,12 +311,14 @@ export default class VictoryChart extends React.Component {
         return (categories && Util.containsStrings(categories)) ? categories : undefined;
       });
       const stringCategories = _.compact(_.flatten(allCategories));
-      categoryMap = _.isEmpty(stringCategories) ? undefined :
+      return _.isEmpty(stringCategories) ? undefined :
         _.zipObject(_.map(stringCategories, (category, index) => {
           return ["" + category, index + 1];
         }));
     }
+  }
 
+  _getStringsFromData(axis) {
     // Collect strings from dataComponents and groupDataComponents props.data
     const allChildData = this.dataComponents.concat(this.groupedDataComponents);
     const allStrings = [];
@@ -309,32 +338,23 @@ export default class VictoryChart extends React.Component {
       allStrings.push(stringData);
     }
     // collect strings from  data components props x or props y
-    const allXYData = _.map(this.dataComponents, (dataComponent) => {
+    const allXYData = _.map(allChildData, (dataComponent) => {
       return dataComponent.props[axis];
     });
     if (allXYData) {
-      _.each(_.flatten(allXYData), (element) => {
+      _.each(_.flattenDeep(allXYData), (element) => {
         if (_.isString(element)) {
           allStrings.push(element);
         }
       });
     }
     // create a unique, sorted set of strings
-    const uniqueStrings = _.chain(allStrings)
+    return _.chain(allStrings)
       .flatten()
       .compact()
       .uniq()
       .sort()
       .value();
-
-    return _.isEmpty(uniqueStrings) ?
-      tickMap || categoryMap || null :
-      _.zipObject(_.map(uniqueStrings, (string, index) => {
-        const tickValue = tickMap && tickMap[string];
-        const categoryValue = categoryMap && categoryMap[string];
-        const value = tickValue || categoryValue || index + 1;
-        return [string, value];
-      }));
   }
 
   formatChildData(childData) {
@@ -348,7 +368,7 @@ export default class VictoryChart extends React.Component {
           yName: _.isString(data.y) ? data.y : undefined
         });
       });
-    }
+    };
     if (Util.isArrayOfArrays(childData)) {
       return _.map(childData, (dataset) => _formatData(dataset));
     }
@@ -369,7 +389,7 @@ export default class VictoryChart extends React.Component {
     const domainFromChildren = Util.removeUndefined(
       _.flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain))
     );
-    const domain =  _.isEmpty(domainFromChildren) ?
+    const domain = _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
     const paddedDomain = this.padDomain(props, domain, axis);
     // If the other axis is in a reversed orientation, the domain of this axis
@@ -491,7 +511,7 @@ export default class VictoryChart extends React.Component {
     return scale;
   }
 
-  getAxisOffset(props) {
+  getAxisOffset() {
     // make the axes line up, and cross when appropriate
     const origin = {
       x: _.max([_.min(this.domain.x), 0]),
@@ -565,11 +585,11 @@ export default class VictoryChart extends React.Component {
 
   generateData(child) {
     if (!child.props.y) {
-      return;
+      return undefined;
     }
-    const generateX = (child) => {
-      const domain = this.domain.x
-      const samples = _.isArray(child.props.y) ? child.props.y.length : 50;
+    const generateX = (component) => {
+      const domain = this.domain.x;
+      const samples = _.isArray(component.props.y) ? component.props.y.length : 50;
       const step = _.max(domain) / samples;
       // return an array of x values spaced across the domain,
       // include the maximum of the domain
@@ -589,7 +609,6 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-
   getNewProps(child) {
     const type = child.type.displayName;
     const animate = child.props.animate || this.props.animate;
@@ -598,20 +617,20 @@ export default class VictoryChart extends React.Component {
       const offsetY = axis === "y" ? undefined : this.axisOffset.y;
       const offsetX = axis === "x" ? undefined : this.axisOffset.x;
       return {
-        animate: animate,
+        animate,
         domain: this.domain[axis],
         range: this.range[axis],
         scale: this.scale[axis],
         tickValues: this.tickValues[axis],
         tickFormat: this.tickFormat[axis],
-        offsetY: offsetY,
-        offsetX: offsetX,
+        offsetY,
+        offsetX,
         crossAxis: true
       };
     } else if (_.includes(this.groupedDataTypes, type)) {
       const categories = this.stringMap.x && _.keys(this.stringMap.x);
       return {
-        animate: animate,
+        animate,
         domain: this.domain,
         range: this.range,
         scale: this.scale,
@@ -620,8 +639,8 @@ export default class VictoryChart extends React.Component {
     }
     const data = !child.props.data && child.props.y ? this.generateData(child) : undefined;
     return {
-      data: data,
-      animate: animate,
+      data,
+      animate,
       domain: this.domain,
       range: this.range,
       scale: this.scale
@@ -630,14 +649,14 @@ export default class VictoryChart extends React.Component {
 
   // the old ones were bad
   getNewChildren() {
-    return  _.map(this.childComponents, (child, index) => {
+    return _.map(this.childComponents, (child, index) => {
       const style = _.merge({}, {parent: this.props.style}, child.props.style);
       const newProps = this.getNewProps(child);
       return React.cloneElement(child, _.merge({}, newProps, {
         ref: index,
         key: index,
         standalone: false,
-        style: style
+        style
       }));
     });
   }
@@ -649,4 +668,4 @@ export default class VictoryChart extends React.Component {
       </svg>
     );
   }
-};
+}

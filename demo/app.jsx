@@ -180,7 +180,7 @@ class App extends React.Component {
             domainPadding={{x: 100, y: 0}}>
             <VictoryAxis independentAxis
               tickValues={["apples", "bananas", "oranges"]}
-              tickFormat={(x) => ""}/>
+              tickFormat={() => ""}/>
             <VictoryBar stacked
               data={this.state.barData}
               dataAttributes={[
