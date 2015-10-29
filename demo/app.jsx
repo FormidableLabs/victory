@@ -72,12 +72,28 @@ class App extends React.Component {
   render() {
     return (
       <div style={this.getStyles()}>
+        <VictoryPie/>
+
+        <VictoryPie style={{labels: {fontSize: 20, padding: 100}}}/>
+
+        <VictoryPie innerRadius={140}/>
+
+        <VictoryPie style={{data: {stroke: "transparent", opacity: 0.4}}}/>
+
+        <VictoryPie endAngle={90} startAngle={-90}/>
+
         <VictoryPie
           style={this.state.style}
           data={this.state.data}
           innerRadius={100}
           animate={{velocity: 0.03}}
           sliceColors={this.state.sliceColors}/>
+
+        <VictoryPie
+          endAngle={90}
+          innerRadius={140}
+          padAngle={5}
+          startAngle={-90}/>
       </div>
     );
   }
