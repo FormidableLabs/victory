@@ -56,7 +56,7 @@ class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 2000);
+    }, 5000);
   }
 
   getStyles() {
@@ -77,8 +77,7 @@ class App extends React.Component {
           data={this.state.data}
           innerRadius={100}
           animate={{velocity: 0.03}}
-          sliceColors={this.state.sliceColors}
-          sort="descending"/>
+          sliceColors={this.state.sliceColors}/>
       </div>
     );
   }
