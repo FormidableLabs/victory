@@ -371,7 +371,13 @@ export default class VictoryChart extends React.Component {
     );
     const domain =  _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    return this.padDomain(props, domain, axis);
+    const paddedDomain = this.padDomain(props, domain, axis);
+    // If the other axis is in a reversed orientation, the domain of this axis
+    // needs to be reversed
+    const otherAxis = axis === "x" ? "y" : "x";
+    const orientation = this.axisComponents[otherAxis].props.orientation;
+    return orientation === "bottom" || orientation === "left" ?
+      paddedDomain : paddedDomain.concat().reverse();
   }
 
   getDomainFromData(component, axis) {
@@ -404,6 +410,9 @@ export default class VictoryChart extends React.Component {
   getDomainFromGroupedData(component, axis) {
     if (component.props.domain) {
       return component.props.domain[axis] || component.props.domain;
+    } else if (component.props.categories && axis === "x") {
+      // TODO support y-axis categories for horizontal bars
+      return this.getDomainFromCategories(component, axis);
     }
     const formattedData = this.formatChildData(component.props.data);
     // find the global min and max
@@ -424,6 +433,14 @@ export default class VictoryChart extends React.Component {
       return [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
     }
     return [min, max];
+  }
+
+  getDomainFromCategories(component, axis) {
+    // TODO: axis is currently always x
+    const categories = _.flatten(component.props.categories);
+    const categoryValues = Util.containsStrings(categories) ?
+      _.map(categories, (value) => this.stringMap[axis][value]) : categories;
+    return [_.min(categoryValues), _.max(categoryValues)];
   }
 
   getDomainFromAxis(axis) {

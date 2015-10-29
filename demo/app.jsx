@@ -155,7 +155,15 @@ class App extends React.Component {
               y={(x) => x}/>
           </VictoryChart>
 
+          <VictoryChart>
+            <VictoryAxis orientation="right"/>
+            <VictoryAxis independentAxis orientation="top"/>
+            <VictoryLine y={(x) => 0.5 * x + 0.5} style={{data: {stroke: "red"}}}/>
+            <VictoryScatter y={(x) => x * x} style={{data: {stroke: "red"}}}/>
+          </VictoryChart>
+
           <VictoryChart animate={{velocity: 0.02}} domainPadding={{x: 20}}>
+            <VictoryAxis independentAxis orientation="top"/>
             <VictoryBar
               data={this.state.numericBarData}
               dataAttributes={[
