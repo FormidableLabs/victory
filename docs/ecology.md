@@ -14,13 +14,24 @@ The plain component has baked-in sample data, style, and angle defaults, so even
 Labels are placed at the centroid of each pie slice by default. Apply styles to the labels, or apply padding to move the labels:
 
 ``` playground
-<VictoryPie style={{labels: {fontSize: 20, padding: 100}}}/>
+<VictoryPie style={{
+    labels: {
+      fontSize: 20, 
+      padding: 100
+    }
+  }}/>
 ```
 
 Styles of the pie chart itself can also be specified:
 
 ``` playground
-<VictoryPie style={{data: {stroke: "transparent", opacity: 0.3}}}/>
+<VictoryPie 
+  style={{
+    data: {
+      stroke: "transparent", 
+      opacity: 0.3
+    }
+  }}/>
 ```
 
 Set the `innerRadius` prop to create a donut chart. Label positions will automatically adjust.
@@ -32,7 +43,9 @@ Set the `innerRadius` prop to create a donut chart. Label positions will automat
 To render only a portion of a chart, specify a `startAngle` and `endAngle`:
 
 ``` playground
-<VictoryPie endAngle={90} startAngle={-90}/>
+<VictoryPie 
+  endAngle={90} 
+  startAngle={-90}/>
 ```
 
 Specify a `padAngle` to add space between adjacent slices:
@@ -49,6 +62,13 @@ Here's an example of a donut chart with custom data and colors
 
 ``` playground
 <VictoryPie
+  style={{
+    labels: {
+      fill: "white",
+      fontSize: 12,
+      fontWeight: "bold"
+    }
+  }}
   data={[
     {x: "<5", y: 6279},
     {x: "5-13", y: 9182},
@@ -58,7 +78,7 @@ Here's an example of a donut chart with custom data and colors
     {x: "45-64", y: 4263},
     {x: "≥65", y: 7502}
   ]}
-  innerRadius={150}
+  innerRadius={110}
   sliceColors={[
     "#D85F49",
     "#F66D3B",
