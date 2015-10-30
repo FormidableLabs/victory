@@ -101,11 +101,11 @@ class App extends React.Component {
 
   getData() {
     return [
-      { x: "A", y: Math.random() },
-      { x: "B", y: Math.random() },
-      { x: "C", y: Math.random() },
-      { x: "D", y: Math.random() },
-      { x: "E", y: Math.random() }
+      { x: "A", y: 0.2 + Math.random() },
+      { x: "B", y: 0.2 + Math.random() },
+      { x: "C", y: 0.2 + Math.random() },
+      { x: "D", y: 0.2 + Math.random() },
+      { x: "E", y: 0.2 + Math.random() }
     ];
   }
 

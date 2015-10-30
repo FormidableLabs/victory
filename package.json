@@ -95,7 +95,7 @@
     "phantomjs": "^1.9.17",
     "raw-loader": "^0.5.1",
     "react": "0.14.x",
-    "react-docgen": "^2.2.0",
+    "react-docgen": "^2.4.0",
     "react-dom": "0.14.x",
     "react-hot-loader": "^1.2.8",
     "sinon": "^1.15.4",
