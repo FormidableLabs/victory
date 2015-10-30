@@ -90,3 +90,41 @@ Here's an example of a donut chart with custom data and colors
   ]}/>
 ```
 
+VictoryPie can also animate as props change:
+
+```playground_norender
+class App extends React.Component {
+   constructor(props) {
+    super(props);
+    this.state = {data: this.getData()};
+  }
+
+  getData() {
+    return [
+      { x: "A", y: Math.random() },
+      { x: "B", y: Math.random() },
+      { x: "C", y: Math.random() },
+      { x: "D", y: Math.random() },
+      { x: "E", y: Math.random() }
+    ];
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({data: this.getData()});
+    }, 3000);
+  }
+
+  render() {
+    return (
+      <VictoryPie
+        data={this.state.data}
+        animate={{velocity: 0.02}}/> 
+    );
+  }
+}
+ReactDOM.render(<App/>, mountNode);
+
+```
+
+
