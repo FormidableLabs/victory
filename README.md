@@ -12,10 +12,10 @@ Usage:
 Access all utils at once:
 
 ```javascript
-import VictoryUtil from "victory-util";
+import Util from "victory-util";
 
-VictoryUtil.log.warn("Uh oh!");
-VictoryUtil.style.toTransformString({ rotate: 90 });
+Util.log.warn("Uh oh!");
+Util.style.toTransformString({ rotate: 90 });
 ```
 
 Or be more selective:
