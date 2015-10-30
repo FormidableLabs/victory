@@ -3,7 +3,27 @@
 Victory Helpers & Utilities
 ===========================
 
-UPDATE THIS README!
+```shell
+npm install victory-util
+```
+
+Usage:
+
+Access all utils at once:
+
+```javascript
+import VictoryUtil from "victory-util";
+
+VictoryUtil.log.warn("Uh oh!");
+VictoryUtil.style.toTransformString({ rotate: 90 });
+```
+
+Or be more selective:
+
+```javascript
+import { warn } from "victory-util/log";
+import { containsStrings, containsOnlyStrings } from "victory-util/collection";
+```
 
 ## Development
 
