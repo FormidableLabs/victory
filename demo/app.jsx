@@ -27,7 +27,6 @@ class App extends React.Component {
     super(props);
     this.state = {
       data: this.props.data,
-      height: 500,
       sliceColors: [
         "#D85F49",
         "#F66D3B",
@@ -38,7 +37,17 @@ class App extends React.Component {
         "#F6A57F"
       ],
       sliceWidth: 60,
-      width: 500
+      style: {
+        width: 400,
+        height: 400,
+        data: {
+          strokeWidth: 2
+        },
+        labels: {
+          fill: "white",
+          padding: 10
+        }
+      }
     };
   }
 
@@ -47,30 +56,44 @@ class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 2000);
+    }, 5000);
   }
 
   getStyles() {
     return {
-      height: this.state.height,
+      height: this.state.style.height,
       margin: "0 auto",
-      width: this.state.width,
+      width: this.state.style.width,
       position: "relative",
-      top: this.state.height / 4 - this.state.sliceWidth / 2
+      top: this.state.style.height / 4 - this.state.sliceWidth / 2
     };
   }
 
   render() {
     return (
       <div style={this.getStyles()}>
+        <VictoryPie/>
+
+        <VictoryPie style={{labels: {fontSize: 20, padding: 100}}}/>
+
+        <VictoryPie innerRadius={140}/>
+
+        <VictoryPie style={{data: {stroke: "transparent", opacity: 0.4}}}/>
+
+        <VictoryPie endAngle={90} startAngle={-90}/>
+
         <VictoryPie
-          borderWidth={2}
+          style={this.state.style}
           data={this.state.data}
-          fontColor="white"
-          fontWeight={200}
-          innerRadius={150}
-          sliceColors={this.state.sliceColors}
-          sort="descending"/>
+          innerRadius={100}
+          animate={{velocity: 0.03}}
+          sliceColors={this.state.sliceColors}/>
+
+        <VictoryPie
+          endAngle={90}
+          innerRadius={140}
+          padAngle={5}
+          startAngle={-90}/>
       </div>
     );
   }
