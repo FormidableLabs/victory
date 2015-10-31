@@ -23,5 +23,9 @@ class Docs extends React.Component {
   }
 }
 
-const content = document.getElementById("content");
-ReactDOM.render(<Docs/>, content);
+if (typeof document !== "undefined") {
+  const content = document.getElementById("content");
+  ReactDOM.render(<Docs/>, content);  
+}
+
+export default Docs;
