@@ -396,10 +396,10 @@ export default class VictoryChart extends React.Component {
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
     const orientation = this.axisComponents[otherAxis].props.orientation;
-    const isVertical = this.axisComponents.x.props.orientation === "bottom" ||
+    const isHorizontalX = this.axisComponents.x.props.orientation === "bottom" ||
       this.axisComponents.x.props.orientation === "top";
 
-    if (isVertical) {
+    if (isHorizontalX) {
       return orientation === "bottom" || orientation === "left" ?
         paddedDomain : paddedDomain.concat().reverse();
     } else {
