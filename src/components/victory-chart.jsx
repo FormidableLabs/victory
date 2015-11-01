@@ -153,7 +153,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getStyles(props) {
-    return props.style ? {parent: _.merge({}, props.style.parent, defaultStyles.parent)} :
+    return props.style ? {parent: _.merge({}, defaultStyles.parent, props.style.parent)} :
       defaultStyles;
   }
 
@@ -396,8 +396,16 @@ export default class VictoryChart extends React.Component {
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
     const orientation = this.axisComponents[otherAxis].props.orientation;
-    return orientation === "bottom" || orientation === "left" ?
-      paddedDomain : paddedDomain.concat().reverse();
+    const isHorizontalX = this.axisComponents.x.props.orientation === "bottom" ||
+      this.axisComponents.x.props.orientation === "top";
+
+    if (isHorizontalX) {
+      return orientation === "bottom" || orientation === "left" ?
+        paddedDomain : paddedDomain.concat().reverse();
+    } else {
+      return orientation === "bottom" || orientation === "left" ?
+        paddedDomain.concat().reverse() : paddedDomain;
+    }
   }
 
   getDomainFromData(component, axis) {
