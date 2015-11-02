@@ -1,3 +1,4 @@
+var CleanPlugin = require("clean-webpack-plugin");
 var path = require("path");
 var StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 var StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
@@ -23,6 +24,7 @@ module.exports = {
   resolve: base.resolve,
   module: base.module,
   plugins: [
+    new CleanPlugin([ "../" + OUTPUT_DIR ]),
     new StatsWriterPlugin({
       filename: "stats.json"
     }),
