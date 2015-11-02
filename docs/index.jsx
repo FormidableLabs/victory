@@ -5,8 +5,11 @@ class Index extends React.Component {
     return (
       <html>
         <head>
-          <meta charset="utf-8" />
-          <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+          <meta dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+          <![endif]-->` }} />
+          <meta charSet="utf-8" />
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
           <title>Demo</title>
           <meta name="description" content="" />
           <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -16,13 +19,18 @@ class Index extends React.Component {
           <link href="https://fonts.googleapis.com/css?family=Karla:400,700,400italic" rel="stylesheet" type="text/css" />
         </head>
         <body>
+          <div dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser.
+            Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+          <![endif]-->` }} />
           <div id="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
-          <script src="https://fb.me/react-0.13.3.min.js"></script>
-          <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.25/browser.js"></script>
           <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script>
           <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script>
-          <script async defer type="text/javascript" src="main.js"></script>
           <script src="bundle.js"></script>
+          <div dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-sham.min.js"></script>
+          <![endif]-->` }} />
         </body>
       </html>
     );
