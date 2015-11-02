@@ -669,7 +669,7 @@ export default class VictoryChart extends React.Component {
   // the old ones were bad
   getNewChildren() {
     return _.map(this.childComponents, (child, index) => {
-      const style = _.merge({}, {parent: this.props.style}, child.props.style);
+      const style = _.merge({}, {parent: this.style.parent}, child.props.style);
       const newProps = this.getNewProps(child);
       return React.cloneElement(child, _.merge({}, newProps, {
         ref: index,

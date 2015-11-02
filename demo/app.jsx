@@ -112,12 +112,11 @@ class App extends React.Component {
     return (
       <div className="demo">
         <p>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} animate={{velocity: 0.02}}>
             <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
               data={this.state.lineData}
-              style={{data: this.state.lineStyle}}
-              animate={{velocity: 0.02}}/>
+              style={{data: this.state.lineStyle}}/>
           </VictoryChart>
 
           <VictoryChart style={chartStyle}
