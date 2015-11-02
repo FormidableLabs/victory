@@ -113,7 +113,7 @@ class App extends React.Component {
       <div className="demo">
         <p>
           <VictoryChart style={chartStyle}>
-            <VictoryAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
+            <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
               data={this.state.lineData}
               style={{data: this.state.lineStyle}}
@@ -125,7 +125,7 @@ class App extends React.Component {
               x: d3.time.scale(),
               y: d3.scale.linear()
             }}>
-            <VictoryAxis independentAxis
+            <VictoryAxis
               orientation="bottom"
               tickValues={[
                 new Date(1980, 1, 1),
@@ -156,14 +156,14 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart>
-            <VictoryAxis orientation="right"/>
-            <VictoryAxis independentAxis orientation="top"/>
+            <VictoryAxis dependentAxis orientation="right"/>
+            <VictoryAxis orientation="top"/>
             <VictoryLine y={(x) => 0.5 * x + 0.5} style={{data: {stroke: "red"}}}/>
             <VictoryScatter y={(x) => x * x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
           <VictoryChart animate={{velocity: 0.02}} domainPadding={{x: 20}}>
-            <VictoryAxis independentAxis orientation="top"/>
+            <VictoryAxis orientation="top"/>
             <VictoryBar
               data={this.state.numericBarData}
               dataAttributes={[
@@ -178,7 +178,7 @@ class App extends React.Component {
 
           <VictoryChart animate={{velocity: 0.02}}
             domainPadding={{x: 100, y: 0}}>
-            <VictoryAxis independentAxis
+            <VictoryAxis
               tickValues={["apples", "bananas", "oranges"]}
               tickFormat={() => ""}/>
             <VictoryBar stacked
@@ -204,7 +204,7 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart domainPadding={{x: 30, y: 30}}>
-            <VictoryAxis independentAxis
+            <VictoryAxis
               tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
               tickFormat={(x) => x + "\ntick"}
               style={{data: {
@@ -212,7 +212,7 @@ class App extends React.Component {
                 ticks: {stroke: "transparent"},
                 tickLabels: {fill: "black"}
               }}}/>
-            <VictoryAxis label="y axis" orientation="left"
+            <VictoryAxis label="y axis" dependentAxis orientation="left"
               tickValues={[0, 1.5, 3, 4.5]}
               style={{data: {
                 grid: {strokeWidth: 1},

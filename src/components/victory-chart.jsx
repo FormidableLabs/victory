@@ -15,8 +15,8 @@ const defaultStyles = {
 };
 
 const defaultAxes = {
-  x: <VictoryAxis independentAxis orientation="bottom" animate={{velocity: 0.02}}/>,
-  y: <VictoryAxis orientation="left" animate={{velocity: 0.02}}/>
+  x: <VictoryAxis orientation="bottom" animate={{velocity: 0.02}}/>,
+  y: <VictoryAxis dependentAxis orientation="left" animate={{velocity: 0.02}}/>
 };
 
 const defaultData = [
@@ -130,6 +130,10 @@ export default class VictoryChart extends React.Component {
       x: this.getAxisComponents("x")[0],
       y: this.getAxisComponents("y")[0]
     };
+    this.axisOrientations = {
+      x: this.getAxisOrientation("x"),
+      y: this.getAxisOrientation("y")
+    }
     this.stringMap = {
       x: this.createStringMap("x"),
       y: this.createStringMap("y")
@@ -173,7 +177,7 @@ export default class VictoryChart extends React.Component {
     if (type !== "VictoryAxis") {
       return undefined;
     }
-    return child.props.independentAxis ? "x" : "y";
+    return child.props.dependentAxis ? "y" : "x";
   }
 
   getChildComponents(props) {
@@ -265,9 +269,16 @@ export default class VictoryChart extends React.Component {
   getAxisComponents(axis) {
     return _.filter(this.childComponents, (child) => {
       return axis === "x" ?
-      child.props.independentAxis && child.type.displayName === "VictoryAxis" :
-      child.type.displayName === "VictoryAxis" && !child.props.independentAxis;
+      child.type.displayName === "VictoryAxis" && !child.props.dependentAxis:
+      child.type.displayName === "VictoryAxis" && child.props.dependentAxis;
     });
+  }
+
+  getAxisOrientation(axis) {
+    if (this.axisComponents[axis].props.orientation) {
+      return this.axisComponents[axis].props.orientation
+    }
+    return axis === "x" ? "bottom" : "left";
   }
 
   createStringMap(axis) {
@@ -395,9 +406,9 @@ export default class VictoryChart extends React.Component {
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
-    const orientation = this.axisComponents[otherAxis].props.orientation;
-    const isHorizontalX = this.axisComponents.x.props.orientation === "bottom" ||
-      this.axisComponents.x.props.orientation === "top";
+    const orientation = this.axisOrientations[otherAxis];
+    const isHorizontalX =
+      this.axisOrientations.x === "bottom" || this.axisOrientations.x === "top";
 
     if (isHorizontalX) {
       return orientation === "bottom" || orientation === "left" ?
@@ -526,8 +537,8 @@ export default class VictoryChart extends React.Component {
       y: _.max([_.min(this.domain.y), 0])
     };
     const orientation = {
-      x: this.axisComponents.x.props.orientation || "bottom",
-      y: this.axisComponents.y.props.orientation || "left"
+      x: this.axisOrientations.x || "bottom",
+      y: this.axisOrientations.y || "left"
     };
     const orientationOffset = {
       x: orientation.y === "left" ? 0 : this.style.parent.width,
@@ -621,7 +632,7 @@ export default class VictoryChart extends React.Component {
     const type = child.type.displayName;
     const animate = child.props.animate || this.props.animate;
     if (type === "VictoryAxis") {
-      const axis = child.props.independentAxis ? "x" : "y";
+      const axis = child.props.dependentAxis ? "y" : "x";
       const offsetY = axis === "y" ? undefined : this.axisOffset.y;
       const offsetX = axis === "x" ? undefined : this.axisOffset.x;
       return {
