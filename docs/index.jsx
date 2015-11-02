@@ -26,7 +26,7 @@ class Index extends React.Component {
           <div id="content" dangerouslySetInnerHTML={{ __html: this.props.content }} />
           <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script>
           <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script>
-          <script src="bundle.js"></script>
+          <script src={this.props.bundle}></script>
           <div dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 9]>
             <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-sham.min.js"></script>
