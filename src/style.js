@@ -1,3 +1,5 @@
+import reduceCSSCalc from "reduce-css-calc";
+
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -8,6 +10,9 @@
  * @returns {String} The generated transform string.
  */
 export const toTransformString = function (obj) {
+  if (!obj || typeof obj === "string") {
+    return obj;
+  }
   const transforms = [];
   for (const key in obj) {
     if (obj.hasOwnProperty(key)) {
@@ -17,3 +22,7 @@ export const toTransformString = function (obj) {
   }
   return transforms.join(" ");
 };
+
+export const calc = function (expr, precision) {
+  return reduceCSSCalc(`calc(${expr})`, precision);
+}
