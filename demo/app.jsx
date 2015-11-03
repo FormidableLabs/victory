@@ -19,7 +19,9 @@ class App extends React.Component {
           </VictoryLabel>
 
           <circle cx="300" cy="150" r="2" fill="green"/>
-          <VictoryLabel x={300} y={150} textAnchor="end">
+          <VictoryLabel x={300} y={150} textAnchor="end"
+            style={{ fill: "blue" }}
+          >
             {"Victory is awesome.\nThis is (end, start) anchoring.\nOK?"}
           </VictoryLabel>
 

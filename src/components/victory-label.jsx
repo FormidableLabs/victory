@@ -104,8 +104,7 @@ export default class VictoryLabel extends React.Component {
   };
 
   getStyles() {
-    return this.props.style ?
-      _.merge({}, styles, this.props.style) : styles;
+    return this.props.style ? _.merge({}, styles, this.props.style) : styles;
   }
 
   render() {
@@ -141,7 +140,7 @@ export default class VictoryLabel extends React.Component {
       <text x={this.props.x} y={this.props.y} dy={dy}
         textAnchor={this.props.textAnchor}
         transform={transform}
-        style={style.text}
+        style={style}
       >
         {lines.map((line, i) => {
           return (
