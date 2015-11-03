@@ -2,7 +2,7 @@
  * Client tests
  */
 import React from "react";
-import Component from "src/components/victory-label";
+import VictoryLabel from "src/components/victory-label";
 // Use `TestUtils` to inject into DOM, simulate events, etc.
 // See: https://facebook.github.io/react/docs/test-utils.html
 import TestUtils from "react-addons-test-utils";
@@ -14,13 +14,17 @@ describe("components/victory-label", () => {
     // browser DOM node.
     //
     // https://facebook.github.io/react/docs/test-utils.html#renderintodocument
-    const rendered = TestUtils.renderIntoDocument(<Component />);
+    const rendered = TestUtils.renderIntoDocument(
+      <VictoryLabel>An Accurate Label</VictoryLabel>
+    );
 
     // This is a real DOM node to assert on.
-    const divNode = TestUtils
-      .findRenderedDOMComponentWithTag(rendered, "div");
+    const textNode = TestUtils
+      .findRenderedDOMComponentWithTag(rendered, "text");
 
-    expect(divNode).to.have.property("innerHTML", "Edit me!");
+    const spanNode = textNode.childNodes[0];
+
+    expect(spanNode).to.have.property("innerHTML", "An Accurate Label");
   });
 
   it("has expected content with shallow render", () => {
@@ -29,10 +33,10 @@ describe("components/victory-label", () => {
     //
     // https://facebook.github.io/react/docs/test-utils.html#shallow-rendering
     const renderer = TestUtils.createRenderer();
-    renderer.render(<Component />);
+    renderer.render(<VictoryLabel>time (ms)</VictoryLabel>);
     const output = renderer.getRenderOutput();
 
-    expect(output.type).to.equal("div");
-    expect(output.props.children).to.contain("Edit me");
+    expect(output.type).to.equal("text");
+    expect(output.props.children[0].props.children).to.contain("time (ms)");
   });
 });
