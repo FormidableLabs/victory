@@ -15,8 +15,8 @@ const defaultStyles = {
 };
 
 const defaultAxes = {
-  x: <VictoryAxis orientation="bottom" animate={{velocity: 0.02}}/>,
-  y: <VictoryAxis dependentAxis orientation="left" animate={{velocity: 0.02}}/>
+  independent: <VictoryAxis animate={{velocity: 0.02}}/>,
+  dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
 };
 
 const defaultData = [
@@ -110,14 +110,8 @@ export default class VictoryChart extends React.Component {
     this.childComponents = this.getChildComponents(props);
     this.dataComponents = this.getDataComponents();
     this.groupedDataComponents = this.getGroupedDataComponents();
-    this.axisComponents = {
-      x: this.getAxisComponents("x")[0],
-      y: this.getAxisComponents("y")[0]
-    };
-    this.axisOrientations = {
-      x: this.getAxisOrientation("x"),
-      y: this.getAxisOrientation("y")
-    }
+    this.axisComponents = this.getAxisComponents();
+    this.axisOrientations = this.getAxisOrientations();
     this.stringMap = {
       x: this.createStringMap("x"),
       y: this.createStringMap("y")
@@ -157,7 +151,7 @@ export default class VictoryChart extends React.Component {
     if (type !== "VictoryAxis") {
       return undefined;
     }
-    return child.props.dependentAxis ? "y" : "x";
+    return child.props.dependentAxis ? "dependent" : "independent";
   }
 
   getChildComponents(props) {
@@ -169,7 +163,7 @@ export default class VictoryChart extends React.Component {
           const type = child.type.displayName;
           const axis = this.getAxisType(child);
           if (!counts[type]) {
-            counts[type] = axis ? {x: 0, y: 0} : 0;
+            counts[type] = axis ? {independent: 0, dependent: 0} : 0;
           }
           if (axis) {
             counts[type][axis] = counts[type][axis] += 1;
@@ -220,8 +214,12 @@ export default class VictoryChart extends React.Component {
 
     // Add default axis components if necessary
     // TODO: should we add both axes by default?
-    if (count.total("VictoryAxis", "x") < 1) { childComponents.push(defaultAxes.x); }
-    if (count.total("VictoryAxis", "y") < 1) { childComponents.push(defaultAxes.y); }
+    if (count.total("VictoryAxis", "independent") < 1) {
+      childComponents.push(defaultAxes.independent);
+    }
+    if (count.total("VictoryAxis", "dependent") < 1) {
+      childComponents.push(defaultAxes.dependent);
+    }
 
     // Add defaut data if no data is provided
     const dataComponents = _.filter(childComponents, (child) => {
@@ -246,19 +244,48 @@ export default class VictoryChart extends React.Component {
     });
   }
 
-  getAxisComponents(axis) {
-    return _.filter(this.childComponents, (child) => {
-      return axis === "x" ?
-      child.type.displayName === "VictoryAxis" && !child.props.dependentAxis:
-      child.type.displayName === "VictoryAxis" && child.props.dependentAxis;
+  getAxisComponents() {
+    // TODO: currently flipped axes are only supported for bar, a groupedDataComponent
+    const flippedAxes = _.some(this.groupedDataComponents, (component) => {
+      return component.props.horizontal;
     });
+    const typicalOrientations = {
+      independent: ["top", "bottom"],
+      dependent: ["left", "right"]
+    };
+    const typicalAxes = {independent: "x", dependent: "y"};
+    const atypicalAxes = {independent: "y", dependent: "x"};
+    const components = _.filter(this.childComponents, (child) => {
+      return child.type.displayName === "VictoryAxis"
+    });
+    const componentsWithType =  _.map(components, (component) => {
+      return [this.getAxisType(component), component];
+    });
+    const axisComponents =  _.zipObject(componentsWithType);
+    const componentsWithOrientation = _.map(_.keys(axisComponents), (type) => {
+      const component = axisComponents[type];
+      const orientation = component.props.orientation;
+      if (!orientation) {
+        return flippedAxes ?
+        [atypicalAxes[type], component] : [typicalAxes[type], component];
+      }
+      return (_.includes(typicalOrientations, orientation)) ?
+          [atypicalAxes[type], component] : [typicalAxes[type], component];
+    });
+    return _.merge({}, axisComponents, _.zipObject(componentsWithOrientation));
   }
 
-  getAxisOrientation(axis) {
-    if (this.axisComponents[axis].props.orientation) {
-      return this.axisComponents[axis].props.orientation
-    }
-    return axis === "x" ? "bottom" : "left";
+  getAxisOrientations() {
+    const getDefaultOrientation = (type) => {
+      return type === "independent" || type === "x" ? "bottom" : "left";
+    };
+
+    const orientations =  _.map(_.keys(this.axisComponents), (type) => {
+      const component = this.axisComponents[type];
+      const orientation = component.props.orientation || getDefaultOrientation(type);
+      return [type, orientation];
+    });
+    return _.zipObject(orientations);
   }
 
   createStringMap(axis) {
@@ -618,6 +645,7 @@ export default class VictoryChart extends React.Component {
       return {
         animate,
         domain: this.domain[axis],
+        range: this.range[axis],
         scale: this.scale[axis],
         tickValues: this.tickValues[axis],
         tickFormat: this.tickFormat[axis],
@@ -630,6 +658,7 @@ export default class VictoryChart extends React.Component {
       return {
         animate,
         domain: this.domain,
+        range: this.range,
         scale: this.scale,
         categories: child.props.categories || categories
       };
@@ -639,6 +668,7 @@ export default class VictoryChart extends React.Component {
       data,
       animate,
       domain: this.domain,
+      range: this.range,
       scale: this.scale
     };
   }

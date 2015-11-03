@@ -112,6 +112,18 @@ class App extends React.Component {
     return (
       <div className="demo">
         <p>
+          <VictoryChart>
+            <VictoryScatter/>
+          </VictoryChart>
+
+          <VictoryChart>
+            <VictoryLine/>
+          </VictoryChart>
+
+          <VictoryChart>
+            <VictoryBar/>
+          </VictoryChart>
+
           <VictoryChart style={chartStyle} animate={{velocity: 0.02}}>
             <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
@@ -211,7 +223,7 @@ class App extends React.Component {
                 ticks: {stroke: "transparent"},
                 tickLabels: {fill: "black"}
               }}}/>
-            <VictoryAxis label="y axis" dependentAxis orientation="left"
+            <VictoryAxis label="y axis" dependentAxis
               tickValues={[0, 1.5, 3, 4.5]}
               style={{data: {
                 grid: {strokeWidth: 1},
