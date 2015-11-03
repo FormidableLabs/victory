@@ -10,7 +10,7 @@ const defaultStyles = {
   parent: {
     width: 400,
     height: 300,
-    margin: 25
+    margin: 30
   }
 };
 
