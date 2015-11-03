@@ -42,3 +42,18 @@ export const grayscaleColors = function(name) {
   }
   return name === 'axisLine' ? grayscale.bar : grayscale[name];
 };
+
+// this method is intended to generate a color scale
+// it can be called with a "name" parameter to request a specific scale
+// but if there is no param, it will return a random scale (eventually)
+// returns an array of 5 strings of hex values
+export const generateColorScale = function(name) {
+  const scales = {
+    formidable: ["#e0dfe0", "#d3d2d3", "#9f9f9f", "#7e7e7e", "#000000"],
+    grayscale: ["#f7f7f7", "#cccccc", "#9696996", "#636363", "#252525"],
+    bluePurple: ["#edf8fb", "#b3cde3", "#8c96c6", "#8856a7", "#810f7c"],
+    red: ["#fee5d9", "#fcae91", "#fb6a4a", "#de2d26", "#a50f15"],
+    yellowBlue: ["#ffffcc", "#a1dab4", "#41b6c4", "#2c7fb8", "#253494"]
+  }
+  return scales[name];
+};
