@@ -35,9 +35,11 @@ export default class VictoryLabel extends React.Component {
     /**
      * The lineHeight prop defines how much space a single line of text should
      * take up. Note that SVG has no notion of line-height, so the positioning
-     * may differ slightly from what you would expect with CSS. The value
-     * should ideally use the same units as `capHeight` and `dy`, preferably
-     * ems. If given a unitless number, it is assumed to be ems.
+     * may differ slightly from what you would expect with CSS, but the result
+     * is similar: a roughly equal amount of extra space is distributed above
+     * and below the line of text. The value should ideally use the same units
+     * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
+     * is assumed to be ems.
      */
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
@@ -87,8 +89,8 @@ export default class VictoryLabel extends React.Component {
     y: PropTypes.number,
     /**
      * The dy prop defines a vertical shift from the `y` coordinate. Since this
-     * component accounts for SVG weirdness and accounts for `capHeight`,
-     * `lineHeight`, and `verticalAnchor`, this will usually not be necessary.
+     * component already accounts for `capHeight`, `lineHeight`, and
+     * `verticalAnchor`, this will usually not be necessary.
      */
     dy: PropTypes.oneOfType([
       PropTypes.number,
