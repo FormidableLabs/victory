@@ -93,11 +93,21 @@ export default class VictoryChart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.getComponents(props);
     this.getCalculatedValues(props);
   }
 
   componentWillReceiveProps(nextProps) {
+    this.getComponents(nextProps);
     this.getCalculatedValues(nextProps);
+  }
+
+  getComponents(props) {
+    this.groupedDataTypes = ["VictoryBar"];
+    this.childComponents = this.getChildComponents(props);
+    this.dataComponents = this.getDataComponents();
+    this.groupedDataComponents = this.getGroupedDataComponents();
+    this.axisComponents = this.getAxisComponents();
   }
 
   getCalculatedValues(props) {
@@ -106,11 +116,6 @@ export default class VictoryChart extends React.Component {
       x: this.getRange(props, "x"),
       y: this.getRange(props, "y")
     };
-    this.groupedDataTypes = ["VictoryBar"];
-    this.childComponents = this.getChildComponents(props);
-    this.dataComponents = this.getDataComponents();
-    this.groupedDataComponents = this.getGroupedDataComponents();
-    this.axisComponents = this.getAxisComponents();
     this.axisOrientations = this.getAxisOrientations();
     this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
     this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
@@ -258,12 +263,12 @@ export default class VictoryChart extends React.Component {
     const typicalAxes = {independent: "x", dependent: "y"};
     const atypicalAxes = {independent: "y", dependent: "x"};
     const components = _.filter(this.childComponents, (child) => {
-      return child.type.displayName === "VictoryAxis"
+      return child.type.displayName === "VictoryAxis";
     });
-    const componentsWithType =  _.map(components, (component) => {
+    const componentsWithType = _.map(components, (component) => {
       return [this.getAxisType(component), component];
     });
-    const axisComponents =  _.zipObject(componentsWithType);
+    const axisComponents = _.zipObject(componentsWithType);
     const componentsWithOrientation = _.map(_.keys(axisComponents), (type) => {
       const component = axisComponents[type];
       const orientation = component.props.orientation;
@@ -282,7 +287,7 @@ export default class VictoryChart extends React.Component {
       return type === "independent" || type === "x" ? "bottom" : "left";
     };
 
-    const orientations =  _.map(_.keys(this.axisComponents), (type) => {
+    const orientations = _.map(_.keys(this.axisComponents), (type) => {
       const component = this.axisComponents[type];
       const orientation = component.props.orientation || getDefaultOrientation(type);
       return [type, orientation];
