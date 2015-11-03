@@ -26,3 +26,19 @@ export const toTransformString = function (obj) {
 export const calc = function (expr, precision) {
   return reduceCSSCalc(`calc(${expr})`, precision);
 };
+
+/**
+ * Given a string description of what is to be colored by the function,
+ * grayscaleColors will return a string hex value as chosen by the Victory
+ * default styles.
+ * @param {String} name A string saying what is to be colored.
+ * @returns {String} The hex value representing the color.
+ */
+export const grayscaleColors = function(name) {
+  const grayscale = {
+    bar: "#9f9f9f",
+    axisLabel: "7e7e7e",
+    line: "#000000"
+  }
+  return name === 'axisLine' ? grayscale.bar : grayscale[name];
+};
