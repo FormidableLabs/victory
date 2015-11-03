@@ -8,9 +8,9 @@ import {VictoryLine} from "victory-line";
 
 const defaultStyles = {
   parent: {
-    width: 500,
+    width: 400,
     height: 300,
-    margin: 50
+    margin: 25
   }
 };
 
@@ -19,9 +19,7 @@ const defaultAxes = {
   dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
 };
 
-const defaultData = [
-  <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>
-];
+const defaultData = <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>;
 
 @Radium
 export default class VictoryChart extends React.Component {
@@ -200,6 +198,9 @@ export default class VictoryChart extends React.Component {
       };
     }();
 
+    if (!props.children) {
+      return [defaultData, defaultAxes.independent, defaultAxes.dependent];
+    }
     const childComponents = [];
     // loop through children, and add each child to the childComponents array
     // unless the limit for that child type has already been reached.
@@ -343,7 +344,7 @@ export default class VictoryChart extends React.Component {
   }
 
   _getStringsFromData(axis) {
-    // Collect strings from dataComponents and groupDataComponents props.data
+    // Collect strings from dataComponents and groupedDataComponents props.data
     const allChildData = this.dataComponents.concat(this.groupedDataComponents);
     const allStrings = [];
     const allData = _.map(allChildData, (dataComponent) => {
@@ -562,34 +563,39 @@ export default class VictoryChart extends React.Component {
   }
 
   getTickValues(axis) {
-    let ticks;
     const stringMap = this.stringMap[axis];
+    let ticksFromAxis;
+    let ticksFromCategories;
+    let ticksFromStringMap;
     // if tickValues are defined for an axis component use them
     if (this.axisComponents[axis].props.tickValues) {
       const axisTicks = this.axisComponents[axis].props.tickValues;
-      ticks = Util.containsOnlyStrings(ticks) && stringMap ?
+      ticksFromAxis = Util.containsOnlyStrings(axisTicks) && stringMap ?
         _.map(axisTicks, (tick) => stringMap[tick]) : axisTicks;
-    } else if (!_.isEmpty(this.groupedDataComponents) && axis === this.independentAxis) {
-      // otherwise, creat a set of tickValues base on groupedData categories
+    }
+    if (!_.isEmpty(this.groupedDataComponents) && axis === this.independentAxis) {
+      // otherwise, create a set of tickValues base on groupedData categories
       const allCategoryTicks = _.map(this.groupedDataComponents, (component) => {
         const categories = component.props.categories;
         return categories && Util.isArrayOfArrays(categories) ?
           _.map(categories, (arr) => (_.sum(arr) / arr.length)) : categories;
       });
-      const categoryTicks = _.uniq(_.flatten(allCategoryTicks));
-      ticks = Util.containsOnlyStrings(categoryTicks) ?
-        _.map(categoryTicks, (tick) => stringMap[tick]) : categoryTicks;
-    } else if (stringMap) {
+      const categoryTicks = _.compact(_.uniq(_.flatten(allCategoryTicks)));
+      const categoryArray = _.isEmpty(categoryTicks) ? undefined : categoryTicks;
+      ticksFromCategories = categoryArray && Util.containsOnlyStrings(categoryArray) ?
+        _.map(categoryTicks, (tick) => stringMap[tick]) : categoryArray;
+    }
+    if (stringMap) {
       // otherwise use the values from the string map
-      ticks = _.values(stringMap);
+      ticksFromStringMap = _.values(stringMap);
     }
     // when ticks is undefined, axis will determine it's own ticks
-    return ticks;
+    return ticksFromAxis || ticksFromCategories || ticksFromStringMap;
   }
 
   getTickFormat(axis) {
     const tickFormat = this.axisComponents[axis].props.tickFormat;
-    const tickValues = this.tickValues[axis];
+    const tickValues = this.axisComponents[axis].props.tickValues;
     if (tickFormat) {
       return tickFormat;
     } else if (tickValues && !Util.containsStrings(tickValues)) {
