@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 
 import Docs from "./docs";
-import IndexTemplate from "./index";
+import IndexTemplate from "./static-index";
 
 const Index = React.createFactory(IndexTemplate);
 const _renderIndex = (component) => `<!DOCTYPE html>${ReactDOMServer.renderToStaticMarkup(component)}`;
@@ -11,7 +11,7 @@ const _renderIndex = (component) => `<!DOCTYPE html>${ReactDOMServer.renderToSta
  * Helper component that allows `static-site-generator-webpack-plugin` to render
  * root component (`Docs`) as static HTML
  *
- * Output built to `/gh-pages/` 
+ * Output built to `/gh-pages/`
  */
 
 module.exports = (locals, next) => {
