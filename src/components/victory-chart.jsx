@@ -19,9 +19,7 @@ const defaultAxes = {
   dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
 };
 
-const defaultData = [
-  <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>
-];
+const defaultData = <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>;
 
 @Radium
 export default class VictoryChart extends React.Component {
@@ -200,6 +198,9 @@ export default class VictoryChart extends React.Component {
       };
     }();
 
+    if (!props.children) {
+      return [defaultData, defaultAxes.independent, defaultAxes.dependent];
+    }
     const childComponents = [];
     // loop through children, and add each child to the childComponents array
     // unless the limit for that child type has already been reached.
