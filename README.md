@@ -21,8 +21,8 @@ Util.style.toTransformString({ rotate: 90 });
 Or be more selective:
 
 ```javascript
-import { warn } from "victory-util/log";
-import { containsStrings, containsOnlyStrings } from "victory-util/collection";
+import { warn } from "victory-util/lib/log";
+import { containsStrings, containsOnlyStrings } from "victory-util/lib/collection";
 ```
 
 ## Development
