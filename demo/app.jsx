@@ -112,6 +112,8 @@ class App extends React.Component {
     return (
       <div className="demo">
         <p>
+          <VictoryChart/>
+
           <VictoryChart>
             <VictoryScatter/>
           </VictoryChart>
