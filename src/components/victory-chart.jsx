@@ -112,6 +112,8 @@ export default class VictoryChart extends React.Component {
     this.groupedDataComponents = this.getGroupedDataComponents();
     this.axisComponents = this.getAxisComponents();
     this.axisOrientations = this.getAxisOrientations();
+    this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
+    this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
     this.stringMap = {
       x: this.createStringMap("x"),
       y: this.createStringMap("y")
@@ -322,8 +324,7 @@ export default class VictoryChart extends React.Component {
   }
 
   _getStringsFromCategories(axis) {
-    // TODO categories only apply to x for bar at the moment.
-    if (this.groupedDataComponents && axis === "x") {
+    if (this.groupedDataComponents && axis === this.independentAxis) {
       const allCategories = _.map(this.groupedDataComponents, (component) => {
         const categories = component.props.categories;
         return (categories && Util.containsStrings(categories)) ? categories : undefined;
@@ -414,10 +415,8 @@ export default class VictoryChart extends React.Component {
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
     const orientation = this.axisOrientations[otherAxis];
-    const isHorizontalX =
-      this.axisOrientations.x === "bottom" || this.axisOrientations.x === "top";
 
-    if (isHorizontalX) {
+    if (this.independentAxis === "x") {
       return orientation === "bottom" || orientation === "left" ?
         paddedDomain : paddedDomain.concat().reverse();
     } else {
@@ -446,18 +445,15 @@ export default class VictoryChart extends React.Component {
   _isStackedComponentData(component, axis) {
     // checks whether grouped data is stacked, and whether there are multiple
     // datasets to stack.
-    // TODO: only vertical stacking is currently supported. remove y-axis check
-    // when horizontal stacking is supported
     return (component.props.stacked === true)
       && Util.isArrayOfArrays(component.props.data)
-      && (axis === "y");
+      && (axis === this.dependentAxis);
   }
 
   getDomainFromGroupedData(component, axis) {
     if (component.props.domain) {
       return component.props.domain[axis] || component.props.domain;
-    } else if (component.props.categories && axis === "x") {
-      // TODO support y-axis categories for horizontal bars
+    } else if (component.props.categories && axis === this.independentAxis) {
       return this.getDomainFromCategories(component, axis);
     }
     const formattedData = this.formatChildData(component.props.data);
@@ -469,11 +465,11 @@ export default class VictoryChart extends React.Component {
       // find the cumulative max and min for stacked chart types
       // TODO: clean up cumulative max / min check assumptions.
       const cumulativeMax = _.reduce(formattedData, (memo, dataset) => {
-        const localMax = (_.max(_.pluck(dataset, "y")));
+        const localMax = (_.max(_.pluck(dataset, this.dependentAxis)));
         return localMax > 0 ? memo + localMax : memo;
       }, 0);
       const cumulativeMin = _.reduce(formattedData, (memo, dataset) => {
-        const localMin = (_.min(_.pluck(dataset, "y")));
+        const localMin = (_.min(_.pluck(dataset, this.dependentAxis)));
         return localMin < 0 ? memo + localMin : memo;
       }, 0);
       return [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
@@ -482,7 +478,6 @@ export default class VictoryChart extends React.Component {
   }
 
   getDomainFromCategories(component, axis) {
-    // TODO: axis is currently always x
     const categories = _.flatten(component.props.categories);
     const categoryValues = Util.containsStrings(categories) ?
       _.map(categories, (value) => this.stringMap[axis][value]) : categories;
@@ -569,9 +564,8 @@ export default class VictoryChart extends React.Component {
       const axisTicks = this.axisComponents[axis].props.tickValues;
       ticks = Util.containsOnlyStrings(ticks) && stringMap ?
         _.map(axisTicks, (tick) => stringMap[tick]) : axisTicks;
-    } else if (!_.isEmpty(this.groupedDataComponents) && axis === "x") {
+    } else if (!_.isEmpty(this.groupedDataComponents) && axis === this.independentAxis) {
       // otherwise, creat a set of tickValues base on groupedData categories
-      // TODO: support categories for x and y
       const allCategoryTicks = _.map(this.groupedDataComponents, (component) => {
         const categories = component.props.categories;
         return categories && Util.isArrayOfArrays(categories) ?
@@ -639,7 +633,7 @@ export default class VictoryChart extends React.Component {
     const type = child.type.displayName;
     const animate = child.props.animate || this.props.animate;
     if (type === "VictoryAxis") {
-      const axis = child.props.dependentAxis ? "y" : "x";
+      const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
       const offsetY = axis === "y" ? undefined : this.axisOffset.y;
       const offsetX = axis === "x" ? undefined : this.axisOffset.x;
       return {
@@ -654,7 +648,8 @@ export default class VictoryChart extends React.Component {
         crossAxis: true
       };
     } else if (_.includes(this.groupedDataTypes, type)) {
-      const categories = this.stringMap.x && _.keys(this.stringMap.x);
+      const categoryAxis = this.independentAxis;
+      const categories = this.stringMap[categoryAxis] && _.keys(this.stringMap[categoryAxis]);
       return {
         animate,
         domain: this.domain,
