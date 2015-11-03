@@ -23,6 +23,8 @@
     "build-dist": "npm run clean-dist && npm run build-dist-min && npm run build-dist-dev",
     "clean-lib": "rimraf lib",
     "build-lib": "npm run clean-lib && babel --stage 0 src -d lib",
+    "build-static": "webpack --config docs/webpack.config.static.js --progress",
+    "push-gh-pages": "git subtree push --prefix gh-pages origin gh-pages",
     "clean": "npm run clean-lib && npm run clean-dist",
     "build": "npm run build-lib && npm run build-dist",
     "server-dev": "webpack-dev-server --port 3000 --config demo/webpack.config.dev.js --content-base demo",
@@ -70,11 +72,13 @@
   "devDependencies": {
     "babel-eslint": "^3.1.25",
     "chai": "^3.2.0",
+    "clean-webpack-plugin": "^0.1.4",
     "ecology": "git+https://github.com/formidablelabs/ecology#master",
     "eslint": "^0.24.1",
     "eslint-config-defaults": "^3.0.3",
     "eslint-plugin-filenames": "^0.1.1",
     "eslint-plugin-react": "^2.6.4",
+    "file-loader": "^0.8.4",
     "isparta-loader": "^0.2.0",
     "json-loader": "^0.5.3",
     "karma": "^0.12.37",
@@ -100,6 +104,8 @@
     "react-hot-loader": "^1.2.8",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "webpack-dev-server": "^1.10.0"
+    "static-site-generator-webpack-plugin": "^1.2.0",
+    "webpack-dev-server": "^1.10.0",
+    "webpack-stats-plugin": "^0.1.1"
   }
 }

@@ -112,7 +112,7 @@ export default {
    */
   '.Container': {
     margin: '0 auto',
-    maxWidth: 960,
+    maxWidth: '960px',
     paddingLeft: '1em',
     paddingRight: '1em'
   },
