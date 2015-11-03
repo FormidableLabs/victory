@@ -25,4 +25,4 @@ export const toTransformString = function (obj) {
 
 export const calc = function (expr, precision) {
   return reduceCSSCalc(`calc(${expr})`, precision);
-}
+};
