@@ -68,10 +68,10 @@
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-axis": "git+https://github.com/formidablelabs/victory-axis#master",
-    "victory-bar": "git+https://github.com/formidablelabs/victory-bar#master",
-    "victory-line": "git+https://github.com/formidablelabs/victory-line#master",
-    "victory-scatter": "git+https://github.com/formidablelabs/victory-scattergit#master",
+    "victory-axis": "^1.4.0",
+    "victory-bar": "^2.3.0",
+    "victory-line": "^0.4.0",
+    "victory-scatter": "^0.4.0",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
