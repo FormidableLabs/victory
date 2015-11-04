@@ -242,10 +242,6 @@ export default class VictoryPie extends React.Component {
       </g>
     );
 
-    return this.props.standalone ? (
-      <svg style={style}>
-          {group}
-      </svg>
-    ) : group;
+    return this.props.standalone ? <svg style={style}>{group}</svg> : group;
   }
 }
