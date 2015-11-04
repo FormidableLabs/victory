@@ -38,8 +38,10 @@ class App extends React.Component {
       ],
       sliceWidth: 60,
       style: {
-        width: 400,
-        height: 400,
+        parent: {
+          width: 400,
+          height: 400
+        },
         data: {
           strokeWidth: 2
         },
