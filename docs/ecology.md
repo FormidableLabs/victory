@@ -1,7 +1,7 @@
 VictoryChart
 =============
 
-A flexible charting component for React. VictoryChart composes other victory components into reusable charts. Acting as a coordinator rather than a stand-alone component, VictoryChart reconciles props such as `domain` and `scale` for child components, and provides a set of sensible defaults. This component works with:
+A flexible charting component for React. VictoryChart composes other Victory components into reusable charts. Acting as a coordinator rather than a stand-alone component, VictoryChart reconciles props such as `domain` and `scale` for child components, and provides a set of sensible defaults. This component works with:
 
 - [VictoryAxis](http://github.com/formidablelabs/victory-axis) 
 - [VictoryLine](http://github.com/formidablelabs/victory-line)
@@ -19,28 +19,194 @@ VictoryChart includes a set of sensible default behaviors, so even when no props
 <VictoryChart/>
 ```
 
-Several data components (VictoryLine, VictoryScatter, VictoryBar etc.) can be passed into chart at once:
+VictoryChart was designed to build charts from minimal information. Pass in only information relevant to a specific chart, and VictoryChart will make assumptions about the other details based on available information.
+
+```playground
+<VictoryChart>
+  <VictoryLine 
+    y={(x) => 0.5 * x * x}/>
+</VictoryChart>
+```
+
+In the example above, VictoryChart was given a VictoryLine component as a child. In addition, it also created a set of VictoryAxis components with the correct domain for the data being plotted by VictoryLine, created tick values based on that data, aligned all of its child components into a correct chart, and applied a set of default styles. 
+
+### Declarative Composition
+
+VictoryCharts are composed of other Victory components. Compose several components of the same type...
+
+```playground
+<VictoryChart>
+  <VictoryLine 
+    style={{data: 
+      {stroke: "red", strokeWidth: 4}
+    }}
+    y={(x) => Math.sin(2 * Math.PI * x)}/>
+  <VictoryLine 
+    style={{data: 
+      {stroke: "blue", strokeWidth: 4}
+    }}
+    y={(x) => Math.cos(2 * Math.PI * x)}/>
+</VictoryChart>
+```
+
+or compose components of different types on the same chart
 
 ```playground
 <VictoryChart>
   <VictoryScatter 
-    style={{data: {fill: "red"}}}
+    style={{data: {fill: "purple"}}}
     symbol="star"
+    size={5}
     data={[
-      {x:1, y: 1}, 
-      {x: 2, y: 2}, 
+      {x:-4, y: -4}, 
+      {x: 4, y: 2, fill: "red"}, 
       {x: 1.8, y: 3}
     ]}/>
   <VictoryLine 
-    style={{data: {stroke: "green"}}} 
-    interpolation="basis"
-    y={(x) => 0.1 * x * x}/>
+    y={(x) => 0.3 * x * x}/>
   <VictoryBar 
     style={{data: {fill: "blue"}}}
     data={[
-      {x: 3, y: 5}, 
-      {x: 4, y: 4}, 
-      {x: 6, y: 3}
+      {x: 3, y: -4}, 
+      {x: -3, y: 4}, 
+      {x: 1, y: 3}
     ]}/>
+</VictoryChart>
+```
+
+### Flexible and Configurable
+
+The sensible defaults VictoryChart provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
+
+```playground
+<VictoryChart
+  domainPadding={{x: 20}}>
+  <VictoryAxis orientation="top"/>
+  <VictoryAxis label="y axis" dependentAxis
+    tickValues={[0, 1.5, 3, 4.5]}
+    style={{
+      grid: {
+        stroke: "grey", 
+        strokeWidth: 1
+      },
+      axis: {stroke: "transparent"},
+      ticks: {stroke: "transparent"}
+    }}/>
+  <VictoryBar 
+    style={{data: 
+      {width: 15, fill: "orange"}
+    }}
+    data={[
+      {x: 1, y: 1},
+      {x: 2, y: 2},
+      {x: 3, y: 3},
+      {x: 4, y: 2},
+      {x: 5, y: 1},
+    ]}/>   
 </VictoryChart> 
 ```
+
+Stacked bar charts are supported too!
+
+```playground
+<VictoryChart
+  domainPadding={{x: 100}}>
+  <VictoryAxis
+    tickValues={[
+      "apples", "bananas", "oranges"
+    ]}
+    tickFormat={() => ""}/>
+  <VictoryBar stacked
+    data={[
+      [
+        {x: "apples", y: 1},
+        {x: "bananas", y: 3},
+        {x: "oranges", y: 3}
+      ],
+      [
+        {x: "apples", y: 2},
+        {x: "bananas", y: 1},
+        {x: "oranges", y: 3}
+      ],
+      [
+        {x: "apples", y: 3},
+        {x: "bananas", y: 1},
+        {x: "oranges", y: 1}
+      ]
+    ]}
+    dataAttributes={[
+      {fill: "cornflowerblue"},
+      {fill: "gold"},
+      {fill: "tomato"}
+    ]}
+    categoryLabels={[
+      "apples\n(fuji)", 
+      "bananas", 
+      "oranges\n(navel)"
+    ]}/>
+</VictoryChart>
+```
+
+### Animating
+
+VictoryChart animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as data changes. Child components stay in sync.
+
+```playground_norender
+class App extends React.Component {
+   constructor(props) {
+    super(props);
+    this.state = {
+      data: this.getData(),
+      style: this.getStyles()
+    };
+  }
+
+  getData() {
+    return _.map(_.range(20), (i) => {
+      return {
+        x: i,
+        y: Math.random()
+      };
+    });
+  }
+
+  getStyles() {
+    const colors = [
+      "red", "orange", "cyan", 
+      "green", "blue", "purple"
+    ];
+    return {
+      stroke: colors[_.random(0, 5)],
+      strokeWidth: [_.random(1, 3)]
+    };
+  }
+
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({
+        data: this.getData(),
+        style: this.getStyles()
+      });
+    }, 3000);
+  }
+
+  render() {
+    return (
+      <VictoryChart 
+        animate={{velocity: 0.02}}>
+        <VictoryAxis dependentAxis 
+          style={{grid: {strokeWidth: 1}}}/>
+        <VictoryLine
+          data={this.state.data}
+          style={{data: this.state.style}}/>
+      </VictoryChart>
+    );
+  }
+}
+ReactDOM.render(<App/>, mountNode);
+
+```
+
+### Props
+
+
