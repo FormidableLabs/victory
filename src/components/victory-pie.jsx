@@ -7,7 +7,7 @@ import Util from "../util";
 import {VictoryAnimation} from "victory-animation";
 
 const defaultStyles = {
-  base: {
+  parent: {
     width: 400,
     height: 400,
     margin: 20
@@ -46,7 +46,7 @@ export default class VictoryPie extends React.Component {
      * so valid Radium style objects should work for this prop, however properties like
      * height, width, padding and margin are used to calculate the radius of the pi, and need to be
      * expressed as a number of pixels
-     * @example {width: 500, height: 300, label: {fill: "black", fontSize: 10}}
+     * @example {parent: {width: 500, height: 300}, data: {stroke: "black"}, label: {fontSize: 10}}
      */
     style: React.PropTypes.object,
     /**
@@ -123,34 +123,12 @@ export default class VictoryPie extends React.Component {
     standalone: true
   }
 
-  constructor(props) {
-    super(props);
-  }
-
-  render() {
-    if (this.props.animate) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const animateData = _.omit(this.props, [
-        "animate", "standalone"
-      ]);
-      return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {props => <VPie {...this.props} {...props}/>}
-        </VictoryAnimation>
-      );
+  componentWillMount() {
+    // If animating, the `VictoryPie` instance wrapped in `VictoryAnimation`
+    // will compute these values.
+    if (!this.props.animate) {
+      this.getCalculatedValues(this.props);
     }
-    return (<VPie {...this.props}/>);
-  }
-}
-
-class VPie extends React.Component {
-  /* eslint-disable react/prop-types */
-  // this component is never exposed, and takes identical props to VictoryPie
-  constructor(props) {
-    super(props);
-    this.getCalculatedValues(props);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -178,9 +156,9 @@ class VPie extends React.Component {
     if (!props.style) {
       return defaultStyles;
     }
-    const {data, labels, ...base} = props.style;
+    const {data, labels, parent} = props.style;
     return {
-      base: _.merge({}, defaultStyles.base, base),
+      parent: _.merge({}, defaultStyles.parent, parent),
       data: _.merge({}, defaultStyles.data, data),
       labels: _.merge({}, defaultStyles.labels, labels)
     };
@@ -188,8 +166,8 @@ class VPie extends React.Component {
 
   getRadius() {
     return _.min([
-      this.style.base.width - this.style.base.margin,
-      this.style.base.height - this.style.base.margin
+      this.style.parent.width - this.style.parent.margin,
+      this.style.parent.height - this.style.parent.margin
     ]) / 2;
   }
 
@@ -243,7 +221,20 @@ class VPie extends React.Component {
   }
 
   render() {
-    const style = this.style.base;
+    if (this.props.animate) {
+      // Do less work by having `VictoryAnimation` tween only values that
+      // make sense to tween. In the future, allow customization of animated
+      // prop whitelist/blacklist?
+      const animateData = _.omit(this.props, [
+        "animate", "standalone"
+      ]);
+      return (
+        <VictoryAnimation {...this.props.animate} data={animateData}>
+          {props => <VictoryPie {...this.props} {...props} animate={null}/>}
+        </VictoryAnimation>
+      );
+    }
+    const style = this.style.parent;
     if (this.props.standalone) {
       return (
         <svg style={style}>
