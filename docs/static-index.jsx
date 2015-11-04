@@ -7,6 +7,8 @@ class Index extends React.Component {
         <head>
           <meta dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 9]>
             <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-sham.min.js"></script>
           <![endif]-->` }} />
           <meta charSet="utf-8" />
           <meta httpEquiv="X-UA-Compatible" content="IE=edge,chrome=1" />
@@ -27,10 +29,6 @@ class Index extends React.Component {
           <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script>
           <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script>
           <script src={this.props.bundle}></script>
-          <div dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 9]>
-            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
-            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-sham.min.js"></script>
-          <![endif]-->` }} />
         </body>
       </html>
     );
