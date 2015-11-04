@@ -71,7 +71,7 @@
     "victory-axis": "git+https://github.com/formidablelabs/victory-axis#master",
     "victory-bar": "git+https://github.com/formidablelabs/victory-bar#master",
     "victory-line": "git+https://github.com/formidablelabs/victory-line#master",
-    "victory-scatter": "git+https://github.com/formidablelabs/victory-scattergit#master",
+    "victory-scatter": "git+https://github.com/formidablelabs/victory-scatter#master",
     "webpack": "^1.10.0"
   },
   "devDependencies": {
