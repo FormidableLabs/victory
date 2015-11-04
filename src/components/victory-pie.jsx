@@ -235,20 +235,17 @@ export default class VictoryPie extends React.Component {
       );
     }
     const style = this.style.parent;
-    if (this.props.standalone) {
-      return (
-        <svg style={style}>
-          <g transform={"translate(" + style.width / 2 + "," + style.height / 2 + ")"}>
-            {this.drawArcs(this.props.data)}
-          </g>
-        </svg>
-      );
-    }
-    return (
+    const group = (
       <g style={style}
         transform={"translate(" + style.width / 2 + "," + style.height / 2 + ")"}>
         {this.drawArcs(this.props.data)}
       </g>
     );
+
+    return this.props.standalone ? (
+      <svg style={style}>
+          {group}
+      </svg>
+    ) : group;
   }
 }
