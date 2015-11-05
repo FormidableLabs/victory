@@ -694,10 +694,12 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
-    return (
-      <svg style={this.style.parent}>
+    const style = this.style.parent;
+    const group = (
+      <g style={style}>
         {this.getNewChildren()}
-      </svg>
+      </g>
     );
+    return this.props.standalone ? <svg style={style}>{group}</svg> : group;
   }
 }
