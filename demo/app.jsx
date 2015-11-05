@@ -114,7 +114,7 @@ class App extends React.Component {
         <p>
           <VictoryChart/>
 
-          <VictoryChart>
+          <VictoryChart height={500} width={200}>
             <VictoryScatter/>
           </VictoryChart>
 
