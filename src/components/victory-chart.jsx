@@ -699,7 +699,6 @@ export default class VictoryChart extends React.Component {
       return {
         animate,
         domain: this.domain,
-        range: this.range,
         scale: this.scale,
         categories: child.props.categories || categories
       };
@@ -709,7 +708,6 @@ export default class VictoryChart extends React.Component {
       data,
       animate,
       domain: this.domain,
-      range: this.range,
       scale: this.scale
     };
   }
