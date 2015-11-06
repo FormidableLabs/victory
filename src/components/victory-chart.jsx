@@ -205,6 +205,7 @@ export default class VictoryChart extends React.Component {
     // loop through children, and add each child to the childComponents array
     // unless the limit for that child type has already been reached.
     React.Children.forEach(props.children, (child) => {
+      if (!child || !child.type) { return; }
       const type = child.type.displayName;
       if (count.limitReached(child)) {
         const msg = type === "VictoryAxis" ?
