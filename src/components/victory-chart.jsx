@@ -6,14 +6,6 @@ import Util from "../util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
-const defaultStyles = {
-  parent: {
-    width: 400,
-    height: 300,
-    margin: 30
-  }
-};
-
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
   dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
@@ -21,21 +13,19 @@ const defaultAxes = {
 
 const defaultData = <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>;
 
+const defaultPadding = 30;
+
 @Radium
 export default class VictoryChart extends React.Component {
   static propTypes = {
     /**
-     * The scale prop determines which scales your chart should use. This prop can be
-     * given as a function, or as an object that specifies separate functions for x and y.
-     * @exampes d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+     * The animate prop specifies props for victory-animation to use. It this prop is
+     * given, all children defined in chart will pass the options specified in this prop to
+     * victory-animation, unless they have animation props of their own specified.
+     * Large datasets might animate slowly due to the inherent limits of svg rendering.
+     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
      */
-    scale: React.PropTypes.oneOfType([
-      React.PropTypes.func,
-      React.PropTypes.shape({
-        x: React.PropTypes.func,
-        y: React.PropTypes.func
-      })
-    ]),
+    animate: React.PropTypes.object,
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -52,20 +42,6 @@ export default class VictoryChart extends React.Component {
       })
     ]),
     /**
-     * The standalone prop determines whether the component will render a standalone svg
-     * or a <g> tag that will be included in an external svg. Set standalone to false to
-     * compose VictoryChart with other components within an enclosing <svg> tag.
-     */
-    standalone: React.PropTypes.bool,
-    /**
-     * The style prop specifies styles for your chart. Victory Chart relies on Radium,
-     * so valid Radium style objects should work for this prop, however height, width, and margin
-     * are used to calculate range, and need to be expressed as a number of pixels
-     * @examples {width: 500, height: 300, axis: {x: {...}, y: {...}},
-     * line: {data: {...}, labels: {...}}, scatter: {...}, bar: {...}}
-     */
-    style: React.PropTypes.object,
-    /**
      * The domainPadding prop specifies a number of pixels of padding to add to the
      * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
      * from the origin to prevent crowding. This prop should be given as an object with
@@ -76,16 +52,60 @@ export default class VictoryChart extends React.Component {
       y: React.PropTypes.number
     }),
     /**
-     * The animate prop specifies props for victory-animation to use. It this prop is
-     * given, all children defined in chart will pass the options specified in this prop to
-     * victory-animation, unless they have animation props of their own specified.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
+     * The height props specifies the height of the chart container element in pixels
      */
-    animate: React.PropTypes.object
+    height: React.PropTypes.number,
+    /**
+     * The padding props specifies the amount of padding in number of pixels between
+     * the edge of the chart and any rendered child components. This prop can be given
+     * as a number or as an object with padding specified for top, bottom, left
+     * and right.
+     */
+    padding: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.shape({
+        top: React.PropTypes.number,
+        bottom: React.PropTypes.number,
+        left: React.PropTypes.number,
+        right: React.PropTypes.number
+      })
+    ]),
+    /**
+     * The scale prop determines which scales your chart should use. This prop can be
+     * given as a function, or as an object that specifies separate functions for x and y.
+     * @exampes d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+     */
+    scale: React.PropTypes.oneOfType([
+      React.PropTypes.func,
+      React.PropTypes.shape({
+        x: React.PropTypes.func,
+        y: React.PropTypes.func
+      })
+    ]),
+
+    /**
+     * The standalone prop determines whether the component will render a standalone svg
+     * or a <g> tag that will be included in an external svg. Set standalone to false to
+     * compose VictoryChart with other components within an enclosing <svg> tag.
+     */
+    standalone: React.PropTypes.bool,
+    /**
+     * The style prop specifies styles for your chart. Victory Chart relies on Radium,
+     * so valid Radium style objects should work for this prop, however height, width, and margin
+     * are used to calculate range, and need to be expressed as a number of pixels
+     * @examples {background: transparent, margin: 50}
+     */
+    style: React.PropTypes.object,
+    /**
+     * The width props specifies the width of the chart container element in pixels
+     */
+    width: React.PropTypes.number
   };
 
   static defaultProps = {
+    height: 300,
+    width: 500,
+    padding: 30,
     standalone: true
   };
 
@@ -110,6 +130,7 @@ export default class VictoryChart extends React.Component {
 
   getCalculatedValues(props) {
     this.style = this.getStyles(props);
+    this.padding = this.getPadding(props);
     this.range = {
       x: this.getRange(props, "x"),
       y: this.getRange(props, "y")
@@ -140,15 +161,30 @@ export default class VictoryChart extends React.Component {
   }
 
   getStyles(props) {
-    return props.style ? {parent: _.merge({}, defaultStyles.parent, props.style.parent)} :
-      defaultStyles;
+    const styleProps = props.style && props.style.parent;
+    return {
+      parent: _.merge({
+        height: props.height,
+        width: props.width
+      },
+      styleProps
+    )};
+  }
+
+  getPadding(props) {
+    const padding = _.isNumber(props.padding) ? props.padding : defaultPadding;
+    return {
+      top: props.padding.top || padding,
+      bottom: props.padding.bottom || padding,
+      left: props.padding.left || padding,
+      right: props.padding.right || padding
+    };
   }
 
   getRange(props, axis) {
-    const style = this.style.parent;
     return axis === "x" ?
-      [style.margin, style.width - style.margin] :
-      [style.height - style.margin, style.margin];
+      [this.padding.left, props.width - this.padding.right] :
+      [props.height - this.padding.bottom, this.padding.top];
   }
 
   getAxisType(child) {
@@ -539,7 +575,7 @@ export default class VictoryChart extends React.Component {
     return scale;
   }
 
-  getAxisOffset() {
+  getAxisOffset(props) {
     // make the axes line up, and cross when appropriate
     const origin = {
       x: _.max([_.min(this.domain.x), 0]),
@@ -550,8 +586,8 @@ export default class VictoryChart extends React.Component {
       y: this.axisOrientations.y || "left"
     };
     const orientationOffset = {
-      x: orientation.y === "left" ? 0 : this.style.parent.width,
-      y: orientation.x === "bottom" ? this.style.parent.height : 0
+      x: orientation.y === "left" ? 0 : props.width,
+      y: orientation.x === "bottom" ? props.height : 0
     };
     const calculatedOffset = {
       x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
@@ -651,7 +687,6 @@ export default class VictoryChart extends React.Component {
       return {
         animate,
         domain: this.domain[axis],
-        range: this.range[axis],
         scale: this.scale[axis],
         tickValues: this.tickValues[axis],
         tickFormat: this.tickFormat[axis],
@@ -665,7 +700,6 @@ export default class VictoryChart extends React.Component {
       return {
         animate,
         domain: this.domain,
-        range: this.range,
         scale: this.scale,
         categories: child.props.categories || categories
       };
@@ -675,7 +709,6 @@ export default class VictoryChart extends React.Component {
       data,
       animate,
       domain: this.domain,
-      range: this.range,
       scale: this.scale
     };
   }
@@ -686,6 +719,9 @@ export default class VictoryChart extends React.Component {
       const style = _.merge({}, {parent: this.style.parent}, child.props.style);
       const newProps = this.getNewProps(child);
       return React.cloneElement(child, _.merge({}, newProps, {
+        height: this.props.height,
+        width: this.props.width,
+        padding: this.padding,
         ref: index,
         key: index,
         standalone: false,
