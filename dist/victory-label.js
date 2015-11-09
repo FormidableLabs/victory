@@ -90,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _victoryUtilLibStyle = __webpack_require__(28);
 	
-	var _lodash = __webpack_require__(33);
+	var _lodash = __webpack_require__(32);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -2249,9 +2249,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) {
-	  return obj && obj.__esModule ? obj : { "default": obj };
-	}
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	var _reduceCssCalc = __webpack_require__(29);
 	
@@ -2482,7 +2480,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(32)
+	var balanced = __webpack_require__(30)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -2557,36 +2555,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 32 */
-/***/ function(module, exports) {
-
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
-
-
-/***/ },
-/* 33 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -14941,10 +14909,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(34)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)(module), (function() { return this; }())))
 
 /***/ },
-/* 34 */
+/* 33 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
