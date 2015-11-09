@@ -4,7 +4,9 @@ import _ from "lodash";
 import log from "../log";
 import Util from "../util";
 import {VictoryAxis} from "victory-axis";
+import {VictoryBar} from "victory-bar";
 import {VictoryLine} from "victory-line";
+import {VictoryScatter} from "victory-scatter";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
@@ -187,11 +189,21 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisType(child) {
-    const type = child.type.displayName;
-    if (type !== "VictoryAxis") {
+    if (child.type !== VictoryAxis) {
       return undefined;
     }
     return child.props.dependentAxis ? "dependent" : "independent";
+  }
+
+  getType(child) {
+    const type = child.type;
+    switch (type) {
+      case VictoryAxis: return "VictoryAxis";
+      case VictoryBar: return "VictoryBar";
+      case VictoryLine: return "VictoryLine";
+      case VictoryScatter: return "VictoryScatter";
+      default: return undefined;
+    }
   }
 
   getChildComponents(props) {
@@ -200,7 +212,7 @@ export default class VictoryChart extends React.Component {
       const counts = {};
       return {
         add: (child) => {
-          const type = child.type.displayName;
+          const type = this.getType(child);
           const axis = this.getAxisType(child);
           if (!counts[type]) {
             counts[type] = axis ? {independent: 0, dependent: 0} : 0;
@@ -213,7 +225,7 @@ export default class VictoryChart extends React.Component {
 
         },
         limitReached: (child) => {
-          const type = child.type.displayName;
+          const type = this.getType(child);
           const axis = this.getAxisType(child);
           if (!counts[type]) {
             return false;
@@ -241,7 +253,7 @@ export default class VictoryChart extends React.Component {
     // unless the limit for that child type has already been reached.
     React.Children.forEach(props.children, (child) => {
       if (!child || !child.type) { return; }
-      const type = child.type.displayName;
+      const type = this.getType(child);
       if (count.limitReached(child)) {
         const msg = type === "VictoryAxis" ?
           "Only one VictoryAxis component of each axis type is allowed when using the " +
@@ -267,7 +279,7 @@ export default class VictoryChart extends React.Component {
 
     // Add defaut data if no data is provided
     const dataComponents = _.filter(childComponents, (child) => {
-      return child.type.displayName !== "VictoryAxis";
+      return child.type !== VictoryAxis;
     });
 
     if (dataComponents.length === 0) { childComponents.push(defaultData); }
@@ -276,14 +288,14 @@ export default class VictoryChart extends React.Component {
 
   getDataComponents() {
     return _.filter(this.childComponents, (child) => {
-      const type = child.type.displayName;
+      const type = this.getType(child);
       return !_.includes(this.groupedDataTypes, type) && type !== "VictoryAxis";
     });
   }
 
   getGroupedDataComponents() {
     return _.filter(this.childComponents, (child) => {
-      const type = child.type.displayName;
+      const type = this.getType(child);
       return _.includes(this.groupedDataTypes, type);
     });
   }
@@ -300,7 +312,7 @@ export default class VictoryChart extends React.Component {
     const typicalAxes = {independent: "x", dependent: "y"};
     const atypicalAxes = {independent: "y", dependent: "x"};
     const components = _.filter(this.childComponents, (child) => {
-      return child.type.displayName === "VictoryAxis";
+      return child.type === VictoryAxis;
     });
     const componentsWithType = _.map(components, (component) => {
       return [this.getAxisType(component), component];
@@ -677,7 +689,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getNewProps(child) {
-    const type = child.type.displayName;
+    const type = this.getType(child);
     const animate = child.props.animate || this.props.animate;
     if (type === "VictoryAxis") {
       const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
