@@ -12648,7 +12648,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	var calc = function calc(expr, precision) {
 	  return (0, _reduceCssCalc2["default"])("calc(" + expr + ")", precision);
 	};
+	
 	exports.calc = calc;
+	/**
+	 * Given the name of a color scale, getColorScale will return an array
+	 * of 5 hex string values in that color scale. If no 'name' parameter
+	 * is given, it will return the Victory default grayscale.
+	 * @param {String} name The name of the color scale to return (optional).
+	 * @returns {Array} An array of 5 hex string values composing a color scale.
+	 */
+	var getColorScale = function getColorScale(name) {
+	  var scales = {
+	    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
+	    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
+	    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
+	    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
+	    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
+	  };
+	  return name ? scales[name] : scales.victory;
+	};
+	exports.getColorScale = getColorScale;
 
 /***/ },
 /* 7 */
@@ -12846,7 +12865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(10)
+	var balanced = __webpack_require__(8)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -12917,36 +12936,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // allow recursivity
 	  return callback(reduceFunctionCall(string, functionRE, callback), functionIdentifier, call)
 	}
-
-
-/***/ },
-/* 10 */
-/***/ function(module, exports) {
-
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
 
 
 /***/ }
