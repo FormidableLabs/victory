@@ -119,7 +119,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getComponents(props) {
-    this.groupedDataTypes = ["VictoryBar"];
+    this.groupedDataTypes = ["bar"];
     this.childComponents = this.getChildComponents(props);
     this.dataComponents = this.getDataComponents();
     this.groupedDataComponents = this.getGroupedDataComponents();
@@ -187,8 +187,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisType(child) {
-    const type = child.type.displayName;
-    if (type !== "VictoryAxis") {
+    if (child.type !== VictoryAxis) {
       return undefined;
     }
     return child.props.dependentAxis ? "dependent" : "independent";
@@ -200,7 +199,7 @@ export default class VictoryChart extends React.Component {
       const counts = {};
       return {
         add: (child) => {
-          const type = child.type.displayName;
+          const type = child.type && child.type.role;
           const axis = this.getAxisType(child);
           if (!counts[type]) {
             counts[type] = axis ? {independent: 0, dependent: 0} : 0;
@@ -210,10 +209,9 @@ export default class VictoryChart extends React.Component {
           } else {
             counts[type] = counts[type] += 1;
           }
-
         },
         limitReached: (child) => {
-          const type = child.type.displayName;
+          const type = child.type && child.type.role;
           const axis = this.getAxisType(child);
           if (!counts[type]) {
             return false;
@@ -241,9 +239,9 @@ export default class VictoryChart extends React.Component {
     // unless the limit for that child type has already been reached.
     React.Children.forEach(props.children, (child) => {
       if (!child || !child.type) { return; }
-      const type = child.type.displayName;
+      const type = child.type && child.type.role;
       if (count.limitReached(child)) {
-        const msg = type === "VictoryAxis" ?
+        const msg = type === "axis" ?
           "Only one VictoryAxis component of each axis type is allowed when using the " +
           "VictoryChart wrapper. Only the first axis will be used. Please compose " +
           "multi-axis charts manually" :
@@ -258,16 +256,17 @@ export default class VictoryChart extends React.Component {
 
     // Add default axis components if necessary
     // TODO: should we add both axes by default?
-    if (count.total("VictoryAxis", "independent") < 1) {
+    if (count.total("axis", "independent") < 1) {
       childComponents.push(defaultAxes.independent);
     }
-    if (count.total("VictoryAxis", "dependent") < 1) {
+    if (count.total("axis", "dependent") < 1) {
       childComponents.push(defaultAxes.dependent);
     }
 
     // Add defaut data if no data is provided
     const dataComponents = _.filter(childComponents, (child) => {
-      return child.type.displayName !== "VictoryAxis";
+      const type = child.type && child.type.role;
+      return type !== "axis";
     });
 
     if (dataComponents.length === 0) { childComponents.push(defaultData); }
@@ -276,14 +275,14 @@ export default class VictoryChart extends React.Component {
 
   getDataComponents() {
     return _.filter(this.childComponents, (child) => {
-      const type = child.type.displayName;
-      return !_.includes(this.groupedDataTypes, type) && type !== "VictoryAxis";
+      const type = child.type && child.type.role;
+      return !_.includes(this.groupedDataTypes, type) && type !== "axis";
     });
   }
 
   getGroupedDataComponents() {
     return _.filter(this.childComponents, (child) => {
-      const type = child.type.displayName;
+      const type = child.type && child.type.role;
       return _.includes(this.groupedDataTypes, type);
     });
   }
@@ -300,7 +299,8 @@ export default class VictoryChart extends React.Component {
     const typicalAxes = {independent: "x", dependent: "y"};
     const atypicalAxes = {independent: "y", dependent: "x"};
     const components = _.filter(this.childComponents, (child) => {
-      return child.type.displayName === "VictoryAxis";
+      const type = child.type && child.type.role;
+      return type === "axis";
     });
     const componentsWithType = _.map(components, (component) => {
       return [this.getAxisType(component), component];
@@ -677,9 +677,9 @@ export default class VictoryChart extends React.Component {
   }
 
   getNewProps(child) {
-    const type = child.type.displayName;
+    const type = child.type && child.type.role;
     const animate = child.props.animate || this.props.animate;
-    if (type === "VictoryAxis") {
+    if (type === "axis") {
       const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
       const offsetY = axis === "y" ? undefined : this.axisOffset.y;
       const offsetX = axis === "x" ? undefined : this.axisOffset.x;
