@@ -220,18 +220,18 @@ class App extends React.Component {
             <VictoryAxis
               tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
               tickFormat={(x) => x + "\ntick"}
-              style={{data: {
+              style={{
                 axis: {stroke: "black", strokeWidth: 2},
                 ticks: {stroke: "transparent"},
                 tickLabels: {fill: "black"}
-              }}}/>
+              }}/>
             <VictoryAxis label="y axis" dependentAxis
               tickValues={[0, 1.5, 3, 4.5]}
-              style={{data: {
+              style={{
                 grid: {strokeWidth: 1},
                 axis: {stroke: "transparent"},
                 ticks: {stroke: "transparent", padding: 15}
-              }}}/>
+              }}/>
             <VictoryBar style={{data: {width: 15, fill: "orange"}}}
               data={[
                 {x: 1, y: 1},
