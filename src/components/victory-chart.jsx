@@ -17,11 +17,11 @@ const defaultData = <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>;
 export default class VictoryChart extends React.Component {
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. It this prop is
+     * The animate prop specifies props for victory-animation to use. If this prop is
      * given, all children defined in chart will pass the options specified in this prop to
      * victory-animation, unless they have animation props of their own specified.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
+     * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
      */
     animate: React.PropTypes.object,
     /**
@@ -30,7 +30,7 @@ export default class VictoryChart extends React.Component {
      * or as an object that specifies separate arrays for x and y.
      * If this prop is not provided, a domain will be calculated from data, or other
      * available information.
-     * @exampes [-1, 1], {x: [0, 100], y: [0, 1]}
+     * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
      */
     domain: React.PropTypes.oneOfType([
       React.PropTypes.array,
@@ -71,7 +71,7 @@ export default class VictoryChart extends React.Component {
     /**
      * The scale prop determines which scales your chart should use. This prop can be
      * given as a function, or as an object that specifies separate functions for x and y.
-     * @exampes d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+     * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
      */
     scale: React.PropTypes.oneOfType([
       React.PropTypes.func,
@@ -80,7 +80,6 @@ export default class VictoryChart extends React.Component {
         y: React.PropTypes.func
       })
     ]),
-
     /**
      * The standalone prop determines whether the component will render a standalone svg
      * or a <g> tag that will be included in an external svg. Set standalone to false to
@@ -89,8 +88,9 @@ export default class VictoryChart extends React.Component {
     standalone: React.PropTypes.bool,
     /**
      * The style prop specifies styles for your chart. Victory Chart relies on Radium,
-     * so valid Radium style objects should work for this prop, however height, width, and margin
-     * are used to calculate range, and need to be expressed as a number of pixels
+     * so valid Radium style objects should work for this prop. Height, width, and
+     * padding should be specified via the height, width, and padding props, as they
+     * are used to calculate the alignment of components within chart.
      * @examples {background: transparent, margin: 50}
      */
     style: React.PropTypes.object,
@@ -102,8 +102,8 @@ export default class VictoryChart extends React.Component {
 
   static defaultProps = {
     height: 300,
-    width: 500,
-    padding: 30,
+    width: 450,
+    padding: 50,
     standalone: true
   };
 
