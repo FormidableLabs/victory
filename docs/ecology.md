@@ -52,7 +52,7 @@ VictoryCharts are composed of other Victory components. Compose several componen
 or compose components of different types on the same chart
 
 ```playground
-<VictoryChart>
+<VictoryChart height={450}>
   <VictoryScatter 
     style={{data: {fill: "purple"}}}
     symbol="star"
@@ -80,9 +80,18 @@ The sensible defaults VictoryChart provides makes it easy to get started, but ev
 
 ```playground
 <VictoryChart
+  height={500}
+  padding={{
+    top: 75,
+    bottom: 40, 
+    left: 40, 
+    right: 40 
+  }}
   domainPadding={{x: 20}}>
-  <VictoryAxis orientation="top"/>
-  <VictoryAxis label="y axis" dependentAxis
+  <VictoryAxis 
+    label="X AXIS" 
+    orientation="top"/>
+  <VictoryAxis dependentAxis
     tickValues={[0, 1.5, 3, 4.5]}
     style={{
       grid: {
@@ -98,24 +107,20 @@ The sensible defaults VictoryChart provides makes it easy to get started, but ev
     }}
     data={[
       {x: 1, y: 1},
-      {x: 2, y: 2},
-      {x: 3, y: 3},
-      {x: 4, y: 2},
+      {x: 2, y: 2.5},
+      {x: 3, y: 4},
+      {x: 4, y: 2.5},
       {x: 5, y: 1},
     ]}/>   
 </VictoryChart> 
 ```
 
-Stacked bar charts are supported too!
+Stacked bar charts and non-numeric data are supported too!
 
 ```playground
 <VictoryChart
+  height={500}
   domainPadding={{x: 100}}>
-  <VictoryAxis
-    tickValues={[
-      "apples", "bananas", "oranges"
-    ]}
-    tickFormat={() => ""}/>
   <VictoryBar stacked
     data={[
       [
@@ -139,10 +144,41 @@ Stacked bar charts are supported too!
       {fill: "gold"},
       {fill: "tomato"}
     ]}
-    categoryLabels={[
+    labels={[
       "apples\n(fuji)", 
       "bananas", 
       "oranges\n(navel)"
+    ]}/>
+</VictoryChart>
+```
+
+Time series data is also supported: 
+
+```playground
+<VictoryChart
+  height={450}
+  scale={{
+    x: d3.time.scale(),
+    y: d3.scale.linear()
+  }}>
+  <VictoryAxis
+    label="Decades"
+    tickValues={[
+      new Date(1980, 1, 1),
+      new Date(2000, 1, 1),
+      new Date(2020, 1, 1),
+    ]}
+    tickFormat={d3.time.format("%Y")}/>
+  <VictoryLine
+    data={[
+      {x: new Date(1982, 1, 1), y: 125},
+      {x: new Date(1987, 1, 1), y: 257},
+      {x: new Date(1993, 1, 1), y: 345},
+      {x: new Date(1997, 1, 1), y: 515},
+      {x: new Date(2001, 1, 1), y: 132},
+      {x: new Date(2005, 1, 1), y: 305},
+      {x: new Date(2011, 1, 1), y: 270},
+      {x: new Date(2015, 1, 1), y: 470}
     ]}/>
 </VictoryChart>
 ```
@@ -162,7 +198,7 @@ class App extends React.Component {
   }
 
   getData() {
-    return _.map(_.range(20), (i) => {
+    return _.map(_.range(25), (i) => {
       return {
         x: i,
         y: Math.random()
@@ -172,12 +208,12 @@ class App extends React.Component {
 
   getStyles() {
     const colors = [
-      "red", "orange", "cyan", 
-      "green", "blue", "purple"
+      "red", "orange", "magenta", 
+      "gold", "blue", "purple"
     ];
     return {
       stroke: colors[_.random(0, 5)],
-      strokeWidth: [_.random(1, 3)]
+      strokeWidth: _.random(1, 5)
     };
   }
 
@@ -192,7 +228,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <VictoryChart 
+      <VictoryChart height={500}
         animate={{velocity: 0.02}}>
         <VictoryAxis dependentAxis 
           style={{grid: {strokeWidth: 1}}}/>
