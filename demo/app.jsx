@@ -39,8 +39,8 @@ class App extends React.Component {
       sliceWidth: 60,
       style: {
         parent: {
-          width: 400,
-          height: 400
+          border: "1px solid #ccc",
+          margin: 20
         },
         data: {
           strokeWidth: 2
@@ -61,30 +61,27 @@ class App extends React.Component {
     }, 5000);
   }
 
-  getStyles() {
-    return {
-      height: this.state.style.height,
-      margin: "0 auto",
-      width: this.state.style.width,
-      position: "relative",
-      top: this.state.style.height / 4 - this.state.sliceWidth / 2
-    };
-  }
-
   render() {
     return (
-      <div style={this.getStyles()}>
-        <VictoryPie/>
+      <div>
+        <VictoryPie style={this.state.style}/>
 
-        <VictoryPie style={{labels: {fontSize: 20, padding: 100}}}/>
+        <VictoryPie style={{
+          parent: {border: "1px solid #ccc", margin: 20},
+          labels: {fontSize: 20, padding: 100}
+        }}/>
 
-        <VictoryPie innerRadius={140}/>
+        <VictoryPie style={this.state.style} innerRadius={140}/>
 
-        <VictoryPie style={{data: {stroke: "transparent", opacity: 0.4}}}/>
+        <VictoryPie style={{
+          parent: {border: "1px solid #ccc", margin: 20},
+          data: {stroke: "transparent", opacity: 0.4}
+        }}/>
 
-        <VictoryPie endAngle={90} startAngle={-90}/>
+        <VictoryPie style={this.state.style} endAngle={90} startAngle={-90}/>
 
         <VictoryPie
+          padding={{top: 30, left: 30}}
           style={this.state.style}
           data={this.state.data}
           innerRadius={100}
@@ -92,6 +89,7 @@ class App extends React.Component {
           sliceColors={this.state.sliceColors}/>
 
         <VictoryPie
+          style={this.state.style}
           endAngle={90}
           innerRadius={140}
           padAngle={5}

@@ -7,11 +7,6 @@ import Util from "../util";
 import {VictoryAnimation} from "victory-animation";
 
 const defaultStyles = {
-  parent: {
-    width: 400,
-    height: 400,
-    margin: 20
-  },
   data: {
     padding: 5,
     stroke: "white",
@@ -32,6 +27,13 @@ const defaultStyles = {
 export default class VictoryPie extends React.Component {
   static propTypes = {
     /**
+     * The animate prop specifies props for victory-animation to use. If this prop is
+     * not given, the pie chart will not tween between changing data / style props.
+     * Large datasets might animate slowly due to the inherent limits of svg rendering.
+     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
+     */
+    animate: React.PropTypes.object,
+    /**
      * Objects in the data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val>
      * is the slice label (string or number), and <y-val> is the corresponding number
      * used to calculate arc length as a proportion of the pie's circumference.
@@ -42,23 +44,14 @@ export default class VictoryPie extends React.Component {
       y: React.PropTypes.number
     })),
     /**
-     * The style prop specifies styles for your pie. VictoryPie relies on Radium,
-     * so valid Radium style objects should work for this prop, however properties like
-     * height, width, padding and margin are used to calculate the radius of the pi, and need to be
-     * expressed as a number of pixels
-     * @example {parent: {width: 500, height: 300}, data: {stroke: "black"}, label: {fontSize: 10}}
-     */
-    style: React.PropTypes.object,
-    /**
-     * The overall start angle of the pie in degrees. This prop is used in conjunction with
-     * `endAngle` to create a pie that spans only a segment of a circle.
-     */
-    startAngle: React.PropTypes.number,
-    /**
      * The overall end angle of the pie in degrees. This prop is used in conjunction with
      * `startAngle` to create a pie that spans only a segment of a circle.
      */
     endAngle: React.PropTypes.number,
+    /**
+     * The height props specifies the height of the chart container element in pixels
+     */
+    height: React.PropTypes.number,
     /**
      * When creating a donut chart, this prop determines the number of pixels between
      * the center of the chart and the inner edge of a donut. When this prop is set to zero
@@ -70,6 +63,21 @@ export default class VictoryPie extends React.Component {
      * in number of degrees
      */
     padAngle: React.PropTypes.number,
+    /**
+     * The padding props specifies the amount of padding in number of pixels between
+     * the edge of the chart and any rendered child components. This prop can be given
+     * as a number or as an object with padding specified for top, bottom, left
+     * and right.
+     */
+    padding: React.PropTypes.oneOfType([
+      React.PropTypes.number,
+      React.PropTypes.shape({
+        top: React.PropTypes.number,
+        bottom: React.PropTypes.number,
+        left: React.PropTypes.number,
+        right: React.PropTypes.number
+      })
+    ]),
     /**
      * The sliceColors prop defines an array of colors to use for distinguishing data
      * segments in a pie chart. If the data array is longer than the sliceColors array,
@@ -85,17 +93,27 @@ export default class VictoryPie extends React.Component {
       React.PropTypes.func
     ]),
     /**
-     * The animate prop specifies props for victory-animation to use. If this prop is
-     * not given, the pie chart will not tween between changing data / style props.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
-     */
-    animate: React.PropTypes.object,
-    /**
      * The standalone prop determines whether VictoryPie should render as a standalone
      * svg, or in a g tag to be included in an svg
      */
-    standalone: React.PropTypes.bool
+    standalone: React.PropTypes.bool,
+    /**
+     * The overall start angle of the pie in degrees. This prop is used in conjunction with
+     * `endAngle` to create a pie that spans only a segment of a circle.
+     */
+    startAngle: React.PropTypes.number,
+    /**
+     * The style prop specifies styles for your pie. VictoryPie relies on Radium,
+     * so valid Radium style objects should work for this prop, however properties like
+     * height, width, padding and margin are used to calculate the radius of the pi, and need to be
+     * expressed as a number of pixels
+     * @example {parent: {width: 500, height: 300}, data: {stroke: "black"}, label: {fontSize: 10}}
+     */
+    style: React.PropTypes.object,
+    /**
+     * The width props specifies the width of the chart container element in pixels
+     */
+    width: React.PropTypes.number
   }
 
   static defaultProps = {
@@ -107,8 +125,10 @@ export default class VictoryPie extends React.Component {
       { x: "E", y: 2 }
     ],
     endAngle: 360,
+    height: 400,
     innerRadius: 0,
     padAngle: 0,
+    padding: 30,
     sliceColors: [
       "#75C776",
       "#39B6C5",
@@ -120,7 +140,8 @@ export default class VictoryPie extends React.Component {
     ],
     sort: null,
     startAngle: 0,
-    standalone: true
+    standalone: true,
+    width: 400
   }
 
   componentWillMount() {
@@ -137,7 +158,8 @@ export default class VictoryPie extends React.Component {
 
   getCalculatedValues(props) {
     this.style = this.getStyles(props);
-    this.radius = this.getRadius();
+    this.padding = this.getPadding(props);
+    this.radius = this.getRadius(props);
     this.sortOrder = this.getSortOrder(props);
     this.colors = d3.scale.ordinal().range(props.sliceColors);
     this.slice = d3.svg.arc()
@@ -153,21 +175,30 @@ export default class VictoryPie extends React.Component {
   }
 
   getStyles(props) {
-    if (!props.style) {
-      return defaultStyles;
-    }
-    const {data, labels, parent} = props.style;
+    const style = props.style || defaultStyles;
+    const {data, labels, parent} = style;
     return {
-      parent: _.merge({}, defaultStyles.parent, parent),
+      parent: _.merge({height: props.height, width: props.width}, parent),
       data: _.merge({}, defaultStyles.data, data),
       labels: _.merge({}, defaultStyles.labels, labels)
     };
   }
 
-  getRadius() {
+  getPadding(props) {
+    const padding = _.isNumber(props.padding) ? props.padding : 0;
+    const paddingObj = _.isObject(props.padding) ? props.padding : {};
+    return {
+      top: paddingObj.top || padding,
+      bottom: paddingObj.bottom || padding,
+      left: paddingObj.left || padding,
+      right: paddingObj.right || padding
+    };
+  }
+
+  getRadius(props) {
     return _.min([
-      this.style.parent.width - this.style.parent.margin,
-      this.style.parent.height - this.style.parent.margin
+      props.width - this.padding.left - this.padding.right,
+      props.height - this.padding.top - this.padding.bottom
     ]) / 2;
   }
 
@@ -235,9 +266,13 @@ export default class VictoryPie extends React.Component {
       );
     }
     const style = this.style.parent;
+    const xOffset = this.radius + this.padding.left;
+    const yOffset = this.radius + this.padding.top;
     const group = (
       <g style={style}
-        transform={"translate(" + style.width / 2 + "," + style.height / 2 + ")"}>
+        transform={"translate(" +
+          xOffset + "," +
+          yOffset + ")"}>
         {this.drawArcs(this.props.data)}
       </g>
     );
