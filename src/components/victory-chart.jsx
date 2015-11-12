@@ -542,21 +542,22 @@ export default class VictoryChart extends React.Component {
   }
 
   padDomain(props, domain, axis) {
-    const domainPadding = props.domainPadding ?
-      props.domainPadding[axis] || props.domainPadding : null;
-    if (!_.isNumber(domainPadding) || domainPadding === 0) {
-      return domain;
+    let domainPadding;
+    if (props.domainPadding) {
+      domainPadding = _.isNumber(props.domainPadding) ?
+        props.domainPadding : props.domainPadding[axis];
     }
     const min = _.min(domain);
     const max = _.max(domain);
     const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
     const extent = Math.abs(max - min);
-    const percentPadding = domainPadding / rangeExtent;
+    const percentPadding = domainPadding ? domainPadding / rangeExtent : 0.01;
     const padding = extent * percentPadding;
     // don't make the axes cross if they aren't already
     const adjustedMin = (min >= 0 && (min - padding) <= 0) ? 0 : min - padding;
     const adjustedMax = (max <= 0 && (max + padding) >= 0) ? 0 : max + padding;
-    return [adjustedMin, adjustedMax];
+    return _.isDate(min) || _.isDate(max) ?
+      [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   }
 
   getScale(props, axis) {

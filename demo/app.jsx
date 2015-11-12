@@ -126,6 +126,19 @@ class App extends React.Component {
             <VictoryBar/>
           </VictoryChart>
 
+          <VictoryChart>
+            <VictoryLine
+              style={{data:
+                {stroke: "red", strokeWidth: 4}
+              }}
+              y={(x) => Math.sin(2 * Math.PI * x)}/>
+            <VictoryLine
+              style={{data:
+                {stroke: "blue", strokeWidth: 4}
+              }}
+              y={(x) => Math.cos(2 * Math.PI * x)}/>
+          </VictoryChart>
+
           <VictoryChart style={chartStyle} animate={{velocity: 0.02}}>
             <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
@@ -203,7 +216,7 @@ class App extends React.Component {
                 {fill: "orange"},
                 {fill: "tomato"}
               ]}
-            categoryLabels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}/>
+            labels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}/>
           </VictoryChart>
 
           <VictoryChart>
@@ -252,8 +265,6 @@ class App extends React.Component {
             style={{data: {stroke: "gold", strokeWidth: 3}}}
             label="LINE"/>
         </VictoryChart>
-
-
         </p>
       </div>
     );
