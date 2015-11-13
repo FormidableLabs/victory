@@ -30,7 +30,7 @@ export default class VictoryPie extends React.Component {
      * The animate prop specifies props for victory-animation to use. If this prop is
      * not given, the pie chart will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {line: {delay: 5, velocity: 10, onEnd: () => alert("woo!")}}
+     * @examples {velocity: 0.02, onEnd: () => alert("done!")}
      */
     animate: React.PropTypes.object,
     /**
@@ -45,7 +45,7 @@ export default class VictoryPie extends React.Component {
     })),
     /**
      * The overall end angle of the pie in degrees. This prop is used in conjunction with
-     * `startAngle` to create a pie that spans only a segment of a circle.
+     * startAngle to create a pie that spans only a segment of a circle.
      */
     endAngle: React.PropTypes.number,
     /**
@@ -99,7 +99,7 @@ export default class VictoryPie extends React.Component {
     standalone: React.PropTypes.bool,
     /**
      * The overall start angle of the pie in degrees. This prop is used in conjunction with
-     * `endAngle` to create a pie that spans only a segment of a circle.
+     * endAngle to create a pie that spans only a segment of a circle.
      */
     startAngle: React.PropTypes.number,
     /**
@@ -107,7 +107,7 @@ export default class VictoryPie extends React.Component {
      * so valid Radium style objects should work for this prop, however properties like
      * height, width, padding and margin are used to calculate the radius of the pi, and need to be
      * expressed as a number of pixels
-     * @example {parent: {width: 500, height: 300}, data: {stroke: "black"}, label: {fontSize: 10}}
+     * @examples {data: {stroke: "black"}, label: {fontSize: 10}}
      */
     style: React.PropTypes.object,
     /**
