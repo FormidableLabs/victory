@@ -1,11 +1,14 @@
 /*global document:false*/
 import React from "react";
+import ReactDOM from "react-dom";
+import {VictoryLine, VictoryChart} from "../src/index";
 
 class App extends React.Component {
   render() {
     return (
       <div className="demo">
-        Edit me!
+        <VictoryLine/>
+        <VictoryChart/>
       </div>
     );
   }
@@ -13,4 +16,4 @@ class App extends React.Component {
 
 const content = document.getElementById("content");
 
-React.render(<App/>, content);
+ReactDOM.render(<App/>, content);

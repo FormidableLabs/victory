@@ -2,33 +2,45 @@
 
 Victory
 =======
-Victory is an opinionated set of data visualization tools built in React and based on d3. Victory relies on d3 for everything d3 does best, and lets React handle *all* the rendering. Victory's API is built around sensible defaults that make it easy to get started.
+Victory is an opinionated set of data visualization tools built in React. This repo aggregates all of the stable Victory components so they can be conveniently included. 
+
+IMPORTANT
+=========
+
+This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
+
+## Including components:
+
+Components can be included individually
+
+```
+import {VictroyLine, VictoryAxis} from "victory"
+
+<VictoryLine/>
+```
+
+Or imported as a set:
+
+```
+import * as V from "victory"
+
+<V.VictoryLine/>
+```
 
 ## Components
 
-[VictoryLine](http://github.com/formidablelabs/victory-line)
+You can read about these Victory components via interactive docs!
 
-[VictoryPie](http://github.com/formidablelabs/victory-pie)
+- [VictoryAxis](https://formidablelabs.github.io/victory-axis)
+- [VictoryBar](https://formidablelabs.github.io/victory-bar)
+- [VictoryChart](https://formidablelabs.github.io/victory-chart)
+- [VictoryLine](https://formidablelabs.github.io/victory-line)
+- [VictoryPie](https://formidablelabs.github.io/victory-pie)
+- [VictoryScatter](https://formidablelabs.github.io/victory-scatter)
 
-[VictoryTree](http://github.com/formidablelabs/victory-tree)
-
-[VictoryTreemap](http://github.com/formidablelabs/victory-treemap)
-
-[VictoryScatter](http://github.com/formidablelabs/victory-scatter)
-
-[VictoryAxis](http://github.com/formidablelabs/victory-axis)
 
 ## Animation
-  Wrap any Victory component with [VictoryAnimation](http://github.com/formidablelabs/victory-animation), and it will transition smoothly between states whenever data changes.  VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
-
-## Themes
-    COMING SOON: define a style guide, and wrap components for consistent, custom styling with [Radium](http://github.com/formidablelabs/radium)
-
-## Coming Soon
-
-    - VictoryChord
-    - VictoryChart (line, scatter, area, bar etc.)
-    - VictoryLegend
+Wrap any Victory component with [VictoryAnimation](https://github.com/FormidableLabs/victory-animation) and it will transition smoothly between states whenever data changes. VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
 
 ## Development
 
