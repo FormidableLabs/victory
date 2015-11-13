@@ -96,6 +96,6 @@
     "react-hot-loader": "^1.2.8",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
-    "webpack-dev-server": "^1.10.0",
+    "webpack-dev-server": "^1.10.0"
   }
 }
