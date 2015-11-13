@@ -1,7 +1,7 @@
 {
   "name": "victory",
   "version": "0.0.1",
-  "description": "Victory Component",
+  "description": "Data viz for React",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -58,6 +58,7 @@
     "radium": "^0.14.1",
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
+    "url-loader": "~0.5.5",
     "victory-animation": "0.0.11",
     "victory-axis": "1.5.1",
     "victory-bar": "2.4.1",
@@ -74,7 +75,6 @@
     "eslint-config-defaults": "^3.0.3",
     "eslint-plugin-filenames": "^0.1.1",
     "eslint-plugin-react": "^2.6.4",
-    "file-loader": "^0.8.4",
     "isparta-loader": "^0.2.0",
     "karma": "^0.12.37",
     "karma-chrome-launcher": "^0.2.0",
@@ -97,6 +97,5 @@
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
     "webpack-dev-server": "^1.10.0",
-    "webpack-stats-plugin": "^0.1.1"
   }
 }
