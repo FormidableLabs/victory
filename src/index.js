@@ -1,9 +1,13 @@
-import * as collection from "./collection";
-import * as log from "./log";
-import * as style from "./style";
+import * as Collection from "./collection";
+import * as Log from "./log";
+import * as Style from "./style";
+import * as Type from "./type";
+import * as PropTypes from "./prop-types";
 
 export default {
-  collection,
-  log,
-  style
+  Collection,
+  Log,
+  Style,
+  Type,
+  PropTypes
 };
