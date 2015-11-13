@@ -1,16 +1,17 @@
 /**
  * Client tests
  */
-import Component from "src/components/victory";
+import * as Victory from "src/index";
 
-describe("components/victory", function () {
+describe("victory", function () {
 
   it("has expected properties", function () {
-    expect(Component.victoryLine).not.to.equal(undefined);
-    expect(Component.victoryScatter).not.to.equal(undefined);
-    expect(Component.victoryBar).not.to.equal(undefined);
-    expect(Component.victoryChart).not.to.equal(undefined);
-    expect(Component.victoryAnimation).not.to.equal(undefined);
-    expect(Component.victoryAxis).not.to.equal(undefined);
+    expect(Victory.VictoryAnimation).not.to.equal(undefined);
+    expect(Victory.VictoryAxis).not.to.equal(undefined);
+    expect(Victory.VictoryBar).not.to.equal(undefined);
+    expect(Victory.VictoryChart).not.to.equal(undefined);
+    expect(Victory.VictoryLine).not.to.equal(undefined);
+    expect(Victory.VictoryPie).not.to.equal(undefined);
+    expect(Victory.VictoryScatter).not.to.equal(undefined);
   });
 });
