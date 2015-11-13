@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Data viz for React",
   "main": "lib/index.js",
   "repository": {
@@ -69,7 +69,7 @@
     "webpack": "^1.10.0"
   },
   "devDependencies": {
-   "babel-eslint": "^3.1.25",
+    "babel-eslint": "^3.1.25",
     "chai": "^3.2.0",
     "eslint": "^0.24.1",
     "eslint-config-defaults": "^3.0.3",
