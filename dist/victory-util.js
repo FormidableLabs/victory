@@ -1,13 +1,13 @@
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
+		module.exports = factory(require("react"));
 	else if(typeof define === 'function' && define.amd)
-		define([], factory);
+		define(["react"], factory);
 	else if(typeof exports === 'object')
-		exports["VictoryUtil"] = factory();
+		exports["VictoryUtil"] = factory(require("react"));
 	else
-		root["VictoryUtil"] = factory();
-})(this, function() {
+		root["VictoryUtil"] = factory(root["React"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_13__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -64,20 +64,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _collection = __webpack_require__(1);
 	
-	var collection = _interopRequireWildcard(_collection);
+	var Collection = _interopRequireWildcard(_collection);
 	
 	var _log = __webpack_require__(4);
 	
-	var log = _interopRequireWildcard(_log);
+	var Log = _interopRequireWildcard(_log);
 	
 	var _style = __webpack_require__(6);
 	
-	var style = _interopRequireWildcard(_style);
+	var Style = _interopRequireWildcard(_style);
+	
+	var _type = __webpack_require__(11);
+	
+	var Type = _interopRequireWildcard(_type);
+	
+	var _propTypes = __webpack_require__(12);
+	
+	var PropTypes = _interopRequireWildcard(_propTypes);
 	
 	exports["default"] = {
-	  collection: collection,
-	  log: log,
-	  style: style
+	  Collection: Collection,
+	  Log: Log,
+	  Style: Style,
+	  Type: Type,
+	  PropTypes: PropTypes
 	};
 	module.exports = exports["default"];
 
@@ -12865,7 +12875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(8)
+	var balanced = __webpack_require__(10)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -12937,6 +12947,202 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return callback(reduceFunctionCall(string, functionRE, callback), functionIdentifier, call)
 	}
 
+
+/***/ },
+/* 10 */
+/***/ function(module, exports) {
+
+	module.exports = function(a, b, str) {
+	  var bal = 0;
+	  var m = {};
+	
+	  for (var i = 0; i < str.length; i++) {
+	    if (a == str.substr(i, a.length)) {
+	      if (!('start' in m)) m.start = i;
+	      bal++;
+	    }
+	    else if (b == str.substr(i, b.length) && 'start' in m) {
+	      bal--;
+	      if (!bal) {
+	        m.end = i;
+	        m.pre = str.substr(0, m.start);
+	        m.body = (m.end - m.start > 1)
+	          ? str.substring(m.start + a.length, m.end)
+	          : '';
+	        m.post = str.slice(m.end + b.length);
+	        return m;
+	      }
+	    }
+	  }
+	};
+	
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var nullConstructor = function nullConstructor() {
+	  return null;
+	};
+	exports.nullConstructor = nullConstructor;
+	var undefinedConstructor = function undefinedConstructor() {
+	  return;
+	};
+	exports.undefinedConstructor = undefinedConstructor;
+	/**
+	 * Get the constructor of `value`. If `value` is null or undefined, return the
+	 * special singletons `nullConstructor` or `undefinedConstructor`, respectively.
+	 * @param {*} value Instance to return the constructor of.
+	 * @returns {Function} Constructor of `value`.
+	 */
+	var getConstructor = function getConstructor(value) {
+	  if (typeof value === "undefined") {
+	    return undefinedConstructor;
+	  } else if (value === null) {
+	    return nullConstructor;
+	  } else {
+	    return value.constructor;
+	  }
+	};
+	
+	exports.getConstructor = getConstructor;
+	/**
+	 * Get the name of the constructor used to create `value`, using
+	 * `Object.protoype.toString`. If the value is null or undefined, return
+	 * "null" or "undefined", respectively.
+	 * @param {*} value Instance to return the constructor name of.
+	 * @returns {String} Name of the constructor.
+	 */
+	var getConstructorName = function getConstructorName(value) {
+	  if (typeof value === "undefined") {
+	    return "undefined";
+	  } else if (value === null) {
+	    return "null";
+	  }
+	  return Object.prototype.toString.call(value).slice(8, -1);
+	};
+	exports.getConstructorName = getConstructorName;
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var _react = __webpack_require__(13);
+	
+	var _type = __webpack_require__(11);
+	
+	var _lodash = __webpack_require__(2);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	/**
+	 * Return a new validator based on `validator` but with the option to chain
+	 * `isRequired` onto the validation. This is nearly identical to how React
+	 * does it internally, but they don't expose their helper for us to use.
+	 * @param {Function} validator Validation function.
+	 * @returns {Function} Validator with `isRequired` option.
+	 */
+	var makeChainable = function makeChainable(validator) {
+	  /* eslint-disable max-params */
+	  var _chainable = function _chainable(isRequired, props, propName, componentName) {
+	    var value = props[propName];
+	    if (typeof value === "undefined" || value === null) {
+	      if (isRequired) {
+	        return new Error("Required `" + propName + "` was not specified in `" + componentName + "`.");
+	      }
+	      return null;
+	    }
+	    return validator(props, propName, componentName);
+	  };
+	  var chainable = _lodash2["default"].bind(_chainable, null, false);
+	  chainable.isRequired = _lodash2["default"].bind(_chainable, null, true);
+	  return chainable;
+	};
+	
+	exports.makeChainable = makeChainable;
+	/**
+	 * Check that the value is a non-negative number.
+	 */
+	var nonNegative = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.number(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value < 0) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be non-negative.");
+	  }
+	});
+	
+	exports.nonNegative = nonNegative;
+	/**
+	 * Check that the value is a two-item Array in ascending order.
+	 */
+	var minMaxArray = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.array(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value.length !== 2 || value[1] < value[0]) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be a [min, max] array.");
+	  }
+	});
+	
+	exports.minMaxArray = minMaxArray;
+	/**
+	 * Check that the value looks like a d3 `scale` function.
+	 */
+	var scale = makeChainable(function (props, propName, componentName) {
+	  var value = props[propName];
+	  if (typeof value !== "function" || !value.copy || !value.domain || !value.range) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be a d3 scale.");
+	  }
+	});
+	
+	exports.scale = scale;
+	/**
+	 * Check that an array contains items of the same type.
+	 */
+	var homogenousArray = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.array(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value.length > 1) {
+	    var _constructor = (0, _type.getConstructor)(value[0]);
+	    for (var i = 1; i < value.length; i++) {
+	      var otherConstructor = (0, _type.getConstructor)(value[i]);
+	      if (_constructor !== otherConstructor) {
+	        var constructorName = (0, _type.getConstructorName)(value[0]);
+	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
+	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogenous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	      }
+	    }
+	  }
+	});
+	exports.homogenousArray = homogenousArray;
+
+/***/ },
+/* 13 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
 
 /***/ }
 /******/ ])
