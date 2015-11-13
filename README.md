@@ -14,8 +14,8 @@ Access all utils at once:
 ```javascript
 import Util from "victory-util";
 
-Util.log.warn("Uh oh!");
-Util.style.toTransformString({ rotate: 90 });
+Util.Log.warn("Uh oh!");
+Util.Style.toTransformString({ rotate: 90 });
 ```
 
 Or be more selective:
@@ -23,6 +23,7 @@ Or be more selective:
 ```javascript
 import { warn } from "victory-util/lib/log";
 import { containsStrings, containsOnlyStrings } from "victory-util/lib/collection";
+import * as VictoryPropTypes from "victory-util/lib/prop-types";
 ```
 
 ## Development
