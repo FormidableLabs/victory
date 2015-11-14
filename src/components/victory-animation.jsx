@@ -8,6 +8,7 @@ addVictoryInterpolator();
 
 export default class VictoryAnimation extends React.Component {
   static propTypes = {
+    children: React.PropTypes.func,
     velocity: React.PropTypes.number,
     easing: React.PropTypes.string,
     delay: React.PropTypes.number,
