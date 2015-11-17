@@ -28,13 +28,6 @@ Note that `dist/` files are only updated and committed on **tagged releases**.
 
 ## Development
 
-Most development / quality tasks require the `devDependencies` from the
-`builder` archetype. Install all dev dependencies with:
-
-```sh
-$ builder install
-```
-
 All development tasks consist of watching the demo bundle, the test bundle
 and launching a browser pointed to the demo page.
 

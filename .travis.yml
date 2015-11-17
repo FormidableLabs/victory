@@ -3,7 +3,8 @@ language: node_js
 node_js:
   - "0.10"
   - "0.12"
-  #- "4.2"
+  - "4.2"
+  - "5.0"
 
 # Use container-based Travis infrastructure.
 sudo: false
@@ -12,16 +13,23 @@ branches:
   only:
     - master
 
+env:
+  matrix:
+    - NPM_3=true
+    - NPM_3=false
+
 before_install:
   # GUI for real browsers.
   - export DISPLAY=:99.0
   - sh -e /etc/init.d/xvfb start
 
+  # Potentially update to npm 3
+  - 'if [ "$NPM_3" = true ]; then npm install -g npm@3; else true; fi'
+
 script:
-  - node_modules/.bin/builder install
+  - npm --version
   - node_modules/.bin/builder run check-ci
 
   # Prune deps to just production and ensure we can still build
   - npm prune --production
-  - npm install --production
   - node_modules/.bin/builder run build
