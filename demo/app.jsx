@@ -38,7 +38,8 @@ class App extends React.Component {
             color: this.state.color,
             br: this.state.br,
             rotate: this.state.rotate
-          }}>
+          }}
+        >
           {(data) => {
             return (
               <div style={
@@ -56,8 +57,9 @@ class App extends React.Component {
                   alignItems: "center",
                   display: "flex",
                   fontSize: 40,
-                  transform: "rotate(" + data.rotate + "deg)"
-                }}>
+                  transform: `rotate(${data.rotate}deg)`
+                }}
+              >
                 <div style={{textAlign: "center", width: "100%"}}>Test</div>
               </div>
             );
