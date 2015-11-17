@@ -61,16 +61,16 @@ export default class VictoryAnimation extends React.Component {
     if (this.delayTimeout) {
       clearTimeout(this.delayTimeout);
     }
-    /* If an array was supplied */
-    if (Array.isArray(nextProps.data)) {
-      /* Extend the tween queue */
-      this.queue.push(...nextProps.data);
     /* If an object was supplied */
-    } else {
+    if (!Array.isArray(nextProps.data)) {
       // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
       // but let's reuse the same array.
       this.queue.length = 0;
       this.queue.push(nextProps.data);
+    /* If an array was supplied */
+    } else {
+      /* Extend the tween queue */
+      this.queue.push(...nextProps.data);
     }
     /* Start traversing the tween queue */
     this.traverseQueue();
