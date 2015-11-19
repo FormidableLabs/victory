@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 
-import Docs from "./docs";
+import App from "./app";
 import IndexTemplate from "./static-index";
 
 const Index = React.createFactory(IndexTemplate);
@@ -18,7 +18,7 @@ module.exports = (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
   const bundle = source.assetsByChunkName.main;
 
-  const content = ReactDOMServer.renderToStaticMarkup(<Docs />);
+  const content = ReactDOMServer.renderToStaticMarkup(<App />);
   const html = _renderIndex(new Index({
     content: content,
     bundle: bundle

@@ -6,7 +6,7 @@ import Radium, { Style } from 'radium';
 import theme from './theme';
 
 @Radium
-class Docs extends React.Component {
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -14,7 +14,7 @@ class Docs extends React.Component {
           <div className="Container">
             <div className="Row">
               <h1 className="Logo">
-                <img width="230px" src="img/logo-victory.svg" alt="Victory" />
+                <img width="230px" src="static/logo-victory.svg" alt="Victory" />
               </h1>
             </div>
           </div>
@@ -32,7 +32,7 @@ class Docs extends React.Component {
           </div>
           </div>
           <div className="Copy">
-            Victory is a collection of chart components.
+            Victory is a collection of chart components. 
           </div>
           <Style rules={theme}/>
         </div>
@@ -43,7 +43,7 @@ class Docs extends React.Component {
 
 if (typeof document !== "undefined") {
   const content = document.getElementById("content");
-  ReactDOM.render(<Docs/>, content);
+  ReactDOM.render(<App/>, content);
 }
 
-export default Docs;
+export default App;

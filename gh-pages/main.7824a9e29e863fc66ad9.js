@@ -66,9 +66,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _reactDomServer2 = _interopRequireDefault(_reactDomServer);
 
-	var _docs = __webpack_require__(159);
+	var _app = __webpack_require__(159);
 
-	var _docs2 = _interopRequireDefault(_docs);
+	var _app2 = _interopRequireDefault(_app);
 
 	var _staticIndex = __webpack_require__(393);
 
@@ -90,7 +90,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
 	  var bundle = source.assetsByChunkName.main;
 
-	  var content = _reactDomServer2["default"].renderToStaticMarkup(_react2["default"].createElement(_docs2["default"], null));
+	  var content = _reactDomServer2["default"].renderToStaticMarkup(_react2["default"].createElement(_app2["default"], null));
 	  var html = _renderIndex(new Index({
 	    content: content,
 	    bundle: bundle
@@ -19723,16 +19723,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _theme2 = _interopRequireDefault(_theme);
 
-	var Docs = (function (_React$Component) {
-	  _inherits(Docs, _React$Component);
+	var App = (function (_React$Component) {
+	  _inherits(App, _React$Component);
 
-	  function Docs() {
-	    _classCallCheck(this, _Docs);
+	  function App() {
+	    _classCallCheck(this, _App);
 
-	    _get(Object.getPrototypeOf(_Docs.prototype), 'constructor', this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(_App.prototype), 'constructor', this).apply(this, arguments);
 	  }
 
-	  _createClass(Docs, [{
+	  _createClass(App, [{
 	    key: 'render',
 	    value: function render() {
 	      return _react2['default'].createElement(
@@ -19750,7 +19750,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              _react2['default'].createElement(
 	                'h1',
 	                { className: 'Logo' },
-	                _react2['default'].createElement('img', { width: '230px', src: 'img/logo-victory.svg', alt: 'Victory' })
+	                _react2['default'].createElement('img', { width: '230px', src: 'static/logo-victory.svg', alt: 'Victory' })
 	              )
 	            )
 	          )
@@ -19784,7 +19784,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement(
 	            'div',
 	            { className: 'Copy' },
-	            'Victory is a collection of chart components.'
+	            'Victory is a collection of chart components. lalalalalalalala'
 	          ),
 	          _react2['default'].createElement(_radium.Style, { rules: _theme2['default'] })
 	        )
@@ -19792,17 +19792,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }]);
 
-	  var _Docs = Docs;
-	  Docs = (0, _radium2['default'])(Docs) || Docs;
-	  return Docs;
+	  var _App = App;
+	  App = (0, _radium2['default'])(App) || App;
+	  return App;
 	})(_react2['default'].Component);
 
 	if (typeof document !== "undefined") {
 	  var content = document.getElementById("content");
-	  _reactDom2['default'].render(_react2['default'].createElement(Docs, null), content);
+	  _reactDom2['default'].render(_react2['default'].createElement(App, null), content);
 	}
 
-	exports['default'] = Docs;
+	exports['default'] = App;
 	module.exports = exports['default'];
 
 /***/ },

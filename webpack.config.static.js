@@ -14,10 +14,10 @@ var routes = [
 
 module.exports = {
   entry: {
-    main: "./docs/static-render-entry.jsx"
+    main: "./components/static-render-entry.jsx"
   },
   output: {
-    path: path.join(__dirname, "..", OUTPUT_DIR),
+    path: path.join(__dirname, OUTPUT_DIR),
     filename: "main.[hash].js",
     libraryTarget: "umd" // Needs to be universal for `static-site-generator-webpack-plugin` to work
   },
