@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { calc, toTransformString } from "victory-util/lib/style";
+import Util from "victory-util";
 import _ from "lodash";
 
 const styles = {
@@ -24,7 +24,7 @@ export default class VictoryLabel extends React.Component {
      */
     capHeight: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.number
+      Util.PropTypes.nonNegative
     ]),
     /**
      * The children of this component define the content of the label. This
@@ -43,7 +43,7 @@ export default class VictoryLabel extends React.Component {
      */
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.number
+      Util.PropTypes.nonNegative
     ]),
     /**
      * The style prop applies CSS properties to the rendered `<text>` element.
@@ -81,12 +81,12 @@ export default class VictoryLabel extends React.Component {
      * The x prop defines the x coordinate to use as a basis for horizontal
      * positioning.
      */
-    x: PropTypes.number,
+    x: Util.PropTypes.nonNegative,
     /**
      * The y prop defines the y coordinate to use as a basis for vertical
      * positioning.
      */
-    y: PropTypes.number,
+    y: Util.PropTypes.nonNegative,
     /**
      * The dy prop defines a vertical shift from the `y` coordinate. Since this
      * component already accounts for `capHeight`, `lineHeight`, and
@@ -111,7 +111,7 @@ export default class VictoryLabel extends React.Component {
 
   render() {
     const style = this.getStyles();
-    const transform = toTransformString(this.props.transform);
+    const transform = Util.Style.toTransformString(this.props.transform);
     const content = this.props.children || "";
     const lines = content.split("\n");
 
@@ -128,13 +128,17 @@ export default class VictoryLabel extends React.Component {
     let dy = this.props.dy;
     switch (this.props.verticalAnchor) {
     case "end":
-      dy = calc(`${dy} + ${capHeight} / 2 + (0.5 - ${lines.length}) * ${lineHeight}`);
+      dy = Util.Style.calc(
+        `${dy} + ${capHeight} / 2 + (0.5 - ${lines.length}) * ${lineHeight}`
+      );
       break;
     case "middle":
-      dy = calc(`${dy} + ${capHeight} / 2 + (0.5 - ${lines.length} / 2) * ${lineHeight}`);
+      dy = Util.Style.calc(
+        `${dy} + ${capHeight} / 2 + (0.5 - ${lines.length} / 2) * ${lineHeight}`
+      );
       break;
     default:
-      dy = calc(`${dy} + ${capHeight} / 2 + ${lineHeight} / 2`);
+      dy = Util.Style.calc(`${dy} + ${capHeight} / 2 + ${lineHeight} / 2`);
     }
 
 
