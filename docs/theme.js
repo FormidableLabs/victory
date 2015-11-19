@@ -120,28 +120,28 @@ export default {
    * Copy
    */
   '.Copy .highlight': {
-    marginLeft: -16,
-    marginRight: -16
+    marginLeft: '-16px',
+    marginRight: '-16px'
   },
   '.Copy .highlight pre': {
     marginBottom: 0,
     background: '#2b303b',
     color: '#fff',
     fontFamily: '"Source Code Pro", monospace',
-    fontSize: 16,
+    fontSize: '16px',
     lineHeight: 1.2,
     overflow: 'auto',
-    padding: 16
+    padding: '16px'
   },
   '.Copy ul': {
-    paddingLeft: 24,
+    paddingLeft: '24px',
     listStyle: 'none'
   },
   '.Copy ul > li': {
     position: 'relative'
   },
   '.Copy ul > li + li': {
-    marginTop: 10
+    marginTop: '10px'
   },
   '.Copy ul > li:before': {
     content: '""',
@@ -149,14 +149,14 @@ export default {
     height: '1em',
     display: 'block',
     position: 'absolute',
-    fontSize: 8,
+    fontSize: '8px',
     borderRadius: '50%',
     border: '1px solid #B22D26',
-    left: -24,
-    top: 11
+    left: '-24px',
+    top: '11px'
   },
   '.Copy li > ul': {
-    marginTop: 10,
+    marginTop: '10px',
     marginBottom: 0
   },
   '.Copy a': {
@@ -170,7 +170,7 @@ export default {
     fontFamily: '"Source Code Pro", monospace',
     background: '#ede7e1',
     color: '#34302e',
-    borderRadius: 3,
+    borderRadius: '3px',
     padding: '0 5px'
   },
   '.highlight code': {
@@ -182,7 +182,7 @@ export default {
     top: 0,
     right: 0,
     left: 0,
-    padding: 10,
+    padding: '10px',
     borderBottomWidth: 1,
     borderBottomStyle: 'solid',
     borderBottomColor: 'rgb(29, 34, 39)',
@@ -289,11 +289,11 @@ export default {
         fontStyle: 'italic'
       },
       '.Header': {
-        paddingTop: 135,
-        paddingBottom: 45
+        paddingTop: '135px',
+        paddingBottom: '45px'
       },
       '.Logo img': {
-        width: 230
+        width: '230px'
       },
       '.Copy': {
         fontSize: '1.125rem'
@@ -302,7 +302,7 @@ export default {
         margin: '36px -24px'
       },
       '.Copy .highlight pre': {
-        padding: 24
+        padding: '24px'
       },
       '.Interactive .playground': {
         display: 'flex',
