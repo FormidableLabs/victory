@@ -53,7 +53,7 @@ class App extends React.Component {
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     window.setInterval(() => {
       this.setState({
         data: getData()
@@ -66,17 +66,21 @@ class App extends React.Component {
       <div>
         <VictoryPie style={this.state.style}/>
 
-        <VictoryPie style={{
-          parent: {border: "1px solid #ccc", margin: 20},
-          labels: {fontSize: 20, padding: 100}
-        }}/>
+        <VictoryPie
+          style={{
+            parent: {border: "1px solid #ccc", margin: 20},
+            labels: {fontSize: 20, padding: 100}
+          }}
+        />
 
         <VictoryPie style={this.state.style} innerRadius={140}/>
 
-        <VictoryPie style={{
-          parent: {border: "1px solid #ccc", margin: 20},
-          data: {stroke: "transparent", opacity: 0.4}
-        }}/>
+        <VictoryPie
+          style={{
+            parent: {border: "1px solid #ccc", margin: 20},
+            data: {stroke: "transparent", opacity: 0.4}
+          }}
+        />
 
         <VictoryPie style={this.state.style} endAngle={90} startAngle={-90}/>
 
@@ -86,14 +90,16 @@ class App extends React.Component {
           data={this.state.data}
           innerRadius={100}
           animate={{velocity: 0.03}}
-          sliceColors={this.state.sliceColors}/>
+          sliceColors={this.state.sliceColors}
+        />
 
         <VictoryPie
           style={this.state.style}
           endAngle={90}
           innerRadius={140}
           padAngle={5}
-          startAngle={-90}/>
+          startAngle={-90}
+        />
       </div>
     );
   }

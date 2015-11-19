@@ -8,9 +8,9 @@
 // See: https://facebook.github.io/react/docs/test-utils.html
 // const TestUtils = React.addons.TestUtils;
 
-describe("components/victory-pie", function () {
+describe("components/victory-pie", () => {
 
-  it("has expected content with deep render", function () {
+  it("has expected content with deep render", () => {
     return true;
   });
 

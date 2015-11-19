@@ -12,7 +12,7 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .tmp
-npm-debug.log
+npm-debug.log*
 
 # Code / build
 coverage
