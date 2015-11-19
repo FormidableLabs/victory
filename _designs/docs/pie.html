@@ -1,313 +1,173 @@
-<html><head>
-	<meta charset="UTF-8">
-	<title>pie</title>
-	<meta name="generator" content="iA Writer 2.1.3 (5984)">
-</head>
-<body>
-<p><a href="https://travis-ci.org/FormidableLabs/victory-pie"><img src="https://api.travis-ci.org/FormidableLabs/victory-pie.svg" alt="Travis Status" id="trav_img"></a></p>
-
-<h1>Victory Pie</h1>
-
+<h1 id="victory-pie">Victory Pie</h1>
 <p><code>victory-pie</code> draws an SVG pie or donut chart with <a href="https://github.com/facebook/react">React</a> and <a href="https://github.com/mbostock/d3">D3</a>. Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with <a href="https://github.com/FormidableLabs/victory-animation">victory-animation</a>.</p>
-
-<h2>Examples</h2>
-
+<p>##Examples</p>
 <p>The plain component has baked-in sample data, style, angle, and sort defaults, so rendering the pie with no custom properties, like so:</p>
-
-<pre><code class="javascript">&lt;VictoryPie/&gt;
+<pre><code class="lang-javascript">&lt;VictoryPie/&gt;
 </code></pre>
-
 <p>Will look like this:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-pie-sample.png" alt="basic pie chart">
-<figcaption>basic pie chart</figcaption>
-</figure>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-pie-sample.png" alt="basic pie chart"></p>
 <p>Labels, by default, are placed at the centroid of each pie slice, which can look a little strange sometimes. Apply <code>padding</code> and <code>labelPadding</code> like so:</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<pre><code class="lang-javascript">&lt;VictoryPie
   labelPadding={180}
   padding={30}/&gt;
 </code></pre>
-
 <p>To move your labels out from the centroid:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-pie-labels.png" alt="pie chart with labels outside">
-<figcaption>pie chart with labels outside</figcaption>
-</figure>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-pie-labels.png" alt="pie chart with labels outside"></p>
 <p>But really, who wants a pie chart? Specify an <code>innerRadius</code> greater than 0 to turn the pie into a donut:</p>
-
-<pre><code class="javascript">&lt;VictoryPie innerRadius={140}/&gt;
+<pre><code class="lang-javascript">&lt;VictoryPie innerRadius={140}/&gt;
 </code></pre>
-
 <p>Yum:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-sample.png" alt="basic donut chart">
-<figcaption>basic donut chart</figcaption>
-</figure>
-
-<p>All default styles (<code>borderColor</code>, <code>borderWidth</code>, <code>fontColor</code>, <code>fontFamily</code>, <code>fontSize</code>, <code>fontWeight</code>, <code>height</code>, <code>innerRadius</code>, <code>labelPadding</code>, <code>padding</code>, <code>sliceColors</code>, <code>width</code>), angles (<code>startAngle</code>, <code>endAngle</code>, <code>padAngle</code>) and sorting (<code>sort</code>) can be overridden by specifying your own props:</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-sample.png" alt="basic donut chart"></p>
+<p>All default styles (<code>borderColor</code>, <code>borderWidth</code>, <code>fontColor</code>, <code>fontFamily</code>, <code>fontSize</code>, <code>fontWeight</code>, <code>height</code>,  <code>innerRadius</code>, <code>labelPadding</code>, <code>padding</code>, <code>sliceColors</code>, <code>width</code>), angles (<code>startAngle</code>, <code>endAngle</code>, <code>padAngle</code>) and sorting (<code>sort</code>) can be overridden by specifying your own props:</p>
+<pre><code class="lang-javascript">&lt;VictoryPie
   fontSize={16}
   fontWeight={200}
   innerRadius={80}/&gt;
 </code></pre>
-
 <p>Makes this:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-thick.png" alt="donut with thicker slices">
-<figcaption>donut with thicker slices</figcaption>
-</figure>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-thick.png" alt="donut with thicker slices"></p>
 <p>Similarly,</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<pre><code class="lang-javascript">&lt;VictoryPie
   borderWidth={2}
-  fontColor="white"
+  fontColor=&quot;white&quot;
   innerRadius={140}/&gt;
 </code></pre>
-
 <p>Makes:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-white.png" alt="donut with white text">
-<figcaption>donut with white text</figcaption>
-</figure>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-white.png" alt="donut with white text"></p>
 <p>Want a half donut? Specify a <code>startAngle</code> and <code>endAngle</code>:</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<pre><code class="lang-javascript">&lt;VictoryPie
   borderWidth={2}
   endAngle={90}
-  fontColor="white"
+  fontColor=&quot;white&quot;
   innerRadius={140}
   startAngle={-90}/&gt;
 </code></pre>
-
-<p>Voilà:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-half.png" alt="half donut">
-<figcaption>half donut</figcaption>
-</figure>
-
+<p>Voilà:
+<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-half.png" alt="half donut"></p>
 <p>Specify a <code>padAngle</code> to add space between adjacent slices:</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<pre><code class="lang-javascript">&lt;VictoryPie
   borderWidth={2}
   endAngle={90}
-  fontColor="white"
+  fontColor=&quot;white&quot;
   innerRadius={140}
   padAngle={5}
   startAngle={-90}/&gt;
 </code></pre>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-padding.png" alt="donut with padding">
-<figcaption>donut with padding</figcaption>
-</figure>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-padding.png" alt="donut with padding"></p>
 <p>Custom data (age vs population) and colors:</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<pre><code class="lang-javascript">&lt;VictoryPie
   borderWidth={2}
   data={[
-    {x: "&lt;5", y: 6279},
-    {x: "5-13", y: 9182},
-    {x: "14-17", y: 5511},
-    {x: "18-24", y: 7164},
-    {x: "25-44", y: 6716},
-    {x: "45-64", y: 4263},
-    {x: "≥65", y: 7502}
+    {x: &quot;&lt;5&quot;, y: 6279},
+    {x: &quot;5-13&quot;, y: 9182},
+    {x: &quot;14-17&quot;, y: 5511},
+    {x: &quot;18-24&quot;, y: 7164},
+    {x: &quot;25-44&quot;, y: 6716},
+    {x: &quot;45-64&quot;, y: 4263},
+    {x: &quot;≥65&quot;, y: 7502}
   ]}
-  fontColor="white"
+  fontColor=&quot;white&quot;
   fontWeight={200}
   innerRadius={150}
   sliceColors={[
-    "#D85F49",
-    "#F66D3B",
-    "#D92E1D",
-    “#D73C4C”,
-    “#FFAF59”,
-    “#E28300”,
-    “#F6A57F”
+    &quot;#D85F49&quot;,
+    &quot;#F66D3B&quot;,
+    &quot;#D92E1D&quot;,
+    &quot;#D73C4C&quot;,
+    &quot;#FFAF59&quot;,
+    &quot;#E28300&quot;,
+    &quot;#F6A57F&quot;
   ]}/&gt;
 </code></pre>
-
 <p>Snazzes things up a bit:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-data.png" alt="donut with data and custom colors">
-<figcaption>donut with data and custom colors</figcaption>
-</figure>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-data.png" alt="donut with data and custom colors"></p>
 <p>If the data changes, the donut updates seamlessly:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-animation.gif" alt="donut data change animated">
-<figcaption>donut data change animated</figcaption>
-</figure>
-
-<p>Set the <code>sort</code> prop to <code>”ascending”</code>, <code>”descending”</code>, or your own comparator:</p>
-
-<pre><code class="javascript">&lt;VictoryPie
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-animation.gif" alt="donut data change animated"></p>
+<p>Set the <code>sort</code> prop to <code>&quot;ascending&quot;</code>, <code>&quot;descending&quot;</code>, or your own comparator:</p>
+<pre><code class="lang-javascript">&lt;VictoryPie
   borderWidth={2}
   data={[
-    { x: “&lt;5”, y: 4577 },
-    { x: “5-13”, y: 5661 },
-    { x: “14-17”, y: 3038 },
-    { x: “18-24”, y: 8151 },
-    { x: “25-44”, y: 7785 },
-    { x: “45-64”, y: 1911 },
-    { x: “≥65”, y: 7665 }
+    { x: &quot;&lt;5&quot;, y: 4577 },
+    { x: &quot;5-13&quot;, y: 5661 },
+    { x: &quot;14-17&quot;, y: 3038 },
+    { x: &quot;18-24&quot;, y: 8151 },
+    { x: &quot;25-44&quot;, y: 7785 },
+    { x: &quot;45-64&quot;, y: 1911 },
+    { x: &quot;≥65&quot;, y: 7665 }
   ]}
-  fontColor=“white”
+  fontColor=&quot;white&quot;
   fontWeight={200}
   innerRadius={150}
   sliceColors={[
-    “#D85F49”,
-    “#F66D3B”,
-    “#D92E1D”,
-    “#D73C4C”,
-    “#FFAF59”,
-    “#E28300”,
-    “#F6A57F”
+    &quot;#D85F49&quot;,
+    &quot;#F66D3B&quot;,
+    &quot;#D92E1D&quot;,
+    &quot;#D73C4C&quot;,
+    &quot;#FFAF59&quot;,
+    &quot;#E28300&quot;,
+    &quot;#F6A57F&quot;
   ]}
-  sort=“descending”/&gt;
+  sort=&quot;descending&quot;/&gt;
 </code></pre>
-
 <p>To organize by slice size:</p>
-
-<figure>
-<img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-sort.png" alt="donut descending sort">
-<figcaption>donut descending sort</figcaption>
-</figure>
-
-<h2>The API</h2>
-
-<h3>Props</h3>
-
-<p>All props are <em>optional</em>. They can be omitted and the component will</p>
-
-<p>still render.</p>
-
+<p><img src="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/victory-donut-sort.png" alt="donut descending sort"></p>
+<h2 id="the-api">The API</h2>
+<h3 id="props">Props</h3>
+<p>All props are <em>optional</em>. They can be omitted and the component will
+still render.</p>
 <p>The following props are supported:</p>
-
-<h4><strong>borderColor</strong></h4>
-
-<p><em>A string.</em> All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: <code>”#ff0000”</code>, <code>”rgba(255, 0, 0, 1)”</code>, <code>”red”</code>.</p>
-
-<p><em>Default value:</em> <code>”white”</code></p>
-
-<h4><strong>borderWidth</strong></h4>
-
-<p><em>A number or string.</em> Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as <code>”2em”</code>.</p>
-
+<p>####<strong>borderColor</strong></p>
+<p><em>A string.</em> All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: <code>&quot;#ff0000&quot;</code>, <code>&quot;rgba(255, 0, 0, 1)&quot;</code>, <code>&quot;red&quot;</code>.</p>
+<p><em>Default value:</em> <code>&quot;white&quot;</code></p>
+<p>####<strong>borderWidth</strong></p>
+<p><em>A number or string.</em> Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as <code>&quot;2em&quot;</code>.</p>
 <p><em>Default value:</em> <code>1</code></p>
-
-<h4><strong>data</strong></h4>
-
-<p><em>An array of objects.</em> If the <code>data</code> prop is omitted, the pie will render sample data. Objects in the <code>data</code> array must be of the form <code>{ x: &lt;x-val&gt;, y: &lt;y-val&gt; }</code>, where <code>&lt;x-val&gt;</code> is the slice label (string or number), and <code>&lt;y-val&gt;</code> is the corresponding number used to calculate arc length as a proportion of the pie’s circumference.</p>
-
-<p><em>Default value:</em> <code>[{ x: “A”, y: 1 }, { x: “B”, y: 2 }, { x: “C”, y: 3 }, { x: “D”, y: 1 }, { x: “E”, y: 2 }]</code></p>
-
-<h4><strong>endAngle</strong></h4>
-
+<p>####<strong>data</strong></p>
+<p><em>An array of objects.</em> If the <code>data</code> prop is omitted, the pie will render sample data. Objects in the <code>data</code> array must be of the form <code>{ x: &lt;x-val&gt;, y: &lt;y-val&gt; }</code>, where <code>&lt;x-val&gt;</code> is the slice label (string or number), and <code>&lt;y-val&gt;</code> is the corresponding number used to calculate arc length as a proportion of the pie&#39;s circumference.</p>
+<p><em>Default value:</em> <code>[{ x: &quot;A&quot;, y: 1 }, { x: &quot;B&quot;, y: 2 }, { x: &quot;C&quot;, y: 3 }, { x: &quot;D&quot;, y: 1 }, { x: &quot;E&quot;, y: 2 }]</code></p>
+<p>####<strong>endAngle</strong></p>
 <p><em>A number.</em> The overall end angle of the pie in degrees.</p>
-
 <p><em>Default value:</em> <code>360</code></p>
-
-<h4><strong>fontColor</strong></h4>
-
-<p><em>A string.</em> All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: <code>”#ff0000”</code>, <code>”rgba(255, 0, 0, 1)”</code>, <code>”red”</code>.</p>
-
-<p><em>Default value:</em> <code>”black”</code></p>
-
-<h4><strong>fontFamily</strong></h4>
-
+<p>####<strong>fontColor</strong></p>
+<p><em>A string.</em> All color formats, including HEX, RGB/RGBA, and HTML color names are accepted. Examples: <code>&quot;#ff0000&quot;</code>, <code>&quot;rgba(255, 0, 0, 1)&quot;</code>, <code>&quot;red&quot;</code>.</p>
+<p><em>Default value:</em> <code>&quot;black&quot;</code></p>
+<p>####<strong>fontFamily</strong></p>
 <p><em>A string.</em> Single font names or font stacks are accepted.</p>
-
-<p><em>Default value:</em> <code>”’Helvetica Neue’, Helvetica, Arial, sans-serif”</code></p>
-
-<h4><strong>fontSize</strong></h4>
-
-<p><em>A number or string.</em> Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as <code>”2em”</code>.</p>
-
+<p><em>Default value:</em> <code>&quot;&#39;Helvetica Neue&#39;, Helvetica, Arial, sans-serif&quot;</code></p>
+<p>####<strong>fontSize</strong></p>
+<p><em>A number or string.</em> Numbers are assigned as pixels. Numbers with specified units can be passed in as a string, such as <code>&quot;2em&quot;</code>.</p>
 <p><em>Default value:</em> <code>10</code></p>
-
-<h4><strong>fontWeight</strong></h4>
-
-<p><em>A number or string.</em> All CSS <code>font-weight</code> properties (<code>100</code>, <code>200</code>, <code>300</code>, <code>400</code>, <code>500</code>, <code>600</code>, <code>700</code>, <code>800</code>, <code>900</code>, <code>”normal”</code>, <code>”bold”</code>, <code>”bolder”</code>, <code>”lighter”</code>, <code>”initial”</code>, <code>”inherit”</code>) are accepted.</p>
-
+<p>####<strong>fontWeight</strong></p>
+<p><em>A number or string.</em> All CSS <code>font-weight</code> properties (<code>100</code>, <code>200</code>, <code>300</code>, <code>400</code>, <code>500</code>, <code>600</code>, <code>700</code>, <code>800</code>, <code>900</code>, <code>&quot;normal&quot;</code>, <code>&quot;bold&quot;</code>, <code>&quot;bolder&quot;</code>, <code>&quot;lighter&quot;</code>, <code>&quot;initial&quot;</code>, <code>&quot;inherit&quot;</code>) are accepted.</p>
 <p><em>Default value:</em> <code>400</code></p>
-
-<h4><strong>height</strong></h4>
-
+<p>####<strong>height</strong></p>
 <p><em>A number.</em> A pixel amount used to calculate chart size. The smaller of the two dimension properties, <code>height</code> and <code>width</code>, will be used to set diameter. Note that any specified <code>padding</code> is included in overall chart dimensions, so the diameter of the pie will be smaller if <code>padding</code> is greater than 0.</p>
-
 <p><em>Default value:</em> <code>400</code></p>
-
-<h4><strong>innerRadius</strong></h4>
-
+<p>####<strong>innerRadius</strong></p>
 <p><em>A number.</em> A pixel amount used to calculate the distance between the center of the chart and the inner edge of a donut.</p>
-
-<p><em>Default value:</em> <code>0</code></p>
-
-<h4><strong>labelPadding</strong></h4>
-
+<p><em>Default value:</em>  <code>0</code></p>
+<p>####<strong>labelPadding</strong></p>
 <p><em>A number.</em> A pixel amount used to position labels further out from the centroid of a pie slice.</p>
-
-<p><em>Default value:</em> <code>0</code></p>
-
-<h4><strong>padAngle</strong></h4>
-
+<p><em>Default value:</em>  <code>0</code></p>
+<p>####<strong>padAngle</strong></p>
 <p><em>A number.</em> The pad angle of the pie in degrees. Adjacent slices will be separated by the pad angle.</p>
-
 <p><em>Default value:</em> <code>0</code></p>
-
-<h4><strong>padding</strong></h4>
-
+<p>####<strong>padding</strong></p>
 <p><em>A number.</em> A pixel amount used to add padding around the outer edge of the pie.</p>
-
 <p><em>Default value:</em> <code>0</code></p>
-
-<h4><strong>sliceColors</strong></h4>
-
+<p>####<strong>sliceColors</strong></p>
 <p><em>An array of strings.</em> If the <code>data</code> array is longer than its corresponding <code>sliceColors</code> array, slice color assignments will continue by looping through the array.</p>
-
-<p><em>Default value:</em> <code>[“#75C776”, “#39B6C5”, “#78CCC4”, “#62C3A4”, “#64A8D1”, “#8C95C8”, “#3BAF74”]</code></p>
-
-<h4><strong>sort</strong></h4>
-
-<p><em>A string or function.</em> Sort order strings <code>”ascending”</code> and <code>”descending”</code>are accepted, as are custom comparator functions.</p>
-
+<p><em>Default value:</em> <code>[&quot;#75C776&quot;, &quot;#39B6C5&quot;, &quot;#78CCC4&quot;, &quot;#62C3A4&quot;, &quot;#64A8D1&quot;, &quot;#8C95C8&quot;, &quot;#3BAF74&quot;]</code></p>
+<p>####<strong>sort</strong></p>
+<p><em>A string or function.</em> Sort order strings <code>&quot;ascending&quot;</code> and <code>&quot;descending&quot;</code>are accepted, as are custom comparator functions.</p>
 <p><em>Default value:</em> <code>null</code></p>
-
-<h4><strong>startAngle</strong></h4>
-
+<p>####<strong>startAngle</strong></p>
 <p><em>A number.</em> The overall start angle of the pie in degrees.</p>
-
 <p><em>Default value:</em> <code>0</code></p>
-
-<h4><strong>width</strong></h4>
-
+<p>####<strong>width</strong></p>
 <p><em>A number.</em> A pixel amount used to calculate chart size. The smaller of the two dimension properties, <code>height</code> and <code>width</code>, will be used to set diameter. Note that any specified <code>padding</code> is included in overall chart dimensions, so the diameter of the pie will be smaller if <code>padding</code> is greater than 0.</p>
-
 <p><em>Default value:</em> <code>400</code></p>
-
-<h2>Development</h2>
-
-<p>Please see <a href="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/DEVELOPMENT.md">DEVELOPMENT</a></p>
-
-<h2>Contributing</h2>
-
-<p>Please see <a href="https://raw.githubusercontent.com/FormidableLabs/victory-pie/master/CONTRIBUTING.md">CONTRIBUTING</a></p>
-
-
-</body></html>
+<h2 id="development">Development</h2>
+<p>Please see <a href="https://github.com/FormidableLabs/victory-pie/blob/master/DEVELOPMENT.md">DEVELOPMENT</a></p>
+<h2 id="contributing">Contributing</h2>
+<p>Please see <a href="https://github.com/FormidableLabs/victory-pie/blob/master/CONTRIBUTING.md">CONTRIBUTING</a></p>

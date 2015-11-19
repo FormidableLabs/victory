@@ -1,5 +1,14 @@
 var marked = require("marked");
-var docs = require("./docs/pie.md");
-
-document.getElementById("markdown").innerHTML =
-  marked(docs);
+var fs = require("fs");
+​
+fs.readFile("./docs/pie.md", "utf8", function(err, data){
+    if (err) { console.log(err) }
+​
+    fs.writeFile("pie.html", marked(data), function(err) {
+      if(err) {
+          return console.log(err);
+      }
+​
+      console.log("The file was saved!");
+    });
+});

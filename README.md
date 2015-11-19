@@ -1,18 +1,13 @@
-Victory
+Victory Documentation Site
 =======
+Welcome to the docs site!
+
 Victory is an opinionated set of data visualization tools built in React and based on d3. Victory relies on d3 for everything d3 does best, and lets React handle *all* the rendering. Victory's API is built around sensible defaults that make it easy to get started.
-
-=======
-# component-playground
-A component for rendering React components with editable source and live preview
-
-![Component Playground]
-(http://i.imgur.com/se3avpr.png)
 
 ###Installation
 
 ```
-npm install component-playground
+
 ```
 
 ###Set up
