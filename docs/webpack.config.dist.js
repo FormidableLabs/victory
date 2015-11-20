@@ -1,43 +1,42 @@
+/*globals __dirname:false */
 "use strict";
 
 var webpack = require("webpack");
-var path = require("path");
-var meta = require("./meta");
 
 module.exports = {
-  cache: true,
-  entry: path.join(__dirname, "src/index.js"),
-  externals: [
-    {
-      "react": {
-        root: "React",
-        commonjs2: "react",
-        commonjs: "react",
-        amd: "react"
-      }
-    }
-  ],
+
   output: {
-    path: path.join(__dirname, "dist"),
-    filename: meta.FILE_NAME + ".min.js",
-    library: meta.LIB_NAME,
-    libraryTarget: "umd"
+    path: __dirname,
+    filename: "dist.js",
+    publicPath: "/assets/"
+  },
+
+  cache: true,
+  devtool: "source-map",
+  entry: {
+    app: ["./docs/docs.jsx"]
+  },
+  stats: {
+    colors: true,
+    reasons: true
   },
   resolve: {
     extensions: ["", ".js", ".jsx"]
   },
+  externals: [
+    {
+      "react": "React"
+    },
+    {
+      "babel-core/browser": "babel"
+    }
+  ],
   module: {
     loaders: [
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/],
-        loader: "babel"
-      }, {
-        test: /\.css$/,
-        loader: "style!css"
-      }, {
-        test: /\.(png|jpg)$/,
-        loader: "url?limit=8192"
+        loaders: ["babel-loader?stage=0"]
       }
     ]
   },
@@ -53,6 +52,5 @@ module.exports = {
       // is in condtionals like: `if (process.env.NODE_ENV === "production")`
       "process.env.NODE_ENV": JSON.stringify("production")
     }),
-    new webpack.SourceMapDevToolPlugin("[file].map")
   ]
 };

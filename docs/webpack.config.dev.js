@@ -12,14 +12,13 @@ module.exports = {
 
   output: {
     path: __dirname,
-    filename: "main.js",
-    publicPath: "/assets/"
+    filename: "main.js"
   },
 
   cache: true,
   devtool: "source-map",
   entry: {
-    app: ["./demo/app.jsx"]
+    app: ["./docs/docs.jsx"]
   },
   stats: {
     colors: true,
@@ -33,13 +32,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [/node_modules/],
-        loader: "babel"
-      }, {
-        test: /\.css$/,
-        loader: "style!css"
-      }, {
-        test: /\.(png|jpg)$/,
-        loader: "url?limit=8192"
+        loaders: ["babel-loader?stage=0"]
       }
     ]
   },
