@@ -1,5 +1,25 @@
+// Fonts
 const sansSerif = '"Karla", "Helvetica Neue", Helvetica, Arial, sans-serif';
 const serif = '"Didot", "Cochin", serif';
+
+// Colors
+const deepNavy = '#1b2633';
+const navy = '#2b303b';
+
+const whiteSand = '#ede7e1';
+const palestSand = '#ebe3db';
+const palerSand = '#e1d7cd';
+const paleSand = '#d1c7bc';
+const sand = '#b5aca3';
+const darkSand = '#91887e';
+const darkerSand = '#67615c';
+const darkestSand = '#4d4945';
+const mud = '#34302e';
+
+const paleRed = '#bd4139';
+const red = '#bd1e13';
+
+// Stylesheet
 export default {
   /*
    * Normalize & Element Selectors
@@ -18,7 +38,7 @@ export default {
     fontFamily: sansSerif,
     lineHeight: 1.5,
     margin: 0,
-    color: '#1b2633',
+    color: deepNavy,
     webkitboxsizing: 'border-box',
     mozboxsizing: 'border-box',
     boxSizing: 'border-box',
@@ -51,7 +71,7 @@ export default {
     verticalAlign: 'middle'
   },
   'th, td': {
-    border: '1px solid #ebe3db',
+    border: '1px solid ' + palestSand,
     padding: '0.425em 0.75em',
     verticalAlign: 'top'
   },
@@ -89,6 +109,18 @@ export default {
     fontFamily: serif,
     fontWeight: 'normal'
   },
+  'a': {
+    color: navy,
+    fontWeight: 700,
+    textDecoration: 'none',
+    boxShadow: 'inset 0 -0.05em 0 ' + sand,
+    transition: 'color 0.2s ease, box-shadow 0.5s ease'
+  },
+  'a:hover, a:focus': {
+    color: red,
+    boxShadow: 'inset 0 -0.05em 0 ' + paleRed,
+    transition: 'color 0.2s ease, box-shadow 0.5s ease'
+  },
   /*
    * Headlines/Headings
    */
@@ -105,7 +137,7 @@ export default {
     textTransform: 'uppercase',
     fontSize: '0.85em',
     fontWeight: 'bold',
-    color: '#91887e'
+    color: darkSand
   },
   /*
    * Layout/Grid
@@ -120,28 +152,28 @@ export default {
    * Copy
    */
   '.Copy .highlight': {
-    marginLeft: -16,
-    marginRight: -16
+    marginLeft: '-16px',
+    marginRight: '-16px'
   },
   '.Copy .highlight pre': {
     marginBottom: 0,
-    background: '#2b303b',
+    background: navy,
     color: '#fff',
     fontFamily: '"Source Code Pro", monospace',
-    fontSize: 16,
+    fontSize: '16px',
     lineHeight: 1.2,
     overflow: 'auto',
-    padding: 16
+    padding: '16px'
   },
   '.Copy ul': {
-    paddingLeft: 24,
+    paddingLeft: '24px',
     listStyle: 'none'
   },
   '.Copy ul > li': {
     position: 'relative'
   },
   '.Copy ul > li + li': {
-    marginTop: 10
+    marginTop: '10px'
   },
   '.Copy ul > li:before': {
     content: '""',
@@ -151,25 +183,18 @@ export default {
     position: 'absolute',
     fontSize: 8,
     borderRadius: '50%',
-    border: '1px solid #B22D26',
-    left: -24,
-    top: 11
+    border: '1px solid ' + red,
+    left: '-24px',
+    top: '11px'
   },
   '.Copy li > ul': {
-    marginTop: 10,
-    marginBottom: 0
-  },
-  '.Copy a': {
-    color: '#2b303b',
-    fontWeight: 700
-  },
-  '.Copy a:hover, .Copy a:focus': {
-    color: '#c33b33'
+    marginTop: '10px',
+    marginBottom: '0px'
   },
   '.Copy code': {
     fontFamily: '"Source Code Pro", monospace',
-    background: '#ede7e1',
-    color: '#34302e',
+    background: whiteSand,
+    color: mud,
     borderRadius: 3,
     padding: '0 5px'
   },
@@ -177,20 +202,16 @@ export default {
     background: 'transparent',
     padding: 0
   },
-  '.Formidabanner': {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    left: 0,
-    padding: 10,
-    borderBottomWidth: 1,
-    borderBottomStyle: 'solid',
-    borderBottomColor: 'rgb(29, 34, 39)',
-    color: 'rgb(255, 255, 255)',
-    fontWeight: 700,
-    textDecoration: 'none',
-    textAlign: 'center',
-    background: 'rgb(43, 48, 59)'
+  '.Installer': {
+    display: 'inline-block',
+    background: navy,
+    border: '1px solid #16191F',
+    color: '#fff',
+    fontFamily: '"Source Code Pro", monospace',
+    fontSize: '18px',
+    lineHeight: 1.2,
+    margin: '0 auto',
+    padding: '16px 32px'
   },
   /*
    * Interactive/Component Playground
@@ -214,7 +235,7 @@ export default {
   '.Interactive .playgroundCode': {
     flex: '0 0 100%',
     verticalAlign: 'top',
-    background: '#fff', // base16 ocean dark #2b303b
+    background: '#fff',
     fontFamily: '"Source Code Pro", monospace',
     fontSize: '1rem',
     lineHeight: 1.2,
@@ -253,7 +274,7 @@ export default {
     fontFamily: '"Source Code Pro", monospace'
   },
   '.Prop-type': {
-    color: '#91887e',
+    color: darkSand,
     display: 'block',
     fontStyle: 'italic',
     lineHeight: '1em'
@@ -271,7 +292,7 @@ export default {
     textTransform: 'uppercase',
     fontSize: '0.85em',
     fontWeight: 'bold',
-    color: '#91887e',
+    color: darkSand,
     letterSpacing: '0.04em'
   },
   '.Prop-examples-value': {
@@ -281,6 +302,19 @@ export default {
     fontFamily: '"Source Code Pro", monospace',
     color: '#4d4945'
   },
+  /* Utilities */
+  '.u-textCenter': {
+    textAlign: 'center'
+  },
+  '.u-textLeft': {
+    textAlign: 'left'
+  },
+  '.u-textRight': {
+    textAlign: 'right'
+  },
+  '.u-marginModule > *:last-child': {
+    marginBottom: 0
+  },
   mediaQueries: {
     'only screen and (min-width: 44em)': {
       '.Headline--major': {
@@ -289,11 +323,11 @@ export default {
         fontStyle: 'italic'
       },
       '.Header': {
-        paddingTop: 135,
-        paddingBottom: 45
+        paddingTop: '135px',
+        paddingBottom: '45px'
       },
       '.Logo img': {
-        width: 230
+        width: '230px'
       },
       '.Copy': {
         fontSize: '1.125rem'
@@ -302,7 +336,12 @@ export default {
         margin: '36px -24px'
       },
       '.Copy .highlight pre': {
-        padding: 24
+        padding: '24px'
+      },
+      '.Installer': {
+        padding: '24px 48px',
+        marginTop: '24px',
+        marginBottom: '24px'
       },
       '.Interactive .playground': {
         display: 'flex',
@@ -329,7 +368,7 @@ export default {
   Created with Base16 Builder by Chris Kempson (https://github.com/chriskempson/base16-builder)
   */
   '.highlight .hll': { 'background-color': '#4f5b66' },
-  '.highlight': { 'background': '#2b303b', 'color': '#eff1f5' },
+  '.highlight': { 'background': navy, 'color': '#eff1f5' },
   '.highlight .c': { 'color': '#65737e' }, /* Comment */
   '.highlight .err': { 'color': '#bf616a' }, /* Error */
   '.highlight .k': { 'color': '#b48ead' }, /* Keyword */

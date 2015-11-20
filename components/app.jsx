@@ -5,37 +5,45 @@ import Radium, { Style } from 'radium';
 
 import theme from './theme';
 
+// TODO: Extract these global Header/Footers into formidable-landers
+// https://github.com/FormidableLabs/formidable-landers/issues/12
+import Header from "./header";
+import Footer from "./footer";
+
 @Radium
 class App extends React.Component {
   render() {
     return (
-      <div>
-        <header className="Header">
+      <div style={{display: 'flex', minHeight: '100vh', flexDirection: 'column'}}>
+        <Header/>
+        <main style={{flex: '1'}}>
+          <header className="Header">
+            <div className="Container">
+              <div className="Row" style={{margin: '0 auto'}}>
+                <h1 className="Logo u-textCenter">
+                  <img width="230px" src="static/logo-victory.svg" alt="Victory" />
+                </h1>
+              </div>
+            </div>
+          </header>
+
           <div className="Container">
             <div className="Row">
-              <h1 className="Logo">
-                <img width="230px" src="static/logo-victory.svg" alt="Victory" />
-              </h1>
+              <p className="Headline Headline--major u-textCenter">Powerful, effortless data visualization</p>
+              <p className="Copy">
+                Victory is.
+              </p>
+
+            <div className="u-textCenter u-marginModule">
+              <code className="Installer">npm install victory</code>
+            </div>
+            </div>
+            <div className="Copy">
             </div>
           </div>
-        </header>
-
-        <div className="Container">
-          <div className="Row">
-            <p className="Headline Headline--major u-textCenter">Powerful, effortless data visualization</p>
-            <p className="Copy">
-              Victory is a collection of chart components that swap out D3’s DOM model for ReactJS. It combines low level control of animations and transitions with chart reusability.
-            </p>
-
-          <div className="u-textCenter u-marginModule">
-            <code className="Installer">npm install victory</code>
-          </div>
-          </div>
-          <div className="Copy">
-            Victory is a collection of chart components. 
-          </div>
-          <Style rules={theme}/>
-        </div>
+        </main>
+        <Footer/>
+        <Style rules={theme}/>
       </div>
     )
   }
