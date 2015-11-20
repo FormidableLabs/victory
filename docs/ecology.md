@@ -5,22 +5,22 @@ Victory is a collection of composable React components you can use to build inte
 ### Overarching benefits and motivations
 
 1. Bridge the gap between beginners (more likely to use Chart.js or Highcharts) and experts (more likely to use D3)
-  a. Provide a gradient of customization, from none (just pass in data) to full (build your own visualization features)
-  b. Provide interactive documentation to help developers get visualizations into their projects (see [ecology.js](https://github.com/FormidableLabs/ecology)) see [victory-chart](projects.formidablelabs.com/victory-chart/) for an example
-  c. Provide better developer UX generally, for both instantiating data visualizations and creating them
+  * Provide a gradient of customization, from none (just pass in data) to full (build your own visualization features)
+  * Provide interactive documentation to help developers get visualizations into their projects (see [ecology.js](https://github.com/FormidableLabs/ecology)) see [victory-chart](projects.formidablelabs.com/victory-chart/) for an example
+  * Provide better developer UX generally, for both instantiating data visualizations and creating them
 2. Leverage the power of React to handle DOM, component lifecycle, state, computed styles, etc.
 3. Make data visualizations first class citizens in the open source community
-  a. Repos rather than gists
-  b. forking / issues for continual improvement
-  c. `package.json` for dependencies
-  d. minified dists / umd builds for CDN
-  e. Babel for ES6
-  f. Webpack for builds
-  g. `propTypes` for input validation
-  h. Hot Reloading
-  i. sourcemaps
-  j. `eslintrc`
-  k. Tests
+  * Repos rather than gists
+  * forking / issues for continual improvement
+  * `package.json` for dependencies
+  * minified dists / umd builds for CDN
+  * Babel for ES6
+  * Webpack for builds
+  * `propTypes` for input validation
+  * Hot Reloading
+  * sourcemaps
+  * `eslintrc`
+  * Tests
 
 ### Using Victory
 
