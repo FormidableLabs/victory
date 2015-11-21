@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Ecology from 'ecology';
 import Radium, { Style } from 'radium';
+import { Link } from 'react-router';
 
 import theme from './theme';
 
@@ -31,6 +32,7 @@ class App extends React.Component {
             <code className="Installer">npm install victory</code>
           </div>
           </div>
+          <Link to="docs">Dang, I'm a link!</Link>
           <div className="Copy">
             Victory is a collection of chart components. 
           </div>
@@ -39,11 +41,6 @@ class App extends React.Component {
       </div>
     )
   }
-}
-
-if (typeof document !== "undefined") {
-  const content = document.getElementById("content");
-  ReactDOM.render(<App/>, content);
 }
 
 export default App;

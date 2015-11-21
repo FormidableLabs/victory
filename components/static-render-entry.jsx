@@ -16,7 +16,7 @@ const _renderIndex = (component) => `<!DOCTYPE html>${ReactDOMServer.renderToSta
 
 module.exports = (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
-  const bundle = source.assetsByChunkName.main;
+  const bundle = `/${source.assetsByChunkName.main}`;
 
   const content = ReactDOMServer.renderToStaticMarkup(<App />);
   const html = _renderIndex(new Index({
