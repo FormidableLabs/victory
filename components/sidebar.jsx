@@ -5,6 +5,10 @@ import Radium from 'radium';
 class Sidebar extends React.Component {
 
   getSidebarStyles() {
+    const navy = '#2b303b';
+    const red = '#bd1e13';
+    const darkSand = '#91887e';
+
     return {
       base: {
         margin: 0,
@@ -13,56 +17,72 @@ class Sidebar extends React.Component {
           flex: '0 0 12em'
         }
       },
-      styleOverrides: this.props.styleOverrides
-    };
-  }
-
-  // .Copy ul > li {
-  //   position: relative;
-  // }
-  //
-  // .Copy ul > li + li {
-  //   margin-top: 10px;
-  // }
-  //
-  // .Copy ul > li:before {
-  //   content: "";
-  //   width: 1em;
-  //   height: 1em;
-  //   display: block;
-  //   position: absolute;
-  //   font-size: 8px;
-  //   border-radius: 50%;
-  //   border: 1px solid #B22D26;
-  //   left: -24px;
-  //   top: 11px;
-  // }
-  //
-  // .Copy li > ul {
-  //   margin-top: 10px;
-  //   margin-bottom: 0;
-  // }
-  getTableOfContentsStyles() {
-    return {
-      margin: '0',
-      paddingLeft: '24px',
-      listStyle: 'none'
+      defaultList: {
+        margin: '0',
+        padding: '6px',
+        listStyle: 'none'
+      },
+      defaultItem: {
+        marginTop: '0.3em',
+        position: 'relative',
+        lineHeight: 1.4
+      },
+      openList: {
+        margin: '0',
+        padding: '0.25em 0.25em 0',
+        fontSize: '0.9em',
+        color: navy
+      },
+      selectedItem: {
+        border: '1px solid red'
+      },
+      selectedLink: {
+        color: red,
+        fontWeight: 'bold'
+      },
+      link: {
+        boxShadow: 'none',
+        color: darkSand,
+        fontWeight: 'normal'
+        // ':hover': {
+        //   color: '#000'
+        // }
+      }
     };
   }
 
   render() {
     const sidebarStyles = this.getSidebarStyles();
+
     return (
       <nav
-        style={[
-          sidebarStyles.base,
-          this.props.styleOverrides && styles.styleOverrides
-        ]}>
-        <ul style={this.getTableOfContentsStyles()}>
-          <li>Installation</li>
-          <li>Victory Chart</li>
-          <li>Victory Pie</li>
-          <li>Victory Scatter</li>
+        className="Nav"
+        style={[sidebarStyles.base]}>
+        <img width="40" src="/static/icon-victory.svg" />
+        <ul style={[sidebarStyles.defaultList]}>
+          <li style={[sidebarStyles.defaultItem]}>
+            <a href="#" style={[sidebarStyles.link]}>Installation</a>
+          </li>
+          <li style={[sidebarStyles.selectedItem]}>
+            <a href="#" style={[sidebarStyles.selectedLink]}>Story time</a>
+            <ul style={[sidebarStyles.openList]}>
+              <li style={[sidebarStyles.defaultItem]}>
+                <a href="#" style={[sidebarStyles.selectedLink]}>Part I</a>
+              </li>
+              <li style={[sidebarStyles.defaultItem]}>
+                <a href="#" style={[sidebarStyles.link]}>Part II</a>
+              </li>
+            </ul>
+          </li>
+          <li style={[sidebarStyles.defaultItem]}>
+            <a href="#" style={[sidebarStyles.link]}>Victory Chart</a>
+          </li>
+          <li style={[sidebarStyles.defaultItem]}>
+            <a href="#" style={[sidebarStyles.link]}>Victory Pie</a>
+          </li>
+          <li style={[sidebarStyles.defaultItem]}>
+            <a href="#" style={[sidebarStyles.link]}>Victory Scatter</a>
+          </li>
         </ul>
       </nav>
     );

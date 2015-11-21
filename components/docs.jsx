@@ -23,7 +23,7 @@ class Docs extends React.Component {
       '@media (min-width: 768px)': {
         flex: '1',
         margin: 0,
-        padding: '0 1rem',
+        padding: '40px 1rem',
         maxWidth: '640px' //Is it possible the copy can be this width & code + playground can be wider?
       }
     };
