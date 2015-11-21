@@ -242,12 +242,12 @@ export default class VictoryChart extends React.Component {
       const type = child.type && child.type.role;
       if (count.limitReached(child)) {
         const msg = type === "axis" ?
-          "Only one VictoryAxis component of each axis type is allowed when using the " +
-          "VictoryChart wrapper. Only the first axis will be used. Please compose " +
-          "multi-axis charts manually" :
-          "Only one " + type + "component is allowed per chart. If you are trying " +
-          "to plot several datasets, please pass an array of data arrays directly " +
-          "into " + type + ".";
+          `Only one VictoryAxis component of each axis type is allowed when using the ` +
+          `VictoryChart wrapper. Only the first axis will be used. Please compose ` +
+          `multi-axis charts manually` :
+          `Only one " + type + "component is allowed per chart. If you are trying ` +
+          `to plot several datasets, please pass an array of data arrays directly ` +
+          `into ${type}.`;
         log.warn(msg);
       }
       childComponents.push(child);
@@ -361,7 +361,7 @@ export default class VictoryChart extends React.Component {
       axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
     return (tickValues && Util.containsStrings(tickValues)) ?
       _.zipObject(_.map(tickValues, (tick, index) => {
-        return ["" + tick, index + 1];
+        return [`${tick}`, index + 1];
       })) : undefined;
   }
 
@@ -374,7 +374,7 @@ export default class VictoryChart extends React.Component {
       const stringCategories = _.compact(_.flatten(allCategories));
       return _.isEmpty(stringCategories) ? undefined :
         _.zipObject(_.map(stringCategories, (category, index) => {
-          return ["" + category, index + 1];
+          return [`${category}`, index + 1];
         }));
     }
   }
