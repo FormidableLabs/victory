@@ -63,6 +63,7 @@
     "history": "^1.13.1",
     "lodash": "^3.9.3",
     "radium": "^0.14.1",
+    "react-ga": "^1.2.0",
     "rimraf": "^2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",

@@ -4,6 +4,9 @@ import Ecology from 'ecology';
 import Radium, { Style } from 'radium';
 import { Link } from 'react-router';
 
+// Analytics
+import ga from 'react-ga';
+
 import theme from './theme';
 
 // TODO: Extract these global Header/Footers into formidable-landers
@@ -13,6 +16,10 @@ import Footer from "./footer";
 
 @Radium
 class App extends React.Component {
+  componentWillMount() {
+    ga.pageview('/victory');
+  }
+
   render() {
     return (
       <div style={{display: 'flex', minHeight: '100vh', flexDirection: 'column'}}>

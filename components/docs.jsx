@@ -1,18 +1,24 @@
-import React from 'react';
+import ga from 'react-ga';
 import Radium, { Style } from 'radium';
+import React from 'react';
 
 import theme from './theme';
 
+// Child components
+
 // TODO: Extract these global Header/Footers into formidable-landers
 // https://github.com/FormidableLabs/formidable-landers/issues/12
-import Header from "./header";
 import Footer from "./footer";
+import Header from "./header";
 
-// Child components
 import Sidebar from "./sidebar";
 
 @Radium
 class Docs extends React.Component {
+
+  componentWillMount() {
+    ga.pageview('/victory/docs');
+  }
 
   getDocsStyles() {
     return {
