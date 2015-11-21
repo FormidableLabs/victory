@@ -1,23 +1,5 @@
-// Fonts
-const sansSerif = '"Karla", "Helvetica Neue", Helvetica, Arial, sans-serif';
-const serif = '"Didot", "Cochin", serif';
-
-// Colors
-const deepNavy = '#1b2633';
-const navy = '#2b303b';
-
-const whiteSand = '#ede7e1';
-const palestSand = '#ebe3db';
-const palerSand = '#e1d7cd';
-const paleSand = '#d1c7bc';
-const sand = '#b5aca3';
-const darkSand = '#91887e';
-const darkerSand = '#67615c';
-const darkestSand = '#4d4945';
-const mud = '#34302e';
-
-const paleRed = '#bd4139';
-const red = '#bd1e13';
+// Settings
+import settings from "../settings";
 
 // Stylesheet
 export default {
@@ -35,10 +17,10 @@ export default {
   },
   body: {
     backgroundColor: '#f6f2ee',
-    fontFamily: sansSerif,
+    fontFamily: settings.sansSerif,
     lineHeight: 1.5,
     margin: 0,
-    color: deepNavy,
+    color: settings.deepNavy,
     webkitboxsizing: 'border-box',
     mozboxsizing: 'border-box',
     boxSizing: 'border-box',
@@ -71,7 +53,7 @@ export default {
     verticalAlign: 'middle'
   },
   'th, td': {
-    border: '1px solid ' + palestSand,
+    border: '1px solid ' + settings.palestSand,
     padding: '0.425em 0.75em',
     verticalAlign: 'top'
   },
@@ -106,26 +88,26 @@ export default {
     fontSize: '1.3125rem'
   },
   'h1,h2,h3,h4': {
-    fontFamily: serif,
+    fontFamily: settings.serif,
     fontWeight: 'normal'
   },
   'a': {
-    color: navy,
+    color: settings.navy,
     fontWeight: 700,
     textDecoration: 'none',
-    boxShadow: 'inset 0 -0.05em 0 ' + sand,
+    boxShadow: 'inset 0 -0.05em 0 ' + settings.sand,
     transition: 'color 0.2s ease, box-shadow 0.5s ease'
   },
   'a:hover, a:focus': {
-    color: red,
-    boxShadow: 'inset 0 -0.05em 0 ' + paleRed,
+    color: settings.red,
+    boxShadow: 'inset 0 -0.05em 0 ' + settings.paleRed,
     transition: 'color 0.2s ease, box-shadow 0.5s ease'
   },
   /*
    * Headlines/Headings
    */
   '.Headline': {
-    fontFamily: serif,
+    fontFamily: settings.serif,
     fontSize: '3rem',
     fontWeight: 'normal'
   },
@@ -137,7 +119,7 @@ export default {
     textTransform: 'uppercase',
     fontSize: '0.85em',
     fontWeight: 'bold',
-    color: darkSand
+    color: settings.darkSand
   },
   /*
    * Layout/Grid
@@ -157,7 +139,7 @@ export default {
   },
   '.Copy .highlight pre': {
     marginBottom: 0,
-    background: navy,
+    background: settings.navy,
     color: '#fff',
     fontFamily: '"Source Code Pro", monospace',
     fontSize: '16px',
@@ -183,7 +165,7 @@ export default {
     position: 'absolute',
     fontSize: 8,
     borderRadius: '50%',
-    border: '1px solid ' + red,
+    border: '1px solid ' + settings.red,
     left: '-24px',
     top: '11px'
   },
@@ -192,9 +174,9 @@ export default {
     marginBottom: '0px'
   },
   '.Copy code': {
-    fontFamily: '"Source Code Pro", monospace',
-    background: whiteSand,
-    color: mud,
+    fontFamily: settings.codeFont,
+    background: settings.whiteSand,
+    color: settings.mud,
     borderRadius: 3,
     padding: '0 5px'
   },
@@ -204,7 +186,7 @@ export default {
   },
   '.Installer': {
     display: 'inline-block',
-    background: navy,
+    background: settings.navy,
     border: '1px solid #16191F',
     color: '#fff',
     fontFamily: '"Source Code Pro", monospace',
@@ -222,7 +204,7 @@ export default {
     marginBottom: '24px'
   },
   '.Interactive:before, .Interactive .playgroundPreview:before': {
-    fontFamily: '"Karla", "Helvetica Neue", Helvetica, Arial, sans-serif',
+    fontFamily: settings.sansSerif,
     fontWeight: 'bold',
     fontSize: '1rem',
     lineHeight: 1,
@@ -236,7 +218,7 @@ export default {
     flex: '0 0 100%',
     verticalAlign: 'top',
     background: '#fff',
-    fontFamily: '"Source Code Pro", monospace',
+    fontFamily: settings.codeFont,
     fontSize: '1rem',
     lineHeight: 1.2,
     marginBottom: '30px',
@@ -256,7 +238,7 @@ export default {
     top: '-18px'
   },
   '.Interactive pre, .CodeMirror-code': {
-    fontFamily: '"Source Code Pro", monospace',
+    fontFamily: settings.codeFont,
     fontSize: '1rem',
     lineHeight: 1.2
   },
@@ -267,14 +249,14 @@ export default {
   * Documentation/Props
   */
   '.Documentation h1, .Documentation h2, .Documentation h3': {
-    fontFamily: '"Didot", "Cochin", serif',
+    fontFamily: settings.serif,
     fontWeight: 'normal'
   },
   '.Prop-name': {
-    fontFamily: '"Source Code Pro", monospace'
+    fontFamily: settings.codeFont
   },
   '.Prop-type': {
-    color: darkSand,
+    color: settings.darkSand,
     display: 'block',
     fontStyle: 'italic',
     lineHeight: '1em'
@@ -292,7 +274,7 @@ export default {
     textTransform: 'uppercase',
     fontSize: '0.85em',
     fontWeight: 'bold',
-    color: darkSand,
+    color: settings.darkSand,
     letterSpacing: '0.04em'
   },
   '.Prop-examples-value': {
@@ -368,7 +350,7 @@ export default {
   Created with Base16 Builder by Chris Kempson (https://github.com/chriskempson/base16-builder)
   */
   '.highlight .hll': { 'background-color': '#4f5b66' },
-  '.highlight': { 'background': navy, 'color': '#eff1f5' },
+  '.highlight': { 'background': settings.navy, 'color': '#eff1f5' },
   '.highlight .c': { 'color': '#65737e' }, /* Comment */
   '.highlight .err': { 'color': '#bf616a' }, /* Error */
   '.highlight .k': { 'color': '#b48ead' }, /* Keyword */
