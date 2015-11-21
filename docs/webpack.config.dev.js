@@ -18,7 +18,7 @@ module.exports = {
   cache: true,
   devtool: "source-map",
   entry: {
-    app: ["./docs/docs.jsx"]
+    app: ["./docs/app.jsx"]
   },
   stats: {
     colors: true,
