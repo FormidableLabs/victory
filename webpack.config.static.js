@@ -9,7 +9,8 @@ var OUTPUT_DIR = "gh-pages";
 
 // All routes we want to static-render--in this case, just the index page:
 var routes = [
-  ""
+  "/",
+  "docs"
 ];
 
 module.exports = {
