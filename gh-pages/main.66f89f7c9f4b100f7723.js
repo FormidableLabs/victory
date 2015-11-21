@@ -104656,7 +104656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _react2['default'].createElement(
 	            'a',
 	            { href: 'http://formidable.com/', style: { display: 'block', boxShadow: 'none' } },
-	            _react2['default'].createElement('img', { width: '300', src: '/static/logo-formidable-black.svg', alt: 'Formidable' })
+	            _react2['default'].createElement('img', { width: '300', src: 'static/logo-formidable-black.svg', alt: 'Formidable' })
 	          )
 	        ),
 	        _react2['default'].createElement(
