@@ -2,13 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Radium from 'radium';
 
+import settings from "../settings";
+
 class Sidebar extends React.Component {
 
   getSidebarStyles() {
-    const navy = '#2b303b';
-    const red = '#bd1e13';
-    const darkSand = '#91887e';
-
     return {
       base: {
         margin: 0,
@@ -29,20 +27,21 @@ class Sidebar extends React.Component {
       },
       openList: {
         margin: '0',
-        padding: '0.25em 0.25em 0',
-        fontSize: '0.9em',
-        color: navy
+        padding: '0 0 0 1rem',
+        listStyle: 'none',
+        fontSize: '0.9rem',
+        color: settings.navy
       },
       selectedItem: {
-        border: '1px solid red'
+        color: settings.navy
       },
       selectedLink: {
-        color: red,
+        color: settings.red,
         fontWeight: 'bold'
       },
       link: {
         boxShadow: 'none',
-        color: darkSand,
+        color: settings.darkSand,
         fontWeight: 'normal'
         // ':hover': {
         //   color: '#000'
@@ -57,44 +56,36 @@ class Sidebar extends React.Component {
     return (
       <nav
         className="Nav"
-        style={[sidebarStyles.base]}>
+        style={sidebarStyles.base}>
         <img width="40" src="/static/icon-victory.svg" />
-        <ul style={[sidebarStyles.defaultList]}>
-          <li style={[sidebarStyles.defaultItem]}>
-            <a href="#" style={[sidebarStyles.link]}>Installation</a>
+        <ul style={sidebarStyles.defaultList}>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="#" style={sidebarStyles.link}>Installation</a>
           </li>
-          <li style={[sidebarStyles.selectedItem]}>
-            <a href="#" style={[sidebarStyles.selectedLink]}>Story time</a>
-            <ul style={[sidebarStyles.openList]}>
-              <li style={[sidebarStyles.defaultItem]}>
-                <a href="#" style={[sidebarStyles.selectedLink]}>Part I</a>
+          <li style={[sidebarStyles.defaultItem, sidebarStyles.selectedItem]}>
+            <a href="#" style={[sidebarStyles.link, sidebarStyles.selectedLink]}>Story time</a>
+            <ul style={sidebarStyles.openList}>
+              <li style={sidebarStyles.defaultItem}>
+                <a href="#" style={[sidebarStyles.link, sidebarStyles.selectedLink]}>Part I</a>
               </li>
-              <li style={[sidebarStyles.defaultItem]}>
-                <a href="#" style={[sidebarStyles.link]}>Part II</a>
+              <li style={sidebarStyles.defaultItem}>
+                <a href="#" style={sidebarStyles.link}>Part II</a>
               </li>
             </ul>
           </li>
-          <li style={[sidebarStyles.defaultItem]}>
-            <a href="#" style={[sidebarStyles.link]}>Victory Chart</a>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="#" style={sidebarStyles.link}>Victory Chart</a>
           </li>
-          <li style={[sidebarStyles.defaultItem]}>
-            <a href="#" style={[sidebarStyles.link]}>Victory Pie</a>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="#" style={sidebarStyles.link}>Victory Pie</a>
           </li>
-          <li style={[sidebarStyles.defaultItem]}>
-            <a href="#" style={[sidebarStyles.link]}>Victory Scatter</a>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="#" style={sidebarStyles.link}>Victory Scatter</a>
           </li>
         </ul>
       </nav>
     );
   }
 }
-
-Sidebar.propTypes = {
-  styleOverrides: React.PropTypes.object
-};
-
-Sidebar.defaultProps = {
-  styleOverrides: null
-};
 
 export default Radium(Sidebar);
