@@ -32,7 +32,7 @@ class App extends React.Component {
             <code className="Installer">npm install victory</code>
           </div>
           </div>
-          <Link to="docs">Dang, I'm a link!</Link>
+          <Link to="docs/victory-bar">Dang, I'm a link!</Link>
           <div className="Copy">
             Victory is a collection of chart components. 
           </div>
