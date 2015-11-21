@@ -193,7 +193,7 @@ export default {
     height: '1em',
     display: 'block',
     position: 'absolute',
-    fontSize: 8,
+    fontSize: '8px',
     borderRadius: '50%',
     border: '1px solid ' + red,
     left: '-24px',
