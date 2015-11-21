@@ -148,9 +148,21 @@ export default {
     paddingLeft: '1em',
     paddingRight: '1em'
   },
+  '.Row': {
+    padding: '36px 0',
+    padding: '2rem 0'
+  },
+  '.Row .Interactive': {
+    marginTop: '-24px',
+    marginTop: '-1.5rem'
+  },
   /*
    * Copy
    */
+  '.Copy': {
+    margin: '0 auto',
+    maxWidth: '640px'
+  },
   '.Copy .highlight': {
     marginLeft: '-16px',
     marginRight: '-16px'
@@ -173,7 +185,7 @@ export default {
     position: 'relative'
   },
   '.Copy ul > li + li': {
-    marginTop: '10px'
+    marginTop: '0.25em'
   },
   '.Copy ul > li:before': {
     content: '""',
@@ -188,7 +200,7 @@ export default {
     top: '11px'
   },
   '.Copy li > ul': {
-    marginTop: '10px',
+    marginTop: '0.25em',
     marginBottom: '0px'
   },
   '.Copy code': {
@@ -323,8 +335,8 @@ export default {
         fontStyle: 'italic'
       },
       '.Header': {
-        paddingTop: '135px',
-        paddingBottom: '45px'
+        paddingTop: '65px',
+        paddingBottom: '0'
       },
       '.Logo img': {
         width: '230px'
