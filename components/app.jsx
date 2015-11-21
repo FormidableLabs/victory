@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Ecology from 'ecology';
 import Radium, { Style } from 'radium';
+import { Link } from 'react-router';
 
 import theme from './theme';
 
@@ -98,11 +99,6 @@ class App extends React.Component {
       </div>
     )
   }
-}
-
-if (typeof document !== "undefined") {
-  const content = document.getElementById("content");
-  ReactDOM.render(<App/>, content);
 }
 
 export default App;
