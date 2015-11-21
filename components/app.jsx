@@ -89,7 +89,15 @@ class App extends React.Component {
               <h2 className="u-textCenter">Where to go from here</h2>
               <div className="Copy">
 
-                <p>Go check out the docs! <a href="http://victory.formidable.com/docs">http://victory.formidable.com/docs</a></p>
+                <p>Go check out the victory components!</p>
+                  <ul>
+                    <li><a href="http://projects.formidablelabs.com/victory-axis/">Victory Axis</a></li>
+                    <li><a href="http://projects.formidablelabs.com/victory-bar/">Victory Bar</a></li>
+                    <li><a href="http://projects.formidablelabs.com/victory-chart/">Victory Chart</a></li>
+                    <li><a href="http://projects.formidablelabs.com/victory-line/">Victory Line</a></li>
+                    <li><a href="http://projects.formidablelabs.com/victory-pie/">Victory Pie</a></li>
+                    <li><a href="http://projects.formidablelabs.com/victory-scatter/">Victory Scatter</a></li>
+                  </ul>
               </div>
             </div>
           </div>
