@@ -149,12 +149,10 @@ export default {
     paddingRight: '1em'
   },
   '.Row': {
-    padding: '36px 0',
-    padding: '2rem 0'
+    padding: '36px 0'
   },
   '.Row .Interactive': {
-    marginTop: '-24px',
-    marginTop: '-1.5rem'
+    marginTop: '-24px'
   },
   /*
    * Copy
