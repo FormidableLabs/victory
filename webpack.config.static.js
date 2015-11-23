@@ -9,7 +9,8 @@ var OUTPUT_DIR = "gh-pages";
 
 // All routes we want to static-render--in this case, just the index page:
 var routes = [
-  ""
+  "/",
+  "docs"
 ];
 
 module.exports = {
@@ -24,7 +25,7 @@ module.exports = {
   resolve: base.resolve,
   module: base.module,
   plugins: [
-    new CleanPlugin([ "../" + OUTPUT_DIR ]),
+    new CleanPlugin([ "./" + OUTPUT_DIR ]),
     new StatsWriterPlugin({
       filename: "stats.json"
     }),

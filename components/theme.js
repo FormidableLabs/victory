@@ -130,9 +130,19 @@ export default {
     paddingLeft: '1em',
     paddingRight: '1em'
   },
+  '.Row': {
+    padding: '36px 0'
+  },
+  '.Row .Interactive': {
+    marginTop: '-24px'
+  },
   /*
    * Copy
    */
+  '.Copy': {
+    margin: '0 auto',
+    maxWidth: '640px'
+  },
   '.Copy .highlight': {
     marginLeft: '-16px',
     marginRight: '-16px'
@@ -155,7 +165,7 @@ export default {
     position: 'relative'
   },
   '.Copy ul > li + li': {
-    marginTop: '10px'
+    marginTop: '0.25em'
   },
   '.Copy ul > li:before': {
     content: '""',
@@ -163,14 +173,14 @@ export default {
     height: '1em',
     display: 'block',
     position: 'absolute',
-    fontSize: 8,
+    fontSize: '8px',
     borderRadius: '50%',
     border: '1px solid ' + settings.red,
     left: '-24px',
     top: '11px'
   },
   '.Copy li > ul': {
-    marginTop: '10px',
+    marginTop: '0.25em',
     marginBottom: '0px'
   },
   '.Copy code': {
@@ -305,8 +315,8 @@ export default {
         fontStyle: 'italic'
       },
       '.Header': {
-        paddingTop: '135px',
-        paddingBottom: '45px'
+        paddingTop: '65px',
+        paddingBottom: '0'
       },
       '.Logo img': {
         width: '230px'
