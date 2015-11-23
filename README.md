@@ -2,19 +2,16 @@
 
 Victory
 =======
-Victory is an opinionated set of data visualization tools built in React. This repo aggregates all of the stable Victory components so they can be conveniently included. 
+Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
-IMPORTANT
-=========
-
-This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
+**Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
 
 ## Including components:
 
 Components can be included individually
 
 ```
-import {VictroyLine, VictoryAxis} from "victory"
+import {VictoryLine, VictoryAxis} from "victory"
 
 <VictoryLine/>
 ```
