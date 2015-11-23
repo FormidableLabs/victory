@@ -1,3 +1,5 @@
+[![Travis Status][trav_img]][trav_site]
+
 Victory
 =======
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included. 
