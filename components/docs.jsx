@@ -1,6 +1,4 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Ecology from 'ecology';
 import Radium, { Style } from 'radium';
 
 import theme from './theme';
