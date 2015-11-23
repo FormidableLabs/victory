@@ -437,8 +437,10 @@ export default class VictoryChart extends React.Component {
   }
 
   getDomain(props, axis) {
-    if (props.domain) {
-      return props.domain[axis] || props.domain;
+    if (props.domain && (_.isArray(props.domain) || props.domain[axis])) {
+      const propsDomain = _.isArray(props.domain) ? props.domain : props.domain[axis];
+      const paddedPropsDomain = this.padDomain(props, propsDomain, axis);
+      return this.orientDomain(paddedPropsDomain, axis);
     }
     const dataDomains = _.map(this.dataComponents, (component) => {
       return this.getDomainFromData(component, axis);
@@ -453,6 +455,10 @@ export default class VictoryChart extends React.Component {
     const domain = _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
     const paddedDomain = this.padDomain(props, domain, axis);
+    return this.orientDomain(paddedDomain, axis);
+  }
+
+  orientDomain(domain, axis) {
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
@@ -460,10 +466,10 @@ export default class VictoryChart extends React.Component {
 
     if (this.independentAxis === "x") {
       return orientation === "bottom" || orientation === "left" ?
-        paddedDomain : paddedDomain.concat().reverse();
+        domain : domain.concat().reverse();
     } else {
       return orientation === "bottom" || orientation === "left" ?
-        paddedDomain.concat().reverse() : paddedDomain;
+        domain.concat().reverse() : domain;
     }
   }
 
