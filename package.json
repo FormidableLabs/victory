@@ -20,13 +20,13 @@
     "test": "builder run npm:test"
   },
   "dependencies": {
-    "builder": "2.1.0",
-    "builder-react-component": "0.1.0",
+    "builder": "~2.1.1",
+    "builder-react-component": "~0.1.0",
     "lodash": "^3.10.1",
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
-    "builder-react-component-dev": "0.1.0",
+    "builder-react-component-dev": "~0.1.0",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "react": "^0.14.0",
