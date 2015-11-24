@@ -10,7 +10,7 @@ mod.loaders[0].loaders = ["react-hot"].concat(mod.loaders[0].loaders);
 
 module.exports = _.merge({}, _.omit(base, "entry", "module"), {
   entry: {
-    app: ["webpack/hot/dev-server", "./docs/docs.jsx"]
+    app: ["webpack/hot/dev-server", "./docs/app.jsx"]
   },
 
   module: mod
