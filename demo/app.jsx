@@ -131,26 +131,30 @@ class App extends React.Component {
               style={{data:
                 {stroke: "red", strokeWidth: 4}
               }}
-              y={(x) => Math.sin(2 * Math.PI * x)}/>
+              y={(x) => Math.sin(2 * Math.PI * x)}
+            />
             <VictoryLine
               style={{data:
                 {stroke: "blue", strokeWidth: 4}
               }}
-              y={(x) => Math.cos(2 * Math.PI * x)}/>
+              y={(x) => Math.cos(2 * Math.PI * x)}
+            />
           </VictoryChart>
 
           <VictoryChart style={chartStyle} animate={{velocity: 0.02}}>
             <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
               data={this.state.lineData}
-              style={{data: this.state.lineStyle}}/>
+              style={{data: this.state.lineStyle}}
+            />
           </VictoryChart>
 
           <VictoryChart style={chartStyle}
             scale={{
               x: d3.time.scale(),
               y: d3.scale.linear()
-            }}>
+            }}
+          >
             <VictoryAxis
               orientation="bottom"
               tickValues={[
@@ -160,7 +164,8 @@ class App extends React.Component {
                 new Date(2010, 1, 1),
                 new Date(2020, 1, 1)
               ]}
-              tickFormat={d3.time.format("%Y")}/>
+              tickFormat={d3.time.format("%Y")}
+            />
             <VictoryLine
               data={[
                 {x: new Date(1982, 1, 1), y: 125},
@@ -171,14 +176,13 @@ class App extends React.Component {
                 {x: new Date(2005, 1, 1), y: 305},
                 {x: new Date(2011, 1, 1), y: 270},
                 {x: new Date(2015, 1, 1), y: 470}
-              ]}/>
+              ]}
+            />
           </VictoryChart>
 
           <VictoryChart animate={{velocity: 0.02}}>
-            <VictoryScatter
-              data={this.state.scatterData}/>
-            <VictoryLine
-              y={(x) => x}/>
+            <VictoryScatter data={this.state.scatterData}/>
+            <VictoryLine y={(x) => x}/>
           </VictoryChart>
 
           <VictoryChart>
@@ -199,14 +203,17 @@ class App extends React.Component {
                 {fill: "gold"},
                 {fill: "tomato"}
               ]}
-              categories={[[1, 3], [4, 7], [9, 11]]}/>
+              categories={[[1, 3], [4, 7], [9, 11]]}
+            />
           </VictoryChart>
 
           <VictoryChart animate={{velocity: 0.02}}
-            domainPadding={{x: 100, y: 0}}>
+            domainPadding={{x: 100, y: 0}}
+          >
             <VictoryAxis
               tickValues={["apples", "bananas", "oranges"]}
-              tickFormat={() => ""}/>
+              tickFormat={() => ""}
+            />
             <VictoryBar stacked
               data={this.state.barData}
               dataAttributes={[
@@ -216,35 +223,41 @@ class App extends React.Component {
                 {fill: "orange"},
                 {fill: "tomato"}
               ]}
-            labels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}/>
+              labels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
+            />
           </VictoryChart>
 
           <VictoryChart>
             <VictoryScatter style={{data: {fill: "red"}}}
               symbol="star"
-              x={[1, 2, 3, 4]} y={[1, 2, 10, 4]}/>
+              x={[1, 2, 3, 4]} y={[1, 2, 10, 4]}
+            />
             <VictoryLine style={{data: {stroke: "green"}}} interpolation="basis"
-              x={[-2, -1, 0, 1, 3]} y={(x) => x * x}/>
+              x={[-2, -1, 0, 1, 3]} y={(x) => x * x}
+            />
             <VictoryScatter style={{data: {fill: "blue"}}}
-              x={[3, 4, 6]} y={[-5, -4, -3, -2, 2, 3]}/>
+              x={[3, 4, 6]} y={[-5, -4, -3, -2, 2, 3]}
+            />
           </VictoryChart>
 
           <VictoryChart domainPadding={{x: 30, y: 30}}>
             <VictoryAxis
               tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
-              tickFormat={(x) => x + "\ntick"}
+              tickFormat={(x) => `${x}\ntick`}
               style={{
                 axis: {stroke: "black", strokeWidth: 2},
                 ticks: {stroke: "transparent"},
                 tickLabels: {fill: "black"}
-              }}/>
+              }}
+            />
             <VictoryAxis label="y axis" dependentAxis
               tickValues={[0, 1.5, 3, 4.5]}
               style={{
                 grid: {strokeWidth: 1},
                 axis: {stroke: "transparent"},
                 ticks: {stroke: "transparent", padding: 15}
-              }}/>
+              }}
+            />
             <VictoryBar style={{data: {width: 15, fill: "orange"}}}
               data={[
                 {x: 1, y: 1},
@@ -260,11 +273,13 @@ class App extends React.Component {
                 {x: 11, y: 3},
                 {x: 12, y: 2},
                 {x: 13, y: 1}
-              ]}/>
-          <VictoryLine y={() => 0.5}
-            style={{data: {stroke: "gold", strokeWidth: 3}}}
-            label="LINE"/>
-        </VictoryChart>
+              ]}
+            />
+            <VictoryLine y={() => 0.5}
+              style={{data: {stroke: "gold", strokeWidth: 3}}}
+              label="LINE"
+            />
+          </VictoryChart>
         </p>
       </div>
     );

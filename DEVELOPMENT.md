@@ -1,13 +1,26 @@
 Development
 ===========
 
+We use [builder][] and `npm` to control all aspects of development and
+publishing.
+
+As a preliminary matter, please update your shell to include
+`./node_modules/.bin` in `PATH` like:
+
+```sh
+export PATH="${PATH}:./node_modules/.bin"
+```
+
+So you can type `builder` instead of `./node_modules/.bin/builder` for all
+commands.
+
 ## Build
 
 Build for production use (NPM, bower, etc) and create `dist` UMD bundles
 (min'ed, non-min'ed)
 
 ```
-$ npm run build
+$ builder run build
 ```
 
 Note that `dist/` files are only updated and committed on **tagged releases**.
@@ -20,9 +33,9 @@ and launching a browser pointed to the demo page.
 
 Run the `demo` application with watched rebuilds:
 
-```
-$ npm run dev       # dev test/app server (OR)
-$ npm run open-dev  # dev servers _and a browser window opens!_
+```sh
+$ builder run dev       # dev test/app server (OR)
+$ builder run open-dev  # dev servers _and a browser window opens!_
 ```
 
 From there you can see:
@@ -77,21 +90,21 @@ size.
 
 During development, you are expected to be running either:
 
-```
-$ npm run dev
+```sh
+$ builder run dev
 ```
 
 to build the lib and test files. With these running, you can run the faster
 
-```
-$ npm run check-dev
+```sh
+$ builder run check-dev
 ```
 
 Command. It is comprised of:
 
-```
-$ npm run lint
-$ npm run test-dev
+```sh
+$ builder run lint
+$ builder run test-dev
 ```
 
 Note that the tests here are not instrumented for code coverage and are thus
@@ -102,20 +115,20 @@ more development / debugging friendly.
 CI doesn't have source / test file watchers, so has to _build_ the test files
 via the commands:
 
-```
-$ npm run check     # PhantomJS only
-$ npm run check-cov # (OR) PhantomJS w/ coverage
-$ npm run check-ci  # (OR) PhantomJS,Firefox + coverage - available on Travis.
+```sh
+$ builder run check     # PhantomJS only
+$ builder run check-cov # (OR) PhantomJS w/ coverage
+$ builder run check-ci  # (OR) PhantomJS,Firefox + coverage - available on Travis.
 ```
 
 Which is currently comprised of:
 
-```
-$ npm run lint      # AND ...
+```sh
+$ builder run lint  # AND ...
 
-$ npm run test      # PhantomJS only
-$ npm run test-cov  # (OR) PhantomJS w/ coverage
-$ npm run test-ci   # (OR) PhantomJS,Firefox + coverage
+$ builder run test      # PhantomJS only
+$ builder run test-cov  # (OR) PhantomJS w/ coverage
+$ builder run test-ci   # (OR) PhantomJS,Firefox + coverage
 ```
 
 Note that `(test|check)-(cov|ci)` run code coverage and thus the
@@ -125,7 +138,7 @@ test code may be harder to debug because it is instrumented.
 
 The client tests rely on webpack dev server to create and serve the bundle
 of the app/test code at: http://127.0.0.1:3001/assets/main.js which is done
-with the task `npm run server-test` (part of `npm dev`).
+with the task `builder run server-test` (part of `npm dev`).
 
 #### Code Coverage
 
@@ -143,7 +156,7 @@ coverage/
 **IMPORTANT - NPM**: To correctly run `preversion` your first step is to make
 sure that you have a very modern `npm` binary:
 
-```
+```sh
 $ npm install -g npm
 ```
 
@@ -151,7 +164,7 @@ Built files in `dist/` should **not** be committeed during development or PRs.
 Instead we _only_ build and commit them for published, tagged releases. So
 the basic workflow is:
 
-```
+```sh
 # Make sure you have a clean, up-to-date `master`
 $ git pull
 $ git status # (should be no changes)
@@ -186,3 +199,5 @@ please review:
 * [`npm publish`](https://docs.npmjs.com/cli/publish): Uploads to NPM.
     * **NOTE**: We don't _build_ in `prepublish` because of the
       [`npm install` runs `npm prepublish` bug](https://github.com/npm/npm/issues/3059)
+
+[builder]: https://github.com/FormidableLabs/builder

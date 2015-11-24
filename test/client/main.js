@@ -2,7 +2,7 @@
  * Test setup for client-side tests.
  *
  * Intended for:
- * - Karma tests: `npm run test-client`
+ * - Karma tests: `builder run test-frontend`
  * - Browser tests: `http://localhost:3000/test/client/test.html`
  */
 /*globals window:false*/

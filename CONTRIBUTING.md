@@ -5,11 +5,12 @@ Thanks for helping out!
 
 ## Development
 
-Run `npm run demo` to run a webpack dev server with component examples.
+Run `builder run open-hot` or `builder run open-dev` to run a webpack dev server
+with component examples.
 
 ## Checks, Tests
 
-Run `npm run check` before committing.
+Run `builder run check` before committing.
 
 ## Dist
 
