@@ -88,9 +88,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _victoryUtilLibStyle = __webpack_require__(28);
+	var _victoryUtil = __webpack_require__(28);
 	
-	var _lodash = __webpack_require__(32);
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
+	
+	var _lodash = __webpack_require__(30);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
@@ -122,7 +124,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this = this;
 	
 	      var style = this.getStyles();
-	      var transform = (0, _victoryUtilLibStyle.toTransformString)(this.props.transform);
+	      var transform = _victoryUtil2["default"].Style.toTransformString(this.props.transform);
 	      var content = this.props.children || "";
 	      var lines = content.split("\n");
 	
@@ -139,13 +141,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dy = this.props.dy;
 	      switch (this.props.verticalAnchor) {
 	        case "end":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + ") * " + lineHeight);
+	          dy = _victoryUtil2["default"].Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + ") * " + lineHeight);
 	          break;
 	        case "middle":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + " / 2) * " + lineHeight);
+	          dy = _victoryUtil2["default"].Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + " / 2) * " + lineHeight);
 	          break;
 	        default:
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
+	          dy = _victoryUtil2["default"].Style.calc(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
 	      }
 	
 	      return _react2["default"].createElement(
@@ -175,7 +177,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
 	       * is assumed to be ems.
 	       */
-	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _victoryUtil2["default"].PropTypes.nonNegative]),
 	      /**
 	       * The children of this component define the content of the label. This
 	       * makes using the component similar to normal HTML spans or labels.
@@ -191,7 +193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
 	       * is assumed to be ems.
 	       */
-	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _victoryUtil2["default"].PropTypes.nonNegative]),
 	      /**
 	       * The style prop applies CSS properties to the rendered `<text>` element.
 	       */
@@ -216,12 +218,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * The x prop defines the x coordinate to use as a basis for horizontal
 	       * positioning.
 	       */
-	      x: _react.PropTypes.number,
+	      x: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The y prop defines the y coordinate to use as a basis for vertical
 	       * positioning.
 	       */
-	      y: _react.PropTypes.number,
+	      y: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
 	       * component already accounts for `capHeight`, `lineHeight`, and
@@ -2249,312 +2251,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
 	
-	var _reduceCssCalc = __webpack_require__(29);
+	var _collection = __webpack_require__(29);
 	
-	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
+	var Collection = _interopRequireWildcard(_collection);
 	
-	/**
-	 * Given an object with CSS/SVG transform definitions, return the string value
-	 * for use with the `transform` CSS property or SVG attribute. Note that we
-	 * can't always guarantee the order will match the author's intended order, so
-	 * authors should only use the object notation if they know that their transform
-	 * is commutative or that there is only one.
-	 * @param {Object} obj An object of transform definitions.
-	 * @returns {String} The generated transform string.
-	 */
-	var toTransformString = function toTransformString(obj) {
-	  if (!obj || typeof obj === "string") {
-	    return obj;
-	  }
-	  var transforms = [];
-	  for (var key in obj) {
-	    if (obj.hasOwnProperty(key)) {
-	      var value = obj[key];
-	      transforms.push(key + "(" + value + ")");
-	    }
-	  }
-	  return transforms.join(" ");
+	var _log = __webpack_require__(32);
+	
+	var Log = _interopRequireWildcard(_log);
+	
+	var _style = __webpack_require__(33);
+	
+	var Style = _interopRequireWildcard(_style);
+	
+	var _type = __webpack_require__(38);
+	
+	var Type = _interopRequireWildcard(_type);
+	
+	var _propTypes = __webpack_require__(39);
+	
+	var PropTypes = _interopRequireWildcard(_propTypes);
+	
+	exports["default"] = {
+	  Collection: Collection,
+	  Log: Log,
+	  Style: Style,
+	  Type: Type,
+	  PropTypes: PropTypes
 	};
-	
-	exports.toTransformString = toTransformString;
-	var calc = function calc(expr, precision) {
-	  return (0, _reduceCssCalc2["default"])("calc(" + expr + ")", precision);
-	};
-	exports.calc = calc;
+	module.exports = exports["default"];
 
 /***/ },
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * Module dependencies
-	 */
-	var balanced = __webpack_require__(30)
-	var reduceFunctionCall = __webpack_require__(31)
+	"use strict";
 	
-	/**
-	 * Constantes
-	 */
-	var MAX_STACK = 100 // should be enough for a single calc()...
-	var NESTED_CALC_RE = /(\+|\-|\*|\\|[^a-z]|)(\s*)(\()/g
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	/**
-	 * Global variables
-	 */
-	var stack
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	/**
-	 * Expose reduceCSSCalc plugin
-	 *
-	 * @type {Function}
-	 */
-	module.exports = reduceCSSCalc
+	var _lodash = __webpack_require__(30);
 	
-	/**
-	 * Reduce CSS calc() in a string, whenever it's possible
-	 *
-	 * @param {String} value css input
-	 */
-	function reduceCSSCalc(value, decimalPrecision) {
-	  stack = 0
-	  decimalPrecision = Math.pow(10, decimalPrecision === undefined ? 5 : decimalPrecision)
+	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	  /**
-	   * Evaluates an expression
-	   *
-	   * @param {String} expression
-	   * @returns {String}
-	   */
-	  function evaluateExpression (expression, functionIdentifier, call) {
-	    if (stack++ > MAX_STACK) {
-	      stack = 0
-	      throw new Error("Call stack overflow for " + call)
-	    }
+	var containsStrings = function containsStrings(collection) {
+	  return _lodash2["default"].some(collection, function (item) {
+	    return _lodash2["default"].isString(item);
+	  });
+	};
 	
-	    if (expression === "") {
-	      throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
-	    }
-	
-	    expression = evaluateNestedExpression(expression, call)
-	
-	    var units = getUnitsInExpression(expression)
-	
-	    // If multiple units let the expression be (i.e. browser calc())
-	    if (units.length > 1) {
-	      return functionIdentifier + "(" + expression + ")"
-	    }
-	
-	    var unit = units[0] || ""
-	
-	    if (unit === "%") {
-	      // Convert percentages to numbers, to handle expressions like: 50% * 50% (will become: 25%):
-	      expression = expression.replace(/\b[0-9\.]+%/g, function(percent) {
-	        return parseFloat(percent.slice(0, -1)) * 0.01
-	      })
-	    }
-	
-	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
-	    var result
-	
-	    try {
-	      result = eval(toEvaluate)
-	    }
-	    catch (e) {
-	      return functionIdentifier + "(" + expression + ")"
-	    }
-	
-	    // Transform back to a percentage result:
-	    if (unit === "%") {
-	      result *= 100
-	    }
-	
-	    // adjust rounding shit
-	    // (0.1 * 0.2 === 0.020000000000000004)
-	    result = Math.round(result * decimalPrecision) / decimalPrecision
-	
-	    // We don't need units for zero values...
-	    if (result !== 0) {
-	      result += unit
-	    }
-	
-	    return result
-	  }
-	
-	  /**
-	   * Evaluates nested expressions
-	   *
-	   * @param {String} expression
-	   * @returns {String}
-	   */
-	  function evaluateNestedExpression(expression, call) {
-	    var evaluatedPart = ""
-	    var nonEvaluatedPart = expression
-	    var matches
-	    while ((matches = NESTED_CALC_RE.exec(nonEvaluatedPart))) {
-	      if (matches[0].index > 0) {
-	        evaluatedPart += nonEvaluatedPart.substring(0, matches[0].index)
-	      }
-	
-	      var balancedExpr = balanced("(", ")", nonEvaluatedPart.substring([0].index))
-	      if (balancedExpr.body === "") {
-	        throw new Error("'" + expression + "' must contain a non-whitespace string")
-	      }
-	
-	      var evaluated = evaluateExpression(balancedExpr.body, "", call)
-	
-	      evaluatedPart += balancedExpr.pre + evaluated
-	      nonEvaluatedPart = balancedExpr.post
-	    }
-	
-	    return evaluatedPart + nonEvaluatedPart
-	  }
-	
-	  return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
-	}
-	
-	/**
-	 * Checks what units are used in an expression
-	 *
-	 * @param {String} expression
-	 * @returns {Array}
-	 */
-	
-	function getUnitsInExpression(expression) {
-	  var uniqueUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/g
-	  var matches = unitRegEx.exec(expression)
-	
-	  while (matches) {
-	    if (!matches || !matches[1]) {
-	      continue
-	    }
-	
-	    if (uniqueUnits.indexOf(matches[1]) === -1) {
-	      uniqueUnits.push(matches[1])
-	    }
-	
-	    matches = unitRegEx.exec(expression)
-	  }
-	
-	  return uniqueUnits
-	}
-
+	exports.containsStrings = containsStrings;
+	var containsOnlyStrings = function containsOnlyStrings(collection) {
+	  return _lodash2["default"].every(collection, function (item) {
+	    return _lodash2["default"].isString(item);
+	  });
+	};
+	exports.containsOnlyStrings = containsOnlyStrings;
 
 /***/ },
 /* 30 */
-/***/ function(module, exports) {
-
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
-
-
-/***/ },
-/* 31 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 * Module dependencies
-	 */
-	var balanced = __webpack_require__(30)
-	
-	/**
-	 * Expose `reduceFunctionCall`
-	 *
-	 * @type {Function}
-	 */
-	module.exports = reduceFunctionCall
-	
-	/**
-	 * Walkthrough all expressions, evaluate them and insert them into the declaration
-	 *
-	 * @param {Array} expressions
-	 * @param {Object} declaration
-	 */
-	
-	function reduceFunctionCall(string, functionRE, callback) {
-	  var call = string
-	  return getFunctionCalls(string, functionRE).reduce(function(string, obj) {
-	    return string.replace(obj.functionIdentifier + "(" + obj.matches.body + ")", evalFunctionCall(obj.matches.body, obj.functionIdentifier, callback, call, functionRE))
-	  }, string)
-	}
-	
-	/**
-	 * Parses expressions in a value
-	 *
-	 * @param {String} value
-	 * @returns {Array}
-	 * @api private
-	 */
-	
-	function getFunctionCalls(call, functionRE) {
-	  var expressions = []
-	
-	  var fnRE = typeof functionRE === "string" ? new RegExp("\\b(" + functionRE + ")\\(") : functionRE
-	  do {
-	    var searchMatch = fnRE.exec(call)
-	    if (!searchMatch) {
-	      return expressions
-	    }
-	    if (searchMatch[1] === undefined) {
-	      throw new Error("Missing the first couple of parenthesis to get the function identifier in " + functionRE)
-	    }
-	    var fn = searchMatch[1]
-	    var startIndex = searchMatch.index
-	    var matches = balanced("(", ")", call.substring(startIndex))
-	
-	    if (!matches) {
-	      throw new SyntaxError(fn + "(): missing closing ')' in the value '" + call + "'")
-	    }
-	
-	    expressions.push({matches: matches, functionIdentifier: fn})
-	    call = matches.post
-	  }
-	  while (fnRE.test(call))
-	
-	  return expressions
-	}
-	
-	/**
-	 * Evaluates an expression
-	 *
-	 * @param {String} expression
-	 * @returns {String}
-	 * @api private
-	 */
-	
-	function evalFunctionCall (string, functionIdentifier, callback, call, functionRE) {
-	  // allow recursivity
-	  return callback(reduceFunctionCall(string, functionRE, callback), functionIdentifier, call)
-	}
-
-
-/***/ },
-/* 32 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/* WEBPACK VAR INJECTION */(function(module, global) {/**
@@ -14909,10 +14668,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	}.call(this));
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(33)(module), (function() { return this; }())))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(31)(module), (function() { return this; }())))
 
 /***/ },
-/* 33 */
+/* 31 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -14926,6 +14685,552 @@ return /******/ (function(modules) { // webpackBootstrap
 		return module;
 	}
 
+
+/***/ },
+/* 32 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {/* global console */
+	/* eslint-disable no-console */
+	
+	// TODO: Use "warning" npm module like React is switching to.
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var warn = function warn(message) {
+	  if (process.env.NODE_ENV !== "production") {
+	    if (console && console.warn) {
+	      console.warn(message);
+	    }
+	  }
+	};
+	exports.warn = warn;
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(5)))
+
+/***/ },
+/* 33 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var _reduceCssCalc = __webpack_require__(34);
+	
+	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
+	
+	/**
+	 * Given an object with CSS/SVG transform definitions, return the string value
+	 * for use with the `transform` CSS property or SVG attribute. Note that we
+	 * can't always guarantee the order will match the author's intended order, so
+	 * authors should only use the object notation if they know that their transform
+	 * is commutative or that there is only one.
+	 * @param {Object} obj An object of transform definitions.
+	 * @returns {String} The generated transform string.
+	 */
+	var toTransformString = function toTransformString(obj) {
+	  if (!obj || typeof obj === "string") {
+	    return obj;
+	  }
+	  var transforms = [];
+	  for (var key in obj) {
+	    if (obj.hasOwnProperty(key)) {
+	      var value = obj[key];
+	      transforms.push(key + "(" + value + ")");
+	    }
+	  }
+	  return transforms.join(" ");
+	};
+	
+	exports.toTransformString = toTransformString;
+	var calc = function calc(expr, precision) {
+	  return (0, _reduceCssCalc2["default"])("calc(" + expr + ")", precision);
+	};
+	
+	exports.calc = calc;
+	/**
+	 * Given the name of a color scale, getColorScale will return an array
+	 * of 5 hex string values in that color scale. If no 'name' parameter
+	 * is given, it will return the Victory default grayscale.
+	 * @param {String} name The name of the color scale to return (optional).
+	 * @returns {Array} An array of 5 hex string values composing a color scale.
+	 */
+	var getColorScale = function getColorScale(name) {
+	  var scales = {
+	    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
+	    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
+	    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
+	    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
+	    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
+	  };
+	  return name ? scales[name] : scales.victory;
+	};
+	exports.getColorScale = getColorScale;
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/**
+	 * Module dependencies
+	 */
+	var balanced = __webpack_require__(35)
+	var reduceFunctionCall = __webpack_require__(36)
+	
+	/**
+	 * Constantes
+	 */
+	var MAX_STACK = 100 // should be enough for a single calc()...
+	var NESTED_CALC_RE = /(\+|\-|\*|\\|[^a-z]|)(\s*)(\()/g
+	
+	/**
+	 * Global variables
+	 */
+	var stack
+	
+	/**
+	 * Expose reduceCSSCalc plugin
+	 *
+	 * @type {Function}
+	 */
+	module.exports = reduceCSSCalc
+	
+	/**
+	 * Reduce CSS calc() in a string, whenever it's possible
+	 *
+	 * @param {String} value css input
+	 */
+	function reduceCSSCalc(value, decimalPrecision) {
+	  stack = 0
+	  decimalPrecision = Math.pow(10, decimalPrecision === undefined ? 5 : decimalPrecision)
+	
+	  /**
+	   * Evaluates an expression
+	   *
+	   * @param {String} expression
+	   * @returns {String}
+	   */
+	  function evaluateExpression (expression, functionIdentifier, call) {
+	    if (stack++ > MAX_STACK) {
+	      stack = 0
+	      throw new Error("Call stack overflow for " + call)
+	    }
+	
+	    if (expression === "") {
+	      throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
+	    }
+	
+	    expression = evaluateNestedExpression(expression, call)
+	
+	    var units = getUnitsInExpression(expression)
+	
+	    // If multiple units let the expression be (i.e. browser calc())
+	    if (units.length > 1) {
+	      return functionIdentifier + "(" + expression + ")"
+	    }
+	
+	    var unit = units[0] || ""
+	
+	    if (unit === "%") {
+	      // Convert percentages to numbers, to handle expressions like: 50% * 50% (will become: 25%):
+	      expression = expression.replace(/\b[0-9\.]+%/g, function(percent) {
+	        return parseFloat(percent.slice(0, -1)) * 0.01
+	      })
+	    }
+	
+	    // Remove units in expression:
+	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
+	    var result
+	
+	    try {
+	      result = eval(toEvaluate)
+	    }
+	    catch (e) {
+	      return functionIdentifier + "(" + expression + ")"
+	    }
+	
+	    // Transform back to a percentage result:
+	    if (unit === "%") {
+	      result *= 100
+	    }
+	
+	    // adjust rounding shit
+	    // (0.1 * 0.2 === 0.020000000000000004)
+	    result = Math.round(result * decimalPrecision) / decimalPrecision
+	
+	    // We don't need units for zero values...
+	    if (result !== 0) {
+	      result += unit
+	    }
+	
+	    return result
+	  }
+	
+	  /**
+	   * Evaluates nested expressions
+	   *
+	   * @param {String} expression
+	   * @returns {String}
+	   */
+	  function evaluateNestedExpression(expression, call) {
+	    var evaluatedPart = ""
+	    var nonEvaluatedPart = expression
+	    var matches
+	    while ((matches = NESTED_CALC_RE.exec(nonEvaluatedPart))) {
+	      if (matches[0].index > 0) {
+	        evaluatedPart += nonEvaluatedPart.substring(0, matches[0].index)
+	      }
+	
+	      var balancedExpr = balanced("(", ")", nonEvaluatedPart.substring([0].index))
+	      if (balancedExpr.body === "") {
+	        throw new Error("'" + expression + "' must contain a non-whitespace string")
+	      }
+	
+	      var evaluated = evaluateExpression(balancedExpr.body, "", call)
+	
+	      evaluatedPart += balancedExpr.pre + evaluated
+	      nonEvaluatedPart = balancedExpr.post
+	    }
+	
+	    return evaluatedPart + nonEvaluatedPart
+	  }
+	
+	  return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
+	}
+	
+	/**
+	 * Checks what units are used in an expression
+	 *
+	 * @param {String} expression
+	 * @returns {Array}
+	 */
+	
+	function getUnitsInExpression(expression) {
+	  var uniqueUnits = []
+	  var unitRegEx = /[\.0-9]([%a-z]+)/g
+	  var matches = unitRegEx.exec(expression)
+	
+	  while (matches) {
+	    if (!matches || !matches[1]) {
+	      continue
+	    }
+	
+	    if (uniqueUnits.indexOf(matches[1]) === -1) {
+	      uniqueUnits.push(matches[1])
+	    }
+	
+	    matches = unitRegEx.exec(expression)
+	  }
+	
+	  return uniqueUnits
+	}
+
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	module.exports = function(a, b, str) {
+	  var bal = 0;
+	  var m = {};
+	
+	  for (var i = 0; i < str.length; i++) {
+	    if (a == str.substr(i, a.length)) {
+	      if (!('start' in m)) m.start = i;
+	      bal++;
+	    }
+	    else if (b == str.substr(i, b.length) && 'start' in m) {
+	      bal--;
+	      if (!bal) {
+	        m.end = i;
+	        m.pre = str.substr(0, m.start);
+	        m.body = (m.end - m.start > 1)
+	          ? str.substring(m.start + a.length, m.end)
+	          : '';
+	        m.post = str.slice(m.end + b.length);
+	        return m;
+	      }
+	    }
+	  }
+	};
+	
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*
+	 * Module dependencies
+	 */
+	var balanced = __webpack_require__(37)
+	
+	/**
+	 * Expose `reduceFunctionCall`
+	 *
+	 * @type {Function}
+	 */
+	module.exports = reduceFunctionCall
+	
+	/**
+	 * Walkthrough all expressions, evaluate them and insert them into the declaration
+	 *
+	 * @param {Array} expressions
+	 * @param {Object} declaration
+	 */
+	
+	function reduceFunctionCall(string, functionRE, callback) {
+	  var call = string
+	  return getFunctionCalls(string, functionRE).reduce(function(string, obj) {
+	    return string.replace(obj.functionIdentifier + "(" + obj.matches.body + ")", evalFunctionCall(obj.matches.body, obj.functionIdentifier, callback, call, functionRE))
+	  }, string)
+	}
+	
+	/**
+	 * Parses expressions in a value
+	 *
+	 * @param {String} value
+	 * @returns {Array}
+	 * @api private
+	 */
+	
+	function getFunctionCalls(call, functionRE) {
+	  var expressions = []
+	
+	  var fnRE = typeof functionRE === "string" ? new RegExp("\\b(" + functionRE + ")\\(") : functionRE
+	  do {
+	    var searchMatch = fnRE.exec(call)
+	    if (!searchMatch) {
+	      return expressions
+	    }
+	    if (searchMatch[1] === undefined) {
+	      throw new Error("Missing the first couple of parenthesis to get the function identifier in " + functionRE)
+	    }
+	    var fn = searchMatch[1]
+	    var startIndex = searchMatch.index
+	    var matches = balanced("(", ")", call.substring(startIndex))
+	
+	    if (!matches) {
+	      throw new SyntaxError(fn + "(): missing closing ')' in the value '" + call + "'")
+	    }
+	
+	    expressions.push({matches: matches, functionIdentifier: fn})
+	    call = matches.post
+	  }
+	  while (fnRE.test(call))
+	
+	  return expressions
+	}
+	
+	/**
+	 * Evaluates an expression
+	 *
+	 * @param {String} expression
+	 * @returns {String}
+	 * @api private
+	 */
+	
+	function evalFunctionCall (string, functionIdentifier, callback, call, functionRE) {
+	  // allow recursivity
+	  return callback(reduceFunctionCall(string, functionRE, callback), functionIdentifier, call)
+	}
+
+
+/***/ },
+/* 37 */
+/***/ function(module, exports) {
+
+	module.exports = function(a, b, str) {
+	  var bal = 0;
+	  var m = {};
+	
+	  for (var i = 0; i < str.length; i++) {
+	    if (a == str.substr(i, a.length)) {
+	      if (!('start' in m)) m.start = i;
+	      bal++;
+	    }
+	    else if (b == str.substr(i, b.length) && 'start' in m) {
+	      bal--;
+	      if (!bal) {
+	        m.end = i;
+	        m.pre = str.substr(0, m.start);
+	        m.body = (m.end - m.start > 1)
+	          ? str.substring(m.start + a.length, m.end)
+	          : '';
+	        m.post = str.slice(m.end + b.length);
+	        return m;
+	      }
+	    }
+	  }
+	};
+	
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var nullConstructor = function nullConstructor() {
+	  return null;
+	};
+	exports.nullConstructor = nullConstructor;
+	var undefinedConstructor = function undefinedConstructor() {
+	  return;
+	};
+	exports.undefinedConstructor = undefinedConstructor;
+	/**
+	 * Get the constructor of `value`. If `value` is null or undefined, return the
+	 * special singletons `nullConstructor` or `undefinedConstructor`, respectively.
+	 * @param {*} value Instance to return the constructor of.
+	 * @returns {Function} Constructor of `value`.
+	 */
+	var getConstructor = function getConstructor(value) {
+	  if (typeof value === "undefined") {
+	    return undefinedConstructor;
+	  } else if (value === null) {
+	    return nullConstructor;
+	  } else {
+	    return value.constructor;
+	  }
+	};
+	
+	exports.getConstructor = getConstructor;
+	/**
+	 * Get the name of the constructor used to create `value`, using
+	 * `Object.protoype.toString`. If the value is null or undefined, return
+	 * "null" or "undefined", respectively.
+	 * @param {*} value Instance to return the constructor name of.
+	 * @returns {String} Name of the constructor.
+	 */
+	var getConstructorName = function getConstructorName(value) {
+	  if (typeof value === "undefined") {
+	    return "undefined";
+	  } else if (value === null) {
+	    return "null";
+	  }
+	  return Object.prototype.toString.call(value).slice(8, -1);
+	};
+	exports.getConstructorName = getConstructorName;
+
+/***/ },
+/* 39 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var _react = __webpack_require__(2);
+	
+	var _type = __webpack_require__(38);
+	
+	var _lodash = __webpack_require__(30);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	/**
+	 * Return a new validator based on `validator` but with the option to chain
+	 * `isRequired` onto the validation. This is nearly identical to how React
+	 * does it internally, but they don't expose their helper for us to use.
+	 * @param {Function} validator Validation function.
+	 * @returns {Function} Validator with `isRequired` option.
+	 */
+	var makeChainable = function makeChainable(validator) {
+	  /* eslint-disable max-params */
+	  var _chainable = function _chainable(isRequired, props, propName, componentName) {
+	    var value = props[propName];
+	    if (typeof value === "undefined" || value === null) {
+	      if (isRequired) {
+	        return new Error("Required `" + propName + "` was not specified in `" + componentName + "`.");
+	      }
+	      return null;
+	    }
+	    return validator(props, propName, componentName);
+	  };
+	  var chainable = _lodash2["default"].bind(_chainable, null, false);
+	  chainable.isRequired = _lodash2["default"].bind(_chainable, null, true);
+	  return chainable;
+	};
+	
+	exports.makeChainable = makeChainable;
+	/**
+	 * Check that the value is a non-negative number.
+	 */
+	var nonNegative = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.number(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value < 0) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be non-negative.");
+	  }
+	});
+	
+	exports.nonNegative = nonNegative;
+	/**
+	 * Check that the value is a two-item Array in ascending order.
+	 */
+	var minMaxArray = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.array(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value.length !== 2 || value[1] < value[0]) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be a [min, max] array.");
+	  }
+	});
+	
+	exports.minMaxArray = minMaxArray;
+	/**
+	 * Check that the value looks like a d3 `scale` function.
+	 */
+	var scale = makeChainable(function (props, propName, componentName) {
+	  var value = props[propName];
+	  if (typeof value !== "function" || !value.copy || !value.domain || !value.range) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be a d3 scale.");
+	  }
+	});
+	
+	exports.scale = scale;
+	/**
+	 * Check that an array contains items of the same type.
+	 */
+	var homogenousArray = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.array(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value.length > 1) {
+	    var _constructor = (0, _type.getConstructor)(value[0]);
+	    for (var i = 1; i < value.length; i++) {
+	      var otherConstructor = (0, _type.getConstructor)(value[i]);
+	      if (_constructor !== otherConstructor) {
+	        var constructorName = (0, _type.getConstructorName)(value[0]);
+	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
+	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogenous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	      }
+	    }
+	  }
+	});
+	exports.homogenousArray = homogenousArray;
 
 /***/ }
 /******/ ])
