@@ -1,35 +1,35 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Radium from 'radium';
+import React from "react";
+import Radium from "radium";
 
 import settings from "../settings";
 
+@Radium
 class Sidebar extends React.Component {
 
   getSidebarStyles() {
     return {
       base: {
         margin: 0,
-        padding: '0 1rem',
-        '@media (min-width: 768px)': {
-          flex: '0 0 12em'
+        padding: "0 1rem",
+        "@media (min-width: 768px)": {
+          flex: "0 0 12em"
         }
       },
       defaultList: {
-        margin: '0',
-        padding: '6px',
-        listStyle: 'none'
+        margin: "0",
+        padding: "6px",
+        listStyle: "none"
       },
       defaultItem: {
-        marginTop: '0.3em',
-        position: 'relative',
+        marginTop: "0.3em",
+        position: "relative",
         lineHeight: 1.4
       },
       openList: {
-        margin: '0',
-        padding: '0 0 0 1rem',
-        listStyle: 'none',
-        fontSize: '0.9rem',
+        margin: "0",
+        padding: "0 0 0 1rem",
+        listStyle: "none",
+        fontSize: "0.9rem",
         color: settings.navy
       },
       selectedItem: {
@@ -37,12 +37,12 @@ class Sidebar extends React.Component {
       },
       selectedLink: {
         color: settings.red,
-        fontWeight: 'bold'
+        fontWeight: "bold"
       },
       link: {
-        boxShadow: 'none',
+        boxShadow: "none",
         color: settings.darkSand,
-        fontWeight: 'normal'
+        fontWeight: "normal"
       }
     };
   }
@@ -50,6 +50,7 @@ class Sidebar extends React.Component {
   render() {
     const sidebarStyles = this.getSidebarStyles();
 
+    /* eslint-disable max-len */
     return (
       <nav
         className="Nav"
@@ -82,7 +83,8 @@ class Sidebar extends React.Component {
         </ul>
       </nav>
     );
+  /* eslint-enable max-len */
   }
 }
 
-export default Radium(Sidebar);
+export default Sidebar;

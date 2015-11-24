@@ -32,8 +32,8 @@ module.exports = {
       {
         test: /\.jsx?$/,
         exclude: [function (absPath) {
-          return absPath.indexOf('node_modules') > -1 &&
-            absPath.indexOf('node_modules/victory') === -1;
+          return absPath.indexOf("node_modules") > -1 &&
+            absPath.indexOf("node_modules/victory") === -1;
         }],
         loaders: ["babel-loader?stage=0"]
       }, {

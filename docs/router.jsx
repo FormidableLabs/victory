@@ -1,14 +1,14 @@
-import createBrowserHistory from 'history/lib/createBrowserHistory';
-import React from 'react';
-import { render } from 'react-dom';
-import { Router, Route, IndexRoute } from 'react-router';
+import createBrowserHistory from "history/lib/createBrowserHistory";
+import React from "react";
+import { render } from "react-dom";
+import { Router, Route, IndexRoute } from "react-router";
 
-import App from './components/app';
-import Docs from './components/docs';
-import Root from './components/root';
+import App from "./components/app";
+import Docs from "./components/docs";
+import Root from "./components/root";
 
 // Analytics
-import ga from 'react-ga';
+import ga from "react-ga";
 
 const routes = (
   <Route path="/" component={Root}>
@@ -31,4 +31,4 @@ export default {
     render(router, el);
   }
 
-}
+};

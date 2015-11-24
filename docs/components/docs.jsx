@@ -1,8 +1,8 @@
-import ga from 'react-ga';
-import Radium, { Style } from 'radium';
-import React from 'react';
+import ga from "react-ga";
+import Radium, { Style } from "radium";
+import React from "react";
 
-import theme from './theme';
+import theme from "./theme";
 
 // Child components
 
@@ -17,38 +17,39 @@ import Sidebar from "./sidebar";
 class Docs extends React.Component {
 
   componentWillMount() {
-    ga.pageview('/victory/docs');
+    ga.pageview("/victory/docs");
   }
 
   getDocsStyles() {
     return {
-      margin: '1rem 0 0 0',
-      padding: '1rem 0.5rem',
-      '@media (min-width: 768px)': {
-        flex: '1',
+      margin: "1rem 0 0 0",
+      padding: "1rem 0.5rem",
+      "@media (min-width: 768px)": {
+        flex: "1",
         margin: 0,
-        padding: '40px 1rem',
-        maxWidth: '640px' //Is it possible the copy can be this width & code + playground can be wider?
+        padding: "40px 1rem",
+        maxWidth: "640px" // Can the copy be this width & code + playground be wider?
       }
     };
   }
 
   getMainStyles() {
     return {
-      display: 'flex',
-      flex: '1 0 auto',
-      flexDirection: 'column',
-      margin: '0 auto',
-      padding: '1rem',
-      '@media (min-width: 768px)': {
-        'flexDirection': 'row'
+      display: "flex",
+      flex: "1 0 auto",
+      flexDirection: "column",
+      margin: "0 auto",
+      padding: "1rem",
+      "@media (min-width: 768px)": {
+        "flexDirection": "row"
       }
-    }
+    };
   }
 
+  /* eslint-disable max-len */
   render() {
     return (
-      <div style={{display: 'flex', minHeight: '100vh', flexDirection: 'column'}}>
+      <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
         <main style={this.getMainStyles()}>
           <Sidebar/>
@@ -116,8 +117,9 @@ class Docs extends React.Component {
         <Footer/>
         <Style rules={theme}/>
       </div>
-    )
+    );
   }
+  /* eslint-enable max-len */
 }
 
 export default Docs;

@@ -1,6 +1,8 @@
-import React from 'react';
+import React from "react";
 
 class Index extends React.Component {
+
+  /* eslint-disable max-len */
   render() {
     return (
       <html>
@@ -33,6 +35,12 @@ class Index extends React.Component {
       </html>
     );
   }
+  /* eslint-enable max-len */
 }
+
+Index.propTypes = {
+  bundle: React.PropTypes.string,
+  content: React.PropTypes.string
+};
 
 module.exports = Index;

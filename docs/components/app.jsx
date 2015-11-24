@@ -1,13 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Ecology from 'ecology';
-import Radium, { Style } from 'radium';
-import { Link } from 'react-router';
+import React from "react";
+import Radium, { Style } from "radium";
 
 // Analytics
-import ga from 'react-ga';
+import ga from "react-ga";
 
-import theme from './theme';
+import theme from "./theme";
 
 // TODO: Extract these global Header/Footers into formidable-landers
 // https://github.com/FormidableLabs/formidable-landers/issues/12
@@ -17,17 +14,18 @@ import Footer from "./footer";
 @Radium
 class App extends React.Component {
   componentWillMount() {
-    ga.pageview('/victory');
+    ga.pageview("/victory");
   }
 
+  /* eslint-disable max-len */
   render() {
     return (
-      <div style={{display: 'flex', minHeight: '100vh', flexDirection: 'column'}}>
+      <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
-        <main style={{flex: '1'}}>
+        <main style={{flex: "1"}}>
           <header className="Header">
             <div className="Container">
-              <div className="Row" style={{margin: '0 auto'}}>
+              <div className="Row" style={{margin: "0 auto"}}>
                 <h1 className="Logo u-textCenter">
                   <img width="230px" src="static/logo-victory.svg" alt="Victory" />
                 </h1>
@@ -112,8 +110,9 @@ class App extends React.Component {
         <Footer/>
         <Style rules={theme}/>
       </div>
-    )
+    );
   }
+  /* eslint-enable max-len */
 }
 
 export default App;
