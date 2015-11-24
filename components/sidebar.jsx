@@ -43,9 +43,6 @@ class Sidebar extends React.Component {
         boxShadow: 'none',
         color: settings.darkSand,
         fontWeight: 'normal'
-        // ':hover': {
-        //   color: '#000'
-        // }
       }
     };
   }
