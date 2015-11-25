@@ -17,16 +17,27 @@ class App extends React.Component {
     ga.pageview("/victory");
   }
 
+  getMainStyles() {
+    return {
+      display: "flex",
+      flex: "1 0 auto",
+      flexDirection: "column",
+      margin: "0 auto",
+      padding: "1rem"
+    };
+  }
+
   /* eslint-disable max-len */
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
-        <main className="Container" style={{flex: "1"}}>
+        <main className="Container" style={this.getMainStyles()}>
           <header className="Header">
             <div className="Row" style={{margin: "0 auto"}}>
               <h1 className="Logo u-textCenter">
-                <img width="230px" src="static/logo-victory.svg" alt="Victory" />
+                <img src="static/logo-victory.svg" alt="Victory"
+                  width="230px" />
               </h1>
             </div>
           </header>
@@ -38,6 +49,7 @@ class App extends React.Component {
               <code className="Installer">npm install victory</code>
             </div>
           </div>
+          {/*-- Begin ecology.md here: --*/}
           <div className="Row">
             <h2 className="u-textCenter">Modular</h2>
             <p className="Copy">
