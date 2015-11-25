@@ -8,7 +8,7 @@ A flexible charting component for React. VictoryChart composes other victory com
 IMPORTANT
 =========
 
-This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes! 
+This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
 
 ## Development
 
@@ -18,6 +18,5 @@ Please see [DEVELOPMENT](DEVELOPMENT.md)
 
 Please see [CONTRIBUTING](CONTRIBUTING.md)
 
-[trav_img]: https://api.travis-ci.org/formidableLabs/victory-chart.svg
-[trav_site]: https://travis-ci.org/formidableLabs/victory-chart
-
+[trav_img]: https://api.travis-ci.org/FormidableLabs/victory-chart.svg
+[trav_site]: https://travis-ci.org/FormidableLabs/victory-chart
