@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 
 import IndexTemplate from "./static-index";
-import { routes } from "../router";
+import Router, { routes } from "../router";
 
 const Index = React.createFactory(IndexTemplate);
 const _renderIndex = (component) => `<!DOCTYPE html>
@@ -15,6 +15,12 @@ const _renderIndex = (component) => `<!DOCTYPE html>
  *
  * Output built to `/gh-pages/`
  */
+
+// Run once the client loads:
+if (typeof document !== "undefined") {
+  const rootEl = document.getElementById("content");
+  Router.run(rootEl);
+}
 
 module.exports = (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
