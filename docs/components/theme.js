@@ -76,10 +76,10 @@ export default {
     fontSize: '2.5rem'
   },
   h3: {
-    fontSize: '1.75rem'
+    fontSize: '2.125rem'
   },
   h4: {
-    fontSize: '1.5rem'
+    fontSize: '1.9rem'
   },
   'h1,h2,h3,h4': {
     fontFamily: settings.serif,
@@ -230,8 +230,8 @@ export default {
   },
   '.Installer': {
     display: 'inline-block',
-    background: '#fff',
-    border: '1px solid ' + settings.palestSand,
+    background: settings.palestSand,
+    border: '1px solid ' + settings.paleSand,
     color: settings.navy,
     fontFamily: settings.monospace,
     fontSize: '18px',
