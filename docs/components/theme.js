@@ -128,9 +128,9 @@ export default {
     border: '3px solid ' + settings.palerSand,
     boxShadow: 'none',
     color: settings.darkestSand,
-    fontFamily: settings.monospace,
-    fontWeight: 'normal',
-    padding: '0.5em 1.25em',
+    fontFamily: settings.sansSerif,
+    fontWeight: 'bold',
+    padding: '0.75em 1.25em',
     textAlign: 'center',
     transition: 'color 0.2s ease, border-color 0.7s ease'
   },
@@ -141,8 +141,18 @@ export default {
     outline: 'none',
     transition: 'color 0.2s ease, border-color 0.7s ease'
   },
-  '.Button--large': {
-    fontSize: '1.25rem'
+  '.Button--spotlight': {
+    backgroundColor: settings.mud,
+    borderColor: settings.mud,
+    color: settings.palerSand,
+    fontSize: '1.25rem',
+    transition: 'color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease'
+  },
+  '.Button--spotlight:hover, .Button--spotlight:focus': {
+    backgroundColor: settings.red,
+    borderColor: settings.red,
+    color: settings.whiteSand,
+    transition: 'color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease'
   },
   /*
    * Layout/Grid
@@ -220,9 +230,9 @@ export default {
   },
   '.Installer': {
     display: 'inline-block',
-    background: settings.navy,
-    border: '1px solid #16191F',
-    color: '#fff',
+    background: '#fff',
+    border: '1px solid ' + settings.palestSand,
+    color: settings.navy,
     fontFamily: settings.monospace,
     fontSize: '18px',
     lineHeight: 1.2,

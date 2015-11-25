@@ -39,23 +39,32 @@ class App extends React.Component {
             </div>
           </div>
           <div className="Row">
-            <h2 className="u-textCenter">Powerful, effortless data visualization</h2>
-            <div className="Copy">
-              <p>
-                Victory is a small and growing ecosystem of data visualization components written for React.
-              </p>
-              <p>
-                The modular, componentized nature of React has allowed us to write fully-contained, reusable data visualization elements that are responsible for their own styles and behaviors.
-              </p>
-              <p>
-                The use of sensible default props makes getting started very easy, without sacrificing flexiblity. Victory also leverages React lifecycle methods and DOM diffing to create a lightweight animation wrapper.
-              </p>
-              <p>
-                When combined, these features result in a set of components that are easy to use, and compose into more complicated visualizations.
-              </p>
-            </div>
+            <h2 className="u-textCenter">Modular</h2>
+            <p className="Copy">
+              Victory is a small and growing ecosystem of data visualization components written for React.
+            </p>
+          </div>
+          <div className="Row">
+            <h2 className="u-textCenter">Powerful</h2>
+            <p className="Copy">
+              The modular, componentized nature of React has allowed us to write fully-contained, reusable data visualization elements that are responsible for their own styles and behaviors.
+            </p>
+          </div>
+          <div className="Row">
+            <h2 className="u-textCenter">Effortless</h2>
+            <p className="Copy">
+              The use of sensible default props makes getting started very easy, without sacrificing flexiblity. Victory also leverages React lifecycle methods and DOM diffing to create a lightweight animation wrapper.
+            </p>
+          </div>
+          <div className="Row">
+            <h2 className="u-textCenter">Victorious</h2>
+            <p className="Copy">
+              When combined, these features result in a set of components that are easy to use, and compose into more complicated visualizations.
+            </p>
+          </div>
+          <div className="Row">
             <div className="Copy u-textCenter">
-              <a className="Button Button--large" href="/install">Get Started</a>
+              <a className="Button Button--spotlight" href="/install">Get Started</a>
             </div>
           </div>
 
