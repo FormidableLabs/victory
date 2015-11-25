@@ -1,3 +1,5 @@
+/*globals document:false */
+
 import { match, RoutingContext } from "react-router";
 import React from "react";
 import ReactDOMServer from "react-dom/server";
