@@ -47,6 +47,6 @@ Please see [DEVELOPMENT](DEVELOPMENT.md)
 
 Please see [CONTRIBUTING](CONTRIBUTING.md)
 
-[trav_img]: https://api.travis-ci.org/formidablelabs/victory.svg
-[trav_site]: https://travis-ci.org/formidablelabs/victory
+[trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
+[trav_site]: https://travis-ci.org/FormidableLabs/victory
 
