@@ -7,13 +7,10 @@ export default {
    * Normalize & Element Selectors
    */
   '*, *:before, *:after': {
-    webkitboxsizing: 'inherit',
-    mozboxsizing: 'inherit',
     boxSizing: 'inherit'
   },
   html: {
-    msTextSizeAdjust: '100%',
-    webkittextsizeadjust: '100%'
+    textSizeAdjust: '100%'
   },
   body: {
     backgroundColor: '#f6f2ee',
@@ -21,11 +18,8 @@ export default {
     lineHeight: 1.5,
     margin: 0,
     color: settings.deepNavy,
-    webkitboxsizing: 'border-box',
-    mozboxsizing: 'border-box',
-    boxSizing: 'border-box',
-    mozosxfontsmoothing: 'grayscale',
-    webkitfontsmoothing: 'antialiased'
+    fontSmoothing: 'antialiased',
+    boxSizing: 'border-box'
   },
   'html, body': {
     overflowX: 'hidden'
@@ -76,21 +70,44 @@ export default {
     fill: 'currentColor'
   },
   h1: {
-    fontSize: '3rem'
-  },
-  h2: {
     fontSize: '2.75rem'
   },
+  h2: {
+    fontSize: '2.5rem'
+  },
   h3: {
-    fontSize: '1.5rem'
+    fontSize: '1.75rem'
   },
   h4: {
-    fontSize: '1.3125rem'
+    fontSize: '1.5rem'
   },
   'h1,h2,h3,h4': {
     fontFamily: settings.serif,
+    fontWeight: 'normal',
+    lineHeight: 1.2
+  },
+  /*
+   * Headlines/Headings
+   */
+  '.Headline': {
+    fontFamily: settings.serif,
+    fontSize: '2.5rem',
     fontWeight: 'normal'
   },
+  '.Headline--major': {
+    fontSize: '3rem',
+    lineHeight: 1.3,
+    fontStyle: 'italic'
+  },
+  '.Smallcaps': {
+    textTransform: 'uppercase',
+    fontSize: '0.85em',
+    fontWeight: 'bold',
+    color: settings.darkSand
+  },
+  /*
+   * Links
+   */
   'a': {
     color: settings.navy,
     fontWeight: 700,
@@ -104,22 +121,26 @@ export default {
     transition: 'color 0.2s ease, box-shadow 0.5s ease'
   },
   /*
-   * Headlines/Headings
+   * Buttons!
    */
-  '.Headline': {
-    fontFamily: settings.serif,
-    fontSize: '3rem',
-    fontWeight: 'normal'
+  '.Button': {
+    backgroundColor: 'transparent',
+    border: '3px solid ' + settings.palerSand,
+    color: settings.darkestSand,
+    fontFamily: settings.monospace,
+    fontWeight: 'normal',
+    padding: '0.5em 1.25em',
+    textAlign: 'center',
+    transition: 'color 0.2s ease, border-color 0.7s ease'
   },
-  '.Headline--major': {
-    lineHeight: 1.3,
-    fontStyle: 'italic'
+  '.Button:hover, .Button:focus': {
+    outline: 'none',
+    borderColor: settings.palestRed,
+    color: settings.red,
+    transition: 'color 0.2s ease, border-color 0.7s ease'
   },
-  '.Smallcaps': {
-    textTransform: 'uppercase',
-    fontSize: '0.85em',
-    fontWeight: 'bold',
-    color: settings.darkSand
+  '.Button--large': {
+    fontSize: '1.25rem'
   },
   /*
    * Layout/Grid
@@ -128,7 +149,8 @@ export default {
     margin: '0 auto',
     maxWidth: '960px',
     paddingLeft: '1em',
-    paddingRight: '1em'
+    paddingRight: '1em',
+    paddingBottom: '1em'
   },
   '.Row': {
     padding: '36px 0'
@@ -151,7 +173,7 @@ export default {
     marginBottom: 0,
     background: settings.navy,
     color: '#fff',
-    fontFamily: '"Source Code Pro", monospace',
+    fontFamily: settings.monospace,
     fontSize: '16px',
     lineHeight: 1.2,
     overflow: 'auto',
@@ -184,7 +206,7 @@ export default {
     marginBottom: '0px'
   },
   '.Copy code': {
-    fontFamily: settings.codeFont,
+    fontFamily: settings.monospace,
     background: settings.whiteSand,
     color: settings.mud,
     borderRadius: 3,
@@ -199,7 +221,7 @@ export default {
     background: settings.navy,
     border: '1px solid #16191F',
     color: '#fff',
-    fontFamily: '"Source Code Pro", monospace',
+    fontFamily: settings.monospace,
     fontSize: '18px',
     lineHeight: 1.2,
     margin: '0 auto',
@@ -228,7 +250,7 @@ export default {
     flex: '0 0 100%',
     verticalAlign: 'top',
     background: '#fff',
-    fontFamily: settings.codeFont,
+    fontFamily: settings.monospace,
     fontSize: '1rem',
     lineHeight: 1.2,
     marginBottom: '30px',
@@ -248,7 +270,7 @@ export default {
     top: '-18px'
   },
   '.Interactive pre, .CodeMirror-code': {
-    fontFamily: settings.codeFont,
+    fontFamily: settings.monospace,
     fontSize: '1rem',
     lineHeight: 1.2
   },
@@ -263,7 +285,7 @@ export default {
     fontWeight: 'normal'
   },
   '.Prop-name': {
-    fontFamily: settings.codeFont
+    fontFamily: settings.monospace
   },
   '.Prop-type': {
     color: settings.darkSand,
@@ -288,10 +310,10 @@ export default {
     letterSpacing: '0.04em'
   },
   '.Prop-examples-value': {
-    fontFamily: '"Source Code Pro", monospace'
+    fontFamily: settings.monospace
   },
   '.Prop-default-value': {
-    fontFamily: '"Source Code Pro", monospace',
+    fontFamily: settings.monospace,
     color: '#4d4945'
   },
   /* Utilities */
@@ -309,6 +331,18 @@ export default {
   },
   mediaQueries: {
     'only screen and (min-width: 44em)': {
+      h1: {
+        fontSize: '3rem'
+      },
+      h2: {
+        fontSize: '2.75rem'
+      },
+      h3: {
+        fontSize: '1.5rem'
+      },
+      h4: {
+        fontSize: '1.3125rem'
+      },
       '.Headline--major': {
         fontSize: '3.5rem',
         lineHeight: 1.2,
