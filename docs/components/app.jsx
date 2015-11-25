@@ -75,11 +75,17 @@ class App extends React.Component {
             </p>
           </div>
           <div className="Row">
-            <div className="Copy u-textCenter">
-              <a className="Button Button--spotlight" href="/install">Get Started</a>
+            <div className="u-textCenter">
+              <ul style={{listStyle: 'none', margin: 0, padding: 0}}>
+                <li><a href="http://projects.formidablelabs.com/victory-axis/">Victory Axis</a></li>
+                <li><a href="http://projects.formidablelabs.com/victory-bar/">Victory Bar</a></li>
+                <li><a href="http://projects.formidablelabs.com/victory-chart/">Victory Chart</a></li>
+                <li><a href="http://projects.formidablelabs.com/victory-line/">Victory Line</a></li>
+                <li><a href="http://projects.formidablelabs.com/victory-pie/">Victory Pie</a></li>
+                <li><a href="http://projects.formidablelabs.com/victory-scatter/">Victory Scatter</a></li>
+              </ul>
             </div>
           </div>
-
         </main>
         <Footer/>
         <Style rules={theme}/>
