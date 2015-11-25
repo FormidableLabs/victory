@@ -55,7 +55,7 @@ class App extends React.Component {
               </p>
             </div>
             <div className="Copy u-textCenter">
-              <button className="Button Button--large">Get Started</button>
+              <a className="Button Button--large" href="/install">Get Started</a>
             </div>
           </div>
 

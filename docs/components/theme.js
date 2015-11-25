@@ -126,6 +126,7 @@ export default {
   '.Button': {
     backgroundColor: 'transparent',
     border: '3px solid ' + settings.palerSand,
+    boxShadow: 'none',
     color: settings.darkestSand,
     fontFamily: settings.monospace,
     fontWeight: 'normal',
@@ -134,9 +135,10 @@ export default {
     transition: 'color 0.2s ease, border-color 0.7s ease'
   },
   '.Button:hover, .Button:focus': {
-    outline: 'none',
     borderColor: settings.palestRed,
+    boxShadow: 'none',
     color: settings.red,
+    outline: 'none',
     transition: 'color 0.2s ease, border-color 0.7s ease'
   },
   '.Button--large': {
