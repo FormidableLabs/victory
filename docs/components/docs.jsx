@@ -34,7 +34,7 @@ class Docs extends React.Component {
       "@media (min-width: 70em)": {
         flex: "1",
         margin: 0,
-        padding: "40px 1rem"
+        padding: "60px 1rem"
       }
     };
   }

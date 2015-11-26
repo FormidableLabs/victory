@@ -18,7 +18,6 @@ export default {
     lineHeight: 1.5,
     margin: 0,
     color: settings.deepNavy,
-    fontSmoothing: 'antialiased',
     boxSizing: 'border-box'
   },
   'html, body': {
@@ -227,7 +226,7 @@ export default {
     marginTop: '0.25em',
     marginBottom: '0px'
   },
-  '.Copy code': {
+  '.Copy code, .Ecology code': {
     fontFamily: settings.monospace,
     background: settings.whiteSand,
     color: settings.mud,
