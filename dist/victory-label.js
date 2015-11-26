@@ -2265,11 +2265,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var Style = _interopRequireWildcard(_style);
 	
-	var _type = __webpack_require__(38);
+	var _type = __webpack_require__(37);
 	
 	var Type = _interopRequireWildcard(_type);
 	
-	var _propTypes = __webpack_require__(39);
+	var _propTypes = __webpack_require__(38);
 	
 	var PropTypes = _interopRequireWildcard(_propTypes);
 	
@@ -14969,7 +14969,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(37)
+	var balanced = __webpack_require__(35)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -15046,36 +15046,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 37 */
 /***/ function(module, exports) {
 
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
-
-
-/***/ },
-/* 38 */
-/***/ function(module, exports) {
-
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -15124,7 +15094,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getConstructorName = getConstructorName;
 
 /***/ },
-/* 39 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15137,7 +15107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react = __webpack_require__(2);
 	
-	var _type = __webpack_require__(38);
+	var _type = __webpack_require__(37);
 	
 	var _lodash = __webpack_require__(30);
 	
