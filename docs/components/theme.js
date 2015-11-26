@@ -78,7 +78,7 @@ export default {
   h3: {
     fontSize: '2.125rem'
   },
-  h4: {
+  'h4, h5, h6': {
     fontSize: '1.9rem'
   },
   'h1,h2,h3,h4': {
@@ -197,17 +197,17 @@ export default {
     overflow: 'auto',
     padding: '16px'
   },
-  '.Copy ul': {
+  '.Copy ul, .Ecology ul': {
     paddingLeft: '24px',
     listStyle: 'none'
   },
-  '.Copy ul > li': {
+  '.Copy ul > li, .Ecology ul > li': {
     position: 'relative'
   },
-  '.Copy ul > li + li': {
+  '.Copy ul > li + li, .Ecology ul > li + li': {
     marginTop: '0.25em'
   },
-  '.Copy ul > li:before': {
+  '.Copy ul > li:before, .Ecology ul > li:before': {
     content: '""',
     width: '1em',
     height: '1em',
@@ -219,7 +219,7 @@ export default {
     left: '-24px',
     top: '11px'
   },
-  '.Copy li > ul': {
+  '.Copy li > ul, .Ecology li > ul': {
     marginTop: '0.25em',
     marginBottom: '0px'
   },
@@ -362,10 +362,10 @@ export default {
         fontSize: '2.75rem'
       },
       h3: {
-        fontSize: '1.5rem'
+        fontSize: '2.125rem'
       },
-      h4: {
-        fontSize: '1.3125rem'
+      'h4, h5, h6': {
+        fontSize: '1.9rem'
       },
       '.Headline--major': {
         fontSize: '3.5rem',
@@ -379,7 +379,7 @@ export default {
       '.Logo img': {
         width: '230px'
       },
-      '.Copy': {
+      '.Copy, .Ecology p': {
         fontSize: '1.125rem'
       },
       '.Copy .highlight': {
