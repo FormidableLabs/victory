@@ -55,7 +55,7 @@ class Sidebar extends React.Component {
       <nav
         className="Nav"
         style={sidebarStyles.base}>
-        <img width="40" src="/static/icon-victory.svg" />
+        <img width="40" src="static/icon-victory.svg" />
         <ul style={sidebarStyles.defaultList}>
           <li style={sidebarStyles.defaultItem}>
             <a href="#" style={sidebarStyles.link}>Installation</a>

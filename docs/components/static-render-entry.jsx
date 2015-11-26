@@ -26,7 +26,7 @@ if (typeof document !== "undefined") {
 
 module.exports = (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
-  const bundle = `/${source.assetsByChunkName.main}`;
+  const bundle = source.assetsByChunkName.main;
 
   match({ routes, location: locals.path }, (err, redirectLocation, renderProps) => {
     // TODO err/redirect handling
