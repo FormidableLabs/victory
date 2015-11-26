@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
 
@@ -55,9 +56,9 @@ class Sidebar extends React.Component {
       <nav
         className="Nav"
         style={sidebarStyles.base}>
-        <a href="/" className="Link--unstyled">
+        <Link to="/" className="Link--unstyled">
           <img width="40px" src="static/icon-victory.svg" alt="Victory Homepage" />
-        </a>
+        </Link>
         <ul style={sidebarStyles.defaultList}>
           <li style={[
             sidebarStyles.defaultItem,
