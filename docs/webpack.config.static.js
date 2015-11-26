@@ -27,7 +27,7 @@ module.exports = {
   resolve: base.resolve,
   module: base.module,
   plugins: [
-    new CleanPlugin([ "./docs/" + OUTPUT_DIR ]),
+    new CleanPlugin([ path.join(__dirname, OUTPUT_DIR) ]),
     new StatsWriterPlugin({
       filename: "stats.json"
     }),
