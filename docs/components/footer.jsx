@@ -38,7 +38,7 @@ class Footer extends React.Component {
           </a>
         </span>
         <span style={[footerStyles.text]}>
-          P.S. <a href="http://formidable.com/studio/" style={{lineHeight: 1}}>We’re hiring</a>.
+          P.S. <a href="http://formidable.com/team/" style={{lineHeight: 1}}>We’re hiring</a>.
         </span>
       </footer>
     );
