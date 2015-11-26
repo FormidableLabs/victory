@@ -62,10 +62,7 @@
     "history": "^1.13.1",
     "lodash": "^3.9.3",
     "radium": "^0.14.1",
-    "react-ga": "^1.2.0",
-    "react-router": "^1.0.0",
     "rimraf": "^2.4.0",
-    "static-site-generator-webpack-plugin": "^1.2.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.0.11",
@@ -107,8 +104,11 @@
     "react": "0.14.x",
     "react-dom": "0.14.x",
     "react-hot-loader": "^1.2.8",
+    "react-ga": "^1.2.0",
+    "react-router": "^1.0.0",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0",
+    "static-site-generator-webpack-plugin": "^1.2.0",
     "webpack-dev-server": "^1.10.0"
   }
 }

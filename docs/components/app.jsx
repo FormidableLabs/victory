@@ -1,6 +1,9 @@
 import { Link } from "react-router";
 import Radium, { Style } from "radium";
 import React from "react";
+import Ecology from "ecology";
+import ReactDOM from "react-dom";
+import {VictoryChart, VictoryLine} from "../../src/index";
 
 // Analytics
 import ga from "react-ga";
@@ -50,7 +53,7 @@ class App extends React.Component {
               <code className="Installer">npm install victory</code>
             </div>
           </div>
-          {/*-- Begin ecology.md here: --*/}
+
           <div className="Row">
             <h2 className="u-textCenter">Modular</h2>
             <p className="Copy">
@@ -75,6 +78,15 @@ class App extends React.Component {
               When combined, these features result in a set of components that are easy to use, and compose into more complicated visualizations.
             </p>
           </div>
+
+          <div>
+            <Ecology
+              overview={require("!!raw!../ecology.md")}
+              scope={{React, ReactDOM, VictoryChart, VictoryLine}}
+              playgroundtheme="elegant" />
+            <Style rules={theme}/>
+          </div>
+
           <div className="Row">
             <div className="Copy u-textCenter">
               <Link className="Button Button--spotlight" to="docs">Get Started</Link>
