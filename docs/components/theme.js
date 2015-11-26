@@ -94,6 +94,10 @@ export default {
     fontSize: '2.5rem',
     fontWeight: 'normal'
   },
+  '.Headline--minor': {
+    fontSize: '2rem',
+    fontStyle: 'italic'
+  },
   '.Headline--major': {
     fontSize: '3rem',
     lineHeight: 1.3,
