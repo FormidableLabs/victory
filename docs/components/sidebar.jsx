@@ -11,7 +11,7 @@ class Sidebar extends React.Component {
       base: {
         margin: 0,
         padding: "0 1rem",
-        "@media (min-width: 768px)": {
+        "@media (min-width: 70em)": {
           flex: "0 0 12em"
         }
       },
@@ -55,7 +55,9 @@ class Sidebar extends React.Component {
       <nav
         className="Nav"
         style={sidebarStyles.base}>
-        <img width="40" src="static/icon-victory.svg" />
+        <a href="/" className="Link--unstyled">
+          <img width="40px" src="static/icon-victory.svg" alt="Victory Homepage" />
+        </a>
         <ul style={sidebarStyles.defaultList}>
           <li style={[
             sidebarStyles.defaultItem,
