@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
 
@@ -11,7 +12,7 @@ class Sidebar extends React.Component {
       base: {
         margin: 0,
         padding: "0 1rem",
-        "@media (min-width: 768px)": {
+        "@media (min-width: 70em)": {
           flex: "0 0 12em"
         }
       },
@@ -55,30 +56,47 @@ class Sidebar extends React.Component {
       <nav
         className="Nav"
         style={sidebarStyles.base}>
-        <img width="40" src="/static/icon-victory.svg" />
+        <Link to="/" className="Link--unstyled">
+          <img width="40px" src="static/icon-victory.svg" alt="Victory Homepage" />
+        </Link>
         <ul style={sidebarStyles.defaultList}>
-          <li style={sidebarStyles.defaultItem}>
-            <a href="#" style={sidebarStyles.link}>Installation</a>
-          </li>
-          <li style={[sidebarStyles.defaultItem, sidebarStyles.selectedItem]}>
-            <a href="#" style={[sidebarStyles.link, sidebarStyles.selectedLink]}>Story time</a>
-            <ul style={sidebarStyles.openList}>
-              <li style={sidebarStyles.defaultItem}>
-                <a href="#" style={[sidebarStyles.link, sidebarStyles.selectedLink]}>Part I</a>
-              </li>
-              <li style={sidebarStyles.defaultItem}>
-                <a href="#" style={sidebarStyles.link}>Part II</a>
-              </li>
-            </ul>
+          <li style={[
+            sidebarStyles.defaultItem,
+            sidebarStyles.selectedItem,
+            sidebarStyles.link,
+            sidebarStyles.selectedLink
+          ]}>
+            Getting started
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="#" style={sidebarStyles.link}>Victory Chart</a>
+            <a href="https://formidablelabs.github.io/victory-axis" style={sidebarStyles.link}>
+              Victory Axis
+            </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="#" style={sidebarStyles.link}>Victory Pie</a>
+            <a href="https://formidablelabs.github.io/victory-bar" style={sidebarStyles.link}>
+              Victory Bar
+            </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="#" style={sidebarStyles.link}>Victory Scatter</a>
+            <a href="https://formidablelabs.github.io/victory-chart" style={sidebarStyles.link}>
+              Victory Chart
+            </a>
+          </li>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="https://formidablelabs.github.io/victory-line" style={sidebarStyles.link}>
+              Victory Line
+            </a>
+          </li>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="https://formidablelabs.github.io/victory-pie" style={sidebarStyles.link}>
+              Victory Pie
+            </a>
+          </li>
+          <li style={sidebarStyles.defaultItem}>
+            <a href="https://formidablelabs.github.io/victory-scatter" style={sidebarStyles.link}>
+              Victory Scatter
+            </a>
           </li>
         </ul>
       </nav>

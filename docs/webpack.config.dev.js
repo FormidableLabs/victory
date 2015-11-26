@@ -31,10 +31,7 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
-        exclude: [function (absPath) {
-          return absPath.indexOf("node_modules") > -1 &&
-            absPath.indexOf("node_modules/victory") === -1;
-        }],
+        exclude: /node_modules/,
         loaders: ["babel-loader?stage=0"]
       }, {
         test: /\.(png|jpg)$/,

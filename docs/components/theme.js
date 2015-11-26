@@ -18,7 +18,6 @@ export default {
     lineHeight: 1.5,
     margin: 0,
     color: settings.deepNavy,
-    fontSmoothing: 'antialiased',
     boxSizing: 'border-box'
   },
   'html, body': {
@@ -78,7 +77,7 @@ export default {
   h3: {
     fontSize: '2.125rem'
   },
-  h4: {
+  'h4, h5, h6': {
     fontSize: '1.9rem'
   },
   'h1,h2,h3,h4': {
@@ -93,6 +92,10 @@ export default {
     fontFamily: settings.serif,
     fontSize: '2.5rem',
     fontWeight: 'normal'
+  },
+  '.Headline--minor': {
+    fontSize: '2rem',
+    fontStyle: 'italic'
   },
   '.Headline--major': {
     fontSize: '3rem',
@@ -119,6 +122,12 @@ export default {
     color: settings.red,
     boxShadow: 'inset 0 -0.05em 0 ' + settings.paleRed,
     transition: 'color 0.2s ease, box-shadow 0.5s ease'
+  },
+  '.Link--unstyled': {
+    boxShadow: 'none'
+  },
+  '.Link--unstyled:hover, .Link--unstyled:focus': {
+    boxShadow: 'none'
   },
   /*
    * Buttons!
@@ -191,17 +200,17 @@ export default {
     overflow: 'auto',
     padding: '16px'
   },
-  '.Copy ul': {
+  '.Copy ul, .Ecology ul': {
     paddingLeft: '24px',
     listStyle: 'none'
   },
-  '.Copy ul > li': {
+  '.Copy ul > li, .Ecology ul > li': {
     position: 'relative'
   },
-  '.Copy ul > li + li': {
+  '.Copy ul > li + li, .Ecology ul > li + li': {
     marginTop: '0.25em'
   },
-  '.Copy ul > li:before': {
+  '.Copy ul > li:before, .Ecology ul > li:before': {
     content: '""',
     width: '1em',
     height: '1em',
@@ -213,11 +222,11 @@ export default {
     left: '-24px',
     top: '11px'
   },
-  '.Copy li > ul': {
+  '.Copy li > ul, .Ecology li > ul': {
     marginTop: '0.25em',
     marginBottom: '0px'
   },
-  '.Copy code': {
+  '.Copy code, .Ecology code': {
     fontFamily: settings.monospace,
     background: settings.whiteSand,
     color: settings.mud,
@@ -238,6 +247,12 @@ export default {
     lineHeight: 1.2,
     margin: '0 auto',
     padding: '16px 32px'
+  },
+  /*
+   * Ecology text wrangling
+   */
+  '.Ecology p': {
+    maxWidth: '640px' // Ideal 60–70 characters per line
   },
   /*
    * Interactive/Component Playground
@@ -342,7 +357,7 @@ export default {
     marginBottom: 0
   },
   mediaQueries: {
-    'only screen and (min-width: 44em)': {
+    'only screen and (min-width: 70em)': {
       h1: {
         fontSize: '3rem'
       },
@@ -350,10 +365,10 @@ export default {
         fontSize: '2.75rem'
       },
       h3: {
-        fontSize: '1.5rem'
+        fontSize: '2.125rem'
       },
-      h4: {
-        fontSize: '1.3125rem'
+      'h4, h5, h6': {
+        fontSize: '1.9rem'
       },
       '.Headline--major': {
         fontSize: '3.5rem',
@@ -367,7 +382,7 @@ export default {
       '.Logo img': {
         width: '230px'
       },
-      '.Copy': {
+      '.Copy, .Ecology p': {
         fontSize: '1.125rem'
       },
       '.Copy .highlight': {
