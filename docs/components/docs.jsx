@@ -31,11 +31,10 @@ class Docs extends React.Component {
     return {
       margin: "1rem 0 0 0",
       padding: "1rem 0.5rem",
-      "@media (min-width: 768px)": {
+      "@media (min-width: 70em)": {
         flex: "1",
         margin: 0,
-        padding: "40px 1rem",
-        maxWidth: "640px" // Can the copy be this width & code + playground be wider?
+        padding: "40px 1rem"
       }
     };
   }
@@ -43,25 +42,13 @@ class Docs extends React.Component {
   getMainStyles() {
     return {
       display: "flex",
-      flex: "1 0 auto",
+      flex: "1 0 100%",
       flexDirection: "column",
       margin: "0 auto",
       padding: "1rem",
-      "@media (min-width: 768px)": {
+      maxWidth: "70em",
+      "@media (min-width: 70em)": {
         "flexDirection": "row"
-      }
-    };
-  }
-
-  // H4X GO HERE
-  _getPlaygroundTheme() {
-    return {
-      mediaQueries: {
-        "only screen and (min-width: 10em)": {
-          ".Interactive .playground .playgroundCode": {
-            display: "block" // to no avail :(
-          }
-        }
       }
     };
   }
@@ -78,7 +65,6 @@ class Docs extends React.Component {
               overview={require("!!raw!../ecology-getting-started.md")}
               scope={{React, ReactDOM, V, VictoryChart, VictoryLine, VictoryPie}}
               playgroundtheme="elegant" />
-            <Style rules={this._getPlaygroundTheme()}/>
           </section>
         </main>
         <Footer/>

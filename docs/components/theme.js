@@ -120,6 +120,12 @@ export default {
     boxShadow: 'inset 0 -0.05em 0 ' + settings.paleRed,
     transition: 'color 0.2s ease, box-shadow 0.5s ease'
   },
+  '.Link--unstyled': {
+    boxShadow: 'none'
+  },
+  '.Link--unstyled:hover, .Link--unstyled:focus': {
+    boxShadow: 'none'
+  },
   /*
    * Buttons!
    */
@@ -240,6 +246,12 @@ export default {
     padding: '16px 32px'
   },
   /*
+   * Ecology text wrangling
+   */
+  '.Ecology p': {
+    maxWidth: '640px' // Ideal 60–70 characters per line
+  },
+  /*
    * Interactive/Component Playground
    */
   '.Interactive .playground': {
@@ -342,7 +354,7 @@ export default {
     marginBottom: 0
   },
   mediaQueries: {
-    'only screen and (min-width: 44em)': {
+    'only screen and (min-width: 70em)': {
       h1: {
         fontSize: '3rem'
       },
