@@ -4,14 +4,11 @@ import Radium, { Style } from "radium";
 import React from "react";
 import ReactDOM from "react-dom";
 
-
 import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
 const V = Victory;
 
 import theme from "./theme";
-
-// Child components
 
 // TODO: Extract these global Header/Footers into formidable-landers
 // https://github.com/FormidableLabs/formidable-landers/issues/12
