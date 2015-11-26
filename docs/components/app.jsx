@@ -1,5 +1,6 @@
-import React from "react";
+import { Link } from "react-router";
 import Radium, { Style } from "radium";
+import React from "react";
 
 // Analytics
 import ga from "react-ga";
@@ -75,17 +76,11 @@ class App extends React.Component {
             </p>
           </div>
           <div className="Row">
-            <div className="u-textCenter">
-              <ul style={{listStyle: "none", margin: 0, padding: 0}}>
-                <li><a href="http://projects.formidablelabs.com/victory-axis/">Victory Axis</a></li>
-                <li><a href="http://projects.formidablelabs.com/victory-bar/">Victory Bar</a></li>
-                <li><a href="http://projects.formidablelabs.com/victory-chart/">Victory Chart</a></li>
-                <li><a href="http://projects.formidablelabs.com/victory-line/">Victory Line</a></li>
-                <li><a href="http://projects.formidablelabs.com/victory-pie/">Victory Pie</a></li>
-                <li><a href="http://projects.formidablelabs.com/victory-scatter/">Victory Scatter</a></li>
-              </ul>
+            <div className="Copy u-textCenter">
+              <Link className="Button Button--spotlight" to="docs">Get Started</Link>
             </div>
           </div>
+
         </main>
         <Footer/>
         <Style rules={theme}/>
