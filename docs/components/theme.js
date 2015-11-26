@@ -257,6 +257,9 @@ export default {
   /*
    * Interactive/Component Playground
    */
+  '.Interactive': {
+    overflowX: 'hidden' // playground & preview have horizontal scrollbars.
+  },
   '.Interactive .playground': {
     display: 'flex',
     flexWrap: 'wrap',
