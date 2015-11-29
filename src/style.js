@@ -36,11 +36,28 @@ export const calc = function (expr, precision) {
  */
 export const getColorScale = function (name) {
   const scales = {
-    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
-    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
-    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
-    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
-    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
+    greyscale: [
+      "#7d7d7d", "#5e5e5e", "#404040", "#969696",
+      "#2b2b2b", "#bdbdbd", "d6d6d6", "#000000"
+    ],
+    qualitative: [
+      "#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49",
+      "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"
+    ],
+    diverging: [
+      "#A83800", "#D64700", "#D66C00", "#FFB403", "#C6B403",
+      "#36A69A", "#297F8D", "#17576D", "#073C58", "#002A4A"
+    ],
+    diverging2: [
+      "#7E1E28", "#962E3D", "#B5374E", "#E54663",
+      "#0368F5", "#0229AB", "#011454", "#000133"
+    ],
+    heatmap: ["#BE2805", "#EC5519", "#DC8505", "#717400", "#32450C"],
+    warm: ["#5C110F", "#901811", "#BF5C00", "#E2AD3B", "#F0C755"],
+    cool: ["#272433", "#343F4F", "#3D6066", "#77994C", "#B2D249"],
+    red: ["#360000", "#600000", "#790000", "#AD1414", "#D91919"],
+    blue: ["#00295A", "#00427D", "#006ECF", "#3590DE", "#65B4F4"],
+    green: ["#28361A", "#354C25", "#4A6B33", "#678544", "#8BA663"]
   };
   return name ? scales[name] : scales.victory;
 };
