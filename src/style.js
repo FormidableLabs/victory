@@ -37,8 +37,7 @@ export const calc = function (expr, precision) {
 export const getColorScale = function (name) {
   const scales = {
     greyscale: [
-      "#7d7d7d", "#5e5e5e", "#404040", "#969696",
-      "#2b2b2b", "#bdbdbd", "d6d6d6", "#000000"
+      "#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"
     ],
     qualitative: [
       "#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49",
