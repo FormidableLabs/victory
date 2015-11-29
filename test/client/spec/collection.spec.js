@@ -1,7 +1,8 @@
 import {
   containsStrings,
   containsOnlyStrings,
-  isArrayOfArrays
+  isArrayOfArrays,
+  removeUndefined
 } from "src/collection";
 
 describe("containsStrings", () => {
@@ -79,5 +80,22 @@ describe("isArrayOfArrays", () => {
     expect(isArrayOfArrays([ [{}] ])).to.equal(true);
     expect(isArrayOfArrays([ [ [] ] ])).to.equal(true);
     expect(isArrayOfArrays([ [], [] ])).to.equal(true);
+  });
+});
+
+describe("removeUndefined", () => {
+  it("handles empty array", () => {
+    expect(removeUndefined([])).to.eql([]);
+  });
+
+  it("does not filter non-undefineds", () => {
+    const testArray = [0, 1, 'a', {}, false, null, NaN];
+    expect(removeUndefined(testArray)).to.eql(testArray);
+  });
+
+  it("filters out undefineds", () => {
+    const testArray = [undefined, 0, undefined, {}, false, null, NaN, undefined];
+    const expectedArray = [0, {}, false, null, NaN];
+    expect(removeUndefined(testArray)).to.eql(expectedArray);
   });
 });
