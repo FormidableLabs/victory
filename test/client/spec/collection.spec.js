@@ -1,4 +1,29 @@
-import { isArrayOfArrays } from "src/collection";
+import {
+  containsStrings,
+  isArrayOfArrays
+} from "src/collection";
+
+describe("containsStrings", () => {
+  it("handles empty argument", () => {
+    expect(containsStrings()).to.equal(false);
+  });
+
+  it("handles empty array", () => {
+    expect(containsStrings([])).to.equal(false);
+  });
+
+  it("returns false for collections of non-strings", () => {
+    expect(containsStrings([0, 1])).to.equal(false);
+    expect(containsStrings([undefined, null, NaN])).to.equal(false);
+    expect(containsStrings([{}, {a: 'foo'}])).to.equal(false);
+  });
+
+  it("returns false for collections with strings", () => {
+    expect(containsStrings(['hello'])).to.equal(true);
+    expect(containsStrings(['hello', 'there'])).to.equal(true);
+    expect(containsStrings([0, 'hello', {}, null])).to.equal(true);
+  });
+});
 
 describe("isArrayOfArrays", () => {
   it("handles empty argument", () => {
