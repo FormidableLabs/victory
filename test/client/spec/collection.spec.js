@@ -1,5 +1,6 @@
 import {
   containsStrings,
+  containsOnlyStrings,
   isArrayOfArrays
 } from "src/collection";
 
@@ -22,6 +23,33 @@ describe("containsStrings", () => {
     expect(containsStrings(['hello'])).to.equal(true);
     expect(containsStrings(['hello', 'there'])).to.equal(true);
     expect(containsStrings([0, 'hello', {}, null])).to.equal(true);
+  });
+});
+
+describe("containsOnlyStrings", () => {
+  it("handles empty argument", () => {
+    expect(containsOnlyStrings()).to.equal(false);
+  });
+
+  it("handles empty array", () => {
+    expect(containsOnlyStrings([])).to.equal(false);
+  });
+
+  it("returns false for collections of non-strings", () => {
+    expect(containsOnlyStrings([0, 1])).to.equal(false);
+    expect(containsOnlyStrings([undefined, null, NaN])).to.equal(false);
+    expect(containsOnlyStrings([{}, {a: 'foo'}])).to.equal(false);
+  });
+
+  it("returns false for collections with some strings", () => {
+    expect(containsOnlyStrings(['hello', 0])).to.equal(false);
+    expect(containsOnlyStrings(['hello', ['not me']])).to.equal(false);
+    expect(containsOnlyStrings([0, 'hello', {}, null])).to.equal(false);
+  });
+
+  it("returns true for collections with only strings", () => {
+    expect(containsOnlyStrings(['hello'])).to.equal(true);
+    expect(containsOnlyStrings(['hello', 'there'])).to.equal(true);
   });
 });
 

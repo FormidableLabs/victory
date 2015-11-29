@@ -7,9 +7,7 @@ export const containsStrings = function (collection) {
 };
 
 export const containsOnlyStrings = function (collection) {
-  return _.every(collection, (item) => {
-    return _.isString(item);
-  });
+  return _.isArray(collection) && _.every(collection, _.isString);
 };
 
 export const isArrayOfArrays = function (collection) {
