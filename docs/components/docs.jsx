@@ -14,7 +14,6 @@ import theme from "./theme";
 // https://github.com/FormidableLabs/formidable-landers/issues/12
 import Footer from "./footer";
 import Header from "./header";
-
 import Sidebar from "./sidebar";
 
 @Radium

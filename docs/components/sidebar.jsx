@@ -74,9 +74,9 @@ class Sidebar extends React.Component {
             </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-bar" style={sidebarStyles.link}>
+            <Link to="docs/victory-bar" style={sidebarStyles.link}>
               Victory Bar
-            </a>
+            </Link>
           </li>
           <li style={sidebarStyles.defaultItem}>
             <a href="https://formidablelabs.github.io/victory-chart" style={sidebarStyles.link}>
