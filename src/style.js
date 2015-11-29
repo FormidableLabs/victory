@@ -36,11 +36,19 @@ export const calc = function (expr, precision) {
  */
 export const getColorScale = function (name) {
   const scales = {
-    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
-    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
-    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
-    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
-    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
+    greyscale: [
+      "#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"
+    ],
+    qualitative: [
+      "#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49",
+      "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"
+    ],
+    heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
+    warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
+    cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
+    red: ["#611310", "#7D1D1D", "#B02928", "#B02928", "#D86B67"],
+    blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
+    green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
   };
   return name ? scales[name] : scales.victory;
 };
