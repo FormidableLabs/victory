@@ -49,13 +49,12 @@ class Docs extends React.Component {
     };
   }
 
-  /* eslint-disable max-len */
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
         <main style={this.getMainStyles()}>
-          <Sidebar/>
+          <Sidebar activeSlug={""} />
           <section style={this.getDocsStyles()}>
             <Ecology
               overview={require("!!raw!../ecology-getting-started.md")}
@@ -68,7 +67,6 @@ class Docs extends React.Component {
       </div>
     );
   }
-  /* eslint-enable max-len */
 }
 
 export default Docs;

@@ -35,7 +35,7 @@ class ComponentDocs extends BaseDocs {
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
         <main style={this.getMainStyles()}>
-          <Sidebar/>
+          <Sidebar activeSlug={this.props.params.component} />
           <section style={this.getDocsStyles()}>
             <Docs />
           </section>

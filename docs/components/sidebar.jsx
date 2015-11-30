@@ -2,7 +2,24 @@ import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
 
+const RadiumLink = Radium(Link);
+
 import settings from "../settings";
+
+// For now, these sidebar items include only those components that have been updated
+// with a fix to make their `docs.jsx` exportable--
+// e.g., https://github.com/FormidableLabs/victory-pie/pull/22/files
+//
+// As additional components become available, just comment them back in!
+const sidebarItems = [
+  { text: "Getting started", slug: "" },
+  // { text: "Victory Axis", slug: "victory-axis" },
+  { text: "Victory Bar", slug: "victory-bar" },
+  // { text: "Victory Chart", slug: "victory-chart" },
+  { text: "Victory Line", slug: "victory-line" },
+  // { text: "Victory Pie", slug: "victory-pie" },
+  { text: "Victory Scatter", slug: "victory-scatter"}
+];
 
 @Radium
 class Sidebar extends React.Component {
@@ -43,65 +60,54 @@ class Sidebar extends React.Component {
       link: {
         boxShadow: "none",
         color: settings.darkSand,
-        fontWeight: "normal"
+        fontWeight: "normal",
+
+        ":hover": {
+          color: settings.red
+        }
       }
     };
   }
 
-  render() {
+  _renderSidebarList() {
     const sidebarStyles = this.getSidebarStyles();
 
-    /* eslint-disable max-len */
+    return (
+      <ul style={sidebarStyles.defaultList}>
+        {sidebarItems.map((item) => {
+          const isSelected = item.slug === this.props.activeSlug;
+          const liStyles = isSelected ?
+            [sidebarStyles.defaultItem, sidebarStyles.selectedItem] :
+            sidebarStyles.defaultItem;
+          const linkStyles = isSelected ?
+            [sidebarStyles.link, sidebarStyles.selectedLink] :
+            sidebarStyles.link;
+
+          return (
+            <li style={liStyles} key={item.slug}>
+              <RadiumLink to={`docs/${item.slug}`} style={linkStyles}>
+                {item.text}
+              </RadiumLink>
+            </li>
+          );
+        })}
+      </ul>
+    );
+  }
+
+  render() {
+    const { base } = this.getSidebarStyles();
+
     return (
       <nav
         className="Nav"
-        style={sidebarStyles.base}>
+        style={base}>
         <Link to="/" className="Link--unstyled">
           <img width="40px" src="static/icon-victory.svg" alt="Victory Homepage" />
         </Link>
-        <ul style={sidebarStyles.defaultList}>
-          <li style={[
-            sidebarStyles.defaultItem,
-            sidebarStyles.selectedItem,
-            sidebarStyles.link,
-            sidebarStyles.selectedLink
-          ]}>
-            Getting started
-          </li>
-          <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-axis" style={sidebarStyles.link}>
-              Victory Axis
-            </a>
-          </li>
-          <li style={sidebarStyles.defaultItem}>
-            <Link to="docs/victory-bar" style={sidebarStyles.link}>
-              Victory Bar
-            </Link>
-          </li>
-          <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-chart" style={sidebarStyles.link}>
-              Victory Chart
-            </a>
-          </li>
-          <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-line" style={sidebarStyles.link}>
-              Victory Line
-            </a>
-          </li>
-          <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-pie" style={sidebarStyles.link}>
-              Victory Pie
-            </a>
-          </li>
-          <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-scatter" style={sidebarStyles.link}>
-              Victory Scatter
-            </a>
-          </li>
-        </ul>
+        {this._renderSidebarList()}
       </nav>
     );
-  /* eslint-enable max-len */
   }
 }
 
