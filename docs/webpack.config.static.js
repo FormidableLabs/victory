@@ -9,10 +9,16 @@ var base = require("./webpack.config.dev.js");
 
 var OUTPUT_DIR = "build";
 
-// All routes we want to static-render--in this case, just the index page:
+// All routes we want to static-render:
 var routes = [
   "/",
-  "docs"
+  "docs",
+  // "docs/victory-axis",
+  // "docs/victory-chart",
+  // "docs/victory-pie",
+  "docs/victory-bar",
+  "docs/victory-line",
+  "docs/victory-scatter"
 ];
 
 module.exports = {

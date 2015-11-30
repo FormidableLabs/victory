@@ -54,7 +54,7 @@ class Docs extends React.Component {
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
         <main style={this.getMainStyles()}>
-          <Sidebar activeSlug={""} />
+          <Sidebar active={"/"} />
           <section style={this.getDocsStyles()}>
             <Ecology
               overview={require("!!raw!../ecology-getting-started.md")}

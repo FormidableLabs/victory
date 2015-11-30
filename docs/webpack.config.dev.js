@@ -31,6 +31,9 @@ module.exports = {
     loaders: [
       {
         test: /\.jsx?$/,
+        // Though we normally exclude `node_modules`, we need babel to require
+        // in documentation from individual Victory components, so we exclude
+        // from all `node_modules` packages that *aren't* Victory:
         exclude: function (absPath) {
           return absPath.indexOf("node_modules") > -1 &&
             absPath.indexOf("node_modules/victory") === -1;

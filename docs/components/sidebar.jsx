@@ -2,7 +2,9 @@ import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
 
+/* eslint-disable new-cap */
 const RadiumLink = Radium(Link);
+/* eslint-enable new-cap */
 
 import settings from "../settings";
 
@@ -10,15 +12,20 @@ import settings from "../settings";
 // with a fix to make their `docs.jsx` exportable--
 // e.g., https://github.com/FormidableLabs/victory-pie/pull/22/files
 //
-// As additional components become available, just comment them back in!
+// As additional components become available, include them by:
+//  1.) Bumping version # in `package.json`, removing old package, reinstalling
+//  2.) Commenting them back in here
+//  3.) Comenting them back in in `component-docs`
+//  4.) Commenting back in their routes in `webpack.config.static`
+
 const sidebarItems = [
-  { text: "Getting started", slug: "" },
-  // { text: "Victory Axis", slug: "victory-axis" },
-  { text: "Victory Bar", slug: "victory-bar" },
-  // { text: "Victory Chart", slug: "victory-chart" },
-  { text: "Victory Line", slug: "victory-line" },
-  // { text: "Victory Pie", slug: "victory-pie" },
-  { text: "Victory Scatter", slug: "victory-scatter"}
+  { text: "Getting started", slug: "/" },
+  // { text: "Victory Axis", slug: "/victory-axis" },
+  // { text: "Victory Chart", slug: "/victory-chart" },
+  // { text: "Victory Pie", slug: "/victory-pie" },
+  { text: "Victory Bar", slug: "/victory-bar" },
+  { text: "Victory Line", slug: "/victory-line" },
+  { text: "Victory Scatter", slug: "/victory-scatter"}
 ];
 
 @Radium
@@ -75,7 +82,7 @@ class Sidebar extends React.Component {
     return (
       <ul style={sidebarStyles.defaultList}>
         {sidebarItems.map((item) => {
-          const isSelected = item.slug === this.props.activeSlug;
+          const isSelected = item.slug === this.props.active;
           const liStyles = isSelected ?
             [sidebarStyles.defaultItem, sidebarStyles.selectedItem] :
             sidebarStyles.defaultItem;
@@ -85,7 +92,7 @@ class Sidebar extends React.Component {
 
           return (
             <li style={liStyles} key={item.slug}>
-              <RadiumLink to={`docs/${item.slug}`} style={linkStyles}>
+              <RadiumLink to={`docs${item.slug}`} style={linkStyles}>
                 {item.text}
               </RadiumLink>
             </li>
@@ -110,5 +117,9 @@ class Sidebar extends React.Component {
     );
   }
 }
+
+Sidebar.propTypes = {
+  active: React.PropTypes.string
+};
 
 export default Sidebar;
