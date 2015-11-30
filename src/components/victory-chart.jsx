@@ -1,8 +1,7 @@
 import React from "react";
 import Radium from "radium";
 import _ from "lodash";
-import log from "../log";
-import Util from "../util";
+import Util from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
@@ -248,7 +247,7 @@ export default class VictoryChart extends React.Component {
           `Only one " + type + "component is allowed per chart. If you are trying ` +
           `to plot several datasets, please pass an array of data arrays directly ` +
           `into ${type}.`;
-        log.warn(msg);
+        Util.Log.warn(msg);
       }
       childComponents.push(child);
       count.add(child);
@@ -359,7 +358,7 @@ export default class VictoryChart extends React.Component {
     const axisComponent = this.axisComponents[axis];
     const tickValues = axisComponent.props.tickValues ?
       axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
-    return (tickValues && Util.containsStrings(tickValues)) ?
+    return (tickValues && Util.Collection.containsStrings(tickValues)) ?
       _.zipObject(_.map(tickValues, (tick, index) => {
         return [`${tick}`, index + 1];
       })) : undefined;
@@ -369,7 +368,8 @@ export default class VictoryChart extends React.Component {
     if (this.groupedDataComponents && axis === this.independentAxis) {
       const allCategories = _.map(this.groupedDataComponents, (component) => {
         const categories = component.props.categories;
-        return (categories && Util.containsStrings(categories)) ? categories : undefined;
+        return (categories && Util.Collection.containsStrings(categories)) ?
+          categories : undefined;
       });
       const stringCategories = _.compact(_.flatten(allCategories));
       return _.isEmpty(stringCategories) ? undefined :
@@ -430,7 +430,7 @@ export default class VictoryChart extends React.Component {
         });
       });
     };
-    if (Util.isArrayOfArrays(childData)) {
+    if (Util.Collection.isArrayOfArrays(childData)) {
       return _.map(childData, (dataset) => _formatData(dataset));
     }
     return _formatData(childData);
@@ -449,7 +449,7 @@ export default class VictoryChart extends React.Component {
       return this.getDomainFromGroupedData(component, axis);
     });
     const axisDomain = this.getDomainFromAxis(axis);
-    const domainFromChildren = Util.removeUndefined(
+    const domainFromChildren = Util.Collection.removeUndefined(
       _.flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain))
     );
     const domain = _.isEmpty(domainFromChildren) ?
@@ -494,7 +494,7 @@ export default class VictoryChart extends React.Component {
     // checks whether grouped data is stacked, and whether there are multiple
     // datasets to stack.
     return (component.props.stacked === true)
-      && Util.isArrayOfArrays(component.props.data)
+      && Util.Collection.isArrayOfArrays(component.props.data)
       && (axis === this.dependentAxis);
   }
 
@@ -527,7 +527,7 @@ export default class VictoryChart extends React.Component {
 
   getDomainFromCategories(component, axis) {
     const categories = _.flatten(component.props.categories);
-    const categoryValues = Util.containsStrings(categories) ?
+    const categoryValues = Util.Collection.containsStrings(categories) ?
       _.map(categories, (value) => this.stringMap[axis][value]) : categories;
     return [_.min(categoryValues), _.max(categoryValues)];
   }
@@ -539,7 +539,7 @@ export default class VictoryChart extends React.Component {
     }
     const ticks = component.props.tickValues;
     if (ticks) {
-      const tickValues = Util.containsStrings(ticks) ?
+      const tickValues = Util.Collection.containsStrings(ticks) ?
         _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
       return [_.min(tickValues), _.max(tickValues)];
     } else {
@@ -613,19 +613,19 @@ export default class VictoryChart extends React.Component {
     // if tickValues are defined for an axis component use them
     if (this.axisComponents[axis].props.tickValues) {
       const axisTicks = this.axisComponents[axis].props.tickValues;
-      ticksFromAxis = Util.containsOnlyStrings(axisTicks) && stringMap ?
+      ticksFromAxis = Util.Collection.containsOnlyStrings(axisTicks) && stringMap ?
         _.map(axisTicks, (tick) => stringMap[tick]) : axisTicks;
     }
     if (!_.isEmpty(this.groupedDataComponents) && axis === this.independentAxis) {
       // otherwise, create a set of tickValues base on groupedData categories
       const allCategoryTicks = _.map(this.groupedDataComponents, (component) => {
         const categories = component.props.categories;
-        return categories && Util.isArrayOfArrays(categories) ?
+        return categories && Util.Collection.isArrayOfArrays(categories) ?
           _.map(categories, (arr) => (_.sum(arr) / arr.length)) : categories;
       });
       const categoryTicks = _.compact(_.uniq(_.flatten(allCategoryTicks)));
       const categoryArray = _.isEmpty(categoryTicks) ? undefined : categoryTicks;
-      ticksFromCategories = categoryArray && Util.containsOnlyStrings(categoryArray) ?
+      ticksFromCategories = categoryArray && Util.Collection.containsOnlyStrings(categoryArray) ?
         _.map(categoryTicks, (tick) => stringMap[tick]) : categoryArray;
     }
     if (stringMap) {
@@ -641,7 +641,7 @@ export default class VictoryChart extends React.Component {
     const tickValues = this.axisComponents[axis].props.tickValues;
     if (tickFormat) {
       return tickFormat;
-    } else if (tickValues && !Util.containsStrings(tickValues)) {
+    } else if (tickValues && !Util.Collection.containsStrings(tickValues)) {
       return (x) => x;
     } else if (this.stringMap[axis] !== null) {
       const tickValueArray = _.sortBy(_.values(this.stringMap[axis]), (n) => n);
