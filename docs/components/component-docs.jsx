@@ -13,10 +13,10 @@ import BaseDocs from "./docs";
 import theme from "./theme";
 
 const docs = {
-  'victory-bar': require('victory-bar/docs/docs')
+  'victory-bar': require('victory-bar/docs/docs'),
+  'victory-line': require('victory-line/docs/docs'),
+  'victory-scatter': require('victory-scatter/docs/docs')
 };
-
-let Docs;
 
 @Radium
 class ComponentDocs extends BaseDocs {
@@ -27,10 +27,10 @@ class ComponentDocs extends BaseDocs {
 
   constructor(props) {
     super(props);
-    Docs = docs[props.params.component];
   }
 
   render() {
+    const Docs = docs[this.props.params.component];
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
