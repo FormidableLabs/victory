@@ -17,7 +17,7 @@ Or imported as a set:
 <V.VictoryPie/>
 ```
 ### Animation
-Wrap any Victory component with [VictoryAnimation](https://github.com/FormidableLabs/victory-animation) and it will transition smoothly between states whenever data changes. `VictoryAnimation` relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
+Wrap any Victory component with [VictoryAnimation](https://github.com/FormidableLabs/victory-animation) and it will transition smoothly between states whenever data changes. `VictoryAnimation` relies on d3's interpolator, so it knows how to transition between colors, dates, numbers, strings etc.
 
 ### Contributing
 Interested in helping out? Great! You can [get started here](https://github.com/FormidableLabs/victory/blob/master/CONTRIBUTING.md).
