@@ -5,7 +5,7 @@ var StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
 
 var base = require("./webpack.config.dev.js");
 
-var OUTPUT_DIR = "gh-pages";
+var OUTPUT_DIR = "docs/build";
 
 // All routes we want to static-render--in this case, just the index page:
 var routes = [
