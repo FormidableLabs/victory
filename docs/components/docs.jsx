@@ -42,9 +42,9 @@ class Docs extends React.Component {
       flexDirection: "column",
       margin: "0 auto",
       padding: "1rem",
-      maxWidth: "70em",
       "@media (min-width: 70em)": {
-        "flexDirection": "row"
+        "flexDirection": "row",
+        margin: "0 2.5rem"
       }
     };
   }
