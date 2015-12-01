@@ -35,7 +35,7 @@ class Sidebar extends React.Component {
     return {
       base: {
         margin: 0,
-        padding: "0 1rem",
+        padding: "0 1rem 0 0",
         "@media (min-width: 70em)": {
           flex: "0 0 12em"
         }
