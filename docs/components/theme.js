@@ -160,7 +160,7 @@ export default {
   '.Button--spotlight:hover, .Button--spotlight:focus': {
     backgroundColor: settings.red,
     borderColor: settings.red,
-    color: settings.whiteSand,
+    color: '#ffffff',
     transition: 'color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease'
   },
   /*
@@ -260,6 +260,9 @@ export default {
   /*
    * Interactive/Component Playground
    */
+  '.Interactive': {
+    minHeight: '333px'  // TODO: Extract for server-side rendering 
+  },
   '.Interactive .playground': {
     display: 'flex',
     flexWrap: 'wrap',
@@ -359,7 +362,7 @@ export default {
   '.u-marginModule > *:last-child': {
     marginBottom: 0
   },
-  mediaQueries: {
+  mediaQueries: { // TODO: Extract for server-side rendering
     'only screen and (min-width: 70em)': {
       h1: {
         fontSize: '3rem'
