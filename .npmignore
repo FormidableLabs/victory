@@ -19,6 +19,7 @@ coverage
 node_modules
 bower_components
 demo
+docs
 test
 karma*
 webpack*
