@@ -65,7 +65,6 @@ class App extends React.Component {
               overview={require("!!raw!../ecology.md")}
               scope={{React, ReactDOM, VictoryChart, VictoryLine}}
               playgroundtheme="elegant" />
-            <Style rules={theme}/>
           </div>
 
           <div className="Row">

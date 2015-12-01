@@ -39,7 +39,7 @@ class Docs extends React.Component {
   getMainStyles() {
     return {
       display: "flex",
-      flex: "1 0 100%",
+      flex: "1 0 auto",
       flexDirection: "column",
       margin: "0 auto",
       padding: "1rem",

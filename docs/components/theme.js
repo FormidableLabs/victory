@@ -138,7 +138,7 @@ export default {
     boxShadow: 'none',
     color: settings.darkestSand,
     fontFamily: settings.sansSerif,
-    fontWeight: 'bold',
+    fontWeight: 'normal',
     padding: '0.75em 1.25em',
     textAlign: 'center',
     transition: 'color 0.2s ease, border-color 0.7s ease'
@@ -254,12 +254,12 @@ export default {
   '.Ecology p': {
     maxWidth: '640px' // Ideal 60–70 characters per line
   },
+  '.Overview pre': {
+    overflow: 'hidden' // Hide horizontal scrollbars for playgrounds.
+  },
   /*
    * Interactive/Component Playground
    */
-  '.Interactive': {
-    overflowX: 'hidden' // playground & preview have horizontal scrollbars.
-  },
   '.Interactive .playground': {
     display: 'flex',
     flexWrap: 'wrap',
