@@ -218,7 +218,7 @@
 ReactDOM.render(&lt;App/&gt;, mountNode);
 </code></pre>
 <h3 id="props">Props</h3>
-</div></div><div class="Documentation"><table class="Props"><thead><tr><th>Props</th><th>Description</th></tr></thead><tbody><tr class="Prop"><td><span class="Prop-name">animate</span><span class="Prop-type">object</span></td><td><span class="Prop-description">The animate prop specifies props for victory-animation to use. It this prop is
+</div></div><div class="Documentation"><table class="Props"><thead><tr><th>Props</th><th>Description</th></tr></thead><tbody><tr class="Prop"><td><span class="Prop-name">animate</span><span class="Prop-type">object</span></td><td><span class="Prop-description">The animate prop specifies props for victory-animation to use. If this prop is
 given, all children defined in chart will pass the options specified in this prop to
 victory-animation, unless they have animation props of their own specified.
 Large datasets might animate slowly due to the inherent limits of svg rendering.
@@ -238,8 +238,9 @@ given as a function, or as an object that specifies separate functions for x and
 </span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">standalone</span><span class="Prop-type">bool</span></td><td><span class="Prop-description">The standalone prop determines whether the component will render a standalone svg
 or a &lt;g&gt; tag that will be included in an external svg. Set standalone to false to
 compose VictoryChart with other components within an enclosing &lt;svg&gt; tag.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">true</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">style</span><span class="Prop-type">object</span></td><td><span class="Prop-description">The style prop specifies styles for your chart. Victory Chart relies on Radium,
-so valid Radium style objects should work for this prop, however height, width, and margin
-are used to calculate range, and need to be expressed as a number of pixels
+so valid Radium style objects should work for this prop. Height, width, and
+padding should be specified via the height, width, and padding props, as they
+are used to calculate the alignment of components within chart.
 </span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> {background: transparent, margin: 50}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">width</span><span class="Prop-type">number</span></td><td><span class="Prop-description">The width props specifies the width of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">450</span></span></td></tr></tbody></table></div></div><style>*, *:before, *:after{webkitboxsizing: inherit;
 mozboxsizing: inherit;
 box-sizing: inherit;}html{ms-text-size-adjust: 100%;
@@ -364,4 +365,4 @@ font-style: italic;
 line-height: 1;}.cm-s-elegant span.cm-meta{color: #555;
 font-style: italic;
 line-height: 1;}.cm-s-elegant span.cm-variable{color: black;}.cm-s-elegant span.cm-variable-2{color: #b11;}.cm-s-elegant span.cm-qualifier{color: #555;}.cm-s-elegant span.cm-keyword{color: #730;}.cm-s-elegant span.cm-builtin{color: #30a;}.cm-s-elegant span.cm-link{color: #762;}.cm-s-elegant span.cm-error{background-color: #fdd;}.cm-s-elegant .CodeMirror-activeline-background{background:  #e8f2ff;}.cm-s-elegant .CodeMirror-matchingbracket{outline: 1px solid grey;
-color: black !important;}</style></div></div></div><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script><script src="main.177d2e2b7bd09e33114d.js"></script></body></html>
+color: black !important;}</style></div></div></div><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script><script src="main.3f8e80660de3883999db.js"></script></body></html>
