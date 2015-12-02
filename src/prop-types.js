@@ -45,17 +45,17 @@ export const nonNegative = makeChainable((props, propName, componentName) => {
 });
 
 /**
- * Check that the value is a two-item Array in ascending order.
+ * Check that the value is an Array of two unique values.
  */
-export const minMaxArray = makeChainable((props, propName, componentName) => {
+export const domain = makeChainable((props, propName, componentName) => {
   const error = PropTypes.array(props, propName, componentName);
   if (error) {
     return error;
   }
   const value = props[propName];
-  if (value.length !== 2 || value[1] < value[0]) {
+  if (value.length !== 2 || value[1] === value[0]) {
     return new Error(
-      `\`${propName}\` in \`${componentName}\` must be a [min, max] array.`
+      `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`
     );
   }
 });
@@ -75,7 +75,7 @@ export const scale = makeChainable((props, propName, componentName) => {
 /**
  * Check that an array contains items of the same type.
  */
-export const homogenousArray = makeChainable((props, propName, componentName) => {
+export const homogeneousArray = makeChainable((props, propName, componentName) => {
   const error = PropTypes.array(props, propName, componentName);
   if (error) {
     return error;
@@ -90,7 +90,7 @@ export const homogenousArray = makeChainable((props, propName, componentName) =>
         const otherConstructorName = getConstructorName(value[i]);
         return new Error(
           `Expected \`${propName}\` in \`${componentName}\` to be a ` +
-          `homogenous array, but found types \`${constructorName}\` and ` +
+          `homogeneous array, but found types \`${constructorName}\` and ` +
           `\`${otherConstructorName}\`.`
         );
       }
