@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
 
-import settings from "../settings";
+import { VictorySettings } from "formidable-landers";
 
 @Radium
 class Sidebar extends React.Component {
@@ -31,19 +31,22 @@ class Sidebar extends React.Component {
         padding: "0 0 0 1rem",
         listStyle: "none",
         fontSize: "0.9rem",
-        color: settings.navy
+        color: VictorySettings.navy
       },
       selectedItem: {
-        color: settings.navy
+        color: VictorySettings.navy
       },
       selectedLink: {
-        color: settings.red,
+        color: VictorySettings.red,
         fontWeight: "bold"
       },
       link: {
         boxShadow: "none",
-        color: settings.darkSand,
-        fontWeight: "normal"
+        color: VictorySettings.darkSand,
+        fontWeight: "normal",
+        ":hover": {
+          color: VictorySettings.red
+        }
       }
     };
   }
@@ -69,33 +72,33 @@ class Sidebar extends React.Component {
             Getting started
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-axis" style={sidebarStyles.link}>
-              Victory Axis
+            <a href="https://formidablelabs.github.io/victory-axis" style={sidebarStyles.link} key="link1">
+              VictoryAxis
             </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-bar" style={sidebarStyles.link}>
-              Victory Bar
+            <a href="https://formidablelabs.github.io/victory-bar" style={sidebarStyles.link} key="link2">
+              VictoryBar
             </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-chart" style={sidebarStyles.link}>
-              Victory Chart
+            <a href="https://formidablelabs.github.io/victory-chart" style={sidebarStyles.link} key="link3">
+              VictoryChart
             </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-line" style={sidebarStyles.link}>
-              Victory Line
+            <a href="https://formidablelabs.github.io/victory-line" style={sidebarStyles.link} key="link4">
+              VictoryLine
             </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-pie" style={sidebarStyles.link}>
-              Victory Pie
+            <a href="https://formidablelabs.github.io/victory-pie" style={sidebarStyles.link} key="link5">
+              VictoryPie
             </a>
           </li>
           <li style={sidebarStyles.defaultItem}>
-            <a href="https://formidablelabs.github.io/victory-scatter" style={sidebarStyles.link}>
-              Victory Scatter
+            <a href="https://formidablelabs.github.io/victory-scatter" style={sidebarStyles.link} key="link6">
+              VictoryScatter
             </a>
           </li>
         </ul>
