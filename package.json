@@ -30,7 +30,7 @@
     "d3": "^3.5.6",
     "lodash": "^3.9.3",
     "radium": "^0.14.1",
-    "victory-util": "^2.0.1"
+    "victory-util": "^2.0.2"
   },
   "devDependencies": {
     "babel": "^5.5.8",
