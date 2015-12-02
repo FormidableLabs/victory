@@ -1,6 +1,6 @@
 {
   "name": "victory-label",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Victory Component",
   "main": "lib/index.js",
   "repository": {
