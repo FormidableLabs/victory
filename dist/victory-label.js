@@ -125,7 +125,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      var style = this.getStyles();
 	      var transform = _victoryUtil2["default"].Style.toTransformString(this.props.transform);
-	      var content = this.props.children || "";
+	      var content = "" + this.props.children || "";
 	      var lines = content.split("\n");
 	
 	      var lineHeight = this.props.lineHeight;
@@ -183,7 +183,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * makes using the component similar to normal HTML spans or labels.
 	       * Currently, only strings are supported.
 	       */
-	      children: _react.PropTypes.string, // TODO: Expand child support in future release
+	      children: _react.PropTypes.oneOfType([// TODO: Expand child support in future release
+	      _react.PropTypes.string, _react.PropTypes.number]),
 	      /**
 	       * The lineHeight prop defines how much space a single line of text should
 	       * take up. Note that SVG has no notion of line-height, so the positioning
@@ -218,12 +219,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * The x prop defines the x coordinate to use as a basis for horizontal
 	       * positioning.
 	       */
-	      x: _victoryUtil2["default"].PropTypes.nonNegative,
+	      x: _react.PropTypes.number,
 	      /**
 	       * The y prop defines the y coordinate to use as a basis for vertical
 	       * positioning.
 	       */
-	      y: _victoryUtil2["default"].PropTypes.nonNegative,
+	      y: _react.PropTypes.number,
 	      /**
 	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
 	       * component already accounts for `capHeight`, `lineHeight`, and
@@ -2265,11 +2266,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var Style = _interopRequireWildcard(_style);
 	
-	var _type = __webpack_require__(37);
+	var _type = __webpack_require__(38);
 	
 	var Type = _interopRequireWildcard(_type);
 	
-	var _propTypes = __webpack_require__(38);
+	var _propTypes = __webpack_require__(39);
 	
 	var PropTypes = _interopRequireWildcard(_propTypes);
 	
@@ -2298,19 +2299,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
+	var isNonEmptyArray = function isNonEmptyArray(collection) {
+	  return _lodash2["default"].isArray(collection) && collection.length > 0;
+	};
+	
+	exports.isNonEmptyArray = isNonEmptyArray;
 	var containsStrings = function containsStrings(collection) {
-	  return _lodash2["default"].some(collection, function (item) {
-	    return _lodash2["default"].isString(item);
-	  });
+	  return _lodash2["default"].some(collection, _lodash2["default"].isString);
 	};
 	
 	exports.containsStrings = containsStrings;
 	var containsOnlyStrings = function containsOnlyStrings(collection) {
-	  return _lodash2["default"].every(collection, function (item) {
-	    return _lodash2["default"].isString(item);
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isString);
+	};
+	
+	exports.containsOnlyStrings = containsOnlyStrings;
+	var isArrayOfArrays = function isArrayOfArrays(collection) {
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isArray);
+	};
+	
+	exports.isArrayOfArrays = isArrayOfArrays;
+	var removeUndefined = function removeUndefined(arr) {
+	  return _lodash2["default"].filter(arr, function (el) {
+	    return el !== undefined;
 	  });
 	};
-	exports.containsOnlyStrings = containsOnlyStrings;
+	exports.removeUndefined = removeUndefined;
 
 /***/ },
 /* 30 */
@@ -14763,11 +14777,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var getColorScale = function getColorScale(name) {
 	  var scales = {
-	    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
-	    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
-	    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
-	    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
-	    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
+	    greyscale: ["#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"],
+	    qualitative: ["#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49", "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"],
+	    heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
+	    warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
+	    cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
+	    red: ["#611310", "#7D1D1D", "#B02928", "#B02928", "#D86B67"],
+	    blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
+	    green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
 	  };
 	  return name ? scales[name] : scales.victory;
 	};
@@ -14969,7 +14986,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(35)
+	var balanced = __webpack_require__(37)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -15046,6 +15063,36 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 37 */
 /***/ function(module, exports) {
 
+	module.exports = function(a, b, str) {
+	  var bal = 0;
+	  var m = {};
+	
+	  for (var i = 0; i < str.length; i++) {
+	    if (a == str.substr(i, a.length)) {
+	      if (!('start' in m)) m.start = i;
+	      bal++;
+	    }
+	    else if (b == str.substr(i, b.length) && 'start' in m) {
+	      bal--;
+	      if (!bal) {
+	        m.end = i;
+	        m.pre = str.substr(0, m.start);
+	        m.body = (m.end - m.start > 1)
+	          ? str.substring(m.start + a.length, m.end)
+	          : '';
+	        m.post = str.slice(m.end + b.length);
+	        return m;
+	      }
+	    }
+	  }
+	};
+	
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -15094,7 +15141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getConstructorName = getConstructorName;
 
 /***/ },
-/* 38 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15107,7 +15154,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react = __webpack_require__(2);
 	
-	var _type = __webpack_require__(37);
+	var _type = __webpack_require__(38);
 	
 	var _lodash = __webpack_require__(30);
 	
@@ -15154,20 +15201,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.nonNegative = nonNegative;
 	/**
-	 * Check that the value is a two-item Array in ascending order.
+	 * Check that the value is an Array of two unique values.
 	 */
-	var minMaxArray = makeChainable(function (props, propName, componentName) {
+	var domain = makeChainable(function (props, propName, componentName) {
 	  var error = _react.PropTypes.array(props, propName, componentName);
 	  if (error) {
 	    return error;
 	  }
 	  var value = props[propName];
-	  if (value.length !== 2 || value[1] < value[0]) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be a [min, max] array.");
+	  if (value.length !== 2 || value[1] === value[0]) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
 	  }
 	});
 	
-	exports.minMaxArray = minMaxArray;
+	exports.domain = domain;
 	/**
 	 * Check that the value looks like a d3 `scale` function.
 	 */
@@ -15182,7 +15229,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Check that an array contains items of the same type.
 	 */
-	var homogenousArray = makeChainable(function (props, propName, componentName) {
+	var homogeneousArray = makeChainable(function (props, propName, componentName) {
 	  var error = _react.PropTypes.array(props, propName, componentName);
 	  if (error) {
 	    return error;
@@ -15195,12 +15242,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_constructor !== otherConstructor) {
 	        var constructorName = (0, _type.getConstructorName)(value[0]);
 	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
-	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogenous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
 	      }
 	    }
 	  }
 	});
-	exports.homogenousArray = homogenousArray;
+	exports.homogeneousArray = homogeneousArray;
 
 /***/ }
 /******/ ])
