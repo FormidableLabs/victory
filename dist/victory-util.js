@@ -107,24 +107,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
+	var isNonEmptyArray = function isNonEmptyArray(collection) {
+	  return _lodash2["default"].isArray(collection) && collection.length > 0;
+	};
+	
+	exports.isNonEmptyArray = isNonEmptyArray;
 	var containsStrings = function containsStrings(collection) {
-	  return _lodash2["default"].some(collection, function (item) {
-	    return _lodash2["default"].isString(item);
-	  });
+	  return _lodash2["default"].some(collection, _lodash2["default"].isString);
 	};
 	
 	exports.containsStrings = containsStrings;
 	var containsOnlyStrings = function containsOnlyStrings(collection) {
-	  return _lodash2["default"].every(collection, function (item) {
-	    return _lodash2["default"].isString(item);
-	  });
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isString);
 	};
 	
 	exports.containsOnlyStrings = containsOnlyStrings;
 	var isArrayOfArrays = function isArrayOfArrays(collection) {
-	  return _lodash2["default"].isArray(collection) && _lodash2["default"].every(collection, function (item) {
-	    return _lodash2["default"].isArray(item);
-	  });
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isArray);
 	};
 	
 	exports.isArrayOfArrays = isArrayOfArrays;
@@ -13107,20 +13106,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.nonNegative = nonNegative;
 	/**
-	 * Check that the value is a two-item Array in ascending order.
+	 * Check that the value is an Array of two unique values.
 	 */
-	var minMaxArray = makeChainable(function (props, propName, componentName) {
+	var domain = makeChainable(function (props, propName, componentName) {
 	  var error = _react.PropTypes.array(props, propName, componentName);
 	  if (error) {
 	    return error;
 	  }
 	  var value = props[propName];
-	  if (value.length !== 2 || value[1] < value[0]) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be a [min, max] array.");
+	  if (value.length !== 2 || value[1] === value[0]) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
 	  }
 	});
 	
-	exports.minMaxArray = minMaxArray;
+	exports.domain = domain;
 	/**
 	 * Check that the value looks like a d3 `scale` function.
 	 */
@@ -13135,7 +13134,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Check that an array contains items of the same type.
 	 */
-	var homogenousArray = makeChainable(function (props, propName, componentName) {
+	var homogeneousArray = makeChainable(function (props, propName, componentName) {
 	  var error = _react.PropTypes.array(props, propName, componentName);
 	  if (error) {
 	    return error;
@@ -13148,12 +13147,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_constructor !== otherConstructor) {
 	        var constructorName = (0, _type.getConstructorName)(value[0]);
 	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
-	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogenous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
 	      }
 	    }
 	  }
 	});
-	exports.homogenousArray = homogenousArray;
+	exports.homogeneousArray = homogeneousArray;
 
 /***/ },
 /* 13 */
