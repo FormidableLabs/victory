@@ -31,7 +31,10 @@ export default class VictoryLabel extends React.Component {
      * makes using the component similar to normal HTML spans or labels.
      * Currently, only strings are supported.
      */
-    children: PropTypes.string, // TODO: Expand child support in future release
+    children: PropTypes.oneOfType([ // TODO: Expand child support in future release
+      PropTypes.string,
+      PropTypes.number
+    ]),
     /**
      * The lineHeight prop defines how much space a single line of text should
      * take up. Note that SVG has no notion of line-height, so the positioning
@@ -81,12 +84,12 @@ export default class VictoryLabel extends React.Component {
      * The x prop defines the x coordinate to use as a basis for horizontal
      * positioning.
      */
-    x: Util.PropTypes.nonNegative,
+    x: PropTypes.number,
     /**
      * The y prop defines the y coordinate to use as a basis for vertical
      * positioning.
      */
-    y: Util.PropTypes.nonNegative,
+    y: PropTypes.number,
     /**
      * The dy prop defines a vertical shift from the `y` coordinate. Since this
      * component already accounts for `capHeight`, `lineHeight`, and
@@ -112,7 +115,7 @@ export default class VictoryLabel extends React.Component {
   render() {
     const style = this.getStyles();
     const transform = Util.Style.toTransformString(this.props.transform);
-    const content = this.props.children || "";
+    const content = `${this.props.children}` || "";
     const lines = content.split("\n");
 
     let lineHeight = this.props.lineHeight;
