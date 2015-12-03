@@ -350,9 +350,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      startAngle: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The style prop specifies styles for your pie. VictoryPie relies on Radium,
-	       * so valid Radium style objects should work for this prop, however properties like
-	       * height, width, padding and margin are used to calculate the radius of the pi, and need to be
-	       * expressed as a number of pixels
+	       * so valid Radium style objects should work for this prop. Height, width, and
+	       * padding should be specified via the height, width, and padding props.
 	       * @examples {data: {stroke: "black"}, label: {fontSize: 10}}
 	       */
 	      style: _react.PropTypes.shape({
@@ -24368,24 +24367,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
+	var isNonEmptyArray = function isNonEmptyArray(collection) {
+	  return _lodash2["default"].isArray(collection) && collection.length > 0;
+	};
+	
+	exports.isNonEmptyArray = isNonEmptyArray;
 	var containsStrings = function containsStrings(collection) {
-	  return _lodash2["default"].some(collection, function (item) {
-	    return _lodash2["default"].isString(item);
-	  });
+	  return _lodash2["default"].some(collection, _lodash2["default"].isString);
 	};
 	
 	exports.containsStrings = containsStrings;
 	var containsOnlyStrings = function containsOnlyStrings(collection) {
-	  return _lodash2["default"].every(collection, function (item) {
-	    return _lodash2["default"].isString(item);
-	  });
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isString);
 	};
 	
 	exports.containsOnlyStrings = containsOnlyStrings;
 	var isArrayOfArrays = function isArrayOfArrays(collection) {
-	  return _lodash2["default"].isArray(collection) && _lodash2["default"].every(collection, function (item) {
-	    return _lodash2["default"].isArray(item);
-	  });
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isArray);
 	};
 	
 	exports.isArrayOfArrays = isArrayOfArrays;
@@ -24897,20 +24895,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.nonNegative = nonNegative;
 	/**
-	 * Check that the value is a two-item Array in ascending order.
+	 * Check that the value is an Array of two unique values.
 	 */
-	var minMaxArray = makeChainable(function (props, propName, componentName) {
+	var domain = makeChainable(function (props, propName, componentName) {
 	  var error = _react.PropTypes.array(props, propName, componentName);
 	  if (error) {
 	    return error;
 	  }
 	  var value = props[propName];
-	  if (value.length !== 2 || value[1] < value[0]) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be a [min, max] array.");
+	  if (value.length !== 2 || value[1] === value[0]) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
 	  }
 	});
 	
-	exports.minMaxArray = minMaxArray;
+	exports.domain = domain;
 	/**
 	 * Check that the value looks like a d3 `scale` function.
 	 */
@@ -24925,7 +24923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/**
 	 * Check that an array contains items of the same type.
 	 */
-	var homogenousArray = makeChainable(function (props, propName, componentName) {
+	var homogeneousArray = makeChainable(function (props, propName, componentName) {
 	  var error = _react.PropTypes.array(props, propName, componentName);
 	  if (error) {
 	    return error;
@@ -24938,12 +24936,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_constructor !== otherConstructor) {
 	        var constructorName = (0, _type.getConstructorName)(value[0]);
 	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
-	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogenous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
 	      }
 	    }
 	  }
 	});
-	exports.homogenousArray = homogenousArray;
+	exports.homogeneousArray = homogeneousArray;
 
 /***/ },
 /* 41 */
@@ -24969,7 +24967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -24991,6 +24989,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var VictoryAnimation = (function (_React$Component) {
 	  _inherits(VictoryAnimation, _React$Component);
+	
+	  _createClass(VictoryAnimation, null, [{
+	    key: "propTypes",
+	    value: {
+	      children: _react2["default"].PropTypes.func,
+	      velocity: _react2["default"].PropTypes.number,
+	      easing: _react2["default"].PropTypes.string,
+	      delay: _react2["default"].PropTypes.number,
+	      onEnd: _react2["default"].PropTypes.func,
+	      data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
+	    },
+	    enumerable: true
+	  }, {
+	    key: "defaultProps",
+	    value: {
+	      /* velocity modifies step each frame */
+	      velocity: 0.02,
+	      /* easing modifies step each frame */
+	      easing: "quad-in-out",
+	      /* delay between transitions */
+	      delay: 0,
+	      /* we got nothin' */
+	      data: {}
+	    },
+	    enumerable: true
+	  }]);
 	
 	  function VictoryAnimation(props) {
 	    _classCallCheck(this, VictoryAnimation);
@@ -25040,6 +25064,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	          /* Start traversing the tween queue */
 	          this.traverseQueue();
 	        }
+	    }
+	  }, {
+	    key: "componentWillUnmount",
+	    value: function componentWillUnmount() {
+	      if (this.raf) {
+	        cancelAnimationFrame(this.raf);
+	      }
 	    }
 	
 	    /* Traverse the tween queue */
@@ -25107,25 +25138,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return VictoryAnimation;
 	})(_react2["default"].Component);
 	
-	VictoryAnimation.propTypes = {
-	  velocity: _react2["default"].PropTypes.number,
-	  easing: _react2["default"].PropTypes.string,
-	  delay: _react2["default"].PropTypes.number,
-	  onEnd: _react2["default"].PropTypes.func,
-	  data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
-	};
-	
-	VictoryAnimation.defaultProps = {
-	  /* velocity modifies step each frame */
-	  velocity: 0.02,
-	  /* easing modifies step each frame */
-	  easing: "quad-in-out",
-	  /* delay between transitions */
-	  delay: 0,
-	  /* we got nothin' */
-	  data: {}
-	};
-	
 	exports["default"] = VictoryAnimation;
 	module.exports = exports["default"];
 
@@ -25145,15 +25157,110 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d32 = _interopRequireDefault(_d3);
 	
-	var interpolatorAdded = false;
+	var _lodash = __webpack_require__(3);
 	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	var isInterpolatable = function isInterpolatable(obj) {
+	  // d3 turns null into 0 and undefined into NaN, which we don't want.
+	  if (obj !== null) {
+	    switch (typeof obj) {
+	      case "undefined":
+	        return false;
+	      case "number":
+	        // The standard `isNaN` is fine in this case since we already know the
+	        // type is number.
+	        return !isNaN(obj) && _lodash2["default"].isFinite(obj);
+	      case "string":
+	        // d3 might not *actually* be able to interpolate the string, but it
+	        // won't cause any issues to let it try.
+	        return true;
+	      case "boolean":
+	        // d3 turns Booleans into integers, which we don't want. Sure, we could
+	        // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
+	        // something expecting a Boolean.
+	        return false;
+	      case "object":
+	        // Don't try to interpolate class instances (except Date or Array).
+	        return _lodash2["default"].isDate(obj) || _lodash2["default"].isArray(obj) || _lodash2["default"].isPlainObject(obj);
+	      case "function":
+	        // Careful! There may be extra properties on function objects that the
+	        // component expects to access - for instance, it may be a `d3.scale()`
+	        // function, which has its own methods attached. We don't know if the
+	        // component is only going to call the function (in which case it's
+	        // safely interpolatable) or if it's going to access special properties
+	        // (in which case our function generated from `interpolateFunction` will
+	        // most likely cause an error. We could check for enumerable properties
+	        // on the function object here to see if it's a "plain" function, but
+	        // let's just require that components prevent such function props from
+	        // being animated in the first place.
+	        return true;
+	    }
+	  }
+	  return false;
+	};
+	
+	exports.isInterpolatable = isInterpolatable;
 	/**
-	 * By default, `d3.interpolate` (which cycles through a list of interpolators)
-	 * has a few downsides:
+	 * Interpolate immediately to the end value at the given step `when`.
+	 * Some nicer default behavior might be to jump at the halfway point or return
+	 * `a` if `t` is 0 (instead of always returning `b`). But d3's default
+	 * interpolator does not do these things:
+	 *
+	 *   d3.interpolate('aaa', 'bbb')(0) === 'bbb'
+	 *
+	 * ...and things might get wonky if we don't replicate that behavior.
+	 *
+	 * @param {any} a - Start value.
+	 * @param {any} b - End value.
+	 * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
+	 * @returns {Function} An interpolation function.
+	 */
+	var interpolateImmediate = function interpolateImmediate(a, b) {
+	  var when = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	
+	  return function (t) {
+	    return t < when ? a : b;
+	  };
+	};
+	
+	exports.interpolateImmediate = interpolateImmediate;
+	/**
+	 * Interpolate to or from a function. The interpolated value will be a function
+	 * that calls `a` (if it's a function) and `b` (if it's a function) and calls
+	 * `d3.interpolate` on the resulting values. Note that our function won't
+	 * necessarily be called (that's up to the component this eventually gets
+	 * passed to) - but if it does get called, it will return an appropriately
+	 * interpolated value.
+	 *
+	 * @param {any} a - Start value.
+	 * @param {any} b - End value.
+	 * @returns {Function} An interpolation function.
+	 */
+	var interpolateFunction = function interpolateFunction(a, b) {
+	  return function (t) {
+	    if (t >= 1) {
+	      return b;
+	    }
+	    return function () {
+	      /* eslint-disable no-invalid-this */
+	      var aval = typeof a === "function" ? a.apply(this, arguments) : a;
+	      var bval = typeof b === "function" ? b.apply(this, arguments) : b;
+	      return _d32["default"].interpolate(aval, bval)(t);
+	    };
+	  };
+	};
+	
+	exports.interpolateFunction = interpolateFunction;
+	/**
+	 * By default, the list of interpolators used by `d3.interpolate` has a few
+	 * downsides:
 	 *
 	 * - `null` values get turned into 0.
 	 * - `undefined`, `function`, and some other value types get turned into NaN.
-	 * - It tries to interpolate between identical start->end values, doing
+	 * - Boolean types get turned into numbers, which probably will be meaningless
+	 *   to whatever is consuming them.
+	 * - It tries to interpolate between identical start and end values, doing
 	 *   unnecessary calculations that sometimes result in floating point rounding
 	 *   errors.
 	 *
@@ -25166,37 +25273,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @param {any} a - Start value.
 	 * @param {any} b - End value.
-	 * @returns {Function} Returns an interpolation function, if possible.
+	 * @returns {Function|undefined} An interpolation function, if necessary.
 	 */
 	var victoryInterpolator = function victoryInterpolator(a, b) {
-	  // If the values are strictly equal, or either value is null or undefined,
-	  // just use the start value `a` or end value `b` at every step, as there is
-	  // no reasonable in-between value. The value will jump, but we can try to
-	  // jump at a good time (like the halfway point).
-	  if (a === b || a == null || b == null) {
-	    return function (t) {
-	      // Switch to `b` halfway through the interpolation.
-	      return t < 0.5 ? a : b;
-	    };
+	  // If the values are strictly equal, or either value is not interpolatable,
+	  // just use either the start value `a` or end value `b` at every step, as
+	  // there is no reasonable in-between value.
+	  if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
+	    return interpolateImmediate(a, b);
 	  }
 	  if (typeof a === "function" || typeof b === "function") {
-	    return function (t) {
-	      // We're interpolating to or from a function. The interpolated value will
-	      // be a function that calls `a` (if it's a function) and `b` (if it's a
-	      // function) and calls `d3.interpolate` on the resulting values.
-	      // Note that our function won't necessarily be called (that's up to the
-	      // component) - but if it does get called, it will return an
-	      // appropriately interpolated value.
-	      return function () {
-	        var aval = typeof a === "function" ? a.apply(this, arguments) : a;
-	        var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	        return _d32["default"].interpolate(aval, bval)(t);
-	      };
-	    };
+	    return interpolateFunction(a, b);
 	  }
 	};
 	
 	exports.victoryInterpolator = victoryInterpolator;
+	var interpolatorAdded = false;
+	
 	var addVictoryInterpolator = function addVictoryInterpolator() {
 	  if (!interpolatorAdded) {
 	    _d32["default"].interpolators.push(victoryInterpolator);
