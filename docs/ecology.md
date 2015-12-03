@@ -1,4 +1,4 @@
-Victory Pie
+VictoryPie
 =============
 
 `victory-pie` draws an SVG pie or donut chart with [React](https://github.com/facebook/react). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
@@ -16,7 +16,7 @@ Labels are placed at the centroid of each pie slice by default. Apply styles to 
 ``` playground
 <VictoryPie style={{
     labels: {
-      fontSize: 20, 
+      fontSize: 20,
       padding: 100
     }
   }}/>
@@ -25,10 +25,10 @@ Labels are placed at the centroid of each pie slice by default. Apply styles to 
 Styles of the pie chart itself can also be specified:
 
 ``` playground
-<VictoryPie 
+<VictoryPie
   style={{
     data: {
-      stroke: "transparent", 
+      stroke: "transparent",
       opacity: 0.3
     }
   }}/>
@@ -43,8 +43,8 @@ Set the `innerRadius` prop to create a donut chart. Label positions will automat
 To render only a portion of a chart, specify a `startAngle` and `endAngle`:
 
 ``` playground
-<VictoryPie 
-  endAngle={90} 
+<VictoryPie
+  endAngle={90}
   startAngle={-90}/>
 ```
 
@@ -119,12 +119,9 @@ class App extends React.Component {
     return (
       <VictoryPie
         data={this.state.data}
-        animate={{velocity: 0.02}}/> 
+        animate={{velocity: 0.02}}/>
     );
   }
 }
 ReactDOM.render(<App/>, mountNode);
-
 ```
-
-
