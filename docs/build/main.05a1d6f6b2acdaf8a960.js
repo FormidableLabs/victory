@@ -124980,7 +124980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          "body",
 	          null,
 	          _react2["default"].createElement("div", { dangerouslySetInnerHTML: { __html: "<!--[if lt IE 8]>\n            <p class=\"browsehappy\">You are using an <strong>outdated</strong> browser.\n            Please <a href=\"http://browsehappy.com/\">upgrade your browser</a> to improve your experience.</p>\n          <![endif]-->" } }),
-	          _react2["default"].createElement("div", { id: "content", dangerouslySetInnerHTML: { __html: this.props.content } }),
+	          _react2["default"].createElement("div", { id: "content", className: "Container", dangerouslySetInnerHTML: { __html: this.props.content } }),
 	          _react2["default"].createElement("script", { type: "text/javascript", src: "//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js" }),
 	          _react2["default"].createElement("script", { type: "text/javascript", src: "//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js" }),
 	          _react2["default"].createElement("script", { src: this.props.bundle })
