@@ -103,9 +103,8 @@ export default class VictoryPie extends React.Component {
     startAngle: Util.PropTypes.nonNegative,
     /**
      * The style prop specifies styles for your pie. VictoryPie relies on Radium,
-     * so valid Radium style objects should work for this prop, however properties like
-     * height, width, padding and margin are used to calculate the radius of the pi, and need to be
-     * expressed as a number of pixels
+     * so valid Radium style objects should work for this prop. Height, width, and
+     * padding should be specified via the height, width, and padding props.
      * @examples {data: {stroke: "black"}, label: {fontSize: 10}}
      */
     style: PropTypes.shape({

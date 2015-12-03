@@ -21,7 +21,7 @@
     "dev-docs": "npm run generate-docs & webpack-dev-server --port 3000 --config docs/webpack.config.dev.js --content-base docs",
     "generate-docs": "node_modules/react-docgen/bin/react-docgen.js src/components/victory-pie.jsx -o docs/victory-pie.json",
     "hot-docs": "npm run generate-docs & webpack-dev-server --port 3000 --config docs/webpack.config.hot.js --hot --content-base docs",
-    "build-static-docs": "webpack --config docs/webpack.config.static.js --progress",
+    "build-static-docs": "npm run generate-docs & webpack --config docs/webpack.config.static.js --progress",
     "push-gh-pages": "git subtree push --prefix docs/build origin gh-pages"
   },
   "dependencies": {
@@ -31,7 +31,7 @@
     "lodash": "^3.9.3",
     "radium": "^0.14.1",
     "victory-animation": "^0.0.12",
-    "victory-util": "^2.0.1"
+    "victory-util": "^2.0.2"
   },
   "devDependencies": {
     "babel": "^5.5.8",
