@@ -1,7 +1,7 @@
 import React from "react";
 import Radium from "radium";
 import _ from "lodash";
-import {Collection, Log} from "victory-util";
+import {Collection, Log, PropTypes} from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
@@ -34,8 +34,8 @@ export default class VictoryChart extends React.Component {
     domain: React.PropTypes.oneOfType([
       React.PropTypes.array,
       React.PropTypes.shape({
-        x: React.PropTypes.array,
-        y: React.PropTypes.array
+        x: PropTypes.domain,
+        y: PropTypes.domain
       })
     ]),
     /**
@@ -45,13 +45,13 @@ export default class VictoryChart extends React.Component {
      * numbers specified for x and y.
      */
     domainPadding: React.PropTypes.shape({
-      x: React.PropTypes.number,
-      y: React.PropTypes.number
+      x: PropTypes.nonNegative,
+      y: PropTypes.nonNegative
     }),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
-    height: React.PropTypes.number,
+    height: PropTypes.nonNegative,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
@@ -73,10 +73,10 @@ export default class VictoryChart extends React.Component {
      * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
      */
     scale: React.PropTypes.oneOfType([
-      React.PropTypes.func,
+      PropTypes.scale,
       React.PropTypes.shape({
-        x: React.PropTypes.func,
-        y: React.PropTypes.func
+        x: PropTypes.scale,
+        y: PropTypes.scale
       })
     ]),
     /**
@@ -96,7 +96,7 @@ export default class VictoryChart extends React.Component {
     /**
      * The width props specifies the width of the chart container element in pixels
      */
-    width: React.PropTypes.number
+    width: PropTypes.nonNegative
   };
 
   static defaultProps = {

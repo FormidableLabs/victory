@@ -2,10 +2,10 @@
             <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
             <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-sham.min.js"></script>
-          <![endif]--></meta><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><title>Victory Chart</title><meta name="description" content=""/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/><link href="https://fonts.googleapis.com/css?family=Karla:400,700,400italic" rel="stylesheet" type="text/css"/></head><body><div><!--[if lt IE 8]>
+          <![endif]--></meta><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><title>VictoryChart</title><meta name="description" content=""/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/><link href="https://fonts.googleapis.com/css?family=Karla:400,700,400italic" rel="stylesheet" type="text/css"/></head><body><div><!--[if lt IE 8]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser.
             Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-          <![endif]--></div><div id="content"><div class="Container"><div class="Copy"><div class="Ecology"><div class="Overview"><div><h1 id="victorychart">VictoryChart</h1>
+          <![endif]--></div><div id="content"><div><div class="Ecology"><div class="Overview"><div><h1 id="victorychart">VictoryChart</h1>
 <p>A flexible charting component for React. VictoryChart composes other Victory components into reusable charts. Acting as a coordinator rather than a stand-alone component, VictoryChart reconciles props such as <code>domain</code> and <code>scale</code> for child components, and provides a set of sensible defaults. This component works with:</p>
 <ul>
 <li><a href="http://github.com/formidablelabs/victory-axis">VictoryAxis</a> </li>
@@ -227,13 +227,13 @@ given as a array of the minimum and maximum expected values for your chart,
 or as an object that specifies separate arrays for x and y.
 If this prop is not provided, a domain will be calculated from data, or other
 available information.
-</span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value">: [-1, 1], {x: [0, 100], y: [0, 1]}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">domainPadding</span><span class="Prop-type">{x: number, y: number}</span></td><td><span class="Prop-description">The domainPadding prop specifies a number of pixels of padding to add to the
+</span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value">: [-1, 1], {x: [0, 100], y: [0, 1]}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">domainPadding</span><span class="Prop-type">{x: custom, y: custom}</span></td><td><span class="Prop-description">The domainPadding prop specifies a number of pixels of padding to add to the
 beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
 from the origin to prevent crowding. This prop should be given as an object with
-numbers specified for x and y.</span></td></tr><tr class="Prop"><td><span class="Prop-name">height</span><span class="Prop-type">number</span></td><td><span class="Prop-description">The height props specifies the height of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">300</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">padding</span><span class="Prop-type">number, shape</span></td><td><span class="Prop-description">The padding props specifies the amount of padding in number of pixels between
+numbers specified for x and y.</span></td></tr><tr class="Prop"><td><span class="Prop-name">height</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The height props specifies the height of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">300</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">padding</span><span class="Prop-type">number, shape</span></td><td><span class="Prop-description">The padding props specifies the amount of padding in number of pixels between
 the edge of the chart and any rendered child components. This prop can be given
 as a number or as an object with padding specified for top, bottom, left
-and right.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">50</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">scale</span><span class="Prop-type">func, shape</span></td><td><span class="Prop-description">The scale prop determines which scales your chart should use. This prop can be
+and right.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">50</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">scale</span><span class="Prop-type">custom, shape</span></td><td><span class="Prop-description">The scale prop determines which scales your chart should use. This prop can be
 given as a function, or as an object that specifies separate functions for x and y.
 </span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">standalone</span><span class="Prop-type">bool</span></td><td><span class="Prop-description">The standalone prop determines whether the component will render a standalone svg
 or a &lt;g&gt; tag that will be included in an external svg. Set standalone to false to
@@ -241,19 +241,12 @@ compose VictoryChart with other components within an enclosing &lt;svg&gt; tag.<
 so valid Radium style objects should work for this prop. Height, width, and
 padding should be specified via the height, width, and padding props, as they
 are used to calculate the alignment of components within chart.
-</span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> {background: transparent, margin: 50}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">width</span><span class="Prop-type">number</span></td><td><span class="Prop-description">The width props specifies the width of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">450</span></span></td></tr></tbody></table></div></div><style>*, *:before, *:after{webkitboxsizing: inherit;
-mozboxsizing: inherit;
-box-sizing: inherit;}html{ms-text-size-adjust: 100%;
-webkittextsizeadjust: 100%;}body{background-color: #f6f2ee;
-font-family: "Karla", "Helvetica Neue", Helvetica, Arial, sans-serif;
+</span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> {background: transparent, margin: 50}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">width</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The width props specifies the width of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">450</span></span></td></tr></tbody></table></div></div><style>*, *:before, *:after{box-sizing: inherit;}html{text-size-adjust: 100%;}body{background-color: #f6f2ee;
+font-family: 'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 line-height: 1.5;
 margin: 0;
 color: #1b2633;
-webkitboxsizing: border-box;
-mozboxsizing: border-box;
-box-sizing: border-box;
-mozosxfontsmoothing: grayscale;
-webkitfontsmoothing: antialiased;}html, body{overflow-x: hidden;}article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary{display: block;}table{border-collapse: collapse;
+box-sizing: border-box;}html, body{overflow-x: hidden;}article, aside, details, figcaption, figure, footer{display: block;}header, hgroup, main, menu, nav, section, summary{display: block;}table{border-collapse: collapse;
 display: block;
 overflow: auto;
 width: 100%;}thead, tbody{border: 0;
@@ -265,64 +258,89 @@ padding: 0.425em 0.75em;
 vertical-align: top;}th code, td code{background: none;
 color: #111;}th{font-weight: bold;
 text-align: left;}h1,h2,h3,h4,h5,h6,hgroup, ul,ol,dd, p,figure, pre,table,fieldset,hr, .highlight{margin-top: 0;
-margin-bottom: 1.5rem;}img{max-width: 100%;}svg, img{fill: currentColor;}h1{font-size: 3rem;}h2{font-size: 2.75rem;}h3{font-size: 1.5rem;}h4{font-size: 1.3125rem;}h1,h2,h3,h4{font-family: "Didot", "Cochin", serif;
-font-weight: normal;}.Headline{font-family: "Didot", "Cochin", serif;
-font-size: 3rem;
-font-weight: normal;}.Headline--major{line-height: 1.3;
+margin-bottom: 1.5rem;}img{max-width: 100%;}svg, img{fill: currentColor;}h1{font-size: 2.75rem;}h2{font-size: 2.5rem;}h3{font-size: 2.125rem;}h4, h5, h6{font-size: 1.9rem;}h1,h2,h3,h4{font-family: 'Didot', 'Bodoni MT', 'Cochin', 'Baskerville', 'Goudy Old Style', 'Bitstream Charter', serif;
+font-weight: normal;
+line-height: 1.2;}.Headline{font-family: 'Didot', 'Bodoni MT', 'Cochin', 'Baskerville', 'Goudy Old Style', 'Bitstream Charter', serif;
+font-size: 2.5rem;
+font-weight: normal;}.Headline--minor{font-size: 2rem;
+font-style: italic;}.Headline--major{font-size: 3rem;
+line-height: 1.3;
 font-style: italic;}.Smallcaps{text-transform: uppercase;
 font-size: 0.85em;
 font-weight: bold;
-color: #91887e;}.Container{margin: 0 auto;
+color: #91887e;}a{color: #2b303b;
+font-weight: 700;
+text-decoration: none;
+box-shadow: inset 0 -0.05em 0 #b5aca3;
+transition: color 0.2s ease, box-shadow 0.5s ease;}a:hover, a:focus{color: #bd1e13;
+box-shadow: inset 0 -0.05em 0 #bd4139;
+transition: color 0.2s ease, box-shadow 0.5s ease;}.Link--unstyled{box-shadow: none;}.Link--unstyled:hover, .Link--unstyled:focus{box-shadow: none;}.Button{background-color: transparent;
+border: 3px solid #e1d7cd;
+box-shadow: none;
+color: #4d4945;
+font-family: 'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+font-weight: normal;
+padding: 0.75em 1.25em;
+text-align: center;
+transition: color 0.2s ease, border-color 0.7s ease;}.Button:hover, .Button:focus{border-color: #E5847D;
+box-shadow: none;
+color: #bd1e13;
+outline: none;
+transition: color 0.2s ease, border-color 0.7s ease;}.Button--spotlight{background-color: #34302e;
+border-color: #34302e;
+color: #e1d7cd;
+font-size: 1.25rem;
+transition: color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease;}.Button--spotlight:hover, .Button--spotlight:focus{background-color: #bd1e13;
+border-color: #bd1e13;
+color: #ffffff;
+transition: color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease;}.Container{margin: 0 auto;
 max-width: 960px;
 padding-left: 1em;
-padding-right: 1em;}.Copy .highlight{margin-left: -16px;
+padding-right: 1em;
+padding-bottom: 1em;}.Row{padding: 36px 0;}.Row .Interactive{margin-top: -24px;}.Copy{margin: 0 auto;
+max-width: 640px;}.Copy .highlight{margin-left: -16px;
 margin-right: -16px;}.Copy .highlight pre{margin-bottom: 0;
 background: #2b303b;
 color: #fff;
-font-family: "Source Code Pro", monospace;
+font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
 font-size: 16px;
 line-height: 1.2;
 overflow: auto;
-padding: 16px;}.Copy ul{padding-left: 24px;
-list-style: none;}.Copy ul > li{position: relative;}.Copy ul > li + li{margin-top: 10px;}.Copy ul > li:before{content: "";
+padding: 16px;}.Copy ul, .Ecology ul{padding-left: 24px;
+list-style: none;}.Copy ul > li, .Ecology ul > li{position: relative;}.Copy ul > li + li, .Ecology ul > li + li{margin-top: 0.25em;}.Copy ul > li:before, .Ecology ul > li:before{content: '';
 width: 1em;
 height: 1em;
 display: block;
 position: absolute;
 font-size: 8px;
 border-radius: 50%;
-border: 1px solid #B22D26;
+border: 1px solid #bd1e13;
 left: -24px;
-top: 11px;}.Copy li > ul{margin-top: 10px;
-margin-bottom: 0;}.Copy a{color: #2b303b;
-font-weight: 700;}.Copy a:hover, .Copy a:focus{color: #c33b33;}.Copy code{font-family: "Source Code Pro", monospace;
+top: 11px;}.Copy li > ul, .Ecology li > ul{margin-top: 0.25em;
+margin-bottom: 0px;}.Copy code, .Ecology code{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
 background: #ede7e1;
 color: #34302e;
-border-radius: 3px;
+border-radius: 3;
 padding: 0 5px;}.highlight code{background: transparent;
-padding: 0;}.Formidabanner{position: absolute;
-top: 0;
-right: 0;
-left: 0;
-padding: 10px;
-border-bottom-width: 1;
-border-bottom-style: solid;
-border-bottom-color: rgb(29, 34, 39);
-color: rgb(255, 255, 255);
-font-weight: 700;
-text-decoration: none;
-text-align: center;
-background: rgb(43, 48, 59);}.Interactive .playground{display: flex;
+padding: 0;}.Installer{display: inline-block;
+background: #ebe3db;
+border: 1px solid #d1c7bc;
+color: #2b303b;
+font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+font-size: 18px;
+line-height: 1.2;
+margin: 0 auto;
+padding: 16px 32px;}.Ecology p{max-width: 640px;}.Overview pre{overflow: hidden;}.Interactive{min-height: 333px;}.Interactive .playground{display: flex;
 flex-wrap: wrap;
-margin-bottom: 24px;}.Interactive:before, .Interactive .playgroundPreview:before{font-family: "Karla", "Helvetica Neue", Helvetica, Arial, sans-serif;
+margin-bottom: 24px;}.Interactive:before, .Interactive .playgroundPreview:before{font-family: 'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 font-weight: bold;
 font-size: 1rem;
 line-height: 1;
 letter-spacing: 0.05em;
-text-transform: uppercase;}.Interactive:before{content: "Interactive Code";}.Interactive .playgroundCode{flex: 0 0 100%;
+text-transform: uppercase;}.Interactive:before{content: 'Interactive Code';}.Interactive .playgroundCode{flex: 0 0 100%;
 vertical-align: top;
 background: #fff;
-font-family: "Source Code Pro", monospace;
+font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
 font-size: 1rem;
 line-height: 1.2;
 margin-bottom: 30px;
@@ -331,12 +349,12 @@ border: 1px solid #ebe3db;}.Interactive .playgroundPreview{flex: 0 0 100%;
 vertical-align: top;
 background: #fff;
 position: relative;
-border: 1px solid #ebe3db;}.Interactive .playgroundPreview:before{content: "Live Preview";
+border: 1px solid #ebe3db;}.Interactive .playgroundPreview:before{content: 'Live Preview';
 position: absolute;
-top: -18px;}.Interactive pre, .CodeMirror-code{font-family: "Source Code Pro", monospace;
+top: -18px;}.Interactive pre, .CodeMirror-code{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
 font-size: 1rem;
-line-height: 1.2;}.CodeMirror{height: auto;}.Documentation h1, .Documentation h2, .Documentation h3{font-family: "Didot", "Cochin", serif;
-font-weight: normal;}.Prop-name{font-family: "Source Code Pro", monospace;}.Prop-type{color: #91887e;
+line-height: 1.2;}.CodeMirror{height: auto;}.Documentation h1, .Documentation h2, .Documentation h3{font-family: 'Didot', 'Bodoni MT', 'Cochin', 'Baskerville', 'Goudy Old Style', 'Bitstream Charter', serif;
+font-weight: normal;}.Prop-name{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;}.Prop-type{color: #91887e;
 display: block;
 font-style: italic;
 line-height: 1em;}.Prop-description{display: block;
@@ -346,11 +364,13 @@ line-height: 1.3em;}.Prop-examples-title, .Prop-default-title{text-transform: up
 font-size: 0.85em;
 font-weight: bold;
 color: #91887e;
-letter-spacing: 0.04em;}.Prop-examples-value{font-family: "Source Code Pro", monospace;}.Prop-default-value{font-family: "Source Code Pro", monospace;
-color: #4d4945;}@media only screen and (min-width: 44em){.Headline--major{font-size: 3.5rem;
+letter-spacing: 0.04em;}.Prop-examples-value{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;}.Prop-default-value{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+color: #4d4945;}.u-textCenter{text-align: center;}.u-textLeft{text-align: left;}.u-textRight{text-align: right;}.u-marginModule > *:last-child{margin-bottom: 0;}@media only screen and (min-width: 70em){h1{font-size: 3rem;}h2{font-size: 2.75rem;}h3{font-size: 2.125rem;}h4, h5, h6{font-size: 1.9rem;}.Headline--major{font-size: 3.5rem;
 line-height: 1.2;
-font-style: italic;}.Header{padding-top: 135px;
-padding-bottom: 45px;}.Logo img{width: 230px;}.Copy{font-size: 1.125rem;}.Copy .highlight{margin: 36px -24px;}.Copy .highlight pre{padding: 24px;}.Interactive .playground{display: flex;
+font-style: italic;}.Header{padding-top: 65px;
+padding-bottom: 0;}.Logo img{width: 230px;}.Copy, .Ecology p{font-size: 1.125rem;}.Copy .highlight{margin: 36px -24px;}.Copy .highlight pre{padding: 24px;}.Installer{padding: 24px 48px;
+margin-top: 24px;
+margin-bottom: 24px;}.Interactive .playground{display: flex;
 flex-wrap: wrap;}.Interactive .playgroundCode{display: flex;
 flex: 1;
 margin-right: 12px;
@@ -364,5 +384,5 @@ font-weight: bold;}.highlight .kc{color: #b48ead;}.highlight .kd{color: #b48ead;
 font-style: italic;
 line-height: 1;}.cm-s-elegant span.cm-meta{color: #555;
 font-style: italic;
-line-height: 1;}.cm-s-elegant span.cm-variable{color: black;}.cm-s-elegant span.cm-variable-2{color: #b11;}.cm-s-elegant span.cm-qualifier{color: #555;}.cm-s-elegant span.cm-keyword{color: #730;}.cm-s-elegant span.cm-builtin{color: #30a;}.cm-s-elegant span.cm-link{color: #762;}.cm-s-elegant span.cm-error{background-color: #fdd;}.cm-s-elegant .CodeMirror-activeline-background{background:  #e8f2ff;}.cm-s-elegant .CodeMirror-matchingbracket{outline: 1px solid grey;
-color: black !important;}</style></div></div></div><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script><script src="main.3f8e80660de3883999db.js"></script></body></html>
+line-height: 1;}.cm-s-elegant span.cm-variable{color: black;}.cm-s-elegant span.cm-variable-2{color: #b11;}.cm-s-elegant span.cm-qualifier{color: #555;}.cm-s-elegant span.cm-keyword{color: #730;}.cm-s-elegant span.cm-builtin{color: #30a;}.cm-s-elegant span.cm-link{color: #762;}.cm-s-elegant span.cm-error{background-color: #fdd;}.cm-s-elegant .CodeMirror-activeline-background{background: #e8f2ff;}.cm-s-elegant .CodeMirror-matchingbracket{outline: 1px solid grey;
+color: black !important;}</style></div></div><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script><script src="main.96e67ac5c98e878a9cb6.js"></script></body></html>

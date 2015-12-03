@@ -2,6 +2,8 @@ var CleanPlugin = require("clean-webpack-plugin");
 var path = require("path");
 var StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 var StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
+var DefinePlugin = require("webpack").DefinePlugin;
+
 
 var base = require("./webpack.config.dev.js");
 
@@ -27,6 +29,12 @@ module.exports = {
     new CleanPlugin([ "../" + OUTPUT_DIR ]),
     new StatsWriterPlugin({
       filename: "stats.json"
+    }),
+    new DefinePlugin({
+      "process.env": {
+        // Disable warnings for static build
+        NODE_ENV: JSON.stringify("production")
+      }
     }),
     new StaticSiteGeneratorPlugin("main", routes)
   ]
