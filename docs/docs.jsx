@@ -7,28 +7,26 @@ import {VictoryBar} from 'victory-bar'
 import {VictoryLine} from 'victory-line'
 import {VictoryScatter} from 'victory-scatter'
 
-import theme from './theme';
+import {VictoryTheme} from 'formidable-landers';
 
 @Radium
 class Docs extends React.Component {
   render() {
     return (
-      <div className="Container">
-        <div className="Copy">
-          <Ecology
-            overview={require('!!raw!./ecology.md')}
-            source={require('json!./victory-chart.json')}
-            scope={{
-              React,
-              ReactDOM,
-              VictoryScatter,
-              VictoryLine,
-              VictoryAxis,
-              VictoryBar,
-              VictoryChart: require('../src/components/victory-chart')}}
-            playgroundtheme='elegant' />
-          <Style rules={theme}/>
-        </div>
+      <div>
+        <Ecology
+          overview={require('!!raw!./ecology.md')}
+          source={require('json!./victory-chart.json')}
+          scope={{
+            React,
+            ReactDOM,
+            VictoryScatter,
+            VictoryLine,
+            VictoryAxis,
+            VictoryBar,
+            VictoryChart: require('../src/components/victory-chart')}}
+          playgroundtheme='elegant' />
+        <Style rules={VictoryTheme}/>
       </div>
     )
   }
