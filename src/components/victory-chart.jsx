@@ -106,17 +106,6 @@ export default class VictoryChart extends React.Component {
     standalone: true
   };
 
-  constructor(props) {
-    super(props);
-    this.getComponents(props);
-    this.getCalculatedValues(props);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    this.getComponents(nextProps);
-    this.getCalculatedValues(nextProps);
-  }
-
   getComponents(props) {
     this.groupedDataTypes = ["bar"];
     this.childComponents = this.getChildComponents(props);
@@ -186,7 +175,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisType(child) {
-    if (child.type !== VictoryAxis) {
+    if (!child.type || child.type.role !== "axis") {
       return undefined;
     }
     return child.props.dependentAxis ? "dependent" : "independent";
@@ -737,6 +726,8 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
+    this.getComponents(this.props);
+    this.getCalculatedValues(this.props);
     const style = this.style.parent;
     const group = (
       <g style={style}>
