@@ -1,6 +1,6 @@
 {
   "name": "victory-pie",
-  "version": "0.1.3",
+  "version": "0.1.2",
   "description": "D3 pie & donut chart component for React",
   "main": "lib/index.js",
   "repository": {
