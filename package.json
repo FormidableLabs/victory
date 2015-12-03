@@ -45,6 +45,7 @@
     "clean-webpack-plugin": "^0.1.4",
     "ecology": "1.0.4",
     "file-loader": "^0.8.4",
+    "formidable-landers": "latest",
     "json-loader": "^0.5.3",
     "mocha": "^2.3.3",
     "opener": "^1.4.1",
