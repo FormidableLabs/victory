@@ -1,0 +1,287 @@
+<!DOCTYPE html><html><head><meta><!--[if lt IE 9]>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv-printshiv.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-shim.min.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.7/es5-sham.min.js"></script>
+          <![endif]--></meta><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/><title>VictoryPie</title><meta name="description" content=""/><meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css"/><link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/><link href="https://fonts.googleapis.com/css?family=Karla:400,700,400italic" rel="stylesheet" type="text/css"/></head><body><div><!--[if lt IE 8]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser.
+            Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+          <![endif]--></div><div id="content" class="Container"><div><div class="Ecology"><div class="Overview"><div><h1 id="victorypie">VictoryPie</h1>
+<p><code>victory-pie</code> draws an SVG pie or donut chart with <a href="https://github.com/facebook/react">React</a>. Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with <a href="https://github.com/FormidableLabs/victory-animation">victory-animation</a>.</p>
+<h2 id="examples">Examples</h2>
+<p>The plain component has baked-in sample data, style, and angle defaults, so even when no props are specified, an example pie chart will be rendered:</p>
+<pre><code class="lang-playground">&lt;VictoryPie/&gt;
+</code></pre>
+<p>Labels are placed at the centroid of each pie slice by default. Apply styles to the labels, or apply padding to move the labels:</p>
+<pre><code class="lang-playground">&lt;VictoryPie style={{
+    labels: {
+      fontSize: 20,
+      padding: 100
+    }
+  }}/&gt;
+</code></pre>
+<p>Styles of the pie chart itself can also be specified:</p>
+<pre><code class="lang-playground">&lt;VictoryPie
+  style={{
+    data: {
+      stroke: &quot;transparent&quot;,
+      opacity: 0.3
+    }
+  }}/&gt;
+</code></pre>
+<p>Set the <code>innerRadius</code> prop to create a donut chart. Label positions will automatically adjust.</p>
+<pre><code class="lang-playground">&lt;VictoryPie innerRadius={140}/&gt;
+</code></pre>
+<p>To render only a portion of a chart, specify a <code>startAngle</code> and <code>endAngle</code>:</p>
+<pre><code class="lang-playground">&lt;VictoryPie
+  endAngle={90}
+  startAngle={-90}/&gt;
+</code></pre>
+<p>Specify a <code>padAngle</code> to add space between adjacent slices:</p>
+<pre><code class="lang-playground">&lt;VictoryPie
+  endAngle={90}
+  innerRadius={140}
+  padAngle={5}
+  startAngle={-90}/&gt;
+</code></pre>
+<p>Here&#39;s an example of a donut chart with custom data and colors</p>
+<pre><code class="lang-playground">&lt;VictoryPie
+  style={{
+    labels: {
+      fill: &quot;white&quot;,
+      fontSize: 12,
+      fontWeight: &quot;bold&quot;
+    }
+  }}
+  data={[
+    {x: &quot;&lt;5&quot;, y: 6279},
+    {x: &quot;5-13&quot;, y: 9182},
+    {x: &quot;14-17&quot;, y: 5511},
+    {x: &quot;18-24&quot;, y: 7164},
+    {x: &quot;25-44&quot;, y: 6716},
+    {x: &quot;45-64&quot;, y: 4263},
+    {x: &quot;≥65&quot;, y: 7502}
+  ]}
+  innerRadius={110}
+  sliceColors={[
+    &quot;#D85F49&quot;,
+    &quot;#F66D3B&quot;,
+    &quot;#D92E1D&quot;,
+    &quot;#D73C4C&quot;,
+    &quot;#FFAF59&quot;,
+    &quot;#E28300&quot;,
+    &quot;#F6A57F&quot;
+  ]}/&gt;
+</code></pre>
+<p>VictoryPie can also animate as props change:</p>
+<pre><code class="lang-playground_norender">class App extends React.Component {
+   constructor(props) {
+    super(props);
+    this.state = {data: this.getData()};
+  }
+
+  getData() {
+    return [
+      { x: &quot;A&quot;, y: 0.2 + Math.random() },
+      { x: &quot;B&quot;, y: 0.2 + Math.random() },
+      { x: &quot;C&quot;, y: 0.2 + Math.random() },
+      { x: &quot;D&quot;, y: 0.2 + Math.random() },
+      { x: &quot;E&quot;, y: 0.2 + Math.random() }
+    ];
+  }
+
+  componentDidMount() {
+    setInterval(() =&gt; {
+      this.setState({data: this.getData()});
+    }, 3000);
+  }
+
+  render() {
+    return (
+      &lt;VictoryPie
+        data={this.state.data}
+        animate={{velocity: 0.02}}/&gt;
+    );
+  }
+}
+ReactDOM.render(&lt;App/&gt;, mountNode);
+</code></pre>
+</div></div><div class="Documentation"><table class="Props"><thead><tr><th>Props</th><th>Description</th></tr></thead><tbody><tr class="Prop"><td><span class="Prop-name">animate</span><span class="Prop-type">object</span></td><td><span class="Prop-description">The animate prop specifies props for victory-animation to use. If this prop is
+not given, the pie chart will not tween between changing data / style props.
+Large datasets might animate slowly due to the inherent limits of svg rendering.
+</span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> {velocity: 0.02, onEnd: () =&gt; alert(&quot;done!&quot;)}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">data</span><span class="Prop-type">Array&lt;{x: string, number, y: number}&gt;</span></td><td><span class="Prop-description">Objects in the data array must be of the form { x: &lt;x-val&gt;, y: &lt;y-val&gt; }, where &lt;x-val&gt;
+is the slice label (string or number), and &lt;y-val&gt; is the corresponding number
+used to calculate arc length as a proportion of the pie&#x27;s circumference.
+If the data prop is omitted, the pie will render sample data.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">[
+  { x: &quot;A&quot;, y: 1 },
+  { x: &quot;B&quot;, y: 2 },
+  { x: &quot;C&quot;, y: 3 },
+  { x: &quot;D&quot;, y: 1 },
+  { x: &quot;E&quot;, y: 2 }
+]</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">endAngle</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The overall end angle of the pie in degrees. This prop is used in conjunction with
+startAngle to create a pie that spans only a segment of a circle.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">360</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">height</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The height props specifies the height of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">400</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">innerRadius</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">When creating a donut chart, this prop determines the number of pixels between
+the center of the chart and the inner edge of a donut. When this prop is set to zero
+a regular pie chart is rendered.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">0</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">padAngle</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The padAngle prop determines the amount of separation between adjacent data slices
+in number of degrees</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">0</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">padding</span><span class="Prop-type">number, shape</span></td><td><span class="Prop-description">The padding props specifies the amount of padding in number of pixels between
+the edge of the chart and any rendered child components. This prop can be given
+as a number or as an object with padding specified for top, bottom, left
+and right.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">30</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">sliceColors</span><span class="Prop-type">Array&lt;string&gt;</span></td><td><span class="Prop-description">The sliceColors prop defines an array of colors to use for distinguishing data
+segments in a pie chart. If the data array is longer than the sliceColors array,
+colors will be reused.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">[
+  &quot;#75C776&quot;,
+  &quot;#39B6C5&quot;,
+  &quot;#78CCC4&quot;,
+  &quot;#62C3A4&quot;,
+  &quot;#64A8D1&quot;,
+  &quot;#8C95C8&quot;,
+  &quot;#3BAF74&quot;
+]</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">sort</span><span class="Prop-type">enum, func</span></td><td><span class="Prop-description">The sort prop determines how to order data. This prop can be given as &quot;ascending&quot;
+or &quot;descending&quot;, or as a custom comparator function</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">null</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">standalone</span><span class="Prop-type">bool</span></td><td><span class="Prop-description">The standalone prop determines whether VictoryPie should render as a standalone
+svg, or in a g tag to be included in an svg</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">true</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">startAngle</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The overall start angle of the pie in degrees. This prop is used in conjunction with
+endAngle to create a pie that spans only a segment of a circle.</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">0</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">style</span><span class="Prop-type">{parent: object, data: object, labels: object}</span></td><td><span class="Prop-description">The style prop specifies styles for your pie. VictoryPie relies on Radium,
+so valid Radium style objects should work for this prop. Height, width, and
+padding should be specified via the height, width, and padding props.
+</span><span class="Prop-examples"><span class="Prop-examples-title">Examples: </span><span class="Prop-examples-value"> {data: {stroke: &quot;black&quot;}, label: {fontSize: 10}}</span></span></td></tr><tr class="Prop"><td><span class="Prop-name">width</span><span class="Prop-type">custom</span></td><td><span class="Prop-description">The width props specifies the width of the chart container element in pixels</span><span class="Prop-default"><span class="Prop-default-title">Default Value: </span><span class="Prop-default-value">400</span></span></td></tr></tbody></table></div></div><style>*, *:before, *:after{box-sizing: inherit;}html{text-size-adjust: 100%;}body{background-color: #f6f2ee;
+font-family: 'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+line-height: 1.5;
+margin: 0;
+color: #1b2633;
+box-sizing: border-box;}html, body{overflow-x: hidden;}article, aside, details, figcaption, figure, footer{display: block;}header, hgroup, main, menu, nav, section, summary{display: block;}table{border-collapse: collapse;
+display: block;
+overflow: auto;
+width: 100%;}thead, tbody{border: 0;
+margin: 0;
+padding: 0;
+font-size: 100%;}thead{font: inherit;
+vertical-align: baseline;}tbody{vertical-align: middle;}th, td{border: 1px solid #ebe3db;
+padding: 0.425em 0.75em;
+vertical-align: top;}th code, td code{background: none;
+color: #111;}th{font-weight: bold;
+text-align: left;}h1,h2,h3,h4,h5,h6,hgroup, ul,ol,dd, p,figure, pre,table,fieldset,hr, .highlight{margin-top: 0;
+margin-bottom: 1.5rem;}img{max-width: 100%;}svg, img{fill: currentColor;}h1{font-size: 2.75rem;}h2{font-size: 2.5rem;}h3{font-size: 2.125rem;}h4, h5, h6{font-size: 1.9rem;}h1,h2,h3,h4{font-family: 'Didot', 'Bodoni MT', 'Cochin', 'Baskerville', 'Goudy Old Style', 'Bitstream Charter', serif;
+font-weight: normal;
+line-height: 1.2;}.Headline{font-family: 'Didot', 'Bodoni MT', 'Cochin', 'Baskerville', 'Goudy Old Style', 'Bitstream Charter', serif;
+font-size: 2.5rem;
+font-weight: normal;}.Headline--minor{font-size: 2rem;
+font-style: italic;}.Headline--major{font-size: 3rem;
+line-height: 1.3;
+font-style: italic;}.Smallcaps{text-transform: uppercase;
+font-size: 0.85em;
+font-weight: bold;
+color: #91887e;}a{color: #2b303b;
+font-weight: 700;
+text-decoration: none;
+box-shadow: inset 0 -0.05em 0 #b5aca3;
+transition: color 0.2s ease, box-shadow 0.5s ease;}a:hover, a:focus{color: #bd1e13;
+box-shadow: inset 0 -0.05em 0 #bd4139;
+transition: color 0.2s ease, box-shadow 0.5s ease;}.Link--unstyled{box-shadow: none;}.Link--unstyled:hover, .Link--unstyled:focus{box-shadow: none;}.Button{background-color: transparent;
+border: 3px solid #e1d7cd;
+box-shadow: none;
+color: #4d4945;
+font-family: 'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+font-weight: normal;
+padding: 0.75em 1.25em;
+text-align: center;
+transition: color 0.2s ease, border-color 0.7s ease;}.Button:hover, .Button:focus{border-color: #E5847D;
+box-shadow: none;
+color: #bd1e13;
+outline: none;
+transition: color 0.2s ease, border-color 0.7s ease;}.Button--spotlight{background-color: #34302e;
+border-color: #34302e;
+color: #e1d7cd;
+font-size: 1.25rem;
+transition: color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease;}.Button--spotlight:hover, .Button--spotlight:focus{background-color: #bd1e13;
+border-color: #bd1e13;
+color: #ffffff;
+transition: color 0.2s ease, background-color 0.7s ease, border-color 0.7s ease;}.Container{margin: 0 auto;
+max-width: 960px;
+padding-left: 1em;
+padding-right: 1em;
+padding-bottom: 1em;}.Row{padding: 36px 0;}.Row .Interactive{margin-top: -24px;}.Copy{margin: 0 auto;
+max-width: 640px;}.Copy .highlight{margin-left: -16px;
+margin-right: -16px;}.Copy .highlight pre{margin-bottom: 0;
+background: #2b303b;
+color: #fff;
+font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+font-size: 16px;
+line-height: 1.2;
+overflow: auto;
+padding: 16px;}.Copy ul, .Ecology ul{padding-left: 24px;
+list-style: none;}.Copy ul > li, .Ecology ul > li{position: relative;}.Copy ul > li + li, .Ecology ul > li + li{margin-top: 0.25em;}.Copy ul > li:before, .Ecology ul > li:before{content: '';
+width: 1em;
+height: 1em;
+display: block;
+position: absolute;
+font-size: 8px;
+border-radius: 50%;
+border: 1px solid #bd1e13;
+left: -24px;
+top: 11px;}.Copy li > ul, .Ecology li > ul{margin-top: 0.25em;
+margin-bottom: 0px;}.Copy code, .Ecology code{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+background: #ede7e1;
+color: #34302e;
+border-radius: 3;
+padding: 0 5px;}.highlight code{background: transparent;
+padding: 0;}.Installer{display: inline-block;
+background: #ebe3db;
+border: 1px solid #d1c7bc;
+color: #2b303b;
+font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+font-size: 18px;
+line-height: 1.2;
+margin: 0 auto;
+padding: 16px 32px;}.Ecology p{max-width: 640px;}.Overview pre{overflow: hidden;}.Interactive{min-height: 333px;}.Interactive .playground{display: flex;
+flex-wrap: wrap;
+margin-bottom: 24px;}.Interactive:before, .Interactive .playgroundPreview:before{font-family: 'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+font-weight: bold;
+font-size: 1rem;
+line-height: 1;
+letter-spacing: 0.05em;
+text-transform: uppercase;}.Interactive:before{content: 'Interactive Code';}.Interactive .playgroundCode{flex: 0 0 100%;
+vertical-align: top;
+background: #fff;
+font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+font-size: 1rem;
+line-height: 1.2;
+margin-bottom: 30px;
+padding: 16px 16px 0 16px;
+border: 1px solid #ebe3db;}.Interactive .playgroundPreview{flex: 0 0 100%;
+vertical-align: top;
+background: #fff;
+position: relative;
+border: 1px solid #ebe3db;}.Interactive .playgroundPreview:before{content: 'Live Preview';
+position: absolute;
+top: -18px;}.Interactive pre, .CodeMirror-code{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+font-size: 1rem;
+line-height: 1.2;}.CodeMirror{height: auto;}.Documentation h1, .Documentation h2, .Documentation h3{font-family: 'Didot', 'Bodoni MT', 'Cochin', 'Baskerville', 'Goudy Old Style', 'Bitstream Charter', serif;
+font-weight: normal;}.Prop-name{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;}.Prop-type{color: #91887e;
+display: block;
+font-style: italic;
+line-height: 1em;}.Prop-description{display: block;
+line-height: 1.3em;
+margin-bottom: 0.5em;}.Prop-examples, .Prop-default{display: block;
+line-height: 1.3em;}.Prop-examples-title, .Prop-default-title{text-transform: uppercase;
+font-size: 0.85em;
+font-weight: bold;
+color: #91887e;
+letter-spacing: 0.04em;}.Prop-examples-value{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;}.Prop-default-value{font-family: 'Source Code Pro', 'Inconsolata', 'Courier New', 'Courier', monospace;
+color: #4d4945;}.u-textCenter{text-align: center;}.u-textLeft{text-align: left;}.u-textRight{text-align: right;}.u-marginModule > *:last-child{margin-bottom: 0;}@media only screen and (min-width: 70em){h1{font-size: 3rem;}h2{font-size: 2.75rem;}h3{font-size: 2.125rem;}h4, h5, h6{font-size: 1.9rem;}.Headline--major{font-size: 3.5rem;
+line-height: 1.2;
+font-style: italic;}.Header{padding-top: 65px;
+padding-bottom: 0;}.Logo img{width: 230px;}.Copy, .Ecology p{font-size: 1.125rem;}.Copy .highlight{margin: 36px -24px;}.Copy .highlight pre{padding: 24px;}.Installer{padding: 24px 48px;
+margin-top: 24px;
+margin-bottom: 24px;}.Interactive .playground{display: flex;
+flex-wrap: wrap;}.Interactive .playgroundCode{display: flex;
+flex: 1;
+margin-right: 12px;
+margin-bottom: 0;}.Interactive .playgroundPreview{display: flex;
+flex: 1;
+margin-left: 12px;}}.highlight .hll{background-color: #4f5b66;}.highlight{background: #2b303b;
+color: #eff1f5;}.highlight .c{color: #65737e;}.highlight .err{color: #bf616a;}.highlight .k{color: #b48ead;}.highlight .l{color: #d08770;}.highlight .n{color: #eff1f5;}.highlight .o{color: #96b5b4;}.highlight .p{color: #eff1f5;}.highlight .cm{color: #65737e;}.highlight .cp{color: #65737e;}.highlight .c1{color: #65737e;}.highlight .cs{color: #65737e;}.highlight .gd{color: #bf616a;}.highlight .ge{font-style: italic;}.highlight .gh{color: #eff1f5;
+font-weight: bold;}.highlight .gi{color: #a3be8c;}.highlight .gp{color: #65737e;
+font-weight: bold;}.highlight .gs{font-weight: bold;}.highlight .gu{color: #96b5b4;
+font-weight: bold;}.highlight .kc{color: #b48ead;}.highlight .kd{color: #b48ead;}.highlight .kn{color: #96b5b4;}.highlight .kp{color: #b48ead;}.highlight .kr{color: #b48ead;}.highlight .kt{color: #ebcb8b;}.highlight .ld{color: #a3be8c;}.highlight .m{color: #d08770;}.highlight .s{color: #a3be8c;}.highlight .na{color: #8fa1b3;}.highlight .nb{color: #eff1f5;}.highlight .nc{color: #ebcb8b;}.highlight .no{color: #bf616a;}.highlight .nd{color: #96b5b4;}.highlight .ni{color: #eff1f5;}.highlight .ne{color: #bf616a;}.highlight .nf{color: #8fa1b3;}.highlight .nl{color: #eff1f5;}.highlight .nn{color: #ebcb8b;}.highlight .nx{color: #fff;}.highlight .py{color: #eff1f5;}.highlight .nt{color: #96b5b4;}.highlight .nv{color: #bf616a;}.highlight .ow{color: #96b5b4;}.highlight .w{color: #eff1f5;}.highlight .mf{color: #d08770;}.highlight .mh{color: #d08770;}.highlight .mi{color: #d08770;}.highlight .mo{color: #d08770;}.highlight .sb{color: #a3be8c;}.highlight .sc{color: #eff1f5;}.highlight .sd{color: #65737e;}.highlight .s2{color: #a3be8c;}.highlight .se{color: #d08770;}.highlight .sh{color: #a3be8c;}.highlight .si{color: #d08770;}.highlight .sx{color: #a3be8c;}.highlight .sr{color: #a3be8c;}.highlight .s1{color: #a3be8c;}.highlight .ss{color: #a3be8c;}.highlight .bp{color: #eff1f5;}.highlight .vc{color: #bf616a;}.highlight .vg{color: #bf616a;}.highlight .vi{color: #bf616a;}.highlight .il{color: #d08770;}.cm-s-elegant span.cm-number, .cm-s-elegant span.cm-string, .cm-s-elegant span.cm-atom{color: #762;}.cm-s-elegant span.cm-comment{color: #262;
+font-style: italic;
+line-height: 1;}.cm-s-elegant span.cm-meta{color: #555;
+font-style: italic;
+line-height: 1;}.cm-s-elegant span.cm-variable{color: black;}.cm-s-elegant span.cm-variable-2{color: #b11;}.cm-s-elegant span.cm-qualifier{color: #555;}.cm-s-elegant span.cm-keyword{color: #730;}.cm-s-elegant span.cm-builtin{color: #30a;}.cm-s-elegant span.cm-link{color: #762;}.cm-s-elegant span.cm-error{background-color: #fdd;}.cm-s-elegant .CodeMirror-activeline-background{background: #e8f2ff;}.cm-s-elegant .CodeMirror-matchingbracket{outline: 1px solid grey;
+color: black !important;}</style></div></div><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/codemirror.min.js"></script><script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/mode/javascript/javascript.min.js"></script><script src="main.05a1d6f6b2acdaf8a960.js"></script></body></html>
