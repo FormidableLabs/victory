@@ -89,7 +89,7 @@ class Sidebar extends React.Component {
         className="Nav"
         style={styles.base}>
         <a href="/" className="Link--unstyled">
-          <img width="40px" height="40px" src="/static/icon-victory.svg" alt="Victory Homepage" />
+          <img width="40px" height="40px" src="/victory/static/icon-victory.svg" alt="Victory Homepage" />
         </a>
         <ul style={styles.list}>
           {this.generateListItems(this.props.items)}
