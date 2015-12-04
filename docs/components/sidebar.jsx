@@ -56,7 +56,7 @@ class Sidebar extends React.Component {
           color: VictorySettings.red
         }
       }
-    }
+    };
   }
 
   generateListItems(items) {
