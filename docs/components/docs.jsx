@@ -3,18 +3,10 @@ import Ecology from "ecology";
 import Radium, { Style } from "radium";
 import React from "react";
 import ReactDOM from "react-dom";
-
+import { VictoryTheme, Header, Footer, VictorySidebar } from "formidable-landers";
 import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
 const V = Victory;
-
-import theme from "./theme";
-
-// TODO: Extract these global Header/Footers into formidable-landers
-// https://github.com/FormidableLabs/formidable-landers/issues/12
-import Footer from "./footer";
-import Header from "./header";
-import Sidebar from "./sidebar";
 
 @Radium
 class Docs extends React.Component {
@@ -54,7 +46,7 @@ class Docs extends React.Component {
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
         <main style={this.getMainStyles()}>
-          <Sidebar active={"/"} />
+          <VictorySidebar active={"/"} />
           <section style={this.getDocsStyles()}>
             <Ecology
               overview={require("!!raw!../ecology-getting-started.md")}
@@ -63,7 +55,7 @@ class Docs extends React.Component {
           </section>
         </main>
         <Footer/>
-        <Style rules={theme}/>
+        <Style rules={VictoryTheme}/>
       </div>
     );
   }
