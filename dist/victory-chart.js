@@ -110,110 +110,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var VictoryChart = (function (_React$Component) {
 	  _inherits(VictoryChart, _React$Component);
 	
-	  _createClass(VictoryChart, null, [{
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. If this prop is
-	       * given, all children defined in chart will pass the options specified in this prop to
-	       * victory-animation, unless they have animation props of their own specified.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
-	       */
-	      animate: _react2["default"].PropTypes.object,
-	      /**
-	       * The domain prop describes the range of values your chart will include. This prop can be
-	       * given as a array of the minimum and maximum expected values for your chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
-	       */
-	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
-	        x: _victoryUtil.PropTypes.domain,
-	        y: _victoryUtil.PropTypes.domain
-	      })]),
-	      /**
-	       * The domainPadding prop specifies a number of pixels of padding to add to the
-	       * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
-	       * from the origin to prevent crowding. This prop should be given as an object with
-	       * numbers specified for x and y.
-	       */
-	      domainPadding: _react2["default"].PropTypes.shape({
-	        x: _victoryUtil.PropTypes.nonNegative,
-	        y: _victoryUtil.PropTypes.nonNegative
-	      }),
-	      /**
-	       * The height props specifies the height of the chart container element in pixels
-	       */
-	      height: _victoryUtil.PropTypes.nonNegative,
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
-	      })]),
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a function, or as an object that specifies separate functions for x and y.
-	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
-	       */
-	      scale: _react2["default"].PropTypes.oneOfType([_victoryUtil.PropTypes.scale, _react2["default"].PropTypes.shape({
-	        x: _victoryUtil.PropTypes.scale,
-	        y: _victoryUtil.PropTypes.scale
-	      })]),
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryChart with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react2["default"].PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. Victory Chart relies on Radium,
-	       * so valid Radium style objects should work for this prop. Height, width, and
-	       * padding should be specified via the height, width, and padding props, as they
-	       * are used to calculate the alignment of components within chart.
-	       * @examples {background: transparent, margin: 50}
-	       */
-	      style: _react2["default"].PropTypes.object,
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _victoryUtil.PropTypes.nonNegative
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      height: 300,
-	      width: 450,
-	      padding: 50,
-	      standalone: true
-	    },
-	    enumerable: true
-	  }]);
-	
-	  function VictoryChart(props) {
+	  function VictoryChart() {
 	    _classCallCheck(this, _VictoryChart);
 	
-	    _get(Object.getPrototypeOf(_VictoryChart.prototype), "constructor", this).call(this, props);
-	    this.getComponents(props);
-	    this.getCalculatedValues(props);
+	    _get(Object.getPrototypeOf(_VictoryChart.prototype), "constructor", this).apply(this, arguments);
 	  }
 	
 	  _createClass(VictoryChart, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.getComponents(nextProps);
-	      this.getCalculatedValues(nextProps);
-	    }
-	  }, {
 	    key: "getComponents",
 	    value: function getComponents(props) {
 	      this.groupedDataTypes = ["bar"];
@@ -285,7 +188,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getAxisType",
 	    value: function getAxisType(child) {
-	      if (child.type !== _victoryAxis.VictoryAxis) {
+	      if (!child.type || child.type.role !== "axis") {
 	        return undefined;
 	      }
 	      return child.props.dependentAxis ? "dependent" : "independent";
@@ -879,6 +782,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
+	      this.getComponents(this.props);
+	      this.getCalculatedValues(this.props);
 	      var style = this.style.parent;
 	      var group = _react2["default"].createElement(
 	        "g",
@@ -891,6 +796,93 @@ return /******/ (function(modules) { // webpackBootstrap
 	        group
 	      ) : group;
 	    }
+	  }], [{
+	    key: "propTypes",
+	    value: {
+	      /**
+	       * The animate prop specifies props for victory-animation to use. If this prop is
+	       * given, all children defined in chart will pass the options specified in this prop to
+	       * victory-animation, unless they have animation props of their own specified.
+	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	       * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
+	       */
+	      animate: _react2["default"].PropTypes.object,
+	      /**
+	       * The domain prop describes the range of values your chart will include. This prop can be
+	       * given as a array of the minimum and maximum expected values for your chart,
+	       * or as an object that specifies separate arrays for x and y.
+	       * If this prop is not provided, a domain will be calculated from data, or other
+	       * available information.
+	       * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
+	       */
+	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
+	        x: _victoryUtil.PropTypes.domain,
+	        y: _victoryUtil.PropTypes.domain
+	      })]),
+	      /**
+	       * The domainPadding prop specifies a number of pixels of padding to add to the
+	       * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+	       * from the origin to prevent crowding. This prop should be given as an object with
+	       * numbers specified for x and y.
+	       */
+	      domainPadding: _react2["default"].PropTypes.shape({
+	        x: _victoryUtil.PropTypes.nonNegative,
+	        y: _victoryUtil.PropTypes.nonNegative
+	      }),
+	      /**
+	       * The height props specifies the height of the chart container element in pixels
+	       */
+	      height: _victoryUtil.PropTypes.nonNegative,
+	      /**
+	       * The padding props specifies the amount of padding in number of pixels between
+	       * the edge of the chart and any rendered child components. This prop can be given
+	       * as a number or as an object with padding specified for top, bottom, left
+	       * and right.
+	       */
+	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
+	        top: _react2["default"].PropTypes.number,
+	        bottom: _react2["default"].PropTypes.number,
+	        left: _react2["default"].PropTypes.number,
+	        right: _react2["default"].PropTypes.number
+	      })]),
+	      /**
+	       * The scale prop determines which scales your chart should use. This prop can be
+	       * given as a function, or as an object that specifies separate functions for x and y.
+	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+	       */
+	      scale: _react2["default"].PropTypes.oneOfType([_victoryUtil.PropTypes.scale, _react2["default"].PropTypes.shape({
+	        x: _victoryUtil.PropTypes.scale,
+	        y: _victoryUtil.PropTypes.scale
+	      })]),
+	      /**
+	       * The standalone prop determines whether the component will render a standalone svg
+	       * or a <g> tag that will be included in an external svg. Set standalone to false to
+	       * compose VictoryChart with other components within an enclosing <svg> tag.
+	       */
+	      standalone: _react2["default"].PropTypes.bool,
+	      /**
+	       * The style prop specifies styles for your chart. Victory Chart relies on Radium,
+	       * so valid Radium style objects should work for this prop. Height, width, and
+	       * padding should be specified via the height, width, and padding props, as they
+	       * are used to calculate the alignment of components within chart.
+	       * @examples {background: transparent, margin: 50}
+	       */
+	      style: _react2["default"].PropTypes.object,
+	      /**
+	       * The width props specifies the width of the chart container element in pixels
+	       */
+	      width: _victoryUtil.PropTypes.nonNegative
+	    },
+	    enumerable: true
+	  }, {
+	    key: "defaultProps",
+	    value: {
+	      height: 300,
+	      width: 450,
+	      padding: 50,
+	      standalone: true
+	    },
+	    enumerable: true
 	  }]);
 	
 	  var _VictoryChart = VictoryChart;
