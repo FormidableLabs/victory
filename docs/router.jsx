@@ -6,6 +6,7 @@ import { render } from "react-dom";
 import { Router, Route, IndexRoute } from "react-router";
 
 import App from "./components/app";
+import ComponentDocs from "./components/component-docs";
 import Docs from "./components/docs";
 import Root from "./components/root";
 
@@ -16,6 +17,7 @@ const routes = (
   <Route path="/" component={Root}>
     <IndexRoute component={App} />
     <Route path="docs" component={Docs} />
+    <Route path="docs/:component" component={ComponentDocs} />
   </Route>
 );
 
