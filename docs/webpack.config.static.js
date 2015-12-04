@@ -13,9 +13,9 @@ var OUTPUT_DIR = "build";
 var routes = [
   "/",
   "docs",
-  // "docs/victory-axis",
-  // "docs/victory-chart",
-  // "docs/victory-pie",
+  "docs/victory-axis",
+  "docs/victory-chart",
+  "docs/victory-pie",
   "docs/victory-bar",
   "docs/victory-line",
   "docs/victory-scatter"

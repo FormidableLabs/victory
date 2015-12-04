@@ -1,21 +1,13 @@
 import ga from "react-ga";
 import React from "react";
 import Radium, { Style } from "radium";
-
-// TODO: Extract these global Header/Footers into formidable-landers
-// https://github.com/FormidableLabs/formidable-landers/issues/12
-import Footer from "./footer";
-import Header from "./header";
-import Sidebar from "./sidebar";
-
+import { VictoryTheme, Header, Footer, VictorySidebar } from 'formidable-landers';
 import BaseDocs from "./docs";
 
-import theme from "./theme";
-
 const docs = {
-  // "victory-axis": require("victory-axis/docs/docs"),
-  // "victory-chart": require("victory-chart/docs/docs"),
-  // "victory-pie": require("victory-pie/docs/docs"),
+  "victory-axis": require("victory-axis/docs/docs"),
+  "victory-chart": require("victory-chart/docs/docs"),
+  "victory-pie": require("victory-pie/docs/docs"),
   "victory-bar": require("victory-bar/docs/docs"),
   "victory-line": require("victory-line/docs/docs"),
   "victory-scatter": require("victory-scatter/docs/docs")
@@ -34,13 +26,13 @@ class ComponentDocs extends BaseDocs {
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header />
         <main style={this.getMainStyles()}>
-          <Sidebar active={`/${this.props.params.component}`} />
+          <VictorySidebar active={`/${this.props.params.component}`} />
           <section style={this.getDocsStyles()}>
             <Docs />
           </section>
         </main>
         <Footer/>
-        <Style rules={theme} />
+        <Style rules={VictoryTheme} />
       </div>
     );
   }
