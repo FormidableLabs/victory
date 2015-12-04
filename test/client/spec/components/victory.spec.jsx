@@ -3,9 +3,9 @@
  */
 import * as Victory from "src/index";
 
-describe("victory", function () {
+describe("victory", () => {
 
-  it("has expected properties", function () {
+  it("has expected properties", () => {
     expect(Victory.VictoryAnimation).not.to.equal(undefined);
     expect(Victory.VictoryAxis).not.to.equal(undefined);
     expect(Victory.VictoryBar).not.to.equal(undefined);
