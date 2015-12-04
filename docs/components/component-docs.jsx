@@ -1,8 +1,10 @@
 import ga from "react-ga";
 import React from "react";
 import Radium, { Style } from "radium";
-import { VictoryTheme, Header, Footer, VictorySidebar } from "formidable-landers";
+import { VictoryTheme, Header, Footer } from "formidable-landers";
+
 import BaseDocs from "./docs";
+import Sidebar from "./sidebar";
 
 const docs = {
   "victory-axis": require("victory-axis/docs/docs"),
@@ -26,7 +28,7 @@ class ComponentDocs extends BaseDocs {
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header />
         <main style={this.getMainStyles()}>
-          <VictorySidebar active={`/${this.props.params.component}`} />
+          <Sidebar active={`${this.props.params.component}`} />
           <section style={this.getDocsStyles()}>
             <Docs />
           </section>
