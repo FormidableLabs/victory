@@ -8,12 +8,7 @@ import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
 const V = Victory;
 
-import theme from "./theme";
-
-// TODO: Extract these global Header/Footers into formidable-landers
-// https://github.com/FormidableLabs/formidable-landers/issues/12
-import Footer from "./footer";
-import Header from "./header";
+import { Header, Footer, VictoryTheme } from "formidable-landers";
 
 import Sidebar from "./sidebar";
 
@@ -65,7 +60,7 @@ class Docs extends React.Component {
           </section>
         </main>
         <Footer/>
-        <Style rules={theme}/>
+        <Style rules={VictoryTheme}/>
       </div>
     );
   }

@@ -8,12 +8,7 @@ import {VictoryChart, VictoryLine} from "../../src/index";
 // Analytics
 import ga from "react-ga";
 
-import theme from "./theme";
-
-// TODO: Extract these global Header/Footers into formidable-landers
-// https://github.com/FormidableLabs/formidable-landers/issues/12
-import Header from "./header";
-import Footer from "./footer";
+import { Header, Footer, VictoryTheme } from "formidable-landers";
 
 @Radium
 class App extends React.Component {
@@ -96,7 +91,7 @@ class App extends React.Component {
 
         </main>
         <Footer/>
-        <Style rules={theme}/>
+        <Style rules={VictoryTheme}/>
       </div>
     );
   }
