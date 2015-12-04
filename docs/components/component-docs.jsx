@@ -1,7 +1,7 @@
 import ga from "react-ga";
 import React from "react";
 import Radium, { Style } from "radium";
-import { VictoryTheme, Header, Footer, VictorySidebar } from 'formidable-landers';
+import { VictoryTheme, Header, Footer, VictorySidebar } from "formidable-landers";
 import BaseDocs from "./docs";
 
 const docs = {
