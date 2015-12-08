@@ -8,7 +8,7 @@ As a preliminary matter, please update your shell to include
 `./node_modules/.bin` in `PATH` like:
 
 ```sh
-export PATH="${PATH}:./node_modules/.bin"
+$ export PATH="${PATH}:./node_modules/.bin"
 ```
 
 So you can type `builder` instead of `./node_modules/.bin/builder` for all
@@ -17,7 +17,7 @@ commands.
 Due to a [postinstall bug](https://github.com/npm/npm/issues/4134#issuecomment-154571544) affecting certain version combinations of NPM v2 and Node (e.g. `Node v4.2.2`, `NPM v2.14.7`), we recommend that you use NPM v3. You can use NPM to upgrade NPM:
 
 ```sh
-npm install -g npm@3
+$ npm install -g npm@3
 ```
 
 ## Build
