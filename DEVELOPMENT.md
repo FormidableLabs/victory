@@ -14,7 +14,7 @@ $ export PATH="${PATH}:./node_modules/.bin"
 So you can type `builder` instead of `./node_modules/.bin/builder` for all
 commands.
 
-Due to a [postinstall bug](https://github.com/npm/npm/issues/4134#issuecomment-154571544) affecting certain version combinations of NPM v2 and Node (e.g. `Node v4.2.2`, `NPM v2.14.7`), we recommend that you use NPM v3. You can use NPM to upgrade NPM:
+Due to a [postinstall bug][] affecting certain version combinations of `npm` v2 and Node (e.g. `node v4.2.2`, `npm v2.14.7`), we recommend that you use `npm` v3. You can use `npm` to upgrade `npm`:
 
 ```sh
 $ npm install -g npm@3
@@ -207,3 +207,4 @@ please review:
       [`npm install` runs `npm prepublish` bug](https://github.com/npm/npm/issues/3059)
 
 [builder]: https://github.com/FormidableLabs/builder
+[postinstall bug]: https://github.com/npm/npm/issues/4134#issuecomment-154571544 
