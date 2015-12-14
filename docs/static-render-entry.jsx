@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import ReactDOMServer from "react-dom/server";
 
 import Docs from "./docs";
@@ -10,9 +11,12 @@ const _renderIndex = (component) => `<!DOCTYPE html>${ReactDOMServer.renderToSta
 /**
  * Helper component that allows `static-site-generator-webpack-plugin` to render
  * root component (`Docs`) as static HTML
- *
- * Output built to `/gh-pages/` 
  */
+
+if (typeof document !== "undefined") {
+  const content = document.getElementById("content");
+  ReactDOM.render(<Docs/>, content);
+}
 
 export default (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
