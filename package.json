@@ -29,6 +29,7 @@
     "builder-react-component": "~0.1.1",
     "lodash": "^3.9.3",
     "radium": "^0.14.1",
+    "victory-animation": "^0.0.12",
     "victory-util": "^2.0.2"
   },
   "devDependencies": {

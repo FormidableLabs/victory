@@ -1,6 +1,7 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Util from "victory-util";
+import {VictoryAnimation} from "victory-animation";
 import _ from "lodash";
 
 const styles = {
@@ -14,6 +15,13 @@ const styles = {
 @Radium
 export default class VictoryLabel extends React.Component {
   static propTypes = {
+    /**
+   * The animate prop specifies props for victory-animation to use. It this prop is
+   * not given, the bar chart will not tween between changing data / style props.
+   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+   * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+   */
+    animate: PropTypes.object,
     /**
      * The capHeight prop defines a text metric for the font being used: the
      * expected height of capital letters. This is necessary because of SVG,
@@ -192,8 +200,7 @@ export default class VictoryLabel extends React.Component {
     }
   }
 
-  render() {
-    this.getCalculatedValues(this.props);
+  renderLabel() {
     return (
       <text x={this.props.x} y={this.props.y} dy={this.dy} dx={this.dx}
         textAnchor={this.textAnchor}
@@ -209,5 +216,22 @@ export default class VictoryLabel extends React.Component {
         })}
       </text>
     );
+  }
+
+  render() {
+    if (this.props.animate) {
+      // Do less work by having `VictoryAnimation` tween only values that
+      // make sense to tween. In the future, allow customization of animated
+      // prop whitelist/blacklist?
+      const animateData = _.pick(this.props, ["x", "y", "style", "data"]);
+      return (
+        <VictoryAnimation {...this.props.animate} data={animateData}>
+          {(props) => <VictoryLabel {...this.props} {...props} animate={null}/>}
+        </VictoryAnimation>
+      );
+    } else {
+      this.getCalculatedValues(this.props);
+    }
+    return this.renderLabel();
   }
 }
