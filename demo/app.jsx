@@ -10,7 +10,7 @@ const rand = function () {
 
 const getData = function () {
   return [
-    { x: "<5", y: rand(), label: "A" },
+    { x: "<5", y: rand(), label: "A", fill: "grey" },
     { x: "5-13", y: rand() },
     { x: "14-17", y: rand() },
     { x: "18-24", y: rand() },

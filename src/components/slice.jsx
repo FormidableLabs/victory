@@ -18,11 +18,16 @@ export default class Slice extends React.Component {
     });
   }
 
+  getStyles() {
+    const dataStyles = _.omit(this.props.slice.data, ["x", "y", "label"]);
+    return this.evaluateStyle(_.merge({}, this.props.style, dataStyles));
+  }
+
   renderSlice(props) {
     return (
       <path
         d={props.pathFunction.call(this, props.slice)}
-        style={this.evaluateStyle(props.style)}
+        style={this.getStyles()}
       />
     );
   }
