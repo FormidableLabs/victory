@@ -4,6 +4,9 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import Util from "victory-util";
 import {VictoryAnimation} from "victory-animation";
+import Slice from "./slice";
+import SliceLabel from "./slice-label";
+
 
 const defaultStyles = {
   data: {
@@ -70,6 +73,16 @@ export default class VictoryPie extends React.Component {
      * a regular pie chart is rendered.
      */
     innerRadius: Util.PropTypes.nonNegative,
+    /**
+     * This prop specifies the labels that will be applied to your data. This prop can be passed in as
+     * an array of values, in the same order as your data, or as a function to be applied
+     * to each data point. If this prop is not specified, the x value of each data point will
+     * be used as a label
+     */
+    labels: PropTypes.oneOfType([
+      PropTypes.array,
+      PropTypes.func
+    ]),
     /**
      * The padAngle prop determines the amount of separation between adjacent data slices
      * in number of degrees
@@ -204,26 +217,31 @@ export default class VictoryPie extends React.Component {
       .innerRadius(innerRadius);
   }
 
-  renderData(slices) {
-    const indexArray = _.range(0, this.props.data.length);
-    const sliceData = this.pie(this.props.data, indexArray);
+  renderData() {
+    const getTextFromProps = (index) => {
+      if (!this.props.labels) {
+        return undefined;
+      }
+      return _.isArray(this.props.labels) ? this.props.labels[index] : this.props.labels;
+    }
+
+    const slices = this.pie(this.props.data);
     const sliceComponents = _.map(slices, (slice, index) => {
       const fill = this.colorScale[index % this.colorScale.length];
       const style = _.merge({}, this.style.data, {fill});
-      const data = sliceData[index];
       return (
         <g key={index}>
-          <path
-            d={this.slice(data)}
+          <Slice
+            path={this.slice(slice)}
+            data={slice.data}
             style={style}
           />
-          <text
-            dy=".35em"
+          <SliceLabel
+            data={slice.data}
+            label={getTextFromProps(index) || slice.data.x}
             style={this.style.labels}
-            transform={`translate( ${this.labelPosition.centroid(data)})`}
-          >
-            {slice.x}
-          </text>
+            transform={`translate( ${this.labelPosition.centroid(slice)})`}
+          />
         </g>
       );
     });
@@ -253,7 +271,7 @@ export default class VictoryPie extends React.Component {
     const yOffset = this.radius + this.padding.top;
     const group = (
       <g style={style} transform={`translate(${xOffset}, ${yOffset})`}>
-        {this.renderData(this.props.data)}
+        {this.renderData()}
       </g>
     );
 
