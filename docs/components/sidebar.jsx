@@ -1,7 +1,7 @@
+import { components, routing as routingConfig } from "../config";
 import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
-import { routing as routingConfig } from "../config";
 
 import { VictorySettings } from "formidable-landers";
 
@@ -64,7 +64,14 @@ class Sidebar extends React.Component {
     const styles = this.getSidebarStyles();
     const linkStyles = this.getLinkStyles();
 
-    return items.map((item) => {
+    // Add "Getting started" link to sidebar
+    // (must have `text` and `slug`)
+    const sidebarList = [{
+      text: "Getting started",
+      slug: ""
+    }].concat(items);
+
+    return sidebarList.map((item) => {
       const isSelected = item.slug === this.props.active;
 
       const radiumLinkStyles = isSelected ?
@@ -105,22 +112,8 @@ Sidebar.propTypes = {
   active: React.PropTypes.string
 };
 
-// For now, these sidebar items include only those components that have been updated
-// with a fix to make their `docs.jsx` exportable--
-// e.g., https://github.com/FormidableLabs/victory-pie/pull/22/files
-//
-// As additional components become available, just comment them back in!
-
 Sidebar.defaultProps = {
-  items: [
-    { text: "Getting started", slug: "" },
-    { text: "VictoryAxis", slug: "victory-axis" },
-    { text: "VictoryBar", slug: "victory-bar" },
-    { text: "VictoryChart", slug: "victory-chart" },
-    { text: "VictoryLine", slug: "victory-line" },
-    { text: "VictoryPie", slug: "victory-pie" },
-    { text: "VictoryScatter", slug: "victory-scatter"}
-  ],
+  items: components,
   active: null
 };
 

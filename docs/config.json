@@ -1,5 +1,13 @@
 {
   "routing": {
     "base": "/"
-  }
+  },
+  "components": [
+    { "text": "VictoryAxis", "slug": "victory-axis" },
+    { "text": "VictoryBar", "slug": "victory-bar" },
+    { "text": "VictoryChart", "slug": "victory-chart" },
+    { "text": "VictoryLine", "slug": "victory-line" },
+    { "text": "VictoryPie", "slug": "victory-pie" },
+    { "text": "VictoryScatter", "slug": "victory-scatter" }
+  ]
 }
