@@ -10,7 +10,7 @@ const rand = function () {
 
 const getData = function () {
   return [
-    { x: "<5", y: rand() },
+    { x: "<5", y: rand(), label: "A" },
     { x: "5-13", y: rand() },
     { x: "14-17", y: rand() },
     { x: "18-24", y: rand() },
@@ -86,7 +86,6 @@ class App extends React.Component {
         <VictoryPie style={this.state.style} endAngle={90} startAngle={-90}/>
 
         <VictoryPie
-          padding={{top: 30, left: 30}}
           style={this.state.style}
           data={this.state.data}
           innerRadius={100}

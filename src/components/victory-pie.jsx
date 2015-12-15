@@ -78,10 +78,7 @@ export default class VictoryPie extends React.Component {
      * to be applied to each data point. If this prop is not specified, the x value
      * of each data point will be used as a label.
      */
-    labels: PropTypes.oneOfType([
-      PropTypes.array,
-      PropTypes.func
-    ]),
+    labelComponent: PropTypes.element,
     /**
      * The padAngle prop determines the amount of separation between adjacent data slices
      * in number of degrees
@@ -217,13 +214,6 @@ export default class VictoryPie extends React.Component {
   }
 
   renderData() {
-    const getTextFromProps = (index) => {
-      if (!this.props.labels) {
-        return undefined;
-      }
-      return _.isArray(this.props.labels) ? this.props.labels[index] : this.props.labels;
-    };
-
     const slices = this.pie(this.props.data);
     const sliceComponents = _.map(slices, (slice, index) => {
       const fill = this.colorScale[index % this.colorScale.length];
@@ -234,13 +224,11 @@ export default class VictoryPie extends React.Component {
             animate={this.props.animate}
             slice={slice}
             pathFunction={this.slice}
-            data={slice.data}
             style={style}
           />
           <SliceLabel
             animate={this.props.animate}
-            data={slice.data}
-            label={getTextFromProps(index) || slice.data.x}
+            labelComponent={this.props.labelComponent}
             style={this.style.labels}
             positionFunction={this.labelPosition.centroid}
             slice={slice}
