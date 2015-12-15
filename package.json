@@ -22,8 +22,9 @@
   "dependencies": {
     "builder": "~2.2.2",
     "builder-victory-component": "~0.0.5",
-    "d3": "^3.5.6",
+    "d3-shape": "^0.2.0",
     "victory-animation": "^0.0.12",
+    "victory-label": "^0.1.6",
     "victory-util": "^2.0.2"
   },
   "devDependencies": {
@@ -31,6 +32,7 @@
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "react": "0.14.x",
+    "react-addons-test-utils": "0.14.x",
     "react-dom": "0.14.x",
     "sinon": "^1.15.4",
     "sinon-chai": "^2.8.0"

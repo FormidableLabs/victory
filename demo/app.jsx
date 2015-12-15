@@ -10,7 +10,7 @@ const rand = function () {
 
 const getData = function () {
   return [
-    { x: "<5", y: rand() },
+    { x: "<5", y: rand(), label: "A", fill: "grey" },
     { x: "5-13", y: rand() },
     { x: "14-17", y: rand() },
     { x: "18-24", y: rand() },
@@ -27,7 +27,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       data: this.props.data,
-      sliceColors: [
+      colorScale: [
         "#D85F49",
         "#F66D3B",
         "#D92E1D",
@@ -58,7 +58,7 @@ class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 5000);
+    }, 3000);
   }
 
   render() {
@@ -69,8 +69,9 @@ class App extends React.Component {
         <VictoryPie
           style={{
             parent: {border: "1px solid #ccc", margin: 20},
-            labels: {fontSize: 20, padding: 100}
+            labels: {fontSize: 20, padding: 100, fill: "white"}
           }}
+          colorScale="greyscale"
         />
 
         <VictoryPie style={this.state.style} innerRadius={140}/>
@@ -85,12 +86,11 @@ class App extends React.Component {
         <VictoryPie style={this.state.style} endAngle={90} startAngle={-90}/>
 
         <VictoryPie
-          padding={{top: 30, left: 30}}
           style={this.state.style}
           data={this.state.data}
           innerRadius={100}
           animate={{velocity: 0.03}}
-          sliceColors={this.state.sliceColors}
+          colorScale={this.state.colorScale}
         />
 
         <VictoryPie
