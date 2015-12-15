@@ -11,27 +11,27 @@ class App extends React.Component {
           VictoryLabel demo! The little circles show the anchor points for
           each label.
         </p>
-        <svg width="600" height="1800" style={{ border: "1px solid #ccc" }}>
+        <svg width="600" height="1800" style={{ border: "1px solid #ccc", padding: 40}}>
 
           <circle cx="0" cy="0" r="2" fill="red"/>
           <VictoryLabel x={0} y={0}>
-            {"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
+            {"Victory is awesome.\nThis is default anchoring.\nCapisce?"}
           </VictoryLabel>
 
           <circle cx="300" cy="150" r="2" fill="green"/>
-          <VictoryLabel x={300} y={150} textAnchor="end"
+          <VictoryLabel x={300} y={150} textAnchor="end" verticalAnchor="start"
             style={{ fill: "blue" }}
           >
             {"Victory is awesome.\nThis is (end, start) anchoring.\nOK?"}
           </VictoryLabel>
 
           <circle cx="300" cy="300" r="2" fill="blue"/>
-          <VictoryLabel x={300} y={300} lineHeight={2} textAnchor="middle">
+          <VictoryLabel x={300} y={300} lineHeight={2} textAnchor="middle" verticalAnchor="start">
             {"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
           </VictoryLabel>
 
           <circle cx="300" cy="450" r="2" fill="red"/>
-          <VictoryLabel x={300} y={450} textAnchor="start">
+          <VictoryLabel x={300} y={450} textAnchor="start" verticalAnchor="start">
             {"Victory is awesome.\nThis is (start, start) anchoring.\nCapisce?"}
           </VictoryLabel>
 
