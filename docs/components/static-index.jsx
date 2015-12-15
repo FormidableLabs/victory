@@ -21,7 +21,7 @@ class Index extends React.Component {
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/codemirror/5.0.0/theme/monokai.min.css"/>
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/>
           <link href="https://fonts.googleapis.com/css?family=Karla:400,700,400italic" rel="stylesheet" type="text/css" />
-          <base href="/victory/" />
+          <base href={this.props.baseHref} />
         </head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 8]>

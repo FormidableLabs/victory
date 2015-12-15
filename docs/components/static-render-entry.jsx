@@ -6,6 +6,7 @@ import ReactDOMServer from "react-dom/server";
 
 import IndexTemplate from "./static-index";
 import Router, { routes } from "../router";
+import { routing as routingConfig } from "../config";
 
 const Index = React.createFactory(IndexTemplate);
 const _renderIndex = (component) => `<!DOCTYPE html>
@@ -33,7 +34,8 @@ module.exports = (locals, next) => {
     const content = ReactDOMServer.renderToStaticMarkup(<RoutingContext {...renderProps}/>);
     const html = _renderIndex(new Index({
       content,
-      bundle
+      bundle,
+      baseHref: routingConfig.base
     }));
 
     next(null, html);

@@ -25,7 +25,7 @@ module.exports = {
     reasons: true
   },
   resolve: {
-    extensions: ["", ".js", ".jsx"]
+    extensions: ["", ".js", ".jsx", ".json"]
   },
   module: {
     loaders: [
@@ -42,6 +42,10 @@ module.exports = {
       }, {
         test: /\.(png|jpg)$/,
         loader: "url-loader?limit=8192"
+      }, {
+        test: /\.json$/,
+        loader: "json-loader",
+        exclude: /node_modules/
       }
     ]
   },

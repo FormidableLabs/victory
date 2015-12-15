@@ -5,6 +5,7 @@ import { VictoryTheme, Header, Footer } from "formidable-landers";
 
 import BaseDocs from "./docs";
 import Sidebar from "./sidebar";
+import { routing as routingConfig } from "../config";
 
 const docs = {
   "victory-axis": require("victory-axis/docs/docs"),
@@ -19,7 +20,7 @@ const docs = {
 class ComponentDocs extends BaseDocs {
 
   componentWillMount() {
-    ga.pageview(`/victory/docs/${this.props.params.component}`);
+    ga.pageview(`${routingConfig.base}docs/${this.props.params.component}`);
   }
 
   render() {

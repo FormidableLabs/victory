@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import React from "react";
 import Radium from "radium";
+import { routing as routingConfig } from "../config";
 
 import { VictorySettings } from "formidable-landers";
 
@@ -88,8 +89,8 @@ class Sidebar extends React.Component {
       <nav
         className="Nav"
         style={styles.base}>
-        <a href="/victory" className="Link--unstyled">
-          <img width="40px" height="40px" src="/victory/static/icon-victory.svg" alt="Victory Homepage" />
+        <a href={routingConfig.base} className="Link--unstyled">
+          <img width="40px" height="40px" src={`${routingConfig.base}static/icon-victory.svg`} alt="Victory Homepage" />
         </a>
         <ul style={styles.list}>
           {this.generateListItems(this.props.items)}
