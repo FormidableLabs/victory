@@ -1,4 +1,4 @@
-/*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
+/*global requestAnimationFrame, cancelAnimationFrame, setTimeout, clearTimeout*/
 
 import React from "react";
 import d3 from "d3";
@@ -33,11 +33,12 @@ export default class VictoryAnimation extends React.Component {
   constructor(props) {
     super(props);
     /* defaults */
-    this.state = Array.isArray(this.props.data)
-      ? this.props.data[0] : this.props.data;
+    this.state = Array.isArray(this.props.data) ?
+      this.props.data[0] : this.props.data;
     this.interpolator = null;
     this.step = 0;
-    this.queue = [];
+    this.queue = Array.isArray(this.props.data) ?
+      this.props.data.slice(1) : [];
     /* build easing function */
     this.ease = d3.ease(this.props.easing);
     /*
@@ -46,35 +47,40 @@ export default class VictoryAnimation extends React.Component {
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
   }
+  componentDidMount() {
+    if (this.queue.length) {
+      this.traverseQueue();
+    }
+  }
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
     if (this.raf) {
       cancelAnimationFrame(this.raf);
     }
+    if (this.delayTimeout) {
+      clearTimeout(this.delayTimeout);
+    }
     /* If an object was supplied */
-    if (Array.isArray(nextProps.data) === false) {
-      /* compare cached version to next props */
-      this.interpolator = d3.interpolate(this.state, nextProps.data);
-      /* reset step to zero */
-      this.step = 0;
-      /* start request animation frame */
-      setTimeout(() => {
-        this.raf = this.functionToBeRunEachFrame();
-      }, this.props.delay);
+    if (!Array.isArray(nextProps.data)) {
+      // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
+      // but let's reuse the same array.
+      this.queue.length = 0;
+      this.queue.push(nextProps.data);
     /* If an array was supplied */
     } else {
-      /* Build our tween queue */
-      nextProps.data.forEach((data) => {
-        this.queue.push(data);
-      });
-      /* Start traversing the tween queue */
-      this.traverseQueue();
+      /* Extend the tween queue */
+      this.queue.push(...nextProps.data);
     }
+    /* Start traversing the tween queue */
+    this.traverseQueue();
   }
   componentWillUnmount() {
     if (this.raf) {
       cancelAnimationFrame(this.raf);
+    }
+    if (this.delayTimeout) {
+      clearTimeout(this.delayTimeout);
     }
   }
   /* Traverse the tween queue */
@@ -86,7 +92,7 @@ export default class VictoryAnimation extends React.Component {
       this.interpolator = d3.interpolate(this.state, data);
       /* reset step to zero */
       this.step = 0;
-      setTimeout(() => {
+      this.delayTimeout = setTimeout(() => {
         this.raf = this.functionToBeRunEachFrame();
       }, this.props.delay);
     } else if (this.props.onEnd) {
