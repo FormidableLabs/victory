@@ -27,7 +27,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       data: this.props.data,
-      sliceColors: [
+      colorScale: [
         "#D85F49",
         "#F66D3B",
         "#D92E1D",
@@ -69,8 +69,9 @@ class App extends React.Component {
         <VictoryPie
           style={{
             parent: {border: "1px solid #ccc", margin: 20},
-            labels: {fontSize: 20, padding: 100}
+            labels: {fontSize: 20, padding: 100, fill: "white"}
           }}
+          colorScale="greyscale"
         />
 
         <VictoryPie style={this.state.style} innerRadius={140}/>
@@ -90,7 +91,7 @@ class App extends React.Component {
           data={this.state.data}
           innerRadius={100}
           animate={{velocity: 0.03}}
-          sliceColors={this.state.sliceColors}
+          colorScale={this.state.colorScale}
         />
 
         <VictoryPie

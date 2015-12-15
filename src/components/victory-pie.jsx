@@ -1,4 +1,4 @@
-import d3 from "d3";
+import d3Shape from "d3-shape";
 import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
@@ -33,6 +33,19 @@ export default class VictoryPie extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The colorScale prop is an optional prop that defines the color scale the pie
+     * will be created on. This prop should be given as an array of CSS colors, or as a string
+     * corresponding to one of the built in color scales. VictoryPie will automatically assign
+     * values from this color scale to the pie slices unless colors are explicitly provided in the
+     * data object
+     */
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+      ])
+    ]),
+    /**
      * Objects in the data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val>
      * is the slice label (string or number), and <y-val> is the corresponding number
      * used to calculate arc length as a proportion of the pie's circumference.
@@ -46,7 +59,7 @@ export default class VictoryPie extends React.Component {
      * The overall end angle of the pie in degrees. This prop is used in conjunction with
      * startAngle to create a pie that spans only a segment of a circle.
      */
-    endAngle: Util.PropTypes.nonNegative,
+    endAngle: PropTypes.number,
     /**
      * The height props specifies the height of the chart container element in pixels
      */
@@ -78,20 +91,6 @@ export default class VictoryPie extends React.Component {
       })
     ]),
     /**
-     * The sliceColors prop defines an array of colors to use for distinguishing data
-     * segments in a pie chart. If the data array is longer than the sliceColors array,
-     * colors will be reused.
-     */
-    sliceColors: PropTypes.arrayOf(PropTypes.string),
-    /**
-     * The sort prop determines how to order data. This prop can be given as "ascending"
-     * or "descending", or as a custom comparator function
-     */
-    sort: PropTypes.oneOfType([
-      PropTypes.oneOf(["ascending", "descending"]),
-      PropTypes.func
-    ]),
-    /**
      * The standalone prop determines whether VictoryPie should render as a standalone
      * svg, or in a g tag to be included in an svg
      */
@@ -100,7 +99,7 @@ export default class VictoryPie extends React.Component {
      * The overall start angle of the pie in degrees. This prop is used in conjunction with
      * endAngle to create a pie that spans only a segment of a circle.
      */
-    startAngle: Util.PropTypes.nonNegative,
+    startAngle: PropTypes.number,
     /**
      * The style prop specifies styles for your pie. VictoryPie relies on Radium,
      * so valid Radium style objects should work for this prop. Height, width, and
@@ -131,7 +130,7 @@ export default class VictoryPie extends React.Component {
     innerRadius: 0,
     padAngle: 0,
     padding: 30,
-    sliceColors: [
+    colorScale: [
       "#75C776",
       "#39B6C5",
       "#78CCC4",
@@ -140,7 +139,6 @@ export default class VictoryPie extends React.Component {
       "#8C95C8",
       "#3BAF74"
     ],
-    sort: null,
     startAngle: 0,
     standalone: true,
     width: 400
@@ -154,14 +152,14 @@ export default class VictoryPie extends React.Component {
     this.style = this.getStyles(props);
     this.padding = this.getPadding(props);
     this.radius = this.getRadius(props);
-    this.sortOrder = this.getSortOrder(props);
-    this.colors = d3.scale.ordinal().range(props.sliceColors);
-    this.slice = d3.svg.arc()
+    this.colorScale = _.isArray(props.colorScale) ?
+      props.colorScale : Util.Style.getColorScale(props.colorScale);
+    this.slice = d3Shape.arc()
       .outerRadius(this.radius)
       .innerRadius(this.props.innerRadius);
     this.labelPosition = this.getLabelPosition(props);
-    this.pie = d3.layout.pie()
-      .sort(this.sortOrder)
+    this.pie = d3Shape.pie()
+      .sort(null)
       .startAngle(this.degreesToRadians(props.startAngle))
       .endAngle(this.degreesToRadians(props.endAngle))
       .padAngle(this.degreesToRadians(props.padAngle))
@@ -201,30 +199,16 @@ export default class VictoryPie extends React.Component {
     const innerRadius = props.innerRadius ?
       props.innerRadius + this.style.labels.padding :
       this.style.labels.padding;
-    return d3.svg.arc()
+    return d3Shape.arc()
       .outerRadius(this.radius)
       .innerRadius(innerRadius);
-  }
-
-  getSortOrder(props) {
-    // TODO: animation looks broken when a sort order is specified
-    let comparator = props.sort;
-    if (!_.isNull(comparator) && _.isString(comparator)) {
-      if (comparator === "ascending" || comparator === "descending") {
-        comparator = (a, b) => { return d3[props.sort](a.y, b.y); };
-      } else {
-        Util.Log.warn("Victory Pie: Invalid sort string. Try 'ascending' or 'descending'.");
-        comparator = null;
-      }
-    }
-    return comparator;
   }
 
   renderData(slices) {
     const indexArray = _.range(0, this.props.data.length);
     const sliceData = this.pie(this.props.data, indexArray);
     const sliceComponents = _.map(slices, (slice, index) => {
-      const fill = this.colors(slice.x);
+      const fill = this.colorScale[index % this.colorScale.length];
       const style = _.merge({}, this.style.data, {fill});
       const data = sliceData[index];
       return (

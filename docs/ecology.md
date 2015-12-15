@@ -55,7 +55,8 @@ Specify a `padAngle` to add space between adjacent slices:
   endAngle={90}
   innerRadius={140}
   padAngle={5}
-  startAngle={-90}/>
+  startAngle={-90}
+/>
 ```
 
 Here's an example of a donut chart with custom data and colors
@@ -79,7 +80,7 @@ Here's an example of a donut chart with custom data and colors
     {x: "≥65", y: 7502}
   ]}
   innerRadius={110}
-  sliceColors={[
+  colorScale={[
     "#D85F49",
     "#F66D3B",
     "#D92E1D",
