@@ -58,7 +58,7 @@ class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 5000);
+    }, 3000);
   }
 
   render() {

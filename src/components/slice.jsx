@@ -7,23 +7,23 @@ import {VictoryAnimation} from "victory-animation";
 export default class Slice extends React.Component {
   static propTypes = {
     animate: PropTypes.object,
-    data: PropTypes.any,
-    path: PropTypes.string,
+    data: PropTypes.object,
+    slice: PropTypes.object,
+    pathFunction: PropTypes.func,
     style: PropTypes.object
   };
 
   evaluateStyle(style) {
     return _.transform(style, (result, value, key) => {
-      result[key] = _.isFunction(value) ? prop.call(this, this.props.data) : value;
+      result[key] = _.isFunction(value) ? value.call(this, this.props.data) : value;
     });
   }
 
   renderSlice(props) {
-    const style = this.evaluateStyle(props.style)
     return (
       <path
-        d={props.path}
-        style={style}
+        d={props.pathFunction.call(this, props.slice)}
+        style={this.evaluateStyle(props.style)}
       />
     );
   }
@@ -33,7 +33,7 @@ export default class Slice extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = _.pick(this.props, ["style", "data", "path"]);
+      const animateData = _.pick(this.props, ["style", "data", "slice"]);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <Slice {...this.props} {...props} animate={null}/>}

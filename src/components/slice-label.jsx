@@ -4,12 +4,13 @@ import Radium from "radium";
 import {VictoryAnimation} from "victory-animation";
 
 @Radium
-export default class Slice extends React.Component {
+export default class SliceLabel extends React.Component {
   static propTypes = {
     animate: PropTypes.object,
     data: PropTypes.any,
     label: PropTypes.any,
-    transform: PropTypes.string,
+    positionFunction: PropTypes.func,
+    slice: PropTypes.object,
     style: PropTypes.object
   };
 
@@ -24,12 +25,12 @@ export default class Slice extends React.Component {
   }
 
   renderLabel(props) {
-    const style = this.evaluateStyle(props.style)
+    const position = props.positionFunction.call(this, props.slice);
     return (
       <text
         dy=".35em"
-        transform={props.transform}
-        style={style}
+        transform={`translate( ${position})`}
+        style={this.evaluateStyle(props.style)}
       >
         {this.evaluateProp(props.label)}
       </text>
@@ -41,7 +42,7 @@ export default class Slice extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = _.pick(this.props, ["style", "data", "transform"]);
+      const animateData = _.pick(this.props, ["style", "data", "slice"]);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <SliceLabel {...this.props} {...props} animate={null}/>}

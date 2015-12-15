@@ -1,9 +1,8 @@
-import d3Shape from "d3-shape";
 import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
+import d3Shape from "d3-shape";
 import Util from "victory-util";
-import {VictoryAnimation} from "victory-animation";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
 
@@ -74,10 +73,10 @@ export default class VictoryPie extends React.Component {
      */
     innerRadius: Util.PropTypes.nonNegative,
     /**
-     * This prop specifies the labels that will be applied to your data. This prop can be passed in as
-     * an array of values, in the same order as your data, or as a function to be applied
-     * to each data point. If this prop is not specified, the x value of each data point will
-     * be used as a label
+     * This prop specifies the labels that will be applied to your data. This prop can be
+     * passed in as an array of values, in the same order as your data, or as a function
+     * to be applied to each data point. If this prop is not specified, the x value
+     * of each data point will be used as a label.
      */
     labels: PropTypes.oneOfType([
       PropTypes.array,
@@ -223,7 +222,7 @@ export default class VictoryPie extends React.Component {
         return undefined;
       }
       return _.isArray(this.props.labels) ? this.props.labels[index] : this.props.labels;
-    }
+    };
 
     const slices = this.pie(this.props.data);
     const sliceComponents = _.map(slices, (slice, index) => {
@@ -232,15 +231,19 @@ export default class VictoryPie extends React.Component {
       return (
         <g key={index}>
           <Slice
-            path={this.slice(slice)}
+            animate={this.props.animate}
+            slice={slice}
+            pathFunction={this.slice}
             data={slice.data}
             style={style}
           />
           <SliceLabel
+            animate={this.props.animate}
             data={slice.data}
             label={getTextFromProps(index) || slice.data.x}
             style={this.style.labels}
-            transform={`translate( ${this.labelPosition.centroid(slice)})`}
+            positionFunction={this.labelPosition.centroid}
+            slice={slice}
           />
         </g>
       );
@@ -250,22 +253,7 @@ export default class VictoryPie extends React.Component {
   }
 
   render() {
-    if (this.props.animate) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const animateData = _.pick(this.props, [
-        "data", "endAngle", "height", "innerRadius", "padAngle", "padding",
-        "sliceColors", "startAngle", "style", "width"
-      ]);
-      return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryPie {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
-      );
-    } else {
-      this.getCalculatedValues(this.props);
-    }
+    this.getCalculatedValues(this.props);
     const style = this.style.parent;
     const xOffset = this.radius + this.padding.left;
     const yOffset = this.radius + this.padding.top;
