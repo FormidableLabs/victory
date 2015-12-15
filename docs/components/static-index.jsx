@@ -22,6 +22,13 @@ class Index extends React.Component {
           <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css"/>
           <link href="https://fonts.googleapis.com/css?family=Karla:400,700,400italic" rel="stylesheet" type="text/css" />
           <base href={this.props.baseHref} />
+          <script dangerouslySetInnerHTML={{ __html: `
+            var url = window.location.href;
+            if (url.indexOf("projects.formidablelabs.com/victory") > -1) {
+              var intendedPath = url.substring(url.indexOf("victory") + "victory".length);
+              window.location = "http://victory.formidable.com" + intendedPath;
+            }
+          `}} />
         </head>
         <body>
           <div dangerouslySetInnerHTML={{ __html: `<!--[if lt IE 8]>
