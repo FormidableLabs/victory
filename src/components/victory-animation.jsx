@@ -1,5 +1,3 @@
-/*global requestAnimationFrame, cancelAnimationFrame, setTimeout, clearTimeout*/
-
 import React from "react";
 import d3Ease from "d3-ease";
 import d3Interpolate from "d3-interpolate";
