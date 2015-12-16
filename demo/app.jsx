@@ -126,7 +126,7 @@ class App extends React.Component {
             <VictoryBar/>
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart scale={d3Scale.linear()}>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}
@@ -151,8 +151,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle}
             scale={{
-              x: d3Scale.time(),
-              y: d3Scale.linear()
+              x: d3Scale.time()
             }}
           >
             <VictoryAxis
