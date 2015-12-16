@@ -1,6 +1,6 @@
+import _ from "lodash";
 import React from "react";
 import Radium from "radium";
-import _ from "lodash";
 import {Collection, Log, PropTypes} from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";

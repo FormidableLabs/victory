@@ -2,7 +2,7 @@
 /*global window:false */
 import React from "react";
 import ReactDOM from "react-dom";
-import d3 from "d3";
+import d3Scale from "d3-scale";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 import {VictoryAxis} from "victory-axis";
@@ -151,8 +151,8 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle}
             scale={{
-              x: d3.time.scale(),
-              y: d3.scale.linear()
+              x: d3Scale.time(),
+              y: d3Scale.linear()
             }}
           >
             <VictoryAxis
@@ -164,7 +164,7 @@ class App extends React.Component {
                 new Date(2010, 1, 1),
                 new Date(2020, 1, 1)
               ]}
-              tickFormat={d3.time.format("%Y")}
+              tickFormat={(x) => x.getFullYear()}
             />
             <VictoryLine
               data={[

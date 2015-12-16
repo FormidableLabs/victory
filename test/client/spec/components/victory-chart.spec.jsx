@@ -1,24 +1,33 @@
 /**
  * Client tests
  */
-import React from "react/addons";
-import Component from "src/components/victory-chart";
-
+import React from "react";
+import ReactDOM from "react-dom";
+import VictoryChart from "src/components/victory-chart";
 // Use `TestUtils` to inject into DOM, simulate events, etc.
 // See: https://facebook.github.io/react/docs/test-utils.html
 import TestUtils from "react-addons-test-utils";
 
+const getElement = function (output, tagName) {
+  return ReactDOM.findDOMNode(
+    TestUtils.findRenderedDOMComponentWithTag(output, tagName)
+  );
+};
+
+let renderedComponent;
+
 describe("components/victory-chart", () => {
+  describe("default component rendering", () => {
+    before(() => {
+      renderedComponent = TestUtils.renderIntoDocument(<VictoryChart/>);
+    });
 
-  it("has expected content with shallow render", () => {
-    // This is a "shallow" render that renders only the current component
-    // without using the actual DOM.
-    //
-    // https://facebook.github.io/react/docs/test-utils.html#shallow-rendering
-    const renderer = TestUtils.createRenderer();
-    renderer.render(<Component />);
-    const output = renderer.getRenderOutput();
+    it("renders an svg with the correct width and height", () => {
 
-    expect(output.type).to.equal("svg");
+      const svg = getElement(renderedComponent, "svg");
+      // default width and height
+      expect(svg.style.width).to.equal(`${VictoryChart.defaultProps.width}px`);
+      expect(svg.style.height).to.equal(`${VictoryChart.defaultProps.height}px`);
+    });
   });
 });
