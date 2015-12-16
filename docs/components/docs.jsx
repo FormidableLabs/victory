@@ -69,12 +69,21 @@ class Docs extends React.Component {
               overview={require("!!raw!../ecology-getting-started.md")}
               scope={{React, ReactDOM, V, VictoryChart, VictoryLine, VictoryPie}}
               playgroundtheme="elegant" />
-            <h3>Explore the interactive docs!</h3>
+            <h3>Explore the interactive docs:</h3>
             {this._renderDocsList()}
           </section>
         </main>
         <Footer/>
         <Style rules={VictoryTheme}/>
+        {/* We need padding: 5px on `.Ecology code`; putting it here for now */}
+        <Style
+          scopeSelector={".Ecology"}
+          rules={{
+            code: {
+              padding: "5px"
+            }
+          }}
+        />
       </div>
     );
   }
