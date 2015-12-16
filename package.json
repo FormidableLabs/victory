@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/formidablelabs/victory-chart",
   "scripts": {
-    "postinstall": "builder run npm:postinstall",
+    "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test"
