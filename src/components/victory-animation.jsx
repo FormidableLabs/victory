@@ -12,8 +12,8 @@ import { addVictoryInterpolator } from "../util";
 // velocity each frame. But for now we still support velocity as we have code
 // using it. Since we use `d3-timer` now and it's duration-based, choose a
 // velocity multiplier here that just happens to result in animations going
-// approximately the same speed (on reasonably fast systems).
-const VELOCITY_MULTIPLIER = 16.5;
+// approximately the same speed on systems getting around 60 fps.
+const VELOCITY_MULTIPLIER = 16.5; // ~ 1 / 60
 
 addVictoryInterpolator();
 
