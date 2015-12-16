@@ -7,12 +7,12 @@ import { addVictoryInterpolator } from "../util";
 // Nearly all animation libraries are duration-based, not velocity-based.
 // In other words, you say "I want the animation to take this long", not
 // "I want things to move this fast". Using velocity will make the animation
-// take different amounts of time in computers of different speed, since
+// take different amounts of time on computers of different speed, since
 // they'll have a different framerate but still adjust values by the same
 // velocity each frame. But for now we still support velocity as we have code
 // using it. Since we use `d3-timer` now and it's duration-based, choose a
 // velocity multiplier here that just happens to result in animations going
-// the same speed (on reasonably fast systems).
+// approximately the same speed (on reasonably fast systems).
 const VELOCITY_MULTIPLIER = 16.5;
 
 addVictoryInterpolator();
