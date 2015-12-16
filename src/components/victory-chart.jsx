@@ -560,8 +560,8 @@ export default class VictoryChart extends React.Component {
     if (this.props.scale && this.props.scale[axis]) {
       // if scale is provided to chart, prefer it
       baseScale = this.props.scale[axis];
-    } else if (this.props.scale && !_.isObject(this.props.scale)){
-        baseScale = this.props.scale;
+    } else if (this.props.scale && !_.isObject(this.props.scale)) {
+      baseScale = this.props.scale;
     } else {
       // otherwise use whatever scale the axis uses, (default: d3.scale.linear)
       baseScale = this.axisComponents[axis].props.scale;
