@@ -64,15 +64,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _victoryAxis = __webpack_require__(8);
 	
-	var _victoryBar = __webpack_require__(48);
+	var _victoryBar = __webpack_require__(47);
 	
-	var _victoryChart = __webpack_require__(62);
+	var _victoryChart = __webpack_require__(49);
 	
-	var _victoryLine = __webpack_require__(66);
+	var _victoryLine = __webpack_require__(53);
 	
-	var _victoryPie = __webpack_require__(74);
+	var _victoryPie = __webpack_require__(55);
 	
-	var _victoryScatter = __webpack_require__(78);
+	var _victoryScatter = __webpack_require__(57);
 	
 	exports.VictoryAnimation = _victoryAnimation.VictoryAnimation;
 	exports.VictoryAxis = _victoryAxis.VictoryAxis;
@@ -106,7 +106,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -132,6 +132,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(VictoryAnimation, null, [{
 	    key: "propTypes",
 	    value: {
+	      children: _react2["default"].PropTypes.func,
 	      velocity: _react2["default"].PropTypes.number,
 	      easing: _react2["default"].PropTypes.string,
 	      delay: _react2["default"].PropTypes.number,
@@ -291,7 +292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;!function() {
 	  var d3 = {
-	    version: "3.5.6"
+	    version: "3.5.10"
 	  };
 	  var d3_arraySlice = [].slice, d3_array = function(list) {
 	    return d3_arraySlice.call(list);
@@ -922,10 +923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    prefix: d3_nsPrefix,
 	    qualify: function(name) {
 	      var i = name.indexOf(":"), prefix = name;
-	      if (i >= 0) {
-	        prefix = name.slice(0, i);
-	        name = name.slice(i + 1);
-	      }
+	      if (i >= 0 && (prefix = name.slice(0, i)) !== "xmlns") name = name.slice(i + 1);
 	      return d3_nsPrefix.hasOwnProperty(prefix) ? {
 	        space: d3_nsPrefix[prefix],
 	        local: name
@@ -1136,12 +1134,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (key) {
 	        var nodeByKeyValue = new d3_Map(), keyValues = new Array(n), keyValue;
 	        for (i = -1; ++i < n; ) {
-	          if (nodeByKeyValue.has(keyValue = key.call(node = group[i], node.__data__, i))) {
-	            exitNodes[i] = node;
-	          } else {
-	            nodeByKeyValue.set(keyValue, node);
+	          if (node = group[i]) {
+	            if (nodeByKeyValue.has(keyValue = key.call(node, node.__data__, i))) {
+	              exitNodes[i] = node;
+	            } else {
+	              nodeByKeyValue.set(keyValue, node);
+	            }
+	            keyValues[i] = keyValue;
 	          }
-	          keyValues[i] = keyValue;
 	        }
 	        for (i = -1; ++i < m; ) {
 	          if (!(node = nodeByKeyValue.get(keyValue = key.call(groupData, nodeData = groupData[i], i)))) {
@@ -1153,7 +1153,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          nodeByKeyValue.set(keyValue, true);
 	        }
 	        for (i = -1; ++i < n; ) {
-	          if (nodeByKeyValue.get(keyValues[i]) !== true) {
+	          if (i in keyValues && nodeByKeyValue.get(keyValues[i]) !== true) {
 	            exitNodes[i] = group[i];
 	          }
 	        }
@@ -1345,7 +1345,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      group = d3_array(d3_selectAll(nodes, d3_document));
 	      group.parentNode = d3_document.documentElement;
 	    } else {
-	      group = nodes;
+	      group = d3_array(nodes);
 	      group.parentNode = null;
 	    }
 	    return d3_selection([ group ]);
@@ -1524,7 +1524,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        function ended() {
 	          if (!position(parent, dragId)) return;
 	          dragSubject.on(move + dragName, null).on(end + dragName, null);
-	          dragRestore(dragged && d3.event.target === target);
+	          dragRestore(dragged);
 	          dispatch({
 	            type: "dragend"
 	          });
@@ -1576,18 +1576,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  var ρ = Math.SQRT2, ρ2 = 2, ρ4 = 4;
 	  d3.interpolateZoom = function(p0, p1) {
-	    var ux0 = p0[0], uy0 = p0[1], w0 = p0[2], ux1 = p1[0], uy1 = p1[1], w1 = p1[2];
-	    var dx = ux1 - ux0, dy = uy1 - uy0, d2 = dx * dx + dy * dy, d1 = Math.sqrt(d2), b0 = (w1 * w1 - w0 * w0 + ρ4 * d2) / (2 * w0 * ρ2 * d1), b1 = (w1 * w1 - w0 * w0 - ρ4 * d2) / (2 * w1 * ρ2 * d1), r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0), r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1), dr = r1 - r0, S = (dr || Math.log(w1 / w0)) / ρ;
-	    function interpolate(t) {
-	      var s = t * S;
-	      if (dr) {
-	        var coshr0 = d3_cosh(r0), u = w0 / (ρ2 * d1) * (coshr0 * d3_tanh(ρ * s + r0) - d3_sinh(r0));
+	    var ux0 = p0[0], uy0 = p0[1], w0 = p0[2], ux1 = p1[0], uy1 = p1[1], w1 = p1[2], dx = ux1 - ux0, dy = uy1 - uy0, d2 = dx * dx + dy * dy, i, S;
+	    if (d2 < ε2) {
+	      S = Math.log(w1 / w0) / ρ;
+	      i = function(t) {
+	        return [ ux0 + t * dx, uy0 + t * dy, w0 * Math.exp(ρ * t * S) ];
+	      };
+	    } else {
+	      var d1 = Math.sqrt(d2), b0 = (w1 * w1 - w0 * w0 + ρ4 * d2) / (2 * w0 * ρ2 * d1), b1 = (w1 * w1 - w0 * w0 - ρ4 * d2) / (2 * w1 * ρ2 * d1), r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0), r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1);
+	      S = (r1 - r0) / ρ;
+	      i = function(t) {
+	        var s = t * S, coshr0 = d3_cosh(r0), u = w0 / (ρ2 * d1) * (coshr0 * d3_tanh(ρ * s + r0) - d3_sinh(r0));
 	        return [ ux0 + u * dx, uy0 + u * dy, w0 * coshr0 / d3_cosh(ρ * s + r0) ];
-	      }
-	      return [ ux0 + t * dx, uy0 + t * dy, w0 * Math.exp(ρ * s) ];
+	      };
 	    }
-	    interpolate.duration = S * 1e3;
-	    return interpolate;
+	    i.duration = S * 1e3;
+	    return i;
 	  };
 	  d3.behavior.zoom = function() {
 	    var view = {
@@ -1657,8 +1661,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      view = {
 	        x: view.x,
 	        y: view.y,
-	        k: +_
+	        k: null
 	      };
+	      scaleTo(+_);
 	      rescale();
 	      return zoom;
 	    };
@@ -1757,7 +1762,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }), center0 = null;
 	    }
 	    function mousedowned() {
-	      var that = this, target = d3.event.target, dispatch = event.of(that, arguments), dragged = 0, subject = d3.select(d3_window(that)).on(mousemove, moved).on(mouseup, ended), location0 = location(d3.mouse(that)), dragRestore = d3_event_dragSuppress(that);
+	      var that = this, dispatch = event.of(that, arguments), dragged = 0, subject = d3.select(d3_window(that)).on(mousemove, moved).on(mouseup, ended), location0 = location(d3.mouse(that)), dragRestore = d3_event_dragSuppress(that);
 	      d3_selection_interrupt.call(that);
 	      zoomstarted(dispatch);
 	      function moved() {
@@ -1767,7 +1772,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      function ended() {
 	        subject.on(mousemove, null).on(mouseup, null);
-	        dragRestore(dragged && d3.event.target === target);
+	        dragRestore(dragged);
 	        zoomended(dispatch);
 	      }
 	    }
@@ -1989,9 +1994,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return v < 16 ? "0" + Math.max(0, v).toString(16) : Math.min(255, v).toString(16);
 	  }
 	  function d3_rgb_parse(format, rgb, hsl) {
-	    format = format.toLowerCase();
 	    var r = 0, g = 0, b = 0, m1, m2, color;
-	    m1 = /([a-z]+)\((.*)\)/.exec(format);
+	    m1 = /([a-z]+)\((.*)\)/.exec(format = format.toLowerCase());
 	    if (m1) {
 	      m2 = m1[2].split(",");
 	      switch (m1[1]) {
@@ -2406,17 +2410,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	  d3.csv = d3.dsv(",", "text/csv");
 	  d3.tsv = d3.dsv("	", "text/tab-separated-values");
-	  var d3_timer_queueHead, d3_timer_queueTail, d3_timer_interval, d3_timer_timeout, d3_timer_active, d3_timer_frame = this[d3_vendorSymbol(this, "requestAnimationFrame")] || function(callback) {
+	  var d3_timer_queueHead, d3_timer_queueTail, d3_timer_interval, d3_timer_timeout, d3_timer_frame = this[d3_vendorSymbol(this, "requestAnimationFrame")] || function(callback) {
 	    setTimeout(callback, 17);
 	  };
-	  d3.timer = function(callback, delay, then) {
+	  d3.timer = function() {
+	    d3_timer.apply(this, arguments);
+	  };
+	  function d3_timer(callback, delay, then) {
 	    var n = arguments.length;
 	    if (n < 2) delay = 0;
 	    if (n < 3) then = Date.now();
 	    var time = then + delay, timer = {
 	      c: callback,
 	      t: time,
-	      f: false,
 	      n: null
 	    };
 	    if (d3_timer_queueTail) d3_timer_queueTail.n = timer; else d3_timer_queueHead = timer;
@@ -2426,7 +2432,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      d3_timer_interval = 1;
 	      d3_timer_frame(d3_timer_step);
 	    }
-	  };
+	    return timer;
+	  }
 	  function d3_timer_step() {
 	    var now = d3_timer_mark(), delay = d3_timer_sweep() - now;
 	    if (delay > 24) {
@@ -2445,22 +2452,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    d3_timer_sweep();
 	  };
 	  function d3_timer_mark() {
-	    var now = Date.now();
-	    d3_timer_active = d3_timer_queueHead;
-	    while (d3_timer_active) {
-	      if (now >= d3_timer_active.t) d3_timer_active.f = d3_timer_active.c(now - d3_timer_active.t);
-	      d3_timer_active = d3_timer_active.n;
+	    var now = Date.now(), timer = d3_timer_queueHead;
+	    while (timer) {
+	      if (now >= timer.t && timer.c(now - timer.t)) timer.c = null;
+	      timer = timer.n;
 	    }
 	    return now;
 	  }
 	  function d3_timer_sweep() {
 	    var t0, t1 = d3_timer_queueHead, time = Infinity;
 	    while (t1) {
-	      if (t1.f) {
-	        t1 = t0 ? t0.n = t1.n : d3_timer_queueHead = t1.n;
-	      } else {
+	      if (t1.c) {
 	        if (t1.t < time) time = t1.t;
 	        t1 = (t0 = t1).n;
+	      } else {
+	        t1 = t0 ? t0.n = t1.n : d3_timer_queueHead = t1.n;
 	      }
 	    }
 	    d3_timer_queueTail = t0;
@@ -2475,7 +2481,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var d3_formatPrefixes = [ "y", "z", "a", "f", "p", "n", "µ", "m", "", "k", "M", "G", "T", "P", "E", "Z", "Y" ].map(d3_formatPrefix);
 	  d3.formatPrefix = function(value, precision) {
 	    var i = 0;
-	    if (value) {
+	    if (value = +value) {
 	      if (value < 0) value *= -1;
 	      if (precision) value = d3.round(value, d3_format_precision(value, precision));
 	      i = 1 + Math.floor(1e-12 + Math.log(value) / Math.LN10);
@@ -2825,7 +2831,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        if (i != string.length) return null;
 	        if ("p" in d) d.H = d.H % 12 + d.p * 12;
 	        var localZ = d.Z != null && d3_date !== d3_date_utc, date = new (localZ ? d3_date_utc : d3_date)();
-	        if ("j" in d) date.setFullYear(d.y, 0, d.j); else if ("w" in d && ("W" in d || "U" in d)) {
+	        if ("j" in d) date.setFullYear(d.y, 0, d.j); else if ("W" in d || "U" in d) {
+	          if (!("w" in d)) d.w = "W" in d ? 1 : 0;
 	          date.setFullYear(d.y, 0, 1);
 	          date.setFullYear(d.y, 0, "W" in d ? (d.w + 6) % 7 + d.W * 7 - (date.getDay() + 5) % 7 : d.w + d.U * 7 - (date.getDay() + 6) % 7);
 	        } else date.setFullYear(d.y, d.m, d.d);
@@ -6277,54 +6284,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	    f: 0
 	  };
 	  d3.interpolateTransform = d3_interpolateTransform;
-	  function d3_interpolateTransform(a, b) {
-	    var s = [], q = [], n, A = d3.transform(a), B = d3.transform(b), ta = A.translate, tb = B.translate, ra = A.rotate, rb = B.rotate, wa = A.skew, wb = B.skew, ka = A.scale, kb = B.scale;
-	    if (ta[0] != tb[0] || ta[1] != tb[1]) {
-	      s.push("translate(", null, ",", null, ")");
+	  function d3_interpolateTransformPop(s) {
+	    return s.length ? s.pop() + "," : "";
+	  }
+	  function d3_interpolateTranslate(ta, tb, s, q) {
+	    if (ta[0] !== tb[0] || ta[1] !== tb[1]) {
+	      var i = s.push("translate(", null, ",", null, ")");
 	      q.push({
-	        i: 1,
+	        i: i - 4,
 	        x: d3_interpolateNumber(ta[0], tb[0])
 	      }, {
-	        i: 3,
+	        i: i - 2,
 	        x: d3_interpolateNumber(ta[1], tb[1])
 	      });
 	    } else if (tb[0] || tb[1]) {
 	      s.push("translate(" + tb + ")");
-	    } else {
-	      s.push("");
 	    }
-	    if (ra != rb) {
+	  }
+	  function d3_interpolateRotate(ra, rb, s, q) {
+	    if (ra !== rb) {
 	      if (ra - rb > 180) rb += 360; else if (rb - ra > 180) ra += 360;
 	      q.push({
-	        i: s.push(s.pop() + "rotate(", null, ")") - 2,
+	        i: s.push(d3_interpolateTransformPop(s) + "rotate(", null, ")") - 2,
 	        x: d3_interpolateNumber(ra, rb)
 	      });
 	    } else if (rb) {
-	      s.push(s.pop() + "rotate(" + rb + ")");
+	      s.push(d3_interpolateTransformPop(s) + "rotate(" + rb + ")");
 	    }
-	    if (wa != wb) {
+	  }
+	  function d3_interpolateSkew(wa, wb, s, q) {
+	    if (wa !== wb) {
 	      q.push({
-	        i: s.push(s.pop() + "skewX(", null, ")") - 2,
+	        i: s.push(d3_interpolateTransformPop(s) + "skewX(", null, ")") - 2,
 	        x: d3_interpolateNumber(wa, wb)
 	      });
 	    } else if (wb) {
-	      s.push(s.pop() + "skewX(" + wb + ")");
+	      s.push(d3_interpolateTransformPop(s) + "skewX(" + wb + ")");
 	    }
-	    if (ka[0] != kb[0] || ka[1] != kb[1]) {
-	      n = s.push(s.pop() + "scale(", null, ",", null, ")");
+	  }
+	  function d3_interpolateScale(ka, kb, s, q) {
+	    if (ka[0] !== kb[0] || ka[1] !== kb[1]) {
+	      var i = s.push(d3_interpolateTransformPop(s) + "scale(", null, ",", null, ")");
 	      q.push({
-	        i: n - 4,
+	        i: i - 4,
 	        x: d3_interpolateNumber(ka[0], kb[0])
 	      }, {
-	        i: n - 2,
+	        i: i - 2,
 	        x: d3_interpolateNumber(ka[1], kb[1])
 	      });
-	    } else if (kb[0] != 1 || kb[1] != 1) {
-	      s.push(s.pop() + "scale(" + kb + ")");
+	    } else if (kb[0] !== 1 || kb[1] !== 1) {
+	      s.push(d3_interpolateTransformPop(s) + "scale(" + kb + ")");
 	    }
-	    n = q.length;
+	  }
+	  function d3_interpolateTransform(a, b) {
+	    var s = [], q = [];
+	    a = d3.transform(a), b = d3.transform(b);
+	    d3_interpolateTranslate(a.translate, b.translate, s, q);
+	    d3_interpolateRotate(a.rotate, b.rotate, s, q);
+	    d3_interpolateSkew(a.skew, b.skew, s, q);
+	    d3_interpolateScale(a.scale, b.scale, s, q);
+	    a = b = null;
 	    return function(t) {
-	      var i = -1, o;
+	      var i = -1, n = q.length, o;
 	      while (++i < n) s[(o = q[i]).i] = o.x(t);
 	      return s.join("");
 	    };
@@ -6496,7 +6517,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return chord;
 	  };
 	  d3.layout.force = function() {
-	    var force = {}, event = d3.dispatch("start", "tick", "end"), size = [ 1, 1 ], drag, alpha, friction = .9, linkDistance = d3_layout_forceLinkDistance, linkStrength = d3_layout_forceLinkStrength, charge = -30, chargeDistance2 = d3_layout_forceChargeDistance2, gravity = .1, theta2 = .64, nodes = [], links = [], distances, strengths, charges;
+	    var force = {}, event = d3.dispatch("start", "tick", "end"), timer, size = [ 1, 1 ], drag, alpha, friction = .9, linkDistance = d3_layout_forceLinkDistance, linkStrength = d3_layout_forceLinkStrength, charge = -30, chargeDistance2 = d3_layout_forceChargeDistance2, gravity = .1, theta2 = .64, nodes = [], links = [], distances, strengths, charges;
 	    function repulse(node) {
 	      return function(quad, x1, _, x2) {
 	        if (quad.point !== node) {
@@ -6520,6 +6541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    force.tick = function() {
 	      if ((alpha *= .99) < .005) {
+	        timer = null;
 	        event.end({
 	          type: "end",
 	          alpha: alpha = 0
@@ -6537,7 +6559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          l = alpha * strengths[i] * ((l = Math.sqrt(l)) - distances[i]) / l;
 	          x *= l;
 	          y *= l;
-	          t.x -= x * (k = s.weight / (t.weight + s.weight));
+	          t.x -= x * (k = s.weight + t.weight ? s.weight / (s.weight + t.weight) : .5);
 	          t.y -= y * k;
 	          s.x += x * (k = 1 - k);
 	          s.y += y * k;
@@ -6633,13 +6655,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!arguments.length) return alpha;
 	      x = +x;
 	      if (alpha) {
-	        if (x > 0) alpha = x; else alpha = 0;
+	        if (x > 0) {
+	          alpha = x;
+	        } else {
+	          timer.c = null, timer.t = NaN, timer = null;
+	          event.end({
+	            type: "end",
+	            alpha: alpha = 0
+	          });
+	        }
 	      } else if (x > 0) {
 	        event.start({
 	          type: "start",
 	          alpha: alpha = x
 	        });
-	        d3.timer(force.tick);
+	        timer = d3_timer(force.tick);
 	      }
 	      return force;
 	    };
@@ -6893,7 +6923,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function pie(data) {
 	      var n = data.length, values = data.map(function(d, i) {
 	        return +value.call(pie, d, i);
-	      }), a = +(typeof startAngle === "function" ? startAngle.apply(this, arguments) : startAngle), da = (typeof endAngle === "function" ? endAngle.apply(this, arguments) : endAngle) - a, p = Math.min(Math.abs(da) / n, +(typeof padAngle === "function" ? padAngle.apply(this, arguments) : padAngle)), pa = p * (da < 0 ? -1 : 1), k = (da - n * pa) / d3.sum(values), index = d3.range(n), arcs = [], v;
+	      }), a = +(typeof startAngle === "function" ? startAngle.apply(this, arguments) : startAngle), da = (typeof endAngle === "function" ? endAngle.apply(this, arguments) : endAngle) - a, p = Math.min(Math.abs(da) / n, +(typeof padAngle === "function" ? padAngle.apply(this, arguments) : padAngle)), pa = p * (da < 0 ? -1 : 1), sum = d3.sum(values), k = sum ? (da - n * pa) / sum : 0, index = d3.range(n), arcs = [], v;
 	      if (sort != null) index.sort(sort === d3_layout_pieSortByValue ? function(i, j) {
 	        return values[j] - values[i];
 	      } : function(i, j) {
@@ -7606,10 +7636,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    function treemap(d) {
 	      var nodes = stickies || hierarchy(d), root = nodes[0];
-	      root.x = 0;
-	      root.y = 0;
-	      root.dx = size[0];
-	      root.dy = size[1];
+	      root.x = root.y = 0;
+	      if (root.value) root.dx = size[0], root.dy = size[1]; else root.dx = root.dy = 0;
 	      if (stickies) hierarchy.revalue(root);
 	      scale([ root ], root.dx * root.dy / root.value);
 	      (stickies ? stickify : squarify)(root);
@@ -8273,11 +8301,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        x2 = y2 = 0;
 	      }
-	      if ((rc = Math.min(Math.abs(r1 - r0) / 2, +cornerRadius.apply(this, arguments))) > .001) {
+	      if (da > ε && (rc = Math.min(Math.abs(r1 - r0) / 2, +cornerRadius.apply(this, arguments))) > .001) {
 	        cr = r0 < r1 ^ cw ? 0 : 1;
-	        var oc = x3 == null ? [ x2, y2 ] : x1 == null ? [ x0, y0 ] : d3_geom_polygonIntersect([ x0, y0 ], [ x3, y3 ], [ x1, y1 ], [ x2, y2 ]), ax = x0 - oc[0], ay = y0 - oc[1], bx = x1 - oc[0], by = y1 - oc[1], kc = 1 / Math.sin(Math.acos((ax * bx + ay * by) / (Math.sqrt(ax * ax + ay * ay) * Math.sqrt(bx * bx + by * by))) / 2), lc = Math.sqrt(oc[0] * oc[0] + oc[1] * oc[1]);
+	        var rc1 = rc, rc0 = rc;
+	        if (da < π) {
+	          var oc = x3 == null ? [ x2, y2 ] : x1 == null ? [ x0, y0 ] : d3_geom_polygonIntersect([ x0, y0 ], [ x3, y3 ], [ x1, y1 ], [ x2, y2 ]), ax = x0 - oc[0], ay = y0 - oc[1], bx = x1 - oc[0], by = y1 - oc[1], kc = 1 / Math.sin(Math.acos((ax * bx + ay * by) / (Math.sqrt(ax * ax + ay * ay) * Math.sqrt(bx * bx + by * by))) / 2), lc = Math.sqrt(oc[0] * oc[0] + oc[1] * oc[1]);
+	          rc0 = Math.min(rc, (r0 - lc) / (kc - 1));
+	          rc1 = Math.min(rc, (r1 - lc) / (kc + 1));
+	        }
 	        if (x1 != null) {
-	          var rc1 = Math.min(rc, (r1 - lc) / (kc + 1)), t30 = d3_svg_arcCornerTangents(x3 == null ? [ x2, y2 ] : [ x3, y3 ], [ x0, y0 ], r1, rc1, cw), t12 = d3_svg_arcCornerTangents([ x1, y1 ], [ x2, y2 ], r1, rc1, cw);
+	          var t30 = d3_svg_arcCornerTangents(x3 == null ? [ x2, y2 ] : [ x3, y3 ], [ x0, y0 ], r1, rc1, cw), t12 = d3_svg_arcCornerTangents([ x1, y1 ], [ x2, y2 ], r1, rc1, cw);
 	          if (rc === rc1) {
 	            path.push("M", t30[0], "A", rc1, ",", rc1, " 0 0,", cr, " ", t30[1], "A", r1, ",", r1, " 0 ", 1 - cw ^ d3_svg_arcSweep(t30[1][0], t30[1][1], t12[1][0], t12[1][1]), ",", cw, " ", t12[1], "A", rc1, ",", rc1, " 0 0,", cr, " ", t12[0]);
 	          } else {
@@ -8287,7 +8320,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          path.push("M", x0, ",", y0);
 	        }
 	        if (x3 != null) {
-	          var rc0 = Math.min(rc, (r0 - lc) / (kc - 1)), t03 = d3_svg_arcCornerTangents([ x0, y0 ], [ x3, y3 ], r0, -rc0, cw), t21 = d3_svg_arcCornerTangents([ x2, y2 ], x1 == null ? [ x0, y0 ] : [ x1, y1 ], r0, -rc0, cw);
+	          var t03 = d3_svg_arcCornerTangents([ x0, y0 ], [ x3, y3 ], r0, -rc0, cw), t21 = d3_svg_arcCornerTangents([ x2, y2 ], x1 == null ? [ x0, y0 ] : [ x1, y1 ], r0, -rc0, cw);
 	          if (rc === rc0) {
 	            path.push("L", t21[0], "A", rc0, ",", rc0, " 0 0,", cr, " ", t21[1], "A", r0, ",", r0, " 0 ", cw ^ d3_svg_arcSweep(t21[1][0], t21[1][1], t03[1][0], t03[1][1]), ",", 1 - cw, " ", t03[1], "A", rc0, ",", rc0, " 0 0,", cr, " ", t03[0]);
 	          } else {
@@ -8369,7 +8402,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return (x0 - x1) * y0 - (y0 - y1) * x0 > 0 ? 0 : 1;
 	  }
 	  function d3_svg_arcCornerTangents(p0, p1, r1, rc, cw) {
-	    var x01 = p0[0] - p1[0], y01 = p0[1] - p1[1], lo = (cw ? rc : -rc) / Math.sqrt(x01 * x01 + y01 * y01), ox = lo * y01, oy = -lo * x01, x1 = p0[0] + ox, y1 = p0[1] + oy, x2 = p1[0] + ox, y2 = p1[1] + oy, x3 = (x1 + x2) / 2, y3 = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1, d2 = dx * dx + dy * dy, r = r1 - rc, D = x1 * y2 - x2 * y1, d = (dy < 0 ? -1 : 1) * Math.sqrt(r * r * d2 - D * D), cx0 = (D * dy - dx * d) / d2, cy0 = (-D * dx - dy * d) / d2, cx1 = (D * dy + dx * d) / d2, cy1 = (-D * dx + dy * d) / d2, dx0 = cx0 - x3, dy0 = cy0 - y3, dx1 = cx1 - x3, dy1 = cy1 - y3;
+	    var x01 = p0[0] - p1[0], y01 = p0[1] - p1[1], lo = (cw ? rc : -rc) / Math.sqrt(x01 * x01 + y01 * y01), ox = lo * y01, oy = -lo * x01, x1 = p0[0] + ox, y1 = p0[1] + oy, x2 = p1[0] + ox, y2 = p1[1] + oy, x3 = (x1 + x2) / 2, y3 = (y1 + y2) / 2, dx = x2 - x1, dy = y2 - y1, d2 = dx * dx + dy * dy, r = r1 - rc, D = x1 * y2 - x2 * y1, d = (dy < 0 ? -1 : 1) * Math.sqrt(Math.max(0, r * r * d2 - D * D)), cx0 = (D * dy - dx * d) / d2, cy0 = (-D * dx - dy * d) / d2, cx1 = (D * dy + dx * d) / d2, cy1 = (-D * dx + dy * d) / d2, dx0 = cx0 - x3, dy0 = cy0 - y3, dx1 = cx1 - x3, dy1 = cy1 - y3;
 	    if (dx0 * dx0 + dy0 * dy0 > dx1 * dx1 + dy1 * dy1) cx0 = cx1, cy0 = cy1;
 	    return [ [ cx0 - ox, cy0 - oy ], [ cx0 * r1 / r, cy0 * r1 / r ] ];
 	  }
@@ -8441,10 +8474,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value.closed = /-closed$/.test(key);
 	  });
 	  function d3_svg_lineLinear(points) {
-	    return points.join("L");
+	    return points.length > 1 ? points.join("L") : points + "Z";
 	  }
 	  function d3_svg_lineLinearClosed(points) {
-	    return d3_svg_lineLinear(points) + "Z";
+	    return points.join("L") + "Z";
 	  }
 	  function d3_svg_lineStep(points) {
 	    var i = 0, n = points.length, p = points[0], path = [ p[0], ",", p[1] ];
@@ -8466,7 +8499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return points.length < 4 ? d3_svg_lineLinear(points) : points[1] + d3_svg_lineHermite(points.slice(1, -1), d3_svg_lineCardinalTangents(points, tension));
 	  }
 	  function d3_svg_lineCardinalClosed(points, tension) {
-	    return points.length < 3 ? d3_svg_lineLinear(points) : points[0] + d3_svg_lineHermite((points.push(points[0]), 
+	    return points.length < 3 ? d3_svg_lineLinearClosed(points) : points[0] + d3_svg_lineHermite((points.push(points[0]), 
 	    points), d3_svg_lineCardinalTangents([ points[points.length - 2] ].concat(points, [ points[1] ]), tension));
 	  }
 	  function d3_svg_lineCardinal(points, tension) {
@@ -8902,9 +8935,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var d3_selection_interrupt = d3_selection_interruptNS(d3_transitionNamespace());
 	  function d3_selection_interruptNS(ns) {
 	    return function() {
-	      var lock, active;
-	      if ((lock = this[ns]) && (active = lock[lock.active])) {
-	        if (--lock.count) delete lock[lock.active]; else delete this[ns];
+	      var lock, activeId, active;
+	      if ((lock = this[ns]) && (active = lock[activeId = lock.active])) {
+	        active.timer.c = null;
+	        active.timer.t = NaN;
+	        if (--lock.count) delete lock[activeId]; else delete this[ns];
 	        lock.active += .5;
 	        active.event && active.event.interrupt.call(this, this.__data__, active.index);
 	      }
@@ -9159,12 +9194,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var lock = node[ns] || (node[ns] = {
 	      active: 0,
 	      count: 0
-	    }), transition = lock[id];
+	    }), transition = lock[id], time, timer, duration, ease, tweens;
+	    function schedule(elapsed) {
+	      var delay = transition.delay;
+	      timer.t = delay + time;
+	      if (delay <= elapsed) return start(elapsed - delay);
+	      timer.c = start;
+	    }
+	    function start(elapsed) {
+	      var activeId = lock.active, active = lock[activeId];
+	      if (active) {
+	        active.timer.c = null;
+	        active.timer.t = NaN;
+	        --lock.count;
+	        delete lock[activeId];
+	        active.event && active.event.interrupt.call(node, node.__data__, active.index);
+	      }
+	      for (var cancelId in lock) {
+	        if (+cancelId < id) {
+	          var cancel = lock[cancelId];
+	          cancel.timer.c = null;
+	          cancel.timer.t = NaN;
+	          --lock.count;
+	          delete lock[cancelId];
+	        }
+	      }
+	      timer.c = tick;
+	      d3_timer(function() {
+	        if (timer.c && tick(elapsed || 1)) {
+	          timer.c = null;
+	          timer.t = NaN;
+	        }
+	        return 1;
+	      }, 0, time);
+	      lock.active = id;
+	      transition.event && transition.event.start.call(node, node.__data__, i);
+	      tweens = [];
+	      transition.tween.forEach(function(key, value) {
+	        if (value = value.call(node, node.__data__, i)) {
+	          tweens.push(value);
+	        }
+	      });
+	      ease = transition.ease;
+	      duration = transition.duration;
+	    }
+	    function tick(elapsed) {
+	      var t = elapsed / duration, e = ease(t), n = tweens.length;
+	      while (n > 0) {
+	        tweens[--n].call(node, e);
+	      }
+	      if (t >= 1) {
+	        transition.event && transition.event.end.call(node, node.__data__, i);
+	        if (--lock.count) delete lock[id]; else delete node[ns];
+	        return 1;
+	      }
+	    }
 	    if (!transition) {
-	      var time = inherit.time;
+	      time = inherit.time;
+	      timer = d3_timer(schedule, 0, time);
 	      transition = lock[id] = {
 	        tween: new d3_Map(),
 	        time: time,
+	        timer: timer,
 	        delay: inherit.delay,
 	        duration: inherit.duration,
 	        ease: inherit.ease,
@@ -9172,49 +9263,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	      inherit = null;
 	      ++lock.count;
-	      d3.timer(function(elapsed) {
-	        var delay = transition.delay, duration, ease, timer = d3_timer_active, tweened = [];
-	        timer.t = delay + time;
-	        if (delay <= elapsed) return start(elapsed - delay);
-	        timer.c = start;
-	        function start(elapsed) {
-	          if (lock.active > id) return stop();
-	          var active = lock[lock.active];
-	          if (active) {
-	            --lock.count;
-	            delete lock[lock.active];
-	            active.event && active.event.interrupt.call(node, node.__data__, active.index);
-	          }
-	          lock.active = id;
-	          transition.event && transition.event.start.call(node, node.__data__, i);
-	          transition.tween.forEach(function(key, value) {
-	            if (value = value.call(node, node.__data__, i)) {
-	              tweened.push(value);
-	            }
-	          });
-	          ease = transition.ease;
-	          duration = transition.duration;
-	          d3.timer(function() {
-	            timer.c = tick(elapsed || 1) ? d3_true : tick;
-	            return 1;
-	          }, 0, time);
-	        }
-	        function tick(elapsed) {
-	          if (lock.active !== id) return 1;
-	          var t = elapsed / duration, e = ease(t), n = tweened.length;
-	          while (n > 0) {
-	            tweened[--n].call(node, e);
-	          }
-	          if (t >= 1) {
-	            transition.event && transition.event.end.call(node, node.__data__, i);
-	            return stop();
-	          }
-	        }
-	        function stop() {
-	          if (--lock.count) delete lock[id]; else delete node[ns];
-	          return 1;
-	        }
-	      }, 0, time);
 	    }
 	  }
 	  d3.svg.axis = function() {
@@ -9268,7 +9316,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	    axis.ticks = function() {
 	      if (!arguments.length) return tickArguments_;
-	      tickArguments_ = arguments;
+	      tickArguments_ = d3_array(arguments);
 	      return axis;
 	    };
 	    axis.tickValues = function(x) {
@@ -9790,8 +9838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  d3.xml = d3_xhrType(function(request) {
 	    return request.responseXML;
 	  });
-	  if (true) !(__WEBPACK_AMD_DEFINE_FACTORY__ = (d3), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); else if (typeof module === "object" && module.exports) module.exports = d3;
-	  this.d3 = d3;
+	  if (true) this.d3 = d3, !(__WEBPACK_AMD_DEFINE_FACTORY__ = (d3), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__)); else if (typeof module === "object" && module.exports) module.exports = d3; else this.d3 = d3;
 	}();
 
 /***/ },
@@ -9816,8 +9863,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var isInterpolatable = function isInterpolatable(obj) {
 	  // d3 turns null into 0 and undefined into NaN, which we don't want.
-	  if (obj != null) {
+	  if (obj !== null) {
 	    switch (typeof obj) {
+	      case "undefined":
+	        return false;
 	      case "number":
 	        // The standard `isNaN` is fine in this case since we already know the
 	        // type is number.
@@ -9894,6 +9943,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return b;
 	    }
 	    return function () {
+	      /* eslint-disable no-invalid-this */
 	      var aval = typeof a === "function" ? a.apply(this, arguments) : a;
 	      var bval = typeof b === "function" ? b.apply(this, arguments) : b;
 	      return _d32["default"].interpolate(aval, bval)(t);
@@ -22348,9 +22398,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -22372,7 +22422,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _victoryAnimation = __webpack_require__(45);
+	var _victoryAnimation = __webpack_require__(1);
+	
+	var _victoryLabel = __webpack_require__(35);
+	
+	var _victoryUtilLibPropTypes = __webpack_require__(46);
+	
+	var VictoryPropTypes = _interopRequireWildcard(_victoryUtilLibPropTypes);
 	
 	var defaultStyles = {
 	  axis: {
@@ -22380,6 +22436,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    fill: "none",
 	    strokeWidth: 2,
 	    strokeLinecap: "round"
+	  },
+	  axisLabel: {
+	    stroke: "transparent",
+	    fill: "#756f6a",
+	    fontSize: 16,
+	    fontFamily: "Helvetica"
 	  },
 	  grid: {
 	    stroke: "#c9c5bb",
@@ -22393,7 +22455,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    padding: 5,
 	    strokeWidth: 2,
 	    strokeLinecap: "round",
-	    color: "#756f6a",
 	    size: 4
 	  },
 	  tickLabels: {
@@ -22402,13 +22463,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	    fontFamily: "Helvetica",
 	    fontSize: 10,
 	    padding: 5
-	  },
-	  axisLabels: {
-	    stroke: "transparent",
-	    fill: "#756f6a",
-	    fontSize: 16,
-	    fontFamily: "Helvetica"
 	  }
+	};
+	
+	var orientationSign = {
+	  top: -1,
+	  left: -1,
+	  right: 1,
+	  bottom: 1
+	};
+	
+	var orientationVerticality = {
+	  top: false,
+	  bottom: false,
+	  left: true,
+	  right: true
 	};
 	
 	var VictoryAxis = (function (_React$Component) {
@@ -22421,111 +22490,67 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  _createClass(VictoryAxis, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      // If animating, the `VictoryAxis` instance wrapped in `VictoryAnimation`
-	      // will compute these values.
-	      if (!this.props.animate) {
-	        this.getCalculatedValues(this.props);
-	      }
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      // If animating, the `VictoryAxis` instance wrapped in `VictoryAnimation`
-	      // will compute these values.
-	      if (!this.props.animate) {
-	        this.getCalculatedValues(nextProps);
-	      }
-	    }
-	  }, {
 	    key: "getCalculatedValues",
 	    value: function getCalculatedValues(props) {
 	      // order matters!
 	      this.style = this.getStyles(props);
 	      this.padding = this.getPadding(props);
 	      this.orientation = this.getOrientation(props);
-	      this.isVertical = this.orientation === "left" || this.orientation === "right";
-	      this.stringMap = this.createStringMap(props);
+	      this.isVertical = orientationVerticality[this.orientation];
 	      this.range = this.getRange(props);
 	      this.domain = this.getDomain(props);
 	      this.scale = this.getScale(props);
 	      this.ticks = this.getTicks(props);
-	      this.tickFormat = this.getTickFormat(props);
 	      this.labelPadding = this.getLabelPadding(props);
 	      this.offset = this.getOffset(props);
-	      this.tickProperties = this.getTickProperties(props);
-	      this.transform = this.getTransform(props);
 	    }
 	  }, {
 	    key: "getOrientation",
 	    value: function getOrientation(props) {
-	      if (props.orientation) {
-	        return props.orientation;
-	      }
-	      return props.dependentAxis ? "left" : "bottom";
+	      return props.orientation || (props.dependentAxis ? "left" : "bottom");
 	    }
 	  }, {
 	    key: "getStyles",
 	    value: function getStyles(props) {
-	      var style = props.style || defaultStyles;
-	      var axis = style.axis;
-	      var grid = style.grid;
-	      var ticks = style.ticks;
-	      var tickLabels = style.tickLabels;
-	      var axisLabels = style.axisLabels;
-	      var parent = style.parent;
-	
+	      var style = props.style || {};
+	      var parentStyleProps = { height: props.height, width: props.width };
 	      return {
-	        parent: _lodash2["default"].merge({ height: props.height, width: props.width }, parent),
-	        axis: _lodash2["default"].merge({}, defaultStyles.axis, axis),
-	        grid: _lodash2["default"].merge({}, defaultStyles.grid, grid),
-	        ticks: _lodash2["default"].merge({}, defaultStyles.ticks, ticks),
-	        tickLabels: _lodash2["default"].merge({}, defaultStyles.tickLabels, tickLabels),
-	        axisLabels: _lodash2["default"].merge({}, defaultStyles.axisLabels, axisLabels)
+	        parent: _lodash2["default"].merge(parentStyleProps, defaultStyles.parent, style.parent),
+	        axis: _lodash2["default"].merge({}, defaultStyles.axis, style.axis),
+	        axisLabel: _lodash2["default"].merge({}, defaultStyles.axisLabel, style.axisLabel),
+	        grid: _lodash2["default"].merge({}, defaultStyles.grid, style.grid),
+	        ticks: _lodash2["default"].merge({}, defaultStyles.ticks, style.ticks),
+	        tickLabels: _lodash2["default"].merge({}, defaultStyles.tickLabels, style.tickLabels)
 	      };
 	    }
 	  }, {
 	    key: "getPadding",
 	    value: function getPadding(props) {
-	      var padding = _lodash2["default"].isNumber(props.padding) ? props.padding : 0;
-	      var paddingObj = _lodash2["default"].isObject(props.padding) ? props.padding : {};
-	      return {
-	        top: paddingObj.top || padding,
-	        bottom: paddingObj.bottom || padding,
-	        left: paddingObj.left || padding,
-	        right: paddingObj.right || padding
-	      };
-	    }
-	  }, {
-	    key: "createStringMap",
-	    value: function createStringMap(props) {
-	      // if tickValues exist and are strings, create a map using only those strings
-	      // dont alter the order.
-	      var containsStrings = function containsStrings(collection) {
-	        return _lodash2["default"].some(collection, function (item) {
-	          return _lodash2["default"].isString(item);
-	        });
-	      };
-	
-	      if (props.tickValues && containsStrings(props.tickValues)) {
-	        return _lodash2["default"].zipObject(_lodash2["default"].map(props.tickValues, function (tick, index) {
-	          return ["" + tick, index + 1];
-	        }));
+	      var padding = props.padding || 0;
+	      if (typeof padding === "number") {
+	        return {
+	          top: padding,
+	          right: padding,
+	          bottom: padding,
+	          left: padding
+	        };
 	      }
+	      return {
+	        top: padding.top || 0,
+	        right: padding.right || 0,
+	        bottom: padding.bottom || 0,
+	        left: padding.left || 0
+	      };
 	    }
 	  }, {
 	    key: "getDomain",
 	    value: function getDomain(props) {
-	      var domain = undefined;
 	      if (props.domain) {
-	        domain = props.domain;
+	        return props.domain;
 	      } else if (props.tickValues) {
-	        domain = this._getDomainFromTickValues(props);
-	      } else {
-	        domain = this._getDomainFromScale(props);
+	        return this._getDomainFromTickValues(props);
 	      }
-	      return domain;
+	      return this._getDomainFromScale(props);
 	    }
 	
 	    // helper for getDomain()
@@ -22533,17 +22558,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: "_getDomainFromTickValues",
 	    value: function _getDomainFromTickValues(props) {
 	      var domain = undefined;
-	      if (this.stringMap) {
-	        var values = _lodash2["default"].values(this.stringMap);
-	        domain = [_lodash2["default"].min(values), _lodash2["default"].max(values)];
+	      // Since we declared that `tickValues` must be a homogenous array, we only
+	      // need to do a string check on the first item.
+	      if (typeof props.tickValues[0] === "string") {
+	        domain = [1, props.tickValues.length];
 	      } else {
-	        var ticks = _lodash2["default"].map(props.tickValues, function (value) {
-	          return +value;
-	        });
 	        // coerce ticks to numbers
+	        var ticks = _lodash2["default"].map(props.tickValues, Number);
 	        domain = [_lodash2["default"].min(ticks), _lodash2["default"].max(ticks)];
 	      }
-	      return this.isVertical ? domain.concat().reverse() : domain;
+	      if (this.isVertical) {
+	        domain.reverse();
+	      }
+	      return domain;
 	    }
 	
 	    // helper for getDomain()
@@ -22568,71 +22595,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getTicks",
 	    value: function getTicks(props) {
-	      var t = undefined;
-	      if (this.stringMap) {
-	        t = _lodash2["default"].values(this.stringMap);
-	      } else if (props.tickValues) {
-	        t = props.tickValues;
+	      if (props.tickValues) {
+	        // Since we declared that `tickValues` must be a homogenous array, we only
+	        // need to do a string check on the first item.
+	        if (typeof props.tickValues[0] === "string") {
+	          return _lodash2["default"].range(1, props.tickValues.length + 1);
+	        }
+	        return props.tickValues;
 	      } else if (_lodash2["default"].isFunction(this.scale.ticks)) {
 	        var ticks = this.scale.ticks(props.tickCount);
 	        if (props.crossAxis) {
-	          t = _lodash2["default"].includes(ticks, 0) ? _lodash2["default"].without(ticks, 0) : ticks;
-	        } else {
-	          t = ticks;
+	          return _lodash2["default"].includes(ticks, 0) ? _lodash2["default"].without(ticks, 0) : ticks;
 	        }
-	      } else {
-	        t = this.scale.domain();
+	        return ticks;
 	      }
-	      return Array.isArray(t) ? t : [t];
+	      return this.scale.domain();
 	    }
 	  }, {
 	    key: "getTickFormat",
 	    value: function getTickFormat(props) {
-	      var _this = this;
-	
 	      if (props.tickFormat && _lodash2["default"].isFunction(props.tickFormat)) {
 	        return props.tickFormat;
 	      } else if (props.tickFormat && _lodash2["default"].isArray(props.tickFormat)) {
 	        return function (x, index) {
 	          return props.tickFormat[index];
 	        };
-	      } else if (this.stringMap) {
-	        var _ret = (function () {
-	          var dataNames = _lodash2["default"].keys(_this.stringMap);
-	          // string ticks should have one tick of padding
-	          var dataTicks = [""].concat(_toConsumableArray(dataNames));
-	          return {
-	            v: function (x) {
-	              return dataTicks[x];
-	            }
-	          };
-	        })();
-	
-	        if (typeof _ret === "object") return _ret.v;
+	      } else if (props.tickValues && typeof props.tickValues[0] === "string") {
+	        return function (x, index) {
+	          return props.tickValues[index];
+	        };
 	      } else if (_lodash2["default"].isFunction(this.scale.tickFormat())) {
 	        return this.scale.tickFormat(this.ticks.length);
 	      } else {
-	        return function (x) {
-	          return x;
-	        };
+	        return _lodash2["default"].identity;
 	      }
 	    }
 	  }, {
 	    key: "getLabelPadding",
 	    value: function getLabelPadding(props) {
-	      if (this.style.axisLabels.padding) {
-	        return this.style.axisLabels.padding;
+	      var style = this.style.axisLabel;
+	      if (typeof style.padding !== "undefined" && style.padding !== null) {
+	        return style.padding;
 	      }
 	      // TODO: magic numbers
-	      var fontSize = this.style.axisLabels.fontSize;
-	      return props.label ? fontSize * 2.4 : 0;
+	      return props.label ? style.fontSize * (this.isVertical ? 2.3 : 1.6) : 0;
 	    }
 	  }, {
 	    key: "getOffset",
 	    value: function getOffset(props) {
 	      var xPadding = props.orientation === "right" ? this.padding.right : this.padding.left;
 	      var yPadding = props.orientation === "top" ? this.padding.top : this.padding.bottom;
-	      var fontSize = this.style.axisLabels.fontSize;
+	      var fontSize = this.style.axisLabel.fontSize;
 	      var offsetX = props.offsetX || xPadding;
 	      var offsetY = props.offsetY || yPadding;
 	      var totalPadding = fontSize + 2 * this.style.ticks.size + this.labelPadding;
@@ -22647,160 +22660,126 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getTickProperties",
 	    value: function getTickProperties() {
-	      var tickSpacing = _lodash2["default"].max([this.style.ticks.size, 0]) + this.style.ticks.padding;
-	      // determine axis orientation and layout
-	      var sign = this.orientation === "top" || this.orientation === "left" ? -1 : 1;
-	      // determine tick formatting constants based on orientationation and layout
-	      var x = this.isVertical ? sign * tickSpacing : 0;
-	      var y = this.isVertical ? 0 : sign * tickSpacing;
-	      var x2 = this.isVertical ? sign * this.style.ticks.size : 0;
-	      var y2 = this.isVertical ? 0 : sign * this.style.ticks.size;
-	      var dy = undefined;
-	      var textAnchor = undefined;
-	      if (this.isVertical) {
-	        dy = ".32em"; // todo: magic numbers from d3
-	        textAnchor = sign < 0 ? "end" : "start";
-	      } else {
-	        dy = sign < 0 ? "0em" : ".71em"; // todo: magic numbers from d3
-	        textAnchor = "middle";
-	      }
-	      return { x: x, y: y, x2: x2, y2: y2, dy: dy, textAnchor: textAnchor };
+	      var style = this.style.ticks;
+	      var tickSpacing = style.size + style.padding;
+	      var sign = orientationSign[this.orientation];
+	      return this.isVertical ? {
+	        x: sign * tickSpacing,
+	        x2: sign * style.size,
+	        y: 0,
+	        y2: 0,
+	        textAnchor: sign < 0 ? "end" : "start",
+	        verticalAnchor: "middle"
+	      } : {
+	        x: 0,
+	        x2: 0,
+	        y: sign * tickSpacing,
+	        y2: sign * style.size,
+	        textAnchor: "middle",
+	        verticalAnchor: sign < 0 ? "end" : "start"
+	      };
 	    }
 	  }, {
 	    key: "getTransform",
 	    value: function getTransform(props) {
-	      var transform = {
+	      var translate = ({
 	        top: [0, this.offset.y],
 	        bottom: [0, props.height - this.offset.y],
 	        left: [this.offset.x, 0],
 	        right: [props.width - this.offset.x, 0]
-	      };
-	      return "translate(" + transform[this.orientation][0] + "," + transform[this.orientation][1] + ")";
+	      })[this.orientation];
+	      return "translate(" + translate[0] + ", " + translate[1] + ")";
 	    }
 	  }, {
-	    key: "getAxisLine",
-	    value: function getAxisLine() {
-	      var extent = {
-	        x: [this.padding.left, this.props.width - this.padding.right],
-	        y: [this.padding.top, this.props.height - this.padding.bottom]
+	    key: "renderAxisLine",
+	    value: function renderAxisLine() {
+	      var props = this.isVertical ? {
+	        y1: this.padding.top,
+	        y2: this.props.height - this.padding.bottom
+	      } : {
+	        x1: this.padding.left,
+	        x2: this.props.width - this.padding.right
 	      };
-	      return this.isVertical ? _react2["default"].createElement("line", { y1: _lodash2["default"].min(extent.y), y2: _lodash2["default"].max(extent.y), style: this.style.axis }) : _react2["default"].createElement("line", { x1: _lodash2["default"].min(extent.x), x2: _lodash2["default"].max(extent.x), style: this.style.axis });
+	      return _react2["default"].createElement("line", _extends({}, props, { style: this.style.axis }));
 	    }
 	  }, {
-	    key: "getTickLines",
-	    value: function getTickLines() {
-	      var _this2 = this;
+	    key: "renderTicks",
+	    value: function renderTicks() {
+	      var _this = this;
 	
-	      var position = undefined;
-	      var translate = undefined;
-	      var textLength = undefined;
+	      var props = this.getTickProperties(this.props);
+	      var tickFormat = this.getTickFormat(this.props);
 	      // determine the position and translation of each tick
 	      return _lodash2["default"].map(this.ticks, function (tick, index) {
-	        position = _this2.scale(tick);
-	        translate = _this2.isVertical ? "translate(0, " + position + ")" : "translate(" + position + ", 0)";
-	        textLength = _this2.getTextHeight(_this2.tickFormat.call(_this2, tick, index));
+	        var position = _this.scale(tick);
+	        var transform = _this.isVertical ? "translate(0, " + position + ")" : "translate(" + position + ", 0)";
 	        return _react2["default"].createElement(
 	          "g",
-	          { key: "tick-" + index, transform: translate },
-	          _react2["default"].createElement("line", {
-	            x2: _this2.tickProperties.x2,
-	            y2: _this2.tickProperties.y2,
-	            style: _this2.style.ticks }),
+	          { key: "tick-" + index, transform: transform },
+	          _react2["default"].createElement("line", { x2: props.x2, y2: props.y2, style: _this.style.ticks }),
 	          _react2["default"].createElement(
-	            "text",
-	            { x: _this2.tickProperties.x,
-	              y: _this2.tickProperties.y - textLength,
-	              dy: _this2.tickProperties.dy,
-	              style: _this2.style.tickLabels,
-	              textAnchor: _this2.tickProperties.textAnchor },
-	            _this2.getTextLines(_this2.tickFormat.call(_this2, tick, index), _this2.tickProperties.x)
+	            _victoryLabel.VictoryLabel,
+	            {
+	              x: props.x,
+	              y: props.y,
+	              style: _this.style.tickLabels,
+	              textAnchor: props.textAnchor,
+	              verticalAnchor: props.verticalAnchor
+	            },
+	            tickFormat.call(_this, tick, index)
 	          )
 	        );
 	      });
 	    }
 	  }, {
-	    key: "getGridLines",
-	    value: function getGridLines() {
-	      var _this3 = this;
+	    key: "renderGridLines",
+	    value: function renderGridLines() {
+	      var _this2 = this;
 	
 	      var xPadding = this.orientation === "right" ? this.padding.right : this.padding.left;
 	      var yPadding = this.orientation === "top" ? this.padding.top : this.padding.bottom;
-	      var sign = this.orientation === "top" || this.orientation === "left" ? 1 : -1;
+	      var sign = -orientationSign[this.orientation];
 	      var xOffset = this.props.crossAxis ? this.offset.x - xPadding : 0;
 	      var yOffset = this.props.crossAxis ? this.offset.y - yPadding : 0;
 	      var x2 = this.isVertical ? sign * (this.props.width - (this.padding.left + this.padding.right)) : 0;
 	      var y2 = this.isVertical ? 0 : sign * (this.props.height - (this.padding.top + this.padding.bottom));
-	      var position = undefined;
-	      var translate = undefined;
-	      // determine the position and translation of each gridline
 	      return _lodash2["default"].map(this.ticks, function (tick, index) {
-	        position = _this3.scale(tick);
-	        translate = _this3.isVertical ? "translate(" + -xOffset + ", " + position + ")" : "translate(" + position + ", " + yOffset + ")";
+	        // determine the position and translation of each gridline
+	        var position = _this2.scale(tick);
+	        var transform = _this2.isVertical ? "translate(" + -xOffset + ", " + position + ")" : "translate(" + position + ", " + yOffset + ")";
 	        return _react2["default"].createElement(
 	          "g",
-	          { key: "grid-" + index, transform: translate },
-	          _react2["default"].createElement("line", {
-	            x2: x2,
-	            y2: y2,
-	            style: _this3.style.grid })
+	          { key: "grid-" + index, transform: transform },
+	          _react2["default"].createElement("line", { x2: x2, y2: y2, style: _this2.style.grid })
 	        );
 	      });
 	    }
 	  }, {
-	    key: "getTextLines",
-	    value: function getTextLines(text, x) {
-	      if (!text) {
-	        return "";
-	      }
-	      // TODO: split text to new lines based on font size, number of characters and total width
-	      // TODO: determine line height ("1.2em") based on font size
-	      var textString = "" + text;
-	      var textLines = textString.split("\n");
-	      return _lodash2["default"].map(textLines, function (line, index) {
-	        return index === 0 ? _react2["default"].createElement(
-	          "tspan",
-	          { x: x, key: "text-line-" + index },
-	          line
-	        ) : _react2["default"].createElement(
-	          "tspan",
-	          { x: x, dy: "1.2em", key: "text-line-" + index },
-	          line
-	        );
-	      });
-	    }
-	  }, {
-	    key: "getTextHeight",
-	    value: function getTextHeight(text) {
-	      if (!text) {
-	        return null;
-	      }
-	      var textString = "" + text;
-	      var textLines = textString.split("\n");
-	      return this.orientation === "top" ? (textLines.length - 1) * this.style.tickLabels.fontSize * 1.25 : 0;
-	    }
-	  }, {
-	    key: "getLabelElements",
-	    value: function getLabelElements() {
+	    key: "renderLabel",
+	    value: function renderLabel() {
 	      if (this.props.label) {
-	        var orientation = this.orientation;
-	        var sign = orientation === "top" || orientation === "left" ? -1 : 1;
-	        var x = this.isVertical ? -((this.props.height - this.padding.top - this.padding.bottom) / 2) - this.padding.top : (this.props.width - this.padding.left - this.padding.right) / 2 + this.padding.left;
+	        var sign = orientationSign[this.orientation];
+	        var hPadding = this.padding.left + this.padding.right;
+	        var vPadding = this.padding.top + this.padding.bottom;
+	        var x = this.isVertical ? -((this.props.height - vPadding) / 2) - this.padding.top : (this.props.width - hPadding) / 2 + this.padding.left;
 	        return _react2["default"].createElement(
-	          "text",
+	          _victoryLabel.VictoryLabel,
 	          {
-	            textAnchor: "middle",
-	            y: sign * this.labelPadding,
 	            x: x,
-	            style: this.style.axisLabels,
-	            transform: this.isVertical ? "rotate(-90)" : "" },
-	          this.getTextLines(this.props.label, x)
+	            y: sign * this.labelPadding,
+	            textAnchor: "middle",
+	            verticalAnchor: sign < 0 ? "end" : "start",
+	            style: this.style.axisLabel,
+	            transform: this.isVertical ? "rotate(-90)" : ""
+	          },
+	          this.props.label
 	        );
 	      }
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this4 = this;
+	      var _this3 = this;
 	
 	      // If animating, return a `VictoryAnimation` element that will create
 	      // a new `VictoryAxis` with nearly identical props, except (1) tweened
@@ -22809,22 +22788,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
-	        var animateData = _lodash2["default"].omit(this.props, ["orientation", "scale", "tickFormat", "animate", "crossAxis", "standalone"]);
+	        var animateData = _lodash2["default"].pick(this.props, ["style", "domain", "range", "tickCount", "tickValues", "labelPadding", "offsetX", "offsetY", "padding", "width", "height"]);
 	        return _react2["default"].createElement(
 	          _victoryAnimation.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
 	          function (props) {
-	            return _react2["default"].createElement(VictoryAxis, _extends({}, _this4.props, props, { animate: null }));
+	            return _react2["default"].createElement(VictoryAxis, _extends({}, _this3.props, props, { animate: null }));
 	          }
 	        );
+	      } else {
+	        this.getCalculatedValues(this.props);
 	      }
+	      var transform = this.getTransform(this.props);
 	      var group = _react2["default"].createElement(
 	        "g",
-	        { style: this.style.parent, transform: this.transform },
-	        this.getGridLines(),
-	        this.getAxisLine(),
-	        this.getTickLines(),
-	        this.getLabelElements()
+	        { style: this.style.parent, transform: transform },
+	        this.renderGridLines(),
+	        this.renderAxisLine(),
+	        this.renderTicks(),
+	        this.renderLabel()
 	      );
 	      return this.props.standalone ? _react2["default"].createElement(
 	        "svg",
@@ -22845,106 +22827,113 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
 	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
 	       */
-	      animate: _react2["default"].PropTypes.object,
+	      animate: _react.PropTypes.object,
 	      /**
 	       * This prop specifies whether a given axis is intended to cross another axis.
 	       */
-	      crossAxis: _react2["default"].PropTypes.bool,
+	      crossAxis: _react.PropTypes.bool,
 	      /**
 	       * The dependentAxis prop specifies whether the axis corresponds to the
 	       * dependent variable (usually y). This prop is useful when composing axis
 	       * with other components to form a chart.
 	       */
-	      dependentAxis: _react2["default"].PropTypes.bool,
+	      dependentAxis: _react.PropTypes.bool,
 	      /**
 	       * The domain prop describes the range of values your axis will include. This prop should be
 	       * given as a array of the minimum and maximum expected values for your axis.
 	       * If this value is not given it will be calculated based on the scale or tickValues.
 	       * @exampes [-1, 1]
 	       */
-	      domain: _react2["default"].PropTypes.array,
+	      domain: VictoryPropTypes.domain,
 	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
-	      height: _react2["default"].PropTypes.number,
+	      height: VictoryPropTypes.nonNegative,
 	      /**
 	       * The label prop specifies the label for your axis
 	       */
-	      label: _react2["default"].PropTypes.string,
+	      label: _react.PropTypes.string,
 	      /**
 	       * The labelPadding prop specifies the padding in pixels for you axis label
 	       */
-	      labelPadding: _react2["default"].PropTypes.number,
+	      labelPadding: _react.PropTypes.number,
 	      /**
 	       * This value describes how far from the "edge" of it's permitted area each axis
 	       * will be set back in the x-direction.  If this prop is not given,
 	       * the offset is calculated based on font size, axis orientation, and label padding.
 	       */
-	      offsetX: _react2["default"].PropTypes.number,
+	      offsetX: _react.PropTypes.number,
 	      /**
 	       * This value describes how far from the "edge" of it's permitted area each axis
 	       * will be set back in the y-direction.  If this prop is not given,
 	       * the offset is calculated based on font size, axis orientation, and label padding.
 	       */
-	      offsetY: _react2["default"].PropTypes.number,
+	      offsetY: _react.PropTypes.number,
 	      /**
 	       * The orientation prop specifies the position and orientation of your axis.
 	       */
-	      orientation: _react2["default"].PropTypes.oneOf(["top", "bottom", "left", "right"]),
+	      orientation: _react.PropTypes.oneOf(["top", "bottom", "left", "right"]),
 	      /**
 	       * The padding props specifies the amount of padding in number of pixels between
 	       * the edge of the chart and any rendered child components. This prop can be given
 	       * as a number or as an object with padding specified for top, bottom, left
 	       * and right.
 	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
+	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	        top: _react.PropTypes.number,
+	        bottom: _react.PropTypes.number,
+	        left: _react.PropTypes.number,
+	        right: _react.PropTypes.number
 	      })]),
 	      /**
 	       * The scale prop determines which scales your axis should use. This prop should be
 	       * given as a function,
 	       * @examples d3.time.scale()
 	       */
-	      scale: _react2["default"].PropTypes.func,
+	      scale: VictoryPropTypes.scale,
 	      /**
 	       * The standalone prop determines whether the component will render a standalone svg
 	       * or a <g> tag that will be included in an external svg. Set standalone to false to
 	       * compose VictoryAxis with other components within an enclosing <svg> tag.
 	       */
-	      standalone: _react2["default"].PropTypes.bool,
+	      standalone: _react.PropTypes.bool,
 	      /**
 	       * The style prop specifies styles for your chart. Victory Axis relies on Radium,
 	       * so valid Radium style objects should work for this prop, however height, width, and margin
 	       * are used to calculate range, and need to be expressed as a number of pixels.
 	       * styles for axis lines, gridlines, and ticks are scoped to separate props.
 	       * @examples {axis: {stroke: "#756f6a"}, grid: {stroke: "grey"}, ticks: {stroke: "grey"},
-	       * tickLabels: {fontSize: 10, padding: 5}, axisLabels: {fontSize: 16, padding: 20}}
+	       * tickLabels: {fontSize: 10, padding: 5}, axisLabel: {fontSize: 16, padding: 20}}
 	       */
-	      style: _react2["default"].PropTypes.object,
+	      style: _react.PropTypes.shape({
+	        parent: _react.PropTypes.object,
+	        axis: _react.PropTypes.object,
+	        axisLabel: _react.PropTypes.object,
+	        grid: _react.PropTypes.object,
+	        ticks: _react.PropTypes.object,
+	        tickLabels: _react.PropTypes.object
+	      }),
 	      /**
 	       * The tickCount prop specifies how many ticks should be drawn on the axis if
 	       * ticksValues are not explicitly provided.
 	       */
-	      tickCount: _react2["default"].PropTypes.number,
+	      tickCount: VictoryPropTypes.nonNegative,
 	      /**
 	       * The tickFormat prop specifies how tick values should be expressed visually.
 	       * tickFormat can be given as a function to be applied to every tickValue, or as
 	       * an array of display values for each tickValue
 	       * @examples d3.time.format("%Y"), (x) => x.toPrecision(2), ["first", "second", "third"]
 	       */
-	      tickFormat: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.func, _react2["default"].PropTypes.array]),
+	      tickFormat: _react.PropTypes.oneOfType([_react.PropTypes.func, VictoryPropTypes.homogeneousArray]),
 	      /**
 	       * The tickValues prop explicity specifies which ticks values to draw on the axis.
 	       * @examples ["apples", "bananas", "oranges"], [2, 4, 6, 8]
 	       */
-	      tickValues: _react2["default"].PropTypes.array,
+	      tickValues: VictoryPropTypes.homogeneousArray,
 	      /**
 	       * The width props specifies the width of the chart container element in pixels
 	       */
-	      width: _react2["default"].PropTypes.number
+	      width: VictoryPropTypes.nonNegative
 	    },
 	    enumerable: true
 	  }, {
@@ -22974,49 +22963,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	exports.__esModule = true;
+	var Enhancer = __webpack_require__(11);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _enhancer = __webpack_require__(11);
-	
-	var _enhancer2 = _interopRequireDefault(_enhancer);
-	
-	var _plugins = __webpack_require__(19);
-	
-	var _plugins2 = _interopRequireDefault(_plugins);
-	
-	var _componentsPrintStyleSheet = __webpack_require__(40);
-	
-	var _componentsPrintStyleSheet2 = _interopRequireDefault(_componentsPrintStyleSheet);
-	
-	var _componentsStyle = __webpack_require__(41);
-	
-	var _componentsStyle2 = _interopRequireDefault(_componentsStyle);
-	
-	var _getState = __webpack_require__(14);
-	
-	var _getState2 = _interopRequireDefault(_getState);
-	
-	var _keyframes = __webpack_require__(44);
-	
-	var _keyframes2 = _interopRequireDefault(_keyframes);
-	
-	var _resolveStyles = __webpack_require__(13);
-	
-	function Radium(ComposedComponent /*: constructor*/) {
-	  return _enhancer2['default'](ComposedComponent);
-	}
-	
-	Radium.Plugins = _plugins2['default'];
-	Radium.PrintStyleSheet = _componentsPrintStyleSheet2['default'];
-	Radium.Style = _componentsStyle2['default'];
-	Radium.getState = _getState2['default'];
-	Radium.keyframes = _keyframes2['default'];
-	Radium.__clearStateForTests = _resolveStyles.__clearStateForTests;
-	
-	exports['default'] = Radium;
-	module.exports = exports['default'];
+	module.exports = function (ComposedComponent /*: constructor*/) {
+	  return Enhancer(ComposedComponent);
+	};
+	module.exports.Plugins = __webpack_require__(14);
+	module.exports.PrintStyleSheet = __webpack_require__(30);
+	module.exports.Style = __webpack_require__(31);
+	module.exports.getState = __webpack_require__(24);
+	module.exports.keyframes = __webpack_require__(34);
+	module.exports.__clearStateForTests = __webpack_require__(13).__clearStateForTests;
 
 /***/ },
 /* 11 */
@@ -23026,29 +22983,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	exports.__esModule = true;
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	
+	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	exports['default'] = enhanceWithRadium;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(3);
+	var _require = __webpack_require__(3);
 	
-	var _react2 = _interopRequireDefault(_react);
+	var Component = _require.Component;
 	
-	var _resolveStylesJs = __webpack_require__(13);
-	
-	var _resolveStylesJs2 = _interopRequireDefault(_resolveStylesJs);
-	
-	var _printStylesJs = __webpack_require__(39);
-	
-	var _printStylesJs2 = _interopRequireDefault(_printStylesJs);
+	var resolveStyles = __webpack_require__(13);
+	var printStyles = __webpack_require__(29);
 	
 	var KEYS_TO_IGNORE_WHEN_COPYING_PROPERTIES = ['arguments', 'callee', 'caller', 'length', 'name', 'prototype', 'type'];
 	
@@ -23061,26 +23011,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	};
 	
-	function enhanceWithRadium(configOrComposedComponent /*: constructor | Function | Object*/) /*: constructor*/ {
+	var enhanceWithRadium = function enhanceWithRadium(configOrComposedComponent /*: constructor | Function | Object*/) /*: constructor*/ {
 	  var config /*:: ?: Object*/ = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
 	
 	  if (typeof configOrComposedComponent !== 'function') {
-	    var _ret = (function () {
-	      var newConfig = _extends({}, config, configOrComposedComponent);
-	      return {
-	        v: function (configOrComponent) {
-	          return enhanceWithRadium(configOrComponent, newConfig);
-	        }
-	      };
-	    })();
-	
-	    if (typeof _ret === 'object') return _ret.v;
+	    var newConfig = _extends({}, config, configOrComposedComponent);
+	    return function (configOrComponent) {
+	      return enhanceWithRadium(configOrComponent, newConfig);
+	    };
 	  }
 	
 	  var component /*: Function*/ = configOrComposedComponent;
 	  var ComposedComponent /*: constructor*/ = component;
 	
 	  // Handle stateless components
+	
 	  if (!ComposedComponent.render && !ComposedComponent.prototype.render) {
 	    ComposedComponent = (function (_Component) {
 	      _inherits(_class, _Component);
@@ -23088,15 +23033,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      function _class() {
 	        _classCallCheck(this, _class);
 	
-	        _Component.apply(this, arguments);
+	        _get(Object.getPrototypeOf(_class.prototype), 'constructor', this).apply(this, arguments);
 	      }
 	
-	      _class.prototype.render = function render() {
-	        return component(this.props, this.context);
-	      };
+	      _createClass(_class, [{
+	        key: 'render',
+	        value: function render() {
+	          return component(this.props);
+	        }
+	      }]);
 	
 	      return _class;
-	    })(_react.Component);
+	    })(Component);
 	    ComposedComponent.displayName = component.displayName || component.name;
 	  }
 	
@@ -23106,7 +23054,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    function RadiumEnhancer() {
 	      _classCallCheck(this, RadiumEnhancer);
 	
-	      _ComposedComponent.apply(this, arguments);
+	      _get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'constructor', this).apply(this, arguments);
 	
 	      this.state = this.state || {};
 	      this.state._radiumStyleState = {};
@@ -23122,51 +23070,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // so need to be manually populated.
 	    // See http://babeljs.io/docs/advanced/caveats/#classes-10-and-below-
 	
-	    RadiumEnhancer.prototype.componentWillUnmount = function componentWillUnmount() {
-	      if (_ComposedComponent.prototype.componentWillUnmount) {
-	        _ComposedComponent.prototype.componentWillUnmount.call(this);
+	    _createClass(RadiumEnhancer, [{
+	      key: 'componentWillUnmount',
+	      value: function componentWillUnmount() {
+	        if (_get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'componentWillUnmount', this)) {
+	          _get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'componentWillUnmount', this).call(this);
+	        }
+	
+	        this._radiumIsMounted = false;
+	
+	        if (this._radiumMouseUpListener) {
+	          this._radiumMouseUpListener.remove();
+	        }
+	
+	        if (this._radiumMediaQueryListenersByQuery) {
+	          Object.keys(this._radiumMediaQueryListenersByQuery).forEach(function (query) {
+	            this._radiumMediaQueryListenersByQuery[query].remove();
+	          }, this);
+	        }
 	      }
-	
-	      this._radiumIsMounted = false;
-	
-	      if (this._radiumMouseUpListener) {
-	        this._radiumMouseUpListener.remove();
+	    }, {
+	      key: 'render',
+	      value: function render() {
+	        var renderedElement = _get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'render', this).call(this);
+	        return resolveStyles(this, renderedElement, config);
 	      }
-	
-	      if (this._radiumMediaQueryListenersByQuery) {
-	        Object.keys(this._radiumMediaQueryListenersByQuery).forEach(function (query) {
-	          this._radiumMediaQueryListenersByQuery[query].remove();
-	        }, this);
-	      }
-	    };
-	
-	    RadiumEnhancer.prototype.getChildContext = function getChildContext() {
-	      var superChildContext = _ComposedComponent.prototype.getChildContext ? _ComposedComponent.prototype.getChildContext : {};
-	
-	      if (!this.props.radiumConfig) {
-	        return superChildContext;
-	      }
-	
-	      return _extends({}, superChildContext, {
-	        radiumConfig: this.props.radiumConfig
-	      });
-	    };
-	
-	    RadiumEnhancer.prototype.render = function render() {
-	      var renderedElement = _ComposedComponent.prototype.render.call(this);
-	      var currentConfig = this.props.radiumConfig || this.context.radiumConfig || config;
-	
-	      if (config && currentConfig !== config) {
-	        currentConfig = _extends({}, config, currentConfig);
-	      }
-	
-	      return _resolveStylesJs2['default'](this, renderedElement, currentConfig);
-	    };
+	    }]);
 	
 	    return RadiumEnhancer;
 	  })(ComposedComponent);
 	
-	  copyProperties(component, RadiumEnhancer);
+	  copyProperties(ComposedComponent, RadiumEnhancer);
 	
 	  if (process.env.NODE_ENV !== 'production') {
 	    // This also fixes React Hot Loader by exposing the original components top
@@ -23175,28 +23109,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    copyProperties(ComposedComponent.prototype, RadiumEnhancer.prototype);
 	  }
 	
-	  if (RadiumEnhancer.propTypes && RadiumEnhancer.propTypes.style) {
-	    RadiumEnhancer.propTypes = _extends({}, RadiumEnhancer.propTypes, {
-	      style: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.object])
-	    });
-	  }
+	  RadiumEnhancer.displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
 	
-	  RadiumEnhancer.displayName = component.displayName || component.name || 'Component';
-	
-	  RadiumEnhancer.printStyleClass = _printStylesJs2['default'].addPrintStyles(RadiumEnhancer);
-	
-	  RadiumEnhancer.contextTypes = _extends({}, RadiumEnhancer.contextTypes, {
-	    radiumConfig: _react2['default'].PropTypes.object
-	  });
-	
-	  RadiumEnhancer.childContextTypes = _extends({}, RadiumEnhancer.childContextTypes, {
-	    radiumConfig: _react2['default'].PropTypes.object
-	  });
+	  RadiumEnhancer.printStyleClass = printStyles.addPrintStyles(RadiumEnhancer);
 	
 	  return RadiumEnhancer;
-	}
+	};
 	
-	module.exports = exports['default'];
+	module.exports = enhanceWithRadium;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
@@ -23235,7 +23155,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        currentQueue = queue;
 	        queue = [];
 	        while (++queueIndex < len) {
-	            currentQueue[queueIndex].run();
+	            if (currentQueue) {
+	                currentQueue[queueIndex].run();
+	            }
 	        }
 	        queueIndex = -1;
 	        len = queue.length;
@@ -23287,7 +23209,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    throw new Error('process.binding is not supported');
 	};
 	
-	// TODO(shtylman)
 	process.cwd = function () { return '/' };
 	process.chdir = function (dir) {
 	    throw new Error('process.chdir is not supported');
@@ -23303,40 +23224,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	exports.__esModule = true;
-	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _getState2 = __webpack_require__(14);
-	
-	var _getState3 = _interopRequireDefault(_getState2);
-	
-	var _getStateKey = __webpack_require__(15);
-	
-	var _getStateKey2 = _interopRequireDefault(_getStateKey);
-	
-	var _mergeStyles = __webpack_require__(16);
-	
-	var _mergeStyles2 = _interopRequireDefault(_mergeStyles);
-	
-	var _plugins = __webpack_require__(19);
-	
-	var _plugins2 = _interopRequireDefault(_plugins);
-	
-	var _exenv = __webpack_require__(38);
-	
-	var _exenv2 = _interopRequireDefault(_exenv);
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
 	
 	/*:: import type {Config} from './config';*/
 	
+	var _getState = __webpack_require__(24);
+	var getStateKey = __webpack_require__(25);
+	var mergeStyles = __webpack_require__(26);
+	var Plugins = __webpack_require__(14);
+	
+	var ExecutionEnvironment = __webpack_require__(19);
+	var React = __webpack_require__(3);
+	
 	var DEFAULT_CONFIG = {
-	  plugins: [_plugins2['default'].mergeStyleArray, _plugins2['default'].checkProps, _plugins2['default'].resolveMediaQueries, _plugins2['default'].resolveInteractionStyles, _plugins2['default'].prefix, _plugins2['default'].checkProps]
+	  plugins: [Plugins.mergeStyleArray, Plugins.checkProps, Plugins.resolveMediaQueries, Plugins.resolveInteractionStyles, Plugins.prefix, Plugins.checkProps]
 	};
 	
 	// Gross
@@ -23371,22 +23272,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    // Wrap the function, resolving styles on the result
 	    return function () {
 	      var result = children.apply(this, arguments);
-	      if (_react2['default'].isValidElement(result)) {
+	      if (React.isValidElement(result)) {
 	        return resolveStyles(component, result, config, existingKeyMap);
 	      }
 	      return result;
 	    };
 	  }
 	
-	  if (_react2['default'].Children.count(children) === 1 && children.type) {
+	  if (React.Children.count(children) === 1 && children.type) {
 	    // If a React Element is an only child, don't wrap it in an array for
 	    // React.Children.map() for React.Children.only() compatibility.
-	    var onlyChild = _react2['default'].Children.only(children);
+	    var onlyChild = React.Children.only(children);
 	    return resolveStyles(component, onlyChild, config, existingKeyMap);
 	  }
 	
-	  return _react2['default'].Children.map(children, function (child) {
-	    if (_react2['default'].isValidElement(child)) {
+	  return React.Children.map(children, function (child) {
+	    if (React.isValidElement(child)) {
 	      return resolveStyles(component, child, config, existingKeyMap);
 	    }
 	
@@ -23410,7 +23311,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    var propValue = props[prop];
-	    if (_react2['default'].isValidElement(propValue)) {
+	    if (React.isValidElement(propValue)) {
 	      newProps = _extends({}, newProps);
 	      newProps[prop] = resolveStyles(component, propValue, config, existingKeyMap);
 	    }
@@ -23424,7 +23325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // with the rendered element, so we know to apply the proper interactive
 	  // styles.
 	  var originalKey = typeof renderedElement.ref === 'string' ? renderedElement.ref : renderedElement.key;
-	  var key = _getStateKey2['default'](originalKey);
+	  var key = getStateKey(originalKey);
 	
 	  var alreadyGotKey = false;
 	  var getKey = function getKey() {
@@ -23470,7 +23371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  // Don't run plugins if renderedElement is not a simple ReactDOMElement or has
 	  // no style.
-	  if (!_react2['default'].isValidElement(renderedElement) || typeof renderedElement.type !== 'string' || !props.style) {
+	  if (!React.isValidElement(renderedElement) || typeof renderedElement.type !== 'string' || !props.style) {
 	    return props;
 	  }
 	
@@ -23483,7 +23384,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var newStyle = props.style;
 	  plugins.forEach(function (plugin) {
 	    var result = plugin({
-	      ExecutionEnvironment: _exenv2['default'],
+	      ExecutionEnvironment: ExecutionEnvironment,
 	      componentName: component.constructor.displayName || component.constructor.name,
 	      config: config,
 	      getComponentField: function getComponentField(key) {
@@ -23493,9 +23394,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return globalState[key];
 	      },
 	      getState: function getState(stateKey, elementKey) {
-	        return _getState3['default'](component.state, elementKey || getKey(), stateKey);
+	        return _getState(component.state, elementKey || getKey(), stateKey);
 	      },
-	      mergeStyles: _mergeStyles2['default'],
+	      mergeStyles: mergeStyles,
 	      props: newProps,
 	      setState: function setState(stateKey, value, elementKey) {
 	        return _setStyleState(component, elementKey || getKey(), stateKey, value);
@@ -23534,7 +23435,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    newProps = _extends({}, newProps, { _radiumDidResolveStyles: true });
 	  }
 	
-	  return _react2['default'].cloneElement(renderedElement, newProps, newChildren);
+	  return React.cloneElement(renderedElement, newProps, newChildren);
 	};
 	
 	//
@@ -23597,195 +23498,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  globalState = {};
 	};
 	
-	exports['default'] = resolveStyles;
-	module.exports = exports['default'];
+	module.exports = resolveStyles;
 	// ReactComponent, flow+eslint complaining
 
 /***/ },
 /* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* @flow */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _getStateKey = __webpack_require__(15);
-	
-	var _getStateKey2 = _interopRequireDefault(_getStateKey);
-	
-	var getState = function getState(state /*: {_radiumStyleState: {[key: string]: {[value: string]: boolean}}}*/, elementKey /*: string*/, value /*: string*/) /*: any*/ {
-	  var key = _getStateKey2['default'](elementKey);
-	
-	  return !!state && !!state._radiumStyleState && !!state._radiumStyleState[key] && state._radiumStyleState[key][value];
-	};
-	
-	exports['default'] = getState;
-	module.exports = exports['default'];
-
-/***/ },
-/* 15 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	var getStateKey = function getStateKey(elementKey /*: ?string*/) /*: string*/ {
-	  return elementKey === null || elementKey === undefined ? 'main' : elementKey.toString();
-	};
-	
-	exports['default'] = getStateKey;
-	module.exports = exports['default'];
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _isPlainObject = __webpack_require__(17);
-	
-	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
-	
-	var shouldMerge = function shouldMerge(value) {
-	  // Don't merge objects overriding toString, since they should be converted
-	  // to string values.
-	  return _isPlainObject2['default'](value) && value.toString === Object.prototype.toString;
-	};
-	
-	// Merge style objects. Deep merge plain object values.
-	var mergeStyles = function mergeStyles(styles) {
-	  var result = {};
-	
-	  styles.forEach(function (style) {
-	    if (!style || typeof style !== 'object') {
-	      return;
-	    }
-	
-	    if (Array.isArray(style)) {
-	      style = mergeStyles(style);
-	    }
-	
-	    Object.keys(style).forEach(function (key) {
-	      if (shouldMerge(style[key]) && shouldMerge(result[key])) {
-	        result[key] = mergeStyles([result[key], style[key]]);
-	      } else {
-	        result[key] = style[key];
-	      }
-	    });
-	  });
-	
-	  return result;
-	};
-	
-	exports['default'] = mergeStyles;
-	module.exports = exports['default'];
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*!
-	 * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
-	 *
-	 * Copyright (c) 2014-2015, Jon Schlinkert.
-	 * Licensed under the MIT License.
-	 */
-	
-	'use strict';
-	
-	var isObject = __webpack_require__(18);
-	
-	function isObjectObject(o) {
-	  return isObject(o) === true
-	    && Object.prototype.toString.call(o) === '[object Object]';
-	}
-	
-	module.exports = function isPlainObject(o) {
-	  var ctor,prot;
-	  
-	  if (isObjectObject(o) === false) return false;
-	  
-	  // If has modified constructor
-	  ctor = o.constructor;
-	  if (typeof ctor !== 'function') return false;
-	  
-	  // If has modified prototype
-	  prot = ctor.prototype;
-	  if (isObjectObject(prot) === false) return false;
-	  
-	  // If constructor does not have an Object-specific method
-	  if (prot.hasOwnProperty('isPrototypeOf') === false) {
-	    return false;
-	  }
-	  
-	  // Most likely a plain Object
-	  return true;
-	};
-
-
-/***/ },
-/* 18 */
-/***/ function(module, exports) {
-
-	/*!
-	 * isobject <https://github.com/jonschlinkert/isobject>
-	 *
-	 * Copyright (c) 2014-2015, Jon Schlinkert.
-	 * Licensed under the MIT License.
-	 */
-	
-	'use strict';
-	
-	module.exports = function isObject(val) {
-	  return val != null && typeof val === 'object'
-	    && !Array.isArray(val);
-	};
-
-
-/***/ },
-/* 19 */
-/***/ function(module, exports, __webpack_require__) {
-
 	/** @flow */
-	/* eslint-disable block-scoped-const */
+	/* eslint-disable block-scoped-var */
 	
 	'use strict';
 	
-	exports.__esModule = true;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _checkPropsPlugin = __webpack_require__(20);
-	
-	var _checkPropsPlugin2 = _interopRequireDefault(_checkPropsPlugin);
-	
-	var _mergeStyleArrayPlugin = __webpack_require__(21);
-	
-	var _mergeStyleArrayPlugin2 = _interopRequireDefault(_mergeStyleArrayPlugin);
-	
-	var _prefixPlugin = __webpack_require__(22);
-	
-	var _prefixPlugin2 = _interopRequireDefault(_prefixPlugin);
-	
-	var _resolveInteractionStylesPlugin = __webpack_require__(35);
-	
-	var _resolveInteractionStylesPlugin2 = _interopRequireDefault(_resolveInteractionStylesPlugin);
-	
-	var _resolveMediaQueriesPlugin = __webpack_require__(37);
-	
-	var _resolveMediaQueriesPlugin2 = _interopRequireDefault(_resolveMediaQueriesPlugin);
+	Object.defineProperty(exports, '__esModule', {
+	  value: true
+	});
 	
 	/*:: import type {Config} from '../config';*/
+	
+	var checkPropsPlugin = __webpack_require__(15);
+	var mergeStyleArrayPlugin = __webpack_require__(16);
+	var prefixPlugin = __webpack_require__(17);
+	var resolveInteractionStylesPlugin = __webpack_require__(21);
+	var resolveMediaQueriesPlugin = __webpack_require__(23);
+	
 	/*:: export type PluginConfig = {
 	  // May not be readable if code has been minified
 	  componentName: string,
@@ -23842,14 +23578,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  // Replaces (not merged into) the rendered element's style property.
 	  style?: Object,
-	};*/exports['default'] = {
-	  checkProps: _checkPropsPlugin2['default'],
-	  mergeStyleArray: _mergeStyleArrayPlugin2['default'],
-	  prefix: _prefixPlugin2['default'],
-	  resolveInteractionStyles: _resolveInteractionStylesPlugin2['default'],
-	  resolveMediaQueries: _resolveMediaQueriesPlugin2['default']
+	};*/
+	
+	module.exports = {
+	  checkProps: checkPropsPlugin,
+	  mergeStyleArray: mergeStyleArrayPlugin,
+	  prefix: prefixPlugin,
+	  resolveInteractionStyles: resolveInteractionStylesPlugin,
+	  resolveMediaQueries: resolveMediaQueriesPlugin
 	};
-	module.exports = exports['default'];
 	
 	// May not be readable if code has been minified
 	
@@ -23890,14 +23627,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	// Replaces (not merged into) the rendered element's style property.
 
 /***/ },
-/* 20 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/* @flow */
 	
 	'use strict';
-	
-	exports.__esModule = true;
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
@@ -23906,65 +23641,60 @@ return /******/ (function(modules) { // webpackBootstrap
 	var checkProps = (function () {} /*: any*/);
 	
 	if (process.env.NODE_ENV !== 'production') {
-	  (function () {
-	    // Warn if you use longhand and shorthand properties in the same style
-	    // object.
-	    // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties
+	  // Warn if you use longhand and shorthand properties in the same style
+	  // object.
+	  // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties
 	
-	    var shorthandPropertyExpansions = {
-	      'background': ['backgroundAttachment', 'backgroundBlendMode', 'backgroundClip', 'backgroundColor', 'backgroundImage', 'backgroundOrigin', 'backgroundPosition', 'backgroundPositionX', 'backgroundPositionY', 'backgroundRepeat', 'backgroundRepeatX', 'backgroundRepeatY', 'backgroundSize'],
-	      'border': ['borderBottom', 'borderBottomColor', 'borderBottomStyle', 'borderBottomWidth', 'borderColor', 'borderLeft', 'borderLeftColor', 'borderLeftStyle', 'borderLeftWidth', 'borderRight', 'borderRightColor', 'borderRightStyle', 'borderRightWidth', 'borderStyle', 'borderTop', 'borderTopColor', 'borderTopStyle', 'borderTopWidth', 'borderWidth'],
-	      'borderImage': ['borderImageOutset', 'borderImageRepeat', 'borderImageSlice', 'borderImageSource', 'borderImageWidth'],
-	      'borderRadius': ['borderBottomLeftRadius', 'borderBottomRightRadius', 'borderTopLeftRadius', 'borderTopRightRadius'],
-	      'font': ['fontFamily', 'fontKerning', 'fontSize', 'fontStretch', 'fontStyle', 'fontVariant', 'fontVariantLigatures', 'fontWeight', 'lineHeight'],
-	      'listStyle': ['listStyleImage', 'listStylePosition', 'listStyleType'],
-	      'margin': ['marginBottom', 'marginLeft', 'marginRight', 'marginTop'],
-	      'padding': ['paddingBottom', 'paddingLeft', 'paddingRight', 'paddingTop'],
-	      'transition': ['transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction']
-	    };
+	  var shorthandPropertyExpansions = {
+	    'background': ['backgroundAttachment', 'backgroundBlendMode', 'backgroundClip', 'backgroundColor', 'backgroundImage', 'backgroundOrigin', 'backgroundPosition', 'backgroundPositionX', 'backgroundPositionY', 'backgroundRepeat', 'backgroundRepeatX', 'backgroundRepeatY', 'backgroundSize'],
+	    'border': ['borderBottom', 'borderBottomColor', 'borderBottomStyle', 'borderBottomWidth', 'borderColor', 'borderLeft', 'borderLeftColor', 'borderLeftStyle', 'borderLeftWidth', 'borderRight', 'borderRightColor', 'borderRightStyle', 'borderRightWidth', 'borderStyle', 'borderTop', 'borderTopColor', 'borderTopStyle', 'borderTopWidth', 'borderWidth'],
+	    'borderImage': ['borderImageOutset', 'borderImageRepeat', 'borderImageSlice', 'borderImageSource', 'borderImageWidth'],
+	    'borderRadius': ['borderBottomLeftRadius', 'borderBottomRightRadius', 'borderTopLeftRadius', 'borderTopRightRadius'],
+	    'font': ['fontFamily', 'fontKerning', 'fontSize', 'fontStretch', 'fontStyle', 'fontVariant', 'fontVariantLigatures', 'fontWeight', 'lineHeight'],
+	    'listStyle': ['listStyleImage', 'listStylePosition', 'listStyleType'],
+	    'margin': ['marginBottom', 'marginLeft', 'marginRight', 'marginTop'],
+	    'padding': ['paddingBottom', 'paddingLeft', 'paddingRight', 'paddingTop'],
+	    'transition': ['transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction']
+	  };
 	
-	    checkProps = function (config /*: PluginConfig*/) /*: PluginResult*/ {
-	      var componentName = config.componentName;
-	      var style = config.style;
+	  checkProps = function (config /*: PluginConfig*/) /*: PluginResult*/ {
+	    var componentName = config.componentName;
+	    var style = config.style;
 	
-	      if (typeof style !== 'object' || !style) {
-	        return;
-	      }
-	
-	      var styleKeys = Object.keys(style);
-	      styleKeys.forEach(function (styleKey) {
-	        if (Array.isArray(shorthandPropertyExpansions[styleKey]) && shorthandPropertyExpansions[styleKey].some(function (sp) {
-	          return styleKeys.indexOf(sp) !== -1;
-	        })) {
-	          if (process.env.NODE_ENV !== 'production') {
-	            /* eslint-disable no-console */
-	            console.warn('Radium: property "' + styleKey + '" in style object', style, ': do not mix longhand and ' + 'shorthand properties in the same style object. Check the render ' + 'method of ' + componentName + '.', 'See https://github.com/FormidableLabs/radium/issues/95 for more ' + 'information.');
-	            /* eslint-enable no-console */
-	          }
-	        }
-	      });
-	
-	      styleKeys.forEach(function (k) {
-	        return checkProps(_extends({}, config, { style: style[k] }));
-	      });
+	    if (typeof style !== 'object' || !style) {
 	      return;
-	    };
-	  })();
+	    }
+	
+	    var styleKeys = Object.keys(style);
+	    styleKeys.forEach(function (styleKey) {
+	      if (shorthandPropertyExpansions[styleKey] && shorthandPropertyExpansions[styleKey].some(function (sp) {
+	        return styleKeys.indexOf(sp) !== -1;
+	      })) {
+	        if (process.env.NODE_ENV !== 'production') {
+	          /* eslint-disable no-console */
+	          console.warn('Radium: property "' + styleKey + '" in style object', style, ': do not mix longhand and ' + 'shorthand properties in the same style object. Check the render ' + 'method of ' + componentName + '.', 'See https://github.com/FormidableLabs/radium/issues/95 for more ' + 'information.');
+	          /* eslint-enable no-console */
+	        }
+	      }
+	    });
+	
+	    styleKeys.forEach(function (k) {
+	      return checkProps(_extends({}, config, { style: style[k] }));
+	    });
+	    return;
+	  };
 	}
 	
-	exports['default'] = checkProps;
-	module.exports = exports['default'];
+	module.exports = checkProps;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 21 */
+/* 16 */
 /***/ function(module, exports) {
 
 	/* @flow */
 	
 	'use strict';
-	
-	exports.__esModule = true;
 	
 	// Convenient syntax for multiple styles: `style={[style1, style2, etc]}`
 	// Ignores non-objects, so you can do `this.state.isCool && styles.cool`.
@@ -23976,39 +23706,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return { style: newStyle };
 	};
 	
-	exports['default'] = mergeStyleArrayPlugin;
-	module.exports = exports['default'];
+	module.exports = mergeStyleArrayPlugin;
 
 /***/ },
-/* 22 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 	
 	'use strict';
 	
-	exports.__esModule = true;
-	exports['default'] = prefixPlugin;
-	
-	var _prefixer = __webpack_require__(23);
-	
 	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	function prefixPlugin(_ref /*: PluginConfig*/) /*: PluginResult*/ {
+	
+	var Prefixer = __webpack_require__(18);
+	
+	var prefixPlugin = function prefixPlugin(_ref /*: PluginConfig*/) /*: PluginResult*/ {
 	  var componentName = _ref.componentName;
-	  var config = _ref.config;
 	  var style = _ref.style;
 	
-	  var newStyle = _prefixer.getPrefixedStyle(style, componentName, config.userAgent);
+	  var newStyle = Prefixer.getPrefixedStyle(style, componentName);
 	  return { style: newStyle };
-	}
+	};
 	
-	module.exports = exports['default'];
+	module.exports = prefixPlugin;
 
 /***/ },
-/* 23 */
+/* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {/**
+	/* WEBPACK VAR INJECTION */(function(process) {/**
 	 * Based on https://github.com/jsstyles/css-vendor, but without having to
 	 * convert between different cases all the time.
 	 *
@@ -24017,1084 +23743,396 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	'use strict';
 	
-	exports.__esModule = true;
-	exports.getPrefixedStyle = getPrefixedStyle;
+	var ExecutionEnvironment = __webpack_require__(19);
+	var arrayFind = __webpack_require__(20);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var VENDOR_PREFIX_REGEX = /-(moz|webkit|ms|o)-/;
 	
-	var _inlineStylePrefixer = __webpack_require__(24);
+	var vendorPrefixes = ['Webkit', 'ms', 'Moz', 'O'];
 	
-	var _inlineStylePrefixer2 = _interopRequireDefault(_inlineStylePrefixer);
-	
-	function transformValues(style) {
-	  return Object.keys(style).reduce(function (newStyle, key) {
-	    var value = style[key];
-	    if (Array.isArray(value)) {
-	      value = value.join(';' + key + ':');
-	    }
-	    newStyle[key] = value;
-	    return newStyle;
-	  }, {});
-	}
-	
-	var lastUserAgent = undefined;
-	var prefixer = undefined;
-	
-	// Returns a new style object with vendor prefixes added to property names
-	// and values.
-	
-	function getPrefixedStyle(style /*: Object*/, componentName /*: ?string*/, userAgent /*:: ?: ?string*/) /*: Object*/ {
-	  var actualUserAgent = userAgent || global && global.navigator && global.navigator.userAgent;
-	
-	  if (!actualUserAgent) {
-	    throw new Error('Radium: userAgent must be supplied for server-side rendering. See ' + 'https://github.com/FormidableLabs/radium/tree/master/docs/api#radium ' + 'for more information.');
-	  }
-	
-	  if (!prefixer || actualUserAgent !== lastUserAgent) {
-	    prefixer = new _inlineStylePrefixer2['default'](actualUserAgent);
-	    lastUserAgent = actualUserAgent;
-	  }
-	
-	  var prefixedStyle = prefixer.prefix(style);
-	  var prefixedStyleWithFallbacks = transformValues(prefixedStyle);
-	  return prefixedStyleWithFallbacks;
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 24 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	var _getBrowserInformation = __webpack_require__(25);
-	
-	var _getBrowserInformation2 = _interopRequireDefault(_getBrowserInformation);
-	
-	var _caniuseData = __webpack_require__(27);
-	
-	var _caniuseData2 = _interopRequireDefault(_caniuseData);
-	
-	var _Plugins = __webpack_require__(28);
-	
-	var _Plugins2 = _interopRequireDefault(_Plugins);
-	
-	var defaultUserAgent = typeof navigator !== 'undefined' ? navigator.userAgent : undefined;
-	
-	var Prefixer = (function () {
-	  /**
-	   * Instantiante a new prefixer.
-	   * @param {string} userAgent - userAgent to gather prefix information according to caniuse.com
-	   */
-	
-	  function Prefixer() {
-	    var _this = this;
-	
-	    var userAgent = arguments.length <= 0 || arguments[0] === undefined ? defaultUserAgent : arguments[0];
-	
-	    _classCallCheck(this, Prefixer);
-	
-	    this._userAgent = userAgent;
-	    this._browserInfo = (0, _getBrowserInformation2['default'])(userAgent);
-	
-	    this.cssPrefix = this._browserInfo.prefix.CSS;
-	    this.jsPrefix = this._browserInfo.prefix.inline;
-	
-	    var data = _caniuseData2['default'][this._browserInfo.browser];
-	    if (data) {
-	      this._requiresPrefix = Object.keys(data).filter(function (key) {
-	        return data[key] >= _this._browserInfo.version;
-	      }).reduce(function (result, name) {
-	        result[name] = true;
-	        return result;
-	      }, {});
-	      this._hasPropsRequiringPrefix = Object.keys(this._requiresPrefix).length > 0;
-	    } else {
-	      this._hasPropsRequiringPrefix = false;
-	
-	      // TODO warn only in dev mode
-	      console.warn('Your userAgent seems to be not supported by inline-style-prefixer. Feel free to open an issue.');
-	    }
-	  }
-	
-	  // helper to capitalize strings
-	
-	  /**
-	   * Returns a prefixed version of the style object
-	   * @param {Object} styles - Style object that gets prefixed properties added
-	   * @returns {Object} - Style object with prefixed properties and valeus
-	   */
-	
-	  _createClass(Prefixer, [{
-	    key: 'prefix',
-	    value: function prefix(styles) {
-	      var _this2 = this;
-	
-	      // only add prefixes if needed
-	      if (!this._hasPropsRequiringPrefix) {
-	        return styles;
+	var infoByCssPrefix = {
+	  '-moz-': {
+	    cssPrefix: '-moz-',
+	    jsPrefix: 'Moz',
+	    alternativeProperties: {
+	      // OLD - Firefox 19-
+	      alignItems: ['MozBoxAlign'],
+	      flex: ['MozBoxFlex'],
+	      flexDirection: ['MozBoxOrient'],
+	      justifyContent: ['MozBoxPack'],
+	      order: ['MozBoxOrdinalGroup']
+	    },
+	    alternativeValues: {
+	      // OLD - Firefox 19-
+	      alignItems: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end']
+	      },
+	      display: {
+	        flex: ['-moz-box']
+	      },
+	      flexDirection: {
+	        column: ['vertical'],
+	        row: ['horizontal']
+	      },
+	      justifyContent: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end'],
+	        'space-between': ['justify']
 	      }
-	
-	      styles = assign({}, styles);
-	
-	      Object.keys(styles).forEach(function (property) {
-	        var value = styles[property];
-	        if (value instanceof Object) {
-	          // recursively loop through nested style objects
-	          styles[property] = _this2.prefix(value);
-	        } else {
-	          // add prefixes if needed
-	          if (_this2._requiresPrefix[property]) {
-	            styles[_this2.jsPrefix + caplitalizeString(property)] = value;
-	            delete styles[property];
-	          }
-	
-	          // resolve plugins
-	          _Plugins2['default'].forEach(function (plugin) {
-	            assign(styles, plugin(property, value, _this2._browserInfo, styles));
-	          });
-	        }
-	      });
-	
-	      return styles;
 	    }
-	  }]);
-	
-	  return Prefixer;
-	})();
-	
-	exports['default'] = Prefixer;
-	var caplitalizeString = function caplitalizeString(str) {
-	  return str.charAt(0).toUpperCase() + str.slice(1);
-	};
-	
-	// leight polyfill for Object.assign
-	var assign = function assign(base, extend) {
-	  extend && Object.keys(extend).forEach(function (key) {
-	    return base[key] = extend[key];
-	  });
-	  return extend;
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 25 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _bowser = __webpack_require__(26);
-	
-	var _bowser2 = _interopRequireDefault(_bowser);
-	
-	var vendorPrefixes = {
-	  'Webkit': ['chrome', 'safari', 'ios', 'android', 'phantom', 'opera', 'webos', 'blackberry', 'bada', 'tizen'],
-	  'Moz': ['firefox', 'seamonkey', 'sailfish'],
-	  'ms': ['msie', 'msedge']
-	};
-	
-	var browsers = {
-	  'chrome': [['chrome'], ['phantom'], ['webos'], ['blackberry'], ['bada'], ['tizenn']],
-	  'safari': [['safari']],
-	  'firefox': [['firefox'], ['seamonkey'], ['sailfish']],
-	  'ie': [['msie'], ['msedge']],
-	  'opera': [['opera']],
-	  'ios_saf': [['ios', 'mobile'], ['ios', 'tablet']],
-	  'ie_mob': [['windowsphone', 'mobile', 'msie'], ['windowsphone', 'tablet', 'msie'], ['windowsphone', 'mobile', 'msedge'], ['windowsphone', 'tablet', 'msedge']],
-	  'op_mini': [['opera', 'mobile'], ['opera', 'tablet']],
-	  'and_chr': [['android', 'chrome', 'mobile'], ['android', 'chrome', 'tablet']],
-	  'and_uc': [['android', 'mobile'], ['android', 'mobile']],
-	  'android': [['android', 'mobile'], ['android', 'mobile']]
+	  },
+	  '-ms-': {
+	    cssPrefix: '-ms-',
+	    jsPrefix: 'ms',
+	    alternativeProperties: {
+	      // TWEENER - IE 10
+	      alignContent: ['msFlexLinePack'],
+	      alignItems: ['msFlexAlign'],
+	      alignSelf: ['msFlexAlignItem'],
+	      justifyContent: ['msFlexPack'],
+	      order: ['msFlexOrder']
+	    },
+	    alternativeValues: {
+	      // TWEENER - IE 10
+	      alignContent: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end'],
+	        'space-between': ['justify'],
+	        'space-around': ['distribute']
+	      },
+	      alignItems: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end']
+	      },
+	      alignSelf: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end']
+	      },
+	      display: {
+	        flex: ['-ms-flexbox'],
+	        'inline-flex': ['-ms-inline-flexbox']
+	      },
+	      justifyContent: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end'],
+	        'space-between': ['justify'],
+	        'space-around': ['distribute']
+	      }
+	    }
+	  },
+	  '-o-': {
+	    cssPrefix: '-o-',
+	    jsPrefix: 'O'
+	  },
+	  '-webkit-': {
+	    cssPrefix: '-webkit-',
+	    jsPrefix: 'Webkit',
+	    alternativeProperties: {
+	      // OLD - iOS 6-, Safari 3.1-6
+	      alignItems: ['WebkitBoxAlign'],
+	      flex: ['MozBoxFlex'],
+	      flexDirection: ['WebkitBoxOrient'],
+	      justifyContent: ['WebkitBoxPack'],
+	      order: ['WebkitBoxOrdinalGroup']
+	    },
+	    alternativeValues: {
+	      // OLD - iOS 6-, Safari 3.1-6
+	      alignItems: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end']
+	      },
+	      display: {
+	        flex: ['-webkit-box']
+	      },
+	      flexDirection: {
+	        row: ['horizontal'],
+	        column: ['vertical']
+	      },
+	      justifyContent: {
+	        'flex-start': ['start'],
+	        'flex-end': ['end'],
+	        'space-between': ['justify']
+	      }
+	    }
+	  }
 	};
 	
 	/**
-	 * Uses bowser to get default browser information such as version and name
-	 * Evaluates bowser info and adds vendorPrefix information
-	 * @param {string} userAgent - userAgent that gets evaluated
+	 * CSS properties which accept numbers but are not in units of "px".
+	 * Copied from React core June 22, 2015.
+	 * https://github.com/facebook/react/blob/
+	 * ba81b60ad8e93b747be42a03b797065932c49c96/
+	 * src/renderers/dom/shared/CSSProperty.js
 	 */
+	var isUnitlessNumber = {
+	  boxFlex: true,
+	  boxFlexGroup: true,
+	  columnCount: true,
+	  flex: true,
+	  flexGrow: true,
+	  flexPositive: true,
+	  flexShrink: true,
+	  flexNegative: true,
+	  fontWeight: true,
+	  lineClamp: true,
+	  lineHeight: true,
+	  opacity: true,
+	  order: true,
+	  orphans: true,
+	  tabSize: true,
+	  widows: true,
+	  zIndex: true,
+	  zoom: true,
 	
-	exports['default'] = function (userAgent) {
-	  var info = _bowser2['default']._detect(userAgent);
-	
-	  Object.keys(vendorPrefixes).forEach(function (prefix) {
-	    vendorPrefixes[prefix].forEach(function (browser) {
-	      if (info[browser]) {
-	        info.prefix = {
-	          inline: prefix,
-	          CSS: '-' + prefix.toLowerCase() + '-'
-	        };
-	      }
-	    });
-	  });
-	
-	  var name = '';
-	  Object.keys(browsers).forEach(function (browser) {
-	    browsers[browser].forEach(function (condition) {
-	      var match = 0;
-	      condition.forEach(function (single) {
-	        if (info[single]) {
-	          match += 1;
-	        }
-	      });
-	      if (condition.length === match) {
-	        name = browser;
-	      }
-	    });
-	  });
-	
-	  info.browser = name;
-	  return info;
+	  // SVG-related properties
+	  fillOpacity: true,
+	  strokeDashoffset: true,
+	  strokeOpacity: true,
+	  strokeWidth: true
 	};
 	
-	module.exports = exports['default'];
-
-/***/ },
-/* 26 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
-	  * Bowser - a browser detector
-	  * https://github.com/ded/bowser
-	  * MIT License | (c) Dustin Diaz 2015
-	  */
+	var domStyle = {};
+	var prefixedPropertyCache = {};
+	var prefixedValueCache = {};
+	var prefixInfo = {
+	  cssPrefix: '',
+	  jsPrefix: ''
+	};
 	
-	!function (name, definition) {
-	  if (typeof module != 'undefined' && module.exports) module.exports = definition()
-	  else if (true) !(__WEBPACK_AMD_DEFINE_FACTORY__ = (definition), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__))
-	  else this[name] = definition()
-	}('bowser', function () {
-	  /**
-	    * See useragents.js for examples of navigator.userAgent
-	    */
+	if (ExecutionEnvironment.canUseDOM) {
+	  domStyle = (document /*: any*/).createElement('p').style;
 	
-	  var t = true
-	
-	  function detect(ua) {
-	
-	    function getFirstMatch(regex) {
-	      var match = ua.match(regex);
-	      return (match && match.length > 1 && match[1]) || '';
-	    }
-	
-	    function getSecondMatch(regex) {
-	      var match = ua.match(regex);
-	      return (match && match.length > 1 && match[2]) || '';
-	    }
-	
-	    var iosdevice = getFirstMatch(/(ipod|iphone|ipad)/i).toLowerCase()
-	      , likeAndroid = /like android/i.test(ua)
-	      , android = !likeAndroid && /android/i.test(ua)
-	      , chromeBook = /CrOS/.test(ua)
-	      , edgeVersion = getFirstMatch(/edge\/(\d+(\.\d+)?)/i)
-	      , versionIdentifier = getFirstMatch(/version\/(\d+(\.\d+)?)/i)
-	      , tablet = /tablet/i.test(ua)
-	      , mobile = !tablet && /[^-]mobi/i.test(ua)
-	      , result
-	
-	    if (/opera|opr/i.test(ua)) {
-	      result = {
-	        name: 'Opera'
-	      , opera: t
-	      , version: versionIdentifier || getFirstMatch(/(?:opera|opr)[\s\/](\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/yabrowser/i.test(ua)) {
-	      result = {
-	        name: 'Yandex Browser'
-	      , yandexbrowser: t
-	      , version: versionIdentifier || getFirstMatch(/(?:yabrowser)[\s\/](\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/windows phone/i.test(ua)) {
-	      result = {
-	        name: 'Windows Phone'
-	      , windowsphone: t
-	      }
-	      if (edgeVersion) {
-	        result.msedge = t
-	        result.version = edgeVersion
-	      }
-	      else {
-	        result.msie = t
-	        result.version = getFirstMatch(/iemobile\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/msie|trident/i.test(ua)) {
-	      result = {
-	        name: 'Internet Explorer'
-	      , msie: t
-	      , version: getFirstMatch(/(?:msie |rv:)(\d+(\.\d+)?)/i)
-	      }
-	    } else if (chromeBook) {
-	      result = {
-	        name: 'Chrome'
-	      , chromeBook: t
-	      , chrome: t
-	      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
-	      }
-	    } else if (/chrome.+? edge/i.test(ua)) {
-	      result = {
-	        name: 'Microsoft Edge'
-	      , msedge: t
-	      , version: edgeVersion
-	      }
-	    }
-	    else if (/chrome|crios|crmo/i.test(ua)) {
-	      result = {
-	        name: 'Chrome'
-	      , chrome: t
-	      , version: getFirstMatch(/(?:chrome|crios|crmo)\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (iosdevice) {
-	      result = {
-	        name : iosdevice == 'iphone' ? 'iPhone' : iosdevice == 'ipad' ? 'iPad' : 'iPod'
-	      }
-	      // WTF: version is not part of user agent in web apps
-	      if (versionIdentifier) {
-	        result.version = versionIdentifier
-	      }
-	    }
-	    else if (/sailfish/i.test(ua)) {
-	      result = {
-	        name: 'Sailfish'
-	      , sailfish: t
-	      , version: getFirstMatch(/sailfish\s?browser\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/seamonkey\//i.test(ua)) {
-	      result = {
-	        name: 'SeaMonkey'
-	      , seamonkey: t
-	      , version: getFirstMatch(/seamonkey\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/firefox|iceweasel/i.test(ua)) {
-	      result = {
-	        name: 'Firefox'
-	      , firefox: t
-	      , version: getFirstMatch(/(?:firefox|iceweasel)[ \/](\d+(\.\d+)?)/i)
-	      }
-	      if (/\((mobile|tablet);[^\)]*rv:[\d\.]+\)/i.test(ua)) {
-	        result.firefoxos = t
-	      }
-	    }
-	    else if (/silk/i.test(ua)) {
-	      result =  {
-	        name: 'Amazon Silk'
-	      , silk: t
-	      , version : getFirstMatch(/silk\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (android) {
-	      result = {
-	        name: 'Android'
-	      , version: versionIdentifier
-	      }
-	    }
-	    else if (/phantom/i.test(ua)) {
-	      result = {
-	        name: 'PhantomJS'
-	      , phantom: t
-	      , version: getFirstMatch(/phantomjs\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/blackberry|\bbb\d+/i.test(ua) || /rim\stablet/i.test(ua)) {
-	      result = {
-	        name: 'BlackBerry'
-	      , blackberry: t
-	      , version: versionIdentifier || getFirstMatch(/blackberry[\d]+\/(\d+(\.\d+)?)/i)
-	      }
-	    }
-	    else if (/(web|hpw)os/i.test(ua)) {
-	      result = {
-	        name: 'WebOS'
-	      , webos: t
-	      , version: versionIdentifier || getFirstMatch(/w(?:eb)?osbrowser\/(\d+(\.\d+)?)/i)
-	      };
-	      /touchpad\//i.test(ua) && (result.touchpad = t)
-	    }
-	    else if (/bada/i.test(ua)) {
-	      result = {
-	        name: 'Bada'
-	      , bada: t
-	      , version: getFirstMatch(/dolfin\/(\d+(\.\d+)?)/i)
-	      };
-	    }
-	    else if (/tizen/i.test(ua)) {
-	      result = {
-	        name: 'Tizen'
-	      , tizen: t
-	      , version: getFirstMatch(/(?:tizen\s?)?browser\/(\d+(\.\d+)?)/i) || versionIdentifier
-	      };
-	    }
-	    else if (/safari/i.test(ua)) {
-	      result = {
-	        name: 'Safari'
-	      , safari: t
-	      , version: versionIdentifier
-	      }
-	    }
-	    else {
-	      result = {
-	        name: getFirstMatch(/^(.*)\/(.*) /),
-	        version: getSecondMatch(/^(.*)\/(.*) /)
-	     };
-	   }
-	
-	    // set webkit or gecko flag for browsers based on these engines
-	    if (!result.msedge && /(apple)?webkit/i.test(ua)) {
-	      result.name = result.name || "Webkit"
-	      result.webkit = t
-	      if (!result.version && versionIdentifier) {
-	        result.version = versionIdentifier
-	      }
-	    } else if (!result.opera && /gecko\//i.test(ua)) {
-	      result.name = result.name || "Gecko"
-	      result.gecko = t
-	      result.version = result.version || getFirstMatch(/gecko\/(\d+(\.\d+)?)/i)
-	    }
-	
-	    // set OS flags for platforms that have multiple browsers
-	    if (!result.msedge && (android || result.silk)) {
-	      result.android = t
-	    } else if (iosdevice) {
-	      result[iosdevice] = t
-	      result.ios = t
-	    }
-	
-	    // OS version extraction
-	    var osVersion = '';
-	    if (result.windowsphone) {
-	      osVersion = getFirstMatch(/windows phone (?:os)?\s?(\d+(\.\d+)*)/i);
-	    } else if (iosdevice) {
-	      osVersion = getFirstMatch(/os (\d+([_\s]\d+)*) like mac os x/i);
-	      osVersion = osVersion.replace(/[_\s]/g, '.');
-	    } else if (android) {
-	      osVersion = getFirstMatch(/android[ \/-](\d+(\.\d+)*)/i);
-	    } else if (result.webos) {
-	      osVersion = getFirstMatch(/(?:web|hpw)os\/(\d+(\.\d+)*)/i);
-	    } else if (result.blackberry) {
-	      osVersion = getFirstMatch(/rim\stablet\sos\s(\d+(\.\d+)*)/i);
-	    } else if (result.bada) {
-	      osVersion = getFirstMatch(/bada\/(\d+(\.\d+)*)/i);
-	    } else if (result.tizen) {
-	      osVersion = getFirstMatch(/tizen[\/\s](\d+(\.\d+)*)/i);
-	    }
-	    if (osVersion) {
-	      result.osversion = osVersion;
-	    }
-	
-	    // device type extraction
-	    var osMajorVersion = osVersion.split('.')[0];
-	    if (tablet || iosdevice == 'ipad' || (android && (osMajorVersion == 3 || (osMajorVersion == 4 && !mobile))) || result.silk) {
-	      result.tablet = t
-	    } else if (mobile || iosdevice == 'iphone' || iosdevice == 'ipod' || android || result.blackberry || result.webos || result.bada) {
-	      result.mobile = t
-	    }
-	
-	    // Graded Browser Support
-	    // http://developer.yahoo.com/yui/articles/gbs
-	    if (result.msedge ||
-	        (result.msie && result.version >= 10) ||
-	        (result.yandexbrowser && result.version >= 15) ||
-	        (result.chrome && result.version >= 20) ||
-	        (result.firefox && result.version >= 20.0) ||
-	        (result.safari && result.version >= 6) ||
-	        (result.opera && result.version >= 10.0) ||
-	        (result.ios && result.osversion && result.osversion.split(".")[0] >= 6) ||
-	        (result.blackberry && result.version >= 10.1)
-	        ) {
-	      result.a = t;
-	    }
-	    else if ((result.msie && result.version < 10) ||
-	        (result.chrome && result.version < 20) ||
-	        (result.firefox && result.version < 20.0) ||
-	        (result.safari && result.version < 6) ||
-	        (result.opera && result.version < 10.0) ||
-	        (result.ios && result.osversion && result.osversion.split(".")[0] < 6)
-	        ) {
-	      result.c = t
-	    } else result.x = t
-	
-	    return result
+	  // older Firefox versions may have no float property in style object
+	  // so we need to add it manually
+	  if (domStyle.float === undefined) {
+	    domStyle.float = '';
 	  }
 	
-	  var bowser = detect(typeof navigator !== 'undefined' ? navigator.userAgent : '')
+	  // Based on http://davidwalsh.name/vendor-prefix
+	  var prefixMatch;
+	  var windowStyles = window.getComputedStyle(document.documentElement, '');
 	
-	  bowser.test = function (browserList) {
-	    for (var i = 0; i < browserList.length; ++i) {
-	      var browserItem = browserList[i];
-	      if (typeof browserItem=== 'string') {
-	        if (browserItem in bowser) {
-	          return true;
-	        }
-	      }
+	  // Array.prototype.slice.call(windowStyles) fails with
+	  // "Uncaught TypeError: undefined is not a function"
+	  // in older versions Android (KitKat) web views
+	  for (var i = 0; i < windowStyles.length; i++) {
+	    prefixMatch = windowStyles[i].match(VENDOR_PREFIX_REGEX);
+	
+	    if (prefixMatch) {
+	      break;
 	    }
-	    return false;
 	  }
 	
-	  /*
-	   * Set our detect method to the main bowser object so we can
-	   * reuse it to test other user agents.
-	   * This is needed to implement future tests.
-	   */
-	  bowser._detect = detect;
+	  var cssVendorPrefix = prefixMatch && prefixMatch[0];
 	
-	  return bowser
-	});
-
-
-/***/ },
-/* 27 */
-/***/ function(module, exports) {
-
-	var caniuseData = {"chrome":{"backfaceVisibility":35,"perspective":35,"perspectiveOrigin":35,"transform":35,"transformOrigin":35,"transformStyle":35,"transformOriginX":35,"transformOriginY":35,"animation":42,"animationDelay":42,"animationDirection":42,"animationFillMode":42,"animationDuration":42,"anmationIterationCount":42,"animationName":42,"animationPlayState":42,"animationTimingFunction":42,"appearance":48,"userSelect":48,"fontKerning":32,"textEmphasisPosition":48,"textEmphasis":48,"textEmphasisStyle":48,"textEmphasisColor":48,"boxDecorationBreak":48,"clipPath":48,"maskImage":48,"maskMode":48,"maskRepeat":48,"maskPosition":48,"maskClip":48,"maskOrigin":48,"maskSize":48,"maskComposite":48,"mask":48,"maskBorderSource":48,"maskBorderMode":48,"maskBorderSlice":48,"maskBorderWidth":48,"maskBorderOutset":48,"maskBorderRepeat":48,"maskBorder":48,"maskType":48,"textDecorationStyle":48,"textDecorationSkip":48,"textDecorationLine":48,"textDecorationColor":48,"filter":48,"fontFeatureSettings":48,"breakAfter":48,"breakBefore":48,"breakInside":48,"columnCount":48,"columnFill":48,"columnGap":48,"columnRule":48,"columnRuleColor":48,"columnRuleStyle":48,"columnRuleWidth":48,"columns":48,"columnSpan":48,"columnWidth":48},"safari":{"flex":8,"flexBasis":8,"flexDirection":8,"flexGrow":8,"flexFlow":8,"flexShrink":8,"alignContent":8,"alignItems":8,"alignSelf":8,"justifyContent":8,"order":8,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"backfaceVisibility":8,"perspective":8,"perspectiveOrigin":8,"transform":8,"transformOrigin":8,"transformStyle":8,"transformOriginX":8,"transformOriginY":8,"animation":8,"animationDelay":8,"animationDirection":8,"animationFillMode":8,"animationDuration":8,"anmationIterationCount":8,"animationName":8,"animationPlayState":8,"animationTimingFunction":8,"appearance":9,"userSelect":9,"backdropFilter":9,"fontKerning":9,"scrollSnapType":9,"scrollSnapPointsX":9,"scrollSnapPointsY":9,"scrollSnapDestination":9,"scrollSnapCoordinate":9,"textEmphasisPosition":7,"textEmphasis":7,"textEmphasisStyle":7,"textEmphasisColor":7,"boxDecorationBreak":9,"clipPath":9,"maskImage":9,"maskMode":9,"maskRepeat":9,"maskPosition":9,"maskClip":9,"maskOrigin":9,"maskSize":9,"maskComposite":9,"mask":9,"maskBorderSource":9,"maskBorderMode":9,"maskBorderSlice":9,"maskBorderWidth":9,"maskBorderOutset":9,"maskBorderRepeat":9,"maskBorder":9,"maskType":9,"textDecorationStyle":9,"textDecorationSkip":9,"textDecorationLine":9,"textDecorationColor":9,"shapeImageThreshold":9,"shapeImageMargin":9,"shapeImageOutside":9,"filter":9,"hyphens":9,"flowInto":9,"flowFrom":9,"breakBefore":8,"breakAfter":8,"breakInside":8,"regionFragment":9,"columnCount":8,"columnFill":8,"columnGap":8,"columnRule":8,"columnRuleColor":8,"columnRuleStyle":8,"columnRuleWidth":8,"columns":8,"columnSpan":8,"columnWidth":8},"firefox":{"appearance":43,"userSelect":43,"boxSizing":28,"textAlignLast":43,"textDecorationStyle":35,"textDecorationSkip":35,"textDecorationLine":35,"textDecorationColor":35,"tabSize":43,"hyphens":42,"fontFeatureSettings":33,"breakAfter":43,"breakBefore":43,"breakInside":43,"columnCount":43,"columnFill":43,"columnGap":43,"columnRule":43,"columnRuleColor":43,"columnRuleStyle":43,"columnRuleWidth":43,"columns":43,"columnSpan":43,"columnWidth":43},"opera":{"flex":16,"flexBasis":16,"flexDirection":16,"flexGrow":16,"flexFlow":16,"flexShrink":16,"alignContent":16,"alignItems":16,"alignSelf":16,"justifyContent":16,"order":16,"backfaceVisibility":22,"perspective":22,"perspectiveOrigin":22,"transform":22,"transformOrigin":22,"transformStyle":22,"transformOriginX":22,"transformOriginY":22,"animation":29,"animationDelay":29,"animationDirection":29,"animationFillMode":29,"animationDuration":29,"anmationIterationCount":29,"animationName":29,"animationPlayState":29,"animationTimingFunction":29,"appearance":34,"userSelect":34,"fontKerning":19,"textEmphasisPosition":34,"textEmphasis":34,"textEmphasisStyle":34,"textEmphasisColor":34,"boxDecorationBreak":34,"clipPath":34,"maskImage":34,"maskMode":34,"maskRepeat":34,"maskPosition":34,"maskClip":34,"maskOrigin":34,"maskSize":34,"maskComposite":34,"mask":34,"maskBorderSource":34,"maskBorderMode":34,"maskBorderSlice":34,"maskBorderWidth":34,"maskBorderOutset":34,"maskBorderRepeat":34,"maskBorder":34,"maskType":34,"filter":34,"fontFeatureSettings":34,"breakAfter":34,"breakBefore":34,"breakInside":34,"columnCount":34,"columnFill":34,"columnGap":34,"columnRule":34,"columnRuleColor":34,"columnRuleStyle":34,"columnRuleWidth":34,"columns":34,"columnSpan":34,"columnWidth":34},"ie":{"gridAutoColumns":11,"touchAction":10,"flex":10,"grid":11,"gridColumnStart":11,"flowInto":11,"gridTemplateAreas":11,"gridAutoFlow":11,"wrapMargin":11,"breakAfter":11,"scrollSnapCoordinate":11,"gridArea":11,"regionFragment":11,"breakInside":11,"scrollSnapPointsY":11,"gridRow":11,"gridTemplate":11,"flowFrom":11,"flexFlow":10,"gridTemplateRows":11,"gridAutoRows":11,"hyphens":11,"scrollSnapPointsX":11,"flexDirection":10,"columnGap":11,"gridRowEnd":11,"gridRowStart":11,"gridColumn":11,"scrollSnapDestination":11,"gridTemplateColumns":11,"scrollSnapType":11,"rowGap":11,"userSelect":11,"wrapFlow":11,"breakBefore":11,"wrapThrough":11,"gridGap":11,"textSizeAdjust":11},"ios_saf":{"flex":8.1,"flexBasis":8.1,"flexDirection":8.1,"flexGrow":8.1,"flexFlow":8.1,"flexShrink":8.1,"alignContent":8.1,"alignItems":8.1,"alignSelf":8.1,"justifyContent":8.1,"order":8.1,"transition":6,"transitionDelay":6,"transitionDuration":6,"transitionProperty":6,"transitionTimingFunction":6,"backfaceVisibility":8.1,"perspective":8.1,"perspectiveOrigin":8.1,"transform":8.1,"transformOrigin":8.1,"transformStyle":8.1,"transformOriginX":8.1,"transformOriginY":8.1,"animation":8.1,"animationDelay":8.1,"animationDirection":8.1,"animationFillMode":8.1,"animationDuration":8.1,"anmationIterationCount":8.1,"animationName":8.1,"animationPlayState":8.1,"animationTimingFunction":8.1,"appearance":9,"userSelect":9,"backdropFilter":9,"fontKerning":9,"scrollSnapType":9,"scrollSnapPointsX":9,"scrollSnapPointsY":9,"scrollSnapDestination":9,"scrollSnapCoordinate":9,"boxDecorationBreak":9,"clipPath":9,"maskImage":9,"maskMode":9,"maskRepeat":9,"maskPosition":9,"maskClip":9,"maskOrigin":9,"maskSize":9,"maskComposite":9,"mask":9,"maskBorderSource":9,"maskBorderMode":9,"maskBorderSlice":9,"maskBorderWidth":9,"maskBorderOutset":9,"maskBorderRepeat":9,"maskBorder":9,"maskType":9,"textSizeAdjust":9,"textDecorationStyle":9,"textDecorationSkip":9,"textDecorationLine":9,"textDecorationColor":9,"shapeImageThreshold":9,"shapeImageMargin":9,"shapeImageOutside":9,"filter":9,"hyphens":9,"flowInto":9,"flowFrom":9,"breakBefore":8.1,"breakAfter":8.1,"breakInside":8.1,"regionFragment":9,"columnCount":8.1,"columnFill":8.1,"columnGap":8.1,"columnRule":8.1,"columnRuleColor":8.1,"columnRuleStyle":8.1,"columnRuleWidth":8.1,"columns":8.1,"columnSpan":8.1,"columnWidth":8.1},"android":{"borderImage":4.2,"borderImageOutset":4.2,"borderImageRepeat":4.2,"borderImageSlice":4.2,"borderImageSource":4.2,"borderImageWidth":4.2,"flex":4.2,"flexBasis":4.2,"flexDirection":4.2,"flexGrow":4.2,"flexFlow":4.2,"flexShrink":4.2,"alignContent":4.2,"alignItems":4.2,"alignSelf":4.2,"justifyContent":4.2,"order":4.2,"transition":4.2,"transitionDelay":4.2,"transitionDuration":4.2,"transitionProperty":4.2,"transitionTimingFunction":4.2,"backfaceVisibility":4.4,"perspective":4.4,"perspectiveOrigin":4.4,"transform":4.4,"transformOrigin":4.4,"transformStyle":4.4,"transformOriginX":4.4,"transformOriginY":4.4,"animation":4.4,"animationDelay":4.4,"animationDirection":4.4,"animationFillMode":4.4,"animationDuration":4.4,"anmationIterationCount":4.4,"animationName":4.4,"animationPlayState":4.4,"animationTimingFunction":4.4,"appearance":44,"userSelect":44,"fontKerning":4.4,"textEmphasisPosition":44,"textEmphasis":44,"textEmphasisStyle":44,"textEmphasisColor":44,"boxDecorationBreak":44,"clipPath":44,"maskImage":44,"maskMode":44,"maskRepeat":44,"maskPosition":44,"maskClip":44,"maskOrigin":44,"maskSize":44,"maskComposite":44,"mask":44,"maskBorderSource":44,"maskBorderMode":44,"maskBorderSlice":44,"maskBorderWidth":44,"maskBorderOutset":44,"maskBorderRepeat":44,"maskBorder":44,"maskType":44,"filter":44,"fontFeatureSettings":44,"breakAfter":44,"breakBefore":44,"breakInside":44,"columnCount":44,"columnFill":44,"columnGap":44,"columnRule":44,"columnRuleColor":44,"columnRuleStyle":44,"columnRuleWidth":44,"columns":44,"columnSpan":44,"columnWidth":44},"and_chr":{},"and_uc":{"flex":9.9,"flexBasis":9.9,"flexDirection":9.9,"flexGrow":9.9,"flexFlow":9.9,"flexShrink":9.9,"alignContent":9.9,"alignItems":9.9,"alignSelf":9.9,"justifyContent":9.9,"order":9.9,"transition":9.9,"transitionDelay":9.9,"transitionDuration":9.9,"transitionProperty":9.9,"transitionTimingFunction":9.9,"backfaceVisibility":9.9,"perspective":9.9,"perspectiveOrigin":9.9,"transform":9.9,"transformOrigin":9.9,"transformStyle":9.9,"transformOriginX":9.9,"transformOriginY":9.9,"animation":9.9,"animationDelay":9.9,"animationDirection":9.9,"animationFillMode":9.9,"animationDuration":9.9,"anmationIterationCount":9.9,"animationName":9.9,"animationPlayState":9.9,"animationTimingFunction":9.9,"appearance":9.9,"userSelect":9.9,"fontKerning":9.9,"textEmphasisPosition":9.9,"textEmphasis":9.9,"textEmphasisStyle":9.9,"textEmphasisColor":9.9,"maskImage":9.9,"maskMode":9.9,"maskRepeat":9.9,"maskPosition":9.9,"maskClip":9.9,"maskOrigin":9.9,"maskSize":9.9,"maskComposite":9.9,"mask":9.9,"maskBorderSource":9.9,"maskBorderMode":9.9,"maskBorderSlice":9.9,"maskBorderWidth":9.9,"maskBorderOutset":9.9,"maskBorderRepeat":9.9,"maskBorder":9.9,"maskType":9.9,"textSizeAdjust":9.9,"filter":9.9,"hyphens":9.9,"flowInto":9.9,"flowFrom":9.9,"breakBefore":9.9,"breakAfter":9.9,"breakInside":9.9,"regionFragment":9.9,"fontFeatureSettings":9.9,"columnCount":9.9,"columnFill":9.9,"columnGap":9.9,"columnRule":9.9,"columnRuleColor":9.9,"columnRuleStyle":9.9,"columnRuleWidth":9.9,"columns":9.9,"columnSpan":9.9,"columnWidth":9.9},"op_mini":{"borderImage":5,"borderImageOutset":5,"borderImageRepeat":5,"borderImageSlice":5,"borderImageSource":5,"borderImageWidth":5,"tabSize":5,"objectFit":5,"objectPosition":5}}; module.exports = caniuseData
-
-/***/ },
-/* 28 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _pluginsCursor = __webpack_require__(29);
-	
-	var _pluginsCursor2 = _interopRequireDefault(_pluginsCursor);
-	
-	var _pluginsFlex = __webpack_require__(30);
-	
-	var _pluginsFlex2 = _interopRequireDefault(_pluginsFlex);
-	
-	var _pluginsSizing = __webpack_require__(31);
-	
-	var _pluginsSizing2 = _interopRequireDefault(_pluginsSizing);
-	
-	var _pluginsGradient = __webpack_require__(32);
-	
-	var _pluginsGradient2 = _interopRequireDefault(_pluginsGradient);
-	
-	//special flexbox specifications
-	
-	var _pluginsFlexboxIE = __webpack_require__(33);
-	
-	var _pluginsFlexboxIE2 = _interopRequireDefault(_pluginsFlexboxIE);
-	
-	var _pluginsFlexboxOld = __webpack_require__(34);
-	
-	var _pluginsFlexboxOld2 = _interopRequireDefault(_pluginsFlexboxOld);
-	
-	exports['default'] = [_pluginsCursor2['default'], _pluginsFlex2['default'], _pluginsSizing2['default'], _pluginsGradient2['default'], _pluginsFlexboxIE2['default'], _pluginsFlexboxOld2['default']];
-	module.exports = exports['default'];
-
-/***/ },
-/* 29 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var values = ['zoom-in', 'zoom-out', 'grab', 'grabbing'];
-	
-	exports['default'] = function (property, value, _ref2) {
-	  var browser = _ref2.browser;
-	  var version = _ref2.version;
-	  var prefix = _ref2.prefix;
-	
-	  if (property === 'cursor' && values.indexOf(value) > -1 && (browser === 'firefox' && version < 24 || browser === 'chrome' && version < 37 || browser === 'safari' && version < 9 || browser === 'opera' && version < 24)) {
-	    return _defineProperty({}, property, prefix.CSS + value);
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 30 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var values = ['flex', 'inline-flex'];
-	
-	exports['default'] = function (property, value, _ref2) {
-	  var browser = _ref2.browser;
-	  var version = _ref2.version;
-	  var prefix = _ref2.prefix;
-	
-	  if (property === 'display' && values.indexOf(value) > -1 && (browser === 'chrome' && (version < 29 || version > 20) || (browser === 'safari' || browser === 'ios_saf') && (version < 9 || version > 6) || browser === 'opera' && (version == 15 || version == 16))) {
-	    return _defineProperty({}, property, prefix.CSS + value);
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 31 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var properties = ['maxHeight', 'maxWidth', 'width', 'height', 'columnWidth', 'minWidth', 'minHeight'];
-	var values = ['min-content', 'max-content', 'fill-available', 'fit-content', 'contain-floats'];
-	
-	exports['default'] = function (property, value, _ref2) {
-	  var prefix = _ref2.prefix;
-	
-	  /**
-	   * This actually is only available with prefixes
-	   * NOTE: This might change in the feature
-	   */
-	  if (properties.indexOf(property) > -1 && values.indexOf(value) > -1) {
-	    return _defineProperty({}, property, prefix.CSS + value);
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 32 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var properties = ['background', 'backgroundImage'];
-	var values = ['linear-gradient', 'radial-gradient', 'repeating-linear-gradient', 'repeating-radial-gradient'];
-	
-	exports['default'] = function (property, value, _ref2) {
-	  var browser = _ref2.browser;
-	  var version = _ref2.version;
-	  var prefix = _ref2.prefix;
-	
-	  if (properties.indexOf(property) > -1 && values.indexOf(value) > -1 && (browser === 'firefox' && version < 16 || browser === 'chrome' && version < 26 || (browser === 'safari' || browser === 'ios_saf') && version < 7 || (browser === 'opera' || browser === 'op_mini') && version < 12.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
-	    return _defineProperty({}, property, prefix.CSS + value);
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 33 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var alternativeValues = {
-	  'space-around': 'distribute',
-	  'space-between': 'justify',
-	  'flex-start': 'start',
-	  'flex-end': 'end',
-	  'flex': '-ms-flexbox',
-	  'inline-flex': '-ms-inline-flexbox'
-	};
-	
-	var alternativeProps = {
-	  'alignContent': 'msFlexLinePack',
-	  'alignSelf': 'msFlexItemAlign',
-	  'alignItems': 'msFlexAlign',
-	  'justifyContent': 'msFlexPack',
-	  'order': 'msFlexOrder',
-	  'flexGrow': 'msFlexPositive',
-	  'flexShrink': 'msFlexNegative',
-	  'flexBasis': 'msPreferredSize'
-	};
-	
-	var properties = Object.keys(alternativeProps).concat('display');
-	
-	exports['default'] = function (property, value, _ref2, styles) {
-	  var browser = _ref2.browser;
-	  var version = _ref2.version;
-	
-	  if (properties.indexOf(property) > -1 && ((browser === 'ie_mob' || browser === 'ie') && version == 10)) {
-	    delete styles[property];
-	    return _defineProperty({}, alternativeProps[property] || property, alternativeValues[value] || value);
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 34 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	var alternativeValues = {
-	  'space-around': 'justify',
-	  'space-between': 'justify',
-	  'flex-start': 'start',
-	  'flex-end': 'end',
-	  'wrap-reverse': 'multiple',
-	  'wrap': 'multiple',
-	  'flex': 'box',
-	  'inline-flex': 'inline-box'
-	};
-	
-	var alternativeProps = {
-	  alignItems: 'WebkitBoxAlign',
-	  justifyContent: 'WebkitBoxPack',
-	  flexWrap: 'WebkitBoxLines'
-	};
-	
-	var properties = Object.keys(alternativeProps).concat(['alignContent', 'alignSelf', 'display', 'order', 'flexGrow', 'flexShrink', 'flexBasis', 'flexDirection']);
-	
-	exports['default'] = function (property, value, _ref2) {
-	  var browser = _ref2.browser;
-	  var version = _ref2.version;
-	  var prefix = _ref2.prefix;
-	
-	  if (properties.indexOf(property) > -1 && (browser === 'firefox' && version < 22 || browser === 'chrome' && version < 21 || (browser === 'safari' || browser === 'ios_saf') && version <= 6.1 || browser === 'android' && version < 4.4 || browser === 'and_uc')) {
-	    if (property === 'flexDirection') {
-	      return {
-	        WebkitBoxOrient: value.indexOf('column') > -1 ? 'vertical' : 'horizontal',
-	        WebkitBoxDirection: value.indexOf('reverse') > -1 ? 'reverse' : 'normal'
-	      };
-	    }
-	    if (property === 'display' && alternativeValues[value]) {
-	      return {
-	        display: prefix.CSS + alternativeValues[value]
-	      };
-	    }
-	    return _defineProperty({}, alternativeProps[property] || property, alternativeValues[value] || value);
-	  }
-	};
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 35 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @flow */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _mouseUpListener = __webpack_require__(36);
-	
-	var _mouseUpListener2 = _interopRequireDefault(_mouseUpListener);
-	
-	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	
-	var _isInteractiveStyleField = function _isInteractiveStyleField(styleFieldName) {
-	  return styleFieldName === ':hover' || styleFieldName === ':active' || styleFieldName === ':focus';
-	};
-	
-	var resolveInteractionStyles = function resolveInteractionStyles(config /*: PluginConfig*/) /*: PluginResult*/ {
-	  var ExecutionEnvironment = config.ExecutionEnvironment;
-	  var getComponentField = config.getComponentField;
-	  var getState = config.getState;
-	  var mergeStyles = config.mergeStyles;
-	  var props = config.props;
-	  var setState = config.setState;
-	  var style = config.style;
-	
-	  var newComponentFields = {};
-	  var newProps = {};
-	
-	  // Only add handlers if necessary
-	  if (style[':hover']) {
-	    (function () {
-	      // Always call the existing handler if one is already defined.
-	      // This code, and the very similar ones below, could be abstracted a bit
-	      // more, but it hurts readability IMO.
-	      var existingOnMouseEnter = props.onMouseEnter;
-	      newProps.onMouseEnter = function (e) {
-	        existingOnMouseEnter && existingOnMouseEnter(e);
-	        setState(':hover', true);
-	      };
-	
-	      var existingOnMouseLeave = props.onMouseLeave;
-	      newProps.onMouseLeave = function (e) {
-	        existingOnMouseLeave && existingOnMouseLeave(e);
-	        setState(':hover', false);
-	      };
-	    })();
-	  }
-	
-	  if (style[':active']) {
-	    (function () {
-	      var existingOnMouseDown = props.onMouseDown;
-	      newProps.onMouseDown = function (e) {
-	        existingOnMouseDown && existingOnMouseDown(e);
-	        newComponentFields._lastMouseDown = Date.now();
-	        setState(':active', 'viamousedown');
-	      };
-	
-	      var existingOnKeyDown = props.onKeyDown;
-	      newProps.onKeyDown = function (e) {
-	        existingOnKeyDown && existingOnKeyDown(e);
-	        if (e.key === ' ' || e.key === 'Enter') {
-	          setState(':active', 'viakeydown');
-	        }
-	      };
-	
-	      var existingOnKeyUp = props.onKeyUp;
-	      newProps.onKeyUp = function (e) {
-	        existingOnKeyUp && existingOnKeyUp(e);
-	        if (e.key === ' ' || e.key === 'Enter') {
-	          setState(':active', false);
-	        }
-	      };
-	    })();
-	  }
-	
-	  if (style[':focus']) {
-	    (function () {
-	      var existingOnFocus = props.onFocus;
-	      newProps.onFocus = function (e) {
-	        existingOnFocus && existingOnFocus(e);
-	        setState(':focus', true);
-	      };
-	
-	      var existingOnBlur = props.onBlur;
-	      newProps.onBlur = function (e) {
-	        existingOnBlur && existingOnBlur(e);
-	        setState(':focus', false);
-	      };
-	    })();
-	  }
-	
-	  if (style[':active'] && !getComponentField('_radiumMouseUpListener') && ExecutionEnvironment.canUseEventListeners) {
-	    newComponentFields._radiumMouseUpListener = _mouseUpListener2['default'].subscribe(function () {
-	      Object.keys(getComponentField('state')._radiumStyleState).forEach(function (key) {
-	        if (getState(':active') === 'viamousedown') {
-	          setState(':active', false, key);
-	        }
-	      });
-	    });
-	  }
-	
-	  // Merge the styles in the order they were defined
-	  var interactionStyles = Object.keys(style).filter(function (name) {
-	    return _isInteractiveStyleField(name) && getState(name);
-	  }).map(function (name) {
-	    return style[name];
-	  });
-	
-	  var newStyle = mergeStyles([style].concat(interactionStyles));
-	
-	  // Remove interactive styles
-	  newStyle = Object.keys(newStyle).reduce(function (styleWithoutInteractions, name) {
-	    if (!_isInteractiveStyleField(name)) {
-	      styleWithoutInteractions[name] = newStyle[name];
-	    }
-	    return styleWithoutInteractions;
-	  }, {});
-	
-	  return {
-	    componentFields: newComponentFields,
-	    props: newProps,
-	    style: newStyle
-	  };
-	};
-	
-	exports['default'] = resolveInteractionStyles;
-	module.exports = exports['default'];
-
-/***/ },
-/* 36 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	var _callbacks = [];
-	var _mouseUpListenerIsActive = false;
-	
-	var _handleMouseUp = function _handleMouseUp(ev) {
-	  _callbacks.forEach(function (callback) {
-	    callback(ev);
-	  });
-	};
-	
-	var subscribe = function subscribe(callback /*: () => void*/) /*: {remove: () => void}*/ {
-	  if (_callbacks.indexOf(callback) === -1) {
-	    _callbacks.push(callback);
-	  }
-	
-	  if (!_mouseUpListenerIsActive) {
-	    window.addEventListener('mouseup', _handleMouseUp);
-	    _mouseUpListenerIsActive = true;
-	  }
-	
-	  return {
-	    remove: function remove() {
-	      var index = _callbacks.indexOf(callback);
-	      _callbacks.splice(index, 1);
-	
-	      if (_callbacks.length === 0 && _mouseUpListenerIsActive) {
-	        window.removeEventListener('mouseup', _handleMouseUp);
-	        _mouseUpListenerIsActive = false;
-	      }
-	    }
-	  };
-	};
-	
-	exports['default'] = {
-	  subscribe: subscribe
-	};
-	module.exports = exports['default'];
-
-/***/ },
-/* 37 */
-/***/ function(module, exports) {
-
-	/** @flow */
-	
-	'use strict';
-	
-	exports.__esModule = true;
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	exports['default'] = resolveMediaQueries;
-	
-	/*:: import type {MatchMediaType} from '../config';*/
-	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	
-	var _windowMatchMedia = undefined;
-	var _getWindowMatchMedia = function _getWindowMatchMedia(ExecutionEnvironment) {
-	  if (_windowMatchMedia === undefined) {
-	    _windowMatchMedia = !!ExecutionEnvironment.canUseDOM && !!window && !!window.matchMedia && function (mediaQueryString) {
-	      return window.matchMedia(mediaQueryString);
-	    } || null;
-	  }
-	  return _windowMatchMedia;
-	};
-	
-	function resolveMediaQueries(_ref /*: PluginConfig*/) /*: PluginResult*/ {
-	  var ExecutionEnvironment = _ref.ExecutionEnvironment;
-	  var getComponentField = _ref.getComponentField;
-	  var getGlobalState = _ref.getGlobalState;
-	  var config = _ref.config;
-	  var mergeStyles = _ref.mergeStyles;
-	  var setState = _ref.setState;
-	  var style = _ref.style;
-	
-	  var newComponentFields = {};
-	  var newStyle = style;
-	  var matchMedia /*: ?MatchMediaType*/ = config.matchMedia || _getWindowMatchMedia(ExecutionEnvironment);
-	  if (!matchMedia) {
-	    return newStyle;
-	  }
-	
-	  var mediaQueryListByQueryString = getGlobalState('mediaQueryListByQueryString') || {};
-	
-	  Object.keys(style).filter(function (name) {
-	    return name.indexOf('@media') === 0;
-	  }).map(function (query) {
-	    var mediaQueryStyles = style[query];
-	    query = query.replace('@media ', '');
-	
-	    // Create a global MediaQueryList if one doesn't already exist
-	    var mql = mediaQueryListByQueryString[query];
-	    if (!mql && matchMedia) {
-	      mediaQueryListByQueryString[query] = mql = matchMedia(query);
-	    }
-	
-	    var listenersByQuery = getComponentField('_radiumMediaQueryListenersByQuery');
-	
-	    if (!listenersByQuery || !listenersByQuery[query]) {
-	      (function () {
-	        var listener = function listener() {
-	          return setState(query, mql.matches, '_all');
-	        };
-	        mql.addListener(listener);
-	        newComponentFields._radiumMediaQueryListenersByQuery = _extends({}, listenersByQuery);
-	        newComponentFields._radiumMediaQueryListenersByQuery[query] = {
-	          remove: function remove() {
-	            mql.removeListener(listener);
-	          }
-	        };
-	      })();
-	    }
-	
-	    // Apply media query states
-	    if (mql.matches) {
-	      newStyle = mergeStyles([newStyle, mediaQueryStyles]);
-	    }
-	  });
-	
-	  // Remove media queries
-	  newStyle = Object.keys(newStyle).reduce(function (styleWithoutMedia, key) {
-	    if (key.indexOf('@media') !== 0) {
-	      styleWithoutMedia[key] = newStyle[key];
-	    }
-	    return styleWithoutMedia;
-	  }, {});
-	
-	  return {
-	    componentFields: newComponentFields,
-	    globalState: { mediaQueryListByQueryString: mediaQueryListByQueryString },
-	    style: newStyle
-	  };
+	  prefixInfo = cssVendorPrefix && infoByCssPrefix[cssVendorPrefix] ? infoByCssPrefix[cssVendorPrefix] : prefixInfo;
 	}
 	
-	module.exports = exports['default'];
+	var getPrefixedPropertyName = function getPrefixedPropertyName(property /*: string*/) /*: string*/ {
+	  if (prefixedPropertyCache.hasOwnProperty(property)) {
+	    return prefixedPropertyCache[property];
+	  }
+	
+	  var unprefixed = property;
+	
+	  // Try the prefixed version first. Chrome in particular has the `filter` and
+	  // `webkitFilter` properties availalbe on the style object, but only the
+	  // prefixed version actually works.
+	  var possiblePropertyNames = [
+	  // Prefixed
+	  prefixInfo.jsPrefix + property[0].toUpperCase() + property.slice(1), unprefixed];
+	
+	  // Alternative property names
+	  if (prefixInfo.alternativeProperties && prefixInfo.alternativeProperties[property]) {
+	    possiblePropertyNames = possiblePropertyNames.concat(prefixInfo.alternativeProperties[property]);
+	  }
+	
+	  var workingProperty = arrayFind(possiblePropertyNames, function (possiblePropertyName) {
+	    if (possiblePropertyName in domStyle) {
+	      return possiblePropertyName;
+	    }
+	  }) || false;
+	
+	  prefixedPropertyCache[property] = workingProperty;
+	
+	  return prefixedPropertyCache[property];
+	};
+	
+	// We are un-prefixing values before checking for isUnitlessNumber,
+	// otherwise we are at risk of being in a situation where someone
+	// explicitly passes something like `MozBoxFlex: 1` and that will
+	// in turn get transformed into `MozBoxFlex: 1px`.
+	var _getUnprefixedProperty = function _getUnprefixedProperty(property) {
+	  var noPrefixProperty = property;
+	
+	  vendorPrefixes.some(function (prefix) {
+	    // Let's check if the property starts with a vendor prefix
+	    if (property.indexOf(prefix) === 0) {
+	      noPrefixProperty = noPrefixProperty.replace(prefix, '');
+	
+	      // We have removed the vendor prefix, however the first
+	      // character is going to be uppercase hence won't match
+	      // any of the `isUnitlessNumber` keys as they all start
+	      // with lower case. Let's ensure that the first char is
+	      // lower case.
+	      noPrefixProperty = noPrefixProperty.charAt(0).toLowerCase() + noPrefixProperty.slice(1);
+	
+	      return true;
+	    }
+	  });
+	
+	  return noPrefixProperty;
+	};
+	
+	// React is planning to deprecate adding px automatically
+	// (https://github.com/facebook/react/issues/1873), and if they do, this
+	// should change to a warning or be removed in favor of React's warning.
+	// Same goes for below.
+	var _addPixelSuffixToValueIfNeeded = function _addPixelSuffixToValueIfNeeded(originalProperty, value) {
+	  var unPrefixedProperty = _getUnprefixedProperty(originalProperty);
+	
+	  if (value !== 0 && !isNaN(value) && !isUnitlessNumber[unPrefixedProperty]) {
+	    return value + 'px';
+	  }
+	  return value;
+	};
+	
+	var _getPrefixedValue = function _getPrefixedValue(componentName, property, value, originalProperty) {
+	  if (!Array.isArray(value)) {
+	    // don't test numbers (pure or stringy), but do add 'px' prefix if needed
+	    if (!isNaN(value) && value !== null) {
+	      return _addPixelSuffixToValueIfNeeded(originalProperty, value);
+	    }
+	
+	    if (typeof value !== 'string') {
+	      if (value !== null && value !== undefined) {
+	        value = value.toString();
+	      } else {
+	        return value;
+	      }
+	    }
+	
+	    // don't test numbers with units (e.g. 10em)
+	    if (!isNaN(parseInt(value, 10))) {
+	      return value;
+	    }
+	  }
+	
+	  var cacheKey = Array.isArray(value) ? value.join(' || ') : property + value;
+	
+	  if (prefixedValueCache.hasOwnProperty(cacheKey)) {
+	    return prefixedValueCache[cacheKey];
+	  }
+	
+	  var possibleValues;
+	  if (Array.isArray(value)) {
+	    // Add px for the same values React would, otherwise the testing below will
+	    // fail and it will try to fallback.
+	    possibleValues = value.map(function (v) {
+	      return _addPixelSuffixToValueIfNeeded(originalProperty, v);
+	    });
+	
+	    // Add prefixed versions
+	    possibleValues = possibleValues.concat(value.filter(function (v) {
+	      return !isNaN(v);
+	    }) // Don't prefix numbers
+	    .map(function (v) {
+	      return prefixInfo.cssPrefix + v;
+	    }));
+	  } else {
+	    possibleValues = [
+	    // Unprefixed
+	    value,
+	    // Prefixed
+	    prefixInfo.cssPrefix + value];
+	  }
+	
+	  // Alternative values
+	  if (prefixInfo.alternativeValues && prefixInfo.alternativeValues[originalProperty] && prefixInfo.alternativeValues[originalProperty][value]) {
+	    possibleValues = possibleValues.concat(prefixInfo.alternativeValues[originalProperty][value]);
+	  }
+	
+	  // Test possible value in order
+	  var workingValue = arrayFind(possibleValues, function (possibleValue) {
+	    domStyle[property] = '';
+	    domStyle[property] = possibleValue;
+	
+	    // Note that we just make sure it is not an empty string. Browsers will
+	    // sometimes rewrite values, but still accept them. They will set the value
+	    // to an empty string if not supported.
+	    // E.g. for border, "solid 1px black" becomes "1px solid black"
+	    //      but "foobar" becomes "", since it is not supported.
+	    return !!domStyle[property];
+	  });
+	
+	  if (workingValue) {
+	    prefixedValueCache[cacheKey] = workingValue;
+	  } else {
+	    // Unsupported, assume unprefixed works, but warn
+	    prefixedValueCache[cacheKey] = value;
+	
+	    if (process.env.NODE_ENV !== 'production') {
+	      /* eslint-disable no-console */
+	      if (console && console.warn) {
+	        var componentContext = componentName ? ' in component "' + componentName + '"' : '';
+	
+	        console.warn('Unsupported CSS value "' + value + '" for property "' + property + '"' + componentContext);
+	      }
+	      /* eslint-enable no-console */
+	    }
+	  }
+	
+	  return prefixedValueCache[cacheKey];
+	};
+	
+	// Returns a new style object with vendor prefixes added to property names
+	// and values.
+	var getPrefixedStyle = function getPrefixedStyle(style /*: Object*/, componentName /*: ?string*/) /*: Object*/ {
+	  if (!ExecutionEnvironment.canUseDOM) {
+	    return Object.keys(style).reduce(function (newStyle, key) {
+	      var value = style[key];
+	      var newValue = Array.isArray(value) ? value[0] : value;
+	      newStyle[key] = newValue;
+	      return newStyle;
+	    }, {});
+	  }
+	
+	  var prefixedStyle = {};
+	  Object.keys(style).forEach(function (property) {
+	    var value = style[property];
+	
+	    var newProperty = getPrefixedPropertyName(property);
+	    if (!newProperty) {
+	      // Ignore unsupported properties
+	      if (process.env.NODE_ENV !== 'production') {
+	        /* eslint-disable no-console */
+	        if (console && console.warn) {
+	          var componentContext = componentName ? ' in component "' + componentName + '"' : '';
+	
+	          console.warn('Unsupported CSS property "' + property + '"' + componentContext);
+	        }
+	        /* eslint-enable no-console */
+	        return;
+	      }
+	    }
+	
+	    var newValue = _getPrefixedValue(componentName, newProperty, value, property);
+	
+	    prefixedStyle[newProperty] = newValue;
+	  });
+	  return prefixedStyle;
+	};
+	
+	module.exports = {
+	  getPrefixedStyle: getPrefixedStyle,
+	  cssPrefix: prefixInfo.cssPrefix,
+	  jsPrefix: prefixInfo.jsPrefix
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 38 */
+/* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -25139,18 +24177,437 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 39 */
+/* 20 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	function find(array, predicate, context) {
+	  if (typeof Array.prototype.find === 'function') {
+	    return array.find(predicate, context);
+	  }
+	
+	  context = context || this;
+	  var length = array.length;
+	  var i;
+	
+	  if (typeof predicate !== 'function') {
+	    throw new TypeError(predicate + ' is not a function');
+	  }
+	
+	  for (i = 0; i < length; i++) {
+	    if (predicate.call(context, array[i], i, array)) {
+	      return array[i];
+	    }
+	  }
+	}
+	
+	module.exports = find;
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/** @flow */
+	
+	'use strict';
+	
+	/*:: import type {PluginConfig, PluginResult} from '.';*/
+	
+	var MouseUpListener = __webpack_require__(22);
+	
+	var _isInteractiveStyleField = function _isInteractiveStyleField(styleFieldName) {
+	  return styleFieldName === ':hover' || styleFieldName === ':active' || styleFieldName === ':focus';
+	};
+	
+	var resolveInteractionStyles = function resolveInteractionStyles(config /*: PluginConfig*/) /*: PluginResult*/ {
+	  var ExecutionEnvironment = config.ExecutionEnvironment;
+	  var getComponentField = config.getComponentField;
+	  var getState = config.getState;
+	  var mergeStyles = config.mergeStyles;
+	  var props = config.props;
+	  var setState = config.setState;
+	  var style = config.style;
+	
+	  var newComponentFields = {};
+	  var newProps = {};
+	
+	  // Only add handlers if necessary
+	  if (style[':hover']) {
+	    // Always call the existing handler if one is already defined.
+	    // This code, and the very similar ones below, could be abstracted a bit
+	    // more, but it hurts readability IMO.
+	    var existingOnMouseEnter = props.onMouseEnter;
+	    newProps.onMouseEnter = function (e) {
+	      existingOnMouseEnter && existingOnMouseEnter(e);
+	      setState(':hover', true);
+	    };
+	
+	    var existingOnMouseLeave = props.onMouseLeave;
+	    newProps.onMouseLeave = function (e) {
+	      existingOnMouseLeave && existingOnMouseLeave(e);
+	      setState(':hover', false);
+	    };
+	  }
+	
+	  if (style[':active']) {
+	    var existingOnMouseDown = props.onMouseDown;
+	    newProps.onMouseDown = function (e) {
+	      existingOnMouseDown && existingOnMouseDown(e);
+	      newComponentFields._lastMouseDown = Date.now();
+	      setState(':active', 'viamousedown');
+	    };
+	
+	    var existingOnKeyDown = props.onKeyDown;
+	    newProps.onKeyDown = function (e) {
+	      existingOnKeyDown && existingOnKeyDown(e);
+	      if (e.key === ' ' || e.key === 'Enter') {
+	        setState(':active', 'viakeydown');
+	      }
+	    };
+	
+	    var existingOnKeyUp = props.onKeyUp;
+	    newProps.onKeyUp = function (e) {
+	      existingOnKeyUp && existingOnKeyUp(e);
+	      if (e.key === ' ' || e.key === 'Enter') {
+	        setState(':active', false);
+	      }
+	    };
+	  }
+	
+	  if (style[':focus']) {
+	    var existingOnFocus = props.onFocus;
+	    newProps.onFocus = function (e) {
+	      existingOnFocus && existingOnFocus(e);
+	      setState(':focus', true);
+	    };
+	
+	    var existingOnBlur = props.onBlur;
+	    newProps.onBlur = function (e) {
+	      existingOnBlur && existingOnBlur(e);
+	      setState(':focus', false);
+	    };
+	  }
+	
+	  if (style[':active'] && !getComponentField('_radiumMouseUpListener') && ExecutionEnvironment.canUseEventListeners) {
+	    newComponentFields._radiumMouseUpListener = MouseUpListener.subscribe(function () {
+	      Object.keys(getComponentField('state')._radiumStyleState).forEach(function (key) {
+	        if (getState(':active') === 'viamousedown') {
+	          setState(':active', false, key);
+	        }
+	      });
+	    });
+	  }
+	
+	  // Merge the styles in the order they were defined
+	  var interactionStyles = Object.keys(style).filter(function (name) {
+	    return _isInteractiveStyleField(name) && getState(name);
+	  }).map(function (name) {
+	    return style[name];
+	  });
+	
+	  var newStyle = mergeStyles([style].concat(interactionStyles));
+	
+	  // Remove interactive styles
+	  newStyle = Object.keys(newStyle).reduce(function (styleWithoutInteractions, name) {
+	    if (!_isInteractiveStyleField(name)) {
+	      styleWithoutInteractions[name] = newStyle[name];
+	    }
+	    return styleWithoutInteractions;
+	  }, {});
+	
+	  return {
+	    componentFields: newComponentFields,
+	    props: newProps,
+	    style: newStyle
+	  };
+	};
+	
+	module.exports = resolveInteractionStyles;
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+	/* @flow */
+	
+	'use strict';
+	
+	var _callbacks = [];
+	var _mouseUpListenerIsActive = false;
+	
+	var _handleMouseUp = function _handleMouseUp(ev) {
+	  _callbacks.forEach(function (callback) {
+	    callback(ev);
+	  });
+	};
+	
+	var subscribe = function subscribe(callback /*: () => void*/) /*: {remove: () => void}*/ {
+	  if (_callbacks.indexOf(callback) === -1) {
+	    _callbacks.push(callback);
+	  }
+	
+	  if (!_mouseUpListenerIsActive) {
+	    window.addEventListener('mouseup', _handleMouseUp);
+	    _mouseUpListenerIsActive = true;
+	  }
+	
+	  return {
+	    remove: function remove() {
+	      var index = _callbacks.indexOf(callback);
+	      _callbacks.splice(index, 1);
+	
+	      if (_callbacks.length === 0 && _mouseUpListenerIsActive) {
+	        window.removeEventListener('mouseup', _handleMouseUp);
+	        _mouseUpListenerIsActive = false;
+	      }
+	    }
+	  };
+	};
+	
+	module.exports = {
+	  subscribe: subscribe
+	};
+
+/***/ },
+/* 23 */
+/***/ function(module, exports) {
+
+	/** @flow */
+	
+	'use strict';
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	/*:: import type {MatchMediaType} from '../config';*/
+	/*:: import type {PluginConfig, PluginResult} from '.';*/
+	
+	var _windowMatchMedia;
+	var _getWindowMatchMedia = function _getWindowMatchMedia(ExecutionEnvironment) {
+	  if (_windowMatchMedia === undefined) {
+	    _windowMatchMedia = !!ExecutionEnvironment.canUseDOM && !!window && !!window.matchMedia && function (mediaQueryString) {
+	      return window.matchMedia(mediaQueryString);
+	    } || null;
+	  }
+	  return _windowMatchMedia;
+	};
+	
+	var resolveMediaQueries = function resolveMediaQueries(_ref /*: PluginConfig*/) /*: PluginResult*/ {
+	  var ExecutionEnvironment = _ref.ExecutionEnvironment;
+	  var getComponentField = _ref.getComponentField;
+	  var getGlobalState = _ref.getGlobalState;
+	  var config = _ref.config;
+	  var mergeStyles = _ref.mergeStyles;
+	  var setState = _ref.setState;
+	  var style = _ref.style;
+	
+	  var newComponentFields = {};
+	  var newStyle = style;
+	  var matchMedia /*: ?MatchMediaType*/ = config.matchMedia || _getWindowMatchMedia(ExecutionEnvironment);
+	  if (!matchMedia) {
+	    return newStyle;
+	  }
+	
+	  var mediaQueryListByQueryString = getGlobalState('mediaQueryListByQueryString') || {};
+	
+	  Object.keys(style).filter(function (name) {
+	    return name.indexOf('@media') === 0;
+	  }).map(function (query) {
+	    var mediaQueryStyles = style[query];
+	    query = query.replace('@media ', '');
+	
+	    // Create a global MediaQueryList if one doesn't already exist
+	    var mql = mediaQueryListByQueryString[query];
+	    if (!mql && matchMedia) {
+	      mediaQueryListByQueryString[query] = mql = matchMedia(query);
+	    }
+	
+	    var listenersByQuery = getComponentField('_radiumMediaQueryListenersByQuery');
+	
+	    if (!listenersByQuery || !listenersByQuery[query]) {
+	      var listener = function listener() {
+	        return setState(query, mql.matches, '_all');
+	      };
+	      mql.addListener(listener);
+	      newComponentFields._radiumMediaQueryListenersByQuery = _extends({}, listenersByQuery);
+	      newComponentFields._radiumMediaQueryListenersByQuery[query] = {
+	        remove: function remove() {
+	          mql.removeListener(listener);
+	        }
+	      };
+	    }
+	
+	    // Apply media query states
+	    if (mql.matches) {
+	      newStyle = mergeStyles([newStyle, mediaQueryStyles]);
+	    }
+	  });
+	
+	  // Remove media queries
+	  newStyle = Object.keys(newStyle).reduce(function (styleWithoutMedia, key) {
+	    if (key.indexOf('@media') !== 0) {
+	      styleWithoutMedia[key] = newStyle[key];
+	    }
+	    return styleWithoutMedia;
+	  }, {});
+	
+	  return {
+	    componentFields: newComponentFields,
+	    globalState: { mediaQueryListByQueryString: mediaQueryListByQueryString },
+	    style: newStyle
+	  };
+	};
+	
+	module.exports = resolveMediaQueries;
+
+/***/ },
+/* 24 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* @flow */
+	
+	'use strict';
+	
+	var getStateKey = __webpack_require__(25);
+	
+	var getState = function getState(state /*: {_radiumStyleState: {[key: string]: {[value: string]: boolean}}}*/, elementKey /*: string*/, value /*: string*/) /*: any*/ {
+	  var key = getStateKey(elementKey);
+	
+	  return !!state && !!state._radiumStyleState && !!state._radiumStyleState[key] && state._radiumStyleState[key][value];
+	};
+	
+	module.exports = getState;
+
+/***/ },
+/* 25 */
+/***/ function(module, exports) {
+
+	/* @flow */
+	
+	'use strict';
+	
+	var getStateKey = function getStateKey(elementKey /*: ?string*/) /*: string*/ {
+	  return elementKey === null || elementKey === undefined ? 'main' : elementKey.toString();
+	};
+	
+	module.exports = getStateKey;
+
+/***/ },
+/* 26 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var isPlainObject = __webpack_require__(27);
+	
+	var shouldMerge = function shouldMerge(value) {
+	  // Don't merge objects overriding toString, since they should be converted
+	  // to string values.
+	  return isPlainObject(value) && value.toString === Object.prototype.toString;
+	};
+	
+	// Merge style objects. Deep merge plain object values.
+	var mergeStyles = function mergeStyles(styles) {
+	  var result = {};
+	
+	  styles.forEach(function (style) {
+	    if (!style || typeof style !== 'object') {
+	      return;
+	    }
+	
+	    if (Array.isArray(style)) {
+	      style = mergeStyles(style);
+	    }
+	
+	    Object.keys(style).forEach(function (key) {
+	      if (shouldMerge(style[key]) && shouldMerge(result[key])) {
+	        result[key] = mergeStyles([result[key], style[key]]);
+	      } else {
+	        result[key] = style[key];
+	      }
+	    });
+	  });
+	
+	  return result;
+	};
+	
+	module.exports = mergeStyles;
+
+/***/ },
+/* 27 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/*!
+	 * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
+	 *
+	 * Copyright (c) 2014-2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+	
+	'use strict';
+	
+	var isObject = __webpack_require__(28);
+	
+	function isObjectObject(o) {
+	  return isObject(o) === true
+	    && Object.prototype.toString.call(o) === '[object Object]';
+	}
+	
+	module.exports = function isPlainObject(o) {
+	  var ctor,prot;
+	  
+	  if (isObjectObject(o) === false) return false;
+	  
+	  // If has modified constructor
+	  ctor = o.constructor;
+	  if (typeof ctor !== 'function') return false;
+	  
+	  // If has modified prototype
+	  prot = ctor.prototype;
+	  if (isObjectObject(prot) === false) return false;
+	  
+	  // If constructor does not have an Object-specific method
+	  if (prot.hasOwnProperty('isPrototypeOf') === false) {
+	    return false;
+	  }
+	  
+	  // Most likely a plain Object
+	  return true;
+	};
+
+
+/***/ },
+/* 28 */
+/***/ function(module, exports) {
+
+	/*!
+	 * isobject <https://github.com/jonschlinkert/isobject>
+	 *
+	 * Copyright (c) 2014-2015, Jon Schlinkert.
+	 * Licensed under the MIT License.
+	 */
+	
+	'use strict';
+	
+	module.exports = function isObject(val) {
+	  return val != null && typeof val === 'object'
+	    && !Array.isArray(val);
+	};
+
+
+/***/ },
+/* 29 */
 /***/ function(module, exports) {
 
 	/* @flow */
 	
 	"use strict";
 	
-	exports.__esModule = true;
 	var allPrintStyles = {};
 	var listeners = [];
 	
-	function subscribe(listener /*: () => void*/) /*: {remove: () => void}*/ {
+	var subscribe = function subscribe(listener /*: () => void*/) /*: {remove: () => void}*/ {
 	  if (listeners.indexOf(listener) === -1) {
 	    listeners.push(listener);
 	  }
@@ -25164,15 +24621,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  };
-	}
+	};
 	
-	function _emitChange() {
+	var _emitChange = function _emitChange() {
 	  listeners.forEach(function (listener) {
 	    return listener();
 	  });
-	}
+	};
 	
-	function _appendImportantToEachValue(styleObj) {
+	var _appendImportantToEachValue = function _appendImportantToEachValue(styleObj) {
 	  var importantStyleObj = {};
 	
 	  Object.keys(styleObj).forEach(function (key) {
@@ -25185,9 +24642,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	
 	  return importantStyleObj;
-	}
+	};
 	
-	function addPrintStyles(Component /*: constructor*/) {
+	var addPrintStyles = function addPrintStyles(Component /*: constructor*/) {
 	  if (!Component.printStyles) {
 	    return;
 	  }
@@ -25205,42 +24662,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // print styles
 	  _emitChange();
 	  return printStyleClass;
-	}
+	};
 	
-	function getPrintStyles() /*: Object*/ {
+	var getPrintStyles = function getPrintStyles() /*: Object*/ {
 	  return allPrintStyles;
-	}
+	};
 	
-	exports["default"] = {
+	module.exports = {
 	  addPrintStyles: addPrintStyles,
 	  getPrintStyles: getPrintStyles,
 	  subscribe: subscribe
 	};
-	module.exports = exports["default"];
 
 /***/ },
-/* 40 */
+/* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
-	exports.__esModule = true;
+	var React = __webpack_require__(3);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var Style = __webpack_require__(31);
+	var printStyles = __webpack_require__(29);
 	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _styleJs = __webpack_require__(41);
-	
-	var _styleJs2 = _interopRequireDefault(_styleJs);
-	
-	var _printStylesJs = __webpack_require__(39);
-	
-	var _printStylesJs2 = _interopRequireDefault(_printStylesJs);
-	
-	var PrintStyle = _react2['default'].createClass({
+	var PrintStyle = React.createClass({
 	  displayName: 'PrintStyle',
 	
 	  getInitialState: function getInitialState() {
@@ -25248,7 +24693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  componentDidMount: function componentDidMount() {
-	    this.subscription = _printStylesJs2['default'].subscribe(this._onChange);
+	    this.subscription = printStyles.subscribe(this._onChange);
 	  },
 	
 	  componentWillUnmount: function componentWillUnmount() {
@@ -25261,12 +24706,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  _getStylesState: function _getStylesState() {
 	    return {
-	      styles: _printStylesJs2['default'].getPrintStyles()
+	      styles: printStyles.getPrintStyles()
 	    };
 	  },
 	
 	  render: function render() {
-	    return _react2['default'].createElement(_styleJs2['default'], { rules: {
+	    return React.createElement(Style, { rules: {
 	        mediaQueries: {
 	          print: this.state.styles
 	        }
@@ -25274,62 +24719,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	exports['default'] = PrintStyle;
-	module.exports = exports['default'];
+	module.exports = PrintStyle;
 
 /***/ },
-/* 41 */
+/* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 	
 	'use strict';
 	
-	exports.__esModule = true;
+	var camelCasePropsToDashCase = __webpack_require__(32);
+	var createMarkupForStyles = __webpack_require__(33);
+	var Prefixer = __webpack_require__(18);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	var React = __webpack_require__(3);
 	
-	var _camelCasePropsToDashCase = __webpack_require__(42);
-	
-	var _camelCasePropsToDashCase2 = _interopRequireDefault(_camelCasePropsToDashCase);
-	
-	var _createMarkupForStyles = __webpack_require__(43);
-	
-	var _createMarkupForStyles2 = _interopRequireDefault(_createMarkupForStyles);
-	
-	var _prefixer = __webpack_require__(23);
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var buildCssString = function buildCssString(selector /*: string*/, rules /*: Object*/, userAgent /*: ?string*/) /*: string*/ {
+	var buildCssString = function buildCssString(selector /*: string*/, rules /*: Object*/, prefix /*: (rules: Object, componentName: string) => Object*/) /*: ?string*/ {
 	  if (!selector || !rules) {
-	    return '';
+	    return null;
 	  }
 	
-	  var prefixedRules = _prefixer.getPrefixedStyle(rules, 'Style', userAgent);
-	  var cssPrefixedRules = _camelCasePropsToDashCase2['default'](prefixedRules);
-	  var serializedRules = _createMarkupForStyles2['default'](cssPrefixedRules);
+	  var prefixedRules = prefix(rules, 'Style');
+	  var cssPrefixedRules = camelCasePropsToDashCase(prefixedRules);
+	  var serializedRules = createMarkupForStyles(cssPrefixedRules);
 	
 	  return selector + '{' + serializedRules + '}';
 	};
 	
-	var Style = _react2['default'].createClass({
+	var Style = React.createClass({
 	  displayName: 'Style',
 	
 	  propTypes: {
-	    rules: _react2['default'].PropTypes.object,
-	    scopeSelector: _react2['default'].PropTypes.string
-	  },
+	    prefix: React.PropTypes.func.isRequired,
 	
-	  contextTypes: {
-	    radiumConfig: _react2['default'].PropTypes.object
+	    rules: React.PropTypes.object,
+	    scopeSelector: React.PropTypes.string
 	  },
 	
 	  getDefaultProps: function getDefaultProps() /*: {scopeSelector: string}*/ {
 	    return {
-	      prefix: _prefixer.getPrefixedStyle,
+	      prefix: Prefixer.getPrefixedStyle,
 	      scopeSelector: ''
 	    };
 	  },
@@ -25344,7 +24774,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        accumulator += _this._buildMediaQueryString(rules);
 	      } else {
 	        var completeSelector = (_this.props.scopeSelector ? _this.props.scopeSelector + ' ' : '') + selector;
-	        accumulator += buildCssString(completeSelector, rules, _this.context && _this.context.radiumConfig && _this.context.radiumConfig.userAgent);
+	        accumulator += buildCssString(completeSelector, rules, _this.props.prefix) || '';
 	      }
 	
 	      return accumulator;
@@ -25366,13 +24796,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	
 	  _getContextMediaQueries: function _getContextMediaQueries() /*: {[mediaQuery: string]: Object}*/ {
-	    var _this3 = this;
-	
 	    var contextMediaQueries = {};
 	    if (this.context && this.context.mediaQueries) {
-	      Object.keys(this.context.mediaQueries).forEach(function (query) {
-	        contextMediaQueries[query] = _this3.context.mediaQueries[query].media;
-	      });
+	      Object.keys(this.context.mediaQueries).forEach((function (query) {
+	        contextMediaQueries[query] = this.context.mediaQueries[query].media;
+	      }).bind(this));
 	    }
 	
 	    return contextMediaQueries;
@@ -25385,22 +24813,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var styles = this._buildStyles(this.props.rules);
 	
-	    return _react2['default'].createElement('style', { dangerouslySetInnerHTML: { __html: styles } });
+	    return React.createElement('style', { dangerouslySetInnerHTML: { __html: styles } });
 	  }
 	});
 	
-	exports['default'] = Style;
-	module.exports = exports['default'];
+	module.exports = Style;
 
 /***/ },
-/* 42 */
+/* 32 */
 /***/ function(module, exports) {
 
 	/* @flow */
 	
 	'use strict';
 	
-	exports.__esModule = true;
 	var _camelCaseRegex = /([a-z])?([A-Z])/g;
 	var _camelCaseReplacer = function _camelCaseReplacer(match, p1, p2) {
 	  return (p1 || '') + '-' + p2.toLowerCase();
@@ -25418,18 +24844,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {});
 	};
 	
-	exports['default'] = camelCasePropsToDashCase;
-	module.exports = exports['default'];
+	module.exports = camelCasePropsToDashCase;
 
 /***/ },
-/* 43 */
+/* 33 */
 /***/ function(module, exports) {
 
 	/* @flow */
 	
 	'use strict';
 	
-	exports.__esModule = true;
 	var createMarkupForStyles = function createMarkupForStyles(style /*: Object*/) /*: string*/ {
 	  var spaces /*: string*/ = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
 	
@@ -25438,59 +24862,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }).join('\n');
 	};
 	
-	exports['default'] = createMarkupForStyles;
-	module.exports = exports['default'];
+	module.exports = createMarkupForStyles;
 
 /***/ },
-/* 44 */
+/* 34 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* @flow */
 	
 	'use strict';
 	
-	exports.__esModule = true;
-	exports['default'] = keyframes;
+	var camelCasePropsToDashCase = __webpack_require__(32);
+	var createMarkupForStyles = __webpack_require__(33);
+	var Prefixer = __webpack_require__(18);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _camelCasePropsToDashCase = __webpack_require__(42);
-	
-	var _camelCasePropsToDashCase2 = _interopRequireDefault(_camelCasePropsToDashCase);
-	
-	var _createMarkupForStyles = __webpack_require__(43);
-	
-	var _createMarkupForStyles2 = _interopRequireDefault(_createMarkupForStyles);
-	
-	var _prefixer = __webpack_require__(23);
-	
-	var _exenv = __webpack_require__(38);
-	
-	var _exenv2 = _interopRequireDefault(_exenv);
+	var ExecutionEnvironment = __webpack_require__(19);
 	
 	var isAnimationSupported = false;
 	var keyframesPrefixed = 'keyframes';
 	
-	if (_exenv2['default'].canUseDOM) {
-	  (function () {
-	    // Animation feature detection and keyframes prefixing from MDN:
-	    // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Detecting_CSS_animation_support
-	    var domPrefixes = ['Webkit', 'Moz', 'O', 'ms'];
-	    var element = (document.createElement('div') /*: any*/);
+	if (ExecutionEnvironment.canUseDOM) {
+	  // Animation feature detection and keyframes prefixing from MDN:
+	  // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Detecting_CSS_animation_support
+	  var domPrefixes = ['Webkit', 'Moz', 'O', 'ms'];
+	  var element = (document.createElement('div') /*: any*/);
 	
-	    if (element.style.animationName !== undefined) {
-	      isAnimationSupported = true;
-	    } else {
-	      domPrefixes.some(function (prefix) {
-	        if (element.style[prefix + 'AnimationName'] !== undefined) {
-	          keyframesPrefixed = '-' + prefix.toLowerCase() + '-keyframes';
-	          isAnimationSupported = true;
-	          return true;
-	        }
-	        return false;
-	      });
-	    }
-	  })();
+	  if (element.style.animationName !== undefined) {
+	    isAnimationSupported = true;
+	  } else {
+	    domPrefixes.some(function (prefix) {
+	      if (element.style[prefix + 'AnimationName'] !== undefined) {
+	        keyframesPrefixed = '-' + prefix.toLowerCase() + '-keyframes';
+	        isAnimationSupported = true;
+	        return true;
+	      }
+	      return false;
+	    });
+	  }
 	}
 	
 	var animationIndex = 1;
@@ -25503,9 +24911,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	// Simple animation helper that injects CSS into a style object containing the
 	// keyframes, and returns a string with the generated animation name.
-	
-	function keyframes(keyframeRules /*: {[percentage: string]: {[key: string]: string|number}}*/, componentName /*:: ?: string*/) /*: string*/ {
-	  var prefix /*: (style: Object, componentName: ?string) => Object*/ = arguments.length <= 2 || arguments[2] === undefined ? _prefixer.getPrefixedStyle : arguments[2];
+	var keyframes = function keyframes(keyframeRules /*: {[percentage: string]: {[key: string]: string|number}}*/, componentName /*:: ?: string*/) /*: string*/ {
+	  var prefix /*: (style: Object, componentName: ?string) => Object*/ = arguments.length <= 2 || arguments[2] === undefined ? Prefixer.getPrefixedStyle : arguments[2];
 	
 	  var name = 'Animation' + animationIndex;
 	  animationIndex += 1;
@@ -25517,8 +24924,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var rule = '@' + keyframesPrefixed + ' ' + name + ' {\n' + Object.keys(keyframeRules).map(function (percentage) {
 	    var props = keyframeRules[percentage];
 	    var prefixedProps = prefix(props, componentName);
-	    var cssPrefixedProps = _camelCasePropsToDashCase2['default'](prefixedProps);
-	    var serializedProps = _createMarkupForStyles2['default'](cssPrefixedProps, '  ');
+	    var cssPrefixedProps = camelCasePropsToDashCase(prefixedProps);
+	    var serializedProps = createMarkupForStyles(cssPrefixedProps, '  ');
 	    return '  ' + percentage + ' {\n  ' + serializedProps + '\n  }';
 	  }).join('\n') + '\n}\n';
 	
@@ -25530,26 +24937,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  animationStyleSheet.sheet.insertRule(rule, animationStyleSheet.sheet.cssRules.length);
 	  return name;
-	}
+	};
 	
-	module.exports = exports['default'];
+	module.exports = keyframes;
 
 /***/ },
-/* 45 */
+/* 35 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryAnimation: __webpack_require__(46)
+	  VictoryLabel: __webpack_require__(36)
 	};
 
 /***/ },
-/* 46 */
+/* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
-	
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -25558,267 +24963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _util = __webpack_require__(47);
-	
-	(0, _util.addVictoryInterpolator)();
-	
-	var VictoryAnimation = (function (_React$Component) {
-	  _inherits(VictoryAnimation, _React$Component);
-	
-	  function VictoryAnimation(props) {
-	    _classCallCheck(this, VictoryAnimation);
-	
-	    _get(Object.getPrototypeOf(VictoryAnimation.prototype), "constructor", this).call(this, props);
-	    /* defaults */
-	    this.state = Array.isArray(this.props.data) ? this.props.data[0] : this.props.data;
-	    this.interpolator = null;
-	    this.step = 0;
-	    this.queue = [];
-	    /* build easing function */
-	    this.ease = _d32["default"].ease(this.props.easing);
-	    /*
-	      unlike React.createClass({}), there is no autobinding of this in ES6 classes
-	      so we bind functionToBeRunEachFrame to current instance of victory animation class
-	    */
-	    this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-	  }
-	
-	  /* lifecycle */
-	
-	  _createClass(VictoryAnimation, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      var _this = this;
-	
-	      /* cancel existing loop if it exists */
-	      if (this.raf) {
-	        cancelAnimationFrame(this.raf);
-	      }
-	      /* If an object was supplied */
-	      if (Array.isArray(nextProps.data) === false) {
-	        /* compare cached version to next props */
-	        this.interpolator = _d32["default"].interpolate(this.state, nextProps.data);
-	        /* reset step to zero */
-	        this.step = 0;
-	        /* start request animation frame */
-	        setTimeout(function () {
-	          _this.raf = _this.functionToBeRunEachFrame();
-	        }, this.props.delay);
-	        /* If an array was supplied */
-	      } else {
-	          /* Build our tween queue */
-	          nextProps.data.forEach(function (data) {
-	            _this.queue.push(data);
-	          });
-	          /* Start traversing the tween queue */
-	          this.traverseQueue();
-	        }
-	    }
-	
-	    /* Traverse the tween queue */
-	  }, {
-	    key: "traverseQueue",
-	    value: function traverseQueue() {
-	      var _this2 = this;
-	
-	      if (this.queue.length > 0) {
-	        /* Get the next index */
-	        var data = this.queue[0];
-	        /* compare cached version to next props */
-	        this.interpolator = _d32["default"].interpolate(this.state, data);
-	        /* reset step to zero */
-	        this.step = 0;
-	        setTimeout(function () {
-	          _this2.raf = _this2.functionToBeRunEachFrame();
-	        }, this.props.delay);
-	      } else if (this.props.onEnd) {
-	        this.props.onEnd();
-	      }
-	    }
-	
-	    /* every frame we... */
-	  }, {
-	    key: "functionToBeRunEachFrame",
-	    value: function functionToBeRunEachFrame() {
-	      /*
-	        step can generate imprecise values, sometimes greater than 1
-	        if this happens set the state to 1 and return, cancelling the loop
-	      */
-	      if (this.step >= 1) {
-	        this.step = 1;
-	        this.setState(this.interpolator(this.step));
-	        if (this.queue.length > 0) {
-	          cancelAnimationFrame(this.raf);
-	          this.queue.shift();
-	          this.traverseQueue();
-	        } else if (this.props.onEnd) {
-	          this.props.onEnd();
-	        }
-	        return;
-	      }
-	      /*
-	        if we're not at the end of the loop, set the state by passing
-	        current step value that's transformed by the ease function to the
-	        interpolator, which is cached for performance whenever props are received
-	      */
-	      this.setState(this.interpolator(this.ease(this.step)));
-	      /* increase step by velocity */
-	      this.step += this.props.velocity;
-	      /*
-	        requestAnimationFrame calls a function on a frame.
-	        continue the loop by feeding functionToBeRunEachFrame
-	      */
-	      this.raf = requestAnimationFrame(this.functionToBeRunEachFrame);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return this.props.children(this.state);
-	    }
-	  }]);
-	
-	  return VictoryAnimation;
-	})(_react2["default"].Component);
-	
-	VictoryAnimation.propTypes = {
-	  velocity: _react2["default"].PropTypes.number,
-	  easing: _react2["default"].PropTypes.string,
-	  delay: _react2["default"].PropTypes.number,
-	  onEnd: _react2["default"].PropTypes.func,
-	  data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
-	};
-	
-	VictoryAnimation.defaultProps = {
-	  /* velocity modifies step each frame */
-	  velocity: 0.02,
-	  /* easing modifies step each frame */
-	  easing: "quad-in-out",
-	  /* delay between transitions */
-	  delay: 0,
-	  /* we got nothin' */
-	  data: {}
-	};
-	
-	exports["default"] = VictoryAnimation;
-	module.exports = exports["default"];
-
-/***/ },
-/* 47 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var interpolatorAdded = false;
-	
-	/**
-	 * By default, `d3.interpolate` (which cycles through a list of interpolators)
-	 * has a few downsides:
-	 *
-	 * - `null` values get turned into 0.
-	 * - `undefined`, `function`, and some other value types get turned into NaN.
-	 * - It tries to interpolate between identical start->end values, doing
-	 *   unnecessary calculations that sometimes result in floating point rounding
-	 *   errors.
-	 *
-	 * If only the default interpolators are used, `VictoryAnimation` will happily
-	 * pass down NaN (and other bad) values as props to the wrapped component.
-	 * The component will then either use the incorrect values or complain that it
-	 * was passed props of the incorrect type. This custom interpolator is added
-	 * using the `d3.interpolators` API, and prevents such cases from happening
-	 * for most values.
-	 *
-	 * @param {any} a - Start value.
-	 * @param {any} b - End value.
-	 * @returns {Function} Returns an interpolation function, if possible.
-	 */
-	var victoryInterpolator = function victoryInterpolator(a, b) {
-	  // If the values are strictly equal, or either value is null or undefined,
-	  // just use the start value `a` or end value `b` at every step, as there is
-	  // no reasonable in-between value. The value will jump, but we can try to
-	  // jump at a good time (like the halfway point).
-	  if (a === b || a == null || b == null) {
-	    return function (t) {
-	      // Switch to `b` halfway through the interpolation.
-	      return t < 0.5 ? a : b;
-	    };
-	  }
-	  if (typeof a === "function" || typeof b === "function") {
-	    return function (t) {
-	      // We're interpolating to or from a function. The interpolated value will
-	      // be a function that calls `a` (if it's a function) and `b` (if it's a
-	      // function) and calls `d3.interpolate` on the resulting values.
-	      // Note that our function won't necessarily be called (that's up to the
-	      // component) - but if it does get called, it will return an
-	      // appropriately interpolated value.
-	      return function () {
-	        var aval = typeof a === "function" ? a.apply(this, arguments) : a;
-	        var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	        return _d32["default"].interpolate(aval, bval)(t);
-	      };
-	    };
-	  }
-	};
-	
-	exports.victoryInterpolator = victoryInterpolator;
-	var addVictoryInterpolator = function addVictoryInterpolator() {
-	  if (!interpolatorAdded) {
-	    _d32["default"].interpolators.push(victoryInterpolator);
-	    interpolatorAdded = true;
-	  }
-	};
-	exports.addVictoryInterpolator = addVictoryInterpolator;
-
-/***/ },
-/* 48 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	module.exports = {
-	  VictoryBar: __webpack_require__(49)
-	};
-
-/***/ },
-/* 49 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -25834,924 +24979,172 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
+	var _victoryUtil = __webpack_require__(37);
+	
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
+	
 	var _lodash = __webpack_require__(6);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _victoryAnimation = __webpack_require__(50);
-	
-	var _victoryUtil = __webpack_require__(53);
-	
-	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
-	
-	var _victoryLabel = __webpack_require__(60);
-	
-	var defaultStyles = {
-	  data: {
-	    width: 8,
-	    padding: 6,
-	    stroke: "transparent",
-	    strokeWidth: 0,
-	    fill: "#756f6a",
-	    opacity: 1
-	  },
-	  labels: {
-	    fontSize: 12,
-	    padding: 4
-	  }
+	var styles = {
+	  stroke: "transparent",
+	  fill: "#756f6a",
+	  fontSize: 16,
+	  fontFamily: "Helvetica",
+	  backgroundColor: "#ccc"
 	};
 	
-	var defaultData = [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }];
+	var VictoryLabel = (function (_React$Component) {
+	  _inherits(VictoryLabel, _React$Component);
 	
-	var VictoryBar = (function (_React$Component) {
-	  _inherits(VictoryBar, _React$Component);
+	  function VictoryLabel() {
+	    _classCallCheck(this, _VictoryLabel);
 	
-	  function VictoryBar() {
-	    _classCallCheck(this, _VictoryBar);
-	
-	    _get(Object.getPrototypeOf(_VictoryBar.prototype), "constructor", this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(_VictoryLabel.prototype), "constructor", this).apply(this, arguments);
 	  }
 	
-	  _createClass(VictoryBar, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      // If animating, the `VictoryBar` instance wrapped in `VictoryAnimation`
-	      // will compute these values.
-	      if (!this.props.animate) {
-	        this.getCalculatedValues(this.props);
-	      }
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.getCalculatedValues(nextProps);
-	    }
-	  }, {
-	    key: "getCalculatedValues",
-	    value: function getCalculatedValues(props) {
-	      this.style = this.getStyles(props);
-	      this.padding = this.getPadding(props);
-	      this.stringMap = {
-	        x: this.createStringMap(props, "x"),
-	        y: this.createStringMap(props, "y")
-	      };
-	      this.datasets = this.consolidateData(props);
-	      this.range = {
-	        x: this.getRange(props, "x"),
-	        y: this.getRange(props, "y")
-	      };
-	      this.domain = {
-	        x: this.getDomain(props, "x"),
-	        y: this.getDomain(props, "y")
-	      };
-	      this.scale = {
-	        x: this.getScale(props, "x"),
-	        y: this.getScale(props, "y")
-	      };
-	      this.barWidth = this.getBarWidth();
-	    }
-	  }, {
+	  _createClass(VictoryLabel, [{
 	    key: "getStyles",
-	    value: function getStyles(props) {
-	      var style = props.style || defaultStyles;
-	      var data = style.data;
-	      var labels = style.labels;
-	      var parent = style.parent;
-	
-	      return {
-	        parent: _lodash2["default"].merge({ height: props.height, width: props.width }, parent),
-	        data: _lodash2["default"].merge({}, defaultStyles.data, data),
-	        labels: _lodash2["default"].merge({}, defaultStyles.labels, labels)
-	      };
-	    }
-	  }, {
-	    key: "getPadding",
-	    value: function getPadding(props) {
-	      var padding = _lodash2["default"].isNumber(props.padding) ? props.padding : 0;
-	      var paddingObj = _lodash2["default"].isObject(props.padding) ? props.padding : {};
-	      return {
-	        top: paddingObj.top || padding,
-	        bottom: paddingObj.bottom || padding,
-	        left: paddingObj.left || padding,
-	        right: paddingObj.right || padding
-	      };
-	    }
-	  }, {
-	    key: "consolidateData",
-	    value: function consolidateData(props) {
-	      var _this = this;
-	
-	      var dataFromProps = _lodash2["default"].isArray(props.data[0]) ? props.data : [props.data];
-	      return _lodash2["default"].map(dataFromProps, function (dataset, index) {
-	        return {
-	          attrs: _this._getAttributes(props, index),
-	          data: _lodash2["default"].map(dataset, function (data) {
-	            return _lodash2["default"].merge(data, {
-	              // map string data to numeric values, and add names
-	              x: _lodash2["default"].isString(data.x) ? _this.stringMap.x[data.x] : data.x,
-	              xName: _lodash2["default"].isString(data.x) ? data.x : undefined,
-	              y: _lodash2["default"].isString(data.y) ? _this.stringMap.y[data.y] : data.y,
-	              yName: _lodash2["default"].isString(data.y) ? data.y : undefined
-	            });
-	          })
-	        };
-	      });
-	    }
-	  }, {
-	    key: "_getAttributes",
-	    value: function _getAttributes(props, index) {
-	      var attributes = props.dataAttributes && props.dataAttributes[index] ? props.dataAttributes[index] : props.dataAttributes;
-	      if (attributes) {
-	        attributes.fill = attributes.fill || this.getColor(props, index);
-	      } else {
-	        attributes = { fill: this.getColor(props, index) };
-	      }
-	      var requiredAttributes = {
-	        name: attributes && attributes.name ? attributes.name : "data-" + index
-	      };
-	      return _lodash2["default"].merge(requiredAttributes, attributes);
-	    }
-	  }, {
-	    key: "getColor",
-	    value: function getColor(props, index) {
-	      // check for styles first
-	      if (props.style && props.style.data && props.style.data.fill) {
-	        return props.style.data.fill;
-	      }
-	      var colorScale = _lodash2["default"].isArray(props.colorScale) ? props.colorScale : _victoryUtil2["default"].style.getColorScale(props.colorScale);
-	      return colorScale[index % colorScale.length];
-	    }
-	  }, {
-	    key: "createStringMap",
-	    value: function createStringMap(props, axis) {
-	      // if categories exist and are strings, create a map using only those strings
-	      // don't alter the order.
-	      if (props.categories && _victoryUtil2["default"].collection.containsStrings(props.categories)) {
-	        return _lodash2["default"].zipObject(_lodash2["default"].map(props.categories, function (tick, index) {
-	          return ["" + tick, index + 1];
-	        }));
-	      }
-	      // collect strings from data
-	      var data = _lodash2["default"].isArray(props.data) ? _lodash2["default"].flattenDeep(props.data) : props.data;
-	      // create a unique, sorted set of strings
-	      var stringData = _lodash2["default"].chain(data).pluck(axis).map(function (datum) {
-	        return _lodash2["default"].isString(datum) ? datum : null;
-	      }).compact().uniq().sort().value();
-	
-	      return _lodash2["default"].isEmpty(stringData) ? null : _lodash2["default"].zipObject(_lodash2["default"].map(stringData, function (string, index) {
-	        return [string, index + 1];
-	      }));
-	    }
-	  }, {
-	    key: "getScale",
-	    value: function getScale(props, axis) {
-	      var scale = props.scale[axis] ? props.scale[axis].copy() : props.scale.copy();
-	      var range = this.range[axis];
-	      var domain = this.domain[axis];
-	      scale.range(range);
-	      scale.domain(domain);
-	      return scale;
-	    }
-	  }, {
-	    key: "getRange",
-	    value: function getRange(props, axis) {
-	      // determine how to lay the axis and what direction positive and negative are
-	      var isVertical = !this.props.horizontal && axis === "x" || this.props.horizontal && axis !== "x";
-	
-	      return isVertical ? [this.padding.left, props.width - this.padding.right] : [props.height - this.padding.bottom, this.padding.top];
-	    }
-	  }, {
-	    key: "getDomain",
-	    value: function getDomain(props, axis) {
-	      var categoryDomain = this._getDomainFromCategories(props, axis);
-	      if (props.domain && props.domain[axis]) {
-	        return props.domain[axis];
-	      } else if (props.domain && _lodash2["default"].isArray(props.domain)) {
-	        return props.domain;
-	      } else if (categoryDomain) {
-	        return categoryDomain;
-	      } else {
-	        return this._getDomainFromData(props, axis);
-	      }
-	    }
-	  }, {
-	    key: "_getDomainFromCategories",
-	    value: function _getDomainFromCategories(props, axis) {
-	      if (axis !== "x" || !props.categories || _victoryUtil2["default"].collection.containsStrings(props.categories)) {
-	        return undefined;
-	      }
-	      return [_lodash2["default"].min(_lodash2["default"].flatten(props.categories)), _lodash2["default"].max(_lodash2["default"].flatten(props.categories))];
-	    }
-	
-	    // helper method for getDomain
-	  }, {
-	    key: "_getDomainFromData",
-	    value: function _getDomainFromData(props, axis) {
-	      // if a sensible string map exists, return the minimum and maximum values
-	      // offset by the bar offset value
-	      if (this.stringMap[axis] !== null) {
-	        var mapValues = _lodash2["default"].values(this.stringMap[axis]);
-	        return [_lodash2["default"].min(mapValues), _lodash2["default"].max(mapValues)];
-	      } else {
-	        // find the global min and max
-	        var allData = _lodash2["default"].flatten(_lodash2["default"].pluck(this.datasets, "data"));
-	        var min = _lodash2["default"].min(_lodash2["default"].pluck(allData, axis));
-	        var max = _lodash2["default"].max(_lodash2["default"].pluck(allData, axis));
-	        // find the cumulative max for stacked chart types
-	        // this is only sensible for the y domain
-	        // TODO check assumption
-	        var cumulativeMax = props.stacked && axis === "y" && this.datasets.length > 1 ? _lodash2["default"].reduce(this.datasets, function (memo, dataset) {
-	          var localMax = _lodash2["default"].max(_lodash2["default"].pluck(dataset.data, "y"));
-	          return localMax > 0 ? memo + localMax : memo;
-	        }, 0) : -Infinity;
-	        var cumulativeMin = props.stacked && axis === "y" && this.datasets.length > 1 ? _lodash2["default"].reduce(this.datasets, function (memo, dataset) {
-	          var localMin = _lodash2["default"].min(_lodash2["default"].pluck(dataset.data, "y"));
-	          return localMin < 0 ? memo + localMin : memo;
-	        }, 0) : Infinity;
-	
-	        // use greatest min / max
-	        var domainMin = _lodash2["default"].min([min, cumulativeMin]);
-	        var domainMax = _lodash2["default"].max([max, cumulativeMax]);
-	        // add 1% padding so bars are always visible
-	        var padding = 0.01 * Math.abs(domainMax - domainMin);
-	        return [domainMin - padding, domainMax - padding];
-	      }
-	    }
-	  }, {
-	    key: "getBarWidth",
-	    value: function getBarWidth() {
-	      // todo calculate / enforce max width
-	      return this.style.data.width;
-	    }
-	
-	    /*
-	     * helper method for getBarPath
-	     * called when the bars will be vertical
-	     */
-	  }, {
-	    key: "_getVerticalBarPath",
-	    value: function _getVerticalBarPath(position) {
-	      var independent = position.independent;
-	      var dependent0 = position.dependent0;
-	      var dependent1 = position.dependent1;
-	
-	      var size = this.barWidth / 2;
-	      return "M " + (independent - size) + "," + dependent0 + " " + "L " + (independent - size) + "," + dependent1 + "L " + (independent + size) + "," + dependent1 + "L " + (independent + size) + "," + dependent0 + "L " + (independent - size) + "," + dependent0;
-	    }
-	
-	    /*
-	     * helper method for getBarPath
-	     * called when the bars will be horizonal
-	     */
-	  }, {
-	    key: "_getHorizontalBarPath",
-	    value: function _getHorizontalBarPath(position) {
-	      var independent = position.independent;
-	      var dependent0 = position.dependent0;
-	      var dependent1 = position.dependent1;
-	
-	      var size = this.barWidth / 2;
-	      return "M " + dependent0 + "," + (independent - size) + " " + "L " + dependent0 + "," + (independent + size) + "L " + dependent1 + "," + (independent + size) + "L " + dependent1 + "," + (independent - size) + "L " + dependent0 + "," + (independent - size);
-	    }
-	  }, {
-	    key: "getBarPath",
-	    value: function getBarPath(position) {
-	      return this.props.horizontal ? this._getHorizontalBarPath(position) : this._getVerticalBarPath(position);
-	    }
-	  }, {
-	    key: "_pixelsToValue",
-	    value: function _pixelsToValue(pixels) {
-	      var xRange = this.range.x;
-	      var xDomain = this.domain.x;
-	      return (_lodash2["default"].max(xDomain) - _lodash2["default"].min(xDomain)) / (_lodash2["default"].max(xRange) - _lodash2["default"].min(xRange)) * pixels;
-	    }
-	  }, {
-	    key: "_adjustX",
-	    value: function _adjustX(x, index, options) {
-	      var stacked = options && options.stacked;
-	      var center = this.datasets.length % 2 === 0 ? this.datasets.length / 2 : (this.datasets.length - 1) / 2;
-	      var centerOffset = index - center;
-	      var totalWidth = this._pixelsToValue(this.style.data.padding) + this._pixelsToValue(this.style.data.width);
-	      if (this.props.categories && _lodash2["default"].isArray(this.props.categories[0])) {
-	        // figure out which band this x value belongs to, and shift it to the
-	        // center of that band before calculating the usual offset
-	        var xBand = _lodash2["default"].filter(this.props.categories, function (band) {
-	          return x >= _lodash2["default"].min(band) && x <= _lodash2["default"].max(band);
-	        });
-	        var bandCenter = _lodash2["default"].isArray(xBand[0]) && (_lodash2["default"].max(xBand[0]) + _lodash2["default"].min(xBand[0])) / 2;
-	        return stacked ? bandCenter : bandCenter + centerOffset * totalWidth;
-	      }
-	      return stacked ? x : x + centerOffset * totalWidth;
-	    }
-	  }, {
-	    key: "getYOffset",
-	    value: function getYOffset(data, index, barIndex) {
-	      var minY = _lodash2["default"].min(this.domain.y);
-	      if (index === 0) {
-	        return _lodash2["default"].max([minY, 0]);
-	      }
-	      var y = data.y;
-	      var previousDataSets = _lodash2["default"].take(this.datasets, index);
-	      var previousBars = _lodash2["default"].map(previousDataSets, function (dataset) {
-	        return _lodash2["default"].pluck(dataset.data, "y");
-	      });
-	      return _lodash2["default"].reduce(previousBars, function (memo, bar) {
-	        var barValue = bar[barIndex];
-	        var sameSign = y < 0 && barValue < 0 || y >= 0 && barValue >= 0;
-	        return sameSign ? memo + barValue : memo;
-	      }, 0);
-	    }
-	  }, {
-	    key: "getLabelIndex",
-	    value: function getLabelIndex(x) {
-	      if (this.stringMap.x) {
-	        return x - 1;
-	      } else if (this.props.categories) {
-	        return _lodash2["default"].findIndex(this.props.categories, function (category) {
-	          return _lodash2["default"].isArray(category) ? _lodash2["default"].min(category) <= x && _lodash2["default"].max(category) >= x : category === x;
-	        });
-	      } else {
-	        var allX = _lodash2["default"].map(this.datasets, function (dataset) {
-	          return _lodash2["default"].map(dataset.data, "x");
-	        });
-	        var uniqueX = _lodash2["default"].uniq(_lodash2["default"].flatten(allX));
-	        return _lodash2["default"].findIndex(_lodash2["default"].sortBy(uniqueX), function (n) {
-	          return n === x;
-	        });
-	      }
-	    }
-	  }, {
-	    key: "getBarPosition",
-	    value: function getBarPosition(data, index, barIndex) {
-	      var stacked = this.props.stacked;
-	      var yOffset = this.getYOffset(data, index, barIndex);
-	      var y0 = stacked ? yOffset : _lodash2["default"].max([_lodash2["default"].min(this.domain.y), 0]);
-	      var y1 = stacked ? yOffset + data.y : data.y;
-	      var x = this._adjustX(data.x, index, { stacked: stacked });
-	      return {
-	        independent: this.scale.x.call(this, x),
-	        dependent0: this.scale.y.call(this, y0),
-	        dependent1: this.scale.y.call(this, y1)
-	      };
-	    }
-	  }, {
-	    key: "_getAnchors",
-	    value: function _getAnchors(sign) {
-	      if (!this.props.horizontal) {
-	        return {
-	          vertical: sign >= 0 ? "end" : "start",
-	          text: "middle"
-	        };
-	      } else {
-	        return {
-	          vertical: "middle",
-	          text: sign >= 0 ? "start" : "end"
-	        };
-	      }
-	    }
-	  }, {
-	    key: "getlabelPadding",
-	    value: function getlabelPadding(style) {
-	      return {
-	        x: this.props.horizontal ? style.padding : 0,
-	        y: this.props.horizontal ? 0 : style.padding
-	      };
-	    }
-	  }, {
-	    key: "renderLabel",
-	    value: function renderLabel(labelData, text, data) {
-	      var position = labelData.position;
-	      var index = labelData.index;
-	
-	      var labelComponent = this.props.labelComponents ? this.props.labelComponents[index] || this.props.labelComponents[0] : undefined;
-	      var sign = data.y >= 0 ? 1 : -1;
-	      var anchors = this._getAnchors(sign);
-	      var componentStyle = labelComponent && labelComponent.props.style;
-	      var style = _lodash2["default"].merge({ padding: 0 }, this.style.labels, componentStyle);
-	      var padding = this.getlabelPadding(style);
-	      var children = labelComponent ? labelComponent.props.children || text : text;
-	
-	      var props = {
-	        key: "label-" + index,
-	        x: labelComponent && labelComponent.props.x || position.x + padding.x,
-	        y: labelComponent && labelComponent.props.y || position.y - padding.y,
-	        data: data, // Pass data for custom label component to access
-	        textAnchor: labelComponent && labelComponent.props.textAnchor || anchors.text,
-	        verticalAnchor: labelComponent && labelComponent.props.textAnchor || anchors.vertical,
-	        style: style
-	      };
-	
-	      return labelComponent ? _react2["default"].cloneElement(labelComponent, props, children) : _react2["default"].createElement(_victoryLabel.VictoryLabel, props, children);
-	    }
-	  }, {
-	    key: "getBarElements",
-	    value: function getBarElements(dataset, index) {
-	      var _this2 = this;
-	
-	      var isCenter = Math.floor(this.datasets.length / 2) === index;
-	      var isLast = this.datasets.length === index + 1;
-	      var stacked = this.props.stacked;
-	      var plotGroupLabel = stacked && isLast || !stacked && isCenter;
-	      return _lodash2["default"].map(dataset.data, function (data, barIndex) {
-	        var position = _this2.getBarPosition(data, index, barIndex);
-	        var path = position.independent ? _this2.getBarPath(position) : undefined;
-	        var styleData = _lodash2["default"].omit(data, ["xName", "yName", "x", "y", "label"]);
-	        var style = _lodash2["default"].merge({}, _this2.style.data, _lodash2["default"].omit(dataset.attrs, "name"), styleData);
-	        var plotLabel = plotGroupLabel && (_this2.props.labels || _this2.props.labelComponents);
-	
-	        if (plotLabel) {
-	          var labelPositions = {
-	            x: _this2.props.horizontal ? position.dependent1 : position.independent,
-	            y: _this2.props.horizontal ? position.independent : position.dependent1
-	          };
-	          var labelIndex = _this2.getLabelIndex(data.x);
-	          var labelData = { position: labelPositions, index: labelIndex };
-	          var labelText = _this2.props.labels ? _this2.props.labels[labelIndex] || _this2.props.labels[0] : "";
-	          return _react2["default"].createElement(
-	            "g",
-	            { key: "series-" + index + "-bar-" + barIndex },
-	            _react2["default"].createElement("path", {
-	              d: path,
-	              shapeRendering: "optimizeSpeed",
-	              style: style }),
-	            _this2.renderLabel(labelData, labelText, data)
-	          );
-	        }
-	        return _react2["default"].createElement("path", {
-	          d: path,
-	          key: "series-" + index + "-bar-" + barIndex,
-	          shapeRendering: "optimizeSpeed",
-	          style: style });
-	      });
-	    }
-	  }, {
-	    key: "plotDataPoints",
-	    value: function plotDataPoints() {
-	      var _this3 = this;
-	
-	      return _lodash2["default"].map(this.datasets, function (dataset, index) {
-	        return _this3.getBarElements(dataset, index);
-	      });
+	    value: function getStyles() {
+	      return this.props.style ? _lodash2["default"].merge({}, styles, this.props.style) : styles;
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this4 = this;
+	      var _this = this;
 	
-	      // If animating, return a `VictoryAnimation` element that will create
-	      // a new `VictoryBar` with nearly identical props, except (1) tweened
-	      // and (2) `animate` set to null so we don't recurse forever.
-	      if (this.props.animate) {
-	        // Do less work by having `VictoryAnimation` tween only values that
-	        // make sense to tween. In the future, allow customization of animated
-	        // prop whitelist/blacklist?
-	        var animateData = _lodash2["default"].omit(this.props, ["stacked", "scale", "animate", "standalone", "horizontal"]);
-	        return _react2["default"].createElement(
-	          _victoryAnimation.VictoryAnimation,
-	          _extends({}, this.props.animate, { data: animateData }),
-	          function (props) {
-	            return _react2["default"].createElement(VictoryBar, _extends({}, _this4.props, props, { animate: null }));
-	          }
-	        );
+	      var style = this.getStyles();
+	      var transform = _victoryUtil2["default"].Style.toTransformString(this.props.transform);
+	      var content = "" + this.props.children || "";
+	      var lines = content.split("\n");
+	
+	      var lineHeight = this.props.lineHeight;
+	      if (typeof lineHeight === "number") {
+	        lineHeight = lineHeight + "em";
 	      }
-	      var style = this.style.parent;
-	      var group = _react2["default"].createElement(
-	        "g",
-	        { style: style },
-	        this.plotDataPoints()
-	      );
 	
-	      return this.props.standalone ? _react2["default"].createElement(
-	        "svg",
-	        { style: style },
-	        group
-	      ) : group;
+	      var capHeight = this.props.capHeight;
+	      if (typeof capHeight === "number") {
+	        capHeight = capHeight + "em";
+	      }
+	
+	      var dy = this.props.dy;
+	      switch (this.props.verticalAnchor) {
+	        case "end":
+	          dy = _victoryUtil2["default"].Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + ") * " + lineHeight);
+	          break;
+	        case "middle":
+	          dy = _victoryUtil2["default"].Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + " / 2) * " + lineHeight);
+	          break;
+	        default:
+	          dy = _victoryUtil2["default"].Style.calc(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
+	      }
+	
+	      return _react2["default"].createElement(
+	        "text",
+	        { x: this.props.x, y: this.props.y, dy: dy,
+	          textAnchor: this.props.textAnchor,
+	          transform: transform,
+	          style: style
+	        },
+	        lines.map(function (line, i) {
+	          return _react2["default"].createElement(
+	            "tspan",
+	            { key: i, x: _this.props.x, dy: i ? lineHeight : undefined },
+	            line
+	          );
+	        })
+	      );
 	    }
 	  }], [{
-	    key: "role",
-	    value: "bar",
-	    enumerable: true
-	  }, {
 	    key: "propTypes",
 	    value: {
 	      /**
-	       * The animate prop specifies props for victory-animation to use. It this prop is
-	       * not given, the bar chart will not tween between changing data / style props.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+	       * The capHeight prop defines a text metric for the font being used: the
+	       * expected height of capital letters. This is necessary because of SVG,
+	       * which (a) positions the *bottom* of the text at `y`, and (b) has no
+	       * notion of line height. The value should ideally use the same units as
+	       * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
+	       * is assumed to be ems.
 	       */
-	      animate: _react2["default"].PropTypes.object,
+	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _victoryUtil2["default"].PropTypes.nonNegative]),
 	      /**
-	       * The data prop specifies the data to be plotted. Data should be in the form of an array
-	       * of data points, or an array of arrays of data points for multiple datasets.
-	       * Each data point should be an object with x and y properties.
-	       * @examples [{x: 1, y:2}, {x: 2, y: 3}],
-	       * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+	       * The children of this component define the content of the label. This
+	       * makes using the component similar to normal HTML spans or labels.
+	       * Currently, only strings are supported.
 	       */
-	      data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.any,
-	        y: _react2["default"].PropTypes.any
-	      })), _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.any,
-	        y: _react2["default"].PropTypes.any
-	      })))]),
+	      children: _react.PropTypes.oneOfType([// TODO: Expand child support in future release
+	      _react.PropTypes.string, _react.PropTypes.number]),
 	      /**
-	       * The dataAttributes prop describes how a data set should be styled.
-	       * This prop can be given as an object, or an array of objects. If this prop is
-	       * given as an array of objects, the properties of each object in the array will
-	       * be applied to the data points in the corresponding array of the data prop.
-	       * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
+	       * The lineHeight prop defines how much space a single line of text should
+	       * take up. Note that SVG has no notion of line-height, so the positioning
+	       * may differ slightly from what you would expect with CSS, but the result
+	       * is similar: a roughly equal amount of extra space is distributed above
+	       * and below the line of text. The value should ideally use the same units
+	       * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
+	       * is assumed to be ems.
 	       */
-	      dataAttributes: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.object)]),
+	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _victoryUtil2["default"].PropTypes.nonNegative]),
 	      /**
-	       * The categories prop specifies the categories for a bar chart. This prop should
-	       * be given as an array of string values, numeric values, or arrays. When this prop is
-	       * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
-	       * allowing numeric data to be grouped into segments.
-	       * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+	       * The style prop applies CSS properties to the rendered `<text>` element.
 	       */
-	      categories: _react2["default"].PropTypes.array,
+	      style: _react.PropTypes.object,
 	      /**
-	       * The colorScale prop is an optional prop that defines the color scale the chart's bars
-	       * will be created on. This prop should be given as a string, which will one of the five
-	       * baked-in color scales: "victory", "grayscale", "red", "bluePurple", and "yellowBlue".
-	       * If it is not defined, the default Victory grayscale will be used, and if the fill
-	       * property on the dataAttributes prop is defined, it will overwrite the colorScale prop.
-	       * The user can pass in an array of hex string values to use as their own scale, and
-	       * VictoryBar will automatically assign values from this color scale to the bars.
+	       * The textAnchor prop defines how the text is horizontally positioned
+	       * relative to the given `x` and `y` coordinates.
 	       */
-	      colorScale: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.string), _react2["default"].PropTypes.oneOf(["victory", "gray", "red", "bluePurple", "yellowBlue"])]),
+	      textAnchor: _react.PropTypes.oneOf(["start", "middle", "end", "inherit"]),
 	      /**
-	       * The domain prop describes the range of values your bar chart will cover. This prop can be
-	       * given as a array of the minimum and maximum expected values for your bar chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
+	       * The verticalAnchor prop defines how the text is vertically positioned
+	       * relative to the given `x` and `y` coordinates.
 	       */
-	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.array,
-	        y: _react2["default"].PropTypes.array
-	      })]),
+	      verticalAnchor: _react.PropTypes.oneOf(["start", "middle", "end"]),
 	      /**
-	       * The height props specifies the height of the chart container element in pixels
+	       * The transform prop applies a transform to the rendered `<text>` element.
+	       * In addition to being a string, it can be an object containing transform
+	       * definitions for easier authoring.
 	       */
-	      height: _react2["default"].PropTypes.number,
+	      transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
 	      /**
-	       * The horizontal prop determines whether the bars will be laid vertically or
-	       * horizontally. The bars will be vertical if this prop is false or unspecified,
-	       * or horizontal if the prop is set to true.
+	       * The x prop defines the x coordinate to use as a basis for horizontal
+	       * positioning.
 	       */
-	      horizontal: _react2["default"].PropTypes.bool,
+	      x: _react.PropTypes.number,
 	      /**
-	       * The labels prop defines labels that will appear above each bar or
-	       * group of bars in your bar chart. This prop should be given as an array of values.
-	       * The number of elements in the label array should be equal to number of elements in
-	       * the categories array, or if categories is not defined, to the number of unique
-	       * x values in your data. Use this prop to add labels to individual bars, stacked bars,
-	       * and groups of bars.
-	       * @examples: ["spring", "summer", "fall", "winter"]
+	       * The y prop defines the y coordinate to use as a basis for vertical
+	       * positioning.
 	       */
-	      labels: _react2["default"].PropTypes.array,
+	      y: _react.PropTypes.number,
 	      /**
-	       * The labelComponents prop takes in an array of entire, HTML-complete label components
-	       * which will be used to create labels for individual bars, stacked bars, or groups of
-	       * bars as appropriate.
+	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
+	       * component already accounts for `capHeight`, `lineHeight`, and
+	       * `verticalAnchor`, this will usually not be necessary.
 	       */
-	      labelComponents: _react2["default"].PropTypes.array,
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
-	      })]),
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a function, or as an object that specifies separate functions for x and y.
-	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
-	       */
-	      scale: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.func, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.func,
-	        y: _react2["default"].PropTypes.func
-	      })]),
-	      /**
-	       * The stacked prop determines whether the chart should consist of stacked bars.
-	       * When this prop is set to false, grouped bars will be rendered instead.
-	       */
-	      stacked: _react2["default"].PropTypes.bool,
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryBar with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react2["default"].PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. VictoryBar relies on Radium,
-	       * so valid Radium style objects should work for this prop, however height, width, and margin
-	       * are used to calculate range, and need to be expressed as a number of pixels
-	       * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
-	       */
-	      style: _react2["default"].PropTypes.object,
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _react2["default"].PropTypes.number
+	      dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
 	    },
 	    enumerable: true
 	  }, {
 	    key: "defaultProps",
 	    value: {
-	      data: defaultData,
-	      height: 300,
-	      padding: 50,
-	      scale: _d32["default"].scale.linear(),
-	      stacked: false,
-	      standalone: true,
-	      width: 450
+	      capHeight: "0.71em", // Magic number from d3.
+	      lineHeight: 1,
+	      verticalAnchor: "start",
+	      dy: 0
 	    },
 	    enumerable: true
 	  }]);
 	
-	  var _VictoryBar = VictoryBar;
-	  VictoryBar = (0, _radium2["default"])(VictoryBar) || VictoryBar;
-	  return VictoryBar;
+	  var _VictoryLabel = VictoryLabel;
+	  VictoryLabel = (0, _radium2["default"])(VictoryLabel) || VictoryLabel;
+	  return VictoryLabel;
 	})(_react2["default"].Component);
 	
-	exports["default"] = VictoryBar;
+	exports["default"] = VictoryLabel;
 	module.exports = exports["default"];
 
 /***/ },
-/* 50 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	module.exports = {
-	  VictoryAnimation: __webpack_require__(51)
-	};
-
-/***/ },
-/* 51 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _util = __webpack_require__(52);
-	
-	(0, _util.addVictoryInterpolator)();
-	
-	var VictoryAnimation = (function (_React$Component) {
-	  _inherits(VictoryAnimation, _React$Component);
-	
-	  function VictoryAnimation(props) {
-	    _classCallCheck(this, VictoryAnimation);
-	
-	    _get(Object.getPrototypeOf(VictoryAnimation.prototype), "constructor", this).call(this, props);
-	    /* defaults */
-	    this.state = Array.isArray(this.props.data) ? this.props.data[0] : this.props.data;
-	    this.interpolator = null;
-	    this.step = 0;
-	    this.queue = [];
-	    /* build easing function */
-	    this.ease = _d32["default"].ease(this.props.easing);
-	    /*
-	      unlike React.createClass({}), there is no autobinding of this in ES6 classes
-	      so we bind functionToBeRunEachFrame to current instance of victory animation class
-	    */
-	    this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-	  }
-	
-	  /* lifecycle */
-	
-	  _createClass(VictoryAnimation, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      var _this = this;
-	
-	      /* cancel existing loop if it exists */
-	      if (this.raf) {
-	        cancelAnimationFrame(this.raf);
-	      }
-	      /* If an object was supplied */
-	      if (Array.isArray(nextProps.data) === false) {
-	        /* compare cached version to next props */
-	        this.interpolator = _d32["default"].interpolate(this.state, nextProps.data);
-	        /* reset step to zero */
-	        this.step = 0;
-	        /* start request animation frame */
-	        setTimeout(function () {
-	          _this.raf = _this.functionToBeRunEachFrame();
-	        }, this.props.delay);
-	        /* If an array was supplied */
-	      } else {
-	          /* Build our tween queue */
-	          nextProps.data.forEach(function (data) {
-	            _this.queue.push(data);
-	          });
-	          /* Start traversing the tween queue */
-	          this.traverseQueue();
-	        }
-	    }
-	
-	    /* Traverse the tween queue */
-	  }, {
-	    key: "traverseQueue",
-	    value: function traverseQueue() {
-	      var _this2 = this;
-	
-	      if (this.queue.length > 0) {
-	        /* Get the next index */
-	        var data = this.queue[0];
-	        /* compare cached version to next props */
-	        this.interpolator = _d32["default"].interpolate(this.state, data);
-	        /* reset step to zero */
-	        this.step = 0;
-	        setTimeout(function () {
-	          _this2.raf = _this2.functionToBeRunEachFrame();
-	        }, this.props.delay);
-	      } else if (this.props.onEnd) {
-	        this.props.onEnd();
-	      }
-	    }
-	
-	    /* every frame we... */
-	  }, {
-	    key: "functionToBeRunEachFrame",
-	    value: function functionToBeRunEachFrame() {
-	      /*
-	        step can generate imprecise values, sometimes greater than 1
-	        if this happens set the state to 1 and return, cancelling the loop
-	      */
-	      if (this.step >= 1) {
-	        this.step = 1;
-	        this.setState(this.interpolator(this.step));
-	        if (this.queue.length > 0) {
-	          cancelAnimationFrame(this.raf);
-	          this.queue.shift();
-	          this.traverseQueue();
-	        } else if (this.props.onEnd) {
-	          this.props.onEnd();
-	        }
-	        return;
-	      }
-	      /*
-	        if we're not at the end of the loop, set the state by passing
-	        current step value that's transformed by the ease function to the
-	        interpolator, which is cached for performance whenever props are received
-	      */
-	      this.setState(this.interpolator(this.ease(this.step)));
-	      /* increase step by velocity */
-	      this.step += this.props.velocity;
-	      /*
-	        requestAnimationFrame calls a function on a frame.
-	        continue the loop by feeding functionToBeRunEachFrame
-	      */
-	      this.raf = requestAnimationFrame(this.functionToBeRunEachFrame);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return this.props.children(this.state);
-	    }
-	  }]);
-	
-	  return VictoryAnimation;
-	})(_react2["default"].Component);
-	
-	VictoryAnimation.propTypes = {
-	  velocity: _react2["default"].PropTypes.number,
-	  easing: _react2["default"].PropTypes.string,
-	  delay: _react2["default"].PropTypes.number,
-	  onEnd: _react2["default"].PropTypes.func,
-	  data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
-	};
-	
-	VictoryAnimation.defaultProps = {
-	  /* velocity modifies step each frame */
-	  velocity: 0.02,
-	  /* easing modifies step each frame */
-	  easing: "quad-in-out",
-	  /* delay between transitions */
-	  delay: 0,
-	  /* we got nothin' */
-	  data: {}
-	};
-	
-	exports["default"] = VictoryAnimation;
-	module.exports = exports["default"];
-
-/***/ },
-/* 52 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var interpolatorAdded = false;
-	
-	/**
-	 * By default, `d3.interpolate` (which cycles through a list of interpolators)
-	 * has a few downsides:
-	 *
-	 * - `null` values get turned into 0.
-	 * - `undefined`, `function`, and some other value types get turned into NaN.
-	 * - It tries to interpolate between identical start->end values, doing
-	 *   unnecessary calculations that sometimes result in floating point rounding
-	 *   errors.
-	 *
-	 * If only the default interpolators are used, `VictoryAnimation` will happily
-	 * pass down NaN (and other bad) values as props to the wrapped component.
-	 * The component will then either use the incorrect values or complain that it
-	 * was passed props of the incorrect type. This custom interpolator is added
-	 * using the `d3.interpolators` API, and prevents such cases from happening
-	 * for most values.
-	 *
-	 * @param {any} a - Start value.
-	 * @param {any} b - End value.
-	 * @returns {Function} Returns an interpolation function, if possible.
-	 */
-	var victoryInterpolator = function victoryInterpolator(a, b) {
-	  // If the values are strictly equal, or either value is null or undefined,
-	  // just use the start value `a` or end value `b` at every step, as there is
-	  // no reasonable in-between value. The value will jump, but we can try to
-	  // jump at a good time (like the halfway point).
-	  if (a === b || a == null || b == null) {
-	    return function (t) {
-	      // Switch to `b` halfway through the interpolation.
-	      return t < 0.5 ? a : b;
-	    };
-	  }
-	  if (typeof a === "function" || typeof b === "function") {
-	    return function (t) {
-	      // We're interpolating to or from a function. The interpolated value will
-	      // be a function that calls `a` (if it's a function) and `b` (if it's a
-	      // function) and calls `d3.interpolate` on the resulting values.
-	      // Note that our function won't necessarily be called (that's up to the
-	      // component) - but if it does get called, it will return an
-	      // appropriately interpolated value.
-	      return function () {
-	        var aval = typeof a === "function" ? a.apply(this, arguments) : a;
-	        var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	        return _d32["default"].interpolate(aval, bval)(t);
-	      };
-	    };
-	  }
-	};
-	
-	exports.victoryInterpolator = victoryInterpolator;
-	var addVictoryInterpolator = function addVictoryInterpolator() {
-	  if (!interpolatorAdded) {
-	    _d32["default"].interpolators.push(victoryInterpolator);
-	    interpolatorAdded = true;
-	  }
-	};
-	exports.addVictoryInterpolator = addVictoryInterpolator;
-
-/***/ },
-/* 53 */
+/* 37 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26762,27 +25155,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
 	
-	var _collection = __webpack_require__(54);
+	var _collection = __webpack_require__(38);
 	
-	var collection = _interopRequireWildcard(_collection);
+	var Collection = _interopRequireWildcard(_collection);
 	
-	var _log = __webpack_require__(55);
+	var _log = __webpack_require__(39);
 	
-	var log = _interopRequireWildcard(_log);
+	var Log = _interopRequireWildcard(_log);
 	
-	var _style = __webpack_require__(56);
+	var _style = __webpack_require__(40);
 	
-	var style = _interopRequireWildcard(_style);
+	var Style = _interopRequireWildcard(_style);
+	
+	var _type = __webpack_require__(45);
+	
+	var Type = _interopRequireWildcard(_type);
+	
+	var _propTypes = __webpack_require__(46);
+	
+	var PropTypes = _interopRequireWildcard(_propTypes);
 	
 	exports["default"] = {
-	  collection: collection,
-	  log: log,
-	  style: style
+	  Collection: Collection,
+	  Log: Log,
+	  Style: Style,
+	  Type: Type,
+	  PropTypes: PropTypes
 	};
 	module.exports = exports["default"];
 
 /***/ },
-/* 54 */
+/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26797,22 +25200,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
+	var isNonEmptyArray = function isNonEmptyArray(collection) {
+	  return _lodash2["default"].isArray(collection) && collection.length > 0;
+	};
+	
+	exports.isNonEmptyArray = isNonEmptyArray;
 	var containsStrings = function containsStrings(collection) {
-	  return _lodash2["default"].some(collection, function (item) {
-	    return _lodash2["default"].isString(item);
-	  });
+	  return _lodash2["default"].some(collection, _lodash2["default"].isString);
 	};
 	
 	exports.containsStrings = containsStrings;
 	var containsOnlyStrings = function containsOnlyStrings(collection) {
-	  return _lodash2["default"].every(collection, function (item) {
-	    return _lodash2["default"].isString(item);
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isString);
+	};
+	
+	exports.containsOnlyStrings = containsOnlyStrings;
+	var isArrayOfArrays = function isArrayOfArrays(collection) {
+	  return isNonEmptyArray(collection) && _lodash2["default"].every(collection, _lodash2["default"].isArray);
+	};
+	
+	exports.isArrayOfArrays = isArrayOfArrays;
+	var removeUndefined = function removeUndefined(arr) {
+	  return _lodash2["default"].filter(arr, function (el) {
+	    return el !== undefined;
 	  });
 	};
-	exports.containsOnlyStrings = containsOnlyStrings;
+	exports.removeUndefined = removeUndefined;
 
 /***/ },
-/* 55 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/* global console */
@@ -26835,7 +25251,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
 
 /***/ },
-/* 56 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -26846,7 +25262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _reduceCssCalc = __webpack_require__(57);
+	var _reduceCssCalc = __webpack_require__(41);
 	
 	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
 	
@@ -26888,25 +25304,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	var getColorScale = function getColorScale(name) {
 	  var scales = {
-	    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
-	    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
-	    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
-	    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
-	    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
+	    greyscale: ["#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"],
+	    qualitative: ["#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49", "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"],
+	    heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
+	    warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
+	    cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
+	    red: ["#611310", "#7D1D1D", "#B02928", "#B02928", "#D86B67"],
+	    blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
+	    green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
 	  };
 	  return name ? scales[name] : scales.victory;
 	};
 	exports.getColorScale = getColorScale;
 
 /***/ },
-/* 57 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(58)
-	var reduceFunctionCall = __webpack_require__(59)
+	var balanced = __webpack_require__(42)
+	var reduceFunctionCall = __webpack_require__(43)
 	
 	/**
 	 * Constantes
@@ -27058,7 +25477,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 58 */
+/* 42 */
 /***/ function(module, exports) {
 
 	module.exports = function(a, b, str) {
@@ -27088,13 +25507,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 59 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(58)
+	var balanced = __webpack_require__(44)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -27168,17 +25587,88 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 60 */
-/***/ function(module, exports, __webpack_require__) {
+/* 44 */
+/***/ function(module, exports) {
+
+	module.exports = function(a, b, str) {
+	  var bal = 0;
+	  var m = {};
+	
+	  for (var i = 0; i < str.length; i++) {
+	    if (a == str.substr(i, a.length)) {
+	      if (!('start' in m)) m.start = i;
+	      bal++;
+	    }
+	    else if (b == str.substr(i, b.length) && 'start' in m) {
+	      bal--;
+	      if (!bal) {
+	        m.end = i;
+	        m.pre = str.substr(0, m.start);
+	        m.body = (m.end - m.start > 1)
+	          ? str.substring(m.start + a.length, m.end)
+	          : '';
+	        m.post = str.slice(m.end + b.length);
+	        return m;
+	      }
+	    }
+	  }
+	};
+	
+
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
 
 	"use strict";
 	
-	module.exports = {
-	  VictoryLabel: __webpack_require__(61)
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var nullConstructor = function nullConstructor() {
+	  return null;
 	};
+	exports.nullConstructor = nullConstructor;
+	var undefinedConstructor = function undefinedConstructor() {
+	  return;
+	};
+	exports.undefinedConstructor = undefinedConstructor;
+	/**
+	 * Get the constructor of `value`. If `value` is null or undefined, return the
+	 * special singletons `nullConstructor` or `undefinedConstructor`, respectively.
+	 * @param {*} value Instance to return the constructor of.
+	 * @returns {Function} Constructor of `value`.
+	 */
+	var getConstructor = function getConstructor(value) {
+	  if (typeof value === "undefined") {
+	    return undefinedConstructor;
+	  } else if (value === null) {
+	    return nullConstructor;
+	  } else {
+	    return value.constructor;
+	  }
+	};
+	
+	exports.getConstructor = getConstructor;
+	/**
+	 * Get the name of the constructor used to create `value`, using
+	 * `Object.protoype.toString`. If the value is null or undefined, return
+	 * "null" or "undefined", respectively.
+	 * @param {*} value Instance to return the constructor name of.
+	 * @returns {String} Name of the constructor.
+	 */
+	var getConstructorName = function getConstructorName(value) {
+	  if (typeof value === "undefined") {
+	    return "undefined";
+	  } else if (value === null) {
+	    return "null";
+	  }
+	  return Object.prototype.toString.call(value).slice(8, -1);
+	};
+	exports.getConstructorName = getConstructorName;
 
 /***/ },
-/* 61 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27186,6 +25676,127 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	
+	var _react = __webpack_require__(3);
+	
+	var _type = __webpack_require__(45);
+	
+	var _lodash = __webpack_require__(6);
+	
+	var _lodash2 = _interopRequireDefault(_lodash);
+	
+	/**
+	 * Return a new validator based on `validator` but with the option to chain
+	 * `isRequired` onto the validation. This is nearly identical to how React
+	 * does it internally, but they don't expose their helper for us to use.
+	 * @param {Function} validator Validation function.
+	 * @returns {Function} Validator with `isRequired` option.
+	 */
+	var makeChainable = function makeChainable(validator) {
+	  /* eslint-disable max-params */
+	  var _chainable = function _chainable(isRequired, props, propName, componentName) {
+	    var value = props[propName];
+	    if (typeof value === "undefined" || value === null) {
+	      if (isRequired) {
+	        return new Error("Required `" + propName + "` was not specified in `" + componentName + "`.");
+	      }
+	      return null;
+	    }
+	    return validator(props, propName, componentName);
+	  };
+	  var chainable = _lodash2["default"].bind(_chainable, null, false);
+	  chainable.isRequired = _lodash2["default"].bind(_chainable, null, true);
+	  return chainable;
+	};
+	
+	exports.makeChainable = makeChainable;
+	/**
+	 * Check that the value is a non-negative number.
+	 */
+	var nonNegative = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.number(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value < 0) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be non-negative.");
+	  }
+	});
+	
+	exports.nonNegative = nonNegative;
+	/**
+	 * Check that the value is an Array of two unique values.
+	 */
+	var domain = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.array(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value.length !== 2 || value[1] === value[0]) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
+	  }
+	});
+	
+	exports.domain = domain;
+	/**
+	 * Check that the value looks like a d3 `scale` function.
+	 */
+	var scale = makeChainable(function (props, propName, componentName) {
+	  var value = props[propName];
+	  if (typeof value !== "function" || !value.copy || !value.domain || !value.range) {
+	    return new Error("`" + propName + "` in `" + componentName + "` must be a d3 scale.");
+	  }
+	});
+	
+	exports.scale = scale;
+	/**
+	 * Check that an array contains items of the same type.
+	 */
+	var homogeneousArray = makeChainable(function (props, propName, componentName) {
+	  var error = _react.PropTypes.array(props, propName, componentName);
+	  if (error) {
+	    return error;
+	  }
+	  var value = props[propName];
+	  if (value.length > 1) {
+	    var _constructor = (0, _type.getConstructor)(value[0]);
+	    for (var i = 1; i < value.length; i++) {
+	      var otherConstructor = (0, _type.getConstructor)(value[i]);
+	      if (_constructor !== otherConstructor) {
+	        var constructorName = (0, _type.getConstructorName)(value[0]);
+	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
+	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	      }
+	    }
+	  }
+	});
+	exports.homogeneousArray = homogeneousArray;
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	module.exports = {
+	  VictoryBar: __webpack_require__(48)
+	};
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -27205,179 +25816,664 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _victoryUtilLibStyle = __webpack_require__(56);
-	
 	var _lodash = __webpack_require__(6);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var styles = {
-	  stroke: "transparent",
-	  fill: "#756f6a",
-	  fontSize: 16,
-	  fontFamily: "Helvetica",
-	  backgroundColor: "#ccc"
+	var _d3 = __webpack_require__(4);
+	
+	var _d32 = _interopRequireDefault(_d3);
+	
+	var _victoryAnimation = __webpack_require__(1);
+	
+	var _victoryUtil = __webpack_require__(37);
+	
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
+	
+	var _victoryLabel = __webpack_require__(35);
+	
+	var defaultStyles = {
+	  data: {
+	    width: 8,
+	    padding: 6,
+	    stroke: "transparent",
+	    strokeWidth: 0,
+	    fill: "#756f6a",
+	    opacity: 1
+	  },
+	  labels: {
+	    fontSize: 12,
+	    padding: 4
+	  }
 	};
 	
-	var VictoryLabel = (function (_React$Component) {
-	  _inherits(VictoryLabel, _React$Component);
+	var defaultData = [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }];
 	
-	  function VictoryLabel() {
-	    _classCallCheck(this, _VictoryLabel);
+	var VictoryBar = (function (_React$Component) {
+	  _inherits(VictoryBar, _React$Component);
 	
-	    _get(Object.getPrototypeOf(_VictoryLabel.prototype), "constructor", this).apply(this, arguments);
+	  function VictoryBar() {
+	    _classCallCheck(this, _VictoryBar);
+	
+	    _get(Object.getPrototypeOf(_VictoryBar.prototype), "constructor", this).apply(this, arguments);
 	  }
 	
-	  _createClass(VictoryLabel, [{
+	  _createClass(VictoryBar, [{
+	    key: "getCalculatedValues",
+	    value: function getCalculatedValues(props) {
+	      this.style = this.getStyles(props);
+	      this.padding = this.getPadding(props);
+	      this.stringMap = {
+	        x: this.createStringMap(props, "x"),
+	        y: this.createStringMap(props, "y")
+	      };
+	      this.datasets = this.consolidateData(props);
+	      this.range = {
+	        x: this.getRange(props, "x"),
+	        y: this.getRange(props, "y")
+	      };
+	      this.domain = {
+	        x: this.getDomain(props, "x"),
+	        y: this.getDomain(props, "y")
+	      };
+	      this.scale = {
+	        x: this.getScale(props, "x"),
+	        y: this.getScale(props, "y")
+	      };
+	      this.barWidth = this.getBarWidth();
+	    }
+	  }, {
 	    key: "getStyles",
-	    value: function getStyles() {
-	      return this.props.style ? _lodash2["default"].merge({}, styles, this.props.style) : styles;
+	    value: function getStyles(props) {
+	      var style = props.style || defaultStyles;
+	      var data = style.data;
+	      var labels = style.labels;
+	      var parent = style.parent;
+	
+	      return {
+	        parent: _lodash2["default"].merge({ height: props.height, width: props.width }, parent),
+	        data: _lodash2["default"].merge({}, defaultStyles.data, data),
+	        labels: _lodash2["default"].merge({}, defaultStyles.labels, labels)
+	      };
+	    }
+	  }, {
+	    key: "getPadding",
+	    value: function getPadding(props) {
+	      var padding = _lodash2["default"].isNumber(props.padding) ? props.padding : 0;
+	      var paddingObj = _lodash2["default"].isObject(props.padding) ? props.padding : {};
+	      return {
+	        top: paddingObj.top || padding,
+	        bottom: paddingObj.bottom || padding,
+	        left: paddingObj.left || padding,
+	        right: paddingObj.right || padding
+	      };
+	    }
+	  }, {
+	    key: "consolidateData",
+	    value: function consolidateData(props) {
+	      var _this = this;
+	
+	      var dataFromProps = _lodash2["default"].isArray(props.data[0]) ? props.data : [props.data];
+	      return _lodash2["default"].map(dataFromProps, function (dataset, index) {
+	        return {
+	          attrs: _this.getAttributes(props, index),
+	          data: _lodash2["default"].map(dataset, function (data) {
+	            return _lodash2["default"].merge(data, {
+	              // map string data to numeric values, and add names
+	              x: _lodash2["default"].isString(data.x) ? _this.stringMap.x[data.x] : data.x,
+	              xName: _lodash2["default"].isString(data.x) ? data.x : undefined,
+	              y: _lodash2["default"].isString(data.y) ? _this.stringMap.y[data.y] : data.y,
+	              yName: _lodash2["default"].isString(data.y) ? data.y : undefined
+	            });
+	          })
+	        };
+	      });
+	    }
+	  }, {
+	    key: "getAttributes",
+	    value: function getAttributes(props, index) {
+	      var attributes = props.dataAttributes && props.dataAttributes[index] ? props.dataAttributes[index] : props.dataAttributes;
+	      if (attributes) {
+	        attributes.fill = attributes.fill || this.getColor(props, index);
+	      } else {
+	        attributes = { fill: this.getColor(props, index) };
+	      }
+	      var requiredAttributes = {
+	        name: attributes && attributes.name ? attributes.name : "data-" + index
+	      };
+	      return _lodash2["default"].merge(requiredAttributes, attributes);
+	    }
+	  }, {
+	    key: "getColor",
+	    value: function getColor(props, index) {
+	      // check for styles first
+	      if (props.style && props.style.data && props.style.data.fill) {
+	        return props.style.data.fill;
+	      }
+	      var colorScale = _lodash2["default"].isArray(props.colorScale) ? props.colorScale : _victoryUtil2["default"].Style.getColorScale(props.colorScale);
+	      return colorScale[index % colorScale.length];
+	    }
+	  }, {
+	    key: "createStringMap",
+	    value: function createStringMap(props, axis) {
+	      // if categories exist and are strings, create a map using only those strings
+	      // don't alter the order.
+	      if (props.categories && _victoryUtil2["default"].Collection.containsStrings(props.categories)) {
+	        return _lodash2["default"].zipObject(_lodash2["default"].map(props.categories, function (tick, index) {
+	          return ["" + tick, index + 1];
+	        }));
+	      }
+	      // collect strings from data
+	      var data = _lodash2["default"].isArray(props.data) ? _lodash2["default"].flattenDeep(props.data) : props.data;
+	      // create a unique, sorted set of strings
+	      var stringData = _lodash2["default"].chain(data).pluck(axis).map(function (datum) {
+	        return _lodash2["default"].isString(datum) ? datum : null;
+	      }).compact().uniq().sort().value();
+	
+	      return _lodash2["default"].isEmpty(stringData) ? null : _lodash2["default"].zipObject(_lodash2["default"].map(stringData, function (string, index) {
+	        return [string, index + 1];
+	      }));
+	    }
+	  }, {
+	    key: "getScale",
+	    value: function getScale(props, axis) {
+	      var scale = props.scale[axis] ? props.scale[axis].copy() : props.scale.copy();
+	      var range = this.range[axis];
+	      var domain = this.domain[axis];
+	      scale.range(range);
+	      scale.domain(domain);
+	      return scale;
+	    }
+	  }, {
+	    key: "getRange",
+	    value: function getRange(props, axis) {
+	      // determine how to lay the axis and what direction positive and negative are
+	      var isVertical = !this.props.horizontal && axis === "x" || this.props.horizontal && axis !== "x";
+	
+	      return isVertical ? [this.padding.left, props.width - this.padding.right] : [props.height - this.padding.bottom, this.padding.top];
+	    }
+	  }, {
+	    key: "getDomain",
+	    value: function getDomain(props, axis) {
+	      var categoryDomain = this.getDomainFromCategories(props, axis);
+	      if (props.domain && props.domain[axis]) {
+	        return props.domain[axis];
+	      } else if (props.domain && _lodash2["default"].isArray(props.domain)) {
+	        return props.domain;
+	      } else if (categoryDomain) {
+	        return categoryDomain;
+	      } else {
+	        return this.getDomainFromData(props, axis);
+	      }
+	    }
+	  }, {
+	    key: "getDomainFromCategories",
+	    value: function getDomainFromCategories(props, axis) {
+	      if (axis !== "x" || !props.categories || _victoryUtil2["default"].Collection.containsStrings(props.categories)) {
+	        return undefined;
+	      }
+	      return [_lodash2["default"].min(_lodash2["default"].flatten(props.categories)), _lodash2["default"].max(_lodash2["default"].flatten(props.categories))];
+	    }
+	  }, {
+	    key: "getDomainFromData",
+	    value: function getDomainFromData(props, axis) {
+	      // if a sensible string map exists, return the minimum and maximum values
+	      // offset by the bar offset value
+	      if (this.stringMap[axis] !== null) {
+	        var mapValues = _lodash2["default"].values(this.stringMap[axis]);
+	        return [_lodash2["default"].min(mapValues), _lodash2["default"].max(mapValues)];
+	      } else {
+	        // find the global min and max
+	        var allData = _lodash2["default"].flatten(_lodash2["default"].pluck(this.datasets, "data"));
+	        var min = _lodash2["default"].min(_lodash2["default"].pluck(allData, axis));
+	        var max = _lodash2["default"].max(_lodash2["default"].pluck(allData, axis));
+	        // find the cumulative max for stacked chart types
+	        // this is only sensible for the y domain
+	        // TODO check assumption
+	        var cumulativeMax = props.stacked && axis === "y" && this.datasets.length > 1 ? _lodash2["default"].reduce(this.datasets, function (memo, dataset) {
+	          var localMax = _lodash2["default"].max(_lodash2["default"].pluck(dataset.data, "y"));
+	          return localMax > 0 ? memo + localMax : memo;
+	        }, 0) : -Infinity;
+	        var cumulativeMin = props.stacked && axis === "y" && this.datasets.length > 1 ? _lodash2["default"].reduce(this.datasets, function (memo, dataset) {
+	          var localMin = _lodash2["default"].min(_lodash2["default"].pluck(dataset.data, "y"));
+	          return localMin < 0 ? memo + localMin : memo;
+	        }, 0) : Infinity;
+	
+	        // use greatest min / max
+	        var domainMin = _lodash2["default"].min([min, cumulativeMin]);
+	        var domainMax = _lodash2["default"].max([max, cumulativeMax]);
+	        // add 1% padding so bars are always visible
+	        var padding = 0.01 * Math.abs(domainMax - domainMin);
+	        return [domainMin - padding, domainMax - padding];
+	      }
+	    }
+	  }, {
+	    key: "getBarWidth",
+	    value: function getBarWidth() {
+	      // todo calculate / enforce max width
+	      return this.style.data.width;
+	    }
+	
+	    /*
+	     * helper method for getBarPath
+	     * called when the bars will be vertical
+	     */
+	  }, {
+	    key: "getVerticalBarPath",
+	    value: function getVerticalBarPath(position) {
+	      var independent = position.independent;
+	      var dependent0 = position.dependent0;
+	      var dependent1 = position.dependent1;
+	
+	      var size = this.barWidth / 2;
+	      return "M " + (independent - size) + ", " + dependent0 + "\n      L " + (independent - size) + ", " + dependent1 + "\n      L " + (independent + size) + ", " + dependent1 + "\n      L " + (independent + size) + ", " + dependent0 + "\n      L " + (independent - size) + ", " + dependent0;
+	    }
+	
+	    /*
+	     * helper method for getBarPath
+	     * called when the bars will be horizonal
+	     */
+	  }, {
+	    key: "getHorizontalBarPath",
+	    value: function getHorizontalBarPath(position) {
+	      var independent = position.independent;
+	      var dependent0 = position.dependent0;
+	      var dependent1 = position.dependent1;
+	
+	      var size = this.barWidth / 2;
+	      return "M " + dependent0 + ", " + (independent - size) + "\n      L " + dependent0 + ", " + (independent + size) + "\n      L " + dependent1 + ", " + (independent + size) + "\n      L " + dependent1 + ", " + (independent - size) + "\n      L " + dependent0 + ", " + (independent - size);
+	    }
+	  }, {
+	    key: "getBarPath",
+	    value: function getBarPath(position) {
+	      return this.props.horizontal ? this.getHorizontalBarPath(position) : this.getVerticalBarPath(position);
+	    }
+	  }, {
+	    key: "pixelsToValue",
+	    value: function pixelsToValue(pixels) {
+	      var xRange = this.range.x;
+	      var xDomain = this.domain.x;
+	      return (_lodash2["default"].max(xDomain) - _lodash2["default"].min(xDomain)) / (_lodash2["default"].max(xRange) - _lodash2["default"].min(xRange)) * pixels;
+	    }
+	  }, {
+	    key: "adjustX",
+	    value: function adjustX(x, index, options) {
+	      var stacked = options && options.stacked;
+	      var center = this.datasets.length % 2 === 0 ? this.datasets.length / 2 : (this.datasets.length - 1) / 2;
+	      var centerOffset = index - center;
+	      var totalWidth = this.pixelsToValue(this.style.data.padding) + this.pixelsToValue(this.style.data.width);
+	      if (this.props.categories && _lodash2["default"].isArray(this.props.categories[0])) {
+	        // figure out which band this x value belongs to, and shift it to the
+	        // center of that band before calculating the usual offset
+	        var xBand = _lodash2["default"].filter(this.props.categories, function (band) {
+	          return x >= _lodash2["default"].min(band) && x <= _lodash2["default"].max(band);
+	        });
+	        var bandCenter = _lodash2["default"].isArray(xBand[0]) && (_lodash2["default"].max(xBand[0]) + _lodash2["default"].min(xBand[0])) / 2;
+	        return stacked ? bandCenter : bandCenter + centerOffset * totalWidth;
+	      }
+	      return stacked ? x : x + centerOffset * totalWidth;
+	    }
+	  }, {
+	    key: "getYOffset",
+	    value: function getYOffset(data, index, barIndex) {
+	      var minY = _lodash2["default"].min(this.domain.y);
+	      if (index === 0) {
+	        return _lodash2["default"].max([minY, 0]);
+	      }
+	      var y = data.y;
+	      var previousDataSets = _lodash2["default"].take(this.datasets, index);
+	      var previousBars = _lodash2["default"].map(previousDataSets, function (dataset) {
+	        return _lodash2["default"].pluck(dataset.data, "y");
+	      });
+	      return _lodash2["default"].reduce(previousBars, function (memo, bar) {
+	        var barValue = bar[barIndex];
+	        var sameSign = y < 0 && barValue < 0 || y >= 0 && barValue >= 0;
+	        return sameSign ? memo + barValue : memo;
+	      }, 0);
+	    }
+	  }, {
+	    key: "getLabelIndex",
+	    value: function getLabelIndex(x) {
+	      if (this.stringMap.x) {
+	        return x - 1;
+	      } else if (this.props.categories) {
+	        return _lodash2["default"].findIndex(this.props.categories, function (category) {
+	          return _lodash2["default"].isArray(category) ? _lodash2["default"].min(category) <= x && _lodash2["default"].max(category) >= x : category === x;
+	        });
+	      } else {
+	        var allX = _lodash2["default"].map(this.datasets, function (dataset) {
+	          return _lodash2["default"].map(dataset.data, "x");
+	        });
+	        var uniqueX = _lodash2["default"].uniq(_lodash2["default"].flatten(allX));
+	        return _lodash2["default"].findIndex(_lodash2["default"].sortBy(uniqueX), function (n) {
+	          return n === x;
+	        });
+	      }
+	    }
+	  }, {
+	    key: "getBarPosition",
+	    value: function getBarPosition(data, index, barIndex) {
+	      var stacked = this.props.stacked;
+	      var yOffset = this.getYOffset(data, index, barIndex);
+	      var y0 = stacked ? yOffset : _lodash2["default"].max([_lodash2["default"].min(this.domain.y), 0]);
+	      var y1 = stacked ? yOffset + data.y : data.y;
+	      var x = this.adjustX(data.x, index, { stacked: stacked });
+	      return {
+	        independent: this.scale.x.call(this, x),
+	        dependent0: this.scale.y.call(this, y0),
+	        dependent1: this.scale.y.call(this, y1)
+	      };
+	    }
+	  }, {
+	    key: "getLabelAnchors",
+	    value: function getLabelAnchors(sign) {
+	      if (!this.props.horizontal) {
+	        return {
+	          vertical: sign >= 0 ? "end" : "start",
+	          text: "middle"
+	        };
+	      } else {
+	        return {
+	          vertical: "middle",
+	          text: sign >= 0 ? "start" : "end"
+	        };
+	      }
+	    }
+	  }, {
+	    key: "getlabelPadding",
+	    value: function getlabelPadding(style) {
+	      return {
+	        x: this.props.horizontal ? style.padding : 0,
+	        y: this.props.horizontal ? 0 : style.padding
+	      };
+	    }
+	  }, {
+	    key: "renderLabel",
+	    value: function renderLabel(labelData, text, data) {
+	      var position = labelData.position;
+	      var index = labelData.index;
+	
+	      var labelComponent = this.props.labelComponents ? this.props.labelComponents[index] || this.props.labelComponents[0] : undefined;
+	      var sign = data.y >= 0 ? 1 : -1;
+	      var anchors = this.getLabelAnchors(sign);
+	      var componentStyle = labelComponent && labelComponent.props.style;
+	      var style = _lodash2["default"].merge({ padding: 0 }, this.style.labels, componentStyle);
+	      var padding = this.getlabelPadding(style);
+	      var children = labelComponent ? labelComponent.props.children || text : text;
+	
+	      var props = {
+	        key: "label-" + index,
+	        x: labelComponent && labelComponent.props.x || position.x + padding.x,
+	        y: labelComponent && labelComponent.props.y || position.y - padding.y,
+	        data: data, // Pass data for custom label component to access
+	        textAnchor: labelComponent && labelComponent.props.textAnchor || anchors.text,
+	        verticalAnchor: labelComponent && labelComponent.props.textAnchor || anchors.vertical,
+	        style: style
+	      };
+	
+	      return labelComponent ? _react2["default"].cloneElement(labelComponent, props, children) : _react2["default"].createElement(_victoryLabel.VictoryLabel, props, children);
+	    }
+	  }, {
+	    key: "renderBars",
+	    value: function renderBars(dataset, index) {
+	      var _this2 = this;
+	
+	      var isCenter = Math.floor(this.datasets.length / 2) === index;
+	      var isLast = this.datasets.length === index + 1;
+	      var stacked = this.props.stacked;
+	      var plotGroupLabel = stacked && isLast || !stacked && isCenter;
+	      return _lodash2["default"].map(dataset.data, function (data, barIndex) {
+	        var position = _this2.getBarPosition(data, index, barIndex);
+	        var path = position.independent ? _this2.getBarPath(position) : undefined;
+	        var styleData = _lodash2["default"].omit(data, ["xName", "yName", "x", "y", "label"]);
+	        var style = _lodash2["default"].merge({}, _this2.style.data, _lodash2["default"].omit(dataset.attrs, "name"), styleData);
+	        var plotLabel = plotGroupLabel && (_this2.props.labels || _this2.props.labelComponents);
+	
+	        if (plotLabel) {
+	          var labelPositions = {
+	            x: _this2.props.horizontal ? position.dependent1 : position.independent,
+	            y: _this2.props.horizontal ? position.independent : position.dependent1
+	          };
+	          var labelIndex = _this2.getLabelIndex(data.x);
+	          var labelData = { position: labelPositions, index: labelIndex };
+	          var labelText = _this2.props.labels ? _this2.props.labels[labelIndex] || _this2.props.labels[0] : "";
+	          return _react2["default"].createElement(
+	            "g",
+	            { key: "series-" + index + "-bar-" + barIndex },
+	            _react2["default"].createElement("path", {
+	              d: path,
+	              shapeRendering: "optimizeSpeed",
+	              style: style
+	            }),
+	            _this2.renderLabel(labelData, labelText, data)
+	          );
+	        }
+	        return _react2["default"].createElement("path", {
+	          d: path,
+	          key: "series-" + index + "-bar-" + barIndex,
+	          shapeRendering: "optimizeSpeed",
+	          style: style
+	        });
+	      });
+	    }
+	  }, {
+	    key: "renderData",
+	    value: function renderData() {
+	      var _this3 = this;
+	
+	      return _lodash2["default"].map(this.datasets, function (dataset, index) {
+	        return _this3.renderBars(dataset, index);
+	      });
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this = this;
+	      var _this4 = this;
 	
-	      var style = this.getStyles();
-	      var transform = (0, _victoryUtilLibStyle.toTransformString)(this.props.transform);
-	      var content = this.props.children || "";
-	      var lines = content.split("\n");
-	
-	      var lineHeight = this.props.lineHeight;
-	      if (typeof lineHeight === "number") {
-	        lineHeight = lineHeight + "em";
+	      // If animating, return a `VictoryAnimation` element that will create
+	      // a new `VictoryBar` with nearly identical props, except (1) tweened
+	      // and (2) `animate` set to null so we don't recurse forever.
+	      if (this.props.animate) {
+	        // Do less work by having `VictoryAnimation` tween only values that
+	        // make sense to tween. In the future, allow customization of animated
+	        // prop whitelist/blacklist?
+	        var animateData = _lodash2["default"].pick(this.props, ["data", "dataAttributes", "categories", "colorScale", "domain", "height", "padding", "style", "width"]);
+	        return _react2["default"].createElement(
+	          _victoryAnimation.VictoryAnimation,
+	          _extends({}, this.props.animate, { data: animateData }),
+	          function (props) {
+	            return _react2["default"].createElement(VictoryBar, _extends({}, _this4.props, props, { animate: null }));
+	          }
+	        );
+	      } else {
+	        this.getCalculatedValues(this.props);
 	      }
-	
-	      var capHeight = this.props.capHeight;
-	      if (typeof capHeight === "number") {
-	        capHeight = capHeight + "em";
-	      }
-	
-	      var dy = this.props.dy;
-	      switch (this.props.verticalAnchor) {
-	        case "end":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + ") * " + lineHeight);
-	          break;
-	        case "middle":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + " / 2) * " + lineHeight);
-	          break;
-	        default:
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
-	      }
-	
-	      return _react2["default"].createElement(
-	        "text",
-	        { x: this.props.x, y: this.props.y, dy: dy,
-	          textAnchor: this.props.textAnchor,
-	          transform: transform,
-	          style: style
-	        },
-	        lines.map(function (line, i) {
-	          return _react2["default"].createElement(
-	            "tspan",
-	            { key: i, x: _this.props.x, dy: i ? lineHeight : undefined },
-	            line
-	          );
-	        })
+	      var style = this.style.parent;
+	      var group = _react2["default"].createElement(
+	        "g",
+	        { style: style },
+	        this.renderData()
 	      );
+	      return this.props.standalone ? _react2["default"].createElement(
+	        "svg",
+	        { style: style },
+	        group
+	      ) : group;
 	    }
 	  }], [{
+	    key: "role",
+	    value: "bar",
+	    enumerable: true
+	  }, {
 	    key: "propTypes",
 	    value: {
 	      /**
-	       * The capHeight prop defines a text metric for the font being used: the
-	       * expected height of capital letters. This is necessary because of SVG,
-	       * which (a) positions the *bottom* of the text at `y`, and (b) has no
-	       * notion of line height. The value should ideally use the same units as
-	       * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
+	       * The animate prop specifies props for victory-animation to use. It this prop is
+	       * not given, the bar chart will not tween between changing data / style props.
+	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
 	       */
-	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      animate: _react.PropTypes.object,
 	      /**
-	       * The children of this component define the content of the label. This
-	       * makes using the component similar to normal HTML spans or labels.
-	       * Currently, only strings are supported.
+	       * The data prop specifies the data to be plotted. Data should be in the form of an array
+	       * of data points, or an array of arrays of data points for multiple datasets.
+	       * Each data point should be an object with x and y properties.
+	       * @examples [{x: 1, y:2}, {x: 2, y: 3}],
+	       * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
 	       */
-	      children: _react.PropTypes.string, // TODO: Expand child support in future release
+	      data: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        x: _react.PropTypes.any,
+	        y: _react.PropTypes.any
+	      })), _react.PropTypes.arrayOf(_react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        x: _react.PropTypes.any,
+	        y: _react.PropTypes.any
+	      })))]),
 	      /**
-	       * The lineHeight prop defines how much space a single line of text should
-	       * take up. Note that SVG has no notion of line-height, so the positioning
-	       * may differ slightly from what you would expect with CSS, but the result
-	       * is similar: a roughly equal amount of extra space is distributed above
-	       * and below the line of text. The value should ideally use the same units
-	       * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
+	       * The dataAttributes prop describes how a data set should be styled.
+	       * This prop can be given as an object, or an array of objects. If this prop is
+	       * given as an array of objects, the properties of each object in the array will
+	       * be applied to the data points in the corresponding array of the data prop.
+	       * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
 	       */
-	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      dataAttributes: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)]),
 	      /**
-	       * The style prop applies CSS properties to the rendered `<text>` element.
+	       * The categories prop specifies the categories for a bar chart. This prop should
+	       * be given as an array of string values, numeric values, or arrays. When this prop is
+	       * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
+	       * allowing numeric data to be grouped into segments.
+	       * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
 	       */
-	      style: _react.PropTypes.object,
+	      categories: _victoryUtil2["default"].PropTypes.homogeneousArray,
 	      /**
-	       * The textAnchor prop defines how the text is horizontally positioned
-	       * relative to the given `x` and `y` coordinates.
+	       * The colorScale prop is an optional prop that defines the color scale the chart's bars
+	       * will be created on. This prop should be given as an array of CSS colors, or as a string
+	       * corresponding to one of the built in color scales. VictoryBar will automatically assign
+	       * values from this color scale to the bars unless colors are explicitly provided in the
+	       * `dataAttributes` prop.
 	       */
-	      textAnchor: _react.PropTypes.oneOf(["start", "middle", "end", "inherit"]),
+	      colorScale: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.oneOf(["greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"])]),
 	      /**
-	       * The verticalAnchor prop defines how the text is vertically positioned
-	       * relative to the given `x` and `y` coordinates.
+	       * The domain prop describes the range of values your bar chart will cover. This prop can be
+	       * given as a array of the minimum and maximum expected values for your bar chart,
+	       * or as an object that specifies separate arrays for x and y.
+	       * If this prop is not provided, a domain will be calculated from data, or other
+	       * available information.
+	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
 	       */
-	      verticalAnchor: _react.PropTypes.oneOf(["start", "middle", "end"]),
+	      domain: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.domain, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.domain,
+	        y: _victoryUtil2["default"].PropTypes.domain
+	      })]),
 	      /**
-	       * The transform prop applies a transform to the rendered `<text>` element.
-	       * In addition to being a string, it can be an object containing transform
-	       * definitions for easier authoring.
+	       * The height props specifies the height of the chart container element in pixels
 	       */
-	      transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
+	      height: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
-	       * The x prop defines the x coordinate to use as a basis for horizontal
-	       * positioning.
+	       * The horizontal prop determines whether the bars will be laid vertically or
+	       * horizontally. The bars will be vertical if this prop is false or unspecified,
+	       * or horizontal if the prop is set to true.
 	       */
-	      x: _react.PropTypes.number,
+	      horizontal: _react.PropTypes.bool,
 	      /**
-	       * The y prop defines the y coordinate to use as a basis for vertical
-	       * positioning.
+	       * The labels prop defines labels that will appear above each bar or
+	       * group of bars in your bar chart. This prop should be given as an array of values.
+	       * The number of elements in the label array should be equal to number of elements in
+	       * the categories array, or if categories is not defined, to the number of unique
+	       * x values in your data. Use this prop to add labels to individual bars, stacked bars,
+	       * and groups of bars.
+	       * @examples: ["spring", "summer", "fall", "winter"]
 	       */
-	      y: _react.PropTypes.number,
+	      labels: _react.PropTypes.array,
 	      /**
-	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
-	       * component already accounts for `capHeight`, `lineHeight`, and
-	       * `verticalAnchor`, this will usually not be necessary.
+	       * The labelComponents prop takes in an array of entire, HTML-complete label components
+	       * which will be used to create labels for individual bars, stacked bars, or groups of
+	       * bars as appropriate.
 	       */
-	      dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
+	      labelComponents: _react.PropTypes.array,
+	      /**
+	       * The padding props specifies the amount of padding in number of pixels between
+	       * the edge of the chart and any rendered child components. This prop can be given
+	       * as a number or as an object with padding specified for top, bottom, left
+	       * and right.
+	       */
+	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	        top: _react.PropTypes.number,
+	        bottom: _react.PropTypes.number,
+	        left: _react.PropTypes.number,
+	        right: _react.PropTypes.number
+	      })]),
+	      /**
+	       * The scale prop determines which scales your chart should use. This prop can be
+	       * given as a function, or as an object that specifies separate functions for x and y.
+	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+	       */
+	      scale: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.scale, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.scale,
+	        y: _victoryUtil2["default"].PropTypes.scale
+	      })]),
+	      /**
+	       * The stacked prop determines whether the chart should consist of stacked bars.
+	       * When this prop is set to false, grouped bars will be rendered instead.
+	       */
+	      stacked: _react.PropTypes.bool,
+	      /**
+	       * The standalone prop determines whether the component will render a standalone svg
+	       * or a <g> tag that will be included in an external svg. Set standalone to false to
+	       * compose VictoryBar with other components within an enclosing <svg> tag.
+	       */
+	      standalone: _react.PropTypes.bool,
+	      /**
+	       * The style prop specifies styles for your chart. VictoryBar relies on Radium,
+	       * so valid Radium style objects should work for this prop, however height, width, and margin
+	       * are used to calculate range, and need to be expressed as a number of pixels
+	       * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
+	       */
+	      style: _react.PropTypes.shape({
+	        parent: _react.PropTypes.object,
+	        data: _react.PropTypes.object,
+	        labels: _react.PropTypes.object
+	      }),
+	      /**
+	       * The width props specifies the width of the chart container element in pixels
+	       */
+	      width: _victoryUtil2["default"].PropTypes.nonNegative
 	    },
 	    enumerable: true
 	  }, {
 	    key: "defaultProps",
 	    value: {
-	      capHeight: "0.71em", // Magic number from d3.
-	      lineHeight: 1,
-	      verticalAnchor: "start",
-	      dy: 0
+	      data: defaultData,
+	      colorScale: "greyscale",
+	      height: 300,
+	      padding: 50,
+	      scale: _d32["default"].scale.linear(),
+	      stacked: false,
+	      standalone: true,
+	      width: 450
 	    },
 	    enumerable: true
 	  }]);
 	
-	  var _VictoryLabel = VictoryLabel;
-	  VictoryLabel = (0, _radium2["default"])(VictoryLabel) || VictoryLabel;
-	  return VictoryLabel;
+	  var _VictoryBar = VictoryBar;
+	  VictoryBar = (0, _radium2["default"])(VictoryBar) || VictoryBar;
+	  return VictoryBar;
 	})(_react2["default"].Component);
 	
-	exports["default"] = VictoryLabel;
+	exports["default"] = VictoryBar;
 	module.exports = exports["default"];
 
 /***/ },
-/* 62 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryChart: __webpack_require__(63)
+	  VictoryChart: __webpack_require__(50)
 	};
 
 /***/ },
-/* 63 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27410,17 +26506,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _log = __webpack_require__(64);
-	
-	var _log2 = _interopRequireDefault(_log);
-	
-	var _util = __webpack_require__(65);
-	
-	var _util2 = _interopRequireDefault(_util);
+	var _victoryUtil = __webpack_require__(37);
 	
 	var _victoryAxis = __webpack_require__(8);
 	
-	var _victoryLine = __webpack_require__(66);
+	var _victoryLine = __webpack_require__(51);
 	
 	var defaultAxes = {
 	  independent: _react2["default"].createElement(_victoryAxis.VictoryAxis, { animate: { velocity: 0.02 } }),
@@ -27432,110 +26522,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	var VictoryChart = (function (_React$Component) {
 	  _inherits(VictoryChart, _React$Component);
 	
-	  _createClass(VictoryChart, null, [{
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. If this prop is
-	       * given, all children defined in chart will pass the options specified in this prop to
-	       * victory-animation, unless they have animation props of their own specified.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
-	       */
-	      animate: _react2["default"].PropTypes.object,
-	      /**
-	       * The domain prop describes the range of values your chart will include. This prop can be
-	       * given as a array of the minimum and maximum expected values for your chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
-	       */
-	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.array,
-	        y: _react2["default"].PropTypes.array
-	      })]),
-	      /**
-	       * The domainPadding prop specifies a number of pixels of padding to add to the
-	       * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
-	       * from the origin to prevent crowding. This prop should be given as an object with
-	       * numbers specified for x and y.
-	       */
-	      domainPadding: _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.number,
-	        y: _react2["default"].PropTypes.number
-	      }),
-	      /**
-	       * The height props specifies the height of the chart container element in pixels
-	       */
-	      height: _react2["default"].PropTypes.number,
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
-	      })]),
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a function, or as an object that specifies separate functions for x and y.
-	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
-	       */
-	      scale: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.func, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.func,
-	        y: _react2["default"].PropTypes.func
-	      })]),
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryChart with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react2["default"].PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. Victory Chart relies on Radium,
-	       * so valid Radium style objects should work for this prop. Height, width, and
-	       * padding should be specified via the height, width, and padding props, as they
-	       * are used to calculate the alignment of components within chart.
-	       * @examples {background: transparent, margin: 50}
-	       */
-	      style: _react2["default"].PropTypes.object,
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _react2["default"].PropTypes.number
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      height: 300,
-	      width: 450,
-	      padding: 50,
-	      standalone: true
-	    },
-	    enumerable: true
-	  }]);
-	
-	  function VictoryChart(props) {
+	  function VictoryChart() {
 	    _classCallCheck(this, _VictoryChart);
 	
-	    _get(Object.getPrototypeOf(_VictoryChart.prototype), "constructor", this).call(this, props);
-	    this.getComponents(props);
-	    this.getCalculatedValues(props);
+	    _get(Object.getPrototypeOf(_VictoryChart.prototype), "constructor", this).apply(this, arguments);
 	  }
 	
 	  _createClass(VictoryChart, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.getComponents(nextProps);
-	      this.getCalculatedValues(nextProps);
-	    }
-	  }, {
 	    key: "getComponents",
 	    value: function getComponents(props) {
 	      this.groupedDataTypes = ["bar"];
@@ -27607,7 +26600,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getAxisType",
 	    value: function getAxisType(child) {
-	      if (child.type !== _victoryAxis.VictoryAxis) {
+	      if (!child.type || child.type.role !== "axis") {
 	        return undefined;
 	      }
 	      return child.props.dependentAxis ? "dependent" : "independent";
@@ -27665,8 +26658,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	        var type = child.type && child.type.role;
 	        if (count.limitReached(child)) {
-	          var msg = type === "axis" ? "Only one VictoryAxis component of each axis type is allowed when using the " + "VictoryChart wrapper. Only the first axis will be used. Please compose " + "multi-axis charts manually" : "Only one " + type + "component is allowed per chart. If you are trying " + "to plot several datasets, please pass an array of data arrays directly " + "into " + type + ".";
-	          _log2["default"].warn(msg);
+	          var msg = type === "axis" ? "Only one VictoryAxis component of each axis type is allowed when using the " + "VictoryChart wrapper. Only the first axis will be used. Please compose " + "multi-axis charts manually" : "Only one \" + type + \"component is allowed per chart. If you are trying " + "to plot several datasets, please pass an array of data arrays directly " + ("into " + type + ".");
+	          _victoryUtil.Log.warn(msg);
 	        }
 	        childComponents.push(child);
 	        count.add(child);
@@ -27788,7 +26781,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _getStringsFromAxes(axis) {
 	      var axisComponent = this.axisComponents[axis];
 	      var tickValues = axisComponent.props.tickValues ? axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
-	      return tickValues && _util2["default"].containsStrings(tickValues) ? _lodash2["default"].zipObject(_lodash2["default"].map(tickValues, function (tick, index) {
+	      return tickValues && _victoryUtil.Collection.containsStrings(tickValues) ? _lodash2["default"].zipObject(_lodash2["default"].map(tickValues, function (tick, index) {
 	        return ["" + tick, index + 1];
 	      })) : undefined;
 	    }
@@ -27798,7 +26791,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.groupedDataComponents && axis === this.independentAxis) {
 	        var allCategories = _lodash2["default"].map(this.groupedDataComponents, function (component) {
 	          var categories = component.props.categories;
-	          return categories && _util2["default"].containsStrings(categories) ? categories : undefined;
+	          return categories && _victoryUtil.Collection.containsStrings(categories) ? categories : undefined;
 	        });
 	        var stringCategories = _lodash2["default"].compact(_lodash2["default"].flatten(allCategories));
 	        return _lodash2["default"].isEmpty(stringCategories) ? undefined : _lodash2["default"].zipObject(_lodash2["default"].map(stringCategories, function (category, index) {
@@ -27854,7 +26847,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          });
 	        });
 	      };
-	      if (_util2["default"].isArrayOfArrays(childData)) {
+	      if (_victoryUtil.Collection.isArrayOfArrays(childData)) {
 	        return _lodash2["default"].map(childData, function (dataset) {
 	          return _formatData(dataset);
 	        });
@@ -27866,8 +26859,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getDomain(props, axis) {
 	      var _this7 = this;
 	
-	      if (props.domain) {
-	        return props.domain[axis] || props.domain;
+	      if (props.domain && (_lodash2["default"].isArray(props.domain) || props.domain[axis])) {
+	        var propsDomain = _lodash2["default"].isArray(props.domain) ? props.domain : props.domain[axis];
+	        var paddedPropsDomain = this.padDomain(props, propsDomain, axis);
+	        return this.orientDomain(paddedPropsDomain, axis);
 	      }
 	      var dataDomains = _lodash2["default"].map(this.dataComponents, function (component) {
 	        return _this7.getDomainFromData(component, axis);
@@ -27876,18 +26871,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _this7.getDomainFromGroupedData(component, axis);
 	      });
 	      var axisDomain = this.getDomainFromAxis(axis);
-	      var domainFromChildren = _util2["default"].removeUndefined(_lodash2["default"].flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain)));
+	      var domainFromChildren = _victoryUtil.Collection.removeUndefined(_lodash2["default"].flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain)));
 	      var domain = _lodash2["default"].isEmpty(domainFromChildren) ? [0, 1] : [_lodash2["default"].min(domainFromChildren), _lodash2["default"].max(domainFromChildren)];
 	      var paddedDomain = this.padDomain(props, domain, axis);
+	      return this.orientDomain(paddedDomain, axis);
+	    }
+	  }, {
+	    key: "orientDomain",
+	    value: function orientDomain(domain, axis) {
 	      // If the other axis is in a reversed orientation, the domain of this axis
 	      // needs to be reversed
 	      var otherAxis = axis === "x" ? "y" : "x";
 	      var orientation = this.axisOrientations[otherAxis];
 	
 	      if (this.independentAxis === "x") {
-	        return orientation === "bottom" || orientation === "left" ? paddedDomain : paddedDomain.concat().reverse();
+	        return orientation === "bottom" || orientation === "left" ? domain : domain.concat().reverse();
 	      } else {
-	        return orientation === "bottom" || orientation === "left" ? paddedDomain.concat().reverse() : paddedDomain;
+	        return orientation === "bottom" || orientation === "left" ? domain.concat().reverse() : domain;
 	      }
 	    }
 	  }, {
@@ -27912,7 +26912,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function _isStackedComponentData(component, axis) {
 	      // checks whether grouped data is stacked, and whether there are multiple
 	      // datasets to stack.
-	      return component.props.stacked === true && _util2["default"].isArrayOfArrays(component.props.data) && axis === this.dependentAxis;
+	      return component.props.stacked === true && _victoryUtil.Collection.isArrayOfArrays(component.props.data) && axis === this.dependentAxis;
 	    }
 	  }, {
 	    key: "getDomainFromGroupedData",
@@ -27950,7 +26950,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this9 = this;
 	
 	      var categories = _lodash2["default"].flatten(component.props.categories);
-	      var categoryValues = _util2["default"].containsStrings(categories) ? _lodash2["default"].map(categories, function (value) {
+	      var categoryValues = _victoryUtil.Collection.containsStrings(categories) ? _lodash2["default"].map(categories, function (value) {
 	        return _this9.stringMap[axis][value];
 	      }) : categories;
 	      return [_lodash2["default"].min(categoryValues), _lodash2["default"].max(categoryValues)];
@@ -27966,7 +26966,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var ticks = component.props.tickValues;
 	      if (ticks) {
-	        var tickValues = _util2["default"].containsStrings(ticks) ? _lodash2["default"].map(ticks, function (tick) {
+	        var tickValues = _victoryUtil.Collection.containsStrings(ticks) ? _lodash2["default"].map(ticks, function (tick) {
 	          return _this10.stringMap[axis][tick];
 	        }) : ticks;
 	        return [_lodash2["default"].min(tickValues), _lodash2["default"].max(tickValues)];
@@ -28043,7 +27043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // if tickValues are defined for an axis component use them
 	      if (this.axisComponents[axis].props.tickValues) {
 	        var axisTicks = this.axisComponents[axis].props.tickValues;
-	        ticksFromAxis = _util2["default"].containsOnlyStrings(axisTicks) && stringMap ? _lodash2["default"].map(axisTicks, function (tick) {
+	        ticksFromAxis = _victoryUtil.Collection.containsOnlyStrings(axisTicks) && stringMap ? _lodash2["default"].map(axisTicks, function (tick) {
 	          return stringMap[tick];
 	        }) : axisTicks;
 	      }
@@ -28051,13 +27051,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // otherwise, create a set of tickValues base on groupedData categories
 	        var allCategoryTicks = _lodash2["default"].map(this.groupedDataComponents, function (component) {
 	          var categories = component.props.categories;
-	          return categories && _util2["default"].isArrayOfArrays(categories) ? _lodash2["default"].map(categories, function (arr) {
+	          return categories && _victoryUtil.Collection.isArrayOfArrays(categories) ? _lodash2["default"].map(categories, function (arr) {
 	            return _lodash2["default"].sum(arr) / arr.length;
 	          }) : categories;
 	        });
 	        var categoryTicks = _lodash2["default"].compact(_lodash2["default"].uniq(_lodash2["default"].flatten(allCategoryTicks)));
 	        var categoryArray = _lodash2["default"].isEmpty(categoryTicks) ? undefined : categoryTicks;
-	        ticksFromCategories = categoryArray && _util2["default"].containsOnlyStrings(categoryArray) ? _lodash2["default"].map(categoryTicks, function (tick) {
+	        ticksFromCategories = categoryArray && _victoryUtil.Collection.containsOnlyStrings(categoryArray) ? _lodash2["default"].map(categoryTicks, function (tick) {
 	          return stringMap[tick];
 	        }) : categoryArray;
 	      }
@@ -28077,7 +27077,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tickValues = this.axisComponents[axis].props.tickValues;
 	      if (tickFormat) {
 	        return tickFormat;
-	      } else if (tickValues && !_util2["default"].containsStrings(tickValues)) {
+	      } else if (tickValues && !_victoryUtil.Collection.containsStrings(tickValues)) {
 	        return function (x) {
 	          return x;
 	        };
@@ -28194,6 +27194,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
+	      this.getComponents(this.props);
+	      this.getCalculatedValues(this.props);
 	      var style = this.style.parent;
 	      var group = _react2["default"].createElement(
 	        "g",
@@ -28206,6 +27208,93 @@ return /******/ (function(modules) { // webpackBootstrap
 	        group
 	      ) : group;
 	    }
+	  }], [{
+	    key: "propTypes",
+	    value: {
+	      /**
+	       * The animate prop specifies props for victory-animation to use. If this prop is
+	       * given, all children defined in chart will pass the options specified in this prop to
+	       * victory-animation, unless they have animation props of their own specified.
+	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	       * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
+	       */
+	      animate: _react2["default"].PropTypes.object,
+	      /**
+	       * The domain prop describes the range of values your chart will include. This prop can be
+	       * given as a array of the minimum and maximum expected values for your chart,
+	       * or as an object that specifies separate arrays for x and y.
+	       * If this prop is not provided, a domain will be calculated from data, or other
+	       * available information.
+	       * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
+	       */
+	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
+	        x: _victoryUtil.PropTypes.domain,
+	        y: _victoryUtil.PropTypes.domain
+	      })]),
+	      /**
+	       * The domainPadding prop specifies a number of pixels of padding to add to the
+	       * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+	       * from the origin to prevent crowding. This prop should be given as an object with
+	       * numbers specified for x and y.
+	       */
+	      domainPadding: _react2["default"].PropTypes.shape({
+	        x: _victoryUtil.PropTypes.nonNegative,
+	        y: _victoryUtil.PropTypes.nonNegative
+	      }),
+	      /**
+	       * The height props specifies the height of the chart container element in pixels
+	       */
+	      height: _victoryUtil.PropTypes.nonNegative,
+	      /**
+	       * The padding props specifies the amount of padding in number of pixels between
+	       * the edge of the chart and any rendered child components. This prop can be given
+	       * as a number or as an object with padding specified for top, bottom, left
+	       * and right.
+	       */
+	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
+	        top: _react2["default"].PropTypes.number,
+	        bottom: _react2["default"].PropTypes.number,
+	        left: _react2["default"].PropTypes.number,
+	        right: _react2["default"].PropTypes.number
+	      })]),
+	      /**
+	       * The scale prop determines which scales your chart should use. This prop can be
+	       * given as a function, or as an object that specifies separate functions for x and y.
+	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+	       */
+	      scale: _react2["default"].PropTypes.oneOfType([_victoryUtil.PropTypes.scale, _react2["default"].PropTypes.shape({
+	        x: _victoryUtil.PropTypes.scale,
+	        y: _victoryUtil.PropTypes.scale
+	      })]),
+	      /**
+	       * The standalone prop determines whether the component will render a standalone svg
+	       * or a <g> tag that will be included in an external svg. Set standalone to false to
+	       * compose VictoryChart with other components within an enclosing <svg> tag.
+	       */
+	      standalone: _react2["default"].PropTypes.bool,
+	      /**
+	       * The style prop specifies styles for your chart. Victory Chart relies on Radium,
+	       * so valid Radium style objects should work for this prop. Height, width, and
+	       * padding should be specified via the height, width, and padding props, as they
+	       * are used to calculate the alignment of components within chart.
+	       * @examples {background: transparent, margin: 50}
+	       */
+	      style: _react2["default"].PropTypes.object,
+	      /**
+	       * The width props specifies the width of the chart container element in pixels
+	       */
+	      width: _victoryUtil.PropTypes.nonNegative
+	    },
+	    enumerable: true
+	  }, {
+	    key: "defaultProps",
+	    value: {
+	      height: 300,
+	      width: 450,
+	      padding: 50,
+	      standalone: true
+	    },
+	    enumerable: true
 	  }]);
 	
 	  var _VictoryChart = VictoryChart;
@@ -28217,70 +27306,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/* eslint-disable*/
-	"use strict";
-	
-	module.exports = {
-	  warn: function warn(message) {
-	    if (process.env.NODE_ENV !== "production") {
-	      if (console && console.warn) {
-	        console.warn(message);
-	      }
-	    }
-	  }
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* eslint-disable*/
-	"use strict";
-	
-	var _ = __webpack_require__(6);
-	
-	module.exports = {
-	  containsStrings: function containsStrings(collection) {
-	    return _.some(collection, function (item) {
-	      return _.isString(item);
-	    });
-	  },
-	
-	  containsOnlyStrings: function containsOnlyStrings(collection) {
-	    return _.every(collection, function (item) {
-	      return _.isString(item);
-	    });
-	  },
-	
-	  isArrayOfArrays: function isArrayOfArrays(collection) {
-	    return _.isArray(collection) && _.every(collection, function (item) {
-	      return _.isArray(item);
-	    });
-	  },
-	
-	  removeUndefined: function removeUndefined(arr) {
-	    return _.filter(arr, function (el) {
-	      return el !== undefined;
-	    });
-	  }
-	};
-
-/***/ },
-/* 66 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryLine: __webpack_require__(67)
+	  VictoryLine: __webpack_require__(52)
 	};
 
 /***/ },
-/* 67 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28293,7 +27329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -28319,7 +27355,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _victoryAnimation = __webpack_require__(1);
 	
-	var _victoryLabel = __webpack_require__(68);
+	var _victoryLabel = __webpack_require__(35);
+	
+	var _victoryUtil = __webpack_require__(37);
+	
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
 	
 	var defaultStyles = {
 	  data: {
@@ -28348,20 +27388,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  _createClass(VictoryLine, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      // If animating, the `VictoryLine` instance wrapped in `VictoryAnimation`
-	      // will compute these values.
-	      if (!this.props.animate) {
-	        this.getCalculatedValues(this.props);
-	      }
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.getCalculatedValues(nextProps);
-	    }
-	  }, {
 	    key: "getCalculatedValues",
 	    value: function getCalculatedValues(props) {
 	      this.style = this.getStyles(props);
@@ -28490,8 +27516,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _lodash2["default"].merge({ opacity: opacity, fill: fill, padding: padding }, this.style.labels);
 	    }
 	  }, {
-	    key: "getLabel",
-	    value: function getLabel(position, text) {
+	    key: "renderLabel",
+	    value: function renderLabel(position, text) {
 	      var component = this.props.labelComponent;
 	      var componentStyle = component && component.props.style || {};
 	      var style = _lodash2["default"].merge({}, this.getLabelStyle(), componentStyle);
@@ -28507,8 +27533,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return component ? _react2["default"].cloneElement(component, props, children) : _react2["default"].createElement(_victoryLabel.VictoryLabel, props, children);
 	    }
 	  }, {
-	    key: "drawLine",
-	    value: function drawLine() {
+	    key: "renderLine",
+	    value: function renderLine() {
 	      var xScale = this.scale.x;
 	      var yScale = this.scale.y;
 	      var lineFunction = _d32["default"].svg.line().interpolate(this.props.interpolation).x(function (data) {
@@ -28527,7 +27553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          "g",
 	          null,
 	          pathElement,
-	          this.getLabel(position, text)
+	          this.renderLabel(position, text)
 	        );
 	      }
 	      return pathElement;
@@ -28544,7 +27570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
-	        var animateData = _lodash2["default"].omit(this.props, ["animate", "scale", "standalone", "interpolation"]);
+	        var animateData = _lodash2["default"].pick(this.props, ["data", "domain", "height", "padding", "samples", "style", "width", "x", "y"]);
 	        return _react2["default"].createElement(
 	          _victoryAnimation.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
@@ -28552,12 +27578,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _react2["default"].createElement(VictoryLine, _extends({}, _this.props, props, { animate: null }));
 	          }
 	        );
+	      } else {
+	        this.getCalculatedValues(this.props);
 	      }
 	      var style = this.style.parent;
 	      var group = _react2["default"].createElement(
 	        "g",
 	        { style: style },
-	        this.drawLine()
+	        this.renderLine()
 	      );
 	
 	      return this.props.standalone ? _react2["default"].createElement(
@@ -28579,15 +27607,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
 	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
 	       */
-	      animate: _react2["default"].PropTypes.object,
+	      animate: _react.PropTypes.object,
 	      /**
 	       * The data prop specifies the data to be plotted. Data should be in the form of an array
 	       * of data points where each data point should be an object with x and y properties.
 	       * @examples [{x: 1, y: 12}, {x: 10, y: 25}, {x: 100, y: 34}]
 	       */
-	      data: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.any,
-	        y: _react2["default"].PropTypes.any
+	      data: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        x: _react.PropTypes.any,
+	        y: _react.PropTypes.any
 	      })),
 	      /**
 	       * The domain prop describes the range of values your chart will include. This prop can be
@@ -28597,78 +27625,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * available information.
 	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
 	       */
-	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.array,
-	        y: _react2["default"].PropTypes.array
+	      domain: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.domain, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.domain,
+	        y: _victoryUtil2["default"].PropTypes.domain
 	      })]),
 	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
-	      height: _react2["default"].PropTypes.number,
+	      height: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The interpolation prop determines how data points should be connected
 	       * when plotting a line
 	       */
-	      interpolation: _react2["default"].PropTypes.oneOf(["linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal", "cardinal-open", "cardinal-closed", "monotone"]),
+	      interpolation: _react.PropTypes.oneOf(["linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal", "cardinal-open", "cardinal-closed", "monotone"]),
 	      /**
 	       * The label prop specifies a label to display at the end of a line component
 	       */
-	      label: _react2["default"].PropTypes.string,
+	      label: _react.PropTypes.string,
 	      /**
 	       * The labelComponent prop takes in an entire, HTML-complete label component
 	       * which will be used to create labels for line to use
 	       */
-	      labelComponent: _react2["default"].PropTypes.element,
+	      labelComponent: _react.PropTypes.element,
 	      /**
 	       * The padding props specifies the amount of padding in number of pixels between
 	       * the edge of the chart and any rendered child components. This prop can be given
 	       * as a number or as an object with padding specified for top, bottom, left
 	       * and right.
 	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
+	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	        top: _react.PropTypes.number,
+	        bottom: _react.PropTypes.number,
+	        left: _react.PropTypes.number,
+	        right: _react.PropTypes.number
 	      })]),
 	      /**
 	       * The samples prop specifies how many individual points to plot when plotting
 	       * y as a function of x. Samples is ignored if x props are provided instead.
 	       */
-	      samples: _react2["default"].PropTypes.number,
+	      samples: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The scale prop determines which scales your chart should use. This prop can be
 	       * given as a function, or as an object that specifies separate functions for x and y.
 	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
 	       */
-	      scale: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.func, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.func,
-	        y: _react2["default"].PropTypes.func
+	      scale: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.scale, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.scale,
+	        y: _victoryUtil2["default"].PropTypes.scale
 	      })]),
 	      /**
 	       * The standalone prop determines whether the component will render a standalone svg
 	       * or a <g> tag that will be included in an external svg. Set standalone to false to
 	       * compose VictoryLine with other components within an enclosing <svg> tag.
 	       */
-	      standalone: _react2["default"].PropTypes.bool,
+	      standalone: _react.PropTypes.bool,
 	      /**
 	       * The style prop specifies styles for your chart. VictoryLine relies on Radium,
 	       * so valid Radium style objects should work for this prop, however height, width, and margin
 	       * are used to calculate range, and need to be expressed as a number of pixels
 	       * @examples {data: {stroke: "red"}, labels: {fontSize: 14}}
 	       */
-	      style: _react2["default"].PropTypes.object,
+	      style: _react.PropTypes.shape({
+	        parent: _react.PropTypes.object,
+	        data: _react.PropTypes.object,
+	        labels: _react.PropTypes.object
+	      }),
 	      /**
 	       * The width props specifies the width of the chart container element in pixels
 	       */
-	      width: _react2["default"].PropTypes.number,
+	      width: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The x prop provides another way to supply data for line to plot. This prop can be given
 	       * as an array of values, and it will be plotted against whatever y prop is provided. If no
 	       * props are provided for y, the values in x will be plotted as the identity function (x) => x.
 	       * @examples [1, 2, 3]
 	       */
-	      x: _react2["default"].PropTypes.array,
+	      x: _victoryUtil2["default"].PropTypes.homogeneousArray,
 	      /**
 	       * The y prop provides another way to supply data for line to plot. This prop can be given
 	       * as a function of x, or an array of values. If x props are given, they will be used
@@ -28676,7 +27708,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * evenly spaced across the x domain will be calculated, and used for plotting data points.
 	       * @examples (x) => Math.sin(x), [1, 2, 3]
 	       */
-	      y: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.func])
+	      y: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.func])
 	    },
 	    enumerable: true
 	  }, {
@@ -28705,17 +27737,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 68 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryLabel: __webpack_require__(69)
+	  VictoryLine: __webpack_require__(54)
 	};
 
 /***/ },
-/* 69 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -28723,6 +27755,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
@@ -28742,512 +27776,409 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _victoryUtilLibStyle = __webpack_require__(70);
+	var _d3 = __webpack_require__(4);
+	
+	var _d32 = _interopRequireDefault(_d3);
 	
 	var _lodash = __webpack_require__(6);
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var styles = {
-	  stroke: "transparent",
-	  fill: "#756f6a",
-	  fontSize: 16,
-	  fontFamily: "Helvetica",
-	  backgroundColor: "#ccc"
+	var _victoryAnimation = __webpack_require__(1);
+	
+	var _victoryLabel = __webpack_require__(35);
+	
+	var _victoryUtil = __webpack_require__(37);
+	
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
+	
+	var defaultStyles = {
+	  data: {
+	    strokeWidth: 2,
+	    fill: "none",
+	    stroke: "#756f6a",
+	    opacity: 1
+	  },
+	  labels: {
+	    padding: 5,
+	    fontFamily: "Helvetica",
+	    fontSize: 10,
+	    strokeWidth: 0,
+	    stroke: "transparent",
+	    textAnchor: "start"
+	  }
 	};
 	
-	var VictoryLabel = (function (_React$Component) {
-	  _inherits(VictoryLabel, _React$Component);
+	var VictoryLine = (function (_React$Component) {
+	  _inherits(VictoryLine, _React$Component);
 	
-	  function VictoryLabel() {
-	    _classCallCheck(this, _VictoryLabel);
+	  function VictoryLine() {
+	    _classCallCheck(this, _VictoryLine);
 	
-	    _get(Object.getPrototypeOf(_VictoryLabel.prototype), "constructor", this).apply(this, arguments);
+	    _get(Object.getPrototypeOf(_VictoryLine.prototype), "constructor", this).apply(this, arguments);
 	  }
 	
-	  _createClass(VictoryLabel, [{
+	  _createClass(VictoryLine, [{
+	    key: "getCalculatedValues",
+	    value: function getCalculatedValues(props) {
+	      this.style = this.getStyles(props);
+	      this.padding = this.getPadding(props);
+	      this.range = {
+	        x: this.getRange(props, "x"),
+	        y: this.getRange(props, "y")
+	      };
+	      this.dataset = this.getData(props);
+	      this.domain = {
+	        x: this.getDomain(props, "x"),
+	        y: this.getDomain(props, "y")
+	      };
+	      this.scale = {
+	        x: this.getScale(props, "x"),
+	        y: this.getScale(props, "y")
+	      };
+	    }
+	  }, {
 	    key: "getStyles",
-	    value: function getStyles() {
-	      return this.props.style ? _lodash2["default"].merge({}, styles, this.props.style) : styles;
+	    value: function getStyles(props) {
+	      var style = props.style || defaultStyles;
+	      var data = style.data;
+	      var labels = style.labels;
+	      var parent = style.parent;
+	
+	      return {
+	        parent: _lodash2["default"].merge({ height: props.height, width: props.width }, parent),
+	        labels: _lodash2["default"].merge({}, defaultStyles.labels, labels),
+	        data: _lodash2["default"].merge({}, defaultStyles.data, data)
+	      };
+	    }
+	  }, {
+	    key: "getPadding",
+	    value: function getPadding(props) {
+	      var padding = _lodash2["default"].isNumber(props.padding) ? props.padding : 0;
+	      var paddingObj = _lodash2["default"].isObject(props.padding) ? props.padding : {};
+	      return {
+	        top: paddingObj.top || padding,
+	        bottom: paddingObj.bottom || padding,
+	        left: paddingObj.left || padding,
+	        right: paddingObj.right || padding
+	      };
+	    }
+	  }, {
+	    key: "getScale",
+	    value: function getScale(props, axis) {
+	      var scale = props.scale[axis] ? props.scale[axis].copy() : props.scale.copy();
+	      var range = this.range[axis];
+	      var domain = this.domain[axis];
+	      scale.range(range);
+	      scale.domain(domain);
+	      return scale;
+	    }
+	  }, {
+	    key: "getDomain",
+	    value: function getDomain(props, axis) {
+	      if (props.domain) {
+	        return props.domain[axis] || props.domain;
+	      } else {
+	        return [_lodash2["default"].min(_lodash2["default"].pluck(this.dataset, axis)), _lodash2["default"].max(_lodash2["default"].pluck(this.dataset, axis))];
+	      }
+	    }
+	  }, {
+	    key: "getRange",
+	    value: function getRange(props, axis) {
+	      // if the range is not given in props, calculate it from width, height and margin
+	      return axis === "x" ? [this.padding.left, props.width - this.padding.right] : [props.height - this.padding.bottom, this.padding.top];
+	    }
+	  }, {
+	    key: "getData",
+	    value: function getData(props) {
+	      if (props.data) {
+	        return props.data;
+	      }
+	      var x = this.returnOrGenerateX(props);
+	      var y = this.returnOrGenerateY(props, x);
+	      var n = _lodash2["default"].min([x.length, y.length]);
+	      // create a dataset from x and y with n points
+	      var dataset = _lodash2["default"].zip(_lodash2["default"].take(x, n), _lodash2["default"].take(y, n));
+	      // return data as an array of objects
+	      return _lodash2["default"].map(dataset, function (point) {
+	        return { x: point[0], y: point[1] };
+	      });
+	    }
+	  }, {
+	    key: "returnOrGenerateX",
+	    value: function returnOrGenerateX(props) {
+	      if (props.x) {
+	        return props.x;
+	      }
+	      // if x is not given in props, create an array of values evenly
+	      // spaced across the x domain
+	      var domainFromProps = props.domain && props.domain.x || props.domain;
+	      var domainFromScale = props.scale && props.scale.x ? props.scale.x.domain() : props.scale.domain();
+	      var domain = domainFromProps || domainFromScale;
+	      var samples = _lodash2["default"].isArray(props.y) ? props.y.length : props.samples;
+	      var step = _lodash2["default"].max(domain) / samples;
+	      // return an array of x values spaced across the domain,
+	      // include the maximum of the domain
+	      return _lodash2["default"].union(_lodash2["default"].range(_lodash2["default"].min(domain), _lodash2["default"].max(domain), step), [_lodash2["default"].max(domain)]);
+	    }
+	  }, {
+	    key: "returnOrGenerateY",
+	    value: function returnOrGenerateY(props, x) {
+	      if (_lodash2["default"].isFunction(props.y)) {
+	        // if y is a function, apply the function y to to each value of the array x,
+	        // and return the results as an array
+	        return _lodash2["default"].map(x, function (datum) {
+	          return props.y(datum);
+	        });
+	      }
+	      // y is either a function or an array, and is never undefined
+	      // if it isn't a function, just return it.
+	      return props.y;
+	    }
+	  }, {
+	    key: "getLabelStyle",
+	    value: function getLabelStyle() {
+	      // match labels styles to data style by default (fill, opacity, others?)
+	      var opacity = this.style.data.opacity;
+	      // match label color to data color if it is not given.
+	      // use fill instead of stroke for text
+	      var fill = this.style.data.stroke;
+	      var padding = this.style.labels.padding || 0;
+	      return _lodash2["default"].merge({ opacity: opacity, fill: fill, padding: padding }, this.style.labels);
+	    }
+	  }, {
+	    key: "renderLabel",
+	    value: function renderLabel(position, text) {
+	      var component = this.props.labelComponent;
+	      var componentStyle = component && component.props.style || {};
+	      var style = _lodash2["default"].merge({}, this.getLabelStyle(), componentStyle);
+	      var children = component && component.props.children || text;
+	      var props = {
+	        x: component && component.props.x || position.x + style.padding,
+	        y: component && component.props.y || position.y - style.padding,
+	        data: this.dataset, // Pass dataset for custom label component to access
+	        textAnchor: component && component.props.textAnchor || "start",
+	        verticalAnchor: component && component.props.verticalAnchor || "middle",
+	        style: style
+	      };
+	      return component ? _react2["default"].cloneElement(component, props, children) : _react2["default"].createElement(_victoryLabel.VictoryLabel, props, children);
+	    }
+	  }, {
+	    key: "renderLine",
+	    value: function renderLine() {
+	      var xScale = this.scale.x;
+	      var yScale = this.scale.y;
+	      var lineFunction = _d32["default"].svg.line().interpolate(this.props.interpolation).x(function (data) {
+	        return xScale(data.x);
+	      }).y(function (data) {
+	        return yScale(data.y);
+	      });
+	      var pathElement = _react2["default"].createElement("path", { style: this.style.data, d: lineFunction(this.dataset) });
+	      if (this.props.label || this.props.labelComponent) {
+	        var position = {
+	          x: xScale.call(this, _lodash2["default"].last(this.dataset).x),
+	          y: yScale.call(this, _lodash2["default"].last(this.dataset).y)
+	        };
+	        var text = this.props.label || "";
+	        return _react2["default"].createElement(
+	          "g",
+	          null,
+	          pathElement,
+	          this.renderLabel(position, text)
+	        );
+	      }
+	      return pathElement;
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
 	      var _this = this;
 	
-	      var style = this.getStyles();
-	      var transform = (0, _victoryUtilLibStyle.toTransformString)(this.props.transform);
-	      var content = this.props.children || "";
-	      var lines = content.split("\n");
-	
-	      var lineHeight = this.props.lineHeight;
-	      if (typeof lineHeight === "number") {
-	        lineHeight = lineHeight + "em";
+	      // If animating, return a `VictoryAnimation` element that will create
+	      // a new `VictoryLine` with nearly identical props, except (1) tweened
+	      // and (2) `animate` set to null so we don't recurse forever.
+	      if (this.props.animate) {
+	        // Do less work by having `VictoryAnimation` tween only values that
+	        // make sense to tween. In the future, allow customization of animated
+	        // prop whitelist/blacklist?
+	        var animateData = _lodash2["default"].pick(this.props, ["data", "domain", "height", "padding", "samples", "style", "width", "x", "y"]);
+	        return _react2["default"].createElement(
+	          _victoryAnimation.VictoryAnimation,
+	          _extends({}, this.props.animate, { data: animateData }),
+	          function (props) {
+	            return _react2["default"].createElement(VictoryLine, _extends({}, _this.props, props, { animate: null }));
+	          }
+	        );
+	      } else {
+	        this.getCalculatedValues(this.props);
 	      }
-	
-	      var capHeight = this.props.capHeight;
-	      if (typeof capHeight === "number") {
-	        capHeight = capHeight + "em";
-	      }
-	
-	      var dy = this.props.dy;
-	      switch (this.props.verticalAnchor) {
-	        case "end":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + ") * " + lineHeight);
-	          break;
-	        case "middle":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + " / 2) * " + lineHeight);
-	          break;
-	        default:
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
-	      }
-	
-	      return _react2["default"].createElement(
-	        "text",
-	        { x: this.props.x, y: this.props.y, dy: dy,
-	          textAnchor: this.props.textAnchor,
-	          transform: transform,
-	          style: style
-	        },
-	        lines.map(function (line, i) {
-	          return _react2["default"].createElement(
-	            "tspan",
-	            { key: i, x: _this.props.x, dy: i ? lineHeight : undefined },
-	            line
-	          );
-	        })
+	      var style = this.style.parent;
+	      var group = _react2["default"].createElement(
+	        "g",
+	        { style: style },
+	        this.renderLine()
 	      );
+	
+	      return this.props.standalone ? _react2["default"].createElement(
+	        "svg",
+	        { style: style },
+	        group
+	      ) : group;
 	    }
 	  }], [{
+	    key: "role",
+	    value: "line",
+	    enumerable: true
+	  }, {
 	    key: "propTypes",
 	    value: {
 	      /**
-	       * The capHeight prop defines a text metric for the font being used: the
-	       * expected height of capital letters. This is necessary because of SVG,
-	       * which (a) positions the *bottom* of the text at `y`, and (b) has no
-	       * notion of line height. The value should ideally use the same units as
-	       * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
+	       * The animate prop specifies props for victory-animation to use. It this prop is
+	       * not given, the line will not tween between changing data / style props.
+	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
 	       */
-	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      animate: _react.PropTypes.object,
 	      /**
-	       * The children of this component define the content of the label. This
-	       * makes using the component similar to normal HTML spans or labels.
-	       * Currently, only strings are supported.
+	       * The data prop specifies the data to be plotted. Data should be in the form of an array
+	       * of data points where each data point should be an object with x and y properties.
+	       * @examples [{x: 1, y: 12}, {x: 10, y: 25}, {x: 100, y: 34}]
 	       */
-	      children: _react.PropTypes.string, // TODO: Expand child support in future release
+	      data: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        x: _react.PropTypes.any,
+	        y: _react.PropTypes.any
+	      })),
 	      /**
-	       * The lineHeight prop defines how much space a single line of text should
-	       * take up. Note that SVG has no notion of line-height, so the positioning
-	       * may differ slightly from what you would expect with CSS, but the result
-	       * is similar: a roughly equal amount of extra space is distributed above
-	       * and below the line of text. The value should ideally use the same units
-	       * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
+	       * The domain prop describes the range of values your chart will include. This prop can be
+	       * given as a array of the minimum and maximum expected values for your chart,
+	       * or as an object that specifies separate arrays for x and y.
+	       * If this prop is not provided, a domain will be calculated from data, or other
+	       * available information.
+	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
 	       */
-	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      domain: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.domain, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.domain,
+	        y: _victoryUtil2["default"].PropTypes.domain
+	      })]),
 	      /**
-	       * The style prop applies CSS properties to the rendered `<text>` element.
+	       * The height props specifies the height of the chart container element in pixels
 	       */
-	      style: _react.PropTypes.object,
+	      height: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
-	       * The textAnchor prop defines how the text is horizontally positioned
-	       * relative to the given `x` and `y` coordinates.
+	       * The interpolation prop determines how data points should be connected
+	       * when plotting a line
 	       */
-	      textAnchor: _react.PropTypes.oneOf(["start", "middle", "end", "inherit"]),
+	      interpolation: _react.PropTypes.oneOf(["linear", "linear-closed", "step", "step-before", "step-after", "basis", "basis-open", "basis-closed", "bundle", "cardinal", "cardinal-open", "cardinal-closed", "monotone"]),
 	      /**
-	       * The verticalAnchor prop defines how the text is vertically positioned
-	       * relative to the given `x` and `y` coordinates.
+	       * The label prop specifies a label to display at the end of a line component
 	       */
-	      verticalAnchor: _react.PropTypes.oneOf(["start", "middle", "end"]),
+	      label: _react.PropTypes.string,
 	      /**
-	       * The transform prop applies a transform to the rendered `<text>` element.
-	       * In addition to being a string, it can be an object containing transform
-	       * definitions for easier authoring.
+	       * The labelComponent prop takes in an entire, HTML-complete label component
+	       * which will be used to create labels for line to use
 	       */
-	      transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
+	      labelComponent: _react.PropTypes.element,
 	      /**
-	       * The x prop defines the x coordinate to use as a basis for horizontal
-	       * positioning.
+	       * The padding props specifies the amount of padding in number of pixels between
+	       * the edge of the chart and any rendered child components. This prop can be given
+	       * as a number or as an object with padding specified for top, bottom, left
+	       * and right.
 	       */
-	      x: _react.PropTypes.number,
+	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	        top: _react.PropTypes.number,
+	        bottom: _react.PropTypes.number,
+	        left: _react.PropTypes.number,
+	        right: _react.PropTypes.number
+	      })]),
 	      /**
-	       * The y prop defines the y coordinate to use as a basis for vertical
-	       * positioning.
+	       * The samples prop specifies how many individual points to plot when plotting
+	       * y as a function of x. Samples is ignored if x props are provided instead.
 	       */
-	      y: _react.PropTypes.number,
+	      samples: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
-	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
-	       * component already accounts for `capHeight`, `lineHeight`, and
-	       * `verticalAnchor`, this will usually not be necessary.
+	       * The scale prop determines which scales your chart should use. This prop can be
+	       * given as a function, or as an object that specifies separate functions for x and y.
+	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
 	       */
-	      dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
+	      scale: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.scale, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.scale,
+	        y: _victoryUtil2["default"].PropTypes.scale
+	      })]),
+	      /**
+	       * The standalone prop determines whether the component will render a standalone svg
+	       * or a <g> tag that will be included in an external svg. Set standalone to false to
+	       * compose VictoryLine with other components within an enclosing <svg> tag.
+	       */
+	      standalone: _react.PropTypes.bool,
+	      /**
+	       * The style prop specifies styles for your chart. VictoryLine relies on Radium,
+	       * so valid Radium style objects should work for this prop, however height, width, and margin
+	       * are used to calculate range, and need to be expressed as a number of pixels
+	       * @examples {data: {stroke: "red"}, labels: {fontSize: 14}}
+	       */
+	      style: _react.PropTypes.shape({
+	        parent: _react.PropTypes.object,
+	        data: _react.PropTypes.object,
+	        labels: _react.PropTypes.object
+	      }),
+	      /**
+	       * The width props specifies the width of the chart container element in pixels
+	       */
+	      width: _victoryUtil2["default"].PropTypes.nonNegative,
+	      /**
+	       * The x prop provides another way to supply data for line to plot. This prop can be given
+	       * as an array of values, and it will be plotted against whatever y prop is provided. If no
+	       * props are provided for y, the values in x will be plotted as the identity function (x) => x.
+	       * @examples [1, 2, 3]
+	       */
+	      x: _victoryUtil2["default"].PropTypes.homogeneousArray,
+	      /**
+	       * The y prop provides another way to supply data for line to plot. This prop can be given
+	       * as a function of x, or an array of values. If x props are given, they will be used
+	       * in plotting (x, y) data points. If x props are not provided, a set of x values
+	       * evenly spaced across the x domain will be calculated, and used for plotting data points.
+	       * @examples (x) => Math.sin(x), [1, 2, 3]
+	       */
+	      y: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.func])
 	    },
 	    enumerable: true
 	  }, {
 	    key: "defaultProps",
 	    value: {
-	      capHeight: "0.71em", // Magic number from d3.
-	      lineHeight: 1,
-	      verticalAnchor: "start",
-	      dy: 0
+	      height: 300,
+	      interpolation: "linear",
+	      padding: 50,
+	      samples: 50,
+	      scale: _d32["default"].scale.linear(),
+	      standalone: true,
+	      width: 450,
+	      y: function y(x) {
+	        return x;
+	      }
 	    },
 	    enumerable: true
 	  }]);
 	
-	  var _VictoryLabel = VictoryLabel;
-	  VictoryLabel = (0, _radium2["default"])(VictoryLabel) || VictoryLabel;
-	  return VictoryLabel;
+	  var _VictoryLine = VictoryLine;
+	  VictoryLine = (0, _radium2["default"])(VictoryLine) || VictoryLine;
+	  return VictoryLine;
 	})(_react2["default"].Component);
 	
-	exports["default"] = VictoryLabel;
+	exports["default"] = VictoryLine;
 	module.exports = exports["default"];
 
 /***/ },
-/* 70 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _reduceCssCalc = __webpack_require__(71);
-	
-	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
-	
-	/**
-	 * Given an object with CSS/SVG transform definitions, return the string value
-	 * for use with the `transform` CSS property or SVG attribute. Note that we
-	 * can't always guarantee the order will match the author's intended order, so
-	 * authors should only use the object notation if they know that their transform
-	 * is commutative or that there is only one.
-	 * @param {Object} obj An object of transform definitions.
-	 * @returns {String} The generated transform string.
-	 */
-	var toTransformString = function toTransformString(obj) {
-	  if (!obj || typeof obj === "string") {
-	    return obj;
-	  }
-	  var transforms = [];
-	  for (var key in obj) {
-	    if (obj.hasOwnProperty(key)) {
-	      var value = obj[key];
-	      transforms.push(key + "(" + value + ")");
-	    }
-	  }
-	  return transforms.join(" ");
-	};
-	
-	exports.toTransformString = toTransformString;
-	var calc = function calc(expr, precision) {
-	  return (0, _reduceCssCalc2["default"])("calc(" + expr + ")", precision);
-	};
-	
-	exports.calc = calc;
-	/**
-	 * Given the name of a color scale, getColorScale will return an array
-	 * of 5 hex string values in that color scale. If no 'name' parameter
-	 * is given, it will return the Victory default grayscale.
-	 * @param {String} name The name of the color scale to return (optional).
-	 * @returns {Array} An array of 5 hex string values composing a color scale.
-	 */
-	var getColorScale = function getColorScale(name) {
-	  var scales = {
-	    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
-	    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
-	    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
-	    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
-	    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
-	  };
-	  return name ? scales[name] : scales.victory;
-	};
-	exports.getColorScale = getColorScale;
-
-/***/ },
-/* 71 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Module dependencies
-	 */
-	var balanced = __webpack_require__(72)
-	var reduceFunctionCall = __webpack_require__(73)
-	
-	/**
-	 * Constantes
-	 */
-	var MAX_STACK = 100 // should be enough for a single calc()...
-	var NESTED_CALC_RE = /(\+|\-|\*|\\|[^a-z]|)(\s*)(\()/g
-	
-	/**
-	 * Global variables
-	 */
-	var stack
-	
-	/**
-	 * Expose reduceCSSCalc plugin
-	 *
-	 * @type {Function}
-	 */
-	module.exports = reduceCSSCalc
-	
-	/**
-	 * Reduce CSS calc() in a string, whenever it's possible
-	 *
-	 * @param {String} value css input
-	 */
-	function reduceCSSCalc(value, decimalPrecision) {
-	  stack = 0
-	  decimalPrecision = Math.pow(10, decimalPrecision === undefined ? 5 : decimalPrecision)
-	
-	  /**
-	   * Evaluates an expression
-	   *
-	   * @param {String} expression
-	   * @returns {String}
-	   */
-	  function evaluateExpression (expression, functionIdentifier, call) {
-	    if (stack++ > MAX_STACK) {
-	      stack = 0
-	      throw new Error("Call stack overflow for " + call)
-	    }
-	
-	    if (expression === "") {
-	      throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
-	    }
-	
-	    expression = evaluateNestedExpression(expression, call)
-	
-	    var units = getUnitsInExpression(expression)
-	
-	    // If multiple units let the expression be (i.e. browser calc())
-	    if (units.length > 1) {
-	      return functionIdentifier + "(" + expression + ")"
-	    }
-	
-	    var unit = units[0] || ""
-	
-	    if (unit === "%") {
-	      // Convert percentages to numbers, to handle expressions like: 50% * 50% (will become: 25%):
-	      expression = expression.replace(/\b[0-9\.]+%/g, function(percent) {
-	        return parseFloat(percent.slice(0, -1)) * 0.01
-	      })
-	    }
-	
-	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
-	    var result
-	
-	    try {
-	      result = eval(toEvaluate)
-	    }
-	    catch (e) {
-	      return functionIdentifier + "(" + expression + ")"
-	    }
-	
-	    // Transform back to a percentage result:
-	    if (unit === "%") {
-	      result *= 100
-	    }
-	
-	    // adjust rounding shit
-	    // (0.1 * 0.2 === 0.020000000000000004)
-	    result = Math.round(result * decimalPrecision) / decimalPrecision
-	
-	    // We don't need units for zero values...
-	    if (result !== 0) {
-	      result += unit
-	    }
-	
-	    return result
-	  }
-	
-	  /**
-	   * Evaluates nested expressions
-	   *
-	   * @param {String} expression
-	   * @returns {String}
-	   */
-	  function evaluateNestedExpression(expression, call) {
-	    var evaluatedPart = ""
-	    var nonEvaluatedPart = expression
-	    var matches
-	    while ((matches = NESTED_CALC_RE.exec(nonEvaluatedPart))) {
-	      if (matches[0].index > 0) {
-	        evaluatedPart += nonEvaluatedPart.substring(0, matches[0].index)
-	      }
-	
-	      var balancedExpr = balanced("(", ")", nonEvaluatedPart.substring([0].index))
-	      if (balancedExpr.body === "") {
-	        throw new Error("'" + expression + "' must contain a non-whitespace string")
-	      }
-	
-	      var evaluated = evaluateExpression(balancedExpr.body, "", call)
-	
-	      evaluatedPart += balancedExpr.pre + evaluated
-	      nonEvaluatedPart = balancedExpr.post
-	    }
-	
-	    return evaluatedPart + nonEvaluatedPart
-	  }
-	
-	  return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
-	}
-	
-	/**
-	 * Checks what units are used in an expression
-	 *
-	 * @param {String} expression
-	 * @returns {Array}
-	 */
-	
-	function getUnitsInExpression(expression) {
-	  var uniqueUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/g
-	  var matches = unitRegEx.exec(expression)
-	
-	  while (matches) {
-	    if (!matches || !matches[1]) {
-	      continue
-	    }
-	
-	    if (uniqueUnits.indexOf(matches[1]) === -1) {
-	      uniqueUnits.push(matches[1])
-	    }
-	
-	    matches = unitRegEx.exec(expression)
-	  }
-	
-	  return uniqueUnits
-	}
-
-
-/***/ },
-/* 72 */
-/***/ function(module, exports) {
-
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
-
-
-/***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 * Module dependencies
-	 */
-	var balanced = __webpack_require__(72)
-	
-	/**
-	 * Expose `reduceFunctionCall`
-	 *
-	 * @type {Function}
-	 */
-	module.exports = reduceFunctionCall
-	
-	/**
-	 * Walkthrough all expressions, evaluate them and insert them into the declaration
-	 *
-	 * @param {Array} expressions
-	 * @param {Object} declaration
-	 */
-	
-	function reduceFunctionCall(string, functionRE, callback) {
-	  var call = string
-	  return getFunctionCalls(string, functionRE).reduce(function(string, obj) {
-	    return string.replace(obj.functionIdentifier + "(" + obj.matches.body + ")", evalFunctionCall(obj.matches.body, obj.functionIdentifier, callback, call, functionRE))
-	  }, string)
-	}
-	
-	/**
-	 * Parses expressions in a value
-	 *
-	 * @param {String} value
-	 * @returns {Array}
-	 * @api private
-	 */
-	
-	function getFunctionCalls(call, functionRE) {
-	  var expressions = []
-	
-	  var fnRE = typeof functionRE === "string" ? new RegExp("\\b(" + functionRE + ")\\(") : functionRE
-	  do {
-	    var searchMatch = fnRE.exec(call)
-	    if (!searchMatch) {
-	      return expressions
-	    }
-	    if (searchMatch[1] === undefined) {
-	      throw new Error("Missing the first couple of parenthesis to get the function identifier in " + functionRE)
-	    }
-	    var fn = searchMatch[1]
-	    var startIndex = searchMatch.index
-	    var matches = balanced("(", ")", call.substring(startIndex))
-	
-	    if (!matches) {
-	      throw new SyntaxError(fn + "(): missing closing ')' in the value '" + call + "'")
-	    }
-	
-	    expressions.push({matches: matches, functionIdentifier: fn})
-	    call = matches.post
-	  }
-	  while (fnRE.test(call))
-	
-	  return expressions
-	}
-	
-	/**
-	 * Evaluates an expression
-	 *
-	 * @param {String} expression
-	 * @returns {String}
-	 * @api private
-	 */
-	
-	function evalFunctionCall (string, functionIdentifier, callback, call, functionRE) {
-	  // allow recursivity
-	  return callback(reduceFunctionCall(string, functionRE, callback), functionIdentifier, call)
-	}
-
-
-/***/ },
-/* 74 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryPie: __webpack_require__(75)
+	  VictoryPie: __webpack_require__(56)
 	};
 
 /***/ },
-/* 75 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29276,10 +28207,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodash2 = _interopRequireDefault(_lodash);
 	
-	var _log = __webpack_require__(76);
-	
-	var _log2 = _interopRequireDefault(_log);
-	
 	var _react = __webpack_require__(3);
 	
 	var _react2 = _interopRequireDefault(_react);
@@ -29288,9 +28215,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _util = __webpack_require__(77);
+	var _victoryUtil = __webpack_require__(37);
 	
-	var _util2 = _interopRequireDefault(_util);
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
 	
 	var _victoryAnimation = __webpack_require__(1);
 	
@@ -29321,18 +28248,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  _createClass(VictoryPie, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      // If animating, the `VictoryPie` instance wrapped in `VictoryAnimation`
-	      // will compute these values.
-	      if (!this.props.animate) {
-	        this.getCalculatedValues(this.props);
-	      }
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.getCalculatedValues(nextProps);
+	    key: "degreesToRadians",
+	    value: function degreesToRadians(degrees) {
+	      return degrees * (Math.PI / 180);
 	    }
 	  }, {
 	    key: "getCalculatedValues",
@@ -29344,7 +28262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.colors = _d32["default"].scale.ordinal().range(props.sliceColors);
 	      this.slice = _d32["default"].svg.arc().outerRadius(this.radius).innerRadius(this.props.innerRadius);
 	      this.labelPosition = this.getLabelPosition(props);
-	      this.pie = _d32["default"].layout.pie().sort(this.sortOrder).startAngle(_util2["default"].degreesToRadians(props.startAngle)).endAngle(_util2["default"].degreesToRadians(props.endAngle)).padAngle(_util2["default"].degreesToRadians(props.padAngle)).value(function (data) {
+	      this.pie = _d32["default"].layout.pie().sort(this.sortOrder).startAngle(this.degreesToRadians(props.startAngle)).endAngle(this.degreesToRadians(props.endAngle)).padAngle(this.degreesToRadians(props.padAngle)).value(function (data) {
 	        return data.y;
 	      });
 	    }
@@ -29397,15 +28315,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _d32["default"][props.sort](a.y, b.y);
 	          };
 	        } else {
-	          _log2["default"].warn("Victory Pie: Invalid sort string. Try 'ascending' or 'descending'.");
+	          _victoryUtil2["default"].Log.warn("Victory Pie: Invalid sort string. Try 'ascending' or 'descending'.");
 	          comparator = null;
 	        }
 	      }
 	      return comparator;
 	    }
 	  }, {
-	    key: "drawArcs",
-	    value: function drawArcs(slices) {
+	    key: "renderData",
+	    value: function renderData(slices) {
 	      var _this = this;
 	
 	      var indexArray = _lodash2["default"].range(0, this.props.data.length);
@@ -29419,13 +28337,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	          { key: index },
 	          _react2["default"].createElement("path", {
 	            d: _this.slice(data),
-	            style: style }),
+	            style: style
+	          }),
 	          _react2["default"].createElement(
 	            "text",
 	            {
 	              dy: ".35em",
 	              style: _this.style.labels,
-	              transform: "translate(" + _this.labelPosition.centroid(data) + ")" },
+	              transform: "translate( " + _this.labelPosition.centroid(data) + ")"
+	            },
 	            slice.x
 	          )
 	        );
@@ -29446,7 +28366,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
-	        var animateData = _lodash2["default"].omit(this.props, ["animate", "standalone"]);
+	        var animateData = _lodash2["default"].pick(this.props, ["data", "endAngle", "height", "innerRadius", "padAngle", "padding", "sliceColors", "startAngle", "style", "width"]);
 	        return _react2["default"].createElement(
 	          _victoryAnimation.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
@@ -29454,15 +28374,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _react2["default"].createElement(VictoryPie, _extends({}, _this2.props, props, { animate: null }));
 	          }
 	        );
+	      } else {
+	        this.getCalculatedValues(this.props);
 	      }
 	      var style = this.style.parent;
 	      var xOffset = this.radius + this.padding.left;
 	      var yOffset = this.radius + this.padding.top;
 	      var group = _react2["default"].createElement(
 	        "g",
-	        { style: style,
-	          transform: "translate(" + xOffset + "," + yOffset + ")" },
-	        this.drawArcs(this.props.data)
+	        { style: style, transform: "translate(" + xOffset + ", " + yOffset + ")" },
+	        this.renderData(this.props.data)
 	      );
 	
 	      return this.props.standalone ? _react2["default"].createElement(
@@ -29480,82 +28401,85 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
 	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
 	       */
-	      animate: _react2["default"].PropTypes.object,
+	      animate: _react.PropTypes.object,
 	      /**
 	       * Objects in the data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val>
 	       * is the slice label (string or number), and <y-val> is the corresponding number
 	       * used to calculate arc length as a proportion of the pie's circumference.
 	       * If the data prop is omitted, the pie will render sample data.
 	       */
-	      data: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.string, _react2["default"].PropTypes.number]),
-	        y: _react2["default"].PropTypes.number
+	      data: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        x: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	        y: _react.PropTypes.number
 	      })),
 	      /**
 	       * The overall end angle of the pie in degrees. This prop is used in conjunction with
 	       * startAngle to create a pie that spans only a segment of a circle.
 	       */
-	      endAngle: _react2["default"].PropTypes.number,
+	      endAngle: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
-	      height: _react2["default"].PropTypes.number,
+	      height: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * When creating a donut chart, this prop determines the number of pixels between
 	       * the center of the chart and the inner edge of a donut. When this prop is set to zero
 	       * a regular pie chart is rendered.
 	       */
-	      innerRadius: _react2["default"].PropTypes.number,
+	      innerRadius: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The padAngle prop determines the amount of separation between adjacent data slices
 	       * in number of degrees
 	       */
-	      padAngle: _react2["default"].PropTypes.number,
+	      padAngle: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The padding props specifies the amount of padding in number of pixels between
 	       * the edge of the chart and any rendered child components. This prop can be given
 	       * as a number or as an object with padding specified for top, bottom, left
 	       * and right.
 	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
+	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	        top: _react.PropTypes.number,
+	        bottom: _react.PropTypes.number,
+	        left: _react.PropTypes.number,
+	        right: _react.PropTypes.number
 	      })]),
 	      /**
 	       * The sliceColors prop defines an array of colors to use for distinguishing data
 	       * segments in a pie chart. If the data array is longer than the sliceColors array,
 	       * colors will be reused.
 	       */
-	      sliceColors: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.string),
+	      sliceColors: _react.PropTypes.arrayOf(_react.PropTypes.string),
 	      /**
 	       * The sort prop determines how to order data. This prop can be given as "ascending"
 	       * or "descending", or as a custom comparator function
 	       */
-	      sort: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.oneOf(["ascending", "descending"]), _react2["default"].PropTypes.func]),
+	      sort: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["ascending", "descending"]), _react.PropTypes.func]),
 	      /**
 	       * The standalone prop determines whether VictoryPie should render as a standalone
 	       * svg, or in a g tag to be included in an svg
 	       */
-	      standalone: _react2["default"].PropTypes.bool,
+	      standalone: _react.PropTypes.bool,
 	      /**
 	       * The overall start angle of the pie in degrees. This prop is used in conjunction with
 	       * endAngle to create a pie that spans only a segment of a circle.
 	       */
-	      startAngle: _react2["default"].PropTypes.number,
+	      startAngle: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The style prop specifies styles for your pie. VictoryPie relies on Radium,
-	       * so valid Radium style objects should work for this prop, however properties like
-	       * height, width, padding and margin are used to calculate the radius of the pi, and need to be
-	       * expressed as a number of pixels
+	       * so valid Radium style objects should work for this prop. Height, width, and
+	       * padding should be specified via the height, width, and padding props.
 	       * @examples {data: {stroke: "black"}, label: {fontSize: 10}}
 	       */
-	      style: _react2["default"].PropTypes.object,
+	      style: _react.PropTypes.shape({
+	        parent: _react.PropTypes.object,
+	        data: _react.PropTypes.object,
+	        labels: _react.PropTypes.object
+	      }),
 	      /**
 	       * The width props specifies the width of the chart container element in pixels
 	       */
-	      width: _react2["default"].PropTypes.number
+	      width: _victoryUtil2["default"].PropTypes.nonNegative
 	    },
 	    enumerable: true
 	  }, {
@@ -29585,53 +28509,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 76 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/* eslint-disable*/
-	"use strict";
-	
-	module.exports = {
-	  warn: function warn(message) {
-	    if (process.env.NODE_ENV !== "production") {
-	      if (console && console.warn) {
-	        console.warn(message);
-	      }
-	    }
-	  }
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(12)))
-
-/***/ },
-/* 77 */
-/***/ function(module, exports) {
-
-	/* eslint-disable*/
-	
-	"use strict";
-	
-	module.exports = {
-	  degreesToRadians: function degreesToRadians(degrees) {
-	    return degrees * (Math.PI / 180);
-	  },
-	
-	  radiansToDegrees: function radiansToDegrees(radians) {
-	    return radians / Math.PI * 180;
-	  }
-	};
-
-/***/ },
-/* 78 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryScatter: __webpack_require__(79)
+	  VictoryScatter: __webpack_require__(58)
 	};
 
 /***/ },
-/* 79 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29644,7 +28532,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
@@ -29668,13 +28556,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d32 = _interopRequireDefault(_d3);
 	
-	var _pathHelpers = __webpack_require__(80);
+	var _pathHelpers = __webpack_require__(59);
 	
 	var _pathHelpers2 = _interopRequireDefault(_pathHelpers);
 	
-	var _victoryAnimation = __webpack_require__(81);
+	var _victoryAnimation = __webpack_require__(1);
 	
-	var _victoryLabel = __webpack_require__(84);
+	var _victoryLabel = __webpack_require__(35);
+	
+	var _victoryUtil = __webpack_require__(37);
+	
+	var _victoryUtil2 = _interopRequireDefault(_victoryUtil);
 	
 	var defaultStyles = {
 	  data: {
@@ -29703,20 +28595,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  _createClass(VictoryScatter, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      // If animating, the `VictoryScatter` instance wrapped in `VictoryAnimation`
-	      // will compute these values.
-	      if (!this.props.animate) {
-	        this.getCalculatedValues(this.props);
-	      }
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.getCalculatedValues(nextProps);
-	    }
-	  }, {
 	    key: "getCalculatedValues",
 	    value: function getCalculatedValues(props) {
 	      this.style = this.getStyles(props);
@@ -29878,8 +28756,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _lodash2["default"].merge({ opacity: opacity, fill: fill, padding: padding }, this.style.labels);
 	    }
 	  }, {
-	    key: "getLabel",
-	    value: function getLabel(position, data, index) {
+	    key: "renderLabel",
+	    value: function renderLabel(position, data, index) {
 	      var component = this.props.labelComponent;
 	      var componentStyle = component && component.props.style || {};
 	      var style = _lodash2["default"].merge({}, this.getLabelStyle(data), componentStyle);
@@ -29898,8 +28776,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return component ? _react2["default"].cloneElement(component, props, children) : _react2["default"].createElement(_victoryLabel.VictoryLabel, props, children);
 	    }
 	  }, {
-	    key: "getPathElement",
-	    value: function getPathElement(data, index) {
+	    key: "renderPoint",
+	    value: function renderPoint(data, index) {
 	      var pathFunctions = {
 	        circle: _pathHelpers2["default"].circle,
 	        square: _pathHelpers2["default"].square,
@@ -29922,25 +28800,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        d: path,
 	        key: index,
 	        shapeRendering: "optimizeSpeed",
-	        style: scatterStyle });
+	        style: scatterStyle
+	      });
 	      if (data.label && this.props.showLabels) {
 	        return _react2["default"].createElement(
 	          "g",
 	          { key: "data-label-" + index },
 	          pathElement,
-	          this.getLabel(position, data, index)
+	          this.renderLabel(position, data, index)
 	        );
 	      }
 	      return pathElement;
 	    }
 	  }, {
-	    key: "plotDataPoints",
-	    value: function plotDataPoints() {
+	    key: "renderData",
+	    value: function renderData() {
 	      var _this = this;
 	
-	      var data = this.data;
-	      return _lodash2["default"].map(data, function (dataPoint, index) {
-	        return _this.getPathElement(dataPoint, index);
+	      return _lodash2["default"].map(this.data, function (dataPoint, index) {
+	        return _this.renderPoint(dataPoint, index);
 	      });
 	    }
 	  }, {
@@ -29955,7 +28833,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
-	        var animateData = _lodash2["default"].omit(this.props, ["animate", "scale", "showLabels", "standalone"]);
+	        var animateData = _lodash2["default"].pick(this.props, ["data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width", "x", "y"]);
 	
 	        return _react2["default"].createElement(
 	          _victoryAnimation.VictoryAnimation,
@@ -29964,12 +28842,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	            return _react2["default"].createElement(VictoryScatter, _extends({}, _this2.props, props, { animate: null }));
 	          }
 	        );
+	      } else {
+	        this.getCalculatedValues(this.props);
 	      }
 	      var style = this.style.parent;
 	      var group = _react2["default"].createElement(
 	        "g",
 	        { style: style },
-	        this.plotDataPoints()
+	        this.renderData()
 	      );
 	      return this.props.standalone ? _react2["default"].createElement(
 	        "svg",
@@ -29990,12 +28870,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
 	       * @examples {delay: 5, velocity: 0.02, onEnd: () => alert("woo!")}
 	       */
-	      animate: _react2["default"].PropTypes.object,
+	      animate: _react.PropTypes.object,
 	      /**
 	       * The bubbleProperty prop indicates which property of the data object should be used
 	       * to scale data points in a bubble chart
 	       */
-	      bubbleProperty: _react2["default"].PropTypes.string,
+	      bubbleProperty: _react.PropTypes.string,
 	      /**
 	       * The data prop specifies the data to be plotted. Data should be in the form of an array
 	       * of data points where each data point should be an object with x and y properties.
@@ -30003,9 +28883,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * These properties will be interpreted and applied to the individual lines
 	       * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
 	       */
-	      data: _react2["default"].PropTypes.arrayOf(_react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.any,
-	        y: _react2["default"].PropTypes.any
+	      data: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        x: _react.PropTypes.any,
+	        y: _react.PropTypes.any
 	      })),
 	      /**
 	       * The domain prop describes the range of values your chart will include. This prop can be
@@ -30015,48 +28895,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * available information.
 	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
 	       */
-	      domain: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.array,
-	        y: _react2["default"].PropTypes.array
+	      domain: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.domain, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.domain,
+	        y: _victoryUtil2["default"].PropTypes.domain
 	      })]),
 	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
-	      height: _react2["default"].PropTypes.number,
+	      height: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The labelComponent prop takes in an entire, HTML-complete label component
 	       * which will be used to create labels for scatter to use
 	       */
-	      labelComponent: _react2["default"].PropTypes.element,
+	      labelComponent: _react.PropTypes.element,
 	      /**
 	       * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
 	       */
-	      maxBubbleSize: _react2["default"].PropTypes.number,
+	      maxBubbleSize: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The padding props specifies the amount of padding in number of pixels between
 	       * the edge of the chart and any rendered child components. This prop can be given
 	       * as a number or as an object with padding specified for top, bottom, left
 	       * and right.
 	       */
-	      padding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.number, _react2["default"].PropTypes.shape({
-	        top: _react2["default"].PropTypes.number,
-	        bottom: _react2["default"].PropTypes.number,
-	        left: _react2["default"].PropTypes.number,
-	        right: _react2["default"].PropTypes.number
+	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	        top: _react.PropTypes.number,
+	        bottom: _react.PropTypes.number,
+	        left: _react.PropTypes.number,
+	        right: _react.PropTypes.number
 	      })]),
 	      /**
 	       * The samples prop specifies how many individual points to plot when plotting
 	       * y as a function of x. Samples is ignored if x props are provided instead.
 	       */
-	      samples: _react2["default"].PropTypes.number,
+	      samples: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The scale prop determines which scales your chart should use. This prop can be
 	       * given as a function, or as an object that specifies separate functions for x and y.
 	       * @exampes d3.time.scale(), {x: d3.scale.linear(), y:tickd3.scale.log()}
 	       */
-	      scale: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.func, _react2["default"].PropTypes.shape({
-	        x: _react2["default"].PropTypes.func,
-	        y: _react2["default"].PropTypes.func
+	      scale: _react.PropTypes.oneOfType([_victoryUtil2["default"].PropTypes.scale, _react.PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.scale,
+	        y: _victoryUtil2["default"].PropTypes.scale
 	      })]),
 	      /**
 	       * The showLabels prop determines whether to show any labels associated with a data point.
@@ -30064,17 +28944,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * If animations are running slowly, try setting this prop to false to cut down on
 	       * the number of svg nodes
 	       */
-	      showLabels: _react2["default"].PropTypes.bool,
+	      showLabels: _react.PropTypes.bool,
 	      /**
 	       * The size prop determines how to scale each data point
 	       */
-	      size: _react2["default"].PropTypes.number,
+	      size: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The standalone prop determines whether the component will render a standalone svg
 	       * or a <g> tag that will be included in an external svg. Set standalone to false to
 	       * compose VictoryScatter with other components within an enclosing <svg> tag.
 	       */
-	      standalone: _react2["default"].PropTypes.bool,
+	      standalone: _react.PropTypes.bool,
 	      /**
 	       * The style prop specifies styles for your scatter plot. VictoryScatter relies on Radium,
 	       * so valid Radium style objects should work for this prop. Height, width, and
@@ -30082,22 +28962,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * are used to calculate the alignment of components within chart.
 	       * @examples {parent: {margin: 50}, data: {fill: "red"}, labels: {padding: 20}}
 	       */
-	      style: _react2["default"].PropTypes.object,
+	      style: _react.PropTypes.shape({
+	        parent: _react.PropTypes.object,
+	        data: _react.PropTypes.object,
+	        labels: _react.PropTypes.object
+	      }),
 	      /**
 	       * The symbol prop determines which symbol should be drawn to represent data points.
 	       */
-	      symbol: _react2["default"].PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]),
+	      symbol: _react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]),
 	      /**
 	       * The width props specifies the width of the chart container element in pixels
 	       */
-	      width: _react2["default"].PropTypes.number,
+	      width: _victoryUtil2["default"].PropTypes.nonNegative,
 	      /**
 	       * The x prop provides another way to supply data for scatter to plot. This prop can be given
 	       * as an array of values, and it will be plotted against whatever y prop is provided. If no
 	       * props are provided for y, the values in x will be plotted as the identity function.
 	       * @examples [1, 2, 3]
 	       */
-	      x: _react2["default"].PropTypes.array,
+	      x: _victoryUtil2["default"].PropTypes.homogeneousArray,
 	      /**
 	       * The y prop provides another way to supply data for scatter to plot. This prop can be given
 	       * as a function of x, or an array of values. If x props are given, they will be used
@@ -30105,7 +28989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * evenly spaced across the x domain will be calculated, and used for plotting data points.
 	       * @examples (x) => Math.sin(x), [1, 2, 3]
 	       */
-	      y: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.array, _react2["default"].PropTypes.func])
+	      y: _react.PropTypes.oneOfType([_react.PropTypes.array, _react.PropTypes.func])
 	    },
 	    enumerable: true
 	  }, {
@@ -30136,7 +29020,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 80 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -30149,33 +29033,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	module.exports = {
 	  circle: function circle(x, y, size) {
-	    return "M " + x + "," + y + " " + "m " + -size + ", 0 " + "a " + size + "," + size + " 0 1,0 " + size * 2 + ",0 " + "a " + size + "," + size + " 0 1,0 " + -size * 2 + ",0";
+	    return "M " + x + ", " + y + " m " + -size + ", 0\n      a " + size + ", " + size + " 0 1,0 " + size * 2 + ",0\n      a " + size + ", " + size + " 0 1,0 " + -size * 2 + ",0";
 	  },
 	
 	  square: function square(x, y, size) {
 	    var baseSize = 0.87 * size;
-	    return "M " + (x - baseSize) + "," + (y + baseSize) + " " + "L " + (x + baseSize) + "," + (y + baseSize) + "L " + (x + baseSize) + "," + (y - baseSize) + "L " + (x - baseSize) + "," + (y - baseSize) + "z";
+	    return "M " + (x - baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y - baseSize) + "\n      L " + (x - baseSize) + ", " + (y - baseSize) + "\n      z";
 	  },
 	
 	  diamond: function diamond(x, y, size) {
 	    var baseSize = 0.87 * size;
 	    var length = Math.sqrt(2 * (baseSize * baseSize));
-	    return "M " + x + "," + (y + length) + " " + "L " + (x + length) + "," + y + "L " + x + "," + (y - length) + "L " + (x - length) + "," + y + "z";
+	    return "M " + x + ", " + (y + length) + "\n      L " + (x + length) + ", " + y + "\n      L " + x + ", " + (y - length) + "\n      L " + (x - length) + ", " + y + "\n      z";
 	  },
 	
 	  triangleDown: function triangleDown(x, y, size) {
 	    var height = size / 2 * Math.sqrt(3);
-	    return "M " + (x - size) + "," + (y - size) + " " + "L " + (x + size) + "," + (y - size) + "L " + x + "," + (y + height) + "z";
+	    return "M " + (x - size) + ", " + (y - size) + "\n      L " + (x + size) + ", " + (y - size) + "\n      L " + x + ", " + (y + height) + "\n      z";
 	  },
 	
 	  triangleUp: function triangleUp(x, y, size) {
 	    var height = size / 2 * Math.sqrt(3);
-	    return "M " + (x - size) + "," + (y + size) + " " + "L " + (x + size) + "," + (y + size) + "L " + x + "," + (y - height) + "z";
+	    return "M " + (x - size) + ", " + (y + size) + "\n      L " + (x + size) + ", " + (y + size) + "\n      L " + x + ", " + (y - height) + "\n      z";
 	  },
 	
 	  plus: function plus(x, y, size) {
 	    var baseSize = 1.1 * size;
-	    return "M " + (x - baseSize / 2.5) + "," + (y + baseSize) + " " + "L " + (x + baseSize / 2.5) + "," + (y + baseSize) + "L " + (x + baseSize / 2.5) + "," + (y + baseSize / 2.5) + "L " + (x + baseSize) + "," + (y + baseSize / 2.5) + "L " + (x + baseSize) + "," + (y - baseSize / 2.5) + "L " + (x + baseSize / 2.5) + "," + (y - baseSize / 2.5) + "L " + (x + baseSize / 2.5) + "," + (y - baseSize) + "L " + (x - baseSize / 2.5) + "," + (y - baseSize) + "L " + (x - baseSize / 2.5) + "," + (y - baseSize / 2.5) + "L " + (x - baseSize) + "," + (y - baseSize / 2.5) + "L " + (x - baseSize) + "," + (y + baseSize / 2.5) + "L " + (x - baseSize / 2.5) + "," + (y + baseSize / 2.5) + "z";
+	    return "M " + (x - baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x - baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      z";
 	  },
 	
 	  star: function star(x, y, size) {
@@ -30183,803 +29067,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var angle = Math.PI / 5;
 	    var starCoords = _lodash2["default"].map(_lodash2["default"].range(10), function (index) {
 	      var length = index % 2 === 0 ? baseSize : baseSize / 2;
-	      return length * Math.sin(angle * (index + 1)) + x + "," + (length * Math.cos(angle * (index + 1)) + y);
+	      return length * Math.sin(angle * (index + 1)) + x + ",\n        " + (length * Math.cos(angle * (index + 1)) + y);
 	    });
-	    return "M" + starCoords.join("L") + "z";
+	    return "M " + starCoords.join("L") + " z";
 	  }
 	};
-
-/***/ },
-/* 81 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	module.exports = {
-	  VictoryAnimation: __webpack_require__(82)
-	};
-
-/***/ },
-/* 82 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*global requestAnimationFrame, cancelAnimationFrame, setTimeout*/
-	
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var _util = __webpack_require__(83);
-	
-	(0, _util.addVictoryInterpolator)();
-	
-	var VictoryAnimation = (function (_React$Component) {
-	  _inherits(VictoryAnimation, _React$Component);
-	
-	  function VictoryAnimation(props) {
-	    _classCallCheck(this, VictoryAnimation);
-	
-	    _get(Object.getPrototypeOf(VictoryAnimation.prototype), "constructor", this).call(this, props);
-	    /* defaults */
-	    this.state = Array.isArray(this.props.data) ? this.props.data[0] : this.props.data;
-	    this.interpolator = null;
-	    this.step = 0;
-	    this.queue = [];
-	    /* build easing function */
-	    this.ease = _d32["default"].ease(this.props.easing);
-	    /*
-	      unlike React.createClass({}), there is no autobinding of this in ES6 classes
-	      so we bind functionToBeRunEachFrame to current instance of victory animation class
-	    */
-	    this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-	  }
-	
-	  /* lifecycle */
-	
-	  _createClass(VictoryAnimation, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      var _this = this;
-	
-	      /* cancel existing loop if it exists */
-	      if (this.raf) {
-	        cancelAnimationFrame(this.raf);
-	      }
-	      /* If an object was supplied */
-	      if (Array.isArray(nextProps.data) === false) {
-	        /* compare cached version to next props */
-	        this.interpolator = _d32["default"].interpolate(this.state, nextProps.data);
-	        /* reset step to zero */
-	        this.step = 0;
-	        /* start request animation frame */
-	        setTimeout(function () {
-	          _this.raf = _this.functionToBeRunEachFrame();
-	        }, this.props.delay);
-	        /* If an array was supplied */
-	      } else {
-	          /* Build our tween queue */
-	          nextProps.data.forEach(function (data) {
-	            _this.queue.push(data);
-	          });
-	          /* Start traversing the tween queue */
-	          this.traverseQueue();
-	        }
-	    }
-	
-	    /* Traverse the tween queue */
-	  }, {
-	    key: "traverseQueue",
-	    value: function traverseQueue() {
-	      var _this2 = this;
-	
-	      if (this.queue.length > 0) {
-	        /* Get the next index */
-	        var data = this.queue[0];
-	        /* compare cached version to next props */
-	        this.interpolator = _d32["default"].interpolate(this.state, data);
-	        /* reset step to zero */
-	        this.step = 0;
-	        setTimeout(function () {
-	          _this2.raf = _this2.functionToBeRunEachFrame();
-	        }, this.props.delay);
-	      } else if (this.props.onEnd) {
-	        this.props.onEnd();
-	      }
-	    }
-	
-	    /* every frame we... */
-	  }, {
-	    key: "functionToBeRunEachFrame",
-	    value: function functionToBeRunEachFrame() {
-	      /*
-	        step can generate imprecise values, sometimes greater than 1
-	        if this happens set the state to 1 and return, cancelling the loop
-	      */
-	      if (this.step >= 1) {
-	        this.step = 1;
-	        this.setState(this.interpolator(this.step));
-	        if (this.queue.length > 0) {
-	          cancelAnimationFrame(this.raf);
-	          this.queue.shift();
-	          this.traverseQueue();
-	        } else if (this.props.onEnd) {
-	          this.props.onEnd();
-	        }
-	        return;
-	      }
-	      /*
-	        if we're not at the end of the loop, set the state by passing
-	        current step value that's transformed by the ease function to the
-	        interpolator, which is cached for performance whenever props are received
-	      */
-	      this.setState(this.interpolator(this.ease(this.step)));
-	      /* increase step by velocity */
-	      this.step += this.props.velocity;
-	      /*
-	        requestAnimationFrame calls a function on a frame.
-	        continue the loop by feeding functionToBeRunEachFrame
-	      */
-	      this.raf = requestAnimationFrame(this.functionToBeRunEachFrame);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return this.props.children(this.state);
-	    }
-	  }]);
-	
-	  return VictoryAnimation;
-	})(_react2["default"].Component);
-	
-	VictoryAnimation.propTypes = {
-	  velocity: _react2["default"].PropTypes.number,
-	  easing: _react2["default"].PropTypes.string,
-	  delay: _react2["default"].PropTypes.number,
-	  onEnd: _react2["default"].PropTypes.func,
-	  data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
-	};
-	
-	VictoryAnimation.defaultProps = {
-	  /* velocity modifies step each frame */
-	  velocity: 0.02,
-	  /* easing modifies step each frame */
-	  easing: "quad-in-out",
-	  /* delay between transitions */
-	  delay: 0,
-	  /* we got nothin' */
-	  data: {}
-	};
-	
-	exports["default"] = VictoryAnimation;
-	module.exports = exports["default"];
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _d3 = __webpack_require__(4);
-	
-	var _d32 = _interopRequireDefault(_d3);
-	
-	var interpolatorAdded = false;
-	
-	/**
-	 * By default, `d3.interpolate` (which cycles through a list of interpolators)
-	 * has a few downsides:
-	 *
-	 * - `null` values get turned into 0.
-	 * - `undefined`, `function`, and some other value types get turned into NaN.
-	 * - It tries to interpolate between identical start->end values, doing
-	 *   unnecessary calculations that sometimes result in floating point rounding
-	 *   errors.
-	 *
-	 * If only the default interpolators are used, `VictoryAnimation` will happily
-	 * pass down NaN (and other bad) values as props to the wrapped component.
-	 * The component will then either use the incorrect values or complain that it
-	 * was passed props of the incorrect type. This custom interpolator is added
-	 * using the `d3.interpolators` API, and prevents such cases from happening
-	 * for most values.
-	 *
-	 * @param {any} a - Start value.
-	 * @param {any} b - End value.
-	 * @returns {Function} Returns an interpolation function, if possible.
-	 */
-	var victoryInterpolator = function victoryInterpolator(a, b) {
-	  // If the values are strictly equal, or either value is null or undefined,
-	  // just use the start value `a` or end value `b` at every step, as there is
-	  // no reasonable in-between value. The value will jump, but we can try to
-	  // jump at a good time (like the halfway point).
-	  if (a === b || a == null || b == null) {
-	    return function (t) {
-	      // Switch to `b` halfway through the interpolation.
-	      return t < 0.5 ? a : b;
-	    };
-	  }
-	  if (typeof a === "function" || typeof b === "function") {
-	    return function (t) {
-	      // We're interpolating to or from a function. The interpolated value will
-	      // be a function that calls `a` (if it's a function) and `b` (if it's a
-	      // function) and calls `d3.interpolate` on the resulting values.
-	      // Note that our function won't necessarily be called (that's up to the
-	      // component) - but if it does get called, it will return an
-	      // appropriately interpolated value.
-	      return function () {
-	        var aval = typeof a === "function" ? a.apply(this, arguments) : a;
-	        var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	        return _d32["default"].interpolate(aval, bval)(t);
-	      };
-	    };
-	  }
-	};
-	
-	exports.victoryInterpolator = victoryInterpolator;
-	var addVictoryInterpolator = function addVictoryInterpolator() {
-	  if (!interpolatorAdded) {
-	    _d32["default"].interpolators.push(victoryInterpolator);
-	    interpolatorAdded = true;
-	  }
-	};
-	exports.addVictoryInterpolator = addVictoryInterpolator;
-
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	module.exports = {
-	  VictoryLabel: __webpack_require__(85)
-	};
-
-/***/ },
-/* 85 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(3);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _radium = __webpack_require__(10);
-	
-	var _radium2 = _interopRequireDefault(_radium);
-	
-	var _victoryUtilLibStyle = __webpack_require__(86);
-	
-	var _lodash = __webpack_require__(6);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	var styles = {
-	  stroke: "transparent",
-	  fill: "#756f6a",
-	  fontSize: 16,
-	  fontFamily: "Helvetica",
-	  backgroundColor: "#ccc"
-	};
-	
-	var VictoryLabel = (function (_React$Component) {
-	  _inherits(VictoryLabel, _React$Component);
-	
-	  function VictoryLabel() {
-	    _classCallCheck(this, _VictoryLabel);
-	
-	    _get(Object.getPrototypeOf(_VictoryLabel.prototype), "constructor", this).apply(this, arguments);
-	  }
-	
-	  _createClass(VictoryLabel, [{
-	    key: "getStyles",
-	    value: function getStyles() {
-	      return this.props.style ? _lodash2["default"].merge({}, styles, this.props.style) : styles;
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this = this;
-	
-	      var style = this.getStyles();
-	      var transform = (0, _victoryUtilLibStyle.toTransformString)(this.props.transform);
-	      var content = this.props.children || "";
-	      var lines = content.split("\n");
-	
-	      var lineHeight = this.props.lineHeight;
-	      if (typeof lineHeight === "number") {
-	        lineHeight = lineHeight + "em";
-	      }
-	
-	      var capHeight = this.props.capHeight;
-	      if (typeof capHeight === "number") {
-	        capHeight = capHeight + "em";
-	      }
-	
-	      var dy = this.props.dy;
-	      switch (this.props.verticalAnchor) {
-	        case "end":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + ") * " + lineHeight);
-	          break;
-	        case "middle":
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + (0.5 - " + lines.length + " / 2) * " + lineHeight);
-	          break;
-	        default:
-	          dy = (0, _victoryUtilLibStyle.calc)(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
-	      }
-	
-	      return _react2["default"].createElement(
-	        "text",
-	        { x: this.props.x, y: this.props.y, dy: dy,
-	          textAnchor: this.props.textAnchor,
-	          transform: transform,
-	          style: style
-	        },
-	        lines.map(function (line, i) {
-	          return _react2["default"].createElement(
-	            "tspan",
-	            { key: i, x: _this.props.x, dy: i ? lineHeight : undefined },
-	            line
-	          );
-	        })
-	      );
-	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The capHeight prop defines a text metric for the font being used: the
-	       * expected height of capital letters. This is necessary because of SVG,
-	       * which (a) positions the *bottom* of the text at `y`, and (b) has no
-	       * notion of line height. The value should ideally use the same units as
-	       * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
-	       */
-	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	      /**
-	       * The children of this component define the content of the label. This
-	       * makes using the component similar to normal HTML spans or labels.
-	       * Currently, only strings are supported.
-	       */
-	      children: _react.PropTypes.string, // TODO: Expand child support in future release
-	      /**
-	       * The lineHeight prop defines how much space a single line of text should
-	       * take up. Note that SVG has no notion of line-height, so the positioning
-	       * may differ slightly from what you would expect with CSS, but the result
-	       * is similar: a roughly equal amount of extra space is distributed above
-	       * and below the line of text. The value should ideally use the same units
-	       * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
-	       */
-	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	      /**
-	       * The style prop applies CSS properties to the rendered `<text>` element.
-	       */
-	      style: _react.PropTypes.object,
-	      /**
-	       * The textAnchor prop defines how the text is horizontally positioned
-	       * relative to the given `x` and `y` coordinates.
-	       */
-	      textAnchor: _react.PropTypes.oneOf(["start", "middle", "end", "inherit"]),
-	      /**
-	       * The verticalAnchor prop defines how the text is vertically positioned
-	       * relative to the given `x` and `y` coordinates.
-	       */
-	      verticalAnchor: _react.PropTypes.oneOf(["start", "middle", "end"]),
-	      /**
-	       * The transform prop applies a transform to the rendered `<text>` element.
-	       * In addition to being a string, it can be an object containing transform
-	       * definitions for easier authoring.
-	       */
-	      transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object]),
-	      /**
-	       * The x prop defines the x coordinate to use as a basis for horizontal
-	       * positioning.
-	       */
-	      x: _react.PropTypes.number,
-	      /**
-	       * The y prop defines the y coordinate to use as a basis for vertical
-	       * positioning.
-	       */
-	      y: _react.PropTypes.number,
-	      /**
-	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
-	       * component already accounts for `capHeight`, `lineHeight`, and
-	       * `verticalAnchor`, this will usually not be necessary.
-	       */
-	      dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      capHeight: "0.71em", // Magic number from d3.
-	      lineHeight: 1,
-	      verticalAnchor: "start",
-	      dy: 0
-	    },
-	    enumerable: true
-	  }]);
-	
-	  var _VictoryLabel = VictoryLabel;
-	  VictoryLabel = (0, _radium2["default"])(VictoryLabel) || VictoryLabel;
-	  return VictoryLabel;
-	})(_react2["default"].Component);
-	
-	exports["default"] = VictoryLabel;
-	module.exports = exports["default"];
-
-/***/ },
-/* 86 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _reduceCssCalc = __webpack_require__(87);
-	
-	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
-	
-	/**
-	 * Given an object with CSS/SVG transform definitions, return the string value
-	 * for use with the `transform` CSS property or SVG attribute. Note that we
-	 * can't always guarantee the order will match the author's intended order, so
-	 * authors should only use the object notation if they know that their transform
-	 * is commutative or that there is only one.
-	 * @param {Object} obj An object of transform definitions.
-	 * @returns {String} The generated transform string.
-	 */
-	var toTransformString = function toTransformString(obj) {
-	  if (!obj || typeof obj === "string") {
-	    return obj;
-	  }
-	  var transforms = [];
-	  for (var key in obj) {
-	    if (obj.hasOwnProperty(key)) {
-	      var value = obj[key];
-	      transforms.push(key + "(" + value + ")");
-	    }
-	  }
-	  return transforms.join(" ");
-	};
-	
-	exports.toTransformString = toTransformString;
-	var calc = function calc(expr, precision) {
-	  return (0, _reduceCssCalc2["default"])("calc(" + expr + ")", precision);
-	};
-	
-	exports.calc = calc;
-	/**
-	 * Given the name of a color scale, getColorScale will return an array
-	 * of 5 hex string values in that color scale. If no 'name' parameter
-	 * is given, it will return the Victory default grayscale.
-	 * @param {String} name The name of the color scale to return (optional).
-	 * @returns {Array} An array of 5 hex string values composing a color scale.
-	 */
-	var getColorScale = function getColorScale(name) {
-	  var scales = {
-	    victory: ["#9f9f9f", "#e0dfe0", "#7e7e7e", "#d3d2d3", "#000000"],
-	    gray: ["#969696", "#f1f1f1", "#636363", "#cccccc", "#252525"],
-	    bluePurple: ["#8c96c6", "#edf8fb", "#8856a7", "#b3cde3", "#810f7c"],
-	    red: ["#de2d26", "#fee5d9", "#fb6a4a", "#fcae91", "#a50f15"],
-	    yellowBlue: ["#41b6c4", "#ffffcc", "#2c7fb8", "#a1dab4", "#253494"]
-	  };
-	  return name ? scales[name] : scales.victory;
-	};
-	exports.getColorScale = getColorScale;
-
-/***/ },
-/* 87 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/**
-	 * Module dependencies
-	 */
-	var balanced = __webpack_require__(88)
-	var reduceFunctionCall = __webpack_require__(89)
-	
-	/**
-	 * Constantes
-	 */
-	var MAX_STACK = 100 // should be enough for a single calc()...
-	var NESTED_CALC_RE = /(\+|\-|\*|\\|[^a-z]|)(\s*)(\()/g
-	
-	/**
-	 * Global variables
-	 */
-	var stack
-	
-	/**
-	 * Expose reduceCSSCalc plugin
-	 *
-	 * @type {Function}
-	 */
-	module.exports = reduceCSSCalc
-	
-	/**
-	 * Reduce CSS calc() in a string, whenever it's possible
-	 *
-	 * @param {String} value css input
-	 */
-	function reduceCSSCalc(value, decimalPrecision) {
-	  stack = 0
-	  decimalPrecision = Math.pow(10, decimalPrecision === undefined ? 5 : decimalPrecision)
-	
-	  /**
-	   * Evaluates an expression
-	   *
-	   * @param {String} expression
-	   * @returns {String}
-	   */
-	  function evaluateExpression (expression, functionIdentifier, call) {
-	    if (stack++ > MAX_STACK) {
-	      stack = 0
-	      throw new Error("Call stack overflow for " + call)
-	    }
-	
-	    if (expression === "") {
-	      throw new Error(functionIdentifier + "(): '" + call + "' must contain a non-whitespace string")
-	    }
-	
-	    expression = evaluateNestedExpression(expression, call)
-	
-	    var units = getUnitsInExpression(expression)
-	
-	    // If multiple units let the expression be (i.e. browser calc())
-	    if (units.length > 1) {
-	      return functionIdentifier + "(" + expression + ")"
-	    }
-	
-	    var unit = units[0] || ""
-	
-	    if (unit === "%") {
-	      // Convert percentages to numbers, to handle expressions like: 50% * 50% (will become: 25%):
-	      expression = expression.replace(/\b[0-9\.]+%/g, function(percent) {
-	        return parseFloat(percent.slice(0, -1)) * 0.01
-	      })
-	    }
-	
-	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
-	    var result
-	
-	    try {
-	      result = eval(toEvaluate)
-	    }
-	    catch (e) {
-	      return functionIdentifier + "(" + expression + ")"
-	    }
-	
-	    // Transform back to a percentage result:
-	    if (unit === "%") {
-	      result *= 100
-	    }
-	
-	    // adjust rounding shit
-	    // (0.1 * 0.2 === 0.020000000000000004)
-	    result = Math.round(result * decimalPrecision) / decimalPrecision
-	
-	    // We don't need units for zero values...
-	    if (result !== 0) {
-	      result += unit
-	    }
-	
-	    return result
-	  }
-	
-	  /**
-	   * Evaluates nested expressions
-	   *
-	   * @param {String} expression
-	   * @returns {String}
-	   */
-	  function evaluateNestedExpression(expression, call) {
-	    var evaluatedPart = ""
-	    var nonEvaluatedPart = expression
-	    var matches
-	    while ((matches = NESTED_CALC_RE.exec(nonEvaluatedPart))) {
-	      if (matches[0].index > 0) {
-	        evaluatedPart += nonEvaluatedPart.substring(0, matches[0].index)
-	      }
-	
-	      var balancedExpr = balanced("(", ")", nonEvaluatedPart.substring([0].index))
-	      if (balancedExpr.body === "") {
-	        throw new Error("'" + expression + "' must contain a non-whitespace string")
-	      }
-	
-	      var evaluated = evaluateExpression(balancedExpr.body, "", call)
-	
-	      evaluatedPart += balancedExpr.pre + evaluated
-	      nonEvaluatedPart = balancedExpr.post
-	    }
-	
-	    return evaluatedPart + nonEvaluatedPart
-	  }
-	
-	  return reduceFunctionCall(value, /((?:\-[a-z]+\-)?calc)\(/, evaluateExpression)
-	}
-	
-	/**
-	 * Checks what units are used in an expression
-	 *
-	 * @param {String} expression
-	 * @returns {Array}
-	 */
-	
-	function getUnitsInExpression(expression) {
-	  var uniqueUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/g
-	  var matches = unitRegEx.exec(expression)
-	
-	  while (matches) {
-	    if (!matches || !matches[1]) {
-	      continue
-	    }
-	
-	    if (uniqueUnits.indexOf(matches[1]) === -1) {
-	      uniqueUnits.push(matches[1])
-	    }
-	
-	    matches = unitRegEx.exec(expression)
-	  }
-	
-	  return uniqueUnits
-	}
-
-
-/***/ },
-/* 88 */
-/***/ function(module, exports) {
-
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
-
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/*
-	 * Module dependencies
-	 */
-	var balanced = __webpack_require__(88)
-	
-	/**
-	 * Expose `reduceFunctionCall`
-	 *
-	 * @type {Function}
-	 */
-	module.exports = reduceFunctionCall
-	
-	/**
-	 * Walkthrough all expressions, evaluate them and insert them into the declaration
-	 *
-	 * @param {Array} expressions
-	 * @param {Object} declaration
-	 */
-	
-	function reduceFunctionCall(string, functionRE, callback) {
-	  var call = string
-	  return getFunctionCalls(string, functionRE).reduce(function(string, obj) {
-	    return string.replace(obj.functionIdentifier + "(" + obj.matches.body + ")", evalFunctionCall(obj.matches.body, obj.functionIdentifier, callback, call, functionRE))
-	  }, string)
-	}
-	
-	/**
-	 * Parses expressions in a value
-	 *
-	 * @param {String} value
-	 * @returns {Array}
-	 * @api private
-	 */
-	
-	function getFunctionCalls(call, functionRE) {
-	  var expressions = []
-	
-	  var fnRE = typeof functionRE === "string" ? new RegExp("\\b(" + functionRE + ")\\(") : functionRE
-	  do {
-	    var searchMatch = fnRE.exec(call)
-	    if (!searchMatch) {
-	      return expressions
-	    }
-	    if (searchMatch[1] === undefined) {
-	      throw new Error("Missing the first couple of parenthesis to get the function identifier in " + functionRE)
-	    }
-	    var fn = searchMatch[1]
-	    var startIndex = searchMatch.index
-	    var matches = balanced("(", ")", call.substring(startIndex))
-	
-	    if (!matches) {
-	      throw new SyntaxError(fn + "(): missing closing ')' in the value '" + call + "'")
-	    }
-	
-	    expressions.push({matches: matches, functionIdentifier: fn})
-	    call = matches.post
-	  }
-	  while (fnRE.test(call))
-	
-	  return expressions
-	}
-	
-	/**
-	 * Evaluates an expression
-	 *
-	 * @param {String} expression
-	 * @returns {String}
-	 * @api private
-	 */
-	
-	function evalFunctionCall (string, functionIdentifier, callback, call, functionRE) {
-	  // allow recursivity
-	  return callback(reduceFunctionCall(string, functionRE, callback), functionIdentifier, call)
-	}
-
 
 /***/ }
 /******/ ])

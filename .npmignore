@@ -12,13 +12,14 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .tmp
-npm-debug.log
+npm-debug.log*
 
 # Code / build
 coverage
 node_modules
 bower_components
 demo
+docs
 test
 karma*
 webpack*

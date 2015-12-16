@@ -1,3 +1,5 @@
 {
-  "breakConfig": true
+  "stage": 0,
+  "nonStandard": true,
+  "breakConfig": true,
 }

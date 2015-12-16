@@ -1,19 +1,15 @@
-import ga from "react-ga";
 import Ecology from "ecology";
+import ga from "react-ga";
+import { Link } from "react-router";
 import Radium, { Style } from "radium";
 import React from "react";
 import ReactDOM from "react-dom";
 
+import { components } from "../config";
+import { VictoryTheme, Header, Footer } from "formidable-landers";
 import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
 const V = Victory;
-
-import theme from "./theme";
-
-// TODO: Extract these global Header/Footers into formidable-landers
-// https://github.com/FormidableLabs/formidable-landers/issues/12
-import Footer from "./footer";
-import Header from "./header";
 
 import Sidebar from "./sidebar";
 
@@ -43,33 +39,45 @@ class Docs extends React.Component {
       flexDirection: "column",
       margin: "0 auto",
       padding: "1rem",
-      maxWidth: "70em",
       "@media (min-width: 70em)": {
-        "flexDirection": "row"
+        "flexDirection": "row",
+        margin: "0 2.5rem"
       }
     };
   }
 
-  /* eslint-disable max-len */
+  _renderDocsList() {
+    return components.map((component) => {
+      return (
+        <li key={component.slug}>
+          <Link to={`docs/${component.slug}`}>
+            {component.text}
+          </Link>
+        </li>
+      );
+    });
+  }
+
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header/>
         <main style={this.getMainStyles()}>
-          <Sidebar/>
+          <Sidebar active={""} />
           <section style={this.getDocsStyles()}>
             <Ecology
               overview={require("!!raw!../ecology-getting-started.md")}
               scope={{React, ReactDOM, V, VictoryChart, VictoryLine, VictoryPie}}
               playgroundtheme="elegant" />
+            <h3>Explore the interactive docs!</h3>
+            {this._renderDocsList()}
           </section>
         </main>
         <Footer/>
-        <Style rules={theme}/>
+        <Style rules={VictoryTheme}/>
       </div>
     );
   }
-  /* eslint-enable max-len */
 }
 
 export default Docs;
