@@ -22,7 +22,8 @@
   "dependencies": {
     "builder": "~2.2.2",
     "builder-victory-component": "~0.0.5",
-    "d3": "^3.5.8"
+    "d3-ease": "^0.3.0",
+    "d3-interpolate": "^0.2.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.0.5",

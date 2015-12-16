@@ -1,5 +1,5 @@
-import d3 from "d3";
 import _ from "lodash";
+import d3Interpolate from "d3-interpolate";
 
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
@@ -82,7 +82,7 @@ export const interpolateFunction = function (a, b) {
       /* eslint-disable no-invalid-this */
       const aval = (typeof a === "function") ? a.apply(this, arguments) : a;
       const bval = (typeof b === "function") ? b.apply(this, arguments) : b;
-      return d3.interpolate(aval, bval)(t);
+      return d3Interpolate.value(aval, bval)(t);
     };
   };
 };
@@ -126,7 +126,7 @@ let interpolatorAdded = false;
 
 export const addVictoryInterpolator = function () {
   if (!interpolatorAdded) {
-    d3.interpolators.push(victoryInterpolator);
+    d3Interpolate.values.push(victoryInterpolator);
     interpolatorAdded = true;
   }
 };

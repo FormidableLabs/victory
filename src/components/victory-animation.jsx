@@ -1,7 +1,8 @@
 /*global requestAnimationFrame, cancelAnimationFrame, setTimeout, clearTimeout*/
 
 import React from "react";
-import d3 from "d3";
+import d3Ease from "d3-ease";
+import d3Interpolate from "d3-interpolate";
 import { addVictoryInterpolator } from "../util";
 
 addVictoryInterpolator();
@@ -10,7 +11,18 @@ export default class VictoryAnimation extends React.Component {
   static propTypes = {
     children: React.PropTypes.func,
     velocity: React.PropTypes.number,
-    easing: React.PropTypes.string,
+    easing: React.PropTypes.oneOf([
+      "back", "backIn", "backOut", "backInOut",
+      "bounce", "bounceIn", "bounceOut", "bounceInOut",
+      "circle", "circleIn", "circleOut", "circleInOut",
+      "linear", "linearIn", "linearOut", "linearInOut",
+      "cubic", "cubicIn", "cubicOut", "cubicInOut",
+      "elastic", "elasticIn", "elasticOut", "elasticInOut",
+      "exp", "expIn", "expOut", "expInOut",
+      "poly", "polyIn", "polyOut", "polyInOut",
+      "quad", "quadIn", "quadOut", "quadInOut",
+      "sin", "sinIn", "sinOut", "sinInOut"
+    ]),
     delay: React.PropTypes.number,
     onEnd: React.PropTypes.func,
     data: React.PropTypes.oneOfType([
@@ -23,7 +35,7 @@ export default class VictoryAnimation extends React.Component {
     /* velocity modifies step each frame */
     velocity: 0.02,
     /* easing modifies step each frame */
-    easing: "quad-in-out",
+    easing: "quadInOut",
     /* delay between transitions */
     delay: 0,
     /* we got nothin' */
@@ -40,7 +52,7 @@ export default class VictoryAnimation extends React.Component {
     this.queue = Array.isArray(this.props.data) ?
       this.props.data.slice(1) : [];
     /* build easing function */
-    this.ease = d3.ease(this.props.easing);
+    this.ease = d3Ease[this.props.easing];
     /*
       unlike React.createClass({}), there is no autobinding of this in ES6 classes
       so we bind functionToBeRunEachFrame to current instance of victory animation class
@@ -89,7 +101,7 @@ export default class VictoryAnimation extends React.Component {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
-      this.interpolator = d3.interpolate(this.state, data);
+      this.interpolator = d3Interpolate.value(this.state, data);
       /* reset step to zero */
       this.step = 0;
       this.delayTimeout = setTimeout(() => {
