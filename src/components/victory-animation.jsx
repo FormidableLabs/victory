@@ -3,7 +3,10 @@
 import React from "react";
 import d3Ease from "d3-ease";
 import d3Interpolate from "d3-interpolate";
+import { timer } from "d3-timer";
 import { addVictoryInterpolator } from "../util";
+
+const VELOCITY_MULTIPLIER = 16.5;
 
 addVictoryInterpolator();
 
@@ -48,7 +51,6 @@ export default class VictoryAnimation extends React.Component {
     this.state = Array.isArray(this.props.data) ?
       this.props.data[0] : this.props.data;
     this.interpolator = null;
-    this.step = 0;
     this.queue = Array.isArray(this.props.data) ?
       this.props.data.slice(1) : [];
     /* build easing function */
@@ -60,6 +62,7 @@ export default class VictoryAnimation extends React.Component {
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
   }
   componentDidMount() {
+    // Length check prevents us from triggering `onEnd` in `traverseQueue`.
     if (this.queue.length) {
       this.traverseQueue();
     }
@@ -67,11 +70,8 @@ export default class VictoryAnimation extends React.Component {
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
-    if (this.raf) {
-      cancelAnimationFrame(this.raf);
-    }
-    if (this.delayTimeout) {
-      clearTimeout(this.delayTimeout);
+    if (this.timer) {
+      this.timer.stop();
     }
     /* If an object was supplied */
     if (!Array.isArray(nextProps.data)) {
@@ -88,60 +88,44 @@ export default class VictoryAnimation extends React.Component {
     this.traverseQueue();
   }
   componentWillUnmount() {
-    if (this.raf) {
-      cancelAnimationFrame(this.raf);
-    }
-    if (this.delayTimeout) {
-      clearTimeout(this.delayTimeout);
+    if (this.timer) {
+      this.timer.stop();
     }
   }
   /* Traverse the tween queue */
   traverseQueue() {
-    if (this.queue.length > 0) {
+    if (this.queue.length) {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
       this.interpolator = d3Interpolate.value(this.state, data);
       /* reset step to zero */
-      this.step = 0;
-      this.delayTimeout = setTimeout(() => {
-        this.raf = this.functionToBeRunEachFrame();
-      }, this.props.delay);
+      this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
     } else if (this.props.onEnd) {
       this.props.onEnd();
     }
   }
   /* every frame we... */
-  functionToBeRunEachFrame() {
+  functionToBeRunEachFrame(elapsed) {
     /*
       step can generate imprecise values, sometimes greater than 1
-      if this happens set the state to 1 and return, cancelling the loop
+      if this happens set the state to 1 and return, cancelling the timer
     */
-    if (this.step >= 1) {
-      this.step = 1;
-      this.setState(this.interpolator(this.step));
-      if (this.queue.length > 0) {
-        cancelAnimationFrame(this.raf);
-        this.queue.shift();
-        this.traverseQueue();
-      } else if (this.props.onEnd) {
-        this.props.onEnd();
-      }
+    const step = elapsed / (VELOCITY_MULTIPLIER / this.props.velocity);
+
+    if (step >= 1) {
+      this.setState(this.interpolator(1));
+      this.timer.stop();
+      this.queue.shift();
+      this.traverseQueue(); // Will take care of calling `onEnd`.
       return;
     }
     /*
-      if we're not at the end of the loop, set the state by passing
+      if we're not at the end of the timer, set the state by passing
       current step value that's transformed by the ease function to the
       interpolator, which is cached for performance whenever props are received
     */
-    this.setState(this.interpolator(this.ease(this.step)));
-    /* increase step by velocity */
-    this.step += this.props.velocity;
-    /*
-      requestAnimationFrame calls a function on a frame.
-      continue the loop by feeding functionToBeRunEachFrame
-    */
-    this.raf = requestAnimationFrame(this.functionToBeRunEachFrame);
+    this.setState(this.interpolator(this.ease(step)));
   }
   render() {
     return this.props.children(this.state);
