@@ -24,7 +24,7 @@ class Index extends React.Component {
           <base href={this.props.baseHref} />
           <script dangerouslySetInnerHTML={{ __html: `
             var url = window.location.href;
-            if (url.indexOf("projects.formidablelabs.com/victory") > -1) {
+            if (url.indexOf("stack.formidable.com/victory") > -1) {
               var intendedPath = url.substring(url.indexOf("victory") + "victory".length);
               window.location = "http://victory.formidable.com" + intendedPath;
             }
