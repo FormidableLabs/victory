@@ -6,12 +6,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { components } from "../config";
-import { VictoryTheme, Header, Footer } from "formidable-landers";
-import * as Victory from "../../src/index";
-const { VictoryChart, VictoryLine, VictoryPie } = Victory;
-const V = Victory;
-
 import Sidebar from "./sidebar";
+import { VictoryTheme, Header, Footer } from "formidable-landers";
 
 @Radium
 class Docs extends React.Component {
@@ -67,7 +63,6 @@ class Docs extends React.Component {
           <section style={this.getDocsStyles()}>
             <Ecology
               overview={require("!!raw!../ecology-getting-started.md")}
-              scope={{React, ReactDOM, V, VictoryChart, VictoryLine, VictoryPie}}
               playgroundtheme="elegant" />
             <h3>Explore the interactive docs!</h3>
             {this._renderDocsList()}
