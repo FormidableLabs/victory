@@ -21,7 +21,8 @@
     "dev-docs": "webpack-dev-server --port 3000 --config docs/webpack.config.dev.js --content-base docs",
     "hot-docs": "webpack-dev-server --port 3000 --config docs/webpack.config.hot.js --hot --content-base docs",
     "copy-static-assets": "cp -r docs/static/ docs/build/static",
-    "build-static-docs": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets",
+    "copy-cname": "cp docs/CNAME docs/build/CNAME",
+    "build-static-docs": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname",
     "push-gh-pages": "git subtree push --prefix docs/build origin gh-pages"
   },
   "dependencies": {
