@@ -28,6 +28,7 @@ $RECYCLE.BIN/
 # App specific
 
 coverage
+docs/build
 node_modules
 bower_components
 .tmp
