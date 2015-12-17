@@ -1,14 +1,12 @@
 import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import {VictoryAnimation} from "victory-animation";
 import {VictoryLabel} from "victory-label";
 
 
 @Radium
 export default class SliceLabel extends React.Component {
   static propTypes = {
-    animate: PropTypes.object,
     labelComponent: PropTypes.any,
     positionFunction: PropTypes.func,
     slice: PropTypes.object,
@@ -68,19 +66,7 @@ export default class SliceLabel extends React.Component {
   }
 
   render() {
-    if (this.props.animate) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const animateData = _.pick(this.props, ["style", "slice"]);
-      return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <SliceLabel {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
-      );
-    } else {
-      this.getCalculatedValues(this.props);
-    }
+    this.getCalculatedValues(this.props);
     return this.renderLabel(this.props);
   }
 }
