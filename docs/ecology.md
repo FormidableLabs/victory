@@ -11,7 +11,9 @@ By default, VictoryLabel behaves just like any other text element you’re used 
 
 ```playground
 <svg>
-  <VictoryLabel>Welcome!</VictoryLabel>
+  <VictoryLabel verticalAnchor="start">
+    Welcome!
+  </VictoryLabel>
 </svg>
 ```
 
@@ -23,6 +25,7 @@ Multiple lines are positioned how you’d expect and account for the given `line
 <svg>
   <VictoryLabel x={50} y={10}
     textAnchor="middle"
+    verticalAnchor="start"
     lineHeight={1.5}>
     {"data viz \n is \n fun!"}
   </VictoryLabel>
