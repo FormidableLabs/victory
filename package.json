@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/formidablelabs/victory-chart.git"
   },
-  "author": "Ross Donaldson",
+  "author": "Lauren Eastridge",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/formidablelabs/victory-chart/issues"
@@ -22,9 +22,9 @@
   "dependencies": {
     "builder": "~2.2.2",
     "builder-victory-component": "~0.0.5",
-    "victory-axis": "1.5.4",
-    "victory-line": "0.5.5",
-    "victory-util": "^2.0.2"
+    "victory-axis": "1.5.5",
+    "victory-line": "0.6.0",
+    "victory-util": "^2.0.3"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.0.5",
@@ -36,7 +36,7 @@
     "react-dom": "^0.14.3",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "victory-bar": "2.4.6",
-    "victory-scatter": "0.5.3"
+    "victory-bar": "2.5.0",
+    "victory-scatter": "0.6.0"
   }
 }
