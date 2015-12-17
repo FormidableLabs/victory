@@ -34,7 +34,7 @@ class HelloWorld extends React.Component {
       <VictoryPie />
     );
   }
-};
+}
 ```
 
 ### Contributing and source
