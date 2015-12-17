@@ -11,6 +11,7 @@ describe("victory", () => {
     expect(Victory.VictoryBar).not.to.equal(undefined);
     expect(Victory.VictoryChart).not.to.equal(undefined);
     expect(Victory.VictoryLine).not.to.equal(undefined);
+    expect(Victory.VictoryLabel).not.to.equal(undefined);
     expect(Victory.VictoryPie).not.to.equal(undefined);
     expect(Victory.VictoryScatter).not.to.equal(undefined);
   });
