@@ -5,7 +5,7 @@ import d3Shape from "d3-shape";
 import Util from "victory-util";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
-
+import {VictoryAnimation} from "victory-animation";
 
 const defaultStyles = {
   data: {
@@ -221,13 +221,11 @@ export default class VictoryPie extends React.Component {
       return (
         <g key={index}>
           <Slice
-            animate={this.props.animate}
             slice={slice}
             pathFunction={this.slice}
             style={style}
           />
           <SliceLabel
-            animate={this.props.animate}
             labelComponent={this.props.labelComponent}
             style={this.style.labels}
             positionFunction={this.labelPosition.centroid}
@@ -241,7 +239,22 @@ export default class VictoryPie extends React.Component {
   }
 
   render() {
-    this.getCalculatedValues(this.props);
+    if (this.props.animate) {
+      // Do less work by having `VictoryAnimation` tween only values that
+      // make sense to tween. In the future, allow customization of animated
+      // prop whitelist/blacklist?
+      const animateData = _.pick(this.props, [
+        "data", "endAngle", "height", "innerRadius", "padAngle", "padding",
+        "colorScale", "startAngle", "style", "width"
+      ]);
+      return (
+        <VictoryAnimation {...this.props.animate} data={animateData}>
+          {(props) => <VictoryPie {...this.props} {...props} animate={null}/>}
+        </VictoryAnimation>
+      );
+    } else {
+      this.getCalculatedValues(this.props);
+    }
     const style = this.style.parent;
     const xOffset = this.radius + this.padding.left;
     const yOffset = this.radius + this.padding.top;

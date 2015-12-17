@@ -23,9 +23,9 @@
     "builder": "~2.2.2",
     "builder-victory-component": "~0.0.5",
     "d3-shape": "^0.2.0",
-    "victory-animation": "^0.0.12",
-    "victory-label": "^0.1.6",
-    "victory-util": "^2.0.2"
+    "victory-animation": "^0.0.13",
+    "victory-label": "^0.1.8",
+    "victory-util": "^2.0.3"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.0.5",
