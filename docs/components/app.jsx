@@ -3,7 +3,7 @@ import Radium, { Style } from "radium";
 import React from "react";
 import Ecology from "ecology";
 import ReactDOM from "react-dom";
-import {VictoryChart, VictoryLine} from "../../src/index";
+import { VictoryChart, VictoryLine, VictoryPie } from "../../src/index";
 import { VictoryTheme, Header, Footer} from "formidable-landers";
 // Analytics
 import ga from "react-ga";
@@ -56,7 +56,7 @@ class App extends React.Component {
           <div>
             <Ecology
               overview={require("!!raw!../ecology.md")}
-              scope={{React, ReactDOM, VictoryChart, VictoryLine}}
+              scope={{React, ReactDOM, VictoryChart, VictoryLine, VictoryPie}}
               playgroundtheme="elegant" />
           </div>
 
