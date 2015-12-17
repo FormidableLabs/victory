@@ -6,8 +6,8 @@
 	else if(typeof exports === 'object')
 		exports["VictoryUtil"] = factory(require("react"));
 	else
-		root["VictoryUtil"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_13__) {
+		root["VictoryUtil"] = factory(root["Victory"]);
+})(this, function(__WEBPACK_EXTERNAL_MODULE_12__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -74,11 +74,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var Style = _interopRequireWildcard(_style);
 	
-	var _type = __webpack_require__(11);
+	var _type = __webpack_require__(10);
 	
 	var Type = _interopRequireWildcard(_type);
 	
-	var _propTypes = __webpack_require__(12);
+	var _propTypes = __webpack_require__(11);
 	
 	var PropTypes = _interopRequireWildcard(_propTypes);
 	
@@ -12891,7 +12891,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(10)
+	var balanced = __webpack_require__(8)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -12968,36 +12968,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 10 */
 /***/ function(module, exports) {
 
-	module.exports = function(a, b, str) {
-	  var bal = 0;
-	  var m = {};
-	
-	  for (var i = 0; i < str.length; i++) {
-	    if (a == str.substr(i, a.length)) {
-	      if (!('start' in m)) m.start = i;
-	      bal++;
-	    }
-	    else if (b == str.substr(i, b.length) && 'start' in m) {
-	      bal--;
-	      if (!bal) {
-	        m.end = i;
-	        m.pre = str.substr(0, m.start);
-	        m.body = (m.end - m.start > 1)
-	          ? str.substring(m.start + a.length, m.end)
-	          : '';
-	        m.post = str.slice(m.end + b.length);
-	        return m;
-	      }
-	    }
-	  }
-	};
-	
-
-
-/***/ },
-/* 11 */
-/***/ function(module, exports) {
-
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -13046,7 +13016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getConstructorName = getConstructorName;
 
 /***/ },
-/* 12 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -13057,9 +13027,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _react = __webpack_require__(13);
+	var _react = __webpack_require__(12);
 	
-	var _type = __webpack_require__(11);
+	var _type = __webpack_require__(10);
 	
 	var _lodash = __webpack_require__(2);
 	
@@ -13155,10 +13125,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.homogeneousArray = homogeneousArray;
 
 /***/ },
-/* 13 */
+/* 12 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_13__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_12__;
 
 /***/ }
 /******/ ])
