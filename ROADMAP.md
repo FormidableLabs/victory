@@ -38,4 +38,4 @@ Expected release: February 2016
 - [victory-legend](https://github.com/FormidableLabs/victory/issues/35)
 - [victory-area](https://github.com/FormidableLabs/victory/issues/40)
 - React native support
-a- 90% code coverage across all Victory components
+- 90% code coverage across all Victory components
