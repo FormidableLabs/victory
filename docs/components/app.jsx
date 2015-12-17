@@ -1,3 +1,4 @@
+import { components } from "../config";
 import { Link } from "react-router";
 import Radium, { Style } from "radium";
 import React from "react";
@@ -85,6 +86,32 @@ class App extends React.Component {
             <div className="Copy u-textCenter">
               <Link className="Button Button--spotlight" to="docs">Get Started</Link>
             </div>
+          </div>
+
+          <div className="Row">
+            <h3 className="u-textCenter">Quick links:</h3>
+            <p className="Copy">
+              GitHub: <a href="https://github.com/FormidableLabs/victory">
+                https://github.com/FormidableLabs/victory
+              </a>
+            </p>
+            <p className="Copy">
+              Gitter chatroom: <a href="https://gitter.im/FormidableLabs/victory">
+                https://gitter.im/FormidableLabs/victory
+              </a>
+            </p>
+            <p className="Copy">Component docs:</p>
+            <ul className="Copy">
+              {components.map((component) => {
+                return (
+                  <li key={component.slug}>
+                    <Link to={`docs/${component.slug}`}>
+                      {component.text}
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
 
         </main>
