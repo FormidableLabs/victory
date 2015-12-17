@@ -28,8 +28,8 @@ Expected release: January 2016
 - [Support data accessor functions](https://github.com/FormidableLabs/victory/issues/84)
 - Inverted axis support
 - [Horizontal bar chart support](https://github.com/FormidableLabs/victory/issues/36)
-- Proof of concept general interactivity support
-- 50% code coverage across all Victory components
+- General interactivity support
+- 75% code coverage across all Victory components
 
 ### [RC1](https://github.com/FormidableLabs/victory/milestones/RC1)
 
@@ -38,5 +38,4 @@ Expected release: February 2016
 - [victory-legend](https://github.com/FormidableLabs/victory/issues/35)
 - [victory-area](https://github.com/FormidableLabs/victory/issues/40)
 - React native support
-- General interactivity support
-- 75% code coverage across all Victory components
+a- 90% code coverage across all Victory components
