@@ -27,7 +27,9 @@ class ComponentDocs extends BaseDocs {
     const Docs = docs[this.props.params.component];
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header />
+        <Header
+          text={"Interested in using Victory on your next project? Let’s talk."}
+        />
         <main style={this.getMainStyles()}>
           <Sidebar active={`${this.props.params.component}`} />
           <section style={this.getDocsStyles()}>

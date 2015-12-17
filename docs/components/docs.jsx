@@ -61,7 +61,9 @@ class Docs extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header/>
+        <Header
+          text={"Interested in using Victory on your next project? Let’s talk."}
+        />
         <main style={this.getMainStyles()}>
           <Sidebar active={""} />
           <section style={this.getDocsStyles()}>
