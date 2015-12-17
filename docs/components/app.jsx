@@ -49,7 +49,7 @@ class App extends React.Component {
 
           <div className="Row">
             <p className="Headline Headline--minor u-textCenter">
-              An ecosystem of modular data visualization components for React
+              An ecosystem of modular data visualization components for React.
             </p>
           </div>
 
@@ -61,21 +61,21 @@ class App extends React.Component {
           </div>
 
           <div className="Row">
-            <h2 className="u-textCenter">Powerful</h2>
+            <h2 className="u-textCenter">Friendly</h2>
             <p className="Copy">
               The modular, componentized nature of React has allowed us to write fully-contained, reusable data visualization elements that are responsible for their own styles and behaviors.
             </p>
           </div>
 
           <div className="Row">
-            <h2 className="u-textCenter">Effortless</h2>
+            <h2 className="u-textCenter">Flexible</h2>
             <p className="Copy">
               The use of sensible default props makes getting started very easy, without sacrificing flexiblity. Victory also leverages React lifecycle methods and DOM diffing to create a lightweight animation wrapper.
             </p>
           </div>
 
           <div className="Row">
-            <h2 className="u-textCenter">Victorious</h2>
+            <h2 className="u-textCenter">Composable</h2>
             <p className="Copy">
               When combined, these features result in a set of components that are easy to use, and compose into more complicated visualizations.
             </p>
