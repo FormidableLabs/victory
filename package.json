@@ -38,7 +38,7 @@
     "victory-bar": "2.5.0",
     "victory-chart": "2.1.0",
     "victory-line": "0.6.0",
-    "victory-label": "0.1.8",
+    "victory-label": "0.1.9",
     "victory-pie": "0.2.0",
     "victory-scatter": "0.6.0"
   },
@@ -57,6 +57,7 @@
     "raw-loader": "^0.5.1",
     "react": "0.14.x",
     "react-addons-test-utils": "^0.14.0",
+    "react-docgen": "^2.4.0",
     "react-dom": "0.14.x",
     "react-ga": "^1.2.0",
     "react-hot-loader": "^1.2.8",

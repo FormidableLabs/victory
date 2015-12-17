@@ -1,20 +1,12 @@
+import _ from "underscore";
 import ga from "react-ga";
-import React from "react";
 import Radium, { Style } from "radium";
+import React from "react";
 import { VictoryTheme, Header, Footer } from "formidable-landers";
 
 import BaseDocs from "./docs";
+import { components, routing as routingConfig } from "../config";
 import Sidebar from "./sidebar";
-import { routing as routingConfig } from "../config";
-
-const docs = {
-  "victory-axis": require("victory-axis/docs/docs"),
-  "victory-chart": require("victory-chart/docs/docs"),
-  "victory-pie": require("victory-pie/docs/docs"),
-  "victory-bar": require("victory-bar/docs/docs"),
-  "victory-line": require("victory-line/docs/docs"),
-  "victory-scatter": require("victory-scatter/docs/docs")
-};
 
 @Radium
 class ComponentDocs extends BaseDocs {
@@ -24,7 +16,7 @@ class ComponentDocs extends BaseDocs {
   }
 
   render() {
-    const Docs = docs[this.props.params.component];
+    const Docs = _.findWhere(components, { slug: this.props.params.component }).docs;
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
         <Header

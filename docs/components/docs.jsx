@@ -5,7 +5,7 @@ import Radium, { Style } from "radium";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { components } from "../config";
+import { components, routing as routingConfig } from "../config";
 import { VictoryTheme, Header, Footer } from "formidable-landers";
 import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
@@ -17,7 +17,7 @@ import Sidebar from "./sidebar";
 class Docs extends React.Component {
 
   componentWillMount() {
-    ga.pageview("/victory/docs");
+    ga.pageview(`${routingConfig.base}docs`);
   }
 
   getDocsStyles() {
