@@ -4,20 +4,38 @@ Victory is an opinionated, but fully overridable, ecosystem of composable React 
 
 ### Including components
 
-Components can be included individually:
-
-```playground
-// import { VictoryPie } from "victory"
-<VictoryPie/>
+First, grab Victory:
+```js
+npm install victory
 ```
 
-Or imported as a set:
-```playground
-// import * as V from "victory"
-<V.VictoryPie/>
+Then include components individually...
+```js
+import { VictoryPie } from "victory";
+// <VictoryPie />
 ```
-### Animation
-Wrap any Victory component with [VictoryAnimation](https://github.com/FormidableLabs/victory-animation) and it will transition smoothly between states whenever data changes. `VictoryAnimation` relies on d3's interpolator, so it knows how to transition between colors, dates, numbers, strings etc.
 
-### Contributing
-Interested in helping out? Great! You can [get started here](https://github.com/FormidableLabs/victory/blob/master/CONTRIBUTING.md).
+... Or import them as a set.
+```js
+import * as V from "victory";
+// <V.VictoryPie />
+```
+
+(The interactive docs throughout this site have already included this `import` step.)
+
+Now you're ready to render:
+```
+import React from "React";
+import { VictoryPie } from "victory";
+
+class HelloWorld extends React.Component {
+  render () {
+    return (
+      <VictoryPie />
+    );
+  }
+};
+```
+
+### Contributing and source
+Interested in helping out or seeing what's happening under the hood? Victory is maintained at [https://github.com/FormidableLabs/victory](https://github.com/FormidableLabs/victory), and you can [start contributing here](https://github.com/FormidableLabs/victory/blob/master/CONTRIBUTING.md).
