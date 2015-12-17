@@ -15,7 +15,7 @@ By default, VictoryLabel behaves just like any other text element you’re used 
 </svg>
 ```
 
-### Multiple Lines
+### Multiline Labels
 
 Multiple lines are positioned how you’d expect and account for the given `lineHeight`. Note that since JSX (like HTML) collapses whitespace, you’ll need to wrap your string in `{` and `}` so that your newlines come through.
 
