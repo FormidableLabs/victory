@@ -33,13 +33,14 @@
     "radium": "^0.14.1",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-animation": "0.0.12",
-    "victory-axis": "1.5.4",
-    "victory-bar": "2.4.7",
+    "victory-animation": "0.0.13",
+    "victory-axis": "1.5.5",
+    "victory-bar": "2.5.0",
     "victory-chart": "2.0.4",
-    "victory-line": "0.5.6",
-    "victory-pie": "0.1.4",
-    "victory-scatter": "0.5.4"
+    "victory-line": "0.6.0",
+    "victory-lable": "0.1.8",
+    "victory-pie": "0.2.0",
+    "victory-scatter": "0.6.0"
   },
   "devDependencies": {
     "babel": "^5.5.8",
