@@ -40,7 +40,7 @@
     "victory-scatter": "0.6.0"
   },
   "devDependencies": {
-    "builder-react-component-dev": "~0.0.6",
+    "builder-victory-component-dev": "~0.0.6",
     "chai": "^3.2.0",
     "formidable-landers": "latest",
     "mocha": "^2.3.3",
