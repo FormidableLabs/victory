@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/formidablelabs/victory",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall || echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1",
+    "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test",
@@ -31,9 +31,9 @@
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.0.13",
-    "victory-axis": "1.5.5",
+    "victory-axis": "1.5.7",
     "victory-bar": "2.5.0",
-    "victory-chart": "2.1.0",
+    "victory-chart": "2.1.1",
     "victory-line": "0.6.0",
     "victory-label": "0.1.9",
     "victory-pie": "0.2.0",
@@ -42,6 +42,7 @@
   "devDependencies": {
     "builder-victory-component-dev": "~0.0.6",
     "chai": "^3.2.0",
+    "file-loader": "^0.8.5",
     "formidable-landers": "latest",
     "mocha": "^2.3.3",
     "react": "0.14.x",

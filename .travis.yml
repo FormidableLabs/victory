@@ -27,7 +27,7 @@ script:
   - node_modules/.bin/builder run check-ci
 
   # Ensure we can build static site
-  - npm run build-static-docs
+  - node_modules/.bin/builder run docs-build-static
 
   # Prune deps to just production and ensure we can still build
   - npm prune --production
