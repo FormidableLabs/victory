@@ -19,7 +19,9 @@ var routes = [
   "docs/victory-pie",
   "docs/victory-bar",
   "docs/victory-line",
-  "docs/victory-scatter"
+  "docs/victory-scatter",
+  "docs/victory-animation",
+  "docs/victory-label"
 ];
 
 module.exports = {
