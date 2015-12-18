@@ -28,12 +28,14 @@ import * as V from "victory"
 
 You can read about these Victory components via interactive docs!
 
-- [VictoryAxis](https://formidablelabs.github.io/victory-axis)
-- [VictoryBar](https://formidablelabs.github.io/victory-bar)
-- [VictoryChart](https://formidablelabs.github.io/victory-chart)
-- [VictoryLine](https://formidablelabs.github.io/victory-line)
-- [VictoryPie](https://formidablelabs.github.io/victory-pie)
-- [VictoryScatter](https://formidablelabs.github.io/victory-scatter)
+- [VictoryAxis](http://victory.formidable.com/docs/victory-axis)
+- [VictoryBar](http://victory.formidable.com/docs/victory-bar)
+- [VictoryChart](http://victory.formidable.com/docs/victory-chart)
+- [VictoryLine](http://victory.formidable.com/docs/victory-line)
+- [VictoryPie](http://victory.formidable.com/docs/victory-pie)
+- [VictoryScatter](http://victory.formidable.com/docs/victory-scatter)
+- [VictoryLabel](http://victory.formidable.com/docs/victory-label)
+- [VictoryAnimation](http://victory.formidable.com/docs/victory-animation)
 
 
 ## Animation
