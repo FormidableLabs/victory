@@ -3,7 +3,7 @@ VictoryChart
 
 A flexible charting component for React. VictoryChart composes other Victory components into reusable charts. Acting as a coordinator rather than a stand-alone component, VictoryChart reconciles props such as `domain` and `scale` for child components, and provides a set of sensible defaults. This component works with:
 
-- [VictoryAxis](http://github.com/formidablelabs/victory-axis) 
+- [VictoryAxis](http://github.com/formidablelabs/victory-axis)
 - [VictoryLine](http://github.com/formidablelabs/victory-line)
 - [VictoryScatter](http://github.com/formidablelabs/victory-scatter)
 - [VictoryBar](http://github.com/formidablelabs/victory-bar)
@@ -23,12 +23,12 @@ VictoryChart was designed to build charts from minimal information. Pass in only
 
 ```playground
 <VictoryChart>
-  <VictoryLine 
+  <VictoryLine
     y={(x) => 0.5 * x * x}/>
 </VictoryChart>
 ```
 
-In the example above, VictoryChart was given a VictoryLine component as a child. In addition, it also created a set of VictoryAxis components with the correct domain for the data being plotted by VictoryLine, created tick values based on that data, aligned all of its child components into a correct chart, and applied a set of default styles. 
+In the example above, VictoryChart was given a VictoryLine component as a child. In addition, it also created a set of VictoryAxis components with the correct domain for the data being plotted by VictoryLine, created tick values based on that data, aligned all of its child components into a correct chart, and applied a set of default styles.
 
 ### Declarative Composition
 
@@ -36,13 +36,13 @@ VictoryCharts are composed of other Victory components. Compose several componen
 
 ```playground
 <VictoryChart>
-  <VictoryLine 
-    style={{data: 
+  <VictoryLine
+    style={{data:
       {stroke: "red", strokeWidth: 4}
     }}
     y={(x) => Math.sin(2 * Math.PI * x)}/>
-  <VictoryLine 
-    style={{data: 
+  <VictoryLine
+    style={{data:
       {stroke: "blue", strokeWidth: 4}
     }}
     y={(x) => Math.cos(2 * Math.PI * x)}/>
@@ -53,22 +53,22 @@ or compose components of different types on the same chart
 
 ```playground
 <VictoryChart height={450}>
-  <VictoryScatter 
+  <VictoryScatter
     style={{data: {fill: "purple"}}}
     symbol="star"
     size={5}
     data={[
-      {x:-4, y: -4}, 
-      {x: 4, y: 2, fill: "red"}, 
+      {x:-4, y: -4},
+      {x: 4, y: 2, fill: "red"},
       {x: 1.8, y: 3}
     ]}/>
-  <VictoryLine 
+  <VictoryLine
     y={(x) => 0.3 * x * x}/>
-  <VictoryBar 
+  <VictoryBar
     style={{data: {fill: "blue"}}}
     data={[
-      {x: 3, y: -4}, 
-      {x: -3, y: 4}, 
+      {x: 3, y: -4},
+      {x: -3, y: 4},
       {x: 1, y: 3}
     ]}/>
 </VictoryChart>
@@ -83,26 +83,26 @@ The sensible defaults VictoryChart provides makes it easy to get started, but ev
   height={500}
   padding={{
     top: 75,
-    bottom: 40, 
-    left: 40, 
-    right: 40 
+    bottom: 40,
+    left: 40,
+    right: 40
   }}
   domainPadding={{x: 20}}>
-  <VictoryAxis 
-    label="X AXIS" 
+  <VictoryAxis
+    label="X AXIS"
     orientation="top"/>
   <VictoryAxis dependentAxis
     tickValues={[0, 1.5, 3, 4.5]}
     style={{
       grid: {
-        stroke: "grey", 
+        stroke: "grey",
         strokeWidth: 1
       },
       axis: {stroke: "transparent"},
       ticks: {stroke: "transparent"}
     }}/>
-  <VictoryBar 
-    style={{data: 
+  <VictoryBar
+    style={{data:
       {width: 15, fill: "orange"}
     }}
     data={[
@@ -112,7 +112,7 @@ The sensible defaults VictoryChart provides makes it easy to get started, but ev
       {x: 4, y: 2.5},
       {x: 5, y: 1},
     ]}/>   
-</VictoryChart> 
+</VictoryChart>
 ```
 
 Stacked bar charts and non-numeric data are supported too!
@@ -145,21 +145,20 @@ Stacked bar charts and non-numeric data are supported too!
       {fill: "tomato"}
     ]}
     labels={[
-      "apples\n(fuji)", 
-      "bananas", 
+      "apples\n(fuji)",
+      "bananas",
       "oranges\n(navel)"
     ]}/>
 </VictoryChart>
 ```
 
-Time series data is also supported: 
+Time series data is also supported:
 
 ```playground
 <VictoryChart
   height={450}
   scale={{
-    x: d3.time.scale(),
-    y: d3.scale.linear()
+    x: d3Scale.time()
   }}>
   <VictoryAxis
     label="Decades"
@@ -168,7 +167,7 @@ Time series data is also supported:
       new Date(2000, 1, 1),
       new Date(2020, 1, 1),
     ]}
-    tickFormat={d3.time.format("%Y")}/>
+    tickFormat={(x) => x.getFullYear()}/>
   <VictoryLine
     data={[
       {x: new Date(1982, 1, 1), y: 125},
@@ -208,7 +207,7 @@ class App extends React.Component {
 
   getStyles() {
     const colors = [
-      "red", "orange", "magenta", 
+      "red", "orange", "magenta",
       "gold", "blue", "purple"
     ];
     return {
@@ -230,7 +229,7 @@ class App extends React.Component {
     return (
       <VictoryChart height={500}
         animate={{velocity: 0.02}}>
-        <VictoryAxis dependentAxis 
+        <VictoryAxis dependentAxis
           style={{grid: {strokeWidth: 1}}}/>
         <VictoryLine
           data={this.state.data}
@@ -244,5 +243,3 @@ ReactDOM.render(<App/>, mountNode);
 ```
 
 ### Props
-
-
