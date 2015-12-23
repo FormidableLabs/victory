@@ -44,13 +44,13 @@ export default class VictoryChart extends React.Component {
      * from the origin to prevent crowding. This prop should be given as an object with
      * numbers specified for x and y.
      */
-     domainPadding: React.PropTypes.oneOfType([
-       React.PropTypes.shape({
-         x: PropTypes.nonNegative,
-         y: PropTypes.nonNegative
-       }),
-       PropTypes.nonNegative
-     ]),
+    domainPadding: React.PropTypes.oneOfType([
+      React.PropTypes.shape({
+        x: PropTypes.nonNegative,
+        y: PropTypes.nonNegative
+      }),
+      PropTypes.nonNegative
+    ]),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
@@ -603,9 +603,7 @@ export default class VictoryChart extends React.Component {
     const domainMin = Math.min(...domain);
     const domainMax = Math.max(...domain);
     const rangeExtent = Math.abs(Math.max(...this.range[axis]) - Math.min(...this.range[axis]));
-    const extent = Math.abs(domainMax - domainMin);
-    const percentPadding = domainPadding / rangeExtent;
-    const padding = extent * percentPadding;
+    const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
     // don't make the axes cross if they aren't already
     const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ? 0 : domainMin - padding;
     const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ? 0 : domainMax + padding;
