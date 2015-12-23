@@ -16,7 +16,11 @@ Run `npm run check` before committing.
 Please do not commit changes to files in `dist`.
 These files are only committed when we tag releases.
 
-## Component Style!
+## Code Style
+
+The JavaScript code style is enforced with `eslint` following the [`defaults/configurations/walmart/es6-react`](https://github.com/walmartlabs/eslint-config-defaults#full-configurations) configuration from [`eslint-config-defaults`](https://github.com/walmartlabs/eslint-config-defaults).
+
+## Component Style
 
 Victory is an ecosystem of components with similar language and methodologies. It should only require one learning curve, and avoid as much component specific domain knowledge as possible. Victory should expose an intuitive api, with sensible defaults that allow a user to render simple visualizations with little start up cost. Though Victory currently relies on d3, Victory components should not be simply React wrappers around d3.
 
