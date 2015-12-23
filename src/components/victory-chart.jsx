@@ -44,10 +44,13 @@ export default class VictoryChart extends React.Component {
      * from the origin to prevent crowding. This prop should be given as an object with
      * numbers specified for x and y.
      */
-    domainPadding: React.PropTypes.shape({
-      x: PropTypes.nonNegative,
-      y: PropTypes.nonNegative
-    }),
+     domainPadding: React.PropTypes.oneOfType([
+       React.PropTypes.shape({
+         x: PropTypes.nonNegative,
+         y: PropTypes.nonNegative
+       }),
+       PropTypes.nonNegative
+     ]),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
@@ -428,7 +431,7 @@ export default class VictoryChart extends React.Component {
   getDomain(props, axis) {
     if (props.domain && (_.isArray(props.domain) || props.domain[axis])) {
       const propsDomain = _.isArray(props.domain) ? props.domain : props.domain[axis];
-      const paddedPropsDomain = this.padDomain(props, propsDomain, axis);
+      const paddedPropsDomain = this.padDomain(propsDomain, axis);
       return this.orientDomain(paddedPropsDomain, axis);
     }
     const dataDomains = _.map(this.dataComponents, (component) => {
@@ -443,7 +446,7 @@ export default class VictoryChart extends React.Component {
     );
     const domain = _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    const paddedDomain = this.padDomain(props, domain, axis);
+    const paddedDomain = this.padDomain(domain, axis);
     return this.orientDomain(paddedDomain, axis);
   }
 
@@ -536,22 +539,29 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  padDomain(props, domain, axis) {
-    let domainPadding;
-    if (props.domainPadding) {
-      domainPadding = _.isNumber(props.domainPadding) ?
-        props.domainPadding : props.domainPadding[axis];
+  padDomain(domain, axis) {
+    if (!this.props.domainPadding) {
+      return domain;
     }
-    const min = _.min(domain);
-    const max = _.max(domain);
-    const rangeExtent = Math.abs(_.max(this.range[axis]) - _.min(this.range[axis]));
-    const extent = Math.abs(max - min);
-    const percentPadding = domainPadding ? domainPadding / rangeExtent : 0.01;
+    let domainPadding;
+    if (this.props.domainPadding[axis]) {
+      domainPadding = this.props.domainPadding[axis];
+    } else {
+      domainPadding = _.isNumber(this.props.domainPadding) ? this.props.domainPadding : 0;
+    }
+    if (domainPadding === 0) {
+      return domain;
+    }
+    const domainMin = Math.min(...domain);
+    const domainMax = Math.max(...domain);
+    const rangeExtent = Math.abs(Math.max(...this.range[axis]) - Math.min(...this.range[axis]));
+    const extent = Math.abs(domainMax - domainMin);
+    const percentPadding = domainPadding / rangeExtent;
     const padding = extent * percentPadding;
     // don't make the axes cross if they aren't already
-    const adjustedMin = (min >= 0 && (min - padding) <= 0) ? 0 : min - padding;
-    const adjustedMax = (max <= 0 && (max + padding) >= 0) ? 0 : max + padding;
-    return _.isDate(min) || _.isDate(max) ?
+    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ? 0 : domainMin - padding;
+    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ? 0 : domainMax + padding;
+    return _.isDate(domainMin) || _.isDate(domainMax) ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   }
 
