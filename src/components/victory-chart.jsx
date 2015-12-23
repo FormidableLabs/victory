@@ -410,10 +410,11 @@ export default class VictoryChart extends React.Component {
       .value();
   }
 
-  formatChildData(childData) {
+  formatChildData(childData, categories) {
     const _formatData = (dataset) => {
       return _.map(dataset, (data) => {
         return _.merge({}, data, {
+          category: this.determineCategoryIndex(data.x, categories),
           // map string data to numeric values, and add names
           x: _.isString(data.x) ? this.stringMap.x[data.x] : data.x,
           xName: _.isString(data.x) ? data.x : undefined,
@@ -426,6 +427,17 @@ export default class VictoryChart extends React.Component {
       return _.map(childData, (dataset) => _formatData(dataset));
     }
     return _formatData(childData);
+  }
+
+  determineCategoryIndex(x, categories) {
+    // if categories don't exist or are not given as an array of arrays, return undefined;
+    if (!categories || !_.isArray(categories[0])) {
+      return undefined;
+    }
+    // determine which range band this x value belongs to, and return the index of that range band.
+    return categories.findIndex((category) => {
+      return (x >= Math.min(...category) && x <= Math.max(...category));
+    });
   }
 
   getDomain(props, axis) {
@@ -471,7 +483,7 @@ export default class VictoryChart extends React.Component {
     if (component.props.domain) {
       return component.props.domain[axis] || component.props.domain;
     } else if (component.props.data) {
-      const formattedData = this.formatChildData(component.props.data);
+      const formattedData = this.formatChildData(component.props.data, component.props.categories);
       dataByAxis = _.map(_.flatten(formattedData), (data) => {
         return data[axis];
       });
@@ -496,25 +508,61 @@ export default class VictoryChart extends React.Component {
     } else if (component.props.categories && axis === this.independentAxis) {
       return this.getDomainFromCategories(component, axis);
     }
-    const formattedData = this.formatChildData(component.props.data);
+    const datasets = this.formatChildData(component.props.data);
     // find the global min and max
-    const allData = _.flatten(formattedData);
-    const min = _.min(_.pluck(allData, axis));
-    const max = _.max(_.pluck(allData, axis));
-    if (this._isStackedComponentData(component, axis)) {
-      // find the cumulative max and min for stacked chart types
-      // TODO: clean up cumulative max / min check assumptions.
-      const cumulativeMax = _.reduce(formattedData, (memo, dataset) => {
-        const localMax = (_.max(_.pluck(dataset, this.dependentAxis)));
-        return localMax > 0 ? memo + localMax : memo;
+    const axisData = _.flatten(datasets).map((data) => data[axis]);
+    const globalMin = Math.min(...axisData);
+    const globalMax = Math.max(...axisData);
+
+    const cumulativeData = (this._isStackedComponentData(component, axis)) ?
+      this.getCumulativeData(datasets, "y") : [];
+
+    const cumulativeMaxArray = cumulativeData.map((dataset) => {
+      return dataset.reduce((memo, val) => {
+        return val > 0 ? memo + val : memo;
       }, 0);
-      const cumulativeMin = _.reduce(formattedData, (memo, dataset) => {
-        const localMin = (_.min(_.pluck(dataset, this.dependentAxis)));
-        return localMin < 0 ? memo + localMin : memo;
+    });
+
+    const cumulativeMinArray = cumulativeData.map((dataset) => {
+      return dataset.reduce((memo, val) => {
+        return val < 0 ? memo + val : memo;
       }, 0);
-      return [_.min([min, cumulativeMin]), _.max([max, cumulativeMax])];
-    }
-    return [min, max];
+    });
+
+    const cumulativeMin = Math.min(...cumulativeMinArray);
+    // use greatest min / max
+    const domainMin = cumulativeMin < 0 ? cumulativeMin : globalMin;
+    const domainMax = Math.max(globalMax, Math.max(...cumulativeMaxArray));
+    return [domainMin, domainMax];
+  }
+
+  getCumulativeData(datasets, axis) {
+    const categories = [];
+    const xValues = [];
+    datasets.forEach((dataset) => {
+      dataset.forEach((data) => {
+        if (data.category !== undefined && !_.includes(categories, data.category)) {
+          categories.push(data.category);
+        } else if (!_.includes(xValues, data.x)) {
+          xValues.push(data.x);
+        }
+      });
+    });
+
+    const dataByCategory = () => {
+      return categories.map((value) => {
+        const categoryData = datasets.filter((data) => data.category === value);
+        return _.flatten(categoryData.map((data) => data[axis]));
+      });
+    };
+
+    const dataByIndex = () => {
+      return xValues.map((value, index) => {
+        return datasets.map((data) => data[index] && data[index][axis]);
+      });
+    };
+
+    return _.isEmpty(categories) ? dataByIndex() : dataByCategory();
   }
 
   getDomainFromCategories(component, axis) {
