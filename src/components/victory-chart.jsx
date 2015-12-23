@@ -605,8 +605,10 @@ export default class VictoryChart extends React.Component {
     const rangeExtent = Math.abs(Math.max(...this.range[axis]) - Math.min(...this.range[axis]));
     const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
     // don't make the axes cross if they aren't already
-    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ? 0 : domainMin - padding;
-    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ? 0 : domainMax + padding;
+    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ?
+      0 : domainMin.valueOf() - padding;
+    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
+      0 : domainMax.valueOf() + padding;
     return _.isDate(domainMin) || _.isDate(domainMax) ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   }
