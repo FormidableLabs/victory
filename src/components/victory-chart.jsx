@@ -550,8 +550,8 @@ export default class VictoryChart extends React.Component {
     const padding = extent * percentPadding;
     // don't make the axes cross if they aren't already
     // valueOf creates a consistent date format for browsers
-    const adjustedMin = (min >= 0 && (min - padding) <= 0) ? 0 : min.valueOf - padding;
-    const adjustedMax = (max <= 0 && (max + padding) >= 0) ? 0 : max.valueOf + padding;
+    const adjustedMin = (min >= 0 && (min - padding) <= 0) ? 0 : min.valueOf() - padding;
+    const adjustedMax = (max <= 0 && (max + padding) >= 0) ? 0 : max.valueOf() + padding;
     return _.isDate(min) || _.isDate(max) ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   }
