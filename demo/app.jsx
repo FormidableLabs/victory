@@ -208,7 +208,6 @@ class App extends React.Component {
 
           <VictoryChart animate={{velocity: 0.02}}
             domainPadding={{x: 100}}
-            domain={{y: [0, 50]}}
           >
             <VictoryAxis
               tickValues={["apples", "bananas", "oranges"]}
