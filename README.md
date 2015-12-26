@@ -3,8 +3,11 @@
 Victory
 =======
 
-[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
+
+See the docs and examples on the website: http://victory.formidable.com
 
 **Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
 
@@ -12,7 +15,7 @@ Victory is an opinionated, but fully overridable, ecosystem of composable React 
 
 Components can be included individually
 
-```
+```jsx
 import {VictoryLine, VictoryAxis} from "victory"
 
 <VictoryLine/>
@@ -20,7 +23,7 @@ import {VictoryLine, VictoryAxis} from "victory"
 
 Or imported as a set:
 
-```
+```jsx
 import * as V from "victory"
 
 <V.VictoryLine/>
