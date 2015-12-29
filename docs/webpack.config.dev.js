@@ -36,7 +36,8 @@ module.exports = {
         // from all `node_modules` packages that *aren't* Victory:
         exclude: function (absPath) {
           return absPath.indexOf("node_modules") > -1 &&
-            absPath.indexOf("node_modules/victory") === -1;
+            absPath.indexOf("node_modules/victory") === -1 ||
+            absPath.indexOf("formidable-landers") > -1;
         },
         loaders: ["babel-loader?stage=0"]
       }, {
