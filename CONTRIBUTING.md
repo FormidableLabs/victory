@@ -3,6 +3,10 @@ Contributing
 
 Thanks for helping out!
 
+## Issues
+
+We love issues! If you find bugs, the absolutely best way you can help (short of creating a PR with a fix and a regression test) is to create an issue with a failing test case e.g. in a branch of your fork. As a lightweight option to that, you can clone http://jsbin.com/vikiha/edit or fork https://jsfiddle.net/5g20p8vd/ to create a reproduction, and add a link to your [issue](https://github.com/FormidableLabs/victory/issues/new).
+
 ## Development
 
 Run `npm run dev` to run a webpack dev server with component examples. The dev server runs on `localhost:3000`.
