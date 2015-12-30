@@ -36,7 +36,7 @@
     "react-dom": "^0.14.3",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "victory-bar": "2.5.0",
+    "victory-bar": "2.5.1",
     "victory-scatter": "0.6.0"
   }
 }
