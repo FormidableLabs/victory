@@ -49,7 +49,7 @@
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "0.14.x",
     "react-ga": "^1.2.0",
-    "react-router": "^1.0.0",
+    "react-router": "1.0.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   }
