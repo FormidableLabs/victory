@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Data viz for React",
   "main": "lib/index.js",
   "repository": {
