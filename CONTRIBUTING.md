@@ -5,7 +5,7 @@ Thanks for helping out!
 
 ## Issues
 
-We love issues! If you find bugs, the absolutely best way you can help (short of creating a PR with a fix and a regression test) is to create an issue with a failing test case e.g. in a branch of your fork. As a lightweight option to that, you can clone http://jsbin.com/cenopi/edit or fork https://jsfiddle.net/5zrx7wxk/1/ to create a reproduction, and add a link to your [issue](https://github.com/FormidableLabs/victory/issues/new).
+We love issues! If you find bugs, the absolutely best way you can help (short of creating a PR with a fix and a regression test) is to create an issue with a failing test case e.g. in a branch of your fork. As a lightweight option to that, you can clone http://jsbin.com/nifaci/edit or fork https://jsfiddle.net/9yb90dnL/ to create a reproduction, and add a link to your [issue](https://github.com/FormidableLabs/victory/issues/new).
 
 ## Development
 
