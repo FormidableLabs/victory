@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["Victory"] = factory(require("react"));
 	else
-		root["Victory"] = factory(root["Victory"]);
+		root["Victory"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -22340,6 +22340,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
@@ -22460,6 +22462,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	          attrs: _this.getAttributes(props, index),
 	          data: _lodash2["default"].map(dataset, function (data) {
 	            return _lodash2["default"].merge(data, {
+	              // determine category if it exists
+	              category: _this.determineCategoryIndex(data.x, props.categories),
 	              // map string data to numeric values, and add names
 	              x: _lodash2["default"].isString(data.x) ? _this.stringMap.x[data.x] : data.x,
 	              xName: _lodash2["default"].isString(data.x) ? data.x : undefined,
@@ -22468,6 +22472,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	            });
 	          })
 	        };
+	      });
+	    }
+	  }, {
+	    key: "determineCategoryIndex",
+	    value: function determineCategoryIndex(x, categories) {
+	      // if categories don't exist or are not given as an array of arrays, return undefined;
+	      if (!categories || !_lodash2["default"].isArray(categories[0])) {
+	        return undefined;
+	      }
+	      // determine which range band this x value belongs to, and return the index of that range band.
+	      return categories.findIndex(function (category) {
+	        return x >= Math.min.apply(Math, _toConsumableArray(category)) && x <= Math.max.apply(Math, _toConsumableArray(category));
 	      });
 	    }
 	  }, {
@@ -22526,10 +22542,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else {
 	        scale = _d3Scale2["default"].linear().copy();
 	      }
-	      var range = this.range[axis];
-	      var domain = this.domain[axis];
-	      scale.range(range);
-	      scale.domain(domain);
+	      scale.range(this.range[axis]);
+	      scale.domain(this.domain[axis]);
 	      return scale;
 	    }
 	  }, {
@@ -22543,16 +22557,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getDomain",
 	    value: function getDomain(props, axis) {
+	      var domain = undefined;
 	      var categoryDomain = this.getDomainFromCategories(props, axis);
 	      if (props.domain && props.domain[axis]) {
-	        return props.domain[axis];
+	        domain = props.domain[axis];
 	      } else if (props.domain && _lodash2["default"].isArray(props.domain)) {
-	        return props.domain;
+	        domain = props.domain;
 	      } else if (categoryDomain) {
-	        return categoryDomain;
+	        domain = categoryDomain;
 	      } else {
-	        return this.getDomainFromData(props, axis);
+	        domain = this.getDomainFromData(props, axis);
 	      }
+	      return this.padDomain(domain, axis);
+	    }
+	  }, {
+	    key: "padDomain",
+	    value: function padDomain(domain, axis) {
+	      var domainPadding = undefined;
+	      if (this.props.domainPadding[axis]) {
+	        domainPadding = this.props.domainPadding[axis];
+	      } else {
+	        domainPadding = _lodash2["default"].isNumber(this.props.domainPadding) ? this.props.domainPadding : 0;
+	      }
+	      if (domainPadding === 0) {
+	        return domain;
+	      }
+	      var domainMin = Math.min.apply(Math, _toConsumableArray(domain));
+	      var domainMax = Math.max.apply(Math, _toConsumableArray(domain));
+	      var rangeExtent = Math.abs(Math.max.apply(Math, _toConsumableArray(this.range[axis])) - Math.min.apply(Math, _toConsumableArray(this.range[axis])));
+	      var extent = Math.abs(domainMax - domainMin);
+	      var percentPadding = domainPadding / rangeExtent;
+	      var padding = extent * percentPadding;
+	      // don't make the axes cross if they aren't already
+	      var adjustedMin = domainMin >= 0 && domainMin - padding <= 0 ? 0 : domainMin.valueOf() - padding;
+	      var adjustedMax = domainMax <= 0 && domainMax + padding >= 0 ? 0 : domainMax.valueOf() + padding;
+	      return _lodash2["default"].isDate(domainMin) || _lodash2["default"].isDate(domainMax) ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
 	    }
 	  }, {
 	    key: "getDomainFromCategories",
@@ -22560,62 +22599,100 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (axis !== "x" || !props.categories || _victoryUtil2["default"].Collection.containsStrings(props.categories)) {
 	        return undefined;
 	      }
-	      return [_lodash2["default"].min(_lodash2["default"].flatten(props.categories)), _lodash2["default"].max(_lodash2["default"].flatten(props.categories))];
+	      var categories = _lodash2["default"].flatten(props.categories);
+	      return [Math.min.apply(Math, _toConsumableArray(categories)), Math.max.apply(Math, _toConsumableArray(categories))];
 	    }
 	  }, {
 	    key: "getDomainFromData",
 	    value: function getDomainFromData(props, axis) {
-	      // if a sensible string map exists, return the minimum and maximum values
-	      // offset by the bar offset value
-	      if (this.stringMap[axis] !== null) {
-	        var mapValues = _lodash2["default"].values(this.stringMap[axis]);
-	        return [_lodash2["default"].min(mapValues), _lodash2["default"].max(mapValues)];
-	      } else {
-	        // find the global min and max
-	        var allData = _lodash2["default"].flatten(_lodash2["default"].pluck(this.datasets, "data"));
-	        var min = _lodash2["default"].min(_lodash2["default"].pluck(allData, axis));
-	        var max = _lodash2["default"].max(_lodash2["default"].pluck(allData, axis));
-	        // find the cumulative max for stacked chart types
-	        // this is only sensible for the y domain
-	        // TODO check assumption
-	        var cumulativeMax = props.stacked && axis === "y" && this.datasets.length > 1 ? _lodash2["default"].reduce(this.datasets, function (memo, dataset) {
-	          var localMax = _lodash2["default"].max(_lodash2["default"].pluck(dataset.data, "y"));
-	          return localMax > 0 ? memo + localMax : memo;
-	        }, 0) : -Infinity;
-	        var cumulativeMin = props.stacked && axis === "y" && this.datasets.length > 1 ? _lodash2["default"].reduce(this.datasets, function (memo, dataset) {
-	          var localMin = _lodash2["default"].min(_lodash2["default"].pluck(dataset.data, "y"));
-	          return localMin < 0 ? memo + localMin : memo;
-	        }, 0) : Infinity;
+	      // find the global min and max
+	      var datasets = this.datasets.map(function (dataset) {
+	        return dataset.data;
+	      });
+	      var axisData = _lodash2["default"].flatten(datasets).map(function (data) {
+	        return data[axis];
+	      });
+	      var globalMin = Math.min.apply(Math, _toConsumableArray(axisData));
+	      var globalMax = Math.max.apply(Math, _toConsumableArray(axisData));
 	
-	        // use greatest min / max
-	        var domainMin = _lodash2["default"].min([min, cumulativeMin]);
-	        var domainMax = _lodash2["default"].max([max, cumulativeMax]);
-	        // add 1% padding so bars are always visible
-	        var padding = 0.01 * Math.abs(domainMax - domainMin);
-	        return [domainMin - padding, domainMax - padding];
-	      }
+	      // find the cumulative max for stacked chart types
+	      // this is only sensible for the y domain
+	      // TODO check assumption
+	      var cumulativeData = props.stacked && axis === "y" && this.datasets.length > 1 ? this.getCumulativeData(datasets, "y") : [];
+	
+	      var cumulativeMaxArray = cumulativeData.map(function (dataset) {
+	        return dataset.reduce(function (memo, val) {
+	          return val > 0 ? memo + val : memo;
+	        }, 0);
+	      });
+	
+	      var cumulativeMinArray = cumulativeData.map(function (dataset) {
+	        return dataset.reduce(function (memo, val) {
+	          return val < 0 ? memo + val : memo;
+	        }, 0);
+	      });
+	
+	      var cumulativeMin = Math.min.apply(Math, _toConsumableArray(cumulativeMinArray));
+	      // use greatest min / max
+	      var domainMin = cumulativeMin < 0 ? cumulativeMin : globalMin;
+	      var domainMax = Math.max(globalMax, Math.max.apply(Math, _toConsumableArray(cumulativeMaxArray)));
+	      return [domainMin, domainMax];
+	    }
+	  }, {
+	    key: "getCumulativeData",
+	    value: function getCumulativeData(datasets, axis) {
+	      var categories = [];
+	      var xValues = [];
+	      datasets.forEach(function (dataset) {
+	        dataset.forEach(function (data) {
+	          if (data.category !== undefined && !_lodash2["default"].includes(categories, data.category)) {
+	            categories.push(data.category);
+	          } else if (!_lodash2["default"].includes(xValues, data.x)) {
+	            xValues.push(data.x);
+	          }
+	        });
+	      });
+	
+	      var dataByCategory = function dataByCategory() {
+	        return categories.map(function (value) {
+	          var categoryData = datasets.filter(function (data) {
+	            return data.category === value;
+	          });
+	          return _lodash2["default"].flatten(categoryData.map(function (data) {
+	            return data[axis];
+	          }));
+	        });
+	      };
+	
+	      var dataByIndex = function dataByIndex() {
+	        return xValues.map(function (value, index) {
+	          return datasets.map(function (data) {
+	            return data[index] && data[index][axis];
+	          });
+	        });
+	      };
+	
+	      return _lodash2["default"].isEmpty(categories) ? dataByIndex() : dataByCategory();
 	    }
 	  }, {
 	    key: "pixelsToValue",
-	    value: function pixelsToValue(pixels) {
-	      var xRange = this.range.x;
-	      var xDomain = this.domain.x;
-	      return (_lodash2["default"].max(xDomain) - _lodash2["default"].min(xDomain)) / (_lodash2["default"].max(xRange) - _lodash2["default"].min(xRange)) * pixels;
+	    value: function pixelsToValue(pixels, axis) {
+	      var domainExtent = Math.max.apply(Math, _toConsumableArray(this.domain[axis])) - Math.min.apply(Math, _toConsumableArray(this.domain[axis]));
+	      var rangeExtent = Math.max.apply(Math, _toConsumableArray(this.range[axis])) - Math.min.apply(Math, _toConsumableArray(this.range[axis]));
+	      return domainExtent / rangeExtent * pixels;
 	    }
 	  }, {
 	    key: "adjustX",
-	    value: function adjustX(x, index, options) {
+	    value: function adjustX(data, index, options) {
+	      var x = data.x;
 	      var stacked = options && options.stacked;
 	      var center = this.datasets.length % 2 === 0 ? this.datasets.length / 2 : (this.datasets.length - 1) / 2;
 	      var centerOffset = index - center;
-	      var totalWidth = this.pixelsToValue(this.style.data.padding) + this.pixelsToValue(this.style.data.width);
-	      if (this.props.categories && _lodash2["default"].isArray(this.props.categories[0])) {
-	        // figure out which band this x value belongs to, and shift it to the
-	        // center of that band before calculating the usual offset
-	        var xBand = _lodash2["default"].filter(this.props.categories, function (band) {
-	          return x >= _lodash2["default"].min(band) && x <= _lodash2["default"].max(band);
-	        });
-	        var bandCenter = _lodash2["default"].isArray(xBand[0]) && (_lodash2["default"].max(xBand[0]) + _lodash2["default"].min(xBand[0])) / 2;
+	      var totalWidth = this.pixelsToValue(this.style.data.padding, "x") + this.pixelsToValue(this.style.data.width, "x");
+	      if (data.category !== undefined) {
+	        // if this is category data, shift x to the center of its category
+	        var rangeBand = this.props.categories[data.category];
+	        var bandCenter = (Math.max.apply(Math, _toConsumableArray(rangeBand)) + Math.min.apply(Math, _toConsumableArray(rangeBand))) / 2;
 	        return stacked ? bandCenter : bandCenter + centerOffset * totalWidth;
 	      }
 	      return stacked ? x : x + centerOffset * totalWidth;
@@ -22623,9 +22700,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getYOffset",
 	    value: function getYOffset(data, index, barIndex) {
-	      var minY = _lodash2["default"].min(this.domain.y);
+	      var minY = Math.min.apply(Math, _toConsumableArray(this.domain.y));
 	      if (index === 0) {
-	        return _lodash2["default"].max([minY, 0]);
+	        return Math.max(minY, 0);
 	      }
 	      var y = data.y;
 	      var previousDataSets = _lodash2["default"].take(this.datasets, index);
@@ -22640,20 +22717,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "getLabelIndex",
-	    value: function getLabelIndex(x) {
-	      if (this.stringMap.x) {
-	        return x - 1;
-	      } else if (this.props.categories) {
-	        return _lodash2["default"].findIndex(this.props.categories, function (category) {
-	          return _lodash2["default"].isArray(category) ? _lodash2["default"].min(category) <= x && _lodash2["default"].max(category) >= x : category === x;
-	        });
+	    value: function getLabelIndex(data) {
+	      if (data.category !== undefined) {
+	        return data.category;
+	      } else if (this.stringMap.x) {
+	        return data.x - 1;
 	      } else {
-	        var allX = _lodash2["default"].map(this.datasets, function (dataset) {
-	          return _lodash2["default"].map(dataset.data, "x");
+	        var allX = this.datasets.map(function (dataset) {
+	          return dataset.data.map(function (datum) {
+	            return datum.x;
+	          });
 	        });
 	        var uniqueX = _lodash2["default"].uniq(_lodash2["default"].flatten(allX));
 	        return _lodash2["default"].findIndex(_lodash2["default"].sortBy(uniqueX), function (n) {
-	          return n === x;
+	          return n === data.x;
 	        });
 	      }
 	    }
@@ -22662,9 +22739,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getBarPosition(data, index, barIndex) {
 	      var stacked = this.props.stacked;
 	      var yOffset = this.getYOffset(data, index, barIndex);
-	      var y0 = stacked ? yOffset : _lodash2["default"].max([_lodash2["default"].min(this.domain.y), 0]);
+	      var y0 = stacked ? yOffset : Math.max(Math.min.apply(Math, _toConsumableArray(this.domain.y)), 0);
 	      var y1 = stacked ? yOffset + data.y : data.y;
-	      var x = this.adjustX(data.x, index, { stacked: stacked });
+	      var x = this.adjustX(data, index, { stacked: stacked });
 	      return {
 	        independent: this.scale.x.call(this, x),
 	        dependent0: this.scale.y.call(this, y0),
@@ -22682,7 +22759,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var plotGroupLabel = stacked && isLast || !stacked && isCenter;
 	      return _lodash2["default"].map(dataset.data, function (data, barIndex) {
 	        var position = _this2.getBarPosition(data, index, barIndex);
-	        var styleData = _lodash2["default"].omit(data, ["xName", "yName", "x", "y", "label"]);
+	        var styleData = _lodash2["default"].omit(data, ["xName", "yName", "x", "y", "label", "category"]);
 	        var style = _lodash2["default"].merge({}, _this2.style.data, _lodash2["default"].omit(dataset.attrs, "name"), styleData);
 	        var barComponent = _react2["default"].createElement(_bar2["default"], { key: "series-" + index + "-bar-" + barIndex,
 	          horizontal: _this2.props.horizontal,
@@ -22692,7 +22769,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        });
 	        var plotLabel = plotGroupLabel && (_this2.props.labels || _this2.props.labelComponents);
 	        if (plotLabel) {
-	          var labelIndex = _this2.getLabelIndex(data.x);
+	          var labelIndex = _this2.getLabelIndex(data);
 	          var labelText = _this2.props.labels ? _this2.props.labels[labelIndex] || _this2.props.labels[0] : "";
 	          var labelComponent = _this2.props.labelComponents ? _this2.props.labelComponents[index] || _this2.props.labelComponents[0] : undefined;
 	          return _react2["default"].createElement(
@@ -22821,6 +22898,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        y: _victoryUtil2["default"].PropTypes.domain
 	      })]),
 	      /**
+	       * The domainPadding prop specifies a number of pixels of padding to add to the
+	       * beginning and end of a domain. This prop is useful for preventing 0 pixel bars,
+	       * and taking bar width into account.
+	       */
+	      domainPadding: _react.PropTypes.oneOfType([_react2["default"].PropTypes.shape({
+	        x: _victoryUtil2["default"].PropTypes.nonNegative,
+	        y: _victoryUtil2["default"].PropTypes.nonNegative
+	      }), _victoryUtil2["default"].PropTypes.nonNegative]),
+	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
 	      height: _victoryUtil2["default"].PropTypes.nonNegative,
@@ -22899,6 +22985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: "defaultProps",
 	    value: {
 	      data: defaultData,
+	      domainPadding: 1,
 	      colorScale: "greyscale",
 	      height: 300,
 	      padding: 50,
@@ -25002,12 +25089,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "formatChildData",
-	    value: function formatChildData(childData) {
+	    value: function formatChildData(childData, categories) {
 	      var _this6 = this;
 	
 	      var _formatData = function _formatData(dataset) {
 	        return _lodash2["default"].map(dataset, function (data) {
 	          return _lodash2["default"].merge({}, data, {
+	            category: _this6.determineCategoryIndex(data.x, categories),
 	            // map string data to numeric values, and add names
 	            x: _lodash2["default"].isString(data.x) ? _this6.stringMap.x[data.x] : data.x,
 	            xName: _lodash2["default"].isString(data.x) ? data.x : undefined,
@@ -25024,13 +25112,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _formatData(childData);
 	    }
 	  }, {
+	    key: "determineCategoryIndex",
+	    value: function determineCategoryIndex(x, categories) {
+	      // if categories don't exist or are not given as an array of arrays, return undefined;
+	      if (!categories || !_lodash2["default"].isArray(categories[0])) {
+	        return undefined;
+	      }
+	      // determine which range band this x value belongs to, and return the index of that range band.
+	      return categories.findIndex(function (category) {
+	        return x >= Math.min.apply(Math, _toConsumableArray(category)) && x <= Math.max.apply(Math, _toConsumableArray(category));
+	      });
+	    }
+	  }, {
 	    key: "getDomain",
 	    value: function getDomain(props, axis) {
 	      var _this7 = this;
 	
 	      if (props.domain && (_lodash2["default"].isArray(props.domain) || props.domain[axis])) {
 	        var propsDomain = _lodash2["default"].isArray(props.domain) ? props.domain : props.domain[axis];
-	        var paddedPropsDomain = this.padDomain(props, propsDomain, axis);
+	        var paddedPropsDomain = this.padDomain(propsDomain, axis);
 	        return this.orientDomain(paddedPropsDomain, axis);
 	      }
 	      var dataDomains = _lodash2["default"].map(this.dataComponents, function (component) {
@@ -25042,7 +25142,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var axisDomain = this.getDomainFromAxis(axis);
 	      var domainFromChildren = _victoryUtil.Collection.removeUndefined(_lodash2["default"].flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain)));
 	      var domain = _lodash2["default"].isEmpty(domainFromChildren) ? [0, 1] : [_lodash2["default"].min(domainFromChildren), _lodash2["default"].max(domainFromChildren)];
-	      var paddedDomain = this.padDomain(props, domain, axis);
+	      var paddedDomain = this.padDomain(domain, axis);
 	      return this.orientDomain(paddedDomain, axis);
 	    }
 	  }, {
@@ -25067,7 +25167,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (component.props.domain) {
 	        return component.props.domain[axis] || component.props.domain;
 	      } else if (component.props.data) {
-	        var formattedData = this.formatChildData(component.props.data);
+	        var formattedData = this.formatChildData(component.props.data, component.props.categories);
 	        dataByAxis = _lodash2["default"].map(_lodash2["default"].flatten(formattedData), function (data) {
 	          return data[axis];
 	        });
@@ -25086,48 +25186,90 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getDomainFromGroupedData",
 	    value: function getDomainFromGroupedData(component, axis) {
-	      var _this8 = this;
-	
 	      if (component.props.domain) {
 	        return component.props.domain[axis] || component.props.domain;
 	      } else if (component.props.categories && axis === this.independentAxis) {
 	        return this.getDomainFromCategories(component, axis);
 	      }
-	      var formattedData = this.formatChildData(component.props.data);
+	      var datasets = this.formatChildData(component.props.data);
 	      // find the global min and max
-	      var allData = _lodash2["default"].flatten(formattedData);
-	      var min = _lodash2["default"].min(_lodash2["default"].pluck(allData, axis));
-	      var max = _lodash2["default"].max(_lodash2["default"].pluck(allData, axis));
-	      if (this._isStackedComponentData(component, axis)) {
-	        // find the cumulative max and min for stacked chart types
-	        // TODO: clean up cumulative max / min check assumptions.
-	        var cumulativeMax = _lodash2["default"].reduce(formattedData, function (memo, dataset) {
-	          var localMax = _lodash2["default"].max(_lodash2["default"].pluck(dataset, _this8.dependentAxis));
-	          return localMax > 0 ? memo + localMax : memo;
+	      var axisData = _lodash2["default"].flatten(datasets).map(function (data) {
+	        return data[axis];
+	      });
+	      var globalMin = Math.min.apply(Math, _toConsumableArray(axisData));
+	      var globalMax = Math.max.apply(Math, _toConsumableArray(axisData));
+	
+	      var cumulativeData = this._isStackedComponentData(component, axis) ? this.getCumulativeData(datasets, "y") : [];
+	
+	      var cumulativeMaxArray = cumulativeData.map(function (dataset) {
+	        return dataset.reduce(function (memo, val) {
+	          return val > 0 ? memo + val : memo;
 	        }, 0);
-	        var cumulativeMin = _lodash2["default"].reduce(formattedData, function (memo, dataset) {
-	          var localMin = _lodash2["default"].min(_lodash2["default"].pluck(dataset, _this8.dependentAxis));
-	          return localMin < 0 ? memo + localMin : memo;
+	      });
+	
+	      var cumulativeMinArray = cumulativeData.map(function (dataset) {
+	        return dataset.reduce(function (memo, val) {
+	          return val < 0 ? memo + val : memo;
 	        }, 0);
-	        return [_lodash2["default"].min([min, cumulativeMin]), _lodash2["default"].max([max, cumulativeMax])];
-	      }
-	      return [min, max];
+	      });
+	
+	      var cumulativeMin = Math.min.apply(Math, _toConsumableArray(cumulativeMinArray));
+	      // use greatest min / max
+	      var domainMin = cumulativeMin < 0 ? cumulativeMin : globalMin;
+	      var domainMax = Math.max(globalMax, Math.max.apply(Math, _toConsumableArray(cumulativeMaxArray)));
+	      return [domainMin, domainMax];
+	    }
+	  }, {
+	    key: "getCumulativeData",
+	    value: function getCumulativeData(datasets, axis) {
+	      var categories = [];
+	      var xValues = [];
+	      datasets.forEach(function (dataset) {
+	        dataset.forEach(function (data) {
+	          if (data.category !== undefined && !_lodash2["default"].includes(categories, data.category)) {
+	            categories.push(data.category);
+	          } else if (!_lodash2["default"].includes(xValues, data.x)) {
+	            xValues.push(data.x);
+	          }
+	        });
+	      });
+	
+	      var dataByCategory = function dataByCategory() {
+	        return categories.map(function (value) {
+	          var categoryData = datasets.filter(function (data) {
+	            return data.category === value;
+	          });
+	          return _lodash2["default"].flatten(categoryData.map(function (data) {
+	            return data[axis];
+	          }));
+	        });
+	      };
+	
+	      var dataByIndex = function dataByIndex() {
+	        return xValues.map(function (value, index) {
+	          return datasets.map(function (data) {
+	            return data[index] && data[index][axis];
+	          });
+	        });
+	      };
+	
+	      return _lodash2["default"].isEmpty(categories) ? dataByIndex() : dataByCategory();
 	    }
 	  }, {
 	    key: "getDomainFromCategories",
 	    value: function getDomainFromCategories(component, axis) {
-	      var _this9 = this;
+	      var _this8 = this;
 	
 	      var categories = _lodash2["default"].flatten(component.props.categories);
 	      var categoryValues = _victoryUtil.Collection.containsStrings(categories) ? _lodash2["default"].map(categories, function (value) {
-	        return _this9.stringMap[axis][value];
+	        return _this8.stringMap[axis][value];
 	      }) : categories;
 	      return [_lodash2["default"].min(categoryValues), _lodash2["default"].max(categoryValues)];
 	    }
 	  }, {
 	    key: "getDomainFromAxis",
 	    value: function getDomainFromAxis(axis) {
-	      var _this10 = this;
+	      var _this9 = this;
 	
 	      var component = this.axisComponents[axis];
 	      if (component.props.domain) {
@@ -25136,7 +25278,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var ticks = component.props.tickValues;
 	      if (ticks) {
 	        var tickValues = _victoryUtil.Collection.containsStrings(ticks) ? _lodash2["default"].map(ticks, function (tick) {
-	          return _this10.stringMap[axis][tick];
+	          return _this9.stringMap[axis][tick];
 	        }) : ticks;
 	        return [_lodash2["default"].min(tickValues), _lodash2["default"].max(tickValues)];
 	      } else {
@@ -25145,21 +25287,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "padDomain",
-	    value: function padDomain(props, domain, axis) {
-	      var domainPadding = undefined;
-	      if (props.domainPadding) {
-	        domainPadding = _lodash2["default"].isNumber(props.domainPadding) ? props.domainPadding : props.domainPadding[axis];
+	    value: function padDomain(domain, axis) {
+	      if (!this.props.domainPadding) {
+	        return domain;
 	      }
-	      var min = _lodash2["default"].min(domain);
-	      var max = _lodash2["default"].max(domain);
-	      var rangeExtent = Math.abs(_lodash2["default"].max(this.range[axis]) - _lodash2["default"].min(this.range[axis]));
-	      var extent = Math.abs(max - min);
-	      var percentPadding = domainPadding ? domainPadding / rangeExtent : 0.01;
-	      var padding = extent * percentPadding;
+	      var domainPadding = undefined;
+	      if (this.props.domainPadding[axis]) {
+	        domainPadding = this.props.domainPadding[axis];
+	      } else {
+	        domainPadding = _lodash2["default"].isNumber(this.props.domainPadding) ? this.props.domainPadding : 0;
+	      }
+	      if (domainPadding === 0) {
+	        return domain;
+	      }
+	      var domainMin = Math.min.apply(Math, _toConsumableArray(domain));
+	      var domainMax = Math.max.apply(Math, _toConsumableArray(domain));
+	      var rangeExtent = Math.abs(Math.max.apply(Math, _toConsumableArray(this.range[axis])) - Math.min.apply(Math, _toConsumableArray(this.range[axis])));
+	      var padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
 	      // don't make the axes cross if they aren't already
-	      var adjustedMin = min >= 0 && min - padding <= 0 ? 0 : min - padding;
-	      var adjustedMax = max <= 0 && max + padding >= 0 ? 0 : max + padding;
-	      return _lodash2["default"].isDate(min) || _lodash2["default"].isDate(max) ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
+	      var adjustedMin = domainMin >= 0 && domainMin - padding <= 0 ? 0 : domainMin.valueOf() - padding;
+	      var adjustedMax = domainMax <= 0 && domainMax + padding >= 0 ? 0 : domainMax.valueOf() + padding;
+	      return _lodash2["default"].isDate(domainMin) || _lodash2["default"].isDate(domainMax) ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
 	    }
 	  }, {
 	    key: "getScale",
@@ -25242,7 +25390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getTickFormat",
 	    value: function getTickFormat(axis) {
-	      var _this11 = this;
+	      var _this10 = this;
 	
 	      var tickFormat = this.axisComponents[axis].props.tickFormat;
 	      var tickValues = this.axisComponents[axis].props.tickValues;
@@ -25254,10 +25402,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	      } else if (this.stringMap[axis] !== null) {
 	        var _ret = (function () {
-	          var tickValueArray = _lodash2["default"].sortBy(_lodash2["default"].values(_this11.stringMap[axis]), function (n) {
+	          var tickValueArray = _lodash2["default"].sortBy(_lodash2["default"].values(_this10.stringMap[axis]), function (n) {
 	            return n;
 	          });
-	          var invertedStringMap = _lodash2["default"].invert(_this11.stringMap[axis]);
+	          var invertedStringMap = _lodash2["default"].invert(_this10.stringMap[axis]);
 	          var dataNames = _lodash2["default"].map(tickValueArray, function (tick) {
 	            return invertedStringMap[tick];
 	          });
@@ -25278,13 +25426,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "generateData",
 	    value: function generateData(child) {
-	      var _this12 = this;
+	      var _this11 = this;
 	
 	      if (!child.props.y) {
 	        return undefined;
 	      }
 	      var generateX = function generateX(component) {
-	        var domain = _this12.domain.x;
+	        var domain = _this11.domain.x;
 	        var samples = _lodash2["default"].isArray(component.props.y) ? component.props.y.length : 50;
 	        var step = _lodash2["default"].max(domain) / samples;
 	        // return an array of x values spaced across the domain,
@@ -25346,15 +25494,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getNewChildren",
 	    value: function getNewChildren() {
-	      var _this13 = this;
+	      var _this12 = this;
 	
 	      return _lodash2["default"].map(this.childComponents, function (child, index) {
-	        var style = _lodash2["default"].merge({}, { parent: _this13.style.parent }, child.props.style);
-	        var newProps = _this13.getNewProps(child);
+	        var style = _lodash2["default"].merge({}, { parent: _this12.style.parent }, child.props.style);
+	        var newProps = _this12.getNewProps(child);
 	        return _react2["default"].cloneElement(child, _lodash2["default"].merge({}, newProps, {
-	          height: _this13.props.height,
-	          width: _this13.props.width,
-	          padding: _this13.padding,
+	          height: _this12.props.height,
+	          width: _this12.props.width,
+	          padding: _this12.padding,
 	          ref: index,
 	          key: index,
 	          standalone: false,
@@ -25408,10 +25556,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * from the origin to prevent crowding. This prop should be given as an object with
 	       * numbers specified for x and y.
 	       */
-	      domainPadding: _react2["default"].PropTypes.shape({
+	      domainPadding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.shape({
 	        x: _victoryUtil.PropTypes.nonNegative,
 	        y: _victoryUtil.PropTypes.nonNegative
-	      }),
+	      }), _victoryUtil.PropTypes.nonNegative]),
 	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
