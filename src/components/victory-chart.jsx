@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import Radium from "radium";
-import {Collection, Log, PropTypes} from "victory-util";
+import {Collection, Log, PropTypes, Chart, Scale} from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
@@ -119,10 +119,10 @@ export default class VictoryChart extends React.Component {
 
   getCalculatedValues(props) {
     this.style = this.getStyles(props);
-    this.padding = this.getPadding(props);
+    this.padding = Chart.getPadding(props);
     this.range = {
-      x: this.getRange(props, "x"),
-      y: this.getRange(props, "y")
+      x: Chart.getRange(props, "x"),
+      y: Chart.getRange(props, "y")
     };
     this.axisOrientations = this.getAxisOrientations();
     this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
@@ -158,23 +158,6 @@ export default class VictoryChart extends React.Component {
       },
       styleProps
     )};
-  }
-
-  getPadding(props) {
-    const padding = _.isNumber(props.padding) ? props.padding : 0;
-    const paddingObj = _.isObject(props.padding) ? props.padding : {};
-    return {
-      top: paddingObj.top || padding,
-      bottom: paddingObj.bottom || padding,
-      left: paddingObj.left || padding,
-      right: paddingObj.right || padding
-    };
-  }
-
-  getRange(props, axis) {
-    return axis === "x" ?
-      [this.padding.left, props.width - this.padding.right] :
-      [props.height - this.padding.bottom, this.padding.top];
   }
 
   getAxisType(child) {
@@ -450,7 +433,7 @@ export default class VictoryChart extends React.Component {
       return this.getDomainFromData(component, axis);
     });
     const groupedDataDomains = _.map(this.groupedDataComponents, (component) => {
-      return this.getDomainFromGroupedData(component, axis);
+      return Chart.getDomainFromGroupedData(component.props, axis);
     });
     const axisDomain = this.getDomainFromAxis(axis);
     const domainFromChildren = Collection.removeUndefined(
@@ -458,7 +441,7 @@ export default class VictoryChart extends React.Component {
     );
     const domain = _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    const paddedDomain = this.padDomain(domain, axis);
+    const paddedDomain = Chart.padDomain(domain, axis);
     return this.orientDomain(paddedDomain, axis);
   }
 
@@ -494,77 +477,6 @@ export default class VictoryChart extends React.Component {
     return dataByAxis ? [_.min(dataByAxis), _.max(dataByAxis)] : undefined;
   }
 
-  _isStackedComponentData(component, axis) {
-    // checks whether grouped data is stacked, and whether there are multiple
-    // datasets to stack.
-    return (component.props.stacked === true)
-      && Collection.isArrayOfArrays(component.props.data)
-      && (axis === this.dependentAxis);
-  }
-
-  getDomainFromGroupedData(component, axis) {
-    if (component.props.domain) {
-      return component.props.domain[axis] || component.props.domain;
-    } else if (component.props.categories && axis === this.independentAxis) {
-      return this.getDomainFromCategories(component, axis);
-    }
-    const datasets = this.formatChildData(component.props.data);
-    // find the global min and max
-    const axisData = _.flatten(datasets).map((data) => data[axis]);
-    const globalMin = Math.min(...axisData);
-    const globalMax = Math.max(...axisData);
-
-    const cumulativeData = (this._isStackedComponentData(component, axis)) ?
-      this.getCumulativeData(datasets, "y") : [];
-
-    const cumulativeMaxArray = cumulativeData.map((dataset) => {
-      return dataset.reduce((memo, val) => {
-        return val > 0 ? memo + val : memo;
-      }, 0);
-    });
-
-    const cumulativeMinArray = cumulativeData.map((dataset) => {
-      return dataset.reduce((memo, val) => {
-        return val < 0 ? memo + val : memo;
-      }, 0);
-    });
-
-    const cumulativeMin = Math.min(...cumulativeMinArray);
-    // use greatest min / max
-    const domainMin = cumulativeMin < 0 ? cumulativeMin : globalMin;
-    const domainMax = Math.max(globalMax, Math.max(...cumulativeMaxArray));
-    return [domainMin, domainMax];
-  }
-
-  getCumulativeData(datasets, axis) {
-    const categories = [];
-    const xValues = [];
-    datasets.forEach((dataset) => {
-      dataset.forEach((data) => {
-        if (data.category !== undefined && !_.includes(categories, data.category)) {
-          categories.push(data.category);
-        } else if (!_.includes(xValues, data.x)) {
-          xValues.push(data.x);
-        }
-      });
-    });
-
-    const dataByCategory = () => {
-      return categories.map((value) => {
-        const categoryData = datasets.filter((data) => data.category === value);
-        return _.flatten(categoryData.map((data) => data[axis]));
-      });
-    };
-
-    const dataByIndex = () => {
-      return xValues.map((value, index) => {
-        return datasets.map((data) => data[index] && data[index][axis]);
-      });
-    };
-
-    return _.isEmpty(categories) ? dataByIndex() : dataByCategory();
-  }
-
   getDomainFromCategories(component, axis) {
     const categories = _.flatten(component.props.categories);
     const categoryValues = Collection.containsStrings(categories) ?
@@ -586,33 +498,7 @@ export default class VictoryChart extends React.Component {
       return undefined;
     }
   }
-
-  padDomain(domain, axis) {
-    if (!this.props.domainPadding) {
-      return domain;
-    }
-    let domainPadding;
-    if (this.props.domainPadding[axis]) {
-      domainPadding = this.props.domainPadding[axis];
-    } else {
-      domainPadding = _.isNumber(this.props.domainPadding) ? this.props.domainPadding : 0;
-    }
-    if (domainPadding === 0) {
-      return domain;
-    }
-    const domainMin = Math.min(...domain);
-    const domainMax = Math.max(...domain);
-    const rangeExtent = Math.abs(Math.max(...this.range[axis]) - Math.min(...this.range[axis]));
-    const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
-    // don't make the axes cross if they aren't already
-    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ?
-      0 : domainMin.valueOf() - padding;
-    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
-      0 : domainMax.valueOf() + padding;
-    return _.isDate(domainMin) || _.isDate(domainMax) ?
-      [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
-  }
-
+    
   getScale(props, axis) {
     let baseScale;
     if (this.props.scale && this.props.scale[axis]) {
