@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import Radium from "radium";
-import {Collection, Log, PropTypes, Chart, Scale} from "victory-util";
+import {Collection, Log, PropTypes, Chart, Data, Scale} from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
@@ -309,11 +309,15 @@ export default class VictoryChart extends React.Component {
   createStringMap(axis) {
     // if tick values exist and are strings, create a map using those strings
     // dont alter the order.
-    const tickMap = this._getStringsFromAxes(axis);
+    const tickValues = this.axisComponents[axis].props.tickValues;
+    const tickMap = Data.getStringsFromAxes(tickValues, axis);
 
     // if categories exist in grouped data, create a string map based on
     // categories which preserves order
-    const categoryMap = this._getStringsFromCategories(axis);
+    const categories = this.groupedDataComponents.map((component) => {
+      return component.props.categories;
+    });
+    const categoryMap = Data.getStringsFromCategories(categories, axis);
 
     // collect all the strings from data and x / y props, and return a
     // unique sorted set of strings
@@ -329,61 +333,14 @@ export default class VictoryChart extends React.Component {
       }));
   }
 
-  _getStringsFromAxes(axis) {
-    const axisComponent = this.axisComponents[axis];
-    const tickValues = axisComponent.props.tickValues ?
-      axisComponent.props.tickValues[axis] || axisComponent.props.tickValues : undefined;
-    return (tickValues && Collection.containsStrings(tickValues)) ?
-      _.zipObject(_.map(tickValues, (tick, index) => {
-        return [`${tick}`, index + 1];
-      })) : undefined;
-  }
-
-  _getStringsFromCategories(axis) {
-    if (this.groupedDataComponents && axis === this.independentAxis) {
-      const allCategories = _.map(this.groupedDataComponents, (component) => {
-        const categories = component.props.categories;
-        return (categories && Collection.containsStrings(categories)) ?
-          categories : undefined;
-      });
-      const stringCategories = _.compact(_.flatten(allCategories));
-      return _.isEmpty(stringCategories) ? undefined :
-        _.zipObject(_.map(stringCategories, (category, index) => {
-          return [`${category}`, index + 1];
-        }));
-    }
-  }
-
   _getStringsFromData(axis) {
     // Collect strings from dataComponents and groupedDataComponents props.data
-    const allChildData = this.dataComponents.concat(this.groupedDataComponents);
-    const allStrings = [];
-    const allData = _.map(allChildData, (dataComponent) => {
-      return dataComponent.props.data;
-    });
-
-    // collect strings from allData
-    if (allData) {
-      const data = _.flattenDeep(allData);
-      const stringData = _.chain(data)
-        .pluck(axis)
-        .map((datum) => {
-          return _.isString(datum) ? datum : null;
-        })
-        .value();
-      allStrings.push(stringData);
-    }
-    // collect strings from  data components props x or props y
-    const allXYData = _.map(allChildData, (dataComponent) => {
-      return dataComponent.props[axis];
-    });
-    if (allXYData) {
-      _.each(_.flattenDeep(allXYData), (element) => {
-        if (_.isString(element)) {
-          allStrings.push(element);
-        }
-      });
-    }
+    const dataComponents = this.dataComponents.concat(this.groupedDataComponents);
+    const xyProps = dataComponents.map((component) => component.props[axis]);
+    const dataProps = dataComponents.map((component) => component.props.data);
+    const xyStrings = Data.getStringsFromXY(xyProps);
+    const dataStrings = Data.getStringsFromData(dataProps, axis);
+    const allStrings = [...xyStrings, ...dataStrings];
     // create a unique, sorted set of strings
     return _.chain(allStrings)
       .flatten()
@@ -441,7 +398,7 @@ export default class VictoryChart extends React.Component {
     );
     const domain = _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    const paddedDomain = Chart.padDomain(domain, axis);
+    const paddedDomain = Chart.padDomain(domain, props, axis);
     return this.orientDomain(paddedDomain, axis);
   }
 
@@ -498,7 +455,7 @@ export default class VictoryChart extends React.Component {
       return undefined;
     }
   }
-    
+
   getScale(props, axis) {
     let baseScale;
     if (this.props.scale && this.props.scale[axis]) {
