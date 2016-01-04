@@ -73,7 +73,7 @@ class App extends React.Component {
           <div className="Row">
             <h2 className="u-textCenter">Flexible</h2>
             <p className="Copy">
-              The use of sensible default props makes getting started very easy, without sacrificing flexiblity. Victory also leverages React lifecycle methods and DOM diffing to create a lightweight animation wrapper.
+              The use of sensible default props makes getting started very easy, without sacrificing flexibility. Victory also leverages React lifecycle methods and DOM diffing to create a lightweight animation wrapper.
             </p>
           </div>
 
