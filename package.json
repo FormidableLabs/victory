@@ -14,7 +14,7 @@
   },
   "homepage": "https://github.com/formidablelabs/victory-chart",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "cd lib || builder run npm:postinstall || echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test"
