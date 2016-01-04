@@ -61,9 +61,7 @@ class Docs extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header
-          text={"Interested in using Victory on your next project? Let’s talk."}
-        />
+        <Header backgroundColor="#ebe3db" />
         <main style={this.getMainStyles()}>
           <Sidebar active={""} />
           <section style={this.getDocsStyles()}>
@@ -75,7 +73,7 @@ class Docs extends React.Component {
             {this._renderDocsList()}
           </section>
         </main>
-        <Footer/>
+        <Footer backgroundColor="#ebe3db"/>
         <Style rules={VictoryTheme}/>
         {/* We need padding: 5px on `.Ecology code`; putting it here for now */}
         <Style

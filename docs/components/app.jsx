@@ -29,9 +29,7 @@ class App extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header
-          text={"Interested in using Victory on your next project? Let’s talk."}
-        />
+        <Header backgroundColor="#ebe3db" />
         <main className="Container" style={this.getMainStyles()}>
 
           <header className="Header">
@@ -117,7 +115,7 @@ class App extends React.Component {
           </div>
 
         </main>
-        <Footer/>
+        <Footer backgroundColor="#ebe3db"/>
         <Style rules={VictoryTheme}/>
       </div>
     );
