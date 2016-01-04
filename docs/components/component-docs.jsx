@@ -26,7 +26,11 @@ class ComponentDocs extends BaseDocs {
             <Docs />
           </section>
         </main>
-        <Footer backgroundColor="#ebe3db"/>
+        <Footer backgroundColor="#ebe3db">
+          <div style={{margin: "2em 0", fontSize: "0.8rem"}}>
+            Victory is a trademark of Formidable Labs, Inc.
+          </div>
+        </Footer>
         <Style rules={VictoryTheme} />
       </div>
     );

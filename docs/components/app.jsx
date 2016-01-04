@@ -5,7 +5,7 @@ import React from "react";
 import Ecology from "ecology";
 import ReactDOM from "react-dom";
 import { VictoryChart, VictoryLine, VictoryPie } from "../../src/index";
-import { VictoryTheme, Header, Footer} from "formidable-landers";
+import { VictorySettings, VictoryTheme, Header, Footer} from "formidable-landers";
 // Analytics
 import ga from "react-ga";
 
@@ -42,7 +42,14 @@ class App extends React.Component {
           </header>
 
           <div className="Row">
-            <p className="Headline Headline--major u-textCenter">Victory</p>
+            <p className="Headline Headline--major u-textCenter">
+              Victory
+              <span style={{
+                  fontFamily: VictorySettings.sansSerif,
+                  fontSize: "0.35em",
+                  verticalAlign: "1em"
+                }}>&#8482;</span>
+            </p>
             <div className="u-textCenter">
               <code className="Installer">npm install victory</code>
             </div>
@@ -115,7 +122,11 @@ class App extends React.Component {
           </div>
 
         </main>
-        <Footer backgroundColor="#ebe3db"/>
+        <Footer backgroundColor="#ebe3db">
+          <div style={{margin: "2em 0", fontSize: "0.8rem"}}>
+            Victory is a trademark of Formidable Labs, Inc.
+          </div>
+        </Footer>
         <Style rules={VictoryTheme}/>
       </div>
     );
