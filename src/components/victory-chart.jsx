@@ -126,22 +126,6 @@ export default class VictoryChart extends React.Component {
       x: this.createStringMap("x"),
       y: this.createStringMap("y")
     };
-    this.domain = {};
-    this.domain.x = this.getDomain(props, "x");
-    this.domain.y = this.getDomain(props, "y");
-    this.scale = {
-      x: this.getScale(props, "x"),
-      y: this.getScale(props, "y")
-    };
-    this.tickValues = {
-      x: this.getTickValues("x"),
-      y: this.getTickValues("y")
-    };
-    this.tickFormat = {
-      x: this.getTickFormat("x"),
-      y: this.getTickFormat("y")
-    };
-    this.axisOffset = this.getAxisOffset(props);
   }
 
   getStyles(props) {
@@ -391,13 +375,6 @@ export default class VictoryChart extends React.Component {
     return Domain.getDomainFromData(dataset, axis);
   }
 
-  getDomainFromCategories(component, axis) {
-    const categories = _.flatten(component.props.categories);
-    const categoryValues = Collection.containsStrings(categories) ?
-      _.map(categories, (value) => this.stringMap[axis][value]) : categories;
-    return [_.min(categoryValues), _.max(categoryValues)];
-  }
-
   getDomainFromAxis(axis) {
     const component = this.axisComponents[axis];
     if (component.props.domain) {
@@ -413,7 +390,7 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  getScale(props, axis) {
+  getScale(props, axis, domain) {
     let baseScale;
     if (this.props.scale && this.props.scale[axis]) {
       // if scale is provided to chart, prefer it
@@ -426,15 +403,15 @@ export default class VictoryChart extends React.Component {
     }
     const scale = baseScale.copy();
     scale.range(Chart.getRange(props, axis));
-    scale.domain(this.domain[axis]);
+    scale.domain(domain[axis]);
     return scale;
   }
 
-  getAxisOffset(props) {
+  getAxisOffset(props, domain, scale) {
     // make the axes line up, and cross when appropriate
     const origin = {
-      x: _.max([_.min(this.domain.x), 0]),
-      y: _.max([_.min(this.domain.y), 0])
+      x: _.max([_.min(domain.x), 0]),
+      y: _.max([_.min(domain.y), 0])
     };
     const orientation = {
       x: this.axisOrientations.x || "bottom",
@@ -445,8 +422,8 @@ export default class VictoryChart extends React.Component {
       y: orientation.x === "bottom" ? props.height : 0
     };
     const calculatedOffset = {
-      x: Math.abs(orientationOffset.x - this.scale.x.call(this, origin.x)),
-      y: Math.abs(orientationOffset.y - this.scale.y.call(this, origin.y))
+      x: Math.abs(orientationOffset.x - scale.x.call(this, origin.x)),
+      y: Math.abs(orientationOffset.y - scale.y.call(this, origin.y))
     };
     return {
       x: this.axisComponents.x.offsetX || calculatedOffset.x,
@@ -485,7 +462,7 @@ export default class VictoryChart extends React.Component {
     return ticksFromAxis || ticksFromCategories || ticksFromStringMap;
   }
 
-  getTickFormat(axis) {
+  getTickFormat(axis, scale) {
     const tickFormat = this.axisComponents[axis].props.tickFormat;
     const tickValues = this.axisComponents[axis].props.tickValues;
     if (tickFormat) {
@@ -502,49 +479,34 @@ export default class VictoryChart extends React.Component {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return this.scale[axis].tickFormat();
-    }
-  }
-
-  generateData(child) {
-    if (!child.props.y) {
-      return undefined;
-    }
-    const generateX = (component) => {
-      const domain = this.domain.x;
-      const samples = _.isArray(component.props.y) ? component.props.y.length : 50;
-      const step = _.max(domain) / samples;
-      // return an array of x values spaced across the domain,
-      // include the maximum of the domain
-      return _.union(_.range(_.min(domain), _.max(domain), step), [_.max(domain)]);
-    };
-    const y = child.props.y;
-    const xArray = child.props.x || generateX(child);
-    if (_.isFunction(y)) {
-      return _.map(xArray, (x) => {
-        return {x, y: y(x)};
-      });
-    } else {
-      const n = _.min([xArray.length, y.length]);
-      return _.map(_.take(xArray, n), (x, index) => {
-        return { x, y: y[index]};
-      });
+      return scale[axis].tickFormat();
     }
   }
 
   getNewProps(child) {
     const type = child.type && child.type.role;
     const animate = child.props.animate || this.props.animate;
+    const domain = {
+      x: this.getDomain(this.props, "x"),
+      y: this.getDomain(this.props, "y")
+    };
+    const scale = {
+      x: this.getScale(this.props, "x", domain),
+      y: this.getScale(this.props, "y", domain)
+    };
     if (type === "axis") {
       const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
-      const offsetY = axis === "y" ? undefined : this.axisOffset.y;
-      const offsetX = axis === "x" ? undefined : this.axisOffset.x;
+      const axisOffset = this.getAxisOffset(this.props, domain, scale);
+      const tickFormat = this.getTickFormat(axis, scale);
+      const tickValues = this.getTickValues(axis);
+      const offsetY = axis === "y" ? undefined : axisOffset.y;
+      const offsetX = axis === "x" ? undefined : axisOffset.x;
       return {
         animate,
-        domain: this.domain[axis],
-        scale: this.scale[axis],
-        tickValues: this.tickValues[axis],
-        tickFormat: this.tickFormat[axis],
+        domain: domain[axis],
+        scale: scale[axis],
+        tickValues,
+        tickFormat,
         offsetY,
         offsetX,
         crossAxis: true
@@ -554,17 +516,17 @@ export default class VictoryChart extends React.Component {
       const categories = this.stringMap[categoryAxis] && _.keys(this.stringMap[categoryAxis]);
       return {
         animate,
-        domain: this.domain,
-        scale: this.scale,
+        domain: domain,
+        scale: scale,
         categories: child.props.categories || categories
       };
     }
-    const data = !child.props.data && child.props.y ? this.generateData(child) : undefined;
+    const data = Data.getData(_.merge({}, child.props, {domain, scale}));
     return {
       data,
       animate,
-      domain: this.domain,
-      scale: this.scale
+      domain: domain,
+      scale: scale
     };
   }
 
