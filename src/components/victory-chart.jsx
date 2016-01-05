@@ -345,36 +345,6 @@ export default class VictoryChart extends React.Component {
       .value();
   }
 
-  formatChildData(childData, categories) {
-    const _formatData = (dataset) => {
-      return _.map(dataset, (data) => {
-        return _.merge({}, data, {
-          category: this.determineCategoryIndex(data.x, categories),
-          // map string data to numeric values, and add names
-          x: _.isString(data.x) ? this.stringMap.x[data.x] : data.x,
-          xName: _.isString(data.x) ? data.x : undefined,
-          y: _.isString(data.y) ? this.stringMap.y[data.y] : data.y,
-          yName: _.isString(data.y) ? data.y : undefined
-        });
-      });
-    };
-    if (Collection.isArrayOfArrays(childData)) {
-      return _.map(childData, (dataset) => _formatData(dataset));
-    }
-    return _formatData(childData);
-  }
-
-  determineCategoryIndex(x, categories) {
-    // if categories don't exist or are not given as an array of arrays, return undefined;
-    if (!categories || !_.isArray(categories[0])) {
-      return undefined;
-    }
-    // determine which range band this x value belongs to, and return the index of that range band.
-    return categories.findIndex((category) => {
-      return (x >= Math.min(...category) && x <= Math.max(...category));
-    });
-  }
-
   getDomain(props, axis) {
     if (props.domain && (_.isArray(props.domain) || props.domain[axis])) {
       const propsDomain = _.isArray(props.domain) ? props.domain : props.domain[axis];
@@ -413,20 +383,12 @@ export default class VictoryChart extends React.Component {
   }
 
   getDomainFromData(component, axis) {
-    // TODO refactor for code cleanliness
-    let dataByAxis;
-    if (component.props.domain) {
-      return component.props.domain[axis] || component.props.domain;
-    } else if (component.props.data) {
-      const formattedData = this.formatChildData(component.props.data, component.props.categories);
-      dataByAxis = _.map(_.flatten(formattedData), (data) => {
-        return data[axis];
-      });
-    } else if (component.props[axis]) {
-      dataByAxis = _.isFunction(component.props[axis]) ?
-        _.pluck(this.generateData(component), axis) : component.props[axis];
+    const domainFromProps = Domain.getDomainFromProps(component.props, axis);
+    if (domainFromProps) {
+      return domainFromProps;
     }
-    return dataByAxis ? [_.min(dataByAxis), _.max(dataByAxis)] : undefined;
+    const dataset = Data.getData(component.props);
+    return Domain.getDomainFromData(dataset, axis);
   }
 
   getDomainFromCategories(component, axis) {
