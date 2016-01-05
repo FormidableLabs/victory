@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import Radium from "radium";
-import {Collection, Log, PropTypes, Chart, Data, Scale} from "victory-util";
+import {Collection, Log, PropTypes, Chart, Data, Domain, Scale} from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
@@ -119,11 +119,6 @@ export default class VictoryChart extends React.Component {
 
   getCalculatedValues(props) {
     this.style = this.getStyles(props);
-    this.padding = Chart.getPadding(props);
-    this.range = {
-      x: Chart.getRange(props, "x"),
-      y: Chart.getRange(props, "y")
-    };
     this.axisOrientations = this.getAxisOrientations();
     this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
     this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
@@ -383,14 +378,14 @@ export default class VictoryChart extends React.Component {
   getDomain(props, axis) {
     if (props.domain && (_.isArray(props.domain) || props.domain[axis])) {
       const propsDomain = _.isArray(props.domain) ? props.domain : props.domain[axis];
-      const paddedPropsDomain = this.padDomain(propsDomain, axis);
+      const paddedPropsDomain = Domain.padDomain(propsDomain, axis);
       return this.orientDomain(paddedPropsDomain, axis);
     }
     const dataDomains = _.map(this.dataComponents, (component) => {
       return this.getDomainFromData(component, axis);
     });
     const groupedDataDomains = _.map(this.groupedDataComponents, (component) => {
-      return Chart.getDomainFromGroupedData(component.props, axis);
+      return Domain.getDomainFromGroupedData(component.props, axis);
     });
     const axisDomain = this.getDomainFromAxis(axis);
     const domainFromChildren = Collection.removeUndefined(
@@ -398,7 +393,7 @@ export default class VictoryChart extends React.Component {
     );
     const domain = _.isEmpty(domainFromChildren) ?
       [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    const paddedDomain = Chart.padDomain(domain, props, axis);
+    const paddedDomain = Domain.padDomain(domain, props, axis);
     return this.orientDomain(paddedDomain, axis);
   }
 
@@ -468,7 +463,7 @@ export default class VictoryChart extends React.Component {
       baseScale = this.axisComponents[axis].props.scale;
     }
     const scale = baseScale.copy();
-    scale.range(this.range[axis]);
+    scale.range(Chart.getRange(props, axis));
     scale.domain(this.domain[axis]);
     return scale;
   }
@@ -619,7 +614,7 @@ export default class VictoryChart extends React.Component {
       return React.cloneElement(child, _.merge({}, newProps, {
         height: this.props.height,
         width: this.props.width,
-        padding: this.padding,
+        padding: Chart.getPadding(this.props),
         ref: index,
         key: index,
         standalone: false,
