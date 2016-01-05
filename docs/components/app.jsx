@@ -29,7 +29,9 @@ class App extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header backgroundColor="#ebe3db" />
+        <Header backgroundColor="#ebe3db">
+          Looking for custom dashboards or data visualization consulting? Let&rsquo;s talk.
+        </Header>
         <main className="Container" style={this.getMainStyles()}>
 
           <header className="Header">
