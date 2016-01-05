@@ -11,6 +11,35 @@ See the docs and examples on the website: http://victory.formidable.com
 
 **Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
 
+## Get started
+
+1. Add Victory to your project:
+  ```
+  npm install victory --save
+  ```
+
+2. Add your first Victory component:
+
+  ```jsx
+  import React, { Component } from 'react';
+  import { render } from 'react-dom';
+  import { VictoryPie } from 'victory';
+  
+  class PieChart extends Component {
+    render() {
+      return (
+        <VictoryPie />
+      );
+    }
+  }
+  
+  render(<PieChart />, document.getElementById('app'));
+  ```
+
+3. `VictoryPie` component will be rendered, and you should see:  
+![VictoryPie](https://cloud.githubusercontent.com/assets/3802023/12114963/369a6538-b3a6-11e5-898c-db410a335a7b.png)
+
+
 ## Including components:
 
 Components can be included individually
