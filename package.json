@@ -24,7 +24,7 @@
     "builder-victory-component": "~0.0.8",
     "victory-axis": "1.5.5",
     "victory-line": "0.6.0",
-    "victory-util": "git+https://github.com/formidablelabs/victory-util#c5b86a6"
+    "victory-util": "^2.0.3"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.0.8",
