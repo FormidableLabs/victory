@@ -6,7 +6,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 import { components, routing as routingConfig } from "../config";
-import { VictoryTheme, Header, Footer } from "formidable-landers";
+import { VictorySettings, VictoryTheme, Header, Footer } from "formidable-landers";
 import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
 const V = Victory;
@@ -61,9 +61,9 @@ class Docs extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header
-          text={"Interested in using Victory on your next project? Let’s talk."}
-        />
+        <Header backgroundColor={VictorySettings.palestSand}>
+          Looking for custom dashboards or data visualization consulting? Let&rsquo;s talk.
+        </Header>
         <main style={this.getMainStyles()}>
           <Sidebar active={""} />
           <section style={this.getDocsStyles()}>
@@ -75,7 +75,11 @@ class Docs extends React.Component {
             {this._renderDocsList()}
           </section>
         </main>
-        <Footer/>
+        <Footer backgroundColor="#ebe3db">
+          <div style={{margin: "2em 0", fontSize: "0.8rem"}}>
+            Victory is a trademark of Formidable Labs, Inc.
+          </div>
+        </Footer>
         <Style rules={VictoryTheme}/>
         {/* We need padding: 5px on `.Ecology code`; putting it here for now */}
         <Style

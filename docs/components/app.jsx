@@ -5,7 +5,7 @@ import React from "react";
 import Ecology from "ecology";
 import ReactDOM from "react-dom";
 import { VictoryChart, VictoryLine, VictoryPie } from "../../src/index";
-import { VictoryTheme, Header, Footer} from "formidable-landers";
+import { VictorySettings, VictoryTheme, Header, Footer} from "formidable-landers";
 // Analytics
 import ga from "react-ga";
 
@@ -29,9 +29,9 @@ class App extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header
-          text={"Interested in using Victory on your next project? Let’s talk."}
-        />
+        <Header backgroundColor={VictorySettings.palestSand}>
+          Looking for custom dashboards or data visualization consulting? Let&rsquo;s talk.
+        </Header>
         <main className="Container" style={this.getMainStyles()}>
 
           <header className="Header">
@@ -44,7 +44,14 @@ class App extends React.Component {
           </header>
 
           <div className="Row">
-            <p className="Headline Headline--major u-textCenter">Victory</p>
+            <p className="Headline Headline--major u-textCenter">
+              Victory
+              <span style={{
+                  fontFamily: VictorySettings.sansSerif,
+                  fontSize: "0.35em",
+                  verticalAlign: "1em"
+                }}>&#8482;</span>
+            </p>
             <div className="u-textCenter">
               <code className="Installer">npm install victory</code>
             </div>
@@ -117,7 +124,11 @@ class App extends React.Component {
           </div>
 
         </main>
-        <Footer/>
+        <Footer backgroundColor="#ebe3db">
+          <div style={{margin: "2em 0", fontSize: "0.8rem"}}>
+            Victory is a trademark of Formidable Labs, Inc.
+          </div>
+        </Footer>
         <Style rules={VictoryTheme}/>
       </div>
     );
