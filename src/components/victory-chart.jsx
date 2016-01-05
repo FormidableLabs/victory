@@ -118,7 +118,6 @@ export default class VictoryChart extends React.Component {
   }
 
   getCalculatedValues(props) {
-    this.style = this.getStyles(props);
     this.axisOrientations = this.getAxisOrientations();
     this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
     this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
@@ -531,9 +530,9 @@ export default class VictoryChart extends React.Component {
   }
 
   // the old ones were bad
-  getNewChildren() {
+  getNewChildren(baseStyle) {
     return _.map(this.childComponents, (child, index) => {
-      const style = _.merge({}, {parent: this.style.parent}, child.props.style);
+      const style = _.merge({}, {parent: baseStyle.parent}, child.props.style);
       const newProps = this.getNewProps(child);
       return React.cloneElement(child, _.merge({}, newProps, {
         height: this.props.height,
@@ -550,12 +549,12 @@ export default class VictoryChart extends React.Component {
   render() {
     this.getComponents(this.props);
     this.getCalculatedValues(this.props);
-    const style = this.style.parent;
+    const style = this.getStyles(this.props);
     const group = (
-      <g style={style}>
-        {this.getNewChildren()}
+      <g style={style.parent}>
+        {this.getNewChildren(style)}
       </g>
     );
-    return this.props.standalone ? <svg style={style}>{group}</svg> : group;
+    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }
 }
