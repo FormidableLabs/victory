@@ -1,7 +1,7 @@
 import _ from "lodash";
 import React from "react";
 import Radium from "radium";
-import {Collection, Log, PropTypes, Chart, Data, Domain, Scale} from "victory-util";
+import {Collection, Log, PropTypes, Chart, Data, Domain} from "victory-util";
 import {VictoryAxis} from "victory-axis";
 import {VictoryLine} from "victory-line";
 
@@ -117,7 +117,7 @@ export default class VictoryChart extends React.Component {
     this.axisComponents = this.getAxisComponents();
   }
 
-  getCalculatedValues(props) {
+  getCalculatedValues() {
     this.axisOrientations = this.getAxisOrientations();
     this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
     this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
@@ -483,59 +483,71 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  calculateProps(props) {
+  getCalculatedProps(props, child) {
     const domain = {
-      x: this.getDomain(this.props, "x"),
-      y: this.getDomain(this.props, "y")
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
     };
     const scale = {
-      x: this.getScale(this.props, "x", domain),
-      y: this.getScale(this.props, "y", domain)
+      x: this.getScale(props, "x", domain),
+      y: this.getScale(props, "y", domain)
     };
-    return {domain, scale};
+    const animate = child.props.animate || this.props.animate;
+    return {animate, domain, scale};
+  }
+
+  getAxisProps(child, calculatedProps) {
+    const {animate, domain, scale} = calculatedProps;
+    const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
+    const axisOffset = this.getAxisOffset(this.props, calculatedProps);
+    const tickFormat = this.getTickFormat(axis, calculatedProps);
+    const tickValues = this.getTickValues(axis);
+    const offsetY = axis === "y" ? undefined : axisOffset.y;
+    const offsetX = axis === "x" ? undefined : axisOffset.x;
+    return {
+      animate,
+      domain: domain[axis],
+      scale: scale[axis],
+      tickValues,
+      tickFormat,
+      offsetY,
+      offsetX,
+      crossAxis: true
+    };
+  }
+
+  getGroupedDataProps(child, calculatedProps) {
+    const {animate, domain, scale} = calculatedProps;
+    const categoryAxis = this.independentAxis;
+    const categories = this.stringMap[categoryAxis] && _.keys(this.stringMap[categoryAxis]);
+    return {
+      animate,
+      domain,
+      scale,
+      categories: child.props.categories || categories
+    };
+  }
+
+  getDataProps(child, calculatedProps) {
+    const {animate, domain, scale} = calculatedProps;
+    const data = Data.getData(_.merge({}, child.props, {domain, scale}));
+    return {
+      data,
+      animate,
+      domain,
+      scale
+    };
   }
 
   getNewProps(child) {
     const type = child.type && child.type.role;
-    const animate = child.props.animate || this.props.animate;
-    const calculatedProps = this.calculateProps(this.props);
+    const calculatedProps = this.getCalculatedProps(this.props, child);
     if (type === "axis") {
-      const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
-      const axisOffset = this.getAxisOffset(this.props, calculatedProps);
-      const tickFormat = this.getTickFormat(axis, calculatedProps);
-      const tickValues = this.getTickValues(axis);
-      const offsetY = axis === "y" ? undefined : axisOffset.y;
-      const offsetX = axis === "x" ? undefined : axisOffset.x;
-      return {
-        animate,
-        domain: calculatedProps.domain[axis],
-        scale: calculatedProps.scale[axis],
-        tickValues,
-        tickFormat,
-        offsetY,
-        offsetX,
-        crossAxis: true
-      };
+      return this.getAxisProps(child, calculatedProps);
     } else if (_.includes(this.groupedDataTypes, type)) {
-      const categoryAxis = this.independentAxis;
-      const categories = this.stringMap[categoryAxis] && _.keys(this.stringMap[categoryAxis]);
-      return {
-        animate,
-        domain: calculatedProps.domain,
-        scale: calculatedProps.scale,
-        categories: child.props.categories || categories
-      };
+      return this.getGroupedDataProps(child, calculatedProps);
     }
-    const data = Data.getData(_.merge({},
-      child.props,
-      { domain: calculatedProps.domain, scale: calculatedProps.scale }
-    ));
-    return {
-      data,
-      animate,
-      domain: calculatedProps.domain,
-      scale: calculatedProps.scale
-    };
+    return this.getDataProps(child, calculatedProps);
   }
 
   // the old ones were bad
