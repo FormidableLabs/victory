@@ -406,7 +406,8 @@ export default class VictoryChart extends React.Component {
     return scale;
   }
 
-  getAxisOffset(props, domain, scale) {
+  getAxisOffset(props, calculatedProps) {
+    const {domain, scale} = calculatedProps;
     // make the axes line up, and cross when appropriate
     const origin = {
       x: _.max([_.min(domain.x), 0]),
@@ -461,7 +462,7 @@ export default class VictoryChart extends React.Component {
     return ticksFromAxis || ticksFromCategories || ticksFromStringMap;
   }
 
-  getTickFormat(axis, scale) {
+  getTickFormat(axis, calculatedProps) {
     const tickFormat = this.axisComponents[axis].props.tickFormat;
     const tickValues = this.axisComponents[axis].props.tickValues;
     if (tickFormat) {
@@ -478,13 +479,11 @@ export default class VictoryChart extends React.Component {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return scale[axis].tickFormat();
+      return calculatedProps.scale[axis].tickFormat();
     }
   }
 
-  getNewProps(child) {
-    const type = child.type && child.type.role;
-    const animate = child.props.animate || this.props.animate;
+  calculateProps(props) {
     const domain = {
       x: this.getDomain(this.props, "x"),
       y: this.getDomain(this.props, "y")
@@ -493,17 +492,24 @@ export default class VictoryChart extends React.Component {
       x: this.getScale(this.props, "x", domain),
       y: this.getScale(this.props, "y", domain)
     };
+    return {domain, scale};
+  }
+
+  getNewProps(child) {
+    const type = child.type && child.type.role;
+    const animate = child.props.animate || this.props.animate;
+    const calculatedProps = this.calculateProps(this.props);
     if (type === "axis") {
       const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
-      const axisOffset = this.getAxisOffset(this.props, domain, scale);
-      const tickFormat = this.getTickFormat(axis, scale);
+      const axisOffset = this.getAxisOffset(this.props, calculatedProps);
+      const tickFormat = this.getTickFormat(axis, calculatedProps);
       const tickValues = this.getTickValues(axis);
       const offsetY = axis === "y" ? undefined : axisOffset.y;
       const offsetX = axis === "x" ? undefined : axisOffset.x;
       return {
         animate,
-        domain: domain[axis],
-        scale: scale[axis],
+        domain: calculatedProps.domain[axis],
+        scale: calculatedProps.scale[axis],
         tickValues,
         tickFormat,
         offsetY,
@@ -515,17 +521,20 @@ export default class VictoryChart extends React.Component {
       const categories = this.stringMap[categoryAxis] && _.keys(this.stringMap[categoryAxis]);
       return {
         animate,
-        domain: domain,
-        scale: scale,
+        domain: calculatedProps.domain,
+        scale: calculatedProps.scale,
         categories: child.props.categories || categories
       };
     }
-    const data = Data.getData(_.merge({}, child.props, {domain, scale}));
+    const data = Data.getData(_.merge({},
+      child.props,
+      { domain: calculatedProps.domain, scale: calculatedProps.scale }
+    ));
     return {
       data,
       animate,
-      domain: domain,
-      scale: scale
+      domain: calculatedProps.domain,
+      scale: calculatedProps.scale
     };
   }
 
