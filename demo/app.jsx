@@ -126,7 +126,7 @@ class App extends React.Component {
             <VictoryBar/>
           </VictoryChart>
 
-          <VictoryChart scale={d3Scale.linear()}>
+          <VictoryChart>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}

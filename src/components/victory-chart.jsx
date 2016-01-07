@@ -329,25 +329,18 @@ export default class VictoryChart extends React.Component {
   }
 
   getDomain(props, axis) {
+    let domain;
     if (props.domain && (_.isArray(props.domain) || props.domain[axis])) {
-      const propsDomain = _.isArray(props.domain) ? props.domain : props.domain[axis];
-      const paddedPropsDomain = Domain.padDomain(propsDomain, axis);
-      return this.orientDomain(paddedPropsDomain, axis);
+      domain = _.isArray(props.domain) ? props.domain : props.domain[axis];
+    } else {
+      const childDomains = this.childComponents.map((component) => {
+        return component.type.getDomain(component.props, axis);
+      });
+      const allDomains = _.flatten(childDomains);
+      domain = [Math.min(...allDomains), Math.max(...allDomains)];
     }
-    const dataDomains = _.map(this.dataComponents, (component) => {
-      return this.getDomainFromData(component, axis);
-    });
-    const groupedDataDomains = _.map(this.groupedDataComponents, (component) => {
-      return Domain.getDomainFromGroupedData(component.props, axis);
-    });
-    const axisDomain = this.getDomainFromAxis(axis);
-    const domainFromChildren = Collection.removeUndefined(
-      _.flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain))
-    );
-    const domain = _.isEmpty(domainFromChildren) ?
-      [0, 1] : [_.min(domainFromChildren), _.max(domainFromChildren)];
-    const paddedDomain = Domain.padDomain(domain, props, axis);
-    return this.orientDomain(paddedDomain, axis);
+    const paddedPropsDomain = Domain.padDomain(domain, axis);
+    return this.orientDomain(paddedPropsDomain, axis);
   }
 
   orientDomain(domain, axis) {
@@ -362,30 +355,6 @@ export default class VictoryChart extends React.Component {
     } else {
       return orientation === "bottom" || orientation === "left" ?
         domain.concat().reverse() : domain;
-    }
-  }
-
-  getDomainFromData(component, axis) {
-    const domainFromProps = Domain.getDomainFromProps(component.props, axis);
-    if (domainFromProps) {
-      return domainFromProps;
-    }
-    const dataset = Data.getData(component.props);
-    return Domain.getDomainFromData(dataset, axis);
-  }
-
-  getDomainFromAxis(axis) {
-    const component = this.axisComponents[axis];
-    if (component.props.domain) {
-      return component.props.domain;
-    }
-    const ticks = component.props.tickValues;
-    if (ticks) {
-      const tickValues = Collection.containsStrings(ticks) ?
-        _.map(ticks, (tick) => this.stringMap[axis][tick]) : ticks;
-      return [_.min(tickValues), _.max(tickValues)];
-    } else {
-      return undefined;
     }
   }
 
