@@ -14,20 +14,20 @@
   },
   "homepage": "https://github.com/formidablelabs/victory-chart",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test"
   },
   "dependencies": {
     "builder": "~2.2.2",
-    "builder-victory-component": "~0.0.8",
+    "builder-victory-component": "~0.0.9",
     "victory-axis": "1.5.5",
     "victory-line": "0.6.0",
     "victory-util": "^2.0.3"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.0.8",
+    "builder-victory-component-dev": "~0.0.9",
     "chai": "^3.2.0",
     "d3-scale": "^0.2.0",
     "mocha": "^2.3.3",
