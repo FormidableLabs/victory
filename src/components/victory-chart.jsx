@@ -336,10 +336,10 @@ export default class VictoryChart extends React.Component {
       const childDomains = this.childComponents.map((component) => {
         return component.type.getDomain(component.props, axis);
       });
-      const allDomains = _.flatten(childDomains);
+      const allDomains = Collection.removeUndefined(_.flatten(childDomains));
       domain = [Math.min(...allDomains), Math.max(...allDomains)];
     }
-    const paddedPropsDomain = Domain.padDomain(domain, axis);
+    const paddedPropsDomain = Domain.padDomain(domain, props, axis);
     return this.orientDomain(paddedPropsDomain, axis);
   }
 
@@ -360,11 +360,11 @@ export default class VictoryChart extends React.Component {
 
   getScale(props, axis, domain) {
     let baseScale;
-    if (this.props.scale && this.props.scale[axis]) {
+    if (props.scale && props.scale[axis]) {
       // if scale is provided to chart, prefer it
-      baseScale = this.props.scale[axis];
-    } else if (this.props.scale && !_.isObject(this.props.scale)) {
-      baseScale = this.props.scale;
+      baseScale = props.scale[axis];
+    } else if (props.scale && !_.isObject(props.scale)) {
+      baseScale = props.scale;
     } else {
       // otherwise use whatever scale the axis uses, (default: d3.scale.linear)
       baseScale = this.axisComponents[axis].props.scale;

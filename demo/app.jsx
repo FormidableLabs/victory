@@ -149,11 +149,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}
-            scale={{
-              x: d3Scale.time()
-            }}
-          >
+          <VictoryChart style={chartStyle}>
             <VictoryAxis
               orientation="bottom"
               tickValues={[
