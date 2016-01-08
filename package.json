@@ -14,21 +14,21 @@
   },
   "homepage": "https://github.com/FormidableLabs/victory-pie",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test"
   },
   "dependencies": {
     "builder": "~2.2.2",
-    "builder-victory-component": "~0.0.5",
+    "builder-victory-component": "~0.0.9",
     "d3-shape": "^0.2.0",
     "victory-animation": "^0.0.13",
     "victory-label": "^0.1.8",
     "victory-util": "^2.0.3"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.0.5",
+    "builder-victory-component-dev": "~0.0.9",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "react": "0.14.x",
