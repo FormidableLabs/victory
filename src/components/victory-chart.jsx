@@ -1,7 +1,9 @@
 import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Collection, Log, Chart, Data, Domain } from "victory-util";
+import {
+  PropTypes as CustomPropTypes, Collection, Log, Chart, Data, Domain, Scale
+} from "victory-util";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
 
@@ -110,7 +112,6 @@ export default class VictoryChart extends React.Component {
   };
 
   getComponents(props) {
-    this.groupedDataTypes = ["bar"];
     this.childComponents = this.getChildComponents(props);
     this.dataComponents = this.getDataComponents();
     this.groupedDataComponents = this.getGroupedDataComponents();
@@ -166,7 +167,7 @@ export default class VictoryChart extends React.Component {
             return false;
           } else if (axis) {
             return counts[type][axis] > 1;
-          } else if (_.includes(this.groupedDataTypes, type)) {
+          } else if (type === "bar") {
             // TODO: should we remove the limit on grouped data types?
             return counts[type] > 1;
           }
@@ -225,14 +226,14 @@ export default class VictoryChart extends React.Component {
   getDataComponents() {
     return _.filter(this.childComponents, (child) => {
       const type = child.type && child.type.role;
-      return !_.includes(this.groupedDataTypes, type) && type !== "axis";
+      return type !== "bar" && type !== "axis";
     });
   }
 
   getGroupedDataComponents() {
     return _.filter(this.childComponents, (child) => {
       const type = child.type && child.type.role;
-      return _.includes(this.groupedDataTypes, type);
+      return type === "bar";
     });
   }
 
@@ -356,17 +357,10 @@ export default class VictoryChart extends React.Component {
   }
 
   getScale(props, axis, domain) {
-    let baseScale;
-    if (props.scale && props.scale[axis]) {
-      // if scale is provided to chart, prefer it
-      baseScale = props.scale[axis];
-    } else if (props.scale && !_.isObject(props.scale)) {
-      baseScale = props.scale;
-    } else {
+    const propsScale = Scale.getScaleFromProps(props, axis);
       // otherwise use whatever scale the axis uses, (default: d3.scale.linear)
-      baseScale = this.axisComponents[axis].props.scale;
-    }
-    const scale = baseScale.copy();
+    const axisScale = this.axisComponents[axis].type.getScale(this.axisComponents[axis].props);
+    const scale = propsScale || axisScale;
     scale.range(Chart.getRange(props, axis));
     scale.domain(domain[axis]);
     return scale;
@@ -539,10 +533,28 @@ export default class VictoryChart extends React.Component {
     });
   }
 
+  // getAxisComponent(childComponents, axis) {
+  //   const axisComponents = childComponents.filter((component) => {
+  //     return
+  //       component.type.role === "axis"
+  //   });
+  //   return axisComponents[0];
+  // }
+
+  // getAllComponents(props) {
+  //   const childComponents = this.getChildComponents(props);
+  //   const axisComponents = {
+  //     x: this.getAxisComponent(childComponents, "x"),
+  //     y: this.getAxisComponent(childComponents, "y")
+  //   }
+  //   return { childComponents, axisComponents }
+  // }
+
   render() {
     this.getComponents(this.props);
     this.getCalculatedValues(this.props);
     const style = this.getStyles(this.props);
+    // const allChildren = this.getAllComponents(this.props);
     const childComponents = this.getChildComponents(this.props);
     const group = (
       <g style={style.parent}>
