@@ -2,7 +2,6 @@
 /*global window:false */
 import React from "react";
 import ReactDOM from "react-dom";
-import d3Scale from "d3-scale";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 import {VictoryAxis} from "victory-axis";
