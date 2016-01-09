@@ -282,22 +282,22 @@ export default class VictoryChart extends React.Component {
     return _.zipObject(orientations);
   }
 
-  createStringMap(axis) {
+  createStringMap(childComponents, axis) {
     // if tick values exist and are strings, create a map using those strings
     // dont alter the order.
-    const tickValues = this.axisComponents[axis].props.tickValues;
+    const tickValues = childComponents.axis[axis].props.tickValues;
     const tickMap = Data.getStringsFromAxes(tickValues, axis);
 
     // if categories exist in grouped data, create a string map based on
     // categories which preserves order
-    const categories = this.groupedDataComponents.map((component) => {
+    const categories = childComponents.groupedData.map((component) => {
       return component.props.categories;
     });
     const categoryMap = Data.getStringsFromCategories(categories, axis);
 
     // collect all the strings from data and x / y props, and return a
     // unique sorted set of strings
-    const dataStrings = this._getStringsFromData(axis);
+    const dataStrings = this._getStringsFromData(childComponents, axis);
 
     return _.isEmpty(dataStrings) ?
       tickMap || categoryMap || null :
@@ -309,9 +309,9 @@ export default class VictoryChart extends React.Component {
       }));
   }
 
-  _getStringsFromData(axis) {
+  _getStringsFromData(childComponents, axis) {
     // Collect strings from dataComponents and groupedDataComponents props.data
-    const dataComponents = this.dataComponents.concat(this.groupedDataComponents);
+    const dataComponents = childComponents.data.concat(childComponents.groupedData);
     const xyProps = dataComponents.map((component) => component.props[axis]);
     const dataProps = dataComponents.map((component) => component.props.data);
     const xyStrings = Data.getStringsFromXY(xyProps);
@@ -326,26 +326,28 @@ export default class VictoryChart extends React.Component {
       .value();
   }
 
-  getDomain(props, axis) {
+  getDomain(childComponents, axis) {
     let domain;
-    if (props.domain && (_.isArray(props.domain) || props.domain[axis])) {
-      domain = _.isArray(props.domain) ? props.domain : props.domain[axis];
+    if (this.props.domain && (_.isArray(this.props.domain) || this.props.domain[axis])) {
+      domain = _.isArray(this.props.domain) ? this.props.domain : this.props.domain[axis];
     } else {
-      const childDomains = this.childComponents.map((component) => {
+      const childDomains = childComponents.all.map((component) => {
         return component.type.getDomain(component.props, axis);
       });
       const allDomains = Collection.removeUndefined(_.flatten(childDomains));
       domain = [Math.min(...allDomains), Math.max(...allDomains)];
     }
-    const paddedPropsDomain = Domain.padDomain(domain, props, axis);
-    return this.orientDomain(paddedPropsDomain, axis);
+    const paddedPropsDomain = Domain.padDomain(domain, this.props, axis);
+    return this.orientDomain(paddedPropsDomain, axis, childComponents.axis);
   }
 
-  orientDomain(domain, axis) {
+  orientDomain(domain, axis, axisComponents) {
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
-    const orientation = this.axisOrientations[otherAxis];
+    // TODO not compatible with flipped axes
+    const defaultOrientation = otherAxis === "x" ? "bottom" : "left";
+    const orientation = axisComponents[otherAxis].props.orientation || defaultOrientation;
 
     if (this.independentAxis === "x") {
       return orientation === "bottom" || orientation === "left" ?
@@ -356,15 +358,16 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  getScale(props, axis, domain) {
-    const propsScale = Scale.getScaleFromProps(props, axis);
+  getScale(axisComponent, axis, domain) {
+    const propsScale = Scale.getScaleFromProps(this.props, axis);
       // otherwise use whatever scale the axis uses, (default: d3.scale.linear)
-    const axisScale = this.axisComponents[axis].type.getScale(this.axisComponents[axis].props);
+    const axisScale = axisComponent.type.getScale(axisComponent.props);
     const scale = propsScale || axisScale;
-    scale.range(Chart.getRange(props, axis));
+    scale.range(Chart.getRange(this.props, axis));
     scale.domain(domain[axis]);
     return scale;
   }
+
 
   getAxisOffset(props, calculatedProps) {
     const {domain, scale} = calculatedProps;
@@ -391,28 +394,27 @@ export default class VictoryChart extends React.Component {
     };
   }
 
+  getCategories(groupedComponents, stringMap, axis) {
+    if (_.isEmpty(groupedComponents)) {
+      return undefined;
+    }
+    // otherwise, create a set of tickValues base on groupedData categories
+    const allCategories = groupedComponents.map((component) => {
+      const categories = component.props.categories;
+      return categories && Collection.isArrayOfArrays(categories) ?
+        categories.map((arr) => (_.sum(arr) / arr.length)) : categories;
+    });
+    const uniqueCategories = _.compact(_.uniq(_.flatten(allCategories)));
+    return _.isEmpty(uniqueCategories) ? undefined : uniqueCategories;
+  }
+
   getTicksFromData(component, axis, calculatedProps) {
     const stringMap = calculatedProps.stringMap[axis];
-    let ticksFromCategories;
-    let ticksFromStringMap;
     // if tickValues are defined for an axis component use them
-
-    if (!_.isEmpty(this.groupedDataComponents) && axis === this.independentAxis) {
-      // otherwise, create a set of tickValues base on groupedData categories
-      const allCategoryTicks = _.map(this.groupedDataComponents, (component) => {
-        const categories = component.props.categories;
-        return categories && Collection.isArrayOfArrays(categories) ?
-          _.map(categories, (arr) => (_.sum(arr) / arr.length)) : categories;
-      });
-      const categoryTicks = _.compact(_.uniq(_.flatten(allCategoryTicks)));
-      const categoryArray = _.isEmpty(categoryTicks) ? undefined : categoryTicks;
-      ticksFromCategories = categoryArray && Collection.containsOnlyStrings(categoryArray) ?
-        _.map(categoryTicks, (tick) => stringMap[tick]) : categoryArray;
-    }
-    if (stringMap) {
-      // otherwise use the values from the string map
-      ticksFromStringMap = _.values(stringMap);
-    }
+    const categoryArray = calculatedProps.categories[axis];
+    const ticksFromCategories = categoryArray && Collection.containsOnlyStrings(categoryArray) ?
+      categoryArray.map((tick) => stringMap[tick]) : categoryArray;
+    const ticksFromStringMap = stringMap && _.values(stringMap);
     // when ticks is undefined, axis will determine it's own ticks
     return ticksFromCategories || ticksFromStringMap;
   }
@@ -435,9 +437,7 @@ export default class VictoryChart extends React.Component {
     } else if (stringMap !== null) {
       const tickValueArray = _.sortBy(_.values(stringMap), (n) => n);
       const invertedStringMap = _.invert(stringMap);
-      const dataNames = _.map(tickValueArray, (tick) => {
-        return invertedStringMap[tick];
-      });
+      const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
       // string ticks should have one tick of padding at the beginning
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
@@ -468,8 +468,8 @@ export default class VictoryChart extends React.Component {
   }
 
   getGroupedDataProps(child, calculatedProps) {
-    const {domain, scale, stringMap} = calculatedProps;
-    const categoryAxis = this.independentAxis;
+    const {domain, flipped, scale, stringMap} = calculatedProps;
+    const categoryAxis = flipped ? "y" : "x";
     const categories = stringMap[categoryAxis] && _.keys(stringMap[categoryAxis]);
     return {
       domain,
@@ -488,38 +488,43 @@ export default class VictoryChart extends React.Component {
     };
   }
 
-  getNewProps(child, calculatedProps) {
+  getNewProps(child, calculatedProps, childComponents) {
     const type = child.type && child.type.role;
     if (type === "axis") {
-      return this.getAxisProps(child, calculatedProps);
+      return this.getAxisProps(child, calculatedProps, childComponents);
     } else if (type === "bar") {
       return this.getGroupedDataProps(child, calculatedProps);
     }
     return this.getDataProps(child, calculatedProps);
   }
 
-  getCalculatedProps(props, child) {
+  getCalculatedProps(childComponents) {
     const domain = {
-      x: this.getDomain(props, "x"),
-      y: this.getDomain(props, "y")
+      x: this.getDomain(childComponents, "x"),
+      y: this.getDomain(childComponents, "y")
     };
+    const flipped = _.some(childComponents.all, (component) => component.props.horizontal);
     const scale = {
-      x: this.getScale(props, "x", domain),
-      y: this.getScale(props, "y", domain)
+      x: this.getScale(childComponents.axis.x, "x", domain),
+      y: this.getScale(childComponents.axis.y, "y", domain)
     };
     const stringMap = {
-      x: this.createStringMap("x"),
-      y: this.createStringMap("y")
+      x: this.createStringMap(childComponents, "x"),
+      y: this.createStringMap(childComponents, "y")
     };
-    return {domain, scale, stringMap};
+    const categories = {
+      x: this.getCategories(childComponents.groupedData, stringMap.x),
+      y: this.getCategories(childComponents.groupedData, stringMap.y)
+    };
+    return {categories, domain, flipped, scale, stringMap};
   }
 
   // the old ones were bad
   getNewChildren(childComponents, baseStyle) {
-    const calculatedProps = this.getCalculatedProps(this.props);
-    return _.map(childComponents, (child, index) => {
+    const calculatedProps = this.getCalculatedProps(childComponents);
+    return _.map(childComponents.all, (child, index) => {
       const style = _.merge({}, {parent: baseStyle.parent}, child.props.style);
-      const newProps = this.getNewProps(child, calculatedProps);
+      const newProps = this.getNewProps(child, calculatedProps, childComponents);
       return React.cloneElement(child, _.merge({}, newProps, {
         animate: child.props.animate || this.props.animate,
         height: this.props.height,
@@ -533,29 +538,35 @@ export default class VictoryChart extends React.Component {
     });
   }
 
-  // getAxisComponent(childComponents, axis) {
-  //   const axisComponents = childComponents.filter((component) => {
-  //     return
-  //       component.type.role === "axis"
-  //   });
-  //   return axisComponents[0];
-  // }
+  getAxisComponent(childComponents, axis) {
+    const getAxis = (component) => {
+      const flipped = _.some(childComponents, (component) => component.props.horizontal);
+      return component.type.getAxis(component.props, flipped)
+    };
 
-  // getAllComponents(props) {
-  //   const childComponents = this.getChildComponents(props);
-  //   const axisComponents = {
-  //     x: this.getAxisComponent(childComponents, "x"),
-  //     y: this.getAxisComponent(childComponents, "y")
-  //   }
-  //   return { childComponents, axisComponents }
-  // }
+    const axisComponents = childComponents.filter((component) => {
+      return component.type.role === "axis" && getAxis(component) === axis;
+    });
+    return axisComponents[0];
+  }
+
+  getAllComponents(props) {
+    const all = this.getChildComponents(props);
+    const axis = {
+      x: this.getAxisComponent(all, "x"),
+      y: this.getAxisComponent(all, "y")
+    };
+    const data = this.getDataComponents(all);
+    const groupedData = this.getGroupedDataComponents(all);
+    return { all, axis, data, groupedData };
+  }
 
   render() {
     this.getComponents(this.props);
     this.getCalculatedValues(this.props);
     const style = this.getStyles(this.props);
     // const allChildren = this.getAllComponents(this.props);
-    const childComponents = this.getChildComponents(this.props);
+    const childComponents = this.getAllComponents(this.props);
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(childComponents, style)}
