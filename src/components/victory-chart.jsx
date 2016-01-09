@@ -113,8 +113,6 @@ export default class VictoryChart extends React.Component {
 
   getComponents(props) {
     this.childComponents = this.getChildComponents(props);
-    this.dataComponents = this.getDataComponents();
-    this.groupedDataComponents = this.getGroupedDataComponents();
     this.axisComponents = this.getAxisComponents();
   }
 
@@ -239,7 +237,7 @@ export default class VictoryChart extends React.Component {
 
   getAxisComponents() {
     // TODO: currently flipped axes are only supported for bar, a groupedDataComponent
-    const flippedAxes = _.some(this.groupedDataComponents, (component) => {
+    const flippedAxes = _.some(this.getGroupedDataComponents(), (component) => {
       return component.props.horizontal;
     });
     const typicalOrientations = {
@@ -369,7 +367,7 @@ export default class VictoryChart extends React.Component {
   }
 
 
-  getAxisOffset(props, calculatedProps) {
+  getAxisOffset(calculatedProps, axisComponents) {
     const {domain, scale} = calculatedProps;
     // make the axes line up, and cross when appropriate
     const origin = {
@@ -381,16 +379,16 @@ export default class VictoryChart extends React.Component {
       y: this.axisOrientations.y || "left"
     };
     const orientationOffset = {
-      x: orientation.y === "left" ? 0 : props.width,
-      y: orientation.x === "bottom" ? props.height : 0
+      x: orientation.y === "left" ? 0 : this.props.width,
+      y: orientation.x === "bottom" ? this.props.height : 0
     };
     const calculatedOffset = {
       x: Math.abs(orientationOffset.x - scale.x.call(this, origin.x)),
       y: Math.abs(orientationOffset.y - scale.y.call(this, origin.y))
     };
     return {
-      x: this.axisComponents.x.offsetX || calculatedOffset.x,
-      y: this.axisComponents.y.offsetY || calculatedOffset.y
+      x: axisComponents.x.offsetX || calculatedOffset.x,
+      y: axisComponents.y.offsetY || calculatedOffset.y
     };
   }
 
@@ -446,10 +444,10 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  getAxisProps(child, calculatedProps) {
+  getAxisProps(child, calculatedProps, childComponents) {
     const {domain, scale} = calculatedProps;
     const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
-    const axisOffset = this.getAxisOffset(this.props, calculatedProps);
+    const axisOffset = this.getAxisOffset(calculatedProps, childComponents.axis);
     const tickValues = this.getTicksFromAxis(child, axis, calculatedProps) ||
       this.getTicksFromData(child, axis, calculatedProps);
     const tickFormat =
