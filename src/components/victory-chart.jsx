@@ -111,18 +111,6 @@ export default class VictoryChart extends React.Component {
     standalone: true
   };
 
-  getComponents(props) {
-    this.childComponents = this.getChildComponents(props);
-    this.axisComponents = this.getAxisComponents();
-  }
-
-  getCalculatedValues() {
-    this.axisOrientations = this.getAxisOrientations();
-    this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
-    this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
-
-  }
-
   getStyles(props) {
     const styleProps = props.style && props.style.parent;
     return {
@@ -221,63 +209,18 @@ export default class VictoryChart extends React.Component {
     return childComponents;
   }
 
-  getDataComponents() {
-    return _.filter(this.childComponents, (child) => {
+  getDataComponents(childComponents) {
+    return _.filter(childComponents, (child) => {
       const type = child.type && child.type.role;
       return type !== "bar" && type !== "axis";
     });
   }
 
-  getGroupedDataComponents() {
-    return _.filter(this.childComponents, (child) => {
+  getGroupedDataComponents(childComponents) {
+    return _.filter(childComponents, (child) => {
       const type = child.type && child.type.role;
       return type === "bar";
     });
-  }
-
-  getAxisComponents() {
-    // TODO: currently flipped axes are only supported for bar, a groupedDataComponent
-    const flippedAxes = _.some(this.getGroupedDataComponents(), (component) => {
-      return component.props.horizontal;
-    });
-    const typicalOrientations = {
-      independent: ["top", "bottom"],
-      dependent: ["left", "right"]
-    };
-    const typicalAxes = {independent: "x", dependent: "y"};
-    const atypicalAxes = {independent: "y", dependent: "x"};
-    const components = _.filter(this.childComponents, (child) => {
-      const type = child.type && child.type.role;
-      return type === "axis";
-    });
-    const componentsWithType = _.map(components, (component) => {
-      return [this.getAxisType(component), component];
-    });
-    const axisComponents = _.zipObject(componentsWithType);
-    const componentsWithOrientation = _.map(_.keys(axisComponents), (type) => {
-      const component = axisComponents[type];
-      const orientation = component.props.orientation;
-      if (!orientation) {
-        return flippedAxes ?
-        [atypicalAxes[type], component] : [typicalAxes[type], component];
-      }
-      return (_.includes(typicalOrientations, orientation)) ?
-          [atypicalAxes[type], component] : [typicalAxes[type], component];
-    });
-    return _.merge({}, axisComponents, _.zipObject(componentsWithOrientation));
-  }
-
-  getAxisOrientations() {
-    const getDefaultOrientation = (type) => {
-      return type === "independent" || type === "x" ? "bottom" : "left";
-    };
-
-    const orientations = _.map(_.keys(this.axisComponents), (type) => {
-      const component = this.axisComponents[type];
-      const orientation = component.props.orientation || getDefaultOrientation(type);
-      return [type, orientation];
-    });
-    return _.zipObject(orientations);
   }
 
   createStringMap(childComponents, axis) {
@@ -324,7 +267,7 @@ export default class VictoryChart extends React.Component {
       .value();
   }
 
-  getDomain(childComponents, axis) {
+  getDomain(childComponents, axis, orientations) {
     let domain;
     if (this.props.domain && (_.isArray(this.props.domain) || this.props.domain[axis])) {
       domain = _.isArray(this.props.domain) ? this.props.domain : this.props.domain[axis];
@@ -336,23 +279,22 @@ export default class VictoryChart extends React.Component {
       domain = [Math.min(...allDomains), Math.max(...allDomains)];
     }
     const paddedPropsDomain = Domain.padDomain(domain, this.props, axis);
-    return this.orientDomain(paddedPropsDomain, axis, childComponents.axis);
+    return this.orientDomain(paddedPropsDomain, axis, orientations);
   }
 
-  orientDomain(domain, axis, axisComponents) {
+  orientDomain(domain, axis, orientation) {
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
-    // TODO not compatible with flipped axes
     const defaultOrientation = otherAxis === "x" ? "bottom" : "left";
-    const orientation = axisComponents[otherAxis].props.orientation || defaultOrientation;
-
-    if (this.independentAxis === "x") {
-      return orientation === "bottom" || orientation === "left" ?
-        domain : domain.concat().reverse();
-    } else {
-      return orientation === "bottom" || orientation === "left" ?
+    const standardOrientation = orientation[otherAxis] === defaultOrientation;
+    const flippedAxis = orientation.x === "left" || orientation.x === "right";
+    if (flippedAxis) {
+      return standardOrientation ?
         domain.concat().reverse() : domain;
+    } else {
+      return standardOrientation ?
+        domain : domain.concat().reverse();
     }
   }
 
@@ -366,21 +308,16 @@ export default class VictoryChart extends React.Component {
     return scale;
   }
 
-
   getAxisOffset(calculatedProps, axisComponents) {
-    const {domain, scale} = calculatedProps;
+    const {domain, axisOrientations, scale} = calculatedProps;
     // make the axes line up, and cross when appropriate
     const origin = {
-      x: _.max([_.min(domain.x), 0]),
-      y: _.max([_.min(domain.y), 0])
-    };
-    const orientation = {
-      x: this.axisOrientations.x || "bottom",
-      y: this.axisOrientations.y || "left"
+      x: Math.max(Math.min(...domain.x), 0),
+      y: Math.max(Math.min(...domain.y), 0)
     };
     const orientationOffset = {
-      x: orientation.y === "left" ? 0 : this.props.width,
-      y: orientation.x === "bottom" ? this.props.height : 0
+      x: axisOrientations.y === "left" ? 0 : this.props.width,
+      y: axisOrientations.x === "bottom" ? this.props.height : 0
     };
     const calculatedOffset = {
       x: Math.abs(orientationOffset.x - scale.x.call(this, origin.x)),
@@ -392,7 +329,7 @@ export default class VictoryChart extends React.Component {
     };
   }
 
-  getCategories(groupedComponents, stringMap, axis) {
+  getCategories(groupedComponents, axis) {
     if (_.isEmpty(groupedComponents)) {
       return undefined;
     }
@@ -446,7 +383,7 @@ export default class VictoryChart extends React.Component {
 
   getAxisProps(child, calculatedProps, childComponents) {
     const {domain, scale} = calculatedProps;
-    const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
+    const axis = child.type.getAxis(child.props);
     const axisOffset = this.getAxisOffset(calculatedProps, childComponents.axis);
     const tickValues = this.getTicksFromAxis(child, axis, calculatedProps) ||
       this.getTicksFromData(child, axis, calculatedProps);
@@ -497,11 +434,15 @@ export default class VictoryChart extends React.Component {
   }
 
   getCalculatedProps(childComponents) {
-    const domain = {
-      x: this.getDomain(childComponents, "x"),
-      y: this.getDomain(childComponents, "y")
-    };
     const flipped = _.some(childComponents.all, (component) => component.props.horizontal);
+    const axisOrientations = {
+      x: this.getAxisOrientation(childComponents.axis.x, "x"),
+      y: this.getAxisOrientation(childComponents.axis.y, "y")
+    };
+    const domain = {
+      x: this.getDomain(childComponents, "x", axisOrientations),
+      y: this.getDomain(childComponents, "y", axisOrientations)
+    };
     const scale = {
       x: this.getScale(childComponents.axis.x, "x", domain),
       y: this.getScale(childComponents.axis.y, "y", domain)
@@ -511,10 +452,10 @@ export default class VictoryChart extends React.Component {
       y: this.createStringMap(childComponents, "y")
     };
     const categories = {
-      x: this.getCategories(childComponents.groupedData, stringMap.x),
-      y: this.getCategories(childComponents.groupedData, stringMap.y)
+      x: this.getCategories(childComponents.groupedData, "x"),
+      y: this.getCategories(childComponents.groupedData, "y")
     };
-    return {categories, domain, flipped, scale, stringMap};
+    return {axisOrientations, categories, domain, flipped, scale, stringMap};
   }
 
   // the old ones were bad
@@ -541,11 +482,21 @@ export default class VictoryChart extends React.Component {
       const flipped = _.some(childComponents, (component) => component.props.horizontal);
       return component.type.getAxis(component.props, flipped)
     };
-
     const axisComponents = childComponents.filter((component) => {
       return component.type.role === "axis" && getAxis(component) === axis;
     });
     return axisComponents[0];
+  }
+
+  getAxisOrientation(component, axis) {
+    if (component.props.orientation) {
+      return component.props.orientation;
+    }
+    const typicalOrientations = {x: "bottom", y: "left"};
+    const flippedOrientations = {x: "left", y: "bottom"};
+    const dependent = component.props.dependentAxis;
+    return (dependent && axis === "y") || (!dependent && axis === "x") ?
+      typicalOrientations[axis] : flippedOrientations[axis];
   }
 
   getAllComponents(props) {
@@ -560,8 +511,6 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
-    this.getComponents(this.props);
-    this.getCalculatedValues(this.props);
     const style = this.getStyles(this.props);
     // const allChildren = this.getAllComponents(this.props);
     const childComponents = this.getAllComponents(this.props);
