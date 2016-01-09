@@ -1,9 +1,9 @@
 import _ from "lodash";
-import React from "react";
+import React, { PropTypes } from "react";
 import Radium from "radium";
-import {Collection, Log, PropTypes, Chart, Data, Domain} from "victory-util";
-import {VictoryAxis} from "victory-axis";
-import {VictoryLine} from "victory-line";
+import { PropTypes as CustomPropTypes, Collection, Log, Chart, Data, Domain } from "victory-util";
+import { VictoryAxis } from "victory-axis";
+import { VictoryLine } from "victory-line";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
@@ -22,7 +22,7 @@ export default class VictoryChart extends React.Component {
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
      * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
      */
-    animate: React.PropTypes.object,
+    animate: PropTypes.object,
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -31,11 +31,11 @@ export default class VictoryChart extends React.Component {
      * available information.
      * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
      */
-    domain: React.PropTypes.oneOfType([
-      React.PropTypes.array,
-      React.PropTypes.shape({
-        x: PropTypes.domain,
-        y: PropTypes.domain
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({
+        x: CustomPropTypes.domain,
+        y: CustomPropTypes.domain
       })
     ]),
     /**
@@ -44,30 +44,30 @@ export default class VictoryChart extends React.Component {
      * from the origin to prevent crowding. This prop should be given as an object with
      * numbers specified for x and y.
      */
-    domainPadding: React.PropTypes.oneOfType([
-      React.PropTypes.shape({
-        x: PropTypes.nonNegative,
-        y: PropTypes.nonNegative
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: CustomPropTypes.nonNegative,
+        y: CustomPropTypes.nonNegative
       }),
-      PropTypes.nonNegative
+      CustomPropTypes.nonNegative
     ]),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
-    height: PropTypes.nonNegative,
+    height: CustomPropTypes.nonNegative,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
      * as a number or as an object with padding specified for top, bottom, left
      * and right.
      */
-    padding: React.PropTypes.oneOfType([
-      React.PropTypes.number,
-      React.PropTypes.shape({
-        top: React.PropTypes.number,
-        bottom: React.PropTypes.number,
-        left: React.PropTypes.number,
-        right: React.PropTypes.number
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number,
+        bottom: PropTypes.number,
+        left: PropTypes.number,
+        right: PropTypes.number
       })
     ]),
     /**
@@ -75,11 +75,11 @@ export default class VictoryChart extends React.Component {
      * given as a function, or as an object that specifies separate functions for x and y.
      * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
      */
-    scale: React.PropTypes.oneOfType([
-      PropTypes.scale,
-      React.PropTypes.shape({
-        x: PropTypes.scale,
-        y: PropTypes.scale
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({
+        x: CustomPropTypes.scale,
+        y: CustomPropTypes.scale
       })
     ]),
     /**
@@ -87,7 +87,7 @@ export default class VictoryChart extends React.Component {
      * or a <g> tag that will be included in an external svg. Set standalone to false to
      * compose VictoryChart with other components within an enclosing <svg> tag.
      */
-    standalone: React.PropTypes.bool,
+    standalone: PropTypes.bool,
     /**
      * The style prop specifies styles for your chart. Victory Chart relies on Radium,
      * so valid Radium style objects should work for this prop. Height, width, and
@@ -95,11 +95,11 @@ export default class VictoryChart extends React.Component {
      * are used to calculate the alignment of components within chart.
      * @examples {background: transparent, margin: 50}
      */
-    style: React.PropTypes.object,
+    style: PropTypes.object,
     /**
      * The width props specifies the width of the chart container element in pixels
      */
-    width: PropTypes.nonNegative
+    width: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
@@ -121,10 +121,7 @@ export default class VictoryChart extends React.Component {
     this.axisOrientations = this.getAxisOrientations();
     this.independentAxis = this.axisComponents.y.props.dependentAxis ? "x" : "y";
     this.dependentAxis = this.axisComponents.y.props.dependentAxis ? "y" : "x";
-    this.stringMap = {
-      x: this.createStringMap("x"),
-      y: this.createStringMap("y")
-    };
+
   }
 
   getStyles(props) {
@@ -400,17 +397,12 @@ export default class VictoryChart extends React.Component {
     };
   }
 
-  getTickValues(axis) {
-    const stringMap = this.stringMap[axis];
-    let ticksFromAxis;
+  getTicksFromData(component, axis, calculatedProps) {
+    const stringMap = calculatedProps.stringMap[axis];
     let ticksFromCategories;
     let ticksFromStringMap;
     // if tickValues are defined for an axis component use them
-    if (this.axisComponents[axis].props.tickValues) {
-      const axisTicks = this.axisComponents[axis].props.tickValues;
-      ticksFromAxis = Collection.containsOnlyStrings(axisTicks) && stringMap ?
-        _.map(axisTicks, (tick) => stringMap[tick]) : axisTicks;
-    }
+
     if (!_.isEmpty(this.groupedDataComponents) && axis === this.independentAxis) {
       // otherwise, create a set of tickValues base on groupedData categories
       const allCategoryTicks = _.map(this.groupedDataComponents, (component) => {
@@ -428,19 +420,27 @@ export default class VictoryChart extends React.Component {
       ticksFromStringMap = _.values(stringMap);
     }
     // when ticks is undefined, axis will determine it's own ticks
-    return ticksFromAxis || ticksFromCategories || ticksFromStringMap;
+    return ticksFromCategories || ticksFromStringMap;
   }
 
-  getTickFormat(axis, calculatedProps) {
-    const tickFormat = this.axisComponents[axis].props.tickFormat;
-    const tickValues = this.axisComponents[axis].props.tickValues;
-    if (tickFormat) {
-      return tickFormat;
-    } else if (tickValues && !Collection.containsStrings(tickValues)) {
+  getTicksFromAxis(component, axis, calculatedProps) {
+    const tickValues = component.props.tickValues;
+    if (!tickValues) {
+      return undefined
+    }
+    const stringMap = calculatedProps.stringMap[axis];
+    return Collection.containsOnlyStrings(tickValues) && stringMap ?
+      tickValues.map((tick) => stringMap[tick]) : tickValues;
+  }
+
+  getTickFormat(component, axis, calculatedProps) {
+    const tickValues = component.props.tickValues;
+    const stringMap = calculatedProps.stringMap[axis];
+    if (tickValues && !Collection.containsStrings(tickValues)) {
       return (x) => x;
-    } else if (this.stringMap[axis] !== null) {
-      const tickValueArray = _.sortBy(_.values(this.stringMap[axis]), (n) => n);
-      const invertedStringMap = _.invert(this.stringMap[axis]);
+    } else if (stringMap !== null) {
+      const tickValueArray = _.sortBy(_.values(stringMap), (n) => n);
+      const invertedStringMap = _.invert(stringMap);
       const dataNames = _.map(tickValueArray, (tick) => {
         return invertedStringMap[tick];
       });
@@ -452,29 +452,17 @@ export default class VictoryChart extends React.Component {
     }
   }
 
-  getCalculatedProps(props, child) {
-    const domain = {
-      x: this.getDomain(props, "x"),
-      y: this.getDomain(props, "y")
-    };
-    const scale = {
-      x: this.getScale(props, "x", domain),
-      y: this.getScale(props, "y", domain)
-    };
-    const animate = child.props.animate || this.props.animate;
-    return {animate, domain, scale};
-  }
-
   getAxisProps(child, calculatedProps) {
-    const {animate, domain, scale} = calculatedProps;
+    const {domain, scale} = calculatedProps;
     const axis = child.props.dependentAxis ? this.dependentAxis : this.independentAxis;
     const axisOffset = this.getAxisOffset(this.props, calculatedProps);
-    const tickFormat = this.getTickFormat(axis, calculatedProps);
-    const tickValues = this.getTickValues(axis);
+    const tickValues = this.getTicksFromAxis(child, axis, calculatedProps) ||
+      this.getTicksFromData(child, axis, calculatedProps);
+    const tickFormat =
+      child.props.tickFormat || this.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     return {
-      animate,
       domain: domain[axis],
       scale: scale[axis],
       tickValues,
@@ -486,11 +474,10 @@ export default class VictoryChart extends React.Component {
   }
 
   getGroupedDataProps(child, calculatedProps) {
-    const {animate, domain, scale} = calculatedProps;
+    const {domain, scale, stringMap} = calculatedProps;
     const categoryAxis = this.independentAxis;
-    const categories = this.stringMap[categoryAxis] && _.keys(this.stringMap[categoryAxis]);
+    const categories = stringMap[categoryAxis] && _.keys(stringMap[categoryAxis]);
     return {
-      animate,
       domain,
       scale,
       categories: child.props.categories || categories
@@ -498,33 +485,49 @@ export default class VictoryChart extends React.Component {
   }
 
   getDataProps(child, calculatedProps) {
-    const {animate, domain, scale} = calculatedProps;
+    const {domain, scale} = calculatedProps;
     const data = Data.getData(_.merge({}, child.props, {domain, scale}));
     return {
       data,
-      animate,
       domain,
       scale
     };
   }
 
-  getNewProps(child) {
+  getNewProps(child, calculatedProps) {
     const type = child.type && child.type.role;
-    const calculatedProps = this.getCalculatedProps(this.props, child);
     if (type === "axis") {
       return this.getAxisProps(child, calculatedProps);
-    } else if (_.includes(this.groupedDataTypes, type)) {
+    } else if (type === "bar") {
       return this.getGroupedDataProps(child, calculatedProps);
     }
     return this.getDataProps(child, calculatedProps);
   }
 
+  getCalculatedProps(props, child) {
+    const domain = {
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
+    };
+    const scale = {
+      x: this.getScale(props, "x", domain),
+      y: this.getScale(props, "y", domain)
+    };
+    const stringMap = {
+      x: this.createStringMap("x"),
+      y: this.createStringMap("y")
+    };
+    return {domain, scale, stringMap};
+  }
+
   // the old ones were bad
-  getNewChildren(baseStyle) {
-    return _.map(this.childComponents, (child, index) => {
+  getNewChildren(childComponents, baseStyle) {
+    const calculatedProps = this.getCalculatedProps(this.props);
+    return _.map(childComponents, (child, index) => {
       const style = _.merge({}, {parent: baseStyle.parent}, child.props.style);
-      const newProps = this.getNewProps(child);
+      const newProps = this.getNewProps(child, calculatedProps);
       return React.cloneElement(child, _.merge({}, newProps, {
+        animate: child.props.animate || this.props.animate,
         height: this.props.height,
         width: this.props.width,
         padding: Chart.getPadding(this.props),
@@ -540,9 +543,10 @@ export default class VictoryChart extends React.Component {
     this.getComponents(this.props);
     this.getCalculatedValues(this.props);
     const style = this.getStyles(this.props);
+    const childComponents = this.getChildComponents(this.props);
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(style)}
+        {this.getNewChildren(childComponents, style)}
       </g>
     );
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
