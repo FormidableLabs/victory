@@ -2,8 +2,6 @@ import compact from "lodash/array/compact";
 import flatten from "lodash/array/flatten";
 import invert from "lodash/object/invert";
 import isEmpty from "lodash/lang/isEmpty";
-import keys from "lodash/object/keys";
-import merge from "lodash/object/merge";
 import some from "lodash/collection/some";
 import sortBy from "lodash/collection/sortBy";
 import sum from "lodash/math/sum";
@@ -11,7 +9,7 @@ import uniq from "lodash/array/uniq";
 import values from "lodash/object/values";
 import zipObject from "lodash/array/zipObject";
 
-import { Collection, Log, Chart, Data, Domain, Scale } from "victory-util";
+import { Collection, Log, Data, Domain, Scale } from "victory-util";
 import React from "react";
 
 const getAxisType = (child) => {
@@ -19,7 +17,7 @@ const getAxisType = (child) => {
     return undefined;
   }
   return child.props.dependentAxis ? "dependent" : "independent";
-}
+};
 
 const getDataComponents = (childComponents, type) => {
   const predicate = {
@@ -113,5 +111,192 @@ const getChildComponents = (props, defaultData, defaultAxes) => {
   return childComponents;
 };
 
+const getAxisComponent = (childComponents, axis) => {
+  const getAxis = (component) => {
+    const flipped = some(childComponents, (child) => child.props.horizontal);
+    return component.type.getAxis(component.props, flipped);
+  };
+  const axisComponents = childComponents.filter((component) => {
+    return component.type.role === "axis" && getAxis(component) === axis;
+  });
+  return axisComponents[0];
+};
 
-export default { getChildComponents, getDataComponents};
+const _getStringsFromData = (childComponents, axis) => {
+  // Collect strings from dataComponents and groupedDataComponents props.data
+  const dataComponents = getDataComponents(childComponents, "all");
+  const xyProps = dataComponents.map((component) => component.props[axis]);
+  const dataProps = dataComponents.map((component) => component.props.data);
+  const xyStrings = Data.getStringsFromXY(xyProps);
+  const dataStrings = Data.getStringsFromData(dataProps, axis);
+  const allStrings = flatten([...xyStrings, ...dataStrings]);
+  // return a unique set of strings
+  return compact(uniq(allStrings));
+};
+
+const createStringMap = (childComponents, categories, axis) => {
+  // if tick values exist and are strings, create a map using those strings
+  // dont alter the order.
+  const tickValues = getAxisComponent(childComponents, axis).props.tickValues;
+  const tickMap = Data.getStringsFromAxes(tickValues, axis);
+
+  // if categories exist in grouped data, create a string map based on
+  // categories which preserves order
+  const categoryMap = Data.getStringsFromCategories(categories[axis], axis);
+
+  // collect all the strings from data and x / y props, and return a
+  // unique sorted set of strings
+  const dataStrings = _getStringsFromData(childComponents, axis);
+
+  return isEmpty(dataStrings) ?
+    tickMap || categoryMap || null :
+    zipObject(dataStrings.map((string, index) => {
+      const tickValue = tickMap && tickMap[string];
+      const categoryValue = categoryMap && categoryMap[string];
+      const value = tickValue || categoryValue || index + 1;
+      return [string, value];
+    }));
+};
+
+const getScale = (props, axisComponent, axis) => {
+  const propsScale = Scale.getScaleFromProps(props, axis);
+    // otherwise use whatever scale the axis uses, (default: d3.scale.linear)
+  const axisScale = axisComponent.type.getScale(axisComponent.props);
+  return propsScale || axisScale;
+};
+
+const getAxisOffset = (props, calculatedProps) => {
+  const {axisComponents, domain, axisOrientations, scale} = calculatedProps;
+  // make the axes line up, and cross when appropriate
+  const origin = {
+    x: Math.max(Math.min(...domain.x), 0),
+    y: Math.max(Math.min(...domain.y), 0)
+  };
+  const orientationOffset = {
+    x: axisOrientations.y === "left" ? 0 : props.width,
+    y: axisOrientations.x === "bottom" ? props.height : 0
+  };
+  const calculatedOffset = {
+    x: Math.abs(orientationOffset.x - scale.x.call(null, origin.x)),
+    y: Math.abs(orientationOffset.y - scale.y.call(null, origin.y))
+  };
+  return {
+    x: axisComponents.x.offsetX || calculatedOffset.x,
+    y: axisComponents.y.offsetY || calculatedOffset.y
+  };
+};
+
+const getCategories = (childComponents) => {
+  const groupedComponents = getDataComponents(childComponents, "grouped");
+  if (isEmpty(groupedComponents)) {
+    return undefined;
+  }
+  // otherwise, create a set of tickValues base on groupedData categories
+  const allCategories = groupedComponents.map((component) => {
+    const categories = component.props.categories;
+    return categories && Collection.isArrayOfArrays(categories) ?
+      categories.map((arr) => (sum(arr) / arr.length)) : categories;
+  });
+  const uniqueCategories = compact(uniq(flatten(allCategories)));
+  return isEmpty(uniqueCategories) ? undefined : uniqueCategories;
+};
+
+const getTicksFromData = (component, axis, calculatedProps) => {
+  const stringMap = calculatedProps.stringMap[axis];
+  // if tickValues are defined for an axis component use them
+  const categoryArray = calculatedProps.categories[axis];
+  const ticksFromCategories = categoryArray && Collection.containsOnlyStrings(categoryArray) ?
+    categoryArray.map((tick) => stringMap[tick]) : categoryArray;
+  const ticksFromStringMap = stringMap && values(stringMap);
+  // when ticks is undefined, axis will determine it's own ticks
+  return ticksFromCategories || ticksFromStringMap;
+};
+
+const getTicksFromAxis = (component, axis, calculatedProps) => {
+  const tickValues = component.props.tickValues;
+  if (!tickValues) {
+    return undefined;
+  }
+  const stringMap = calculatedProps.stringMap[axis];
+  return Collection.containsOnlyStrings(tickValues) && stringMap ?
+    tickValues.map((tick) => stringMap[tick]) : tickValues;
+};
+
+const getTicks = (...args) => {
+  return getTicksFromAxis(...args) || getTicksFromData(...args);
+};
+
+const getTickFormat = (component, axis, calculatedProps) => {
+  const tickValues = component.props.tickValues;
+  const stringMap = calculatedProps.stringMap[axis];
+  if (tickValues && !Collection.containsStrings(tickValues)) {
+    return (x) => x;
+  } else if (stringMap !== null) {
+    const tickValueArray = sortBy(values(stringMap), (n) => n);
+    const invertedStringMap = invert(stringMap);
+    const dataNames = tickValueArray.map((tick) => invertedStringMap[tick]);
+    // string ticks should have one tick of padding at the beginning
+    const dataTicks = ["", ...dataNames, ""];
+    return (x) => dataTicks[x];
+  } else {
+    return calculatedProps.scale[axis].tickFormat();
+  }
+};
+
+const getAxisOrientation = (component, axis) => {
+  if (component.props.orientation) {
+    return component.props.orientation;
+  }
+  const typicalOrientations = {x: "bottom", y: "left"};
+  const flippedOrientations = {x: "left", y: "bottom"};
+  const dependent = component.props.dependentAxis;
+  return (dependent && axis === "y") || (!dependent && axis === "x") ?
+    typicalOrientations[axis] : flippedOrientations[axis];
+};
+
+const orientDomain = (domain, axis, orientation) => {
+  // If the other axis is in a reversed orientation, the domain of this axis
+  // needs to be reversed
+  const otherAxis = axis === "x" ? "y" : "x";
+  const defaultOrientation = otherAxis === "x" ? "bottom" : "left";
+  const standardOrientation = orientation[otherAxis] === defaultOrientation;
+  const flippedAxis = orientation.x === "left" || orientation.x === "right";
+  if (flippedAxis) {
+    return standardOrientation ?
+      domain.concat().reverse() : domain;
+  } else {
+    return standardOrientation ?
+      domain : domain.concat().reverse();
+  }
+};
+
+/*eslint-disable max-params */
+const getDomain = (props, childComponents, axis, orientations) => {
+  let domain;
+  if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
+    domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
+  } else {
+    const childDomains = childComponents.map((component) => {
+      return component.type.getDomain(component.props, axis);
+    });
+    const allDomains = Collection.removeUndefined(flatten(childDomains));
+    domain = [Math.min(...allDomains), Math.max(...allDomains)];
+  }
+  const paddedDomain = Domain.padDomain(domain, props, axis);
+  return orientDomain(paddedDomain, axis, orientations);
+};
+/*eslint-enable max-params */
+
+export default {
+  createStringMap,
+  getAxisComponent,
+  getAxisOffset,
+  getAxisOrientation,
+  getCategories,
+  getChildComponents,
+  getDataComponents,
+  getDomain,
+  getScale,
+  getTicks,
+  getTickFormat
+};
