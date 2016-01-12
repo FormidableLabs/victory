@@ -4,7 +4,7 @@ import some from "lodash/collection/some";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
+import { PropTypes as CustomPropTypes, Chart, Data, Domain } from "victory-util";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
 import * as Helpers from "../helper-methods";
@@ -185,9 +185,19 @@ export default class VictoryChart extends React.Component {
       x: Helpers.getAxisOrientation(axisComponents.x, "x"),
       y: Helpers.getAxisOrientation(axisComponents.y, "y")
     };
+    const padDomain = (axis) => {
+      return (domain) => Domain.padDomain(domain, props, axis)
+    };
+    const orientDomain = (axis) => {
+      return (domain) => Helpers.orientDomain(domain, axisOrientations, axis)
+    };
+    const getBaseDomain = (axis) => {
+      return () => Helpers.getDomain(props, childComponents, axis)
+    };
+    const getDomain = (axis) => _.flow(getBaseDomain(axis), padDomain(axis), orientDomain(axis));
     const domain = {
-      x: Helpers.getDomain(props, childComponents, "x", axisOrientations),
-      y: Helpers.getDomain(props, childComponents, "y", axisOrientations)
+      x: getDomain("x")(),
+      y: getDomain("y")()
     };
     const range = {
       x: Chart.getRange(props, "x"),

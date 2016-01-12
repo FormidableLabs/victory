@@ -254,7 +254,7 @@ const getAxisOrientation = (component, axis) => {
     typicalOrientations[axis] : flippedOrientations[axis];
 };
 
-const orientDomain = (domain, axis, orientation) => {
+const orientDomain = (domain, orientation, axis) => {
   // If the other axis is in a reversed orientation, the domain of this axis
   // needs to be reversed
   const otherAxis = axis === "x" ? "y" : "x";
@@ -282,8 +282,7 @@ const getDomain = (props, childComponents, axis, orientations) => {
     const allDomains = Collection.removeUndefined(flatten(childDomains));
     domain = [Math.min(...allDomains), Math.max(...allDomains)];
   }
-  const paddedDomain = Domain.padDomain(domain, props, axis);
-  return orientDomain(paddedDomain, axis, orientations);
+  return domain
 };
 /*eslint-enable max-params */
 
@@ -298,5 +297,6 @@ export default {
   getDomain,
   getScale,
   getTicks,
-  getTickFormat
+  getTickFormat,
+  orientDomain
 };
