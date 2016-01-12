@@ -27,7 +27,6 @@
   "dependencies": {
     "builder": "~2.2.2",
     "builder-victory-component": "~0.0.9",
-    "history": "~1.13.1",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.0.13",
@@ -44,6 +43,7 @@
     "chai": "^3.2.0",
     "file-loader": "^0.8.5",
     "formidable-landers": "latest",
+    "history": "~1.13.1",
     "mocha": "^2.3.3",
     "react": "0.14.x",
     "react-addons-test-utils": "^0.14.0",
