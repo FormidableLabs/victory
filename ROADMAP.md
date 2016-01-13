@@ -6,21 +6,19 @@ The following roadmap pertains to Victory as an ecosystem, and specific features
 
 ### [Alpha](https://github.com/FormidableLabs/victory/milestones/Alpha)
 
-Expected release: December 2015
+Released: December 2015
 
-- The following components documented and ready to use; API subject to change:
-  - [victory-animation](https://github.com/FormidableLabs/victory-animation)
-  - [victory-axis](https://github.com/FormidableLabs/victory-axis)
-  - [victory-bar](https://github.com/FormidableLabs/victory-bar)
-  - [victory-chart](https://github.com/FormidableLabs/victory-chart)
-  - [victory-label](https://github.com/FormidableLabs/victory-label)
-  - [victory-line](https://github.com/FormidableLabs/victory-line)
-  - [victory-pie](https://github.com/FormidableLabs/victory-pie)
-  - [victory-scatter](https://github.com/FormidableLabs/victory-scatter)
-- Proof of concept react native implementation
+- [victory-animation](https://github.com/FormidableLabs/victory-animation)
+- [victory-axis](https://github.com/FormidableLabs/victory-axis)
+- [victory-bar](https://github.com/FormidableLabs/victory-bar)
+- [victory-chart](https://github.com/FormidableLabs/victory-chart)
+- [victory-label](https://github.com/FormidableLabs/victory-label)
+- [victory-line](https://github.com/FormidableLabs/victory-line)
+- [victory-pie](https://github.com/FormidableLabs/victory-pie)
+- [victory-scatter](https://github.com/FormidableLabs/victory-scatter)
 - Basic code coverage across all Victory components (#37)
 
-### [Beta](https://github.com/FormidableLabs/victory/milestones/Beta)
+### [Alpha 2](https://github.com/FormidableLabs/victory/milestones/Alpha%202)
 
 Expected release: January 2016
 
@@ -31,7 +29,7 @@ Expected release: January 2016
 - General interactivity support
 - 75% code coverage across all Victory components
 
-### [RC1](https://github.com/FormidableLabs/victory/milestones/RC1)
+### [Alpha 3](https://github.com/FormidableLabs/victory/milestones/Alpha%203)
 
 Expected release: February 2016
 
