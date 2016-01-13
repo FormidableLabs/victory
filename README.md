@@ -198,39 +198,9 @@ The resulting render looks like:
 
 ![array demo](http://i.imgur.com/zuLvSnu.gif)
 
-## The API
+## API Documentation
 
-### Props
-
-The following props are supported:
-
-####**data**
-
-*An Object or an Array.* This is the data you want to transition between when this prop is updated.
-
-*Default value:* `{}`
-
-####**delay**
-
-*A Number.* This value (in milliseconds) is the delay before the transition starts. For array based transitions, this delay occurs before each step.
-
-*Default value:* `0`
-
-####**easing**
-
-*A String.* This value controls the easing of your transition. Valid values can be found in the [d3-ease README](https://github.com/d3/d3-ease).
-
-*Default value:* `poly-in-out`
-
-####**velocity**
-
-*A Float.* This value controls the speed of your transitions
-
-*Default value:* `0.02`
-
-####**onEnd**
-
-*A Function.* This function gets called when the current animation is complete. If the animation is interrupted with new values, it fires after all values have been traversed.
+See http://victory.formidable.com/docs/victory-animation/
 
 ## Development
 
