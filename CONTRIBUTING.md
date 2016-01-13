@@ -18,7 +18,7 @@ If you can't find an existing issue, [create a new issue](https://github.com/For
 
 ### 2. Fix bugs
 
-Feel like writing some code? The best place to get familiar with the code base is to fix a bug!
+Feel like writing some code? The best way to get familiar with the code base is to fix a bug!
 
 `Option a)` You can browse bugs repo by repo:
 
