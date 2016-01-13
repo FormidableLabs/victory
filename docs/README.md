@@ -4,22 +4,22 @@ The Victory documentation site (currently `projects.formidablelabs.com/victory`;
 
 ### Development
 
-Run `npm run dev-docs` to start `webpack-dev-server` at port 3000. Run `npm run check` for the usual linting, which covers the `docs` source.
+Run `builder run docs-dev` to start `webpack-dev-server` at port 3000. Run `builder run check` for the usual linting, which covers the `docs` source.
 
 ### Deployment
 
-On `master`, run `npm run build-static-docs` to build the static site in `docs/build`, and commit your changes. (As with Heroku, Git needs to know what's changed before it can push, so we're stuck committing built artifacts.) Then run `npm run push-gh-pages` to perform a subtree push from `/docs/build` (local) to root in the `gh-pages` branch (remote), updating the live site. Finally, run `git push origin master` to get the static build into shared history--see Gotchas.
+On `master`, run `builder run docs-build-static` to build the static site in `docs/build`, and commit your changes. (As with Heroku, Git needs to know what's changed before it can push, so we're stuck committing built artifacts.) Then run `builder run push-gh-pages` to perform a subtree push from `/docs/build` (local) to root in the `gh-pages` branch (remote), updating the live site. Finally, run `git push origin master` to get the static build into shared history--see Gotchas.
 
 ### Gotchas
 
-* We use pushState routing for clean URLs (`myurl.com/path`, not `myurl.com/#/path`), but we don't have any Node app rendering content on the server side. This is fine in production because the static build step generates content for every route, but it can be a headache in development. If you've run `npm run dev-docs` and navigated to a nested route like `localhost:3000/docs/my-component`, you can't just refresh the page to see changes--for now, you have to refresh `localhost:3000` and then navigate back to the page you're interested in.
+* We use pushState routing for clean URLs (`myurl.com/path`, not `myurl.com/#/path`), but we don't have any Node app rendering content on the server side. This is fine in production because the static build step generates content for every route, but it can be a headache in development. If you've run `builder run docs-dev` and navigated to a nested route like `localhost:3000/docs/my-component`, you can't just refresh the page to see changes--for now, you have to refresh `localhost:3000` and then navigate back to the page you're interested in.
 
 * Since the live site lives in a nested route (`/victory/`), we have to do a few things differently:
   * In `docs/router.jsx`, we instantiate `history` with the `basename` `/victory`.
   * In both `docs/components/static-index.jsx` (prod base page) and `docs/index.html` (local dev base page), we specific a `base href`: the path relative to which relative content in served. In `static-index`, that path is `/victory` (since that's where the prod site lives); in `index.html`, it's `/` (since we're serving at `localhost:3000`). Then, elsewhere, we serve all assets with relative paths.
 This works great in production and pretty well in development (previous Gotcha aside), but it doesn't work when previewing built assets. That is, if you `cd` into `docs/build` and start a server with something like `python -m SimpleHTTPServer`, the app won't be able to find its assets: the `build-static-docs` step builds into `static-index`, which specifies the `/victory` base href for prod, which doesn't exist locally. Point is, if you see this happen, no worries--nothing's wrong!
 
-* Having trouble with `npm run push-gh-pages`? The remote history is probably ahead of your local history, which means someone else ran `push-gh-pages` and it's not in your history tree; maybe they forgot to push to master after building and deploying. You need the equivalent of `--force`, but that's not an option with subtree pushes. Luckily, you can chain commands together like this:
+* Having trouble with `builder run push-gh-pages`? The remote history is probably ahead of your local history, which means someone else ran `push-gh-pages` and it's not in your history tree; maybe they forgot to push to master after building and deploying. You need the equivalent of `--force`, but that's not an option with subtree pushes. Luckily, you can chain commands together like this:
 ```
 git push origin `git subtree split --prefix docs/build master`:gh-pages --force
 ```
