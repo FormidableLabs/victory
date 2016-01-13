@@ -5,7 +5,7 @@ import React from "react";
 import { VictorySettings, VictoryTheme, Header, Footer } from "formidable-landers";
 
 import BaseDocs from "./docs";
-import { components, routing as routingConfig } from "../config";
+import { components, headerText, routing as routingConfig } from "../config";
 import Sidebar from "./sidebar";
 
 @Radium
@@ -19,8 +19,8 @@ class ComponentDocs extends BaseDocs {
     const Docs = _.findWhere(components, { slug: this.props.params.component }).docs;
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header backgroundColor={VictorySettings.palestSand}>
-          Looking for custom dashboards or data visualization consulting? Let&rsquo;s talk.
+        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: "block"}}>
+          {headerText}
         </Header>
         <main style={this.getMainStyles()}>
           <Sidebar active={`${this.props.params.component}`} />
