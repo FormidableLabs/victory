@@ -29,7 +29,7 @@ class App extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: 'block'}}>
+        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: "block"}}>
           {headerText}
         </Header>
         <main className="Container" style={this.getMainStyles()}>

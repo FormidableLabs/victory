@@ -19,7 +19,7 @@ class ComponentDocs extends BaseDocs {
     const Docs = _.findWhere(components, { slug: this.props.params.component }).docs;
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: 'block'}}>
+        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: "block"}}>
           {headerText}
         </Header>
         <main style={this.getMainStyles()}>
