@@ -5,7 +5,7 @@ import Radium, { Style } from "radium";
 import React from "react";
 import ReactDOM from "react-dom";
 
-import { components, routing as routingConfig } from "../config";
+import { components, headerText, routing as routingConfig } from "../config";
 import { VictorySettings, VictoryTheme, Header, Footer } from "formidable-landers";
 import * as Victory from "../../src/index";
 const { VictoryChart, VictoryLine, VictoryPie } = Victory;
@@ -61,8 +61,8 @@ class Docs extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header backgroundColor={VictorySettings.palestSand}>
-          Looking for custom dashboards or data visualization consulting? Let&rsquo;s talk.
+        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: 'block'}}>
+          {headerText}
         </Header>
         <main style={this.getMainStyles()}>
           <Sidebar active={""} />
