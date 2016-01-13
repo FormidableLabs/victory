@@ -3,9 +3,11 @@
 VictoryPie
 =============
 
-`VictoryPie` is a reusable pie chart component for [React](https://github.com/facebook/react). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
+`VictoryPie` draws an SVG pie or donut chart with [React](https://github.com/facebook/react). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
 
-Detailed documentation and interactive examples can be found [here](https://victory.formidable.com/victory-pie)
+API Documentation
+-----------------
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/victory-pie
 
 IMPORTANT
 =========
