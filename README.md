@@ -8,7 +8,7 @@ VictoryLabel is a text component that provides several enhancements over SVG’s
 API Documentation
 -----------------
 
-See http://victory.formidable.com/docs/victory-label/
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-label/
 
 IMPORTANT
 =========
