@@ -109,6 +109,11 @@ class App extends React.Component {
                 https://gitter.im/FormidableLabs/victory
               </a>
             </p>
+            <p className="Copy">
+              Roadmap: <a href="https://github.com/FormidableLabs/victory/blob/master/ROADMAP.md">
+                ROADMAP.md
+              </a>
+            </p>
             <p className="Copy">Component docs:</p>
             <ul className="Copy">
               {components.map((component) => {
