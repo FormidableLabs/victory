@@ -3,7 +3,17 @@
 Starter Victory Component
 =========================
 
-UPDATE THIS README!
+VictoryLabel is a text component that provides several enhancements over SVG’s `<text>` element.
+
+API Documentation
+-----------------
+
+See http://victory.formidable.com/docs/victory-label/
+
+IMPORTANT
+=========
+
+This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
 
 ## Development
 
