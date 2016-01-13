@@ -1,12 +1,16 @@
-# Victory Roadmap
+# Victory Release Roadmap
 
-The following roadmap pertains to Victory as an ecosystem, and specific features will be developed as part of existing or new Victory subcomponents. Releases are represented by GitHub milestones, and features by GitHub issues.
+Release schedule for the Victory ecosystem. Subject to change and reprioritization.
+
+## Feature requests
+
+We'd love :heart: to hear what you think we should build! First, please [search for an existing issue](https://github.com/FormidableLabs/victory/issues) with your feature request, and `+1` it. If nobody has suggested it yet, please [create a new issue](https://github.com/FormidableLabs/victory/issues/new?labels=enhancement)!
 
 ## Releases
 
 ### [Alpha](https://github.com/FormidableLabs/victory/milestones/Alpha)
 
-Released: December 2015
+Released: December 2015 ([`v0.1.0`](https://github.com/FormidableLabs/victory/releases/tag/v0.1.0))
 
 - [victory-animation](https://github.com/FormidableLabs/victory-animation)
 - [victory-axis](https://github.com/FormidableLabs/victory-axis)
