@@ -16,7 +16,7 @@ This component works with:
 
 API Documentation
 -----------------
-See http://victory.formidable.com/docs/victory-chart/
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-chart/
 
 IMPORTANT
 =========
