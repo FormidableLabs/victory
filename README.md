@@ -200,7 +200,7 @@ The resulting render looks like:
 
 ## API Documentation
 
-See http://victory.formidable.com/docs/victory-animation/
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-animation/
 
 ## Development
 
