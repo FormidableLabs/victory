@@ -134,7 +134,7 @@ const createStringMap = (childComponents, categories, axis) => {
   const axisComponent = getAxisComponent(childComponents, axis);
   const tickStrings = Data.getStringsFromAxes(axisComponent.props, axis);
 
-  const categoryStrings = compact(flatten(childComponents.map((component, axis) => {
+  const categoryStrings = compact(flatten(childComponents.map((component) => {
     return Data.getStringsFromCategories(component.props, axis);
   })));
 
@@ -259,7 +259,7 @@ const orientDomain = (domain, orientation, axis) => {
 };
 
 /*eslint-disable max-params */
-const getDomain = (props, childComponents, axis, orientations) => {
+const getDomain = (props, childComponents, orientations, axis) => {
   let domain;
   if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
     domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
@@ -270,7 +270,8 @@ const getDomain = (props, childComponents, axis, orientations) => {
     const allDomains = Collection.removeUndefined(flatten(childDomains));
     domain = [Math.min(...allDomains), Math.max(...allDomains)];
   }
-  return domain
+  const paddedDomain = Domain.padDomain(domain, props, axis);
+  return orientDomain(paddedDomain, orientations, axis);
 };
 /*eslint-enable max-params */
 
