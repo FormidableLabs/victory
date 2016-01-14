@@ -22,6 +22,7 @@
   "dependencies": {
     "builder": "~2.2.2",
     "builder-victory-component": "~0.0.5",
+    "d3-scale": "^0.2.0",
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
