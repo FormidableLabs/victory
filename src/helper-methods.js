@@ -124,38 +124,26 @@ const getAxisComponent = (childComponents, axis) => {
 
 const _getStringsFromData = (childComponents, axis) => {
   // Collect strings from dataComponents and groupedDataComponents props.data
-  const dataComponents = getDataComponents(childComponents, "all");
-  const xyProps = dataComponents.map((component) => component.props[axis]);
-  const dataProps = dataComponents.map((component) => component.props.data);
-  const xyStrings = Data.getStringsFromXY(xyProps);
-  const dataStrings = Data.getStringsFromData(dataProps, axis);
-  const allStrings = flatten([...xyStrings, ...dataStrings]);
-  // return a unique set of strings
-  return compact(uniq(allStrings));
+  const xyStrings = childComponents.map((child) => Data.getStringsFromXY(child, axis));
+  const dataStrings = childComponents.map((child) => Data.getStringsFromData(child, axis));
+  const allStrings = compact(flatten([...xyStrings, ...dataStrings]));
+  return uniq(allStrings);
 };
 
 const createStringMap = (childComponents, categories, axis) => {
-  // if tick values exist and are strings, create a map using those strings
-  // dont alter the order.
-  const tickValues = getAxisComponent(childComponents, axis).props.tickValues;
-  const tickMap = Data.getStringsFromAxes(tickValues, axis);
+  const axisComponent = getAxisComponent(childComponents, axis);
+  const tickStrings = Data.getStringsFromAxes(axisComponent.props, axis);
 
-  // if categories exist in grouped data, create a string map based on
-  // categories which preserves order
-  const categoryMap = Data.getStringsFromCategories(categories[axis], axis);
+  const categoryStrings = compact(flatten(childComponents.map((component, axis) => {
+    return Data.getStringsFromCategories(component.props, axis);
+  })));
 
-  // collect all the strings from data and x / y props, and return a
-  // unique sorted set of strings
   const dataStrings = _getStringsFromData(childComponents, axis);
 
-  return isEmpty(dataStrings) ?
-    tickMap || categoryMap || null :
-    zipObject(dataStrings.map((string, index) => {
-      const tickValue = tickMap && tickMap[string];
-      const categoryValue = categoryMap && categoryMap[string];
-      const value = tickValue || categoryValue || index + 1;
-      return [string, value];
-    }));
+  const allStrings = uniq(compact([...tickStrings, ...categoryStrings, ...dataStrings]));
+
+  return isEmpty(allStrings) ? null :
+    zipObject(allStrings.map((string, index) => [string, index + 1]));
 };
 
 const getScale = (props, axisComponent, axis) => {
