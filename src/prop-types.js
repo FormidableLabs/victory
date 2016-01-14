@@ -1,6 +1,6 @@
+import bind from "lodash/function/bind";
 import { PropTypes } from "react";
 import { getConstructor, getConstructorName } from "./type";
-import _ from "lodash";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -23,8 +23,8 @@ export const makeChainable = function (validator) {
     }
     return validator(props, propName, componentName);
   };
-  const chainable = _.bind(_chainable, null, false);
-  chainable.isRequired = _.bind(_chainable, null, true);
+  const chainable = bind(_chainable, null, false);
+  chainable.isRequired = bind(_chainable, null, true);
   return chainable;
 };
 
