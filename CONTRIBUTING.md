@@ -113,7 +113,7 @@ Victory components should:
 - Have attractive default styling
 - Take a `style` prop, and intelligently merge provided (and scoped) styles with default styles
 
-```
+```js
 // default styles
 const styles = {
   parent: {
