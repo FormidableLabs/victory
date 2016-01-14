@@ -1,3 +1,4 @@
+import Chart from "./chart";
 import * as Collection from "./collection";
 import * as Log from "./log";
 import Scale from "./scale";
@@ -6,6 +7,7 @@ import * as Type from "./type";
 import * as PropTypes from "./prop-types";
 
 export default {
+  Chart,
   Collection,
   Log,
   Scale,
