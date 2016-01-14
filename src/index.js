@@ -1,6 +1,7 @@
 import Chart from "./chart";
 import * as Collection from "./collection";
 import Data from "./data";
+import Domain from "./domain";
 import * as Log from "./log";
 import Scale from "./scale";
 import * as Style from "./style";
@@ -11,6 +12,7 @@ export default {
   Chart,
   Collection,
   Data,
+  Domain,
   Log,
   Scale,
   Style,
