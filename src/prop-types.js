@@ -1,6 +1,7 @@
+import bind from "lodash/function/bind";
 import { PropTypes } from "react";
 import { getConstructor, getConstructorName } from "./type";
-import _ from "lodash";
+import * as Scale from "./scale";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -23,8 +24,8 @@ export const makeChainable = function (validator) {
     }
     return validator(props, propName, componentName);
   };
-  const chainable = _.bind(_chainable, null, false);
-  chainable.isRequired = _.bind(_chainable, null, true);
+  const chainable = bind(_chainable, null, false);
+  chainable.isRequired = bind(_chainable, null, true);
   return chainable;
 };
 
@@ -65,7 +66,7 @@ export const domain = makeChainable((props, propName, componentName) => {
  */
 export const scale = makeChainable((props, propName, componentName) => {
   const value = props[propName];
-  if (typeof value !== "function" || !value.copy || !value.domain || !value.range) {
+  if (!Scale.validScale(value)) {
     return new Error(
       `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
     );
