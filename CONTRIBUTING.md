@@ -65,16 +65,25 @@ $ git commit
 
 Make sure to mention the issue **`#number`** in the commit message!
 
-#### Dist
-
-Please do not commit changes to files in `dist`.
-These files are only committed when we tag releases.
-
 ## Developer's Guide
 
 This is an overview. For a more in-depth guide, see [`DEVELOPMENT.md`](https://github.com/FormidableLabs/victory/blob/master/DEVELOPMENT.md#development).
 
 **Note: Victory requires `npm v3`**. To upgrade your global `npm` installation, run `npm install -g npm@3`.
+
+We use [builder](https://github.com/FormidableLabs/builder) to control our
+development workflows. `builder` is an npm dependency found in
+`node_modules/.bin/builder`. To use the shorthand `builder` command without the
+full path, please follow the steps in the `builder`
+[local install guide](https://github.com/FormidableLabs/builder#local-install).
+
+The "short, short version" of this on Mac/Linux is to add:
+
+```sh
+export PATH="${PATH}:./node_modules/.bin"
+```
+
+to your permanent shell configuration.
 
 ### Dev Server
 
