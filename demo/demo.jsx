@@ -1,4 +1,3 @@
-/*global document:false*/
 import React from "react";
 import {VictoryAnimation} from "../src/index";
 
