@@ -11,7 +11,7 @@ Run `builder run docs-dev` to start `webpack-dev-server` at port 3000. Run `buil
 1. `$ git checkout master`
 2. `$ builder run docs-build-static` to build the static site in `docs/build`.
 3. `$ builder run server-docs` to start a `http-server`, and open `http://localhost:8080` to test the static docs site.
-4. `$ git commit -a -m "Rebuild site"` (As with Heroku, Git needs to know what's changed before it can push, so we're stuck committing built artifacts.)
+4. `$ git add docs/build && git commit -m "Rebuild site"` (As with Heroku, Git needs to know what's changed before it can push, so we're stuck committing built artifacts.)
 5. `$ builder run push-gh-pages` to perform a subtree push from `/docs/build` (local) to root in the `gh-pages` branch (remote), updating the live site. **See Gotchas**.
 6. Finally, `$ git push origin master` to get the static build into shared history.
 
