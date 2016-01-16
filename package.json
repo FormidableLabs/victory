@@ -14,20 +14,20 @@
   },
   "homepage": "https://github.com/formidablelabs/victory-animation",
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
+    "postinstall": "cd lib || builder run npm:postinstall || echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test"
   },
   "dependencies": {
     "builder": "~2.2.2",
-    "builder-victory-component": "~0.0.5",
+    "builder-victory-component": "~0.1.2",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "^0.2.0",
     "d3-timer": "^0.0.6"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.0.5",
+    "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
     "mocha": "^2.3.3",
     "react": "^0.14.0",
