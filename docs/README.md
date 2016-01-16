@@ -8,7 +8,11 @@ Run `builder run docs-dev` to start `webpack-dev-server` at port 3000. Run `buil
 
 ### Deployment
 
-On `master`, run `builder run docs-build-static` to build the static site in `docs/build`, and commit your changes. (As with Heroku, Git needs to know what's changed before it can push, so we're stuck committing built artifacts.) Then run `builder run push-gh-pages` to perform a subtree push from `/docs/build` (local) to root in the `gh-pages` branch (remote), updating the live site. Finally, run `git push origin master` to get the static build into shared history--see Gotchas.
+1. `$ git checkout master`
+2. `$ builder run docs-build-static` to build the static site in `docs/build`, and commit your changes. (As with Heroku, Git needs to know what's changed before it can push, so we're stuck committing built artifacts.)
+3. `$ builder run server-docs` to start a `http-server`, and open `http://localhost:8080` to test the static docs site.
+4. `$ builder run push-gh-pages` to perform a subtree push from `/docs/build` (local) to root in the `gh-pages` branch (remote), updating the live site. **See Gotchas**.
+5. Finally, `$ git push origin master` to get the static build into shared history.
 
 ### Gotchas
 
@@ -17,6 +21,7 @@ On `master`, run `builder run docs-build-static` to build the static site in `do
 * Since the live site lives in a nested route (`/victory/`), we have to do a few things differently:
   * In `docs/router.jsx`, we instantiate `history` with the `basename` `/victory`.
   * In both `docs/components/static-index.jsx` (prod base page) and `docs/index.html` (local dev base page), we specific a `base href`: the path relative to which relative content in served. In `static-index`, that path is `/victory` (since that's where the prod site lives); in `index.html`, it's `/` (since we're serving at `localhost:3000`). Then, elsewhere, we serve all assets with relative paths.
+
 This works great in production and pretty well in development (previous Gotcha aside), but it doesn't work when previewing built assets. That is, if you `cd` into `docs/build` and start a server with something like `python -m SimpleHTTPServer`, the app won't be able to find its assets: the `build-static-docs` step builds into `static-index`, which specifies the `/victory` base href for prod, which doesn't exist locally. Point is, if you see this happen, no worries--nothing's wrong!
 
 * Having trouble with `builder run push-gh-pages`? The remote history is probably ahead of your local history, which means someone else ran `push-gh-pages` and it's not in your history tree; maybe they forgot to push to master after building and deploying. You need the equivalent of `--force`, but that's not an option with subtree pushes. Luckily, you can chain commands together like this:
