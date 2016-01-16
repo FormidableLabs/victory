@@ -7,7 +7,7 @@ import Radium from "radium";
 import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
-import * as Helpers from "../helper-methods";
+import Helpers from "../helper-methods";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
