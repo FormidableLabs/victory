@@ -17,20 +17,13 @@ module.exports = {
     const categoryStrings = compact(flatten(childComponents.map((component) => {
       return Data.getStringsFromCategories(component.props, axis);
     })));
-
-    const dataStrings = this._getStringsFromData(childComponents, axis);
-
+    const dataStrings = compact(flatten(childComponents.map((child) => {
+      return Data.getDataStrings(child.props, axis);
+    })));
     const allStrings = uniq(compact([...tickStrings, ...categoryStrings, ...dataStrings]));
 
     return isEmpty(allStrings) ? null :
       zipObject(allStrings.map((string, index) => [string, index + 1]));
-  },
-  _getStringsFromData(childComponents, axis) {
-    // Collect strings from dataComponents and groupedDataComponents props.data
-    const xyStrings = childComponents.map((child) => Data.getStringsFromXY(child, axis));
-    const dataStrings = childComponents.map((child) => Data.getStringsFromData(child, axis));
-    const allStrings = compact(flatten([...xyStrings, ...dataStrings]));
-    return uniq(allStrings);
   },
 
   getCategories(childComponents) {
