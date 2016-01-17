@@ -6,7 +6,6 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAxis } from "victory-axis";
-import { VictoryLine } from "victory-line";
 import AxisHelpers from "../axis-helpers";
 import ComponentHelpers from "../component-helpers";
 import DataHelpers from "../data-helpers";
@@ -17,8 +16,6 @@ const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
   dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
 };
-
-const defaultData = <VictoryLine domain={{x: [0, 1], y: [0, 1]}}/>;
 
 @Radium
 export default class VictoryChart extends React.Component {
@@ -234,9 +231,7 @@ export default class VictoryChart extends React.Component {
 
   render() {
     const style = this.getStyles(this.props);
-    const childComponents = ComponentHelpers.getChildComponents(
-      this.props, defaultData, defaultAxes
-    );
+    const childComponents = ComponentHelpers.getChildComponents(this.props, defaultAxes);
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(this.props, childComponents, style)}

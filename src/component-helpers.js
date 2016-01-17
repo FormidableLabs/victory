@@ -11,7 +11,7 @@ module.exports = {
     return child.props.dependentAxis ? "dependent" : "independent";
   },
 
-  getChildComponents(props, defaultData, defaultAxes) {
+  getChildComponents(props, defaultAxes) {
     // set up a counter for component types
     const count = () => {
       const counts = {};
@@ -50,7 +50,7 @@ module.exports = {
     }();
 
     if (!props.children) {
-      return [defaultData, defaultAxes.independent, defaultAxes.dependent];
+      return [defaultAxes.independent, defaultAxes.dependent];
     }
     const childComponents = [];
     // loop through children, and add each child to the childComponents array
@@ -80,14 +80,6 @@ module.exports = {
     if (count.total("axis", "dependent") < 1) {
       childComponents.push(defaultAxes.dependent);
     }
-
-    // Add defaut data if no data is provided
-    const dataComponents = childComponents.filter((child) => {
-      const type = child.type && child.type.role;
-      return type !== "axis";
-    });
-
-    if (dataComponents.length === 0) { childComponents.push(defaultData); }
     return childComponents;
   },
 

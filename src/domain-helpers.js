@@ -1,4 +1,5 @@
 import flatten from "lodash/array/flatten";
+import isEmpty from "lodash/lang/isEmpty";
 
 import { Collection, Domain } from "victory-util";
 
@@ -29,7 +30,7 @@ module.exports = {
         return component.type.getDomain(component.props, axis);
       });
       const allDomains = Collection.removeUndefined(flatten(childDomains));
-      domain = [Math.min(...allDomains), Math.max(...allDomains)];
+      domain = isEmpty(allDomains) ? [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
     }
     const paddedDomain = Domain.padDomain(domain, props, axis);
     return this.orientDomain(paddedDomain, orientations, axis);
