@@ -7,7 +7,11 @@ import Radium from "radium";
 import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAxis } from "victory-axis";
 import { VictoryLine } from "victory-line";
-import Helpers from "../helper-methods";
+import AxisHelpers from "../axis-helpers";
+import ComponentHelpers from "../component-helpers";
+import DataHelpers from "../data-helpers";
+import DomainHelpers from "../domain-helpers";
+import ScaleHelpers from "../scale-helpers";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
@@ -127,10 +131,10 @@ export default class VictoryChart extends React.Component {
   getAxisProps(child, props, calculatedProps) {
     const {domain, scale} = calculatedProps;
     const axis = child.type.getAxis(child.props);
-    const axisOffset = Helpers.getAxisOffset(props, calculatedProps);
-    const tickValues = Helpers.getTicks(child, axis, calculatedProps);
+    const axisOffset = AxisHelpers.getAxisOffset(props, calculatedProps);
+    const tickValues = AxisHelpers.getTicks(child, axis, calculatedProps);
     const tickFormat =
-      child.props.tickFormat || Helpers.getTickFormat(child, axis, calculatedProps);
+      child.props.tickFormat || AxisHelpers.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     return {
@@ -178,33 +182,33 @@ export default class VictoryChart extends React.Component {
   getCalculatedProps(props, childComponents) {
     const flipped = some(childComponents, (component) => component.props.horizontal);
     const axisComponents = {
-      x: Helpers.getAxisComponent(childComponents, "x"),
-      y: Helpers.getAxisComponent(childComponents, "y")
+      x: ComponentHelpers.getAxisComponent(childComponents, "x"),
+      y: ComponentHelpers.getAxisComponent(childComponents, "y")
     };
     const axisOrientations = {
-      x: Helpers.getAxisOrientation(axisComponents.x, "x"),
-      y: Helpers.getAxisOrientation(axisComponents.y, "y")
+      x: AxisHelpers.getAxisOrientation(axisComponents.x, "x"),
+      y: AxisHelpers.getAxisOrientation(axisComponents.y, "y")
     };
     const domain = {
-      x: Helpers.getDomain(props, childComponents, axisOrientations, "x"),
-      y: Helpers.getDomain(props, childComponents, axisOrientations, "y")
+      x: DomainHelpers.getDomain(props, childComponents, axisOrientations, "x"),
+      y: DomainHelpers.getDomain(props, childComponents, axisOrientations, "y")
     };
     const range = {
       x: Chart.getRange(props, "x"),
       y: Chart.getRange(props, "y")
     };
     const scale = {
-      x: Helpers.getScale(props, axisComponents.x, "x").domain(domain.x).range(range.x),
-      y: Helpers.getScale(props, axisComponents.y, "y").domain(domain.y).range(range.y)
+      x: ScaleHelpers.getScale(props, axisComponents.x, "x").domain(domain.x).range(range.x),
+      y: ScaleHelpers.getScale(props, axisComponents.y, "y").domain(domain.y).range(range.y)
     };
     // TODO: check
     const categories = {
-      x: Helpers.getCategories(childComponents, "x"),
-      y: Helpers.getCategories(childComponents, "y")
+      x: DataHelpers.getCategories(childComponents, "x"),
+      y: DataHelpers.getCategories(childComponents, "y")
     };
     const stringMap = {
-      x: Helpers.createStringMap(childComponents, categories, "x"),
-      y: Helpers.createStringMap(childComponents, categories, "y")
+      x: DataHelpers.createStringMap(childComponents, categories, "x"),
+      y: DataHelpers.createStringMap(childComponents, categories, "y")
     };
     return {axisComponents, axisOrientations, categories, domain, flipped, scale, stringMap};
   }
@@ -230,7 +234,9 @@ export default class VictoryChart extends React.Component {
 
   render() {
     const style = this.getStyles(this.props);
-    const childComponents = Helpers.getChildComponents(this.props, defaultData, defaultAxes);
+    const childComponents = ComponentHelpers.getChildComponents(
+      this.props, defaultData, defaultAxes
+    );
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(this.props, childComponents, style)}
