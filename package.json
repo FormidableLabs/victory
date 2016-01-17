@@ -21,11 +21,11 @@
   },
   "dependencies": {
     "builder": "~2.2.1",
-    "builder-victory-component": "~0.0.9",
+    "builder-victory-component": "~0.1.2",
     "victory-util": "^2.0.2"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.0.9",
+    "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "react": "0.14.x",
