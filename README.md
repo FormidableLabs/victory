@@ -17,11 +17,11 @@ This project is in a pre-release state. We're hard at work fixing bugs and impro
 
 ## Development
 
-Please see [DEVELOPMENT](DEVELOPMENT.md)
+Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
 
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-pie.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-pie
