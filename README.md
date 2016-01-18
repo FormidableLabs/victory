@@ -28,11 +28,11 @@ import * as VictoryPropTypes from "victory-util/lib/prop-types";
 
 ## Development
 
-Please see [DEVELOPMENT](DEVELOPMENT.md)
+Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
 
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-util.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-util
