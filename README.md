@@ -9,7 +9,7 @@ Victory Animation
 
 The most basic set up you can use will require supplying a `data` prop and rendering a functional child, as shown below:
 
-``` javascript
+```jsx
 <VictoryAnimation data={x: 500}>
   {(data) => {
     return <div style={{left: data.x}}/>
@@ -21,7 +21,7 @@ The way `victory-animation` works is, when you supply the initial value for the 
 
 For example, lets check out a simple example using a button to toggle between `data` prop values:
 
-``` javascript
+```jsx
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -54,7 +54,7 @@ class App extends React.Component {
 
 We can expand on this by adding multiple values, as `VictoryAnimation` supports object interpolation with interpolation of any properties contained using any type supported by `d3-interpolate`:
 
-``` javascript
+```jsx
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -204,11 +204,11 @@ Detailed documentation and interactive examples can be found at http://victory.f
 
 ## Development
 
-Please see [DEVELOPMENT](DEVELOPMENT.md)
+Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
 
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-animation.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-animation
