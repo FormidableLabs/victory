@@ -3,7 +3,7 @@
 Victory
 =======
 
-[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
@@ -24,7 +24,7 @@ See the docs and examples on the website: http://victory.formidable.com
   import React, { Component } from 'react';
   import { render } from 'react-dom';
   import { VictoryPie } from 'victory';
-  
+
   class PieChart extends Component {
     render() {
       return (
@@ -32,11 +32,11 @@ See the docs and examples on the website: http://victory.formidable.com
       );
     }
   }
-  
+
   render(<PieChart />, document.getElementById('app'));
   ```
 
-3. `VictoryPie` component will be rendered, and you should see:  
+3. `VictoryPie` component will be rendered, and you should see:
 ![VictoryPie](https://cloud.githubusercontent.com/assets/3802023/12114963/369a6538-b3a6-11e5-898c-db410a335a7b.png)
 
 
@@ -77,11 +77,11 @@ Wrap any Victory component with [VictoryAnimation](https://github.com/Formidable
 
 ## Development
 
-Please see [DEVELOPMENT](DEVELOPMENT.md)
+Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
 
 ## Contributing
 
-Please see [CONTRIBUTING](CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
 
 ## Roadmap
 
