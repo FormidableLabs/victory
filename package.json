@@ -1,6 +1,6 @@
 {
   "name": "victory",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "Data viz for React",
   "main": "lib/index.js",
   "repository": {
@@ -19,27 +19,27 @@
     "version": "builder run npm:version",
     "test": "builder run npm:test",
     "docs-dev": "webpack-dev-server --port 3000 --config docs/webpack.config.dev.js --content-base docs",
-    "docs-hot": "webpack-dev-server --port 3000 --config docs/webpack.config.hot.js --hot --content-base docs",
     "copy-static-assets": "cp -r docs/static/ docs/build/static",
     "copy-cname": "cp docs/CNAME docs/build/CNAME",
-    "docs-build-static": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname"
+    "docs-build-static": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname",
+    "server-docs": "http-server docs/build"
   },
   "dependencies": {
     "builder": "~2.2.2",
-    "builder-victory-component": "~0.0.9",
+    "builder-victory-component": "~0.1.2",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.0.13",
     "victory-axis": "1.5.7",
     "victory-bar": "2.5.1",
     "victory-chart": "2.1.3",
-    "victory-line": "0.6.0",
     "victory-label": "0.1.9",
+    "victory-line": "0.6.0",
     "victory-pie": "0.2.0",
     "victory-scatter": "0.6.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.0.9",
+    "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
     "file-loader": "^0.8.5",
     "formidable-landers": "latest",

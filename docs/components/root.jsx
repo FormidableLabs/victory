@@ -1,11 +1,12 @@
 import React from "react";
+import { StyleRoot } from "radium";
 
 class Root extends React.Component {
   render() {
     return (
-      <div>
+      <StyleRoot>
         {this.props.children}
-      </div>
+      </StyleRoot>
     );
   }
 }

@@ -2,6 +2,7 @@ export default {
   routing: {
     base: "/"
   },
+  headerText: "Looking for a custom dashboard? Need help leveling up your data visualizations? Let’s talk!",
   components: [
     {
       text: "VictoryAnimation",

@@ -1,4 +1,4 @@
-import { components } from "../config";
+import { components, headerText } from "../config";
 import { Link } from "react-router";
 import Radium, { Style } from "radium";
 import React from "react";
@@ -29,8 +29,8 @@ class App extends React.Component {
   render() {
     return (
       <div style={{display: "flex", minHeight: "100vh", flexDirection: "column"}}>
-        <Header backgroundColor={VictorySettings.palestSand}>
-          Looking for custom dashboards or data visualization consulting? Let&rsquo;s talk.
+        <Header backgroundColor={VictorySettings.palestSand} styleOverrides={{display: "block"}}>
+          {headerText}
         </Header>
         <main className="Container" style={this.getMainStyles()}>
 
@@ -107,6 +107,11 @@ class App extends React.Component {
             <p className="Copy">
               Gitter chatroom: <a href="https://gitter.im/FormidableLabs/victory">
                 https://gitter.im/FormidableLabs/victory
+              </a>
+            </p>
+            <p className="Copy">
+              Roadmap: <a href="https://github.com/FormidableLabs/victory/blob/master/ROADMAP.md">
+                ROADMAP.md
               </a>
             </p>
             <p className="Copy">Component docs:</p>

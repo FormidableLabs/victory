@@ -1,10 +1,15 @@
 "use strict";
 
-var CleanPlugin = require("clean-webpack-plugin");
 var path = require("path");
+var webpack = require("webpack");
+
+var CleanPlugin = require("clean-webpack-plugin");
 var StaticSiteGeneratorPlugin = require("static-site-generator-webpack-plugin");
 var StatsWriterPlugin = require("webpack-stats-plugin").StatsWriterPlugin;
-var DefinePlugin = require("webpack").DefinePlugin;
+
+var DefinePlugin = webpack.DefinePlugin;
+var DedupePlugin = webpack.optimize.DedupePlugin;
+var UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 
 var base = require("./webpack.config.dev.js");
 
@@ -36,11 +41,19 @@ module.exports = {
   resolve: base.resolve,
   module: base.module,
   plugins: [
-    new CleanPlugin([ path.join(__dirname, OUTPUT_DIR) ]),
+    new CleanPlugin([ path.join(__dirname, OUTPUT_DIR) ], {
+      root: path.join(__dirname, "..")
+    }),
     new DefinePlugin({
       "process.env": {
         // Disable warnings for static build
         NODE_ENV: JSON.stringify("production")
+      }
+    }),
+    new DedupePlugin(),
+    new UglifyJsPlugin({
+      compress: {
+        warnings: false
       }
     }),
     new StatsWriterPlugin({

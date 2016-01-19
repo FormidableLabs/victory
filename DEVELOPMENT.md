@@ -175,6 +175,10 @@ the basic workflow is:
 $ git pull
 $ git status # (should be no changes)
 
+# Add release notes
+$ vi CHANGELOG.md
+$ git add CHANGELOG.md
+
 # Choose a semantic update for the new version.
 # If you're unsure, read about semantic versioning at http://semver.org/
 $ npm version major|minor|patch -m "Version %s - INSERT_REASONS"
@@ -207,4 +211,4 @@ please review:
       [`npm install` runs `npm prepublish` bug](https://github.com/npm/npm/issues/3059)
 
 [builder]: https://github.com/FormidableLabs/builder
-[postinstall bug]: https://github.com/npm/npm/issues/4134#issuecomment-154571544 
+[postinstall bug]: https://github.com/npm/npm/issues/4134#issuecomment-154571544
