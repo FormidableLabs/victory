@@ -22,7 +22,7 @@
   "dependencies": {
     "builder": "~2.4.0",
     "builder-victory-component": "~0.1.0",
-    "victory-axis": "1.5.5",
+    "victory-axis": "1.6.0",
     "victory-util": "^2.1.0"
   },
   "devDependencies": {
@@ -34,8 +34,8 @@
     "react-dom": "^0.14.3",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "victory-bar": "2.5.0",
-    "victory-line": "0.6.0",
-    "victory-scatter": "0.6.0"
+    "victory-bar": "2.6.0",
+    "victory-line": "0.7.0",
+    "victory-scatter": "0.7.0"
   }
 }

@@ -8,9 +8,11 @@ module.exports = {
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
-    const defaultOrientation = otherAxis === "x" ? "bottom" : "left";
-    const standardOrientation = orientation[otherAxis] === defaultOrientation;
+    const defaultOrientation = (ax) => ax === "x" ? "bottom" : "left";
     const flippedAxis = orientation.x === "left" || orientation.x === "right";
+    const standardOrientation = flippedAxis ?
+      orientation[otherAxis] === defaultOrientation(axis) :
+      orientation[otherAxis] === defaultOrientation(otherAxis);
     if (flippedAxis) {
       return standardOrientation ?
         domain.concat().reverse() : domain;
