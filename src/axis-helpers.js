@@ -1,6 +1,7 @@
 import invert from "lodash/object/invert";
 import sortBy from "lodash/collection/sortBy";
 import values from "lodash/object/values";
+import identity from "lodash/utility/identity";
 
 import { Collection } from "victory-util";
 
@@ -26,7 +27,7 @@ module.exports = {
     };
   },
 
-  getTicksFromData(component, axis, calculatedProps) {
+  getTicksFromData(calculatedProps, axis) {
     const stringMap = calculatedProps.stringMap[axis];
     // if tickValues are defined for an axis component use them
     const categoryArray = calculatedProps.categories[axis];
@@ -37,7 +38,7 @@ module.exports = {
     return ticksFromCategories || ticksFromStringMap;
   },
 
-  getTicksFromAxis(component, axis, calculatedProps) {
+  getTicksFromAxis(calculatedProps, axis, component) {
     const tickValues = component.props.tickValues;
     if (!tickValues) {
       return undefined;
@@ -55,7 +56,7 @@ module.exports = {
     const tickValues = component.props.tickValues;
     const stringMap = calculatedProps.stringMap[axis];
     if (tickValues && !Collection.containsStrings(tickValues)) {
-      return (x) => x;
+      return identity;
     } else if (stringMap !== null) {
       const tickValueArray = sortBy(values(stringMap), (n) => n);
       const invertedStringMap = invert(stringMap);
@@ -64,7 +65,7 @@ module.exports = {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return calculatedProps.scale[axis].tickFormat();
+      return calculatedProps.scale[axis].tickFormat() || identity;
     }
   },
 

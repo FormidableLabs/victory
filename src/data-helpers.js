@@ -10,7 +10,7 @@ import { Collection, Data} from "victory-util";
 import ComponentHelpers from "./component-helpers";
 
 module.exports = {
-  createStringMap(childComponents, categories, axis) {
+  createStringMap(childComponents, axis) {
     const axisComponent = ComponentHelpers.getAxisComponent(childComponents, axis);
     const tickStrings = Data.getStringsFromAxes(axisComponent.props, axis);
 
@@ -31,7 +31,7 @@ module.exports = {
     if (isEmpty(groupedComponents)) {
       return undefined;
     }
-    // otherwise, create a set of tickValues base on groupedData categories
+    // otherwise, create a set of groupedComponent categories
     const allCategories = groupedComponents.map((component) => {
       const categories = component.props.categories;
       return categories && Collection.isArrayOfArrays(categories) ?

@@ -129,7 +129,7 @@ export default class VictoryChart extends React.Component {
     const {domain, scale} = calculatedProps;
     const axis = child.type.getAxis(child.props);
     const axisOffset = AxisHelpers.getAxisOffset(props, calculatedProps);
-    const tickValues = AxisHelpers.getTicks(child, axis, calculatedProps);
+    const tickValues = AxisHelpers.getTicks(calculatedProps, axis, child);
     const tickFormat =
       child.props.tickFormat || AxisHelpers.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
@@ -204,8 +204,8 @@ export default class VictoryChart extends React.Component {
       y: DataHelpers.getCategories(childComponents, "y")
     };
     const stringMap = {
-      x: DataHelpers.createStringMap(childComponents, categories, "x"),
-      y: DataHelpers.createStringMap(childComponents, categories, "y")
+      x: DataHelpers.createStringMap(childComponents, "x"),
+      y: DataHelpers.createStringMap(childComponents, "y")
     };
     return {axisComponents, axisOrientations, categories, domain, flipped, scale, stringMap};
   }
