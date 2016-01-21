@@ -4,7 +4,12 @@ import flatten from "lodash/array/flatten";
 import take from "lodash/array/take";
 import union from "lodash/array/union";
 import isEmpty from "lodash/lang/isEmpty";
+import isFunction from "lodash/lang/isFunction";
+import isUndefined from "lodash/lang/isUndefined";
+import isNull from "lodash/lang/isNull";
 import merge from "lodash/object/merge";
+import identity from "lodash/utility/identity";
+import property from "lodash/utility/property";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
@@ -209,5 +214,17 @@ module.exports = {
     const colorScale = Array.isArray(props.colorScale) ?
       props.colorScale : Style.getColorScale(props.colorScale);
     return colorScale[index % colorScale.length];
+  },
+
+  createAccessor(key) {
+    // creates a data accessor function given a property key, path, array index, or null for identity.
+    if (isFunction(key)) {
+      return key;
+    } else if (isNull(key) || isUndefined(key)) {
+      // null/undefined means "return the data item itself"
+      return identity;
+    }
+    // otherwise, assume it is an array index, property key or path (_.property handles all three)
+    return property(key);
   }
 };
