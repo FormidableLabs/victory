@@ -1,6 +1,5 @@
 /*global window:false */
 import React from "react";
-import d3Scale from "d3-scale";
 import _ from "lodash";
 import {VictoryChart} from "../src/index";
 import {VictoryAxis} from "victory-axis";
@@ -130,7 +129,7 @@ class App extends React.Component {
             <VictoryBar/>
           </VictoryChart>
 
-          <VictoryChart scale={d3Scale.linear()}>
+          <VictoryChart scale={"linear"}>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}
@@ -155,7 +154,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle}
             scale={{
-              x: d3Scale.time()
+              x: "time"
             }}
           >
             <VictoryAxis
