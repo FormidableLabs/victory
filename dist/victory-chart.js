@@ -98,7 +98,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _victoryAxis = __webpack_require__(51);
 	
-	var _victoryLine = __webpack_require__(93);
+	var _victoryLine = __webpack_require__(72);
 	
 	var defaultAxes = {
 	  independent: _react2["default"].createElement(_victoryAxis.VictoryAxis, { animate: { velocity: 0.02 } }),
@@ -421,12 +421,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "formatChildData",
-	    value: function formatChildData(childData) {
+	    value: function formatChildData(childData, categories) {
 	      var _this6 = this;
 	
 	      var _formatData = function _formatData(dataset) {
 	        return _lodash2["default"].map(dataset, function (data) {
 	          return _lodash2["default"].merge({}, data, {
+	            category: _this6.determineCategoryIndex(data.x, categories),
 	            // map string data to numeric values, and add names
 	            x: _lodash2["default"].isString(data.x) ? _this6.stringMap.x[data.x] : data.x,
 	            xName: _lodash2["default"].isString(data.x) ? data.x : undefined,
@@ -443,13 +444,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _formatData(childData);
 	    }
 	  }, {
+	    key: "determineCategoryIndex",
+	    value: function determineCategoryIndex(x, categories) {
+	      // if categories don't exist or are not given as an array of arrays, return undefined;
+	      if (!categories || !_lodash2["default"].isArray(categories[0])) {
+	        return undefined;
+	      }
+	      // determine which range band this x value belongs to, and return the index of that range band.
+	      return categories.findIndex(function (category) {
+	        return x >= Math.min.apply(Math, _toConsumableArray(category)) && x <= Math.max.apply(Math, _toConsumableArray(category));
+	      });
+	    }
+	  }, {
 	    key: "getDomain",
 	    value: function getDomain(props, axis) {
 	      var _this7 = this;
 	
 	      if (props.domain && (_lodash2["default"].isArray(props.domain) || props.domain[axis])) {
 	        var propsDomain = _lodash2["default"].isArray(props.domain) ? props.domain : props.domain[axis];
-	        var paddedPropsDomain = this.padDomain(props, propsDomain, axis);
+	        var paddedPropsDomain = this.padDomain(propsDomain, axis);
 	        return this.orientDomain(paddedPropsDomain, axis);
 	      }
 	      var dataDomains = _lodash2["default"].map(this.dataComponents, function (component) {
@@ -461,7 +474,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var axisDomain = this.getDomainFromAxis(axis);
 	      var domainFromChildren = _victoryUtil.Collection.removeUndefined(_lodash2["default"].flattenDeep(dataDomains.concat(groupedDataDomains, axisDomain)));
 	      var domain = _lodash2["default"].isEmpty(domainFromChildren) ? [0, 1] : [_lodash2["default"].min(domainFromChildren), _lodash2["default"].max(domainFromChildren)];
-	      var paddedDomain = this.padDomain(props, domain, axis);
+	      var paddedDomain = this.padDomain(domain, axis);
 	      return this.orientDomain(paddedDomain, axis);
 	    }
 	  }, {
@@ -486,7 +499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (component.props.domain) {
 	        return component.props.domain[axis] || component.props.domain;
 	      } else if (component.props.data) {
-	        var formattedData = this.formatChildData(component.props.data);
+	        var formattedData = this.formatChildData(component.props.data, component.props.categories);
 	        dataByAxis = _lodash2["default"].map(_lodash2["default"].flatten(formattedData), function (data) {
 	          return data[axis];
 	        });
@@ -505,48 +518,90 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getDomainFromGroupedData",
 	    value: function getDomainFromGroupedData(component, axis) {
-	      var _this8 = this;
-	
 	      if (component.props.domain) {
 	        return component.props.domain[axis] || component.props.domain;
 	      } else if (component.props.categories && axis === this.independentAxis) {
 	        return this.getDomainFromCategories(component, axis);
 	      }
-	      var formattedData = this.formatChildData(component.props.data);
+	      var datasets = this.formatChildData(component.props.data);
 	      // find the global min and max
-	      var allData = _lodash2["default"].flatten(formattedData);
-	      var min = _lodash2["default"].min(_lodash2["default"].pluck(allData, axis));
-	      var max = _lodash2["default"].max(_lodash2["default"].pluck(allData, axis));
-	      if (this._isStackedComponentData(component, axis)) {
-	        // find the cumulative max and min for stacked chart types
-	        // TODO: clean up cumulative max / min check assumptions.
-	        var cumulativeMax = _lodash2["default"].reduce(formattedData, function (memo, dataset) {
-	          var localMax = _lodash2["default"].max(_lodash2["default"].pluck(dataset, _this8.dependentAxis));
-	          return localMax > 0 ? memo + localMax : memo;
+	      var axisData = _lodash2["default"].flatten(datasets).map(function (data) {
+	        return data[axis];
+	      });
+	      var globalMin = Math.min.apply(Math, _toConsumableArray(axisData));
+	      var globalMax = Math.max.apply(Math, _toConsumableArray(axisData));
+	
+	      var cumulativeData = this._isStackedComponentData(component, axis) ? this.getCumulativeData(datasets, "y") : [];
+	
+	      var cumulativeMaxArray = cumulativeData.map(function (dataset) {
+	        return dataset.reduce(function (memo, val) {
+	          return val > 0 ? memo + val : memo;
 	        }, 0);
-	        var cumulativeMin = _lodash2["default"].reduce(formattedData, function (memo, dataset) {
-	          var localMin = _lodash2["default"].min(_lodash2["default"].pluck(dataset, _this8.dependentAxis));
-	          return localMin < 0 ? memo + localMin : memo;
+	      });
+	
+	      var cumulativeMinArray = cumulativeData.map(function (dataset) {
+	        return dataset.reduce(function (memo, val) {
+	          return val < 0 ? memo + val : memo;
 	        }, 0);
-	        return [_lodash2["default"].min([min, cumulativeMin]), _lodash2["default"].max([max, cumulativeMax])];
-	      }
-	      return [min, max];
+	      });
+	
+	      var cumulativeMin = Math.min.apply(Math, _toConsumableArray(cumulativeMinArray));
+	      // use greatest min / max
+	      var domainMin = cumulativeMin < 0 ? cumulativeMin : globalMin;
+	      var domainMax = Math.max(globalMax, Math.max.apply(Math, _toConsumableArray(cumulativeMaxArray)));
+	      return [domainMin, domainMax];
+	    }
+	  }, {
+	    key: "getCumulativeData",
+	    value: function getCumulativeData(datasets, axis) {
+	      var categories = [];
+	      var xValues = [];
+	      datasets.forEach(function (dataset) {
+	        dataset.forEach(function (data) {
+	          if (data.category !== undefined && !_lodash2["default"].includes(categories, data.category)) {
+	            categories.push(data.category);
+	          } else if (!_lodash2["default"].includes(xValues, data.x)) {
+	            xValues.push(data.x);
+	          }
+	        });
+	      });
+	
+	      var dataByCategory = function dataByCategory() {
+	        return categories.map(function (value) {
+	          var categoryData = datasets.filter(function (data) {
+	            return data.category === value;
+	          });
+	          return _lodash2["default"].flatten(categoryData.map(function (data) {
+	            return data[axis];
+	          }));
+	        });
+	      };
+	
+	      var dataByIndex = function dataByIndex() {
+	        return xValues.map(function (value, index) {
+	          return datasets.map(function (data) {
+	            return data[index] && data[index][axis];
+	          });
+	        });
+	      };
+	
+	      return _lodash2["default"].isEmpty(categories) ? dataByIndex() : dataByCategory();
 	    }
 	  }, {
 	    key: "getDomainFromCategories",
 	    value: function getDomainFromCategories(component, axis) {
-	      var _this9 = this;
+	      var _this8 = this;
 	
 	      var categories = _lodash2["default"].flatten(component.props.categories);
 	      var categoryValues = _victoryUtil.Collection.containsStrings(categories) ? _lodash2["default"].map(categories, function (value) {
-	        return _this9.stringMap[axis][value];
+	        return _this8.stringMap[axis][value];
 	      }) : categories;
 	      return [_lodash2["default"].min(categoryValues), _lodash2["default"].max(categoryValues)];
 	    }
 	  }, {
 	    key: "getDomainFromAxis",
 	    value: function getDomainFromAxis(axis) {
-	      var _this10 = this;
+	      var _this9 = this;
 	
 	      var component = this.axisComponents[axis];
 	      if (component.props.domain) {
@@ -555,7 +610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var ticks = component.props.tickValues;
 	      if (ticks) {
 	        var tickValues = _victoryUtil.Collection.containsStrings(ticks) ? _lodash2["default"].map(ticks, function (tick) {
-	          return _this10.stringMap[axis][tick];
+	          return _this9.stringMap[axis][tick];
 	        }) : ticks;
 	        return [_lodash2["default"].min(tickValues), _lodash2["default"].max(tickValues)];
 	      } else {
@@ -564,21 +619,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "padDomain",
-	    value: function padDomain(props, domain, axis) {
-	      var domainPadding = undefined;
-	      if (props.domainPadding) {
-	        domainPadding = _lodash2["default"].isNumber(props.domainPadding) ? props.domainPadding : props.domainPadding[axis];
+	    value: function padDomain(domain, axis) {
+	      if (!this.props.domainPadding) {
+	        return domain;
 	      }
-	      var min = _lodash2["default"].min(domain);
-	      var max = _lodash2["default"].max(domain);
-	      var rangeExtent = Math.abs(_lodash2["default"].max(this.range[axis]) - _lodash2["default"].min(this.range[axis]));
-	      var extent = Math.abs(max - min);
-	      var percentPadding = domainPadding ? domainPadding / rangeExtent : 0.01;
-	      var padding = extent * percentPadding;
+	      var domainPadding = undefined;
+	      if (this.props.domainPadding[axis]) {
+	        domainPadding = this.props.domainPadding[axis];
+	      } else {
+	        domainPadding = _lodash2["default"].isNumber(this.props.domainPadding) ? this.props.domainPadding : 0;
+	      }
+	      if (domainPadding === 0) {
+	        return domain;
+	      }
+	      var domainMin = Math.min.apply(Math, _toConsumableArray(domain));
+	      var domainMax = Math.max.apply(Math, _toConsumableArray(domain));
+	      var rangeExtent = Math.abs(Math.max.apply(Math, _toConsumableArray(this.range[axis])) - Math.min.apply(Math, _toConsumableArray(this.range[axis])));
+	      var padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
 	      // don't make the axes cross if they aren't already
-	      var adjustedMin = min >= 0 && min - padding <= 0 ? 0 : min - padding;
-	      var adjustedMax = max <= 0 && max + padding >= 0 ? 0 : max + padding;
-	      return _lodash2["default"].isDate(min) || _lodash2["default"].isDate(max) ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
+	      var adjustedMin = domainMin >= 0 && domainMin - padding <= 0 ? 0 : domainMin.valueOf() - padding;
+	      var adjustedMax = domainMax <= 0 && domainMax + padding >= 0 ? 0 : domainMax.valueOf() + padding;
+	      return _lodash2["default"].isDate(domainMin) || _lodash2["default"].isDate(domainMax) ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
 	    }
 	  }, {
 	    key: "getScale",
@@ -661,7 +722,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getTickFormat",
 	    value: function getTickFormat(axis) {
-	      var _this11 = this;
+	      var _this10 = this;
 	
 	      var tickFormat = this.axisComponents[axis].props.tickFormat;
 	      var tickValues = this.axisComponents[axis].props.tickValues;
@@ -673,10 +734,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        };
 	      } else if (this.stringMap[axis] !== null) {
 	        var _ret = (function () {
-	          var tickValueArray = _lodash2["default"].sortBy(_lodash2["default"].values(_this11.stringMap[axis]), function (n) {
+	          var tickValueArray = _lodash2["default"].sortBy(_lodash2["default"].values(_this10.stringMap[axis]), function (n) {
 	            return n;
 	          });
-	          var invertedStringMap = _lodash2["default"].invert(_this11.stringMap[axis]);
+	          var invertedStringMap = _lodash2["default"].invert(_this10.stringMap[axis]);
 	          var dataNames = _lodash2["default"].map(tickValueArray, function (tick) {
 	            return invertedStringMap[tick];
 	          });
@@ -697,13 +758,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "generateData",
 	    value: function generateData(child) {
-	      var _this12 = this;
+	      var _this11 = this;
 	
 	      if (!child.props.y) {
 	        return undefined;
 	      }
 	      var generateX = function generateX(component) {
-	        var domain = _this12.domain.x;
+	        var domain = _this11.domain.x;
 	        var samples = _lodash2["default"].isArray(component.props.y) ? component.props.y.length : 50;
 	        var step = _lodash2["default"].max(domain) / samples;
 	        // return an array of x values spaced across the domain,
@@ -765,15 +826,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getNewChildren",
 	    value: function getNewChildren() {
-	      var _this13 = this;
+	      var _this12 = this;
 	
 	      return _lodash2["default"].map(this.childComponents, function (child, index) {
-	        var style = _lodash2["default"].merge({}, { parent: _this13.style.parent }, child.props.style);
-	        var newProps = _this13.getNewProps(child);
+	        var style = _lodash2["default"].merge({}, { parent: _this12.style.parent }, child.props.style);
+	        var newProps = _this12.getNewProps(child);
 	        return _react2["default"].cloneElement(child, _lodash2["default"].merge({}, newProps, {
-	          height: _this13.props.height,
-	          width: _this13.props.width,
-	          padding: _this13.padding,
+	          height: _this12.props.height,
+	          width: _this12.props.width,
+	          padding: _this12.padding,
 	          ref: index,
 	          key: index,
 	          standalone: false,
@@ -827,10 +888,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * from the origin to prevent crowding. This prop should be given as an object with
 	       * numbers specified for x and y.
 	       */
-	      domainPadding: _react2["default"].PropTypes.shape({
+	      domainPadding: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.shape({
 	        x: _victoryUtil.PropTypes.nonNegative,
 	        y: _victoryUtil.PropTypes.nonNegative
-	      }),
+	      }), _victoryUtil.PropTypes.nonNegative]),
 	      /**
 	       * The height props specifies the height of the chart container element in pixels
 	       */
@@ -16769,15 +16830,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _victoryLabel = __webpack_require__(61);
 	
-	var _axisLine = __webpack_require__(84);
+	var _axisLine = __webpack_require__(63);
 	
 	var _axisLine2 = _interopRequireDefault(_axisLine);
 	
-	var _grid = __webpack_require__(90);
+	var _grid = __webpack_require__(69);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _tick = __webpack_require__(91);
+	var _tick = __webpack_require__(70);
 	
 	var _tick2 = _interopRequireDefault(_tick);
 	
@@ -21722,7 +21783,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _radium = __webpack_require__(63);
+	var _radium = __webpack_require__(5);
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
@@ -21894,1786 +21955,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 63 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-	
-	var Enhancer = __webpack_require__(64);
-	
-	module.exports = function (ComposedComponent /*: constructor*/) {
-	  return Enhancer(ComposedComponent);
-	};
-	module.exports.Plugins = __webpack_require__(69);
-	module.exports.PrintStyleSheet = __webpack_require__(79);
-	module.exports.Style = __webpack_require__(80);
-	module.exports.getState = __webpack_require__(66);
-	module.exports.keyframes = __webpack_require__(83);
-	module.exports.__clearStateForTests = __webpack_require__(65).__clearStateForTests;
-
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/* @flow */
-	
-	'use strict';
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x2, _x3, _x4) { var _again = true; _function: while (_again) { var object = _x2, property = _x3, receiver = _x4; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x2 = parent; _x3 = property; _x4 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _require = __webpack_require__(4);
-	
-	var Component = _require.Component;
-	
-	var resolveStyles = __webpack_require__(65);
-	var printStyles = __webpack_require__(78);
-	
-	var KEYS_TO_IGNORE_WHEN_COPYING_PROPERTIES = ['arguments', 'callee', 'caller', 'length', 'name', 'prototype', 'type'];
-	
-	var copyProperties = function copyProperties(source, target) {
-	  Object.getOwnPropertyNames(source).forEach(function (key) {
-	    if (KEYS_TO_IGNORE_WHEN_COPYING_PROPERTIES.indexOf(key) < 0 && !target.hasOwnProperty(key)) {
-	      var descriptor = Object.getOwnPropertyDescriptor(source, key);
-	      Object.defineProperty(target, key, descriptor);
-	    }
-	  });
-	};
-	
-	var enhanceWithRadium = function enhanceWithRadium(configOrComposedComponent /*: constructor | Function | Object*/) /*: constructor*/ {
-	  var config /*:: ?: Object*/ = arguments.length <= 1 || arguments[1] === undefined ? {} : arguments[1];
-	
-	  if (typeof configOrComposedComponent !== 'function') {
-	    var newConfig = _extends({}, config, configOrComposedComponent);
-	    return function (configOrComponent) {
-	      return enhanceWithRadium(configOrComponent, newConfig);
-	    };
-	  }
-	
-	  var component /*: Function*/ = configOrComposedComponent;
-	  var ComposedComponent /*: constructor*/ = component;
-	
-	  // Handle stateless components
-	
-	  if (!ComposedComponent.render && !ComposedComponent.prototype.render) {
-	    ComposedComponent = (function (_Component) {
-	      _inherits(_class, _Component);
-	
-	      function _class() {
-	        _classCallCheck(this, _class);
-	
-	        _get(Object.getPrototypeOf(_class.prototype), 'constructor', this).apply(this, arguments);
-	      }
-	
-	      _createClass(_class, [{
-	        key: 'render',
-	        value: function render() {
-	          return component(this.props);
-	        }
-	      }]);
-	
-	      return _class;
-	    })(Component);
-	    ComposedComponent.displayName = component.displayName || component.name;
-	  }
-	
-	  var RadiumEnhancer = (function (_ComposedComponent) {
-	    _inherits(RadiumEnhancer, _ComposedComponent);
-	
-	    function RadiumEnhancer() {
-	      _classCallCheck(this, RadiumEnhancer);
-	
-	      _get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'constructor', this).apply(this, arguments);
-	
-	      this.state = this.state || {};
-	      this.state._radiumStyleState = {};
-	      this._radiumIsMounted = true;
-	
-	      if (RadiumEnhancer.printStyleClass) {
-	        this.printStyleClass = RadiumEnhancer.printStyleClass;
-	      }
-	    }
-	
-	    // Class inheritance uses Object.create and because of __proto__ issues
-	    // with IE <10 any static properties of the superclass aren't inherited and
-	    // so need to be manually populated.
-	    // See http://babeljs.io/docs/advanced/caveats/#classes-10-and-below-
-	
-	    _createClass(RadiumEnhancer, [{
-	      key: 'componentWillUnmount',
-	      value: function componentWillUnmount() {
-	        if (_get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'componentWillUnmount', this)) {
-	          _get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'componentWillUnmount', this).call(this);
-	        }
-	
-	        this._radiumIsMounted = false;
-	
-	        if (this._radiumMouseUpListener) {
-	          this._radiumMouseUpListener.remove();
-	        }
-	
-	        if (this._radiumMediaQueryListenersByQuery) {
-	          Object.keys(this._radiumMediaQueryListenersByQuery).forEach(function (query) {
-	            this._radiumMediaQueryListenersByQuery[query].remove();
-	          }, this);
-	        }
-	      }
-	    }, {
-	      key: 'render',
-	      value: function render() {
-	        var renderedElement = _get(Object.getPrototypeOf(RadiumEnhancer.prototype), 'render', this).call(this);
-	        return resolveStyles(this, renderedElement, config);
-	      }
-	    }]);
-	
-	    return RadiumEnhancer;
-	  })(ComposedComponent);
-	
-	  copyProperties(ComposedComponent, RadiumEnhancer);
-	
-	  if (process.env.NODE_ENV !== 'production') {
-	    // This also fixes React Hot Loader by exposing the original components top
-	    // level prototype methods on the Radium enhanced prototype as discussed in
-	    // https://github.com/FormidableLabs/radium/issues/219.
-	    copyProperties(ComposedComponent.prototype, RadiumEnhancer.prototype);
-	  }
-	
-	  RadiumEnhancer.displayName = ComposedComponent.displayName || ComposedComponent.name || 'Component';
-	
-	  RadiumEnhancer.printStyleClass = printStyles.addPrintStyles(RadiumEnhancer);
-	
-	  return RadiumEnhancer;
-	};
-	
-	module.exports = enhanceWithRadium;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ },
-/* 65 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	/*:: import type {Config} from './config';*/
-	
-	var _getState = __webpack_require__(66);
-	var getStateKey = __webpack_require__(67);
-	var mergeStyles = __webpack_require__(68);
-	var Plugins = __webpack_require__(69);
-	
-	var ExecutionEnvironment = __webpack_require__(34);
-	var React = __webpack_require__(4);
-	
-	var DEFAULT_CONFIG = {
-	  plugins: [Plugins.mergeStyleArray, Plugins.checkProps, Plugins.resolveMediaQueries, Plugins.resolveInteractionStyles, Plugins.prefix, Plugins.checkProps]
-	};
-	
-	// Gross
-	var globalState = {};
-	
-	// Declare early for recursive helpers.
-	var resolveStyles = ((null /*: any*/) /*: (
-	                                        component: any, // ReactComponent, flow+eslint complaining
-	                                        renderedElement: any,
-	                                        config: Config,
-	                                        existingKeyMap?: {[key: string]: bool}
-	                                      ) => any*/);
-	
-	var _resolveChildren = function _resolveChildren(_ref) {
-	  var children = _ref.children;
-	  var component = _ref.component;
-	  var config = _ref.config;
-	  var existingKeyMap = _ref.existingKeyMap;
-	
-	  if (!children) {
-	    return children;
-	  }
-	
-	  var childrenType = typeof children;
-	
-	  if (childrenType === 'string' || childrenType === 'number') {
-	    // Don't do anything with a single primitive child
-	    return children;
-	  }
-	
-	  if (childrenType === 'function') {
-	    // Wrap the function, resolving styles on the result
-	    return function () {
-	      var result = children.apply(this, arguments);
-	      if (React.isValidElement(result)) {
-	        return resolveStyles(component, result, config, existingKeyMap);
-	      }
-	      return result;
-	    };
-	  }
-	
-	  if (React.Children.count(children) === 1 && children.type) {
-	    // If a React Element is an only child, don't wrap it in an array for
-	    // React.Children.map() for React.Children.only() compatibility.
-	    var onlyChild = React.Children.only(children);
-	    return resolveStyles(component, onlyChild, config, existingKeyMap);
-	  }
-	
-	  return React.Children.map(children, function (child) {
-	    if (React.isValidElement(child)) {
-	      return resolveStyles(component, child, config, existingKeyMap);
-	    }
-	
-	    return child;
-	  });
-	};
-	
-	// Recurse over props, just like children
-	var _resolveProps = function _resolveProps(_ref2) {
-	  var component = _ref2.component;
-	  var config = _ref2.config;
-	  var existingKeyMap = _ref2.existingKeyMap;
-	  var props = _ref2.props;
-	
-	  var newProps = props;
-	
-	  Object.keys(props).forEach(function (prop) {
-	    // We already recurse over children above
-	    if (prop === 'children') {
-	      return;
-	    }
-	
-	    var propValue = props[prop];
-	    if (React.isValidElement(propValue)) {
-	      newProps = _extends({}, newProps);
-	      newProps[prop] = resolveStyles(component, propValue, config, existingKeyMap);
-	    }
-	  });
-	
-	  return newProps;
-	};
-	
-	var _buildGetKey = function _buildGetKey(renderedElement, existingKeyMap) {
-	  // We need a unique key to correlate state changes due to user interaction
-	  // with the rendered element, so we know to apply the proper interactive
-	  // styles.
-	  var originalKey = typeof renderedElement.ref === 'string' ? renderedElement.ref : renderedElement.key;
-	  var key = getStateKey(originalKey);
-	
-	  var alreadyGotKey = false;
-	  var getKey = function getKey() {
-	    if (alreadyGotKey) {
-	      return key;
-	    }
-	
-	    alreadyGotKey = true;
-	
-	    if (existingKeyMap[key]) {
-	      throw new Error('Radium requires each element with interactive styles to have a unique ' + 'key, set using either the ref or key prop. ' + (originalKey ? 'Key "' + originalKey + '" is a duplicate.' : 'Multiple elements have no key specified.'));
-	    }
-	
-	    existingKeyMap[key] = true;
-	
-	    return key;
-	  };
-	
-	  return getKey;
-	};
-	
-	var _setStyleState = function _setStyleState(component, key, stateKey, value) {
-	  if (!component._radiumIsMounted) {
-	    return;
-	  }
-	
-	  var existing = component._lastRadiumState || component.state && component.state._radiumStyleState || {};
-	
-	  var state = { _radiumStyleState: _extends({}, existing) };
-	  state._radiumStyleState[key] = _extends({}, state._radiumStyleState[key]);
-	  state._radiumStyleState[key][stateKey] = value;
-	
-	  component._lastRadiumState = state._radiumStyleState;
-	  component.setState(state);
-	};
-	
-	var _runPlugins = function _runPlugins(_ref3) {
-	  var component = _ref3.component;
-	  var config = _ref3.config;
-	  var existingKeyMap = _ref3.existingKeyMap;
-	  var props = _ref3.props;
-	  var renderedElement = _ref3.renderedElement;
-	
-	  // Don't run plugins if renderedElement is not a simple ReactDOMElement or has
-	  // no style.
-	  if (!React.isValidElement(renderedElement) || typeof renderedElement.type !== 'string' || !props.style) {
-	    return props;
-	  }
-	
-	  var newProps = props;
-	
-	  var plugins = config.plugins || DEFAULT_CONFIG.plugins;
-	
-	  var getKey = _buildGetKey(renderedElement, existingKeyMap);
-	
-	  var newStyle = props.style;
-	  plugins.forEach(function (plugin) {
-	    var result = plugin({
-	      ExecutionEnvironment: ExecutionEnvironment,
-	      componentName: component.constructor.displayName || component.constructor.name,
-	      config: config,
-	      getComponentField: function getComponentField(key) {
-	        return component[key];
-	      },
-	      getGlobalState: function getGlobalState(key) {
-	        return globalState[key];
-	      },
-	      getState: function getState(stateKey, elementKey) {
-	        return _getState(component.state, elementKey || getKey(), stateKey);
-	      },
-	      mergeStyles: mergeStyles,
-	      props: newProps,
-	      setState: function setState(stateKey, value, elementKey) {
-	        return _setStyleState(component, elementKey || getKey(), stateKey, value);
-	      },
-	      style: newStyle
-	    }) || {};
-	
-	    newStyle = result.style || newStyle;
-	
-	    newProps = result.props && Object.keys(result.props).length ? _extends({}, newProps, result.props) : newProps;
-	
-	    var newComponentFields = result.componentFields || {};
-	    Object.keys(newComponentFields).forEach(function (fieldName) {
-	      component[fieldName] = newComponentFields[fieldName];
-	    });
-	
-	    var newGlobalState = result.globalState || {};
-	    Object.keys(newGlobalState).forEach(function (key) {
-	      globalState[key] = newGlobalState[key];
-	    });
-	  });
-	
-	  if (newStyle !== props.style) {
-	    newProps = _extends({}, newProps, { style: newStyle });
-	  }
-	
-	  return newProps;
-	};
-	
-	// Wrapper around React.cloneElement. To avoid processing the same element
-	// twice, whenever we clone an element add a special prop to make sure we don't
-	// process this element again.
-	var _cloneElement = function _cloneElement(renderedElement, newProps, newChildren) {
-	  // Only add flag if this is a normal DOM element
-	  if (typeof renderedElement.type === 'string') {
-	    newProps = _extends({}, newProps, { _radiumDidResolveStyles: true });
-	  }
-	
-	  return React.cloneElement(renderedElement, newProps, newChildren);
-	};
-	
-	//
-	// The nucleus of Radium. resolveStyles is called on the rendered elements
-	// before they are returned in render. It iterates over the elements and
-	// children, rewriting props to add event handlers required to capture user
-	// interactions (e.g. mouse over). It also replaces the style prop because it
-	// adds in the various interaction styles (e.g. :hover).
-	//
-	resolveStyles = function (component /*: any*/, // ReactComponent, flow+eslint complaining
-	renderedElement /*: any*/, // ReactElement
-	config /*: Config*/, existingKeyMap /*:: ?: {[key: string]: boolean}*/) /*: any*/ {
-	  if (config === undefined) config = DEFAULT_CONFIG;
-	  // ReactElement
-	  existingKeyMap = existingKeyMap || {};
-	
-	  if (!renderedElement ||
-	  // Bail if we've already processed this element. This ensures that only the
-	  // owner of an element processes that element, since the owner's render
-	  // function will be called first (which will always be the case, since you
-	  // can't know what else to render until you render the parent component).
-	  renderedElement.props && renderedElement.props._radiumDidResolveStyles) {
-	    return renderedElement;
-	  }
-	
-	  var newChildren = _resolveChildren({
-	    children: renderedElement.props.children,
-	    component: component,
-	    config: config,
-	    existingKeyMap: existingKeyMap
-	  });
-	
-	  var newProps = _resolveProps({
-	    component: component,
-	    config: config,
-	    existingKeyMap: existingKeyMap,
-	    props: renderedElement.props
-	  });
-	
-	  newProps = _runPlugins({
-	    component: component,
-	    config: config,
-	    existingKeyMap: existingKeyMap,
-	    props: newProps,
-	    renderedElement: renderedElement
-	  });
-	
-	  // If nothing changed, don't bother cloning the element. Might be a bit
-	  // wasteful, as we add the sentinal to stop double-processing when we clone.
-	  // Assume benign double-processing is better than unneeded cloning.
-	  if (newChildren === renderedElement.props.children && newProps === renderedElement.props) {
-	    return renderedElement;
-	  }
-	
-	  return _cloneElement(renderedElement, newProps !== renderedElement.props ? newProps : {}, newChildren);
-	};
-	
-	// Only for use by tests
-	resolveStyles.__clearStateForTests = function () {
-	  globalState = {};
-	};
-	
-	module.exports = resolveStyles;
-	// ReactComponent, flow+eslint complaining
-
-/***/ },
-/* 66 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var getStateKey = __webpack_require__(67);
-	
-	var getState = function getState(state /*: {_radiumStyleState: {[key: string]: {[value: string]: boolean}}}*/, elementKey /*: string*/, value /*: string*/) /*: any*/ {
-	  var key = getStateKey(elementKey);
-	
-	  return !!state && !!state._radiumStyleState && !!state._radiumStyleState[key] && state._radiumStyleState[key][value];
-	};
-	
-	module.exports = getState;
-
-/***/ },
-/* 67 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var getStateKey = function getStateKey(elementKey /*: ?string*/) /*: string*/ {
-	  return elementKey === null || elementKey === undefined ? 'main' : elementKey.toString();
-	};
-	
-	module.exports = getStateKey;
-
-/***/ },
-/* 68 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var isPlainObject = __webpack_require__(12);
-	
-	var shouldMerge = function shouldMerge(value) {
-	  // Don't merge objects overriding toString, since they should be converted
-	  // to string values.
-	  return isPlainObject(value) && value.toString === Object.prototype.toString;
-	};
-	
-	// Merge style objects. Deep merge plain object values.
-	var mergeStyles = function mergeStyles(styles) {
-	  var result = {};
-	
-	  styles.forEach(function (style) {
-	    if (!style || typeof style !== 'object') {
-	      return;
-	    }
-	
-	    if (Array.isArray(style)) {
-	      style = mergeStyles(style);
-	    }
-	
-	    Object.keys(style).forEach(function (key) {
-	      if (shouldMerge(style[key]) && shouldMerge(result[key])) {
-	        result[key] = mergeStyles([result[key], style[key]]);
-	      } else {
-	        result[key] = style[key];
-	      }
-	    });
-	  });
-	
-	  return result;
-	};
-	
-	module.exports = mergeStyles;
-
-/***/ },
-/* 69 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @flow */
-	/* eslint-disable block-scoped-var */
-	
-	'use strict';
-	
-	Object.defineProperty(exports, '__esModule', {
-	  value: true
-	});
-	
-	/*:: import type {Config} from '../config';*/
-	
-	var checkPropsPlugin = __webpack_require__(70);
-	var mergeStyleArrayPlugin = __webpack_require__(71);
-	var prefixPlugin = __webpack_require__(72);
-	var resolveInteractionStylesPlugin = __webpack_require__(75);
-	var resolveMediaQueriesPlugin = __webpack_require__(77);
-	
-	/*:: export type PluginConfig = {
-	  // May not be readable if code has been minified
-	  componentName: string,
-	
-	  // The Radium configuration
-	  config: Config,
-	
-	  // Retrieve the value of a field on the component
-	  getComponentField: (key: string) => any,
-	
-	  // Retrieve the value of a field global to the Radium module
-	  // Used so that tests can easily clear global state.
-	  getGlobalState: (key: string) => any,
-	
-	  // Retrieve the value of some state specific to the rendered element.
-	  // Requires the element to have a unique key or ref or for an element key
-	  // to be passed in.
-	  getState: (stateKey: string, elementKey?: string) => any,
-	
-	  // Access to the mergeStyles utility
-	  mergeStyles: (styles: Array<Object>) => Object,
-	
-	  // The props of the rendered element. This can be changed by each plugin,
-	  // and successive plugins will see the result of previous plugins.
-	  props: Object,
-	
-	  // Calls setState on the component with the given key and value.
-	  // By default this is specific to the rendered element, but you can override
-	  // by passing in the `elementKey` parameter.
-	  setState: (stateKey: string, value: any, elementKey?: string) => void,
-	
-	  // The style prop of the rendered element. This can be changed by each plugin,
-	  // and successive plugins will see the result of previous plugins. Kept
-	  // separate from `props` for ease of use.
-	  style: Object,
-	
-	  // uses the exenv npm module
-	  ExecutionEnvironment: {
-	    canUseEventListeners: bool,
-	    canUseDOM: bool,
-	  }
-	};*/
-	/*:: export type PluginResult = ?{
-	  // Merged into the component directly. Useful for storing things for which you
-	  // don't need to re-render, event subscriptions, for instance.
-	  componentFields?: Object,
-	
-	  // Merged into a Radium controlled global state object. Use this instead of
-	  // module level state for ease of clearing state between tests.
-	  globalState?: Object,
-	
-	  // Merged into the rendered element's props.
-	  props?: Object,
-	
-	  // Replaces (not merged into) the rendered element's style property.
-	  style?: Object,
-	};*/
-	
-	module.exports = {
-	  checkProps: checkPropsPlugin,
-	  mergeStyleArray: mergeStyleArrayPlugin,
-	  prefix: prefixPlugin,
-	  resolveInteractionStyles: resolveInteractionStylesPlugin,
-	  resolveMediaQueries: resolveMediaQueriesPlugin
-	};
-	
-	// May not be readable if code has been minified
-	
-	// The Radium configuration
-	
-	// Retrieve the value of a field on the component
-	
-	// Retrieve the value of a field global to the Radium module
-	// Used so that tests can easily clear global state.
-	
-	// Retrieve the value of some state specific to the rendered element.
-	// Requires the element to have a unique key or ref or for an element key
-	// to be passed in.
-	
-	// Access to the mergeStyles utility
-	
-	// The props of the rendered element. This can be changed by each plugin,
-	// and successive plugins will see the result of previous plugins.
-	
-	// Calls setState on the component with the given key and value.
-	// By default this is specific to the rendered element, but you can override
-	// by passing in the `elementKey` parameter.
-	
-	// The style prop of the rendered element. This can be changed by each plugin,
-	// and successive plugins will see the result of previous plugins. Kept
-	// separate from `props` for ease of use.
-	
-	// uses the exenv npm module
-	
-	// Merged into the component directly. Useful for storing things for which you
-	// don't need to re-render, event subscriptions, for instance.
-	
-	// Merged into a Radium controlled global state object. Use this instead of
-	// module level state for ease of clearing state between tests.
-	
-	// Merged into the rendered element's props.
-	
-	// Replaces (not merged into) the rendered element's style property.
-
-/***/ },
-/* 70 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/* @flow */
-	
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	
-	var checkProps = (function () {} /*: any*/);
-	
-	if (process.env.NODE_ENV !== 'production') {
-	  // Warn if you use longhand and shorthand properties in the same style
-	  // object.
-	  // https://developer.mozilla.org/en-US/docs/Web/CSS/Shorthand_properties
-	
-	  var shorthandPropertyExpansions = {
-	    'background': ['backgroundAttachment', 'backgroundBlendMode', 'backgroundClip', 'backgroundColor', 'backgroundImage', 'backgroundOrigin', 'backgroundPosition', 'backgroundPositionX', 'backgroundPositionY', 'backgroundRepeat', 'backgroundRepeatX', 'backgroundRepeatY', 'backgroundSize'],
-	    'border': ['borderBottom', 'borderBottomColor', 'borderBottomStyle', 'borderBottomWidth', 'borderColor', 'borderLeft', 'borderLeftColor', 'borderLeftStyle', 'borderLeftWidth', 'borderRight', 'borderRightColor', 'borderRightStyle', 'borderRightWidth', 'borderStyle', 'borderTop', 'borderTopColor', 'borderTopStyle', 'borderTopWidth', 'borderWidth'],
-	    'borderImage': ['borderImageOutset', 'borderImageRepeat', 'borderImageSlice', 'borderImageSource', 'borderImageWidth'],
-	    'borderRadius': ['borderBottomLeftRadius', 'borderBottomRightRadius', 'borderTopLeftRadius', 'borderTopRightRadius'],
-	    'font': ['fontFamily', 'fontKerning', 'fontSize', 'fontStretch', 'fontStyle', 'fontVariant', 'fontVariantLigatures', 'fontWeight', 'lineHeight'],
-	    'listStyle': ['listStyleImage', 'listStylePosition', 'listStyleType'],
-	    'margin': ['marginBottom', 'marginLeft', 'marginRight', 'marginTop'],
-	    'padding': ['paddingBottom', 'paddingLeft', 'paddingRight', 'paddingTop'],
-	    'transition': ['transitionDelay', 'transitionDuration', 'transitionProperty', 'transitionTimingFunction']
-	  };
-	
-	  checkProps = function (config /*: PluginConfig*/) /*: PluginResult*/ {
-	    var componentName = config.componentName;
-	    var style = config.style;
-	
-	    if (typeof style !== 'object' || !style) {
-	      return;
-	    }
-	
-	    var styleKeys = Object.keys(style);
-	    styleKeys.forEach(function (styleKey) {
-	      if (shorthandPropertyExpansions[styleKey] && shorthandPropertyExpansions[styleKey].some(function (sp) {
-	        return styleKeys.indexOf(sp) !== -1;
-	      })) {
-	        if (process.env.NODE_ENV !== 'production') {
-	          /* eslint-disable no-console */
-	          console.warn('Radium: property "' + styleKey + '" in style object', style, ': do not mix longhand and ' + 'shorthand properties in the same style object. Check the render ' + 'method of ' + componentName + '.', 'See https://github.com/FormidableLabs/radium/issues/95 for more ' + 'information.');
-	          /* eslint-enable no-console */
-	        }
-	      }
-	    });
-	
-	    styleKeys.forEach(function (k) {
-	      return checkProps(_extends({}, config, { style: style[k] }));
-	    });
-	    return;
-	  };
-	}
-	
-	module.exports = checkProps;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ },
-/* 71 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	// Convenient syntax for multiple styles: `style={[style1, style2, etc]}`
-	// Ignores non-objects, so you can do `this.state.isCool && styles.cool`.
-	/*:: import type {PluginConfig, PluginResult} from '.';*/var mergeStyleArrayPlugin = function mergeStyleArrayPlugin(_ref /*: PluginConfig*/) /*: PluginResult*/ {
-	  var style = _ref.style;
-	  var mergeStyles = _ref.mergeStyles;
-	
-	  var newStyle = Array.isArray(style) ? mergeStyles(style) : style;
-	  return { style: newStyle };
-	};
-	
-	module.exports = mergeStyleArrayPlugin;
-
-/***/ },
-/* 72 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	
-	var Prefixer = __webpack_require__(73);
-	
-	var prefixPlugin = function prefixPlugin(_ref /*: PluginConfig*/) /*: PluginResult*/ {
-	  var componentName = _ref.componentName;
-	  var style = _ref.style;
-	
-	  var newStyle = Prefixer.getPrefixedStyle(style, componentName);
-	  return { style: newStyle };
-	};
-	
-	module.exports = prefixPlugin;
-
-/***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {/**
-	 * Based on https://github.com/jsstyles/css-vendor, but without having to
-	 * convert between different cases all the time.
-	 *
-	 * @flow
-	 */
-	
-	'use strict';
-	
-	var ExecutionEnvironment = __webpack_require__(34);
-	var arrayFind = __webpack_require__(74);
-	
-	var VENDOR_PREFIX_REGEX = /-(moz|webkit|ms|o)-/;
-	
-	var vendorPrefixes = ['Webkit', 'ms', 'Moz', 'O'];
-	
-	var infoByCssPrefix = {
-	  '-moz-': {
-	    cssPrefix: '-moz-',
-	    jsPrefix: 'Moz',
-	    alternativeProperties: {
-	      // OLD - Firefox 19-
-	      alignItems: ['MozBoxAlign'],
-	      flex: ['MozBoxFlex'],
-	      flexDirection: ['MozBoxOrient'],
-	      justifyContent: ['MozBoxPack'],
-	      order: ['MozBoxOrdinalGroup']
-	    },
-	    alternativeValues: {
-	      // OLD - Firefox 19-
-	      alignItems: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end']
-	      },
-	      display: {
-	        flex: ['-moz-box']
-	      },
-	      flexDirection: {
-	        column: ['vertical'],
-	        row: ['horizontal']
-	      },
-	      justifyContent: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end'],
-	        'space-between': ['justify']
-	      }
-	    }
-	  },
-	  '-ms-': {
-	    cssPrefix: '-ms-',
-	    jsPrefix: 'ms',
-	    alternativeProperties: {
-	      // TWEENER - IE 10
-	      alignContent: ['msFlexLinePack'],
-	      alignItems: ['msFlexAlign'],
-	      alignSelf: ['msFlexAlignItem'],
-	      justifyContent: ['msFlexPack'],
-	      order: ['msFlexOrder']
-	    },
-	    alternativeValues: {
-	      // TWEENER - IE 10
-	      alignContent: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end'],
-	        'space-between': ['justify'],
-	        'space-around': ['distribute']
-	      },
-	      alignItems: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end']
-	      },
-	      alignSelf: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end']
-	      },
-	      display: {
-	        flex: ['-ms-flexbox'],
-	        'inline-flex': ['-ms-inline-flexbox']
-	      },
-	      justifyContent: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end'],
-	        'space-between': ['justify'],
-	        'space-around': ['distribute']
-	      }
-	    }
-	  },
-	  '-o-': {
-	    cssPrefix: '-o-',
-	    jsPrefix: 'O'
-	  },
-	  '-webkit-': {
-	    cssPrefix: '-webkit-',
-	    jsPrefix: 'Webkit',
-	    alternativeProperties: {
-	      // OLD - iOS 6-, Safari 3.1-6
-	      alignItems: ['WebkitBoxAlign'],
-	      flex: ['MozBoxFlex'],
-	      flexDirection: ['WebkitBoxOrient'],
-	      justifyContent: ['WebkitBoxPack'],
-	      order: ['WebkitBoxOrdinalGroup']
-	    },
-	    alternativeValues: {
-	      // OLD - iOS 6-, Safari 3.1-6
-	      alignItems: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end']
-	      },
-	      display: {
-	        flex: ['-webkit-box']
-	      },
-	      flexDirection: {
-	        row: ['horizontal'],
-	        column: ['vertical']
-	      },
-	      justifyContent: {
-	        'flex-start': ['start'],
-	        'flex-end': ['end'],
-	        'space-between': ['justify']
-	      }
-	    }
-	  }
-	};
-	
-	/**
-	 * CSS properties which accept numbers but are not in units of "px".
-	 * Copied from React core June 22, 2015.
-	 * https://github.com/facebook/react/blob/
-	 * ba81b60ad8e93b747be42a03b797065932c49c96/
-	 * src/renderers/dom/shared/CSSProperty.js
-	 */
-	var isUnitlessNumber = {
-	  boxFlex: true,
-	  boxFlexGroup: true,
-	  columnCount: true,
-	  flex: true,
-	  flexGrow: true,
-	  flexPositive: true,
-	  flexShrink: true,
-	  flexNegative: true,
-	  fontWeight: true,
-	  lineClamp: true,
-	  lineHeight: true,
-	  opacity: true,
-	  order: true,
-	  orphans: true,
-	  tabSize: true,
-	  widows: true,
-	  zIndex: true,
-	  zoom: true,
-	
-	  // SVG-related properties
-	  fillOpacity: true,
-	  strokeDashoffset: true,
-	  strokeOpacity: true,
-	  strokeWidth: true
-	};
-	
-	var domStyle = {};
-	var prefixedPropertyCache = {};
-	var prefixedValueCache = {};
-	var prefixInfo = {
-	  cssPrefix: '',
-	  jsPrefix: ''
-	};
-	
-	if (ExecutionEnvironment.canUseDOM) {
-	  domStyle = (document /*: any*/).createElement('p').style;
-	
-	  // older Firefox versions may have no float property in style object
-	  // so we need to add it manually
-	  if (domStyle.float === undefined) {
-	    domStyle.float = '';
-	  }
-	
-	  // Based on http://davidwalsh.name/vendor-prefix
-	  var prefixMatch;
-	  var windowStyles = window.getComputedStyle(document.documentElement, '');
-	
-	  // Array.prototype.slice.call(windowStyles) fails with
-	  // "Uncaught TypeError: undefined is not a function"
-	  // in older versions Android (KitKat) web views
-	  for (var i = 0; i < windowStyles.length; i++) {
-	    prefixMatch = windowStyles[i].match(VENDOR_PREFIX_REGEX);
-	
-	    if (prefixMatch) {
-	      break;
-	    }
-	  }
-	
-	  var cssVendorPrefix = prefixMatch && prefixMatch[0];
-	
-	  prefixInfo = cssVendorPrefix && infoByCssPrefix[cssVendorPrefix] ? infoByCssPrefix[cssVendorPrefix] : prefixInfo;
-	}
-	
-	var getPrefixedPropertyName = function getPrefixedPropertyName(property /*: string*/) /*: string*/ {
-	  if (prefixedPropertyCache.hasOwnProperty(property)) {
-	    return prefixedPropertyCache[property];
-	  }
-	
-	  var unprefixed = property;
-	
-	  // Try the prefixed version first. Chrome in particular has the `filter` and
-	  // `webkitFilter` properties availalbe on the style object, but only the
-	  // prefixed version actually works.
-	  var possiblePropertyNames = [
-	  // Prefixed
-	  prefixInfo.jsPrefix + property[0].toUpperCase() + property.slice(1), unprefixed];
-	
-	  // Alternative property names
-	  if (prefixInfo.alternativeProperties && prefixInfo.alternativeProperties[property]) {
-	    possiblePropertyNames = possiblePropertyNames.concat(prefixInfo.alternativeProperties[property]);
-	  }
-	
-	  var workingProperty = arrayFind(possiblePropertyNames, function (possiblePropertyName) {
-	    if (possiblePropertyName in domStyle) {
-	      return possiblePropertyName;
-	    }
-	  }) || false;
-	
-	  prefixedPropertyCache[property] = workingProperty;
-	
-	  return prefixedPropertyCache[property];
-	};
-	
-	// We are un-prefixing values before checking for isUnitlessNumber,
-	// otherwise we are at risk of being in a situation where someone
-	// explicitly passes something like `MozBoxFlex: 1` and that will
-	// in turn get transformed into `MozBoxFlex: 1px`.
-	var _getUnprefixedProperty = function _getUnprefixedProperty(property) {
-	  var noPrefixProperty = property;
-	
-	  vendorPrefixes.some(function (prefix) {
-	    // Let's check if the property starts with a vendor prefix
-	    if (property.indexOf(prefix) === 0) {
-	      noPrefixProperty = noPrefixProperty.replace(prefix, '');
-	
-	      // We have removed the vendor prefix, however the first
-	      // character is going to be uppercase hence won't match
-	      // any of the `isUnitlessNumber` keys as they all start
-	      // with lower case. Let's ensure that the first char is
-	      // lower case.
-	      noPrefixProperty = noPrefixProperty.charAt(0).toLowerCase() + noPrefixProperty.slice(1);
-	
-	      return true;
-	    }
-	  });
-	
-	  return noPrefixProperty;
-	};
-	
-	// React is planning to deprecate adding px automatically
-	// (https://github.com/facebook/react/issues/1873), and if they do, this
-	// should change to a warning or be removed in favor of React's warning.
-	// Same goes for below.
-	var _addPixelSuffixToValueIfNeeded = function _addPixelSuffixToValueIfNeeded(originalProperty, value) {
-	  var unPrefixedProperty = _getUnprefixedProperty(originalProperty);
-	
-	  if (value !== 0 && !isNaN(value) && !isUnitlessNumber[unPrefixedProperty]) {
-	    return value + 'px';
-	  }
-	  return value;
-	};
-	
-	var _getPrefixedValue = function _getPrefixedValue(componentName, property, value, originalProperty) {
-	  if (!Array.isArray(value)) {
-	    // don't test numbers (pure or stringy), but do add 'px' prefix if needed
-	    if (!isNaN(value) && value !== null) {
-	      return _addPixelSuffixToValueIfNeeded(originalProperty, value);
-	    }
-	
-	    if (typeof value !== 'string') {
-	      if (value !== null && value !== undefined) {
-	        value = value.toString();
-	      } else {
-	        return value;
-	      }
-	    }
-	
-	    // don't test numbers with units (e.g. 10em)
-	    if (!isNaN(parseInt(value, 10))) {
-	      return value;
-	    }
-	  }
-	
-	  var cacheKey = Array.isArray(value) ? value.join(' || ') : property + value;
-	
-	  if (prefixedValueCache.hasOwnProperty(cacheKey)) {
-	    return prefixedValueCache[cacheKey];
-	  }
-	
-	  var possibleValues;
-	  if (Array.isArray(value)) {
-	    // Add px for the same values React would, otherwise the testing below will
-	    // fail and it will try to fallback.
-	    possibleValues = value.map(function (v) {
-	      return _addPixelSuffixToValueIfNeeded(originalProperty, v);
-	    });
-	
-	    // Add prefixed versions
-	    possibleValues = possibleValues.concat(value.filter(function (v) {
-	      return !isNaN(v);
-	    }) // Don't prefix numbers
-	    .map(function (v) {
-	      return prefixInfo.cssPrefix + v;
-	    }));
-	  } else {
-	    possibleValues = [
-	    // Unprefixed
-	    value,
-	    // Prefixed
-	    prefixInfo.cssPrefix + value];
-	  }
-	
-	  // Alternative values
-	  if (prefixInfo.alternativeValues && prefixInfo.alternativeValues[originalProperty] && prefixInfo.alternativeValues[originalProperty][value]) {
-	    possibleValues = possibleValues.concat(prefixInfo.alternativeValues[originalProperty][value]);
-	  }
-	
-	  // Test possible value in order
-	  var workingValue = arrayFind(possibleValues, function (possibleValue) {
-	    domStyle[property] = '';
-	    domStyle[property] = possibleValue;
-	
-	    // Note that we just make sure it is not an empty string. Browsers will
-	    // sometimes rewrite values, but still accept them. They will set the value
-	    // to an empty string if not supported.
-	    // E.g. for border, "solid 1px black" becomes "1px solid black"
-	    //      but "foobar" becomes "", since it is not supported.
-	    return !!domStyle[property];
-	  });
-	
-	  if (workingValue) {
-	    prefixedValueCache[cacheKey] = workingValue;
-	  } else {
-	    // Unsupported, assume unprefixed works, but warn
-	    prefixedValueCache[cacheKey] = value;
-	
-	    if (process.env.NODE_ENV !== 'production') {
-	      /* eslint-disable no-console */
-	      if (console && console.warn) {
-	        var componentContext = componentName ? ' in component "' + componentName + '"' : '';
-	
-	        console.warn('Unsupported CSS value "' + value + '" for property "' + property + '"' + componentContext);
-	      }
-	      /* eslint-enable no-console */
-	    }
-	  }
-	
-	  return prefixedValueCache[cacheKey];
-	};
-	
-	// Returns a new style object with vendor prefixes added to property names
-	// and values.
-	var getPrefixedStyle = function getPrefixedStyle(style /*: Object*/, componentName /*: ?string*/) /*: Object*/ {
-	  if (!ExecutionEnvironment.canUseDOM) {
-	    return Object.keys(style).reduce(function (newStyle, key) {
-	      var value = style[key];
-	      var newValue = Array.isArray(value) ? value[0] : value;
-	      newStyle[key] = newValue;
-	      return newStyle;
-	    }, {});
-	  }
-	
-	  var prefixedStyle = {};
-	  Object.keys(style).forEach(function (property) {
-	    var value = style[property];
-	
-	    var newProperty = getPrefixedPropertyName(property);
-	    if (!newProperty) {
-	      // Ignore unsupported properties
-	      if (process.env.NODE_ENV !== 'production') {
-	        /* eslint-disable no-console */
-	        if (console && console.warn) {
-	          var componentContext = componentName ? ' in component "' + componentName + '"' : '';
-	
-	          console.warn('Unsupported CSS property "' + property + '"' + componentContext);
-	        }
-	        /* eslint-enable no-console */
-	        return;
-	      }
-	    }
-	
-	    var newValue = _getPrefixedValue(componentName, newProperty, value, property);
-	
-	    prefixedStyle[newProperty] = newValue;
-	  });
-	  return prefixedStyle;
-	};
-	
-	module.exports = {
-	  getPrefixedStyle: getPrefixedStyle,
-	  cssPrefix: prefixInfo.cssPrefix,
-	  jsPrefix: prefixInfo.jsPrefix
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
-
-/***/ },
-/* 74 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	function find(array, predicate, context) {
-	  if (typeof Array.prototype.find === 'function') {
-	    return array.find(predicate, context);
-	  }
-	
-	  context = context || this;
-	  var length = array.length;
-	  var i;
-	
-	  if (typeof predicate !== 'function') {
-	    throw new TypeError(predicate + ' is not a function');
-	  }
-	
-	  for (i = 0; i < length; i++) {
-	    if (predicate.call(context, array[i], i, array)) {
-	      return array[i];
-	    }
-	  }
-	}
-	
-	module.exports = find;
-
-
-/***/ },
-/* 75 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/** @flow */
-	
-	'use strict';
-	
-	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	
-	var MouseUpListener = __webpack_require__(76);
-	
-	var _isInteractiveStyleField = function _isInteractiveStyleField(styleFieldName) {
-	  return styleFieldName === ':hover' || styleFieldName === ':active' || styleFieldName === ':focus';
-	};
-	
-	var resolveInteractionStyles = function resolveInteractionStyles(config /*: PluginConfig*/) /*: PluginResult*/ {
-	  var ExecutionEnvironment = config.ExecutionEnvironment;
-	  var getComponentField = config.getComponentField;
-	  var getState = config.getState;
-	  var mergeStyles = config.mergeStyles;
-	  var props = config.props;
-	  var setState = config.setState;
-	  var style = config.style;
-	
-	  var newComponentFields = {};
-	  var newProps = {};
-	
-	  // Only add handlers if necessary
-	  if (style[':hover']) {
-	    // Always call the existing handler if one is already defined.
-	    // This code, and the very similar ones below, could be abstracted a bit
-	    // more, but it hurts readability IMO.
-	    var existingOnMouseEnter = props.onMouseEnter;
-	    newProps.onMouseEnter = function (e) {
-	      existingOnMouseEnter && existingOnMouseEnter(e);
-	      setState(':hover', true);
-	    };
-	
-	    var existingOnMouseLeave = props.onMouseLeave;
-	    newProps.onMouseLeave = function (e) {
-	      existingOnMouseLeave && existingOnMouseLeave(e);
-	      setState(':hover', false);
-	    };
-	  }
-	
-	  if (style[':active']) {
-	    var existingOnMouseDown = props.onMouseDown;
-	    newProps.onMouseDown = function (e) {
-	      existingOnMouseDown && existingOnMouseDown(e);
-	      newComponentFields._lastMouseDown = Date.now();
-	      setState(':active', 'viamousedown');
-	    };
-	
-	    var existingOnKeyDown = props.onKeyDown;
-	    newProps.onKeyDown = function (e) {
-	      existingOnKeyDown && existingOnKeyDown(e);
-	      if (e.key === ' ' || e.key === 'Enter') {
-	        setState(':active', 'viakeydown');
-	      }
-	    };
-	
-	    var existingOnKeyUp = props.onKeyUp;
-	    newProps.onKeyUp = function (e) {
-	      existingOnKeyUp && existingOnKeyUp(e);
-	      if (e.key === ' ' || e.key === 'Enter') {
-	        setState(':active', false);
-	      }
-	    };
-	  }
-	
-	  if (style[':focus']) {
-	    var existingOnFocus = props.onFocus;
-	    newProps.onFocus = function (e) {
-	      existingOnFocus && existingOnFocus(e);
-	      setState(':focus', true);
-	    };
-	
-	    var existingOnBlur = props.onBlur;
-	    newProps.onBlur = function (e) {
-	      existingOnBlur && existingOnBlur(e);
-	      setState(':focus', false);
-	    };
-	  }
-	
-	  if (style[':active'] && !getComponentField('_radiumMouseUpListener') && ExecutionEnvironment.canUseEventListeners) {
-	    newComponentFields._radiumMouseUpListener = MouseUpListener.subscribe(function () {
-	      Object.keys(getComponentField('state')._radiumStyleState).forEach(function (key) {
-	        if (getState(':active') === 'viamousedown') {
-	          setState(':active', false, key);
-	        }
-	      });
-	    });
-	  }
-	
-	  // Merge the styles in the order they were defined
-	  var interactionStyles = Object.keys(style).filter(function (name) {
-	    return _isInteractiveStyleField(name) && getState(name);
-	  }).map(function (name) {
-	    return style[name];
-	  });
-	
-	  var newStyle = mergeStyles([style].concat(interactionStyles));
-	
-	  // Remove interactive styles
-	  newStyle = Object.keys(newStyle).reduce(function (styleWithoutInteractions, name) {
-	    if (!_isInteractiveStyleField(name)) {
-	      styleWithoutInteractions[name] = newStyle[name];
-	    }
-	    return styleWithoutInteractions;
-	  }, {});
-	
-	  return {
-	    componentFields: newComponentFields,
-	    props: newProps,
-	    style: newStyle
-	  };
-	};
-	
-	module.exports = resolveInteractionStyles;
-
-/***/ },
-/* 76 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var _callbacks = [];
-	var _mouseUpListenerIsActive = false;
-	
-	var _handleMouseUp = function _handleMouseUp(ev) {
-	  _callbacks.forEach(function (callback) {
-	    callback(ev);
-	  });
-	};
-	
-	var subscribe = function subscribe(callback /*: () => void*/) /*: {remove: () => void}*/ {
-	  if (_callbacks.indexOf(callback) === -1) {
-	    _callbacks.push(callback);
-	  }
-	
-	  if (!_mouseUpListenerIsActive) {
-	    window.addEventListener('mouseup', _handleMouseUp);
-	    _mouseUpListenerIsActive = true;
-	  }
-	
-	  return {
-	    remove: function remove() {
-	      var index = _callbacks.indexOf(callback);
-	      _callbacks.splice(index, 1);
-	
-	      if (_callbacks.length === 0 && _mouseUpListenerIsActive) {
-	        window.removeEventListener('mouseup', _handleMouseUp);
-	        _mouseUpListenerIsActive = false;
-	      }
-	    }
-	  };
-	};
-	
-	module.exports = {
-	  subscribe: subscribe
-	};
-
-/***/ },
-/* 77 */
-/***/ function(module, exports) {
-
-	/** @flow */
-	
-	'use strict';
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	/*:: import type {MatchMediaType} from '../config';*/
-	/*:: import type {PluginConfig, PluginResult} from '.';*/
-	
-	var _windowMatchMedia;
-	var _getWindowMatchMedia = function _getWindowMatchMedia(ExecutionEnvironment) {
-	  if (_windowMatchMedia === undefined) {
-	    _windowMatchMedia = !!ExecutionEnvironment.canUseDOM && !!window && !!window.matchMedia && function (mediaQueryString) {
-	      return window.matchMedia(mediaQueryString);
-	    } || null;
-	  }
-	  return _windowMatchMedia;
-	};
-	
-	var resolveMediaQueries = function resolveMediaQueries(_ref /*: PluginConfig*/) /*: PluginResult*/ {
-	  var ExecutionEnvironment = _ref.ExecutionEnvironment;
-	  var getComponentField = _ref.getComponentField;
-	  var getGlobalState = _ref.getGlobalState;
-	  var config = _ref.config;
-	  var mergeStyles = _ref.mergeStyles;
-	  var setState = _ref.setState;
-	  var style = _ref.style;
-	
-	  var newComponentFields = {};
-	  var newStyle = style;
-	  var matchMedia /*: ?MatchMediaType*/ = config.matchMedia || _getWindowMatchMedia(ExecutionEnvironment);
-	  if (!matchMedia) {
-	    return newStyle;
-	  }
-	
-	  var mediaQueryListByQueryString = getGlobalState('mediaQueryListByQueryString') || {};
-	
-	  Object.keys(style).filter(function (name) {
-	    return name.indexOf('@media') === 0;
-	  }).map(function (query) {
-	    var mediaQueryStyles = style[query];
-	    query = query.replace('@media ', '');
-	
-	    // Create a global MediaQueryList if one doesn't already exist
-	    var mql = mediaQueryListByQueryString[query];
-	    if (!mql && matchMedia) {
-	      mediaQueryListByQueryString[query] = mql = matchMedia(query);
-	    }
-	
-	    var listenersByQuery = getComponentField('_radiumMediaQueryListenersByQuery');
-	
-	    if (!listenersByQuery || !listenersByQuery[query]) {
-	      var listener = function listener() {
-	        return setState(query, mql.matches, '_all');
-	      };
-	      mql.addListener(listener);
-	      newComponentFields._radiumMediaQueryListenersByQuery = _extends({}, listenersByQuery);
-	      newComponentFields._radiumMediaQueryListenersByQuery[query] = {
-	        remove: function remove() {
-	          mql.removeListener(listener);
-	        }
-	      };
-	    }
-	
-	    // Apply media query states
-	    if (mql.matches) {
-	      newStyle = mergeStyles([newStyle, mediaQueryStyles]);
-	    }
-	  });
-	
-	  // Remove media queries
-	  newStyle = Object.keys(newStyle).reduce(function (styleWithoutMedia, key) {
-	    if (key.indexOf('@media') !== 0) {
-	      styleWithoutMedia[key] = newStyle[key];
-	    }
-	    return styleWithoutMedia;
-	  }, {});
-	
-	  return {
-	    componentFields: newComponentFields,
-	    globalState: { mediaQueryListByQueryString: mediaQueryListByQueryString },
-	    style: newStyle
-	  };
-	};
-	
-	module.exports = resolveMediaQueries;
-
-/***/ },
-/* 78 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	"use strict";
-	
-	var allPrintStyles = {};
-	var listeners = [];
-	
-	var subscribe = function subscribe(listener /*: () => void*/) /*: {remove: () => void}*/ {
-	  if (listeners.indexOf(listener) === -1) {
-	    listeners.push(listener);
-	  }
-	
-	  return {
-	    remove: function remove() {
-	      var listenerIndex = listeners.indexOf(listener);
-	
-	      if (listenerIndex > -1) {
-	        listeners.splice(listenerIndex, 1);
-	      }
-	    }
-	  };
-	};
-	
-	var _emitChange = function _emitChange() {
-	  listeners.forEach(function (listener) {
-	    return listener();
-	  });
-	};
-	
-	var _appendImportantToEachValue = function _appendImportantToEachValue(styleObj) {
-	  var importantStyleObj = {};
-	
-	  Object.keys(styleObj).forEach(function (key) {
-	    var value = styleObj[key];
-	
-	    // This breaks unitless values but they'll be deprecated soon anyway
-	    // https://github.com/facebook/react/issues/1873
-	    value = value + " !important";
-	    importantStyleObj[key] = value;
-	  });
-	
-	  return importantStyleObj;
-	};
-	
-	var addPrintStyles = function addPrintStyles(Component /*: constructor*/) {
-	  if (!Component.printStyles) {
-	    return;
-	  }
-	
-	  var printStyleClass = {};
-	
-	  Object.keys(Component.printStyles).forEach(function (key) {
-	    var styles = Component.printStyles[key];
-	    var className = "Radium-" + Component.displayName + "-" + key;
-	    allPrintStyles["." + className] = _appendImportantToEachValue(styles);
-	    printStyleClass[key] = className;
-	  });
-	
-	  // Allows for lazy loading of JS that then calls Radium to update the
-	  // print styles
-	  _emitChange();
-	  return printStyleClass;
-	};
-	
-	var getPrintStyles = function getPrintStyles() /*: Object*/ {
-	  return allPrintStyles;
-	};
-	
-	module.exports = {
-	  addPrintStyles: addPrintStyles,
-	  getPrintStyles: getPrintStyles,
-	  subscribe: subscribe
-	};
-
-/***/ },
-/* 79 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var React = __webpack_require__(4);
-	
-	var Style = __webpack_require__(80);
-	var printStyles = __webpack_require__(78);
-	
-	var PrintStyle = React.createClass({
-	  displayName: 'PrintStyle',
-	
-	  getInitialState: function getInitialState() {
-	    return this._getStylesState();
-	  },
-	
-	  componentDidMount: function componentDidMount() {
-	    this.subscription = printStyles.subscribe(this._onChange);
-	  },
-	
-	  componentWillUnmount: function componentWillUnmount() {
-	    this.subscription.remove();
-	  },
-	
-	  _onChange: function _onChange() {
-	    this.setState(this._getStylesState());
-	  },
-	
-	  _getStylesState: function _getStylesState() {
-	    return {
-	      styles: printStyles.getPrintStyles()
-	    };
-	  },
-	
-	  render: function render() {
-	    return React.createElement(Style, { rules: {
-	        mediaQueries: {
-	          print: this.state.styles
-	        }
-	      } });
-	  }
-	});
-	
-	module.exports = PrintStyle;
-
-/***/ },
-/* 80 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var camelCasePropsToDashCase = __webpack_require__(81);
-	var createMarkupForStyles = __webpack_require__(82);
-	var Prefixer = __webpack_require__(73);
-	
-	var React = __webpack_require__(4);
-	
-	var buildCssString = function buildCssString(selector /*: string*/, rules /*: Object*/, prefix /*: (rules: Object, componentName: string) => Object*/) /*: ?string*/ {
-	  if (!selector || !rules) {
-	    return null;
-	  }
-	
-	  var prefixedRules = prefix(rules, 'Style');
-	  var cssPrefixedRules = camelCasePropsToDashCase(prefixedRules);
-	  var serializedRules = createMarkupForStyles(cssPrefixedRules);
-	
-	  return selector + '{' + serializedRules + '}';
-	};
-	
-	var Style = React.createClass({
-	  displayName: 'Style',
-	
-	  propTypes: {
-	    prefix: React.PropTypes.func.isRequired,
-	
-	    rules: React.PropTypes.object,
-	    scopeSelector: React.PropTypes.string
-	  },
-	
-	  getDefaultProps: function getDefaultProps() /*: {scopeSelector: string}*/ {
-	    return {
-	      prefix: Prefixer.getPrefixedStyle,
-	      scopeSelector: ''
-	    };
-	  },
-	
-	  _buildStyles: function _buildStyles(styles /*: Object*/) /*: string*/ {
-	    var _this = this;
-	
-	    return Object.keys(styles).reduce(function (accumulator, selector) {
-	      var rules = styles[selector];
-	
-	      if (selector === 'mediaQueries') {
-	        accumulator += _this._buildMediaQueryString(rules);
-	      } else {
-	        var completeSelector = (_this.props.scopeSelector ? _this.props.scopeSelector + ' ' : '') + selector;
-	        accumulator += buildCssString(completeSelector, rules, _this.props.prefix) || '';
-	      }
-	
-	      return accumulator;
-	    }, '');
-	  },
-	
-	  _buildMediaQueryString: function _buildMediaQueryString(stylesByMediaQuery /*: {[mediaQuery: string]: Object}*/) /*: string*/ {
-	    var _this2 = this;
-	
-	    var contextMediaQueries = this._getContextMediaQueries();
-	    var mediaQueryString = '';
-	
-	    Object.keys(stylesByMediaQuery).forEach(function (query) {
-	      var completeQuery = contextMediaQueries[query] ? contextMediaQueries[query] : query;
-	      mediaQueryString += '@media ' + completeQuery + '{' + _this2._buildStyles(stylesByMediaQuery[query]) + '}';
-	    });
-	
-	    return mediaQueryString;
-	  },
-	
-	  _getContextMediaQueries: function _getContextMediaQueries() /*: {[mediaQuery: string]: Object}*/ {
-	    var contextMediaQueries = {};
-	    if (this.context && this.context.mediaQueries) {
-	      Object.keys(this.context.mediaQueries).forEach((function (query) {
-	        contextMediaQueries[query] = this.context.mediaQueries[query].media;
-	      }).bind(this));
-	    }
-	
-	    return contextMediaQueries;
-	  },
-	
-	  render: function render() /*: ?ReactElement*/ {
-	    if (!this.props.rules) {
-	      return null;
-	    }
-	
-	    var styles = this._buildStyles(this.props.rules);
-	
-	    return React.createElement('style', { dangerouslySetInnerHTML: { __html: styles } });
-	  }
-	});
-	
-	module.exports = Style;
-
-/***/ },
-/* 81 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var _camelCaseRegex = /([a-z])?([A-Z])/g;
-	var _camelCaseReplacer = function _camelCaseReplacer(match, p1, p2) {
-	  return (p1 || '') + '-' + p2.toLowerCase();
-	};
-	var _camelCaseToDashCase = function _camelCaseToDashCase(s) {
-	  return s.replace(_camelCaseRegex, _camelCaseReplacer);
-	};
-	
-	var camelCasePropsToDashCase = function camelCasePropsToDashCase(prefixedStyle /*: Object*/) /*: Object*/ {
-	  // Since prefix is expected to work on inline style objects, we must
-	  // translate the keys to dash case for rendering to CSS.
-	  return Object.keys(prefixedStyle).reduce(function (result, key) {
-	    result[_camelCaseToDashCase(key)] = prefixedStyle[key];
-	    return result;
-	  }, {});
-	};
-	
-	module.exports = camelCasePropsToDashCase;
-
-/***/ },
-/* 82 */
-/***/ function(module, exports) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var createMarkupForStyles = function createMarkupForStyles(style /*: Object*/) /*: string*/ {
-	  var spaces /*: string*/ = arguments.length <= 1 || arguments[1] === undefined ? '' : arguments[1];
-	
-	  return Object.keys(style).map(function (property) {
-	    return spaces + property + ': ' + style[property] + ';';
-	  }).join('\n');
-	};
-	
-	module.exports = createMarkupForStyles;
-
-/***/ },
-/* 83 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* @flow */
-	
-	'use strict';
-	
-	var camelCasePropsToDashCase = __webpack_require__(81);
-	var createMarkupForStyles = __webpack_require__(82);
-	var Prefixer = __webpack_require__(73);
-	
-	var ExecutionEnvironment = __webpack_require__(34);
-	
-	var isAnimationSupported = false;
-	var keyframesPrefixed = 'keyframes';
-	
-	if (ExecutionEnvironment.canUseDOM) {
-	  // Animation feature detection and keyframes prefixing from MDN:
-	  // https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Animations/Detecting_CSS_animation_support
-	  var domPrefixes = ['Webkit', 'Moz', 'O', 'ms'];
-	  var element = (document.createElement('div') /*: any*/);
-	
-	  if (element.style.animationName !== undefined) {
-	    isAnimationSupported = true;
-	  } else {
-	    domPrefixes.some(function (prefix) {
-	      if (element.style[prefix + 'AnimationName'] !== undefined) {
-	        keyframesPrefixed = '-' + prefix.toLowerCase() + '-keyframes';
-	        isAnimationSupported = true;
-	        return true;
-	      }
-	      return false;
-	    });
-	  }
-	}
-	
-	var animationIndex = 1;
-	var animationStyleSheet = null;
-	
-	if (isAnimationSupported) {
-	  animationStyleSheet = (document.createElement('style') /*: any*/);
-	  document.head.appendChild(animationStyleSheet);
-	}
-	
-	// Simple animation helper that injects CSS into a style object containing the
-	// keyframes, and returns a string with the generated animation name.
-	var keyframes = function keyframes(keyframeRules /*: {[percentage: string]: {[key: string]: string|number}}*/, componentName /*:: ?: string*/) /*: string*/ {
-	  var prefix /*: (style: Object, componentName: ?string) => Object*/ = arguments.length <= 2 || arguments[2] === undefined ? Prefixer.getPrefixedStyle : arguments[2];
-	
-	  var name = 'Animation' + animationIndex;
-	  animationIndex += 1;
-	
-	  if (!isAnimationSupported) {
-	    return name;
-	  }
-	
-	  var rule = '@' + keyframesPrefixed + ' ' + name + ' {\n' + Object.keys(keyframeRules).map(function (percentage) {
-	    var props = keyframeRules[percentage];
-	    var prefixedProps = prefix(props, componentName);
-	    var cssPrefixedProps = camelCasePropsToDashCase(prefixedProps);
-	    var serializedProps = createMarkupForStyles(cssPrefixedProps, '  ');
-	    return '  ' + percentage + ' {\n  ' + serializedProps + '\n  }';
-	  }).join('\n') + '\n}\n';
-	
-	  // for flow
-	  /* istanbul ignore next */
-	  if (!animationStyleSheet) {
-	    throw new Error('keyframes not initialized properly');
-	  }
-	
-	  animationStyleSheet.sheet.insertRule(rule, animationStyleSheet.sheet.cssRules.length);
-	  return name;
-	};
-	
-	module.exports = keyframes;
-
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
-
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -23704,7 +21985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _victoryAnimation = __webpack_require__(85);
+	var _victoryAnimation = __webpack_require__(64);
 	
 	var AxisLine = (function (_React$Component) {
 	  _inherits(AxisLine, _React$Component);
@@ -23764,17 +22045,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 85 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryAnimation: __webpack_require__(86)
+	  VictoryAnimation: __webpack_require__(65)
 	};
 
 /***/ },
-/* 86 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -23799,7 +22080,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Ease = __webpack_require__(87);
+	var _d3Ease = __webpack_require__(66);
 	
 	var _d3Ease2 = _interopRequireDefault(_d3Ease);
 	
@@ -23807,9 +22088,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
 	
-	var _d3Timer = __webpack_require__(88);
+	var _d3Timer = __webpack_require__(67);
 	
-	var _util = __webpack_require__(89);
+	var _util = __webpack_require__(68);
 	
 	var VELOCITY_MULTIPLIER = 16.5;
 	
@@ -23956,7 +22237,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 87 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -24186,7 +22467,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 88 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -24292,7 +22573,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 89 */
+/* 68 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24449,7 +22730,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.addVictoryInterpolator = addVictoryInterpolator;
 
 /***/ },
-/* 90 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24482,7 +22763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _victoryAnimation = __webpack_require__(85);
+	var _victoryAnimation = __webpack_require__(64);
 	
 	var GridLine = (function (_React$Component) {
 	  _inherits(GridLine, _React$Component);
@@ -24557,7 +22838,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 91 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24592,9 +22873,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _victoryLabel = __webpack_require__(61);
 	
-	var _victoryAnimation = __webpack_require__(85);
+	var _victoryAnimation = __webpack_require__(64);
 	
-	var _util = __webpack_require__(92);
+	var _util = __webpack_require__(71);
 	
 	var orientationSign = {
 	  top: -1,
@@ -24730,7 +23011,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 92 */
+/* 71 */
 /***/ function(module, exports) {
 
 	// TODO: Move to `victory-util`.
@@ -24752,17 +23033,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getRole = getRole;
 
 /***/ },
-/* 93 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	module.exports = {
-	  VictoryLine: __webpack_require__(94)
+	  VictoryLine: __webpack_require__(73)
 	};
 
 /***/ },
-/* 94 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -24797,11 +23078,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _d3Scale2 = _interopRequireDefault(_d3Scale);
 	
-	var _lineSegment = __webpack_require__(95);
+	var _lineSegment = __webpack_require__(74);
 	
 	var _lineSegment2 = _interopRequireDefault(_lineSegment);
 	
-	var _lineLabel = __webpack_require__(101);
+	var _lineLabel = __webpack_require__(77);
 	
 	var _lineLabel2 = _interopRequireDefault(_lineLabel);
 	
@@ -25184,7 +23465,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 95 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -25217,11 +23498,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _d3Shape = __webpack_require__(96);
+	var _d3Shape = __webpack_require__(75);
 	
 	var _d3Shape2 = _interopRequireDefault(_d3Shape);
 	
-	var _victoryAnimation = __webpack_require__(98);
+	var _victoryAnimation = __webpack_require__(64);
 	
 	var LineSegment = (function (_React$Component) {
 	  _inherits(LineSegment, _React$Component);
@@ -25308,11 +23589,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 96 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(97)) :
+	   true ? factory(exports, __webpack_require__(76)) :
 	  typeof define === 'function' && define.amd ? define('d3-shape', ['exports', 'd3-path'], factory) :
 	  factory((global.d3_shape = {}),global.d3_path);
 	}(this, function (exports,d3Path) { 'use strict';
@@ -26922,7 +25203,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 97 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -27081,356 +25362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 98 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	module.exports = {
-	  VictoryAnimation: __webpack_require__(99)
-	};
-
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(4);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _d3Ease = __webpack_require__(87);
-	
-	var _d3Ease2 = _interopRequireDefault(_d3Ease);
-	
-	var _d3Interpolate = __webpack_require__(55);
-	
-	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
-	
-	var _d3Timer = __webpack_require__(88);
-	
-	var _util = __webpack_require__(100);
-	
-	var VELOCITY_MULTIPLIER = 16.5;
-	
-	(0, _util.addVictoryInterpolator)();
-	
-	var VictoryAnimation = (function (_React$Component) {
-	  _inherits(VictoryAnimation, _React$Component);
-	
-	  _createClass(VictoryAnimation, null, [{
-	    key: "propTypes",
-	    value: {
-	      children: _react2["default"].PropTypes.func,
-	      velocity: _react2["default"].PropTypes.number,
-	      easing: _react2["default"].PropTypes.oneOf(["back", "backIn", "backOut", "backInOut", "bounce", "bounceIn", "bounceOut", "bounceInOut", "circle", "circleIn", "circleOut", "circleInOut", "linear", "linearIn", "linearOut", "linearInOut", "cubic", "cubicIn", "cubicOut", "cubicInOut", "elastic", "elasticIn", "elasticOut", "elasticInOut", "exp", "expIn", "expOut", "expInOut", "poly", "polyIn", "polyOut", "polyInOut", "quad", "quadIn", "quadOut", "quadInOut", "sin", "sinIn", "sinOut", "sinInOut"]),
-	      delay: _react2["default"].PropTypes.number,
-	      onEnd: _react2["default"].PropTypes.func,
-	      data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      /* velocity modifies step each frame */
-	      velocity: 0.02,
-	      /* easing modifies step each frame */
-	      easing: "quadInOut",
-	      /* delay between transitions */
-	      delay: 0,
-	      /* we got nothin' */
-	      data: {}
-	    },
-	    enumerable: true
-	  }]);
-	
-	  function VictoryAnimation(props) {
-	    _classCallCheck(this, VictoryAnimation);
-	
-	    _get(Object.getPrototypeOf(VictoryAnimation.prototype), "constructor", this).call(this, props);
-	    /* defaults */
-	    this.state = Array.isArray(this.props.data) ? this.props.data[0] : this.props.data;
-	    this.interpolator = null;
-	    this.queue = Array.isArray(this.props.data) ? this.props.data.slice(1) : [];
-	    /* build easing function */
-	    this.ease = _d3Ease2["default"][this.props.easing];
-	    /*
-	      unlike React.createClass({}), there is no autobinding of this in ES6 classes
-	      so we bind functionToBeRunEachFrame to current instance of victory animation class
-	    */
-	    this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
-	  }
-	
-	  _createClass(VictoryAnimation, [{
-	    key: "componentDidMount",
-	    value: function componentDidMount() {
-	      // Length check prevents us from triggering `onEnd` in `traverseQueue`.
-	      if (this.queue.length) {
-	        this.traverseQueue();
-	      }
-	    }
-	
-	    /* lifecycle */
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      /* cancel existing loop if it exists */
-	      if (this.timer) {
-	        this.timer.stop();
-	      }
-	      /* If an object was supplied */
-	      if (!Array.isArray(nextProps.data)) {
-	        // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
-	        // but let's reuse the same array.
-	        this.queue.length = 0;
-	        this.queue.push(nextProps.data);
-	        /* If an array was supplied */
-	      } else {
-	          var _queue;
-	
-	          /* Extend the tween queue */
-	          (_queue = this.queue).push.apply(_queue, _toConsumableArray(nextProps.data));
-	        }
-	      /* Start traversing the tween queue */
-	      this.traverseQueue();
-	    }
-	  }, {
-	    key: "componentWillUnmount",
-	    value: function componentWillUnmount() {
-	      if (this.timer) {
-	        this.timer.stop();
-	      }
-	    }
-	
-	    /* Traverse the tween queue */
-	  }, {
-	    key: "traverseQueue",
-	    value: function traverseQueue() {
-	      if (this.queue.length) {
-	        /* Get the next index */
-	        var data = this.queue[0];
-	        /* compare cached version to next props */
-	        this.interpolator = _d3Interpolate2["default"].value(this.state, data);
-	        /* reset step to zero */
-	        this.timer = (0, _d3Timer.timer)(this.functionToBeRunEachFrame, this.props.delay);
-	      } else if (this.props.onEnd) {
-	        this.props.onEnd();
-	      }
-	    }
-	
-	    /* every frame we... */
-	  }, {
-	    key: "functionToBeRunEachFrame",
-	    value: function functionToBeRunEachFrame(elapsed) {
-	      /*
-	        step can generate imprecise values, sometimes greater than 1
-	        if this happens set the state to 1 and return, cancelling the timer
-	      */
-	      var step = elapsed / (VELOCITY_MULTIPLIER / this.props.velocity);
-	
-	      if (step >= 1) {
-	        this.setState(this.interpolator(1));
-	        this.timer.stop();
-	        this.queue.shift();
-	        this.traverseQueue(); // Will take care of calling `onEnd`.
-	        return;
-	      }
-	      /*
-	        if we're not at the end of the timer, set the state by passing
-	        current step value that's transformed by the ease function to the
-	        interpolator, which is cached for performance whenever props are received
-	      */
-	      this.setState(this.interpolator(this.ease(step)));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return this.props.children(this.state);
-	    }
-	  }]);
-	
-	  return VictoryAnimation;
-	})(_react2["default"].Component);
-	
-	exports["default"] = VictoryAnimation;
-	module.exports = exports["default"];
-
-/***/ },
-/* 100 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _lodash = __webpack_require__(2);
-	
-	var _lodash2 = _interopRequireDefault(_lodash);
-	
-	var _d3Interpolate = __webpack_require__(55);
-	
-	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
-	
-	var isInterpolatable = function isInterpolatable(obj) {
-	  // d3 turns null into 0 and undefined into NaN, which we don't want.
-	  if (obj !== null) {
-	    switch (typeof obj) {
-	      case "undefined":
-	        return false;
-	      case "number":
-	        // The standard `isNaN` is fine in this case since we already know the
-	        // type is number.
-	        return !isNaN(obj) && _lodash2["default"].isFinite(obj);
-	      case "string":
-	        // d3 might not *actually* be able to interpolate the string, but it
-	        // won't cause any issues to let it try.
-	        return true;
-	      case "boolean":
-	        // d3 turns Booleans into integers, which we don't want. Sure, we could
-	        // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
-	        // something expecting a Boolean.
-	        return false;
-	      case "object":
-	        // Don't try to interpolate class instances (except Date or Array).
-	        return _lodash2["default"].isDate(obj) || _lodash2["default"].isArray(obj) || _lodash2["default"].isPlainObject(obj);
-	      case "function":
-	        // Careful! There may be extra properties on function objects that the
-	        // component expects to access - for instance, it may be a `d3.scale()`
-	        // function, which has its own methods attached. We don't know if the
-	        // component is only going to call the function (in which case it's
-	        // safely interpolatable) or if it's going to access special properties
-	        // (in which case our function generated from `interpolateFunction` will
-	        // most likely cause an error. We could check for enumerable properties
-	        // on the function object here to see if it's a "plain" function, but
-	        // let's just require that components prevent such function props from
-	        // being animated in the first place.
-	        return true;
-	    }
-	  }
-	  return false;
-	};
-	
-	exports.isInterpolatable = isInterpolatable;
-	/**
-	 * Interpolate immediately to the end value at the given step `when`.
-	 * Some nicer default behavior might be to jump at the halfway point or return
-	 * `a` if `t` is 0 (instead of always returning `b`). But d3's default
-	 * interpolator does not do these things:
-	 *
-	 *   d3.interpolate('aaa', 'bbb')(0) === 'bbb'
-	 *
-	 * ...and things might get wonky if we don't replicate that behavior.
-	 *
-	 * @param {any} a - Start value.
-	 * @param {any} b - End value.
-	 * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
-	 * @returns {Function} An interpolation function.
-	 */
-	var interpolateImmediate = function interpolateImmediate(a, b) {
-	  var when = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
-	
-	  return function (t) {
-	    return t < when ? a : b;
-	  };
-	};
-	
-	exports.interpolateImmediate = interpolateImmediate;
-	/**
-	 * Interpolate to or from a function. The interpolated value will be a function
-	 * that calls `a` (if it's a function) and `b` (if it's a function) and calls
-	 * `d3.interpolate` on the resulting values. Note that our function won't
-	 * necessarily be called (that's up to the component this eventually gets
-	 * passed to) - but if it does get called, it will return an appropriately
-	 * interpolated value.
-	 *
-	 * @param {any} a - Start value.
-	 * @param {any} b - End value.
-	 * @returns {Function} An interpolation function.
-	 */
-	var interpolateFunction = function interpolateFunction(a, b) {
-	  return function (t) {
-	    if (t >= 1) {
-	      return b;
-	    }
-	    return function () {
-	      /* eslint-disable no-invalid-this */
-	      var aval = typeof a === "function" ? a.apply(this, arguments) : a;
-	      var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	      return _d3Interpolate2["default"].value(aval, bval)(t);
-	    };
-	  };
-	};
-	
-	exports.interpolateFunction = interpolateFunction;
-	/**
-	 * By default, the list of interpolators used by `d3.interpolate` has a few
-	 * downsides:
-	 *
-	 * - `null` values get turned into 0.
-	 * - `undefined`, `function`, and some other value types get turned into NaN.
-	 * - Boolean types get turned into numbers, which probably will be meaningless
-	 *   to whatever is consuming them.
-	 * - It tries to interpolate between identical start and end values, doing
-	 *   unnecessary calculations that sometimes result in floating point rounding
-	 *   errors.
-	 *
-	 * If only the default interpolators are used, `VictoryAnimation` will happily
-	 * pass down NaN (and other bad) values as props to the wrapped component.
-	 * The component will then either use the incorrect values or complain that it
-	 * was passed props of the incorrect type. This custom interpolator is added
-	 * using the `d3.interpolators` API, and prevents such cases from happening
-	 * for most values.
-	 *
-	 * @param {any} a - Start value.
-	 * @param {any} b - End value.
-	 * @returns {Function|undefined} An interpolation function, if necessary.
-	 */
-	var victoryInterpolator = function victoryInterpolator(a, b) {
-	  // If the values are strictly equal, or either value is not interpolatable,
-	  // just use either the start value `a` or end value `b` at every step, as
-	  // there is no reasonable in-between value.
-	  if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
-	    return interpolateImmediate(a, b);
-	  }
-	  if (typeof a === "function" || typeof b === "function") {
-	    return interpolateFunction(a, b);
-	  }
-	};
-	
-	exports.victoryInterpolator = victoryInterpolator;
-	var interpolatorAdded = false;
-	
-	var addVictoryInterpolator = function addVictoryInterpolator() {
-	  if (!interpolatorAdded) {
-	    _d3Interpolate2["default"].values.push(victoryInterpolator);
-	    interpolatorAdded = true;
-	  }
-	};
-	exports.addVictoryInterpolator = addVictoryInterpolator;
-
-/***/ },
-/* 101 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -27463,7 +25395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _radium2 = _interopRequireDefault(_radium);
 	
-	var _victoryAnimation = __webpack_require__(98);
+	var _victoryAnimation = __webpack_require__(64);
 	
 	var _victoryLabel = __webpack_require__(61);
 	

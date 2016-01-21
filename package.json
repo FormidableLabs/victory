@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "2.1.1",
+  "version": "2.1.3",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -14,19 +14,19 @@
   },
   "homepage": "https://github.com/formidablelabs/victory-chart",
   "scripts": {
-    "postinstall": "cd lib || builder run build",
+    "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
     "version": "builder run npm:version",
     "test": "builder run npm:test"
   },
   "dependencies": {
     "builder": "~2.4.0",
-    "builder-victory-component": "~0.1.0",
+    "builder-victory-component": "~0.1.2",
     "victory-axis": "1.6.0",
     "victory-util": "^2.1.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.1.0",
+    "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
     "mocha": "^2.3.3",
     "react": "^0.14.3",
