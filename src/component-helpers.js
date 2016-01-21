@@ -13,41 +13,39 @@ module.exports = {
 
   getChildComponents(props, defaultAxes) {
     // set up a counter for component types
-    const count = () => {
-      const counts = {};
-      return {
-        add: (child) => {
-          const type = child.type && child.type.role;
-          const axis = this.getAxisType(child);
-          if (!counts[type]) {
-            counts[type] = axis ? {independent: 0, dependent: 0} : 0;
-          }
-          if (axis) {
-            counts[type][axis] = counts[type][axis] += 1;
-          } else {
-            counts[type] = counts[type] += 1;
-          }
-        },
-        limitReached: (child) => {
-          const type = child.type && child.type.role;
-          const axis = this.getAxisType(child);
-          if (!counts[type]) {
-            return false;
-          } else if (axis) {
-            return counts[type][axis] > 1;
-          } else if (type === "bar") {
-            // TODO: should we remove the limit on grouped data types?
-            return counts[type] > 1;
-          }
-          return false;
-        },
-        total: (type, axis) => {
-          const totalCount = (axis && counts[type]) ?
-            counts[type][axis] : counts[type];
-          return totalCount || 0;
-        }
-      };
-    }();
+    const counts = {};
+    const addChild = (child) => {
+      const type = child.type && child.type.role;
+      const axis = this.getAxisType(child);
+      if (!counts[type]) {
+        counts[type] = axis ? {independent: 0, dependent: 0} : 0;
+      }
+      if (axis) {
+        counts[type][axis] = counts[type][axis] += 1;
+      } else {
+        counts[type] = counts[type] += 1;
+      }
+    };
+
+    const limitReached = (child) => {
+      const type = child.type && child.type.role;
+      const axis = this.getAxisType(child);
+      if (!counts[type]) {
+        return false;
+      } else if (axis) {
+        return counts[type][axis] >= 1;
+      } else if (type === "bar") {
+        // TODO: should we remove the limit on grouped data types?
+        return counts[type] >= 1;
+      }
+      return false;
+    };
+
+    const total = (type, axis) => {
+      const totalCount = (axis && counts[type]) ?
+        counts[type][axis] : counts[type];
+      return totalCount || 0;
+    };
 
     if (!props.children) {
       return [defaultAxes.independent, defaultAxes.dependent];
@@ -58,7 +56,7 @@ module.exports = {
     React.Children.forEach(props.children, (child) => {
       if (!child || !child.type) { return; }
       const type = child.type && child.type.role;
-      if (count.limitReached(child)) {
+      if (limitReached(child)) {
         const msg = type === "axis" ?
           `Only one VictoryAxis component of each axis type is allowed when using the ` +
           `VictoryChart wrapper. Only the first axis will be used. Please compose ` +
@@ -67,17 +65,18 @@ module.exports = {
           `to plot several datasets, please pass an array of data arrays directly ` +
           `into ${type}.`;
         Log.warn(msg);
+      } else {
+        childComponents.push(child);
       }
-      childComponents.push(child);
-      count.add(child);
+      addChild(child);
     });
 
     // Add default axis components if necessary
     // TODO: should we add both axes by default?
-    if (count.total("axis", "independent") < 1) {
+    if (total("axis", "independent") < 1) {
       childComponents.push(defaultAxes.independent);
     }
-    if (count.total("axis", "dependent") < 1) {
+    if (total("axis", "dependent") < 1) {
       childComponents.push(defaultAxes.dependent);
     }
     return childComponents;
