@@ -46,6 +46,18 @@ export const nonNegative = makeChainable((props, propName, componentName) => {
 });
 
 /**
+ * Check that the value is an integer.
+ */
+export const integer = makeChainable((props, propName, componentName) => {
+  const value = props[propName];
+  if(typeof value !== 'number' || x % 1 !== 0) {
+    return new Error(
+      `\`${propName}\` in \`${componentName}\` must be an integer.`
+    );
+  }
+});
+
+/**
  * Check that the value is an Array of two unique values.
  */
 export const domain = makeChainable((props, propName, componentName) => {
