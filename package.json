@@ -24,7 +24,12 @@
     "builder-victory-component": "~0.1.2",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "^0.2.0",
-    "d3-timer": "^0.0.6"
+    "d3-timer": "^0.0.6",
+    "lodash": "^3.10.1",
+    "radium": "^0.16.2"
+  },
+  "peerDependencies": {
+    "react": "0.14.x"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",
