@@ -23,9 +23,14 @@
     "builder": "~2.2.2",
     "builder-victory-component": "~0.1.2",
     "d3-shape": "^0.2.0",
+    "lodash": "^3.10.1",
+    "radium": "^0.16.2",
     "victory-animation": "^0.0.13",
     "victory-label": "^0.1.8",
     "victory-util": "^2.0.3"
+  },
+  "peerDependencies": {
+    "react": "0.14.x"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",
