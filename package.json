@@ -22,7 +22,7 @@
   "dependencies": {
     "builder": "~2.2.1",
     "builder-victory-component": "~0.1.2",
-    "victory-util": "^2.0.2"
+    "victory-util": "^2.1.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",

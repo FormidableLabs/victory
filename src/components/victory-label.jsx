@@ -1,9 +1,9 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import Util from "victory-util";
-import _ from "lodash";
+import { PropTypes as CustomPropTypes, Chart, Style } from "victory-util";
+import merge from "lodash/object/merge";
 
-const styles = {
+const defaultStyles = {
   stroke: "transparent",
   fill: "#756f6a",
   fontSize: 16,
@@ -24,7 +24,7 @@ export default class VictoryLabel extends React.Component {
      */
     capHeight: PropTypes.oneOfType([
       PropTypes.string,
-      Util.PropTypes.nonNegative,
+      CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
     /**
@@ -53,7 +53,7 @@ export default class VictoryLabel extends React.Component {
      */
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
-      Util.PropTypes.nonNegative,
+      CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
     /**
@@ -130,79 +130,67 @@ export default class VictoryLabel extends React.Component {
     lineHeight: 1
   };
 
-  getCalculatedValues(props) {
-    this.style = this.getStyles(props);
-    this.transform = Util.Style.toTransformString(this.evaluateProp(props.transform));
-    this.verticalAnchor = props.verticalAnchor ?
-      this.evaluateProp(props.verticalAnchor) : "middle";
-    this.textAnchor = props.textAnchor ? this.evaluateProp(props.textAnchor) : "start";
-    this.capHeight = this.getHeight(props, "capHeight");
-    this.lineHeight = this.getHeight(props, "lineHeight");
-    this.content = this.getContent(props);
-    this.dy = this.getDy(props);
-    this.dx = this.getDx(props);
-  }
-
   getStyles(props) {
-    const style = props.style ? _.merge({}, styles, props.style) : styles;
-    return this.evaluateStyle(style);
-  }
-
-  evaluateStyle(style) {
-    return _.transform(style, (result, value, key) => {
-      result[key] = this.evaluateProp(value);
-    });
-  }
-
-  evaluateProp(prop) {
-    return _.isFunction(prop) ? prop.call(this, this.props.data) : prop;
+    const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
+    return Chart.evaluateStyle(style);
   }
 
   getHeight(props, type) {
-    const height = this.evaluateProp(props[type]);
-    return _.isNumber(height) ? `${height}em` : height;
+    const height = Chart.evaluateProp(props[type]);
+    return typeof height === "number" ? `${height}em` : height;
   }
 
   getContent(props) {
     if (props.children) {
-      const child = this.evaluateProp(props.children);
+      const child = Chart.evaluateProp(props.children);
       return `${child}`.split("\n");
     }
     return [""];
   }
 
-  getDx(props) {
-    return props.dx ? this.evaluateProp(props.dx) : 0;
-  }
-
-  getDy(props) {
-    const dy = props.dy ? this.evaluateProp(props.dy) : 0;
-    const length = this.content.length;
-    switch (this.verticalAnchor) {
+  getDy(props, content, lineHeight) {
+    const dy = props.dy ? Chart.evaluateProp(props.dy) : 0;
+    const length = content.length;
+    const capHeight = this.getHeight(props, "capHeight");
+    const verticalAnchor = props.verticalAnchor ?
+      Chart.evaluateProp(props.verticalAnchor) : "middle";
+    switch (verticalAnchor) {
     case "end":
-      return Util.Style.calc(
-        `${dy} +  ${this.capHeight} / 2 + (0.5 - ${length}) * ${this.lineHeight}`
+      return Style.calc(
+        `${dy} +  ${capHeight} / 2 + (0.5 - ${length}) * ${lineHeight}`
       );
     case "middle":
-      return Util.Style.calc(
-        `${dy} + ${this.capHeight} / 2 + (0.5 - ${length} / 2) * ${this.lineHeight}`
+      return Style.calc(
+        `${dy} + ${capHeight} / 2 + (0.5 - ${length} / 2) * ${lineHeight}`
       );
     default:
-      return Util.Style.calc(`${dy} + ${this.capHeight} / 2 + ${this.lineHeight} / 2`);
+      return Style.calc(`${dy} + ${capHeight} / 2 + ${lineHeight} / 2`);
     }
   }
 
   render() {
-    this.getCalculatedValues(this.props);
+    const lineHeight = this.getHeight(this.props, "lineHeight");
+    const transform =
+      this.props.transform && Style.toTransformString(Chart.evaluateProp(this.props.transform));
+    const textAnchor = this.props.textAnchor ?
+      Chart.evaluateProp(this.props.textAnchor) : "start";
+    const content = this.getContent(this.props);
+    const style = this.getStyles(this.props);
+    const dx = this.props.dx ? Chart.evaluateProp(this.props.dx) : 0;
+    const dy = this.getDy(this.props, content, lineHeight);
     return (
-      <text x={this.props.x} y={this.props.y} dy={this.dy} dx={this.dx}
-        textAnchor={this.textAnchor}
-        transform={this.transform}
-        style={this.style}
+      <text
+        x={this.props.x}
+        y={this.props.y}
+        dy={dy}
+        dx={dx}
+        textAnchor={textAnchor}
+        transform={transform}
+        style={style}
       >
-        {this.content.map((line, i) => {
+        {content.map((line, i) => {
           return (
-            <tspan key={i} x={this.props.x} dy={i ? this.lineHeight : undefined}>
+            <tspan key={i} x={this.props.x} dy={i ? lineHeight : undefined}>
               {line}
             </tspan>
           );
