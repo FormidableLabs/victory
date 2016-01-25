@@ -18,7 +18,7 @@ import * as Collection from "./collection";
 import * as Style from "./style";
 import Scale from "./scale";
 
-module.exports = {
+export default {
   // String Data
   createStringMap(props, axis) {
     const stringsFromAxes = this.getStringsFromAxes(props, axis);
@@ -66,46 +66,21 @@ module.exports = {
     if (props.data) {
       return this.formatData(props.data, props);
     }
-    const x = this.returnOrGenerateX(props);
-    const y = this.returnOrGenerateY(props, x);
-    const n = Math.min(x.length, y.length);
-    // create a dataset from x and y with n points
-    const dataset = zip(take(x, n), take(y, n));
-    // return data as an array of objects
-    const data = dataset.map((point) => {
-      return {x: point[0], y: point[1]};
-    });
+    const data = this.generateData(props);
     return this.formatData(data, props);
   },
 
-  returnOrGenerateX(props) {
-    if (props.x) {
-      return props.x;
-    }
-    // if x is not given in props, create an array of values evenly
-    // spaced across the x domain
+  generateData(props) {
+    // create an array of values evenly spaced across the x domain that include domain min/max
     const domain = props.domain ? (props.domain.x || props.domain) :
       Scale.getBaseScale(props, "x").domain();
-    const samples = Array.isArray(props.y) ? props.y.length : props.samples;
-    const step = Math.max(...domain) / samples;
-    // return an array of x values spaced across the domain,
-    // include the maximum of the domain
-    return union(
-      lodashRange(Math.min(...domain),
-      Math.max(...domain), step),
-      [Math.max(...domain)]
+    const step = Math.max(...domain) / props.samples;
+    const values = union(
+        lodashRange(Math.min(...domain), Math.max(...domain), step),
+        [Math.max(...domain)]
     );
-  },
-
-  returnOrGenerateY(props, x) {
-    if (props.y && typeof props.y === "function") {
-      // if y is a function, apply the function y to to each value of the array x,
-      // and return the results as an array
-      return x.map((datum) => props.y(datum));
-    }
-    // y is either a function or an array, and is never undefined
-    // if it isn't a function, just return it.
-    return props.y;
+    // return data objects for values in {x, y} format
+    return values.map(v => ({x: v, y: v}));
   },
 
   formatData(dataset, props) {
