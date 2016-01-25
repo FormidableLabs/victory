@@ -27,9 +27,6 @@
     "victory-axis": "1.6.0",
     "victory-util": "^2.1.0"
   },
-  "peerDependencies": {
-    "react": "0.14.x"
-  },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
