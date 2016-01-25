@@ -42,7 +42,7 @@ describe("domain", () => {
     });
 
     it("gets the domain from data if props don't exist for a particular axis", () => {
-      const props = {domain: {y: [1, 2]}, data: [{x: 1, y: 3}, {x: 3, y: 5}]};
+      const props = {x: "x", y: "y", domain: {y: [1, 2]}, data: [{x: 1, y: 3}, {x: 3, y: 5}]};
       const resultDomain = Domain.getDomain(props, "x");
       const dataset = Data.getData(props);
       expect(Domain.getDomainFromProps).calledWith(props, "x").and.returned(undefined);

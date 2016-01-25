@@ -50,7 +50,7 @@ export const nonNegative = makeChainable((props, propName, componentName) => {
  */
 export const integer = makeChainable((props, propName, componentName) => {
   const value = props[propName];
-  if(typeof value !== 'number' || x % 1 !== 0) {
+  if (typeof value !== "number" || value % 1 !== 0) {
     return new Error(
       `\`${propName}\` in \`${componentName}\` must be an integer.`
     );

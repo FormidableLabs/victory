@@ -1,29 +1,33 @@
 import compact from "lodash/array/compact";
 import findIndex from "lodash/array/findIndex";
 import flatten from "lodash/array/flatten";
-import take from "lodash/array/take";
 import union from "lodash/array/union";
 import isEmpty from "lodash/lang/isEmpty";
 import isFunction from "lodash/lang/isFunction";
 import isUndefined from "lodash/lang/isUndefined";
 import isNull from "lodash/lang/isNull";
+import has from "lodash/object/has";
+import assign from "lodash/object/assign";
 import merge from "lodash/object/merge";
 import identity from "lodash/utility/identity";
 import property from "lodash/utility/property";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
-import zip from "lodash/array/zip";
-import * as Collection from "./collection";
 import * as Style from "./style";
 import Scale from "./scale";
 
 export default {
   // String Data
-  createStringMap(props, axis) {
+  createStringMap(props, axis, hasMultipleDatasets = false) {
     const stringsFromAxes = this.getStringsFromAxes(props, axis);
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
-    const stringsFromData = this.getStringsFromData(props, axis);
+    const stringsFromData = hasMultipleDatasets ?
+        uniq(flatten(props.data.map((dataset) => {
+          return this.getStringsFromData(merge({}, props, {data: dataset}), axis);
+        })))
+        : this.getStringsFromData(props, axis);
+
     const allStrings = uniq(compact(
       [...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]
     ));
@@ -53,9 +57,9 @@ export default {
     if (!props.data) {
       return [];
     }
-    const accessor = this.createAccessor(props[axis]);
-    const dataStrings = flatten(props.data)
-        .map((datum) => datum && accessor(datum))
+    const accessor = this.createAccessor(has(props, axis) ? props[axis] : axis);
+    const dataStrings = (props.data)
+        .map((datum) => accessor(datum))
         .filter((datum) => typeof datum === "string");
     // return a unique set of strings
     return compact(uniq(dataStrings));
@@ -80,14 +84,14 @@ export default {
         [Math.max(...domain)]
     );
     // return data objects for values in {x, y} format
-    return values.map(v => ({x: v, y: v}));
+    return values.map((v) => ({x: v, y: v}));
   },
 
-  formatData(dataset, props) {
+  formatData(dataset, props, stringMap) {
     if (!dataset) {
       return [];
     }
-    const stringMap = {
+    stringMap = stringMap || {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
@@ -113,12 +117,18 @@ export default {
 
   // For components that take multiple datasets
   formatDatasets(datasets, props) {
+    // string map must be calculated using all datasets and shared
+    const propsWithDatasets = assign({}, props, {data: datasets});
+    const stringMap = {
+      x: this.createStringMap(propsWithDatasets, "x", true),
+      y: this.createStringMap(propsWithDatasets, "y", true)
+    };
     return datasets.map((dataset, index) => {
       return {
         attrs: this.getAttributes(props, index),
-        data: this.formatData(dataset, props)
+        data: this.formatData(dataset, props, stringMap)
       };
-    })
+    });
   },
 
   cleanData(dataset, props) {
@@ -181,7 +191,8 @@ export default {
   },
 
   createAccessor(key) {
-    // creates a data accessor function given a property key, path, array index, or null for identity.
+    // creates a data accessor function
+    // given a property key, path, array index, or null for identity.
     if (isFunction(key)) {
       return key;
     } else if (isNull(key) || isUndefined(key)) {

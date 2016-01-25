@@ -10,7 +10,7 @@ describe("data", () => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Data, "getStringsFromAxes");
       sandbox.spy(Data, "getStringsFromCategories");
-      sandbox.spy(Data, "getDataStrings");
+      sandbox.spy(Data, "getStringsFromData");
     });
     afterEach(() => {
       sandbox.restore();
@@ -38,8 +38,8 @@ describe("data", () => {
     it("returns a string map from strings in data", () => {
       const props = {data};
       const stringMap = Data.createStringMap(props, "x");
-      expect(Data.getDataStrings).calledWith(props, "x");
-      expect(Data.getDataStrings).to.have.returned(["one", "red", "cat"]);
+      expect(Data.getStringsFromData).calledWith(props, "x");
+      expect(Data.getStringsFromData).to.have.returned(["one", "red", "cat"]);
       expect(stringMap).to.eql({ one: 1, red: 2, cat: 3 });
     });
 
@@ -47,17 +47,16 @@ describe("data", () => {
       const props = {tickValues, data};
       const stringMap = Data.createStringMap(props, "x");
       expect(Data.getStringsFromAxes).to.have.returned(["one", "two", "three"]);
-      expect(Data.getDataStrings).to.have.returned(["one", "red", "cat"]);
+      expect(Data.getStringsFromData).to.have.returned(["one", "red", "cat"]);
       expect(stringMap).to.eql({ one: 1, two: 2, three: 3, red: 4, cat: 5 });
     });
   });
 
-  describe("getDataStrings", () => {
+  describe("getStringsFromData", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Data, "getStringsFromData");
-      sandbox.spy(Data, "getStringsFromXY");
     });
     afterEach(() => {
       sandbox.restore();
@@ -65,55 +64,17 @@ describe("data", () => {
 
     it("returns an array of strings from a data prop", () => {
       const props = {data: [{x: "one", y: 1}, {x: "red", y: 2}, {x: "cat", y: 3}]};
-      const dataStrings = Data.getDataStrings(props, "x");
-      expect(Data.getStringsFromData).calledWith(props, "x").and.returned(["one", "red", "cat"]);
-      expect(Data.getStringsFromXY).calledWith(props, "x").and.returned([]);
+      const dataStrings = Data.getStringsFromData(props, "x");
       expect(dataStrings).to.eql(["one", "red", "cat"]);
     });
 
-    it("returns an array of strings from a single axis data array", () => {
-      const props = {x: ["red", "blue"]};
-      const dataStrings = Data.getDataStrings(props, "x");
-      expect(Data.getStringsFromData).calledWith(props, "x").and.returned([]);
-      expect(Data.getStringsFromXY).calledWith(props, "x").and.returned(["red", "blue"]);
-      expect(dataStrings).to.eql(["red", "blue"]);
+    it("returns an array of strings from array-type data", () => {
+      const props = {data: [["one", 1], ["red", 2], ["cat", 3]], x: 0, y: 1};
+      const dataStrings = Data.getStringsFromData(props, "x");
+      expect(dataStrings).to.eql(["one", "red", "cat"]);
     });
 
-    it("returns an array of strings multiple data sources", () => {
-      const props = {x: ["red", "blue"], data: [{x: "one", y: 1}, {x: "two", y: 1}]};
-      const dataStrings = Data.getDataStrings(props, "x");
-      expect(Data.getStringsFromData).calledWith(props, "x").and.returned(["one", "two"]);
-      expect(Data.getStringsFromXY).calledWith(props, "x").and.returned(["red", "blue"]);
-      expect(dataStrings).to.eql(["one", "two", "red", "blue"]);
-    });
-
-    it("returns an empty array when no data like props are defined", () => {
-      const props = {};
-      const dataStrings = Data.getDataStrings(props, "x");
-      expect(Data.getStringsFromData).calledWith(props, "x").and.returned([]);
-      expect(Data.getStringsFromXY).calledWith(props, "x").and.returned([]);
-      expect(dataStrings).to.eql([]);
-    });
-  });
-
-  describe("getStringsFromXY", () => {
-    it("returns an array of strings", () => {
-      const props = {x: [1, "three", 5]};
-      expect(Data.getStringsFromXY(props, "x")).to.eql(["three"]);
-    });
-
-    it("returns an empty array when no strings are present", () => {
-      const props = {x: [1, 3, 5]};
-      expect(Data.getStringsFromXY(props, "x")).to.eql([]);
-    });
-
-    it("returns an empty array when the given props is undefined", () => {
-      expect(Data.getStringsFromXY({}, "x")).to.eql([]);
-    });
-  });
-
-  describe("getStringsFromData", () => {
-    it("returns an array of strings", () => {
+    it("only returns strings, if data is mixed", () => {
       const props = {data: [{x: 1, y: 1}, {x: "three", y: 3}]};
       expect(Data.getStringsFromData(props, "x")).to.eql(["three"]);
     });
@@ -170,36 +131,6 @@ describe("data", () => {
     });
   });
 
-  describe("consolidateData", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Data, "formatData");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("returns an object of data and attrs", () => {
-      const data = [
-        [{x: 1, y: 3}, {x: 2, y: 5}],
-        [{x: 1, y: 2}, {x: 2, y: 4}]
-      ];
-      const dataAttributes = [{name: "a", fill: "red"}, {name: "b", fill: "blue"}];
-      const props = {data, dataAttributes};
-      const datasets = Data.consolidateData(props);
-      expect(Data.formatData).to.be.calledWith(data, props);
-      expect(datasets).to.be.an("array").and.have.length(2);
-      expect(datasets[0]).to.eql({
-        data: [{x: 1, y: 3}, {x: 2, y: 5}], attrs: {name: "a", fill: "red"}
-      });
-      expect(datasets[1]).to.eql({
-        data: [{x: 1, y: 2}, {x: 2, y: 4}], attrs: {name: "b", fill: "blue"}
-      });
-    });
-  });
-
   describe("formatData", () => {
     let sandbox;
     beforeEach(() => {
@@ -224,16 +155,32 @@ describe("data", () => {
       expect(formatted[0]).to.have.keys(["x", "y", "category"]);
     });
 
+
+  });
+
+  describe("formatDatasets", () => {
+    let sandbox;
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      sandbox.spy(Data, "cleanData");
+      sandbox.spy(Data, "determineCategoryIndex");
+      sandbox.spy(Data, "getAttributes");
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
     it("formats a array of data sets, and adds attributes", () => {
-      const dataset = [
+      const datasets = [
         [{x: 1, y: 3}, {x: 2, y: 5}],
         [{x: 1, y: 2}, {x: 2, y: 4}]
       ];
       const dataAttributes = [{name: "a", fill: "red"}, {name: "b", fill: "blue"}];
-      const props = {dataAttributes};
-      const formatted = Data.formatData(dataset, props);
+      const props = {dataAttributes, x: "x", y: "y"};
+      const formatted = Data.formatDatasets(datasets, props);
       expect(Data.determineCategoryIndex).called.and.returned(undefined);
-      expect(Data.cleanData).calledTwice.and.returned(dataset[0], dataset[1]);
+      expect(Data.cleanData).calledTwice.and.returned(datasets[0], datasets[1]);
       expect(Data.getAttributes).calledTwice.and.returned(dataAttributes[0], dataAttributes[1]);
       expect(formatted).to.be.an("array").and.have.length(2);
       expect(formatted[0]).to.eql({
@@ -250,8 +197,7 @@ describe("data", () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Data, "formatData");
-      sandbox.spy(Data, "returnOrGenerateX");
-      sandbox.spy(Data, "returnOrGenerateY");
+      sandbox.spy(Data, "generateData");
     });
 
     afterEach(() => {
@@ -260,33 +206,27 @@ describe("data", () => {
 
     it("formats and returns the data prop", () => {
       const data = [{x: "kittens", y: 3}, {x: "cats", y: 5}];
-      const props = {data};
+      const props = {data, x: "x", y: "y"};
       const expectedReturn = [{x: 1, xName: "kittens", y: 3}, {x: 2, xName: "cats", y: 5}];
       const returnData = Data.getData(props);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
       expect(returnData).to.eql(expectedReturn);
     });
 
-    it("generates a dataset from x and y data props", () => {
-      const x = [1, 2];
-      const y = ["red", "blue"];
-      const props = {x, y};
-      const expectedReturn = [{x: 1, yName: "red", y: 1}, {x: 2, yName: "blue", y: 2}];
+    it("generates a dataset from domain", () => {
+      const expectedReturn = [{x: 0, y: 0}, {x: 10, y: 10}];
+      const props = {x: "x", y: "y", domain: {x: [0, 10], y: [0, 10]}};
       const returnData = Data.getData(props);
-      expect(Data.returnOrGenerateX).calledOnce.and.returned([1, 2]);
-      expect(Data.returnOrGenerateY).calledOnce.and.returned(["red", "blue"]);
+      expect(Data.generateData).calledOnce.and.returned(expectedReturn);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
       expect(returnData).to.eql(expectedReturn);
     });
 
-    it("generates a dataset from a function", () => {
-      const x = [1, 2, 3];
-      const y = (data) => data * data;
-      const props = {x, y};
-      const expectedReturn = [{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 9}];
+    it("generates a dataset from domain and samples", () => {
+      const expectedReturn = [{x: 0, y: 0}, {x: 5, y: 5}, {x: 10, y: 10}];
+      const props = {x: "x", y: "y", domain: {x: [0, 10], y: [0, 10]}, samples: 2};
       const returnData = Data.getData(props);
-      expect(Data.returnOrGenerateX).calledOnce.and.returned([1, 2, 3]);
-      expect(Data.returnOrGenerateY).calledOnce.and.returned([1, 4, 9]);
+      expect(Data.generateData).calledOnce.and.returned(expectedReturn);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
       expect(returnData).to.eql(expectedReturn);
     });
