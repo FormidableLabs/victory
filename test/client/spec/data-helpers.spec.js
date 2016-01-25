@@ -18,7 +18,7 @@ describe("data-helpers", () => {
       sandbox.spy(ComponentHelpers, "getAxisComponent");
       sandbox.spy(Data, "getStringsFromAxes");
       sandbox.spy(Data, "getStringsFromCategories");
-      sandbox.spy(Data, "getDataStrings");
+      sandbox.spy(Data, "getStringsFromData");
     });
 
     afterEach(() => {
@@ -34,7 +34,7 @@ describe("data-helpers", () => {
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
         .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
-      expect(Data.getDataStrings).calledWith(axisComponent.props, "x").and.returned([]);
+      expect(Data.getStringsFromData).calledWith(axisComponent.props, "x").and.returned([]);
       expect(stringResult).to.eql({a: 1, b: 2, c: 3});
     });
 
@@ -45,14 +45,15 @@ describe("data-helpers", () => {
       ]});
       const childComponents = [axisComponent, lineComponent];
       const stringResult = DataHelpers.createStringMap(childComponents, "x");
+
       expect(ComponentHelpers.getAxisComponent).calledWith(childComponents, "x")
         .and.returned(axisComponent);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
         .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
       expect(Data.getStringsFromCategories).calledWith(lineComponent.props, "x").and.returned([]);
-      expect(Data.getDataStrings).calledWith(axisComponent.props, "x").and.returned([]);
-      expect(Data.getDataStrings).calledWith(lineComponent.props, "x")
+      expect(Data.getStringsFromData).calledWith(axisComponent.props, "x").and.returned([]);
+      expect(Data.getStringsFromData).calledWith(lineComponent.props, "x")
         .and.returned(["b", "c", "d"]);
       expect(stringResult).to.eql({a: 1, b: 2, c: 3, d: 4});
     });
