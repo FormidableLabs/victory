@@ -29,9 +29,6 @@
     "victory-label": "^0.1.8",
     "victory-util": "^2.0.3"
   },
-  "peerDependencies": {
-    "react": "0.14.x"
-  },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
