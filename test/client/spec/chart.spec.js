@@ -40,17 +40,26 @@ describe("chart", () => {
   });
 
   describe("getStyles", () => {
-    const style = {data: {fill: "red"}, labels: {fontSize: 12}};
     const defaultStyles = {
       parent: {border: "black"},
       data: {fill: "blue", stroke: "black"},
       labels: {fontSize: 10, fontFamily: "Helvetica"}
     };
-    const props = {style, width: 500, height: 500};
     it("merges styles", () => {
+      const style = {data: {fill: "red"}, labels: {fontSize: 12}};
+      const props = {style, width: 500, height: 500};
       const styles = Chart.getStyles(props, defaultStyles);
       expect(styles.parent).to.deep.equal({border: "black", width: 500, height: 500});
       expect(styles.data).to.deep.equal({fill: "red", stroke: "black"});
+      expect(styles.labels).to.deep.equal({fontSize: 12, fontFamily: "Helvetica"});
+    });
+
+    it("does not include invisible styles", () => {
+      const style = {data: {fill: "red", stroke: "transparent"}, labels: {fontSize: 12}};
+      const props = {style, width: 500, height: 500};
+      const styles = Chart.getStyles(props, defaultStyles);
+      expect(styles.parent).to.deep.equal({border: "black", width: 500, height: 500});
+      expect(styles.data).to.deep.equal({fill: "red"});
       expect(styles.labels).to.deep.equal({fontSize: 12, fontFamily: "Helvetica"});
     });
   });
