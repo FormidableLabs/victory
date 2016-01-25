@@ -1,5 +1,6 @@
 import reduceCSSCalc from "reduce-css-calc";
-
+import keys from "lodash/object/keys";
+import omit from "lodash/object/omit";
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -51,4 +52,11 @@ export const getColorScale = function (name) {
     green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
   };
   return name ? scales[name] : scales.greyscale;
+};
+
+export const removeInvisible = function (style) {
+  const invisibleKeys = keys(style).filter((key) => {
+    return style[key] === "transparent" || style[key] === "none";
+  });
+  return omit(style, invisibleKeys);
 };
