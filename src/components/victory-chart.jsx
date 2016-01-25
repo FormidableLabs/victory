@@ -4,7 +4,7 @@ import some from "lodash/collection/some";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
+import { PropTypes as CustomPropTypes, Chart } from "victory-util";
 import { VictoryAxis } from "victory-axis";
 import AxisHelpers from "../axis-helpers";
 import ComponentHelpers from "../component-helpers";
