@@ -28,9 +28,6 @@
     "lodash": "^3.10.1",
     "radium": "^0.16.2"
   },
-  "peerDependencies": {
-    "react": "0.14.x"
-  },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
