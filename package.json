@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "builder": "~2.2.2",
-    "builder-victory-component": "~0.1.2",
+    "builder-victory-component": "~0.2.1",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.0.13",
@@ -39,7 +39,7 @@
     "victory-scatter": "0.6.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.1.2",
+    "builder-victory-component-dev": "~0.2.1",
     "chai": "^3.2.0",
     "file-loader": "^0.8.5",
     "formidable-landers": "latest",
