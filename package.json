@@ -38,9 +38,6 @@
     "victory-pie": "0.2.0",
     "victory-scatter": "0.6.0"
   },
-  "peerDependencies": {
-    "react": "0.14.x"
-  },
   "devDependencies": {
     "builder-victory-component-dev": "~0.1.2",
     "chai": "^3.2.0",
