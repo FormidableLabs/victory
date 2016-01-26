@@ -2,12 +2,10 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import d3Shape from "d3-shape";
 import isArray from "lodash/lang/isArray";
-import isNumber from "lodash/lang/isNumber";
-import isObject from "lodash/lang/isObject";
 import merge from "lodash/object/merge";
 import assign from "lodash/object/assign";
 import pick from "lodash/object/pick";
-import { PropTypes as CustomPropTypes, Data, Domain, Style } from "victory-util";
+import { PropTypes as CustomPropTypes, Data, Domain, Style, Chart } from "victory-util";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
 import {VictoryAnimation} from "victory-animation";
@@ -31,27 +29,6 @@ const defaultStyles = {
 
 const degreesToRadians = function (degrees) {
   return degrees * (Math.PI / 180);
-};
-
-const getStyles = function (props) {
-  const style = props.style || defaultStyles;
-  const {data, labels, parent} = style;
-  return {
-    parent: merge({height: props.height, width: props.width}, parent),
-    data: merge({}, defaultStyles.data, data),
-    labels: merge({}, defaultStyles.labels, labels)
-  };
-};
-
-const getPadding = function (props) {
-  const padding = isNumber(props.padding) ? props.padding : 0;
-  const paddingObj = isObject(props.padding) ? props.padding : {};
-  return {
-    top: paddingObj.top || padding,
-    bottom: paddingObj.bottom || padding,
-    left: paddingObj.left || padding,
-    right: paddingObj.right || padding
-  };
 };
 
 const getRadius = function (props, padding) {
@@ -314,8 +291,8 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const style = getStyles(this.props);
-    const padding = getPadding(this.props);
+    const style = Chart.getStyles(this.props, defaultStyles);
+    const padding = Chart.getPadding(this.props);
     const radius = getRadius(this.props, padding);
     const parentStyle = style.parent;
     const xOffset = radius + padding.left;

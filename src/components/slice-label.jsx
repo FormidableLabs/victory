@@ -1,8 +1,8 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import isFunction from "lodash/lang/isFunction";
+import { Chart } from "victory-util";
 import merge from "lodash/object/merge";
-import transform from "lodash/object/transform";
+import assign from "lodash/object/assign";
 import {VictoryLabel} from "victory-label";
 
 @Radium
@@ -14,32 +14,17 @@ export default class SliceLabel extends React.Component {
     style: PropTypes.object
   };
 
-  getCalculatedValues(props) {
-    const position = props.positionFunction.call(this, props.slice);
-    this.x = position[0];
-    this.y = position[1];
-    this.data = props.slice.data;
-    this.label = this.data.label ? `${this.evaluateProp(this.data.label)}` : `${this.data.x}`;
-  }
-
-  evaluateStyle(style) {
-    return transform(style, (result, value, key) => {
-      result[key] = this.evaluateProp(value);
-    });
-  }
-
-  evaluateProp(prop) {
-    return isFunction(prop) ? prop.call(this, this.data) : prop;
-  }
-
-  renderLabelComponent(props) {
+  renderLabelComponent(props, position, label) {
     const component = props.labelComponent;
-    const style = this.evaluateStyle(merge({padding: 0}, props.style, component.props.style));
-    const children = component.props.children || this.label;
+    const style = Chart.evaluateStyle(
+      merge({padding: 0}, props.style, component.props.style),
+      this.data
+    );
+    const children = component.props.children || label;
     const newProps = {
-      x: component.props.x || this.x,
-      y: component.props.y || this.y,
-      data: this.data, // Pass data for custom label component to access
+      x: component.props.x || position[0],
+      y: component.props.y || position[1],
+      data: props.slice.data, // Pass data for custom label component to access
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
       style
@@ -47,27 +32,34 @@ export default class SliceLabel extends React.Component {
     return React.cloneElement(component, newProps, children);
   }
 
-  renderVictoryLabel(props) {
-    const style = this.evaluateStyle(merge({padding: 0}, props.style));
+  renderVictoryLabel(props, position, label) {
+    const style = Chart.evaluateStyle(
+      assign({padding: 0}, props.style),
+      props.slice.data
+    );
     return (
       <VictoryLabel
-        x={this.x}
-        y={this.y}
-        data={this.data}
+        x={position[0]}
+        y={position[1]}
+        data={props.slice.data}
         style={style}
       >
-        {this.label}
+        {label}
       </VictoryLabel>
     );
   }
 
   renderLabel(props) {
+    const position = props.positionFunction(props.slice);
+    const data = props.slice.data;
+    const label = data.label ?
+    `${Chart.evaluateProp(data.label, data)}` : `${data.x}`;
     return props.labelComponent ?
-      this.renderLabelComponent(props) : this.renderVictoryLabel(props);
+      this.renderLabelComponent(props, position, label) :
+      this.renderVictoryLabel(props, position, label);
   }
 
   render() {
-    this.getCalculatedValues(this.props);
     return this.renderLabel(this.props);
   }
 }
