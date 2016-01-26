@@ -1,11 +1,40 @@
 import {
+  allOfType,
   nonNegative,
+  integer,
   domain,
   scale,
   homogeneousArray
 } from "src/prop-types";
 
 describe("prop-types", () => {
+
+  describe("allOfType", () => {
+    const validate = function (prop) {
+      return allOfType([nonNegative, integer])({testProp: prop}, "testProp", "TestComponent");
+    };
+
+    it("returns an error if the first validator is false", () => {
+      const result = validate(-1);
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).contain(
+          "`testProp` in `TestComponent` must be non-negative."
+      );
+    });
+
+    it("returns an error if the second validator is false", () => {
+      const result = validate(1.3);
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).contain(
+          "`testProp` in `TestComponent` must be an integer."
+      );
+    });
+
+    it("does not return an error if both validators are true", () => {
+      const result = validate(3);
+      expect(result).not.to.be.an.instanceOf(Error);
+    });
+  });
 
   describe("nonNegative", () => {
     const validate = function (prop) {
@@ -35,6 +64,37 @@ describe("prop-types", () => {
 
     it("does not return an error for zero", () => {
       const result = validate(0);
+      expect(result).not.to.be.an.instanceOf(Error);
+    });
+  });
+
+  describe("integer", () => {
+    const validate = function (prop) {
+      return integer({testProp: prop}, "testProp", "TestComponent");
+    };
+
+    it("returns an error for non numeric values", () => {
+      const result = validate("a");
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).contain(
+          "`string` supplied to `TestComponent`, expected `number`."
+      );
+    });
+
+    it("returns an error for non-integer numeric values", () => {
+      const result = validate(2.4);
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).to.contain(
+          "`testProp` in `TestComponent` must be an integer."
+      );
+    });
+
+    it("does not return an error for integers", () => {
+      let result = validate(3);
+      expect(result).not.to.be.an.instanceOf(Error);
+      result = validate(-3);
+      expect(result).not.to.be.an.instanceOf(Error);
+      result = validate(0);
       expect(result).not.to.be.an.instanceOf(Error);
     });
   });

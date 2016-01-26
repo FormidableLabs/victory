@@ -30,6 +30,24 @@ export const makeChainable = function (validator) {
 };
 
 /**
+ * Return a new validator which returns true
+ * if and only if all validators passed as arguments return true.
+ * Like React.propTypes.oneOfType, except "all" instead of "any"
+ * @param {Array} validators Validation functions.
+ * @returns {Function} Combined validator function
+ */
+export const allOfType = function (validators) {
+  return makeChainable((props, propName, componentName) => {
+    const error = validators.reduce((result, validator) => {
+      return result || validator(props, propName, componentName);
+    }, undefined);
+    if (error) {
+      return error;
+    }
+  });
+};
+
+/**
  * Check that the value is a non-negative number.
  */
 export const nonNegative = makeChainable((props, propName, componentName) => {
@@ -49,8 +67,12 @@ export const nonNegative = makeChainable((props, propName, componentName) => {
  * Check that the value is an integer.
  */
 export const integer = makeChainable((props, propName, componentName) => {
+  const error = PropTypes.number(props, propName, componentName);
+  if (error) {
+    return error;
+  }
   const value = props[propName];
-  if (typeof value !== "number" || value % 1 !== 0) {
+  if (value % 1 !== 0) {
     return new Error(
       `\`${propName}\` in \`${componentName}\` must be an integer.`
     );
