@@ -1,7 +1,12 @@
-import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import d3Shape from "d3-shape";
+import isArray from "lodash/lang/isArray";
+import isNumber from "lodash/lang/isNumber";
+import isObject from "lodash/lang/isObject";
+import merge from "lodash/object/merge";
+import assign from "lodash/object/assign";
+import pick from "lodash/object/pick";
 import { PropTypes as CustomPropTypes, Data, Domain, Style } from "victory-util";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
@@ -32,15 +37,15 @@ const getStyles = function (props) {
   const style = props.style || defaultStyles;
   const {data, labels, parent} = style;
   return {
-    parent: _.merge({height: props.height, width: props.width}, parent),
-    data: _.merge({}, defaultStyles.data, data),
-    labels: _.merge({}, defaultStyles.labels, labels)
+    parent: merge({height: props.height, width: props.width}, parent),
+    data: merge({}, defaultStyles.data, data),
+    labels: merge({}, defaultStyles.labels, labels)
   };
 };
 
 const getPadding = function (props) {
-  const padding = _.isNumber(props.padding) ? props.padding : 0;
-  const paddingObj = _.isObject(props.padding) ? props.padding : {};
+  const padding = isNumber(props.padding) ? props.padding : 0;
+  const paddingObj = isObject(props.padding) ? props.padding : {};
   return {
     top: paddingObj.top || padding,
     bottom: paddingObj.bottom || padding,
@@ -50,10 +55,10 @@ const getPadding = function (props) {
 };
 
 const getRadius = function (props, padding) {
-  return _.min([
+  return Math.min(
     props.width - padding.left - padding.right,
     props.height - padding.top - padding.bottom
-  ]) / 2;
+  ) / 2;
 };
 
 const getLabelPosition = function (props, style, radius) {
@@ -242,7 +247,7 @@ export default class VictoryPie extends React.Component {
   renderSlice(slice, index, calculatedProps) {
     const {style, colorScale, makeSlicePath, labelPosition} = calculatedProps;
     const fill = colorScale[index % colorScale.length];
-    const sliceStyle = _.merge({}, style.data, {fill});
+    const sliceStyle = merge({}, style.data, {fill});
     return (
       <g key={index}>
         <Slice
@@ -268,13 +273,13 @@ export default class VictoryPie extends React.Component {
       y: Domain.getDomain(props, "y")
     };
     const labelPosition = getLabelPosition(props, style, radius);
-    const colorScale = _.isArray(props.colorScale) ?
+    const colorScale = isArray(props.colorScale) ?
       props.colorScale : Style.getColorScale(props.colorScale);
     const makeSlicePath = d3Shape.arc()
       .outerRadius(radius)
       .innerRadius(this.props.innerRadius);
 
-    calculatedProps = _.assign(calculatedProps,
+    calculatedProps = assign(calculatedProps,
       {data, domain, colorScale, makeSlicePath, labelPosition}
     );
 
@@ -287,7 +292,7 @@ export default class VictoryPie extends React.Component {
     const slices = pie(data);
 
     return (<g>
-      {_.map(slices, (slice, index) => {
+      {slices.map((slice, index) => {
         return this.renderSlice(slice, index, calculatedProps);
       })}
     </g>);
@@ -298,7 +303,7 @@ export default class VictoryPie extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = _.pick(this.props, [
+      const animateData = pick(this.props, [
         "data", "endAngle", "height", "innerRadius", "padAngle", "padding",
         "colorScale", "startAngle", "style", "width"
       ]);

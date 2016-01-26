@@ -1,8 +1,9 @@
-import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
+import isFunction from "lodash/lang/isFunction";
+import merge from "lodash/object/merge";
+import transform from "lodash/object/transform";
 import {VictoryLabel} from "victory-label";
-
 
 @Radium
 export default class SliceLabel extends React.Component {
@@ -22,18 +23,18 @@ export default class SliceLabel extends React.Component {
   }
 
   evaluateStyle(style) {
-    return _.transform(style, (result, value, key) => {
+    return transform(style, (result, value, key) => {
       result[key] = this.evaluateProp(value);
     });
   }
 
   evaluateProp(prop) {
-    return _.isFunction(prop) ? prop.call(this, this.data) : prop;
+    return isFunction(prop) ? prop.call(this, this.data) : prop;
   }
 
   renderLabelComponent(props) {
     const component = props.labelComponent;
-    const style = this.evaluateStyle(_.merge({padding: 0}, props.style, component.props.style));
+    const style = this.evaluateStyle(merge({padding: 0}, props.style, component.props.style));
     const children = component.props.children || this.label;
     const newProps = {
       x: component.props.x || this.x,
@@ -47,7 +48,7 @@ export default class SliceLabel extends React.Component {
   }
 
   renderVictoryLabel(props) {
-    const style = this.evaluateStyle(_.merge({padding: 0}, props.style));
+    const style = this.evaluateStyle(merge({padding: 0}, props.style));
     return (
       <VictoryLabel
         x={this.x}

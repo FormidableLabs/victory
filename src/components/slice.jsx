@@ -1,6 +1,9 @@
-import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
+import isFunction from "lodash/lang/isFunction";
+import merge from "lodash/object/merge";
+import omit from "lodash/object/omit";
+import transform from "lodash/object/transform";
 
 @Radium
 export default class Slice extends React.Component {
@@ -11,14 +14,14 @@ export default class Slice extends React.Component {
   };
 
   evaluateStyle(style) {
-    return _.transform(style, (result, value, key) => {
-      result[key] = _.isFunction(value) ? value.call(this, this.props.slice.data) : value;
+    return transform(style, (result, value, key) => {
+      result[key] = isFunction(value) ? value.call(this, this.props.slice.data) : value;
     });
   }
 
   getStyles() {
-    const dataStyles = _.omit(this.props.slice.data, ["x", "y", "label"]);
-    return this.evaluateStyle(_.merge({}, this.props.style, dataStyles));
+    const dataStyles = omit(this.props.slice.data, ["x", "y", "label"]);
+    return this.evaluateStyle(merge({}, this.props.style, dataStyles));
   }
 
   renderSlice(props) {
