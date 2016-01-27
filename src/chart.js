@@ -1,7 +1,6 @@
 import transform from "lodash/object/transform";
 import merge from "lodash/object/merge";
 import some from "lodash/collection/some";
-import * as Style from "./style";
 
 module.exports = {
   getPadding(props) {
@@ -19,11 +18,9 @@ module.exports = {
     const style = props.style || defaultStyles;
     const {data, labels, parent} = style;
     return {
-      parent: Style.removeInvisible(merge(
-        {}, defaultStyles.parent, parent, {height: props.height, width: props.width}
-      )),
-      labels: Style.removeInvisible(merge({}, defaultStyles.labels, labels)),
-      data: Style.removeInvisible(merge({}, defaultStyles.data, data))
+      parent: merge({}, defaultStyles.parent, parent, {height: props.height, width: props.width}),
+      labels: merge({}, defaultStyles.labels, labels),
+      data: merge({}, defaultStyles.data, data)
     };
   },
 
