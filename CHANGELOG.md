@@ -1,4 +1,9 @@
-## HEAD
+# Victory Changelog
+
+## 0.3.0 (2016-01-26)
+
+- Demo application now works with hot reloading.
+- Application dependencies like `radium` and `lodash` now live in components, not in the Builder archetype. This is a breaking change. https://github.com/FormidableLabs/victory/issues/176
 
 ## 0.2.0 (2016-01-15)
 
