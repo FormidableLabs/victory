@@ -29,14 +29,14 @@
     "builder-victory-component": "~0.2.1",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
-    "victory-animation": "0.0.13",
-    "victory-axis": "1.5.7",
-    "victory-bar": "2.5.1",
-    "victory-chart": "2.1.3",
-    "victory-label": "0.1.9",
-    "victory-line": "0.6.0",
-    "victory-pie": "0.2.0",
-    "victory-scatter": "0.6.0"
+    "victory-animation": "0.1.0",
+    "victory-axis": "2.0.0",
+    "victory-bar": "3.0.0",
+    "victory-chart": "3.0.0",
+    "victory-label": "0.3.0",
+    "victory-line": "0.8.0",
+    "victory-pie": "0.3.0",
+    "victory-scatter": "0.8.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
