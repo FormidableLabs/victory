@@ -6,7 +6,7 @@
 	else if(typeof exports === 'object')
 		exports["VictoryAnimation"] = factory(require("react"));
 	else
-		root["VictoryAnimation"] = factory(root["Victory"]);
+		root["VictoryAnimation"] = factory(root["React"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
