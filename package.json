@@ -1,6 +1,6 @@
 {
   "name": "victory-animation",
-  "version": "0.0.13",
+  "version": "0.1.0",
   "description": "animation wrapper for victory components",
   "main": "lib/index.js",
   "repository": {
