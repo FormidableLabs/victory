@@ -1,4 +1,5 @@
 [![Travis Status][trav_img]][trav_site]
+![](https://badge-size.herokuapp.com/FormidableLabs/victory-label/master/dist/victory-label.js.svg?compression=gzip)
 
 Starter Victory Component
 =========================
