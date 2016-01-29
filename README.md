@@ -8,7 +8,7 @@ VictoryPie
 
 API Documentation
 -----------------
-Detailed documentation and interactive examples can be found at http://victory.formidable.com/victory-pie
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-pie
 
 IMPORTANT
 =========
