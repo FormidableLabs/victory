@@ -1,4 +1,5 @@
 [![Travis Status][trav_img]][trav_site]
+![](https://badge-size.herokuapp.com/FormidableLabs/victory-pie/master/dist/victory-pie.js.svg?compression=gzip)
 
 VictoryPie
 =============
