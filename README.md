@@ -1,4 +1,5 @@
 [![Travis Status][trav_img]][trav_site]
+![](https://badge-size.herokuapp.com/FormidableLabs/victory-chart/master/dist/victory-chart.js.svg?compression=gzip)
 
 VictoryChart
 =============
