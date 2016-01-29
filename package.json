@@ -20,13 +20,14 @@
     "test": "builder run npm:test"
   },
   "dependencies": {
-    "builder": "~2.2.2",
-    "builder-victory-component": "~0.0.5",
+    "builder": "~2.4.0",
+    "builder-victory-component": "~0.2.1",
     "d3-scale": "^0.2.0",
+    "lodash": "^3.10.1",
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.0.5",
+    "builder-victory-component-dev": "~0.2.1",
     "chai": "^3.2.0",
     "mocha": "^2.2.5",
     "react": "^0.14.0",
