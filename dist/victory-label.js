@@ -9411,11 +9411,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	(function (global, factory) {
 	   true ? factory(exports) :
-	  typeof define === 'function' && define.amd ? define('d3-color', ['exports'], factory) :
-	  factory((global.d3_color = {}));
+	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	  (factory((global.d3_color = {})));
 	}(this, function (exports) { 'use strict';
 	
-	  function Color() {};
+	  function Color() {}
 	
 	  var darker = 0.7;
 	  var brighter = 1 / darker;
@@ -9595,7 +9595,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        : (m = reHslPercent.exec(format)) ? new Hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
 	        : named.hasOwnProperty(format) ? rgbn(named[format])
 	        : null;
-	  };
+	  }
 	
 	  function rgbn(n) {
 	    return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
@@ -9614,13 +9614,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return new Rgb(r, g, b);
-	  };
+	  }
 	
 	  function Rgb(r, g, b) {
 	    this.r = +r;
 	    this.g = +g;
 	    this.b = +b;
-	  };
+	  }
 	
 	  var _rgb = rgb.prototype = Rgb.prototype = new Color;
 	
@@ -9688,13 +9688,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return new Hsl(h, s, l);
-	  };
+	  }
 	
 	  function Hsl(h, s, l) {
 	    this.h = +h;
 	    this.s = +s;
 	    this.l = +l;
-	  };
+	  }
 	
 	  var _hsl = hsl.prototype = Hsl.prototype = new Color;
 	
@@ -9758,25 +9758,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	        l = l.l;
 	      } else {
 	        if (!(l instanceof Rgb)) l = rgb(l);
-	        var r = rgb2xyz(l.r),
-	            g = rgb2xyz(l.g),
-	            b = rgb2xyz(l.b),
-	            x = xyz2lab((0.4124564 * r + 0.3575761 * g + 0.1804375 * b) / Xn),
-	            y = xyz2lab((0.2126729 * r + 0.7151522 * g + 0.0721750 * b) / Yn),
-	            z = xyz2lab((0.0193339 * r + 0.1191920 * g + 0.9503041 * b) / Zn);
+	        b = rgb2xyz(l.r);
+	        a = rgb2xyz(l.g);
+	        l = rgb2xyz(l.b);
+	        var x = xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
+	            y = xyz2lab((0.2126729 * b + 0.7151522 * a + 0.0721750 * l) / Yn),
+	            z = xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
 	        b = 200 * (y - z);
 	        a = 500 * (x - y);
 	        l = 116 * y - 16;
 	      }
 	    }
 	    return new Lab(l, a, b);
-	  };
+	  }
 	
 	  function Lab(l, a, b) {
 	    this.l = +l;
 	    this.a = +a;
 	    this.b = +b;
-	  };
+	  }
 	
 	  var _lab = lab.prototype = Lab.prototype = new Color;
 	
@@ -9833,13 +9833,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return new Hcl(h, c, l);
-	  };
+	  }
 	
 	  function Hcl(h, c, l) {
 	    this.h = +h;
 	    this.c = +c;
 	    this.l = +l;
-	  };
+	  }
 	
 	  var _hcl = hcl.prototype = Hcl.prototype = new Color;
 	
@@ -9880,13 +9880,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return new Cubehelix(h, s, l);
-	  };
+	  }
 	
 	  function Cubehelix(h, s, l) {
 	    this.h = +h;
 	    this.s = +s;
 	    this.l = +l;
-	  };
+	  }
 	
 	  var _cubehelix = cubehelix.prototype = Cubehelix.prototype = new Color;
 	
@@ -9913,7 +9913,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    );
 	  };
 	
-	  var version = "0.3.3";
+	  var version = "0.3.4";
 	
 	  exports.version = version;
 	  exports.color = color;
