@@ -1,6 +1,6 @@
 {
   "name": "victory-util",
-  "version": "2.1.2",
+  "version": "3.0.0",
   "description": "Victory helpers and utility functions",
   "main": "lib/index.js",
   "repository": {
