@@ -24,7 +24,7 @@
     "builder-victory-component": "~0.1.2",
     "lodash": "^3.10.1",
     "radium": "^0.16.2",
-    "victory-util": "^2.0.2"
+    "victory-util": "^3.0.0"
   },
   "peerDependencies": {
     "react": "0.14.x"
