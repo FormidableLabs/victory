@@ -1,24 +1,33 @@
 import compact from "lodash/array/compact";
 import findIndex from "lodash/array/findIndex";
 import flatten from "lodash/array/flatten";
-import take from "lodash/array/take";
 import union from "lodash/array/union";
 import isEmpty from "lodash/lang/isEmpty";
+import isFunction from "lodash/lang/isFunction";
+import isUndefined from "lodash/lang/isUndefined";
+import isNull from "lodash/lang/isNull";
+import has from "lodash/object/has";
+import assign from "lodash/object/assign";
 import merge from "lodash/object/merge";
+import identity from "lodash/utility/identity";
+import property from "lodash/utility/property";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
-import zip from "lodash/array/zip";
-import * as Collection from "./collection";
 import * as Style from "./style";
 import Scale from "./scale";
 
-module.exports = {
+export default {
   // String Data
-  createStringMap(props, axis) {
+  createStringMap(props, axis, hasMultipleDatasets = false) {
     const stringsFromAxes = this.getStringsFromAxes(props, axis);
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
-    const stringsFromData = this.getDataStrings(props, axis);
+    const stringsFromData = hasMultipleDatasets ?
+        uniq(flatten(props.data.map((dataset) => {
+          return this.getStringsFromData(merge({}, props, {data: dataset}), axis);
+        })))
+        : this.getStringsFromData(props, axis);
+
     const allStrings = uniq(compact(
       [...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]
     ));
@@ -27,7 +36,6 @@ module.exports = {
   },
 
   getStringsFromAxes(props, axis) {
-
     if (!props.tickValues || (!Array.isArray(props.tickValues) && !props.tickValues[axis])) {
       return [];
     }
@@ -45,36 +53,16 @@ module.exports = {
     }
   },
 
-  getDataStrings(props, axis) {
-    const xyStrings = this.getStringsFromXY(props, axis);
-    const dataStrings = this.getStringsFromData(props, axis);
-    const allStrings = flatten([...dataStrings, ...xyStrings]);
-    // return a unique set of strings
-    return compact(uniq(allStrings));
-  },
-
   getStringsFromData(props, axis) {
     if (!props.data) {
       return [];
     }
-    const axisData = flatten(props.data).map((datum) => {
-      return datum && datum[axis];
-    });
-    return axisData.filter((datum) => typeof datum === "string");
-  },
-
-  getStringsFromXY(props, axis) {
-    if (!props[axis] || !Array.isArray(props[axis])) {
-      return [];
-    }
-    const allData = flatten(props[axis]);
-    return allData.filter((element) => typeof element === "string");
-  },
-
-  // For components that take multiple datasets
-  consolidateData(props) {
-    const datasets = Array.isArray(props.data[0]) ? props.data : [props.data];
-    return this.formatData(datasets, props);
+    const accessor = this.createAccessor(has(props, axis) ? props[axis] : axis);
+    const dataStrings = (props.data)
+        .map((datum) => accessor(datum))
+        .filter((datum) => typeof datum === "string");
+    // return a unique set of strings
+    return compact(uniq(dataStrings));
   },
 
   // for components that take single datasets
@@ -82,78 +70,65 @@ module.exports = {
     if (props.data) {
       return this.formatData(props.data, props);
     }
-    const x = this.returnOrGenerateX(props);
-    const y = this.returnOrGenerateY(props, x);
-    const n = Math.min(x.length, y.length);
-    // create a dataset from x and y with n points
-    const dataset = zip(take(x, n), take(y, n));
-    // return data as an array of objects
-    const data = dataset.map((point) => {
-      return {x: point[0], y: point[1]};
-    });
+    const data = this.generateData(props);
     return this.formatData(data, props);
   },
 
-  returnOrGenerateX(props) {
-    if (props.x) {
-      return props.x;
-    }
-    // if x is not given in props, create an array of values evenly
-    // spaced across the x domain
+  generateData(props) {
+    // create an array of values evenly spaced across the x domain that include domain min/max
     const domain = props.domain ? (props.domain.x || props.domain) :
       Scale.getBaseScale(props, "x").domain();
-    const samples = Array.isArray(props.y) ? props.y.length : props.samples;
-    const step = Math.max(...domain) / samples;
-    // return an array of x values spaced across the domain,
-    // include the maximum of the domain
-    return union(
-      lodashRange(Math.min(...domain),
-      Math.max(...domain), step),
-      [Math.max(...domain)]
+    const step = Math.max(...domain) / props.samples;
+    const values = union(
+        lodashRange(Math.min(...domain), Math.max(...domain), step),
+        [Math.max(...domain)]
     );
+    // return data objects for values in {x, y} format
+    return values.map((v) => ({x: v, y: v}));
   },
 
-  returnOrGenerateY(props, x) {
-    if (props.y && typeof props.y === "function") {
-      // if y is a function, apply the function y to to each value of the array x,
-      // and return the results as an array
-      return x.map((datum) => props.y(datum));
-    }
-    // y is either a function or an array, and is never undefined
-    // if it isn't a function, just return it.
-    return props.y;
-  },
-
-  formatData(allData, props) {
-    if (!allData) {
+  formatData(dataset, props, stringMap) {
+    if (!dataset) {
       return [];
     }
-    const stringMap = {
+    stringMap = stringMap || {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
-    const _formatData = (dataset) => {
-      const cleanedData = this.cleanData(dataset, props);
-      return cleanedData.map((data) => {
-        return merge({}, data, {
-          category: this.determineCategoryIndex(data.x, props.categories),
+    const accessor = {
+      x: this.createAccessor(props.x),
+      y: this.createAccessor(props.y)
+    };
+
+    return this.cleanData(dataset, props)
+      .map((datum) => {
+        const x = accessor.x(datum);
+        const y = accessor.y(datum);
+        return merge({}, datum, {
+          category: this.determineCategoryIndex(x, props.categories),
           // map string data to numeric values, and add names
-          x: typeof data.x === "string" ? stringMap.x[data.x] : data.x,
-          xName: typeof data.x === "string" ? data.x : undefined,
-          y: typeof data.y === "string" ? stringMap.y[data.y] : data.y,
-          yName: typeof data.y === "string" ? data.y : undefined
+          x: typeof x === "string" ? stringMap.x[x] : x,
+          xName: typeof x === "string" ? x : undefined,
+          y: typeof y === "string" ? stringMap.y[y] : y,
+          yName: typeof y === "string" ? y : undefined
         });
       });
+  },
+
+  // For components that take multiple datasets
+  formatDatasets(datasets, props) {
+    // string map must be calculated using all datasets and shared
+    const propsWithDatasets = assign({}, props, {data: datasets});
+    const stringMap = {
+      x: this.createStringMap(propsWithDatasets, "x", true),
+      y: this.createStringMap(propsWithDatasets, "y", true)
     };
-    if (Collection.isArrayOfArrays(allData)) {
-      return allData.map((dataset, index) => {
-        return {
-          attrs: this.getAttributes(props, index),
-          data: _formatData(dataset)
-        };
-      });
-    }
-    return _formatData(allData);
+    return datasets.map((dataset, index) => {
+      return {
+        attrs: this.getAttributes(props, index),
+        data: this.formatData(dataset, props, stringMap)
+      };
+    });
   },
 
   cleanData(dataset, props) {
@@ -165,11 +140,15 @@ module.exports = {
       x: Scale.getScaleType(props, "x"),
       y: Scale.getScaleType(props, "y")
     };
+    const accessor = {
+      x: this.createAccessor(props.x),
+      y: this.createAccessor(props.y)
+    };
     if (scaleType.x !== "log" && scaleType.y !== "log") {
       return dataset;
     }
     const rules = (datum, axis) => {
-      return scaleType[axis] === "log" ? datum[axis] !== 0 : true;
+      return scaleType[axis] === "log" ? accessor[axis](datum) !== 0 : true;
     };
     return dataset.filter((datum) => {
       return rules(datum, "x") && rules(datum, "y");
@@ -209,5 +188,18 @@ module.exports = {
     const colorScale = Array.isArray(props.colorScale) ?
       props.colorScale : Style.getColorScale(props.colorScale);
     return colorScale[index % colorScale.length];
+  },
+
+  createAccessor(key) {
+    // creates a data accessor function
+    // given a property key, path, array index, or null for identity.
+    if (isFunction(key)) {
+      return key;
+    } else if (isNull(key) || isUndefined(key)) {
+      // null/undefined means "return the data item itself"
+      return identity;
+    }
+    // otherwise, assume it is an array index, property key or path (_.property handles all three)
+    return property(key);
   }
 };

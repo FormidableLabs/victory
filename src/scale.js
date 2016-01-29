@@ -1,6 +1,7 @@
 import flatten from "lodash/array/flatten";
 import includes from "lodash/collection/includes";
 import * as Collection from "./collection";
+import Data from "./data";
 import d3Scale from "d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
@@ -39,8 +40,9 @@ module.exports = {
     if (!props.data) {
       return "linear";
     }
+    const accessor = Data.createAccessor(props[axis]);
     const allData = flatten(props.data);
-    const axisData = allData.map((datum) => datum[axis]);
+    const axisData = allData.map(accessor);
     return Collection.containsDates(axisData) ? "time" : "linear";
   },
 

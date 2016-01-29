@@ -137,7 +137,7 @@ describe("scale", () => {
     });
 
     it("returns 'time' when no scale is set, and data contains dates", () => {
-      const props = {data: [{x: new Date("2016-01-13"), y: 1}]};
+      const props = {x: "x", y: "y", data: [{x: new Date("2016-01-13"), y: 1}]};
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleFromProps).calledWith(props, "x").and.returned(undefined);
       expect(Scale.getScaleTypeFromData).calledWith(props, "x").and.returned("time");
