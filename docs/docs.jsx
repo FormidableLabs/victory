@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import d3Scale from "d3-scale";
 import Ecology from "ecology";
 import Radium, { Style } from "radium";
 import {VictoryAxis} from "victory-axis";
@@ -22,7 +21,6 @@ class Docs extends React.Component {
           scope={{
             React,
             ReactDOM,
-            d3Scale,
             VictoryScatter,
             VictoryLine,
             VictoryAxis,

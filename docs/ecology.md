@@ -13,7 +13,7 @@ A flexible charting component for React. VictoryChart composes other Victory com
 
 ### Props are Optional
 
-VictoryChart includes a set of sensible default behaviors, so even when no props are passed, a chart will still be rendered. The default chart renders a `VictoryLine` components which plots the identity function `(x) => x`, and two `VictoryAxis` components.
+VictoryChart includes a set of sensible default behaviors, so even when no props are passed, a chart will still be rendered. The default chart renders two `VictoryAxis` components.
 
 ``` playground
 <VictoryChart/>
@@ -24,7 +24,7 @@ VictoryChart was designed to build charts from minimal information. Pass in only
 ```playground
 <VictoryChart>
   <VictoryLine
-    y={(x) => 0.5 * x * x}/>
+    y={(data) => 0.5 * data.x * data.x}/>
 </VictoryChart>
 ```
 
@@ -40,12 +40,18 @@ VictoryCharts are composed of other Victory components. Compose several componen
     style={{data:
       {stroke: "red", strokeWidth: 4}
     }}
-    y={(x) => Math.sin(2 * Math.PI * x)}/>
+    y={(data) =>
+      Math.sin(2 * Math.PI * data.x)
+    }
+  />
   <VictoryLine
     style={{data:
       {stroke: "blue", strokeWidth: 4}
     }}
-    y={(x) => Math.cos(2 * Math.PI * x)}/>
+    y={(data) =>
+      Math.cos(2 * Math.PI * data.x)
+    }
+  />
 </VictoryChart>
 ```
 
@@ -63,7 +69,7 @@ or compose components of different types on the same chart
       {x: 1.8, y: 3}
     ]}/>
   <VictoryLine
-    y={(x) => 0.3 * x * x}/>
+    y={(data) => 0.3 * data.x * data.x}/>
   <VictoryBar
     style={{data: {fill: "blue"}}}
     data={[
@@ -102,8 +108,12 @@ The sensible defaults VictoryChart provides makes it easy to get started, but ev
       ticks: {stroke: "transparent"}
     }}/>
   <VictoryBar
-    style={{data:
-      {width: 15, fill: "orange"}
+    style={{
+      data: {
+        width: 15,
+        fill: (data) => data.y > 3 ?
+          "gold" : "orange"
+      }
     }}
     data={[
       {x: 1, y: 1},
@@ -158,7 +168,7 @@ Time series data is also supported:
 <VictoryChart
   height={450}
   scale={{
-    x: d3Scale.time()
+    x: "time"
   }}>
   <VictoryAxis
     label="Decades"
