@@ -1,4 +1,5 @@
 [![Travis Status][trav_img]][trav_site]
+![](https://badge-size.herokuapp.com/FormidableLabs/victory-pie/master/dist/victory-pie.js.svg?compression=gzip)
 
 VictoryPie
 =============
@@ -7,7 +8,7 @@ VictoryPie
 
 API Documentation
 -----------------
-Detailed documentation and interactive examples can be found at http://victory.formidable.com/victory-pie
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-pie
 
 IMPORTANT
 =========
