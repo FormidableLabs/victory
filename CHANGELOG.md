@@ -1,5 +1,23 @@
 # Victory Changelog
 
+## 0.4.0 (2016-01-31)
+
+- Data Accessors are supported on all relevant components
+- Shared code has been factored into VictoryUtil
+
+Breaking Changes:
+  - VictoryLine and VictoryScatter:
+    - plotting functions via the `y` prop must now be expressed as functions of
+      data rather than functions of x. _i.e._ `y={(data) => Math.sin(data.x)}`
+  - VictoryBar:
+    - the domain of the dependent axis will automatically include zero unless a domain is specified via props
+    - automatic alphabetic data sorting has been removed
+    - automatic 1% domain padding has been removed
+  - VictoryChart:
+    - automatic 1% domain padding has been removed
+    - default line data has been removed, so `<VictoryChart/>` with no additional props will now only render a set of
+      axes with no data
+
 ## 0.3.0 (2016-01-26)
 
 - Demo application now works with hot reloading.
