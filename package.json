@@ -25,18 +25,18 @@
     "server-docs": "http-server docs/build"
   },
   "dependencies": {
-    "builder": "~2.2.2",
+    "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.1.0",
     "victory-axis": "2.0.0",
-    "victory-bar": "3.0.0",
-    "victory-chart": "3.0.0",
-    "victory-label": "0.3.0",
-    "victory-line": "0.8.0",
-    "victory-pie": "0.3.0",
-    "victory-scatter": "0.8.0"
+    "victory-bar": "4.0.0",
+    "victory-chart": "4.0.0",
+    "victory-label": "1.0.0",
+    "victory-line": "1.0.0",
+    "victory-pie": "1.0.0",
+    "victory-scatter": "1.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
