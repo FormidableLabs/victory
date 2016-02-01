@@ -1,8 +1,11 @@
-import _ from "lodash";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import d3Shape from "d3-shape";
-import Util from "victory-util";
+import isArray from "lodash/lang/isArray";
+import merge from "lodash/object/merge";
+import assign from "lodash/object/assign";
+import pick from "lodash/object/pick";
+import { PropTypes as CustomPropTypes, Data, Domain, Style, Chart } from "victory-util";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
 import {VictoryAnimation} from "victory-animation";
@@ -22,6 +25,27 @@ const defaultStyles = {
     fontSize: 10,
     textAnchor: "middle"
   }
+};
+
+const degreesToRadians = function (degrees) {
+  return degrees * (Math.PI / 180);
+};
+
+const getRadius = function (props, padding) {
+  return Math.min(
+    props.width - padding.left - padding.right,
+    props.height - padding.top - padding.bottom
+  ) / 2;
+};
+
+const getLabelPosition = function (props, style, radius) {
+  // TODO: better label positioning
+  const innerRadius = props.innerRadius ?
+  props.innerRadius + style.labels.padding :
+    style.labels.padding;
+  return d3Shape.arc()
+    .outerRadius(radius)
+    .innerRadius(innerRadius);
 };
 
 @Radium
@@ -53,10 +77,18 @@ export default class VictoryPie extends React.Component {
      * used to calculate arc length as a proportion of the pie's circumference.
      * If the data prop is omitted, the pie will render sample data.
      */
-    data: PropTypes.arrayOf(PropTypes.shape({
-      x: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-      y: PropTypes.number
-    })),
+
+    /**
+     * The data prop specifies the data to be plotted,
+     * where data X-value is the slice label (string or number),
+     * and Y-value is the corresponding number value represented by the slice
+     * Data should be in the form of an array of data points.
+     * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
+     * but by default, an object with x and y properties is expected.
+     * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
+     * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+     */
+    data: PropTypes.array,
     /**
      * The overall end angle of the pie in degrees. This prop is used in conjunction with
      * startAngle to create a pie that spans only a segment of a circle.
@@ -65,13 +97,13 @@ export default class VictoryPie extends React.Component {
     /**
      * The height props specifies the height of the chart container element in pixels
      */
-    height: Util.PropTypes.nonNegative,
+    height: CustomPropTypes.nonNegative,
     /**
      * When creating a donut chart, this prop determines the number of pixels between
      * the center of the chart and the inner edge of a donut. When this prop is set to zero
      * a regular pie chart is rendered.
      */
-    innerRadius: Util.PropTypes.nonNegative,
+    innerRadius: CustomPropTypes.nonNegative,
     /**
      * This prop specifies the labels that will be applied to your data. This prop can be
      * passed in as an array of values, in the same order as your data, or as a function
@@ -83,7 +115,7 @@ export default class VictoryPie extends React.Component {
      * The padAngle prop determines the amount of separation between adjacent data slices
      * in number of degrees
      */
-    padAngle: Util.PropTypes.nonNegative,
+    padAngle: CustomPropTypes.nonNegative,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
@@ -123,8 +155,40 @@ export default class VictoryPie extends React.Component {
     /**
      * The width props specifies the width of the chart container element in pixels
      */
-    width: Util.PropTypes.nonNegative
-  }
+    width: CustomPropTypes.nonNegative,
+    /**
+     * The x prop specifies how to access the X value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+     */
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The y prop specifies how to access the Y value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+     */
+    y: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ])
+  };
 
   static defaultProps = {
     data: [
@@ -150,92 +214,65 @@ export default class VictoryPie extends React.Component {
     ],
     startAngle: 0,
     standalone: true,
-    width: 400
+    width: 400,
+    x: "x",
+    y: "y"
+  };
+
+  static getDomain = Domain.getDomain.bind(Domain);
+
+  renderSlice(slice, index, calculatedProps) {
+    const {style, colorScale, makeSlicePath, labelPosition} = calculatedProps;
+    const fill = colorScale[index % colorScale.length];
+    const sliceStyle = merge({}, style.data, {fill});
+    return (
+      <g key={index}>
+        <Slice
+          slice={slice}
+          pathFunction={makeSlicePath}
+          style={sliceStyle}
+        />
+        <SliceLabel
+          labelComponent={this.props.labelComponent}
+          style={style.labels}
+          positionFunction={labelPosition.centroid}
+          slice={slice}
+        />
+      </g>
+    );
   }
 
-  degreesToRadians(degrees) {
-    return degrees * (Math.PI / 180);
-  }
-
-  getCalculatedValues(props) {
-    this.style = this.getStyles(props);
-    this.padding = this.getPadding(props);
-    this.radius = this.getRadius(props);
-    this.colorScale = _.isArray(props.colorScale) ?
-      props.colorScale : Util.Style.getColorScale(props.colorScale);
-    this.slice = d3Shape.arc()
-      .outerRadius(this.radius)
+  renderData(props, calculatedProps) {
+    const {style, radius} = calculatedProps;
+    const data = Data.getData(props);
+    const domain = {
+      x: Domain.getDomain(props, "x"),
+      y: Domain.getDomain(props, "y")
+    };
+    const labelPosition = getLabelPosition(props, style, radius);
+    const colorScale = isArray(props.colorScale) ?
+      props.colorScale : Style.getColorScale(props.colorScale);
+    const makeSlicePath = d3Shape.arc()
+      .outerRadius(radius)
       .innerRadius(this.props.innerRadius);
-    this.labelPosition = this.getLabelPosition(props);
-    this.pie = d3Shape.pie()
+
+    calculatedProps = assign(calculatedProps,
+      {data, domain, colorScale, makeSlicePath, labelPosition}
+    );
+
+    const pie = d3Shape.pie()
       .sort(null)
-      .startAngle(this.degreesToRadians(props.startAngle))
-      .endAngle(this.degreesToRadians(props.endAngle))
-      .padAngle(this.degreesToRadians(props.padAngle))
-      .value((data) => { return data.y; });
-  }
+      .startAngle(degreesToRadians(props.startAngle))
+      .endAngle(degreesToRadians(props.endAngle))
+      .padAngle(degreesToRadians(props.padAngle))
+      .value((datum) => { return datum.y; });
+    const slices = pie(data);
 
-  getStyles(props) {
-    const style = props.style || defaultStyles;
-    const {data, labels, parent} = style;
-    return {
-      parent: _.merge({height: props.height, width: props.width}, parent),
-      data: _.merge({}, defaultStyles.data, data),
-      labels: _.merge({}, defaultStyles.labels, labels)
-    };
-  }
-
-  getPadding(props) {
-    const padding = _.isNumber(props.padding) ? props.padding : 0;
-    const paddingObj = _.isObject(props.padding) ? props.padding : {};
-    return {
-      top: paddingObj.top || padding,
-      bottom: paddingObj.bottom || padding,
-      left: paddingObj.left || padding,
-      right: paddingObj.right || padding
-    };
-  }
-
-  getRadius(props) {
-    return _.min([
-      props.width - this.padding.left - this.padding.right,
-      props.height - this.padding.top - this.padding.bottom
-    ]) / 2;
-  }
-
-  getLabelPosition(props) {
-    // TODO: better label positioning
-    const innerRadius = props.innerRadius ?
-      props.innerRadius + this.style.labels.padding :
-      this.style.labels.padding;
-    return d3Shape.arc()
-      .outerRadius(this.radius)
-      .innerRadius(innerRadius);
-  }
-
-  renderData() {
-    const slices = this.pie(this.props.data);
-    const sliceComponents = _.map(slices, (slice, index) => {
-      const fill = this.colorScale[index % this.colorScale.length];
-      const style = _.merge({}, this.style.data, {fill});
-      return (
-        <g key={index}>
-          <Slice
-            slice={slice}
-            pathFunction={this.slice}
-            style={style}
-          />
-          <SliceLabel
-            labelComponent={this.props.labelComponent}
-            style={this.style.labels}
-            positionFunction={this.labelPosition.centroid}
-            slice={slice}
-          />
-        </g>
-      );
-    });
-
-    return (<g>{sliceComponents}</g>);
+    return (<g>
+      {slices.map((slice, index) => {
+        return this.renderSlice(slice, index, calculatedProps);
+      })}
+    </g>);
   }
 
   render() {
@@ -243,7 +280,7 @@ export default class VictoryPie extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = _.pick(this.props, [
+      const animateData = pick(this.props, [
         "data", "endAngle", "height", "innerRadius", "padAngle", "padding",
         "colorScale", "startAngle", "style", "width"
       ]);
@@ -252,18 +289,21 @@ export default class VictoryPie extends React.Component {
           {(props) => <VictoryPie {...this.props} {...props} animate={null}/>}
         </VictoryAnimation>
       );
-    } else {
-      this.getCalculatedValues(this.props);
     }
-    const style = this.style.parent;
-    const xOffset = this.radius + this.padding.left;
-    const yOffset = this.radius + this.padding.top;
+
+    const style = Chart.getStyles(this.props, defaultStyles);
+    const padding = Chart.getPadding(this.props);
+    const radius = getRadius(this.props, padding);
+    const parentStyle = style.parent;
+    const xOffset = radius + padding.left;
+    const yOffset = radius + padding.top;
+
     const group = (
-      <g style={style} transform={`translate(${xOffset}, ${yOffset})`}>
-        {this.renderData()}
+      <g style={parentStyle} transform={`translate(${xOffset}, ${yOffset})`}>
+        {this.renderData(this.props, {style, padding, radius})}
       </g>
     );
 
-    return this.props.standalone ? <svg style={style}>{group}</svg> : group;
+    return this.props.standalone ? <svg style={parentStyle}>{group}</svg> : group;
   }
 }

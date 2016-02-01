@@ -1,4 +1,5 @@
 /*global window:false*/
+import _ from "lodash";
 import React from "react";
 import Radium from "radium";
 import {VictoryPie} from "../src/index";
@@ -96,6 +97,22 @@ export default class App extends React.Component {
           innerRadius={140}
           padAngle={5}
           startAngle={-90}
+        />
+
+        <VictoryPie
+          data={_.range(0, 6)}
+          x={null}
+          y={(d) => d * d * Math.random()}
+          style={this.state.style}
+          colorScale="warm"
+        />
+
+        <VictoryPie
+          data={_.range(0, 6).map((i) => [i, Math.random()])}
+          x={0}
+          y={1}
+          style={this.state.style}
+          colorScale="qualitative"
         />
       </div>
     );

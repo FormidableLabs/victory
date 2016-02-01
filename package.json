@@ -20,14 +20,14 @@
     "test": "builder run npm:test"
   },
   "dependencies": {
-    "builder": "~2.2.2",
+    "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
     "d3-shape": "^0.2.0",
     "lodash": "^3.10.1",
     "radium": "^0.16.2",
     "victory-animation": "^0.0.13",
-    "victory-label": "^0.1.8",
-    "victory-util": "^2.0.3"
+    "victory-label": "^1.0.0",
+    "victory-util": "^4.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
