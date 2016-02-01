@@ -24,8 +24,8 @@
     "builder-victory-component": "~0.2.1",
     "lodash": "^3.10.1",
     "radium": "^0.16.2",
-    "victory-axis": "1.6.0",
-    "victory-util": "^2.1.0"
+    "victory-axis": "2.0.0",
+    "victory-util": "^4.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
@@ -36,8 +36,8 @@
     "react-dom": "^0.14.3",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "victory-bar": "2.6.0",
-    "victory-line": "0.7.0",
-    "victory-scatter": "0.7.0"
+    "victory-bar": "3.0.0",
+    "victory-line": "1.0.0",
+    "victory-scatter": "1.0.0"
   }
 }

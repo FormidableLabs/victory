@@ -134,13 +134,13 @@ class App extends React.Component {
               style={{data:
                 {stroke: "red", strokeWidth: 4}
               }}
-              y={(x) => Math.sin(2 * Math.PI * x)}
+              y={(data) => Math.sin(2 * Math.PI * data.x)}
             />
             <VictoryLine
               style={{data:
                 {stroke: "blue", strokeWidth: 4}
               }}
-              y={(x) => Math.cos(2 * Math.PI * x)}
+              y={(data) => Math.cos(2 * Math.PI * data.x)}
             />
           </VictoryChart>
 
@@ -184,14 +184,14 @@ class App extends React.Component {
 
           <VictoryChart animate={{velocity: 0.02}}>
             <VictoryScatter data={this.state.scatterData}/>
-            <VictoryLine y={(x) => x}/>
+            <VictoryLine y={(data) => data.x}/>
           </VictoryChart>
 
           <VictoryChart>
             <VictoryAxis dependentAxis orientation="right"/>
             <VictoryAxis orientation="top"/>
-            <VictoryLine y={(x) => 0.5 * x + 0.5} style={{data: {stroke: "red"}}}/>
-            <VictoryScatter y={(x) => x * x} style={{data: {stroke: "red"}}}/>
+            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
+            <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
           <VictoryChart animate={{velocity: 0.02}} domainPadding={{x: 20}}>
@@ -226,19 +226,6 @@ class App extends React.Component {
                 {fill: "tomato"}
               ]}
               labels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
-            />
-          </VictoryChart>
-
-          <VictoryChart>
-            <VictoryScatter style={{data: {fill: "red"}}}
-              symbol="star"
-              x={[1, 2, 3, 4]} y={[1, 2, 10, 4]}
-            />
-            <VictoryLine style={{data: {stroke: "green"}}} interpolation="basis"
-              x={[-2, -1, 0, 1, 3]} y={(x) => x * x}
-            />
-            <VictoryScatter style={{data: {fill: "blue"}}}
-              x={[3, 4, 6]} y={[-5, -4, -3, -2, 2, 3]}
             />
           </VictoryChart>
 

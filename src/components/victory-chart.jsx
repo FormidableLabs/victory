@@ -4,7 +4,7 @@ import some from "lodash/collection/some";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
+import { PropTypes as CustomPropTypes, Chart } from "victory-util";
 import { VictoryAxis } from "victory-axis";
 import AxisHelpers from "../axis-helpers";
 import ComponentHelpers from "../component-helpers";
@@ -156,24 +156,17 @@ export default class VictoryChart extends React.Component {
     };
   }
 
-  getDataProps(child, calculatedProps) {
-    const {domain, scale} = calculatedProps;
-    const data = Data.getData(merge({}, child.props, {domain, scale}));
-    return {
-      data,
-      domain,
-      scale
-    };
-  }
-
-  getNewProps(child, props, calculatedProps) {
+  getChildProps(child, props, calculatedProps) {
     const type = child.type && child.type.role;
     if (type === "axis") {
       return this.getAxisProps(child, props, calculatedProps);
     } else if (type === "bar") {
       return this.getGroupedDataProps(child, calculatedProps);
     }
-    return this.getDataProps(child, calculatedProps);
+    return {
+      domain: calculatedProps.domain,
+      scale: calculatedProps.scale
+    };
   }
 
   getCalculatedProps(props, childComponents) {
@@ -215,8 +208,8 @@ export default class VictoryChart extends React.Component {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
     return childComponents.map((child, index) => {
       const style = merge({}, {parent: baseStyle.parent}, child.props.style);
-      const newProps = this.getNewProps(child, props, calculatedProps);
-      return React.cloneElement(child, merge({}, newProps, {
+      const childProps = this.getChildProps(child, props, calculatedProps);
+      return React.cloneElement(child, merge({}, childProps, {
         animate: child.props.animate || props.animate,
         height: props.height,
         width: props.width,

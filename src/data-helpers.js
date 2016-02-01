@@ -18,7 +18,7 @@ module.exports = {
       return Data.getStringsFromCategories(component.props, axis);
     })));
     const dataStrings = compact(flatten(childComponents.map((child) => {
-      return Data.getDataStrings(child.props, axis);
+      return Data.getStringsFromData(child.props, axis);
     })));
     const allStrings = uniq(compact([...tickStrings, ...categoryStrings, ...dataStrings]));
 
