@@ -52,8 +52,9 @@ export default class SliceLabel extends React.Component {
   renderLabel(props) {
     const position = props.positionFunction(props.slice);
     const data = props.slice.data;
+    const dataLabel = data.xName ? `${data.xName}` : `${data.x}`;
     const label = data.label ?
-    `${Chart.evaluateProp(data.label, data)}` : `${data.x}`;
+    `${Chart.evaluateProp(data.label, data)}` : dataLabel;
     return props.labelComponent ?
       this.renderLabelComponent(props, position, label) :
       this.renderVictoryLabel(props, position, label);
