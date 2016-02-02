@@ -12,6 +12,8 @@ See the docs and examples on the website: http://victory.formidable.com
 
 **Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
 
+**SEMVER** Minor version bumps should be considered breaking changes until we hit v1.0.0. Patches can be considered safe.
+
 ## Get started
 
 1. Add Victory to your project:
