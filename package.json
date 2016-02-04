@@ -27,6 +27,7 @@
   "dependencies": {
     "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
+    "radium-grid": "^1.0.5",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.1.0",
