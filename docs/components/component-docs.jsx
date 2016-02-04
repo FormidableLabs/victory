@@ -3,6 +3,7 @@ import ga from "react-ga";
 import Radium, { Style } from "radium";
 import React from "react";
 import { VictorySettings, VictoryTheme, Header, Footer } from "formidable-landers";
+import {Grid, Cell} from "radium-grid";
 
 import BaseDocs from "./docs";
 import { components, headerText, routing as routingConfig } from "../config";
@@ -23,10 +24,26 @@ class ComponentDocs extends BaseDocs {
           {headerText}
         </Header>
         <main style={this.getMainStyles()}>
-          <Sidebar active={`${this.props.params.component}`} />
-          <section style={this.getDocsStyles()}>
-            <Docs />
-          </section>
+          <Grid
+            gutter="0px"
+          >
+            <Cell
+              width="1/8"
+              mediumWidth="1"
+              smallWidth="1"
+            >
+              <Sidebar active={`${this.props.params.component}`} />
+            </Cell>
+            <Cell
+              width="4/5"
+              mediumWidth="1"
+              smallWidth="1"
+            >
+              <section style={this.getDocsStyles()}>
+                <Docs />
+              </section>
+            </Cell>
+          </Grid>
         </main>
         <Footer backgroundColor="#ebe3db">
           <div style={{margin: "2em 0", fontSize: "0.8rem"}}>
