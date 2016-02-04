@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import React from "react";
-import AxisHelpers from "src/axis-helpers";
+import AxisHelpers from "src/components/victory-chart/axis-helpers";
 import { VictoryAxis } from "victory-axis";
 import { Scale } from "victory-util";
 import identity from "lodash/utility/identity";

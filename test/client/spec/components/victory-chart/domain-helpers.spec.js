@@ -1,8 +1,8 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import React from "react";
-import DomainHelpers from "src/domain-helpers";
-import { VictoryLine } from "victory-line";
+import DomainHelpers from "src/components/victory-chart/domain-helpers";
+import { VictoryLine } from "src/index";
 import { Domain } from "victory-util";
 
 describe("domain-helpers", () => {

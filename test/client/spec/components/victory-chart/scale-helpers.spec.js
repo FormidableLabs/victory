@@ -1,8 +1,8 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import React from "react";
-import ScaleHelpers from "src/scale-helpers";
-import { VictoryAxis } from "victory-axis";
+import ScaleHelpers from "src/components/victory-chart/scale-helpers";
+import { VictoryAxis } from "src/index";
 
 describe("scale-helpers", () => {
   describe("getScale", () => {

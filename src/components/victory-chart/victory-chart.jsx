@@ -6,11 +6,11 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import { PropTypes as CustomPropTypes, Chart } from "victory-util";
 import { VictoryAxis } from "victory-axis";
-import AxisHelpers from "../axis-helpers";
-import ComponentHelpers from "../component-helpers";
-import DataHelpers from "../data-helpers";
-import DomainHelpers from "../domain-helpers";
-import ScaleHelpers from "../scale-helpers";
+import AxisHelpers from "./axis-helpers";
+import ComponentHelpers from "./component-helpers";
+import DataHelpers from "./data-helpers";
+import DomainHelpers from "./domain-helpers";
+import ScaleHelpers from "./scale-helpers";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,

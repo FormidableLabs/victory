@@ -1,12 +1,10 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import React from "react";
-import DataHelpers from "src/data-helpers";
-import { VictoryAxis } from "victory-axis";
-import { VictoryLine } from "victory-line";
-import { VictoryBar } from "victory-bar";
+import DataHelpers from "src/components/victory-chart/data-helpers";
+import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
 import { Data } from "victory-util";
-import ComponentHelpers from "src/component-helpers";
+import ComponentHelpers from "src/components/victory-chart/component-helpers";
 
 describe("data-helpers", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
