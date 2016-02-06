@@ -1,4 +1,4 @@
-import { Scale } from "victory-util";
+import Scale from "../../helpers/scale";
 
 module.exports = {
   getScale(props, axisComponent, axis) {

@@ -1,7 +1,8 @@
 import without from "lodash/array/without";
 import includes from "lodash/collection/includes";
 import range from "lodash/utility/range";
-import { Chart, Collection, Scale } from "victory-util";
+import Scale from "../../helpers/scale";
+import { Chart, Collection } from "victory-util";
 
 module.exports = {
   // exposed for use by VictoryChart

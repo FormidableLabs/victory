@@ -2,8 +2,7 @@
 /* global sinon */
 
 import LayoutHelpers from "src/components/victory-bar/layout-helpers";
-import { Scale } from "victory-util";
-
+import Scale from "src/helpers/scale";
 
 describe("layout-helpers", () => {
   describe("getBarPosition", () => {

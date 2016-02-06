@@ -1,7 +1,8 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import Helpers from "src/components/victory-axis/helper-methods";
-import { Chart, Scale } from "victory-util";
+import Scale from "src/helpers/scale";
+import { Chart } from "victory-util";
 
 describe("helper-methods", () => {
   describe("getDomain", () => {

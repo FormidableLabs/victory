@@ -2,7 +2,8 @@ import pick from "lodash/object/pick";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Chart, Data, Scale } from "victory-util";
+import Scale from "../../helpers/scale";
+import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Bar from "./bar";
 import BarLabel from "./bar-label";

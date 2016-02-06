@@ -3,7 +3,7 @@
 import React from "react";
 import DomainHelpers from "src/components/victory-chart/domain-helpers";
 import { VictoryLine } from "src/index";
-import { Domain } from "victory-util";
+import Domain from "src/helpers/domain";
 
 describe("domain-helpers", () => {
   describe("getDomain", () => {

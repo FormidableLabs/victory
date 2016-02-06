@@ -10,7 +10,9 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import LineSegment from "./line-segment";
 import LineLabel from "./line-label";
-import { PropTypes as CustomPropTypes, Chart, Data, Domain, Scale } from "victory-util";
+import Scale from "../../helpers/scale";
+import Domain from "../../helpers/domain";
+import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 
 const defaultStyles = {

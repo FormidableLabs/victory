@@ -3,7 +3,7 @@
 import React from "react";
 import AxisHelpers from "src/components/victory-chart/axis-helpers";
 import { VictoryAxis } from "victory-axis";
-import { Scale } from "victory-util";
+import Scale from "src/helpers/scale";
 import identity from "lodash/utility/identity";
 
 

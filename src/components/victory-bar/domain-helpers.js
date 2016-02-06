@@ -3,8 +3,8 @@ import includes from "lodash/collection/includes";
 import isEmpty from "lodash/lang/isEmpty";
 import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
-
-import { Collection, Data, Domain } from "victory-util";
+import Domain from "../../helpers/domain";
+import { Collection, Data } from "victory-util";
 
 
 module.exports = {

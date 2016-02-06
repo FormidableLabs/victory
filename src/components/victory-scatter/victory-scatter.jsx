@@ -2,7 +2,9 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import pick from "lodash/object/pick";
 import Point from "./point";
-import { PropTypes as CustomPropTypes, Chart, Data, Domain, Scale } from "victory-util";
+import Scale from "../../helpers/scale";
+import Domain from "../../helpers/domain";
+import { PropTypes as CustomPropTypes, Chart, Data} from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Helpers from "./helper-methods";
 

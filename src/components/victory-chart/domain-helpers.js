@@ -1,7 +1,8 @@
 import flatten from "lodash/array/flatten";
 import isEmpty from "lodash/lang/isEmpty";
+import Domain from "../../helpers/domain";
 
-import { Collection, Domain } from "victory-util";
+import { Collection } from "victory-util";
 
 module.exports = {
   orientDomain(domain, orientation, axis) {
