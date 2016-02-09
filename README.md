@@ -1,14 +1,15 @@
 [![Travis Status][trav_img]][trav_site]
+![](https://badge-size.herokuapp.com/FormidableLabs/victory/master/dist/victory.min.js?compression=gzip)
+[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 Victory
 =======
 
-[![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-![](https://badge-size.herokuapp.com/FormidableLabs/victory/master/dist/victory.min.js?compression=gzip)
-
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
-See the docs and examples on the website: http://victory.formidable.com
+See the docs and examples on the website: http://victory.formidable.com.
+
+You can also join the Gitter chat room at https://gitter.im/FormidableLabs/victory.
 
 **Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
 
