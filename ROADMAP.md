@@ -24,7 +24,7 @@ Released: December 2015 ([`v0.1.0`](https://github.com/FormidableLabs/victory/re
 
 ### [Alpha 2](https://github.com/FormidableLabs/victory/milestones/Alpha%202)
 
-Expected release: January 2016
+Expected release: February 2016
 
 - [victory-tooltip](https://github.com/FormidableLabs/victory/issues/83)
 - [Support data accessor functions](https://github.com/FormidableLabs/victory/issues/84)
@@ -35,7 +35,7 @@ Expected release: January 2016
 
 ### [Alpha 3](https://github.com/FormidableLabs/victory/milestones/Alpha%203)
 
-Expected release: February 2016
+Expected release: March 2016
 
 - [victory-legend](https://github.com/FormidableLabs/victory/issues/35)
 - [victory-area](https://github.com/FormidableLabs/victory/issues/40)
