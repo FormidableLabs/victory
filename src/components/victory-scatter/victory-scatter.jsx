@@ -4,7 +4,8 @@ import pick from "lodash/object/pick";
 import Point from "./point";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
-import { PropTypes as CustomPropTypes, Chart, Data} from "victory-util";
+import Data from "../../helpers/data";
+import { PropTypes as CustomPropTypes, Chart } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Helpers from "./helper-methods";
 

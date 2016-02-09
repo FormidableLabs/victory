@@ -4,8 +4,8 @@ import isEmpty from "lodash/lang/isEmpty";
 import sum from "lodash/math/sum";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
-
-import { Collection, Data} from "victory-util";
+import Data from "../../helpers/data";
+import { Collection } from "victory-util";
 
 import ComponentHelpers from "./component-helpers";
 

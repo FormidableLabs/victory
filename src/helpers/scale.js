@@ -1,6 +1,8 @@
 import flatten from "lodash/array/flatten";
 import includes from "lodash/collection/includes";
-import { Collection, Data } from "victory-util";
+import isFunction from "lodash/lang/isFunction";
+import Helpers from "./general";
+import { Collection } from "victory-util";
 import d3Scale from "d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
@@ -8,7 +10,6 @@ const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 module.exports = {
   validScale(scale) {
     if (typeof scale === "function") {
-      const isFunction = (val) => typeof val === "function";
       return (isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range));
     } else if (typeof scale === "string") {
       return includes(supportedScaleStrings, scale);
@@ -39,7 +40,7 @@ module.exports = {
     if (!props.data) {
       return "linear";
     }
-    const accessor = Data.createAccessor(props[axis]);
+    const accessor = Helpers.createAccessor(props[axis]);
     const allData = flatten(props.data);
     const axisData = allData.map(accessor);
     return Collection.containsDates(axisData) ? "time" : "linear";

@@ -1,6 +1,7 @@
 import flatten from "lodash/array/flatten";
 import isDate from "lodash/lang/isDate";
-import { Chart, Data } from "victory-util";
+import Data from "./data";
+import { Chart } from "victory-util";
 
 module.exports = {
   getDomain(props, axis) {

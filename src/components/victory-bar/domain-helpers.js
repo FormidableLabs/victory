@@ -4,7 +4,8 @@ import isEmpty from "lodash/lang/isEmpty";
 import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
 import Domain from "../../helpers/domain";
-import { Collection, Data } from "victory-util";
+import Data from "../../helpers/data";
+import { Collection } from "victory-util";
 
 
 module.exports = {

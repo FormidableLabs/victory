@@ -5,15 +5,15 @@ import Domain from "../../helpers/domain";
 import { Collection } from "victory-util";
 
 module.exports = {
-  orientDomain(domain, orientation, axis) {
+  orientDomain(domain, orientations, axis) {
     // If the other axis is in a reversed orientation, the domain of this axis
     // needs to be reversed
     const otherAxis = axis === "x" ? "y" : "x";
     const defaultOrientation = (ax) => ax === "x" ? "bottom" : "left";
-    const flippedAxis = orientation.x === "left" || orientation.x === "right";
+    const flippedAxis = orientations.x === "left" || orientations.x === "right";
     const standardOrientation = flippedAxis ?
-      orientation[otherAxis] === defaultOrientation(axis) :
-      orientation[otherAxis] === defaultOrientation(otherAxis);
+      orientations[otherAxis] === defaultOrientation(axis) :
+      orientations[otherAxis] === defaultOrientation(otherAxis);
     if (flippedAxis) {
       return standardOrientation ?
         domain.concat().reverse() : domain;

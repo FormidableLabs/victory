@@ -3,7 +3,7 @@
 import React from "react";
 import DataHelpers from "src/components/victory-chart/data-helpers";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
-import { Data } from "victory-util";
+import Data from "src/helpers/data";
 import ComponentHelpers from "src/components/victory-chart/component-helpers";
 
 describe("data-helpers", () => {
