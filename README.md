@@ -1,8 +1,8 @@
 [![Travis Status][trav_img]][trav_site]
 ![](https://badge-size.herokuapp.com/FormidableLabs/victory-label/master/dist/victory-label.min.js?compression=gzip)
 
-Starter Victory Component
-=========================
+VictoryLabel
+============
 
 VictoryLabel is a text component that provides several enhancements over SVG’s `<text>` element.
 
