@@ -4,7 +4,7 @@ Victory
 =======
 
 [![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-![](https://badge-size.herokuapp.com/FormidableLabs/victory/master/dist/victory.js.svg?compression=gzip)
+![](https://badge-size.herokuapp.com/FormidableLabs/victory/master/dist/victory.min.js?compression=gzip)
 
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
