@@ -4,14 +4,20 @@ import values from "lodash/object/values";
 import identity from "lodash/utility/identity";
 
 import { Collection } from "victory-util";
+import Axis from "../../helpers/axis";
+
 
 module.exports = {
   getAxisOffset(props, calculatedProps) {
-    const {axisComponents, domain, axisOrientations, scale} = calculatedProps;
+    const {axisComponents, domain, scale} = calculatedProps;
     // make the axes line up, and cross when appropriate
     const origin = {
       x: Math.max(Math.min(...domain.x), 0),
       y: Math.max(Math.min(...domain.y), 0)
+    };
+    const axisOrientations = {
+      x: Axis.getOrientation(axisComponents.x, "x"),
+      y: Axis.getOrientation(axisComponents.y, "y")
     };
     const orientationOffset = {
       x: axisOrientations.y === "left" ? 0 : props.width,
@@ -67,16 +73,5 @@ module.exports = {
     } else {
       return calculatedProps.scale[axis].tickFormat() || identity;
     }
-  },
-
-  getAxisOrientation(component, axis) {
-    if (component.props.orientation) {
-      return component.props.orientation;
-    }
-    const typicalOrientations = {x: "bottom", y: "left"};
-    const flippedOrientations = {x: "left", y: "bottom"};
-    const dependent = component.props.dependentAxis;
-    return (dependent && axis === "y") || (!dependent && axis === "x") ?
-      typicalOrientations[axis] : flippedOrientations[axis];
   }
 };

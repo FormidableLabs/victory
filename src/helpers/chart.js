@@ -1,22 +1,21 @@
+import without from "lodash/array/without";
+import includes from "lodash/collection/includes";
 import some from "lodash/collection/some";
-
-import { Log } from "victory-util";
+import range from "lodash/utility/range";
+import flatten from "lodash/array/flatten";
+import isEmpty from "lodash/lang/isEmpty";
+import Domain from "./domain";
+import Axis from "./axis";
 import React from "react";
+import { Collection } from "victory-util";
 
 module.exports = {
-  getAxisType(child) {
-    if (!child.type || child.type.role !== "axis") {
-      return undefined;
-    }
-    return child.props.dependentAxis ? "dependent" : "independent";
-  },
-
   getChildComponents(props, defaultAxes) {
     // set up a counter for component types
     const counts = {};
     const addChild = (child) => {
       const type = child.type && child.type.role;
-      const axis = this.getAxisType(child);
+      const axis = Axis.getAxisType(child);
       if (!counts[type]) {
         counts[type] = axis ? {independent: 0, dependent: 0} : 0;
       }
@@ -29,7 +28,7 @@ module.exports = {
 
     const limitReached = (child) => {
       const type = child.type && child.type.role;
-      const axis = this.getAxisType(child);
+      const axis = Axis.getAxisType(child);
       if (!counts[type]) {
         return false;
       } else if (axis) {
@@ -94,14 +93,19 @@ module.exports = {
     });
   },
 
-  getAxisComponent(childComponents, axis) {
-    const getAxis = (component) => {
-      const flipped = some(childComponents, (child) => child.props.horizontal);
-      return component.type.getAxis(component.props, flipped);
-    };
-    const axisComponents = childComponents.filter((component) => {
-      return component.type.role === "axis" && getAxis(component) === axis;
-    });
-    return axisComponents[0];
+  getDomain(props, childComponents, axis) {
+    let domain;
+    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
+      domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
+    } else {
+      const childDomains = childComponents.map((component) => {
+        return component.type.getDomain(component.props, axis);
+      });
+      const allDomains = Collection.removeUndefined(flatten(childDomains));
+      domain = isEmpty(allDomains) ? [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
+    }
+    const paddedDomain = Domain.padDomain(domain, props, axis);
+    const orientations = Axis.getAxisOrientations(childComponents);
+    return Domain.orientDomain(paddedDomain, orientations, axis);
   }
 };

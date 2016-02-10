@@ -5,12 +5,12 @@ import some from "lodash/collection/some";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import { PropTypes as CustomPropTypes, Chart } from "victory-util";
-import { VictoryAxis } from "victory-axis";
+import VictoryAxis from "../victory-axis/victory-axis";
 import AxisHelpers from "./axis-helpers";
-import ComponentHelpers from "./component-helpers";
+import Axis from "../../helpers/axis";
+import Scale from "../../helpers/scale";
+import ChartHelpers from "../../helpers/chart";
 import DataHelpers from "./data-helpers";
-import DomainHelpers from "./domain-helpers";
-import ScaleHelpers from "./scale-helpers";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
@@ -172,24 +172,26 @@ export default class VictoryChart extends React.Component {
   getCalculatedProps(props, childComponents) {
     const flipped = some(childComponents, (component) => component.props.horizontal);
     const axisComponents = {
-      x: ComponentHelpers.getAxisComponent(childComponents, "x"),
-      y: ComponentHelpers.getAxisComponent(childComponents, "y")
-    };
-    const axisOrientations = {
-      x: AxisHelpers.getAxisOrientation(axisComponents.x, "x"),
-      y: AxisHelpers.getAxisOrientation(axisComponents.y, "y")
+      x: Axis.getAxisComponent(childComponents, "x"),
+      y: Axis.getAxisComponent(childComponents, "y")
     };
     const domain = {
-      x: DomainHelpers.getDomain(props, childComponents, axisOrientations, "x"),
-      y: DomainHelpers.getDomain(props, childComponents, axisOrientations, "y")
+      x: ChartHelpers.getDomain(props, childComponents, "x"),
+      y: ChartHelpers.getDomain(props, childComponents, "y")
     };
     const range = {
       x: Chart.getRange(props, "x"),
       y: Chart.getRange(props, "y")
     };
+    const baseScale = {
+      x: Scale.getScaleFromProps(props, "x") ||
+        axisComponents.x.type.getScale(axisComponents.x.props),
+      y: Scale.getScaleFromProps(props, "y") ||
+        axisComponents.y.type.getScale(axisComponents.y.props)
+    };
     const scale = {
-      x: ScaleHelpers.getScale(props, axisComponents.x, "x").domain(domain.x).range(range.x),
-      y: ScaleHelpers.getScale(props, axisComponents.y, "y").domain(domain.y).range(range.y)
+      x: baseScale.x.domain(domain.x).range(range.x),
+      y: baseScale.y.domain(domain.y).range(range.y)
     };
     // TODO: check
     const categories = {
@@ -200,7 +202,7 @@ export default class VictoryChart extends React.Component {
       x: DataHelpers.createStringMap(childComponents, "x"),
       y: DataHelpers.createStringMap(childComponents, "y")
     };
-    return {axisComponents, axisOrientations, categories, domain, flipped, scale, stringMap};
+    return {axisComponents, categories, domain, flipped, scale, stringMap};
   }
 
   // the old ones were bad
@@ -224,7 +226,7 @@ export default class VictoryChart extends React.Component {
 
   render() {
     const style = this.getStyles(this.props);
-    const childComponents = ComponentHelpers.getChildComponents(this.props, defaultAxes);
+    const childComponents = ChartHelpers.getChildComponents(this.props, defaultAxes);
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(this.props, childComponents, style)}

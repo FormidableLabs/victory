@@ -3,12 +3,12 @@ import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Scale from "../../helpers/scale";
+import Domain from "../../helpers/domain";
 import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Bar from "./bar";
 import BarLabel from "./bar-label";
-import DomainHelpers from "./domain-helpers";
-import LayoutHelpers from "./layout-helpers";
+import Helpers from "./helpers";
 
 const defaultStyles = {
   data: {
@@ -248,14 +248,14 @@ export default class VictoryBar extends React.Component {
     y: "y"
   };
 
-  static getDomain = DomainHelpers.getDomain.bind(DomainHelpers);
+  static getDomain = Helpers.getDomain.bind(Helpers);
 
   renderBars(dataset, seriesIndex, calculatedProps) {
     return dataset.data.map((datum, barIndex) => {
       const index = {seriesIndex, barIndex};
-      const position = LayoutHelpers.getBarPosition(datum, index, calculatedProps);
+      const position = Helpers.getBarPosition(datum, index, calculatedProps);
       const baseStyle = calculatedProps.style;
-      const style = LayoutHelpers.getBarStyle(datum, dataset, baseStyle);
+      const style = Helpers.getBarStyle(datum, dataset, baseStyle);
       const barComponent = (
         <Bar key={`series-${index}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
@@ -264,11 +264,11 @@ export default class VictoryBar extends React.Component {
           datum={datum}
         />
       );
-      const shouldPlotLabel = LayoutHelpers.shouldPlotLabel(
+      const shouldPlotLabel = Helpers.shouldPlotLabel(
         seriesIndex, this.props, calculatedProps.datasets
       );
       if (datum.label || shouldPlotLabel) {
-        const labelIndex = LayoutHelpers.getLabelIndex(datum, calculatedProps);
+        const labelIndex = Helpers.getLabelIndex(datum, calculatedProps);
         const labelText = this.props.labels ?
           this.props.labels[labelIndex] || this.props.labels[0] : "";
         const labelComponent = this.props.labelComponents ?
@@ -293,7 +293,7 @@ export default class VictoryBar extends React.Component {
 
   renderData(props, style) {
     const {stacked, categories} = props;
-    const grouped = DomainHelpers.shouldGroup(props);
+    const grouped = Domain.shouldGroup(props);
     const hasMultipleDatasets = (grouped || stacked);
     const rawDatasets = hasMultipleDatasets ? props.data : [props.data];
     const datasets = Data.formatDatasets(rawDatasets, props);
@@ -307,8 +307,8 @@ export default class VictoryBar extends React.Component {
       y: Chart.getRange(props, "y")
     };
     const domain = {
-      x: DomainHelpers.getDomain(props, "x"),
-      y: DomainHelpers.getDomain(props, "y")
+      x: Helpers.getDomain(props, "x"),
+      y: Helpers.getDomain(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),

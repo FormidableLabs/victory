@@ -52,6 +52,19 @@ const orientationSign = {
   bottom: 1
 };
 
+const getStyles = (props) => {
+  const style = props.style || {};
+  const parentStyleProps = { height: props.height, width: props.width };
+  return {
+    parent: merge(parentStyleProps, defaultStyles.parent, style.parent),
+    axis: merge({}, defaultStyles.axis, style.axis),
+    axisLabel: merge({}, defaultStyles.axisLabel, style.axisLabel),
+    grid: merge({}, defaultStyles.grid, style.grid),
+    ticks: merge({}, defaultStyles.ticks, style.ticks),
+    tickLabels: merge({}, defaultStyles.tickLabels, style.tickLabels)
+  };
+};
+
 @Radium
 export default class VictoryAxis extends React.Component {
   static role = "axis";
@@ -191,19 +204,20 @@ export default class VictoryAxis extends React.Component {
   static getDomain = Helpers.getDomain.bind(Helpers);
   static getAxis = Helpers.getAxis.bind(Helpers);
   static getScale = Helpers.getScale.bind(Helpers);
+  static getStyles = getStyles;
 
-  getStyles(props) {
-    const style = props.style || {};
-    const parentStyleProps = { height: props.height, width: props.width };
-    return {
-      parent: merge(parentStyleProps, defaultStyles.parent, style.parent),
-      axis: merge({}, defaultStyles.axis, style.axis),
-      axisLabel: merge({}, defaultStyles.axisLabel, style.axisLabel),
-      grid: merge({}, defaultStyles.grid, style.grid),
-      ticks: merge({}, defaultStyles.ticks, style.ticks),
-      tickLabels: merge({}, defaultStyles.tickLabels, style.tickLabels)
-    };
-  }
+  // getStyles(props) {
+  //   const style = props.style || {};
+  //   const parentStyleProps = { height: props.height, width: props.width };
+  //   return {
+  //     parent: merge(parentStyleProps, defaultStyles.parent, style.parent),
+  //     axis: merge({}, defaultStyles.axis, style.axis),
+  //     axisLabel: merge({}, defaultStyles.axisLabel, style.axisLabel),
+  //     grid: merge({}, defaultStyles.grid, style.grid),
+  //     ticks: merge({}, defaultStyles.ticks, style.ticks),
+  //     tickLabels: merge({}, defaultStyles.tickLabels, style.tickLabels)
+  //   };
+  // }
 
   getTickProps(props) {
     const stringTicks = Helpers.stringTicks(props);
@@ -213,7 +227,7 @@ export default class VictoryAxis extends React.Component {
   }
 
   getLayoutProps(props) {
-    const style = this.getStyles(props);
+    const style = getStyles(props);
     const padding = Chart.getPadding(props);
     const orientation = Helpers.getOrientation(props);
     const isVertical = Helpers.isVertical(props);

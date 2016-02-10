@@ -7,11 +7,13 @@ import zipObject from "lodash/array/zipObject";
 import Data from "../../helpers/data";
 import { Collection } from "victory-util";
 
-import ComponentHelpers from "./component-helpers";
+import ChartHelpers from "../../helpers/chart";
+import Axis from "../../helpers/axis";
+
 
 module.exports = {
   createStringMap(childComponents, axis) {
-    const axisComponent = ComponentHelpers.getAxisComponent(childComponents, axis);
+    const axisComponent = Axis.getAxisComponent(childComponents, axis);
     const tickStrings = Data.getStringsFromAxes(axisComponent.props, axis);
 
     const categoryStrings = compact(flatten(childComponents.map((component) => {
@@ -27,7 +29,7 @@ module.exports = {
   },
 
   getCategories(childComponents) {
-    const groupedComponents = ComponentHelpers.getDataComponents(childComponents, "grouped");
+    const groupedComponents = ChartHelpers.getDataComponents(childComponents, "grouped");
     if (isEmpty(groupedComponents)) {
       return undefined;
     }
