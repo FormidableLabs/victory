@@ -9,6 +9,8 @@ import GridLine from "./grid";
 import Tick from "./tick";
 import Helpers from "./helper-methods";
 import { PropTypes as CustomPropTypes, Chart} from "victory-util";
+import Axis from "../../helpers/axis";
+
 
 const defaultStyles = {
   axis: {
@@ -206,21 +208,8 @@ export default class VictoryAxis extends React.Component {
   static getScale = Helpers.getScale.bind(Helpers);
   static getStyles = getStyles;
 
-  // getStyles(props) {
-  //   const style = props.style || {};
-  //   const parentStyleProps = { height: props.height, width: props.width };
-  //   return {
-  //     parent: merge(parentStyleProps, defaultStyles.parent, style.parent),
-  //     axis: merge({}, defaultStyles.axis, style.axis),
-  //     axisLabel: merge({}, defaultStyles.axisLabel, style.axisLabel),
-  //     grid: merge({}, defaultStyles.grid, style.grid),
-  //     ticks: merge({}, defaultStyles.ticks, style.ticks),
-  //     tickLabels: merge({}, defaultStyles.tickLabels, style.tickLabels)
-  //   };
-  // }
-
   getTickProps(props) {
-    const stringTicks = Helpers.stringTicks(props);
+    const stringTicks = Axis.stringTicks(props);
     const scale = Helpers.getScale(props);
     const ticks = Helpers.getTicks(props, scale);
     return {scale, ticks, stringTicks};
@@ -229,8 +218,8 @@ export default class VictoryAxis extends React.Component {
   getLayoutProps(props) {
     const style = getStyles(props);
     const padding = Chart.getPadding(props);
-    const orientation = Helpers.getOrientation(props);
-    const isVertical = Helpers.isVertical(props);
+    const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
+    const isVertical = Axis.isVertical(props);
     const labelPadding = Helpers.getLabelPadding(props, style);
     const offset = Helpers.getOffset(props, style);
     return {style, padding, orientation, isVertical, labelPadding, offset};

@@ -8,7 +8,7 @@ import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Bar from "./bar";
 import BarLabel from "./bar-label";
-import Helpers from "./helpers";
+import Helpers from "./helper-methods";
 
 const defaultStyles = {
   data: {

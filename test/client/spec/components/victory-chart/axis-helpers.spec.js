@@ -7,28 +7,8 @@ import Scale from "src/helpers/scale";
 import identity from "lodash/utility/identity";
 
 
-describe("axis-helpers", () => {
+describe("victory-chart/axis-helpers", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
-
-  describe("getAxisOrientation", () => {
-    it("returns an orientation from props", () => {
-      const props = {orientation: "top"};
-      const victoryAxis = getVictoryAxis(props);
-      expect(AxisHelpers.getAxisOrientation(victoryAxis, "x")).to.equal("top");
-    });
-
-    it("returns a default orientation by axis type", () => {
-      const props = {dependentAxis: false};
-      const victoryAxis = getVictoryAxis(props);
-      expect(AxisHelpers.getAxisOrientation(victoryAxis, "x")).to.equal("bottom");
-    });
-
-    it("returns a default flipped orientation by axis type", () => {
-      const props = {dependentAxis: true};
-      const victoryAxis = getVictoryAxis(props);
-      expect(AxisHelpers.getAxisOrientation(victoryAxis, "x")).to.equal("left");
-    });
-  });
 
   describe("getTickFormat", () => {
     const stringMap = {x: {"a": 1, "b": 2, "c": 3}};

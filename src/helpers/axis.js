@@ -1,7 +1,5 @@
-import without from "lodash/array/without";
-import includes from "lodash/collection/includes";
-import range from "lodash/utility/range";
 import some from "lodash/collection/some";
+import { Collection } from "victory-util";
 
 module.exports = {
   getAxisType(component) {
@@ -23,7 +21,7 @@ module.exports = {
   },
 
   getOrientation(component, axis) {
-    if (component.props.orientation) {
+    if (component.props && component.props.orientation) {
       return component.props.orientation;
     }
     const typicalOrientations = {x: "bottom", y: "left"};
@@ -36,7 +34,17 @@ module.exports = {
   getAxisOrientations(childComponents) {
     return {
       x: this.getOrientation(this.getAxisComponent(childComponents, "x"), "x"),
-      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y"),
+      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y")
     };
+  },
+
+  isVertical(props) {
+    const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
+    const vertical = {top: false, bottom: false, left: true, right: true};
+    return vertical[orientation];
+  },
+
+  stringTicks(props) {
+    return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
   }
 };

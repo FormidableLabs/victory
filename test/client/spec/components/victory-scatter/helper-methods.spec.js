@@ -2,7 +2,7 @@
 /* global sinon */
 import Helpers from "src/components/victory-scatter/helper-methods";
 
-describe("helper-methods", () => {
+describe("victory-scatter/helper-methods", () => {
   describe("getSize", () => {
     let sandbox;
     beforeEach(() => {

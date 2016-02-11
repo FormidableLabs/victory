@@ -1,13 +1,9 @@
-import without from "lodash/array/without";
-import includes from "lodash/collection/includes";
-import some from "lodash/collection/some";
-import range from "lodash/utility/range";
 import flatten from "lodash/array/flatten";
 import isEmpty from "lodash/lang/isEmpty";
 import Domain from "./domain";
 import Axis from "./axis";
 import React from "react";
-import { Collection } from "victory-util";
+import { Collection, Log } from "victory-util";
 
 module.exports = {
   getChildComponents(props, defaultAxes) {

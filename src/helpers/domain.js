@@ -5,6 +5,7 @@ import isEmpty from "lodash/lang/isEmpty";
 import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
 import Data from "./data";
+import Axis from "./axis";
 import { Chart, Collection } from "victory-util";
 
 module.exports = {
@@ -36,6 +37,21 @@ module.exports = {
       return [0, adjustedMax];
     }
     return [min, max];
+  },
+
+  getDomainFromTickValues(props) {
+    let domain;
+    if (Axis.stringTicks(props)) {
+      domain = [1, props.tickValues.length];
+    } else {
+      // coerce ticks to numbers
+      const ticks = props.tickValues.map((value) => +value);
+      domain = [Math.min(...ticks), Math.max(...ticks)];
+    }
+    if (Axis.isVertical(props)) {
+      domain.reverse();
+    }
+    return domain;
   },
 
   getDomainFromCategories(props, axis) {

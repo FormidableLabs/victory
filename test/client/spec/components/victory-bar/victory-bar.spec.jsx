@@ -8,7 +8,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import _ from "lodash";
 import VictoryBar from "src/components/victory-bar/victory-bar";
-import DomainHelpers from "src/components/victory-bar/domain-helpers";
+import Domain from "src/helpers/domain";
 // Use `TestUtils` to inject into DOM, simulate events, etc.
 // See: https://facebook.github.io/react/docs/test-utils.html
 import TestUtils from "react-addons-test-utils";
@@ -73,8 +73,8 @@ describe("components/victory-bar", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(DomainHelpers, "isStacked");
-      sandbox.spy(DomainHelpers, "shouldGroup");
+      sandbox.spy(Domain, "isStacked");
+      sandbox.spy(Domain, "shouldGroup");
     });
 
     afterEach(() => {
@@ -86,8 +86,8 @@ describe("components/victory-bar", () => {
       renderedComponent = TestUtils.renderIntoDocument(
         <VictoryBar grouped data={datasets}/>
       );
-      expect(DomainHelpers.shouldGroup).called.and.returned(true);
-      expect(DomainHelpers.isStacked).called.and.returned(false);
+      expect(Domain.shouldGroup).called.and.returned(true);
+      expect(Domain.isStacked).called.and.returned(false);
       const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
       expect(path.length).to.equal(30);
     });
@@ -97,8 +97,8 @@ describe("components/victory-bar", () => {
       renderedComponent = TestUtils.renderIntoDocument(
         <VictoryBar stacked data={datasets}/>
       );
-      expect(DomainHelpers.shouldGroup).called.and.returned(false);
-      expect(DomainHelpers.isStacked).called.and.returned(true);
+      expect(Domain.shouldGroup).called.and.returned(false);
+      expect(Domain.isStacked).called.and.returned(true);
       const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
       expect(path.length).to.equal(40);
     });
@@ -106,8 +106,8 @@ describe("components/victory-bar", () => {
     it("renders grouped if grouped is undefined, data is 2d array, & default accessors", () => {
       const datasets = _.range(5).map(() => _.range(10).map((i) => ({x: i, y: i})));
       renderedComponent = TestUtils.renderIntoDocument(<VictoryBar data={datasets}/>);
-      expect(DomainHelpers.shouldGroup).called.and.returned(true);
-      expect(DomainHelpers.isStacked).called.and.returned(false);
+      expect(Domain.shouldGroup).called.and.returned(true);
+      expect(Domain.isStacked).called.and.returned(false);
       const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
       expect(path.length).to.equal(50);
     });

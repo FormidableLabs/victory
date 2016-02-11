@@ -106,7 +106,7 @@ module.exports = {
         return dataset.data.map((d) => d.x);
       });
       const uniqueX = uniq(flatten(allX));
-      return (uniqueX.sort()).findIndex((x) => x === datum.x);
+      return uniqueX.findIndex((x) => x === datum.x);
     }
   },
 

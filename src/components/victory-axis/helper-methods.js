@@ -2,7 +2,8 @@ import without from "lodash/array/without";
 import includes from "lodash/collection/includes";
 import range from "lodash/utility/range";
 import Scale from "../../helpers/scale";
-import { Chart, Collection } from "victory-util";
+import Axis from "../../helpers/axis";
+import { Chart } from "victory-util";
 
 module.exports = {
   // exposed for use by VictoryChart
@@ -42,36 +43,22 @@ module.exports = {
 
   getDomainFromTickValues(props) {
     let domain;
-    if (this.stringTicks(props)) {
+    if (Axis.stringTicks(props)) {
       domain = [1, props.tickValues.length];
     } else {
       // coerce ticks to numbers
       const ticks = props.tickValues.map((value) => +value);
       domain = [Math.min(...ticks), Math.max(...ticks)];
     }
-    if (this.isVertical(props)) {
+    if (Axis.isVertical(props)) {
       domain.reverse();
     }
     return domain;
   },
 
-  getOrientation(props) {
-    return props.orientation || (props.dependentAxis ? "left" : "bottom");
-  },
-
-  isVertical(props) {
-    const orientation = this.getOrientation(props);
-    const vertical = {top: false, bottom: false, left: true, right: true};
-    return vertical[orientation];
-  },
-
-  stringTicks(props) {
-    return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
-  },
-
   getTicks(props, scale) {
     if (props.tickValues) {
-      if (this.stringTicks(props)) {
+      if (Axis.stringTicks(props)) {
         return range(1, props.tickValues.length + 1);
       }
       return props.tickValues;
@@ -91,7 +78,7 @@ module.exports = {
       return props.tickFormat;
     } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
       return (x, index) => props.tickFormat[index];
-    } else if (this.stringTicks(props)) {
+    } else if (Axis.stringTicks(props)) {
       return (x, index) => props.tickValues[index];
     } else if (scale.tickFormat && typeof scale.tickFormat === "function") {
       return scale.tickFormat(ticks.length);
@@ -105,15 +92,15 @@ module.exports = {
     if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
       return labelStyle.padding;
     }
-    const isVertical = this.isVertical(props);
+    const isVertical = Axis.isVertical(props);
     // TODO: magic numbers
     return props.label ? (labelStyle.fontSize * (isVertical ? 2.3 : 1.6)) : 0;
   },
 
   getOffset(props, style) {
     const padding = Chart.getPadding(props);
-    const isVertical = this.isVertical(props);
-    const orientation = this.getOrientation(props);
+    const isVertical = Axis.isVertical(props);
+    const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
     const labelPadding = this.getLabelPadding(props, style);
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;

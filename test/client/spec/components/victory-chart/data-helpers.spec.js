@@ -4,16 +4,17 @@ import React from "react";
 import DataHelpers from "src/components/victory-chart/data-helpers";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
 import Data from "src/helpers/data";
-import ComponentHelpers from "src/components/victory-chart/component-helpers";
+import ChartHelpers from "src/helpers/chart";
+import Axis from "src/helpers/axis";
 
-describe("data-helpers", () => {
+describe("victory-chart/data-helpers", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
   describe("createStringMap", () => {
     const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(ComponentHelpers, "getAxisComponent");
+      sandbox.spy(Axis, "getAxisComponent");
       sandbox.spy(Data, "getStringsFromAxes");
       sandbox.spy(Data, "getStringsFromCategories");
       sandbox.spy(Data, "getStringsFromData");
@@ -27,7 +28,7 @@ describe("data-helpers", () => {
       const axisComponent = getVictoryAxis({tickValues: ["a", "b", "c"]});
       const childComponents = [axisComponent];
       const stringResult = DataHelpers.createStringMap(childComponents, "x");
-      expect(ComponentHelpers.getAxisComponent).calledWith(childComponents, "x")
+      expect(Axis.getAxisComponent).calledWith(childComponents, "x")
         .and.returned(axisComponent);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
         .and.returned(["a", "b", "c"]);
@@ -44,7 +45,7 @@ describe("data-helpers", () => {
       const childComponents = [axisComponent, lineComponent];
       const stringResult = DataHelpers.createStringMap(childComponents, "x");
 
-      expect(ComponentHelpers.getAxisComponent).calledWith(childComponents, "x")
+      expect(Axis.getAxisComponent).calledWith(childComponents, "x")
         .and.returned(axisComponent);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
         .and.returned(["a", "b", "c"]);
@@ -62,7 +63,7 @@ describe("data-helpers", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(ComponentHelpers, "getDataComponents");
+      sandbox.spy(ChartHelpers, "getDataComponents");
     });
 
     afterEach(() => {
@@ -73,7 +74,7 @@ describe("data-helpers", () => {
       const victoryBar = getVictoryBar({categories: [1, 2, 3]});
       const childComponents = [victoryBar];
       const categoryResult = DataHelpers.getCategories(childComponents);
-      expect(ComponentHelpers.getDataComponents).calledWith(childComponents, "grouped")
+      expect(ChartHelpers.getDataComponents).calledWith(childComponents, "grouped")
         .and.returned([victoryBar]);
       expect(categoryResult).to.eql(victoryBar.props.categories);
     });
@@ -82,7 +83,7 @@ describe("data-helpers", () => {
       const victoryBar = getVictoryBar({});
       const childComponents = [victoryBar];
       const categoryResult = DataHelpers.getCategories(childComponents);
-      expect(ComponentHelpers.getDataComponents).calledWith(childComponents, "grouped")
+      expect(ChartHelpers.getDataComponents).calledWith(childComponents, "grouped")
         .and.returned([victoryBar]);
       expect(categoryResult).to.be.undefined;
     });
@@ -91,7 +92,7 @@ describe("data-helpers", () => {
       const victoryLine = getVictoryLine({});
       const childComponents = [victoryLine];
       const categoryResult = DataHelpers.getCategories(childComponents);
-      expect(ComponentHelpers.getDataComponents).calledWith(childComponents, "grouped")
+      expect(ChartHelpers.getDataComponents).calledWith(childComponents, "grouped")
         .and.returned([]);
       expect(categoryResult).to.be.undefined;
     });
