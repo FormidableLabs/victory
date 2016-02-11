@@ -3,6 +3,7 @@ import includes from "lodash/collection/includes";
 import range from "lodash/utility/range";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
+import Domain from "../../helpers/domain";
 import { Chart } from "victory-util";
 
 module.exports = {
@@ -14,7 +15,7 @@ module.exports = {
     if (props.domain) {
       return props.domain;
     } else if (props.tickValues) {
-      return this.getDomainFromTickValues(props);
+      return Domain.getDomainFromTickValues(props);
     }
     return undefined;
   },
@@ -39,21 +40,6 @@ module.exports = {
     scale.range(Chart.getRange(props, axis));
     scale.domain(domain);
     return scale;
-  },
-
-  getDomainFromTickValues(props) {
-    let domain;
-    if (Axis.stringTicks(props)) {
-      domain = [1, props.tickValues.length];
-    } else {
-      // coerce ticks to numbers
-      const ticks = props.tickValues.map((value) => +value);
-      domain = [Math.min(...ticks), Math.max(...ticks)];
-    }
-    if (Axis.isVertical(props)) {
-      domain.reverse();
-    }
-    return domain;
   },
 
   getTicks(props, scale) {

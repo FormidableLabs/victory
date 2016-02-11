@@ -3,6 +3,7 @@
 import Helpers from "src/components/victory-axis/helper-methods";
 import Scale from "src/helpers/scale";
 import Axis from "src/helpers/axis";
+import Domain from "src/helpers/domain";
 import { Chart } from "victory-util";
 
 describe("victory-axis/helper-methods", () => {
@@ -10,7 +11,7 @@ describe("victory-axis/helper-methods", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Helpers, "getDomainFromTickValues");
+      sandbox.spy(Domain, "getDomainFromTickValues");
       const fakeGetAxis = () => "x";
       sandbox.stub(Helpers, "getAxis", fakeGetAxis);
     });
@@ -22,14 +23,14 @@ describe("victory-axis/helper-methods", () => {
     it("determines a domain from props", () => {
       const props = {domain: [1, 2]};
       const domainResult = Helpers.getDomain(props);
-      expect(Helpers.getDomainFromTickValues).notCalled;
+      expect(Domain.getDomainFromTickValues).notCalled;
       expect(domainResult).to.eql([1, 2]);
     });
 
     it("calculates a domain from tickValues", () => {
       const props = {tickValues: [1, 2, 3, 4]};
       const domainResult = Helpers.getDomain(props);
-      expect(Helpers.getDomainFromTickValues).calledWith(props)
+      expect(Domain.getDomainFromTickValues).calledWith(props)
         .and.returned([1, 4]);
       expect(domainResult).to.eql([1, 4]);
     });
@@ -89,43 +90,6 @@ describe("victory-axis/helper-methods", () => {
       expect(Chart.getRange).calledWith(props, "x").and.returned([0, 100]);
       expect(scaleResult.domain()).to.eql([0, 10]);
       expect(scaleResult.range()).to.eql([0, 100]);
-    });
-  });
-
-  describe("getDomainFromTickValues", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Axis, "isVertical");
-      sandbox.spy(Axis, "stringTicks");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("determines a domain from tickValues", () => {
-      const props = {tickValues: [1, 2, 3]};
-      const domainResult = Helpers.getDomainFromTickValues(props);
-      expect(Axis.stringTicks).calledWith(props).and.returned(false);
-      expect(Axis.isVertical).calledWith(props).and.returned(false);
-      expect(domainResult).to.eql([1, 3]);
-    });
-
-    it("determines a domain from string tick values", () => {
-      const props = {tickValues: ["a", "b", "c", "d"]};
-      const domainResult = Helpers.getDomainFromTickValues(props);
-      expect(Axis.stringTicks).calledWith(props).and.returned(true);
-      expect(Axis.isVertical).calledWith(props).and.returned(false);
-      expect(domainResult).to.eql([1, 4]);
-    });
-
-    it("reverses a domain from tickValues when the axis is vertical", () => {
-      const props = {tickValues: [1, 2, 3], dependentAxis: true};
-      const domainResult = Helpers.getDomainFromTickValues(props);
-      expect(Axis.stringTicks).calledWith(props).and.returned(false);
-      expect(Axis.isVertical).calledWith(props).and.returned(true);
-      expect(domainResult).to.eql([3, 1]);
     });
   });
 

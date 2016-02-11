@@ -6,11 +6,9 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import { PropTypes as CustomPropTypes, Chart } from "victory-util";
 import VictoryAxis from "../victory-axis/victory-axis";
-import AxisHelpers from "./axis-helpers";
+import Helpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
-import ChartHelpers from "../../helpers/chart";
-import DataHelpers from "./data-helpers";
 
 const defaultAxes = {
   independent: <VictoryAxis animate={{velocity: 0.02}}/>,
@@ -128,10 +126,10 @@ export default class VictoryChart extends React.Component {
   getAxisProps(child, props, calculatedProps) {
     const {domain, scale} = calculatedProps;
     const axis = child.type.getAxis(child.props);
-    const axisOffset = AxisHelpers.getAxisOffset(props, calculatedProps);
-    const tickValues = AxisHelpers.getTicks(calculatedProps, axis, child);
+    const axisOffset = Helpers.getAxisOffset(props, calculatedProps);
+    const tickValues = Helpers.getTicks(calculatedProps, axis, child);
     const tickFormat =
-      child.props.tickFormat || AxisHelpers.getTickFormat(child, axis, calculatedProps);
+      child.props.tickFormat || Helpers.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     return {
@@ -176,8 +174,8 @@ export default class VictoryChart extends React.Component {
       y: Axis.getAxisComponent(childComponents, "y")
     };
     const domain = {
-      x: ChartHelpers.getDomain(props, childComponents, "x"),
-      y: ChartHelpers.getDomain(props, childComponents, "y")
+      x: Helpers.getDomain(props, childComponents, "x"),
+      y: Helpers.getDomain(props, childComponents, "y")
     };
     const range = {
       x: Chart.getRange(props, "x"),
@@ -195,12 +193,12 @@ export default class VictoryChart extends React.Component {
     };
     // TODO: check
     const categories = {
-      x: DataHelpers.getCategories(childComponents, "x"),
-      y: DataHelpers.getCategories(childComponents, "y")
+      x: Helpers.getCategories(childComponents, "x"),
+      y: Helpers.getCategories(childComponents, "y")
     };
     const stringMap = {
-      x: DataHelpers.createStringMap(childComponents, "x"),
-      y: DataHelpers.createStringMap(childComponents, "y")
+      x: Helpers.createStringMap(childComponents, "x"),
+      y: Helpers.createStringMap(childComponents, "y")
     };
     return {axisComponents, categories, domain, flipped, scale, stringMap};
   }
@@ -226,7 +224,7 @@ export default class VictoryChart extends React.Component {
 
   render() {
     const style = this.getStyles(this.props);
-    const childComponents = ChartHelpers.getChildComponents(this.props, defaultAxes);
+    const childComponents = Helpers.getChildComponents(this.props, defaultAxes);
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(this.props, childComponents, style)}
