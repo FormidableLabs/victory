@@ -5,7 +5,7 @@ import isArray from "lodash/lang/isArray";
 import merge from "lodash/object/merge";
 import assign from "lodash/object/assign";
 import pick from "lodash/object/pick";
-import { PropTypes as CustomPropTypes, Data, Domain, Style, Chart } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers, Style } from "victory-util";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
 import {VictoryAnimation} from "victory-animation";
@@ -219,8 +219,6 @@ export default class VictoryPie extends React.Component {
     y: "y"
   };
 
-  static getDomain = Domain.getDomain.bind(Domain);
-
   renderSlice(slice, index, calculatedProps) {
     const {style, colorScale, makeSlicePath, labelPosition} = calculatedProps;
     const fill = colorScale[index % colorScale.length];
@@ -244,11 +242,7 @@ export default class VictoryPie extends React.Component {
 
   renderData(props, calculatedProps) {
     const {style, radius} = calculatedProps;
-    const data = Data.getData(props);
-    const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
-    };
+    const data = Helpers.getData(props);
     const labelPosition = getLabelPosition(props, style, radius);
     const colorScale = isArray(props.colorScale) ?
       props.colorScale : Style.getColorScale(props.colorScale);
@@ -257,7 +251,7 @@ export default class VictoryPie extends React.Component {
       .innerRadius(this.props.innerRadius);
 
     calculatedProps = assign(calculatedProps,
-      {data, domain, colorScale, makeSlicePath, labelPosition}
+      {data, colorScale, makeSlicePath, labelPosition}
     );
 
     const pie = d3Shape.pie()
@@ -291,8 +285,8 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const style = Chart.getStyles(this.props, defaultStyles);
-    const padding = Chart.getPadding(this.props);
+    const style = Helpers.getStyles(this.props, defaultStyles);
+    const padding = Helpers.getPadding(this.props);
     const radius = getRadius(this.props, padding);
     const parentStyle = style.parent;
     const xOffset = radius + padding.left;

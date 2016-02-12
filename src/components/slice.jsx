@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 import merge from "lodash/object/merge";
 import omit from "lodash/object/omit";
 
@@ -14,7 +14,7 @@ export default class Slice extends React.Component {
 
   renderSlice(props) {
     const dataStyles = omit(props.slice.data, ["x", "y", "label"]);
-    const style = Chart.evaluateStyle(merge({}, props.style, dataStyles), props.slice.data);
+    const style = Helpers.evaluateStyle(merge({}, props.style, dataStyles), props.slice.data);
     return (
       <path
         d={props.pathFunction(props.slice)}
