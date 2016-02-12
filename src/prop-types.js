@@ -1,7 +1,9 @@
 import bind from "lodash/function/bind";
+import includes from "lodash/collection/includes";
+import isFunction from "lodash/lang/isFunction";
+
 import { PropTypes } from "react";
 import { getConstructor, getConstructorName } from "./type";
-import * as Scale from "./scale";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -99,8 +101,18 @@ export const domain = makeChainable((props, propName, componentName) => {
  * Check that the value looks like a d3 `scale` function.
  */
 export const scale = makeChainable((props, propName, componentName) => {
+  const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
+  const validScale = (scl) => {
+    if (isFunction(scl)) {
+      return (isFunction(scl.copy) && isFunction(scl.domain) && isFunction(scl.range));
+    } else if (typeof scl === "string") {
+      return includes(supportedScaleStrings, scl);
+    }
+    return false;
+  };
+
   const value = props[propName];
-  if (!Scale.validScale(value)) {
+  if (!validScale(value)) {
     return new Error(
       `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
     );
