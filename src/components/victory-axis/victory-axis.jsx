@@ -7,8 +7,8 @@ import { VictoryAnimation } from "victory-animation";
 import AxisLine from "./axis-line";
 import GridLine from "./grid";
 import Tick from "./tick";
-import Helpers from "./helper-methods";
-import { PropTypes as CustomPropTypes, Chart} from "victory-util";
+import AxisHelpers from "./helper-methods";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import Axis from "../../helpers/axis";
 
 
@@ -203,25 +203,25 @@ export default class VictoryAxis extends React.Component {
     width: 450
   };
 
-  static getDomain = Helpers.getDomain.bind(Helpers);
-  static getAxis = Helpers.getAxis.bind(Helpers);
-  static getScale = Helpers.getScale.bind(Helpers);
+  static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
+  static getAxis = AxisHelpers.getAxis.bind(AxisHelpers);
+  static getScale = AxisHelpers.getScale.bind(AxisHelpers);
   static getStyles = getStyles;
 
   getTickProps(props) {
     const stringTicks = Axis.stringTicks(props);
-    const scale = Helpers.getScale(props);
-    const ticks = Helpers.getTicks(props, scale);
+    const scale = AxisHelpers.getScale(props);
+    const ticks = AxisHelpers.getTicks(props, scale);
     return {scale, ticks, stringTicks};
   }
 
   getLayoutProps(props) {
     const style = getStyles(props);
-    const padding = Chart.getPadding(props);
+    const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
     const isVertical = Axis.isVertical(props);
-    const labelPadding = Helpers.getLabelPadding(props, style);
-    const offset = Helpers.getOffset(props, style);
+    const labelPadding = AxisHelpers.getLabelPadding(props, style);
+    const offset = AxisHelpers.getOffset(props, style);
     return {style, padding, orientation, isVertical, labelPadding, offset};
   }
 
@@ -241,7 +241,7 @@ export default class VictoryAxis extends React.Component {
   renderTicks(props, layoutProps, tickProps) {
     const {style, orientation} = layoutProps;
     const {scale, ticks, stringTicks} = tickProps;
-    const tickFormat = Helpers.getTickFormat(props, tickProps);
+    const tickFormat = AxisHelpers.getTickFormat(props, tickProps);
     return ticks.map((tick, index) => {
       const position = scale(tick);
       return (
@@ -341,7 +341,7 @@ export default class VictoryAxis extends React.Component {
     const layoutProps = this.getLayoutProps(this.props);
     const tickProps = this.getTickProps(this.props);
     const {style} = layoutProps;
-    const transform = Helpers.getTransform(this.props, layoutProps);
+    const transform = AxisHelpers.getTransform(this.props, layoutProps);
     const group = (
       <g style={style.parent} transform={transform}>
         {this.renderLabel(this.props, layoutProps)}

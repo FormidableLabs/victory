@@ -6,7 +6,7 @@ import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
 import Data from "./data";
 import Axis from "./axis";
-import { Chart, Collection } from "victory-util";
+import { Helpers, Collection } from "victory-util";
 
 module.exports = {
   getDomain(props, axis) {
@@ -168,7 +168,7 @@ module.exports = {
     }
     const domainMin = Math.min(...domain);
     const domainMax = Math.max(...domain);
-    const range = Chart.getRange(props, axis);
+    const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
     const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
     // don't make the axes cross if they aren't already

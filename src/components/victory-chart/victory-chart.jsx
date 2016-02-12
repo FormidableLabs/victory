@@ -4,9 +4,9 @@ import some from "lodash/collection/some";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Chart } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import VictoryAxis from "../victory-axis/victory-axis";
-import Helpers from "./helper-methods";
+import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
 
@@ -126,10 +126,10 @@ export default class VictoryChart extends React.Component {
   getAxisProps(child, props, calculatedProps) {
     const {domain, scale} = calculatedProps;
     const axis = child.type.getAxis(child.props);
-    const axisOffset = Helpers.getAxisOffset(props, calculatedProps);
-    const tickValues = Helpers.getTicks(calculatedProps, axis, child);
+    const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
+    const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
     const tickFormat =
-      child.props.tickFormat || Helpers.getTickFormat(child, axis, calculatedProps);
+      child.props.tickFormat || ChartHelpers.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     return {
@@ -174,12 +174,12 @@ export default class VictoryChart extends React.Component {
       y: Axis.getAxisComponent(childComponents, "y")
     };
     const domain = {
-      x: Helpers.getDomain(props, childComponents, "x"),
-      y: Helpers.getDomain(props, childComponents, "y")
+      x: ChartHelpers.getDomain(props, childComponents, "x"),
+      y: ChartHelpers.getDomain(props, childComponents, "y")
     };
     const range = {
-      x: Chart.getRange(props, "x"),
-      y: Chart.getRange(props, "y")
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
     };
     const baseScale = {
       x: Scale.getScaleFromProps(props, "x") ||
@@ -193,12 +193,12 @@ export default class VictoryChart extends React.Component {
     };
     // TODO: check
     const categories = {
-      x: Helpers.getCategories(childComponents, "x"),
-      y: Helpers.getCategories(childComponents, "y")
+      x: ChartHelpers.getCategories(childComponents, "x"),
+      y: ChartHelpers.getCategories(childComponents, "y")
     };
     const stringMap = {
-      x: Helpers.createStringMap(childComponents, "x"),
-      y: Helpers.createStringMap(childComponents, "y")
+      x: ChartHelpers.createStringMap(childComponents, "x"),
+      y: ChartHelpers.createStringMap(childComponents, "y")
     };
     return {axisComponents, categories, domain, flipped, scale, stringMap};
   }
@@ -213,7 +213,7 @@ export default class VictoryChart extends React.Component {
         animate: child.props.animate || props.animate,
         height: props.height,
         width: props.width,
-        padding: Chart.getPadding(props),
+        padding: Helpers.getPadding(props),
         ref: index,
         key: index,
         standalone: false,
@@ -224,7 +224,7 @@ export default class VictoryChart extends React.Component {
 
   render() {
     const style = this.getStyles(this.props);
-    const childComponents = Helpers.getChildComponents(this.props, defaultAxes);
+    const childComponents = ChartHelpers.getChildComponents(this.props, defaultAxes);
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(this.props, childComponents, style)}

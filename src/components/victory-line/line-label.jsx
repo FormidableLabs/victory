@@ -2,7 +2,7 @@ import merge from "lodash/object/merge";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import {VictoryLabel} from "victory-label";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 
 @Radium
 export default class LineLabel extends React.Component {
@@ -16,7 +16,7 @@ export default class LineLabel extends React.Component {
   renderLabelComponent(props) {
     const component = props.label;
     const baseStyle = merge({padding: 0}, props.style, component.props.style);
-    const style = Chart.evaluateStyle(baseStyle, props.data);
+    const style = Helpers.evaluateStyle(baseStyle, props.data);
     const children = component.props.children || "";
     const newProps = {
       x: component.props.x || props.position.x + style.padding,
@@ -29,7 +29,7 @@ export default class LineLabel extends React.Component {
   }
 
   renderVictoryLabel(props) {
-    const style = Chart.evaluateStyle(merge({padding: 0}, props.style), props.data);
+    const style = Helpers.evaluateStyle(merge({padding: 0}, props.style), props.data);
     return (
       <VictoryLabel
         x={props.position.x + style.padding}

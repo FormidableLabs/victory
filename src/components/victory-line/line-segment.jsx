@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import d3Shape from "d3-shape";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 
 @Radium
 export default class LineSegment extends React.Component {
@@ -13,8 +13,8 @@ export default class LineSegment extends React.Component {
   };
 
   render() {
-    const style = Chart.evaluateStyle(this.props.style, this.props.data);
-    const interpolation = Chart.evaluateProp(this.props.interpolation, this.props.data);
+    const style = Helpers.evaluateStyle(this.props.style, this.props.data);
+    const interpolation = Helpers.evaluateProp(this.props.interpolation, this.props.data);
     const xScale = this.props.scale.x;
     const yScale = this.props.scale.y;
     const lineFunction = d3Shape.line()

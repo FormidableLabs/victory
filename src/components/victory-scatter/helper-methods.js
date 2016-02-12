@@ -1,6 +1,6 @@
 import values from "lodash/object/values";
 import pathHelpers from "./path-helpers";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 
 module.exports = {
   getSymbol(data, props) {
@@ -13,7 +13,7 @@ module.exports = {
   getBubbleSize(datum, props, calculatedProps) {
     const {data, z} = calculatedProps;
     const getMaxRadius = () => {
-      const minPadding = Math.min(...values(Chart.getPadding(props)));
+      const minPadding = Math.min(...values(Helpers.getPadding(props)));
       return Math.max(minPadding, 5);
     };
     const zData = data.map((point) => point.z);
@@ -48,8 +48,8 @@ module.exports = {
       plus: pathHelpers.plus,
       star: pathHelpers.star
     };
-    const size = Chart.evaluateProp(props.size, props.data);
-    const symbol = Chart.evaluateProp(props.symbol, props.data);
+    const size = Helpers.evaluateProp(props.size, props.data);
+    const symbol = Helpers.evaluateProp(props.symbol, props.data);
     return pathFunctions[symbol].call(null, props.x, props.y, size);
   }
 };

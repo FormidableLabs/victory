@@ -15,9 +15,8 @@ import merge from "lodash/object/merge";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
-import { Style } from "victory-util";
+import { Helpers, Style } from "victory-util";
 import Scale from "./scale";
-import Helpers from "./general";
 
 export default {
   // String Data
@@ -26,7 +25,7 @@ export default {
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
     const stringsFromData = hasMultipleDatasets ?
         uniq(flatten(props.data.map((dataset) => {
-          return this.getStringsFromData(merge({}, props, {data: dataset}), axis);
+          return Helpers.getStringsFromData(merge({}, props, {data: dataset}), axis);
         })))
         : this.getStringsFromData(props, axis);
 

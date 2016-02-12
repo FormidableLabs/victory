@@ -5,9 +5,9 @@ import Point from "./point";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Chart } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
-import Helpers from "./helper-methods";
+import ScatterHelpers from "./helper-methods";
 
 const defaultStyles = {
   data: {
@@ -222,8 +222,8 @@ export default class VictoryScatter extends React.Component {
         x={position.x}
         y={position.y}
         data={data}
-        size={Helpers.getSize(data, this.props, calculatedProps)}
-        symbol={Helpers.getSymbol(data, this.props)}
+        size={ScatterHelpers.getSize(data, this.props, calculatedProps)}
+        symbol={ScatterHelpers.getSymbol(data, this.props)}
       />
     );
   }
@@ -231,8 +231,8 @@ export default class VictoryScatter extends React.Component {
   renderData(props, style) {
     const data = Data.getData(props);
     const range = {
-      x: Chart.getRange(props, "x"),
-      y: Chart.getRange(props, "y")
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
     };
     const domain = {
       x: Domain.getDomain(props, "x"),
@@ -268,7 +268,7 @@ export default class VictoryScatter extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Chart.getStyles(this.props, defaultStyles);
+    const style = Helpers.getStyles(this.props, defaultStyles);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

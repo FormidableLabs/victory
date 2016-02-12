@@ -3,12 +3,13 @@ import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Scale from "../../helpers/scale";
+import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import { PropTypes as CustomPropTypes, Chart, Data } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Bar from "./bar";
 import BarLabel from "./bar-label";
-import Helpers from "./helper-methods";
+import BarHelpers from "./helper-methods";
 
 const defaultStyles = {
   data: {
@@ -248,14 +249,14 @@ export default class VictoryBar extends React.Component {
     y: "y"
   };
 
-  static getDomain = Helpers.getDomain.bind(Helpers);
+  static getDomain = BarHelpers.getDomain.bind(BarHelpers);
 
   renderBars(dataset, seriesIndex, calculatedProps) {
     return dataset.data.map((datum, barIndex) => {
       const index = {seriesIndex, barIndex};
-      const position = Helpers.getBarPosition(datum, index, calculatedProps);
+      const position = BarHelpers.getBarPosition(datum, index, calculatedProps);
       const baseStyle = calculatedProps.style;
-      const style = Helpers.getBarStyle(datum, dataset, baseStyle);
+      const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
       const barComponent = (
         <Bar key={`series-${index}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
@@ -264,11 +265,11 @@ export default class VictoryBar extends React.Component {
           datum={datum}
         />
       );
-      const shouldPlotLabel = Helpers.shouldPlotLabel(
+      const shouldPlotLabel = BarHelpers.shouldPlotLabel(
         seriesIndex, this.props, calculatedProps.datasets
       );
       if (datum.label || shouldPlotLabel) {
-        const labelIndex = Helpers.getLabelIndex(datum, calculatedProps);
+        const labelIndex = BarHelpers.getLabelIndex(datum, calculatedProps);
         const labelText = this.props.labels ?
           this.props.labels[labelIndex] || this.props.labels[0] : "";
         const labelComponent = this.props.labelComponents ?
@@ -301,14 +302,14 @@ export default class VictoryBar extends React.Component {
       x: Data.createStringMap(props, "x", hasMultipleDatasets),
       y: Data.createStringMap(props, "y", hasMultipleDatasets)
     };
-    const padding = Chart.getPadding(props);
+    const padding = Helpers.getPadding(props);
     const range = {
-      x: Chart.getRange(props, "x"),
-      y: Chart.getRange(props, "y")
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Helpers.getDomain(props, "x"),
-      y: Helpers.getDomain(props, "y")
+      x: BarHelpers.getDomain(props, "x"),
+      y: BarHelpers.getDomain(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
@@ -340,7 +341,7 @@ export default class VictoryBar extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Chart.getStyles(this.props, defaultStyles);
+    const style = Helpers.getStyles(this.props, defaultStyles);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

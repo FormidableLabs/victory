@@ -13,7 +13,7 @@ import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Chart } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 
 const defaultStyles = {
@@ -268,8 +268,8 @@ export default class VictoryLine extends React.Component {
     const dataset = Data.getData(props);
     const dataSegments = this.getDataSegments(dataset);
     const range = {
-      x: Chart.getRange(props, "x"),
-      y: Chart.getRange(props, "y")
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
     };
     const domain = {
       x: Domain.getDomain(props, "x"),
@@ -305,7 +305,7 @@ export default class VictoryLine extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Chart.getStyles(this.props, defaultStyles);
+    const style = Helpers.getStyles(this.props, defaultStyles);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

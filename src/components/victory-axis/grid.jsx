@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 
 @Radium
 export default class GridLine extends React.Component {
@@ -21,7 +21,7 @@ export default class GridLine extends React.Component {
         <line
           x2={this.props.x2}
           y2={this.props.y2}
-          style={Chart.evaluateStyle(this.props.style, this.props.tick)}
+          style={Helpers.evaluateStyle(this.props.style, this.props.tick)}
         />
       </g>
     );

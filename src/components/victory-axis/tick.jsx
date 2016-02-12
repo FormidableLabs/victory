@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import { VictoryLabel } from "victory-label";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 
 @Radium
 export default class Tick extends React.Component {
@@ -49,7 +49,7 @@ export default class Tick extends React.Component {
       y: position.y,
       textAnchor: componentProps.textAnchor || anchors.textAnchor,
       verticalAnchor: componentProps.verticalAnchor || anchors.verticalAnchor,
-      style: Chart.evaluateStyle(style, props.tick)
+      style: Helpers.evaluateStyle(style, props.tick)
     };
     return props.label.props ?
       React.cloneElement(props.label, newProps) :
@@ -63,7 +63,7 @@ export default class Tick extends React.Component {
         x2={position.x2}
         y={position.y}
         y2={position.y2}
-        style={Chart.evaluateStyle(props.style.ticks, props.ticks)}
+        style={Helpers.evaluateStyle(props.style.ticks, props.ticks)}
       />
     );
   }

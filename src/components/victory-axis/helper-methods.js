@@ -4,7 +4,7 @@ import range from "lodash/utility/range";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 
 module.exports = {
   // exposed for use by VictoryChart
@@ -37,7 +37,7 @@ module.exports = {
     const axis = this.getAxis(props);
     const scale = Scale.getBaseScale(props, axis);
     const domain = this.getDomain(props) || scale.domain();
-    scale.range(Chart.getRange(props, axis));
+    scale.range(Helpers.getRange(props, axis));
     scale.domain(domain);
     return scale;
   },
@@ -84,7 +84,7 @@ module.exports = {
   },
 
   getOffset(props, style) {
-    const padding = Chart.getPadding(props);
+    const padding = Helpers.getPadding(props);
     const isVertical = Axis.isVertical(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
     const labelPadding = this.getLabelPadding(props, style);
