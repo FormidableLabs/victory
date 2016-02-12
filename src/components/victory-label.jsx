@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Chart, Style } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers, Style } from "victory-util";
 import merge from "lodash/object/merge";
 
 const defaultStyles = {
@@ -132,28 +132,28 @@ export default class VictoryLabel extends React.Component {
 
   getStyles(props) {
     const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
-    return Chart.evaluateStyle(style);
+    return Helpers.evaluateStyle(style);
   }
 
   getHeight(props, type) {
-    const height = Chart.evaluateProp(props[type]);
+    const height = Helpers.evaluateProp(props[type]);
     return typeof height === "number" ? `${height}em` : height;
   }
 
   getContent(props) {
     if (props.children) {
-      const child = Chart.evaluateProp(props.children);
+      const child = Helpers.evaluateProp(props.children);
       return `${child}`.split("\n");
     }
     return [""];
   }
 
   getDy(props, content, lineHeight) {
-    const dy = props.dy ? Chart.evaluateProp(props.dy) : 0;
+    const dy = props.dy ? Helpers.evaluateProp(props.dy) : 0;
     const length = content.length;
     const capHeight = this.getHeight(props, "capHeight");
     const verticalAnchor = props.verticalAnchor ?
-      Chart.evaluateProp(props.verticalAnchor) : "middle";
+      Helpers.evaluateProp(props.verticalAnchor) : "middle";
     switch (verticalAnchor) {
     case "end":
       return Style.calc(
@@ -171,12 +171,12 @@ export default class VictoryLabel extends React.Component {
   render() {
     const lineHeight = this.getHeight(this.props, "lineHeight");
     const transform =
-      this.props.transform && Style.toTransformString(Chart.evaluateProp(this.props.transform));
+      this.props.transform && Style.toTransformString(Helpers.evaluateProp(this.props.transform));
     const textAnchor = this.props.textAnchor ?
-      Chart.evaluateProp(this.props.textAnchor) : "start";
+      Helpers.evaluateProp(this.props.textAnchor) : "start";
     const content = this.getContent(this.props);
     const style = this.getStyles(this.props);
-    const dx = this.props.dx ? Chart.evaluateProp(this.props.dx) : 0;
+    const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx) : 0;
     const dy = this.getDy(this.props, content, lineHeight);
     return (
       <text
