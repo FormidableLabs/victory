@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { Chart } from "victory-util";
+import { Helpers } from "victory-util";
 import merge from "lodash/object/merge";
 import assign from "lodash/object/assign";
 import {VictoryLabel} from "victory-label";
@@ -16,7 +16,7 @@ export default class SliceLabel extends React.Component {
 
   renderLabelComponent(props, position, label) {
     const component = props.labelComponent;
-    const style = Chart.evaluateStyle(
+    const style = Helpers.evaluateStyle(
       merge({padding: 0}, props.style, component.props.style),
       this.data
     );
@@ -33,7 +33,7 @@ export default class SliceLabel extends React.Component {
   }
 
   renderVictoryLabel(props, position, label) {
-    const style = Chart.evaluateStyle(
+    const style = Helpers.evaluateStyle(
       assign({padding: 0}, props.style),
       props.slice.data
     );
@@ -54,7 +54,7 @@ export default class SliceLabel extends React.Component {
     const data = props.slice.data;
     const dataLabel = data.xName ? `${data.xName}` : `${data.x}`;
     const label = data.label ?
-    `${Chart.evaluateProp(data.label, data)}` : dataLabel;
+    `${Helpers.evaluateProp(data.label, data)}` : dataLabel;
     return props.labelComponent ?
       this.renderLabelComponent(props, position, label) :
       this.renderVictoryLabel(props, position, label);
