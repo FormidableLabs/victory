@@ -1,11 +1,9 @@
 /*global window:false */
 import React from "react";
 import _ from "lodash";
-import {VictoryChart} from "../src/index";
-import {VictoryAxis} from "victory-axis";
-import {VictoryBar} from "victory-bar";
-import {VictoryLine} from "victory-line";
-import {VictoryScatter} from "victory-scatter";
+import {
+  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter
+} from "../../src/index";
 
 const UPDATE_INTERVAL = 2000;
 let updateTimer;

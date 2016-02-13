@@ -22,22 +22,24 @@
   "dependencies": {
     "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
+    "d3-scale": "^0.2.0",
+    "d3-shape": "^0.2.0",
     "lodash": "^3.10.1",
     "radium": "^0.16.2",
-    "victory-axis": "2.0.0",
-    "victory-util": "^4.0.0"
+    "victory-animation": "^0.1.0",
+    "victory-label": "^1.0.1",
+    "victory-util": "^5.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
     "chai": "^3.2.0",
+    "history": "~1.13.1",
     "mocha": "^2.3.3",
     "react": "^0.14.3",
     "react-addons-test-utils": "^0.14.3",
     "react-dom": "^0.14.3",
+    "react-router": "^1.0.0",
     "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0",
-    "victory-bar": "3.0.0",
-    "victory-line": "1.0.0",
-    "victory-scatter": "1.0.0"
+    "sinon-chai": "^2.8.0"
   }
 }
