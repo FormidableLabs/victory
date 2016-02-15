@@ -258,7 +258,7 @@ export default class VictoryBar extends React.Component {
       const baseStyle = calculatedProps.style;
       const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
       const barComponent = (
-        <Bar key={`series-${index}-bar-${barIndex}`}
+        <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
           style={style}
           position={position}
