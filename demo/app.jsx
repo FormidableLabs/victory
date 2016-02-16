@@ -1,6 +1,7 @@
 /*global document:false */
 import React from "react";
 import ReactDOM from "react-dom";
+import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
 import ChartDemo from "./components/victory-chart-demo";
@@ -21,6 +22,7 @@ const App = React.createClass({
         <h1>App</h1>
         <ul>
           <li><Link to="/axis">Victory Axis Demo</Link></li>
+          <li><Link to="/area">Victory Area Demo</Link></li>
           <li><Link to="/bar">Victory Bar Demo</Link></li>
           <li><Link to="/chart">Victory Chart Demo</Link></li>
           <li><Link to="/line">Victory Line Demo</Link></li>
@@ -36,6 +38,7 @@ ReactDOM.render((
   <Router>
     <Route path="/" component={App}>
       <Route path="axis" component={AxisDemo}/>
+      <Route path="area" component={AreaDemo}/>
       <Route path="bar" component={BarDemo}/>
       <Route path="chart" component={ChartDemo}/>
       <Route path="line" component={LineDemo}/>

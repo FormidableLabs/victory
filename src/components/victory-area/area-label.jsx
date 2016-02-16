@@ -5,19 +5,20 @@ import {VictoryLabel} from "victory-label";
 import { Helpers } from "victory-util";
 
 @Radium
-export default class LineLabel extends React.Component {
+export default class AreaLabel extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    label: PropTypes.any,
+    labelComponent: PropTypes.any,
+    labelText: PropTypes.string,
     position: PropTypes.object,
     style: PropTypes.object
   };
 
   renderLabelComponent(props) {
-    const component = props.label;
+    const component = props.labelComponent;
     const baseStyle = merge({padding: 0}, props.style, component.props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.data);
-    const children = component.props.children || "";
+    const children = component.props.children || props.labelText || "";
     const newProps = {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
@@ -38,13 +39,13 @@ export default class LineLabel extends React.Component {
         verticalAnchor={"middle"}
         style={style}
       >
-        {props.label}
+        {props.labelText}
       </VictoryLabel>
     );
   }
 
   renderLabel(props) {
-    return props.label && props.label.props ?
+    return props.labelComponent ?
       this.renderLabelComponent(props) : this.renderVictoryLabel(props);
   }
 
