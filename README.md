@@ -1,5 +1,5 @@
 [![Travis Status][trav_img]][trav_site]
-![](https://badge-size.herokuapp.com/FormidableLabs/victory-label/master/dist/victory-label.min.js?compression=gzip)
+![](https://badge-size.herokuapp.com/FormidableLabs/victory-core/master/dist/victory-core.min.js?compression=gzip)
 
 VictoryLabel
 ============
@@ -9,7 +9,7 @@ VictoryLabel is a text component that provides several enhancements over SVG’s
 API Documentation
 -----------------
 
-Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-label/
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-core/
 
 IMPORTANT
 =========
@@ -24,6 +24,5 @@ Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-compo
 
 Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
 
-[trav_img]: https://api.travis-ci.org/FormidableLabs/victory-label.svg
-[trav_site]: https://travis-ci.org/FormidableLabs/victory-label
-
+[trav_img]: https://api.travis-ci.org/FormidableLabs/victory-core.svg
+[trav_site]: https://travis-ci.org/FormidableLabs/victory-core
