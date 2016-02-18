@@ -2,7 +2,7 @@
  * Client tests
  */
 import React from "react";
-import Component from "src/components/victory-animation";
+import Component from "src/victory-animation/victory-animation";
 // Use `TestUtils` to inject into DOM, simulate events, etc.
 // See: https://facebook.github.io/react/docs/test-utils.html
 import TestUtils from "react-addons-test-utils";

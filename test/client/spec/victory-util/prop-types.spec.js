@@ -5,7 +5,7 @@ import {
   domain,
   scale,
   homogeneousArray
-} from "src/prop-types";
+} from "src/victory-util/prop-types";
 
 describe("prop-types", () => {
 

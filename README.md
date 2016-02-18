@@ -1,15 +1,8 @@
 [![Travis Status][trav_img]][trav_site]
 ![](https://badge-size.herokuapp.com/FormidableLabs/victory-core/master/dist/victory-core.min.js?compression=gzip)
 
-VictoryLabel
+VictoryCore
 ============
-
-VictoryLabel is a text component that provides several enhancements over SVG’s `<text>` element.
-
-API Documentation
------------------
-
-Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-core/
 
 IMPORTANT
 =========

@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { PropTypes as CustomPropTypes, Helpers, Style } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers, Style } from "../victory-util/index";
 import merge from "lodash/object/merge";
 
 const defaultStyles = {

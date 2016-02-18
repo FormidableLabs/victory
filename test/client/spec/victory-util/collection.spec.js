@@ -4,7 +4,7 @@ import {
   containsOnlyStrings,
   isArrayOfArrays,
   removeUndefined
-} from "src/collection";
+} from "src/victory-util/collection";
 
 describe("collections", () => {
 

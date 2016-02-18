@@ -2,7 +2,7 @@
  * Client tests
  */
 import React from "react";
-import VictoryLabel from "src/components/victory-label";
+import VictoryLabel from "src/victory-label/victory-label";
 // Use `TestUtils` to inject into DOM, simulate events, etc.
 // See: https://facebook.github.io/react/docs/test-utils.html
 import TestUtils from "react-addons-test-utils";
