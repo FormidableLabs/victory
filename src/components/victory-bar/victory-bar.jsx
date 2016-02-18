@@ -6,6 +6,7 @@ import Scale from "../../helpers/scale";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
+import { memoize } from "victory-util/perf";
 import { VictoryAnimation } from "victory-animation";
 import Bar from "./bar";
 import BarLabel from "./bar-label";
@@ -251,6 +252,12 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = BarHelpers.getDomain.bind(BarHelpers);
 
+  componentWillMount () {
+    this.memoized = {
+      getStyles: memoize(Helpers.getStyles)
+    };
+  }
+
   renderBars(dataset, seriesIndex, calculatedProps) {
     return dataset.data.map((datum, barIndex) => {
       const index = {seriesIndex, barIndex};
@@ -345,7 +352,8 @@ export default class VictoryBar extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Helpers.getStyles(this.props, defaultStyles);
+
+    const style = this.memoized.getStyles(this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }
