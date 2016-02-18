@@ -303,8 +303,7 @@ export default class VictoryBar extends React.Component {
     const {stacked, categories} = props;
     const grouped = Domain.shouldGroup(props);
     const hasMultipleDatasets = (grouped || stacked);
-    const rawDatasets = hasMultipleDatasets ? props.data : [props.data];
-    const datasets = Data.formatDatasets(rawDatasets, props);
+    const datasets = Data.formatDatasets(props, hasMultipleDatasets);
     const stringMap = {
       x: Data.createStringMap(props, "x", hasMultipleDatasets),
       y: Data.createStringMap(props, "y", hasMultipleDatasets)

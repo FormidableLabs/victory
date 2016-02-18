@@ -12,6 +12,7 @@ import isEmpty from "lodash/lang/isEmpty";
 import has from "lodash/object/has";
 import assign from "lodash/object/assign";
 import merge from "lodash/object/merge";
+import defaults from "lodash/object/defaults";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
@@ -25,7 +26,7 @@ export default {
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
     const stringsFromData = hasMultipleDatasets ?
         uniq(flatten(props.data.map((dataset) => {
-          return Helpers.getStringsFromData(merge({}, props, {data: dataset}), axis);
+          return Helpers.getStringsFromData(defaults({}, axis, {data: dataset}), props);
         })))
         : this.getStringsFromData(props, axis);
 
@@ -117,19 +118,19 @@ export default {
   },
 
   // For components that take multiple datasets
-  formatDatasets(datasets, props) {
+  formatDatasets(props, hasMultipleDatasets) {
     // string map must be calculated using all datasets and shared
-    const propsWithDatasets = assign({}, props, {data: datasets});
     const stringMap = {
-      x: this.createStringMap(propsWithDatasets, "x", true),
-      y: this.createStringMap(propsWithDatasets, "y", true)
+      x: this.createStringMap(props, "x", hasMultipleDatasets),
+      y: this.createStringMap(props, "y", hasMultipleDatasets)
     };
-    return datasets.map((dataset, index) => {
-      return {
-        attrs: this.getAttributes(props, index),
-        data: this.formatData(dataset, props, stringMap)
-      };
+
+    const _format = (dataset, index) => ({
+      attrs: this.getAttributes(props, index),
+      data: this.formatData(dataset, props, stringMap)
     });
+
+    return hasMultipleDatasets ? props.data.map(_format) : [_format(props.data, 0)];
   },
 
   cleanData(dataset, props) {
