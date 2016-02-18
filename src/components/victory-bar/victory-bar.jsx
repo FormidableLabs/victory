@@ -292,7 +292,7 @@ export default class VictoryBar extends React.Component {
     });
   }
 
-  renderData(props, style) {
+  calculateProps(props, style) {
     const {stacked, categories} = props;
     const grouped = Domain.shouldGroup(props);
     const hasMultipleDatasets = (grouped || stacked);
@@ -315,10 +315,14 @@ export default class VictoryBar extends React.Component {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    const calculatedProps = {
+    return {
       categories, datasets, domain, padding, range, scale, grouped, stacked, stringMap, style
     };
-    return datasets.map((dataset, index) => {
+  }
+
+  renderData(props, style) {
+    const calculatedProps = this.calculateProps(props, style);
+    return calculatedProps.datasets.map((dataset, index) => {
       return this.renderBars(dataset, index, calculatedProps);
     });
   }
