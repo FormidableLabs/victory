@@ -124,12 +124,13 @@ export default {
       x: this.createStringMap(propsWithDatasets, "x", true),
       y: this.createStringMap(propsWithDatasets, "y", true)
     };
-    return datasets.map((dataset, index) => {
+    const result =  datasets.map((dataset, index) => {
       return {
         attrs: this.getAttributes(props, index),
         data: this.formatData(dataset, props, stringMap)
       };
     });
+    return result
   },
 
   cleanData(dataset, props) {

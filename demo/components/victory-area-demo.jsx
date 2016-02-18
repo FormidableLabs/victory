@@ -10,10 +10,7 @@ export default class App extends React.Component {
     this.state = {
       data: this.getData(),
       arrayData: this.getArrayData(),
-      style: {
-        stroke: "blue",
-        strokeWidth: 2
-      }
+      groupedData: this.getGroupedData()
     };
   }
 
@@ -25,15 +22,42 @@ export default class App extends React.Component {
       };
     });
   }
+
+  getGroupedData() {
+    return _.map(_.range(7), () => {
+      return [
+        {
+          x: "rabbits",
+          y: _.random(1, 5)
+        },
+        {
+          x: "cats",
+          y: _.random(1, 10)
+        },
+        {
+          x: "dogs",
+          y: _.random(2, 10)
+        },
+        {
+          x: "birds",
+          y: _.random(2, 10)
+        },
+        {
+          x: "frogs",
+          y: _.random(2, 15)
+        }
+      ];
+    });
+  }
+
   getArrayData() {
     return _.range(40).map((i) => [i, i + (Math.random() * 3)]);
   }
 
   getStyles() {
-    const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
+    const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      stroke: colors[_.random(0, 5)],
-      strokeWidth: [_.random(1, 5)]
+      fill: colors[_.random(0, 5)],
     };
   }
 
@@ -41,9 +65,10 @@ export default class App extends React.Component {
     window.setInterval(() => {
       this.setState({
         data: this.getData(),
+        groupedData: this.getGroupedData(),
         style: this.getStyles()
       });
-    }, 200000);
+    }, 2000);
   }
 
   render() {
@@ -56,13 +81,38 @@ export default class App extends React.Component {
           animate={{velocity: 0.03}}
         />
 
-      
+        <VictoryArea
+          stacked
+          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          data={[
+            [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}],
+            [{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}],
+            [{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}],
+            [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]
+          ]}
+        />
+        <VictoryArea
+          colorScale={["cyan", "magenta"]}
+          style={{parent: {border: "1px solid black", margin: "5px"}, data: {opacity: 0.4}}}
+          data={[
+            [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}],
+            [{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]
+          ]}
+        />
+
+        <VictoryArea
+          stacked
+          colorScale={"green"}
+          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          data={this.state.groupedData}
+          animate={{velocity: 0.03}}
+        />
 
       <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "red"}}}
           data={_.range(0, 100)}
           x={null}
-          y={(d) => d * d}
+          y={(d) => Math.sin(d)}
         />
 
       <VictoryArea
@@ -86,7 +136,7 @@ export default class App extends React.Component {
           ]}
         />
 
-      <VictoryArea
+        <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}}}
           data={[
             {x: 1, y: 1},
@@ -102,9 +152,8 @@ export default class App extends React.Component {
           ]}
         />
 
-      <VictoryArea
+        <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}}}
-          scale={{x: "linear", y: "log"}}
         />
       </div>
     );

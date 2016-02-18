@@ -1,7 +1,11 @@
 import pick from "lodash/object/pick";
 import last from "lodash/array/last";
+import flatten from "lodash/array/flatten";
+import take from "lodash/array/take";
+import includes from "lodash/collection/includes";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
+import values from "lodash/object/values";
 import omit from "lodash/object/omit";
 
 import React, { PropTypes } from "react";
@@ -17,10 +21,8 @@ import AreaHelpers from "./helper-methods";
 
 const defaultStyles = {
   data: {
-    stroke: "transparent",
-    strokeWidth: 0,
     fill: "#756f6a",
-    opacity: 0.5
+    opacity: 1
   },
   labels: {
     fontSize: 12,
@@ -206,6 +208,7 @@ export default class VictoryArea extends React.Component {
     samples: 50,
     stacked: false,
     standalone: true,
+    interpolation: "linear",
     width: 450,
     x: "x",
     y: "y"
@@ -213,12 +216,50 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = AreaHelpers.getDomain.bind(AreaHelpers);
 
-  getBaseline(dataset, index, calculatedProps) {
+  getPreviousXIndex(x, index, previousData) {
+    const xValues = previousData.map((datum) => datum.x);
+    if (includes(xValues, x)) {
+      return index;
+    } else if (x < first(xValues) || x > last(xValues)) {
+      return undefined;
+    } else {
+      const less =  xValues.reduce((prev, current) => {
+        return x > prev && x > current ? current : prev;
+      });
+      const more = xValues[find(less) + 1];
+      return x - less > more - x ? more : less;
+    }
+  }
+  getY0(datasets, datum, index) {
+    const y = datum.y;
+    const previousDataSets = take(datasets, index);
+    const previousPoints = flatten(previousDataSets.map((dataset) => {
+      return dataset.data
+        .filter((previousDatum) => previousDatum.x === datum.x)
+        .map((previousDatum) => previousDatum.y || 0);
+    }));
+    return previousPoints.reduce((memo, value) => {
+      const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
+      return sameSign ? memo + value : memo;
+    }, 0);
+  }
+
+  getBaseline(datasets, index, calculatedProps) {
     if (index === 0 || this.props.stacked === false) {
       const {domain} = calculatedProps;
       // TODO: assumes independent x axis
       const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
-      return dataset.data.map((datum) => assign({y0: minY}, datum));
+      return datasets[index].data.map((datum) => assign({y0: minY}, datum));
+    } else {
+      const xValues = datasets[index].data.map((datum) => datum.x);
+      const x0Values = datasets[index - 1].data.map((datum) => datum.x);
+
+      return datasets[index].data.map((datum, pointIndex) => {
+        // const xIndex = this.getPreviousXIndex(datum.x, pointIndex, datasets[index - 1].data);
+        // const previousPoint = datasets[index - 1].data[xIndex];
+        const y0 = this.getY0(datasets, datum, index);
+        return assign({y0}, datum)
+      })
     }
   }
 
@@ -228,7 +269,7 @@ export default class VictoryArea extends React.Component {
     return datasets.map((dataset, index) => {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data, );
-      const dataWithBaseline = this.getBaseline(dataset, index, calculatedProps);
+      const dataWithBaseline = this.getBaseline(datasets, index, calculatedProps);
       const areaComponent = (
         <Area key={dataset.attrs.name}
           scale={scale}
@@ -237,7 +278,7 @@ export default class VictoryArea extends React.Component {
           data={dataWithBaseline}
         />
       );
-      const label = (this.props.label && this.props.label[index]) || this.props.label
+      const label = Array.isArray(this.props.label) ? this.props.label[index] : this.props.label;
       if (label) {
         const labelComponent = this.props.labelComponents ?
           this.props.labelComponents[index] || this.props.labelComponents[0] : undefined;
