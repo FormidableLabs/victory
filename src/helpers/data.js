@@ -118,6 +118,9 @@ export default {
   },
 
   // For components that take multiple datasets
+  //
+  // NOTE: This code is in the hot path.  Future optimizations may be possible by
+  // reducing the frequency and number of data transformations that occur here.
   formatDatasets(props, hasMultipleDatasets) {
     // string map must be calculated using all datasets and shared
     const stringMap = {
