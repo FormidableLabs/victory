@@ -11,7 +11,7 @@ import union from "lodash/array/union";
 import isEmpty from "lodash/lang/isEmpty";
 import has from "lodash/object/has";
 import assign from "lodash/object/assign";
-import merge from "lodash/object/merge";
+import defaults from "lodash/object/defaults";
 import defaults from "lodash/object/defaults";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
@@ -106,14 +106,14 @@ export default {
       .map((datum) => {
         const x = accessor.x(datum);
         const y = accessor.y(datum);
-        return merge({}, datum, {
+        return defaults({}, {
           category: this.determineCategoryIndex(x, props.categories),
           // map string data to numeric values, and add names
           x: typeof x === "string" ? stringMap.x[x] : x,
           xName: typeof x === "string" ? x : undefined,
           y: typeof y === "string" ? stringMap.y[y] : y,
           yName: typeof y === "string" ? y : undefined
-        });
+        }, datum);
       });
   },
 
@@ -179,7 +179,7 @@ export default {
     const requiredAttributes = {
       name: attributes && attributes.name ? attributes.name : `data-${index}`
     };
-    return merge(requiredAttributes, attributes);
+    return defaults(requiredAttributes, attributes);
   },
 
   getColor(props, index) {

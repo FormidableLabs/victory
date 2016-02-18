@@ -2,7 +2,7 @@ import flatten from "lodash/array/flatten";
 import take from "lodash/array/take";
 import uniq from "lodash/array/uniq";
 import isDate from "lodash/lang/isDate";
-import merge from "lodash/object/merge";
+import defaults from "lodash/object/defaults";
 import omit from "lodash/object/omit";
 import Domain from "../../helpers/domain";
 
@@ -114,6 +114,6 @@ module.exports = {
     const styleData = omit(datum, [
       "xName", "yName", "x", "y", "label", "category"
     ]);
-    return merge({}, baseStyle.data, omit(dataset.attrs, "name"), styleData);
+    return defaults({}, styleData, omit(dataset.attrs, "name"), baseStyle.data);
   }
 };
