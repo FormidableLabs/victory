@@ -2,7 +2,7 @@ import React from "react";
 import d3Ease from "d3-ease";
 import d3Interpolate from "d3-interpolate";
 import { timer } from "d3-timer";
-import { addVictoryInterpolator } from "../util";
+import { addVictoryInterpolator } from "./util";
 
 // Nearly all animation libraries are duration-based, not velocity-based.
 // In other words, you say "I want the animation to take this long", not
