@@ -1,9 +1,34 @@
+/* global console */
 import bind from "lodash/function/bind";
 import includes from "lodash/collection/includes";
 import isFunction from "lodash/lang/isFunction";
 
 import { PropTypes } from "react";
 import { getConstructor, getConstructorName } from "./type";
+
+/**
+ * Return a new validator based on `propType` but which logs a `console.error`
+ * with `explanation` if used.
+ * @param {Function} propType The old, deprecated propType.
+ * @param {String} explanation The message to provide the user of the deprecated propType.
+ * @returns {Function} Validator which logs usage of this propType
+ */
+export const deprecated = (propType, explanation) => {
+  return (props, propName, componentName) => {
+    if (process.env.NODE_ENV !== "production") {
+      /* eslint-disable no-console */
+      if (typeof console !== "undefined" && console.error) {
+        if (props[propName] !== null) {
+          console.error(false,
+            `"${propName}" property of "${componentName}" has been deprecated ${explanation}`);
+        }
+      }
+      /* eslint-enable no-console */
+    }
+
+    return propType(props, propName, componentName);
+  };
+};
 
 /**
  * Return a new validator based on `validator` but with the option to chain

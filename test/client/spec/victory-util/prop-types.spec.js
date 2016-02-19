@@ -1,13 +1,62 @@
+/* global sinon */
+/* global console */
+import {PropTypes} from "react";
 import {
   allOfType,
   nonNegative,
   integer,
   domain,
   scale,
-  homogeneousArray
+  homogeneousArray,
+  deprecated
 } from "src/victory-util/prop-types";
 
 describe("prop-types", () => {
+
+  /* eslint-disable no-console */
+  // Directly lifted from https://github.com/react-bootstrap/react-prop-types
+  // And then adapted to work with our linter, and sinon sandbox
+  describe("deprecated", () => {
+    let sandbox;
+
+    const shouldError = () => {
+      sinon.assert.calledOnce(console.error);
+    };
+
+    const validate = (prop) => {
+      return deprecated(PropTypes.string, "Read more at link")({
+        pName: prop
+      }, "pName", "ComponentName");
+    };
+
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      sandbox.stub(console, "error");
+    });
+
+    afterEach(() => {
+      console.error.restore();
+      sandbox.reset();
+    });
+
+    it("Should warn about deprecation and validate OK", () => {
+
+      const err = validate("value");
+      shouldError("`pName` property of `ComponentName1 has been deprecated.\nRead more at link");
+      expect(err).to.not.be.an.instanceOf(Error);
+    });
+
+    it(`Should warn about deprecation and throw validation error when property
+       value is not OK`, () => {
+
+      const err = validate({});
+      shouldError("`pName` property of `ComponentName` has been deprecated.\nRead more at link");
+      expect(err).to.be.an.instanceOf(Error);
+      expect(err.message).to.include(
+        "Invalid undefined `pName` of type `object` supplied to `ComponentName`");
+    });
+  });
+  /* eslint-enable no-console */
 
   describe("allOfType", () => {
     const validate = function (prop) {
