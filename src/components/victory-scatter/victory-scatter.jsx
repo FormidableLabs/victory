@@ -73,7 +73,12 @@ export default class VictoryScatter extends React.Component {
     height: CustomPropTypes.nonNegative,
     /**
      * The labelComponent prop takes in an entire, HTML-complete label component
-     * which will be used to create labels for scatter to use
+     * which will be used to create labels for each point in the scatter plot. The new element
+     * created from the passed labelComponent will have children preserved, or provided as the label
+     * property from the point's datum; property data provided by the point's datum; properties x,
+     * y, dy, textAnchor, and verticalAnchor preserved or default values provided by the point; and
+     * styles overwritten by the styles from the scatter. If labelComponent is omitted, a new
+     * VictoryLabel will be created with props and styles from the point.
      */
     labelComponent: PropTypes.element,
     /**
