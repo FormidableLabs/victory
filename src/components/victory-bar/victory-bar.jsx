@@ -142,9 +142,20 @@ export default class VictoryBar extends React.Component {
      */
     labels: PropTypes.array,
     /**
-     * The labelComponents prop takes in an array of entire, HTML-complete label components
-     * which will be used to create labels for individual bars, stacked bars, or groups of
-     * bars as appropriate.
+     * The labelComponents prop defines labels - as entire, HTML-complete label
+     * components - that will appear above each bar or group of bars in your
+     * bar chart. This prop should be given as an array of elements. The number
+     * of elements in the labelComponents array should be equal to the number
+     * of elements in the categories array, or, if categories is not defined,
+     * to the number of unique x values in your data. Use this prop to add
+     * labels to individual bars, stacked bars, and groups of bars. The new
+     * element created from each element of the labelComponents array will have
+     * children preserved, or provided as the label from the bar's datum;
+     * property data provided by the bar's datum; properties x, y, textAnchor,
+     * and verticalAnchor preserved or default values provided by the bar; and
+     * styles filled out with defaults provided by the bar. If you do not
+     * provide enough elements in the labelComponents array, a new
+     * VictoryLabel will be created with props and styles from the bar.
      */
     labelComponents: PropTypes.array,
     /**

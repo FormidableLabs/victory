@@ -8,7 +8,6 @@ import { Helpers } from "victory-util";
 export default class LineLabel extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    labelComponent: PropTypes.any,
     position: PropTypes.object,
     style: PropTypes.object
   };
