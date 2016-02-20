@@ -69,7 +69,8 @@ export default class Point extends React.Component {
     }
     const component = props.labelComponent;
     const componentStyle = component && component.props.style || {};
-    const labelStyle = merge({}, style.labels, componentStyle);
+    const baseStyle = merge({}, style.labels, componentStyle);
+    const labelStyle = Helpers.evaluateStyle(baseStyle, props.data);
     const children = component && component.props.children || props.data.label;
     const labelProps = {
       x: component && component.props.x || props.x,
