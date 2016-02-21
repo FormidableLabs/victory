@@ -97,8 +97,14 @@ export default class VictoryLine extends React.Component {
       "stepBefore"
     ]),
     /**
-     * The label prop specifies a label to display at the end of a line component,
-     * this prop can be given as a value, or as an entire label component
+     * The label prop specifies a label to display at the end of a line component.
+     * This prop can be given as a value, or as an entire, HTML-complete label component.
+     * If given as a value, a new VictoryLabel will be created with props and
+     * styles from the line. When given as a component, a new element will be
+     * cloned from the label component. The new element will have default
+     * values provided by the line for properties x, y, textAnchor, and
+     * verticalAnchor; and styles filled out with defaults from the line, and
+     * overrides from the datum.
      */
     label: PropTypes.any,
     /**
