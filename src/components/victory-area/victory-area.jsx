@@ -2,18 +2,14 @@ import pick from "lodash/object/pick";
 import last from "lodash/array/last";
 import flatten from "lodash/array/flatten";
 import take from "lodash/array/take";
-import includes from "lodash/collection/includes";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
-import values from "lodash/object/values";
 import omit from "lodash/object/omit";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Scale from "../../helpers/scale";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
-import { PropTypes as CustomPropTypes, Helpers, Collection } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import Area from "./area";
 import AreaLabel from "./area-label";
@@ -43,6 +39,19 @@ export default class VictoryArea extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The colorScale prop is an optional prop that defines the color scale the chart's areas
+     * will be created on. This prop should be given as an array of CSS colors, or as a string
+     * corresponding to one of the built in color scales. VictoryBar will automatically assign
+     * values from this color scale to the areas unless colors are explicitly provided in the
+     * `dataAttributes` prop.
+     */
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+      ])
+    ]),
+    /**
      * The data prop specifies the data to be plotted. Data should be in the form of an array
      * of data points, or an array of arrays of data points for multiple datasets.
      * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
@@ -63,19 +72,6 @@ export default class VictoryArea extends React.Component {
       PropTypes.arrayOf(PropTypes.object)
     ]),
     /**
-     * The colorScale prop is an optional prop that defines the color scale the chart's areas
-     * will be created on. This prop should be given as an array of CSS colors, or as a string
-     * corresponding to one of the built in color scales. VictoryBar will automatically assign
-     * values from this color scale to the areas unless colors are explicitly provided in the
-     * `dataAttributes` prop.
-     */
-    colorScale: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
-      ])
-    ]),
-    /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
      * or as an object that specifies separate arrays for x and y.
@@ -90,11 +86,34 @@ export default class VictoryArea extends React.Component {
         y: CustomPropTypes.domain
       })
     ]),
-
     /**
      * The height props specifies the height of the chart container element in pixels
      */
     height: CustomPropTypes.nonNegative,
+    /**
+     * The interpolation prop determines how data points should be connected
+     * when plotting a line
+     */
+    interpolation: PropTypes.oneOf([
+      "basis",
+      "basisClosed",
+      "basisOpen",
+      "bundle",
+      "cardinal",
+      "cardinalClosed",
+      "cardinalOpen",
+      "catmullRom",
+      "catmullRomClosed",
+      "catmullRomOpen",
+      "linear",
+      "linearClosed",
+      "monotone",
+      "natural",
+      "radial",
+      "step",
+      "stepAfter",
+      "stepBefore"
+    ]),
     /**
      * The labels prop defines labels that will appear above each area. This prop
      * should be given as an array of values.
@@ -102,10 +121,15 @@ export default class VictoryArea extends React.Component {
      */
     labels: PropTypes.array,
     /**
-     * The labelComponents prop takes in an array of entire, HTML-complete label components
-     * which will be used to create labels for each area
+    * The labelComponent prop takes in an entire, HTML-complete label
+    * component which will be used to create labels for each area in the
+    * chart. The new element created from the passed labelComponent will have
+    * children preserved, or provided via the labels array, textAnchor, and verticalAnchor
+    * preserved or default values provided by defaults; and styles filled out with defaults
+    * provided by the style prop, and dataAttributes prop. If labelComponent is omitted,
+    * but a labels array is specified, a new VictoryLabel will be created.
      */
-    labelComponents: PropTypes.array,
+    labelComponent: PropTypes.element,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
@@ -216,20 +240,6 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = AreaHelpers.getDomain.bind(AreaHelpers);
 
-  getPreviousXIndex(x, index, previousData) {
-    const xValues = previousData.map((datum) => datum.x);
-    if (includes(xValues, x)) {
-      return index;
-    } else if (x < first(xValues) || x > last(xValues)) {
-      return undefined;
-    } else {
-      const less =  xValues.reduce((prev, current) => {
-        return x > prev && x > current ? current : prev;
-      });
-      const more = xValues[find(less) + 1];
-      return x - less > more - x ? more : less;
-    }
-  }
   getY0(datasets, datum, index) {
     const y = datum.y;
     const previousDataSets = take(datasets, index);
@@ -251,24 +261,19 @@ export default class VictoryArea extends React.Component {
       const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
       return datasets[index].data.map((datum) => assign({y0: minY}, datum));
     } else {
-      const xValues = datasets[index].data.map((datum) => datum.x);
-      const x0Values = datasets[index - 1].data.map((datum) => datum.x);
-
-      return datasets[index].data.map((datum, pointIndex) => {
-        // const xIndex = this.getPreviousXIndex(datum.x, pointIndex, datasets[index - 1].data);
-        // const previousPoint = datasets[index - 1].data[xIndex];
+      return datasets[index].data.map((datum) => {
         const y0 = this.getY0(datasets, datum, index);
-        return assign({y0}, datum)
-      })
+        return assign({y0}, datum);
+      });
     }
   }
 
   renderAreas(allData, calculatedProps) {
-    const {scale, domain} = calculatedProps;
-    const datasets = Array.isArray(allData) ? allData : [allData]
+    const {scale} = calculatedProps;
+    const datasets = Array.isArray(allData) ? allData : [allData];
     return datasets.map((dataset, index) => {
       const baseStyle = calculatedProps.style;
-      const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data, );
+      const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
       const dataWithBaseline = this.getBaseline(datasets, index, calculatedProps);
       const areaComponent = (
         <Area key={dataset.attrs.name}
@@ -278,10 +283,8 @@ export default class VictoryArea extends React.Component {
           data={dataWithBaseline}
         />
       );
-      const label = Array.isArray(this.props.label) ? this.props.label[index] : this.props.label;
+      const label = this.props.labels && this.props.labels[index];
       if (label) {
-        const labelComponent = this.props.labelComponents ?
-          this.props.labelComponents[index] || this.props.labelComponents[0] : undefined;
         const position = {
           x: scale.x.call(this, last(dataset.data).x),
           y: scale.y.call(this, last(dataset.data).y)
@@ -294,7 +297,7 @@ export default class VictoryArea extends React.Component {
               data={dataset.data}
               position={position}
               labelText={label}
-              labelComponent={labelComponent}
+              labelComponent={this.props.labelComponent}
             />
           </g>
         );

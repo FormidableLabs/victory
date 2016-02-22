@@ -1,12 +1,8 @@
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import d3Shape from "d3-shape";
-import last from "lodash/array/last";
-import first from "lodash/array/first";
 import assign from "lodash/object/assign";
-
-
-import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
+import { Helpers } from "victory-util";
 
 @Radium
 export default class Area extends React.Component {

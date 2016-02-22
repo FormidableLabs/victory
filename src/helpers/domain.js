@@ -71,9 +71,8 @@ module.exports = {
   getDomainFromGroupedData(props, axis) {
     if (axis === "x" && props.categories) {
       return this.getDomainFromCategories(props, axis);
-    }
-    if (!props.data) {
-      return [0, 1];
+    } else if (!props.data) {
+      return 
     }
     // find the global min and max
     const rawDatasets = (props.stacked || this.shouldGroup(props)) ? props.data : [props.data];

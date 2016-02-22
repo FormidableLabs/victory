@@ -1,8 +1,3 @@
-import flatten from "lodash/array/flatten";
-import take from "lodash/array/take";
-import uniq from "lodash/array/uniq";
-import isDate from "lodash/lang/isDate";
-import merge from "lodash/object/merge";
 import assign from "lodash/object/assign";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -16,7 +11,7 @@ module.exports = {
       const datasets = multipleDatasets ? props.data : [props.data];
       return Data.formatDatasets(datasets, props);
     } else if (Array.isArray(props.y) && typeof props.y[0] === "function") {
-      return  props.y.map((y, index) => {
+      return props.y.map((y, index) => {
         const newProps = assign({}, props, {y});
         return {
           attrs: Data.getAttributes(props, index),
@@ -24,8 +19,7 @@ module.exports = {
         };
       });
     } else {
-      const data = Data.getData(props);
-      return  [{
+      return [{
         attrs: Data.getAttributes(props, 0),
         data: Data.getData(props)
       }];
