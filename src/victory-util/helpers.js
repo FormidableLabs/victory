@@ -1,16 +1,5 @@
-import transform from "lodash/object/transform";
-import merge from "lodash/object/merge";
-import some from "lodash/collection/some";
-import isFunction from "lodash/lang/isFunction";
-import isUndefined from "lodash/lang/isUndefined";
-import isNull from "lodash/lang/isNull";
+import defaults from "lodash/object/defaults";
 import property from "lodash/utility/property";
-import identity from "lodash/utility/identity";
-import compact from "lodash/array/compact";
-import isEmpty from "lodash/lang/isEmpty";
-import has from "lodash/object/has";
-import uniq from "lodash/array/uniq";
-import zipObject from "lodash/array/zipObject";
 
 module.exports = {
   getPadding(props) {
@@ -28,9 +17,9 @@ module.exports = {
     const style = props.style || defaultStyles;
     const {data, labels, parent} = style;
     return {
-      parent: merge({}, defaultStyles.parent, parent, {height: props.height, width: props.width}),
-      labels: merge({}, defaultStyles.labels, labels),
-      data: merge({}, defaultStyles.data, data)
+      parent: defaults({height: props.height, width: props.width}, defaultStyles.parent, parent),
+      labels: defaults({}, labels, defaultStyles.labels),
+      data: defaults({}, data, defaultStyles.data)
     };
   },
 
@@ -39,12 +28,13 @@ module.exports = {
   },
 
   evaluateStyle(style, data) {
-    if (!some(style, (value) => typeof value === "function")) {
+    if (!Object.keys(style).some((value) => typeof style[value] === "function")) {
       return style;
     }
-    return transform(style, (result, value, key) => {
-      result[key] = this.evaluateProp(value, data);
-    });
+    return Object.keys(style).reduce((prev, curr) => {
+      prev[curr] = this.evaluateProp(style[curr], data);
+      return prev;
+    }, {});
   },
 
   getRange(props, axis) {
@@ -83,42 +73,51 @@ module.exports = {
     return dataset.map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
-      return merge({}, datum, {
+      const xName = typeof x === "string" ? {xName: x} : undefined;
+      const yName = typeof y === "string" ? {yName: y} : undefined;
+      return defaults({
         // map string data to numeric values, and add names
         x: typeof x === "string" ? stringMap.x[x] : x,
-        xName: typeof x === "string" ? x : undefined,
-        y: typeof y === "string" ? stringMap.y[y] : y,
-        yName: typeof y === "string" ? y : undefined
-      });
+        y: typeof y === "string" ? stringMap.y[y] : y
+      }, xName, yName, datum);
     });
   },
 
   createStringMap(props, axis) {
     const stringsFromData = this.getStringsFromData(props, axis);
-    return isEmpty(stringsFromData) ? null :
-      zipObject(stringsFromData.map((string, index) => [string, index + 1]));
+    return stringsFromData.length === 0 ? null :
+      stringsFromData.reduce((prev, curr, index) => {
+        prev[curr] = index + 1;
+        return prev;
+      }, {});
   },
 
   getStringsFromData(props, axis) {
     if (!props.data) {
       return [];
     }
-    const accessor = this.createAccessor(has(props, axis) ? props[axis] : axis);
+    const key = typeof props[axis] === "undefined" ? axis : props[axis];
+    const accessor = this.createAccessor(key);
     const dataStrings = (props.data)
         .map((datum) => accessor(datum))
         .filter((datum) => typeof datum === "string");
     // return a unique set of strings
-    return compact(uniq(dataStrings));
+    return dataStrings.reduce((prev, curr) => {
+      if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
+        prev.push(curr);
+      }
+      return prev;
+    }, []);
   },
 
   createAccessor(key) {
     // creates a data accessor function
     // given a property key, path, array index, or null for identity.
-    if (isFunction(key)) {
+    if (typeof key === "function") {
       return key;
-    } else if (isNull(key) || isUndefined(key)) {
+    } else if (key === null || typeof key === "undefined") {
       // null/undefined means "return the data item itself"
-      return identity;
+      return (x) => x;
     }
     // otherwise, assume it is an array index, property key or path (_.property handles all three)
     return property(key);

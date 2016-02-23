@@ -1,8 +1,4 @@
 /* global console */
-import bind from "lodash/function/bind";
-import includes from "lodash/collection/includes";
-import isFunction from "lodash/lang/isFunction";
-
 import { PropTypes } from "react";
 import { getConstructor, getConstructorName } from "./type";
 
@@ -51,8 +47,8 @@ export const makeChainable = function (validator) {
     }
     return validator(props, propName, componentName);
   };
-  const chainable = bind(_chainable, null, false);
-  chainable.isRequired = bind(_chainable, null, true);
+  const chainable = _chainable.bind(null, false);
+  chainable.isRequired = _chainable.bind(null, true);
   return chainable;
 };
 
@@ -127,11 +123,12 @@ export const domain = makeChainable((props, propName, componentName) => {
  */
 export const scale = makeChainable((props, propName, componentName) => {
   const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
+  const isFunction = (val) => typeof val === "function";
   const validScale = (scl) => {
     if (isFunction(scl)) {
       return (isFunction(scl.copy) && isFunction(scl.domain) && isFunction(scl.range));
     } else if (typeof scl === "string") {
-      return includes(supportedScaleStrings, scl);
+      return supportedScaleStrings.indexOf(scl) !== -1;
     }
     return false;
   };
