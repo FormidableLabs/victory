@@ -1,4 +1,3 @@
-import _ from "lodash";
 import d3Interpolate from "d3-interpolate";
 
 export const isInterpolatable = function (obj) {
@@ -10,7 +9,7 @@ export const isInterpolatable = function (obj) {
     case "number":
       // The standard `isNaN` is fine in this case since we already know the
       // type is number.
-      return !isNaN(obj) && _.isFinite(obj);
+      return !isNaN(obj) && obj !== Number.POSITIVE_INFINITY && obj !== Number.NEGATIVE_INFINITY;
     case "string":
       // d3 might not *actually* be able to interpolate the string, but it
       // won't cause any issues to let it try.
@@ -22,7 +21,7 @@ export const isInterpolatable = function (obj) {
       return false;
     case "object":
       // Don't try to interpolate class instances (except Date or Array).
-      return _.isDate(obj) || _.isArray(obj) || _.isPlainObject(obj);
+      return obj instanceof Date || Array.isArray(obj) || typeof obj === "object";
     case "function":
       // Careful! There may be extra properties on function objects that the
       // component expects to access - for instance, it may be a `d3.scale()`
