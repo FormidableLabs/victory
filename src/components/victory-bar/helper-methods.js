@@ -1,25 +1,7 @@
 import defaults from "lodash/object/defaults";
+import flatten from "lodash/array/flatten";
+import omit from "lodash/object/omit";
 import Domain from "../../helpers/domain";
-
-// TODO move to victory-core/util
-const flatten = (arr) => {
-  const [first, ...rest] = arr;
-  if (arr.length === 0) {
-    return [];
-  } else if (!Array.isArray(first)) {
-    return [first, ...flatten(rest)];
-  } else {
-    return [...flatten(first), ...flatten(rest)];
-  }
-};
-
-const omit = (obj, keys) => {
-  const whitelist = Object.keys(obj).filter((key) => keys.indexOf(key) === -1);
-  return whitelist.reduce((prev, curr) => {
-    prev[curr] = obj[curr];
-    return prev;
-  }, {});
-};
 
 module.exports = {
   getDomain(props, axis) {

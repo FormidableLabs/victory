@@ -1,10 +1,8 @@
 import invert from "lodash/object/invert";
 import sortBy from "lodash/collection/sortBy";
 import values from "lodash/object/values";
-import identity from "lodash/utility/identity";
 import compact from "lodash/array/compact";
 import flatten from "lodash/array/flatten";
-import isEmpty from "lodash/lang/isEmpty";
 import sum from "lodash/math/sum";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
@@ -107,7 +105,7 @@ module.exports = {
         return component.type.getDomain(component.props, axis);
       });
       const allDomains = Collection.removeUndefined(flatten(childDomains));
-      domain = isEmpty(allDomains) ? [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
+      domain = allDomains.length === 0 ? [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
     }
     const paddedDomain = Domain.padDomain(domain, props, axis);
     const orientations = Axis.getAxisOrientations(childComponents);
@@ -168,7 +166,7 @@ module.exports = {
     const tickValues = component.props.tickValues;
     const stringMap = calculatedProps.stringMap[axis];
     if (tickValues && !Collection.containsStrings(tickValues)) {
-      return identity;
+      return (x) => x;
     } else if (stringMap !== null) {
       const tickValueArray = sortBy(values(stringMap), (n) => n);
       const invertedStringMap = invert(stringMap);
@@ -177,7 +175,7 @@ module.exports = {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return calculatedProps.scale[axis].tickFormat() || identity;
+      return calculatedProps.scale[axis].tickFormat() || (x) => x;
     }
   },
 
@@ -193,13 +191,13 @@ module.exports = {
     })));
     const allStrings = uniq(compact([...tickStrings, ...categoryStrings, ...dataStrings]));
 
-    return isEmpty(allStrings) ? null :
+    return allStrings.length === 0 ? null :
       zipObject(allStrings.map((string, index) => [string, index + 1]));
   },
 
   getCategories(childComponents) {
     const groupedComponents = this.getDataComponents(childComponents, "grouped");
-    if (isEmpty(groupedComponents)) {
+    if (groupedComponents.length === 0) {
       return undefined;
     }
     // otherwise, create a set of groupedComponent categories
@@ -209,6 +207,6 @@ module.exports = {
         categories.map((arr) => (sum(arr) / arr.length)) : categories;
     });
     const uniqueCategories = compact(uniq(flatten(allCategories)));
-    return isEmpty(uniqueCategories) ? undefined : uniqueCategories;
+    return uniqueCategories.length === 0 ? undefined : uniqueCategories;
   }
 };
