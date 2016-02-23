@@ -1,10 +1,25 @@
-import flatten from "lodash/array/flatten";
-import take from "lodash/array/take";
-import uniq from "lodash/array/uniq";
-import isDate from "lodash/lang/isDate";
-import merge from "lodash/object/merge";
-import omit from "lodash/object/omit";
+import defaults from "lodash/object/defaults";
 import Domain from "../../helpers/domain";
+
+// TODO move to victory-core/util
+const flatten = (arr) => {
+  const [first, ...rest] = arr;
+  if (arr.length === 0) {
+    return [];
+  } else if (!Array.isArray(first)) {
+    return [first, ...flatten(rest)];
+  } else {
+    return [...flatten(first), ...flatten(rest)];
+  }
+};
+
+const omit = (obj, keys) => {
+  const whitelist = Object.keys(obj).filter((key) => keys.indexOf(key) === -1);
+  return whitelist.reduce((prev, curr) => {
+    prev[curr] = obj[curr];
+    return prev;
+  }, {});
+};
 
 module.exports = {
   getDomain(props, axis) {
@@ -28,7 +43,7 @@ module.exports = {
     const x = (stacked && !categories) ? datum.x :
       this.adjustX(datum, index.seriesIndex, calculatedProps);
     const formatValue = (value, axis) => {
-      return isDate(datum[axis]) ? new Date(value) : value;
+      return datum[axis] instanceof Date ? new Date(value) : value;
     };
     return {
       independent: scale.x(formatValue(x, "x")),
@@ -43,7 +58,7 @@ module.exports = {
       return 0;
     }
     const y = datum.y;
-    const previousDataSets = take(datasets, index.seriesIndex);
+    const previousDataSets = datasets.slice(0, index.seriesIndex);
     const previousBars = flatten(previousDataSets.map((dataset) => {
       return dataset.data
         .filter((previousDatum) => previousDatum.x === datum.x)
@@ -105,7 +120,12 @@ module.exports = {
       const allX = datasets.map((dataset) => {
         return dataset.data.map((d) => d.x);
       });
-      const uniqueX = uniq(flatten(allX));
+      const uniqueX = flatten(allX).reduce((prev, curr) => {
+        if (prev.indexOf(curr) === -1) {
+          prev.push(curr);
+        }
+        return prev;
+      }, []);
       return uniqueX.findIndex((x) => x === datum.x);
     }
   },
@@ -114,6 +134,6 @@ module.exports = {
     const styleData = omit(datum, [
       "xName", "yName", "x", "y", "label", "category"
     ]);
-    return merge({}, baseStyle.data, omit(dataset.attrs, "name"), styleData);
+    return defaults({}, styleData, omit(dataset.attrs, "name"), baseStyle.data);
   }
 };

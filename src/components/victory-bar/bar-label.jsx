@@ -1,4 +1,4 @@
-import merge from "lodash/object/merge";
+import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import { VictoryLabel } from "victory-label";
@@ -40,7 +40,7 @@ export default class BarLabel extends React.Component {
 
   renderLabelComponent(props, position, anchors) {
     const component = props.labelComponent;
-    const baseStyle = merge({padding: 0}, props.style, component.props.style);
+    const baseStyle = defaults({padding: 0}, component.props.style, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     const children = component.props.children || props.labelText;
@@ -56,7 +56,7 @@ export default class BarLabel extends React.Component {
   }
 
   renderVictoryLabel(props, position, anchors) {
-    const baseStyle = merge({padding: 0}, props.style);
+    const baseStyle = defaults({padding: 0}, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     return (
