@@ -24,11 +24,14 @@ module.exports = {
     };
   },
 
-  getStyles(props, defaultStyles) {
-    const style = props.style || defaultStyles;
+  getStyles(style, defaultStyles, height, width) {  // eslint-disable-line max-params
+    if (!style) {
+      return merge({}, defaultStyles, { parent: { height, width } });
+    }
+
     const {data, labels, parent} = style;
     return {
-      parent: merge({}, defaultStyles.parent, parent, {height: props.height, width: props.width}),
+      parent: merge({}, defaultStyles.parent, parent, { height, width }),
       labels: merge({}, defaultStyles.labels, labels),
       data: merge({}, defaultStyles.data, data)
     };
