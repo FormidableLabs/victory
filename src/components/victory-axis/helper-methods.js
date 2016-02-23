@@ -1,6 +1,3 @@
-import without from "lodash/array/without";
-import includes from "lodash/collection/includes";
-import range from "lodash/utility/range";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -45,13 +42,13 @@ module.exports = {
   getTicks(props, scale) {
     if (props.tickValues) {
       if (Axis.stringTicks(props)) {
-        return range(1, props.tickValues.length + 1);
+        return props.tickValues.map((val, index) => index + 1);
       }
       return props.tickValues;
     } else if (scale.ticks && typeof scale.ticks === "function") {
       const ticks = scale.ticks(props.tickCount);
       if (props.crossAxis) {
-        return includes(ticks, 0) ? without(ticks, 0) : ticks;
+        return ticks.indexOf(0) !== -1 ? ticks.filter((val) => val !== 0) : ticks;
       }
       return ticks;
     }

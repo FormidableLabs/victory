@@ -1,5 +1,4 @@
-import merge from "lodash/object/merge";
-import pick from "lodash/object/pick";
+import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import { VictoryLabel } from "victory-label";
@@ -58,12 +57,12 @@ const getStyles = (props) => {
   const style = props.style || {};
   const parentStyleProps = { height: props.height, width: props.width };
   return {
-    parent: merge(parentStyleProps, defaultStyles.parent, style.parent),
-    axis: merge({}, defaultStyles.axis, style.axis),
-    axisLabel: merge({}, defaultStyles.axisLabel, style.axisLabel),
-    grid: merge({}, defaultStyles.grid, style.grid),
-    ticks: merge({}, defaultStyles.ticks, style.ticks),
-    tickLabels: merge({}, defaultStyles.tickLabels, style.tickLabels)
+    parent: defaults(parentStyleProps, style.parent, defaultStyles.parent),
+    axis: defaults({}, style.axis, defaultStyles.axis),
+    axisLabel: defaults({}, style.axisLabel, defaultStyles.axisLabel),
+    grid: defaults({}, style.grid, defaultStyles.grid),
+    ticks: defaults({}, style.ticks, defaultStyles.ticks),
+    tickLabels: defaults({}, style.tickLabels, defaultStyles.tickLabels)
   };
 };
 
@@ -315,7 +314,7 @@ export default class VictoryAxis extends React.Component {
       y: componentProps.y || y,
       textAnchor: componentProps.textAnchor || "middle",
       verticalAnchor: componentProps.verticalAnchor || verticalAnchor,
-      style: merge({}, componentProps.style, style.axisLabel),
+      style: defaults({}, style.axisLabel, componentProps.style),
       transform: componentProps.transform || transform
     };
   }
@@ -328,10 +327,14 @@ export default class VictoryAxis extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      const whitelist = [
         "style", "domain", "range", "tickCount", "tickValues",
         "labelPadding", "offsetX", "offsetY", "padding", "width", "height"
-      ]);
+      ];
+      const animateData = whitelist.reduce((prev, curr) => {
+        prev[curr] = this.props[curr];
+        return prev;
+      }, {});
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryAxis {...this.props} {...props} animate={null}/>}
