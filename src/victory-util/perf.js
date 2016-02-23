@@ -9,7 +9,7 @@
  *
  * @return {Function}      Memoized `fn`.
  */
-export const memoize = function memoize (fn) {
+export const memoize = function memoize(fn) {
   const cache = {};
   return function () {
     const args = Array.prototype.slice.call(arguments);
