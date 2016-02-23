@@ -21,7 +21,8 @@ export const isInterpolatable = function (obj) {
       return false;
     case "object":
       // Don't try to interpolate class instances (except Date or Array).
-      return obj instanceof Date || Array.isArray(obj) || typeof obj === "object";
+      const proto = Object.getPrototypeOf(obj);
+      return proto === Object.prototype ||  proto === null;
     case "function":
       // Careful! There may be extra properties on function objects that the
       // component expects to access - for instance, it may be a `d3.scale()`
