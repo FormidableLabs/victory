@@ -46,7 +46,9 @@ module.exports = {
     const previousDataSets = take(datasets, index.seriesIndex);
     const previousBars = flatten(previousDataSets.map((dataset) => {
       return dataset.data
-        .filter((previousDatum) => previousDatum.x === datum.x)
+        .filter((previousDatum) => isDate(datum.x)
+          ? previousDatum.x.getTime() === datum.x.getTime()
+          : previousDatum.x === datum.x)
         .map((previousDatum) => previousDatum.y || 0);
     }));
     return previousBars.reduce((memo, barValue) => {
