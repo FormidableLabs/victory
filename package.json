@@ -16,6 +16,7 @@
   "scripts": {
     "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
+    "start": "builder run hot",
     "test": "builder run npm:test",
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
