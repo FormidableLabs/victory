@@ -13,8 +13,11 @@ module.exports = {
     };
   },
 
-  getStyles(props, defaultStyles) {
-    const style = props.style || defaultStyles;
+  getStyles(style, defaultStyles, height, width) {  // eslint-disable-line max-params
+    if (!style) {
+      return merge({}, defaultStyles, { parent: { height, width } });
+    }
+
     const {data, labels, parent} = style;
     return {
       parent: defaults({height: props.height, width: props.width}, defaultStyles.parent, parent),
