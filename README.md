@@ -4,25 +4,35 @@
 VictoryPie
 =============
 
-`VictoryPie` draws an SVG pie or donut chart with [React](https://github.com/facebook/react). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
+`VictoryPie` draws an SVG pie or donut chart with [React][]. Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation][].
 
-API Documentation
------------------
-Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-pie
-
-IMPORTANT
-=========
-
-This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
-
+## API Documentation
+Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-pie.
 
 ## Development
 
-Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
+```sh
+# Run the demo app server
+$ npm start
+
+# Open the demo app
+$ open http://localhost:3000
+
+# Run tests
+$ npm test
+```
+
+For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md) in the project builder archetype.
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
 
+## _IMPORTANT_
+
+This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
+
+[React]: https://github.com/facebook/react
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-pie.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-pie
+[victory-animation]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-animation/victory-animation.jsx
