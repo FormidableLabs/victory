@@ -22,7 +22,7 @@
     "preversion": "builder run npm:preversion",
     "server-docs": "http-server docs/build",
     "start": "builder run hot",
-    "test": "builder run npm:test",
+    "test": "builder run check",
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {

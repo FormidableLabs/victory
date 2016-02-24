@@ -97,7 +97,7 @@ $ npm start
 # Open the demo app
 $ open http://localhost:3000
 
-# Run tests
+# Run checks (lint and tests)
 $ npm test
 ```
 
