@@ -15,22 +15,31 @@ This component works with:
 - _More chart types coming soon!_
 
 
-API Documentation
------------------
+## API Documentation
 Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-chart/
-
-IMPORTANT
-=========
-
-This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
 
 ## Development
 
-Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
+```sh
+# Run the demo app server
+$ npm start
+
+# Open the demo app
+$ open http://localhost:3000
+
+# Run tests
+$ npm test
+```
+
+For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md) in the project builder archetype.
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
+
+## _IMPORTANT_
+
+This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
 
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-chart.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-chart
