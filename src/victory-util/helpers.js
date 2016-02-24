@@ -1,6 +1,7 @@
 import defaults from "lodash/object/defaults";
-import property from "lodash/utility/property";
 import isFunction from "lodash/lang/isFunction";
+import property from "lodash/utility/property";
+import zipObject from "lodash/array/zipObject";
 
 module.exports = {
   getPadding(props) {
@@ -90,10 +91,7 @@ module.exports = {
   createStringMap(props, axis) {
     const stringsFromData = this.getStringsFromData(props, axis);
     return stringsFromData.length === 0 ? null :
-      stringsFromData.reduce((prev, curr, index) => {
-        prev[curr] = index + 1;
-        return prev;
-      }, {});
+      zipObject(stringsFromData.map((string, index) => [string, index + 1]));
   },
 
   getStringsFromData(props, axis) {
