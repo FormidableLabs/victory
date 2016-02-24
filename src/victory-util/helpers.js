@@ -1,5 +1,6 @@
 import defaults from "lodash/object/defaults";
 import property from "lodash/utility/property";
+import isFunction from "lodash/lang/isFunction";
 
 module.exports = {
   getPadding(props) {
@@ -27,11 +28,11 @@ module.exports = {
   },
 
   evaluateProp(prop, data) {
-    return typeof prop === "function" ? prop(data) : prop;
+    return isFunction(prop) ? prop(data) : prop;
   },
 
   evaluateStyle(style, data) {
-    if (!Object.keys(style).some((value) => typeof style[value] === "function")) {
+    if (!Object.keys(style).some((value) => isFunction(style[value]))) {
       return style;
     }
     return Object.keys(style).reduce((prev, curr) => {
@@ -116,7 +117,7 @@ module.exports = {
   createAccessor(key) {
     // creates a data accessor function
     // given a property key, path, array index, or null for identity.
-    if (typeof key === "function") {
+    if (isFunction(key)) {
       return key;
     } else if (key === null || typeof key === "undefined") {
       // null/undefined means "return the data item itself"

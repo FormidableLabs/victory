@@ -1,4 +1,5 @@
 /* global console */
+import isFunction from "lodash/lang/isFunction";
 import { PropTypes } from "react";
 import { getConstructor, getConstructorName } from "./type";
 
@@ -123,7 +124,6 @@ export const domain = makeChainable((props, propName, componentName) => {
  */
 export const scale = makeChainable((props, propName, componentName) => {
   const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
-  const isFunction = (val) => typeof val === "function";
   const validScale = (scl) => {
     if (isFunction(scl)) {
       return (isFunction(scl.copy) && isFunction(scl.domain) && isFunction(scl.range));
