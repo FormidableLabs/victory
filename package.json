@@ -16,12 +16,12 @@
   "scripts": {
     "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
-    "test": "builder run npm:test"
+    "test": "builder run npm:test",
+    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
-    "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
+    "builder": "~2.4.0",
     "d3-shape": "^0.2.0",
     "lodash": "^3.10.1",
     "victory-core": "^0.0.3"
@@ -34,7 +34,8 @@
     "react": "0.14.x",
     "react-addons-test-utils": "0.14.x",
     "react-dom": "0.14.x",
-    "sinon": "^1.15.4",
-    "sinon-chai": "^2.8.0"
+    "react": "0.14.x",
+    "sinon-chai": "^2.8.0",
+    "sinon": "^1.15.4"
   }
 }
