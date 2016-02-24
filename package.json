@@ -14,19 +14,19 @@
   },
   "homepage": "https://github.com/formidablelabs/victory",
   "scripts": {
+    "copy-cname": "cp docs/CNAME docs/build/CNAME",
+    "copy-static-assets": "cp -r docs/static/ docs/build/static",
+    "docs-build-static": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname",
+    "docs-dev": "webpack-dev-server --port 3000 --config docs/webpack.config.dev.js --content-base docs",
     "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
+    "server-docs": "http-server docs/build",
     "test": "builder run npm:test",
-    "docs-dev": "webpack-dev-server --port 3000 --config docs/webpack.config.dev.js --content-base docs",
-    "copy-static-assets": "cp -r docs/static/ docs/build/static",
-    "copy-cname": "cp docs/CNAME docs/build/CNAME",
-    "docs-build-static": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname",
-    "server-docs": "http-server docs/build"
+    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
-    "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
+    "builder": "~2.4.0",
     "style-loader": "~0.8.0",
     "url-loader": "~0.5.5",
     "victory-animation": "0.1.0",
@@ -47,12 +47,12 @@
     "lodash": "^3.10.1",
     "mocha": "^2.3.3",
     "radium": "^0.16.2",
-    "react": "0.14.x",
     "react-addons-test-utils": "^0.14.0",
     "react-dom": "0.14.x",
     "react-ga": "^1.2.0",
     "react-router": "1.0.0",
-    "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0"
+    "react": "0.14.x",
+    "sinon-chai": "^2.8.0",
+    "sinon": "^1.17.2"
   }
 }
