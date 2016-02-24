@@ -1,4 +1,5 @@
 import d3Interpolate from "d3-interpolate";
+import isPlainObject  from "lodash/lang/isPlainObject";
 
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.
@@ -21,8 +22,7 @@ export const isInterpolatable = function (obj) {
       return false;
     case "object":
       // Don't try to interpolate class instances (except Date or Array).
-      const proto = Object.getPrototypeOf(obj);
-      return proto === Object.prototype || proto === null;
+      return obj instanceof Date || Array.isArray(obj) || isPlainObject(obj);
     case "function":
       // Careful! There may be extra properties on function objects that the
       // component expects to access - for instance, it may be a `d3.scale()`
