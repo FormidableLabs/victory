@@ -6,12 +6,12 @@ VictoryChart
 
 A flexible charting component for React. VictoryChart composes other victory components into reusable charts. Acting as a coordinator rather than a stand-alone component, VictoryChart reconciles props such as `domain` and `scale` for child components, and provides a set of sensible defaults.
 
-This component works with:
+This component works with the following child components:
 
-- [VictoryAxis](http://github.com/formidablelabs/victory-axis)
-- [VictoryLine](http://github.com/formidablelabs/victory-line)
-- [VictoryScatter](http://github.com/formidablelabs/victory-scatter)
-- [VictoryBar](http://github.com/formidablelabs/victory-bar)
+- [VictoryAxis](src/components/victory-axis/victory-axis.jsx)
+- [VictoryLine](src/components/victory-line/victory-line.jsx)
+- [VictoryScatter](src/components/victory-scatter/victory-scatter.jsx)
+- [VictoryBar](src/components/victory-bar/victory-bar.jsx)
 - _More chart types coming soon!_
 
 
