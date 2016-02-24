@@ -15,14 +15,14 @@ module.exports = {
 
   getStyles(style, defaultStyles, height, width) {  // eslint-disable-line max-params
     if (!style) {
-      return merge({}, defaultStyles, { parent: { height, width } });
+      return defaults({ parent: { height, width } }, defaultStyles);
     }
 
     const {data, labels, parent} = style;
     return {
-      parent: defaults({height: props.height, width: props.width}, defaultStyles.parent, parent),
-      labels: defaults({}, labels, defaultStyles.labels),
-      data: defaults({}, data, defaultStyles.data)
+      parent: defaults({ height, width }, parent, defaultStyles.parent),
+      labels: defaults(labels, defaultStyles.labels),
+      data: defaults(data, defaultStyles.data)
     };
   },
 
