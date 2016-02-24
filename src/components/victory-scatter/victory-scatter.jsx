@@ -8,6 +8,7 @@ import Data from "../../helpers/data";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
 import { VictoryAnimation } from "victory-animation";
 import ScatterHelpers from "./helper-methods";
+import memoizerific from "memoizerific";
 
 const defaultStyles = {
   data: {
@@ -208,6 +209,12 @@ export default class VictoryScatter extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
 
+  componentWillMount() {
+    this.memoized = {
+      getStyles: memoizerific(1)(Helpers.getStyles)
+    };
+  }
+
   renderPoint(data, index, calculatedProps) {
     const position = {
       x: calculatedProps.scale.x.call(null, data.x),
@@ -268,7 +275,8 @@ export default class VictoryScatter extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Helpers.getStyles(this.props, defaultStyles);
+    const style = this.memoized.getStyles(
+      this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

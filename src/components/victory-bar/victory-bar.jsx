@@ -6,7 +6,7 @@ import Scale from "../../helpers/scale";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
-import { memoize } from "victory-util/perf";
+import memoizerific from "memoizerific";
 import { VictoryAnimation } from "victory-animation";
 import Bar from "./bar";
 import BarLabel from "./bar-label";
@@ -254,7 +254,7 @@ export default class VictoryBar extends React.Component {
 
   componentWillMount() {
     this.memoized = {
-      getStyles: memoize(Helpers.getStyles)
+      getStyles: memoizerific(1)(Helpers.getStyles)
     };
   }
 
