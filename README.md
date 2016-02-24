@@ -18,8 +18,9 @@ You can also join the Gitter chat room at https://gitter.im/FormidableLabs/victo
 ## Get started
 
 1. Add Victory to your project:
-  ```
-  npm install victory --save
+
+  ```sh
+  $ npm install victory --save
   ```
 
 2. Add your first Victory component:
@@ -41,6 +42,7 @@ You can also join the Gitter chat room at https://gitter.im/FormidableLabs/victo
   ```
 
 3. `VictoryPie` component will be rendered, and you should see:
+
 ![VictoryPie](https://cloud.githubusercontent.com/assets/3802023/12114963/369a6538-b3a6-11e5-898c-db410a335a7b.png)
 
 
@@ -77,15 +79,29 @@ You can read about these Victory components via interactive docs!
 
 
 ## Animation
-Wrap any Victory component with [VictoryAnimation](https://github.com/FormidableLabs/victory-animation) and it will transition smoothly between states whenever data changes. VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
 
-## Development
-
-Please see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md)
+Wrap any Victory component with [VictoryAnimation][] and it will transition smoothly between states whenever data changes. VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md)
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
+
+```sh
+# Clone the Victory repo
+$ git clone git@github.com:FormidableLabs/victory.git
+$ cd victory
+
+# Run the demo app server
+$ npm start
+
+# Open the demo app
+$ open http://localhost:3000
+
+# Run tests
+$ npm test
+```
+
+For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md) in the project builder archetype.
 
 ## Roadmap
 
@@ -93,3 +109,4 @@ Please see [ROADMAP](ROADMAP.md)
 
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory
+[VictoryAnimation]: https://github.com/FormidableLabs/victory-core/blob/master/src/victory-animation/victory-animation.jsx
