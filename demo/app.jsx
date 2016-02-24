@@ -18,11 +18,11 @@ const App = React.createClass({
   render() {
     return (
       <div>
-        <h1>App</h1>
+        <h1>Victory Chart and Friends Demo</h1>
         <ul>
+          <li><Link to="/chart">Victory Chart Demo</Link></li>
           <li><Link to="/axis">Victory Axis Demo</Link></li>
           <li><Link to="/bar">Victory Bar Demo</Link></li>
-          <li><Link to="/chart">Victory Chart Demo</Link></li>
           <li><Link to="/line">Victory Line Demo</Link></li>
           <li><Link to="/scatter">Victory Scatter Demo</Link></li>
         </ul>

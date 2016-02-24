@@ -56,17 +56,24 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    window.setInterval(() => {
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: getData()
       });
-    }, 3000);
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
   }
 
   render() {
     return (
-      <div>
+      <div className="demo">
+        <h1>VictoryScatter</h1>
+
         <VictoryScatter
           style={style}
           width={500}
