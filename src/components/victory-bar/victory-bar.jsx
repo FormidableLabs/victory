@@ -252,7 +252,7 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = BarHelpers.getDomain.bind(BarHelpers);
 
-  componentWillMount () {
+  componentWillMount() {
     this.memoized = {
       getStyles: memoize(Helpers.getStyles)
     };
@@ -352,7 +352,8 @@ export default class VictoryBar extends React.Component {
       );
     }
 
-    const style = this.memoized.getStyles(this.props.style, defaultStyles, this.props.height, this.props.width);
+    const style = this.memoized.getStyles(
+      this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

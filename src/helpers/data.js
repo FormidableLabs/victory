@@ -10,8 +10,6 @@ import flatten from "lodash/array/flatten";
 import union from "lodash/array/union";
 import isEmpty from "lodash/lang/isEmpty";
 import has from "lodash/object/has";
-import assign from "lodash/object/assign";
-import defaults from "lodash/object/defaults";
 import defaults from "lodash/object/defaults";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
