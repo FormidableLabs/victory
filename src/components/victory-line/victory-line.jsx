@@ -13,8 +13,7 @@ import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
-import { VictoryAnimation } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import memoizerific from "memoizerific";
 
 const defaultStyles = {
