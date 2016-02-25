@@ -3,7 +3,7 @@ import React from "react";
 import Radium from "radium";
 import _ from "lodash";
 import {VictoryScatter} from "../../src/index";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
 
@@ -56,17 +56,24 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    window.setInterval(() => {
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: getData()
       });
-    }, 3000);
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
   }
 
   render() {
     return (
-      <div>
+      <div className="demo">
+        <h1>VictoryScatter</h1>
+
         <VictoryScatter
           style={style}
           width={500}

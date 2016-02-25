@@ -16,30 +16,30 @@
   "scripts": {
     "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
-    "test": "builder run npm:test"
+    "start": "builder run hot",
+    "test": "builder run check",
+    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
-    "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
-    "d3-scale": "~0.2.0",
-    "d3-shape": "~0.2.0",
+    "builder": "~2.4.0",
+    "d3-scale": "^0.2.0",
+    "d3-shape": "^0.2.0",
     "lodash": "^3.10.1",
+    "memoizerific": "^1.5.2",
     "radium": "^0.16.2",
-    "victory-animation": "^0.1.0",
-    "victory-label": "^1.0.1",
-    "victory-util": "^5.0.0"
+    "victory-core": "^0.0.2"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
     "chai": "^3.2.0",
     "history": "~1.13.1",
     "mocha": "^2.3.3",
-    "react": "^0.14.3",
     "react-addons-test-utils": "^0.14.3",
     "react-dom": "^0.14.3",
     "react-router": "^1.0.0",
-    "sinon": "^1.17.2",
-    "sinon-chai": "^2.8.0"
+    "react": "^0.14.3",
+    "sinon-chai": "^2.8.0",
+    "sinon": "^1.17.2"
   }
 }

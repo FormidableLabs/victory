@@ -1,7 +1,7 @@
 import flatten from "lodash/array/flatten";
 import includes from "lodash/collection/includes";
 import isFunction from "lodash/lang/isFunction";
-import { Collection, Helpers } from "victory-util";
+import { Collection, Helpers } from "victory-core";
 import d3Scale from "d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];

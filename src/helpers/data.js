@@ -5,12 +5,12 @@ import flatten from "lodash/array/flatten";
 import union from "lodash/array/union";
 import isEmpty from "lodash/lang/isEmpty";
 import has from "lodash/object/has";
+import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
-import merge from "lodash/object/merge";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
-import { Helpers, Style } from "victory-util";
+import { Helpers, Style } from "victory-core";
 import Scale from "./scale";
 
 export default {
@@ -20,7 +20,7 @@ export default {
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
     const stringsFromData = hasMultipleDatasets ?
         uniq(flatten(props.data.map((dataset) => {
-          return Helpers.getStringsFromData(merge({}, props, {data: dataset}), axis);
+          return Helpers.getStringsFromData(defaults({}, { data: dataset }, props), axis);
         })))
         : this.getStringsFromData(props, axis);
 
@@ -100,31 +100,37 @@ export default {
       .map((datum) => {
         const x = accessor.x(datum);
         const y = accessor.y(datum);
-        return merge({}, datum, {
-          category: this.determineCategoryIndex(x, props.categories),
+        const category = this.determineCategoryIndex(x, props.categories);
+
+        return assign(
+          {},
+          datum,
+          { x, y },
+          category ? { category } : {},
           // map string data to numeric values, and add names
-          x: typeof x === "string" ? stringMap.x[x] : x,
-          xName: typeof x === "string" ? x : undefined,
-          y: typeof y === "string" ? stringMap.y[y] : y,
-          yName: typeof y === "string" ? y : undefined
-        });
+          typeof x === "string" ? { x: stringMap.x[x], xName: x } : {},
+          typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
+        );
       });
   },
 
   // For components that take multiple datasets
-  formatDatasets(datasets, props) {
+  //
+  // NOTE: This code is in the hot path.  Future optimizations may be possible by
+  // reducing the frequency and number of data transformations that occur here.
+  formatDatasets(props, hasMultipleDatasets) {
     // string map must be calculated using all datasets and shared
-    const propsWithDatasets = assign({}, props, {data: datasets});
     const stringMap = {
-      x: this.createStringMap(propsWithDatasets, "x", true),
-      y: this.createStringMap(propsWithDatasets, "y", true)
+      x: this.createStringMap(props, "x", hasMultipleDatasets),
+      y: this.createStringMap(props, "y", hasMultipleDatasets)
     };
-    return datasets.map((dataset, index) => {
-      return {
-        attrs: this.getAttributes(props, index),
-        data: this.formatData(dataset, props, stringMap)
-      };
+
+    const _format = (dataset, index) => ({
+      attrs: this.getAttributes(props, index),
+      data: this.formatData(dataset, props, stringMap)
     });
+
+    return hasMultipleDatasets ? props.data.map(_format) : [_format(props.data, 0)];
   },
 
   cleanData(dataset, props) {
@@ -173,7 +179,7 @@ export default {
     const requiredAttributes = {
       name: attributes && attributes.name ? attributes.name : `data-${index}`
     };
-    return merge(requiredAttributes, attributes);
+    return defaults(requiredAttributes, attributes);
   },
 
   getColor(props, index) {

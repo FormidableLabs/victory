@@ -1,6 +1,6 @@
 import values from "lodash/object/values";
 import pathHelpers from "./path-helpers";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
 module.exports = {
   getSymbol(data, props) {

@@ -4,7 +4,7 @@ import Ecology from "ecology";
 import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
 import { VictoryBar } from "../../src/index";
-import { VictoryLabel } from "victory-label";
+import { VictoryLabel } from "victory-core";
 import { VictoryTheme } from "formidable-landers";
 
 @Radium

@@ -10,7 +10,7 @@ import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import React from "react";
-import { Collection, Log } from "victory-util";
+import { Collection, Log } from "victory-core";
 
 module.exports = {
   getChildComponents(props, defaultAxes) {
@@ -105,7 +105,8 @@ module.exports = {
         return component.type.getDomain(component.props, axis);
       });
       const allDomains = Collection.removeUndefined(flatten(childDomains));
-      domain = allDomains.length === 0 ? [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
+      domain = allDomains.length === 0 ?
+        [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
     }
     const paddedDomain = Domain.padDomain(domain, props, axis);
     const orientations = Axis.getAxisOrientations(childComponents);
@@ -165,8 +166,9 @@ module.exports = {
   getTickFormat(component, axis, calculatedProps) {
     const tickValues = component.props.tickValues;
     const stringMap = calculatedProps.stringMap[axis];
+    const identity = (x) => x;
     if (tickValues && !Collection.containsStrings(tickValues)) {
-      return (x) => x;
+      return identity;
     } else if (stringMap !== null) {
       const tickValueArray = sortBy(values(stringMap), (n) => n);
       const invertedStringMap = invert(stringMap);
@@ -175,7 +177,7 @@ module.exports = {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return calculatedProps.scale[axis].tickFormat() || (x) => x;
+      return calculatedProps.scale[axis].tickFormat() || identity;
     }
   },
 

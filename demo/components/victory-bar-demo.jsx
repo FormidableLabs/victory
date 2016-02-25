@@ -50,8 +50,9 @@ export default class App extends React.Component {
     });
   }
 
-  componentWillMount() {
-    window.setInterval(() => {
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         barData: this.getBarData(),
         numericBarData: this.getNumericBarData()
@@ -59,10 +60,14 @@ export default class App extends React.Component {
     }, 4000);
   }
 
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
   render() {
     return (
       <div className="demo">
-        <h1>Victory Bar</h1>
+        <h1>VictoryBar</h1>
 
         <ChartWrap>
           <VictoryBar

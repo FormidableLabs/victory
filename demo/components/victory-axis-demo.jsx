@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import {VictoryAxis} from "../../src/index";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 import _ from "lodash";
 import Radium from "radium";
 
@@ -21,7 +21,6 @@ export default class App extends React.Component {
     });
   }
 
-
   getDomain() {
     const someNumber = _.random(2, 5);
     return [-someNumber, someNumber];
@@ -29,12 +28,16 @@ export default class App extends React.Component {
 
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
-    window.setInterval(() => {
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         tickValues: this.getTickValues(),
         domain: this.getDomain()
       });
     }, 2000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
   }
 
   render() {
@@ -56,8 +59,9 @@ export default class App extends React.Component {
 
     return (
       <div className="demo">
+        <h1>VictoryAxis</h1>
         <div>
-          <h1>Animating Axis</h1>
+          <h2>Animating Axis</h2>
           <VictoryAxis style={styleOverrides}
             padding={60}
             label={<VictoryLabel>{"animation\nwow!"}</VictoryLabel>}
@@ -67,7 +71,7 @@ export default class App extends React.Component {
           />
         </div>
         <div>
-          <h1>Time Scale Axis</h1>
+          <h2>Time Scale Axis</h2>
           <VictoryAxis
             label="time axis"
             padding={{left: 10, right: 80}}
@@ -83,7 +87,7 @@ export default class App extends React.Component {
           />
         </div>
         <div>
-        <h1>X-Y Axis</h1>
+        <h2>X-Y Axis</h2>
           <svg style={{width: 500, height: 400}}>
             <VictoryAxis crossAxis
               width={500}
@@ -102,7 +106,7 @@ export default class App extends React.Component {
           </svg>
         </div>
         <div>
-        <h1>Log Scale Axis</h1>
+        <h2>Log Scale Axis</h2>
           <VictoryAxis
             label="cool log axis"
             padding={{top: 10, bottom: 60}}
@@ -120,7 +124,7 @@ export default class App extends React.Component {
           />
         </div>
         <div>
-          <h1>Ordinal Scales</h1>
+          <h2>Ordinal Scales</h2>
           <VictoryAxis
             orientation="top"
             style={styleOverrides}

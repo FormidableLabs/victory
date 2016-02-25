@@ -5,9 +5,9 @@ import Point from "./point";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
-import { VictoryAnimation } from "victory-animation";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import ScatterHelpers from "./helper-methods";
+import memoizerific from "memoizerific";
 
 const defaultStyles = {
   data: {
@@ -213,6 +213,13 @@ export default class VictoryScatter extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
 
+  componentWillMount() {
+    this.memoized = {
+      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
+      getStyles: memoizerific(1)(Helpers.getStyles)
+    };
+  }
+
   renderPoint(data, index, calculatedProps) {
     const position = {
       x: calculatedProps.scale.x.call(null, data.x),
@@ -273,7 +280,8 @@ export default class VictoryScatter extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Helpers.getStyles(this.props, defaultStyles);
+    const style = this.memoized.getStyles(
+      this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

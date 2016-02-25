@@ -1,5 +1,6 @@
 import defaults from "lodash/object/defaults";
 import flatten from "lodash/array/flatten";
+import isDate from "lodash/lang/isDate";
 import omit from "lodash/object/omit";
 import Domain from "../../helpers/domain";
 
@@ -43,7 +44,9 @@ module.exports = {
     const previousDataSets = datasets.slice(0, index.seriesIndex);
     const previousBars = flatten(previousDataSets.map((dataset) => {
       return dataset.data
-        .filter((previousDatum) => previousDatum.x === datum.x)
+        .filter((previousDatum) => isDate(datum.x)
+          ? previousDatum.x.getTime() === datum.x.getTime()
+          : previousDatum.x === datum.x)
         .map((previousDatum) => previousDatum.y || 0);
     }));
     return previousBars.reduce((memo, barValue) => {

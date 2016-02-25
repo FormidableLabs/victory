@@ -177,8 +177,8 @@ describe("helpers/data", () => {
         [{x: 1, y: 2}, {x: 2, y: 4}]
       ];
       const dataAttributes = [{name: "a", fill: "red"}, {name: "b", fill: "blue"}];
-      const props = {dataAttributes, x: "x", y: "y"};
-      const formatted = Data.formatDatasets(datasets, props);
+      const props = {dataAttributes, data: datasets, x: "x", y: "y"};
+      const formatted = Data.formatDatasets(props, true);
       expect(Data.determineCategoryIndex).called.and.returned(undefined);
       expect(Data.cleanData).calledTwice.and.returned(datasets[0], datasets[1]);
       expect(Data.getAttributes).calledTwice.and.returned(dataAttributes[0], dataAttributes[1]);
