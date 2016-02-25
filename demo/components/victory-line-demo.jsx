@@ -37,8 +37,9 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    window.setInterval(() => {
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
         style: this.getStyles()
@@ -46,9 +47,15 @@ export default class App extends React.Component {
     }, 2000);
   }
 
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
   render() {
     return (
       <div className="demo">
+        <h1>VictoryLine</h1>
+
         <VictoryLine
           style={{parent: {border: "1px solid black", margin: "5px"}, data: this.state.style}}
           data={this.state.data}
