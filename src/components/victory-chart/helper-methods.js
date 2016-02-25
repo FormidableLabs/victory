@@ -12,7 +12,7 @@ import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import React from "react";
-import { Collection, Log } from "victory-util";
+import { Collection, Log } from "victory-core";
 
 module.exports = {
   getChildComponents(props, defaultAxes) {

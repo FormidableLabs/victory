@@ -5,8 +5,8 @@ import Radium from "radium";
 import Scale from "../../helpers/scale";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
-import { VictoryAnimation } from "victory-animation";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+import memoizerific from "memoizerific";
 import Bar from "./bar";
 import BarLabel from "./bar-label";
 import BarHelpers from "./helper-methods";
@@ -277,6 +277,13 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = BarHelpers.getDomain.bind(BarHelpers);
 
+  componentWillMount() {
+    this.memoized = {
+      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
+      getStyles: memoizerific(1)(Helpers.getStyles)
+    };
+  }
+
   renderBars(dataset, seriesIndex, calculatedProps) {
     return dataset.data.map((datum, barIndex) => {
       const index = {seriesIndex, barIndex};
@@ -284,7 +291,7 @@ export default class VictoryBar extends React.Component {
       const baseStyle = calculatedProps.style;
       const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
       const barComponent = (
-        <Bar key={`series-${index}-bar-${barIndex}`}
+        <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
           style={style}
           position={position}
@@ -316,12 +323,11 @@ export default class VictoryBar extends React.Component {
     });
   }
 
-  renderData(props, style) {
+  calculateProps(props, style) {
     const {stacked, categories} = props;
     const grouped = Domain.shouldGroup(props);
     const hasMultipleDatasets = (grouped || stacked);
-    const rawDatasets = hasMultipleDatasets ? props.data : [props.data];
-    const datasets = Data.formatDatasets(rawDatasets, props);
+    const datasets = Data.formatDatasets(props, hasMultipleDatasets);
     const stringMap = {
       x: Data.createStringMap(props, "x", hasMultipleDatasets),
       y: Data.createStringMap(props, "y", hasMultipleDatasets)
@@ -339,10 +345,14 @@ export default class VictoryBar extends React.Component {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    const calculatedProps = {
+    return {
       categories, datasets, domain, padding, range, scale, grouped, stacked, stringMap, style
     };
-    return datasets.map((dataset, index) => {
+  }
+
+  renderData(props, style) {
+    const calculatedProps = this.calculateProps(props, style);
+    return calculatedProps.datasets.map((dataset, index) => {
       return this.renderBars(dataset, index, calculatedProps);
     });
   }
@@ -365,7 +375,9 @@ export default class VictoryBar extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Helpers.getStyles(this.props, defaultStyles);
+
+    const style = this.memoized.getStyles(
+      this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

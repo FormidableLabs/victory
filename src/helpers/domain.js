@@ -6,7 +6,7 @@ import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
 import Data from "./data";
 import Axis from "./axis";
-import { Helpers, Collection } from "victory-util";
+import { Helpers, Collection } from "victory-core";
 
 module.exports = {
   getDomain(props, axis) {
@@ -73,8 +73,8 @@ module.exports = {
       return this.getDomainFromCategories(props, axis);
     }
     // find the global min and max
-    const rawDatasets = (props.stacked || this.shouldGroup(props)) ? props.data : [props.data];
-    const datasets = Data.formatDatasets(rawDatasets, props)
+    const hasMultipleDatasets = props.stacked || this.shouldGroup(props);
+    const datasets = Data.formatDatasets(props, hasMultipleDatasets)
       .map((dataset) => dataset.data);
     const globalDomain = this.getDomainFromData(datasets, axis);
 

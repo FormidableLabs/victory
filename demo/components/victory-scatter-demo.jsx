@@ -3,7 +3,7 @@ import React from "react";
 import Radium from "radium";
 import _ from "lodash";
 import {VictoryScatter} from "../../src/index";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
 

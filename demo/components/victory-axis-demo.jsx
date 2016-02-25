@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import {VictoryAxis} from "../../src/index";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 import _ from "lodash";
 import Radium from "radium";
 

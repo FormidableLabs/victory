@@ -1,5 +1,5 @@
 import some from "lodash/collection/some";
-import { Collection } from "victory-util";
+import { Collection } from "victory-core";
 
 module.exports = {
   getAxisType(component) {
