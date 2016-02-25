@@ -198,8 +198,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return {
 	      parent: (0, _lodashObjectDefaults2["default"])({ height: height, width: width }, parent, defaultStyles.parent),
-	      labels: (0, _lodashObjectDefaults2["default"])(labels, defaultStyles.labels),
-	      data: (0, _lodashObjectDefaults2["default"])(data, defaultStyles.data)
+	      labels: (0, _lodashObjectDefaults2["default"])({}, labels, defaultStyles.labels),
+	      data: (0, _lodashObjectDefaults2["default"])({}, data, defaultStyles.data)
 	    };
 	  },
 	
