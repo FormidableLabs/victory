@@ -23,8 +23,8 @@ module.exports = {
     const {data, labels, parent} = style;
     return {
       parent: defaults({ height, width }, parent, defaultStyles.parent),
-      labels: defaults(labels, defaultStyles.labels),
-      data: defaults(data, defaultStyles.data)
+      labels: defaults({}, labels, defaultStyles.labels),
+      data: defaults({}, data, defaultStyles.data)
     };
   },
 
