@@ -29,6 +29,7 @@ $RECYCLE.BIN/
 # App specific
 bower_components
 coverage
+dist/*.map
 docs/build
 lib
 node_modules
