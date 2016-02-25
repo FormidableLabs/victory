@@ -22,6 +22,7 @@ bower_components
 coverage
 demo
 docs
+dist/*.map
 karma*
 node_modules
 test
