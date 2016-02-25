@@ -25,7 +25,7 @@ export default {
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
     const stringsFromData = hasMultipleDatasets ?
         uniq(flatten(props.data.map((dataset) => {
-          return Helpers.getStringsFromData(defaults({}, axis, {data: dataset}), props);
+          return Helpers.getStringsFromData(defaults({}, { data: dataset }, props), axis);
         })))
         : this.getStringsFromData(props, axis);
 
