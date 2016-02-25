@@ -254,6 +254,7 @@ export default class VictoryBar extends React.Component {
 
   componentWillMount() {
     this.memoized = {
+      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
       getStyles: memoizerific(1)(Helpers.getStyles)
     };
   }
