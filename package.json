@@ -27,7 +27,7 @@
     "lodash": "^3.10.1",
     "memoizerific": "^1.5.2",
     "radium": "^0.16.2",
-    "victory-core": "^0.0.1"
+    "victory-core": "^0.0.2"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
