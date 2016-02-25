@@ -2,13 +2,13 @@ import merge from "lodash/object/merge";
 import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { VictoryLabel } from "victory-label";
-import { VictoryAnimation } from "victory-animation";
+import { VictoryLabel } from "victory-core";
+import { VictoryAnimation } from "victory-core";
 import AxisLine from "./axis-line";
 import GridLine from "./grid";
 import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
 import Axis from "../../helpers/axis";
 
 

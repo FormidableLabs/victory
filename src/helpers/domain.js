@@ -6,7 +6,7 @@ import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
 import Data from "./data";
 import Axis from "./axis";
-import { Helpers, Collection } from "victory-util";
+import { Helpers, Collection } from "victory-core";
 
 module.exports = {
   getDomain(props, axis) {

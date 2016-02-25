@@ -4,7 +4,7 @@ import range from "lodash/utility/range";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
 module.exports = {
   // exposed for use by VictoryChart

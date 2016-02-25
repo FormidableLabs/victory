@@ -15,7 +15,7 @@ import assign from "lodash/object/assign";
 import lodashRange from "lodash/utility/range";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
-import { Helpers, Style } from "victory-util";
+import { Helpers, Style } from "victory-core";
 import Scale from "./scale";
 
 export default {

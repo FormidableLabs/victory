@@ -3,9 +3,9 @@ import omit from "lodash/object/omit";
 import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 import { getPath } from "./helper-methods";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
 @Radium
 export default class Point extends React.Component {

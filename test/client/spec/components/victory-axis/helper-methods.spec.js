@@ -4,7 +4,7 @@ import AxisHelpers from "src/components/victory-axis/helper-methods";
 import Scale from "src/helpers/scale";
 import Axis from "src/helpers/axis";
 import Domain from "src/helpers/domain";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
 describe("victory-axis/helper-methods", () => {
   describe("getDomain", () => {

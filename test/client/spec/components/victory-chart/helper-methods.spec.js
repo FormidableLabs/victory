@@ -3,7 +3,7 @@
 import Helpers from "src/components/victory-chart/helper-methods";
 import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
-import { Log } from "victory-util";
+import { Log } from "victory-core";
 import Data from "src/helpers/data";
 import Domain from "src/helpers/domain";
 import Axis from "src/helpers/axis";

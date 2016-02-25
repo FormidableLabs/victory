@@ -1,8 +1,8 @@
 import merge from "lodash/object/merge";
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import { VictoryLabel } from "victory-label";
-import { Helpers } from "victory-util";
+import { VictoryLabel } from "victory-core";
+import { Helpers } from "victory-core";
 
 @Radium
 export default class BarLabel extends React.Component {
