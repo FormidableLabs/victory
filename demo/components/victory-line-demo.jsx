@@ -2,7 +2,7 @@
 import React from "react";
 import _ from "lodash";
 import {VictoryLine} from "../../src/index";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
