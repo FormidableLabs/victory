@@ -1,11 +1,8 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
-import { Helpers } from "victory-util";
+import { Helpers, VictoryLabel } from "victory-core";
 import merge from "lodash/object/merge";
 import assign from "lodash/object/assign";
-import {VictoryLabel} from "victory-label";
 
-@Radium
 export default class SliceLabel extends React.Component {
   static propTypes = {
     labelComponent: PropTypes.any,

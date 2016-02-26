@@ -1,10 +1,8 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 import merge from "lodash/object/merge";
 import omit from "lodash/object/omit";
 
-@Radium
 export default class Slice extends React.Component {
   static propTypes = {
     slice: PropTypes.object,

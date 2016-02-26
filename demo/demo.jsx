@@ -1,8 +1,7 @@
 /*global window:false*/
 import _ from "lodash";
 import React from "react";
-import Radium from "radium";
-import {VictoryPie} from "../src/index";
+import { VictoryPie } from "../src/index";
 
 const rand = () => Math.max(Math.floor(Math.random() * 10000), 1000);
 
@@ -18,7 +17,6 @@ const getData = () => {
   ];
 };
 
-@Radium
 export default class App extends React.Component {
 
   constructor(props) {
