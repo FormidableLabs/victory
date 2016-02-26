@@ -1,4 +1,6 @@
 import defaults from "lodash/object/defaults";
+import pick from "lodash/object/pick";
+
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import {
@@ -334,10 +336,7 @@ export default class VictoryAxis extends React.Component {
         "style", "domain", "range", "tickCount", "tickValues",
         "labelPadding", "offsetX", "offsetY", "padding", "width", "height"
       ];
-      const animateData = whitelist.reduce((prev, curr) => {
-        prev[curr] = this.props[curr];
-        return prev;
-      }, {});
+      const animateData = pick(this.props, whitelist);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryAxis {...this.props} {...props} animate={null}/>}

@@ -1,5 +1,4 @@
 import flatten from "lodash/array/flatten";
-import includes from "lodash/collection/includes";
 import isFunction from "lodash/lang/isFunction";
 import { Collection, Helpers } from "victory-core";
 import d3Scale from "d3-scale";
@@ -11,7 +10,7 @@ module.exports = {
     if (typeof scale === "function") {
       return (isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range));
     } else if (typeof scale === "string") {
-      return includes(supportedScaleStrings, scale);
+      return supportedScaleStrings.indexOf(scale) !== -1;
     }
     return false;
   },
@@ -59,7 +58,7 @@ module.exports = {
     if (!scale) {
       return this.getScaleTypeFromData(props, axis);
     } else if (typeof scale === "string") {
-      return includes(supportedScaleStrings, scale) ? scale : "invalid";
+      return supportedScaleStrings.indexOf(scale) !== -1 ? scale : "invalid";
     } else if (!this.validScale(scale)) {
       return "invalid";
     }

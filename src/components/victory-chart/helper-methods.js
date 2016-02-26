@@ -3,6 +3,7 @@ import sortBy from "lodash/collection/sortBy";
 import values from "lodash/object/values";
 import compact from "lodash/array/compact";
 import flatten from "lodash/array/flatten";
+import identity from "lodash/utility/identity";
 import sum from "lodash/math/sum";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
@@ -166,7 +167,6 @@ module.exports = {
   getTickFormat(component, axis, calculatedProps) {
     const tickValues = component.props.tickValues;
     const stringMap = calculatedProps.stringMap[axis];
-    const identity = (x) => x;
     if (tickValues && !Collection.containsStrings(tickValues)) {
       return identity;
     } else if (stringMap !== null) {

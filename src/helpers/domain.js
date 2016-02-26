@@ -1,8 +1,4 @@
 import flatten from "lodash/array/flatten";
-import isDate from "lodash/lang/isDate";
-import includes from "lodash/collection/includes";
-import isEmpty from "lodash/lang/isEmpty";
-import isUndefined from "lodash/lang/isUndefined";
 import zipObject from "lodash/array/zipObject";
 import Data from "./data";
 import Axis from "./axis";
@@ -61,7 +57,7 @@ module.exports = {
     const categories = flatten(props.categories);
     const stringArray = Collection.containsStrings(categories) ?
      Data.getStringsFromCategories(props, axis) : [];
-    const stringMap = isEmpty(stringArray) ? null :
+    const stringMap = stringArray.length === 0 ? null :
       zipObject(stringArray.map((string, index) => [string, index + 1]));
     const categoryValues = stringMap ?
       categories.map((value) => stringMap[value]) : categories;
@@ -111,7 +107,7 @@ module.exports = {
     // automatically create grouped bars if data is array of arrays
     // and x/y accessors are the default "x" and "y" keys,
     return !props.stacked && (props.grouped || (
-      isUndefined(props.grouped) && Collection.isArrayOfArrays(props.data) &&
+      typeof props.grouped === "undefined" && Collection.isArrayOfArrays(props.data) &&
       props.x === "x" && props.y === "y"
     ));
   },
@@ -132,9 +128,9 @@ module.exports = {
     const axisValues = [];
     datasets.forEach((dataset) => {
       dataset.forEach((data) => {
-        if (data.category !== undefined && !includes(categories, data.category)) {
+        if (data.category !== undefined && categories.indexOf(data.category) === -1) {
           categories.push(data.category);
-        } else if (!includes(axisValues, data[axis])) {
+        } else if (axisValues.indexOf(data[axis]) === -1) {
           axisValues.push(data[axis]);
         }
       });
@@ -153,7 +149,7 @@ module.exports = {
       });
     };
 
-    return isEmpty(categories) ? _dataByIndex() : _dataByCategory();
+    return categories.length === 0 ? _dataByIndex() : _dataByCategory();
   },
 
   padDomain(domain, props, axis) {
@@ -176,7 +172,7 @@ module.exports = {
       0 : domainMin.valueOf() - padding;
     const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
       0 : domainMax.valueOf() + padding;
-    return isDate(domainMin) || isDate(domainMax) ?
+    return domainMin instanceof Date || domainMax instanceof Date ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   },
 

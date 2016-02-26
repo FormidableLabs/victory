@@ -1,3 +1,5 @@
+import pick from "lodash/object/pick";
+
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Scale from "../../helpers/scale";
@@ -367,10 +369,7 @@ export default class VictoryBar extends React.Component {
         "data", "dataAttributes", "categories", "colorScale", "domain", "height",
         "padding", "style", "width"
       ];
-      const animateData = whitelist.reduce((prev, curr) => {
-        prev[curr] = this.props[curr];
-        return prev;
-      }, {});
+      const animateData = pick(this.props, whitelist);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryBar {...this.props} {...props} animate={null}/>}
