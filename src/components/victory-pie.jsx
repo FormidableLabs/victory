@@ -1,14 +1,17 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import d3Shape from "d3-shape";
 import isArray from "lodash/lang/isArray";
 import merge from "lodash/object/merge";
 import assign from "lodash/object/assign";
 import pick from "lodash/object/pick";
-import { PropTypes as CustomPropTypes, Helpers, Style } from "victory-util";
+import {
+  PropTypes as CustomPropTypes,
+  Helpers,
+  Style,
+  VictoryAnimation
+} from "victory-core";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
-import {VictoryAnimation} from "victory-animation";
 
 const defaultStyles = {
   data: {
@@ -48,7 +51,6 @@ const getLabelPosition = function (props, style, radius) {
     .innerRadius(innerRadius);
 };
 
-@Radium
 export default class VictoryPie extends React.Component {
   static propTypes = {
     /**
@@ -285,7 +287,12 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const style = Helpers.getStyles(this.props, defaultStyles);
+    const style = Helpers.getStyles(
+      this.props.style,
+      defaultStyles,
+      this.props.height,
+      this.props.width)
+    ;
     const padding = Helpers.getPadding(this.props);
     const radius = getRadius(this.props, padding);
     const parentStyle = style.parent;
