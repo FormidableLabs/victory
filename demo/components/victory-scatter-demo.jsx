@@ -1,6 +1,5 @@
 /*global window:false */
 import React from "react";
-import Radium from "radium";
 import _ from "lodash";
 import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
@@ -47,7 +46,6 @@ const symbolStyle = {
   }
 };
 
-@Radium
 export default class App extends React.Component {
   constructor(props) {
     super(props);
