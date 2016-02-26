@@ -2,11 +2,9 @@ import merge from "lodash/object/merge";
 import omit from "lodash/object/omit";
 import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import { VictoryLabel, Helpers } from "victory-core";
 import { getPath } from "./helper-methods";
 
-@Radium
 export default class Point extends React.Component {
   static propTypes = {
     data: PropTypes.shape({

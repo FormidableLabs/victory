@@ -1,7 +1,6 @@
 import merge from "lodash/object/merge";
 import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import {
   PropTypes as CustomPropTypes,
   VictoryLabel,
@@ -70,7 +69,6 @@ const getStyles = (props) => {
   };
 };
 
-@Radium
 export default class VictoryAxis extends React.Component {
   static role = "axis";
   static propTypes = {
