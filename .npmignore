@@ -21,7 +21,7 @@ Thumbs.db
 bower_components
 coverage
 demo
-docs
+docs/build
 dist/*.map
 karma*
 node_modules
