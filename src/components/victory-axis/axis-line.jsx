@@ -1,7 +1,5 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
 
-@Radium
 export default class AxisLine extends React.Component {
   static role = "line";
 

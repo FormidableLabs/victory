@@ -7,7 +7,6 @@ import isUndefined from "lodash/lang/isUndefined";
 import merge from "lodash/object/merge";
 import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import LineSegment from "./line-segment";
 import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
@@ -33,7 +32,6 @@ const defaultStyles = {
   }
 };
 
-@Radium
 export default class VictoryLine extends React.Component {
   static role = "line";
   static propTypes = {

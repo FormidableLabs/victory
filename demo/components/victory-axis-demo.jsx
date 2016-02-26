@@ -3,9 +3,7 @@ import React from "react";
 import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import _ from "lodash";
-import Radium from "radium";
 
-@Radium
 export default class App extends React.Component {
   constructor() {
     super();
