@@ -75,11 +75,7 @@ Style data for the entire chart with props:
       data: {
         fill: "gold",
         stroke: "orange",
-        strokeWidth: 3,
-        ":hover": {
-          fill: "orange",
-          stroke: "gold",
-        }
+        strokeWidth: 3
       }
     }}
  />

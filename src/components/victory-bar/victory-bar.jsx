@@ -1,7 +1,6 @@
 import pick from "lodash/object/pick";
 
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import Scale from "../../helpers/scale";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -34,7 +33,6 @@ const defaultData = [
   {x: 4, y: 4}
 ];
 
-@Radium
 export default class VictoryBar extends React.Component {
   static role = "bar";
   static propTypes = {

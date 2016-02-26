@@ -1,7 +1,6 @@
 import defaults from "lodash/object/defaults";
 
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -13,7 +12,6 @@ const defaultAxes = {
   dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
 };
 
-@Radium
 export default class VictoryChart extends React.Component {
   static propTypes = {
     /**

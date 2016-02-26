@@ -1,9 +1,7 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import d3Shape from "d3-shape";
 import { Helpers } from "victory-core";
 
-@Radium
 export default class LineSegment extends React.Component {
   static propTypes = {
     data: PropTypes.array,

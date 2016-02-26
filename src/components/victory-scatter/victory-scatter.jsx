@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import pick from "lodash/object/pick";
 import Point from "./point";
 import Scale from "../../helpers/scale";
@@ -26,7 +25,6 @@ const defaultStyles = {
   }
 };
 
-@Radium
 export default class VictoryScatter extends React.Component {
   static role = "scatter";
   static propTypes = {
