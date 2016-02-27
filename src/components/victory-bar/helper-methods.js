@@ -95,16 +95,19 @@ module.exports = {
     return (plotGroupLabel && labelExists);
   },
 
+  getUniqueX(datasets) {
+    return uniq(datasets.reduce((prev, dataset) => {
+      return prev.concat(dataset.data.map((d) => d.x));
+    }, []));
+  },
+
   getLabelIndex(datum, calculatedProps) {
-    const { datasets, stringMap } = calculatedProps;
+    const { stringMap, uniqueX } = calculatedProps;
     if (datum.category !== undefined) {
       return datum.category;
     } else if (stringMap.x) {
       return (datum.x - 1);
     } else {
-      const uniqueX = uniq(datasets.reduce((prev, dataset) => {
-        return prev.concat(dataset.data.map((d) => d.x));
-      }, []));
       return uniqueX.findIndex((x) => x === datum.x);
     }
   },

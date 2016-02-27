@@ -343,8 +343,10 @@ export default class VictoryBar extends React.Component {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+    const uniqueX = BarHelpers.getUniqueX(datasets);
     return {
-      categories, datasets, domain, padding, range, scale, grouped, stacked, stringMap, style
+      categories, datasets, domain, padding, range, scale,
+      grouped, stacked, stringMap, style, uniqueX
     };
   }
 
