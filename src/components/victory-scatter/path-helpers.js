@@ -1,3 +1,5 @@
+import range from "lodash/utility/range";
+
 module.exports = {
   circle(x, y, size) {
     return `M ${x}, ${y} m ${-size}, 0
@@ -60,7 +62,7 @@ module.exports = {
   star(x, y, size) {
     const baseSize = 1.35 * size;
     const angle = Math.PI / 5;
-    const starCoords = Array(...Array(10)).map((val, index) => {
+    const starCoords = range(10).map((index) => {
       const length = index % 2 === 0 ? baseSize : baseSize / 2;
       return `${length * Math.sin(angle * (index + 1)) + x},
         ${length * Math.cos(angle * (index + 1)) + y}`;

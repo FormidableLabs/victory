@@ -1,4 +1,5 @@
 import flatten from "lodash/array/flatten";
+import includes from "lodash/collection/includes";
 import zipObject from "lodash/array/zipObject";
 import Data from "./data";
 import Axis from "./axis";
@@ -128,9 +129,9 @@ module.exports = {
     const axisValues = [];
     datasets.forEach((dataset) => {
       dataset.forEach((data) => {
-        if (data.category !== undefined && categories.indexOf(data.category) === -1) {
+        if (data.category !== undefined && !includes(categories, data.category)) {
           categories.push(data.category);
-        } else if (axisValues.indexOf(data[axis]) === -1) {
+        } else if (!includes(axisValues, data[axis])) {
           axisValues.push(data[axis]);
         }
       });
