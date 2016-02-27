@@ -1,5 +1,5 @@
 import defaults from "lodash/object/defaults";
-import flatten from "lodash/array/flatten";
+import uniq from "lodash/array/uniq";
 import omit from "lodash/object/omit";
 import Domain from "../../helpers/domain";
 
@@ -41,13 +41,14 @@ module.exports = {
     }
     const y = datum.y;
     const previousDataSets = datasets.slice(0, index.seriesIndex);
-    const previousBars = flatten(previousDataSets.map((dataset) => {
-      return dataset.data
+    const previousBars = previousDataSets.reduce((prev, dataset) => {
+      return prev.concat(dataset.data
         .filter((previousDatum) => datum.x instanceof Date
           ? previousDatum.x.getTime() === datum.x.getTime()
           : previousDatum.x === datum.x)
-        .map((previousDatum) => previousDatum.y || 0);
-    }));
+        .map((previousDatum) => previousDatum.y || 0)
+      );
+    }, []);
     return previousBars.reduce((memo, barValue) => {
       const sameSign = (y < 0 && barValue < 0) || (y >= 0 && barValue >= 0);
       return sameSign ? memo + barValue : memo;
@@ -101,15 +102,9 @@ module.exports = {
     } else if (stringMap.x) {
       return (datum.x - 1);
     } else {
-      const allX = datasets.map((dataset) => {
-        return dataset.data.map((d) => d.x);
-      });
-      const uniqueX = flatten(allX).reduce((prev, curr) => {
-        if (prev.indexOf(curr) === -1) {
-          prev.push(curr);
-        }
-        return prev;
-      }, []);
+      const uniqueX = uniq(datasets.reduce((prev, dataset) => {
+        return prev.concat(dataset.data.map((d) => d.x));
+      }, []));
       return uniqueX.findIndex((x) => x === datum.x);
     }
   },

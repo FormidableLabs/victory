@@ -1,6 +1,5 @@
-import flatten from "lodash/array/flatten";
-import last from "lodash/array/last";
 import sortBy from "lodash/collection/sortBy";
+import pick from "lodash/object/pick";
 import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
@@ -256,15 +255,17 @@ export default class VictoryLine extends React.Component {
     if (!this.props.label) {
       return undefined;
     }
-    const position = {
-      x: scale.x.call(this, last(flatten(dataSegments)).x),
-      y: scale.y.call(this, last(flatten(dataSegments)).y)
-    };
+    const lastSegment = dataSegments[dataSegments.length - 1];
+    const lastPoint = Array.isArray(lastSegment) ?
+      lastSegment[lastSegment.length - 1] : lastSegment;
     return (
       <LineLabel
         key={`line-label`}
         data={dataset}
-        position={position}
+        position={{
+          x: scale.x.call(this, lastPoint.x),
+          y: scale.y.call(this, lastPoint.y)
+        }}
         label={this.props.label}
         style={this.getLabelStyle(style)}
       />
@@ -307,10 +308,7 @@ export default class VictoryLine extends React.Component {
       const whitelist = [
         "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
       ];
-      const animateData = whitelist.reduce((prev, curr) => {
-        prev[curr] = this.props[curr];
-        return prev;
-      }, {});
+      const animateData = pick(this.props, whitelist);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryLine {...this.props} {...props} animate={null}/>}

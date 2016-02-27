@@ -138,8 +138,9 @@ module.exports = {
 
     const _dataByCategory = () => {
       return categories.map((value) => {
-        const categoryData = datasets.filter((data) => data.category === value);
-        return flatten(categoryData.map((data) => data[axis]));
+        return datasets.reduce((prev, data) => {
+          return data.category === value ? prev.concat(data[axis]) : prev;
+        }, []);
       });
     };
 

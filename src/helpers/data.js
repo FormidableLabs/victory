@@ -1,10 +1,9 @@
-import compact from "lodash/array/compact";
 import flatten from "lodash/array/flatten";
 import findIndex from "lodash/array/findIndex";
+import uniq from "lodash/array/uniq";
 import has from "lodash/object/has";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
-import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
 import { Helpers, Style } from "victory-core";
 import Scale from "./scale";
@@ -15,14 +14,12 @@ export default {
     const stringsFromAxes = this.getStringsFromAxes(props, axis);
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
     const stringsFromData = hasMultipleDatasets ?
-        uniq(flatten(props.data.map((dataset) => {
-          return Helpers.getStringsFromData(defaults({}, {data: dataset}, props), axis);
-        })))
-        : this.getStringsFromData(props, axis);
+      props.data.reduce((prev, dataset) => {
+        return prev.concat(Helpers.getStringsFromData(defaults({}, {data: dataset}, props), axis));
+      }, [])
+      : this.getStringsFromData(props, axis);
 
-    const allStrings = uniq(compact(
-      [...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]
-    ));
+    const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
     return allStrings.length === 0 ? null :
       zipObject(allStrings.map((string, index) => [string, index + 1]));
   },
@@ -50,11 +47,10 @@ export default {
       return [];
     }
     const accessor = Helpers.createAccessor(has(props, axis) ? props[axis] : axis);
-    const dataStrings = (props.data)
-        .map((datum) => accessor(datum))
-        .filter((datum) => typeof datum === "string");
-    // return a unique set of strings
-    return compact(uniq(dataStrings));
+    return props.data.reduce((prev, curr) => {
+      const datum = accessor(curr);
+      return typeof datum === "string" && prev.indexOf(datum) === -1 ? prev.concat(datum) : prev;
+    }, []);
   },
 
   // for components that take single datasets
