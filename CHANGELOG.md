@@ -1,5 +1,12 @@
 # VictoryLine Changelog
 
+## 5.0.0 (2016-02-26)
+
+- VictoryBar, VictoryLine, VictoryScatter, and VictoryAxis are now all part of the VictoryChart repo.
+- VictoryChart depends on VictoryCore instead of VictoryUtil, VictoryLabel, and VictoryAnimation individually.
+- VictoryChart no longer depends on Radium
+- Significant rendering performance improvements
+
 ## 4.0.0 (2016-01-30)
 
 - Supports data accessor functions!
