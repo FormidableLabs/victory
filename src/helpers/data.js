@@ -1,7 +1,6 @@
 import flatten from "lodash/array/flatten";
 import findIndex from "lodash/array/findIndex";
 import uniq from "lodash/array/uniq";
-import has from "lodash/object/has";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import zipObject from "lodash/array/zipObject";
@@ -46,7 +45,9 @@ export default {
     if (!props.data) {
       return [];
     }
-    const accessor = Helpers.createAccessor(has(props, axis) ? props[axis] : axis);
+    const accessor = Helpers.createAccessor(
+      typeof props[axis] !== "undefined" ? props[axis] : axis
+    );
     return props.data.reduce((prev, curr) => {
       const datum = accessor(curr);
       return typeof datum === "string" && prev.indexOf(datum) === -1 ? prev.concat(datum) : prev;
