@@ -343,8 +343,10 @@ export default class VictoryBar extends React.Component {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+    const uniqueX = BarHelpers.getUniqueX(datasets);
     return {
-      categories, datasets, domain, padding, range, scale, grouped, stacked, stringMap, style
+      categories, datasets, domain, padding, range, scale,
+      grouped, stacked, stringMap, style, uniqueX
     };
   }
 
@@ -363,10 +365,11 @@ export default class VictoryBar extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      const whitelist = [
         "data", "dataAttributes", "categories", "colorScale", "domain", "height",
         "padding", "style", "width"
-      ]);
+      ];
+      const animateData = pick(this.props, whitelist);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryBar {...this.props} {...props} animate={null}/>}

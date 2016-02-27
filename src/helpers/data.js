@@ -1,19 +1,8 @@
-import isFunction from "lodash/lang/isFunction";
-import isUndefined from "lodash/lang/isUndefined";
-import isNull from "lodash/lang/isNull";
-import property from "lodash/utility/property";
-import identity from "lodash/utility/identity";
-
-import compact from "lodash/array/compact";
-import findIndex from "lodash/array/findIndex";
 import flatten from "lodash/array/flatten";
-import union from "lodash/array/union";
-import isEmpty from "lodash/lang/isEmpty";
-import has from "lodash/object/has";
+import findIndex from "lodash/array/findIndex";
+import uniq from "lodash/array/uniq";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
-import lodashRange from "lodash/utility/range";
-import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
 import { Helpers, Style } from "victory-core";
 import Scale from "./scale";
@@ -24,15 +13,13 @@ export default {
     const stringsFromAxes = this.getStringsFromAxes(props, axis);
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
     const stringsFromData = hasMultipleDatasets ?
-        uniq(flatten(props.data.map((dataset) => {
-          return Helpers.getStringsFromData(defaults({}, { data: dataset }, props), axis);
-        })))
-        : this.getStringsFromData(props, axis);
+      props.data.reduce((prev, dataset) => {
+        return prev.concat(Helpers.getStringsFromData(defaults({}, {data: dataset}, props), axis));
+      }, [])
+      : this.getStringsFromData(props, axis);
 
-    const allStrings = uniq(compact(
-      [...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]
-    ));
-    return isEmpty(allStrings) ? null :
+    const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
+    return allStrings.length === 0 ? null :
       zipObject(allStrings.map((string, index) => [string, index + 1]));
   },
 
@@ -49,7 +36,7 @@ export default {
     if (!props.categories || axis !== "x") {
       return [];
     } else {
-      const categoryArray = compact(flatten(props.categories));
+      const categoryArray = flatten(props.categories);
       return categoryArray.filter((val) => typeof val === "string");
     }
   },
@@ -58,12 +45,13 @@ export default {
     if (!props.data) {
       return [];
     }
-    const accessor = Helpers.createAccessor(has(props, axis) ? props[axis] : axis);
-    const dataStrings = (props.data)
-        .map((datum) => accessor(datum))
-        .filter((datum) => typeof datum === "string");
-    // return a unique set of strings
-    return compact(uniq(dataStrings));
+    const accessor = Helpers.createAccessor(
+      typeof props[axis] !== "undefined" ? props[axis] : axis
+    );
+    return props.data.reduce((prev, curr) => {
+      const datum = accessor(curr);
+      return typeof datum === "string" && prev.indexOf(datum) === -1 ? prev.concat(datum) : prev;
+    }, []);
   },
 
   // for components that take single datasets
@@ -79,13 +67,13 @@ export default {
     // create an array of values evenly spaced across the x domain that include domain min/max
     const domain = props.domain ? (props.domain.x || props.domain) :
       Scale.getBaseScale(props, "x").domain();
-    const step = Math.max(...domain) / props.samples;
-    const values = union(
-        lodashRange(Math.min(...domain), Math.max(...domain), step),
-        [Math.max(...domain)]
-    );
-    // return data objects for values in {x, y} format
-    return values.map((v) => ({x: v, y: v}));
+    const samples = props.samples || 1;
+    const max = Math.max(...domain);
+    const values = Array(...Array(samples)).map((val, index) => {
+      const v = (max / samples) * index + Math.min(...domain);
+      return { x: v, y: v };
+    });
+    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
   },
 
   formatData(dataset, props, stringMap) {
@@ -100,23 +88,20 @@ export default {
       x: Helpers.createAccessor(props.x),
       y: Helpers.createAccessor(props.y)
     };
-
-    return this.cleanData(dataset, props)
-      .map((datum) => {
-        const x = accessor.x(datum);
-        const y = accessor.y(datum);
-        const category = this.determineCategoryIndex(x, props.categories);
-
-        return assign(
+    return this.cleanData(dataset, props).map((datum) => {
+      const x = accessor.x(datum);
+      const y = accessor.y(datum);
+      const category = this.determineCategoryIndex(x, props.categories);
+      return assign(
           {},
           datum,
           { x, y },
-          category ? { category } : {},
+          typeof category !== "undefined" ? { category } : {},
           // map string data to numeric values, and add names
           typeof x === "string" ? { x: stringMap.x[x], xName: x } : {},
           typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
         );
-      });
+    });
   },
 
   // For components that take multiple datasets
@@ -195,18 +180,5 @@ export default {
     const colorScale = Array.isArray(props.colorScale) ?
       props.colorScale : Style.getColorScale(props.colorScale);
     return colorScale[index % colorScale.length];
-  },
-
-  createAccessor(key) {
-    // creates a data accessor function
-    // given a property key, path, array index, or null for identity.
-    if (isFunction(key)) {
-      return key;
-    } else if (isNull(key) || isUndefined(key)) {
-      // null/undefined means "return the data item itself"
-      return identity;
-    }
-    // otherwise, assume it is an array index, property key or path (_.property handles all three)
-    return property(key);
   }
 };

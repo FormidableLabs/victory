@@ -1,8 +1,5 @@
-import flatten from "lodash/array/flatten";
-import take from "lodash/array/take";
-import uniq from "lodash/array/uniq";
-import isDate from "lodash/lang/isDate";
 import defaults from "lodash/object/defaults";
+import uniq from "lodash/array/uniq";
 import omit from "lodash/object/omit";
 import Domain from "../../helpers/domain";
 
@@ -28,7 +25,7 @@ module.exports = {
     const x = (stacked && !categories) ? datum.x :
       this.adjustX(datum, index.seriesIndex, calculatedProps);
     const formatValue = (value, axis) => {
-      return isDate(datum[axis]) ? new Date(value) : value;
+      return datum[axis] instanceof Date ? new Date(value) : value;
     };
     return {
       independent: scale.x(formatValue(x, "x")),
@@ -43,14 +40,15 @@ module.exports = {
       return 0;
     }
     const y = datum.y;
-    const previousDataSets = take(datasets, index.seriesIndex);
-    const previousBars = flatten(previousDataSets.map((dataset) => {
-      return dataset.data
-        .filter((previousDatum) => isDate(datum.x)
+    const previousDataSets = datasets.slice(0, index.seriesIndex);
+    const previousBars = previousDataSets.reduce((prev, dataset) => {
+      return prev.concat(dataset.data
+        .filter((previousDatum) => datum.x instanceof Date
           ? previousDatum.x.getTime() === datum.x.getTime()
           : previousDatum.x === datum.x)
-        .map((previousDatum) => previousDatum.y || 0);
-    }));
+        .map((previousDatum) => previousDatum.y || 0)
+      );
+    }, []);
     return previousBars.reduce((memo, barValue) => {
       const sameSign = (y < 0 && barValue < 0) || (y >= 0 && barValue >= 0);
       return sameSign ? memo + barValue : memo;
@@ -97,17 +95,19 @@ module.exports = {
     return (plotGroupLabel && labelExists);
   },
 
+  getUniqueX(datasets) {
+    return uniq(datasets.reduce((prev, dataset) => {
+      return prev.concat(dataset.data.map((d) => d.x));
+    }, []));
+  },
+
   getLabelIndex(datum, calculatedProps) {
-    const { datasets, stringMap } = calculatedProps;
+    const { stringMap, uniqueX } = calculatedProps;
     if (datum.category !== undefined) {
       return datum.category;
     } else if (stringMap.x) {
       return (datum.x - 1);
     } else {
-      const allX = datasets.map((dataset) => {
-        return dataset.data.map((d) => d.x);
-      });
-      const uniqueX = uniq(flatten(allX));
       return uniqueX.findIndex((x) => x === datum.x);
     }
   },

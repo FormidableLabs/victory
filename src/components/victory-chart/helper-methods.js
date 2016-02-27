@@ -2,9 +2,6 @@ import invert from "lodash/object/invert";
 import sortBy from "lodash/collection/sortBy";
 import values from "lodash/object/values";
 import identity from "lodash/utility/identity";
-import compact from "lodash/array/compact";
-import flatten from "lodash/array/flatten";
-import isEmpty from "lodash/lang/isEmpty";
 import sum from "lodash/math/sum";
 import uniq from "lodash/array/uniq";
 import zipObject from "lodash/array/zipObject";
@@ -103,11 +100,12 @@ module.exports = {
     if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
       domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
     } else {
-      const childDomains = childComponents.map((component) => {
-        return component.type.getDomain(component.props, axis);
-      });
-      const allDomains = Collection.removeUndefined(flatten(childDomains));
-      domain = isEmpty(allDomains) ? [0, 1] : [Math.min(...allDomains), Math.max(...allDomains)];
+      const childDomains = childComponents.reduce((prev, component) => {
+        const childDomain = component.type.getDomain(component.props, axis);
+        return childDomain ? prev.concat(childDomain) : prev;
+      }, []);
+      domain = childDomains.length === 0 ?
+        [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
     }
     const paddedDomain = Domain.padDomain(domain, props, axis);
     const orientations = Axis.getAxisOrientations(childComponents);
@@ -185,30 +183,32 @@ module.exports = {
     const axisComponent = Axis.getAxisComponent(childComponents, axis);
     const tickStrings = Data.getStringsFromAxes(axisComponent.props, axis);
 
-    const categoryStrings = compact(flatten(childComponents.map((component) => {
-      return Data.getStringsFromCategories(component.props, axis);
-    })));
-    const dataStrings = compact(flatten(childComponents.map((child) => {
-      return Data.getStringsFromData(child.props, axis);
-    })));
-    const allStrings = uniq(compact([...tickStrings, ...categoryStrings, ...dataStrings]));
+    const categoryStrings = childComponents.reduce((prev, component) => {
+      const categoryData = Data.getStringsFromCategories(component.props, axis);
+      return categoryData ? prev.concat(categoryData) : prev;
+    }, []);
+    const dataStrings = childComponents.reduce((prev, component) => {
+      const stringData = Data.getStringsFromData(component.props, axis);
+      return stringData ? prev.concat(stringData) : prev;
+    }, []);
+    const allStrings = uniq([...tickStrings, ...categoryStrings, ...dataStrings]);
 
-    return isEmpty(allStrings) ? null :
+    return allStrings.length === 0 ? null :
       zipObject(allStrings.map((string, index) => [string, index + 1]));
   },
 
   getCategories(childComponents) {
     const groupedComponents = this.getDataComponents(childComponents, "grouped");
-    if (isEmpty(groupedComponents)) {
+    if (groupedComponents.length === 0) {
       return undefined;
     }
     // otherwise, create a set of groupedComponent categories
-    const allCategories = groupedComponents.map((component) => {
-      const categories = component.props.categories;
-      return categories && Collection.isArrayOfArrays(categories) ?
-        categories.map((arr) => (sum(arr) / arr.length)) : categories;
-    });
-    const uniqueCategories = compact(uniq(flatten(allCategories)));
-    return isEmpty(uniqueCategories) ? undefined : uniqueCategories;
+    const allCategories = groupedComponents.reduce((prev, component) => {
+      const cats = component.props.categories;
+      const categories = cats && Collection.isArrayOfArrays(cats) ?
+        cats.map((arr) => (sum(arr) / arr.length)) : cats;
+      return categories && prev.indexOf(categories) === -1 ? prev.concat(categories) : prev;
+    }, []);
+    return allCategories.length === 0 ? undefined : allCategories;
   }
 };

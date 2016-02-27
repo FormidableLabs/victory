@@ -1,6 +1,8 @@
-import without from "lodash/array/without";
+import isFunction from "lodash/lang/isFunction";
 import includes from "lodash/collection/includes";
+import without from "lodash/array/without";
 import range from "lodash/utility/range";
+
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -48,7 +50,7 @@ module.exports = {
         return range(1, props.tickValues.length + 1);
       }
       return props.tickValues;
-    } else if (scale.ticks && typeof scale.ticks === "function") {
+    } else if (scale.ticks && isFunction(scale.ticks)) {
       const ticks = scale.ticks(props.tickCount);
       if (props.crossAxis) {
         return includes(ticks, 0) ? without(ticks, 0) : ticks;
@@ -60,13 +62,13 @@ module.exports = {
 
   getTickFormat(props, tickProps) {
     const {scale, ticks} = tickProps;
-    if (props.tickFormat && typeof props.tickFormat === "function") {
+    if (props.tickFormat && isFunction(props.tickFormat)) {
       return props.tickFormat;
     } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
       return (x, index) => props.tickFormat[index];
     } else if (Axis.stringTicks(props)) {
       return (x, index) => props.tickValues[index];
-    } else if (scale.tickFormat && typeof scale.tickFormat === "function") {
+    } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
       return scale.tickFormat(ticks.length);
     } else {
       return (x) => x;

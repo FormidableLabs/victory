@@ -1,11 +1,6 @@
-import flatten from "lodash/array/flatten";
-import last from "lodash/array/last";
 import sortBy from "lodash/collection/sortBy";
-import isEmpty from "lodash/lang/isEmpty";
-import isNull from "lodash/lang/isNull";
-import isUndefined from "lodash/lang/isUndefined";
-import merge from "lodash/object/merge";
 import pick from "lodash/object/pick";
+import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineLabel from "./line-label";
@@ -219,14 +214,14 @@ export default class VictoryLine extends React.Component {
     const segments = [];
     let segmentStartIndex = 0;
     orderedData.forEach((datum, index) => {
-      if (isNull(datum.y) || isUndefined(datum.y)) {
+      if (datum.y === null || typeof datum.y === "undefined") {
         segments.push(orderedData.slice(segmentStartIndex, index));
         segmentStartIndex = index + 1;
       }
     });
     segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
     return segments.filter((segment) => {
-      return !isEmpty(segment);
+      return Array.isArray(segment) && segment.length > 0;
     });
   }
 
@@ -237,7 +232,7 @@ export default class VictoryLine extends React.Component {
     // use fill instead of stroke for text
     const fill = style.data.stroke;
     const padding = style.labels.padding || 0;
-    return merge({}, {opacity, fill, padding}, style.labels);
+    return defaults({opacity, fill, padding}, style.labels);
   }
 
   renderLine(calculatedProps) {
@@ -260,15 +255,17 @@ export default class VictoryLine extends React.Component {
     if (!this.props.label) {
       return undefined;
     }
-    const position = {
-      x: scale.x.call(this, last(flatten(dataSegments)).x),
-      y: scale.y.call(this, last(flatten(dataSegments)).y)
-    };
+    const lastSegment = dataSegments[dataSegments.length - 1];
+    const lastPoint = Array.isArray(lastSegment) ?
+      lastSegment[lastSegment.length - 1] : lastSegment;
     return (
       <LineLabel
         key={`line-label`}
         data={dataset}
-        position={position}
+        position={{
+          x: scale.x.call(this, lastPoint.x),
+          y: scale.y.call(this, lastPoint.y)
+        }}
         label={this.props.label}
         style={this.getLabelStyle(style)}
       />
@@ -307,9 +304,11 @@ export default class VictoryLine extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      // TODO: extract into helper
+      const whitelist = [
         "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
-      ]);
+      ];
+      const animateData = pick(this.props, whitelist);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryLine {...this.props} {...props} animate={null}/>}

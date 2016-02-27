@@ -31,7 +31,7 @@ module.exports = {
     }
     const scale = props.scale[axis] || props.scale;
     if (this.validScale(scale)) {
-      return typeof scale === "function" ? scale : d3Scale[scale]();
+      return isFunction(scale) ? scale : d3Scale[scale]();
     }
   },
 

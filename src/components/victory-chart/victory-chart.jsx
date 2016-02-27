@@ -1,6 +1,4 @@
-import keys from "lodash/object/keys";
-import merge from "lodash/object/merge";
-import some from "lodash/collection/some";
+import defaults from "lodash/object/defaults";
 
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
@@ -113,7 +111,7 @@ export default class VictoryChart extends React.Component {
   getStyles(props) {
     const styleProps = props.style && props.style.parent;
     return {
-      parent: merge({
+      parent: defaults({
         height: props.height,
         width: props.width
       },
@@ -144,7 +142,7 @@ export default class VictoryChart extends React.Component {
   getGroupedDataProps(child, calculatedProps) {
     const {domain, flipped, scale, stringMap} = calculatedProps;
     const categoryAxis = flipped ? "y" : "x";
-    const categories = stringMap[categoryAxis] && keys(stringMap[categoryAxis]);
+    const categories = stringMap[categoryAxis] && Object.keys(stringMap[categoryAxis]);
     return {
       domain,
       scale,
@@ -166,7 +164,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getCalculatedProps(props, childComponents) {
-    const flipped = some(childComponents, (component) => component.props.horizontal);
+    const flipped = childComponents.some((component) => component.props.horizontal);
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
       y: Axis.getAxisComponent(childComponents, "y")
@@ -205,9 +203,9 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
     return childComponents.map((child, index) => {
-      const style = merge({}, {parent: baseStyle.parent}, child.props.style);
+      const style = defaults({parent: baseStyle.parent}, child.props.style);
       const childProps = this.getChildProps(child, props, calculatedProps);
-      return React.cloneElement(child, merge({}, childProps, {
+      return React.cloneElement(child, defaults({
         animate: child.props.animate || props.animate,
         height: props.height,
         width: props.width,
@@ -216,7 +214,7 @@ export default class VictoryChart extends React.Component {
         key: index,
         standalone: false,
         style
-      }));
+      }, childProps));
     });
   }
 

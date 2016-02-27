@@ -1,4 +1,4 @@
-import merge from "lodash/object/merge";
+import defaults from "lodash/object/defaults";
 import omit from "lodash/object/omit";
 import pick from "lodash/object/pick";
 import React, { PropTypes } from "react";
@@ -39,12 +39,12 @@ export default class Point extends React.Component {
     const stylesFromData = omit(props.data, [
       "x", "y", "z", "size", "symbol", "name", "label"
     ]);
-    const baseDataStyle = merge({}, props.style.data, stylesFromData);
+    const baseDataStyle = defaults({}, stylesFromData, props.style.data);
     const dataStyle = Helpers.evaluateStyle(baseDataStyle, props.data);
     // match certain label styles to data if styles are not given
     const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
     const padding = props.style.labels.padding || props.size * 0.25;
-    const baseLabelStyle = merge({padding}, matchedStyle, props.style.labels);
+    const baseLabelStyle = defaults({padding}, props.style.labels, matchedStyle);
     const labelStyle = Helpers.evaluateStyle(baseLabelStyle, props.data);
     return {data: dataStyle, labels: labelStyle};
   }
@@ -66,7 +66,7 @@ export default class Point extends React.Component {
     }
     const component = props.labelComponent;
     const componentStyle = component && component.props.style || {};
-    const baseStyle = merge({}, style.labels, componentStyle);
+    const baseStyle = defaults({}, componentStyle, style.labels);
     const labelStyle = Helpers.evaluateStyle(baseStyle, props.data);
     const children = component && component.props.children || props.data.label;
     const labelProps = {
