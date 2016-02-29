@@ -2,6 +2,7 @@
 /* global sinon */
 
 import Helpers from "src/components/victory-bar/helper-methods";
+import Layout from "src/helpers/layout";
 import Scale from "src/helpers/scale";
 
 describe("victory-bar/helper-methods", () => {
@@ -9,7 +10,7 @@ describe("victory-bar/helper-methods", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Helpers, "getYOffset");
+      sandbox.spy(Layout, "getY0");
       sandbox.spy(Helpers, "adjustX");
     });
 
@@ -34,7 +35,7 @@ describe("victory-bar/helper-methods", () => {
       const data = {x: 1, y: 1};
       const index = {seriesIndex: 1, barIndex: 0};
       const barPosition = Helpers.getBarPosition(data, index, calculatedProps);
-      expect(Helpers.getYOffset).not.called;
+      expect(Layout.getY0).not.called;
       expect(Helpers.adjustX).calledWith(data, index.seriesIndex, calculatedProps).and.returned(1);
       expect(barPosition).to.eql({independent: 10, dependent0: 0, dependent1: 10});
     });
@@ -45,7 +46,7 @@ describe("victory-bar/helper-methods", () => {
       const index = {seriesIndex: 2, barIndex: 0};
       const barPosition = Helpers.getBarPosition(data, index, calculatedProps);
       expect(Helpers.adjustX).notCalled;
-      expect(Helpers.getYOffset).calledWith(data, index, calculatedProps).and.returned(1);
+      expect(Layout.getY0).calledWith(datasets, data, index.seriesIndex).and.returned(1);
       expect(barPosition).to.eql({independent: 10, dependent0: 10, dependent1: 30});
     });
   });

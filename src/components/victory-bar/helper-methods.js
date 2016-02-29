@@ -1,12 +1,14 @@
 import defaults from "lodash/object/defaults";
 import uniq from "lodash/array/uniq";
 import omit from "lodash/object/omit";
+import Layout from "../../helpers/layout";
 
 module.exports = {
   // Layout Helpers
   getBarPosition(datum, index, calculatedProps) {
-    const { scale, stacked, categories } = calculatedProps;
-    const yOffset = stacked ? this.getYOffset(datum, index, calculatedProps) : 0;
+    const { scale, stacked, categories, datasets } = calculatedProps;
+    const yOffset = stacked && index.seriesIndex !== 0 ?
+      Layout.getY0(datasets, datum, index.seriesIndex) : 0;
     const y0 = yOffset;
     const y1 = yOffset + datum.y;
     const x = (stacked && !categories) ? datum.x :
@@ -19,27 +21,6 @@ module.exports = {
       dependent0: scale.y(formatValue(y0, "y")),
       dependent1: scale.y(formatValue(y1, "y"))
     };
-  },
-
-  getYOffset(datum, index, calculatedProps) {
-    const { datasets } = calculatedProps;
-    if (index.seriesIndex === 0) {
-      return 0;
-    }
-    const y = datum.y;
-    const previousDataSets = datasets.slice(0, index.seriesIndex);
-    const previousBars = previousDataSets.reduce((prev, dataset) => {
-      return prev.concat(dataset.data
-        .filter((previousDatum) => datum.x instanceof Date
-          ? previousDatum.x.getTime() === datum.x.getTime()
-          : previousDatum.x === datum.x)
-        .map((previousDatum) => previousDatum.y || 0)
-      );
-    }, []);
-    return previousBars.reduce((memo, barValue) => {
-      const sameSign = (y < 0 && barValue < 0) || (y >= 0 && barValue >= 0);
-      return sameSign ? memo + barValue : memo;
-    }, 0);
   },
 
   adjustX(datum, index, calculatedProps) {

@@ -1,7 +1,5 @@
 import pick from "lodash/object/pick";
 import last from "lodash/array/last";
-import flatten from "lodash/array/flatten";
-import take from "lodash/array/take";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import omit from "lodash/object/omit";
@@ -9,6 +7,7 @@ import omit from "lodash/object/omit";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Domain from "../../helpers/domain";
+import Layout from "../../helpers/layout";
 import Scale from "../../helpers/scale";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import Area from "./area";
@@ -249,20 +248,6 @@ export default class VictoryArea extends React.Component {
     };
   }
 
-  getY0(datasets, datum, index) {
-    const y = datum.y;
-    const previousDataSets = take(datasets, index);
-    const previousPoints = flatten(previousDataSets.map((dataset) => {
-      return dataset.data
-        .filter((previousDatum) => previousDatum.x === datum.x)
-        .map((previousDatum) => previousDatum.y || 0);
-    }));
-    return previousPoints.reduce((memo, value) => {
-      const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
-      return sameSign ? memo + value : memo;
-    }, 0);
-  }
-
   getBaseline(datasets, index, calculatedProps) {
     if (index === 0 || this.props.stacked === false) {
       const {domain} = calculatedProps;
@@ -271,7 +256,7 @@ export default class VictoryArea extends React.Component {
       return datasets[index].data.map((datum) => assign({y0: minY}, datum));
     } else {
       return datasets[index].data.map((datum) => {
-        const y0 = this.getY0(datasets, datum, index);
+        const y0 = Layout.getY0(datasets, datum, index);
         return assign({y0}, datum);
       });
     }
