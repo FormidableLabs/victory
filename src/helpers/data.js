@@ -119,8 +119,8 @@ export default {
       attrs: this.getAttributes(props, index),
       data: this.formatData(dataset, props, stringMap)
     });
-
-    return hasMultipleDatasets ? props.data.map(_format) : [_format(props.data, 0)];
+    const data = props.data || this.generateData(props);
+    return hasMultipleDatasets ? data.map(_format) : [_format(data, 0)];
   },
 
   cleanData(dataset, props) {
