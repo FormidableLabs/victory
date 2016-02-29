@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import Radium from "radium";
 import d3Shape from "d3-shape";
 import assign from "lodash/object/assign";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
 @Radium
 export default class Area extends React.Component {

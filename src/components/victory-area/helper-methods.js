@@ -1,15 +1,14 @@
 import assign from "lodash/object/assign";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import { Collection } from "victory-util";
+import { Collection } from "victory-core";
 
 module.exports = {
   getData(props) {
     if (props.data) {
-      const multipleDatasets = Collection.isArrayOfArrays(props.data) &&
+      const hasMultipleDatasets = Collection.isArrayOfArrays(props.data) &&
         props.y === "y" && props.x === "x";
-      const datasets = multipleDatasets ? props.data : [props.data];
-      return Data.formatDatasets(datasets, props);
+      return Data.formatDatasets(props, hasMultipleDatasets);
     } else if (Array.isArray(props.y) && typeof props.y[0] === "function") {
       return props.y.map((y, index) => {
         const newProps = assign({}, props, {y});

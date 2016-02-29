@@ -1,8 +1,7 @@
-import merge from "lodash/object/merge";
+import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
 import Radium from "radium";
-import {VictoryLabel} from "victory-label";
-import { Helpers } from "victory-util";
+import { VictoryLabel, Helpers } from "victory-core";
 
 @Radium
 export default class AreaLabel extends React.Component {
@@ -16,7 +15,7 @@ export default class AreaLabel extends React.Component {
 
   renderLabelComponent(props) {
     const component = props.labelComponent;
-    const baseStyle = merge({padding: 0}, props.style, component.props.style);
+    const baseStyle = defaults({padding: 0}, component.props.style, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.data);
     const children = component.props.children || props.labelText || "";
     const newProps = {
@@ -30,7 +29,7 @@ export default class AreaLabel extends React.Component {
   }
 
   renderVictoryLabel(props) {
-    const style = Helpers.evaluateStyle(merge({padding: 0}, props.style), props.data);
+    const style = Helpers.evaluateStyle(defaults({padding: 0}, props.style), props.data);
     return (
       <VictoryLabel
         x={props.position.x + style.padding}

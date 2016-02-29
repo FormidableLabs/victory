@@ -6,7 +6,6 @@ import {
 } from "../../src/index";
 
 const UPDATE_INTERVAL = 2000;
-let updateTimer;
 
 const chartStyle = {parent: {width: 500, height: 350, margin: 50}};
 class App extends React.Component {
@@ -93,8 +92,9 @@ class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    updateTimer = window.setInterval(() => {
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         scatterData: this.getScatterData(),
         lineData: this.getData(),
@@ -106,12 +106,13 @@ class App extends React.Component {
   }
 
   componentWillUnmount() {
-    window.clearInterval(updateTimer);
+    window.clearInterval(this.setStateInterval);
   }
 
   render() {
     return (
       <div className="demo">
+        <h1>VictoryChart</h1>
         <p>
           <VictoryChart/>
 

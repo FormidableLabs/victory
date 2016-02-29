@@ -9,11 +9,11 @@ import omit from "lodash/object/omit";
 import React, { PropTypes } from "react";
 import Radium from "radium";
 import Scale from "../../helpers/scale";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
-import { VictoryAnimation } from "victory-animation";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import Area from "./area";
 import AreaLabel from "./area-label";
 import AreaHelpers from "./helper-methods";
+import memoizerific from "memoizerific";
 
 const defaultStyles = {
   data: {
@@ -240,6 +240,13 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = AreaHelpers.getDomain.bind(AreaHelpers);
 
+  componentWillMount() {
+    this.memoized = {
+      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
+      getStyles: memoizerific(1)(Helpers.getStyles)
+    };
+  }
+
   getY0(datasets, datum, index) {
     const y = datum.y;
     const previousDataSets = take(datasets, index);
@@ -268,15 +275,14 @@ export default class VictoryArea extends React.Component {
     }
   }
 
-  renderAreas(allData, calculatedProps) {
-    const {scale} = calculatedProps;
-    const datasets = Array.isArray(allData) ? allData : [allData];
+  renderAreas(calculatedProps) {
+    const {datasets, scale} = calculatedProps;
     return datasets.map((dataset, index) => {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
       const dataWithBaseline = this.getBaseline(datasets, index, calculatedProps);
       const areaComponent = (
-        <Area key={dataset.attrs.name}
+        <Area key={`area-${index}`}
           scale={scale}
           style={style}
           interpolation={dataset.attrs.interpolation || this.props.interpolation}
@@ -324,7 +330,7 @@ export default class VictoryArea extends React.Component {
     const calculatedProps = {
       datasets, domain, padding, range, scale, style
     };
-    return this.renderAreas(datasets, calculatedProps);
+    return this.renderAreas(calculatedProps);
   }
 
   render() {
@@ -345,7 +351,8 @@ export default class VictoryArea extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = Helpers.getStyles(this.props, defaultStyles);
+    const style = this.memoized.getStyles(
+      this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

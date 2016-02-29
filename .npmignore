@@ -1,27 +1,29 @@
 # Cruft
-*.sublime-workspace
-.DS_Store
-.AppleDouble
-.LSOverride
-Icon
 ._*
+.AppleDouble
+.DS_Store
+.LSOverride
 .Spotlight-V100
-.Trashes
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/
 .tmp
+.Trashes
+*.sublime-workspace
+$RECYCLE.BIN/
+Desktop.ini
+ehthumbs.db
+Icon
 npm-debug.log*
+Thumbs.db
 
 # Code / build
-coverage
-node_modules
-bower_components
-demo
-test
-karma*
-webpack*
-.eslint*
 .editor*
+.eslint*
 .travis*
+bower_components
+coverage
+demo
+docs/build
+dist/*.map
+karma*
+node_modules
+test
+webpack*

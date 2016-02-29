@@ -80,8 +80,7 @@ Add labels, style the data, change the interpolation, add a custom domain:
     style={{
       data: {
         stroke: "#822722",
-        strokeWidth: 3,
-        ":hover": {stroke: "#c33b33"}
+        strokeWidth: 3
       },
       labels: {fontSize: 12}
     }}

@@ -2,7 +2,7 @@
 import React from "react";
 import _ from "lodash";
 import {VictoryArea} from "../../src/index";
-import {VictoryLabel} from "victory-label";
+import {VictoryLabel} from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -109,7 +109,7 @@ export default class App extends React.Component {
         />
 
       <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "red"}}}
+          style={{parent: {border: "1px solid black", margin: "5px"}, data: {fill: "red"}}}
           data={_.range(0, 100)}
           x={null}
           y={(d) => Math.sin(d)}
@@ -150,10 +150,6 @@ export default class App extends React.Component {
             {x: 9, y: 8},
             {x: 10, y: 12}
           ]}
-        />
-
-        <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
         />
       </div>
     );

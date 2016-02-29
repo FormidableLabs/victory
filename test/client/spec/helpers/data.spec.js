@@ -177,8 +177,8 @@ describe("helpers/data", () => {
         [{x: 1, y: 2}, {x: 2, y: 4}]
       ];
       const dataAttributes = [{name: "a", fill: "red"}, {name: "b", fill: "blue"}];
-      const props = {dataAttributes, x: "x", y: "y"};
-      const formatted = Data.formatDatasets(datasets, props);
+      const props = {dataAttributes, data: datasets, x: "x", y: "y"};
+      const formatted = Data.formatDatasets(props, true);
       expect(Data.determineCategoryIndex).called.and.returned(undefined);
       expect(Data.cleanData).calledTwice.and.returned(datasets[0], datasets[1]);
       expect(Data.getAttributes).calledTwice.and.returned(dataAttributes[0], dataAttributes[1]);
@@ -229,30 +229,6 @@ describe("helpers/data", () => {
       expect(Data.generateData).calledOnce.and.returned(expectedReturn);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
       expect(returnData).to.eql(expectedReturn);
-    });
-  });
-
-  describe("createAccessor", () => {
-    it("creates a valid object accessor from a property key", () => {
-      const accessor = Data.createAccessor("k");
-      expect(accessor({k: 42})).to.eql(42);
-    });
-
-    it("creates a valid array accessor from an index", () => {
-      const accessor = Data.createAccessor(2);
-      expect(accessor([3, 4, 5])).to.eql(5);
-    });
-
-    it("creates a valid array accessor from a deeply nested path", () => {
-      const accessor = Data.createAccessor("x.y[0].0.z");
-      expect(accessor({x: {y: [[{z: 1987}]]}})).to.eql(1987);
-    });
-
-    it("creates a value (passthrough) accessor from null/undefined", () => {
-      const nullAccessor = Data.createAccessor(null);
-      const undefinedAccessor = Data.createAccessor(undefined);
-      expect(nullAccessor("ok")).to.eql("ok");
-      expect(undefinedAccessor(14)).to.eql(14);
     });
   });
 });

@@ -1,8 +1,6 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
-@Radium
 export default class Bar extends React.Component {
 
   static propTypes = {

@@ -1,20 +1,14 @@
-import flatten from "lodash/array/flatten";
-import last from "lodash/array/last";
 import sortBy from "lodash/collection/sortBy";
-import isEmpty from "lodash/lang/isEmpty";
-import isNull from "lodash/lang/isNull";
-import isUndefined from "lodash/lang/isUndefined";
-import merge from "lodash/object/merge";
 import pick from "lodash/object/pick";
+import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import LineSegment from "./line-segment";
 import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-util";
-import { VictoryAnimation } from "victory-animation";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+import memoizerific from "memoizerific";
 
 const defaultStyles = {
   data: {
@@ -33,7 +27,6 @@ const defaultStyles = {
   }
 };
 
-@Radium
 export default class VictoryLine extends React.Component {
   static role = "line";
   static propTypes = {
@@ -97,8 +90,14 @@ export default class VictoryLine extends React.Component {
       "stepBefore"
     ]),
     /**
-     * The label prop specifies a label to display at the end of a line component,
-     * this prop can be given as a value, or as an entire label component
+     * The label prop specifies a label to display at the end of a line component.
+     * This prop can be given as a value, or as an entire, HTML-complete label component.
+     * If given as a value, a new VictoryLabel will be created with props and
+     * styles from the line. When given as a component, a new element will be
+     * cloned from the label component. The new element will have default
+     * values provided by the line for properties x, y, textAnchor, and
+     * verticalAnchor; and styles filled out with defaults from the line, and
+     * overrides from the datum.
      */
     label: PropTypes.any,
     /**
@@ -203,19 +202,26 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
 
+  componentWillMount() {
+    this.memoized = {
+      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
+      getStyles: memoizerific(1)(Helpers.getStyles)
+    };
+  }
+
   getDataSegments(dataset) {
     const orderedData = sortBy(dataset, "x");
     const segments = [];
     let segmentStartIndex = 0;
     orderedData.forEach((datum, index) => {
-      if (isNull(datum.y) || isUndefined(datum.y)) {
+      if (datum.y === null || typeof datum.y === "undefined") {
         segments.push(orderedData.slice(segmentStartIndex, index));
         segmentStartIndex = index + 1;
       }
     });
     segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
     return segments.filter((segment) => {
-      return !isEmpty(segment);
+      return Array.isArray(segment) && segment.length > 0;
     });
   }
 
@@ -226,7 +232,7 @@ export default class VictoryLine extends React.Component {
     // use fill instead of stroke for text
     const fill = style.data.stroke;
     const padding = style.labels.padding || 0;
-    return merge({}, {opacity, fill, padding}, style.labels);
+    return defaults({opacity, fill, padding}, style.labels);
   }
 
   renderLine(calculatedProps) {
@@ -249,15 +255,17 @@ export default class VictoryLine extends React.Component {
     if (!this.props.label) {
       return undefined;
     }
-    const position = {
-      x: scale.x.call(this, last(flatten(dataSegments)).x),
-      y: scale.y.call(this, last(flatten(dataSegments)).y)
-    };
+    const lastSegment = dataSegments[dataSegments.length - 1];
+    const lastPoint = Array.isArray(lastSegment) ?
+      lastSegment[lastSegment.length - 1] : lastSegment;
     return (
       <LineLabel
         key={`line-label`}
         data={dataset}
-        position={position}
+        position={{
+          x: scale.x.call(this, lastPoint.x),
+          y: scale.y.call(this, lastPoint.y)
+        }}
         label={this.props.label}
         style={this.getLabelStyle(style)}
       />
@@ -296,16 +304,19 @@ export default class VictoryLine extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      // TODO: extract into helper
+      const whitelist = [
         "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
-      ]);
+      ];
+      const animateData = pick(this.props, whitelist);
       return (
         <VictoryAnimation {...this.props.animate} data={animateData}>
           {(props) => <VictoryLine {...this.props} {...props} animate={null}/>}
         </VictoryAnimation>
       );
     }
-    const style = Helpers.getStyles(this.props, defaultStyles);
+    const style = this.memoized.getStyles(
+      this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
   }

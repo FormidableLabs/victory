@@ -1,5 +1,4 @@
-import some from "lodash/collection/some";
-import { Collection } from "victory-util";
+import { Collection } from "victory-core";
 
 module.exports = {
   getAxisType(component) {
@@ -11,7 +10,7 @@ module.exports = {
 
   getAxisComponent(childComponents, axis) {
     const getAxis = (component) => {
-      const flipped = some(childComponents, (child) => child.props.horizontal);
+      const flipped = childComponents.some((child) => child.props.horizontal);
       return component.type.getAxis(component.props, flipped);
     };
     const axisComponents = childComponents.filter((component) => {

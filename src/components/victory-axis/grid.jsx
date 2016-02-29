@@ -1,8 +1,6 @@
 import React, { PropTypes } from "react";
-import Radium from "radium";
-import { Helpers } from "victory-util";
+import { Helpers } from "victory-core";
 
-@Radium
 export default class GridLine extends React.Component {
   static role = "grid";
 
