@@ -1,21 +1,8 @@
 import defaults from "lodash/object/defaults";
 import uniq from "lodash/array/uniq";
 import omit from "lodash/object/omit";
-import Domain from "../../helpers/domain";
 
 module.exports = {
-  getDomain(props, axis) {
-    const propsDomain = Domain.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return Domain.padDomain(propsDomain, props, axis);
-    }
-    const ensureZero = (domain) => {
-      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
-    };
-    const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis));
-    return Domain.padDomain(dataDomain, props, axis);
-  },
-
   // Layout Helpers
   getBarPosition(datum, index, calculatedProps) {
     const { scale, stacked, categories } = calculatedProps;

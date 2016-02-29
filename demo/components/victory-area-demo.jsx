@@ -91,6 +91,7 @@ export default class App extends React.Component {
             [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]
           ]}
         />
+
         <VictoryArea
           colorScale={["cyan", "magenta"]}
           style={{parent: {border: "1px solid black", margin: "5px"}, data: {opacity: 0.4}}}
@@ -108,21 +109,21 @@ export default class App extends React.Component {
           animate={{velocity: 0.03}}
         />
 
-      <VictoryArea
+        <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}, data: {fill: "red"}}}
           data={_.range(0, 100)}
           x={null}
           y={(d) => Math.sin(d)}
         />
 
-      <VictoryArea
+        <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}}}
           data={this.state.arrayData}
           x={0}
           y={1}
         />
 
-      <VictoryArea
+        <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}}}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
@@ -151,6 +152,13 @@ export default class App extends React.Component {
             {x: 10, y: 12}
           ]}
         />
+
+      <VictoryArea
+        y={[
+          (data) => Math.sin(data.x),
+          (data) => Math.cos(data.x)
+        ]}
+      />
       </div>
     );
   }

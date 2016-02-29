@@ -1,6 +1,5 @@
 import assign from "lodash/object/assign";
 import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
 import { Collection } from "victory-core";
 
 module.exports = {
@@ -23,17 +22,5 @@ module.exports = {
         data: Data.getData(props)
       }];
     }
-  },
-
-  getDomain(props, axis) {
-    const propsDomain = Domain.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return Domain.padDomain(propsDomain, props, axis);
-    }
-    const ensureZero = (domain) => {
-      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
-    };
-    const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis));
-    return Domain.padDomain(dataDomain, props, axis);
   }
 };

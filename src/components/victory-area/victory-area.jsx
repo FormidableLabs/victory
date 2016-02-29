@@ -8,6 +8,7 @@ import omit from "lodash/object/omit";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
+import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import Area from "./area";
@@ -220,7 +221,8 @@ export default class VictoryArea extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.func)
     ])
   };
 
@@ -238,7 +240,7 @@ export default class VictoryArea extends React.Component {
     y: "y"
   };
 
-  static getDomain = AreaHelpers.getDomain.bind(AreaHelpers);
+  static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
 
   componentWillMount() {
     this.memoized = {
@@ -320,8 +322,8 @@ export default class VictoryArea extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: AreaHelpers.getDomain(props, "x"),
-      y: AreaHelpers.getDomain(props, "y")
+      x: Domain.getMultiSeriesDomain(props, "x", datasets),
+      y: Domain.getMultiSeriesDomain(props, "y", datasets)
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),

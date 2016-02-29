@@ -273,7 +273,7 @@ export default class VictoryBar extends React.Component {
     y: "y"
   };
 
-  static getDomain = BarHelpers.getDomain.bind(BarHelpers);
+  static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
 
   componentWillMount() {
     this.memoized = {
@@ -336,8 +336,8 @@ export default class VictoryBar extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: BarHelpers.getDomain(props, "x"),
-      y: BarHelpers.getDomain(props, "y")
+      x: Domain.getMultiSeriesDomain(props, "x", datasets),
+      y: Domain.getMultiSeriesDomain(props, "y", datasets)
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
