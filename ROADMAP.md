@@ -23,21 +23,20 @@ Released: December 2015 ([`v0.1.0`](https://github.com/FormidableLabs/victory/re
 - Basic code coverage across all Victory components (#37)
 
 ### [Alpha 2](https://github.com/FormidableLabs/victory/milestones/Alpha%202)
-
-Expected release: February 2016
-
-- [victory-tooltip](https://github.com/FormidableLabs/victory/issues/83)
+Expected release: End of February 2016
+- Code reorganization and infrastructure improvements
+- [Perf improvements](https://github.com/FormidableLabs/victory/issues/141)
+- [Enhancements for victory-label](https://github.com/FormidableLabs/victory-label/issues/35)
+- [victory-area](https://github.com/FormidableLabs/victory/issues/40)
 - [Support data accessor functions](https://github.com/FormidableLabs/victory/issues/84)
-- Inverted axis support
-- [Horizontal bar chart support](https://github.com/FormidableLabs/victory/issues/36)
-- General interactivity support
+- Basic interactivity support via an event object
+- [Support for custom data and label components](https://github.com/FormidableLabs/victory-chart/issues/100)
 - 75% code coverage across all Victory components
 
 ### [Alpha 3](https://github.com/FormidableLabs/victory/milestones/Alpha%203)
-
-Expected release: March 2016
-
+Expected release: End of March 2016
+- [victory-tooltip](https://github.com/FormidableLabs/victory/issues/83)
 - [victory-legend](https://github.com/FormidableLabs/victory/issues/35)
-- [victory-area](https://github.com/FormidableLabs/victory/issues/40)
-- React native support
+- Interactivity support with data callbacks
+- Support for inverted axes in all chart types
 - 90% code coverage across all Victory components
