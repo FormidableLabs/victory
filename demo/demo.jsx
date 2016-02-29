@@ -1,12 +1,33 @@
 import React from "react";
-import {VictoryLine, VictoryChart, VictoryAxis, VictoryBar} from "../src/index";
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryLine,
+  VictoryPie,
+  VictoryScatter
+} from "../src/index";
 
 export default class App extends React.Component {
   render() {
     return (
       <div className="demo">
-        <VictoryLine/>
-        <VictoryChart/>
+        <h1>Victory Demo</h1>
+
+        <h2>Composites</h2>
+
+        <h3>VictoryPie</h3>
+        <p>Default props</p>
+        <VictoryPie/>
+
+        <h3>VictoryChart</h3>
+        <p>Line chart of function <code>y = x^2</code></p>
+        <VictoryChart>
+          <VictoryLine y={(data) => data.x * data.x}/>
+        </VictoryChart>
+
+        <h3>VictoryChart</h3>
+        <p>Custom axes and tickformats; Bar + line chart</p>
         <VictoryChart domainPadding={{x: 30, y: 30}}>
           <VictoryAxis
             tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
@@ -47,6 +68,25 @@ export default class App extends React.Component {
             label="LINE"
           />
         </VictoryChart>
+
+        <h2>Primitives</h2>
+
+        <h3>VictoryAxis</h3>
+        <p>Default props</p>
+        <VictoryAxis/>
+
+        <h3>VictoryBar</h3>
+        <p>Default props</p>
+        <VictoryBar/>
+
+        <h3>VictoryLine</h3>
+        <p>Default props</p>
+        <VictoryLine/>
+
+        <h3>VictoryScatter</h3>
+        <p>Default props</p>
+        <VictoryScatter/>
+
       </div>
     );
   }
