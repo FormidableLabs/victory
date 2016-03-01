@@ -4,7 +4,6 @@ import defaults from "lodash/object/defaults";
 import omit from "lodash/object/omit";
 
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
@@ -26,7 +25,6 @@ const defaultStyles = {
   }
 };
 
-@Radium
 export default class VictoryArea extends React.Component {
   static role = "area";
   static propTypes = {

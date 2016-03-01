@@ -1,9 +1,7 @@
 import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
-import Radium from "radium";
 import { VictoryLabel, Helpers } from "victory-core";
 
-@Radium
 export default class AreaLabel extends React.Component {
   static propTypes = {
     data: PropTypes.array,

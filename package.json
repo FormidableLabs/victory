@@ -27,12 +27,12 @@
     "d3-shape": "^0.5.1",
     "lodash": "^3.10.1",
     "memoizerific": "^1.5.2",
-    "victory-core": "^0.0.3"
+    "victory-core": "^1.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "~0.2.1",
     "chai": "^3.2.0",
-    "history": "~1.13.1",
+    "history": "^1.17.0",
     "mocha": "^2.3.3",
     "radium": "^0.16.2",
     "react-addons-test-utils": "^0.14.3",
