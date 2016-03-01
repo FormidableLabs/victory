@@ -31,6 +31,15 @@ export default class VictoryLabel extends React.Component {
      */
     data: PropTypes.object,
     /**
+     * all Victory components will pass a text prop to their label component.
+     * This defines the content of the label when child nodes are absent. It
+     * will be ignored if children are provided.
+     */
+    text: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    /**
      * The children of this component define the content of the label. This
      * makes using the component similar to normal HTML spans or labels.
      * Currently, only strings are supported.
@@ -143,7 +152,7 @@ export default class VictoryLabel extends React.Component {
       const child = Helpers.evaluateProp(props.children);
       return `${child}`.split("\n");
     }
-    return [""];
+    return [props.text];
   }
 
   getDy(props, content, lineHeight) {
