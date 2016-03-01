@@ -39,4 +39,13 @@ describe("components/victory-label", () => {
     expect(output.type).to.equal("text");
     expect(output.props.children[0].props.children).to.contain("time (ms)");
   });
+
+  it("falls back to label prop without children", () => {
+    const renderer = TestUtils.createRenderer();
+    renderer.render(<VictoryLabel label="such label" />);
+    const output = renderer.getRenderOutput();
+
+    expect(output.type).to.equal("text");
+    expect(output.props.children[0].props.children).to.contain("such label");
+  });
 });
