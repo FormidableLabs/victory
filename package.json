@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Victory Core",
   "main": "lib/index.js",
   "repository": {
@@ -39,7 +39,6 @@
     "react-addons-test-utils": "^0.14.3",
     "react-dom": "0.14.3",
     "react-router": "^1.0.0",
-    "react": "0.14.3",
     "sinon-chai": "^2.8.0",
     "sinon": "^1.17.2"
   }
