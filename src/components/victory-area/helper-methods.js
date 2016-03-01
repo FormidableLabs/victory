@@ -1,26 +1,18 @@
 import assign from "lodash/object/assign";
-import Data from "../../helpers/data";
-import { Collection } from "victory-core";
+import Layout from "../../helpers/layout";
 
 module.exports = {
-  getData(props) {
-    if (props.data) {
-      const hasMultipleDatasets = Collection.isArrayOfArrays(props.data) &&
-        props.y === "y" && props.x === "x";
-      return Data.formatDatasets(props, hasMultipleDatasets);
-    } else if (Array.isArray(props.y) && typeof props.y[0] === "function") {
-      return props.y.map((y, index) => {
-        const newProps = assign({}, props, {y});
-        return {
-          attrs: Data.getAttributes(props, index),
-          data: Data.getData(newProps)
-        };
-      });
+  getBaseline(datasets, index, calculatedProps) {
+    const {domain, stacked} = calculatedProps;
+    if (index === 0 || stacked === false) {
+      // TODO: assumes independent x axis
+      const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
+      return datasets[index].data.map((datum) => assign({y0: minY}, datum));
     } else {
-      return [{
-        attrs: Data.getAttributes(props, 0),
-        data: Data.getData(props)
-      }];
+      return datasets[index].data.map((datum) => {
+        const y0 = Layout.getY0(datasets, datum, index);
+        return assign({y0}, datum);
+      });
     }
   }
 };

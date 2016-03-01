@@ -1,13 +1,12 @@
 import pick from "lodash/object/pick";
 import last from "lodash/array/last";
 import defaults from "lodash/object/defaults";
-import assign from "lodash/object/assign";
 import omit from "lodash/object/omit";
 
 import React, { PropTypes } from "react";
 import Radium from "radium";
+import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Layout from "../../helpers/layout";
 import Scale from "../../helpers/scale";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import Area from "./area";
@@ -248,26 +247,12 @@ export default class VictoryArea extends React.Component {
     };
   }
 
-  getBaseline(datasets, index, calculatedProps) {
-    if (index === 0 || this.props.stacked === false) {
-      const {domain} = calculatedProps;
-      // TODO: assumes independent x axis
-      const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
-      return datasets[index].data.map((datum) => assign({y0: minY}, datum));
-    } else {
-      return datasets[index].data.map((datum) => {
-        const y0 = Layout.getY0(datasets, datum, index);
-        return assign({y0}, datum);
-      });
-    }
-  }
-
   renderAreas(calculatedProps) {
     const {datasets, scale} = calculatedProps;
     return datasets.map((dataset, index) => {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
-      const dataWithBaseline = this.getBaseline(datasets, index, calculatedProps);
+      const dataWithBaseline = AreaHelpers.getBaseline(datasets, index, calculatedProps);
       const areaComponent = (
         <Area key={`area-${index}`}
           scale={scale}
@@ -300,7 +285,7 @@ export default class VictoryArea extends React.Component {
   }
 
   renderData(props, style) {
-    const datasets = AreaHelpers.getData(props);
+    const datasets = Data.getMultiSeriesData(props);
     const padding = Helpers.getPadding(props);
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -315,7 +300,7 @@ export default class VictoryArea extends React.Component {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
     const calculatedProps = {
-      datasets, domain, padding, range, scale, style
+      datasets, domain, padding, range, scale, style, stacked: props.stacked
     };
     return this.renderAreas(calculatedProps);
   }

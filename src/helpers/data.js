@@ -1,10 +1,11 @@
 import flatten from "lodash/array/flatten";
 import findIndex from "lodash/array/findIndex";
+import isFunction from "lodash/lang/isFunction";
 import uniq from "lodash/array/uniq";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import zipObject from "lodash/array/zipObject";
-import { Helpers, Style } from "victory-core";
+import { Collection, Helpers, Style } from "victory-core";
 import Scale from "./scale";
 
 export default {
@@ -61,6 +62,27 @@ export default {
     }
     const data = this.generateData(props);
     return this.formatData(data, props);
+  },
+
+  getMultiSeriesData(props, hasMultipleDatasets) {
+    if (props.data) {
+      hasMultipleDatasets = hasMultipleDatasets ||
+        Collection.isArrayOfArrays(props.data) && props.y === "y" && props.x === "x";
+      return this.formatDatasets(props, hasMultipleDatasets);
+    } else if (Array.isArray(props.y) && isFunction(props.y[0])) {
+      return props.y.map((y, index) => {
+        const newProps = assign({}, props, {y});
+        return {
+          attrs: this.getAttributes(props, index),
+          data: this.getData(newProps)
+        };
+      });
+    } else {
+      return [{
+        attrs: this.getAttributes(props, 0),
+        data: this.getData(props)
+      }];
+    }
   },
 
   generateData(props) {
