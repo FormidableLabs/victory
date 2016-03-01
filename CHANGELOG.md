@@ -1,9 +1,66 @@
-# VictoryUtil Changelog
+VictoryCore Changelog
+=====================
 
-## 4.0.0 (2016-01-29)
+## 1.0.0
+
+- Merge `victory-label@1.0.1`, `victory-util@5.0.0`, `victory-animation@0.1.0` to `victory-core`
+- Don't publish source maps to npm or git
+- Don't publish `docs/build` directory to npm
+- Add `npm start` and `npm test` scripts
+
+### VictoryLabel
+
+- Add support for providing label text as a prop
+
+### VictoryAnimation
+
+- 	Retire `velocity` in favor of `duration` in milliseconds.
+
+Deprecated Subcomponents
+========================
+
+Below are the histories of individual subcomponents before they were merged into `victory-core`.
+
+## VictoryLabel
+
+### 1.0.1
+
+- Update victory-util version
+- Fix README title
+- Use minified file path for gzip size badge
+
+### 1.0.0 (2016-01-29)
+
+- Update `victory-util` for victory archetype bump.
+- Remove react peerDependency
+
+### 0.3.1 (2016-01-29)
+
+Update `victory-util` for data accessor feature bump
+
+### 0.3.0 (2016-01-29)
+
+- Update builder and victory archetypes.
+- Move lodash and radium dependencies from the archetype to the package
+
+### 0.2.0 (2016-1-26)
+
+Refactor to use shared methods from `victory-util`
+
+### 0.1.9 Alpha (2015-12-17)
+
+We make no promises about any code prior to this release.
+
+
+## VictoryUtil
+
+### 5.0.0
+- 	Remove chart specific methods, consolidate others
+
+### 4.0.0 (2016-01-29)
 - Application dependencies like `lodash` now live in components, not in the Builder archetype. This is a breaking change. https://github.com/FormidableLabs/victory/issues/176
 
-## 3.0.0 (2016-01-29)
+### 3.0.0 (2016-01-29)
 
 - Supports data accessor functions!
 [more detail](https://github.com/FormidableLabs/victory/issues/84)
@@ -16,7 +73,7 @@ PropTypes
   - `integer`
   - `allOfType` - runs a given prop through an array of validators
 
-## 2.1.0 (2016-1-15)
+### 2.1.0 (2016-1-15)
 
 This tag adds shared methods to VictoryUtil to reduce code repetition in all of the chart ecosystem components (VictoryChart, VictoryBar, VictoryAxis, VictoryLine, VictoryScatter)
 
@@ -77,6 +134,6 @@ style={{
 ```
 - replaces functional style and functional prop support methods `evaluateProp` and  `evaluateStyle` across all chart components
 
-## 2.0.3 Alpha (2015-12-16)
+### 2.0.3 Alpha (2015-12-16)
 
 We make no promises about any code prior to this release.
