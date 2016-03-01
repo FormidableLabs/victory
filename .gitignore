@@ -2,8 +2,8 @@
 *.sublime-workspace
 
 ### OSX ###
-.DS_Store
 .AppleDouble
+.DS_Store
 .LSOverride
 Icon
 
@@ -12,12 +12,13 @@ Icon
 
 # Files that might appear on external disk
 .Spotlight-V100
+.tmp
 .Trashes
 
 ### Windows ###
 # Windows image file caches
-Thumbs.db
 ehthumbs.db
+Thumbs.db
 
 # Folder config file
 Desktop.ini
@@ -26,11 +27,10 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # App specific
-
-coverage
-docs/build
-node_modules
 bower_components
-.tmp
+coverage
+dist/*.map
+docs/build
 lib
+node_modules
 npm-debug.log*
