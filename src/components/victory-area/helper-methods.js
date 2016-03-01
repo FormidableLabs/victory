@@ -2,7 +2,7 @@ import assign from "lodash/object/assign";
 import Layout from "../../helpers/layout";
 
 module.exports = {
-  getBaseline(datasets, index, calculatedProps) {
+  getBaseline(datasets, calculatedProps, index) {
     const {domain, stacked} = calculatedProps;
     if (index === 0 || stacked === false) {
       // TODO: assumes independent x axis

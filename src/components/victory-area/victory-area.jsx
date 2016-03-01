@@ -252,7 +252,7 @@ export default class VictoryArea extends React.Component {
     return datasets.map((dataset, index) => {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
-      const dataWithBaseline = AreaHelpers.getBaseline(datasets, index, calculatedProps);
+      const dataWithBaseline = AreaHelpers.getBaseline(datasets, calculatedProps, index);
       const areaComponent = (
         <Area key={`area-${index}`}
           scale={scale}
