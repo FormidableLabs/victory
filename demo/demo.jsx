@@ -49,17 +49,24 @@ export default class App extends React.Component {
     };
   }
 
-  componentWillMount() {
-    window.setInterval(() => {
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: getData()
       });
-    }, 3000);
+    }, 2000);
+  }
+
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
   }
 
   render() {
     return (
       <div>
+        <h1>VictoryPie Demo</h1>
+
         <VictoryPie style={this.state.style}/>
 
         <VictoryPie
@@ -79,7 +86,7 @@ export default class App extends React.Component {
           }}
         />
 
-        <VictoryPie style={this.state.style} endAngle={90} startAngle={-90}/>
+        <VictoryPie style={this.state.style} startAngle={-90} endAngle={90} />
 
         <VictoryPie
           style={this.state.style}
