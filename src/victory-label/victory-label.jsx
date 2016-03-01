@@ -31,10 +31,11 @@ export default class VictoryLabel extends React.Component {
      */
     data: PropTypes.object,
     /**
-     * all Victory components will pass a label prop to their label component.
-     * This defines the content of the label when child nodes are absent.
+     * all Victory components will pass a text prop to their label component.
+     * This defines the content of the label when child nodes are absent. It
+     * will be ignored if children are provided.
      */
-    label: PropTypes.oneOfType([
+    text: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
     ]),
@@ -151,7 +152,7 @@ export default class VictoryLabel extends React.Component {
       const child = Helpers.evaluateProp(props.children);
       return `${child}`.split("\n");
     }
-    return [props.label];
+    return [props.text];
   }
 
   getDy(props, content, lineHeight) {

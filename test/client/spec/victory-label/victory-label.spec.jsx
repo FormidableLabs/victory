@@ -42,7 +42,7 @@ describe("components/victory-label", () => {
 
   it("falls back to label prop without children", () => {
     const renderer = TestUtils.createRenderer();
-    renderer.render(<VictoryLabel label="such label" />);
+    renderer.render(<VictoryLabel text="such label" />);
     const output = renderer.getRenderOutput();
 
     expect(output.type).to.equal("text");
