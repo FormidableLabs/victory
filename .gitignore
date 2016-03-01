@@ -2,8 +2,8 @@
 *.sublime-workspace
 
 ### OSX ###
-.DS_Store
 .AppleDouble
+.DS_Store
 .LSOverride
 Icon
 
@@ -16,8 +16,8 @@ Icon
 
 ### Windows ###
 # Windows image file caches
-Thumbs.db
 ehthumbs.db
+Thumbs.db
 
 # Folder config file
 Desktop.ini
@@ -26,11 +26,11 @@ Desktop.ini
 $RECYCLE.BIN/
 
 # App specific
-
+.tmp
+bower_components
 coverage
 docs/build
-node_modules
-bower_components
-.tmp
+dist/*.map
 lib
+node_modules
 npm-debug.log*
