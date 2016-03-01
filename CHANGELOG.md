@@ -1,5 +1,18 @@
 # VictoryPie Changelog
 
+## 1.1.0 (2016-03-01)
+
+- Move Radium to devDependencies
+- Fix unmount problems with Demo
+- Add `npm start` and `npm test` scripts
+- Don't publish source maps to npm
+- Don't publish built docs to npm
+
+## 1.0.1 (2016-02-12)
+
+- Use minified file path for gzip size badge
+- Update victory-util and victory-label versions
+
 ## 1.0.0 (2016-01-30)
 
 - Supports data accessor functions!
