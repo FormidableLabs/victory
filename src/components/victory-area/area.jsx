@@ -20,28 +20,31 @@ export default class Area extends React.Component {
   renderArea(style, interpolation) {
     const xScale = this.props.scale.x;
     const yScale = this.props.scale.y;
-    const areaStroke = style.stroke ?  "none" : style.fill;
-    const areaStyle = assign({stroke: areaStroke}, style);
+    const areaStroke = style.stroke ? "none" : style.fill;
+    const areaStyle = assign({}, style, {stroke: areaStroke});
     const areaFunction = d3Shape.area()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
       .y1((data) => yScale(data.y0 + data.y))
       .y0((data) => yScale(data.y0));
     const path = areaFunction(this.props.data);
-    return <path style={areaStyle} d={path}/>
+    return <path style={areaStyle} d={path}/>;
   }
 
-  renderArea(style, interpolation) {
+  renderLine(style, interpolation) {
+    if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
+      return undefined;
+    }
+    const lineStyle = assign({}, style, {fill: "none"});
     const xScale = this.props.scale.x;
     const yScale = this.props.scale.y;
-
-    const lineFunction = d3Shape.curve()
+    const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
-      .y1((data) => yScale(data.y0 + data.y))
+      .y((data) => yScale(data.y));
     const path = lineFunction(this.props.data);
     return (
-      <path  d={path}/>
+      <path style={lineStyle} d={path}/>
     );
   }
 
@@ -49,13 +52,11 @@ export default class Area extends React.Component {
   render() {
     const style = Helpers.evaluateStyle(this.props.style, this.props.data);
     const interpolation = Helpers.evaluateProp(this.props.interpolation, this.props.data);
-    const area = this.renderArea(style, interpolation);
-
-    return !style.stroke || style.stroke === "none" ?
-      ({area}) :
-      (<g>
-        {area}
+    return (
+      <g>
+        {this.renderArea(style, interpolation)}
         {this.renderLine(style, interpolation)}
-      </g>);
+      </g>
+    );
   }
 }

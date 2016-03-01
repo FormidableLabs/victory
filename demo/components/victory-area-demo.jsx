@@ -93,7 +93,10 @@ export default class App extends React.Component {
         />
 
         <VictoryArea
-          colorScale={["cyan", "magenta"]}
+          dataAttributes={[
+            {fill: "cyan", stroke: "cyan", strokeWidth: 2, fillOpacity: 0.4},
+            {fill: "magenta", stroke: "magenta", strokeWidth: 2, fillOpacity: 0.4}
+          ]}
           style={{parent: {border: "1px solid black", margin: "5px"}, data: {opacity: 0.4}}}
           data={[
             [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}],
@@ -111,6 +114,7 @@ export default class App extends React.Component {
 
         <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}, data: {fill: "red"}}}
+          interpolation={"basis"}
           data={_.range(0, 100)}
           x={null}
           y={(d) => Math.sin(d)}
