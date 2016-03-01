@@ -13,7 +13,6 @@ export default class LineLabel extends React.Component {
     const component = props.label;
     const baseStyle = defaults({padding: 0}, component.props.style, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.data);
-    const children = component.props.children || "";
     const newProps = {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
@@ -22,7 +21,7 @@ export default class LineLabel extends React.Component {
       verticalAnchor: component.props.verticalAnchor || "middle",
       style
     };
-    return React.cloneElement(component, newProps, children);
+    return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props) {

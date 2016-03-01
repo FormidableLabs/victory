@@ -40,16 +40,17 @@ export default class BarLabel extends React.Component {
     const baseStyle = defaults({padding: 0}, component.props.style, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
-    const children = component.props.children || props.labelText;
+    const labelText = props.labelText || props.datum.label;
     const newProps = {
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
       data: props.datum, // Pass data for custom label component to access - todo: rename to datum
+      text: labelText,
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
       style
     };
-    return React.cloneElement(component, newProps, children);
+    return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props, position, anchors) {
