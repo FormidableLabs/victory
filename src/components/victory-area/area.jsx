@@ -19,20 +19,45 @@ export default class Area extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
-  render() {
-    const style = Helpers.evaluateStyle(this.props.style, this.props.data);
-    const stroke = style.stroke || style.fill;
-    const interpolation = Helpers.evaluateProp(this.props.interpolation, this.props.data);
+  renderArea(style, interpolation) {
     const xScale = this.props.scale.x;
     const yScale = this.props.scale.y;
+    const areaStroke = style.stroke ?  "none" : style.fill;
+    const areaStyle = assign({stroke: areaStroke}, style);
     const areaFunction = d3Shape.area()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
       .y1((data) => yScale(data.y0 + data.y))
       .y0((data) => yScale(data.y0));
     const path = areaFunction(this.props.data);
+    return <path style={areaStyle} d={path}/>
+  }
+
+  renderArea(style, interpolation) {
+    const xScale = this.props.scale.x;
+    const yScale = this.props.scale.y;
+
+    const lineFunction = d3Shape.curve()
+      .curve(d3Shape[this.toNewName(interpolation)])
+      .x((data) => xScale(data.x))
+      .y1((data) => yScale(data.y0 + data.y))
+    const path = lineFunction(this.props.data);
     return (
-      <path style={assign({stroke}, style)} d={path}/>
+      <path  d={path}/>
     );
+  }
+
+
+  render() {
+    const style = Helpers.evaluateStyle(this.props.style, this.props.data);
+    const interpolation = Helpers.evaluateProp(this.props.interpolation, this.props.data);
+    const area = this.renderArea(style, interpolation);
+
+    return !style.stroke || style.stroke === "none" ?
+      ({area}) :
+      (<g>
+        {area}
+        {this.renderLine(style, interpolation)}
+      </g>);
   }
 }
