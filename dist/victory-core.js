@@ -7,7 +7,7 @@
 		exports["VictoryCore"] = factory(require("react"));
 	else
 		root["VictoryCore"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_46__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_47__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -76,19 +76,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var Style = _interopRequireWildcard(_victoryUtilStyle);
 	
-	var _victoryUtilType = __webpack_require__(44);
+	var _victoryUtilType = __webpack_require__(45);
 	
 	var Type = _interopRequireWildcard(_victoryUtilType);
 	
-	var _victoryUtilPropTypes = __webpack_require__(45);
+	var _victoryUtilPropTypes = __webpack_require__(46);
 	
 	var PropTypes = _interopRequireWildcard(_victoryUtilPropTypes);
 	
-	var _victoryAnimationVictoryAnimation = __webpack_require__(47);
+	var _victoryAnimationVictoryAnimation = __webpack_require__(48);
 	
 	var _victoryAnimationVictoryAnimation2 = _interopRequireDefault(_victoryAnimationVictoryAnimation);
 	
-	var _victoryLabelVictoryLabel = __webpack_require__(57);
+	var _victoryLabelVictoryLabel = __webpack_require__(58);
 	
 	var _victoryLabelVictoryLabel2 = _interopRequireDefault(_victoryLabelVictoryLabel);
 	
@@ -1802,7 +1802,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
+	    var toEvaluate = expression.replace(new RegExp(unit, "gi"), "")
 	    var result
 	
 	    try {
@@ -1870,7 +1870,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function getUnitsInExpression(expression) {
 	  var uniqueUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/g
+	  var uniqueLowerCaseUnits = []
+	  var unitRegEx = /[\.0-9]([%a-z]+)/gi
 	  var matches = unitRegEx.exec(expression)
 	
 	  while (matches) {
@@ -1878,8 +1879,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      continue
 	    }
 	
-	    if (uniqueUnits.indexOf(matches[1]) === -1) {
+	    if (uniqueLowerCaseUnits.indexOf(matches[1].toLowerCase()) === -1) {
 	      uniqueUnits.push(matches[1])
+	      uniqueLowerCaseUnits.push(matches[1].toLowerCase())
 	    }
 	
 	    matches = unitRegEx.exec(expression)
@@ -1926,7 +1928,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(42)
+	var balanced = __webpack_require__(44)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -2003,6 +2005,36 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 44 */
 /***/ function(module, exports) {
 
+	module.exports = function(a, b, str) {
+	  var bal = 0;
+	  var m = {};
+	
+	  for (var i = 0; i < str.length; i++) {
+	    if (a == str.substr(i, a.length)) {
+	      if (!('start' in m)) m.start = i;
+	      bal++;
+	    }
+	    else if (b == str.substr(i, b.length) && 'start' in m) {
+	      bal--;
+	      if (!bal) {
+	        m.end = i;
+	        m.pre = str.substr(0, m.start);
+	        m.body = (m.end - m.start > 1)
+	          ? str.substring(m.start + a.length, m.end)
+	          : '';
+	        m.post = str.slice(m.end + b.length);
+	        return m;
+	      }
+	    }
+	  }
+	};
+	
+
+
+/***/ },
+/* 45 */
+/***/ function(module, exports) {
+
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
@@ -2051,7 +2083,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getConstructorName = getConstructorName;
 
 /***/ },
-/* 45 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/* WEBPACK VAR INJECTION */(function(process) {/* global console */
@@ -2067,9 +2099,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodashLangIsFunction2 = _interopRequireDefault(_lodashLangIsFunction);
 	
-	var _react = __webpack_require__(46);
+	var _react = __webpack_require__(47);
 	
-	var _type = __webpack_require__(44);
+	var _type = __webpack_require__(45);
 	
 	/**
 	 * Return a new validator based on `propType` but which logs a `console.error`
@@ -2230,13 +2262,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(39)))
 
 /***/ },
-/* 46 */
+/* 47 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_46__;
+	module.exports = __WEBPACK_EXTERNAL_MODULE_47__;
 
 /***/ },
-/* 47 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2257,32 +2289,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(46);
+	var _react = __webpack_require__(47);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Ease = __webpack_require__(48);
+	var _d3Ease = __webpack_require__(49);
 	
 	var _d3Ease2 = _interopRequireDefault(_d3Ease);
 	
-	var _d3Interpolate = __webpack_require__(49);
+	var _d3Interpolate = __webpack_require__(50);
 	
 	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
 	
-	var _d3Timer = __webpack_require__(51);
+	var _d3Timer = __webpack_require__(52);
 	
-	var _util = __webpack_require__(52);
-	
-	// Nearly all animation libraries are duration-based, not velocity-based.
-	// In other words, you say "I want the animation to take this long", not
-	// "I want things to move this fast". Using velocity will make the animation
-	// take different amounts of time on computers of different speed, since
-	// they'll have a different framerate but still adjust values by the same
-	// velocity each frame. But for now we still support velocity as we have code
-	// using it. Since we use `d3-timer` now and it's duration-based, choose a
-	// velocity multiplier here that just happens to result in animations going
-	// approximately the same speed on systems getting around 60 fps.
-	var VELOCITY_MULTIPLIER = 16.5; // ~ 1 / 60
+	var _util = __webpack_require__(53);
 	
 	(0, _util.addVictoryInterpolator)();
 	
@@ -2298,9 +2319,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	       */
 	      children: _react2["default"].PropTypes.func,
 	      /**
-	       * The velocity prop specifies how fast the animation should run.
+	       * The number of milliseconds the animation should take to complete.
 	       */
-	      velocity: _react2["default"].PropTypes.number,
+	      duration: _react2["default"].PropTypes.number,
 	      /**
 	       * The easing prop specifies an easing function name to use for tweening.
 	       */
@@ -2328,8 +2349,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "defaultProps",
 	    value: {
-	      /* velocity modifies step each frame */
-	      velocity: 0.02,
+	      /* length of animation */
+	      duration: 1000,
 	      /* easing modifies step each frame */
 	      easing: "quadInOut",
 	      /* delay between transitions */
@@ -2422,7 +2443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        step can generate imprecise values, sometimes greater than 1
 	        if this happens set the state to 1 and return, cancelling the timer
 	      */
-	      var step = elapsed / (VELOCITY_MULTIPLIER / this.props.velocity);
+	      var step = elapsed / this.props.duration;
 	
 	      if (step >= 1) {
 	        this.setState(this.interpolator(1));
@@ -2452,7 +2473,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 48 */
+/* 49 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -2682,11 +2703,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 49 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(50)) :
+	   true ? factory(exports, __webpack_require__(51)) :
 	  typeof define === 'function' && define.amd ? define('d3-interpolate', ['exports', 'd3-color'], factory) :
 	  factory((global.d3_interpolate = {}),global.d3_color);
 	}(this, function (exports,d3Color) { 'use strict';
@@ -3169,7 +3190,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 50 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -3689,7 +3710,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 51 */
+/* 52 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -3795,7 +3816,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 52 */
+/* 53 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -3806,11 +3827,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 	
-	var _d3Interpolate = __webpack_require__(49);
+	var _d3Interpolate = __webpack_require__(50);
 	
 	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
 	
-	var _lodashLangIsPlainObject = __webpack_require__(53);
+	var _lodashLangIsPlainObject = __webpack_require__(54);
 	
 	var _lodashLangIsPlainObject2 = _interopRequireDefault(_lodashLangIsPlainObject);
 	
@@ -3952,10 +3973,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.addVictoryInterpolator = addVictoryInterpolator;
 
 /***/ },
-/* 53 */
+/* 54 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForIn = __webpack_require__(54),
+	var baseForIn = __webpack_require__(55),
 	    isArguments = __webpack_require__(17),
 	    isObjectLike = __webpack_require__(11);
 	
@@ -4029,10 +4050,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 54 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(55),
+	var baseFor = __webpack_require__(56),
 	    keysIn = __webpack_require__(20);
 	
 	/**
@@ -4052,10 +4073,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 55 */
+/* 56 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(56);
+	var createBaseFor = __webpack_require__(57);
 	
 	/**
 	 * The base implementation of `baseForIn` and `baseForOwn` which iterates
@@ -4075,7 +4096,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 56 */
+/* 57 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var toObject = __webpack_require__(33);
@@ -4108,7 +4129,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 57 */
+/* 58 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4127,13 +4148,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _react = __webpack_require__(46);
+	var _react = __webpack_require__(47);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryUtilIndex = __webpack_require__(58);
+	var _victoryUtilIndex = __webpack_require__(59);
 	
-	var _lodashObjectMerge = __webpack_require__(60);
+	var _lodashObjectMerge = __webpack_require__(61);
 	
 	var _lodashObjectMerge2 = _interopRequireDefault(_lodashObjectMerge);
 	
@@ -4173,7 +4194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var child = _victoryUtilIndex.Helpers.evaluateProp(props.children);
 	        return ("" + child).split("\n");
 	      }
-	      return [""];
+	      return [props.text];
 	    }
 	  }, {
 	    key: "getDy",
@@ -4240,6 +4261,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * be used to calculate functional styles, and determine child text
 	       */
 	      data: _react.PropTypes.object,
+	      /**
+	       * all Victory components will pass a text prop to their label component.
+	       * This defines the content of the label when child nodes are absent. It
+	       * will be ignored if children are provided.
+	       */
+	      text: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	      /**
 	       * The children of this component define the content of the label. This
 	       * makes using the component similar to normal HTML spans or labels.
@@ -4315,7 +4342,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 58 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4344,15 +4371,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var Style = _interopRequireWildcard(_style);
 	
-	var _type = __webpack_require__(44);
+	var _type = __webpack_require__(45);
 	
 	var Type = _interopRequireWildcard(_type);
 	
-	var _propTypes = __webpack_require__(45);
+	var _propTypes = __webpack_require__(46);
 	
 	var PropTypes = _interopRequireWildcard(_propTypes);
 	
-	var _perf = __webpack_require__(59);
+	var _perf = __webpack_require__(60);
 	
 	var Perf = _interopRequireWildcard(_perf);
 	
@@ -4368,7 +4395,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	module.exports = exports["default"];
 
 /***/ },
-/* 59 */
+/* 60 */
 /***/ function(module, exports) {
 
 	/**
@@ -4400,10 +4427,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.memoize = memoize;
 
 /***/ },
-/* 60 */
+/* 61 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMerge = __webpack_require__(61),
+	var baseMerge = __webpack_require__(62),
 	    createAssigner = __webpack_require__(23);
 	
 	/**
@@ -4460,16 +4487,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 61 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayEach = __webpack_require__(62),
-	    baseMergeDeep = __webpack_require__(63),
+	var arrayEach = __webpack_require__(63),
+	    baseMergeDeep = __webpack_require__(64),
 	    isArray = __webpack_require__(18),
 	    isArrayLike = __webpack_require__(12),
 	    isObject = __webpack_require__(10),
 	    isObjectLike = __webpack_require__(11),
-	    isTypedArray = __webpack_require__(65),
+	    isTypedArray = __webpack_require__(66),
 	    keys = __webpack_require__(6);
 	
 	/**
@@ -4522,7 +4549,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 62 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -4550,16 +4577,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 63 */
+/* 64 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayCopy = __webpack_require__(64),
+	var arrayCopy = __webpack_require__(65),
 	    isArguments = __webpack_require__(17),
 	    isArray = __webpack_require__(18),
 	    isArrayLike = __webpack_require__(12),
-	    isPlainObject = __webpack_require__(53),
-	    isTypedArray = __webpack_require__(65),
-	    toPlainObject = __webpack_require__(66);
+	    isPlainObject = __webpack_require__(54),
+	    isTypedArray = __webpack_require__(66),
+	    toPlainObject = __webpack_require__(67);
 	
 	/**
 	 * A specialized version of `baseMerge` for arrays and objects which performs
@@ -4623,7 +4650,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 64 */
+/* 65 */
 /***/ function(module, exports) {
 
 	/**
@@ -4649,7 +4676,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 65 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isLength = __webpack_require__(15),
@@ -4729,7 +4756,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 66 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseCopy = __webpack_require__(22),
