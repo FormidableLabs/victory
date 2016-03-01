@@ -4,16 +4,6 @@ import d3Interpolate from "d3-interpolate";
 import { timer } from "d3-timer";
 import { addVictoryInterpolator } from "./util";
 
-// Nearly all animation libraries are duration-based, not velocity-based.
-// In other words, you say "I want the animation to take this long", not
-// "I want things to move this fast". Using velocity will make the animation
-// take different amounts of time on computers of different speed, since
-// they'll have a different framerate but still adjust values by the same
-// velocity each frame. But for now we still support velocity as we have code
-// using it. Since we use `d3-timer` now and it's duration-based, choose a
-// velocity multiplier here that just happens to result in animations going
-// approximately the same speed on systems getting around 60 fps.
-const VELOCITY_MULTIPLIER = 16.5; // ~ 1 / 60
 
 addVictoryInterpolator();
 
@@ -25,9 +15,9 @@ export default class VictoryAnimation extends React.Component {
      */
     children: React.PropTypes.func,
     /**
-     * The velocity prop specifies how fast the animation should run.
+     * The number of milliseconds the animation should take to complete.
      */
-    velocity: React.PropTypes.number,
+    duration: React.PropTypes.number,
     /**
      * The easing prop specifies an easing function name to use for tweening.
      */
@@ -67,8 +57,8 @@ export default class VictoryAnimation extends React.Component {
   };
 
   static defaultProps = {
-    /* velocity modifies step each frame */
-    velocity: 0.02,
+    /* length of animation */
+    duration: 1000,
     /* easing modifies step each frame */
     easing: "quadInOut",
     /* delay between transitions */
@@ -143,7 +133,7 @@ export default class VictoryAnimation extends React.Component {
       step can generate imprecise values, sometimes greater than 1
       if this happens set the state to 1 and return, cancelling the timer
     */
-    const step = elapsed / (VELOCITY_MULTIPLIER / this.props.velocity);
+    const step = elapsed / this.props.duration;
 
     if (step >= 1) {
       this.setState(this.interpolator(1));
