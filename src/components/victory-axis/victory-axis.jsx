@@ -102,8 +102,14 @@ export default class VictoryAxis extends React.Component {
      */
     height: CustomPropTypes.nonNegative,
     /**
-     * The label prop specifies the label for your axis. This prop can be a string or
-     * a label component.
+     * The label prop defines the label that will appear along the axis. This
+     * prop should be given as a value or an entire, HTML-complete label
+     * component. If a label component is given, it will be cloned. The new
+     * element's properties x, y, textAnchor, verticalAnchor, and transform
+     * will have defaults provided by the axis; styles filled out with
+     * defaults provided by the axis, and overrides from the label component.
+     * If a value is given, a new VictoryLabel will be created with props and
+     * styles from the axis.
      */
     label: PropTypes.any,
     /**
