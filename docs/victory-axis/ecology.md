@@ -1,7 +1,7 @@
 VictoryAxis
 =============
 
-VictoryAxis draws an SVG chart axis with [React](https://github.com/facebook/react). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
+VictoryAxis draws an SVG chart axis with [React][]. Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [VictoryAnimation][].
 
 ## Features
 
@@ -36,7 +36,7 @@ Axes are meant to be composable.
 </svg>
 ```
 
-And can be made to cross each other by setting `offsetX`,  `offsetY`, and `crossAxis` props as shown below. Getting crossed axes to look correct requires calculating the appropriate offsets. This is handled automatically in [VictoryChart](https://github.com/FormidableLabs/victory-chart).
+And can be made to cross each other by setting `offsetX`,  `offsetY`, and `crossAxis` props as shown below. Getting crossed axes to look correct requires calculating the appropriate offsets. This is handled automatically in [VictoryChart][].
 
 ```playground
 <svg width={400} height={400}>
@@ -109,7 +109,7 @@ Here's how you make a log scale:
 
 ### Animating
 
-VictoryAxis animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as props change when an `animate` prop is provided.
+VictoryAxis animates with [VictoryAnimation][] as props change when an `animate` prop is provided.
 
 ```playground_norender
 class App extends React.Component {
@@ -168,3 +168,7 @@ ReactDOM.render(<App/>, mountNode);
 ```
 
 ### Props
+
+[React]: https://github.com/facebook/react
+[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
+[VictoryChart]: http://victory.formidable.com/docs/victory-chart
