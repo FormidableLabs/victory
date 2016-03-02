@@ -129,7 +129,7 @@ class App extends React.Component {
           </div>
 
         </main>
-        <Footer backgroundColor="#ebe3db">
+        <Footer backgroundColor={VictorySettings.palestSand}>
           <div style={{margin: "2em 0", fontSize: "0.8rem"}}>
             Victory is a trademark of Formidable Labs, Inc.
           </div>
