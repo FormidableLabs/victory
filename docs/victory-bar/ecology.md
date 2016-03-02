@@ -205,7 +205,7 @@ class App extends React.Component {
   }
 
   getData() {
-    return _.map(_.range(5), (index) => {
+    return _.map(_.range(4), (index) => {
       return [
         {x: "apples", y: _.random(1, 5)},
         {x: "oranges", y: _.random(1, 5)},
