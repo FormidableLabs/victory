@@ -1,5 +1,15 @@
 # Victory Changelog
 
+## 0.4.1 (2016-03-01)
+
+- Remove dependency on Radium
+- Many performance improvements via memoization and replacing expensive merge operations
+- Ignore source maps for smaller NPM installation
+- Add `npm start` and `npm test` scripts for easier contribution dev workflow
+- Show gzipped size for minified distribution file
+- Code reorganization
+- Update roadmap
+
 ## 0.4.0 (2016-01-31)
 
 - Data Accessors are supported on all relevant components
