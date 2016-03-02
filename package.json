@@ -27,6 +27,7 @@
     "d3-interpolate": "^0.2.0",
     "d3-scale": "^0.2.0",
     "d3-timer": "^0.0.6",
+    "lodash": "^3.10.1",
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
