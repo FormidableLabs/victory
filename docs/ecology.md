@@ -1,7 +1,7 @@
 VictoryPie
 =============
 
-`victory-pie` draws an SVG pie or donut chart with [React](https://github.com/facebook/react). Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [victory-animation](https://github.com/FormidableLabs/victory-animation).
+`victory-pie` draws an SVG pie or donut chart with [React][]. Styles and data can be customized by passing in your own values as properties to the component. Data changes are animated with [VictoryAnimation][].
 
 ## Features
 
@@ -153,7 +153,7 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Animating
 
-VictoryPie animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as data changes when an `animate` prop is provided.
+VictoryPie animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
 
 
 ```playground_norender
@@ -190,3 +190,8 @@ class App extends React.Component {
 }
 ReactDOM.render(<App/>, mountNode);
 ```
+
+### Props
+
+[React]: https://github.com/facebook/react
+[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
