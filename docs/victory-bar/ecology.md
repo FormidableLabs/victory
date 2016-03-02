@@ -1,7 +1,7 @@
 VictoryBar
 =============
 
-Draw SVG bar charts with [React](https://github.com/facebook/react). VictoryBar is a composable component, so it doesn't include axes. Check out [VictoryChart](https://github.com/FormidableLabs/victory-animation) for complete bar charts and more.
+Draw SVG bar charts with [React](https://github.com/facebook/react). VictoryBar is a composable component, so it doesn't include axes. Check out [VictoryChart](https://github.com/FormidableLabs/victory-chart) for complete bar charts and more.
 
 ## Features
 
