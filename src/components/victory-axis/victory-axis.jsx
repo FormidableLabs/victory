@@ -302,7 +302,7 @@ export default class VictoryAxis extends React.Component {
     const newProps = this.getLableProps(props, layoutProps);
     return (props.label.props) ?
       React.cloneElement(props.label, newProps) :
-      React.createElement(VictoryLabel, newProps, props.label);
+      React.createElement(VictoryLabel, newProps);
   }
 
   getLableProps(props, layoutProps) {
@@ -317,6 +317,7 @@ export default class VictoryAxis extends React.Component {
     const y = sign * labelPadding;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const transform = isVertical ? "rotate(-90)" : "";
+    const labelText = typeof props.label === "string" ? props.label : null;
     return {
       key: "label",
       x: componentProps.x || x,
@@ -324,7 +325,8 @@ export default class VictoryAxis extends React.Component {
       textAnchor: componentProps.textAnchor || "middle",
       verticalAnchor: componentProps.verticalAnchor || verticalAnchor,
       style: defaults({}, style.axisLabel, componentProps.style),
-      transform: componentProps.transform || transform
+      transform: componentProps.transform || transform,
+      text: labelText
     };
   }
 
