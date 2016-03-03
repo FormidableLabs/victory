@@ -1,7 +1,7 @@
 VictoryScatter
 =============
 
-VictoryScatter creates a scatter of points from data. VictoryScatter is a composable component, so it does not include an axis. Check out [VictoryChart](https://github.com/formidablelabs/victory-chart) for easy to use scatter plots and more.
+VictoryScatter creates a scatter of points from data. VictoryScatter is a composable component, so it does not include an axis. Check out [VictoryChart][] for easy to use scatter plots and more.
 
 ## Features
 
@@ -143,7 +143,7 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Animating
 
-VictoryScatter animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as data changes when an `animate` prop is provided.
+VictoryScatter animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
 
 ```playground_norender
 class App extends React.Component {
@@ -200,3 +200,6 @@ ReactDOM.render(<App/>, mountNode);
 ```
 
 ### Props
+
+[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
+[VictoryChart]: http://victory.formidable.com/docs/victory-chart

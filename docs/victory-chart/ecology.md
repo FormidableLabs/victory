@@ -3,10 +3,10 @@ VictoryChart
 
 A flexible charting component for React. VictoryChart composes other Victory components into reusable charts. Acting as a coordinator rather than a stand-alone component, VictoryChart reconciles props such as `domain` and `scale` for child components, and provides a set of sensible defaults. This component works with:
 
-- [VictoryAxis](http://github.com/formidablelabs/victory-axis)
-- [VictoryLine](http://github.com/formidablelabs/victory-line)
-- [VictoryScatter](http://github.com/formidablelabs/victory-scatter)
-- [VictoryBar](http://github.com/formidablelabs/victory-bar)
+- [VictoryAxis][]
+- [VictoryLine][]
+- [VictoryScatter][]
+- [VictoryBar][]
 - More chart types coming soon!
 
 ## Features
@@ -28,7 +28,7 @@ VictoryChart was designed to build charts from minimal information. Pass in only
 </VictoryChart>
 ```
 
-In the example above, VictoryChart was given a VictoryLine component as a child. In addition, it also created a set of VictoryAxis components with the correct domain for the data being plotted by VictoryLine, created tick values based on that data, aligned all of its child components into a correct chart, and applied a set of default styles.
+In the example above, VictoryChart was given a [VictoryLine][] component as a child. In addition, it also created a set of VictoryAxis components with the correct domain for the data being plotted by [VictoryLine][], created tick values based on that data, aligned all of its child components into a correct chart, and applied a set of default styles.
 
 ### Declarative Composition
 
@@ -194,7 +194,7 @@ Time series data is also supported:
 
 ### Animating
 
-VictoryChart animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as data changes. Child components stay in sync.
+VictoryChart animates with [VictoryAnimation][] as data changes. Child components stay in sync.
 
 ```playground_norender
 class App extends React.Component {
@@ -253,3 +253,10 @@ ReactDOM.render(<App/>, mountNode);
 ```
 
 ### Props
+
+[React]: https://github.com/facebook/react
+[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
+[VictoryAxis]: http://victory.formidable.com/docs/victory-axis
+[VictoryLine]: http://victory.formidable.com/docs/victory-line
+[VictoryScatter]: http://victory.formidable.com/docs/victory-scatter
+[VictoryBar]: http://victory.formidable.com/docs/victory-bar
