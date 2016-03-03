@@ -1,7 +1,11 @@
 VictoryCore Changelog
 =====================
 
-## 1.0.0
+## 1.1.0 (2016-03-02)
+
+- Add matchDataLength custom proptype
+
+## 1.0.0 (2016-03-01)
 
 - Merge `victory-label@1.0.1`, `victory-util@5.0.0`, `victory-animation@0.1.0` to `victory-core`
 - Don't publish source maps to npm or git
