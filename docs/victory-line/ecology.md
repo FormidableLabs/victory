@@ -1,7 +1,7 @@
 VictoryLine
 =============
 
-VictoryLine creates a line based on data. VictoryLine is a composable component, so it does not include an axis.  Check out [VictoryChart](https://github.com/formidablelabs/victory-chart) for easy to use line charts and more.
+VictoryLine creates a line based on data. VictoryLine is a composable component, so it does not include an axis.  Check out [VictoryChart][] for easy to use line charts and more.
 
 ## Features
 
@@ -117,7 +117,7 @@ VictoryLine also supports functional styles. Unlike other data components, style
 
 ### Animating
 
-VictoryLine animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as data changes when an `animate` prop is provided.
+VictoryLine animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
 
 ```playground_norender
 class App extends React.Component {
@@ -171,3 +171,8 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 
 ```
+
+### Props
+
+[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
+[VictoryChart]: http://victory.formidable.com/docs/victory-chart

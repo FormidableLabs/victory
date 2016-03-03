@@ -1,7 +1,7 @@
 VictoryBar
 =============
 
-Draw SVG bar charts with [React](https://github.com/facebook/react). VictoryBar is a composable component, so it doesn't include axes. Check out [VictoryChart](https://github.com/FormidableLabs/victory-animation) for complete bar charts and more.
+Draw SVG bar charts with [React][]. VictoryBar is a composable component, so it doesn't include axes. Check out [VictoryChart][] for complete bar charts and more.
 
 ## Features
 
@@ -193,7 +193,7 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Animating
 
-VictoryBar animates with [VictoryAnimation](http://github.com/formidablelabs/victory-animation) as data changes when an `animate` prop is provided.
+VictoryBar animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
 
 ```playground_norender
 class App extends React.Component {
@@ -205,7 +205,7 @@ class App extends React.Component {
   }
 
   getData() {
-    return _.map(_.range(5), (index) => {
+    return _.map(_.range(4), (index) => {
       return [
         {x: "apples", y: _.random(1, 5)},
         {x: "oranges", y: _.random(1, 5)},
@@ -246,3 +246,9 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 
 ```
+
+### Props
+
+[React]: https://github.com/facebook/react
+[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
+[VictoryChart]: http://victory.formidable.com/docs/victory-chart
