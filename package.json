@@ -28,8 +28,6 @@
   "dependencies": {
     "builder": "~2.4.0",
     "builder-victory-component": "~0.2.1",
-    "style-loader": "~0.8.0",
-    "url-loader": "~0.5.5",
     "victory-chart": "5.0.1",
     "victory-core": "1.0.0",
     "victory-pie": "1.1.0"
