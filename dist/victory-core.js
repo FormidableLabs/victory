@@ -2258,7 +2258,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	});
+	
 	exports.homogeneousArray = homogeneousArray;
+	/**
+	 * Check that array prop length matches props.data.length
+	 */
+	var matchDataLength = makeChainable(function (props, propName) {
+	  if (props[propName] && Array.isArray(props[propName]) && props[propName].length !== props.data.length) {
+	    return new Error("Length of data and " + propName + " arrays must match.");
+	  }
+	});
+	exports.matchDataLength = matchDataLength;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(39)))
 
 /***/ },
