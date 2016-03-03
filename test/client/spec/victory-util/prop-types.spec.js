@@ -8,7 +8,8 @@ import {
   domain,
   scale,
   homogeneousArray,
-  deprecated
+  deprecated,
+  matchDataLength
 } from "src/victory-util/prop-types";
 
 describe("prop-types", () => {
@@ -252,6 +253,27 @@ describe("prop-types", () => {
     it("does not return an error for arrays where all elements are the same type", () => {
       const result = validate([1, 0]);
       expect(result).not.to.be.an.instanceOf(Error);
+    });
+  });
+
+  describe("matchDataLength", () => {
+    const validate = function (prop, dataProp) {
+      const props = {testProp: prop, data: dataProp};
+      return matchDataLength(props, "testProp", "TestComponent");
+    };
+
+    it("does not return an error when prop is undefined", () => {
+      expect(validate()).to.not.be.an.instanceOf(Error);
+    });
+
+    it("does not return an error when prop has same length as data", () => {
+      expect(validate([{}, {}], [1, 2])).to.not.be.an.instanceOf(Error);
+    });
+
+    it("returns an error when prop doesn't have same length as data", () => {
+      expect(validate([{}], [1, 2]))
+        .to.be.an.instanceOf(Error).and
+        .to.have.property("message", "Length of data and testProp arrays must match.");
     });
   });
 });
