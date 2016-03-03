@@ -59,9 +59,12 @@ export default class VictoryBar extends React.Component {
      * be applied to the data points in the corresponding array of the data prop.
      * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
      */
-    dataAttributes: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object)
+    dataAttributes: CustomPropTypes.allOfType([
+      CustomPropTypes.matchDataLength,
+      PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+      ])
     ]),
     /**
      * The categories prop specifies the categories for a bar chart. This prop should
