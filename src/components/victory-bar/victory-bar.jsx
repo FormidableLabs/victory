@@ -1,14 +1,14 @@
 import pick from "lodash/object/pick";
-
-import React, { PropTypes } from "react";
-import Scale from "../../helpers/scale";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
-import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import memoizerific from "memoizerific";
+import React, { PropTypes } from "react";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+
 import Bar from "./bar";
 import BarLabel from "./bar-label";
 import BarHelpers from "./helper-methods";
+import Data from "../../helpers/data";
+import Domain from "../../helpers/domain";
+import Scale from "../../helpers/scale";
 
 const defaultStyles = {
   data: {
@@ -59,9 +59,12 @@ export default class VictoryBar extends React.Component {
      * be applied to the data points in the corresponding array of the data prop.
      * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
      */
-    dataAttributes: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object)
+    dataAttributes: CustomPropTypes.allOfType([
+      CustomPropTypes.matchDataLength,
+      PropTypes.oneOfType([
+        PropTypes.object,
+        PropTypes.arrayOf(PropTypes.object)
+      ])
     ]),
     /**
      * The categories prop specifies the categories for a bar chart. This prop should
