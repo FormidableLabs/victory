@@ -166,3 +166,16 @@ export const homogeneousArray = makeChainable((props, propName, componentName) =
     }
   }
 });
+
+/**
+ * Check that array prop length matches props.data.length
+ */
+export const matchDataLength = makeChainable((props, propName) => {
+  if (
+    props[propName] &&
+    Array.isArray(props[propName]) &&
+    props[propName].length !== props.data.length
+  ) {
+    return new Error(`Length of data and ${propName} arrays must match.`);
+  }
+});
