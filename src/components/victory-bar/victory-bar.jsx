@@ -1,14 +1,14 @@
 import pick from "lodash/object/pick";
-
-import React, { PropTypes } from "react";
-import Scale from "../../helpers/scale";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
-import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import memoizerific from "memoizerific";
+import React, { PropTypes } from "react";
+import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+
 import Bar from "./bar";
 import BarLabel from "./bar-label";
 import BarHelpers from "./helper-methods";
+import Data from "../../helpers/data";
+import Domain from "../../helpers/domain";
+import Scale from "../../helpers/scale";
 
 const defaultStyles = {
   data: {
