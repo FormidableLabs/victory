@@ -1,11 +1,15 @@
-import {VictoryAnimation} from "victory-animation";
-import {VictoryAxis} from "victory-axis";
-import {VictoryBar} from "victory-bar";
-import {VictoryChart} from "victory-chart";
-import {VictoryLine} from "victory-line";
-import {VictoryLabel} from "victory-label";
+import {
+  VictoryAnimation,
+  VictoryLabel} from "victory-core";
+
+import {
+  VictoryAxis,
+  VictoryBar,
+  VictoryChart,
+  VictoryLine,
+  VictoryScatter} from "victory-chart";
+
 import {VictoryPie} from "victory-pie";
-import {VictoryScatter} from "victory-scatter";
 
 export {
   VictoryAnimation,
