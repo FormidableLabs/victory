@@ -1,5 +1,10 @@
 # VictoryLine Changelog
 
+## 5.0.1 (2016-03-01)
+
+- Provide datum to victory-line custom label
+- Upgrade to `victory-core@1.0.0`
+
 ## 5.0.0 (2016-02-26)
 
 - VictoryBar, VictoryLine, VictoryScatter, and VictoryAxis are now all part of the VictoryChart repo.

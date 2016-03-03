@@ -18,6 +18,7 @@ export default class LineLabel extends React.Component {
     const newProps = {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
+      data: props.data,
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
       style
