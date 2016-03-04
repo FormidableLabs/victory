@@ -37,12 +37,13 @@ export default class VictoryLabel extends React.Component {
      */
     text: PropTypes.oneOfType([
       PropTypes.string,
-      PropTypes.number
+      PropTypes.number,
+      PropTypes.func
     ]),
     /**
      * The children of this component define the content of the label. This
      * makes using the component similar to normal HTML spans or labels.
-     * Currently, only strings are supported.
+     * strings, numbers, and functions of data / value are supported.
      */
     children: PropTypes.oneOfType([ // TODO: Expand child support in future release
       PropTypes.string,
@@ -148,11 +149,12 @@ export default class VictoryLabel extends React.Component {
   }
 
   getContent(props) {
-    if (props.children) {
-      const child = Helpers.evaluateProp(props.children);
+    const text = props.text || props.children;
+    if (text) {
+      const child = Helpers.evaluateProp(text);
       return `${child}`.split("\n");
     }
-    return [props.text];
+    return [""];
   }
 
   getDy(props, content, lineHeight) {
