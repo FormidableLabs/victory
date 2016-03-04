@@ -65,9 +65,8 @@ export default class BarLabel extends React.Component {
         textAnchor={anchors.text}
         verticalAnchor={anchors.vertical}
         style={style}
-      >
-        {props.labelText}
-      </VictoryLabel>
+        text={props.labelText}
+      />
     );
   }
 

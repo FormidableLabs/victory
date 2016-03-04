@@ -46,11 +46,12 @@ export default class Tick extends React.Component {
       y: position.y,
       textAnchor: componentProps.textAnchor || anchors.textAnchor,
       verticalAnchor: componentProps.verticalAnchor || anchors.verticalAnchor,
-      style: Helpers.evaluateStyle(style, props.tick)
+      style: Helpers.evaluateStyle(style, props.tick),
+      text: props.label
     };
     return props.label.props ?
       React.cloneElement(props.label, newProps) :
-      React.createElement(VictoryLabel, newProps, props.label);
+      React.createElement(VictoryLabel, newProps);
   }
 
   renderTick(props, position) {

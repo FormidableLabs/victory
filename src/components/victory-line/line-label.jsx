@@ -33,9 +33,8 @@ export default class LineLabel extends React.Component {
         textAnchor={"start"}
         verticalAnchor={"middle"}
         style={style}
-      >
-        {props.label}
-      </VictoryLabel>
+        text={props.label}
+      />
     );
   }
 
