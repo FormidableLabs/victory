@@ -41,6 +41,22 @@ export default class VictoryScatter extends React.Component {
      */
     bubbleProperty: PropTypes.string,
     /**
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or two element arrays.
+     * or an object with these values for x and y. When categories are not given as an object
+     * they are assumed to refer to the independent variable (x). When categories are given
+     * as an array of arrays, the minimum and maximum values of the arrays define range bands,
+     * allowing numeric data to be grouped into segments.
+     * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+     */
+    categories: PropTypes.oneOfType([
+      CustomPropTypes.homogeneousArray,
+      PropTypes.shape({
+        x: CustomPropTypes.homogeneousArray,
+        y: CustomPropTypes.homogeneousArray
+      })
+    ]),
+    /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
      * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
@@ -49,6 +65,7 @@ export default class VictoryScatter extends React.Component {
      * These properties will be interpreted and applied to the individual lines
      * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
      */
+
     data: PropTypes.array,
     /**
      * The domain prop describes the range of values your chart will include. This prop can be

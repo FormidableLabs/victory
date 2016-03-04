@@ -11,6 +11,7 @@ module.exports = {
     if (propsDomain) {
       return propsDomain;
     }
+    const categoryData = this.getDomainFromCategories(props, axis);
     const dataset = Data.getData(props);
     return this.getDomainFromData(dataset, axis);
   },
@@ -64,6 +65,7 @@ module.exports = {
   },
 
   getDomainFromCategories(props, axis) {
+  
     if (axis !== "x" || !props.categories) {
       return undefined;
     }
@@ -82,13 +84,12 @@ module.exports = {
       return this.getDomainFromCategories(props, axis);
     }
     // find the global min and max
-    const hasMultipleDatasets = props.stacked || this.shouldGroup(props);
     datasets = datasets ? datasets.map((dataset) => dataset.data) :
-      Data.formatDatasets(props, hasMultipleDatasets).map((dataset) => dataset.data);
+      Data.formatDatasets(props, true).map((dataset) => dataset.data);
     const globalDomain = this.getDomainFromData(datasets, axis);
 
     // find the cumulative max for stacked chart types
-    const cumulativeData = this.isStacked(props, axis) ?
+    const cumulativeData = this.isStacked(props, axis, datasets) ?
       this.getCumulativeData(datasets, axis) : [];
 
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
@@ -116,15 +117,6 @@ module.exports = {
     return [domainMin, domainMax];
   },
 
-  shouldGroup(props) {
-    // automatically create grouped bars if data is array of arrays
-    // and x/y accessors are the default "x" and "y" keys,
-    return !props.stacked && (props.grouped || (
-      typeof props.grouped === "undefined" && Collection.isArrayOfArrays(props.data) &&
-      props.x === "x" && props.y === "y"
-    ));
-  },
-
   isStacked(props, axis) {
     // checks whether grouped data is stacked,
     // whether there are multiple datasets to stack
@@ -132,7 +124,7 @@ module.exports = {
     // TODO: check assumptions for inverted axis charts
 
     return (props.stacked === true)
-      && Collection.isArrayOfArrays(props.data)
+      && Collection.isArrayOfArrays(datasets)
       && (axis === "y");
   },
 

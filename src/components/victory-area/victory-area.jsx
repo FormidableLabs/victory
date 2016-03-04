@@ -36,18 +36,15 @@ export default class VictoryArea extends React.Component {
      */
     animate: PropTypes.object,
     /**
-     * The colorScale prop is an optional prop that defines the color scale the chart's areas
-     * will be created on. This prop should be given as an array of CSS colors, or as a string
-     * corresponding to one of the built in color scales. VictoryBar will automatically assign
-     * values from this color scale to the areas unless colors are explicitly provided in the
-     * `dataAttributes` prop.
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or two element arrays.
+     * or an object with these values for x and y. When categories are not given as an object
+     * they are assumed to refer to the independent variable (x). When categories are given
+     * as an array of arrays, the minimum and maximum values of the arrays define range bands,
+     * allowing numeric data to be grouped into segments.
+     * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
      */
-    colorScale: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
-      ])
-    ]),
+    categories: CustomPropTypes.homogeneousArray,
     /**
      * The data prop specifies the data to be plotted. Data should be in the form of an array
      * of data points, or an array of arrays of data points for multiple datasets.

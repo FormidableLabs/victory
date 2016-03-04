@@ -35,9 +35,6 @@ module.exports = {
         return false;
       } else if (axis) {
         return counts[type][axis] >= 1;
-      } else if (type === "bar") {
-        // TODO: should we remove the limit on grouped data types?
-        return counts[type] >= 1;
       }
       return false;
     };
@@ -58,13 +55,9 @@ module.exports = {
       if (!child || !child.type) { return; }
       const type = child.type && child.type.role;
       if (limitReached(child)) {
-        const msg = type === "axis" ?
-          `Only one VictoryAxis component of each axis type is allowed when using the ` +
-          `VictoryChart wrapper. Only the first axis will be used. Please compose ` +
-          `multi-axis charts manually` :
-          `Only one " + type + "component is allowed per chart. If you are trying ` +
-          `to plot several datasets, please pass an array of data arrays directly ` +
-          `into ${type}.`;
+        const msg = `Only one VictoryAxis component of each axis type is allowed when` +
+          `using the VictoryChart wrapper. Only the first axis will be used. Please compose ` +
+          `multi-axis charts manually`
         Log.warn(msg);
       } else {
         childComponents.push(child);
@@ -87,11 +80,11 @@ module.exports = {
     const predicate = {
       all: (role) => role !== "axis",
       data: (role) => role !== "axis" && role !== "bar",
-      grouped: (role) => role === "bar"
+
     };
     return childComponents.filter((child) => {
       const role = child.type && child.type.role;
-      return predicate[type].call(null, role);
+      return role !== axis;
     });
   },
 
@@ -198,7 +191,7 @@ module.exports = {
   },
 
   getCategories(childComponents) {
-    const groupedComponents = this.getDataComponents(childComponents, "grouped");
+    const groupedComponents = this.getDataComponents(childComponents);
     if (groupedComponents.length === 0) {
       return undefined;
     }

@@ -67,9 +67,11 @@ export default class VictoryBar extends React.Component {
       ])
     ]),
     /**
-     * The categories prop specifies the categories for a bar chart. This prop should
-     * be given as an array of string values, numeric values, or arrays. When this prop is
-     * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or two element arrays.
+     * or an object with these values for x and y. When categories are not given as an object
+     * they are assumed to refer to the independent variable (x). When categories are given
+     * as an array of arrays, the minimum and maximum values of the arrays define range bands,
      * allowing numeric data to be grouped into segments.
      * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
      */
@@ -276,7 +278,9 @@ export default class VictoryBar extends React.Component {
     y: "y"
   };
 
-  static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
+  static getDomain = Domain.getDomain.bind(Domain);
+  static getData = Data.getData.bind(Data);
+  static getBaseScale = Scale.getBaseScale.bind(Scale);
 
   componentWillMount() {
     this.memoized = {

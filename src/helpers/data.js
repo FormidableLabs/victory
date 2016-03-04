@@ -64,26 +64,6 @@ export default {
     return this.formatData(data, props);
   },
 
-  getMultiSeriesData(props, hasMultipleDatasets) {
-    if (props.data) {
-      hasMultipleDatasets = hasMultipleDatasets ||
-        Collection.isArrayOfArrays(props.data) && props.y === "y" && props.x === "x";
-      return this.formatDatasets(props, hasMultipleDatasets);
-    } else if (Array.isArray(props.y) && isFunction(props.y[0])) {
-      return props.y.map((y, index) => {
-        const newProps = assign({}, props, {y});
-        return {
-          attrs: this.getAttributes(props, index),
-          data: this.getData(newProps)
-        };
-      });
-    } else {
-      return [{
-        attrs: this.getAttributes(props, 0),
-        data: this.getData(props)
-      }];
-    }
-  },
 
   generateData(props) {
     // create an array of values evenly spaced across the x domain that include domain min/max
@@ -126,25 +106,6 @@ export default {
     });
   },
 
-  // For components that take multiple datasets
-  //
-  // NOTE: This code is in the hot path.  Future optimizations may be possible by
-  // reducing the frequency and number of data transformations that occur here.
-  formatDatasets(props, hasMultipleDatasets) {
-    // string map must be calculated using all datasets and shared
-    const stringMap = {
-      x: this.createStringMap(props, "x", hasMultipleDatasets),
-      y: this.createStringMap(props, "y", hasMultipleDatasets)
-    };
-
-    const _format = (dataset, index) => ({
-      attrs: this.getAttributes(props, index),
-      data: this.formatData(dataset, props, stringMap)
-    });
-    const data = props.data || this.generateData(props);
-    return hasMultipleDatasets ? data.map(_format) : [_format(data, 0)];
-  },
-
   cleanData(dataset, props) {
     // Some scale types break when certain data is supplies. This method will
     // remove data points that break scales. So far this method only removes
@@ -178,29 +139,5 @@ export default {
     return findIndex(categories, (category) => {
       return (x >= Math.min(...category) && x <= Math.max(...category));
     });
-  },
-
-  getAttributes(props, index) {
-    let attributes = props.dataAttributes && props.dataAttributes[index] ?
-      props.dataAttributes[index] : props.dataAttributes;
-    if (attributes) {
-      attributes.fill = attributes.fill || this.getColor(props, index);
-    } else {
-      attributes = {fill: this.getColor(props, index)};
-    }
-    const requiredAttributes = {
-      name: attributes && attributes.name ? attributes.name : `data-${index}`
-    };
-    return defaults(requiredAttributes, attributes);
-  },
-
-  getColor(props, index) {
-    // check for styles first
-    if (props.style && props.style.data && props.style.data.fill) {
-      return props.style.data.fill;
-    }
-    const colorScale = Array.isArray(props.colorScale) ?
-      props.colorScale : Style.getColorScale(props.colorScale);
-    return colorScale[index % colorScale.length];
   }
 };
