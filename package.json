@@ -27,13 +27,13 @@
   },
   "dependencies": {
     "builder": "~2.4.0",
-    "builder-victory-component": "~0.2.1",
+    "builder-victory-component": "~0.2.3",
     "victory-chart": "5.0.1",
     "victory-core": "1.0.0",
     "victory-pie": "1.1.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.2.1",
+    "builder-victory-component-dev": "~0.2.3",
     "chai": "^3.2.0",
     "ecology": "^1.2.0",
     "file-loader": "^0.8.5",
