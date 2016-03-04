@@ -1,5 +1,5 @@
 import pick from "lodash/object/pick";
-import memoizerific from "memoizerific";
+import lruMemoize from "lru-memoize";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 
@@ -260,7 +260,7 @@ export default class VictoryBar extends React.Component {
   componentWillMount() {
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: memoizerific(1)(Helpers.getStyles)
+      getStyles: lruMemoize(1, true)(Helpers.getStyles)
     };
   }
 

@@ -6,7 +6,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import ScatterHelpers from "./helper-methods";
-import memoizerific from "memoizerific";
+import lruMemoize from "lru-memoize";
 
 const defaultStyles = {
   data: {
@@ -213,7 +213,7 @@ export default class VictoryScatter extends React.Component {
   componentWillMount() {
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: memoizerific(1)(Helpers.getStyles)
+      getStyles: lruMemoize(1, true)(Helpers.getStyles)
     };
   }
 
