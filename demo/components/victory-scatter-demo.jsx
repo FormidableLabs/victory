@@ -60,7 +60,7 @@ export default class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 20000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -115,6 +115,7 @@ export default class App extends React.Component {
           maxBubbleSize={20}
           showLabels={false}
           data={bubbleData}
+          events={{data: {onClick: (evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}}
         />
 
         <svg style={_.merge({width: 500, height: 300}, style.parent)}>

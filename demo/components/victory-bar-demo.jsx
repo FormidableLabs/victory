@@ -71,6 +71,7 @@ export default class App extends React.Component {
 
         <ChartWrap>
           <VictoryBar
+            events={{data: {onClick: (evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}}
             stacked
             data={_.times(5, () => _.range(32))}
             x={null}

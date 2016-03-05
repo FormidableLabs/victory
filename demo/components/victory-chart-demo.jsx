@@ -168,6 +168,7 @@ class App extends React.Component {
               tickFormat={(x) => x.getFullYear()}
             />
             <VictoryLine
+              events={{data: {onClick: (evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}}
               data={[
                 {x: new Date(1982, 1, 1), y: 125},
                 {x: new Date(1987, 1, 1), y: 257},
