@@ -62,6 +62,17 @@ export default class VictoryLine extends React.Component {
       })
     ]),
     /**
+     * The events prop attaches arbitrary event handlers to parent, data, and label elements
+     * Parent events are only supported on standalone components i.e. top level svgs.
+     * Event handlers are currently only called with their corresponding events.
+     * @examples {data: {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}
+     */
+    events: PropTypes.shape({
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
+    }),
+    /**
      * The height props specifies the height of the chart container element in pixels
      */
     height: CustomPropTypes.nonNegative,
@@ -189,6 +200,7 @@ export default class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
+    events: {},
     height: 300,
     interpolation: "linear",
     padding: 50,
@@ -241,6 +253,7 @@ export default class VictoryLine extends React.Component {
       return (
         <LineSegment
           key={`line-segment-${index}`}
+          events={this.props.events.data}
           data={segment}
           interpolation={this.props.interpolation}
           scale={scale}
@@ -261,6 +274,7 @@ export default class VictoryLine extends React.Component {
     return (
       <LineLabel
         key={`line-label`}
+        events={this.props.events.labels}
         data={dataset}
         position={{
           x: scale.x.call(this, lastPoint.x),
@@ -318,6 +332,8 @@ export default class VictoryLine extends React.Component {
     const style = this.memoized.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

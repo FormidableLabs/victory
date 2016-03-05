@@ -8,10 +8,11 @@ export default class AxisLine extends React.Component {
     x2: PropTypes.number,
     y1: PropTypes.number,
     y2: PropTypes.number,
-    style: PropTypes.object
+    style: PropTypes.object,
+    events: PropTypes.object
   };
 
   render() {
-    return <line {...this.props}/>;
+    return <line {...this.props} {...this.props.events}/>;
   }
 }

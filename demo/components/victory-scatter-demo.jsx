@@ -60,7 +60,7 @@ export default class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 2000);
+    }, 20000);
   }
 
   componentWillUnmount() {

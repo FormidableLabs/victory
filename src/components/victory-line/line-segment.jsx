@@ -5,6 +5,7 @@ import { Helpers } from "victory-core";
 export default class LineSegment extends React.Component {
   static propTypes = {
     data: PropTypes.array,
+    events: PropTypes.object,
     interpolation: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object
@@ -21,7 +22,7 @@ export default class LineSegment extends React.Component {
       .y((data) => yScale(data.y));
     const path = lineFunction(this.props.data);
     return (
-      <path style={style} d={path}/>
+      <path style={style} d={path} {...this.props.events}/>
     );
   }
 }

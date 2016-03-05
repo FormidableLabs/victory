@@ -4,6 +4,7 @@ import { Helpers } from "victory-core";
 export default class Bar extends React.Component {
 
   static propTypes = {
+    events: PropTypes.object,
     position: PropTypes.object,
     horizontal: PropTypes.bool,
     style: PropTypes.object,
@@ -43,6 +44,7 @@ export default class Bar extends React.Component {
       this.getBarPath(props.position, barWidth) : undefined;
     return (
       <path
+        {...this.props.events}
         d={path}
         style={style}
         shapeRendering="optimizeSpeed"

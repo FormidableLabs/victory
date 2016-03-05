@@ -71,7 +71,8 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "red"}}}
+          style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "red", strokeWidth: 6}}}
+          events={{data: {onClick: (evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}}
           data={_.range(0, 100)}
           x={null}
           y={(d) => d * d}

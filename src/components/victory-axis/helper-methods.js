@@ -114,5 +114,17 @@ module.exports = {
       right: [props.width - offset.x, 0]
     }[orientation];
     return `translate(${translate[0]}, ${translate[1]})`;
+  },
+
+  getTickPosition(style, orientation, isVertical) {
+    const orientationSign = { top: -1, left: -1, right: 1, bottom: 1 };
+    const tickSpacing = style.size + style.padding;
+    const sign = orientationSign[orientation];
+    return {
+      x: isVertical ? sign * tickSpacing : 0,
+      x2: isVertical ? sign * style.size : 0,
+      y: isVertical ? 0 : sign * tickSpacing,
+      y2: isVertical ? 0 : sign * style.size
+    };
   }
 };

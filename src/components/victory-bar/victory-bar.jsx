@@ -115,6 +115,17 @@ export default class VictoryBar extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
+     * The events prop attaches arbitrary event handlers to parent, data, and label elements
+     * Parent events are only supported on standalone components i.e. top level svgs.
+     * Event handlers are currently only called with their corresponding events.
+     * @examples {data: {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}
+     */
+    events: PropTypes.shape({
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
+    }),
+    /**
      * The grouped prop determines whether the chart should consist of sets of grouped bars.
      * When this prop is set to true, the data prop *must* be an array of multiple data series
      * ie. not an array of data points, but an array of arrays of data points.  If data is
@@ -264,8 +275,9 @@ export default class VictoryBar extends React.Component {
   };
 
   static defaultProps = {
-    data: defaultData,
     colorScale: "greyscale",
+    data: defaultData,
+    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -297,6 +309,7 @@ export default class VictoryBar extends React.Component {
           style={style}
           position={position}
           datum={datum}
+          events={this.props.events.data}
         />
       );
       const shouldPlotLabel = BarHelpers.shouldPlotLabel(
@@ -316,6 +329,7 @@ export default class VictoryBar extends React.Component {
               datum={datum}
               labelText={datum.label || labelText}
               labelComponent={this.props.labelComponent}
+              events={this.props.events.labels}
             />
           </g>
         );
@@ -383,6 +397,8 @@ export default class VictoryBar extends React.Component {
     const style = this.memoized.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

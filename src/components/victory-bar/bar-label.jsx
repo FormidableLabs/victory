@@ -5,6 +5,7 @@ import { VictoryLabel, Helpers } from "victory-core";
 export default class BarLabel extends React.Component {
 
   static propTypes = {
+    events: PropTypes.object,
     position: PropTypes.object,
     horizontal: PropTypes.bool,
     style: PropTypes.object,
@@ -47,7 +48,8 @@ export default class BarLabel extends React.Component {
       data: props.datum, // Pass data for custom label component to access - todo: rename to datum
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
-      style
+      style,
+      events: component.props.events || props.events
     };
     return React.cloneElement(component, newProps, children);
   }
@@ -64,6 +66,7 @@ export default class BarLabel extends React.Component {
         textAnchor={anchors.text}
         verticalAnchor={anchors.vertical}
         style={style}
+        events={this.props.events}
       >
         {props.labelText}
       </VictoryLabel>

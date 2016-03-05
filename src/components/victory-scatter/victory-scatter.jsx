@@ -1,6 +1,9 @@
 import React, { PropTypes } from "react";
 import pick from "lodash/object/pick";
+import omit from "lodash/object/omit";
+import defaults from "lodash/object/defaults";
 import Point from "./point";
+import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
@@ -65,6 +68,17 @@ export default class VictoryScatter extends React.Component {
         y: CustomPropTypes.domain
       })
     ]),
+    /**
+     * The events prop attaches arbitrary event handlers to parent, data, and label elements
+     * Parent events are only supported on standalone components i.e. top level svgs.
+     * Event handlers are currently only called with their corresponding events.
+     * @examples {data: {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}
+     */
+    events: PropTypes.shape({
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
+    }),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
@@ -196,6 +210,7 @@ export default class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
+    events: {},
     height: 300,
     padding: 50,
     samples: 50,
@@ -219,23 +234,50 @@ export default class VictoryScatter extends React.Component {
   }
 
   renderPoint(data, index, calculatedProps) {
+    const {style} = calculatedProps;
     const position = {
       x: calculatedProps.scale.x.call(null, data.x),
       y: calculatedProps.scale.y.call(null, data.y)
     };
-    return (
+    const stylesFromData = omit(data, [
+      "x", "y", "z", "size", "symbol", "name", "label"
+    ]);
+    const baseDataStyle = defaults({}, stylesFromData, style.data);
+    const pointStyle = Helpers.evaluateStyle(baseDataStyle, data);
+    const baseSize = ScatterHelpers.getSize(data, this.props, calculatedProps);
+    const size = Helpers.evaluateProp(baseSize, data);
+    const pointComponent = (
       <Point
         key={`point-${index}`}
-        labelComponent={this.props.labelComponent}
-        showLabels={this.props.showLabels}
-        style={calculatedProps.style}
+        style={pointStyle}
         x={position.x}
         y={position.y}
         data={data}
-        size={ScatterHelpers.getSize(data, this.props, calculatedProps)}
+        size={size}
         symbol={ScatterHelpers.getSymbol(data, this.props)}
+        events={this.props.events}
       />
     );
+    if (data.label && this.props.showLabels) {
+      const matchedStyle = pick(pointStyle, ["opacity", "fill"]);
+      const padding = style.labels.padding || size * 0.25;
+      const baseLabelStyle = defaults({padding}, style.labels, matchedStyle);
+      const labelStyle = Helpers.evaluateStyle(baseLabelStyle, data);
+      return (
+        <g key={`point-group-${index}`}>
+          {pointComponent}
+          <PointLabel
+            style={labelStyle}
+            events={this.props.events.labels}
+            x={position.x}
+            y={position.y}
+            data={data}
+            labelComponent={this.props.labelComponent}
+          />
+        </g>
+      );
+    }
+    return pointComponent;
   }
 
   renderData(props, style) {
@@ -281,6 +323,8 @@ export default class VictoryScatter extends React.Component {
     const style = this.memoized.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }
