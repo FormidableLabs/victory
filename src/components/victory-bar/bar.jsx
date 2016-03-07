@@ -36,12 +36,12 @@ export default class Bar extends React.Component {
       this.getHorizontalBarPath(position, width) : this.getVerticalBarPath(position, width);
   }
 
-  renderBar(props) {
-    const style = Helpers.evaluateStyle(props.style, props.datum);
+  render() {
+    const style = Helpers.evaluateStyle(this.props.style, this.props.datum);
     // TODO better bar width calculation
     const barWidth = style.width;
-    const path = props.position.independent ?
-      this.getBarPath(props.position, barWidth) : undefined;
+    const path = this.props.position.independent ?
+      this.getBarPath(this.props.position, barWidth) : undefined;
     return (
       <path
         {...this.props.events}
@@ -49,14 +49,6 @@ export default class Bar extends React.Component {
         style={style}
         shapeRendering="optimizeSpeed"
       />
-    );
-  }
-
-  render() {
-    return (
-      <g>
-        {this.renderBar(this.props)}
-      </g>
     );
   }
 }

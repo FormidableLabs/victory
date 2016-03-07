@@ -13,6 +13,6 @@ export default class AxisLine extends React.Component {
   };
 
   render() {
-    return <line className={"axis-line"} {...this.props} {...this.props.events}/>;
+    return <line {...this.props} {...this.props.events}/>;
   }
 }

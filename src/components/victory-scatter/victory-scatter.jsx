@@ -255,7 +255,7 @@ export default class VictoryScatter extends React.Component {
         data={data}
         size={size}
         symbol={ScatterHelpers.getSymbol(data, this.props)}
-        events={this.props.events}
+        events={this.props.events.data}
       />
     );
     if (data.label && this.props.showLabels) {

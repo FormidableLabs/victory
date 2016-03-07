@@ -38,7 +38,7 @@ export default class Point extends React.Component {
   render() {
     return (
       <path
-        {...this.props.events.data}
+        {...this.props.events}
         style={this.props.style}
         d={this.getPath(this.props)}
         shapeRendering="optimizeSpeed"
