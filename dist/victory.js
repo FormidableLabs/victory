@@ -1827,7 +1827,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "gi"), "")
+	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
 	    var result
 	
 	    try {
@@ -1895,8 +1895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function getUnitsInExpression(expression) {
 	  var uniqueUnits = []
-	  var uniqueLowerCaseUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/gi
+	  var unitRegEx = /[\.0-9]([%a-z]+)/g
 	  var matches = unitRegEx.exec(expression)
 	
 	  while (matches) {
@@ -1904,9 +1903,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      continue
 	    }
 	
-	    if (uniqueLowerCaseUnits.indexOf(matches[1].toLowerCase()) === -1) {
+	    if (uniqueUnits.indexOf(matches[1]) === -1) {
 	      uniqueUnits.push(matches[1])
-	      uniqueLowerCaseUnits.push(matches[1].toLowerCase())
 	    }
 	
 	    matches = unitRegEx.exec(expression)
@@ -2283,7 +2281,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	});
+	
 	exports.homogeneousArray = homogeneousArray;
+	/**
+	 * Check that array prop length matches props.data.length
+	 */
+	var matchDataLength = makeChainable(function (props, propName) {
+	  if (props[propName] && Array.isArray(props[propName]) && props[propName].length !== props.data.length) {
+	    return new Error("Length of data and " + propName + " arrays must match.");
+	  }
+	});
+	exports.matchDataLength = matchDataLength;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(40)))
 
 /***/ },
@@ -4215,11 +4223,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getContent",
 	    value: function getContent(props) {
-	      if (props.children) {
-	        var child = _victoryUtilIndex.Helpers.evaluateProp(props.children);
+	      var text = props.text || props.children;
+	      if (text) {
+	        var child = _victoryUtilIndex.Helpers.evaluateProp(text);
 	        return ("" + child).split("\n");
 	      }
-	      return [props.text];
+	      return [""];
 	    }
 	  }, {
 	    key: "getDy",
@@ -4291,11 +4300,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * This defines the content of the label when child nodes are absent. It
 	       * will be ignored if children are provided.
 	       */
-	      text: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
+	      text: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
 	      /**
 	       * The children of this component define the content of the label. This
 	       * makes using the component similar to normal HTML spans or labels.
-	       * Currently, only strings are supported.
+	       * strings, numbers, and functions of data / value are supported.
 	       */
 	      children: _react.PropTypes.oneOfType([// TODO: Expand child support in future release
 	      _react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
@@ -14236,7 +14245,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	  (factory((global.d3_path = global.d3_path || {})));
+	  (factory((global.d3_path = {})));
 	}(this, function (exports) { 'use strict';
 	
 	  var pi = Math.PI;
@@ -14254,7 +14263,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  Path.prototype = path.prototype = {
-	    constructor: Path,
 	    moveTo: function(x, y) {
 	      this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y);
 	    },
@@ -14382,7 +14390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  var version = "0.1.5";
+	  var version = "0.1.4";
 	
 	  exports.version = version;
 	  exports.path = path;
@@ -14764,27 +14772,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
 	
+	var _memoizerific = __webpack_require__(144);
+	
+	var _memoizerific2 = _interopRequireDefault(_memoizerific);
+	
 	var _react = __webpack_require__(48);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _helpersScale = __webpack_require__(94);
-	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
-	
-	var _helpersData = __webpack_require__(103);
-	
-	var _helpersData2 = _interopRequireDefault(_helpersData);
-	
-	var _helpersDomain = __webpack_require__(102);
-	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
-	
 	var _victoryCore = __webpack_require__(1);
-	
-	var _memoizerific = __webpack_require__(144);
-	
-	var _memoizerific2 = _interopRequireDefault(_memoizerific);
 	
 	var _bar = __webpack_require__(148);
 	
@@ -14797,6 +14793,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _helperMethods = __webpack_require__(150);
 	
 	var _helperMethods2 = _interopRequireDefault(_helperMethods);
+	
+	var _helpersData = __webpack_require__(103);
+	
+	var _helpersData2 = _interopRequireDefault(_helpersData);
+	
+	var _helpersDomain = __webpack_require__(102);
+	
+	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	
+	var _helpersScale = __webpack_require__(94);
+	
+	var _helpersScale2 = _interopRequireDefault(_helpersScale);
 	
 	var defaultStyles = {
 	  data: {
@@ -14977,7 +14985,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * be applied to the data points in the corresponding array of the data prop.
 	       * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
 	       */
-	      dataAttributes: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)]),
+	      dataAttributes: _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.matchDataLength, _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)])]),
 	      /**
 	       * The categories prop specifies the categories for a bar chart. This prop should
 	       * be given as an array of string values, numeric values, or arrays. When this prop is
