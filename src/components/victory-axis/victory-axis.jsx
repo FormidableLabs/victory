@@ -102,8 +102,14 @@ export default class VictoryAxis extends React.Component {
      */
     height: CustomPropTypes.nonNegative,
     /**
-     * The label prop specifies the label for your axis. This prop can be a string or
-     * a label component.
+     * The label prop defines the label that will appear along the axis. This
+     * prop should be given as a value or an entire, HTML-complete label
+     * component. If a label component is given, it will be cloned. The new
+     * element's properties x, y, textAnchor, verticalAnchor, and transform
+     * will have defaults provided by the axis; styles filled out with
+     * defaults provided by the axis, and overrides from the label component.
+     * If a value is given, a new VictoryLabel will be created with props and
+     * styles from the axis.
      */
     label: PropTypes.any,
     /**
@@ -296,7 +302,7 @@ export default class VictoryAxis extends React.Component {
     const newProps = this.getLableProps(props, layoutProps);
     return (props.label.props) ?
       React.cloneElement(props.label, newProps) :
-      React.createElement(VictoryLabel, newProps, props.label);
+      React.createElement(VictoryLabel, newProps);
   }
 
   getLableProps(props, layoutProps) {
@@ -311,6 +317,7 @@ export default class VictoryAxis extends React.Component {
     const y = sign * labelPadding;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const transform = isVertical ? "rotate(-90)" : "";
+    const labelText = typeof props.label === "string" ? props.label : null;
     return {
       key: "label",
       x: componentProps.x || x,
@@ -318,7 +325,8 @@ export default class VictoryAxis extends React.Component {
       textAnchor: componentProps.textAnchor || "middle",
       verticalAnchor: componentProps.verticalAnchor || verticalAnchor,
       style: defaults({}, style.axisLabel, componentProps.style),
-      transform: componentProps.transform || transform
+      transform: componentProps.transform || transform,
+      text: labelText
     };
   }
 

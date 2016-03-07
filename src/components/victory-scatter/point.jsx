@@ -68,20 +68,21 @@ export default class Point extends React.Component {
     const componentStyle = component && component.props.style || {};
     const baseStyle = defaults({}, componentStyle, style.labels);
     const labelStyle = Helpers.evaluateStyle(baseStyle, props.data);
-    const children = component && component.props.children || props.data.label;
+    const labelText = props.data.label;
     const labelProps = {
       x: component && component.props.x || props.x,
       y: component && component.props.y || props.y - labelStyle.padding,
       dy: component && component.props.dy,
       data: props.data,
+      text: labelText,
       textAnchor: component && component.props.textAnchor || labelStyle.textAnchor,
       verticalAnchor: component && component.props.verticalAnchor || "end",
       style: labelStyle
     };
 
     return component ?
-      React.cloneElement(component, labelProps, children) :
-      React.createElement(VictoryLabel, labelProps, children);
+      React.cloneElement(component, labelProps) :
+      React.createElement(VictoryLabel, labelProps);
   }
 
   render() {
