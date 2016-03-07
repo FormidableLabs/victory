@@ -97,6 +97,17 @@ export default class VictoryPie extends React.Component {
      */
     endAngle: PropTypes.number,
     /**
+     * The events prop attaches arbitrary event handlers to parent, data, and label elements
+     * Parent events are only supported on standalone components i.e. top level svgs.
+     * Event handlers are currently only called with their corresponding events.
+     * @examples {data: {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}
+     */
+    events: PropTypes.shape({
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object
+    }),
+    /**
      * The height props specifies the height of the chart container element in pixels
      */
     height: CustomPropTypes.nonNegative,
@@ -201,6 +212,7 @@ export default class VictoryPie extends React.Component {
       { x: "E", y: 2 }
     ],
     endAngle: 360,
+    events: {},
     height: 400,
     innerRadius: 0,
     padAngle: 0,
@@ -228,11 +240,13 @@ export default class VictoryPie extends React.Component {
     return (
       <g key={index}>
         <Slice
+          events={this.props.events.data}
           slice={slice}
           pathFunction={makeSlicePath}
           style={sliceStyle}
         />
         <SliceLabel
+          events={this.props.events.labels}
           labelComponent={this.props.labelComponent}
           style={style.labels}
           positionFunction={labelPosition.centroid}
@@ -305,6 +319,8 @@ export default class VictoryPie extends React.Component {
       </g>
     );
 
-    return this.props.standalone ? <svg style={parentStyle}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={parentStyle} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

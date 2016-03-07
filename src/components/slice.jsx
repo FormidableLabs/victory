@@ -7,7 +7,8 @@ export default class Slice extends React.Component {
   static propTypes = {
     slice: PropTypes.object,
     pathFunction: PropTypes.func,
-    style: PropTypes.object
+    style: PropTypes.object,
+    events: PropTypes.object
   };
 
   renderSlice(props) {
@@ -17,6 +18,7 @@ export default class Slice extends React.Component {
       <path
         d={props.pathFunction(props.slice)}
         style={style}
+        {...props.events}
       />
     );
   }

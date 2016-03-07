@@ -2,68 +2,69 @@
  * Client tests
  */
 /*eslint-disable max-nested-callbacks */
-
+/* global sinon */
 import _ from "lodash";
 import React from "react";
-import ReactDOM from "react-dom";
+import { shallow, mount } from "enzyme";
 import VictoryPie from "src/components/victory-pie";
-// Use `TestUtils` to inject into DOM, simulate events, etc.
-// See: https://facebook.github.io/react/docs/test-utils.html
-import TestUtils from "react-addons-test-utils";
-
-const getElement = function (output, tagName) {
-  return ReactDOM.findDOMNode(
-    TestUtils.findRenderedDOMComponentWithTag(output, tagName)
-  );
-};
-
-let renderedComponent;
+import Slice from "src/components/slice";
 
 describe("components/victory-pie", () => {
   describe("default component rendering", () => {
-    before(() => {
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryPie/>);
-    });
-
     it("renders an svg with the correct width and height", () => {
-      const svg = getElement(renderedComponent, "svg");
-      // default width and height
-      expect(svg.style.width).to.equal(`${VictoryPie.defaultProps.width}px`);
-      expect(svg.style.height).to.equal(`${VictoryPie.defaultProps.height}px`);
+      const wrapper = shallow(
+        <VictoryPie/>
+      );
+      const svg = wrapper.find("svg");
+      expect(svg.prop("style").width).to.equal(VictoryPie.defaultProps.width);
+      expect(svg.prop("style").height).to.equal(VictoryPie.defaultProps.height);
     });
   });
 
   describe("rendering data", () => {
     it("renders points for {x, y} shaped data (default)", () => {
       const data = _.range(5).map((i) => ({x: i, y: i}));
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryPie data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(5);
+      const wrapper = shallow(<VictoryPie data={data}/>);
+      const slices = wrapper.find(Slice);
+      expect(slices.length).to.equal(5);
     });
 
     it("renders points for array-shaped data", () => {
       const data = _.range(6).map((i) => [i, i]);
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryPie data={data} x={0} y={1}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(6);
+      const wrapper = shallow(<VictoryPie data={data} x={0} y={1}/>);
+      const slices = wrapper.find(Slice);
+      expect(slices.length).to.equal(6);
     });
 
     it("renders points for deeply-nested data", () => {
       const data = _.range(7).map((i) => ({a: {b: [{x: i, y: i}]}}));
-      renderedComponent = TestUtils.renderIntoDocument(
+      const wrapper = shallow(
         <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y"/>
       );
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(7);
+      const slices = wrapper.find(Slice);
+      expect(slices.length).to.equal(7);
     });
 
     it("renders data values with null accessor", () => {
       const data = _.range(8);
-      renderedComponent = TestUtils.renderIntoDocument(
+      const wrapper = shallow(
         <VictoryPie data={data} x={null} y={null}/>
       );
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(8);
+      const slices = wrapper.find(Slice);
+      expect(slices.length).to.equal(8);
+    });
+  });
+
+  describe("event handling", () => {
+    it("attaches an event to data", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryPie events={{data: {onClick: clickHandler}}}/>
+      );
+      wrapper.find(Slice).forEach((node) => {
+        node.simulate("click");
+        expect(clickHandler.called).to.equal(true);
+      });
     });
   });
 });

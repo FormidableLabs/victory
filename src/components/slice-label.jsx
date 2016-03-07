@@ -8,7 +8,8 @@ export default class SliceLabel extends React.Component {
     labelComponent: PropTypes.any,
     positionFunction: PropTypes.func,
     slice: PropTypes.object,
-    style: PropTypes.object
+    style: PropTypes.object,
+    events: PropTypes.object
   };
 
   renderLabelComponent(props, position, label) {
@@ -24,6 +25,7 @@ export default class SliceLabel extends React.Component {
       data: props.slice.data, // Pass data for custom label component to access
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
+      events: component.props.events || props.events,
       style
     };
     return React.cloneElement(component, newProps, children);
@@ -36,6 +38,7 @@ export default class SliceLabel extends React.Component {
     );
     return (
       <VictoryLabel
+        events={props.events}
         x={position[0]}
         y={position[1]}
         data={props.slice.data}
