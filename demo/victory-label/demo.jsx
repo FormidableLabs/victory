@@ -12,9 +12,10 @@ export default class App extends React.Component {
         <svg width="600" height="1800" style={{ border: "1px solid #ccc", padding: 40}}>
 
           <circle cx="0" cy="0" r="2" fill="red"/>
-          <VictoryLabel x={0} y={0}>
-            {"Victory is awesome.\nThis is default anchoring.\nCapisce?"}
-          </VictoryLabel>
+          <VictoryLabel
+            x={0} y={0}
+            text={"Victory is awesome.\nThis is default anchoring.\nCapisce?"}
+          />
 
           <circle cx="300" cy="150" r="2" fill="green"/>
           <VictoryLabel x={300} y={150} textAnchor="end" verticalAnchor="start"
