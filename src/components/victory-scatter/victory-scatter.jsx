@@ -227,10 +227,25 @@ export default class VictoryScatter extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
 
   componentWillMount() {
+    this.state = {
+      childState: {}
+    };
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
       getStyles: memoizerific(1)(Helpers.getStyles)
     };
+  }
+
+  onClick(childKey, eventName, evt) {
+    if (eventName === "onClick") {
+      if (this.props.events.data && this.props.events.data.onClick) {
+        this.setState({
+          childState: Object.assign(this.state.childState, {
+            [childKey]: this.props.events.data.onClick(childKey, evt)
+          })
+        });
+      }
+    }
   }
 
   renderPoint(data, index, calculatedProps) {
@@ -249,13 +264,15 @@ export default class VictoryScatter extends React.Component {
     const pointComponent = (
       <Point
         key={`point-${index}`}
+        index={index}
         style={pointStyle}
         x={position.x}
         y={position.y}
         data={data}
         size={size}
         symbol={ScatterHelpers.getSymbol(data, this.props)}
-        events={this.props.events.data}
+        events={{onClick: this.onClick.bind(this)}}
+        {...this.state.childState[index]}
       />
     );
     if (data.label && this.props.showLabels) {

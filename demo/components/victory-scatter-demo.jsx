@@ -143,12 +143,15 @@ export default class App extends React.Component {
           symbol={"star"}
           size={8}
           events={{data: {
-            onMouseOver: function(evt) {
-              this.setState({style: {stroke: "orange", strokeWidth: 3, fill: "gold"}})
+            onClick: function(childKey, evt) {
+              return {
+                style: {
+                  fill: "gold",
+                  stroke: "orange",
+                  strokeWidth: 3
+                }
+              }
             },
-            onMouseOut: function(evt) {
-              this.setState({style: {fill: "gold"}})
-            }
           }}}
         />
 
