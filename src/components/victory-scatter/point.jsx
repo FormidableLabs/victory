@@ -21,7 +21,16 @@ export default class Point extends React.Component {
     y: React.PropTypes.number
   };
 
-  getPath(props) {
+  constructor(props) {
+    super(props);
+    this.state = props;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState(nextProps);
+  }
+
+  getPath(state) {
     const pathFunctions = {
       circle: pathHelpers.circle,
       square: pathHelpers.square,
@@ -31,16 +40,25 @@ export default class Point extends React.Component {
       plus: pathHelpers.plus,
       star: pathHelpers.star
     };
-    const symbol = Helpers.evaluateProp(props.symbol, props.data);
-    return pathFunctions[symbol].call(null, props.x, props.y, props.size);
+    const symbol = Helpers.evaluateProp(state.symbol, state.data);
+    return pathFunctions[symbol].call(null, state.x, state.y, state.size);
+  }
+
+  bindEvents(events) {
+    return events ?
+      Object.keys(events).reduce((prev, curr) => {
+        prev[curr] = events[curr].bind(this);
+        return prev;
+      }, {}) : {};
   }
 
   render() {
+    const events = this.bindEvents(this.state.events);
     return (
       <path
-        {...this.props.events}
-        style={this.props.style}
-        d={this.getPath(this.props)}
+        {...events}
+        style={this.state.style}
+        d={this.getPath(this.state)}
         shapeRendering="optimizeSpeed"
       />
     );

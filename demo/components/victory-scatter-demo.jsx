@@ -1,5 +1,6 @@
 /*global window:false */
 import React from "react";
+import ReactDOM from "react-dom";
 import _ from "lodash";
 import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
@@ -142,10 +143,12 @@ export default class App extends React.Component {
           symbol={"star"}
           size={8}
           events={{data: {
-            onMouseOver: (evt) => this.setState({
-              hoverStyle: {stroke: "orange", strokeWidth: 3, fill: "gold"}
-            }),
-            onMouseOut: () => this.setState({hoverStyle: {fill: "gold"}})
+            onMouseOver: function(evt) {
+              this.setState({style: {stroke: "orange", strokeWidth: 3, fill: "gold"}})
+            },
+            onMouseOut: function(evt) {
+              this.setState({style: {fill: "gold"}})
+            }
           }}}
         />
 
@@ -163,7 +166,7 @@ export default class App extends React.Component {
 
         <VictoryScatter
           data={_.range(0, 200).map((i) => {
-            return {a: {b: [{y: i * Math.sin(i * .3)}], x: Math.cos(i * .3)}};
+            return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}
           x="a.x"
           y="a.b[0]y"
