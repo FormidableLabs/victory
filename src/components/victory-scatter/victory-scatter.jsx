@@ -234,7 +234,7 @@ export default class VictoryScatter extends React.Component {
   }
 
   renderPoint(data, index, calculatedProps) {
-    const {style} = calculatedProps;
+    const { style } = calculatedProps;
     const position = {
       x: calculatedProps.scale.x.call(null, data.x),
       y: calculatedProps.scale.y.call(null, data.y)
@@ -261,7 +261,7 @@ export default class VictoryScatter extends React.Component {
     if (data.label && this.props.showLabels) {
       const matchedStyle = pick(pointStyle, ["opacity", "fill"]);
       const padding = style.labels.padding || size * 0.25;
-      const baseLabelStyle = defaults({padding}, style.labels, matchedStyle);
+      const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});
       const labelStyle = Helpers.evaluateStyle(baseLabelStyle, data);
       return (
         <g key={`point-group-${index}`}>

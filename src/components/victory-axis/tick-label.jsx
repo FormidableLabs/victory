@@ -24,22 +24,23 @@ export default class TickLabel extends React.Component {
   }
 
   render() {
-    if (!this.props.label) {
+    const { props } = this;
+    if (!props.label) {
       return undefined;
     }
-    const componentProps = this.props.label.props ? this.props.label.props : {};
-    const style = componentProps.style || this.props.style;
-    const anchors = this.getAnchors(this.props);
+    const componentProps = props.label.props || {};
+    const style = componentProps.style || props.style;
+    const anchors = this.getAnchors(props);
     const newProps = {
-      x: this.props.position.x,
-      y: this.props.position.y,
+      x: props.position.x,
+      y: props.position.y,
       textAnchor: componentProps.textAnchor || anchors.textAnchor,
       verticalAnchor: componentProps.verticalAnchor || anchors.verticalAnchor,
-      style: Helpers.evaluateStyle(style, this.props.tick),
-      events: componentProps.events || this.props.events
+      style: Helpers.evaluateStyle(style, props.tick),
+      events: componentProps.events || props.events
     };
-    return this.props.label.props ?
-      React.cloneElement(this.props.label, newProps) :
-      React.createElement(VictoryLabel, newProps, this.props.label);
+    return props.label.props ?
+      React.cloneElement(props.label, newProps) :
+      React.createElement(VictoryLabel, newProps, props.label);
   }
 }

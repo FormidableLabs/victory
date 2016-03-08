@@ -211,7 +211,7 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
     return childComponents.map((child, index) => {
-      const style = defaults({parent: baseStyle.parent}, child.props.style);
+      const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
       return React.cloneElement(child, defaults({
         animate: child.props.animate || props.animate,

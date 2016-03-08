@@ -12,7 +12,7 @@ export default class LineLabel extends React.Component {
 
   renderLabelComponent(props) {
     const component = props.label;
-    const baseStyle = defaults({padding: 0}, component.props.style, props.style);
+    const baseStyle = defaults({}, component.props.style, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.data);
     const children = component.props.children || "";
     const newProps = {
@@ -28,7 +28,7 @@ export default class LineLabel extends React.Component {
   }
 
   renderVictoryLabel(props) {
-    const style = Helpers.evaluateStyle(defaults({padding: 0}, props.style), props.data);
+    const style = Helpers.evaluateStyle(defaults({}, props.style), props.data, {padding: 0});
     return (
       <VictoryLabel
         x={props.position.x + style.padding}

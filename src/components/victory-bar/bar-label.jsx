@@ -38,7 +38,7 @@ export default class BarLabel extends React.Component {
 
   renderLabelComponent(props, position, anchors) {
     const component = props.labelComponent;
-    const baseStyle = defaults({padding: 0}, component.props.style, props.style);
+    const baseStyle = defaults({}, component.props.style, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     const children = component.props.children || props.labelText;
@@ -55,7 +55,7 @@ export default class BarLabel extends React.Component {
   }
 
   renderVictoryLabel(props, position, anchors) {
-    const baseStyle = defaults({padding: 0}, props.style);
+    const baseStyle = defaults({}, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     return (

@@ -274,7 +274,7 @@ export default class VictoryAxis extends React.Component {
       );
       const label = tickFormat.call(this, tick, index);
       let labelComponent;
-      if (label && label !== "") {
+      if (label) {
         labelComponent = (
           <TickLabel key={`tick-label-${index}`}
             events={this.props.events.tickLabels}

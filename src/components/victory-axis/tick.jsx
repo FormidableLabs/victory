@@ -16,9 +16,7 @@ export default class Tick extends React.Component {
     return (
       <line
         {...this.props.events}
-        x={this.props.position.x}
         x2={this.props.position.x2}
-        y={this.props.position.y}
         y2={this.props.position.y2}
         style={style}
       />
