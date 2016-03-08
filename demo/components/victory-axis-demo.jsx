@@ -74,11 +74,18 @@ export default class App extends React.Component {
             label="time axis"
             padding={{left: 10, right: 80}}
             scale="time"
-            events={{axis: {onClick: (evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}}
+            events={{
+              axis: {
+                onClick: (evt) => this.setState({
+                  label: `x: ${evt.clientX}, y: ${evt.clientY}`
+                })
+              }
+            }}
             style={{
               axis: {strokeWidth: 3},
               grid: {stroke: "black", strokeWidth: 1}
             }}
+            label={this.state.label}
             tickValues={[
               new Date(1980, 1, 1),
               new Date(1990, 1, 1),

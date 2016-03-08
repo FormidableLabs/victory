@@ -50,6 +50,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      hoverStyle: {fill: "gold"},
       data: props.data
     };
   }
@@ -115,7 +116,6 @@ export default class App extends React.Component {
           maxBubbleSize={20}
           showLabels={false}
           data={bubbleData}
-          events={{data: {onClick: (evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}}
         />
 
         <svg style={_.merge({width: 500, height: 300}, style.parent)}>
@@ -128,7 +128,7 @@ export default class App extends React.Component {
         </svg>
 
         <VictoryScatter
-          style={style}
+          style={{parent: style.parent, data: this.state.hoverStyle}}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},
@@ -139,6 +139,14 @@ export default class App extends React.Component {
             {x: new Date(2011, 1, 1), y: 270},
             {x: new Date(2015, 1, 1), y: 470}
           ]}
+          symbol={"star"}
+          size={8}
+          events={{data: {
+            onMouseOver: (evt) => this.setState({
+              hoverStyle: {stroke: "orange", strokeWidth: 3, fill: "gold"}
+            }),
+            onMouseOut: () => this.setState({hoverStyle: {fill: "gold"}})
+          }}}
         />
 
         <VictoryScatter
