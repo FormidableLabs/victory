@@ -3,7 +3,7 @@ import uniq from "lodash/array/uniq";
 import omit from "lodash/object/omit";
 import Domain from "../../helpers/domain";
 
-module.exports = {
+export default {
   getDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {

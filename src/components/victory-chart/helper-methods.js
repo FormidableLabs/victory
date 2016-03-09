@@ -11,7 +11,7 @@ import Domain from "../../helpers/domain";
 import React from "react";
 import { Collection, Log } from "victory-core";
 
-module.exports = {
+export default {
   getChildComponents(props, defaultAxes) {
     // set up a counter for component types
     const counts = {};

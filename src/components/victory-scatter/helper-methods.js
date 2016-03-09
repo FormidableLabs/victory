@@ -2,7 +2,7 @@ import values from "lodash/object/values";
 import pathHelpers from "./path-helpers";
 import { Helpers } from "victory-core";
 
-module.exports = {
+export default {
   getSymbol(data, props) {
     if (props.bubbleProperty) {
       return "circle";

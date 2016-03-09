@@ -6,7 +6,8 @@ import d3Scale from "d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 
-module.exports = {
+export default {
+
   validScale(scale) {
     if (typeof scale === "function") {
       return (isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range));
