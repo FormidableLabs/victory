@@ -236,16 +236,22 @@ export default class VictoryScatter extends React.Component {
     };
   }
 
-  onClick(childKey, eventName, evt) {
-    if (eventName === "onClick") {
-      if (this.props.events.data && this.props.events.data.onClick) {
-        this.setState({
-          childState: Object.assign(this.state.childState, {
-            [childKey]: this.props.events.data.onClick(childKey, evt)
-          })
-        });
-      }
+  onDataEvent(childKey, eventName, evt) {
+    if (this.props.events.data && this.props.events.data[eventName]) {
+      this.setState({
+        childState: Object.assign(this.state.childState, {
+          [childKey]: this.props.events.data[eventName](childKey, evt)
+        })
+      });
     }
+  }
+
+  getBoundDataEvents(events) {
+    return events ?
+      Object.keys(this.props.events.data).reduce((memo, event) => {
+        memo[event] = this.onDataEvent.bind(this);
+        return memo;
+      }, {}) : {};
   }
 
   renderPoint(data, index, calculatedProps) {
@@ -271,7 +277,7 @@ export default class VictoryScatter extends React.Component {
         data={data}
         size={size}
         symbol={ScatterHelpers.getSymbol(data, this.props)}
-        events={{onClick: this.onClick.bind(this)}}
+        events={this.getBoundDataEvents(this.props.events.data)}
         {...this.state.childState[index]}
       />
     );
