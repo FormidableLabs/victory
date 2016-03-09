@@ -1,7 +1,7 @@
 import assign from "lodash/object/assign";
 import Layout from "../../helpers/layout";
 
-module.exports = {
+export default {
   getBaseline(datasets, calculatedProps, index) {
     const {domain, stacked} = calculatedProps;
     if (index === 0 || stacked === false) {

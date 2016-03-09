@@ -1,5 +1,11 @@
 # VictoryLine Changelog
 
+## 5.0.2 (2016-03-04)
+
+- Add validation of length for `dataAttributes` prop
+- Remove source-maps from git
+- Various documentation fixes
+
 ## 5.0.1 (2016-03-01)
 
 - Provide datum to victory-line custom label

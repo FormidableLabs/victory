@@ -2115,7 +2115,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
+	    var toEvaluate = expression.replace(new RegExp(unit, "gi"), "")
 	    var result
 	
 	    try {
@@ -2183,7 +2183,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function getUnitsInExpression(expression) {
 	  var uniqueUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/g
+	  var uniqueLowerCaseUnits = []
+	  var unitRegEx = /[\.0-9]([%a-z]+)/gi
 	  var matches = unitRegEx.exec(expression)
 	
 	  while (matches) {
@@ -2191,8 +2192,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      continue
 	    }
 	
-	    if (uniqueUnits.indexOf(matches[1]) === -1) {
+	    if (uniqueLowerCaseUnits.indexOf(matches[1].toLowerCase()) === -1) {
 	      uniqueUnits.push(matches[1])
+	      uniqueLowerCaseUnits.push(matches[1].toLowerCase())
 	    }
 	
 	    matches = unitRegEx.exec(expression)
@@ -2569,7 +2571,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	});
+	
 	exports.homogeneousArray = homogeneousArray;
+	/**
+	 * Check that array prop length matches props.data.length
+	 */
+	var matchDataLength = makeChainable(function (props, propName) {
+	  if (props[propName] && Array.isArray(props[propName]) && props[propName].length !== props.data.length) {
+	    return new Error("Length of data and " + propName + " arrays must match.");
+	  }
+	});
+	exports.matchDataLength = matchDataLength;
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
 
 /***/ },
@@ -14736,27 +14748,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
 	
+	var _memoizerific = __webpack_require__(143);
+	
+	var _memoizerific2 = _interopRequireDefault(_memoizerific);
+	
 	var _react = __webpack_require__(29);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _helpersScale = __webpack_require__(93);
-	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
-	
-	var _helpersData = __webpack_require__(102);
-	
-	var _helpersData2 = _interopRequireDefault(_helpersData);
-	
-	var _helpersDomain = __webpack_require__(101);
-	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
-	
 	var _victoryCore = __webpack_require__(30);
-	
-	var _memoizerific = __webpack_require__(143);
-	
-	var _memoizerific2 = _interopRequireDefault(_memoizerific);
 	
 	var _bar = __webpack_require__(147);
 	
@@ -14769,6 +14769,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	var _helperMethods = __webpack_require__(149);
 	
 	var _helperMethods2 = _interopRequireDefault(_helperMethods);
+	
+	var _helpersData = __webpack_require__(102);
+	
+	var _helpersData2 = _interopRequireDefault(_helpersData);
+	
+	var _helpersDomain = __webpack_require__(101);
+	
+	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	
+	var _helpersScale = __webpack_require__(93);
+	
+	var _helpersScale2 = _interopRequireDefault(_helpersScale);
 	
 	var defaultStyles = {
 	  data: {
@@ -14949,7 +14961,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	       * be applied to the data points in the corresponding array of the data prop.
 	       * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
 	       */
-	      dataAttributes: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)]),
+	      dataAttributes: _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.matchDataLength, _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)])]),
 	      /**
 	       * The categories prop specifies the categories for a bar chart. This prop should
 	       * be given as an array of string values, numeric values, or arrays. When this prop is

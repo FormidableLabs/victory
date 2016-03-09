@@ -1,6 +1,6 @@
 import { Collection } from "victory-core";
 
-module.exports = {
+export default {
   getAxisType(component) {
     if (!component.type || component.type.role !== "axis") {
       return undefined;

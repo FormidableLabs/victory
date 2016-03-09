@@ -3,7 +3,7 @@ import uniq from "lodash/array/uniq";
 import omit from "lodash/object/omit";
 import Layout from "../../helpers/layout";
 
-module.exports = {
+export default {
   // Layout Helpers
   getBarPosition(datum, index, calculatedProps) {
     const { scale, stacked, categories, datasets } = calculatedProps;

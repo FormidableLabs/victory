@@ -8,7 +8,7 @@ import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
 import { Helpers } from "victory-core";
 
-module.exports = {
+export default {
   // exposed for use by VictoryChart
   getDomain(props, axis) {
     if (axis && axis !== this.getAxis(props)) {

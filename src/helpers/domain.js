@@ -5,7 +5,7 @@ import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
 
-module.exports = {
+export default {
   getDomain(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
