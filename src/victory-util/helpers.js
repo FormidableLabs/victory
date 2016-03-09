@@ -2,7 +2,7 @@ import defaults from "lodash/defaults";
 import isFunction from "lodash/isFunction";
 import property from "lodash/property";
 
-module.exports = {
+export default {
   getPadding(props) {
     const padding = typeof props.padding === "number" ? props.padding : 0;
     const paddingObj = typeof props.padding === "object" ? props.padding : {};
