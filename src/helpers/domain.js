@@ -5,7 +5,7 @@ import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
 
-module.exports = {
+export default {
   getDomain(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
@@ -13,6 +13,18 @@ module.exports = {
     }
     const dataset = Data.getData(props);
     return this.getDomainFromData(dataset, axis);
+  },
+
+  getMultiSeriesDomain(props, axis, datasets) {
+    const propsDomain = this.getDomainFromProps(props, axis);
+    if (propsDomain) {
+      return this.padDomain(propsDomain, props, axis);
+    }
+    const ensureZero = (domain) => {
+      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+    };
+    const dataDomain = ensureZero(this.getDomainFromGroupedData(props, axis, datasets));
+    return this.padDomain(dataDomain, props, axis);
   },
 
   getDomainFromProps(props, axis) {
@@ -65,14 +77,14 @@ module.exports = {
     return [Math.min(...categoryValues), Math.max(...categoryValues)];
   },
 
-  getDomainFromGroupedData(props, axis) {
+  getDomainFromGroupedData(props, axis, datasets) {
     if (axis === "x" && props.categories) {
       return this.getDomainFromCategories(props, axis);
     }
     // find the global min and max
     const hasMultipleDatasets = props.stacked || this.shouldGroup(props);
-    const datasets = Data.formatDatasets(props, hasMultipleDatasets)
-      .map((dataset) => dataset.data);
+    datasets = datasets ? datasets.map((dataset) => dataset.data) :
+      Data.formatDatasets(props, hasMultipleDatasets).map((dataset) => dataset.data);
     const globalDomain = this.getDomainFromData(datasets, axis);
 
     // find the cumulative max for stacked chart types

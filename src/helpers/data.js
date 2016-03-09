@@ -1,10 +1,11 @@
 import flatten from "lodash/array/flatten";
 import findIndex from "lodash/array/findIndex";
+import isFunction from "lodash/lang/isFunction";
 import uniq from "lodash/array/uniq";
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import zipObject from "lodash/array/zipObject";
-import { Helpers, Style } from "victory-core";
+import { Collection, Helpers, Style } from "victory-core";
 import Scale from "./scale";
 
 export default {
@@ -63,6 +64,27 @@ export default {
     return this.formatData(data, props);
   },
 
+  getMultiSeriesData(props, hasMultipleDatasets) {
+    if (props.data) {
+      hasMultipleDatasets = hasMultipleDatasets ||
+        Collection.isArrayOfArrays(props.data) && props.y === "y" && props.x === "x";
+      return this.formatDatasets(props, hasMultipleDatasets);
+    } else if (Array.isArray(props.y) && isFunction(props.y[0])) {
+      return props.y.map((y, index) => {
+        const newProps = assign({}, props, {y});
+        return {
+          attrs: this.getAttributes(props, index),
+          data: this.getData(newProps)
+        };
+      });
+    } else {
+      return [{
+        attrs: this.getAttributes(props, 0),
+        data: this.getData(props)
+      }];
+    }
+  },
+
   generateData(props) {
     // create an array of values evenly spaced across the x domain that include domain min/max
     const domain = props.domain ? (props.domain.x || props.domain) :
@@ -119,8 +141,8 @@ export default {
       attrs: this.getAttributes(props, index),
       data: this.formatData(dataset, props, stringMap)
     });
-
-    return hasMultipleDatasets ? props.data.map(_format) : [_format(props.data, 0)];
+    const data = props.data || this.generateData(props);
+    return hasMultipleDatasets ? data.map(_format) : [_format(data, 0)];
   },
 
   cleanData(dataset, props) {

@@ -231,4 +231,67 @@ describe("helpers/data", () => {
       expect(returnData).to.eql(expectedReturn);
     });
   });
+
+  describe("getMultiSeriesData", () => {
+    let sandbox;
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      sandbox.spy(Data, "getData");
+      sandbox.spy(Data, "getAttributes");
+      sandbox.spy(Data, "formatDatasets");
+    });
+
+    afterEach(() => {
+      sandbox.restore();
+    });
+
+    it("formats and returns the data prop", () => {
+      const data = [{x: "kittens", y: 3}, {x: "cats", y: 5}];
+      const props = {data, x: "x", y: "y"};
+      const expectedReturn = [{
+        data: [{x: 1, xName: "kittens", y: 3}, {x: 2, xName: "cats", y: 5}],
+        attrs: {name: "data-0", fill: "#7d7d7d"}
+      }];
+      const returnData = Data.getMultiSeriesData(props);
+      expect(Data.getData).notCalled;
+      expect(Data.formatDatasets).calledOnce.and.returned(expectedReturn);
+      expect(returnData).to.eql(expectedReturn);
+    });
+
+    it("generates a dataset from domain", () => {
+      const expectedReturn = [{
+        data: [{x: 0, y: 0}, {x: 10, y: 10}],
+        attrs: {name: "data-0", fill: "#7d7d7d"}
+      }];
+      const props = {x: "x", y: "y", domain: {x: [0, 10], y: [0, 10]}};
+      const returnData = Data.getMultiSeriesData(props);
+      expect(Data.getData).calledOnce.and.returned(expectedReturn[0].data);
+      expect(Data.getAttributes).calledOnce.and.returned(expectedReturn[0].attrs);
+      expect(returnData).to.eql(expectedReturn);
+    });
+
+    it("generates a dataset from domain", () => {
+      const expectedReturn = [
+        {
+          data: [{x: 0, y: 1}, {x: 10, y: 11}],
+          attrs: {name: "data-0", fill: "#7d7d7d"}
+        },
+        {
+          data: [{x: 0, y: 2}, {x: 10, y: 12}],
+          attrs: {name: "data-1", fill: "#5e5e5e"}
+        }
+      ];
+      const y = [
+        (data) => data.x + 1,
+        (data) => data.x + 2
+      ];
+      const props = {y, x: "x", domain: {x: [0, 10], y: [0, 10]}};
+      const returnData = Data.getMultiSeriesData(props);
+      expect(Data.getData).calledTwice
+        .and.returned(expectedReturn[0].data);
+      expect(Data.getAttributes).calledTwice
+        .and.returned(expectedReturn[0].attrs);
+      expect(returnData).to.eql(expectedReturn);
+    });
+  });
 });

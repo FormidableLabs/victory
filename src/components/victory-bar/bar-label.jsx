@@ -41,17 +41,18 @@ export default class BarLabel extends React.Component {
     const baseStyle = defaults({}, component.props.style, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
-    const children = component.props.children || props.labelText;
+    const labelText = props.labelText || props.datum.label;
     const newProps = {
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
       data: props.datum, // Pass data for custom label component to access - todo: rename to datum
+      text: labelText,
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
       style,
       events: component.props.events || props.events
     };
-    return React.cloneElement(component, newProps, children);
+    return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props, position, anchors) {
@@ -62,14 +63,13 @@ export default class BarLabel extends React.Component {
       <VictoryLabel
         x={position.x + padding.x}
         y={position.y - padding.y}
-        data={props.datum} // todo: rename to datum
+        data={props.datum}
         textAnchor={anchors.text}
         verticalAnchor={anchors.vertical}
         style={style}
         events={this.props.events}
-      >
-        {props.labelText}
-      </VictoryLabel>
+        text={props.labelText}
+      />
     );
   }
 
