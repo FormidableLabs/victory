@@ -1,28 +1,29 @@
 import defaults from "lodash/object/defaults";
 import React, { PropTypes } from "react";
-import { VictoryLabel, Helpers} from "victory-core";
+import { VictoryLabel, Helpers } from "victory-core";
 
-export default class LineLabel extends React.Component {
+export default class AreaLabel extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    label: PropTypes.any,
+    labelComponent: PropTypes.any,
+    labelText: PropTypes.string,
     position: PropTypes.object,
     style: PropTypes.object
   };
 
   renderLabelComponent(props) {
-    const component = props.label;
+    const component = props.labelComponent;
     const baseStyle = defaults({padding: 0}, component.props.style, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.data);
+    const children = component.props.children || props.labelText || "";
     const newProps = {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
-      data: props.data,
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
       style
     };
-    return React.cloneElement(component, newProps);
+    return React.cloneElement(component, newProps, children);
   }
 
   renderVictoryLabel(props) {
@@ -34,13 +35,14 @@ export default class LineLabel extends React.Component {
         textAnchor={"start"}
         verticalAnchor={"middle"}
         style={style}
-        text={props.label}
-      />
+      >
+        {props.labelText}
+      </VictoryLabel>
     );
   }
 
   renderLabel(props) {
-    return props.label && props.label.props ?
+    return props.labelComponent ?
       this.renderLabelComponent(props) : this.renderVictoryLabel(props);
   }
 

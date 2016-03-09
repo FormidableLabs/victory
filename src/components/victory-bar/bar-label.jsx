@@ -61,7 +61,7 @@ export default class BarLabel extends React.Component {
       <VictoryLabel
         x={position.x + padding.x}
         y={position.y - padding.y}
-        data={props.datum} // todo: rename to datum
+        data={props.datum}
         textAnchor={anchors.text}
         verticalAnchor={anchors.vertical}
         style={style}
