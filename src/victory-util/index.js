@@ -1,10 +1,10 @@
-import * as Collection from "./collection";
+import Collection from "./collection";
 import Helpers from "./helpers";
-import * as Log from "./log";
-import * as Style from "./style";
-import * as Type from "./type";
-import * as PropTypes from "./prop-types";
-import * as Perf from "./perf";
+import Log from "./log";
+import Style from "./style";
+import Type from "./type";
+import PropTypes from "./prop-types";
+import Perf from "./perf";
 
 export default {
   Collection,

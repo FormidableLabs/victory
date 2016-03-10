@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Victory Core",
   "main": "lib/index.js",
   "repository": {
@@ -21,17 +21,17 @@
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
-    "builder-victory-component": "~0.2.1",
     "builder": "~2.4.0",
+    "builder-victory-component": "0.2.1",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "^0.2.0",
     "d3-scale": "^0.2.0",
     "d3-timer": "^0.0.6",
-    "lodash": "^3.10.1",
+    "lodash": "^4.6.1",
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "~0.2.1",
+    "builder-victory-component-dev": "0.2.1",
     "chai": "^3.2.0",
     "ecology": "^1.2.0",
     "enzyme": "^2.0.0",

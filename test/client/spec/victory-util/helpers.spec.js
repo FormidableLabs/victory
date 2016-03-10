@@ -1,5 +1,4 @@
 /* eslint no-unused-expressions: 0 */
-/* global sinon */
 import Helpers from "src/victory-util/helpers";
 
 describe("helpers", () => {
@@ -141,22 +140,11 @@ describe("helpers", () => {
   });
 
   describe("getData", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Helpers, "formatData");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
     it("formats and returns the data prop", () => {
       const data = [{x: "kittens", y: 3}, {x: "cats", y: 5}];
       const props = {data, x: "x", y: "y"};
       const expectedReturn = [{x: 1, xName: "kittens", y: 3}, {x: 2, xName: "cats", y: 5}];
       const returnData = Helpers.getData(props);
-      expect(Helpers.formatData).calledOnce.and.returned(expectedReturn);
       expect(returnData).to.eql(expectedReturn);
     });
   });

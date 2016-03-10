@@ -1,13 +1,13 @@
-import * as Collection from "./victory-util/collection";
+import Collection from "./victory-util/collection";
 import Helpers from "./victory-util/helpers";
-import * as Log from "./victory-util/log";
-import * as Style from "./victory-util/style";
-import * as Type from "./victory-util/type";
-import * as PropTypes from "./victory-util/prop-types";
+import Log from "./victory-util/log";
+import Style from "./victory-util/style";
+import Type from "./victory-util/type";
+import PropTypes from "./victory-util/prop-types";
 import VictoryAnimation from "./victory-animation/victory-animation";
 import VictoryLabel from "./victory-label/victory-label";
 
-module.exports = {
+export {
   Collection,
   Helpers,
   Log,
