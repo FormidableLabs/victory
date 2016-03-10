@@ -143,7 +143,7 @@ export default class App extends React.Component {
           symbol={"star"}
           size={8}
           events={{data: {
-            onClick: function(childKey, evt) {
+            onClick: function(evt) {
               return {
                 style: {
                   fill: "gold",

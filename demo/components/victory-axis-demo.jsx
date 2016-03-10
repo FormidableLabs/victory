@@ -76,9 +76,11 @@ export default class App extends React.Component {
             scale="time"
             events={{
               axis: {
-                onClick: (evt) => this.setState({
-                  label: `x: ${evt.clientX}, y: ${evt.clientY}`
-                })
+                onClick: (evt) => {
+                  this.setState({
+                    label: `x: ${evt.clientX}, y: ${evt.clientY}`
+                  })
+                }
               }
             }}
             style={{

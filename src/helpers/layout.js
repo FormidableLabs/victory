@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   getY0(datasets, datum, index) {
     const y = datum.y;
     const previousDataSets = datasets.slice(0, index);

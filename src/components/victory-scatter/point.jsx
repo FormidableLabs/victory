@@ -1,7 +1,8 @@
 import React, { PropTypes } from "react";
-import partial from "lodash/function/partial";
 import { Helpers } from "victory-core";
 import pathHelpers from "./path-helpers";
+import Events from "../../helpers/events";
+
 
 export default class Point extends React.Component {
   static propTypes = {
@@ -38,10 +39,7 @@ export default class Point extends React.Component {
   }
 
   render() {
-    const events = Object.keys(this.props.events).reduce((_events, eventName) => {
-      _events[eventName] = partial(this.props.events[eventName], this.props.index, "onClick");
-      return _events;
-    }, {});
+    const events = Events.getPartialEvents(this.props.events, this.props.index);
     return (
       <path
         {...events}

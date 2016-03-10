@@ -7,6 +7,7 @@ import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
+import Events from "../../helpers/events";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 import memoizerific from "memoizerific";
@@ -227,30 +228,13 @@ export default class VictoryScatter extends React.Component {
 
   componentWillMount() {
     this.state = {
-      childState: {}
+      dataState: {},
+      labelsState: {}
     };
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
       getStyles: memoizerific(1)(Helpers.getStyles)
     };
-  }
-
-  onDataEvent(childKey, eventName, evt) {
-    if (this.props.events.data && this.props.events.data[eventName]) {
-      this.setState({
-        childState: Object.assign(this.state.childState, {
-          [childKey]: this.props.events.data[eventName](childKey, evt)
-        })
-      });
-    }
-  }
-
-  getBoundDataEvents(events) {
-    return events ?
-      Object.keys(this.props.events.data).reduce((memo, event) => {
-        memo[event] = this.onDataEvent.bind(this);
-        return memo;
-      }, {}) : {};
   }
 
   renderPoint(data, index, calculatedProps) {
@@ -266,6 +250,7 @@ export default class VictoryScatter extends React.Component {
     const pointStyle = Helpers.evaluateStyle(baseDataStyle, data);
     const baseSize = ScatterHelpers.getSize(data, this.props, calculatedProps);
     const size = Helpers.evaluateProp(baseSize, data);
+    const getBoundDataEvents = Events.getDataEvents.bind(this)
     const pointComponent = (
       <Point
         key={`point-${index}`}
@@ -276,8 +261,8 @@ export default class VictoryScatter extends React.Component {
         data={data}
         size={size}
         symbol={ScatterHelpers.getSymbol(data, this.props)}
-        events={this.getBoundDataEvents(this.props.events.data)}
-        {...this.state.childState[index]}
+        events={getBoundDataEvents(this.props.events.data)}
+        {...this.state.dataState[index]}
       />
     );
     if (data.label && this.props.showLabels) {
@@ -285,16 +270,19 @@ export default class VictoryScatter extends React.Component {
       const padding = style.labels.padding || size * 0.25;
       const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});
       const labelStyle = Helpers.evaluateStyle(baseLabelStyle, data);
+      const getBoundLabelEvents = Events.getLabelEvents.bind(this)
       return (
         <g key={`point-group-${index}`}>
           {pointComponent}
           <PointLabel
             style={labelStyle}
-            events={this.props.events.labels}
+            index={index}
+            events={getBoundLabelEvents(this.props.events.labels)}
             x={position.x}
             y={position.y}
             data={data}
             labelComponent={this.props.labelComponent}
+            {...this.state.labelsState[index]}
           />
         </g>
       );
