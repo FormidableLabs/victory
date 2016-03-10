@@ -1,6 +1,8 @@
 import defaults from "lodash/object/defaults";
+import assign from "lodash/object/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
+import Events from "../../helpers/events";
 
 export default class BarLabel extends React.Component {
 
@@ -10,6 +12,7 @@ export default class BarLabel extends React.Component {
     horizontal: PropTypes.bool,
     style: PropTypes.object,
     datum: PropTypes.object,
+    index: PropTypes.object,
     labelText: PropTypes.string,
     labelComponent: PropTypes.any
   };
@@ -42,16 +45,20 @@ export default class BarLabel extends React.Component {
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     const labelText = props.labelText || props.datum.label;
-    const newProps = {
+    const index = [props.index.seriesIndex, props.index.barIndex];
+    const baseEvents = component && component.props.events ?
+      defaults({}, component.props.events, props.events) : props.events;
+    const events = Events.getPartialEvents(baseEvents, index, props.data);
+    const newProps = assign({}, events, {
+      index: [props.index.seriesIndex, props.index.barIndex],
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
       data: props.datum, // Pass data for custom label component to access - todo: rename to datum
       text: labelText,
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
-      style,
-      events: component.props.events || props.events
-    };
+      style
+    });
     return React.cloneElement(component, newProps);
   }
 
@@ -59,16 +66,19 @@ export default class BarLabel extends React.Component {
     const baseStyle = defaults({}, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
+    const index = [props.index.seriesIndex, props.index.barIndex];
+    const events = Events.getPartialEvents(props.events, index, props.datum);
     return (
       <VictoryLabel
         x={position.x + padding.x}
         y={position.y - padding.y}
         data={props.datum}
+        index={[props.index.seriesIndex, props.index.barIndex]}
         textAnchor={anchors.text}
         verticalAnchor={anchors.vertical}
         style={style}
-        events={this.props.events}
         text={props.labelText}
+        {...events}
       />
     );
   }

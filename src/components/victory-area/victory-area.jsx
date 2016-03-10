@@ -7,6 +7,7 @@ import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
+import Events from "../../helpers/events";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import Area from "./area";
 import AreaLabel from "./area-label";
@@ -83,6 +84,20 @@ export default class VictoryArea extends React.Component {
         y: CustomPropTypes.domain
       })
     ]),
+    /**
+     * The events prop attaches arbitrary event handlers to data and label elements
+     * Event handlers are called with their corresponding events, corresponding datum,
+     * and their index in the data array. Event handlers can return an object to change
+     * props on an individual data or label component. These objects are stored in the
+     * state of VictoryArea
+     * @examples {data: {
+     *  onClick: (evt) => return {style: fill: "green"
+     *}}}
+     */
+    events: PropTypes.shape({
+      data: PropTypes.object,
+      labels: PropTypes.object
+    }),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
@@ -224,6 +239,7 @@ export default class VictoryArea extends React.Component {
 
   static defaultProps = {
     colorScale: "greyscale",
+    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -239,6 +255,10 @@ export default class VictoryArea extends React.Component {
   static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
 
   componentWillMount() {
+    this.state = {
+      dataState: {},
+      labelsState: {}
+    };
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
       getStyles: memoizerific(1)(Helpers.getStyles)
@@ -251,12 +271,16 @@ export default class VictoryArea extends React.Component {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
       const dataWithBaseline = AreaHelpers.getBaseline(datasets, calculatedProps, index);
+      const getBoundDataEvents = Events.getDataEvents.bind(this);
       const areaComponent = (
         <Area key={`area-${index}`}
+          index={index}
           scale={scale}
           style={style}
+          events={getBoundDataEvents(this.props.events.data)}
           interpolation={dataset.attrs.interpolation || this.props.interpolation}
           data={dataWithBaseline}
+          {...this.state.dataState[index]}
         />
       );
       const label = this.props.labels && this.props.labels[index];
@@ -265,15 +289,19 @@ export default class VictoryArea extends React.Component {
           x: scale.x.call(this, last(dataset.data).x),
           y: scale.y.call(this, last(dataset.data).y)
         };
+        const getBoundLabelEvents = Events.getLabelEvents.bind(this);
         return (
           <g key={`area-group-${index}`}>
             {areaComponent}
             <AreaLabel key={`area-label-${index}`}
+              index={index}
               style={baseStyle.labels}
               data={dataset.data}
+              events={getBoundLabelEvents(this.props.events.data)}
               position={position}
               labelText={label}
               labelComponent={this.props.labelComponent}
+              {...this.state.labelsState[index]}
             />
           </g>
         );

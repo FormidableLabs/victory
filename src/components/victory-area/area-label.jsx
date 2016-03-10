@@ -1,10 +1,13 @@
 import defaults from "lodash/object/defaults";
+import assign from "lodash/object/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
+import Events from "../../helpers/events";
 
 export default class AreaLabel extends React.Component {
   static propTypes = {
     data: PropTypes.array,
+    index: PropTypes.number,
     labelComponent: PropTypes.any,
     labelText: PropTypes.string,
     position: PropTypes.object,
@@ -16,18 +19,22 @@ export default class AreaLabel extends React.Component {
     const baseStyle = defaults({padding: 0}, component.props.style, props.style);
     const style = Helpers.evaluateStyle(baseStyle, props.data);
     const children = component.props.children || props.labelText || "";
-    const newProps = {
+    const baseEvents = component && component.props.events ?
+      defaults({}, component.props.events, props.events) : props.events;
+    const events = Events.getPartialEvents(baseEvents, props.index, props.data);
+    const newProps = assign({}, events, {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
       style
-    };
+    });
     return React.cloneElement(component, newProps, children);
   }
 
   renderVictoryLabel(props) {
     const style = Helpers.evaluateStyle(defaults({padding: 0}, props.style), props.data);
+    const events = Events.getPartialEvents(props.events, props.index, props.data);
     return (
       <VictoryLabel
         x={props.position.x + style.padding}
@@ -35,9 +42,9 @@ export default class AreaLabel extends React.Component {
         textAnchor={"start"}
         verticalAnchor={"middle"}
         style={style}
-      >
-        {props.labelText}
-      </VictoryLabel>
+        text={props.labelText}
+        {...events}
+      />
     );
   }
 

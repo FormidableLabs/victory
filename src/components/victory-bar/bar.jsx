@@ -1,9 +1,11 @@
 import React, { PropTypes } from "react";
 import { Helpers } from "victory-core";
+import Events from "../../helpers/events";
 
 export default class Bar extends React.Component {
 
   static propTypes = {
+    index: PropTypes.object,
     events: PropTypes.object,
     position: PropTypes.object,
     horizontal: PropTypes.bool,
@@ -42,9 +44,11 @@ export default class Bar extends React.Component {
     const barWidth = style.width;
     const path = this.props.position.independent ?
       this.getBarPath(this.props.position, barWidth) : undefined;
+    const index = [this.props.index.seriesIndex, this.props.index.barIndex];
+    const events = Events.getPartialEvents(this.props.events, index, this.props.datum);
     return (
       <path
-        {...this.props.events}
+        {...events}
         d={path}
         style={style}
         shapeRendering="optimizeSpeed"

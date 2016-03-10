@@ -357,17 +357,18 @@ export default class VictoryAxis extends React.Component {
     const verticalAnchor = sign < 0 ? "end" : "start";
     const transform = isVertical ? "rotate(-90)" : "";
     const labelText = typeof props.label === "string" ? props.label : null;
-    return {
+    const sharedStyle = defaults({}, style.axisLabel, componentProps.style);
+    const labelProps = {
       key: "label",
-      x: componentProps.x || x,
-      y: componentProps.y || y,
-      textAnchor: componentProps.textAnchor || "middle",
-      verticalAnchor: componentProps.verticalAnchor || verticalAnchor,
-      style: defaults({}, style.axisLabel, componentProps.style),
-      transform: componentProps.transform || transform,
-      events: componentProps.events || props.events.axisLabel,
-      text: labelText
+      events: props.events.axisLabel,
+      text: labelText,
+      textAnchor: "middle",
+      verticalAnchor,
+      transform,
+      x,
+      y
     };
+    return defaults({}, labelProps, componentProps, {style: sharedStyle});
   }
 
   render() {

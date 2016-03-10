@@ -2,13 +2,16 @@ import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
 import assign from "lodash/object/assign";
 import { Helpers } from "victory-core";
+import Events from "../../helpers/events";
 
 export default class Area extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     interpolation: PropTypes.string,
+    index: PropTypes.number,
     scale: PropTypes.object,
-    style: PropTypes.object
+    style: PropTypes.object,
+    events: PropTypes.object
   };
 
   toNewName(interpolation) {
@@ -18,8 +21,9 @@ export default class Area extends React.Component {
   }
 
   renderArea(style, interpolation) {
-    const xScale = this.props.scale.x;
-    const yScale = this.props.scale.y;
+    const { props } = this;
+    const xScale = props.scale.x;
+    const yScale = props.scale.y;
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
     const areaFunction = d3Shape.area()
@@ -27,8 +31,9 @@ export default class Area extends React.Component {
       .x((data) => xScale(data.x))
       .y1((data) => yScale(data.y0 + data.y))
       .y0((data) => yScale(data.y0));
-    const path = areaFunction(this.props.data);
-    return <path style={areaStyle} d={path}/>;
+    const path = areaFunction(props.data);
+    const events = Events.getPartialEvents(props.events, props.index, props.data);
+    return <path style={areaStyle} d={path} {...events}/>;
   }
 
   renderLine(style, interpolation) {

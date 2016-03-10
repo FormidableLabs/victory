@@ -143,8 +143,10 @@ export default class App extends React.Component {
           symbol={"star"}
           size={8}
           events={{data: {
-            onClick: function(evt) {
+            onClick: function(evt, data) {
+              console.log(evt, data);
               return {
+                data: _.assign({}, data, {label: "WHOA"}),
                 style: {
                   fill: "gold",
                   stroke: "orange",
