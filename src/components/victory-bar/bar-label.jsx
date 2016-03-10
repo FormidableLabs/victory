@@ -48,7 +48,7 @@ export default class BarLabel extends React.Component {
     const index = [props.index.seriesIndex, props.index.barIndex];
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
-    const events = Events.getPartialEvents(baseEvents, index, props.data);
+    const events = Events.getPartialEvents(baseEvents, index, props);
     const newProps = assign({}, events, {
       index: [props.index.seriesIndex, props.index.barIndex],
       x: component.props.x || position.x + padding.x,
@@ -67,7 +67,7 @@ export default class BarLabel extends React.Component {
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     const index = [props.index.seriesIndex, props.index.barIndex];
-    const events = Events.getPartialEvents(props.events, index, props.datum);
+    const events = Events.getPartialEvents(props.events, index, props);
     return (
       <VictoryLabel
         x={position.x + padding.x}

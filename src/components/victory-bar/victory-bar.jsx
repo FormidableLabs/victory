@@ -118,17 +118,23 @@ export default class VictoryBar extends React.Component {
     ]),
     /**
      * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding datum,
-     * and their index in the data array. Event handlers can return an object to change
-     * props on an individual data or label component. These objects are stored in the
-     * state of VictoryBar
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryBar
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryBar
+     * if one exists. If VictoryBar is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
      * @examples {data: {
-     *  onClick: (evt) => return {stroke: fill: "green"}
+     *  onClick: () => onClick: () => return {style: {fill: "green"}}
      *}}
      */
     events: PropTypes.shape({
       data: PropTypes.object,
-      labels: PropTypes.object
+      labels: PropTypes.object,
+      parent: PropTypes.object
     }),
     /**
      * The grouped prop determines whether the chart should consist of sets of grouped bars.
@@ -291,7 +297,7 @@ export default class VictoryBar extends React.Component {
       const position = BarHelpers.getBarPosition(datum, index, calculatedProps);
       const baseStyle = calculatedProps.style;
       const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
-      const getBoundDataEvents = Events.getDataEvents.bind(this);
+      const getBoundEvents = Events.getEvents.bind(this);
       const barComponent = (
         <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
@@ -299,7 +305,7 @@ export default class VictoryBar extends React.Component {
           index={index}
           position={position}
           datum={datum}
-          events={getBoundDataEvents(this.props.events.data)}
+          events={getBoundEvents(this.props.events.data, "data")}
           {...get(this.state.dataState, [seriesIndex, barIndex], undefined)}
         />
       );
@@ -310,7 +316,6 @@ export default class VictoryBar extends React.Component {
         const labelIndex = BarHelpers.getLabelIndex(datum, calculatedProps);
         const labelText = this.props.labels ?
           this.props.labels[labelIndex] || this.props.labels[0] : "";
-        const getBoundLabelEvents = Events.getLabelEvents.bind(this);
         return (
           <g key={`series-${index}-bar-${barIndex}`}>
             {barComponent}
@@ -322,7 +327,7 @@ export default class VictoryBar extends React.Component {
               datum={datum}
               labelText={datum.label || labelText}
               labelComponent={this.props.labelComponent}
-              events={getBoundLabelEvents(this.props.events.labels)}
+              events={getBoundEvents(this.props.events.labels, "labels")}
               {...get(this.state.labelsState, [seriesIndex, barIndex], undefined)}
             />
           </g>
@@ -392,7 +397,7 @@ export default class VictoryBar extends React.Component {
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent}>{group}</svg> :
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
       group;
   }
 }

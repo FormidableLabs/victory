@@ -45,7 +45,7 @@ export default class Bar extends React.Component {
     const path = this.props.position.independent ?
       this.getBarPath(this.props.position, barWidth) : undefined;
     const index = [this.props.index.seriesIndex, this.props.index.barIndex];
-    const events = Events.getPartialEvents(this.props.events, index, this.props.datum);
+    const events = Events.getPartialEvents(this.props.events, index, this.props);
     return (
       <path
         {...events}

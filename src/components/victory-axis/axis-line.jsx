@@ -1,8 +1,7 @@
 import React, { PropTypes } from "react";
+import Events from "../../helpers/events";
 
 export default class AxisLine extends React.Component {
-  static role = "line";
-
   static propTypes = {
     x1: PropTypes.number,
     x2: PropTypes.number,
@@ -13,6 +12,7 @@ export default class AxisLine extends React.Component {
   };
 
   render() {
-    return <line {...this.props} {...this.props.events}/>;
+    const events = Events.getPartialEvents(this.props.events, 0, this.props);
+    return <line {...this.props} {...events}/>;
   }
 }

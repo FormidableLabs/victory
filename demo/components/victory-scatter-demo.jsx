@@ -143,10 +143,9 @@ export default class App extends React.Component {
           symbol={"star"}
           size={8}
           events={{data: {
-            onClick: function(evt, data) {
-              console.log(evt, data);
+            onMouseOver: function(evt, data) {
               return {
-                data: _.assign({}, data, {label: "WHOA"}),
+                symbol: "circle",
                 style: {
                   fill: "gold",
                   stroke: "orange",
@@ -154,6 +153,14 @@ export default class App extends React.Component {
                 }
               }
             },
+            onMouseOut: function(evt, data) {
+              return {
+                symbol: "star",
+                style: {
+                  fill: "gold",
+                }
+              }
+            }
           }}}
         />
 

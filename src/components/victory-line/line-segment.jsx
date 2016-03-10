@@ -30,7 +30,7 @@ export default class LineSegment extends React.Component {
       .x((data) => xScale(data.x))
       .y((data) => yScale(data.y));
     const path = lineFunction(props.data);
-    const events = Events.getPartialEvents(props.events, props.index, props.data);
+    const events = Events.getPartialEvents(props.events, props.index, props);
     return (
       <path style={style} d={path} {...events}/>
     );

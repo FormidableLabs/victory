@@ -3,52 +3,39 @@ import set from "lodash/object/set";
 import assign from "lodash/object/assign";
 
 export default {
-  getPartialEvents(events, index, data) {
+  getPartialEvents(events, index, childProps) {
     return events ?
       Object.keys(events).reduce((memo, eventName) => {
         /* eslint max-params: 0 */
-        memo[eventName] = partial(events[eventName], partial.placeholder, data, index, eventName);
+        memo[eventName] = partial(
+          events[eventName],
+          partial.placeholder, // evt will still be the first argument for event handlers
+          childProps, // event handlers will have access to data component props, including data
+          index, // used in setting a unique state property
+          eventName // used in setting a unique state property
+        );
         return memo;
       }, {}) :
       {};
   },
 
-  getDataEvents(events) {
-    const onDataEvent = (evt, data, index, eventName) => {
-      if (this.props.events.data && this.props.events.data[eventName]) {
+  getEvents(events, namespace) {
+    const stateName = `${namespace}State`;
+    const onEvent = (evt, childProps, index, eventName) => {
+      if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
         this.setState({
-          dataState: assign(
+          [stateName]: assign(
             {},
-            this.state.dataState,
-            set({}, index, this.props.events.data[eventName](evt, data, index))
+            this.state[stateName],
+            set({}, index, this.props.events[namespace][eventName](evt, childProps, index))
           )
         });
       }
     };
 
     return events ?
-      Object.keys(this.props.events.data).reduce((memo, event) => {
-        memo[event] = onDataEvent;
-        return memo;
-      }, {}) : {};
-  },
-
-  getLabelEvents(events) {
-    const onLabelEvent = (evt, data, index, eventName) => {
-      if (this.props.events.labels && this.props.events.labels[eventName]) {
-        this.setState({
-          labelsState: assign(
-            {},
-            this.state.labelsState,
-            set({}, index, this.props.events.labels[eventName](evt, data, index))
-          )
-        });
-      }
-    };
-
-    return events ?
-      Object.keys(this.props.events.labels).reduce((memo, event) => {
-        memo[event] = onLabelEvent;
+      Object.keys(this.props.events[namespace]).reduce((memo, event) => {
+        memo[event] = onEvent;
         return memo;
       }, {}) : {};
   }

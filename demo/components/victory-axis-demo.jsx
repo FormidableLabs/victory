@@ -71,20 +71,19 @@ export default class App extends React.Component {
         <div>
           <h2>Time Scale Axis</h2>
           <VictoryAxis
-            label="time axis"
             padding={{left: 10, right: 80}}
             scale="time"
             events={{
               axis: {
-                onClick: (evt) => {
-                  this.setState({
-                    label: `x: ${evt.clientX}, y: ${evt.clientY}`
-                  })
+                onClick: function() {
+                  return {
+                    style: {stroke: "red", strokeWidth: 4}
+                  };
                 }
               }
             }}
             style={{
-              axis: {strokeWidth: 3},
+              axis: {strokeWidth: 4},
               grid: {stroke: "black", strokeWidth: 1}
             }}
             label={this.state.label}

@@ -39,7 +39,7 @@ export default class Point extends React.Component {
   }
 
   render() {
-    const events = Events.getPartialEvents(this.props.events, this.props.index, this.props.data);
+    const events = Events.getPartialEvents(this.props.events, this.props.index, this.props);
     return (
       <path
         {...events}

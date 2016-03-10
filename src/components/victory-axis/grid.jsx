@@ -1,10 +1,12 @@
 import React, { PropTypes } from "react";
 import { Helpers } from "victory-core";
+import Events from "../../helpers/events";
 
 export default class GridLine extends React.Component {
   static role = "grid";
 
   static propTypes = {
+    index: PropTypes.number,
     tick: PropTypes.any,
     x2: PropTypes.number,
     y2: PropTypes.number,
@@ -15,13 +17,15 @@ export default class GridLine extends React.Component {
   };
 
   render() {
+    const { props } = this;
+    const events = Events.getPartialEvents(props.events, props.index, props);
     return (
-      <g transform={`translate(${this.props.xTransform}, ${this.props.yTransform})`}>
+      <g transform={`translate(${props.xTransform}, ${props.yTransform})`}>
         <line
-          {...this.props.events}
-          x2={this.props.x2}
-          y2={this.props.y2}
-          style={Helpers.evaluateStyle(this.props.style, this.props.tick)}
+          {...events}
+          x2={props.x2}
+          y2={props.y2}
+          style={Helpers.evaluateStyle(props.style, props.tick)}
         />
       </g>
     );

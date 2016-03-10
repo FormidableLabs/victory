@@ -86,17 +86,23 @@ export default class VictoryArea extends React.Component {
     ]),
     /**
      * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding datum,
-     * and their index in the data array. Event handlers can return an object to change
-     * props on an individual data or label component. These objects are stored in the
-     * state of VictoryArea
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryArea
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryArea
+     * if one exists. If VictoryArea is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
      * @examples {data: {
-     *  onClick: (evt) => return {style: fill: "green"
-     *}}}
+     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *}}
      */
     events: PropTypes.shape({
       data: PropTypes.object,
-      labels: PropTypes.object
+      labels: PropTypes.object,
+      parent: PropTypes.object
     }),
     /**
      * The height props specifies the height of the chart container element in pixels
@@ -271,13 +277,13 @@ export default class VictoryArea extends React.Component {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
       const dataWithBaseline = AreaHelpers.getBaseline(datasets, calculatedProps, index);
-      const getBoundDataEvents = Events.getDataEvents.bind(this);
+      const getBoundEvents = Events.getEvents.bind(this);
       const areaComponent = (
         <Area key={`area-${index}`}
           index={index}
           scale={scale}
           style={style}
-          events={getBoundDataEvents(this.props.events.data)}
+          events={getBoundEvents(this.props.events.data, "data")}
           interpolation={dataset.attrs.interpolation || this.props.interpolation}
           data={dataWithBaseline}
           {...this.state.dataState[index]}
@@ -289,7 +295,6 @@ export default class VictoryArea extends React.Component {
           x: scale.x.call(this, last(dataset.data).x),
           y: scale.y.call(this, last(dataset.data).y)
         };
-        const getBoundLabelEvents = Events.getLabelEvents.bind(this);
         return (
           <g key={`area-group-${index}`}>
             {areaComponent}
@@ -297,7 +302,7 @@ export default class VictoryArea extends React.Component {
               index={index}
               style={baseStyle.labels}
               data={dataset.data}
-              events={getBoundLabelEvents(this.props.events.data)}
+              events={getBoundEvents(this.props.events.data, "labels")}
               position={position}
               labelText={label}
               labelComponent={this.props.labelComponent}
@@ -352,6 +357,8 @@ export default class VictoryArea extends React.Component {
     const style = this.memoized.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

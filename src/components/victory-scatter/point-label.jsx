@@ -27,7 +27,7 @@ export default class PointLabel extends React.Component {
     const labelText = component.props.text || props.data.label;
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
-    const events = Events.getPartialEvents(baseEvents, props.index, props.data);
+    const events = Events.getPartialEvents(baseEvents, props.index, props);
     const labelProps = assign({}, events, {
       x: component && component.props.x || props.x,
       y: component && component.props.y || props.y - labelStyle.padding,

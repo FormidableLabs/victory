@@ -64,17 +64,23 @@ export default class VictoryLine extends React.Component {
     ]),
     /**
      * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding datum,
-     * and their index in the data array. Event handlers can return an object to change
-     * props on an individual data or label component. These objects are stored in the
-     * state of VictoryLine
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryLine
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryLine
+     * if one exists. If VictoryLine is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
      * @examples {data: {
-     *  onClick: (evt) => return {stroke: fill: "green"}
+     *  onClick: () => onClick: () => return {style: {stroke: "green"}}
      *}}
      */
     events: PropTypes.shape({
       data: PropTypes.object,
-      labels: PropTypes.object
+      labels: PropTypes.object,
+      parent: PropTypes.object
     }),
     /**
      * The height props specifies the height of the chart container element in pixels
@@ -258,11 +264,11 @@ export default class VictoryLine extends React.Component {
   renderLine(calculatedProps) {
     const {dataSegments, scale, style} = calculatedProps;
     return dataSegments.map((segment, index) => {
-      const getBoundDataEvents = Events.getDataEvents.bind(this);
+      const getBoundEvents = Events.getEvents.bind(this);
       return (
         <LineSegment
           key={`line-segment-${index}`}
-          events={getBoundDataEvents(this.props.events.data)}
+          events={getBoundEvents(this.props.events.data, "data")}
           data={segment}
           interpolation={this.props.interpolation}
           scale={scale}
@@ -281,11 +287,11 @@ export default class VictoryLine extends React.Component {
     const lastSegment = dataSegments[dataSegments.length - 1];
     const lastPoint = Array.isArray(lastSegment) ?
       lastSegment[lastSegment.length - 1] : lastSegment;
-    const getBoundLabelEvents = Events.getLabelEvents.bind(this);
+    const getBoundEvents = Events.getEvents.bind(this);
     return (
       <LineLabel
         key={`line-label`}
-        events={getBoundLabelEvents(this.props.events.labels)}
+        events={getBoundEvents(this.props.events.labels, "labels")}
         data={dataset}
         position={{
           x: scale.x.call(this, lastPoint.x),
@@ -345,7 +351,7 @@ export default class VictoryLine extends React.Component {
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent}>{group}</svg> :
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
       group;
   }
 }
