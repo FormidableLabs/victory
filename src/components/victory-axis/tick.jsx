@@ -1,6 +1,5 @@
 import React, { PropTypes } from "react";
 import { Helpers } from "victory-core";
-import Events from "../../helpers/events";
 
 export default class Tick extends React.Component {
   static role = "tick";
@@ -15,7 +14,7 @@ export default class Tick extends React.Component {
 
   render() {
     const style = Helpers.evaluateStyle(this.props.style, this.props.tick);
-    const events = Events.getPartialEvents(this.props.events, this.props.index, this.props);
+    const events = Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
     return (
       <line
         {...events}

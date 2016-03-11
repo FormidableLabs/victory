@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
 import { Helpers } from "victory-core";
 import pathHelpers from "./path-helpers";
-import Events from "../../helpers/events";
 
 
 export default class Point extends React.Component {
@@ -39,7 +38,7 @@ export default class Point extends React.Component {
   }
 
   render() {
-    const events = Events.getPartialEvents(this.props.events, this.props.index, this.props);
+    const events = Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
     return (
       <path
         {...events}

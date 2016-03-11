@@ -2,7 +2,6 @@ import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
-import Events from "../../helpers/events";
 
 export default class TickLabel extends React.Component {
 
@@ -36,7 +35,7 @@ export default class TickLabel extends React.Component {
     const anchors = this.getAnchors(props);
     const baseEvents = componentProps.events ?
       defaults({}, componentProps.events, props.events) : props.events;
-    const events = Events.getPartialEvents(baseEvents, props.index, props);
+    const events = Helpers.getPartialEvents(baseEvents, props.index, props);
     const newProps = assign({}, events, {
       x: props.position.x,
       y: props.position.y,

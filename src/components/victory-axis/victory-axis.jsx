@@ -14,7 +14,6 @@ import Tick from "./tick";
 import TickLabel from "./tick-label";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
-import Events from "../../helpers/events";
 
 const defaultStyles = {
   axis: {
@@ -266,7 +265,7 @@ export default class VictoryAxis extends React.Component {
 
   renderLine(props, layoutProps) {
     const {style, padding, isVertical} = layoutProps;
-    const getBoundEvents = Events.getEvents.bind(this);
+    const getBoundEvents = Helpers.getEvents.bind(this);
     return (
       <AxisLine key="line"
         events={getBoundEvents(this.props.events.axis, "axis")}
@@ -287,7 +286,7 @@ export default class VictoryAxis extends React.Component {
     return ticks.map((tick, index) => {
       const isVertical = orientation === "left" || orientation === "right";
       const tickPosition = AxisHelpers.getTickPosition(style.ticks, orientation, isVertical);
-      const getBoundEvents = Events.getEvents.bind(this);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       const tickComponent = (
         <Tick key={`tick-${index}`}
           index={index}
@@ -342,7 +341,7 @@ export default class VictoryAxis extends React.Component {
     return ticks.map((tick, index) => {
       // determine the position and translation of each gridline
       const position = scale(tick);
-      const getBoundEvents = Events.getEvents.bind(this);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       return (
         <GridLine key={`grid-${index}`}
           index={index}
@@ -373,7 +372,7 @@ export default class VictoryAxis extends React.Component {
     const y = sign * labelPadding;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const transform = isVertical ? "rotate(-90)" : "";
-    const getBoundEvents = Events.getEvents.bind(this);
+    const getBoundEvents = Helpers.getEvents.bind(this);
     return (
       <AxisLabel
         events={getBoundEvents(this.props.events.axisLabel, "axisLabels")}

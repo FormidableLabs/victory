@@ -2,7 +2,6 @@ import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
 import assign from "lodash/object/assign";
 import { Helpers } from "victory-core";
-import Events from "../../helpers/events";
 
 export default class Area extends React.Component {
   static propTypes = {
@@ -32,7 +31,7 @@ export default class Area extends React.Component {
       .y1((data) => yScale(data.y0 + data.y))
       .y0((data) => yScale(data.y0));
     const path = areaFunction(props.data);
-    const events = Events.getPartialEvents(props.events, props.index, props);
+    const events = Helpers.getPartialEvents(props.events, props.index, props);
     return <path style={areaStyle} d={path} {...events}/>;
   }
 

@@ -7,7 +7,6 @@ import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import Events from "../../helpers/events";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import Area from "./area";
 import AreaLabel from "./area-label";
@@ -277,7 +276,7 @@ export default class VictoryArea extends React.Component {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
       const dataWithBaseline = AreaHelpers.getBaseline(datasets, calculatedProps, index);
-      const getBoundEvents = Events.getEvents.bind(this);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       const areaComponent = (
         <Area key={`area-${index}`}
           index={index}

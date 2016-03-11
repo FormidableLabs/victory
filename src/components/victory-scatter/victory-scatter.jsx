@@ -7,7 +7,6 @@ import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Events from "../../helpers/events";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 import memoizerific from "memoizerific";
@@ -263,7 +262,7 @@ export default class VictoryScatter extends React.Component {
     const dataStyle = this.getDataStyles(data, style.data);
     const baseSize = ScatterHelpers.getSize(data, this.props, calculatedProps);
     const size = Helpers.evaluateProp(baseSize, data);
-    const getBoundEvents = Events.getEvents.bind(this);
+    const getBoundEvents = Helpers.getEvents.bind(this);
     const pointComponent = (
       <Point
         key={`point-${index}`}

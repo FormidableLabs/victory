@@ -1,6 +1,5 @@
 import React, { PropTypes } from "react";
 import { Helpers } from "victory-core";
-import Events from "../../helpers/events";
 
 export default class GridLine extends React.Component {
   static role = "grid";
@@ -18,7 +17,7 @@ export default class GridLine extends React.Component {
 
   render() {
     const { props } = this;
-    const events = Events.getPartialEvents(props.events, props.index, props);
+    const events = Helpers.getPartialEvents(props.events, props.index, props);
     return (
       <g transform={`translate(${props.xTransform}, ${props.yTransform})`}>
         <line

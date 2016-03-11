@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import Events from "../../helpers/events";
+import { Helpers } from "victory-core";
 
 export default class AxisLine extends React.Component {
   static propTypes = {
@@ -12,7 +12,7 @@ export default class AxisLine extends React.Component {
   };
 
   render() {
-    const events = Events.getPartialEvents(this.props.events, 0, this.props);
+    const events = Helpers.getPartialEvents(this.props.events, 0, this.props);
     return <line {...this.props} {...events}/>;
   }
 }

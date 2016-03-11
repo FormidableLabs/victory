@@ -7,7 +7,6 @@ import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Events from "../../helpers/events";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import memoizerific from "memoizerific";
 
@@ -264,7 +263,7 @@ export default class VictoryLine extends React.Component {
   renderLine(calculatedProps) {
     const {dataSegments, scale, style} = calculatedProps;
     return dataSegments.map((segment, index) => {
-      const getBoundEvents = Events.getEvents.bind(this);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       return (
         <LineSegment
           key={`line-segment-${index}`}
@@ -287,7 +286,7 @@ export default class VictoryLine extends React.Component {
     const lastSegment = dataSegments[dataSegments.length - 1];
     const lastPoint = Array.isArray(lastSegment) ?
       lastSegment[lastSegment.length - 1] : lastSegment;
-    const getBoundEvents = Events.getEvents.bind(this);
+    const getBoundEvents = Helpers.getEvents.bind(this);
     return (
       <LineLabel
         key={`line-label`}

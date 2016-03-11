@@ -1,8 +1,7 @@
 import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import React, { PropTypes } from "react";
-import { VictoryLabel } from "victory-core";
-import Events from "../../helpers/events";
+import { VictoryLabel, Helpers } from "victory-core";
 
 export default class AxisLabel extends React.Component {
   static propTypes = {
@@ -19,7 +18,7 @@ export default class AxisLabel extends React.Component {
     const style = defaults({}, component.props.style, props.style);
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
-    const events = Events.getPartialEvents(baseEvents, 0, props);
+    const events = Helpers.getPartialEvents(baseEvents, 0, props);
     const newProps = assign({}, events, {
       x: component.props.x || props.position.x,
       y: component.props.y || props.position.y,
@@ -32,7 +31,7 @@ export default class AxisLabel extends React.Component {
   }
 
   renderVictoryLabel(props) {
-    const events = Events.getPartialEvents(this.props.events, 0, this.props);
+    const events = Helpers.getPartialEvents(this.props.events, 0, this.props);
     const text = typeof props.label === "string" ? props.label : null;
     return (
       <VictoryLabel

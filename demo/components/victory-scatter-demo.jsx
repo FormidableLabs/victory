@@ -143,7 +143,12 @@ export default class App extends React.Component {
           symbol={"star"}
           size={8}
           events={{data: {
-            onMouseOver: function(evt, data) {
+            onMouseOver: (evt, data, index) => {
+              this.setState({
+                labelsState: _.assign(
+                  {}, this.state.labelsState, {[index] : {style: {stroke: "blue"}, label: "WHAAAAT"}}
+                )
+              })
               return {
                 symbol: "circle",
                 style: {
@@ -153,7 +158,7 @@ export default class App extends React.Component {
                 }
               }
             },
-            onMouseOut: function(evt, data) {
+            onMouseOut: (evt, data) => {
               return {
                 symbol: "star",
                 style: {

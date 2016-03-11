@@ -2,8 +2,6 @@ import defaults from "lodash/object/defaults";
 import assign from "lodash/object/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
-import Events from "../../helpers/events";
-
 
 export default class PointLabel extends React.Component {
   static propTypes = {
@@ -27,7 +25,7 @@ export default class PointLabel extends React.Component {
     const labelText = component.props.text || props.data.label;
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
-    const events = Events.getPartialEvents(baseEvents, props.index, props);
+    const events = Helpers.getPartialEvents(baseEvents, props.index, props);
     const labelProps = assign({}, events, {
       x: component && component.props.x || props.x,
       y: component && component.props.y || props.y - labelStyle.padding,
