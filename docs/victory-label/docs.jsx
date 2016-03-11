@@ -6,8 +6,6 @@ import * as docgen from "react-docgen";
 import { VictoryTheme } from "formidable-landers";
 import { VictoryLabel } from "../../src/index";
 
-
-@Radium
 class Docs extends React.Component {
   render() {
     return (
@@ -23,4 +21,4 @@ class Docs extends React.Component {
   }
 }
 
-export default Docs;
+export default Radium(Docs);
