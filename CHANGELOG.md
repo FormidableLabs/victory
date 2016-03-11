@@ -1,6 +1,13 @@
 VictoryCore Changelog
 =====================
 
+## 1.2.0 (2016-03-11)
+
+- Adds event helper methods
+- Adds an events prop to VictoryLabel
+- Updates to Babel 6
+- Updates to Lodash 4
+
 ## 1.1.0 (2016-03-02)
 
 - Add matchDataLength custom proptype
