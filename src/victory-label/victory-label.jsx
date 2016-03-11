@@ -31,6 +31,12 @@ export default class VictoryLabel extends React.Component {
      */
     data: PropTypes.object,
     /**
+     * The events prop attaches arbitrary event handlers to the label component.
+     * Event handlers are currently only called with their corresponding events.
+     * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+     */
+    events: PropTypes.object,
+    /**
      * all Victory components will pass a text prop to their label component.
      * This defines the content of the label when child nodes are absent. It
      * will be ignored if children are provided.
@@ -196,6 +202,7 @@ export default class VictoryLabel extends React.Component {
         textAnchor={textAnchor}
         transform={transform}
         style={style}
+        {...this.props.events}
       >
         {content.map((line, i) => {
           return (

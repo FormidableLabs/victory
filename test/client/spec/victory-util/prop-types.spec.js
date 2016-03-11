@@ -1,16 +1,7 @@
 /* global sinon */
 /* global console */
 import {PropTypes} from "react";
-import {
-  allOfType,
-  nonNegative,
-  integer,
-  domain,
-  scale,
-  homogeneousArray,
-  deprecated,
-  matchDataLength
-} from "src/victory-util/prop-types";
+import {PropTypes as CustomPropTypes} from "src/index";
 
 describe("prop-types", () => {
 
@@ -25,7 +16,7 @@ describe("prop-types", () => {
     };
 
     const validate = (prop) => {
-      return deprecated(PropTypes.string, "Read more at link")({
+      return CustomPropTypes.deprecated(PropTypes.string, "Read more at link")({
         pName: prop
       }, "pName", "ComponentName");
     };
@@ -61,7 +52,9 @@ describe("prop-types", () => {
 
   describe("allOfType", () => {
     const validate = function (prop) {
-      return allOfType([nonNegative, integer])({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.allOfType(
+        [CustomPropTypes.nonNegative, CustomPropTypes.integer]
+      )({testProp: prop}, "testProp", "TestComponent");
     };
 
     it("returns an error if the first validator is false", () => {
@@ -88,7 +81,7 @@ describe("prop-types", () => {
 
   describe("nonNegative", () => {
     const validate = function (prop) {
-      return nonNegative({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.nonNegative({testProp: prop}, "testProp", "TestComponent");
     };
 
     it("returns an error for non numeric values", () => {
@@ -120,7 +113,7 @@ describe("prop-types", () => {
 
   describe("integer", () => {
     const validate = function (prop) {
-      return integer({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.integer({testProp: prop}, "testProp", "TestComponent");
     };
 
     it("returns an error for non numeric values", () => {
@@ -151,7 +144,7 @@ describe("prop-types", () => {
 
   describe("domain", () => {
     const validate = function (prop) {
-      return domain({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.domain({testProp: prop}, "testProp", "TestComponent");
     };
 
     it("returns an error for non array values", () => {
@@ -196,7 +189,7 @@ describe("prop-types", () => {
 
   describe("scale", () => {
     const validate = function (prop) {
-      return scale({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.scale({testProp: prop}, "testProp", "TestComponent");
     };
 
     it("returns an error for non function values", () => {
@@ -225,7 +218,7 @@ describe("prop-types", () => {
 
   describe("homogeneousArray", () => {
     const validate = function (prop) {
-      return homogeneousArray({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.homogeneousArray({testProp: prop}, "testProp", "TestComponent");
     };
 
     it("returns an error for non array values", () => {
@@ -259,7 +252,7 @@ describe("prop-types", () => {
   describe("matchDataLength", () => {
     const validate = function (prop, dataProp) {
       const props = {testProp: prop, data: dataProp};
-      return matchDataLength(props, "testProp", "TestComponent");
+      return CustomPropTypes.matchDataLength(props, "testProp", "TestComponent");
     };
 
     it("does not return an error when prop is undefined", () => {

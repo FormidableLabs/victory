@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import ReactDOMServer from "react-dom/server";
 
-import Docs from "./docs";
+import Docs from "./docs/app";
 import IndexTemplate from "./static-index";
 
 const Index = React.createFactory(IndexTemplate);
@@ -20,7 +20,7 @@ if (typeof document !== "undefined") {
   ReactDOM.render(<Docs/>, content);
 }
 
-module.exports = (locals, next) => {
+const entry =  (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
   const bundle = source.assetsByChunkName.main;
 
@@ -32,3 +32,5 @@ module.exports = (locals, next) => {
 
   next(null, html)
 };
+
+export { entry }

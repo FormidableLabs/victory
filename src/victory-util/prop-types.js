@@ -1,7 +1,6 @@
 /* global console */
 import isFunction from "lodash/isFunction";
 import { PropTypes } from "react";
-import { getConstructor, getConstructorName } from "./type";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -29,6 +28,41 @@ const makeChainable = function (validator) {
   return chainable;
 };
 
+const nullConstructor = () => null;
+const undefinedConstructor = () => undefined;
+
+/**
+ * Get the constructor of `value`. If `value` is null or undefined, return the
+ * special singletons `nullConstructor` or `undefinedConstructor`, respectively.
+ * @param {*} value Instance to return the constructor of.
+ * @returns {Function} Constructor of `value`.
+ */
+const getConstructor = (value) => {
+  if (typeof value === "undefined") {
+    return undefinedConstructor;
+  } else if (value === null) {
+    return nullConstructor;
+  } else {
+    return value.constructor;
+  }
+};
+
+/**
+ * Get the name of the constructor used to create `value`, using
+ * `Object.protoype.toString`. If the value is null or undefined, return
+ * "null" or "undefined", respectively.
+ * @param {*} value Instance to return the constructor name of.
+ * @returns {String} Name of the constructor.
+ */
+const getConstructorName = (value) => {
+  if (typeof value === "undefined") {
+    return "undefined";
+  } else if (value === null) {
+    return "null";
+  }
+  return Object.prototype.toString.call(value).slice(8, -1);
+};
+
 export default {
   /**
    * Return a new validator based on `propType` but which logs a `console.error`
@@ -37,7 +71,7 @@ export default {
    * @param {String} explanation The message to provide the user of the deprecated propType.
    * @returns {Function} Validator which logs usage of this propType
    */
-  deprecated: (propType, explanation) => {
+  deprecated(propType, explanation) {
     return (props, propName, componentName) => {
       if (process.env.NODE_ENV !== "production") {
         /* eslint-disable no-console */

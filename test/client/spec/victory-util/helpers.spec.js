@@ -148,4 +148,38 @@ describe("helpers", () => {
       expect(returnData).to.eql(expectedReturn);
     });
   });
+
+  describe("getPartialEvents", () => {
+    it("returns a set of new event functions with partially applied arguments", () => {
+      const events = {
+        onClick: (evt, childProps, index) => {
+          return {evt, childProps, index};
+        }
+      };
+      const index = 0;
+      const childProps = {style: {fill: "green"}};
+      const result = Helpers.getPartialEvents(events, index, childProps);
+      expect(result).to.have.keys(["onClick"]);
+      expect(result.onClick()).to.have.keys(["evt", "childProps", "index"]);
+      expect(result.onClick().index).to.eql(index);
+      expect(result.onClick().childProps).to.eql(childProps);
+    });
+  });
+
+  describe("getEvents", () => {
+    it("returns a set of new event functions with partially applied arguments", () => {
+      const events = {
+        onClick: (evt, childProps, index) => {
+          return {evt, childProps, index};
+        }
+      };
+      const index = 0;
+      const childProps = {style: {fill: "green"}};
+      const result = Helpers.getPartialEvents(events, index, childProps);
+      expect(result).to.have.keys(["onClick"]);
+      expect(result.onClick()).to.have.keys(["evt", "childProps", "index"]);
+      expect(result.onClick().index).to.eql(index);
+      expect(result.onClick().childProps).to.eql(childProps);
+    });
+  });
 });
