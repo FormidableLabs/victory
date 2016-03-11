@@ -1,7 +1,7 @@
-import { toTransformString } from "src/victory-util/style";
+import { Style } from "src/index";
 
 describe("toTransformString", () => {
   it("returns an empty string if no transform definitions are given", () => {
-    expect(toTransformString({})).to.equal("");
+    expect(Style.toTransformString({})).to.equal("");
   });
 });
