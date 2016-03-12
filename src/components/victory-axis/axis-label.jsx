@@ -25,6 +25,7 @@ export default class AxisLabel extends React.Component {
       text: component.props.text,
       textAnchor: component.props.textAnchor || "middle",
       verticalAnchor: component.props.verticalAnchor || props.verticalAnchor,
+      transform: component.props.transform || props.transform,
       style
     });
     return React.cloneElement(component, newProps);
@@ -39,6 +40,7 @@ export default class AxisLabel extends React.Component {
         y={props.position.y}
         textAnchor={"middle"}
         verticalAnchor={props.verticalAnchor}
+        transform={props.transform}
         style={props.style}
         text={text}
         {...events}
