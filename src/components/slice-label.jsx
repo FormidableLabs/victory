@@ -38,7 +38,7 @@ export default class SliceLabel extends React.Component {
       <VictoryLabel
         x={position[0]}
         y={position[1]}
-        data={props.slice.data}
+        datum={props.slice.data}
         style={style}
       >
         {label}
