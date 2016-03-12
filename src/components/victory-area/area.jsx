@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
-import assign from "lodash/object/assign";
+import assign from "lodash/assign";
 import { Helpers } from "victory-core";
 
 export default class Area extends React.Component {

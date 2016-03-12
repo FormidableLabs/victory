@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
-import pick from "lodash/object/pick";
-import omit from "lodash/object/omit";
-import defaults from "lodash/object/defaults";
+import pick from "lodash/pick";
+import omit from "lodash/omit";
+import defaults from "lodash/defaults";
 import Point from "./point";
 import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";

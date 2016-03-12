@@ -1,5 +1,5 @@
-import defaults from "lodash/object/defaults";
-import assign from "lodash/object/assign";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
 

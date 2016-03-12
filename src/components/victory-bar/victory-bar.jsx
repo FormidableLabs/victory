@@ -1,5 +1,5 @@
-import pick from "lodash/object/pick";
-import get from "lodash/object/get";
+import pick from "lodash/pick";
+import get from "lodash/get";
 import memoizerific from "memoizerific";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
@@ -10,7 +10,6 @@ import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import Events from "../../helpers/events";
 
 const defaultStyles = {
   data: {
@@ -297,7 +296,7 @@ export default class VictoryBar extends React.Component {
       const position = BarHelpers.getBarPosition(datum, index, calculatedProps);
       const baseStyle = calculatedProps.style;
       const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
-      const getBoundEvents = Events.getEvents.bind(this);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       const barComponent = (
         <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
           horizontal={this.props.horizontal}

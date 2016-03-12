@@ -1,5 +1,5 @@
-import defaults from "lodash/object/defaults";
-import pick from "lodash/object/pick";
+import defaults from "lodash/defaults";
+import pick from "lodash/pick";
 
 import React, { PropTypes } from "react";
 import {

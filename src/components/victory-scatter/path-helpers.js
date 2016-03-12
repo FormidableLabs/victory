@@ -1,4 +1,4 @@
-import range from "lodash/utility/range";
+import range from "lodash/range";
 
 export default {
   circle(x, y, size) {

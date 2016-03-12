@@ -1,7 +1,7 @@
-import pick from "lodash/object/pick";
-import last from "lodash/array/last";
-import defaults from "lodash/object/defaults";
-import omit from "lodash/object/omit";
+import pick from "lodash/pick";
+import last from "lodash/last";
+import defaults from "lodash/defaults";
+import omit from "lodash/omit";
 
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";

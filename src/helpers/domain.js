@@ -1,6 +1,5 @@
-import flatten from "lodash/array/flatten";
-import includes from "lodash/collection/includes";
-import zipObject from "lodash/array/zipObject";
+import flatten from "lodash/flatten";
+import includes from "lodash/includes";
 import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
@@ -71,7 +70,10 @@ export default {
     const stringArray = Collection.containsStrings(categories) ?
      Data.getStringsFromCategories(props, axis) : [];
     const stringMap = stringArray.length === 0 ? null :
-      zipObject(stringArray.map((string, index) => [string, index + 1]));
+      stringArray.reduce((memo, string, index) => {
+        memo[string] = index + 1;
+        return memo;
+      }, {});
     const categoryValues = stringMap ?
       categories.map((value) => stringMap[value]) : categories;
     return [Math.min(...categoryValues), Math.max(...categoryValues)];

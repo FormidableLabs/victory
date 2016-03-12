@@ -8,7 +8,7 @@ import Data from "src/helpers/data";
 import Domain from "src/helpers/domain";
 import Axis from "src/helpers/axis";
 import Scale from "src/helpers/scale";
-import identity from "lodash/utility/identity";
+import identity from "lodash/identity";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);

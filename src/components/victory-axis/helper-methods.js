@@ -1,7 +1,7 @@
-import isFunction from "lodash/lang/isFunction";
-import includes from "lodash/collection/includes";
-import without from "lodash/array/without";
-import range from "lodash/utility/range";
+import isFunction from "lodash/isFunction";
+import includes from "lodash/includes";
+import without from "lodash/without";
+import range from "lodash/range";
 
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";

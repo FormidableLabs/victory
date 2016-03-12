@@ -1,8 +1,7 @@
-import defaults from "lodash/object/defaults";
-import assign from "lodash/object/assign";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers} from "victory-core";
-import Events from "../../helpers/events";
 
 export default class LineLabel extends React.Component {
   static propTypes = {
@@ -19,7 +18,7 @@ export default class LineLabel extends React.Component {
     const style = Helpers.evaluateStyle(baseStyle, props.data);
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
-    const events = Events.getPartialEvents(baseEvents, 0, props);
+    const events = Helpers.getPartialEvents(baseEvents, 0, props);
     const newProps = assign({}, events, {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
@@ -34,7 +33,7 @@ export default class LineLabel extends React.Component {
 
   renderVictoryLabel(props) {
     const style = Helpers.evaluateStyle(defaults({}, props.style), props.data, {padding: 0});
-    const events = Events.getPartialEvents(this.props.events, 0, this.props);
+    const events = Helpers.getPartialEvents(this.props.events, 0, this.props);
     return (
       <VictoryLabel
         x={props.position.x + style.padding}

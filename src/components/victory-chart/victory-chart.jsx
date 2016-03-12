@@ -1,4 +1,4 @@
-import defaults from "lodash/object/defaults";
+import defaults from "lodash/defaults";
 
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-core";

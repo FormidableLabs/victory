@@ -1,6 +1,6 @@
-import defaults from "lodash/object/defaults";
-import uniq from "lodash/array/uniq";
-import omit from "lodash/object/omit";
+import defaults from "lodash/defaults";
+import uniq from "lodash/uniq";
+import omit from "lodash/omit";
 import Layout from "../../helpers/layout";
 
 export default {

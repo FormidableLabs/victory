@@ -21,16 +21,16 @@
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
-    "builder-victory-component": "^1.0.1",
+    "builder-victory-component": "^1.0.3",
     "builder": "~2.8.0",
     "d3-scale": "^0.2.0",
     "d3-shape": "^0.5.1",
-    "lodash": "^3.10.1",
+    "lodash": "^4.6.1",
     "memoizerific": "^1.5.2",
-    "victory-core": "^1.1.1"
+    "victory-core": "^1.2.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^1.0.1",
+    "builder-victory-component-dev": "^1.0.3",
     "chai": "^3.2.0",
     "history": "^1.17.0",
     "ecology": "^1.2.0",
