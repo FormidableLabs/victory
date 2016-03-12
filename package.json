@@ -26,7 +26,7 @@
     "d3-shape": "^0.5.1",
     "lodash": "^4.6.1",
     "lru-memoize": "^1.0.1",
-    "victory-core": "^1.0.0"
+    "victory-core": "^1.2.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^1.0.3",
