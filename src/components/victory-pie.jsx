@@ -1,9 +1,8 @@
 import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
-import isArray from "lodash/lang/isArray";
-import merge from "lodash/object/merge";
-import assign from "lodash/object/assign";
-import pick from "lodash/object/pick";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
+import pick from "lodash/pick";
 import {
   PropTypes as CustomPropTypes,
   Helpers,
@@ -12,6 +11,7 @@ import {
 } from "victory-core";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
+import lruMemoize from "lru-memoize";
 
 const defaultStyles = {
   data: {
@@ -97,10 +97,19 @@ export default class VictoryPie extends React.Component {
      */
     endAngle: PropTypes.number,
     /**
-     * The events prop attaches arbitrary event handlers to parent, data, and label elements
-     * Parent events are only supported on standalone components i.e. top level svgs.
-     * Event handlers are currently only called with their corresponding events.
-     * @examples {data: {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}}
+     * The events prop attaches arbitrary event handlers to data and label elements
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryPie
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryPie
+     * if one exists. If VictoryPie is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
+     * @examples {data: {
+     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *}}
      */
     events: PropTypes.shape({
       parent: PropTypes.object,
@@ -233,24 +242,40 @@ export default class VictoryPie extends React.Component {
     y: "y"
   };
 
+  componentWillMount() {
+    this.state = {
+      dataState: {},
+      labelsState: {}
+    };
+    this.memoized = {
+      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
+      getStyles: lruMemoize(1, true)(Helpers.getStyles)
+    };
+  }
+
   renderSlice(slice, index, calculatedProps) {
     const {style, colorScale, makeSlicePath, labelPosition} = calculatedProps;
     const fill = colorScale[index % colorScale.length];
-    const sliceStyle = merge({}, style.data, {fill});
+    const sliceStyle = defaults({}, {fill}, style.data);
+    const getBoundEvents = Helpers.getEvents.bind(this);
     return (
       <g key={index}>
         <Slice
-          events={this.props.events.data}
+          index={index}
+          events={getBoundEvents(this.props.events.data, "data")}
           slice={slice}
           pathFunction={makeSlicePath}
           style={sliceStyle}
+          {...this.state.dataState[index]}
         />
         <SliceLabel
-          events={this.props.events.labels}
+          index={index}
+          events={getBoundEvents(this.props.events.labels, "labels")}
           labelComponent={this.props.labelComponent}
           style={style.labels}
           positionFunction={labelPosition.centroid}
           slice={slice}
+          {...this.state.labelsState[index]}
         />
       </g>
     );
@@ -260,7 +285,7 @@ export default class VictoryPie extends React.Component {
     const {style, radius} = calculatedProps;
     const data = Helpers.getData(props);
     const labelPosition = getLabelPosition(props, style, radius);
-    const colorScale = isArray(props.colorScale) ?
+    const colorScale = Array.isArray(props.colorScale) ?
       props.colorScale : Style.getColorScale(props.colorScale);
     const makeSlicePath = d3Shape.arc()
       .outerRadius(radius)
@@ -301,7 +326,7 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const style = Helpers.getStyles(
+    const style = this.memoized.getStyles(
       this.props.style,
       defaultStyles,
       this.props.height,

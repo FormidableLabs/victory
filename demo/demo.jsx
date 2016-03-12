@@ -67,7 +67,18 @@ export default class App extends React.Component {
       <div>
         <h1>VictoryPie Demo</h1>
 
-        <VictoryPie style={this.state.style}/>
+        <VictoryPie
+          style={this.state.style}
+          events={{
+            data: {
+              onClick: (evt, props) => {
+                return {
+                  style: _.assign({}, props.style, {opacity: props.style.opacity === 1 ? 0.6 : 1})
+                };
+              }
+            }
+          }}
+        />
 
         <VictoryPie
           style={{
@@ -105,14 +116,7 @@ export default class App extends React.Component {
         />
 
         <VictoryPie
-          data={_.range(0, 6)}
-          x={null}
-          y={(d) => d * d * Math.random()}
-          style={this.state.style}
-          colorScale="warm"
-        />
-
-        <VictoryPie
+          animate={{velocity: 0.03}}
           data={_.range(0, 6).map((i) => [i, Math.random()])}
           x={0}
           y={1}

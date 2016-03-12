@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-class Index extends React.Component {
+export default class Index extends React.Component {
   render() {
     return (
       <html>
@@ -34,5 +34,3 @@ class Index extends React.Component {
     );
   }
 }
-
-module.exports = Index;

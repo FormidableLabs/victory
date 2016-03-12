@@ -1,10 +1,11 @@
 import React, { PropTypes } from "react";
 import { Helpers, VictoryLabel } from "victory-core";
-import merge from "lodash/object/merge";
-import assign from "lodash/object/assign";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 
 export default class SliceLabel extends React.Component {
   static propTypes = {
+    index: PropTypes.number,
     labelComponent: PropTypes.any,
     positionFunction: PropTypes.func,
     slice: PropTypes.object,
@@ -15,11 +16,14 @@ export default class SliceLabel extends React.Component {
   renderLabelComponent(props, position, label) {
     const component = props.labelComponent;
     const style = Helpers.evaluateStyle(
-      merge({padding: 0}, props.style, component.props.style),
+      defaults({}, component.props.style, props.style, {padding: 0}),
       this.data
     );
+    const baseEvents = component && component.props.events ?
+      defaults({}, component.props.events, props.events) : props.events;
+    const events = Helpers.getPartialEvents(baseEvents, props.index, props);
     const children = component.props.children || label;
-    const newProps = {
+    const newProps = assign({}, events, {
       x: component.props.x || position[0],
       y: component.props.y || position[1],
       data: props.slice.data, // Pass data for custom label component to access
@@ -27,7 +31,7 @@ export default class SliceLabel extends React.Component {
       verticalAnchor: component.props.verticalAnchor || "middle",
       events: component.props.events || props.events,
       style
-    };
+    });
     return React.cloneElement(component, newProps, children);
   }
 
@@ -36,16 +40,16 @@ export default class SliceLabel extends React.Component {
       assign({padding: 0}, props.style),
       props.slice.data
     );
+    const events = Helpers.getPartialEvents(props.events, props.index, props);
     return (
       <VictoryLabel
-        events={props.events}
         x={position[0]}
         y={position[1]}
         data={props.slice.data}
         style={style}
-      >
-        {label}
-      </VictoryLabel>
+        text={label}
+        {...events}
+      />
     );
   }
 
