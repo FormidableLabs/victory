@@ -1,6 +1,7 @@
 /* eslint no-unused-expressions: 0 */
-import Helpers from "src/victory-util/helpers";
+/* global sinon */
 
+import Helpers from "src/victory-util/helpers";
 describe("helpers", () => {
   describe("evaluateProp", () => {
     const data = {x: 3, y: 2};
@@ -167,19 +168,41 @@ describe("helpers", () => {
   });
 
   describe("getEvents", () => {
-    it("returns a set of new event functions with partially applied arguments", () => {
-      const events = {
-        onClick: (evt, childProps, index) => {
-          return {evt, childProps, index};
-        }
+    let sandbox;
+    let fake;
+    beforeEach(() => {
+      sandbox = sinon.sandbox.create();
+      fake = {
+        props: {
+          events: {
+            data: {
+              onClick: () => "foo"
+            }
+          }
+        },
+        setState: (x) => x,
+        state: { dataState: {} }
       };
-      const index = 0;
-      const childProps = {style: {fill: "green"}};
-      const result = Helpers.getPartialEvents(events, index, childProps);
+      sandbox.spy(fake, "setState");
+    });
+
+    afterEach(() => {
+      sandbox.reset();
+    });
+
+    it("returns new functions that call set state", () => {
+      const getBoundEvents = Helpers.getEvents.bind(fake);
+      const result = getBoundEvents(fake.props.events.data, "data");
       expect(result).to.have.keys(["onClick"]);
-      expect(result.onClick()).to.have.keys(["evt", "childProps", "index"]);
-      expect(result.onClick().index).to.eql(index);
-      expect(result.onClick().childProps).to.eql(childProps);
+      const index = 0;
+      const partialEvents = Helpers.getPartialEvents(result, index, {});
+      expect(partialEvents).to.have.keys(["onClick"]);
+      partialEvents.onClick();
+      expect(fake.setState).calledWith({
+        dataState: {
+          [index]: "foo"
+        }
+      });
     });
   });
 });
