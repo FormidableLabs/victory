@@ -19,10 +19,9 @@ export default class Area extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
-  renderArea(style, interpolation) {
-    const { props } = this;
-    const xScale = props.scale.x;
-    const yScale = props.scale.y;
+  renderArea(style, interpolation, events) {
+    const xScale = this.props.scale.x;
+    const yScale = this.props.scale.y;
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
     const areaFunction = d3Shape.area()
@@ -30,12 +29,12 @@ export default class Area extends React.Component {
       .x((data) => xScale(data.x))
       .y1((data) => yScale(data.y0 + data.y))
       .y0((data) => yScale(data.y0));
-    const path = areaFunction(props.data);
-    const events = Helpers.getPartialEvents(props.events, props.index, props);
+    const path = areaFunction(this.props.data);
+
     return <path style={areaStyle} d={path} {...events}/>;
   }
 
-  renderLine(style, interpolation) {
+  renderLine(style, interpolation, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
@@ -48,18 +47,19 @@ export default class Area extends React.Component {
       .y((data) => yScale(data.y));
     const path = lineFunction(this.props.data);
     return (
-      <path style={lineStyle} d={path}/>
+      <path style={lineStyle} d={path} {...events}/>
     );
   }
 
-
   render() {
-    const style = Helpers.evaluateStyle(this.props.style, this.props.data);
-    const interpolation = Helpers.evaluateProp(this.props.interpolation, this.props.data);
+    const { props } = this;
+    const style = Helpers.evaluateStyle(props.style, props.data);
+    const interpolation = Helpers.evaluateProp(props.interpolation, props.data);
+    const events = Helpers.getPartialEvents(props.events, props.index, props);
     return (
       <g>
-        {this.renderArea(style, interpolation)}
-        {this.renderLine(style, interpolation)}
+        {this.renderArea(style, interpolation, events)}
+        {this.renderLine(style, interpolation, events)}
       </g>
     );
   }

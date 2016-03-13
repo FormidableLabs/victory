@@ -301,7 +301,7 @@ export default class VictoryArea extends React.Component {
               index={index}
               style={baseStyle.labels}
               data={dataset.data}
-              events={getBoundEvents(this.props.events.data, "labels")}
+              events={getBoundEvents(this.props.events.labels, "labels")}
               position={position}
               labelText={label}
               labelComponent={this.props.labelComponent}

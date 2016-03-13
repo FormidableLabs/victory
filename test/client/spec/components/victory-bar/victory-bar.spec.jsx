@@ -107,9 +107,14 @@ describe("components/victory-bar", () => {
       const wrapper = mount(
         <VictoryBar events={{data: {onClick: clickHandler}}}/>
       );
-      wrapper.find(Bar).forEach((node) => {
+      const Data = wrapper.find(Bar);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql([0, index]);
       });
     });
   });

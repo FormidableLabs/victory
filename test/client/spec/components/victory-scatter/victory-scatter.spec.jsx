@@ -2,7 +2,7 @@
  * Client tests
  */
 /*eslint-disable max-nested-callbacks */
- /* global sinon */
+/* global sinon */
 import React from "react";
 import { shallow, mount } from "enzyme";
 import _ from "lodash";
@@ -65,9 +65,14 @@ describe("components/victory-scatter", () => {
       const wrapper = mount(
         <VictoryScatter events={{data: {onClick: clickHandler}}}/>
       );
-      wrapper.find(Point).forEach((node) => {
+      const Data = wrapper.find(Point);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
       });
     });
   });

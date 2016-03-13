@@ -74,6 +74,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="demo">
+        <VictoryArea/>
+
         <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}, data: this.state.style}}
           data={this.state.data}
@@ -121,10 +123,31 @@ export default class App extends React.Component {
         />
 
         <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{
+            parent: {border: "1px solid black", margin: "5px"},
+            data: {fill: "gold"}
+          }}
           data={this.state.arrayData}
           x={0}
           y={1}
+          events={{data: {
+            onMouseOver: () => {
+              return {
+                style: {
+                  fill: "gold",
+                  stroke: "orange",
+                  strokeWidth: 3
+                }
+              }
+            },
+            onMouseOut: () => {
+              return {
+                style: {
+                  fill: "gold",
+                }
+              }
+            }
+          }}}
         />
 
         <VictoryArea

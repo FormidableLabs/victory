@@ -1,7 +1,9 @@
 /**
  * Client tests
  */
- /* global sinon */
+/* global sinon */
+/*eslint-disable max-nested-callbacks */
+
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
@@ -25,8 +27,15 @@ describe("components/victory-axis", () => {
       const wrapper = mount(
         <VictoryAxis events={{axis: {onClick: clickHandler}}}/>
       );
-      wrapper.find(AxisLine).simulate("click");
-      expect(clickHandler.calledOnce).to.equal(true);
+      const Data = wrapper.find(AxisLine);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
+        node.simulate("click");
+        expect(clickHandler.called).to.equal(true);
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
+      });
     });
   });
 });

@@ -1,7 +1,9 @@
 /**
  * Client tests
  */
- /* global sinon */
+/* global sinon */
+/*eslint-disable max-nested-callbacks */
+
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
@@ -165,8 +167,14 @@ describe("components/victory-line", () => {
       const wrapper = mount(
         <VictoryLine events={{data: {onClick: clickHandler}}}/>
       );
-      wrapper.find(Line).simulate("click");
-      expect(clickHandler.called).to.equal(true);
+      const Data = wrapper.find(Line);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
+        node.simulate("click");
+        expect(clickHandler.called).to.equal(true);
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+      });
     });
   });
 });
