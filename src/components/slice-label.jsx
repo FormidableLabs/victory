@@ -17,16 +17,17 @@ export default class SliceLabel extends React.Component {
       merge({padding: 0}, props.style, component.props.style),
       this.data
     );
-    const children = component.props.children || label;
+
     const newProps = {
       x: component.props.x || position[0],
       y: component.props.y || position[1],
       data: props.slice.data, // Pass data for custom label component to access
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
+      text: label,
       style
     };
-    return React.cloneElement(component, newProps, children);
+    return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props, position, label) {
@@ -40,9 +41,8 @@ export default class SliceLabel extends React.Component {
         y={position[1]}
         data={props.slice.data}
         style={style}
-      >
-        {label}
-      </VictoryLabel>
+        text={label}
+      />
     );
   }
 
