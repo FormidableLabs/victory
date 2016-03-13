@@ -26,10 +26,10 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func
     ]),
     /**
-     * all Victory components will pass a data prop to their label component. This can
+     * all Victory components will pass a datum prop to their label component. This can
      * be used to calculate functional styles, and determine child text
      */
-    data: PropTypes.object,
+    datum: PropTypes.object,
     /**
      * The events prop attaches arbitrary event handlers to the label component.
      * Event handlers are currently only called with their corresponding events.
