@@ -116,11 +116,20 @@ export default class App extends React.Component {
         />
 
         <VictoryPie
+          data={_.range(0, 6).map((i) => [i, Math.random()])}
+          x={0}
+          y={1}
           animate={{velocity: 0.03}}
+          style={this.state.style}
+          colorScale="warm"
+        />
+
+        <VictoryPie
           data={_.range(0, 6).map((i) => [i, Math.random()])}
           x={0}
           y={1}
           style={this.state.style}
+          animate={{velocity: 0.03}}
           colorScale="qualitative"
         />
       </div>

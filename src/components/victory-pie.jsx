@@ -130,9 +130,10 @@ export default class VictoryPie extends React.Component {
      * This prop specifies the labels that will be applied to your data. This prop can be
      * passed in as an array of values, in the same order as your data, or as a function
      * to be applied to each data point. If this prop is not specified, the x value
-     * of each data point will be used as a label.
+     * of each data point will be used as a label. An array of custom components may also
+     * be passed in.
      */
-    labelComponent: PropTypes.element,
+    labels: PropTypes.element,
     /**
      * The padAngle prop determines the amount of separation between adjacent data slices
      * in number of degrees
@@ -271,7 +272,7 @@ export default class VictoryPie extends React.Component {
         <SliceLabel
           index={index}
           events={getBoundEvents(this.props.events.labels, "labels")}
-          labelComponent={this.props.labelComponent}
+          labels={this.props.labels}
           style={style.labels}
           positionFunction={labelPosition.centroid}
           slice={slice}

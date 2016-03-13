@@ -6,7 +6,7 @@ import assign from "lodash/assign";
 export default class SliceLabel extends React.Component {
   static propTypes = {
     index: PropTypes.number,
-    labelComponent: PropTypes.any,
+    labels: PropTypes.any,
     positionFunction: PropTypes.func,
     slice: PropTypes.object,
     style: PropTypes.object,
@@ -14,7 +14,7 @@ export default class SliceLabel extends React.Component {
   };
 
   renderLabelComponent(props, position, label) {
-    const component = props.labelComponent;
+    const component = props.labels;
     const style = Helpers.evaluateStyle(
       defaults({}, component.props.style, props.style, {padding: 0}),
       this.data
@@ -22,17 +22,16 @@ export default class SliceLabel extends React.Component {
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, props.index, props);
-    const children = component.props.children || label;
     const newProps = assign({}, events, {
       x: component.props.x || position[0],
       y: component.props.y || position[1],
       data: props.slice.data, // Pass data for custom label component to access
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
-      events: component.props.events || props.events,
+      text: component.props.text || label,
       style
     });
-    return React.cloneElement(component, newProps, children);
+    return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props, position, label) {
@@ -59,7 +58,7 @@ export default class SliceLabel extends React.Component {
     const dataLabel = data.xName ? `${data.xName}` : `${data.x}`;
     const label = data.label ?
     `${Helpers.evaluateProp(data.label, data)}` : dataLabel;
-    return props.labelComponent ?
+    return props.labels && props.labels.props ?
       this.renderLabelComponent(props, position, label) :
       this.renderVictoryLabel(props, position, label);
   }
