@@ -1,3 +1,2 @@
-module.exports = {
-  VictoryPie: require("./components/victory-pie")
-};
+import VictoryPie from "./components/victory-pie";
+export { VictoryPie };

@@ -1,32 +1,36 @@
 import React, { PropTypes } from "react";
 import { Helpers, VictoryLabel } from "victory-core";
-import merge from "lodash/object/merge";
-import assign from "lodash/object/assign";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 
 export default class SliceLabel extends React.Component {
   static propTypes = {
-    labelComponent: PropTypes.any,
+    index: PropTypes.number,
+    labels: PropTypes.any,
     positionFunction: PropTypes.func,
     slice: PropTypes.object,
-    style: PropTypes.object
+    style: PropTypes.object,
+    events: PropTypes.object
   };
 
   renderLabelComponent(props, position, label) {
-    const component = props.labelComponent;
+    const component = props.labels;
     const style = Helpers.evaluateStyle(
-      merge({padding: 0}, props.style, component.props.style),
+      defaults({}, component.props.style, props.style, {padding: 0}),
       this.data
     );
-
-    const newProps = {
+    const baseEvents = component && component.props.events ?
+      defaults({}, component.props.events, props.events) : props.events;
+    const events = Helpers.getPartialEvents(baseEvents, props.index, props);
+    const newProps = assign({}, events, {
       x: component.props.x || position[0],
       y: component.props.y || position[1],
       data: props.slice.data, // Pass data for custom label component to access
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
-      text: label,
+      text: component.props.text || label,
       style
-    };
+    });
     return React.cloneElement(component, newProps);
   }
 
@@ -35,6 +39,7 @@ export default class SliceLabel extends React.Component {
       assign({padding: 0}, props.style),
       props.slice.data
     );
+    const events = Helpers.getPartialEvents(props.events, props.index, props);
     return (
       <VictoryLabel
         x={position[0]}
@@ -42,6 +47,7 @@ export default class SliceLabel extends React.Component {
         data={props.slice.data}
         style={style}
         text={label}
+        {...events}
       />
     );
   }
@@ -52,7 +58,7 @@ export default class SliceLabel extends React.Component {
     const dataLabel = data.xName ? `${data.xName}` : `${data.x}`;
     const label = data.label ?
     `${Helpers.evaluateProp(data.label, data)}` : dataLabel;
-    return props.labelComponent ?
+    return props.labels && props.labels.props ?
       this.renderLabelComponent(props, position, label) :
       this.renderVictoryLabel(props, position, label);
   }

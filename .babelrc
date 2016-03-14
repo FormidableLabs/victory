@@ -1,4 +1,3 @@
 {
-  "stage": 0,
-  "nonStandard": true
+  "extends": "./node_modules/builder-victory-component/config/babel/.babelrc"
 }
