@@ -71,10 +71,22 @@ export default class App extends React.Component {
         <div>
           <h2>Time Scale Axis</h2>
           <VictoryAxis
-            label="time axis"
             padding={{left: 10, right: 80}}
             scale="time"
-            style={{grid: {stroke: "black", strokeWidth: 1}}}
+            events={{
+              axis: {
+                onClick: function() {
+                  return {
+                    style: {stroke: "red", strokeWidth: 4}
+                  };
+                }
+              }
+            }}
+            style={{
+              axis: {strokeWidth: 4},
+              grid: {stroke: "black", strokeWidth: 1}
+            }}
+            label={this.state.label}
             tickValues={[
               new Date(1980, 1, 1),
               new Date(1990, 1, 1),

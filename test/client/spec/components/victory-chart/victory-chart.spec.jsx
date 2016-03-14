@@ -1,33 +1,31 @@
 /**
  * Client tests
  */
+ /* global sinon */
 import React from "react";
-import ReactDOM from "react-dom";
+import { shallow, mount } from "enzyme";
 import VictoryChart from "src/components/victory-chart/victory-chart";
-// Use `TestUtils` to inject into DOM, simulate events, etc.
-// See: https://facebook.github.io/react/docs/test-utils.html
-import TestUtils from "react-addons-test-utils";
-
-const getElement = function (output, tagName) {
-  return ReactDOM.findDOMNode(
-    TestUtils.findRenderedDOMComponentWithTag(output, tagName)
-  );
-};
-
-let renderedComponent;
 
 describe("components/victory-chart", () => {
   describe("default component rendering", () => {
-    before(() => {
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryChart/>);
-    });
-
     it("renders an svg with the correct width and height", () => {
+      const wrapper = shallow(
+        <VictoryChart/>
+      );
+      const svg = wrapper.find("svg");
+      expect(svg.prop("style").width).to.equal(VictoryChart.defaultProps.width);
+      expect(svg.prop("style").height).to.equal(VictoryChart.defaultProps.height);
+    });
+  });
 
-      const svg = getElement(renderedComponent, "svg");
-      // default width and height
-      expect(svg.style.width).to.equal(`${VictoryChart.defaultProps.width}px`);
-      expect(svg.style.height).to.equal(`${VictoryChart.defaultProps.height}px`);
+  describe("event handling", () => {
+    it("attaches an event to the parent object", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryChart events={{onClick: clickHandler}}/>
+      );
+      wrapper.find("svg").simulate("click");
+      expect(clickHandler.called).to.equal(true);
     });
   });
 });

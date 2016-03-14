@@ -1,81 +1,27 @@
 import React, { PropTypes } from "react";
-import { VictoryLabel, Helpers } from "victory-core";
+import { Helpers } from "victory-core";
 
 export default class Tick extends React.Component {
   static role = "tick";
 
   static propTypes = {
-    position: PropTypes.number,
+    index: PropTypes.number,
+    position: PropTypes.object,
     tick: PropTypes.any,
-    orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     style: PropTypes.object,
-    label: PropTypes.any
+    events: PropTypes.object
   };
 
-  getPosition(props, isVertical) {
-    const orientationSign = { top: -1, left: -1, right: 1, bottom: 1 };
-    const style = props.style.ticks;
-    const tickSpacing = style.size + style.padding;
-    const sign = orientationSign[props.orientation];
-    return {
-      x: isVertical ? sign * tickSpacing : 0,
-      x2: isVertical ? sign * style.size : 0,
-      y: isVertical ? 0 : sign * tickSpacing,
-      y2: isVertical ? 0 : sign * style.size
-    };
-  }
-
-  getAnchors(props, isVertical) {
-    const anchorOrientation = { top: "end", left: "end", right: "start", bottom: "start" };
-    const anchor = anchorOrientation[props.orientation];
-    return {
-      textAnchor: isVertical ? anchor : "middle",
-      verticalAnchor: isVertical ? "middle" : anchor
-    };
-  }
-
-  renderLabel(props, position, isVertical) {
-    if (!props.label) {
-      return undefined;
-    }
-    const componentProps = props.label.props ? props.label.props : {};
-    const style = componentProps.style || props.style.tickLabels;
-    const anchors = this.getAnchors(props, isVertical);
-    const newProps = {
-      x: position.x,
-      y: position.y,
-      textAnchor: componentProps.textAnchor || anchors.textAnchor,
-      verticalAnchor: componentProps.verticalAnchor || anchors.verticalAnchor,
-      style: Helpers.evaluateStyle(style, props.tick),
-      text: props.label
-    };
-    return props.label.props ?
-      React.cloneElement(props.label, newProps) :
-      React.createElement(VictoryLabel, newProps);
-  }
-
-  renderTick(props, position) {
+  render() {
+    const style = Helpers.evaluateStyle(this.props.style, this.props.tick);
+    const events = Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
     return (
       <line
-        x={position.x}
-        x2={position.x2}
-        y={position.y}
-        y2={position.y2}
-        style={Helpers.evaluateStyle(props.style.ticks, props.ticks)}
+        {...events}
+        x2={this.props.position.x2}
+        y2={this.props.position.y2}
+        style={style}
       />
-    );
-  }
-
-  render() {
-    const isVertical = this.props.orientation === "left" || this.props.orientation === "right";
-    const transform = isVertical ?
-      `translate(0, ${this.props.position})` : `translate(${this.props.position}, 0)`;
-    const position = this.getPosition(this.props, isVertical);
-    return (
-      <g transform={transform}>
-        {this.renderTick(this.props, position)}
-        {this.renderLabel(this.props, position, isVertical)}
-      </g>
     );
   }
 }

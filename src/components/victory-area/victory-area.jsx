@@ -1,7 +1,7 @@
-import pick from "lodash/object/pick";
-import last from "lodash/array/last";
-import defaults from "lodash/object/defaults";
-import omit from "lodash/object/omit";
+import pick from "lodash/pick";
+import last from "lodash/last";
+import defaults from "lodash/defaults";
+import omit from "lodash/omit";
 
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
@@ -83,6 +83,26 @@ export default class VictoryArea extends React.Component {
         y: CustomPropTypes.domain
       })
     ]),
+    /**
+     * The events prop attaches arbitrary event handlers to data and label elements
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryArea
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryArea
+     * if one exists. If VictoryArea is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
+     * @examples {data: {
+     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *}}
+     */
+    events: PropTypes.shape({
+      data: PropTypes.object,
+      labels: PropTypes.object,
+      parent: PropTypes.object
+    }),
     /**
      * The height props specifies the height of the chart container element in pixels
      */
@@ -224,6 +244,7 @@ export default class VictoryArea extends React.Component {
 
   static defaultProps = {
     colorScale: "greyscale",
+    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -239,6 +260,10 @@ export default class VictoryArea extends React.Component {
   static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
 
   componentWillMount() {
+    this.state = {
+      dataState: {},
+      labelsState: {}
+    };
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
       getStyles: lruMemoize(1, true)(Helpers.getStyles)
@@ -251,12 +276,16 @@ export default class VictoryArea extends React.Component {
       const baseStyle = calculatedProps.style;
       const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
       const dataWithBaseline = AreaHelpers.getBaseline(datasets, calculatedProps, index);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       const areaComponent = (
         <Area key={`area-${index}`}
+          index={index}
           scale={scale}
           style={style}
+          events={getBoundEvents(this.props.events.data, "data")}
           interpolation={dataset.attrs.interpolation || this.props.interpolation}
           data={dataWithBaseline}
+          {...this.state.dataState[index]}
         />
       );
       const label = this.props.labels && this.props.labels[index];
@@ -269,11 +298,14 @@ export default class VictoryArea extends React.Component {
           <g key={`area-group-${index}`}>
             {areaComponent}
             <AreaLabel key={`area-label-${index}`}
+              index={index}
               style={baseStyle.labels}
               data={dataset.data}
+              events={getBoundEvents(this.props.events.labels, "labels")}
               position={position}
               labelText={label}
               labelComponent={this.props.labelComponent}
+              {...this.state.labelsState[index]}
             />
           </g>
         );
@@ -324,6 +356,8 @@ export default class VictoryArea extends React.Component {
     const style = this.memoized.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

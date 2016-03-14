@@ -1,5 +1,6 @@
 /*global window:false */
 import React from "react";
+import ReactDOM from "react-dom";
 import _ from "lodash";
 import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
@@ -50,6 +51,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      hoverStyle: {fill: "gold"},
       data: props.data
     };
   }
@@ -127,7 +129,7 @@ export default class App extends React.Component {
         </svg>
 
         <VictoryScatter
-          style={style}
+          style={{parent: style.parent, data: this.state.hoverStyle}}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},
@@ -138,6 +140,33 @@ export default class App extends React.Component {
             {x: new Date(2011, 1, 1), y: 270},
             {x: new Date(2015, 1, 1), y: 470}
           ]}
+          symbol={"star"}
+          size={8}
+          events={{data: {
+            onMouseOver: (evt, data, index) => {
+              this.setState({
+                labelsState: _.assign(
+                  {}, this.state.labelsState, {[index] : {style: {stroke: "blue"}, label: "WHAAAAT"}}
+                )
+              })
+              return {
+                symbol: "circle",
+                style: {
+                  fill: "gold",
+                  stroke: "orange",
+                  strokeWidth: 3
+                }
+              }
+            },
+            onMouseOut: (evt, data) => {
+              return {
+                symbol: "star",
+                style: {
+                  fill: "gold",
+                }
+              }
+            }
+          }}}
         />
 
         <VictoryScatter
@@ -154,7 +183,7 @@ export default class App extends React.Component {
 
         <VictoryScatter
           data={_.range(0, 200).map((i) => {
-            return {a: {b: [{y: i * Math.sin(i * .3)}], x: Math.cos(i * .3)}};
+            return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}
           x="a.x"
           y="a.b[0]y"

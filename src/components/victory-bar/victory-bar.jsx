@@ -1,4 +1,5 @@
-import pick from "lodash/object/pick";
+import pick from "lodash/pick";
+import get from "lodash/get";
 import lruMemoize from "lru-memoize";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
@@ -114,6 +115,26 @@ export default class VictoryBar extends React.Component {
       }),
       CustomPropTypes.nonNegative
     ]),
+    /**
+     * The events prop attaches arbitrary event handlers to data and label elements
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryBar
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryBar
+     * if one exists. If VictoryBar is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
+     * @examples {data: {
+     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *}}
+     */
+    events: PropTypes.shape({
+      data: PropTypes.object,
+      labels: PropTypes.object,
+      parent: PropTypes.object
+    }),
     /**
      * The grouped prop determines whether the chart should consist of sets of grouped bars.
      * When this prop is set to true, the data prop *must* be an array of multiple data series
@@ -243,8 +264,9 @@ export default class VictoryBar extends React.Component {
   };
 
   static defaultProps = {
-    data: defaultData,
     colorScale: "greyscale",
+    data: defaultData,
+    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -258,6 +280,10 @@ export default class VictoryBar extends React.Component {
   static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
 
   componentWillMount() {
+    this.state = {
+      dataState: {},
+      labelsState: {}
+    };
     this.memoized = {
       // Provide performant, multiple-argument memoization with LRU cache-size of 1.
       getStyles: lruMemoize(1, true)(Helpers.getStyles)
@@ -270,12 +296,16 @@ export default class VictoryBar extends React.Component {
       const position = BarHelpers.getBarPosition(datum, index, calculatedProps);
       const baseStyle = calculatedProps.style;
       const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       const barComponent = (
         <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
           style={style}
+          index={index}
           position={position}
           datum={datum}
+          events={getBoundEvents(this.props.events.data, "data")}
+          {...get(this.state.dataState, [seriesIndex, barIndex], undefined)}
         />
       );
       const shouldPlotLabel = BarHelpers.shouldPlotLabel(
@@ -291,10 +321,13 @@ export default class VictoryBar extends React.Component {
             <BarLabel key={`label-series-${index}-bar-${barIndex}`}
               horizontal={this.props.horizontal}
               style={baseStyle.labels}
+              index={index}
               position={position}
               datum={datum}
               labelText={datum.label || labelText}
               labelComponent={this.props.labelComponent}
+              events={getBoundEvents(this.props.events.labels, "labels")}
+              {...get(this.state.labelsState, [seriesIndex, barIndex], undefined)}
             />
           </g>
         );
@@ -362,6 +395,8 @@ export default class VictoryBar extends React.Component {
     const style = this.memoized.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

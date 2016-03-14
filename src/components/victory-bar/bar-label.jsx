@@ -1,14 +1,17 @@
-import defaults from "lodash/object/defaults";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
 
 export default class BarLabel extends React.Component {
 
   static propTypes = {
+    events: PropTypes.object,
     position: PropTypes.object,
     horizontal: PropTypes.bool,
     style: PropTypes.object,
     datum: PropTypes.object,
+    index: PropTypes.object,
     labelText: PropTypes.string,
     labelComponent: PropTypes.any
   };
@@ -37,11 +40,16 @@ export default class BarLabel extends React.Component {
 
   renderLabelComponent(props, position, anchors) {
     const component = props.labelComponent;
-    const baseStyle = defaults({padding: 0}, component.props.style, props.style);
+    const baseStyle = defaults({}, component.props.style, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
     const labelText = props.labelText || props.datum.label;
-    const newProps = {
+    const index = [props.index.seriesIndex, props.index.barIndex];
+    const baseEvents = component && component.props.events ?
+      defaults({}, component.props.events, props.events) : props.events;
+    const events = Helpers.getPartialEvents(baseEvents, index, props);
+    const newProps = assign({}, events, {
+      index: [props.index.seriesIndex, props.index.barIndex],
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
       data: props.datum, // Pass data for custom label component to access - todo: rename to datum
@@ -49,23 +57,27 @@ export default class BarLabel extends React.Component {
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
       style
-    };
+    });
     return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props, position, anchors) {
-    const baseStyle = defaults({padding: 0}, props.style);
+    const baseStyle = defaults({}, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
+    const index = [props.index.seriesIndex, props.index.barIndex];
+    const events = Helpers.getPartialEvents(props.events, index, props);
     return (
       <VictoryLabel
         x={position.x + padding.x}
         y={position.y - padding.y}
         data={props.datum}
+        index={[props.index.seriesIndex, props.index.barIndex]}
         textAnchor={anchors.text}
         verticalAnchor={anchors.vertical}
         style={style}
         text={props.labelText}
+        {...events}
       />
     );
   }

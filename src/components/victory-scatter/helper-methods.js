@@ -1,5 +1,4 @@
-import values from "lodash/object/values";
-import pathHelpers from "./path-helpers";
+import values from "lodash/values";
 import { Helpers } from "victory-core";
 
 export default {
@@ -36,20 +35,5 @@ export default {
     } else {
       return Math.max(props.size, 1);
     }
-  },
-
-  getPath(props) {
-    const pathFunctions = {
-      circle: pathHelpers.circle,
-      square: pathHelpers.square,
-      diamond: pathHelpers.diamond,
-      triangleDown: pathHelpers.triangleDown,
-      triangleUp: pathHelpers.triangleUp,
-      plus: pathHelpers.plus,
-      star: pathHelpers.star
-    };
-    const size = Helpers.evaluateProp(props.size, props.data);
-    const symbol = Helpers.evaluateProp(props.symbol, props.data);
-    return pathFunctions[symbol].call(null, props.x, props.y, size);
   }
 };

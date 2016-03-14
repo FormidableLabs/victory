@@ -1,6 +1,6 @@
-import flatten from "lodash/array/flatten";
-import includes from "lodash/collection/includes";
-import isFunction from "lodash/lang/isFunction";
+import flatten from "lodash/flatten";
+import includes from "lodash/includes";
+import isFunction from "lodash/isFunction";
 import { Collection, Helpers } from "victory-core";
 import d3Scale from "d3-scale";
 

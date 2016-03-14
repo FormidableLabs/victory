@@ -1,47 +1,48 @@
 import defaults from "lodash/defaults";
 import assign from "lodash/assign";
 import React, { PropTypes } from "react";
-import { VictoryLabel, Helpers} from "victory-core";
+import { VictoryLabel, Helpers } from "victory-core";
 
-export default class LineLabel extends React.Component {
+export default class AxisLabel extends React.Component {
   static propTypes = {
-    data: PropTypes.array,
     events: PropTypes.object,
     label: PropTypes.any,
     position: PropTypes.object,
+    verticalAnchor: PropTypes.string,
+    transform: PropTypes.string,
     style: PropTypes.object
   };
 
   renderLabelComponent(props) {
     const component = props.label;
-    const baseStyle = defaults({}, component.props.style, props.style, {padding: 0});
-    const style = Helpers.evaluateStyle(baseStyle, props.data);
+    const style = defaults({}, component.props.style, props.style);
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, 0, props);
     const newProps = assign({}, events, {
-      x: component.props.x || props.position.x + style.padding,
-      y: component.props.y || props.position.y - style.padding,
-      data: props.data,
+      x: component.props.x || props.position.x,
+      y: component.props.y || props.position.y,
       text: component.props.text,
-      textAnchor: component.props.textAnchor || "start",
-      verticalAnchor: component.props.verticalAnchor || "middle",
+      textAnchor: component.props.textAnchor || "middle",
+      verticalAnchor: component.props.verticalAnchor || props.verticalAnchor,
+      transform: component.props.transform || props.transform,
       style
     });
     return React.cloneElement(component, newProps);
   }
 
   renderVictoryLabel(props) {
-    const style = Helpers.evaluateStyle(defaults({}, props.style), props.data, {padding: 0});
     const events = Helpers.getPartialEvents(this.props.events, 0, this.props);
+    const text = typeof props.label === "string" ? props.label : null;
     return (
       <VictoryLabel
-        x={props.position.x + style.padding}
-        y={props.position.y - style.padding}
-        textAnchor={"start"}
-        verticalAnchor={"middle"}
-        style={style}
-        text={props.label}
+        x={props.position.x}
+        y={props.position.y}
+        textAnchor={"middle"}
+        verticalAnchor={props.verticalAnchor}
+        transform={props.transform}
+        style={props.style}
+        text={text}
         {...events}
       />
     );
