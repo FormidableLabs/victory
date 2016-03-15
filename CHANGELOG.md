@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 1.2.1 (2016-03-15)
+
+- Upgrades to builder 2.9.1 for lodash 4 support
+
 ## 1.2.0 (2016-03-11)
 
 - Adds event helper methods
