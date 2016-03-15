@@ -8,7 +8,6 @@ import BaseDocs from "./docs";
 import { components, headerText, routing as routingConfig } from "../config";
 import Sidebar from "./sidebar";
 
-@Radium
 class ComponentDocs extends BaseDocs {
 
   componentWillMount() {
@@ -46,4 +45,4 @@ ComponentDocs.propTypes = {
   })
 };
 
-export default ComponentDocs;
+export default Radium(ComponentDocs);

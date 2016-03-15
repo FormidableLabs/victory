@@ -39,7 +39,11 @@ module.exports = {
             absPath.indexOf("node_modules/victory") === -1 ||
             absPath.indexOf("formidable-landers") > -1;
         },
-        loaders: ["babel-loader?stage=0"]
+        loader: require.resolve("babel-loader"),
+        query: {
+          "presets": ["es2015", "stage-1", "react"],
+          babelrc: false
+        }
       }, {
         test: /\.(png|jpg)$/,
         loader: "url-loader?limit=8192"

@@ -25,7 +25,7 @@ if (typeof document !== "undefined") {
   Router.run(rootEl);
 }
 
-module.exports = (locals, next) => {
+const entry = (locals, next) => {
   const source = JSON.parse(locals.webpackStats.compilation.assets["stats.json"].source());
   const bundle = source.assetsByChunkName.main;
 
@@ -41,3 +41,5 @@ module.exports = (locals, next) => {
     next(null, html);
   });
 };
+
+export { entry }
