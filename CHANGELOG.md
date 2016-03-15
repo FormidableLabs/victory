@@ -1,6 +1,6 @@
 # VictoryLine Changelog
 
-## 6.0.2 (2016-03-14)
+## 6.0.0 (2016-03-14)
 
 - Add VictoryArea component
 - Add event handling via an `events` prop
