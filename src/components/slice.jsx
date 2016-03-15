@@ -9,6 +9,7 @@ export default class Slice extends React.Component {
     slice: PropTypes.object,
     pathFunction: PropTypes.func,
     style: PropTypes.object,
+    datum: PropTypes.object,
     events: PropTypes.object
   };
 

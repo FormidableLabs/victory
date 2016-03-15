@@ -10,6 +10,7 @@ export default class SliceLabel extends React.Component {
     positionFunction: PropTypes.func,
     slice: PropTypes.object,
     style: PropTypes.object,
+    datum: PropTypes.object,
     events: PropTypes.object
   };
 
@@ -25,7 +26,7 @@ export default class SliceLabel extends React.Component {
     const newProps = assign({}, events, {
       x: component.props.x || position[0],
       y: component.props.y || position[1],
-      data: props.slice.data, // Pass data for custom label component to access
+      datum: props.datum, // Pass data for custom label component to access
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
       text: component.props.text || label,
@@ -37,14 +38,14 @@ export default class SliceLabel extends React.Component {
   renderVictoryLabel(props, position, label) {
     const style = Helpers.evaluateStyle(
       assign({padding: 0}, props.style),
-      props.slice.data
+      props.datum
     );
     const events = Helpers.getPartialEvents(props.events, props.index, props);
     return (
       <VictoryLabel
         x={position[0]}
         y={position[1]}
-        datum={props.slice.data}
+        datum={props.datum}
         style={style}
         text={label}
         {...events}
@@ -54,10 +55,9 @@ export default class SliceLabel extends React.Component {
 
   renderLabel(props) {
     const position = props.positionFunction(props.slice);
-    const data = props.slice.data;
-    const dataLabel = data.xName ? `${data.xName}` : `${data.x}`;
-    const label = data.label ?
-    `${Helpers.evaluateProp(data.label, data)}` : dataLabel;
+    const dataLabel = props.datum.xName ? `${props.datum.xName}` : `${props.datum.x}`;
+    const label = props.datum.label ?
+    `${Helpers.evaluateProp(props.datum.label, props.datum)}` : dataLabel;
     return props.labels && props.labels.props ?
       this.renderLabelComponent(props, position, label) :
       this.renderVictoryLabel(props, position, label);
