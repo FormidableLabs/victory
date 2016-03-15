@@ -5,7 +5,7 @@ import { VictoryLabel, Helpers } from "victory-core";
 
 export default class PointLabel extends React.Component {
   static propTypes = {
-    data: PropTypes.object,
+    datum: PropTypes.object,
     index: React.PropTypes.number,
     events: PropTypes.object,
     labelComponent: React.PropTypes.element,
@@ -15,14 +15,14 @@ export default class PointLabel extends React.Component {
   };
 
   renderLabel(props) {
-    if (props.showLabels === false || !props.data.label) {
+    if (props.showLabels === false || !props.datum.label) {
       return undefined;
     }
     const component = props.labelComponent;
     const componentStyle = component && component.props.style || {};
     const baseStyle = defaults({}, componentStyle, props.style);
-    const labelStyle = Helpers.evaluateStyle(baseStyle, props.data);
-    const labelText = component && component.props.text || props.data.label;
+    const labelStyle = Helpers.evaluateStyle(baseStyle, props.datum);
+    const labelText = component && component.props.text || props.datum.label;
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, props.index, props);
@@ -30,7 +30,7 @@ export default class PointLabel extends React.Component {
       x: component && component.props.x || props.x,
       y: component && component.props.y || props.y - labelStyle.padding,
       dy: component && component.props.dy,
-      data: props.data,
+      datum: props.datum,
       text: labelText,
       textAnchor: component && component.props.textAnchor || labelStyle.textAnchor,
       verticalAnchor: component && component.props.verticalAnchor || "end",

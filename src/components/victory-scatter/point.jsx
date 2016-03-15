@@ -6,7 +6,7 @@ import pathHelpers from "./path-helpers";
 export default class Point extends React.Component {
   static propTypes = {
     index: React.PropTypes.number,
-    data: PropTypes.object,
+    datum: PropTypes.object,
     events: PropTypes.object,
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
@@ -33,7 +33,7 @@ export default class Point extends React.Component {
       plus: pathHelpers.plus,
       star: pathHelpers.star
     };
-    const symbol = Helpers.evaluateProp(props.symbol, props.data);
+    const symbol = Helpers.evaluateProp(props.symbol, props.datum);
     return pathFunctions[symbol].call(null, props.x, props.y, props.size);
   }
 
