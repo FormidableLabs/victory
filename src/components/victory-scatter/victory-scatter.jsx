@@ -74,7 +74,7 @@ export default class VictoryScatter extends React.Component {
      * and their index in the data array, and event name. The return value of event handlers
      * will be stored by unique index on the state object of VictoryScatter
      * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
-     * applied to by index to the appropriate child component. Event props on the
+     * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryScatter
      * if one exists. If VictoryScatter is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
@@ -253,15 +253,15 @@ export default class VictoryScatter extends React.Component {
     return Helpers.evaluateStyle(baseDataStyle, data);
   }
 
-  renderPoint(data, index, calculatedProps) {
+  renderPoint(datum, index, calculatedProps) {
     const { style } = calculatedProps;
     const position = {
-      x: calculatedProps.scale.x.call(null, data.x),
-      y: calculatedProps.scale.y.call(null, data.y)
+      x: calculatedProps.scale.x.call(null, datum.x),
+      y: calculatedProps.scale.y.call(null, datum.y)
     };
-    const dataStyle = this.getDataStyles(data, style.data);
-    const baseSize = ScatterHelpers.getSize(data, this.props, calculatedProps);
-    const size = Helpers.evaluateProp(baseSize, data);
+    const dataStyle = this.getDataStyles(datum, style.data);
+    const baseSize = ScatterHelpers.getSize(datum, this.props, calculatedProps);
+    const size = Helpers.evaluateProp(baseSize, datum);
     const getBoundEvents = Helpers.getEvents.bind(this);
     const pointComponent = (
       <Point
@@ -270,18 +270,18 @@ export default class VictoryScatter extends React.Component {
         style={dataStyle}
         x={position.x}
         y={position.y}
-        data={data}
+        datum={datum}
         size={size}
-        symbol={ScatterHelpers.getSymbol(data, this.props)}
+        symbol={ScatterHelpers.getSymbol(datum, this.props)}
         events={getBoundEvents(this.props.events.data, "data")}
         {...this.state.dataState[index]}
       />
     );
-    if (data.label && this.props.showLabels) {
+    if (datum.label && this.props.showLabels) {
       const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
       const padding = style.labels.padding || size * 0.25;
       const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});
-      const labelStyle = Helpers.evaluateStyle(baseLabelStyle, data);
+      const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
       return (
         <g key={`point-group-${index}`}>
           {pointComponent}
@@ -291,7 +291,7 @@ export default class VictoryScatter extends React.Component {
             events={getBoundEvents(this.props.events.labels, "labels")}
             x={position.x}
             y={position.y}
-            data={data}
+            datum={datum}
             labelComponent={this.props.labelComponent}
             {...this.state.labelsState[index]}
           />

@@ -38,6 +38,7 @@ export default class AreaLabel extends React.Component {
       <VictoryLabel
         x={props.position.x + style.padding}
         y={props.position.y - style.padding}
+        data={props.data}
         textAnchor={"start"}
         verticalAnchor={"middle"}
         style={style}

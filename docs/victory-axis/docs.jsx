@@ -6,7 +6,6 @@ import * as docgen from "react-docgen";
 import { VictoryAxis } from "../../src/index";
 import { VictoryTheme } from 'formidable-landers';
 
-@Radium
 class Docs extends React.Component {
   render() {
     return (
@@ -22,4 +21,4 @@ class Docs extends React.Component {
   }
 }
 
-export default Docs;
+export default Radium(Docs);

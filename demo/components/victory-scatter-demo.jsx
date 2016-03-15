@@ -73,7 +73,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryScatter</h1>
-
         <VictoryScatter
           style={style}
           width={500}
@@ -159,12 +158,7 @@ export default class App extends React.Component {
               }
             },
             onMouseOut: (evt, data) => {
-              return {
-                symbol: "star",
-                style: {
-                  fill: "gold",
-                }
-              }
+              return null;
             }
           }}}
         />

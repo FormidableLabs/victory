@@ -141,11 +141,7 @@ export default class App extends React.Component {
               }
             },
             onMouseOut: () => {
-              return {
-                style: {
-                  fill: "gold",
-                }
-              }
+              return null
             }
           }}}
         />
@@ -181,6 +177,10 @@ export default class App extends React.Component {
         />
 
       <VictoryArea
+        style={{
+          parent: {border: "1px solid black", margin: "5px"},
+          data: {opacity: 0.4}
+        }}
         y={[
           (data) => Math.sin(data.x),
           (data) => Math.cos(data.x)

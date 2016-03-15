@@ -102,7 +102,8 @@ export default class VictoryLine extends React.Component {
       "catmullRomOpen",
       "linear",
       "linearClosed",
-      "monotone",
+      "monotoneX",
+      "monotoneY",
       "natural",
       "radial",
       "step",
@@ -267,6 +268,7 @@ export default class VictoryLine extends React.Component {
       return (
         <LineSegment
           key={`line-segment-${index}`}
+          index={index}
           events={getBoundEvents(this.props.events.data, "data")}
           data={segment}
           interpolation={this.props.interpolation}

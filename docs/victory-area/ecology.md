@@ -20,8 +20,10 @@ To display your own data, just pass in an array of data objects, or an array of 
     {x: 1, y: 1},
     {x: 2, y: 2},
     {x: 3, y: 3},
-    {x: 4, y: 2},
-    {x: 5, y: 1}
+    {x: 4, y: 1},
+    {x: 5, y: 3},
+    {x: 6, y: 4},
+    {x: 7, y: 2}
   ]}
 />
 ```
@@ -48,7 +50,7 @@ Pass in an array of arrays of data objects to create a set of overlapping areas.
 ```playground
 <VictoryArea
   height={500}
-  style={{data: {fillOpacity: 0.3}}}
+  style={{data: {opacity: 0.3}}}
   data={[
     [
       {x: 1, y: 1},
@@ -103,8 +105,11 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
   height={500}
   padding={75}
   style={{
-    data: {strokeWidth: 2, fillOpacity: 0.4},
-    labels: {fontSize: 14}
+    data: {
+      strokeDasharray: "5,5",
+      strokeWidth: 2,
+      fillOpacity: 0.4
+    }
   }}
   data={[
     [
@@ -126,8 +131,49 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
   dataAttributes={[
     {fill: "tomato", stroke: "tomato"},
     {fill: "orange", stroke: "orange"},
-    {fill: "cornflowerblue", stroke: "cornflowerblue"},
+    {fill: "gold", stroke: "gold"},
   ]}
+/>
+```
+
+### Events
+
+Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
+Event handlers on data and labels components are called with the event object, the props
+corresponding to that component, and the index of that component. Values returned from
+event handlers on data or labels will be stored as state on VictoryArea. Data and labels
+state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+
+```playground
+<VictoryArea stacked
+  height={500}
+  padding={75}
+  data={[
+    [
+      {x: 1, y: 1},
+      {x: 2, y: 2},
+      {x: 3, y: 3}
+    ],
+    [
+      {x: 1, y: 2},
+      {x: 2, y: 1},
+      {x: 3, y: 1}
+    ],
+    [
+      {x: 1, y: 3},
+      {x: 2, y: 4},
+      {x: 3, y: 2}
+    ],
+  ]}
+  colorScale={"warm"}
+  events={{
+    data: {
+      onMouseOver: () => {
+        return {style: {fill: "orange"}}
+      },
+      onMouseOut: () => null
+    }
+  }}
 />
 ```
 
@@ -150,7 +196,9 @@ class App extends React.Component {
       return [
         {x: "apples", y: _.random(1, 5)},
         {x: "oranges", y: _.random(1, 5)},
-        {x: "bananas", y: _.random(1, 5)}
+        {x: "bananas", y: _.random(1, 5)},
+        {x: "peaches", y: _.random(1, 5)},
+        {x: "pears", y: _.random(1, 5)}
       ];
     });
   }
@@ -160,7 +208,7 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 3000);
+    }, 2000);
   }
 
   render() {
@@ -169,13 +217,10 @@ class App extends React.Component {
         stacked
         height={600}
         padding={75}
-        domain={{
-          x: [1, 3],
-          y: [0, 5]
-        }}
-        animate={{velocity: 0.02}}
+        animate={{duration: 2000}}
         data={this.state.data}
         dataAttributes={[
+          {fill: "black"},
           {fill: "cornflowerblue"},
           {fill: "tomato"},
           {fill: "orange"},

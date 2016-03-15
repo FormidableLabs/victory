@@ -161,6 +161,13 @@ export default class App extends React.Component {
               ]
             ]}
             colorScale="warm"
+            events={{
+              data: {
+                onClick: () => {
+                  return {style: {fill: "cyan"}}
+                }
+              }
+            }}
           />
         </ChartWrap>
       </div>
