@@ -74,6 +74,31 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryScatter</h1>
 
+          <VictoryScatter
+              data={[
+                {
+                  x: 1, y: 3, fill: "red",
+                  symbol: "plus", size: 6
+                },
+                {
+                  x: 2, y: 5, fill: "magenta",
+                  size: 9, opacity: 0.4
+                },
+                {
+                  x: 3, y: 4, fill: "orange",
+                  size: 5, label: "LABEL"
+                },
+                {
+                  x: 4, y: 2, fill: "brown",
+                  symbol: "square", size: 6
+                },
+                {
+                  x: 5, y: 5, fill: "black",
+                  symbol: "triangleUp", size: 5
+                }
+              ]}
+           />
+
         <VictoryScatter
           style={style}
           width={500}

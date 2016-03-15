@@ -44,7 +44,7 @@ export default class Area extends React.Component {
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
-      .y((data) => yScale(data.y));
+      .y((data) => yScale(data.y0 + data.y));
     const path = lineFunction(this.props.data);
     return (
       <path style={lineStyle} d={path} {...events}/>

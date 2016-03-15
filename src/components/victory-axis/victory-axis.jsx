@@ -103,7 +103,7 @@ export default class VictoryAxis extends React.Component {
      * and their index in the data array, and event name. The return value of event handlers
      * will be stored by unique index on the state object of VictoryAxis
      * i.e. `this.state.axisState[axisIndex] = {style: {fill: "red"}...}`, and will be
-     * applied to by index to the appropriate child component. Event props on the
+     * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryAxis
      * if one exists. If VictoryAxis is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.

@@ -22,7 +22,7 @@ export default class PointLabel extends React.Component {
     const componentStyle = component && component.props.style || {};
     const baseStyle = defaults({}, componentStyle, props.style);
     const labelStyle = Helpers.evaluateStyle(baseStyle, props.data);
-    const labelText = component.props.text || props.data.label;
+    const labelText = component && component.props.text || props.data.label;
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, props.index, props);

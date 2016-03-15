@@ -40,7 +40,7 @@ export default class Bar extends React.Component {
   render() {
     const style = Helpers.evaluateStyle(this.props.style, this.props.datum);
     // TODO better bar width calculation
-    const barWidth = style.width;
+    const barWidth = style.width || 8;
     const path = this.props.position.independent ?
       this.getBarPath(this.props.position, barWidth) : undefined;
     const index = [this.props.index.seriesIndex, this.props.index.barIndex];
