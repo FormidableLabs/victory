@@ -1,5 +1,13 @@
 # VictoryPie Changelog
 
+## 2.0.0 (2016-03-15)
+
+- Add event handling via an `events` prop
+- Update to lodash 4
+- Update `d3-shape` to the latest version
+- Updates via `builder-victory-component` to support Babel 6
+- Provide label text via a `text` prop rather than children
+
 ## 1.1.0 (2016-03-01)
 
 - Move Radium to devDependencies
