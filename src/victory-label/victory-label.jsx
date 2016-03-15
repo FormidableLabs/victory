@@ -26,10 +26,15 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func
     ]),
     /**
-     * all Victory components will pass a datum prop to their label component. This can
+     * Victory components can pass a datum prop to their label component. This can
      * be used to calculate functional styles, and determine child text
      */
     datum: PropTypes.object,
+    /**
+     * Labels that apply to an entire data series will recieve the entire series
+     * as `data` instead of an individual datum prop.
+     */
+    data: PropTypes.array,
     /**
      * The events prop attaches arbitrary event handlers to the label component.
      * Event handlers are currently only called with their corresponding events.
@@ -146,29 +151,33 @@ export default class VictoryLabel extends React.Component {
 
   getStyles(props) {
     const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
-    return Helpers.evaluateStyle(style);
+    const datum = props.datum || props.data;
+    return Helpers.evaluateStyle(style, datum);
   }
 
   getHeight(props, type) {
-    const height = Helpers.evaluateProp(props[type]);
+    const datum = props.datum || props.data;
+    const height = Helpers.evaluateProp(props[type], datum);
     return typeof height === "number" ? `${height}em` : height;
   }
 
   getContent(props) {
     const text = props.text || props.children;
     if (text) {
-      const child = Helpers.evaluateProp(text);
+      const datum = props.datum || props.data;
+      const child = Helpers.evaluateProp(text, datum);
       return `${child}`.split("\n");
     }
     return [""];
   }
 
   getDy(props, content, lineHeight) {
-    const dy = props.dy ? Helpers.evaluateProp(props.dy) : 0;
+    const datum = props.datum || props.data;
+    const dy = props.dy ? Helpers.evaluateProp(props.dy, datum) : 0;
     const length = content.length;
     const capHeight = this.getHeight(props, "capHeight");
     const verticalAnchor = props.verticalAnchor ?
-      Helpers.evaluateProp(props.verticalAnchor) : "middle";
+      Helpers.evaluateProp(props.verticalAnchor, datum) : "middle";
     switch (verticalAnchor) {
     case "end":
       return Style.calc(
@@ -184,14 +193,15 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
+    const datum = this.props.datum || this.props.data;
     const lineHeight = this.getHeight(this.props, "lineHeight");
-    const transform =
-      this.props.transform && Style.toTransformString(Helpers.evaluateProp(this.props.transform));
+    const transform = this.props.transform &&
+      Style.toTransformString(Helpers.evaluateProp(this.props.transform, datum));
     const textAnchor = this.props.textAnchor ?
-      Helpers.evaluateProp(this.props.textAnchor) : "start";
+      Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
     const content = this.getContent(this.props);
     const style = this.getStyles(this.props);
-    const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx) : 0;
+    const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
     const dy = this.getDy(this.props, content, lineHeight);
     return (
       <text
