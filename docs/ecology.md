@@ -151,6 +151,34 @@ Functional styles allow elements to determine their own styles based on data
 />
 ```
 
+### Events
+
+Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
+Event handlers on data and labels components are called with the event object, the props
+corresponding to that component, and the index of that component. Values returned from
+event handlers on data or labels will be stored as state on VictoryPie. Data and labels
+state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+
+``` playground
+  <VictoryPie
+    data={[
+      {x: "Cat", y: 62},
+      {x: "Dog", y: 91},
+      {x: "Fish", y: 55},
+      {x: "Bird", y: 55},
+    ]}
+    events={{
+      data: {
+        onClick: (evt, props) => {
+          const fill = props.style.fill;
+          return fill === "pink" ?
+            null : {style: {fill: "pink"}};
+        }
+      }
+    }}
+  />
+```
+
 ### Animating
 
 VictoryPie animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
