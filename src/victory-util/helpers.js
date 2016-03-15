@@ -3,7 +3,7 @@ import isFunction from "lodash/isFunction";
 import property from "lodash/property";
 import partial from "lodash/partial";
 import set from "lodash/set";
-import assign from "lodash/assign";
+import merge from "lodash/merge";
 
 
 export default {
@@ -154,7 +154,7 @@ export default {
     const onEvent = (evt, childProps, index, eventName) => {
       if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
         this.setState({
-          [stateName]: assign(
+          [stateName]: merge(
             {},
             this.state[stateName],
             set({}, index, this.props.events[namespace][eventName](evt, childProps, index))
