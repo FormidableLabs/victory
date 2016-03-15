@@ -1,5 +1,14 @@
 # VictoryLine Changelog
 
+## 6.0.2 (2016-03-14)
+
+- Add VictoryArea component
+- Add event handling via an `events` prop
+- Update to lodash 4
+- Update `d3-shape` to the latest version (minor breaking changes on interpolation types)
+- Updates via `builder-victory-component` to support Babel 6
+- Provide label text via a `text` prop rather than children
+
 ## 5.0.2 (2016-03-04)
 
 - Add validation of length for `dataAttributes` prop
