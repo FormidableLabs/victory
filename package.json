@@ -27,17 +27,17 @@
   },
   "dependencies": {
     "builder": "2.9.1",
-    "builder-victory-component": "^1.0.5",
+    "builder-victory-component": "^1.0.6",
     "victory-chart": "6.0.1",
     "victory-core": "1.2.2",
     "victory-pie": "2.0.1"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^1.0.5",
+    "builder-victory-component-dev": "^1.0.6",
     "chai": "^3.2.0",
     "ecology": "^1.2.0",
     "file-loader": "^0.8.5",
-    "formidable-landers": "^0.0.11",
+    "formidable-landers": "^0.1.0",
     "history": "~1.17.0",
     "lodash": "^4.6.1",
     "mocha": "^2.3.3",
