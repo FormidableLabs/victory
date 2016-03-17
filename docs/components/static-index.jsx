@@ -51,4 +51,4 @@ Index.propTypes = {
   content: React.PropTypes.string
 };
 
-module.exports = Index;
+export default Index;

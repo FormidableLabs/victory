@@ -7,7 +7,6 @@ import { VictorySettings } from "formidable-landers";
 
 const RadiumLink = Radium(Link);
 
-@Radium
 class Sidebar extends React.Component {
 
   getSidebarStyles() {
@@ -117,4 +116,4 @@ Sidebar.defaultProps = {
   active: null
 };
 
-export default Sidebar;
+export default Radium(Sidebar);

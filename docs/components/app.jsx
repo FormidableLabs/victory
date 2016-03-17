@@ -9,7 +9,6 @@ import { VictorySettings, VictoryTheme, Header, Footer} from "formidable-landers
 // Analytics
 import ga from "react-ga";
 
-@Radium
 class App extends React.Component {
   componentWillMount() {
     ga.pageview("/victory");
@@ -141,4 +140,4 @@ class App extends React.Component {
   /* eslint-enable max-len */
 }
 
-export default App;
+export default Radium(App);
