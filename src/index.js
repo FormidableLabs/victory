@@ -4,6 +4,7 @@ import {
 
 import {
   VictoryAxis,
+  VictoryArea,
   VictoryBar,
   VictoryChart,
   VictoryLine,
@@ -14,6 +15,7 @@ import {VictoryPie} from "victory-pie";
 export {
   VictoryAnimation,
   VictoryAxis,
+  VictoryArea,
   VictoryBar,
   VictoryChart,
   VictoryLine,
