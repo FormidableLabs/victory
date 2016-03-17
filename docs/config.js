@@ -20,6 +20,10 @@ const components = [
     slug: "victory-animation",
     docs: AnimationDocs
   }, {
+    text: "VictoryArea",
+    slug: "victory-area",
+    docs: AreaDocs
+  }, {
     text: "VictoryAxis",
     slug: "victory-axis",
     docs: AxisDocs
