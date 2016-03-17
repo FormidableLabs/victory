@@ -59,7 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.VictoryScatter = exports.VictoryPie = exports.VictoryLabel = exports.VictoryLine = exports.VictoryChart = exports.VictoryBar = exports.VictoryAxis = exports.VictoryAnimation = undefined;
+	exports.VictoryScatter = exports.VictoryPie = exports.VictoryLabel = exports.VictoryLine = exports.VictoryChart = exports.VictoryBar = exports.VictoryArea = exports.VictoryAxis = exports.VictoryAnimation = undefined;
 	
 	var _victoryCore = __webpack_require__(1);
 	
@@ -69,6 +69,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.VictoryAnimation = _victoryCore.VictoryAnimation;
 	exports.VictoryAxis = _victoryChart.VictoryAxis;
+	exports.VictoryArea = _victoryChart.VictoryArea;
 	exports.VictoryBar = _victoryChart.VictoryBar;
 	exports.VictoryChart = _victoryChart.VictoryChart;
 	exports.VictoryLine = _victoryChart.VictoryLine;
