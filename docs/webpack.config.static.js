@@ -20,6 +20,7 @@ var routes = [
   "/",
   "docs",
   "docs/victory-axis",
+  "docs/victory-area",
   "docs/victory-chart",
   "docs/victory-pie",
   "docs/victory-bar",
