@@ -22,7 +22,7 @@ chai.use(sinonChai);
 window.mocha.setup({
   ui: "bdd",
   bail: false,
-  timeout: 3000
+  timeout: 5000
 });
 
 // --------------------------------------------------------------------------
