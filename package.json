@@ -21,7 +21,7 @@
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
-    "builder-victory-component": "^1.0.3",
+    "builder-victory-component": "^2.0.0",
     "builder": "~2.9.1",
     "d3-shape": "^0.6.0",
     "lodash": "^4.6.1",
@@ -29,7 +29,7 @@
     "victory-core": "^1.2.2"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^1.0.3",
+    "builder-victory-component-dev": "^2.0.0",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
     "ecology": "^1.2.0",
