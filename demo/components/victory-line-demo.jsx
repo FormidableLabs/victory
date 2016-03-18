@@ -33,7 +33,7 @@ export default class App extends React.Component {
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
       stroke: colors[_.random(0, 5)],
-      strokeWidth: [_.random(1, 5)]
+      strokeWidth: _.random(1, 5)
     };
   }
 
