@@ -75,7 +75,7 @@ export default class App extends React.Component {
             scale="time"
             events={{
               axis: {
-                onClick: function() {
+                onClick: () => {
                   return {
                     style: {stroke: "red", strokeWidth: 4}
                   };

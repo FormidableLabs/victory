@@ -72,7 +72,7 @@ export default class App extends React.Component {
         <VictoryBar
           events={{data: {
             onClick: (evt) => {
-              this.setState({colorScale: evt.clientX < 370 ? "cool" : "warm"})
+              this.setState({colorScale: evt.clientX < 370 ? "cool" : "warm"});
             }
           }}}
           stacked
@@ -164,7 +164,7 @@ export default class App extends React.Component {
             events={{
               data: {
                 onClick: () => {
-                  return {style: {fill: "cyan"}}
+                  return {style: {fill: "cyan"}};
                 }
               }
             }}
