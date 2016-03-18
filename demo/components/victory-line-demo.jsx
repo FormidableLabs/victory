@@ -71,10 +71,13 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "red", strokeWidth: 6}}}
+          style={{
+            parent: {border: "1px solid black", margin: "5px"},
+            data: {stroke: "red", strokeWidth: 6}
+          }}
           events={{data: {
             onClick: (evt) => {
-              this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`})
+              this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
             }
           }}}
           label={this.state.label}

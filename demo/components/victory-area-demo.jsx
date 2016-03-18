@@ -2,7 +2,6 @@
 import React from "react";
 import _ from "lodash";
 import {VictoryArea} from "../../src/index";
-import {VictoryLabel} from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -57,7 +56,7 @@ export default class App extends React.Component {
   getStyles() {
     const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      fill: colors[_.random(0, 5)],
+      fill: colors[_.random(0, 5)]
     };
   }
 
@@ -138,10 +137,10 @@ export default class App extends React.Component {
                   stroke: "orange",
                   strokeWidth: 3
                 }
-              }
+              };
             },
             onMouseOut: () => {
-              return null
+              return null;
             }
           }}}
         />
