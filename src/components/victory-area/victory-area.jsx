@@ -11,7 +11,6 @@ import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory
 import Area from "./area";
 import AreaLabel from "./area-label";
 import AreaHelpers from "./helper-methods";
-import lruMemoize from "lru-memoize";
 
 const defaultStyles = {
   data: {
@@ -265,10 +264,6 @@ export default class VictoryArea extends React.Component {
       dataState: {},
       labelsState: {}
     };
-    this.memoized = {
-      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: lruMemoize(1, true)(Helpers.getStyles)
-    };
   }
 
   renderAreas(calculatedProps) {
@@ -354,7 +349,7 @@ export default class VictoryArea extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = this.memoized.getStyles(
+    const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?

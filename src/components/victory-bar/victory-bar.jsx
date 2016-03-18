@@ -1,6 +1,5 @@
 import pick from "lodash/pick";
 import get from "lodash/get";
-import lruMemoize from "lru-memoize";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 
@@ -284,10 +283,6 @@ export default class VictoryBar extends React.Component {
       dataState: {},
       labelsState: {}
     };
-    this.memoized = {
-      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: lruMemoize(1, true)(Helpers.getStyles)
-    };
   }
 
   renderBars(dataset, seriesIndex, calculatedProps) {
@@ -392,7 +387,7 @@ export default class VictoryBar extends React.Component {
       );
     }
 
-    const style = this.memoized.getStyles(
+    const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?

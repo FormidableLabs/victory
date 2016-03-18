@@ -9,7 +9,6 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 import ScatterHelpers from "./helper-methods";
-import lruMemoize from "lru-memoize";
 
 const defaultStyles = {
   data: {
@@ -239,10 +238,6 @@ export default class VictoryScatter extends React.Component {
       dataState: {},
       labelsState: {}
     };
-    this.memoized = {
-      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: lruMemoize(1, true)(Helpers.getStyles)
-    };
   }
 
   getDataStyles(data, style) {
@@ -341,7 +336,7 @@ export default class VictoryScatter extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = this.memoized.getStyles(
+    const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
