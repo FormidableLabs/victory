@@ -174,7 +174,7 @@ class App extends React.Component {
               }}
               events={{data: {
                 onClick: (evt) => {
-                  this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`})
+                  this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
                 }
               }}}
               label={this.state.label}
