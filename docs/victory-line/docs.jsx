@@ -8,7 +8,6 @@ import { VictoryLine } from "../../src/index";
 import { VictoryTheme } from "formidable-landers";
 import {parse as parseComponent} from "react-docgen";
 
-@Radium
 class Docs extends React.Component {
   render() {
     return (
@@ -24,4 +23,4 @@ class Docs extends React.Component {
   }
 }
 
-export default Docs;
+export default Radium(Docs);

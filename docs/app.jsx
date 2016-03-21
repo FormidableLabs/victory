@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Router, Route, Link } from "react-router";
+import AreaDocs from "./victory-area/docs";
 import AxisDocs from "./victory-axis/docs";
 import BarDocs from "./victory-bar/docs";
 import ChartDocs from "./victory-chart/docs";
@@ -18,6 +19,7 @@ const App = React.createClass({
     return (
       <div>
         <ul>
+          <li><Link to="/area">Victory Area Docs</Link></li>
           <li><Link to="/axis">Victory Axis Docs</Link></li>
           <li><Link to="/bar">Victory Bar Docs</Link></li>
           <li><Link to="/chart">Victory Chart Docs</Link></li>
@@ -33,6 +35,7 @@ const App = React.createClass({
 ReactDOM.render((
   <Router>
     <Route path="/" component={App}>
+      <Route path="area" component={AreaDocs}/>
       <Route path="axis" component={AxisDocs}/>
       <Route path="bar" component={BarDocs}/>
       <Route path="chart" component={ChartDocs}/>

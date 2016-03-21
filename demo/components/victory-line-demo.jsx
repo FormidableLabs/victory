@@ -33,7 +33,7 @@ export default class App extends React.Component {
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
       stroke: colors[_.random(0, 5)],
-      strokeWidth: [_.random(1, 5)]
+      strokeWidth: _.random(1, 5)
     };
   }
 
@@ -71,7 +71,16 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "red"}}}
+          style={{
+            parent: {border: "1px solid black", margin: "5px"},
+            data: {stroke: "red", strokeWidth: 6}
+          }}
+          events={{data: {
+            onClick: (evt) => {
+              this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
+            }
+          }}}
+          label={this.state.label}
           data={_.range(0, 100)}
           x={null}
           y={(d) => d * d}

@@ -1,5 +1,5 @@
-import pick from "lodash/object/pick";
-import memoizerific from "memoizerific";
+import pick from "lodash/pick";
+import get from "lodash/get";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 
@@ -117,6 +117,26 @@ export default class VictoryBar extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
+     * The events prop attaches arbitrary event handlers to data and label elements
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryBar
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryBar
+     * if one exists. If VictoryBar is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
+     * @examples {data: {
+     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *}}
+     */
+    events: PropTypes.shape({
+      data: PropTypes.object,
+      labels: PropTypes.object,
+      parent: PropTypes.object
+    }),
+    /**
      * The grouped prop determines whether the chart should consist of sets of grouped bars.
      * When this prop is set to true, the data prop *must* be an array of multiple data series
      * ie. not an array of data points, but an array of arrays of data points.  If data is
@@ -145,37 +165,16 @@ export default class VictoryBar extends React.Component {
      */
     labels: PropTypes.array,
     /**
-      * The labelComponent prop takes in an entire, HTML-complete label
-      * component which will be used to create labels for each bar in the bar
-      * chart. The new element created from the passed labelComponent will have
-      * children preserved, or provided as the label property from the bar's
-      * datum; property data provided by the bar's datum; properties x, y,
-      * textAnchor, and verticalAnchor preserved or default values provided by
-      * the bar; and styles filled out with defaults provided by the bar, and
-      * overrides from the datum. If labelComponent is omitted, a new
-      * VictoryLabel will be created with props and styles from the bar.
-     */
-    labelComponent: PropTypes.element,
-    /**
-     * Deprecated: Use labelComponent instead!
-     * The labelComponents prop defines labels - as entire, HTML-complete label
-     * components - that will appear above each bar or group of bars in your
-     * bar chart. This prop should be given as an array of elements. The number
-     * of elements in the labelComponents array should be equal to the number
-     * of elements in the categories array, or, if categories is not defined,
-     * to the number of unique x values in your data. Use this prop to add
-     * labels to individual bars, stacked bars, and groups of bars. The new
-     * element created from each element of the labelComponents array will have
-     * children preserved, or provided as the label from the bar's datum;
+     * The labelComponent prop takes in an entire, HTML-complete label
+     * component which will be used to create labels for each bar in the bar
+     * chart. The new element created from the passed labelComponent will have
      * property data provided by the bar's datum; properties x, y, textAnchor,
      * and verticalAnchor preserved or default values provided by the bar; and
-     * styles filled out with defaults provided by the bar. If you do not
-     * provide enough elements in the labelComponents array, a new VictoryLabel
-     * will be created with props and styles from the bar.
-     labelComponents: PropTypes.deprecated(PropTypes.array, `You'll find you
-                                          have less repetition if you use the
-                                          new labelComponent propType`),
-    */
+     * styles filled out with defaults provided by the bar, and overrides from
+     * the datum. If labelComponent is omitted, a new VictoryLabel will be
+     * created with props and styles from the bar.
+     */
+    labelComponent: PropTypes.element,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
@@ -266,8 +265,9 @@ export default class VictoryBar extends React.Component {
   };
 
   static defaultProps = {
-    data: defaultData,
     colorScale: "greyscale",
+    data: defaultData,
+    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -283,9 +283,9 @@ export default class VictoryBar extends React.Component {
   static getBaseScale = Scale.getBaseScale.bind(Scale);
 
   componentWillMount() {
-    this.memoized = {
-      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: memoizerific(1)(Helpers.getStyles)
+    this.state = {
+      dataState: {},
+      labelsState: {}
     };
   }
 
@@ -295,12 +295,16 @@ export default class VictoryBar extends React.Component {
       const position = BarHelpers.getBarPosition(datum, index, calculatedProps);
       const baseStyle = calculatedProps.style;
       const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
+      const getBoundEvents = Helpers.getEvents.bind(this);
       const barComponent = (
         <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
           horizontal={this.props.horizontal}
           style={style}
+          index={index}
           position={position}
           datum={datum}
+          events={getBoundEvents(this.props.events.data, "data")}
+          {...get(this.state.dataState, [seriesIndex, barIndex], undefined)}
         />
       );
       const shouldPlotLabel = BarHelpers.shouldPlotLabel(
@@ -316,10 +320,13 @@ export default class VictoryBar extends React.Component {
             <BarLabel key={`label-series-${index}-bar-${barIndex}`}
               horizontal={this.props.horizontal}
               style={baseStyle.labels}
+              index={index}
               position={position}
               datum={datum}
               labelText={datum.label || labelText}
               labelComponent={this.props.labelComponent}
+              events={getBoundEvents(this.props.events.labels, "labels")}
+              {...get(this.state.labelsState, [seriesIndex, barIndex], undefined)}
             />
           </g>
         );
@@ -384,9 +391,11 @@ export default class VictoryBar extends React.Component {
       );
     }
 
-    const style = this.memoized.getStyles(
+    const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

@@ -1,6 +1,6 @@
-import range from "lodash/utility/range";
+import range from "lodash/range";
 
-module.exports = {
+export default {
   circle(x, y, size) {
     return `M ${x}, ${y} m ${-size}, 0
       a ${size}, ${size} 0 1,0 ${size * 2},0

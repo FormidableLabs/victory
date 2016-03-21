@@ -141,6 +141,50 @@ Functional styles allow elements to determine their own styles based on data
   />
 ```
 
+### Events
+
+Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
+Event handlers on data and labels components are called with the event object, the props
+corresponding to that component, and the index of that component. Values returned from
+event handlers on data or labels will be stored as state on VictoryScatter. Data and labels
+state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+
+```playground
+  <VictoryScatter
+    data={[
+      {x: 1, y: 3},
+      {x: 2, y: 5},      
+      {x: 3, y: 4},
+      {x: 4, y: 2},
+      {x: 5, y: 5}
+    ]}
+    size={8}
+    symbol={"star"}
+    style={{
+      data: {
+        fill: "gold",
+        stroke: "orange",
+        strokeWidth: 3
+      }
+    }}
+    events={{
+      data: {
+        onClick: (evt, props) => {
+          return props.symbol === "star" ?
+            {
+              symbol: "circle",
+              style: {
+                fill: "cyan",
+                stroke: "blue",
+                strokeWidth: 3
+              }
+            } : null;
+        }
+      }
+    }}
+  />
+```
+
 ### Animating
 
 VictoryScatter animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.

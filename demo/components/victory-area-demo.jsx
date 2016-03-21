@@ -2,7 +2,6 @@
 import React from "react";
 import _ from "lodash";
 import {VictoryArea} from "../../src/index";
-import {VictoryLabel} from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -57,7 +56,7 @@ export default class App extends React.Component {
   getStyles() {
     const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      fill: colors[_.random(0, 5)],
+      fill: colors[_.random(0, 5)]
     };
   }
 
@@ -74,6 +73,8 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="demo">
+        <VictoryArea/>
+
         <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}, data: this.state.style}}
           data={this.state.data}
@@ -121,10 +122,27 @@ export default class App extends React.Component {
         />
 
         <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{
+            parent: {border: "1px solid black", margin: "5px"},
+            data: {fill: "gold"}
+          }}
           data={this.state.arrayData}
           x={0}
           y={1}
+          events={{data: {
+            onMouseOver: () => {
+              return {
+                style: {
+                  fill: "gold",
+                  stroke: "orange",
+                  strokeWidth: 3
+                }
+              };
+            },
+            onMouseOut: () => {
+              return null;
+            }
+          }}}
         />
 
         <VictoryArea
@@ -158,6 +176,10 @@ export default class App extends React.Component {
         />
 
       <VictoryArea
+        style={{
+          parent: {border: "1px solid black", margin: "5px"},
+          data: {opacity: 0.4}
+        }}
         y={[
           (data) => Math.sin(data.x),
           (data) => Math.cos(data.x)

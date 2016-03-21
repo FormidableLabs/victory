@@ -4,6 +4,8 @@ import { Helpers } from "victory-core";
 export default class Bar extends React.Component {
 
   static propTypes = {
+    index: PropTypes.object,
+    events: PropTypes.object,
     position: PropTypes.object,
     horizontal: PropTypes.bool,
     style: PropTypes.object,
@@ -35,26 +37,21 @@ export default class Bar extends React.Component {
       this.getHorizontalBarPath(position, width) : this.getVerticalBarPath(position, width);
   }
 
-  renderBar(props) {
-    const style = Helpers.evaluateStyle(props.style, props.datum);
+  render() {
+    const style = Helpers.evaluateStyle(this.props.style, this.props.datum);
     // TODO better bar width calculation
-    const barWidth = style.width;
-    const path = props.position.independent ?
-      this.getBarPath(props.position, barWidth) : undefined;
+    const barWidth = style.width || 8;
+    const path = this.props.position.independent ?
+      this.getBarPath(this.props.position, barWidth) : undefined;
+    const index = [this.props.index.seriesIndex, this.props.index.barIndex];
+    const events = Helpers.getPartialEvents(this.props.events, index, this.props);
     return (
       <path
+        {...events}
         d={path}
         style={style}
         shapeRendering="optimizeSpeed"
       />
-    );
-  }
-
-  render() {
-    return (
-      <g>
-        {this.renderBar(this.props)}
-      </g>
     );
   }
 }

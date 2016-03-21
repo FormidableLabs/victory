@@ -50,6 +50,7 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      hoverStyle: {fill: "gold"},
       data: props.data
     };
   }
@@ -71,7 +72,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryScatter</h1>
-
         <VictoryScatter
           style={style}
           width={500}
@@ -127,7 +127,7 @@ export default class App extends React.Component {
         </svg>
 
         <VictoryScatter
-          style={style}
+          style={{parent: style.parent, data: this.state.hoverStyle}}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},
@@ -138,6 +138,23 @@ export default class App extends React.Component {
             {x: new Date(2011, 1, 1), y: 270},
             {x: new Date(2015, 1, 1), y: 470}
           ]}
+          symbol={"star"}
+          size={8}
+          events={{data: {
+            onMouseOver: () => {
+              return {
+                symbol: "circle",
+                style: {
+                  fill: "gold",
+                  stroke: "orange",
+                  strokeWidth: 3
+                }
+              };
+            },
+            onMouseOut: () => {
+              return null;
+            }
+          }}}
         />
 
         <VictoryScatter
@@ -154,7 +171,7 @@ export default class App extends React.Component {
 
         <VictoryScatter
           data={_.range(0, 200).map((i) => {
-            return {a: {b: [{y: i * Math.sin(i * .3)}], x: Math.cos(i * .3)}};
+            return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}
           x="a.x"
           y="a.b[0]y"

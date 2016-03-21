@@ -75,7 +75,7 @@ Add labels, style the data, change the interpolation, add a custom domain:
       {x: 4, y: 3},
       {x: 5, y: 5}
     ]}
-    interpolation="monotone"
+    interpolation="cardinal"
     label="LINE"
     style={{
       data: {
@@ -114,6 +114,40 @@ VictoryLine also supports functional styles. Unlike other data components, style
  />
 ```
 
+### Events
+
+Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
+Event handlers on data and labels components are called with the event object, the props
+corresponding to that component, and the index of that component. Values returned from
+event handlers on data or labels will be stored as state on VictoryLine. Data and labels
+state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+
+```playground
+ <VictoryLine
+   style={{
+     data: {stroke: "red", strokeWidth: 9}
+   }}
+   interpolation={"linear"}
+   data={[
+     {x: 0, y: 1},
+     {x: 1, y: 3},
+     {x: 2, y: 2},      
+     {x: 3, y: 4},
+     {x: 4, y: 3},
+     {x: 5, y: 5}
+   ]}
+   events={{
+     data: {
+       onClick: (evt, props) => {
+         const i = props.interpolation;
+         return i === "linear" ?
+          {interpolation: "cardinal"} :
+          null;
+       }
+     }
+   }}
+ />
+```
 
 ### Animating
 

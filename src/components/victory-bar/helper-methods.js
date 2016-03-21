@@ -1,9 +1,9 @@
-import defaults from "lodash/object/defaults";
-import uniq from "lodash/array/uniq";
-import omit from "lodash/object/omit";
+import defaults from "lodash/defaults";
+import uniq from "lodash/uniq";
+import omit from "lodash/omit";
 import Layout from "../../helpers/layout";
 
-module.exports = {
+export default {
   // Layout Helpers
   getBarPosition(datum, index, calculatedProps) {
     const { scale, stacked, categories, datasets } = calculatedProps;

@@ -69,15 +69,18 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryBar</h1>
 
-        <ChartWrap>
-          <VictoryBar
-            stacked
-            data={_.times(5, () => _.range(32))}
-            x={null}
-            y={(d) => Math.sin(d * 0.2)}
-            colorScale="warm"
-          />
-        </ChartWrap>
+        <VictoryBar
+          events={{data: {
+            onClick: (evt) => {
+              this.setState({colorScale: evt.clientX < 370 ? "cool" : "warm"});
+            }
+          }}}
+          stacked
+          data={_.times(5, () => _.range(32))}
+          x={null}
+          y={(d) => Math.sin(d * 0.2)}
+          colorScale={this.state.colorScale || "warm"}
+        />
 
         <ChartWrap>
           <VictoryBar
@@ -158,6 +161,13 @@ export default class App extends React.Component {
               ]
             ]}
             colorScale="warm"
+            events={{
+              data: {
+                onClick: () => {
+                  return {style: {fill: "cyan"}};
+                }
+              }
+            }}
           />
         </ChartWrap>
       </div>

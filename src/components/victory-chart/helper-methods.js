@@ -1,17 +1,16 @@
-import invert from "lodash/object/invert";
-import sortBy from "lodash/collection/sortBy";
-import values from "lodash/object/values";
-import identity from "lodash/utility/identity";
-import sum from "lodash/math/sum";
-import uniq from "lodash/array/uniq";
-import zipObject from "lodash/array/zipObject";
+import invert from "lodash/invert";
+import sortBy from "lodash/sortBy";
+import values from "lodash/values";
+import identity from "lodash/identity";
+import sum from "lodash/sum";
+import uniq from "lodash/uniq";
 import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import React from "react";
 import { Collection, Log } from "victory-core";
 
-module.exports = {
+export default {
   getChildComponents(props, defaultAxes) {
     // set up a counter for component types
     const counts = {};
@@ -187,7 +186,10 @@ module.exports = {
     const allStrings = uniq([...tickStrings, ...categoryStrings, ...dataStrings]);
 
     return allStrings.length === 0 ? null :
-      zipObject(allStrings.map((string, index) => [string, index + 1]));
+      allStrings.reduce((memo, string, index) => {
+        memo[string] = index + 1;
+        return memo;
+      }, {});
   },
 
   getCategories(childComponents) {

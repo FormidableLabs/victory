@@ -1,14 +1,16 @@
 import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
-import assign from "lodash/object/assign";
+import assign from "lodash/assign";
 import { Helpers } from "victory-core";
 
 export default class Area extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     interpolation: PropTypes.string,
+    index: PropTypes.number,
     scale: PropTypes.object,
-    style: PropTypes.object
+    style: PropTypes.object,
+    events: PropTypes.object
   };
 
   toNewName(interpolation) {
@@ -17,7 +19,7 @@ export default class Area extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
-  renderArea(style, interpolation) {
+  renderArea(style, interpolation, events) {
     const xScale = this.props.scale.x;
     const yScale = this.props.scale.y;
     const areaStroke = style.stroke ? "none" : style.fill;
@@ -28,10 +30,11 @@ export default class Area extends React.Component {
       .y1((data) => yScale(data.y0 + data.y))
       .y0((data) => yScale(data.y0));
     const path = areaFunction(this.props.data);
-    return <path style={areaStyle} d={path}/>;
+
+    return <path style={areaStyle} d={path} {...events}/>;
   }
 
-  renderLine(style, interpolation) {
+  renderLine(style, interpolation, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
@@ -41,21 +44,22 @@ export default class Area extends React.Component {
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
-      .y((data) => yScale(data.y));
+      .y((data) => yScale(data.y0 + data.y));
     const path = lineFunction(this.props.data);
     return (
-      <path style={lineStyle} d={path}/>
+      <path style={lineStyle} d={path} {...events}/>
     );
   }
 
-
   render() {
-    const style = Helpers.evaluateStyle(this.props.style, this.props.data);
-    const interpolation = Helpers.evaluateProp(this.props.interpolation, this.props.data);
+    const { props } = this;
+    const style = Helpers.evaluateStyle(props.style, props.data);
+    const interpolation = Helpers.evaluateProp(props.interpolation, props.data);
+    const events = Helpers.getPartialEvents(props.events, props.index, props);
     return (
       <g>
-        {this.renderArea(style, interpolation)}
-        {this.renderLine(style, interpolation)}
+        {this.renderArea(style, interpolation, events)}
+        {this.renderLine(style, interpolation, events)}
       </g>
     );
   }

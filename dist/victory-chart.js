@@ -7,7 +7,7 @@
 		exports["VictoryChart"] = factory(require("react"));
 	else
 		root["VictoryChart"] = factory(root["React"]);
-})(this, function(__WEBPACK_EXTERNAL_MODULE_29__) {
+})(this, function(__WEBPACK_EXTERNAL_MODULE_36__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -56,13 +56,43 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 	
-	module.exports = {
-	  VictoryChart: __webpack_require__(1),
-	  VictoryLine: __webpack_require__(138),
-	  VictoryAxis: __webpack_require__(70),
-	  VictoryBar: __webpack_require__(146),
-	  VictoryScatter: __webpack_require__(152)
-	};
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.VictoryScatter = exports.VictoryBar = exports.VictoryArea = exports.VictoryAxis = exports.VictoryLine = exports.VictoryChart = undefined;
+	
+	var _victoryChart = __webpack_require__(1);
+	
+	var _victoryChart2 = _interopRequireDefault(_victoryChart);
+	
+	var _victoryLine = __webpack_require__(337);
+	
+	var _victoryLine2 = _interopRequireDefault(_victoryLine);
+	
+	var _victoryAxis = __webpack_require__(201);
+	
+	var _victoryAxis2 = _interopRequireDefault(_victoryAxis);
+	
+	var _victoryArea = __webpack_require__(347);
+	
+	var _victoryArea2 = _interopRequireDefault(_victoryArea);
+	
+	var _victoryBar = __webpack_require__(353);
+	
+	var _victoryBar2 = _interopRequireDefault(_victoryBar);
+	
+	var _victoryScatter = __webpack_require__(357);
+	
+	var _victoryScatter2 = _interopRequireDefault(_victoryScatter);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.VictoryChart = _victoryChart2.default;
+	exports.VictoryLine = _victoryLine2.default;
+	exports.VictoryAxis = _victoryAxis2.default;
+	exports.VictoryArea = _victoryArea2.default;
+	exports.VictoryBar = _victoryBar2.default;
+	exports.VictoryScatter = _victoryScatter2.default;
 
 /***/ },
 /* 1 */
@@ -74,54 +104,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _defaults = __webpack_require__(2);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _lodashObjectDefaults = __webpack_require__(2);
-	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _victoryAxisVictoryAxis = __webpack_require__(70);
+	var _victoryAxis = __webpack_require__(201);
 	
-	var _victoryAxisVictoryAxis2 = _interopRequireDefault(_victoryAxisVictoryAxis);
+	var _victoryAxis2 = _interopRequireDefault(_victoryAxis);
 	
-	var _helperMethods = __webpack_require__(124);
+	var _helperMethods = __webpack_require__(319);
 	
 	var _helperMethods2 = _interopRequireDefault(_helperMethods);
 	
-	var _helpersAxis = __webpack_require__(100);
+	var _axis = __webpack_require__(266);
 	
-	var _helpersAxis2 = _interopRequireDefault(_helpersAxis);
+	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _helpersScale = __webpack_require__(93);
+	var _scale = __webpack_require__(257);
 	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
+	var _scale2 = _interopRequireDefault(_scale);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var defaultAxes = {
-	  independent: _react2["default"].createElement(_victoryAxisVictoryAxis2["default"], { animate: { velocity: 0.02 } }),
-	  dependent: _react2["default"].createElement(_victoryAxisVictoryAxis2["default"], { dependentAxis: true, animate: { velocity: 0.02 } })
+	  independent: _react2.default.createElement(_victoryAxis2.default, { animate: { velocity: 0.02 } }),
+	  dependent: _react2.default.createElement(_victoryAxis2.default, { dependentAxis: true, animate: { velocity: 0.02 } })
 	};
 	
-	var VictoryChart = (function (_React$Component) {
+	var VictoryChart = function (_React$Component) {
 	  _inherits(VictoryChart, _React$Component);
 	
 	  function VictoryChart() {
 	    _classCallCheck(this, VictoryChart);
 	
-	    _get(Object.getPrototypeOf(VictoryChart.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryChart).apply(this, arguments));
 	  }
 	
 	  _createClass(VictoryChart, [{
@@ -129,7 +161,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function getStyles(props) {
 	      var styleProps = props.style && props.style.parent;
 	      return {
-	        parent: (0, _lodashObjectDefaults2["default"])({
+	        parent: (0, _defaults2.default)({
 	          height: props.height,
 	          width: props.width
 	        }, styleProps) };
@@ -141,9 +173,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var scale = calculatedProps.scale;
 	
 	      var axis = child.type.getAxis(child.props);
-	      var axisOffset = _helperMethods2["default"].getAxisOffset(props, calculatedProps);
-	      var tickValues = _helperMethods2["default"].getTicks(calculatedProps, axis, child);
-	      var tickFormat = child.props.tickFormat || _helperMethods2["default"].getTickFormat(child, axis, calculatedProps);
+	      var axisOffset = _helperMethods2.default.getAxisOffset(props, calculatedProps);
+	      var tickValues = _helperMethods2.default.getTicks(calculatedProps, axis, child);
+	      var tickFormat = child.props.tickFormat || _helperMethods2.default.getTickFormat(child, axis, calculatedProps);
 	      var offsetY = axis === "y" ? undefined : axisOffset.y;
 	      var offsetX = axis === "x" ? undefined : axisOffset.x;
 	      return {
@@ -193,20 +225,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return component.props.horizontal;
 	      });
 	      var axisComponents = {
-	        x: _helpersAxis2["default"].getAxisComponent(childComponents, "x"),
-	        y: _helpersAxis2["default"].getAxisComponent(childComponents, "y")
+	        x: _axis2.default.getAxisComponent(childComponents, "x"),
+	        y: _axis2.default.getAxisComponent(childComponents, "y")
 	      };
 	      var domain = {
-	        x: _helperMethods2["default"].getDomain(props, childComponents, "x"),
-	        y: _helperMethods2["default"].getDomain(props, childComponents, "y")
+	        x: _helperMethods2.default.getDomain(props, childComponents, "x"),
+	        y: _helperMethods2.default.getDomain(props, childComponents, "y")
 	      };
 	      var range = {
 	        x: _victoryCore.Helpers.getRange(props, "x"),
 	        y: _victoryCore.Helpers.getRange(props, "y")
 	      };
 	      var baseScale = {
-	        x: _helpersScale2["default"].getScaleFromProps(props, "x") || axisComponents.x.type.getScale(axisComponents.x.props),
-	        y: _helpersScale2["default"].getScaleFromProps(props, "y") || axisComponents.y.type.getScale(axisComponents.y.props)
+	        x: _scale2.default.getScaleFromProps(props, "x") || axisComponents.x.type.getScale(axisComponents.x.props),
+	        y: _scale2.default.getScaleFromProps(props, "y") || axisComponents.y.type.getScale(axisComponents.y.props)
 	      };
 	      var scale = {
 	        x: baseScale.x.domain(domain.x).range(range.x),
@@ -214,27 +246,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	      // TODO: check
 	      var categories = {
-	        x: _helperMethods2["default"].getCategories(childComponents, "x"),
-	        y: _helperMethods2["default"].getCategories(childComponents, "y")
+	        x: _helperMethods2.default.getCategories(childComponents, "x"),
+	        y: _helperMethods2.default.getCategories(childComponents, "y")
 	      };
 	      var stringMap = {
-	        x: _helperMethods2["default"].createStringMap(childComponents, "x"),
-	        y: _helperMethods2["default"].createStringMap(childComponents, "y")
+	        x: _helperMethods2.default.createStringMap(childComponents, "x"),
+	        y: _helperMethods2.default.createStringMap(childComponents, "y")
 	      };
 	      return { axisComponents: axisComponents, categories: categories, domain: domain, flipped: flipped, scale: scale, stringMap: stringMap };
 	    }
 	
 	    // the old ones were bad
+	
 	  }, {
 	    key: "getNewChildren",
 	    value: function getNewChildren(props, childComponents, baseStyle) {
-	      var _this = this;
+	      var _this2 = this;
 	
 	      var calculatedProps = this.getCalculatedProps(props, childComponents);
 	      return childComponents.map(function (child, index) {
-	        var style = (0, _lodashObjectDefaults2["default"])({ parent: baseStyle.parent }, child.props.style);
-	        var childProps = _this.getChildProps(child, props, calculatedProps);
-	        return _react2["default"].cloneElement(child, (0, _lodashObjectDefaults2["default"])({
+	        var style = (0, _defaults2.default)({}, child.props.style, { parent: baseStyle.parent });
+	        var childProps = _this2.getChildProps(child, props, calculatedProps);
+	        return _react2.default.cloneElement(child, (0, _defaults2.default)({
 	          animate: child.props.animate || props.animate,
 	          height: props.height,
 	          width: props.width,
@@ -250,125 +283,128 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: "render",
 	    value: function render() {
 	      var style = this.getStyles(this.props);
-	      var childComponents = _helperMethods2["default"].getChildComponents(this.props, defaultAxes);
-	      var group = _react2["default"].createElement(
+	      var childComponents = _helperMethods2.default.getChildComponents(this.props, defaultAxes);
+	      var group = _react2.default.createElement(
 	        "g",
 	        { style: style.parent },
 	        this.getNewChildren(this.props, childComponents, style)
 	      );
-	      return this.props.standalone ? _react2["default"].createElement(
+	      return this.props.standalone ? _react2.default.createElement(
 	        "svg",
-	        { style: style.parent },
+	        _extends({ style: style.parent }, this.props.events),
 	        group
 	      ) : group;
 	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. If this prop is
-	       * given, all children defined in chart will pass the options specified in this prop to
-	       * victory-animation, unless they have animation props of their own specified.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
-	       */
-	      animate: _react.PropTypes.object,
-	      /**
-	       * The domain prop describes the range of values your chart will include. This prop can be
-	       * given as a array of the minimum and maximum expected values for your chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
-	       */
-	      domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.domain,
-	        y: _victoryCore.PropTypes.domain
-	      })]),
-	      /**
-	       * The domainPadding prop specifies a number of pixels of padding to add to the
-	       * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
-	       * from the origin to prevent crowding. This prop should be given as an object with
-	       * numbers specified for x and y.
-	       */
-	      domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.nonNegative,
-	        y: _victoryCore.PropTypes.nonNegative
-	      }), _victoryCore.PropTypes.nonNegative]),
-	      /**
-	       * The height props specifies the height of the chart container element in pixels
-	       */
-	      height: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	        top: _react.PropTypes.number,
-	        bottom: _react.PropTypes.number,
-	        left: _react.PropTypes.number,
-	        right: _react.PropTypes.number
-	      })]),
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a function, or as an object that specifies separate functions for x and y.
-	       * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
-	       */
-	      scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.scale,
-	        y: _victoryCore.PropTypes.scale
-	      })]),
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryChart with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react.PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. Victory Chart relies on Radium,
-	       * so valid Radium style objects should work for this prop. Height, width, and
-	       * padding should be specified via the height, width, and padding props, as they
-	       * are used to calculate the alignment of components within chart.
-	       * @examples {background: transparent, margin: 50}
-	       */
-	      style: _react.PropTypes.object,
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _victoryCore.PropTypes.nonNegative
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      height: 300,
-	      width: 450,
-	      padding: 50,
-	      standalone: true
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return VictoryChart;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryChart;
-	module.exports = exports["default"];
+	VictoryChart.propTypes = {
+	  /**
+	   * The animate prop specifies props for victory-animation to use. If this prop is
+	   * given, all children defined in chart will pass the options specified in this prop to
+	   * victory-animation, unless they have animation props of their own specified.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
+	   */
+	  animate: _react.PropTypes.object,
+	  /**
+	   * The domain prop describes the range of values your chart will include. This prop can be
+	   * given as a array of the minimum and maximum expected values for your chart,
+	   * or as an object that specifies separate arrays for x and y.
+	   * If this prop is not provided, a domain will be calculated from data, or other
+	   * available information.
+	   * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
+	   */
+	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.domain,
+	    y: _victoryCore.PropTypes.domain
+	  })]),
+	  /**
+	   * The domainPadding prop specifies a number of pixels of padding to add to the
+	   * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+	   * from the origin to prevent crowding. This prop should be given as an object with
+	   * numbers specified for x and y.
+	   */
+	  domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.nonNegative,
+	    y: _victoryCore.PropTypes.nonNegative
+	  }), _victoryCore.PropTypes.nonNegative]),
+	  /**
+	   * The events prop attaches arbitrary event handlers to the top level chart svg.
+	   * To attach events to individual pieces of data, use the events prop in child componenets.
+	   * Event handlers are currently only called with their corresponding events.
+	   * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+	   */
+	  events: _react.PropTypes.object,
+	  /**
+	   * The height props specifies the height of the chart container element in pixels
+	   */
+	  height: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The padding props specifies the amount of padding in number of pixels between
+	   * the edge of the chart and any rendered child components. This prop can be given
+	   * as a number or as an object with padding specified for top, bottom, left
+	   * and right.
+	   */
+	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	    top: _react.PropTypes.number,
+	    bottom: _react.PropTypes.number,
+	    left: _react.PropTypes.number,
+	    right: _react.PropTypes.number
+	  })]),
+	  /**
+	   * The scale prop determines which scales your chart should use. This prop can be
+	   * given as a function, or as an object that specifies separate functions for x and y.
+	   * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+	   */
+	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.scale,
+	    y: _victoryCore.PropTypes.scale
+	  })]),
+	  /**
+	   * The standalone prop determines whether the component will render a standalone svg
+	   * or a <g> tag that will be included in an external svg. Set standalone to false to
+	   * compose VictoryChart with other components within an enclosing <svg> tag.
+	   */
+	  standalone: _react.PropTypes.bool,
+	  /**
+	   * The style prop specifies styles for your chart. Victory Chart relies on Radium,
+	   * so valid Radium style objects should work for this prop. Height, width, and
+	   * padding should be specified via the height, width, and padding props, as they
+	   * are used to calculate the alignment of components within chart.
+	   * @examples {background: transparent, margin: 50}
+	   */
+	  style: _react.PropTypes.object,
+	  /**
+	   * The width props specifies the width of the chart container element in pixels
+	   */
+	  width: _victoryCore.PropTypes.nonNegative
+	};
+	VictoryChart.defaultProps = {
+	  events: {},
+	  height: 300,
+	  width: 450,
+	  padding: 50,
+	  standalone: true
+	};
+	exports.default = VictoryChart;
 
 /***/ },
 /* 2 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assign = __webpack_require__(3),
-	    assignDefaults = __webpack_require__(27),
-	    createDefaults = __webpack_require__(28);
+	var apply = __webpack_require__(3),
+	    assignInDefaults = __webpack_require__(4),
+	    assignInWith = __webpack_require__(6),
+	    rest = __webpack_require__(18);
 	
 	/**
-	 * Assigns own enumerable properties of source object(s) to the destination
-	 * object for all destination properties that resolve to `undefined`. Once a
-	 * property is set, additional values of the same property are ignored.
+	 * Assigns own and inherited enumerable properties of source objects to the
+	 * destination object for all destination properties that resolve to `undefined`.
+	 * Source objects are applied from left to right. Once a property is set,
+	 * additional values of the same property are ignored.
 	 *
 	 * **Note:** This method mutates `object`.
 	 *
@@ -383,319 +419,304 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * _.defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
 	 * // => { 'user': 'barney', 'age': 36 }
 	 */
-	var defaults = createDefaults(assign, assignDefaults);
+	var defaults = rest(function(args) {
+	  args.push(undefined, assignInDefaults);
+	  return apply(assignInWith, undefined, args);
+	});
 	
 	module.exports = defaults;
 
 
 /***/ },
 /* 3 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var assignWith = __webpack_require__(4),
-	    baseAssign = __webpack_require__(20),
-	    createAssigner = __webpack_require__(22);
-	
 	/**
-	 * Assigns own enumerable properties of source object(s) to the destination
-	 * object. Subsequent sources overwrite property assignments of previous sources.
-	 * If `customizer` is provided it's invoked to produce the assigned values.
-	 * The `customizer` is bound to `thisArg` and invoked with five arguments:
-	 * (objectValue, sourceValue, key, object, source).
+	 * A faster alternative to `Function#apply`, this function invokes `func`
+	 * with the `this` binding of `thisArg` and the arguments of `args`.
 	 *
-	 * **Note:** This method mutates `object` and is based on
-	 * [`Object.assign`](http://ecma-international.org/ecma-262/6.0/#sec-object.assign).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @alias extend
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} [sources] The source objects.
-	 * @param {Function} [customizer] The function to customize assigned values.
-	 * @param {*} [thisArg] The `this` binding of `customizer`.
-	 * @returns {Object} Returns `object`.
-	 * @example
-	 *
-	 * _.assign({ 'user': 'barney' }, { 'age': 40 }, { 'user': 'fred' });
-	 * // => { 'user': 'fred', 'age': 40 }
-	 *
-	 * // using a customizer callback
-	 * var defaults = _.partialRight(_.assign, function(value, other) {
-	 *   return _.isUndefined(value) ? other : value;
-	 * });
-	 *
-	 * defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
-	 * // => { 'user': 'barney', 'age': 36 }
+	 * @private
+	 * @param {Function} func The function to invoke.
+	 * @param {*} thisArg The `this` binding of `func`.
+	 * @param {...*} args The arguments to invoke `func` with.
+	 * @returns {*} Returns the result of `func`.
 	 */
-	var assign = createAssigner(function(object, source, customizer) {
-	  return customizer
-	    ? assignWith(object, source, customizer)
-	    : baseAssign(object, source);
-	});
+	function apply(func, thisArg, args) {
+	  var length = args.length;
+	  switch (length) {
+	    case 0: return func.call(thisArg);
+	    case 1: return func.call(thisArg, args[0]);
+	    case 2: return func.call(thisArg, args[0], args[1]);
+	    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+	  }
+	  return func.apply(thisArg, args);
+	}
 	
-	module.exports = assign;
+	module.exports = apply;
 
 
 /***/ },
 /* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(5);
+	var eq = __webpack_require__(5);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
 	
 	/**
-	 * A specialized version of `_.assign` for customizing assigned values without
-	 * support for argument juggling, multiple sources, and `this` binding `customizer`
-	 * functions.
+	 * Used by `_.defaults` to customize its `_.assignIn` use.
 	 *
 	 * @private
-	 * @param {Object} object The destination object.
-	 * @param {Object} source The source object.
-	 * @param {Function} customizer The function to customize assigned values.
-	 * @returns {Object} Returns `object`.
+	 * @param {*} objValue The destination value.
+	 * @param {*} srcValue The source value.
+	 * @param {string} key The key of the property to assign.
+	 * @param {Object} object The parent object of `objValue`.
+	 * @returns {*} Returns the value to assign.
 	 */
-	function assignWith(object, source, customizer) {
-	  var index = -1,
-	      props = keys(source),
-	      length = props.length;
-	
-	  while (++index < length) {
-	    var key = props[index],
-	        value = object[key],
-	        result = customizer(value, source[key], key, object, source);
-	
-	    if ((result === result ? (result !== value) : (value === value)) ||
-	        (value === undefined && !(key in object))) {
-	      object[key] = result;
-	    }
+	function assignInDefaults(objValue, srcValue, key, object) {
+	  if (objValue === undefined ||
+	      (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+	    return srcValue;
 	  }
-	  return object;
+	  return objValue;
 	}
 	
-	module.exports = assignWith;
+	module.exports = assignInDefaults;
 
 
 /***/ },
 /* 5 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var getNative = __webpack_require__(6),
-	    isArrayLike = __webpack_require__(11),
-	    isObject = __webpack_require__(9),
-	    shimKeys = __webpack_require__(15);
-	
-	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeKeys = getNative(Object, 'keys');
-	
 	/**
-	 * Creates an array of the own enumerable property names of `object`.
-	 *
-	 * **Note:** Non-object values are coerced to objects. See the
-	 * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
-	 * for more details.
+	 * Performs a [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @category Object
-	 * @param {Object} object The object to query.
-	 * @returns {Array} Returns the array of property names.
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
 	 * @example
 	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 *   this.b = 2;
-	 * }
+	 * var object = { 'user': 'fred' };
+	 * var other = { 'user': 'fred' };
 	 *
-	 * Foo.prototype.c = 3;
+	 * _.eq(object, object);
+	 * // => true
 	 *
-	 * _.keys(new Foo);
-	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 * _.eq(object, other);
+	 * // => false
 	 *
-	 * _.keys('hi');
-	 * // => ['0', '1']
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
 	 */
-	var keys = !nativeKeys ? shimKeys : function(object) {
-	  var Ctor = object == null ? undefined : object.constructor;
-	  if ((typeof Ctor == 'function' && Ctor.prototype === object) ||
-	      (typeof object != 'function' && isArrayLike(object))) {
-	    return shimKeys(object);
-	  }
-	  return isObject(object) ? nativeKeys(object) : [];
-	};
+	function eq(value, other) {
+	  return value === other || (value !== value && other !== other);
+	}
 	
-	module.exports = keys;
+	module.exports = eq;
 
 
 /***/ },
 /* 6 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isNative = __webpack_require__(7);
+	var copyObjectWith = __webpack_require__(7),
+	    createAssigner = __webpack_require__(9),
+	    keysIn = __webpack_require__(21);
 	
 	/**
-	 * Gets the native function at `key` of `object`.
+	 * This method is like `_.assignIn` except that it accepts `customizer` which
+	 * is invoked to produce the assigned values. If `customizer` returns `undefined`
+	 * assignment is handled by the method instead. The `customizer` is invoked
+	 * with five arguments: (objValue, srcValue, key, object, source).
 	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @param {string} key The key of the method to get.
-	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 * **Note:** This method mutates `object`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @alias extendWith
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} sources The source objects.
+	 * @param {Function} [customizer] The function to customize assigned values.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * function customizer(objValue, srcValue) {
+	 *   return _.isUndefined(objValue) ? srcValue : objValue;
+	 * }
+	 *
+	 * var defaults = _.partialRight(_.assignInWith, customizer);
+	 *
+	 * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+	 * // => { 'a': 1, 'b': 2 }
 	 */
-	function getNative(object, key) {
-	  var value = object == null ? undefined : object[key];
-	  return isNative(value) ? value : undefined;
-	}
+	var assignInWith = createAssigner(function(object, source, srcIndex, customizer) {
+	  copyObjectWith(source, keysIn(source), object, customizer);
+	});
 	
-	module.exports = getNative;
+	module.exports = assignInWith;
 
 
 /***/ },
 /* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isFunction = __webpack_require__(8),
-	    isObjectLike = __webpack_require__(10);
-	
-	/** Used to detect host constructors (Safari > 5). */
-	var reIsHostCtor = /^\[object .+?Constructor\]$/;
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to resolve the decompiled source of functions. */
-	var fnToString = Function.prototype.toString;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Used to detect if a method is native. */
-	var reIsNative = RegExp('^' +
-	  fnToString.call(hasOwnProperty).replace(/[\\^$.*+?()[\]{}|]/g, '\\$&')
-	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
-	);
+	var assignValue = __webpack_require__(8);
 	
 	/**
-	 * Checks if `value` is a native function.
+	 * This function is like `copyObject` except that it accepts a function to
+	 * customize copied values.
 	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
-	 * @example
-	 *
-	 * _.isNative(Array.prototype.push);
-	 * // => true
-	 *
-	 * _.isNative(_);
-	 * // => false
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property names to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @param {Function} [customizer] The function to customize copied values.
+	 * @returns {Object} Returns `object`.
 	 */
-	function isNative(value) {
-	  if (value == null) {
-	    return false;
+	function copyObjectWith(source, props, object, customizer) {
+	  object || (object = {});
+	
+	  var index = -1,
+	      length = props.length;
+	
+	  while (++index < length) {
+	    var key = props[index];
+	
+	    var newValue = customizer
+	      ? customizer(object[key], source[key], key, object, source)
+	      : source[key];
+	
+	    assignValue(object, key, newValue);
 	  }
-	  if (isFunction(value)) {
-	    return reIsNative.test(fnToString.call(value));
-	  }
-	  return isObjectLike(value) && reIsHostCtor.test(value);
+	  return object;
 	}
 	
-	module.exports = isNative;
+	module.exports = copyObjectWith;
 
 
 /***/ },
 /* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(9);
+	var eq = __webpack_require__(5);
 	
-	/** `Object#toString` result references. */
-	var funcTag = '[object Function]';
-	
-	/** Used for native method references. */
+	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
 	
-	/**
-	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
 	
 	/**
-	 * Checks if `value` is classified as a `Function` object.
+	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
+	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	 * for equality comparisons.
 	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
-	 * @example
-	 *
-	 * _.isFunction(_);
-	 * // => true
-	 *
-	 * _.isFunction(/abc/);
-	 * // => false
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
 	 */
-	function isFunction(value) {
-	  // The use of `Object#toString` avoids issues with the `typeof` operator
-	  // in older versions of Chrome and Safari which return 'function' for regexes
-	  // and Safari 8 which returns 'object' for typed array constructors.
-	  return isObject(value) && objToString.call(value) == funcTag;
+	function assignValue(object, key, value) {
+	  var objValue = object[key];
+	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+	      (value === undefined && !(key in object))) {
+	    object[key] = value;
+	  }
 	}
 	
-	module.exports = isFunction;
+	module.exports = assignValue;
 
 
 /***/ },
 /* 9 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var isIterateeCall = __webpack_require__(10),
+	    rest = __webpack_require__(18);
+	
 	/**
-	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
-	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 * Creates a function like `_.assign`.
 	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-	 * @example
-	 *
-	 * _.isObject({});
-	 * // => true
-	 *
-	 * _.isObject([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObject(1);
-	 * // => false
+	 * @private
+	 * @param {Function} assigner The function to assign values.
+	 * @returns {Function} Returns the new assigner function.
 	 */
-	function isObject(value) {
-	  // Avoid a V8 JIT bug in Chrome 19-20.
-	  // See https://code.google.com/p/v8/issues/detail?id=2291 for more details.
-	  var type = typeof value;
-	  return !!value && (type == 'object' || type == 'function');
+	function createAssigner(assigner) {
+	  return rest(function(object, sources) {
+	    var index = -1,
+	        length = sources.length,
+	        customizer = length > 1 ? sources[length - 1] : undefined,
+	        guard = length > 2 ? sources[2] : undefined;
+	
+	    customizer = typeof customizer == 'function'
+	      ? (length--, customizer)
+	      : undefined;
+	
+	    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+	      customizer = length < 3 ? undefined : customizer;
+	      length = 1;
+	    }
+	    object = Object(object);
+	    while (++index < length) {
+	      var source = sources[index];
+	      if (source) {
+	        assigner(object, source, index, customizer);
+	      }
+	    }
+	    return object;
+	  });
 	}
 	
-	module.exports = isObject;
+	module.exports = createAssigner;
 
 
 /***/ },
 /* 10 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
+	var eq = __webpack_require__(5),
+	    isArrayLike = __webpack_require__(11),
+	    isIndex = __webpack_require__(17),
+	    isObject = __webpack_require__(15);
+	
 	/**
-	 * Checks if `value` is object-like.
+	 * Checks if the given arguments are from an iteratee call.
 	 *
 	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @param {*} value The potential iteratee value argument.
+	 * @param {*} index The potential iteratee index or key argument.
+	 * @param {*} object The potential iteratee object argument.
+	 * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
 	 */
-	function isObjectLike(value) {
-	  return !!value && typeof value == 'object';
+	function isIterateeCall(value, index, object) {
+	  if (!isObject(object)) {
+	    return false;
+	  }
+	  var type = typeof index;
+	  if (type == 'number'
+	      ? (isArrayLike(object) && isIndex(index, object.length))
+	      : (type == 'string' && index in object)) {
+	    return eq(object[index], value);
+	  }
+	  return false;
 	}
 	
-	module.exports = isObjectLike;
+	module.exports = isIterateeCall;
 
 
 /***/ },
@@ -703,17 +724,35 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var getLength = __webpack_require__(12),
-	    isLength = __webpack_require__(14);
+	    isFunction = __webpack_require__(14),
+	    isLength = __webpack_require__(16);
 	
 	/**
-	 * Checks if `value` is array-like.
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
 	 *
-	 * @private
+	 * @static
+	 * @memberOf _
+	 * @category Lang
 	 * @param {*} value The value to check.
 	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
 	 */
 	function isArrayLike(value) {
-	  return value != null && isLength(getLength(value));
+	  return value != null && isLength(getLength(value)) && !isFunction(value);
 	}
 	
 	module.exports = isArrayLike;
@@ -762,142 +801,25 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 14 */
-/***/ function(module, exports) {
-
-	/**
-	 * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
-	 * of an array-like value.
-	 */
-	var MAX_SAFE_INTEGER = 9007199254740991;
-	
-	/**
-	 * Checks if `value` is a valid array-like length.
-	 *
-	 * **Note:** This function is based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
-	 */
-	function isLength(value) {
-	  return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-	}
-	
-	module.exports = isLength;
-
-
-/***/ },
-/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArguments = __webpack_require__(16),
-	    isArray = __webpack_require__(17),
-	    isIndex = __webpack_require__(18),
-	    isLength = __webpack_require__(14),
-	    keysIn = __webpack_require__(19);
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * A fallback implementation of `Object.keys` which creates an array of the
-	 * own enumerable property names of `object`.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @returns {Array} Returns the array of property names.
-	 */
-	function shimKeys(object) {
-	  var props = keysIn(object),
-	      propsLength = props.length,
-	      length = propsLength && object.length;
-	
-	  var allowIndexes = !!length && isLength(length) &&
-	    (isArray(object) || isArguments(object));
-	
-	  var index = -1,
-	      result = [];
-	
-	  while (++index < propsLength) {
-	    var key = props[index];
-	    if ((allowIndexes && isIndex(key, length)) || hasOwnProperty.call(object, key)) {
-	      result.push(key);
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = shimKeys;
-
-
-/***/ },
-/* 16 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isArrayLike = __webpack_require__(11),
-	    isObjectLike = __webpack_require__(10);
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Native method references. */
-	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-	
-	/**
-	 * Checks if `value` is classified as an `arguments` object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
-	 * @example
-	 *
-	 * _.isArguments(function() { return arguments; }());
-	 * // => true
-	 *
-	 * _.isArguments([1, 2, 3]);
-	 * // => false
-	 */
-	function isArguments(value) {
-	  return isObjectLike(value) && isArrayLike(value) &&
-	    hasOwnProperty.call(value, 'callee') && !propertyIsEnumerable.call(value, 'callee');
-	}
-	
-	module.exports = isArguments;
-
-
-/***/ },
-/* 17 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getNative = __webpack_require__(6),
-	    isLength = __webpack_require__(14),
-	    isObjectLike = __webpack_require__(10);
+	var isObject = __webpack_require__(15);
 	
 	/** `Object#toString` result references. */
-	var arrayTag = '[object Array]';
+	var funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]';
 	
-	/** Used for native method references. */
+	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
 	
 	/**
 	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
 	 * of values.
 	 */
-	var objToString = objectProto.toString;
-	
-	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeIsArray = getNative(Array, 'isArray');
+	var objectToString = objectProto.toString;
 	
 	/**
-	 * Checks if `value` is classified as an `Array` object.
+	 * Checks if `value` is classified as a `Function` object.
 	 *
 	 * @static
 	 * @memberOf _
@@ -906,31 +828,106 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
 	 * @example
 	 *
-	 * _.isArray([1, 2, 3]);
+	 * _.isFunction(_);
 	 * // => true
 	 *
-	 * _.isArray(function() { return arguments; }());
+	 * _.isFunction(/abc/);
 	 * // => false
 	 */
-	var isArray = nativeIsArray || function(value) {
-	  return isObjectLike(value) && isLength(value.length) && objToString.call(value) == arrayTag;
-	};
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 8 which returns 'object' for typed array and weak map constructors,
+	  // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+	  var tag = isObject(value) ? objectToString.call(value) : '';
+	  return tag == funcTag || tag == genTag;
+	}
 	
-	module.exports = isArray;
+	module.exports = isFunction;
 
 
 /***/ },
-/* 18 */
+/* 15 */
 /***/ function(module, exports) {
 
-	/** Used to detect unsigned integer values. */
-	var reIsUint = /^\d+$/;
+	/**
+	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	module.exports = isObject;
+
+
+/***/ },
+/* 16 */
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
 	
 	/**
-	 * Used as the [maximum length](http://ecma-international.org/ecma-262/6.0/#sec-number.max_safe_integer)
-	 * of an array-like value.
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This function is loosely based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
 	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	module.exports = isLength;
+
+
+/***/ },
+/* 17 */
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
 	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
 	
 	/**
 	 * Checks if `value` is a valid array-like index.
@@ -950,16 +947,197 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
+/* 18 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(3),
+	    toInteger = __webpack_require__(19);
+	
+	/** Used as the `TypeError` message for "Functions" methods. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * Creates a function that invokes `func` with the `this` binding of the
+	 * created function and arguments from `start` and beyond provided as an array.
+	 *
+	 * **Note:** This method is based on the [rest parameter](https://mdn.io/rest_parameters).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Function
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @param {number} [start=func.length-1] The start position of the rest parameter.
+	 * @returns {Function} Returns the new function.
+	 * @example
+	 *
+	 * var say = _.rest(function(what, names) {
+	 *   return what + ' ' + _.initial(names).join(', ') +
+	 *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
+	 * });
+	 *
+	 * say('hello', 'fred', 'barney', 'pebbles');
+	 * // => 'hello fred, barney, & pebbles'
+	 */
+	function rest(func, start) {
+	  if (typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  start = nativeMax(start === undefined ? (func.length - 1) : toInteger(start), 0);
+	  return function() {
+	    var args = arguments,
+	        index = -1,
+	        length = nativeMax(args.length - start, 0),
+	        array = Array(length);
+	
+	    while (++index < length) {
+	      array[index] = args[start + index];
+	    }
+	    switch (start) {
+	      case 0: return func.call(this, array);
+	      case 1: return func.call(this, args[0], array);
+	      case 2: return func.call(this, args[0], args[1], array);
+	    }
+	    var otherArgs = Array(start + 1);
+	    index = -1;
+	    while (++index < start) {
+	      otherArgs[index] = args[index];
+	    }
+	    otherArgs[start] = array;
+	    return apply(func, this, otherArgs);
+	  };
+	}
+	
+	module.exports = rest;
+
+
+/***/ },
 /* 19 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArguments = __webpack_require__(16),
-	    isArray = __webpack_require__(17),
-	    isIndex = __webpack_require__(18),
-	    isLength = __webpack_require__(14),
-	    isObject = __webpack_require__(9);
+	var toNumber = __webpack_require__(20);
 	
-	/** Used for native method references. */
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0,
+	    MAX_INTEGER = 1.7976931348623157e+308;
+	
+	/**
+	 * Converts `value` to an integer.
+	 *
+	 * **Note:** This function is loosely based on [`ToInteger`](http://www.ecma-international.org/ecma-262/6.0/#sec-tointeger).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {number} Returns the converted integer.
+	 * @example
+	 *
+	 * _.toInteger(3);
+	 * // => 3
+	 *
+	 * _.toInteger(Number.MIN_VALUE);
+	 * // => 0
+	 *
+	 * _.toInteger(Infinity);
+	 * // => 1.7976931348623157e+308
+	 *
+	 * _.toInteger('3');
+	 * // => 3
+	 */
+	function toInteger(value) {
+	  if (!value) {
+	    return value === 0 ? value : 0;
+	  }
+	  value = toNumber(value);
+	  if (value === INFINITY || value === -INFINITY) {
+	    var sign = (value < 0 ? -1 : 1);
+	    return sign * MAX_INTEGER;
+	  }
+	  var remainder = value % 1;
+	  return value === value ? (remainder ? value - remainder : value) : 0;
+	}
+	
+	module.exports = toInteger;
+
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(14),
+	    isObject = __webpack_require__(15);
+	
+	/** Used as references for various `Number` constants. */
+	var NAN = 0 / 0;
+	
+	/** Used to match leading and trailing whitespace. */
+	var reTrim = /^\s+|\s+$/g;
+	
+	/** Used to detect bad signed hexadecimal string values. */
+	var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+	
+	/** Used to detect binary string values. */
+	var reIsBinary = /^0b[01]+$/i;
+	
+	/** Used to detect octal string values. */
+	var reIsOctal = /^0o[0-7]+$/i;
+	
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseInt = parseInt;
+	
+	/**
+	 * Converts `value` to a number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {number} Returns the number.
+	 * @example
+	 *
+	 * _.toNumber(3);
+	 * // => 3
+	 *
+	 * _.toNumber(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toNumber(Infinity);
+	 * // => Infinity
+	 *
+	 * _.toNumber('3');
+	 * // => 3
+	 */
+	function toNumber(value) {
+	  if (isObject(value)) {
+	    var other = isFunction(value.valueOf) ? value.valueOf() : value;
+	    value = isObject(other) ? (other + '') : other;
+	  }
+	  if (typeof value != 'string') {
+	    return value === 0 ? value : +value;
+	  }
+	  value = value.replace(reTrim, '');
+	  var isBinary = reIsBinary.test(value);
+	  return (isBinary || reIsOctal.test(value))
+	    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+	    : (reIsBadHex.test(value) ? NAN : +value);
+	}
+	
+	module.exports = toNumber;
+
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseKeysIn = __webpack_require__(22),
+	    indexKeys = __webpack_require__(28),
+	    isIndex = __webpack_require__(17),
+	    isPrototype = __webpack_require__(35);
+	
+	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
 	
 	/** Used to check objects for own properties. */
@@ -988,27 +1166,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
 	 */
 	function keysIn(object) {
-	  if (object == null) {
-	    return [];
-	  }
-	  if (!isObject(object)) {
-	    object = Object(object);
-	  }
-	  var length = object.length;
-	  length = (length && isLength(length) &&
-	    (isArray(object) || isArguments(object)) && length) || 0;
+	  var index = -1,
+	      isProto = isPrototype(object),
+	      props = baseKeysIn(object),
+	      propsLength = props.length,
+	      indexes = indexKeys(object),
+	      skipIndexes = !!indexes,
+	      result = indexes || [],
+	      length = result.length;
 	
-	  var Ctor = object.constructor,
-	      index = -1,
-	      isProto = typeof Ctor == 'function' && Ctor.prototype === object,
-	      result = Array(length),
-	      skipIndexes = length > 0;
-	
-	  while (++index < length) {
-	    result[index] = (index + '');
-	  }
-	  for (var key in object) {
-	    if (!(skipIndexes && isIndex(key, length)) &&
+	  while (++index < propsLength) {
+	    var key = props[index];
+	    if (!(skipIndexes && (key == 'length' || isIndex(key, length))) &&
 	        !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
 	      result.push(key);
 	    }
@@ -1020,273 +1189,139 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseCopy = __webpack_require__(21),
-	    keys = __webpack_require__(5);
-	
-	/**
-	 * The base implementation of `_.assign` without support for argument juggling,
-	 * multiple sources, and `customizer` functions.
-	 *
-	 * @private
-	 * @param {Object} object The destination object.
-	 * @param {Object} source The source object.
-	 * @returns {Object} Returns `object`.
-	 */
-	function baseAssign(object, source) {
-	  return source == null
-	    ? object
-	    : baseCopy(source, keys(source), object);
-	}
-	
-	module.exports = baseAssign;
-
-
-/***/ },
-/* 21 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copies properties of `source` to `object`.
-	 *
-	 * @private
-	 * @param {Object} source The object to copy properties from.
-	 * @param {Array} props The property names to copy.
-	 * @param {Object} [object={}] The object to copy properties to.
-	 * @returns {Object} Returns `object`.
-	 */
-	function baseCopy(source, props, object) {
-	  object || (object = {});
-	
-	  var index = -1,
-	      length = props.length;
-	
-	  while (++index < length) {
-	    var key = props[index];
-	    object[key] = source[key];
-	  }
-	  return object;
-	}
-	
-	module.exports = baseCopy;
-
-
-/***/ },
 /* 22 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var bindCallback = __webpack_require__(23),
-	    isIterateeCall = __webpack_require__(25),
-	    restParam = __webpack_require__(26);
+	var Reflect = __webpack_require__(23),
+	    iteratorToArray = __webpack_require__(27);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Built-in value references. */
+	var enumerate = Reflect ? Reflect.enumerate : undefined,
+	    propertyIsEnumerable = objectProto.propertyIsEnumerable;
 	
 	/**
-	 * Creates a `_.assign`, `_.defaults`, or `_.merge` function.
+	 * The base implementation of `_.keysIn` which doesn't skip the constructor
+	 * property of prototypes or treat sparse arrays as dense.
 	 *
 	 * @private
-	 * @param {Function} assigner The function to assign values.
-	 * @returns {Function} Returns the new assigner function.
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
 	 */
-	function createAssigner(assigner) {
-	  return restParam(function(object, sources) {
-	    var index = -1,
-	        length = object == null ? 0 : sources.length,
-	        customizer = length > 2 ? sources[length - 2] : undefined,
-	        guard = length > 2 ? sources[2] : undefined,
-	        thisArg = length > 1 ? sources[length - 1] : undefined;
+	function baseKeysIn(object) {
+	  object = object == null ? object : Object(object);
 	
-	    if (typeof customizer == 'function') {
-	      customizer = bindCallback(customizer, thisArg, 5);
-	      length -= 2;
-	    } else {
-	      customizer = typeof thisArg == 'function' ? thisArg : undefined;
-	      length -= (customizer ? 1 : 0);
-	    }
-	    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-	      customizer = length < 3 ? undefined : customizer;
-	      length = 1;
-	    }
-	    while (++index < length) {
-	      var source = sources[index];
-	      if (source) {
-	        assigner(object, source, customizer);
-	      }
-	    }
-	    return object;
-	  });
+	  var result = [];
+	  for (var key in object) {
+	    result.push(key);
+	  }
+	  return result;
 	}
 	
-	module.exports = createAssigner;
+	// Fallback for IE < 9 with es6-shim.
+	if (enumerate && !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf')) {
+	  baseKeysIn = function(object) {
+	    return iteratorToArray(enumerate(object));
+	  };
+	}
+	
+	module.exports = baseKeysIn;
 
 
 /***/ },
 /* 23 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var identity = __webpack_require__(24);
+	var root = __webpack_require__(24);
 	
-	/**
-	 * A specialized version of `baseCallback` which only supports `this` binding
-	 * and specifying the number of arguments to provide to `func`.
-	 *
-	 * @private
-	 * @param {Function} func The function to bind.
-	 * @param {*} thisArg The `this` binding of `func`.
-	 * @param {number} [argCount] The number of arguments to provide to `func`.
-	 * @returns {Function} Returns the callback.
-	 */
-	function bindCallback(func, thisArg, argCount) {
-	  if (typeof func != 'function') {
-	    return identity;
-	  }
-	  if (thisArg === undefined) {
-	    return func;
-	  }
-	  switch (argCount) {
-	    case 1: return function(value) {
-	      return func.call(thisArg, value);
-	    };
-	    case 3: return function(value, index, collection) {
-	      return func.call(thisArg, value, index, collection);
-	    };
-	    case 4: return function(accumulator, value, index, collection) {
-	      return func.call(thisArg, accumulator, value, index, collection);
-	    };
-	    case 5: return function(value, other, key, object, source) {
-	      return func.call(thisArg, value, other, key, object, source);
-	    };
-	  }
-	  return function() {
-	    return func.apply(thisArg, arguments);
-	  };
-	}
+	/** Built-in value references. */
+	var Reflect = root.Reflect;
 	
-	module.exports = bindCallback;
+	module.exports = Reflect;
 
 
 /***/ },
 /* 24 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	/**
-	 * This method returns the first argument provided to it.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Utility
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * _.identity(object) === object;
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
+	/* WEBPACK VAR INJECTION */(function(module, global) {var checkGlobal = __webpack_require__(26);
 	
-	module.exports = identity;
-
+	/** Used to determine if values are of the language type `Object`. */
+	var objectTypes = {
+	  'function': true,
+	  'object': true
+	};
+	
+	/** Detect free variable `exports`. */
+	var freeExports = (objectTypes[typeof exports] && exports && !exports.nodeType)
+	  ? exports
+	  : undefined;
+	
+	/** Detect free variable `module`. */
+	var freeModule = (objectTypes[typeof module] && module && !module.nodeType)
+	  ? module
+	  : undefined;
+	
+	/** Detect free variable `global` from Node.js. */
+	var freeGlobal = checkGlobal(freeExports && freeModule && typeof global == 'object' && global);
+	
+	/** Detect free variable `self`. */
+	var freeSelf = checkGlobal(objectTypes[typeof self] && self);
+	
+	/** Detect free variable `window`. */
+	var freeWindow = checkGlobal(objectTypes[typeof window] && window);
+	
+	/** Detect `this` as the global object. */
+	var thisGlobal = checkGlobal(objectTypes[typeof this] && this);
+	
+	/**
+	 * Used as a reference to the global object.
+	 *
+	 * The `this` value is used if it's the global object to avoid Greasemonkey's
+	 * restricted `window` object, otherwise the `window` object is used.
+	 */
+	var root = freeGlobal ||
+	  ((freeWindow !== (thisGlobal && thisGlobal.window)) && freeWindow) ||
+	    freeSelf || thisGlobal || Function('return this')();
+	
+	module.exports = root;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)(module), (function() { return this; }())))
 
 /***/ },
 /* 25 */
-/***/ function(module, exports, __webpack_require__) {
+/***/ function(module, exports) {
 
-	var isArrayLike = __webpack_require__(11),
-	    isIndex = __webpack_require__(18),
-	    isObject = __webpack_require__(9);
-	
-	/**
-	 * Checks if the provided arguments are from an iteratee call.
-	 *
-	 * @private
-	 * @param {*} value The potential iteratee value argument.
-	 * @param {*} index The potential iteratee index or key argument.
-	 * @param {*} object The potential iteratee object argument.
-	 * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
-	 */
-	function isIterateeCall(value, index, object) {
-	  if (!isObject(object)) {
-	    return false;
-	  }
-	  var type = typeof index;
-	  if (type == 'number'
-	      ? (isArrayLike(object) && isIndex(index, object.length))
-	      : (type == 'string' && index in object)) {
-	    var other = object[index];
-	    return value === value ? (value === other) : (other !== other);
-	  }
-	  return false;
+	module.exports = function(module) {
+		if(!module.webpackPolyfill) {
+			module.deprecate = function() {};
+			module.paths = [];
+			// module.parent = undefined by default
+			module.children = [];
+			module.webpackPolyfill = 1;
+		}
+		return module;
 	}
-	
-	module.exports = isIterateeCall;
 
 
 /***/ },
 /* 26 */
 /***/ function(module, exports) {
 
-	/** Used as the `TypeError` message for "Functions" methods. */
-	var FUNC_ERROR_TEXT = 'Expected a function';
-	
-	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeMax = Math.max;
-	
 	/**
-	 * Creates a function that invokes `func` with the `this` binding of the
-	 * created function and arguments from `start` and beyond provided as an array.
+	 * Checks if `value` is a global object.
 	 *
-	 * **Note:** This method is based on the [rest parameter](https://developer.mozilla.org/Web/JavaScript/Reference/Functions/rest_parameters).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Function
-	 * @param {Function} func The function to apply a rest parameter to.
-	 * @param {number} [start=func.length-1] The start position of the rest parameter.
-	 * @returns {Function} Returns the new function.
-	 * @example
-	 *
-	 * var say = _.restParam(function(what, names) {
-	 *   return what + ' ' + _.initial(names).join(', ') +
-	 *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
-	 * });
-	 *
-	 * say('hello', 'fred', 'barney', 'pebbles');
-	 * // => 'hello fred, barney, & pebbles'
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {null|Object} Returns `value` if it's a global object, else `null`.
 	 */
-	function restParam(func, start) {
-	  if (typeof func != 'function') {
-	    throw new TypeError(FUNC_ERROR_TEXT);
-	  }
-	  start = nativeMax(start === undefined ? (func.length - 1) : (+start || 0), 0);
-	  return function() {
-	    var args = arguments,
-	        index = -1,
-	        length = nativeMax(args.length - start, 0),
-	        rest = Array(length);
-	
-	    while (++index < length) {
-	      rest[index] = args[start + index];
-	    }
-	    switch (start) {
-	      case 0: return func.call(this, rest);
-	      case 1: return func.call(this, args[0], rest);
-	      case 2: return func.call(this, args[0], args[1], rest);
-	    }
-	    var otherArgs = Array(start + 1);
-	    index = -1;
-	    while (++index < start) {
-	      otherArgs[index] = args[index];
-	    }
-	    otherArgs[start] = rest;
-	    return func.apply(this, otherArgs);
-	  };
+	function checkGlobal(value) {
+	  return (value && value.Object === Object) ? value : null;
 	}
 	
-	module.exports = restParam;
+	module.exports = checkGlobal;
 
 
 /***/ },
@@ -1294,109 +1329,357 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	/**
-	 * Used by `_.defaults` to customize its `_.assign` use.
+	 * Converts `iterator` to an array.
 	 *
 	 * @private
-	 * @param {*} objectValue The destination object property value.
-	 * @param {*} sourceValue The source object property value.
-	 * @returns {*} Returns the value to assign to the destination object.
+	 * @param {Object} iterator The iterator to convert.
+	 * @returns {Array} Returns the converted array.
 	 */
-	function assignDefaults(objectValue, sourceValue) {
-	  return objectValue === undefined ? sourceValue : objectValue;
+	function iteratorToArray(iterator) {
+	  var data,
+	      result = [];
+	
+	  while (!(data = iterator.next()).done) {
+	    result.push(data.value);
+	  }
+	  return result;
 	}
 	
-	module.exports = assignDefaults;
+	module.exports = iteratorToArray;
 
 
 /***/ },
 /* 28 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var restParam = __webpack_require__(26);
+	var baseTimes = __webpack_require__(29),
+	    isArguments = __webpack_require__(30),
+	    isArray = __webpack_require__(33),
+	    isLength = __webpack_require__(16),
+	    isString = __webpack_require__(34);
 	
 	/**
-	 * Creates a `_.defaults` or `_.defaultsDeep` function.
+	 * Creates an array of index keys for `object` values of arrays,
+	 * `arguments` objects, and strings, otherwise `null` is returned.
 	 *
 	 * @private
-	 * @param {Function} assigner The function to assign values.
-	 * @param {Function} customizer The function to customize assigned values.
-	 * @returns {Function} Returns the new defaults function.
+	 * @param {Object} object The object to query.
+	 * @returns {Array|null} Returns index keys, else `null`.
 	 */
-	function createDefaults(assigner, customizer) {
-	  return restParam(function(args) {
-	    var object = args[0];
-	    if (object == null) {
-	      return object;
-	    }
-	    args.push(customizer);
-	    return assigner.apply(undefined, args);
-	  });
+	function indexKeys(object) {
+	  var length = object ? object.length : undefined;
+	  if (isLength(length) &&
+	      (isArray(object) || isString(object) || isArguments(object))) {
+	    return baseTimes(length, String);
+	  }
+	  return null;
 	}
 	
-	module.exports = createDefaults;
+	module.exports = indexKeys;
 
 
 /***/ },
 /* 29 */
 /***/ function(module, exports) {
 
-	module.exports = __WEBPACK_EXTERNAL_MODULE_29__;
+	/**
+	 * The base implementation of `_.times` without support for iteratee shorthands
+	 * or max array length checks.
+	 *
+	 * @private
+	 * @param {number} n The number of times to invoke `iteratee`.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the array of results.
+	 */
+	function baseTimes(n, iteratee) {
+	  var index = -1,
+	      result = Array(n);
+	
+	  while (++index < n) {
+	    result[index] = iteratee(index);
+	  }
+	  return result;
+	}
+	
+	module.exports = baseTimes;
+
 
 /***/ },
 /* 30 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	var isArrayLikeObject = __webpack_require__(31);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]';
 	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
 	
-	var _victoryUtilCollection = __webpack_require__(31);
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
 	
-	var Collection = _interopRequireWildcard(_victoryUtilCollection);
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
 	
-	var _victoryUtilHelpers = __webpack_require__(32);
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
 	
-	var _victoryUtilHelpers2 = _interopRequireDefault(_victoryUtilHelpers);
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	function isArguments(value) {
+	  // Safari 8.1 incorrectly makes `arguments.callee` enumerable in strict mode.
+	  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+	    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+	}
 	
-	var _victoryUtilLog = __webpack_require__(41);
-	
-	var Log = _interopRequireWildcard(_victoryUtilLog);
-	
-	var _victoryUtilStyle = __webpack_require__(43);
-	
-	var Style = _interopRequireWildcard(_victoryUtilStyle);
-	
-	var _victoryUtilType = __webpack_require__(48);
-	
-	var Type = _interopRequireWildcard(_victoryUtilType);
-	
-	var _victoryUtilPropTypes = __webpack_require__(49);
-	
-	var PropTypes = _interopRequireWildcard(_victoryUtilPropTypes);
-	
-	var _victoryAnimationVictoryAnimation = __webpack_require__(50);
-	
-	var _victoryAnimationVictoryAnimation2 = _interopRequireDefault(_victoryAnimationVictoryAnimation);
-	
-	var _victoryLabelVictoryLabel = __webpack_require__(60);
-	
-	var _victoryLabelVictoryLabel2 = _interopRequireDefault(_victoryLabelVictoryLabel);
-	
-	module.exports = {
-	  Collection: Collection,
-	  Helpers: _victoryUtilHelpers2["default"],
-	  Log: Log,
-	  PropTypes: PropTypes,
-	  Style: Style,
-	  Type: Type,
-	  VictoryAnimation: _victoryAnimationVictoryAnimation2["default"],
-	  VictoryLabel: _victoryLabelVictoryLabel2["default"]
-	};
+	module.exports = isArguments;
+
 
 /***/ },
 /* 31 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArrayLike = __webpack_require__(11),
+	    isObjectLike = __webpack_require__(32);
+	
+	/**
+	 * This method is like `_.isArrayLike` except that it also checks if `value`
+	 * is an object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array-like object, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLikeObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject('abc');
+	 * // => false
+	 *
+	 * _.isArrayLikeObject(_.noop);
+	 * // => false
+	 */
+	function isArrayLikeObject(value) {
+	  return isObjectLike(value) && isArrayLike(value);
+	}
+	
+	module.exports = isArrayLikeObject;
+
+
+/***/ },
+/* 32 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+	
+	module.exports = isObjectLike;
+
+
+/***/ },
+/* 33 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @type {Function}
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+	
+	module.exports = isArray;
+
+
+/***/ },
+/* 34 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(33),
+	    isObjectLike = __webpack_require__(32);
+	
+	/** `Object#toString` result references. */
+	var stringTag = '[object String]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a `String` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isString('abc');
+	 * // => true
+	 *
+	 * _.isString(1);
+	 * // => false
+	 */
+	function isString(value) {
+	  return typeof value == 'string' ||
+	    (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
+	}
+	
+	module.exports = isString;
+
+
+/***/ },
+/* 35 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Checks if `value` is likely a prototype object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+	 */
+	function isPrototype(value) {
+	  var Ctor = value && value.constructor,
+	      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+	
+	  return value === proto;
+	}
+	
+	module.exports = isPrototype;
+
+
+/***/ },
+/* 36 */
+/***/ function(module, exports) {
+
+	module.exports = __WEBPACK_EXTERNAL_MODULE_36__;
+
+/***/ },
+/* 37 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.VictoryLabel = exports.VictoryAnimation = exports.Style = exports.PropTypes = exports.Log = exports.Helpers = exports.Collection = undefined;
+	
+	var _collection = __webpack_require__(38);
+	
+	var _collection2 = _interopRequireDefault(_collection);
+	
+	var _helpers = __webpack_require__(39);
+	
+	var _helpers2 = _interopRequireDefault(_helpers);
+	
+	var _log = __webpack_require__(184);
+	
+	var _log2 = _interopRequireDefault(_log);
+	
+	var _style = __webpack_require__(186);
+	
+	var _style2 = _interopRequireDefault(_style);
+	
+	var _propTypes = __webpack_require__(191);
+	
+	var _propTypes2 = _interopRequireDefault(_propTypes);
+	
+	var _victoryAnimation = __webpack_require__(192);
+	
+	var _victoryAnimation2 = _interopRequireDefault(_victoryAnimation);
+	
+	var _victoryLabel = __webpack_require__(198);
+	
+	var _victoryLabel2 = _interopRequireDefault(_victoryLabel);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.Collection = _collection2.default;
+	exports.Helpers = _helpers2.default;
+	exports.Log = _log2.default;
+	exports.PropTypes = _propTypes2.default;
+	exports.Style = _style2.default;
+	exports.VictoryAnimation = _victoryAnimation2.default;
+	exports.VictoryLabel = _victoryLabel2.default;
+
+/***/ },
+/* 38 */
 /***/ function(module, exports) {
 
 	"use strict";
@@ -1404,72 +1687,79 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var isNonEmptyArray = function isNonEmptyArray(collection) {
-	  return Array.isArray(collection) && collection.length > 0;
+	exports.default = {
+	  isNonEmptyArray: function isNonEmptyArray(collection) {
+	    return Array.isArray(collection) && collection.length > 0;
+	  },
+	  containsStrings: function containsStrings(collection) {
+	    return Array.isArray(collection) && collection.some(function (value) {
+	      return typeof value === "string";
+	    });
+	  },
+	  containsDates: function containsDates(collection) {
+	    return Array.isArray(collection) && collection.some(function (value) {
+	      return value instanceof Date;
+	    });
+	  },
+	  containsOnlyStrings: function containsOnlyStrings(collection) {
+	    return this.isNonEmptyArray(collection) && collection.every(function (value) {
+	      return typeof value === "string";
+	    });
+	  },
+	  isArrayOfArrays: function isArrayOfArrays(collection) {
+	    return this.isNonEmptyArray(collection) && collection.every(Array.isArray);
+	  },
+	  removeUndefined: function removeUndefined(arr) {
+	    return arr.filter(function (el) {
+	      return el !== undefined;
+	    });
+	  }
 	};
-	
-	exports.isNonEmptyArray = isNonEmptyArray;
-	var containsStrings = function containsStrings(collection) {
-	  return Array.isArray(collection) && collection.some(function (value) {
-	    return typeof value === "string";
-	  });
-	};
-	
-	exports.containsStrings = containsStrings;
-	var containsDates = function containsDates(collection) {
-	  return Array.isArray(collection) && collection.some(function (value) {
-	    return value instanceof Date;
-	  });
-	};
-	
-	exports.containsDates = containsDates;
-	var containsOnlyStrings = function containsOnlyStrings(collection) {
-	  return isNonEmptyArray(collection) && collection.every(function (value) {
-	    return typeof value === "string";
-	  });
-	};
-	
-	exports.containsOnlyStrings = containsOnlyStrings;
-	var isArrayOfArrays = function isArrayOfArrays(collection) {
-	  return isNonEmptyArray(collection) && collection.every(Array.isArray);
-	};
-	
-	exports.isArrayOfArrays = isArrayOfArrays;
-	var removeUndefined = function removeUndefined(arr) {
-	  return arr.filter(function (el) {
-	    return el !== undefined;
-	  });
-	};
-	exports.removeUndefined = removeUndefined;
 
 /***/ },
-/* 32 */
+/* 39 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var _lodashObjectDefaults = __webpack_require__(2);
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
+	var _defaults = __webpack_require__(40);
 	
-	var _lodashLangIsFunction = __webpack_require__(8);
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	var _lodashLangIsFunction2 = _interopRequireDefault(_lodashLangIsFunction);
+	var _isFunction = __webpack_require__(52);
 	
-	var _lodashUtilityProperty = __webpack_require__(33);
+	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
-	var _lodashUtilityProperty2 = _interopRequireDefault(_lodashUtilityProperty);
+	var _property = __webpack_require__(73);
 	
-	var _lodashArrayZipObject = __webpack_require__(40);
+	var _property2 = _interopRequireDefault(_property);
 	
-	var _lodashArrayZipObject2 = _interopRequireDefault(_lodashArrayZipObject);
+	var _partial = __webpack_require__(82);
 	
-	module.exports = {
+	var _partial2 = _interopRequireDefault(_partial);
+	
+	var _set = __webpack_require__(118);
+	
+	var _set2 = _interopRequireDefault(_set);
+	
+	var _merge = __webpack_require__(120);
+	
+	var _merge2 = _interopRequireDefault(_merge);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
+	exports.default = {
 	  getPadding: function getPadding(props) {
 	    var padding = typeof props.padding === "number" ? props.padding : 0;
-	    var paddingObj = typeof props.padding === "object" ? props.padding : {};
+	    var paddingObj = _typeof(props.padding) === "object" ? props.padding : {};
 	    return {
 	      top: paddingObj.top || padding,
 	      bottom: paddingObj.bottom || padding,
@@ -1477,11 +1767,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      right: paddingObj.right || padding
 	    };
 	  },
-	
 	  getStyles: function getStyles(style, defaultStyles, height, width) {
 	    // eslint-disable-line max-params
 	    if (!style) {
-	      return (0, _lodashObjectDefaults2["default"])({ parent: { height: height, width: width } }, defaultStyles);
+	      return (0, _defaults2.default)({ parent: { height: height, width: width } }, defaultStyles);
 	    }
 	
 	    var data = style.data;
@@ -1489,21 +1778,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var parent = style.parent;
 	
 	    return {
-	      parent: (0, _lodashObjectDefaults2["default"])({ height: height, width: width }, parent, defaultStyles.parent),
-	      labels: (0, _lodashObjectDefaults2["default"])({}, labels, defaultStyles.labels),
-	      data: (0, _lodashObjectDefaults2["default"])({}, data, defaultStyles.data)
+	      parent: (0, _defaults2.default)({ height: height, width: width }, parent, defaultStyles.parent),
+	      labels: (0, _defaults2.default)({}, labels, defaultStyles.labels),
+	      data: (0, _defaults2.default)({}, data, defaultStyles.data)
 	    };
 	  },
-	
 	  evaluateProp: function evaluateProp(prop, data) {
-	    return (0, _lodashLangIsFunction2["default"])(prop) ? prop(data) : prop;
+	    return (0, _isFunction2.default)(prop) ? prop(data) : prop;
 	  },
-	
 	  evaluateStyle: function evaluateStyle(style, data) {
 	    var _this = this;
 	
 	    if (!Object.keys(style).some(function (value) {
-	      return (0, _lodashLangIsFunction2["default"])(style[value]);
+	      return (0, _isFunction2.default)(style[value]);
 	    })) {
 	      return style;
 	    }
@@ -1512,7 +1799,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return prev;
 	    }, {});
 	  },
-	
 	  getRange: function getRange(props, axis) {
 	    // determine how to lay the axis and what direction positive and negative are
 	    var horizontal = props.horizontal;
@@ -1527,13 +1813,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return [padding.left, props.width - padding.right];
 	  },
 	
+	
 	  // for components that take single datasets
 	  getData: function getData(props) {
 	    if (props.data) {
 	      return this.formatData(props.data, props);
 	    }
 	  },
-	
 	  formatData: function formatData(dataset, props, stringMap) {
 	    if (!dataset) {
 	      return [];
@@ -1552,21 +1838,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var y = accessor.y(datum);
 	      var xName = typeof x === "string" ? { xName: x } : undefined;
 	      var yName = typeof y === "string" ? { yName: y } : undefined;
-	      return (0, _lodashObjectDefaults2["default"])({
+	      return (0, _defaults2.default)({
 	        // map string data to numeric values, and add names
 	        x: typeof x === "string" ? stringMap.x[x] : x,
 	        y: typeof y === "string" ? stringMap.y[y] : y
 	      }, xName, yName, datum);
 	    });
 	  },
-	
 	  createStringMap: function createStringMap(props, axis) {
 	    var stringsFromData = this.getStringsFromData(props, axis);
-	    return stringsFromData.length === 0 ? null : (0, _lodashArrayZipObject2["default"])(stringsFromData.map(function (string, index) {
-	      return [string, index + 1];
-	    }));
+	    if (stringsFromData.length) {
+	      return stringsFromData.reduce(function (acc, string, index) {
+	        acc[string] = index + 1;
+	        return acc;
+	      }, {});
+	    }
+	    return null;
 	  },
-	
 	  getStringsFromData: function getStringsFromData(props, axis) {
 	    if (!props.data) {
 	      return [];
@@ -1586,11 +1874,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return prev;
 	    }, []);
 	  },
-	
 	  createAccessor: function createAccessor(key) {
 	    // creates a data accessor function
 	    // given a property key, path, array index, or null for identity.
-	    if ((0, _lodashLangIsFunction2["default"])(key)) {
+	    if ((0, _isFunction2.default)(key)) {
 	      return key;
 	    } else if (key === null || typeof key === "undefined") {
 	      // null/undefined means "return the data item itself"
@@ -1599,25 +1886,1266 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	    }
 	    // otherwise, assume it is an array index, property key or path (_.property handles all three)
-	    return (0, _lodashUtilityProperty2["default"])(key);
+	    return (0, _property2.default)(key);
+	  },
+	  getPartialEvents: function getPartialEvents(events, index, childProps) {
+	    return events ? Object.keys(events).reduce(function (memo, eventName) {
+	      /* eslint max-params: 0 */
+	      memo[eventName] = (0, _partial2.default)(events[eventName], _partial2.default.placeholder, // evt will still be the first argument for event handlers
+	      childProps, // event handlers will have access to data component props, including data
+	      index, // used in setting a unique state property
+	      eventName // used in setting a unique state property
+	      );
+	      return memo;
+	    }, {}) : {};
+	  },
+	  getEvents: function getEvents(events, namespace) {
+	    var _this2 = this;
+	
+	    var stateName = namespace + "State";
+	    var onEvent = function onEvent(evt, childProps, index, eventName) {
+	      if (_this2.props.events[namespace] && _this2.props.events[namespace][eventName]) {
+	        _this2.setState(_defineProperty({}, stateName, (0, _merge2.default)({}, _this2.state[stateName], (0, _set2.default)({}, index, _this2.props.events[namespace][eventName](evt, childProps, index)))));
+	      }
+	    };
+	
+	    return events ? Object.keys(this.props.events[namespace]).reduce(function (memo, event) {
+	      memo[event] = onEvent;
+	      return memo;
+	    }, {}) : {};
 	  }
 	};
 
 /***/ },
-/* 33 */
+/* 40 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseProperty = __webpack_require__(13),
-	    basePropertyDeep = __webpack_require__(34),
-	    isKey = __webpack_require__(39);
+	var apply = __webpack_require__(41),
+	    assignInDefaults = __webpack_require__(42),
+	    assignInWith = __webpack_require__(44),
+	    rest = __webpack_require__(56);
 	
 	/**
-	 * Creates a function that returns the property value at `path` on a
-	 * given object.
+	 * Assigns own and inherited enumerable properties of source objects to the
+	 * destination object for all destination properties that resolve to `undefined`.
+	 * Source objects are applied from left to right. Once a property is set,
+	 * additional values of the same property are ignored.
+	 *
+	 * **Note:** This method mutates `object`.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @category Utility
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} [sources] The source objects.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * _.defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
+	 * // => { 'user': 'barney', 'age': 36 }
+	 */
+	var defaults = rest(function(args) {
+	  args.push(undefined, assignInDefaults);
+	  return apply(assignInWith, undefined, args);
+	});
+	
+	module.exports = defaults;
+
+
+/***/ },
+/* 41 */
+/***/ function(module, exports) {
+
+	/**
+	 * A faster alternative to `Function#apply`, this function invokes `func`
+	 * with the `this` binding of `thisArg` and the arguments of `args`.
+	 *
+	 * @private
+	 * @param {Function} func The function to invoke.
+	 * @param {*} thisArg The `this` binding of `func`.
+	 * @param {...*} args The arguments to invoke `func` with.
+	 * @returns {*} Returns the result of `func`.
+	 */
+	function apply(func, thisArg, args) {
+	  var length = args.length;
+	  switch (length) {
+	    case 0: return func.call(thisArg);
+	    case 1: return func.call(thisArg, args[0]);
+	    case 2: return func.call(thisArg, args[0], args[1]);
+	    case 3: return func.call(thisArg, args[0], args[1], args[2]);
+	  }
+	  return func.apply(thisArg, args);
+	}
+	
+	module.exports = apply;
+
+
+/***/ },
+/* 42 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(43);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used by `_.defaults` to customize its `_.assignIn` use.
+	 *
+	 * @private
+	 * @param {*} objValue The destination value.
+	 * @param {*} srcValue The source value.
+	 * @param {string} key The key of the property to assign.
+	 * @param {Object} object The parent object of `objValue`.
+	 * @returns {*} Returns the value to assign.
+	 */
+	function assignInDefaults(objValue, srcValue, key, object) {
+	  if (objValue === undefined ||
+	      (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
+	    return srcValue;
+	  }
+	  return objValue;
+	}
+	
+	module.exports = assignInDefaults;
+
+
+/***/ },
+/* 43 */
+/***/ function(module, exports) {
+
+	/**
+	 * Performs a [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	 * comparison between two values to determine if they are equivalent.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 * var other = { 'user': 'fred' };
+	 *
+	 * _.eq(object, object);
+	 * // => true
+	 *
+	 * _.eq(object, other);
+	 * // => false
+	 *
+	 * _.eq('a', 'a');
+	 * // => true
+	 *
+	 * _.eq('a', Object('a'));
+	 * // => false
+	 *
+	 * _.eq(NaN, NaN);
+	 * // => true
+	 */
+	function eq(value, other) {
+	  return value === other || (value !== value && other !== other);
+	}
+	
+	module.exports = eq;
+
+
+/***/ },
+/* 44 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObjectWith = __webpack_require__(45),
+	    createAssigner = __webpack_require__(47),
+	    keysIn = __webpack_require__(59);
+	
+	/**
+	 * This method is like `_.assignIn` except that it accepts `customizer` which
+	 * is invoked to produce the assigned values. If `customizer` returns `undefined`
+	 * assignment is handled by the method instead. The `customizer` is invoked
+	 * with five arguments: (objValue, srcValue, key, object, source).
+	 *
+	 * **Note:** This method mutates `object`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @alias extendWith
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} sources The source objects.
+	 * @param {Function} [customizer] The function to customize assigned values.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * function customizer(objValue, srcValue) {
+	 *   return _.isUndefined(objValue) ? srcValue : objValue;
+	 * }
+	 *
+	 * var defaults = _.partialRight(_.assignInWith, customizer);
+	 *
+	 * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
+	 * // => { 'a': 1, 'b': 2 }
+	 */
+	var assignInWith = createAssigner(function(object, source, srcIndex, customizer) {
+	  copyObjectWith(source, keysIn(source), object, customizer);
+	});
+	
+	module.exports = assignInWith;
+
+
+/***/ },
+/* 45 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignValue = __webpack_require__(46);
+	
+	/**
+	 * This function is like `copyObject` except that it accepts a function to
+	 * customize copied values.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property names to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @param {Function} [customizer] The function to customize copied values.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObjectWith(source, props, object, customizer) {
+	  object || (object = {});
+	
+	  var index = -1,
+	      length = props.length;
+	
+	  while (++index < length) {
+	    var key = props[index];
+	
+	    var newValue = customizer
+	      ? customizer(object[key], source[key], key, object, source)
+	      : source[key];
+	
+	    assignValue(object, key, newValue);
+	  }
+	  return object;
+	}
+	
+	module.exports = copyObjectWith;
+
+
+/***/ },
+/* 46 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(43);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
+	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	 * for equality comparisons.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function assignValue(object, key, value) {
+	  var objValue = object[key];
+	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
+	      (value === undefined && !(key in object))) {
+	    object[key] = value;
+	  }
+	}
+	
+	module.exports = assignValue;
+
+
+/***/ },
+/* 47 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isIterateeCall = __webpack_require__(48),
+	    rest = __webpack_require__(56);
+	
+	/**
+	 * Creates a function like `_.assign`.
+	 *
+	 * @private
+	 * @param {Function} assigner The function to assign values.
+	 * @returns {Function} Returns the new assigner function.
+	 */
+	function createAssigner(assigner) {
+	  return rest(function(object, sources) {
+	    var index = -1,
+	        length = sources.length,
+	        customizer = length > 1 ? sources[length - 1] : undefined,
+	        guard = length > 2 ? sources[2] : undefined;
+	
+	    customizer = typeof customizer == 'function'
+	      ? (length--, customizer)
+	      : undefined;
+	
+	    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
+	      customizer = length < 3 ? undefined : customizer;
+	      length = 1;
+	    }
+	    object = Object(object);
+	    while (++index < length) {
+	      var source = sources[index];
+	      if (source) {
+	        assigner(object, source, index, customizer);
+	      }
+	    }
+	    return object;
+	  });
+	}
+	
+	module.exports = createAssigner;
+
+
+/***/ },
+/* 48 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(43),
+	    isArrayLike = __webpack_require__(49),
+	    isIndex = __webpack_require__(55),
+	    isObject = __webpack_require__(53);
+	
+	/**
+	 * Checks if the given arguments are from an iteratee call.
+	 *
+	 * @private
+	 * @param {*} value The potential iteratee value argument.
+	 * @param {*} index The potential iteratee index or key argument.
+	 * @param {*} object The potential iteratee object argument.
+	 * @returns {boolean} Returns `true` if the arguments are from an iteratee call, else `false`.
+	 */
+	function isIterateeCall(value, index, object) {
+	  if (!isObject(object)) {
+	    return false;
+	  }
+	  var type = typeof index;
+	  if (type == 'number'
+	      ? (isArrayLike(object) && isIndex(index, object.length))
+	      : (type == 'string' && index in object)) {
+	    return eq(object[index], value);
+	  }
+	  return false;
+	}
+	
+	module.exports = isIterateeCall;
+
+
+/***/ },
+/* 49 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getLength = __webpack_require__(50),
+	    isFunction = __webpack_require__(52),
+	    isLength = __webpack_require__(54);
+	
+	/**
+	 * Checks if `value` is array-like. A value is considered array-like if it's
+	 * not a function and has a `value.length` that's an integer greater than or
+	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLike(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLike('abc');
+	 * // => true
+	 *
+	 * _.isArrayLike(_.noop);
+	 * // => false
+	 */
+	function isArrayLike(value) {
+	  return value != null && isLength(getLength(value)) && !isFunction(value);
+	}
+	
+	module.exports = isArrayLike;
+
+
+/***/ },
+/* 50 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseProperty = __webpack_require__(51);
+	
+	/**
+	 * Gets the "length" property value of `object`.
+	 *
+	 * **Note:** This function is used to avoid a [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792)
+	 * that affects Safari on at least iOS 8.1-8.3 ARM64.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {*} Returns the "length" value.
+	 */
+	var getLength = baseProperty('length');
+	
+	module.exports = getLength;
+
+
+/***/ },
+/* 51 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.property` without support for deep paths.
+	 *
+	 * @private
+	 * @param {string} key The key of the property to get.
+	 * @returns {Function} Returns the new function.
+	 */
+	function baseProperty(key) {
+	  return function(object) {
+	    return object == null ? undefined : object[key];
+	  };
+	}
+	
+	module.exports = baseProperty;
+
+
+/***/ },
+/* 52 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(53);
+	
+	/** `Object#toString` result references. */
+	var funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a `Function` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isFunction(_);
+	 * // => true
+	 *
+	 * _.isFunction(/abc/);
+	 * // => false
+	 */
+	function isFunction(value) {
+	  // The use of `Object#toString` avoids issues with the `typeof` operator
+	  // in Safari 8 which returns 'object' for typed array and weak map constructors,
+	  // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
+	  var tag = isObject(value) ? objectToString.call(value) : '';
+	  return tag == funcTag || tag == genTag;
+	}
+	
+	module.exports = isFunction;
+
+
+/***/ },
+/* 53 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is the [language type](https://es5.github.io/#x8) of `Object`.
+	 * (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
+	 * @example
+	 *
+	 * _.isObject({});
+	 * // => true
+	 *
+	 * _.isObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObject(_.noop);
+	 * // => true
+	 *
+	 * _.isObject(null);
+	 * // => false
+	 */
+	function isObject(value) {
+	  var type = typeof value;
+	  return !!value && (type == 'object' || type == 'function');
+	}
+	
+	module.exports = isObject;
+
+
+/***/ },
+/* 54 */
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/**
+	 * Checks if `value` is a valid array-like length.
+	 *
+	 * **Note:** This function is loosely based on [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a valid length, else `false`.
+	 * @example
+	 *
+	 * _.isLength(3);
+	 * // => true
+	 *
+	 * _.isLength(Number.MIN_VALUE);
+	 * // => false
+	 *
+	 * _.isLength(Infinity);
+	 * // => false
+	 *
+	 * _.isLength('3');
+	 * // => false
+	 */
+	function isLength(value) {
+	  return typeof value == 'number' &&
+	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
+	}
+	
+	module.exports = isLength;
+
+
+/***/ },
+/* 55 */
+/***/ function(module, exports) {
+
+	/** Used as references for various `Number` constants. */
+	var MAX_SAFE_INTEGER = 9007199254740991;
+	
+	/** Used to detect unsigned integer values. */
+	var reIsUint = /^(?:0|[1-9]\d*)$/;
+	
+	/**
+	 * Checks if `value` is a valid array-like index.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
+	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
+	 */
+	function isIndex(value, length) {
+	  value = (typeof value == 'number' || reIsUint.test(value)) ? +value : -1;
+	  length = length == null ? MAX_SAFE_INTEGER : length;
+	  return value > -1 && value % 1 == 0 && value < length;
+	}
+	
+	module.exports = isIndex;
+
+
+/***/ },
+/* 56 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(41),
+	    toInteger = __webpack_require__(57);
+	
+	/** Used as the `TypeError` message for "Functions" methods. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * Creates a function that invokes `func` with the `this` binding of the
+	 * created function and arguments from `start` and beyond provided as an array.
+	 *
+	 * **Note:** This method is based on the [rest parameter](https://mdn.io/rest_parameters).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Function
+	 * @param {Function} func The function to apply a rest parameter to.
+	 * @param {number} [start=func.length-1] The start position of the rest parameter.
+	 * @returns {Function} Returns the new function.
+	 * @example
+	 *
+	 * var say = _.rest(function(what, names) {
+	 *   return what + ' ' + _.initial(names).join(', ') +
+	 *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
+	 * });
+	 *
+	 * say('hello', 'fred', 'barney', 'pebbles');
+	 * // => 'hello fred, barney, & pebbles'
+	 */
+	function rest(func, start) {
+	  if (typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
+	  }
+	  start = nativeMax(start === undefined ? (func.length - 1) : toInteger(start), 0);
+	  return function() {
+	    var args = arguments,
+	        index = -1,
+	        length = nativeMax(args.length - start, 0),
+	        array = Array(length);
+	
+	    while (++index < length) {
+	      array[index] = args[start + index];
+	    }
+	    switch (start) {
+	      case 0: return func.call(this, array);
+	      case 1: return func.call(this, args[0], array);
+	      case 2: return func.call(this, args[0], args[1], array);
+	    }
+	    var otherArgs = Array(start + 1);
+	    index = -1;
+	    while (++index < start) {
+	      otherArgs[index] = args[index];
+	    }
+	    otherArgs[start] = array;
+	    return apply(func, this, otherArgs);
+	  };
+	}
+	
+	module.exports = rest;
+
+
+/***/ },
+/* 57 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toNumber = __webpack_require__(58);
+	
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0,
+	    MAX_INTEGER = 1.7976931348623157e+308;
+	
+	/**
+	 * Converts `value` to an integer.
+	 *
+	 * **Note:** This function is loosely based on [`ToInteger`](http://www.ecma-international.org/ecma-262/6.0/#sec-tointeger).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {number} Returns the converted integer.
+	 * @example
+	 *
+	 * _.toInteger(3);
+	 * // => 3
+	 *
+	 * _.toInteger(Number.MIN_VALUE);
+	 * // => 0
+	 *
+	 * _.toInteger(Infinity);
+	 * // => 1.7976931348623157e+308
+	 *
+	 * _.toInteger('3');
+	 * // => 3
+	 */
+	function toInteger(value) {
+	  if (!value) {
+	    return value === 0 ? value : 0;
+	  }
+	  value = toNumber(value);
+	  if (value === INFINITY || value === -INFINITY) {
+	    var sign = (value < 0 ? -1 : 1);
+	    return sign * MAX_INTEGER;
+	  }
+	  var remainder = value % 1;
+	  return value === value ? (remainder ? value - remainder : value) : 0;
+	}
+	
+	module.exports = toInteger;
+
+
+/***/ },
+/* 58 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(52),
+	    isObject = __webpack_require__(53);
+	
+	/** Used as references for various `Number` constants. */
+	var NAN = 0 / 0;
+	
+	/** Used to match leading and trailing whitespace. */
+	var reTrim = /^\s+|\s+$/g;
+	
+	/** Used to detect bad signed hexadecimal string values. */
+	var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
+	
+	/** Used to detect binary string values. */
+	var reIsBinary = /^0b[01]+$/i;
+	
+	/** Used to detect octal string values. */
+	var reIsOctal = /^0o[0-7]+$/i;
+	
+	/** Built-in method references without a dependency on `root`. */
+	var freeParseInt = parseInt;
+	
+	/**
+	 * Converts `value` to a number.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {number} Returns the number.
+	 * @example
+	 *
+	 * _.toNumber(3);
+	 * // => 3
+	 *
+	 * _.toNumber(Number.MIN_VALUE);
+	 * // => 5e-324
+	 *
+	 * _.toNumber(Infinity);
+	 * // => Infinity
+	 *
+	 * _.toNumber('3');
+	 * // => 3
+	 */
+	function toNumber(value) {
+	  if (isObject(value)) {
+	    var other = isFunction(value.valueOf) ? value.valueOf() : value;
+	    value = isObject(other) ? (other + '') : other;
+	  }
+	  if (typeof value != 'string') {
+	    return value === 0 ? value : +value;
+	  }
+	  value = value.replace(reTrim, '');
+	  var isBinary = reIsBinary.test(value);
+	  return (isBinary || reIsOctal.test(value))
+	    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
+	    : (reIsBadHex.test(value) ? NAN : +value);
+	}
+	
+	module.exports = toNumber;
+
+
+/***/ },
+/* 59 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseKeysIn = __webpack_require__(60),
+	    indexKeys = __webpack_require__(65),
+	    isIndex = __webpack_require__(55),
+	    isPrototype = __webpack_require__(72);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Creates an array of the own and inherited enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keysIn(new Foo);
+	 * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
+	 */
+	function keysIn(object) {
+	  var index = -1,
+	      isProto = isPrototype(object),
+	      props = baseKeysIn(object),
+	      propsLength = props.length,
+	      indexes = indexKeys(object),
+	      skipIndexes = !!indexes,
+	      result = indexes || [],
+	      length = result.length;
+	
+	  while (++index < propsLength) {
+	    var key = props[index];
+	    if (!(skipIndexes && (key == 'length' || isIndex(key, length))) &&
+	        !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = keysIn;
+
+
+/***/ },
+/* 60 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Reflect = __webpack_require__(61),
+	    iteratorToArray = __webpack_require__(64);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Built-in value references. */
+	var enumerate = Reflect ? Reflect.enumerate : undefined,
+	    propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	
+	/**
+	 * The base implementation of `_.keysIn` which doesn't skip the constructor
+	 * property of prototypes or treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeysIn(object) {
+	  object = object == null ? object : Object(object);
+	
+	  var result = [];
+	  for (var key in object) {
+	    result.push(key);
+	  }
+	  return result;
+	}
+	
+	// Fallback for IE < 9 with es6-shim.
+	if (enumerate && !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf')) {
+	  baseKeysIn = function(object) {
+	    return iteratorToArray(enumerate(object));
+	  };
+	}
+	
+	module.exports = baseKeysIn;
+
+
+/***/ },
+/* 61 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(62);
+	
+	/** Built-in value references. */
+	var Reflect = root.Reflect;
+	
+	module.exports = Reflect;
+
+
+/***/ },
+/* 62 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module, global) {var checkGlobal = __webpack_require__(63);
+	
+	/** Used to determine if values are of the language type `Object`. */
+	var objectTypes = {
+	  'function': true,
+	  'object': true
+	};
+	
+	/** Detect free variable `exports`. */
+	var freeExports = (objectTypes[typeof exports] && exports && !exports.nodeType)
+	  ? exports
+	  : undefined;
+	
+	/** Detect free variable `module`. */
+	var freeModule = (objectTypes[typeof module] && module && !module.nodeType)
+	  ? module
+	  : undefined;
+	
+	/** Detect free variable `global` from Node.js. */
+	var freeGlobal = checkGlobal(freeExports && freeModule && typeof global == 'object' && global);
+	
+	/** Detect free variable `self`. */
+	var freeSelf = checkGlobal(objectTypes[typeof self] && self);
+	
+	/** Detect free variable `window`. */
+	var freeWindow = checkGlobal(objectTypes[typeof window] && window);
+	
+	/** Detect `this` as the global object. */
+	var thisGlobal = checkGlobal(objectTypes[typeof this] && this);
+	
+	/**
+	 * Used as a reference to the global object.
+	 *
+	 * The `this` value is used if it's the global object to avoid Greasemonkey's
+	 * restricted `window` object, otherwise the `window` object is used.
+	 */
+	var root = freeGlobal ||
+	  ((freeWindow !== (thisGlobal && thisGlobal.window)) && freeWindow) ||
+	    freeSelf || thisGlobal || Function('return this')();
+	
+	module.exports = root;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)(module), (function() { return this; }())))
+
+/***/ },
+/* 63 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is a global object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {null|Object} Returns `value` if it's a global object, else `null`.
+	 */
+	function checkGlobal(value) {
+	  return (value && value.Object === Object) ? value : null;
+	}
+	
+	module.exports = checkGlobal;
+
+
+/***/ },
+/* 64 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `iterator` to an array.
+	 *
+	 * @private
+	 * @param {Object} iterator The iterator to convert.
+	 * @returns {Array} Returns the converted array.
+	 */
+	function iteratorToArray(iterator) {
+	  var data,
+	      result = [];
+	
+	  while (!(data = iterator.next()).done) {
+	    result.push(data.value);
+	  }
+	  return result;
+	}
+	
+	module.exports = iteratorToArray;
+
+
+/***/ },
+/* 65 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseTimes = __webpack_require__(66),
+	    isArguments = __webpack_require__(67),
+	    isArray = __webpack_require__(70),
+	    isLength = __webpack_require__(54),
+	    isString = __webpack_require__(71);
+	
+	/**
+	 * Creates an array of index keys for `object` values of arrays,
+	 * `arguments` objects, and strings, otherwise `null` is returned.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array|null} Returns index keys, else `null`.
+	 */
+	function indexKeys(object) {
+	  var length = object ? object.length : undefined;
+	  if (isLength(length) &&
+	      (isArray(object) || isString(object) || isArguments(object))) {
+	    return baseTimes(length, String);
+	  }
+	  return null;
+	}
+	
+	module.exports = indexKeys;
+
+
+/***/ },
+/* 66 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.times` without support for iteratee shorthands
+	 * or max array length checks.
+	 *
+	 * @private
+	 * @param {number} n The number of times to invoke `iteratee`.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the array of results.
+	 */
+	function baseTimes(n, iteratee) {
+	  var index = -1,
+	      result = Array(n);
+	
+	  while (++index < n) {
+	    result[index] = iteratee(index);
+	  }
+	  return result;
+	}
+	
+	module.exports = baseTimes;
+
+
+/***/ },
+/* 67 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArrayLikeObject = __webpack_require__(68);
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	
+	/**
+	 * Checks if `value` is likely an `arguments` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isArguments(function() { return arguments; }());
+	 * // => true
+	 *
+	 * _.isArguments([1, 2, 3]);
+	 * // => false
+	 */
+	function isArguments(value) {
+	  // Safari 8.1 incorrectly makes `arguments.callee` enumerable in strict mode.
+	  return isArrayLikeObject(value) && hasOwnProperty.call(value, 'callee') &&
+	    (!propertyIsEnumerable.call(value, 'callee') || objectToString.call(value) == argsTag);
+	}
+	
+	module.exports = isArguments;
+
+
+/***/ },
+/* 68 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArrayLike = __webpack_require__(49),
+	    isObjectLike = __webpack_require__(69);
+	
+	/**
+	 * This method is like `_.isArrayLike` except that it also checks if `value`
+	 * is an object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is an array-like object, else `false`.
+	 * @example
+	 *
+	 * _.isArrayLikeObject([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject(document.body.children);
+	 * // => true
+	 *
+	 * _.isArrayLikeObject('abc');
+	 * // => false
+	 *
+	 * _.isArrayLikeObject(_.noop);
+	 * // => false
+	 */
+	function isArrayLikeObject(value) {
+	  return isObjectLike(value) && isArrayLike(value);
+	}
+	
+	module.exports = isArrayLikeObject;
+
+
+/***/ },
+/* 69 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is object-like. A value is object-like if it's not `null`
+	 * and has a `typeof` result of "object".
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
+	 * @example
+	 *
+	 * _.isObjectLike({});
+	 * // => true
+	 *
+	 * _.isObjectLike([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isObjectLike(_.noop);
+	 * // => false
+	 *
+	 * _.isObjectLike(null);
+	 * // => false
+	 */
+	function isObjectLike(value) {
+	  return !!value && typeof value == 'object';
+	}
+	
+	module.exports = isObjectLike;
+
+
+/***/ },
+/* 70 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is classified as an `Array` object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @type {Function}
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isArray([1, 2, 3]);
+	 * // => true
+	 *
+	 * _.isArray(document.body.children);
+	 * // => false
+	 *
+	 * _.isArray('abc');
+	 * // => false
+	 *
+	 * _.isArray(_.noop);
+	 * // => false
+	 */
+	var isArray = Array.isArray;
+	
+	module.exports = isArray;
+
+
+/***/ },
+/* 71 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(70),
+	    isObjectLike = __webpack_require__(69);
+	
+	/** `Object#toString` result references. */
+	var stringTag = '[object String]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a `String` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isString('abc');
+	 * // => true
+	 *
+	 * _.isString(1);
+	 * // => false
+	 */
+	function isString(value) {
+	  return typeof value == 'string' ||
+	    (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
+	}
+	
+	module.exports = isString;
+
+
+/***/ },
+/* 72 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Checks if `value` is likely a prototype object.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a prototype, else `false`.
+	 */
+	function isPrototype(value) {
+	  var Ctor = value && value.constructor,
+	      proto = (typeof Ctor == 'function' && Ctor.prototype) || objectProto;
+	
+	  return value === proto;
+	}
+	
+	module.exports = isPrototype;
+
+
+/***/ },
+/* 73 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseProperty = __webpack_require__(51),
+	    basePropertyDeep = __webpack_require__(74),
+	    isKey = __webpack_require__(81);
+	
+	/**
+	 * Creates a function that returns the value at `path` of a given object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
 	 * @param {Array|string} path The path of the property to get.
 	 * @returns {Function} Returns the new function.
 	 * @example
@@ -1630,7 +3158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * _.map(objects, _.property('a.b.c'));
 	 * // => [2, 1]
 	 *
-	 * _.pluck(_.sortBy(objects, _.property(['a', 'b', 'c'])), 'a.b.c');
+	 * _.map(_.sortBy(objects, _.property(['a', 'b', 'c'])), 'a.b.c');
 	 * // => [1, 2]
 	 */
 	function property(path) {
@@ -1641,11 +3169,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 34 */
+/* 74 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(35),
-	    toPath = __webpack_require__(37);
+	var baseGet = __webpack_require__(75);
 	
 	/**
 	 * A specialized version of `baseProperty` which supports deep paths.
@@ -1655,10 +3182,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Function} Returns the new function.
 	 */
 	function basePropertyDeep(path) {
-	  var pathKey = (path + '');
-	  path = toPath(path);
 	  return function(object) {
-	    return baseGet(object, path, pathKey);
+	    return baseGet(object, path);
 	  };
 	}
 	
@@ -1666,28 +3191,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 35 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toObject = __webpack_require__(36);
+	var baseCastPath = __webpack_require__(76),
+	    isKey = __webpack_require__(81);
 	
 	/**
-	 * The base implementation of `get` without support for string paths
-	 * and default values.
+	 * The base implementation of `_.get` without support for default values.
 	 *
 	 * @private
 	 * @param {Object} object The object to query.
-	 * @param {Array} path The path of the property to get.
-	 * @param {string} [pathKey] The key representation of path.
+	 * @param {Array|string} path The path of the property to get.
 	 * @returns {*} Returns the resolved value.
 	 */
-	function baseGet(object, path, pathKey) {
-	  if (object == null) {
-	    return;
-	  }
-	  if (pathKey !== undefined && pathKey in toObject(object)) {
-	    path = [pathKey];
-	  }
+	function baseGet(object, path) {
+	  path = isKey(path, object) ? [path + ''] : baseCastPath(path);
+	
 	  var index = 0,
 	      length = path.length;
 	
@@ -1701,87 +3221,170 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 36 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(9);
+	var isArray = __webpack_require__(70),
+	    stringToPath = __webpack_require__(77);
 	
 	/**
-	 * Converts `value` to an object if it's not one.
+	 * Casts `value` to a path array if it's not one.
 	 *
 	 * @private
-	 * @param {*} value The value to process.
-	 * @returns {Object} Returns the object.
+	 * @param {*} value The value to inspect.
+	 * @returns {Array} Returns the cast property path array.
 	 */
-	function toObject(value) {
-	  return isObject(value) ? value : Object(value);
+	function baseCastPath(value) {
+	  return isArray(value) ? value : stringToPath(value);
 	}
 	
-	module.exports = toObject;
+	module.exports = baseCastPath;
 
 
 /***/ },
-/* 37 */
+/* 77 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseToString = __webpack_require__(38),
-	    isArray = __webpack_require__(17);
+	var toString = __webpack_require__(78);
 	
 	/** Used to match property names within property paths. */
-	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\n\\]|\\.)*?)\2)\]/g;
+	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
 	
 	/** Used to match backslashes in property paths. */
 	var reEscapeChar = /\\(\\)?/g;
 	
 	/**
-	 * Converts `value` to property path array if it's not one.
+	 * Converts `string` to a property path array.
 	 *
 	 * @private
-	 * @param {*} value The value to process.
+	 * @param {string} string The string to convert.
 	 * @returns {Array} Returns the property path array.
 	 */
-	function toPath(value) {
-	  if (isArray(value)) {
-	    return value;
-	  }
+	function stringToPath(string) {
 	  var result = [];
-	  baseToString(value).replace(rePropName, function(match, number, quote, string) {
+	  toString(string).replace(rePropName, function(match, number, quote, string) {
 	    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
 	  });
 	  return result;
 	}
 	
-	module.exports = toPath;
+	module.exports = stringToPath;
 
 
 /***/ },
-/* 38 */
-/***/ function(module, exports) {
-
-	/**
-	 * Converts `value` to a string if it's not one. An empty string is returned
-	 * for `null` or `undefined` values.
-	 *
-	 * @private
-	 * @param {*} value The value to process.
-	 * @returns {string} Returns the string.
-	 */
-	function baseToString(value) {
-	  return value == null ? '' : (value + '');
-	}
-	
-	module.exports = baseToString;
-
-
-/***/ },
-/* 39 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(17),
-	    toObject = __webpack_require__(36);
+	var Symbol = __webpack_require__(79),
+	    isSymbol = __webpack_require__(80);
+	
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0;
+	
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolToString = symbolProto ? symbolProto.toString : undefined;
+	
+	/**
+	 * Converts `value` to a string if it's not one. An empty string is returned
+	 * for `null` and `undefined` values. The sign of `-0` is preserved.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {string} Returns the string.
+	 * @example
+	 *
+	 * _.toString(null);
+	 * // => ''
+	 *
+	 * _.toString(-0);
+	 * // => '-0'
+	 *
+	 * _.toString([1, 2, 3]);
+	 * // => '1,2,3'
+	 */
+	function toString(value) {
+	  // Exit early for strings to avoid a performance hit in some environments.
+	  if (typeof value == 'string') {
+	    return value;
+	  }
+	  if (value == null) {
+	    return '';
+	  }
+	  if (isSymbol(value)) {
+	    return symbolToString ? symbolToString.call(value) : '';
+	  }
+	  var result = (value + '');
+	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+	}
+	
+	module.exports = toString;
+
+
+/***/ },
+/* 79 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(62);
+	
+	/** Built-in value references. */
+	var Symbol = root.Symbol;
+	
+	module.exports = Symbol;
+
+
+/***/ },
+/* 80 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObjectLike = __webpack_require__(69);
+	
+	/** `Object#toString` result references. */
+	var symbolTag = '[object Symbol]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a `Symbol` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isSymbol(Symbol.iterator);
+	 * // => true
+	 *
+	 * _.isSymbol('abc');
+	 * // => false
+	 */
+	function isSymbol(value) {
+	  return typeof value == 'symbol' ||
+	    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+	}
+	
+	module.exports = isSymbol;
+
+
+/***/ },
+/* 81 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(70);
 	
 	/** Used to match property names within property paths. */
-	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\n\\]|\\.)*?\1)\]/,
+	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
 	    reIsPlainProp = /^\w*$/;
 	
 	/**
@@ -1793,94 +3396,3729 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
 	 */
 	function isKey(value, object) {
-	  var type = typeof value;
-	  if ((type == 'string' && reIsPlainProp.test(value)) || type == 'number') {
+	  if (typeof value == 'number') {
 	    return true;
 	  }
-	  if (isArray(value)) {
-	    return false;
-	  }
-	  var result = !reIsDeepProp.test(value);
-	  return result || (object != null && value in toObject(object));
+	  return !isArray(value) &&
+	    (reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+	      (object != null && value in Object(object)));
 	}
 	
 	module.exports = isKey;
 
 
 /***/ },
-/* 40 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(17);
+	var createWrapper = __webpack_require__(83),
+	    getPlaceholder = __webpack_require__(113),
+	    replaceHolders = __webpack_require__(115),
+	    rest = __webpack_require__(56);
+	
+	/** Used to compose bitmasks for wrapper metadata. */
+	var PARTIAL_FLAG = 32;
 	
 	/**
-	 * The inverse of `_.pairs`; this method returns an object composed from arrays
-	 * of property names and values. Provide either a single two dimensional array,
-	 * e.g. `[[key1, value1], [key2, value2]]` or two arrays, one of property names
-	 * and one of corresponding values.
+	 * Creates a function that invokes `func` with `partial` arguments prepended
+	 * to those provided to the new function. This method is like `_.bind` except
+	 * it does **not** alter the `this` binding.
+	 *
+	 * The `_.partial.placeholder` value, which defaults to `_` in monolithic
+	 * builds, may be used as a placeholder for partially applied arguments.
+	 *
+	 * **Note:** This method doesn't set the "length" property of partially
+	 * applied functions.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @alias object
-	 * @category Array
-	 * @param {Array} props The property names.
-	 * @param {Array} [values=[]] The property values.
-	 * @returns {Object} Returns the new object.
+	 * @category Function
+	 * @param {Function} func The function to partially apply arguments to.
+	 * @param {...*} [partials] The arguments to be partially applied.
+	 * @returns {Function} Returns the new partially applied function.
 	 * @example
 	 *
-	 * _.zipObject([['fred', 30], ['barney', 40]]);
-	 * // => { 'fred': 30, 'barney': 40 }
+	 * var greet = function(greeting, name) {
+	 *   return greeting + ' ' + name;
+	 * };
 	 *
-	 * _.zipObject(['fred', 'barney'], [30, 40]);
-	 * // => { 'fred': 30, 'barney': 40 }
+	 * var sayHelloTo = _.partial(greet, 'hello');
+	 * sayHelloTo('fred');
+	 * // => 'hello fred'
+	 *
+	 * // Partially applied with placeholders.
+	 * var greetFred = _.partial(greet, _, 'fred');
+	 * greetFred('hi');
+	 * // => 'hi fred'
 	 */
-	function zipObject(props, values) {
-	  var index = -1,
-	      length = props ? props.length : 0,
-	      result = {};
+	var partial = rest(function(func, partials) {
+	  var holders = replaceHolders(partials, getPlaceholder(partial));
+	  return createWrapper(func, PARTIAL_FLAG, undefined, partials, holders);
+	});
 	
-	  if (length && !values && !isArray(props[0])) {
-	    values = [];
+	// Assign default placeholders.
+	partial.placeholder = {};
+	
+	module.exports = partial;
+
+
+/***/ },
+/* 83 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseSetData = __webpack_require__(84),
+	    createBaseWrapper = __webpack_require__(91),
+	    createCurryWrapper = __webpack_require__(94),
+	    createHybridWrapper = __webpack_require__(95),
+	    createPartialWrapper = __webpack_require__(116),
+	    getData = __webpack_require__(104),
+	    mergeData = __webpack_require__(117),
+	    setData = __webpack_require__(111),
+	    toInteger = __webpack_require__(57);
+	
+	/** Used as the `TypeError` message for "Functions" methods. */
+	var FUNC_ERROR_TEXT = 'Expected a function';
+	
+	/** Used to compose bitmasks for wrapper metadata. */
+	var BIND_FLAG = 1,
+	    BIND_KEY_FLAG = 2,
+	    CURRY_FLAG = 8,
+	    CURRY_RIGHT_FLAG = 16,
+	    PARTIAL_FLAG = 32,
+	    PARTIAL_RIGHT_FLAG = 64;
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * Creates a function that either curries or invokes `func` with optional
+	 * `this` binding and partially applied arguments.
+	 *
+	 * @private
+	 * @param {Function|string} func The function or method name to wrap.
+	 * @param {number} bitmask The bitmask of wrapper flags.
+	 *  The bitmask may be composed of the following flags:
+	 *     1 - `_.bind`
+	 *     2 - `_.bindKey`
+	 *     4 - `_.curry` or `_.curryRight` of a bound function
+	 *     8 - `_.curry`
+	 *    16 - `_.curryRight`
+	 *    32 - `_.partial`
+	 *    64 - `_.partialRight`
+	 *   128 - `_.rearg`
+	 *   256 - `_.ary`
+	 * @param {*} [thisArg] The `this` binding of `func`.
+	 * @param {Array} [partials] The arguments to be partially applied.
+	 * @param {Array} [holders] The `partials` placeholder indexes.
+	 * @param {Array} [argPos] The argument positions of the new function.
+	 * @param {number} [ary] The arity cap of `func`.
+	 * @param {number} [arity] The arity of `func`.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createWrapper(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
+	  var isBindKey = bitmask & BIND_KEY_FLAG;
+	  if (!isBindKey && typeof func != 'function') {
+	    throw new TypeError(FUNC_ERROR_TEXT);
 	  }
-	  while (++index < length) {
-	    var key = props[index];
-	    if (values) {
-	      result[key] = values[index];
-	    } else if (key) {
-	      result[key[0]] = key[1];
+	  var length = partials ? partials.length : 0;
+	  if (!length) {
+	    bitmask &= ~(PARTIAL_FLAG | PARTIAL_RIGHT_FLAG);
+	    partials = holders = undefined;
+	  }
+	  ary = ary === undefined ? ary : nativeMax(toInteger(ary), 0);
+	  arity = arity === undefined ? arity : toInteger(arity);
+	  length -= holders ? holders.length : 0;
+	
+	  if (bitmask & PARTIAL_RIGHT_FLAG) {
+	    var partialsRight = partials,
+	        holdersRight = holders;
+	
+	    partials = holders = undefined;
+	  }
+	  var data = isBindKey ? undefined : getData(func);
+	
+	  var newData = [
+	    func, bitmask, thisArg, partials, holders, partialsRight, holdersRight,
+	    argPos, ary, arity
+	  ];
+	
+	  if (data) {
+	    mergeData(newData, data);
+	  }
+	  func = newData[0];
+	  bitmask = newData[1];
+	  thisArg = newData[2];
+	  partials = newData[3];
+	  holders = newData[4];
+	  arity = newData[9] = newData[9] == null
+	    ? (isBindKey ? 0 : func.length)
+	    : nativeMax(newData[9] - length, 0);
+	
+	  if (!arity && bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG)) {
+	    bitmask &= ~(CURRY_FLAG | CURRY_RIGHT_FLAG);
+	  }
+	  if (!bitmask || bitmask == BIND_FLAG) {
+	    var result = createBaseWrapper(func, bitmask, thisArg);
+	  } else if (bitmask == CURRY_FLAG || bitmask == CURRY_RIGHT_FLAG) {
+	    result = createCurryWrapper(func, bitmask, arity);
+	  } else if ((bitmask == PARTIAL_FLAG || bitmask == (BIND_FLAG | PARTIAL_FLAG)) && !holders.length) {
+	    result = createPartialWrapper(func, bitmask, thisArg, partials);
+	  } else {
+	    result = createHybridWrapper.apply(undefined, newData);
+	  }
+	  var setter = data ? baseSetData : setData;
+	  return setter(result, newData);
+	}
+	
+	module.exports = createWrapper;
+
+
+/***/ },
+/* 84 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var identity = __webpack_require__(85),
+	    metaMap = __webpack_require__(86);
+	
+	/**
+	 * The base implementation of `setData` without support for hot loop detection.
+	 *
+	 * @private
+	 * @param {Function} func The function to associate metadata with.
+	 * @param {*} data The metadata.
+	 * @returns {Function} Returns `func`.
+	 */
+	var baseSetData = !metaMap ? identity : function(func, data) {
+	  metaMap.set(func, data);
+	  return func;
+	};
+	
+	module.exports = baseSetData;
+
+
+/***/ },
+/* 85 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns the first argument given to it.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value Any value.
+	 * @returns {*} Returns `value`.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 *
+	 * _.identity(object) === object;
+	 * // => true
+	 */
+	function identity(value) {
+	  return value;
+	}
+	
+	module.exports = identity;
+
+
+/***/ },
+/* 86 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var WeakMap = __webpack_require__(87);
+	
+	/** Used to store function metadata. */
+	var metaMap = WeakMap && new WeakMap;
+	
+	module.exports = metaMap;
+
+
+/***/ },
+/* 87 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(88),
+	    root = __webpack_require__(62);
+	
+	/* Built-in method references that are verified to be native. */
+	var WeakMap = getNative(root, 'WeakMap');
+	
+	module.exports = WeakMap;
+
+
+/***/ },
+/* 88 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isNative = __webpack_require__(89);
+	
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = object[key];
+	  return isNative(value) ? value : undefined;
+	}
+	
+	module.exports = getNative;
+
+
+/***/ },
+/* 89 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(52),
+	    isHostObject = __webpack_require__(90),
+	    isObjectLike = __webpack_require__(69);
+	
+	/** Used to match `RegExp` [syntax characters](http://ecma-international.org/ecma-262/6.0/#sec-patterns). */
+	var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+	
+	/** Used to detect host constructors (Safari > 5). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = Function.prototype.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	
+	/**
+	 * Checks if `value` is a native function.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
+	 * @example
+	 *
+	 * _.isNative(Array.prototype.push);
+	 * // => true
+	 *
+	 * _.isNative(_);
+	 * // => false
+	 */
+	function isNative(value) {
+	  if (value == null) {
+	    return false;
+	  }
+	  if (isFunction(value)) {
+	    return reIsNative.test(funcToString.call(value));
+	  }
+	  return isObjectLike(value) &&
+	    (isHostObject(value) ? reIsNative : reIsHostCtor).test(value);
+	}
+	
+	module.exports = isNative;
+
+
+/***/ },
+/* 90 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is a host object in IE < 9.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+	 */
+	function isHostObject(value) {
+	  // Many host objects are `Object` objects that can coerce to strings
+	  // despite having improperly defined `toString` methods.
+	  var result = false;
+	  if (value != null && typeof value.toString != 'function') {
+	    try {
+	      result = !!(value + '');
+	    } catch (e) {}
+	  }
+	  return result;
+	}
+	
+	module.exports = isHostObject;
+
+
+/***/ },
+/* 91 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createCtorWrapper = __webpack_require__(92),
+	    root = __webpack_require__(62);
+	
+	/** Used to compose bitmasks for wrapper metadata. */
+	var BIND_FLAG = 1;
+	
+	/**
+	 * Creates a function that wraps `func` to invoke it with the optional `this`
+	 * binding of `thisArg`.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper` for more details.
+	 * @param {*} [thisArg] The `this` binding of `func`.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createBaseWrapper(func, bitmask, thisArg) {
+	  var isBind = bitmask & BIND_FLAG,
+	      Ctor = createCtorWrapper(func);
+	
+	  function wrapper() {
+	    var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
+	    return fn.apply(isBind ? thisArg : this, arguments);
+	  }
+	  return wrapper;
+	}
+	
+	module.exports = createBaseWrapper;
+
+
+/***/ },
+/* 92 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCreate = __webpack_require__(93),
+	    isObject = __webpack_require__(53);
+	
+	/**
+	 * Creates a function that produces an instance of `Ctor` regardless of
+	 * whether it was invoked as part of a `new` expression or by `call` or `apply`.
+	 *
+	 * @private
+	 * @param {Function} Ctor The constructor to wrap.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createCtorWrapper(Ctor) {
+	  return function() {
+	    // Use a `switch` statement to work with class constructors.
+	    // See http://ecma-international.org/ecma-262/6.0/#sec-ecmascript-function-objects-call-thisargument-argumentslist
+	    // for more details.
+	    var args = arguments;
+	    switch (args.length) {
+	      case 0: return new Ctor;
+	      case 1: return new Ctor(args[0]);
+	      case 2: return new Ctor(args[0], args[1]);
+	      case 3: return new Ctor(args[0], args[1], args[2]);
+	      case 4: return new Ctor(args[0], args[1], args[2], args[3]);
+	      case 5: return new Ctor(args[0], args[1], args[2], args[3], args[4]);
+	      case 6: return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5]);
+	      case 7: return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
+	    }
+	    var thisBinding = baseCreate(Ctor.prototype),
+	        result = Ctor.apply(thisBinding, args);
+	
+	    // Mimic the constructor's `return` behavior.
+	    // See https://es5.github.io/#x13.2.2 for more details.
+	    return isObject(result) ? result : thisBinding;
+	  };
+	}
+	
+	module.exports = createCtorWrapper;
+
+
+/***/ },
+/* 93 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObject = __webpack_require__(53);
+	
+	/** Built-in value references. */
+	var objectCreate = Object.create;
+	
+	/**
+	 * The base implementation of `_.create` without support for assigning
+	 * properties to the created object.
+	 *
+	 * @private
+	 * @param {Object} prototype The object to inherit from.
+	 * @returns {Object} Returns the new object.
+	 */
+	function baseCreate(proto) {
+	  return isObject(proto) ? objectCreate(proto) : {};
+	}
+	
+	module.exports = baseCreate;
+
+
+/***/ },
+/* 94 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(41),
+	    createCtorWrapper = __webpack_require__(92),
+	    createHybridWrapper = __webpack_require__(95),
+	    createRecurryWrapper = __webpack_require__(99),
+	    getPlaceholder = __webpack_require__(113),
+	    replaceHolders = __webpack_require__(115),
+	    root = __webpack_require__(62);
+	
+	/**
+	 * Creates a function that wraps `func` to enable currying.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper` for more details.
+	 * @param {number} arity The arity of `func`.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createCurryWrapper(func, bitmask, arity) {
+	  var Ctor = createCtorWrapper(func);
+	
+	  function wrapper() {
+	    var length = arguments.length,
+	        args = Array(length),
+	        index = length,
+	        placeholder = getPlaceholder(wrapper);
+	
+	    while (index--) {
+	      args[index] = arguments[index];
+	    }
+	    var holders = (length < 3 && args[0] !== placeholder && args[length - 1] !== placeholder)
+	      ? []
+	      : replaceHolders(args, placeholder);
+	
+	    length -= holders.length;
+	    if (length < arity) {
+	      return createRecurryWrapper(
+	        func, bitmask, createHybridWrapper, wrapper.placeholder, undefined,
+	        args, holders, undefined, undefined, arity - length);
+	    }
+	    var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
+	    return apply(fn, this, args);
+	  }
+	  return wrapper;
+	}
+	
+	module.exports = createCurryWrapper;
+
+
+/***/ },
+/* 95 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var composeArgs = __webpack_require__(96),
+	    composeArgsRight = __webpack_require__(97),
+	    countHolders = __webpack_require__(98),
+	    createCtorWrapper = __webpack_require__(92),
+	    createRecurryWrapper = __webpack_require__(99),
+	    getPlaceholder = __webpack_require__(113),
+	    reorder = __webpack_require__(114),
+	    replaceHolders = __webpack_require__(115),
+	    root = __webpack_require__(62);
+	
+	/** Used to compose bitmasks for wrapper metadata. */
+	var BIND_FLAG = 1,
+	    BIND_KEY_FLAG = 2,
+	    CURRY_FLAG = 8,
+	    CURRY_RIGHT_FLAG = 16,
+	    ARY_FLAG = 128,
+	    FLIP_FLAG = 512;
+	
+	/**
+	 * Creates a function that wraps `func` to invoke it with optional `this`
+	 * binding of `thisArg`, partial application, and currying.
+	 *
+	 * @private
+	 * @param {Function|string} func The function or method name to wrap.
+	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper` for more details.
+	 * @param {*} [thisArg] The `this` binding of `func`.
+	 * @param {Array} [partials] The arguments to prepend to those provided to the new function.
+	 * @param {Array} [holders] The `partials` placeholder indexes.
+	 * @param {Array} [partialsRight] The arguments to append to those provided to the new function.
+	 * @param {Array} [holdersRight] The `partialsRight` placeholder indexes.
+	 * @param {Array} [argPos] The argument positions of the new function.
+	 * @param {number} [ary] The arity cap of `func`.
+	 * @param {number} [arity] The arity of `func`.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createHybridWrapper(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
+	  var isAry = bitmask & ARY_FLAG,
+	      isBind = bitmask & BIND_FLAG,
+	      isBindKey = bitmask & BIND_KEY_FLAG,
+	      isCurried = bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG),
+	      isFlip = bitmask & FLIP_FLAG,
+	      Ctor = isBindKey ? undefined : createCtorWrapper(func);
+	
+	  function wrapper() {
+	    var length = arguments.length,
+	        index = length,
+	        args = Array(length);
+	
+	    while (index--) {
+	      args[index] = arguments[index];
+	    }
+	    if (isCurried) {
+	      var placeholder = getPlaceholder(wrapper),
+	          holdersCount = countHolders(args, placeholder);
+	    }
+	    if (partials) {
+	      args = composeArgs(args, partials, holders, isCurried);
+	    }
+	    if (partialsRight) {
+	      args = composeArgsRight(args, partialsRight, holdersRight, isCurried);
+	    }
+	    length -= holdersCount;
+	    if (isCurried && length < arity) {
+	      var newHolders = replaceHolders(args, placeholder);
+	      return createRecurryWrapper(
+	        func, bitmask, createHybridWrapper, wrapper.placeholder, thisArg,
+	        args, newHolders, argPos, ary, arity - length
+	      );
+	    }
+	    var thisBinding = isBind ? thisArg : this,
+	        fn = isBindKey ? thisBinding[func] : func;
+	
+	    length = args.length;
+	    if (argPos) {
+	      args = reorder(args, argPos);
+	    } else if (isFlip && length > 1) {
+	      args.reverse();
+	    }
+	    if (isAry && ary < length) {
+	      args.length = ary;
+	    }
+	    if (this && this !== root && this instanceof wrapper) {
+	      fn = Ctor || createCtorWrapper(fn);
+	    }
+	    return fn.apply(thisBinding, args);
+	  }
+	  return wrapper;
+	}
+	
+	module.exports = createHybridWrapper;
+
+
+/***/ },
+/* 96 */
+/***/ function(module, exports) {
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * Creates an array that is the composition of partially applied arguments,
+	 * placeholders, and provided arguments into a single array of arguments.
+	 *
+	 * @private
+	 * @param {Array|Object} args The provided arguments.
+	 * @param {Array} partials The arguments to prepend to those provided.
+	 * @param {Array} holders The `partials` placeholder indexes.
+	 * @params {boolean} [isCurried] Specify composing for a curried function.
+	 * @returns {Array} Returns the new array of composed arguments.
+	 */
+	function composeArgs(args, partials, holders, isCurried) {
+	  var argsIndex = -1,
+	      argsLength = args.length,
+	      holdersLength = holders.length,
+	      leftIndex = -1,
+	      leftLength = partials.length,
+	      rangeLength = nativeMax(argsLength - holdersLength, 0),
+	      result = Array(leftLength + rangeLength),
+	      isUncurried = !isCurried;
+	
+	  while (++leftIndex < leftLength) {
+	    result[leftIndex] = partials[leftIndex];
+	  }
+	  while (++argsIndex < holdersLength) {
+	    if (isUncurried || argsIndex < argsLength) {
+	      result[holders[argsIndex]] = args[argsIndex];
+	    }
+	  }
+	  while (rangeLength--) {
+	    result[leftIndex++] = args[argsIndex++];
+	  }
+	  return result;
+	}
+	
+	module.exports = composeArgs;
+
+
+/***/ },
+/* 97 */
+/***/ function(module, exports) {
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMax = Math.max;
+	
+	/**
+	 * This function is like `composeArgs` except that the arguments composition
+	 * is tailored for `_.partialRight`.
+	 *
+	 * @private
+	 * @param {Array|Object} args The provided arguments.
+	 * @param {Array} partials The arguments to append to those provided.
+	 * @param {Array} holders The `partials` placeholder indexes.
+	 * @params {boolean} [isCurried] Specify composing for a curried function.
+	 * @returns {Array} Returns the new array of composed arguments.
+	 */
+	function composeArgsRight(args, partials, holders, isCurried) {
+	  var argsIndex = -1,
+	      argsLength = args.length,
+	      holdersIndex = -1,
+	      holdersLength = holders.length,
+	      rightIndex = -1,
+	      rightLength = partials.length,
+	      rangeLength = nativeMax(argsLength - holdersLength, 0),
+	      result = Array(rangeLength + rightLength),
+	      isUncurried = !isCurried;
+	
+	  while (++argsIndex < rangeLength) {
+	    result[argsIndex] = args[argsIndex];
+	  }
+	  var offset = argsIndex;
+	  while (++rightIndex < rightLength) {
+	    result[offset + rightIndex] = partials[rightIndex];
+	  }
+	  while (++holdersIndex < holdersLength) {
+	    if (isUncurried || argsIndex < argsLength) {
+	      result[offset + holders[holdersIndex]] = args[argsIndex++];
 	    }
 	  }
 	  return result;
 	}
 	
-	module.exports = zipObject;
+	module.exports = composeArgsRight;
 
 
 /***/ },
-/* 41 */
+/* 98 */
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the number of `placeholder` occurrences in `array`.
+	 *
+	 * @private
+	 * @param {Array} array The array to inspect.
+	 * @param {*} placeholder The placeholder to search for.
+	 * @returns {number} Returns the placeholder count.
+	 */
+	function countHolders(array, placeholder) {
+	  var length = array.length,
+	      result = 0;
+	
+	  while (length--) {
+	    if (array[length] === placeholder) {
+	      result++;
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = countHolders;
+
+
+/***/ },
+/* 99 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {/* global console */
-	/* eslint-disable no-console */
+	var copyArray = __webpack_require__(100),
+	    isLaziable = __webpack_require__(101),
+	    setData = __webpack_require__(111);
 	
-	// TODO: Use "warning" npm module like React is switching to.
-	"use strict";
+	/** Used to compose bitmasks for wrapper metadata. */
+	var BIND_FLAG = 1,
+	    BIND_KEY_FLAG = 2,
+	    CURRY_BOUND_FLAG = 4,
+	    CURRY_FLAG = 8,
+	    PARTIAL_FLAG = 32,
+	    PARTIAL_RIGHT_FLAG = 64;
+	
+	/**
+	 * Creates a function that wraps `func` to continue currying.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper` for more details.
+	 * @param {Function} wrapFunc The function to create the `func` wrapper.
+	 * @param {*} placeholder The placeholder value.
+	 * @param {*} [thisArg] The `this` binding of `func`.
+	 * @param {Array} [partials] The arguments to prepend to those provided to the new function.
+	 * @param {Array} [holders] The `partials` placeholder indexes.
+	 * @param {Array} [argPos] The argument positions of the new function.
+	 * @param {number} [ary] The arity cap of `func`.
+	 * @param {number} [arity] The arity of `func`.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createRecurryWrapper(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
+	  var isCurry = bitmask & CURRY_FLAG,
+	      newArgPos = argPos ? copyArray(argPos) : undefined,
+	      newHolders = isCurry ? holders : undefined,
+	      newHoldersRight = isCurry ? undefined : holders,
+	      newPartials = isCurry ? partials : undefined,
+	      newPartialsRight = isCurry ? undefined : partials;
+	
+	  bitmask |= (isCurry ? PARTIAL_FLAG : PARTIAL_RIGHT_FLAG);
+	  bitmask &= ~(isCurry ? PARTIAL_RIGHT_FLAG : PARTIAL_FLAG);
+	
+	  if (!(bitmask & CURRY_BOUND_FLAG)) {
+	    bitmask &= ~(BIND_FLAG | BIND_KEY_FLAG);
+	  }
+	  var newData = [
+	    func, bitmask, thisArg, newPartials, newHolders, newPartialsRight,
+	    newHoldersRight, newArgPos, ary, arity
+	  ];
+	
+	  var result = wrapFunc.apply(undefined, newData);
+	  if (isLaziable(func)) {
+	    setData(result, newData);
+	  }
+	  result.placeholder = placeholder;
+	  return result;
+	}
+	
+	module.exports = createRecurryWrapper;
+
+
+/***/ },
+/* 100 */
+/***/ function(module, exports) {
+
+	/**
+	 * Copies the values of `source` to `array`.
+	 *
+	 * @private
+	 * @param {Array} source The array to copy values from.
+	 * @param {Array} [array=[]] The array to copy values to.
+	 * @returns {Array} Returns `array`.
+	 */
+	function copyArray(source, array) {
+	  var index = -1,
+	      length = source.length;
+	
+	  array || (array = Array(length));
+	  while (++index < length) {
+	    array[index] = source[index];
+	  }
+	  return array;
+	}
+	
+	module.exports = copyArray;
+
+
+/***/ },
+/* 101 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var LazyWrapper = __webpack_require__(102),
+	    getData = __webpack_require__(104),
+	    getFuncName = __webpack_require__(106),
+	    lodash = __webpack_require__(108);
+	
+	/**
+	 * Checks if `func` has a lazy counterpart.
+	 *
+	 * @private
+	 * @param {Function} func The function to check.
+	 * @returns {boolean} Returns `true` if `func` has a lazy counterpart, else `false`.
+	 */
+	function isLaziable(func) {
+	  var funcName = getFuncName(func),
+	      other = lodash[funcName];
+	
+	  if (typeof other != 'function' || !(funcName in LazyWrapper.prototype)) {
+	    return false;
+	  }
+	  if (func === other) {
+	    return true;
+	  }
+	  var data = getData(other);
+	  return !!data && func === data[0];
+	}
+	
+	module.exports = isLaziable;
+
+
+/***/ },
+/* 102 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCreate = __webpack_require__(93),
+	    baseLodash = __webpack_require__(103);
+	
+	/** Used as references for the maximum length and index of an array. */
+	var MAX_ARRAY_LENGTH = 4294967295;
+	
+	/**
+	 * Creates a lazy wrapper object which wraps `value` to enable lazy evaluation.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {*} value The value to wrap.
+	 */
+	function LazyWrapper(value) {
+	  this.__wrapped__ = value;
+	  this.__actions__ = [];
+	  this.__dir__ = 1;
+	  this.__filtered__ = false;
+	  this.__iteratees__ = [];
+	  this.__takeCount__ = MAX_ARRAY_LENGTH;
+	  this.__views__ = [];
+	}
+	
+	LazyWrapper.prototype = baseCreate(baseLodash.prototype);
+	LazyWrapper.prototype.constructor = LazyWrapper;
+	
+	module.exports = LazyWrapper;
+
+
+/***/ },
+/* 103 */
+/***/ function(module, exports) {
+
+	/**
+	 * The function whose prototype all chaining wrappers inherit from.
+	 *
+	 * @private
+	 */
+	function baseLodash() {
+	  // No operation performed.
+	}
+	
+	module.exports = baseLodash;
+
+
+/***/ },
+/* 104 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var metaMap = __webpack_require__(86),
+	    noop = __webpack_require__(105);
+	
+	/**
+	 * Gets metadata for `func`.
+	 *
+	 * @private
+	 * @param {Function} func The function to query.
+	 * @returns {*} Returns the metadata for `func`.
+	 */
+	var getData = !metaMap ? noop : function(func) {
+	  return metaMap.get(func);
+	};
+	
+	module.exports = getData;
+
+
+/***/ },
+/* 105 */
+/***/ function(module, exports) {
+
+	/**
+	 * A no-operation function that returns `undefined` regardless of the
+	 * arguments it receives.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 *
+	 * _.noop(object) === undefined;
+	 * // => true
+	 */
+	function noop() {
+	  // No operation performed.
+	}
+	
+	module.exports = noop;
+
+
+/***/ },
+/* 106 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var realNames = __webpack_require__(107);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Gets the name of `func`.
+	 *
+	 * @private
+	 * @param {Function} func The function to query.
+	 * @returns {string} Returns the function name.
+	 */
+	function getFuncName(func) {
+	  var result = (func.name + ''),
+	      array = realNames[result],
+	      length = hasOwnProperty.call(realNames, result) ? array.length : 0;
+	
+	  while (length--) {
+	    var data = array[length],
+	        otherFunc = data.func;
+	    if (otherFunc == null || otherFunc == func) {
+	      return data.name;
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = getFuncName;
+
+
+/***/ },
+/* 107 */
+/***/ function(module, exports) {
+
+	/** Used to lookup unminified function names. */
+	var realNames = {};
+	
+	module.exports = realNames;
+
+
+/***/ },
+/* 108 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var LazyWrapper = __webpack_require__(102),
+	    LodashWrapper = __webpack_require__(109),
+	    baseLodash = __webpack_require__(103),
+	    isArray = __webpack_require__(70),
+	    isObjectLike = __webpack_require__(69),
+	    wrapperClone = __webpack_require__(110);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Creates a `lodash` object which wraps `value` to enable implicit method
+	 * chaining. Methods that operate on and return arrays, collections, and
+	 * functions can be chained together. Methods that retrieve a single value or
+	 * may return a primitive value will automatically end the chain sequence and
+	 * return the unwrapped value. Otherwise, the value must be unwrapped with
+	 * `_#value`.
+	 *
+	 * Explicit chaining, which must be unwrapped with `_#value` in all cases,
+	 * may be enabled using `_.chain`.
+	 *
+	 * The execution of chained methods is lazy, that is, it's deferred until
+	 * `_#value` is implicitly or explicitly called.
+	 *
+	 * Lazy evaluation allows several methods to support shortcut fusion. Shortcut
+	 * fusion is an optimization to merge iteratee calls; this avoids the creation
+	 * of intermediate arrays and can greatly reduce the number of iteratee executions.
+	 * Sections of a chain sequence qualify for shortcut fusion if the section is
+	 * applied to an array of at least two hundred elements and any iteratees
+	 * accept only one argument. The heuristic for whether a section qualifies
+	 * for shortcut fusion is subject to change.
+	 *
+	 * Chaining is supported in custom builds as long as the `_#value` method is
+	 * directly or indirectly included in the build.
+	 *
+	 * In addition to lodash methods, wrappers have `Array` and `String` methods.
+	 *
+	 * The wrapper `Array` methods are:
+	 * `concat`, `join`, `pop`, `push`, `shift`, `sort`, `splice`, and `unshift`
+	 *
+	 * The wrapper `String` methods are:
+	 * `replace` and `split`
+	 *
+	 * The wrapper methods that support shortcut fusion are:
+	 * `at`, `compact`, `drop`, `dropRight`, `dropWhile`, `filter`, `find`,
+	 * `findLast`, `head`, `initial`, `last`, `map`, `reject`, `reverse`, `slice`,
+	 * `tail`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, and `toArray`
+	 *
+	 * The chainable wrapper methods are:
+	 * `after`, `ary`, `assign`, `assignIn`, `assignInWith`, `assignWith`, `at`,
+	 * `before`, `bind`, `bindAll`, `bindKey`, `castArray`, `chain`, `chunk`,
+	 * `commit`, `compact`, `concat`, `conforms`, `constant`, `countBy`, `create`,
+	 * `curry`, `debounce`, `defaults`, `defaultsDeep`, `defer`, `delay`,
+	 * `difference`, `differenceBy`, `differenceWith`, `drop`, `dropRight`,
+	 * `dropRightWhile`, `dropWhile`, `extend`, `extendWith`, `fill`, `filter`,
+	 * `flatten`, `flattenDeep`, `flattenDepth`, `flip`, `flow`, `flowRight`,
+	 * `fromPairs`, `functions`, `functionsIn`, `groupBy`, `initial`, `intersection`,
+	 * `intersectionBy`, `intersectionWith`, `invert`, `invertBy`, `invokeMap`,
+	 * `iteratee`, `keyBy`, `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`,
+	 * `matches`, `matchesProperty`, `memoize`, `merge`, `mergeWith`, `method`,
+	 * `methodOf`, `mixin`, `negate`, `nthArg`, `omit`, `omitBy`, `once`, `orderBy`,
+	 * `over`, `overArgs`, `overEvery`, `overSome`, `partial`, `partialRight`,
+	 * `partition`, `pick`, `pickBy`, `plant`, `property`, `propertyOf`, `pull`,
+	 * `pullAll`, `pullAllBy`, `pullAllWith`, `pullAt`, `push`, `range`,
+	 * `rangeRight`, `rearg`, `reject`, `remove`, `rest`, `reverse`, `sampleSize`,
+	 * `set`, `setWith`, `shuffle`, `slice`, `sort`, `sortBy`, `splice`, `spread`,
+	 * `tail`, `take`, `takeRight`, `takeRightWhile`, `takeWhile`, `tap`, `throttle`,
+	 * `thru`, `toArray`, `toPairs`, `toPairsIn`, `toPath`, `toPlainObject`,
+	 * `transform`, `unary`, `union`, `unionBy`, `unionWith`, `uniq`, `uniqBy`,
+	 * `uniqWith`, `unset`, `unshift`, `unzip`, `unzipWith`, `update`, `values`,
+	 * `valuesIn`, `without`, `wrap`, `xor`, `xorBy`, `xorWith`, `zip`, `zipObject`,
+	 * `zipObjectDeep`, and `zipWith`
+	 *
+	 * The wrapper methods that are **not** chainable by default are:
+	 * `add`, `attempt`, `camelCase`, `capitalize`, `ceil`, `clamp`, `clone`,
+	 * `cloneDeep`, `cloneDeepWith`, `cloneWith`, `deburr`, `each`, `eachRight`,
+	 * `endsWith`, `eq`, `escape`, `escapeRegExp`, `every`, `find`, `findIndex`,
+	 * `findKey`, `findLast`, `findLastIndex`, `findLastKey`, `first`, `floor`,
+	 * `forEach`, `forEachRight`, `forIn`, `forInRight`, `forOwn`, `forOwnRight`,
+	 * `get`, `gt`, `gte`, `has`, `hasIn`, `head`, `identity`, `includes`,
+	 * `indexOf`, `inRange`, `invoke`, `isArguments`, `isArray`, `isArrayBuffer`,
+	 * `isArrayLike`, `isArrayLikeObject`, `isBoolean`, `isBuffer`, `isDate`,
+	 * `isElement`, `isEmpty`, `isEqual`, `isEqualWith`, `isError`, `isFinite`,
+	 * `isFunction`, `isInteger`, `isLength`, `isMap`, `isMatch`, `isMatchWith`,
+	 * `isNaN`, `isNative`, `isNil`, `isNull`, `isNumber`, `isObject`, `isObjectLike`,
+	 * `isPlainObject`, `isRegExp`, `isSafeInteger`, `isSet`, `isString`,
+	 * `isUndefined`, `isTypedArray`, `isWeakMap`, `isWeakSet`, `join`, `kebabCase`,
+	 * `last`, `lastIndexOf`, `lowerCase`, `lowerFirst`, `lt`, `lte`, `max`,
+	 * `maxBy`, `mean`, `min`, `minBy`, `noConflict`, `noop`, `now`, `pad`,
+	 * `padEnd`, `padStart`, `parseInt`, `pop`, `random`, `reduce`, `reduceRight`,
+	 * `repeat`, `result`, `round`, `runInContext`, `sample`, `shift`, `size`,
+	 * `snakeCase`, `some`, `sortedIndex`, `sortedIndexBy`, `sortedLastIndex`,
+	 * `sortedLastIndexBy`, `startCase`, `startsWith`, `subtract`, `sum`, `sumBy`,
+	 * `template`, `times`, `toInteger`, `toJSON`, `toLength`, `toLower`,
+	 * `toNumber`, `toSafeInteger`, `toString`, `toUpper`, `trim`, `trimEnd`,
+	 * `trimStart`, `truncate`, `unescape`, `uniqueId`, `upperCase`, `upperFirst`,
+	 * `value`, and `words`
+	 *
+	 * @name _
+	 * @constructor
+	 * @category Seq
+	 * @param {*} value The value to wrap in a `lodash` instance.
+	 * @returns {Object} Returns the new `lodash` wrapper instance.
+	 * @example
+	 *
+	 * function square(n) {
+	 *   return n * n;
+	 * }
+	 *
+	 * var wrapped = _([1, 2, 3]);
+	 *
+	 * // Returns an unwrapped value.
+	 * wrapped.reduce(_.add);
+	 * // => 6
+	 *
+	 * // Returns a wrapped value.
+	 * var squares = wrapped.map(square);
+	 *
+	 * _.isArray(squares);
+	 * // => false
+	 *
+	 * _.isArray(squares.value());
+	 * // => true
+	 */
+	function lodash(value) {
+	  if (isObjectLike(value) && !isArray(value) && !(value instanceof LazyWrapper)) {
+	    if (value instanceof LodashWrapper) {
+	      return value;
+	    }
+	    if (hasOwnProperty.call(value, '__wrapped__')) {
+	      return wrapperClone(value);
+	    }
+	  }
+	  return new LodashWrapper(value);
+	}
+	
+	// Ensure wrappers are instances of `baseLodash`.
+	lodash.prototype = baseLodash.prototype;
+	lodash.prototype.constructor = lodash;
+	
+	module.exports = lodash;
+
+
+/***/ },
+/* 109 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCreate = __webpack_require__(93),
+	    baseLodash = __webpack_require__(103);
+	
+	/**
+	 * The base constructor for creating `lodash` wrapper objects.
+	 *
+	 * @private
+	 * @param {*} value The value to wrap.
+	 * @param {boolean} [chainAll] Enable chaining for all wrapper methods.
+	 */
+	function LodashWrapper(value, chainAll) {
+	  this.__wrapped__ = value;
+	  this.__actions__ = [];
+	  this.__chain__ = !!chainAll;
+	  this.__index__ = 0;
+	  this.__values__ = undefined;
+	}
+	
+	LodashWrapper.prototype = baseCreate(baseLodash.prototype);
+	LodashWrapper.prototype.constructor = LodashWrapper;
+	
+	module.exports = LodashWrapper;
+
+
+/***/ },
+/* 110 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var LazyWrapper = __webpack_require__(102),
+	    LodashWrapper = __webpack_require__(109),
+	    copyArray = __webpack_require__(100);
+	
+	/**
+	 * Creates a clone of `wrapper`.
+	 *
+	 * @private
+	 * @param {Object} wrapper The wrapper to clone.
+	 * @returns {Object} Returns the cloned wrapper.
+	 */
+	function wrapperClone(wrapper) {
+	  if (wrapper instanceof LazyWrapper) {
+	    return wrapper.clone();
+	  }
+	  var result = new LodashWrapper(wrapper.__wrapped__, wrapper.__chain__);
+	  result.__actions__ = copyArray(wrapper.__actions__);
+	  result.__index__  = wrapper.__index__;
+	  result.__values__ = wrapper.__values__;
+	  return result;
+	}
+	
+	module.exports = wrapperClone;
+
+
+/***/ },
+/* 111 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseSetData = __webpack_require__(84),
+	    now = __webpack_require__(112);
+	
+	/** Used to detect hot functions by number of calls within a span of milliseconds. */
+	var HOT_COUNT = 150,
+	    HOT_SPAN = 16;
+	
+	/**
+	 * Sets metadata for `func`.
+	 *
+	 * **Note:** If this function becomes hot, i.e. is invoked a lot in a short
+	 * period of time, it will trip its breaker and transition to an identity function
+	 * to avoid garbage collection pauses in V8. See [V8 issue 2070](https://code.google.com/p/v8/issues/detail?id=2070)
+	 * for more details.
+	 *
+	 * @private
+	 * @param {Function} func The function to associate metadata with.
+	 * @param {*} data The metadata.
+	 * @returns {Function} Returns `func`.
+	 */
+	var setData = (function() {
+	  var count = 0,
+	      lastCalled = 0;
+	
+	  return function(key, value) {
+	    var stamp = now(),
+	        remaining = HOT_SPAN - (stamp - lastCalled);
+	
+	    lastCalled = stamp;
+	    if (remaining > 0) {
+	      if (++count >= HOT_COUNT) {
+	        return key;
+	      }
+	    } else {
+	      count = 0;
+	    }
+	    return baseSetData(key, value);
+	  };
+	}());
+	
+	module.exports = setData;
+
+
+/***/ },
+/* 112 */
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the timestamp of the number of milliseconds that have elapsed since
+	 * the Unix epoch (1 January 1970 00:00:00 UTC).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @type {Function}
+	 * @category Date
+	 * @returns {number} Returns the timestamp.
+	 * @example
+	 *
+	 * _.defer(function(stamp) {
+	 *   console.log(_.now() - stamp);
+	 * }, _.now());
+	 * // => logs the number of milliseconds it took for the deferred function to be invoked
+	 */
+	var now = Date.now;
+	
+	module.exports = now;
+
+
+/***/ },
+/* 113 */
+/***/ function(module, exports) {
+
+	/**
+	 * Gets the argument placeholder value for `func`.
+	 *
+	 * @private
+	 * @param {Function} func The function to inspect.
+	 * @returns {*} Returns the placeholder value.
+	 */
+	function getPlaceholder(func) {
+	  var object = func;
+	  return object.placeholder;
+	}
+	
+	module.exports = getPlaceholder;
+
+
+/***/ },
+/* 114 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyArray = __webpack_require__(100),
+	    isIndex = __webpack_require__(55);
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMin = Math.min;
+	
+	/**
+	 * Reorder `array` according to the specified indexes where the element at
+	 * the first index is assigned as the first element, the element at
+	 * the second index is assigned as the second element, and so on.
+	 *
+	 * @private
+	 * @param {Array} array The array to reorder.
+	 * @param {Array} indexes The arranged array indexes.
+	 * @returns {Array} Returns `array`.
+	 */
+	function reorder(array, indexes) {
+	  var arrLength = array.length,
+	      length = nativeMin(indexes.length, arrLength),
+	      oldArray = copyArray(array);
+	
+	  while (length--) {
+	    var index = indexes[length];
+	    array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined;
+	  }
+	  return array;
+	}
+	
+	module.exports = reorder;
+
+
+/***/ },
+/* 115 */
+/***/ function(module, exports) {
+
+	/** Used as the internal argument placeholder. */
+	var PLACEHOLDER = '__lodash_placeholder__';
+	
+	/**
+	 * Replaces all `placeholder` elements in `array` with an internal placeholder
+	 * and returns an array of their indexes.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {*} placeholder The placeholder to replace.
+	 * @returns {Array} Returns the new array of placeholder indexes.
+	 */
+	function replaceHolders(array, placeholder) {
+	  var index = -1,
+	      length = array.length,
+	      resIndex = 0,
+	      result = [];
+	
+	  while (++index < length) {
+	    var value = array[index];
+	    if (value === placeholder || value === PLACEHOLDER) {
+	      array[index] = PLACEHOLDER;
+	      result[resIndex++] = index;
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = replaceHolders;
+
+
+/***/ },
+/* 116 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var apply = __webpack_require__(41),
+	    createCtorWrapper = __webpack_require__(92),
+	    root = __webpack_require__(62);
+	
+	/** Used to compose bitmasks for wrapper metadata. */
+	var BIND_FLAG = 1;
+	
+	/**
+	 * Creates a function that wraps `func` to invoke it with the optional `this`
+	 * binding of `thisArg` and the `partials` prepended to those provided to
+	 * the wrapper.
+	 *
+	 * @private
+	 * @param {Function} func The function to wrap.
+	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper` for more details.
+	 * @param {*} thisArg The `this` binding of `func`.
+	 * @param {Array} partials The arguments to prepend to those provided to the new function.
+	 * @returns {Function} Returns the new wrapped function.
+	 */
+	function createPartialWrapper(func, bitmask, thisArg, partials) {
+	  var isBind = bitmask & BIND_FLAG,
+	      Ctor = createCtorWrapper(func);
+	
+	  function wrapper() {
+	    var argsIndex = -1,
+	        argsLength = arguments.length,
+	        leftIndex = -1,
+	        leftLength = partials.length,
+	        args = Array(leftLength + argsLength),
+	        fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
+	
+	    while (++leftIndex < leftLength) {
+	      args[leftIndex] = partials[leftIndex];
+	    }
+	    while (argsLength--) {
+	      args[leftIndex++] = arguments[++argsIndex];
+	    }
+	    return apply(fn, isBind ? thisArg : this, args);
+	  }
+	  return wrapper;
+	}
+	
+	module.exports = createPartialWrapper;
+
+
+/***/ },
+/* 117 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var composeArgs = __webpack_require__(96),
+	    composeArgsRight = __webpack_require__(97),
+	    copyArray = __webpack_require__(100),
+	    replaceHolders = __webpack_require__(115);
+	
+	/** Used as the internal argument placeholder. */
+	var PLACEHOLDER = '__lodash_placeholder__';
+	
+	/** Used to compose bitmasks for wrapper metadata. */
+	var BIND_FLAG = 1,
+	    BIND_KEY_FLAG = 2,
+	    CURRY_BOUND_FLAG = 4,
+	    CURRY_FLAG = 8,
+	    ARY_FLAG = 128,
+	    REARG_FLAG = 256;
+	
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeMin = Math.min;
+	
+	/**
+	 * Merges the function metadata of `source` into `data`.
+	 *
+	 * Merging metadata reduces the number of wrappers used to invoke a function.
+	 * This is possible because methods like `_.bind`, `_.curry`, and `_.partial`
+	 * may be applied regardless of execution order. Methods like `_.ary` and `_.rearg`
+	 * modify function arguments, making the order in which they are executed important,
+	 * preventing the merging of metadata. However, we make an exception for a safe
+	 * combined case where curried functions have `_.ary` and or `_.rearg` applied.
+	 *
+	 * @private
+	 * @param {Array} data The destination metadata.
+	 * @param {Array} source The source metadata.
+	 * @returns {Array} Returns `data`.
+	 */
+	function mergeData(data, source) {
+	  var bitmask = data[1],
+	      srcBitmask = source[1],
+	      newBitmask = bitmask | srcBitmask,
+	      isCommon = newBitmask < (BIND_FLAG | BIND_KEY_FLAG | ARY_FLAG);
+	
+	  var isCombo =
+	    ((srcBitmask == ARY_FLAG) && (bitmask == CURRY_FLAG)) ||
+	    ((srcBitmask == ARY_FLAG) && (bitmask == REARG_FLAG) && (data[7].length <= source[8])) ||
+	    ((srcBitmask == (ARY_FLAG | REARG_FLAG)) && (source[7].length <= source[8]) && (bitmask == CURRY_FLAG));
+	
+	  // Exit early if metadata can't be merged.
+	  if (!(isCommon || isCombo)) {
+	    return data;
+	  }
+	  // Use source `thisArg` if available.
+	  if (srcBitmask & BIND_FLAG) {
+	    data[2] = source[2];
+	    // Set when currying a bound function.
+	    newBitmask |= bitmask & BIND_FLAG ? 0 : CURRY_BOUND_FLAG;
+	  }
+	  // Compose partial arguments.
+	  var value = source[3];
+	  if (value) {
+	    var partials = data[3];
+	    data[3] = partials ? composeArgs(partials, value, source[4]) : copyArray(value);
+	    data[4] = partials ? replaceHolders(data[3], PLACEHOLDER) : copyArray(source[4]);
+	  }
+	  // Compose partial right arguments.
+	  value = source[5];
+	  if (value) {
+	    partials = data[5];
+	    data[5] = partials ? composeArgsRight(partials, value, source[6]) : copyArray(value);
+	    data[6] = partials ? replaceHolders(data[5], PLACEHOLDER) : copyArray(source[6]);
+	  }
+	  // Use source `argPos` if available.
+	  value = source[7];
+	  if (value) {
+	    data[7] = copyArray(value);
+	  }
+	  // Use source `ary` if it's smaller.
+	  if (srcBitmask & ARY_FLAG) {
+	    data[8] = data[8] == null ? source[8] : nativeMin(data[8], source[8]);
+	  }
+	  // Use source `arity` if one is not provided.
+	  if (data[9] == null) {
+	    data[9] = source[9];
+	  }
+	  // Use source `func` and merge bitmasks.
+	  data[0] = source[0];
+	  data[1] = newBitmask;
+	
+	  return data;
+	}
+	
+	module.exports = mergeData;
+
+
+/***/ },
+/* 118 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseSet = __webpack_require__(119);
+	
+	/**
+	 * Sets the value at `path` of `object`. If a portion of `path` doesn't exist
+	 * it's created. Arrays are created for missing index properties while objects
+	 * are created for all other missing properties. Use `_.setWith` to customize
+	 * `path` creation.
+	 *
+	 * **Note:** This method mutates `object`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to modify.
+	 * @param {Array|string} path The path of the property to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * var object = { 'a': [{ 'b': { 'c': 3 } }] };
+	 *
+	 * _.set(object, 'a[0].b.c', 4);
+	 * console.log(object.a[0].b.c);
+	 * // => 4
+	 *
+	 * _.set(object, 'x[0].y.z', 5);
+	 * console.log(object.x[0].y.z);
+	 * // => 5
+	 */
+	function set(object, path, value) {
+	  return object == null ? object : baseSet(object, path, value);
+	}
+	
+	module.exports = set;
+
+
+/***/ },
+/* 119 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignValue = __webpack_require__(46),
+	    baseCastPath = __webpack_require__(76),
+	    isIndex = __webpack_require__(55),
+	    isKey = __webpack_require__(81),
+	    isObject = __webpack_require__(53);
+	
+	/**
+	 * The base implementation of `_.set`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} path The path of the property to set.
+	 * @param {*} value The value to set.
+	 * @param {Function} [customizer] The function to customize path creation.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseSet(object, path, value, customizer) {
+	  path = isKey(path, object) ? [path + ''] : baseCastPath(path);
+	
+	  var index = -1,
+	      length = path.length,
+	      lastIndex = length - 1,
+	      nested = object;
+	
+	  while (nested != null && ++index < length) {
+	    var key = path[index];
+	    if (isObject(nested)) {
+	      var newValue = value;
+	      if (index != lastIndex) {
+	        var objValue = nested[key];
+	        newValue = customizer ? customizer(objValue, key, nested) : undefined;
+	        if (newValue === undefined) {
+	          newValue = objValue == null
+	            ? (isIndex(path[index + 1]) ? [] : {})
+	            : objValue;
+	        }
+	      }
+	      assignValue(nested, key, newValue);
+	    }
+	    nested = nested[key];
+	  }
+	  return object;
+	}
+	
+	module.exports = baseSet;
+
+
+/***/ },
+/* 120 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseMerge = __webpack_require__(121),
+	    createAssigner = __webpack_require__(47);
+	
+	/**
+	 * This method is like `_.assign` except that it recursively merges own and
+	 * inherited enumerable properties of source objects into the destination
+	 * object. Source properties that resolve to `undefined` are skipped if a
+	 * destination value exists. Array and plain object properties are merged
+	 * recursively.Other objects and value types are overridden by assignment.
+	 * Source objects are applied from left to right. Subsequent sources
+	 * overwrite property assignments of previous sources.
+	 *
+	 * **Note:** This method mutates `object`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} [sources] The source objects.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * var users = {
+	 *   'data': [{ 'user': 'barney' }, { 'user': 'fred' }]
+	 * };
+	 *
+	 * var ages = {
+	 *   'data': [{ 'age': 36 }, { 'age': 40 }]
+	 * };
+	 *
+	 * _.merge(users, ages);
+	 * // => { 'data': [{ 'user': 'barney', 'age': 36 }, { 'user': 'fred', 'age': 40 }] }
+	 */
+	var merge = createAssigner(function(object, source, srcIndex) {
+	  baseMerge(object, source, srcIndex);
+	});
+	
+	module.exports = merge;
+
+
+/***/ },
+/* 121 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Stack = __webpack_require__(122),
+	    arrayEach = __webpack_require__(147),
+	    assignMergeValue = __webpack_require__(148),
+	    baseMergeDeep = __webpack_require__(149),
+	    isArray = __webpack_require__(70),
+	    isObject = __webpack_require__(53),
+	    isTypedArray = __webpack_require__(182),
+	    keysIn = __webpack_require__(59);
+	
+	/**
+	 * The base implementation of `_.merge` without support for multiple sources.
+	 *
+	 * @private
+	 * @param {Object} object The destination object.
+	 * @param {Object} source The source object.
+	 * @param {number} srcIndex The index of `source`.
+	 * @param {Function} [customizer] The function to customize merged values.
+	 * @param {Object} [stack] Tracks traversed source values and their merged counterparts.
+	 */
+	function baseMerge(object, source, srcIndex, customizer, stack) {
+	  if (object === source) {
+	    return;
+	  }
+	  var props = (isArray(source) || isTypedArray(source))
+	    ? undefined
+	    : keysIn(source);
+	
+	  arrayEach(props || source, function(srcValue, key) {
+	    if (props) {
+	      key = srcValue;
+	      srcValue = source[key];
+	    }
+	    if (isObject(srcValue)) {
+	      stack || (stack = new Stack);
+	      baseMergeDeep(object, source, key, srcIndex, baseMerge, customizer, stack);
+	    }
+	    else {
+	      var newValue = customizer
+	        ? customizer(object[key], srcValue, (key + ''), object, source, stack)
+	        : undefined;
+	
+	      if (newValue === undefined) {
+	        newValue = srcValue;
+	      }
+	      assignMergeValue(object, key, newValue);
+	    }
+	  });
+	}
+	
+	module.exports = baseMerge;
+
+
+/***/ },
+/* 122 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var stackClear = __webpack_require__(123),
+	    stackDelete = __webpack_require__(124),
+	    stackGet = __webpack_require__(127),
+	    stackHas = __webpack_require__(129),
+	    stackSet = __webpack_require__(131);
+	
+	/**
+	 * Creates a stack cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [values] The values to cache.
+	 */
+	function Stack(values) {
+	  var index = -1,
+	      length = values ? values.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = values[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	// Add functions to the `Stack` cache.
+	Stack.prototype.clear = stackClear;
+	Stack.prototype['delete'] = stackDelete;
+	Stack.prototype.get = stackGet;
+	Stack.prototype.has = stackHas;
+	Stack.prototype.set = stackSet;
+	
+	module.exports = Stack;
+
+
+/***/ },
+/* 123 */
+/***/ function(module, exports) {
+
+	/**
+	 * Removes all key-value entries from the stack.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf Stack
+	 */
+	function stackClear() {
+	  this.__data__ = { 'array': [], 'map': null };
+	}
+	
+	module.exports = stackClear;
+
+
+/***/ },
+/* 124 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocDelete = __webpack_require__(125);
+	
+	/**
+	 * Removes `key` and its value from the stack.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function stackDelete(key) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  return array ? assocDelete(array, key) : data.map['delete'](key);
+	}
+	
+	module.exports = stackDelete;
+
+
+/***/ },
+/* 125 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(126);
+	
+	/** Used for built-in method references. */
+	var arrayProto = Array.prototype;
+	
+	/** Built-in value references. */
+	var splice = arrayProto.splice;
+	
+	/**
+	 * Removes `key` and its value from the associative array.
+	 *
+	 * @private
+	 * @param {Array} array The array to query.
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function assocDelete(array, key) {
+	  var index = assocIndexOf(array, key);
+	  if (index < 0) {
+	    return false;
+	  }
+	  var lastIndex = array.length - 1;
+	  if (index == lastIndex) {
+	    array.pop();
+	  } else {
+	    splice.call(array, index, 1);
+	  }
+	  return true;
+	}
+	
+	module.exports = assocDelete;
+
+
+/***/ },
+/* 126 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(43);
+	
+	/**
+	 * Gets the index at which the first occurrence of `key` is found in `array`
+	 * of key-value pairs.
+	 *
+	 * @private
+	 * @param {Array} array The array to search.
+	 * @param {*} key The key to search for.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function assocIndexOf(array, key) {
+	  var length = array.length;
+	  while (length--) {
+	    if (eq(array[length][0], key)) {
+	      return length;
+	    }
+	  }
+	  return -1;
+	}
+	
+	module.exports = assocIndexOf;
+
+
+/***/ },
+/* 127 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocGet = __webpack_require__(128);
+	
+	/**
+	 * Gets the stack value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function stackGet(key) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  return array ? assocGet(array, key) : data.map.get(key);
+	}
+	
+	module.exports = stackGet;
+
+
+/***/ },
+/* 128 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(126);
+	
+	/**
+	 * Gets the associative array value for `key`.
+	 *
+	 * @private
+	 * @param {Array} array The array to query.
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function assocGet(array, key) {
+	  var index = assocIndexOf(array, key);
+	  return index < 0 ? undefined : array[index][1];
+	}
+	
+	module.exports = assocGet;
+
+
+/***/ },
+/* 129 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocHas = __webpack_require__(130);
+	
+	/**
+	 * Checks if a stack value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf Stack
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function stackHas(key) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  return array ? assocHas(array, key) : data.map.has(key);
+	}
+	
+	module.exports = stackHas;
+
+
+/***/ },
+/* 130 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(126);
+	
+	/**
+	 * Checks if an associative array value for `key` exists.
+	 *
+	 * @private
+	 * @param {Array} array The array to query.
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function assocHas(array, key) {
+	  return assocIndexOf(array, key) > -1;
+	}
+	
+	module.exports = assocHas;
+
+
+/***/ },
+/* 131 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MapCache = __webpack_require__(132),
+	    assocSet = __webpack_require__(145);
+	
+	/** Used as the size to enable large array optimizations. */
+	var LARGE_ARRAY_SIZE = 200;
+	
+	/**
+	 * Sets the stack `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the stack cache object.
+	 */
+	function stackSet(key, value) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  if (array) {
+	    if (array.length < (LARGE_ARRAY_SIZE - 1)) {
+	      assocSet(array, key, value);
+	    } else {
+	      data.array = null;
+	      data.map = new MapCache(array);
+	    }
+	  }
+	  var map = data.map;
+	  if (map) {
+	    map.set(key, value);
+	  }
+	  return this;
+	}
+	
+	module.exports = stackSet;
+
+
+/***/ },
+/* 132 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var mapClear = __webpack_require__(133),
+	    mapDelete = __webpack_require__(137),
+	    mapGet = __webpack_require__(141),
+	    mapHas = __webpack_require__(143),
+	    mapSet = __webpack_require__(144);
+	
+	/**
+	 * Creates a map cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [values] The values to cache.
+	 */
+	function MapCache(values) {
+	  var index = -1,
+	      length = values ? values.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = values[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	// Add functions to the `MapCache`.
+	MapCache.prototype.clear = mapClear;
+	MapCache.prototype['delete'] = mapDelete;
+	MapCache.prototype.get = mapGet;
+	MapCache.prototype.has = mapHas;
+	MapCache.prototype.set = mapSet;
+	
+	module.exports = MapCache;
+
+
+/***/ },
+/* 133 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Hash = __webpack_require__(134),
+	    Map = __webpack_require__(136);
+	
+	/**
+	 * Removes all key-value entries from the map.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf MapCache
+	 */
+	function mapClear() {
+	  this.__data__ = {
+	    'hash': new Hash,
+	    'map': Map ? new Map : [],
+	    'string': new Hash
+	  };
+	}
+	
+	module.exports = mapClear;
+
+
+/***/ },
+/* 134 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(135);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Creates an hash object.
+	 *
+	 * @private
+	 * @constructor
+	 * @returns {Object} Returns the new hash object.
+	 */
+	function Hash() {}
+	
+	// Avoid inheriting from `Object.prototype` when possible.
+	Hash.prototype = nativeCreate ? nativeCreate(null) : objectProto;
+	
+	module.exports = Hash;
+
+
+/***/ },
+/* 135 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(88);
+	
+	/* Built-in method references that are verified to be native. */
+	var nativeCreate = getNative(Object, 'create');
+	
+	module.exports = nativeCreate;
+
+
+/***/ },
+/* 136 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(88),
+	    root = __webpack_require__(62);
+	
+	/* Built-in method references that are verified to be native. */
+	var Map = getNative(root, 'Map');
+	
+	module.exports = Map;
+
+
+/***/ },
+/* 137 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(136),
+	    assocDelete = __webpack_require__(125),
+	    hashDelete = __webpack_require__(138),
+	    isKeyable = __webpack_require__(140);
+	
+	/**
+	 * Removes `key` and its value from the map.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function mapDelete(key) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    return hashDelete(typeof key == 'string' ? data.string : data.hash, key);
+	  }
+	  return Map ? data.map['delete'](key) : assocDelete(data.map, key);
+	}
+	
+	module.exports = mapDelete;
+
+
+/***/ },
+/* 138 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var hashHas = __webpack_require__(139);
+	
+	/**
+	 * Removes `key` and its value from the hash.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to modify.
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function hashDelete(hash, key) {
+	  return hashHas(hash, key) && delete hash[key];
+	}
+	
+	module.exports = hashDelete;
+
+
+/***/ },
+/* 139 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(135);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Checks if a hash value for `key` exists.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to query.
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function hashHas(hash, key) {
+	  return nativeCreate ? hash[key] !== undefined : hasOwnProperty.call(hash, key);
+	}
+	
+	module.exports = hashHas;
+
+
+/***/ },
+/* 140 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is suitable for use as unique object key.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+	 */
+	function isKeyable(value) {
+	  var type = typeof value;
+	  return type == 'number' || type == 'boolean' ||
+	    (type == 'string' && value != '__proto__') || value == null;
+	}
+	
+	module.exports = isKeyable;
+
+
+/***/ },
+/* 141 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(136),
+	    assocGet = __webpack_require__(128),
+	    hashGet = __webpack_require__(142),
+	    isKeyable = __webpack_require__(140);
+	
+	/**
+	 * Gets the map value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function mapGet(key) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    return hashGet(typeof key == 'string' ? data.string : data.hash, key);
+	  }
+	  return Map ? data.map.get(key) : assocGet(data.map, key);
+	}
+	
+	module.exports = mapGet;
+
+
+/***/ },
+/* 142 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(135);
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Gets the hash value for `key`.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to query.
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function hashGet(hash, key) {
+	  if (nativeCreate) {
+	    var result = hash[key];
+	    return result === HASH_UNDEFINED ? undefined : result;
+	  }
+	  return hasOwnProperty.call(hash, key) ? hash[key] : undefined;
+	}
+	
+	module.exports = hashGet;
+
+
+/***/ },
+/* 143 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(136),
+	    assocHas = __webpack_require__(130),
+	    hashHas = __webpack_require__(139),
+	    isKeyable = __webpack_require__(140);
+	
+	/**
+	 * Checks if a map value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf MapCache
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function mapHas(key) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    return hashHas(typeof key == 'string' ? data.string : data.hash, key);
+	  }
+	  return Map ? data.map.has(key) : assocHas(data.map, key);
+	}
+	
+	module.exports = mapHas;
+
+
+/***/ },
+/* 144 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(136),
+	    assocSet = __webpack_require__(145),
+	    hashSet = __webpack_require__(146),
+	    isKeyable = __webpack_require__(140);
+	
+	/**
+	 * Sets the map `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the map cache object.
+	 */
+	function mapSet(key, value) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    hashSet(typeof key == 'string' ? data.string : data.hash, key, value);
+	  } else if (Map) {
+	    data.map.set(key, value);
+	  } else {
+	    assocSet(data.map, key, value);
+	  }
+	  return this;
+	}
+	
+	module.exports = mapSet;
+
+
+/***/ },
+/* 145 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(126);
+	
+	/**
+	 * Sets the associative array `key` to `value`.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 */
+	function assocSet(array, key, value) {
+	  var index = assocIndexOf(array, key);
+	  if (index < 0) {
+	    array.push([key, value]);
+	  } else {
+	    array[index][1] = value;
+	  }
+	}
+	
+	module.exports = assocSet;
+
+
+/***/ },
+/* 146 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(135);
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/**
+	 * Sets the hash `key` to `value`.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to modify.
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 */
+	function hashSet(hash, key, value) {
+	  hash[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+	}
+	
+	module.exports = hashSet;
+
+
+/***/ },
+/* 147 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.forEach` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayEach(array, iteratee) {
+	  var index = -1,
+	      length = array.length;
+	
+	  while (++index < length) {
+	    if (iteratee(array[index], index, array) === false) {
+	      break;
+	    }
+	  }
+	  return array;
+	}
+	
+	module.exports = arrayEach;
+
+
+/***/ },
+/* 148 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(43);
+	
+	/**
+	 * This function is like `assignValue` except that it doesn't assign
+	 * `undefined` values.
+	 *
+	 * @private
+	 * @param {Object} object The object to modify.
+	 * @param {string} key The key of the property to assign.
+	 * @param {*} value The value to assign.
+	 */
+	function assignMergeValue(object, key, value) {
+	  if ((value !== undefined && !eq(object[key], value)) ||
+	      (typeof key == 'number' && value === undefined && !(key in object))) {
+	    object[key] = value;
+	  }
+	}
+	
+	module.exports = assignMergeValue;
+
+
+/***/ },
+/* 149 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignMergeValue = __webpack_require__(148),
+	    baseClone = __webpack_require__(150),
+	    copyArray = __webpack_require__(100),
+	    isArguments = __webpack_require__(67),
+	    isArray = __webpack_require__(70),
+	    isArrayLikeObject = __webpack_require__(68),
+	    isFunction = __webpack_require__(52),
+	    isObject = __webpack_require__(53),
+	    isPlainObject = __webpack_require__(181),
+	    isTypedArray = __webpack_require__(182),
+	    toPlainObject = __webpack_require__(183);
+	
+	/**
+	 * A specialized version of `baseMerge` for arrays and objects which performs
+	 * deep merges and tracks traversed objects enabling objects with circular
+	 * references to be merged.
+	 *
+	 * @private
+	 * @param {Object} object The destination object.
+	 * @param {Object} source The source object.
+	 * @param {string} key The key of the value to merge.
+	 * @param {number} srcIndex The index of `source`.
+	 * @param {Function} mergeFunc The function to merge values.
+	 * @param {Function} [customizer] The function to customize assigned values.
+	 * @param {Object} [stack] Tracks traversed source values and their merged counterparts.
+	 */
+	function baseMergeDeep(object, source, key, srcIndex, mergeFunc, customizer, stack) {
+	  var objValue = object[key],
+	      srcValue = source[key],
+	      stacked = stack.get(srcValue);
+	
+	  if (stacked) {
+	    assignMergeValue(object, key, stacked);
+	    return;
+	  }
+	  var newValue = customizer
+	    ? customizer(objValue, srcValue, (key + ''), object, source, stack)
+	    : undefined;
+	
+	  var isCommon = newValue === undefined;
+	
+	  if (isCommon) {
+	    newValue = srcValue;
+	    if (isArray(srcValue) || isTypedArray(srcValue)) {
+	      if (isArray(objValue)) {
+	        newValue = objValue;
+	      }
+	      else if (isArrayLikeObject(objValue)) {
+	        newValue = copyArray(objValue);
+	      }
+	      else {
+	        isCommon = false;
+	        newValue = baseClone(srcValue, !customizer);
+	      }
+	    }
+	    else if (isPlainObject(srcValue) || isArguments(srcValue)) {
+	      if (isArguments(objValue)) {
+	        newValue = toPlainObject(objValue);
+	      }
+	      else if (!isObject(objValue) || (srcIndex && isFunction(objValue))) {
+	        isCommon = false;
+	        newValue = baseClone(srcValue, !customizer);
+	      }
+	      else {
+	        newValue = objValue;
+	      }
+	    }
+	    else {
+	      isCommon = false;
+	    }
+	  }
+	  stack.set(srcValue, newValue);
+	
+	  if (isCommon) {
+	    // Recursively merge objects and arrays (susceptible to call stack limits).
+	    mergeFunc(newValue, srcValue, srcIndex, customizer, stack);
+	  }
+	  stack['delete'](srcValue);
+	  assignMergeValue(object, key, newValue);
+	}
+	
+	module.exports = baseMergeDeep;
+
+
+/***/ },
+/* 150 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Stack = __webpack_require__(122),
+	    arrayEach = __webpack_require__(147),
+	    assignValue = __webpack_require__(46),
+	    baseAssign = __webpack_require__(151),
+	    baseForOwn = __webpack_require__(156),
+	    cloneBuffer = __webpack_require__(159),
+	    copyArray = __webpack_require__(100),
+	    copySymbols = __webpack_require__(160),
+	    getTag = __webpack_require__(162),
+	    initCloneArray = __webpack_require__(164),
+	    initCloneByTag = __webpack_require__(165),
+	    initCloneObject = __webpack_require__(178),
+	    isArray = __webpack_require__(70),
+	    isBuffer = __webpack_require__(179),
+	    isHostObject = __webpack_require__(90),
+	    isObject = __webpack_require__(53);
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    genTag = '[object GeneratorFunction]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    symbolTag = '[object Symbol]',
+	    weakMapTag = '[object WeakMap]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+	
+	/** Used to identify `toStringTag` values supported by `_.clone`. */
+	var cloneableTags = {};
+	cloneableTags[argsTag] = cloneableTags[arrayTag] =
+	cloneableTags[arrayBufferTag] = cloneableTags[boolTag] =
+	cloneableTags[dateTag] = cloneableTags[float32Tag] =
+	cloneableTags[float64Tag] = cloneableTags[int8Tag] =
+	cloneableTags[int16Tag] = cloneableTags[int32Tag] =
+	cloneableTags[mapTag] = cloneableTags[numberTag] =
+	cloneableTags[objectTag] = cloneableTags[regexpTag] =
+	cloneableTags[setTag] = cloneableTags[stringTag] =
+	cloneableTags[symbolTag] = cloneableTags[uint8Tag] =
+	cloneableTags[uint8ClampedTag] = cloneableTags[uint16Tag] =
+	cloneableTags[uint32Tag] = true;
+	cloneableTags[errorTag] = cloneableTags[funcTag] =
+	cloneableTags[weakMapTag] = false;
+	
+	/**
+	 * The base implementation of `_.clone` and `_.cloneDeep` which tracks
+	 * traversed objects.
+	 *
+	 * @private
+	 * @param {*} value The value to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @param {boolean} [isFull] Specify a clone including symbols.
+	 * @param {Function} [customizer] The function to customize cloning.
+	 * @param {string} [key] The key of `value`.
+	 * @param {Object} [object] The parent object of `value`.
+	 * @param {Object} [stack] Tracks traversed objects and their clone counterparts.
+	 * @returns {*} Returns the cloned value.
+	 */
+	function baseClone(value, isDeep, isFull, customizer, key, object, stack) {
+	  var result;
+	  if (customizer) {
+	    result = object ? customizer(value, key, object, stack) : customizer(value);
+	  }
+	  if (result !== undefined) {
+	    return result;
+	  }
+	  if (!isObject(value)) {
+	    return value;
+	  }
+	  var isArr = isArray(value);
+	  if (isArr) {
+	    result = initCloneArray(value);
+	    if (!isDeep) {
+	      return copyArray(value, result);
+	    }
+	  } else {
+	    var tag = getTag(value),
+	        isFunc = tag == funcTag || tag == genTag;
+	
+	    if (isBuffer(value)) {
+	      return cloneBuffer(value, isDeep);
+	    }
+	    if (tag == objectTag || tag == argsTag || (isFunc && !object)) {
+	      if (isHostObject(value)) {
+	        return object ? value : {};
+	      }
+	      result = initCloneObject(isFunc ? {} : value);
+	      if (!isDeep) {
+	        result = baseAssign(result, value);
+	        return isFull ? copySymbols(value, result) : result;
+	      }
+	    } else {
+	      if (!cloneableTags[tag]) {
+	        return object ? value : {};
+	      }
+	      result = initCloneByTag(value, tag, isDeep);
+	    }
+	  }
+	  // Check for circular references and return its corresponding clone.
+	  stack || (stack = new Stack);
+	  var stacked = stack.get(value);
+	  if (stacked) {
+	    return stacked;
+	  }
+	  stack.set(value, result);
+	
+	  // Recursively populate clone (susceptible to call stack limits).
+	  (isArr ? arrayEach : baseForOwn)(value, function(subValue, key) {
+	    assignValue(result, key, baseClone(subValue, isDeep, isFull, customizer, key, value, stack));
+	  });
+	  return (isFull && !isArr) ? copySymbols(value, result) : result;
+	}
+	
+	module.exports = baseClone;
+
+
+/***/ },
+/* 151 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(152),
+	    keys = __webpack_require__(153);
+	
+	/**
+	 * The base implementation of `_.assign` without support for multiple sources
+	 * or `customizer` functions.
+	 *
+	 * @private
+	 * @param {Object} object The destination object.
+	 * @param {Object} source The source object.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseAssign(object, source) {
+	  return object && copyObject(source, keys(source), object);
+	}
+	
+	module.exports = baseAssign;
+
+
+/***/ },
+/* 152 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObjectWith = __webpack_require__(45);
+	
+	/**
+	 * Copies properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property names to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObject(source, props, object) {
+	  return copyObjectWith(source, props, object);
+	}
+	
+	module.exports = copyObject;
+
+
+/***/ },
+/* 153 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseHas = __webpack_require__(154),
+	    baseKeys = __webpack_require__(155),
+	    indexKeys = __webpack_require__(65),
+	    isArrayLike = __webpack_require__(49),
+	    isIndex = __webpack_require__(55),
+	    isPrototype = __webpack_require__(72);
+	
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  var isProto = isPrototype(object);
+	  if (!(isProto || isArrayLike(object))) {
+	    return baseKeys(object);
+	  }
+	  var indexes = indexKeys(object),
+	      skipIndexes = !!indexes,
+	      result = indexes || [],
+	      length = result.length;
+	
+	  for (var key in object) {
+	    if (baseHas(object, key) &&
+	        !(skipIndexes && (key == 'length' || isIndex(key, length))) &&
+	        !(isProto && key == 'constructor')) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = keys;
+
+
+/***/ },
+/* 154 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Built-in value references. */
+	var getPrototypeOf = Object.getPrototypeOf;
+	
+	/**
+	 * The base implementation of `_.has` without support for deep paths.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} key The key to check.
+	 * @returns {boolean} Returns `true` if `key` exists, else `false`.
+	 */
+	function baseHas(object, key) {
+	  // Avoid a bug in IE 10-11 where objects with a [[Prototype]] of `null`,
+	  // that are composed entirely of index properties, return `false` for
+	  // `hasOwnProperty` checks of them.
+	  return hasOwnProperty.call(object, key) ||
+	    (typeof object == 'object' && key in object && getPrototypeOf(object) === null);
+	}
+	
+	module.exports = baseHas;
+
+
+/***/ },
+/* 155 */
+/***/ function(module, exports) {
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = Object.keys;
+	
+	/**
+	 * The base implementation of `_.keys` which doesn't skip the constructor
+	 * property of prototypes or treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  return nativeKeys(Object(object));
+	}
+	
+	module.exports = baseKeys;
+
+
+/***/ },
+/* 156 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFor = __webpack_require__(157),
+	    keys = __webpack_require__(153);
+	
+	/**
+	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Object} object The object to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseForOwn(object, iteratee) {
+	  return object && baseFor(object, iteratee, keys);
+	}
+	
+	module.exports = baseForOwn;
+
+
+/***/ },
+/* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createBaseFor = __webpack_require__(158);
+	
+	/**
+	 * The base implementation of `baseForIn` and `baseForOwn` which iterates
+	 * over `object` properties returned by `keysFunc` invoking `iteratee` for
+	 * each property. Iteratee functions may exit iteration early by explicitly
+	 * returning `false`.
+	 *
+	 * @private
+	 * @param {Object} object The object to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @param {Function} keysFunc The function to get the keys of `object`.
+	 * @returns {Object} Returns `object`.
+	 */
+	var baseFor = createBaseFor();
+	
+	module.exports = baseFor;
+
+
+/***/ },
+/* 158 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a base function for methods like `_.forIn`.
+	 *
+	 * @private
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {Function} Returns the new base function.
+	 */
+	function createBaseFor(fromRight) {
+	  return function(object, iteratee, keysFunc) {
+	    var index = -1,
+	        iterable = Object(object),
+	        props = keysFunc(object),
+	        length = props.length;
+	
+	    while (length--) {
+	      var key = props[fromRight ? length : ++index];
+	      if (iteratee(iterable[key], key, iterable) === false) {
+	        break;
+	      }
+	    }
+	    return object;
+	  };
+	}
+	
+	module.exports = createBaseFor;
+
+
+/***/ },
+/* 159 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a clone of  `buffer`.
+	 *
+	 * @private
+	 * @param {Buffer} buffer The buffer to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Buffer} Returns the cloned buffer.
+	 */
+	function cloneBuffer(buffer, isDeep) {
+	  if (isDeep) {
+	    return buffer.slice();
+	  }
+	  var result = new buffer.constructor(buffer.length);
+	  buffer.copy(result);
+	  return result;
+	}
+	
+	module.exports = cloneBuffer;
+
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(152),
+	    getSymbols = __webpack_require__(161);
+	
+	/**
+	 * Copies own symbol properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy symbols from.
+	 * @param {Object} [object={}] The object to copy symbols to.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copySymbols(source, object) {
+	  return copyObject(source, getSymbols(source), object);
+	}
+	
+	module.exports = copySymbols;
+
+
+/***/ },
+/* 161 */
+/***/ function(module, exports) {
+
+	/** Built-in value references. */
+	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
+	
+	/**
+	 * Creates an array of the own symbol properties of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of symbols.
+	 */
+	var getSymbols = getOwnPropertySymbols || function() {
+	  return [];
+	};
+	
+	module.exports = getSymbols;
+
+
+/***/ },
+/* 162 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(136),
+	    Set = __webpack_require__(163),
+	    WeakMap = __webpack_require__(87);
+	
+	/** `Object#toString` result references. */
+	var mapTag = '[object Map]',
+	    objectTag = '[object Object]',
+	    setTag = '[object Set]',
+	    weakMapTag = '[object WeakMap]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = Function.prototype.toString;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/** Used to detect maps, sets, and weakmaps. */
+	var mapCtorString = Map ? funcToString.call(Map) : '',
+	    setCtorString = Set ? funcToString.call(Set) : '',
+	    weakMapCtorString = WeakMap ? funcToString.call(WeakMap) : '';
+	
+	/**
+	 * Gets the `toStringTag` of `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	function getTag(value) {
+	  return objectToString.call(value);
+	}
+	
+	// Fallback for IE 11 providing `toStringTag` values for maps, sets, and weakmaps.
+	if ((Map && getTag(new Map) != mapTag) ||
+	    (Set && getTag(new Set) != setTag) ||
+	    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+	  getTag = function(value) {
+	    var result = objectToString.call(value),
+	        Ctor = result == objectTag ? value.constructor : null,
+	        ctorString = typeof Ctor == 'function' ? funcToString.call(Ctor) : '';
+	
+	    if (ctorString) {
+	      switch (ctorString) {
+	        case mapCtorString: return mapTag;
+	        case setCtorString: return setTag;
+	        case weakMapCtorString: return weakMapTag;
+	      }
+	    }
+	    return result;
+	  };
+	}
+	
+	module.exports = getTag;
+
+
+/***/ },
+/* 163 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(88),
+	    root = __webpack_require__(62);
+	
+	/* Built-in method references that are verified to be native. */
+	var Set = getNative(root, 'Set');
+	
+	module.exports = Set;
+
+
+/***/ },
+/* 164 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Initializes an array clone.
+	 *
+	 * @private
+	 * @param {Array} array The array to clone.
+	 * @returns {Array} Returns the initialized clone.
+	 */
+	function initCloneArray(array) {
+	  var length = array.length,
+	      result = array.constructor(length);
+	
+	  // Add properties assigned by `RegExp#exec`.
+	  if (length && typeof array[0] == 'string' && hasOwnProperty.call(array, 'index')) {
+	    result.index = array.index;
+	    result.input = array.input;
+	  }
+	  return result;
+	}
+	
+	module.exports = initCloneArray;
+
+
+/***/ },
+/* 165 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var cloneArrayBuffer = __webpack_require__(166),
+	    cloneMap = __webpack_require__(168),
+	    cloneRegExp = __webpack_require__(172),
+	    cloneSet = __webpack_require__(173),
+	    cloneSymbol = __webpack_require__(176),
+	    cloneTypedArray = __webpack_require__(177);
+	
+	/** `Object#toString` result references. */
+	var boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    symbolTag = '[object Symbol]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+	
+	/**
+	 * Initializes an object clone based on its `toStringTag`.
+	 *
+	 * **Note:** This function only supports cloning values with tags of
+	 * `Boolean`, `Date`, `Error`, `Number`, `RegExp`, or `String`.
+	 *
+	 * @private
+	 * @param {Object} object The object to clone.
+	 * @param {string} tag The `toStringTag` of the object to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the initialized clone.
+	 */
+	function initCloneByTag(object, tag, isDeep) {
+	  var Ctor = object.constructor;
+	  switch (tag) {
+	    case arrayBufferTag:
+	      return cloneArrayBuffer(object);
+	
+	    case boolTag:
+	    case dateTag:
+	      return new Ctor(+object);
+	
+	    case float32Tag: case float64Tag:
+	    case int8Tag: case int16Tag: case int32Tag:
+	    case uint8Tag: case uint8ClampedTag: case uint16Tag: case uint32Tag:
+	      return cloneTypedArray(object, isDeep);
+	
+	    case mapTag:
+	      return cloneMap(object);
+	
+	    case numberTag:
+	    case stringTag:
+	      return new Ctor(object);
+	
+	    case regexpTag:
+	      return cloneRegExp(object);
+	
+	    case setTag:
+	      return cloneSet(object);
+	
+	    case symbolTag:
+	      return cloneSymbol(object);
+	  }
+	}
+	
+	module.exports = initCloneByTag;
+
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Uint8Array = __webpack_require__(167);
+	
+	/**
+	 * Creates a clone of `arrayBuffer`.
+	 *
+	 * @private
+	 * @param {ArrayBuffer} arrayBuffer The array buffer to clone.
+	 * @returns {ArrayBuffer} Returns the cloned array buffer.
+	 */
+	function cloneArrayBuffer(arrayBuffer) {
+	  var result = new arrayBuffer.constructor(arrayBuffer.byteLength);
+	  new Uint8Array(result).set(new Uint8Array(arrayBuffer));
+	  return result;
+	}
+	
+	module.exports = cloneArrayBuffer;
+
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(62);
+	
+	/** Built-in value references. */
+	var Uint8Array = root.Uint8Array;
+	
+	module.exports = Uint8Array;
+
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var addMapEntry = __webpack_require__(169),
+	    arrayReduce = __webpack_require__(170),
+	    mapToArray = __webpack_require__(171);
+	
+	/**
+	 * Creates a clone of `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to clone.
+	 * @returns {Object} Returns the cloned map.
+	 */
+	function cloneMap(map) {
+	  return arrayReduce(mapToArray(map), addMapEntry, new map.constructor);
+	}
+	
+	module.exports = cloneMap;
+
+
+/***/ },
+/* 169 */
+/***/ function(module, exports) {
+
+	/**
+	 * Adds the key-value `pair` to `map`.
+	 *
+	 * @private
+	 * @param {Object} map The map to modify.
+	 * @param {Array} pair The key-value pair to add.
+	 * @returns {Object} Returns `map`.
+	 */
+	function addMapEntry(map, pair) {
+	  // Don't return `Map#set` because it doesn't return the map instance in IE 11.
+	  map.set(pair[0], pair[1]);
+	  return map;
+	}
+	
+	module.exports = addMapEntry;
+
+
+/***/ },
+/* 170 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.reduce` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @param {*} [accumulator] The initial value.
+	 * @param {boolean} [initAccum] Specify using the first element of `array` as the initial value.
+	 * @returns {*} Returns the accumulated value.
+	 */
+	function arrayReduce(array, iteratee, accumulator, initAccum) {
+	  var index = -1,
+	      length = array.length;
+	
+	  if (initAccum && length) {
+	    accumulator = array[++index];
+	  }
+	  while (++index < length) {
+	    accumulator = iteratee(accumulator, array[index], index, array);
+	  }
+	  return accumulator;
+	}
+	
+	module.exports = arrayReduce;
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `map` to an array.
+	 *
+	 * @private
+	 * @param {Object} map The map to convert.
+	 * @returns {Array} Returns the converted array.
+	 */
+	function mapToArray(map) {
+	  var index = -1,
+	      result = Array(map.size);
+	
+	  map.forEach(function(value, key) {
+	    result[++index] = [key, value];
+	  });
+	  return result;
+	}
+	
+	module.exports = mapToArray;
+
+
+/***/ },
+/* 172 */
+/***/ function(module, exports) {
+
+	/** Used to match `RegExp` flags from their coerced string values. */
+	var reFlags = /\w*$/;
+	
+	/**
+	 * Creates a clone of `regexp`.
+	 *
+	 * @private
+	 * @param {Object} regexp The regexp to clone.
+	 * @returns {Object} Returns the cloned regexp.
+	 */
+	function cloneRegExp(regexp) {
+	  var result = new regexp.constructor(regexp.source, reFlags.exec(regexp));
+	  result.lastIndex = regexp.lastIndex;
+	  return result;
+	}
+	
+	module.exports = cloneRegExp;
+
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var addSetEntry = __webpack_require__(174),
+	    arrayReduce = __webpack_require__(170),
+	    setToArray = __webpack_require__(175);
+	
+	/**
+	 * Creates a clone of `set`.
+	 *
+	 * @private
+	 * @param {Object} set The set to clone.
+	 * @returns {Object} Returns the cloned set.
+	 */
+	function cloneSet(set) {
+	  return arrayReduce(setToArray(set), addSetEntry, new set.constructor);
+	}
+	
+	module.exports = cloneSet;
+
+
+/***/ },
+/* 174 */
+/***/ function(module, exports) {
+
+	/**
+	 * Adds `value` to `set`.
+	 *
+	 * @private
+	 * @param {Object} set The set to modify.
+	 * @param {*} value The value to add.
+	 * @returns {Object} Returns `set`.
+	 */
+	function addSetEntry(set, value) {
+	  set.add(value);
+	  return set;
+	}
+	
+	module.exports = addSetEntry;
+
+
+/***/ },
+/* 175 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `set` to an array.
+	 *
+	 * @private
+	 * @param {Object} set The set to convert.
+	 * @returns {Array} Returns the converted array.
+	 */
+	function setToArray(set) {
+	  var index = -1,
+	      result = Array(set.size);
+	
+	  set.forEach(function(value) {
+	    result[++index] = value;
+	  });
+	  return result;
+	}
+	
+	module.exports = setToArray;
+
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(79);
+	
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
+	
+	/**
+	 * Creates a clone of the `symbol` object.
+	 *
+	 * @private
+	 * @param {Object} symbol The symbol object to clone.
+	 * @returns {Object} Returns the cloned symbol object.
+	 */
+	function cloneSymbol(symbol) {
+	  return symbolValueOf ? Object(symbolValueOf.call(symbol)) : {};
+	}
+	
+	module.exports = cloneSymbol;
+
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var cloneArrayBuffer = __webpack_require__(166);
+	
+	/**
+	 * Creates a clone of `typedArray`.
+	 *
+	 * @private
+	 * @param {Object} typedArray The typed array to clone.
+	 * @param {boolean} [isDeep] Specify a deep clone.
+	 * @returns {Object} Returns the cloned typed array.
+	 */
+	function cloneTypedArray(typedArray, isDeep) {
+	  var buffer = isDeep ? cloneArrayBuffer(typedArray.buffer) : typedArray.buffer;
+	  return new typedArray.constructor(buffer, typedArray.byteOffset, typedArray.length);
+	}
+	
+	module.exports = cloneTypedArray;
+
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCreate = __webpack_require__(93),
+	    isPrototype = __webpack_require__(72);
+	
+	/** Built-in value references. */
+	var getPrototypeOf = Object.getPrototypeOf;
+	
+	/**
+	 * Initializes an object clone.
+	 *
+	 * @private
+	 * @param {Object} object The object to clone.
+	 * @returns {Object} Returns the initialized clone.
+	 */
+	function initCloneObject(object) {
+	  return (typeof object.constructor == 'function' && !isPrototype(object))
+	    ? baseCreate(getPrototypeOf(object))
+	    : {};
+	}
+	
+	module.exports = initCloneObject;
+
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(module) {var constant = __webpack_require__(180),
+	    root = __webpack_require__(62);
+	
+	/** Used to determine if values are of the language type `Object`. */
+	var objectTypes = {
+	  'function': true,
+	  'object': true
+	};
+	
+	/** Detect free variable `exports`. */
+	var freeExports = (objectTypes[typeof exports] && exports && !exports.nodeType)
+	  ? exports
+	  : undefined;
+	
+	/** Detect free variable `module`. */
+	var freeModule = (objectTypes[typeof module] && module && !module.nodeType)
+	  ? module
+	  : undefined;
+	
+	/** Detect the popular CommonJS extension `module.exports`. */
+	var moduleExports = (freeModule && freeModule.exports === freeExports)
+	  ? freeExports
+	  : undefined;
+	
+	/** Built-in value references. */
+	var Buffer = moduleExports ? root.Buffer : undefined;
+	
+	/**
+	 * Checks if `value` is a buffer.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a buffer, else `false`.
+	 * @example
+	 *
+	 * _.isBuffer(new Buffer(2));
+	 * // => true
+	 *
+	 * _.isBuffer(new Uint8Array(2));
+	 * // => false
+	 */
+	var isBuffer = !Buffer ? constant(false) : function(value) {
+	  return value instanceof Buffer;
+	};
+	
+	module.exports = isBuffer;
+	
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(25)(module)))
+
+/***/ },
+/* 180 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a function that returns `value`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value The value to return from the new function.
+	 * @returns {Function} Returns the new function.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 * var getter = _.constant(object);
+	 *
+	 * getter() === object;
+	 * // => true
+	 */
+	function constant(value) {
+	  return function() {
+	    return value;
+	  };
+	}
+	
+	module.exports = constant;
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isHostObject = __webpack_require__(90),
+	    isObjectLike = __webpack_require__(69);
+	
+	/** `Object#toString` result references. */
+	var objectTag = '[object Object]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = Function.prototype.toString;
+	
+	/** Used to infer the `Object` constructor. */
+	var objectCtorString = funcToString.call(Object);
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/** Built-in value references. */
+	var getPrototypeOf = Object.getPrototypeOf;
+	
+	/**
+	 * Checks if `value` is a plain object, that is, an object created by the
+	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 * }
+	 *
+	 * _.isPlainObject(new Foo);
+	 * // => false
+	 *
+	 * _.isPlainObject([1, 2, 3]);
+	 * // => false
+	 *
+	 * _.isPlainObject({ 'x': 0, 'y': 0 });
+	 * // => true
+	 *
+	 * _.isPlainObject(Object.create(null));
+	 * // => true
+	 */
+	function isPlainObject(value) {
+	  if (!isObjectLike(value) ||
+	      objectToString.call(value) != objectTag || isHostObject(value)) {
+	    return false;
+	  }
+	  var proto = getPrototypeOf(value);
+	  if (proto === null) {
+	    return true;
+	  }
+	  var Ctor = proto.constructor;
+	  return (typeof Ctor == 'function' &&
+	    Ctor instanceof Ctor && funcToString.call(Ctor) == objectCtorString);
+	}
+	
+	module.exports = isPlainObject;
+
+
+/***/ },
+/* 182 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isLength = __webpack_require__(54),
+	    isObjectLike = __webpack_require__(69);
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    weakMapTag = '[object WeakMap]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+	
+	/** Used to identify `toStringTag` values of typed arrays. */
+	var typedArrayTags = {};
+	typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+	typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+	typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+	typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+	typedArrayTags[uint32Tag] = true;
+	typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+	typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+	typedArrayTags[dateTag] = typedArrayTags[errorTag] =
+	typedArrayTags[funcTag] = typedArrayTags[mapTag] =
+	typedArrayTags[numberTag] = typedArrayTags[objectTag] =
+	typedArrayTags[regexpTag] = typedArrayTags[setTag] =
+	typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a typed array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isTypedArray(new Uint8Array);
+	 * // => true
+	 *
+	 * _.isTypedArray([]);
+	 * // => false
+	 */
+	function isTypedArray(value) {
+	  return isObjectLike(value) &&
+	    isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
+	}
+	
+	module.exports = isTypedArray;
+
+
+/***/ },
+/* 183 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObject = __webpack_require__(152),
+	    keysIn = __webpack_require__(59);
+	
+	/**
+	 * Converts `value` to a plain object flattening inherited enumerable
+	 * properties of `value` to own properties of the plain object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to convert.
+	 * @returns {Object} Returns the converted plain object.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.assign({ 'a': 1 }, new Foo);
+	 * // => { 'a': 1, 'b': 2 }
+	 *
+	 * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
+	 * // => { 'a': 1, 'b': 2, 'c': 3 }
+	 */
+	function toPlainObject(value) {
+	  return copyObject(value, keysIn(value));
+	}
+	
+	module.exports = toPlainObject;
+
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	var warn = function warn(message) {
-	  if (process.env.NODE_ENV !== "production") {
-	    if (console && console.warn) {
-	      console.warn(message);
+	/* global console */
+	/* eslint-disable no-console */
+	
+	// TODO: Use "warning" npm module like React is switching to.
+	exports.default = {
+	  warn: function warn(message) {
+	    if (process.env.NODE_ENV !== "production") {
+	      if (console && console.warn) {
+	        console.warn(message);
+	      }
 	    }
 	  }
 	};
-	exports.warn = warn;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
 
 /***/ },
-/* 42 */
+/* 185 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
@@ -1977,7 +7215,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 43 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -1986,72 +7224,72 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _reduceCssCalc = __webpack_require__(44);
+	var _reduceCssCalc = __webpack_require__(187);
 	
 	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
 	
-	/**
-	 * Given an object with CSS/SVG transform definitions, return the string value
-	 * for use with the `transform` CSS property or SVG attribute. Note that we
-	 * can't always guarantee the order will match the author's intended order, so
-	 * authors should only use the object notation if they know that their transform
-	 * is commutative or that there is only one.
-	 * @param {Object} obj An object of transform definitions.
-	 * @returns {String} The generated transform string.
-	 */
-	var toTransformString = function toTransformString(obj) {
-	  if (!obj || typeof obj === "string") {
-	    return obj;
-	  }
-	  var transforms = [];
-	  for (var key in obj) {
-	    if (obj.hasOwnProperty(key)) {
-	      var value = obj[key];
-	      transforms.push(key + "(" + value + ")");
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
+	  /**
+	   * Given an object with CSS/SVG transform definitions, return the string value
+	   * for use with the `transform` CSS property or SVG attribute. Note that we
+	   * can't always guarantee the order will match the author's intended order, so
+	   * authors should only use the object notation if they know that their transform
+	   * is commutative or that there is only one.
+	   * @param {Object} obj An object of transform definitions.
+	   * @returns {String} The generated transform string.
+	   */
+	
+	  toTransformString: function toTransformString(obj) {
+	    if (!obj || typeof obj === "string") {
+	      return obj;
 	    }
+	    var transforms = [];
+	    for (var key in obj) {
+	      if (obj.hasOwnProperty(key)) {
+	        var value = obj[key];
+	        transforms.push(key + "(" + value + ")");
+	      }
+	    }
+	    return transforms.join(" ");
+	  },
+	  calc: function calc(expr, precision) {
+	    return (0, _reduceCssCalc2.default)("calc(" + expr + ")", precision);
+	  },
+	
+	
+	  /**
+	   * Given the name of a color scale, getColorScale will return an array
+	   * of 5 hex string values in that color scale. If no 'name' parameter
+	   * is given, it will return the Victory default grayscale.
+	   * @param {String} name The name of the color scale to return (optional).
+	   * @returns {Array} An array of 5 hex string values composing a color scale.
+	   */
+	  getColorScale: function getColorScale(name) {
+	    var scales = {
+	      greyscale: ["#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"],
+	      qualitative: ["#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49", "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"],
+	      heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
+	      warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
+	      cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
+	      red: ["#611310", "#7D1D1D", "#B02928", "#B02928", "#D86B67"],
+	      blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
+	      green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
+	    };
+	    return name ? scales[name] : scales.greyscale;
 	  }
-	  return transforms.join(" ");
 	};
-	
-	exports.toTransformString = toTransformString;
-	var calc = function calc(expr, precision) {
-	  return (0, _reduceCssCalc2["default"])("calc(" + expr + ")", precision);
-	};
-	
-	exports.calc = calc;
-	/**
-	 * Given the name of a color scale, getColorScale will return an array
-	 * of 5 hex string values in that color scale. If no 'name' parameter
-	 * is given, it will return the Victory default grayscale.
-	 * @param {String} name The name of the color scale to return (optional).
-	 * @returns {Array} An array of 5 hex string values composing a color scale.
-	 */
-	var getColorScale = function getColorScale(name) {
-	  var scales = {
-	    greyscale: ["#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"],
-	    qualitative: ["#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49", "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"],
-	    heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
-	    warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
-	    cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
-	    red: ["#611310", "#7D1D1D", "#B02928", "#B02928", "#D86B67"],
-	    blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
-	    green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
-	  };
-	  return name ? scales[name] : scales.greyscale;
-	};
-	exports.getColorScale = getColorScale;
 
 /***/ },
-/* 44 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(45)
-	var reduceFunctionCall = __webpack_require__(46)
+	var balanced = __webpack_require__(188)
+	var reduceFunctionCall = __webpack_require__(189)
 	
 	/**
 	 * Constantes
@@ -2115,7 +7353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    // Remove units in expression:
-	    var toEvaluate = expression.replace(new RegExp(unit, "g"), "")
+	    var toEvaluate = expression.replace(new RegExp(unit, "gi"), "")
 	    var result
 	
 	    try {
@@ -2183,7 +7421,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function getUnitsInExpression(expression) {
 	  var uniqueUnits = []
-	  var unitRegEx = /[\.0-9]([%a-z]+)/g
+	  var uniqueLowerCaseUnits = []
+	  var unitRegEx = /[\.0-9]([%a-z]+)/gi
 	  var matches = unitRegEx.exec(expression)
 	
 	  while (matches) {
@@ -2191,8 +7430,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      continue
 	    }
 	
-	    if (uniqueUnits.indexOf(matches[1]) === -1) {
+	    if (uniqueLowerCaseUnits.indexOf(matches[1].toLowerCase()) === -1) {
 	      uniqueUnits.push(matches[1])
+	      uniqueLowerCaseUnits.push(matches[1].toLowerCase())
 	    }
 	
 	    matches = unitRegEx.exec(expression)
@@ -2203,7 +7443,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 45 */
+/* 188 */
 /***/ function(module, exports) {
 
 	module.exports = function(a, b, str) {
@@ -2233,13 +7473,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 46 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(47)
+	var balanced = __webpack_require__(190)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -2313,7 +7553,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 47 */
+/* 190 */
 /***/ function(module, exports) {
 
 	module.exports = function(a, b, str) {
@@ -2343,101 +7583,23 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 48 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var nullConstructor = function nullConstructor() {
-	  return null;
-	};
-	exports.nullConstructor = nullConstructor;
-	var undefinedConstructor = function undefinedConstructor() {
-	  return;
-	};
-	exports.undefinedConstructor = undefinedConstructor;
-	/**
-	 * Get the constructor of `value`. If `value` is null or undefined, return the
-	 * special singletons `nullConstructor` or `undefinedConstructor`, respectively.
-	 * @param {*} value Instance to return the constructor of.
-	 * @returns {Function} Constructor of `value`.
-	 */
-	var getConstructor = function getConstructor(value) {
-	  if (typeof value === "undefined") {
-	    return undefinedConstructor;
-	  } else if (value === null) {
-	    return nullConstructor;
-	  } else {
-	    return value.constructor;
-	  }
-	};
-	
-	exports.getConstructor = getConstructor;
-	/**
-	 * Get the name of the constructor used to create `value`, using
-	 * `Object.protoype.toString`. If the value is null or undefined, return
-	 * "null" or "undefined", respectively.
-	 * @param {*} value Instance to return the constructor name of.
-	 * @returns {String} Name of the constructor.
-	 */
-	var getConstructorName = function getConstructorName(value) {
-	  if (typeof value === "undefined") {
-	    return "undefined";
-	  } else if (value === null) {
-	    return "null";
-	  }
-	  return Object.prototype.toString.call(value).slice(8, -1);
-	};
-	exports.getConstructorName = getConstructorName;
-
-/***/ },
-/* 49 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {/* global console */
-	"use strict";
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _isFunction = __webpack_require__(52);
 	
-	var _lodashLangIsFunction = __webpack_require__(8);
+	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
-	var _lodashLangIsFunction2 = _interopRequireDefault(_lodashLangIsFunction);
+	var _react = __webpack_require__(36);
 	
-	var _react = __webpack_require__(29);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var _type = __webpack_require__(48);
-	
-	/**
-	 * Return a new validator based on `propType` but which logs a `console.error`
-	 * with `explanation` if used.
-	 * @param {Function} propType The old, deprecated propType.
-	 * @param {String} explanation The message to provide the user of the deprecated propType.
-	 * @returns {Function} Validator which logs usage of this propType
-	 */
-	var deprecated = function deprecated(propType, explanation) {
-	  return function (props, propName, componentName) {
-	    if (process.env.NODE_ENV !== "production") {
-	      /* eslint-disable no-console */
-	      if (typeof console !== "undefined" && console.error) {
-	        if (props[propName] !== null) {
-	          console.error(false, "\"" + propName + "\" property of \"" + componentName + "\" has been deprecated " + explanation);
-	        }
-	      }
-	      /* eslint-enable no-console */
-	    }
-	
-	    return propType(props, propName, componentName);
-	  };
-	};
-	
-	exports.deprecated = deprecated;
 	/**
 	 * Return a new validator based on `validator` but with the option to chain
 	 * `isRequired` onto the validation. This is nearly identical to how React
@@ -2445,6 +7607,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Function} validator Validation function.
 	 * @returns {Function} Validator with `isRequired` option.
 	 */
+	/* global console */
 	var makeChainable = function makeChainable(validator) {
 	  /* eslint-disable max-params */
 	  var _chainable = function _chainable(isRequired, props, propName, componentName) {
@@ -2462,118 +7625,186 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return chainable;
 	};
 	
-	exports.makeChainable = makeChainable;
+	var nullConstructor = function nullConstructor() {
+	  return null;
+	};
+	var undefinedConstructor = function undefinedConstructor() {
+	  return undefined;
+	};
+	
 	/**
-	 * Return a new validator which returns true
-	 * if and only if all validators passed as arguments return true.
-	 * Like React.propTypes.oneOfType, except "all" instead of "any"
-	 * @param {Array} validators Validation functions.
-	 * @returns {Function} Combined validator function
+	 * Get the constructor of `value`. If `value` is null or undefined, return the
+	 * special singletons `nullConstructor` or `undefinedConstructor`, respectively.
+	 * @param {*} value Instance to return the constructor of.
+	 * @returns {Function} Constructor of `value`.
 	 */
-	var allOfType = function allOfType(validators) {
-	  return makeChainable(function (props, propName, componentName) {
-	    var error = validators.reduce(function (result, validator) {
-	      return result || validator(props, propName, componentName);
-	    }, undefined);
+	var getConstructor = function getConstructor(value) {
+	  if (typeof value === "undefined") {
+	    return undefinedConstructor;
+	  } else if (value === null) {
+	    return nullConstructor;
+	  } else {
+	    return value.constructor;
+	  }
+	};
+	
+	/**
+	 * Get the name of the constructor used to create `value`, using
+	 * `Object.protoype.toString`. If the value is null or undefined, return
+	 * "null" or "undefined", respectively.
+	 * @param {*} value Instance to return the constructor name of.
+	 * @returns {String} Name of the constructor.
+	 */
+	var getConstructorName = function getConstructorName(value) {
+	  if (typeof value === "undefined") {
+	    return "undefined";
+	  } else if (value === null) {
+	    return "null";
+	  }
+	  return Object.prototype.toString.call(value).slice(8, -1);
+	};
+	
+	exports.default = {
+	  /**
+	   * Return a new validator based on `propType` but which logs a `console.error`
+	   * with `explanation` if used.
+	   * @param {Function} propType The old, deprecated propType.
+	   * @param {String} explanation The message to provide the user of the deprecated propType.
+	   * @returns {Function} Validator which logs usage of this propType
+	   */
+	
+	  deprecated: function deprecated(propType, explanation) {
+	    return function (props, propName, componentName) {
+	      if (process.env.NODE_ENV !== "production") {
+	        /* eslint-disable no-console */
+	        if (typeof console !== "undefined" && console.error) {
+	          if (props[propName] !== null) {
+	            console.error(false, "\"" + propName + "\" property of \"" + componentName + "\" has been deprecated " + explanation);
+	          }
+	        }
+	        /* eslint-enable no-console */
+	      }
+	      return propType(props, propName, componentName);
+	    };
+	  },
+	
+	
+	  /**
+	   * Return a new validator which returns true
+	   * if and only if all validators passed as arguments return true.
+	   * Like React.propTypes.oneOfType, except "all" instead of "any"
+	   * @param {Array} validators Validation functions.
+	   * @returns {Function} Combined validator function
+	   */
+	  allOfType: function allOfType(validators) {
+	    return makeChainable(function (props, propName, componentName) {
+	      var error = validators.reduce(function (result, validator) {
+	        return result || validator(props, propName, componentName);
+	      }, undefined);
+	      if (error) {
+	        return error;
+	      }
+	    });
+	  },
+	
+	
+	  /**
+	   * Check that the value is a non-negative number.
+	   */
+	  nonNegative: makeChainable(function (props, propName, componentName) {
+	    var error = _react.PropTypes.number(props, propName, componentName);
 	    if (error) {
 	      return error;
 	    }
-	  });
-	};
-	
-	exports.allOfType = allOfType;
-	/**
-	 * Check that the value is a non-negative number.
-	 */
-	var nonNegative = makeChainable(function (props, propName, componentName) {
-	  var error = _react.PropTypes.number(props, propName, componentName);
-	  if (error) {
-	    return error;
-	  }
-	  var value = props[propName];
-	  if (value < 0) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be non-negative.");
-	  }
-	});
-	
-	exports.nonNegative = nonNegative;
-	/**
-	 * Check that the value is an integer.
-	 */
-	var integer = makeChainable(function (props, propName, componentName) {
-	  var error = _react.PropTypes.number(props, propName, componentName);
-	  if (error) {
-	    return error;
-	  }
-	  var value = props[propName];
-	  if (value % 1 !== 0) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be an integer.");
-	  }
-	});
-	
-	exports.integer = integer;
-	/**
-	 * Check that the value is an Array of two unique values.
-	 */
-	var domain = makeChainable(function (props, propName, componentName) {
-	  var error = _react.PropTypes.array(props, propName, componentName);
-	  if (error) {
-	    return error;
-	  }
-	  var value = props[propName];
-	  if (value.length !== 2 || value[1] === value[0]) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
-	  }
-	});
-	
-	exports.domain = domain;
-	/**
-	 * Check that the value looks like a d3 `scale` function.
-	 */
-	var scale = makeChainable(function (props, propName, componentName) {
-	  var supportedScaleStrings = ["linear", "time", "log", "sqrt"];
-	  var validScale = function validScale(scl) {
-	    if ((0, _lodashLangIsFunction2["default"])(scl)) {
-	      return (0, _lodashLangIsFunction2["default"])(scl.copy) && (0, _lodashLangIsFunction2["default"])(scl.domain) && (0, _lodashLangIsFunction2["default"])(scl.range);
-	    } else if (typeof scl === "string") {
-	      return supportedScaleStrings.indexOf(scl) !== -1;
+	    var value = props[propName];
+	    if (value < 0) {
+	      return new Error("`" + propName + "` in `" + componentName + "` must be non-negative.");
 	    }
-	    return false;
-	  };
+	  }),
 	
-	  var value = props[propName];
-	  if (!validScale(value)) {
-	    return new Error("`" + propName + "` in `" + componentName + "` must be a d3 scale.");
-	  }
-	});
+	  /**
+	   * Check that the value is an integer.
+	   */
+	  integer: makeChainable(function (props, propName, componentName) {
+	    var error = _react.PropTypes.number(props, propName, componentName);
+	    if (error) {
+	      return error;
+	    }
+	    var value = props[propName];
+	    if (value % 1 !== 0) {
+	      return new Error("`" + propName + "` in `" + componentName + "` must be an integer.");
+	    }
+	  }),
 	
-	exports.scale = scale;
-	/**
-	 * Check that an array contains items of the same type.
-	 */
-	var homogeneousArray = makeChainable(function (props, propName, componentName) {
-	  var error = _react.PropTypes.array(props, propName, componentName);
-	  if (error) {
-	    return error;
-	  }
-	  var value = props[propName];
-	  if (value.length > 1) {
-	    var _constructor = (0, _type.getConstructor)(value[0]);
-	    for (var i = 1; i < value.length; i++) {
-	      var otherConstructor = (0, _type.getConstructor)(value[i]);
-	      if (_constructor !== otherConstructor) {
-	        var constructorName = (0, _type.getConstructorName)(value[0]);
-	        var otherConstructorName = (0, _type.getConstructorName)(value[i]);
-	        return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	  /**
+	   * Check that the value is an Array of two unique values.
+	   */
+	  domain: makeChainable(function (props, propName, componentName) {
+	    var error = _react.PropTypes.array(props, propName, componentName);
+	    if (error) {
+	      return error;
+	    }
+	    var value = props[propName];
+	    if (value.length !== 2 || value[1] === value[0]) {
+	      return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
+	    }
+	  }),
+	
+	  /**
+	   * Check that the value looks like a d3 `scale` function.
+	   */
+	  scale: makeChainable(function (props, propName, componentName) {
+	    var supportedScaleStrings = ["linear", "time", "log", "sqrt"];
+	    var validScale = function validScale(scl) {
+	      if ((0, _isFunction2.default)(scl)) {
+	        return (0, _isFunction2.default)(scl.copy) && (0, _isFunction2.default)(scl.domain) && (0, _isFunction2.default)(scl.range);
+	      } else if (typeof scl === "string") {
+	        return supportedScaleStrings.indexOf(scl) !== -1;
+	      }
+	      return false;
+	    };
+	
+	    var value = props[propName];
+	    if (!validScale(value)) {
+	      return new Error("`" + propName + "` in `" + componentName + "` must be a d3 scale.");
+	    }
+	  }),
+	
+	  /**
+	   * Check that an array contains items of the same type.
+	   */
+	  homogeneousArray: makeChainable(function (props, propName, componentName) {
+	    var error = _react.PropTypes.array(props, propName, componentName);
+	    if (error) {
+	      return error;
+	    }
+	    var value = props[propName];
+	    if (value.length > 1) {
+	      var _constructor = getConstructor(value[0]);
+	      for (var i = 1; i < value.length; i++) {
+	        var otherConstructor = getConstructor(value[i]);
+	        if (_constructor !== otherConstructor) {
+	          var constructorName = getConstructorName(value[0]);
+	          var otherConstructorName = getConstructorName(value[i]);
+	          return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
+	        }
 	      }
 	    }
-	  }
-	});
-	exports.homogeneousArray = homogeneousArray;
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
+	  }),
+	
+	  /**
+	   * Check that array prop length matches props.data.length
+	   */
+	  matchDataLength: makeChainable(function (props, propName) {
+	    if (props[propName] && Array.isArray(props[propName]) && props[propName].length !== props.data.length) {
+	      return new Error("Length of data and " + propName + " arrays must match.");
+	    }
+	  })
+	};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(185)))
 
 /***/ },
-/* 50 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -2582,105 +7813,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Ease = __webpack_require__(51);
+	var _d3Ease = __webpack_require__(193);
 	
 	var _d3Ease2 = _interopRequireDefault(_d3Ease);
 	
-	var _d3Interpolate = __webpack_require__(52);
+	var _d3Interpolate = __webpack_require__(194);
 	
 	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
 	
-	var _d3Timer = __webpack_require__(54);
+	var _d3Timer = __webpack_require__(196);
 	
-	var _util = __webpack_require__(55);
+	var _util = __webpack_require__(197);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	(0, _util.addVictoryInterpolator)();
 	
-	var VictoryAnimation = (function (_React$Component) {
+	var VictoryAnimation = function (_React$Component) {
 	  _inherits(VictoryAnimation, _React$Component);
-	
-	  _createClass(VictoryAnimation, null, [{
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The child of should be a function that takes an object of tweened values
-	       * and returns a component to render.
-	       */
-	      children: _react2["default"].PropTypes.func,
-	      /**
-	       * The number of milliseconds the animation should take to complete.
-	       */
-	      duration: _react2["default"].PropTypes.number,
-	      /**
-	       * The easing prop specifies an easing function name to use for tweening.
-	       */
-	      easing: _react2["default"].PropTypes.oneOf(["back", "backIn", "backOut", "backInOut", "bounce", "bounceIn", "bounceOut", "bounceInOut", "circle", "circleIn", "circleOut", "circleInOut", "linear", "linearIn", "linearOut", "linearInOut", "cubic", "cubicIn", "cubicOut", "cubicInOut", "elastic", "elasticIn", "elasticOut", "elasticInOut", "exp", "expIn", "expOut", "expInOut", "poly", "polyIn", "polyOut", "polyInOut", "quad", "quadIn", "quadOut", "quadInOut", "sin", "sinIn", "sinOut", "sinInOut"]),
-	      /**
-	       * The delay prop specifies a delay in milliseconds before the animation
-	       * begins. If multiple values are in the animation queue, it is the delay
-	       * between each animation.
-	       */
-	      delay: _react2["default"].PropTypes.number,
-	      /**
-	       * The onEnd prop specifies a function to run when the animation ends. If
-	       * multiple animations are in the queue, it is called after the last
-	       * animation.
-	       */
-	      onEnd: _react2["default"].PropTypes.func,
-	      /**
-	       * The data prop specifies the latest set of values to tween to. When this
-	       * prop changes, VictoryAnimation will begin animating from the current
-	       * value to the new value.
-	       */
-	      data: _react2["default"].PropTypes.oneOfType([_react2["default"].PropTypes.object, _react2["default"].PropTypes.array])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      /* length of animation */
-	      duration: 1000,
-	      /* easing modifies step each frame */
-	      easing: "quadInOut",
-	      /* delay between transitions */
-	      delay: 0,
-	      /* we got nothin' */
-	      data: {}
-	    },
-	    enumerable: true
-	  }]);
 	
 	  function VictoryAnimation(props) {
 	    _classCallCheck(this, VictoryAnimation);
 	
-	    _get(Object.getPrototypeOf(VictoryAnimation.prototype), "constructor", this).call(this, props);
 	    /* defaults */
-	    this.state = Array.isArray(this.props.data) ? this.props.data[0] : this.props.data;
-	    this.interpolator = null;
-	    this.queue = Array.isArray(this.props.data) ? this.props.data.slice(1) : [];
+	
+	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryAnimation).call(this, props));
+	
+	    _this.state = Array.isArray(_this.props.data) ? _this.props.data[0] : _this.props.data;
+	    _this.interpolator = null;
+	    _this.queue = Array.isArray(_this.props.data) ? _this.props.data.slice(1) : [];
 	    /* build easing function */
-	    this.ease = _d3Ease2["default"][this.props.easing];
+	    _this.ease = _d3Ease2.default[_this.props.easing];
 	    /*
 	      unlike React.createClass({}), there is no autobinding of this in ES6 classes
 	      so we bind functionToBeRunEachFrame to current instance of victory animation class
 	    */
-	    this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
+	    _this.functionToBeRunEachFrame = _this.functionToBeRunEachFrame.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(VictoryAnimation, [{
@@ -2691,8 +7874,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.traverseQueue();
 	      }
 	    }
-	
 	    /* lifecycle */
+	
 	  }, {
 	    key: "componentWillReceiveProps",
 	    value: function componentWillReceiveProps(nextProps) {
@@ -2723,8 +7906,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.timer.stop();
 	      }
 	    }
-	
 	    /* Traverse the tween queue */
+	
 	  }, {
 	    key: "traverseQueue",
 	    value: function traverseQueue() {
@@ -2732,15 +7915,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        /* Get the next index */
 	        var data = this.queue[0];
 	        /* compare cached version to next props */
-	        this.interpolator = _d3Interpolate2["default"].value(this.state, data);
+	        this.interpolator = _d3Interpolate2.default.value(this.state, data);
 	        /* reset step to zero */
 	        this.timer = (0, _d3Timer.timer)(this.functionToBeRunEachFrame, this.props.delay);
 	      } else if (this.props.onEnd) {
 	        this.props.onEnd();
 	      }
 	    }
-	
 	    /* every frame we... */
+	
 	  }, {
 	    key: "functionToBeRunEachFrame",
 	    value: function functionToBeRunEachFrame(elapsed) {
@@ -2772,13 +7955,55 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }]);
 	
 	  return VictoryAnimation;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryAnimation;
-	module.exports = exports["default"];
+	VictoryAnimation.propTypes = {
+	  /**
+	   * The child of should be a function that takes an object of tweened values
+	   * and returns a component to render.
+	   */
+	  children: _react2.default.PropTypes.func,
+	  /**
+	   * The number of milliseconds the animation should take to complete.
+	   */
+	  duration: _react2.default.PropTypes.number,
+	  /**
+	   * The easing prop specifies an easing function name to use for tweening.
+	   */
+	  easing: _react2.default.PropTypes.oneOf(["back", "backIn", "backOut", "backInOut", "bounce", "bounceIn", "bounceOut", "bounceInOut", "circle", "circleIn", "circleOut", "circleInOut", "linear", "linearIn", "linearOut", "linearInOut", "cubic", "cubicIn", "cubicOut", "cubicInOut", "elastic", "elasticIn", "elasticOut", "elasticInOut", "exp", "expIn", "expOut", "expInOut", "poly", "polyIn", "polyOut", "polyInOut", "quad", "quadIn", "quadOut", "quadInOut", "sin", "sinIn", "sinOut", "sinInOut"]),
+	  /**
+	   * The delay prop specifies a delay in milliseconds before the animation
+	   * begins. If multiple values are in the animation queue, it is the delay
+	   * between each animation.
+	   */
+	  delay: _react2.default.PropTypes.number,
+	  /**
+	   * The onEnd prop specifies a function to run when the animation ends. If
+	   * multiple animations are in the queue, it is called after the last
+	   * animation.
+	   */
+	  onEnd: _react2.default.PropTypes.func,
+	  /**
+	   * The data prop specifies the latest set of values to tween to. When this
+	   * prop changes, VictoryAnimation will begin animating from the current
+	   * value to the new value.
+	   */
+	  data: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object, _react2.default.PropTypes.array])
+	};
+	VictoryAnimation.defaultProps = {
+	  /* length of animation */
+	  duration: 1000,
+	  /* easing modifies step each frame */
+	  easing: "quadInOut",
+	  /* delay between transitions */
+	  delay: 0,
+	  /* we got nothin' */
+	  data: {}
+	};
+	exports.default = VictoryAnimation;
 
 /***/ },
-/* 51 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -3008,11 +8233,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 52 */
+/* 194 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(53)) :
+	   true ? factory(exports, __webpack_require__(195)) :
 	  typeof define === 'function' && define.amd ? define('d3-interpolate', ['exports', 'd3-color'], factory) :
 	  factory((global.d3_interpolate = {}),global.d3_color);
 	}(this, function (exports,d3Color) { 'use strict';
@@ -3495,7 +8720,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 53 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -4015,7 +9240,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 54 */
+/* 196 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -4121,7 +9346,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 55 */
+/* 197 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4129,21 +9354,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.addVictoryInterpolator = exports.victoryInterpolator = exports.interpolateFunction = exports.interpolateImmediate = exports.isInterpolatable = undefined;
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _d3Interpolate = __webpack_require__(52);
+	var _d3Interpolate = __webpack_require__(194);
 	
 	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
 	
-	var _lodashLangIsPlainObject = __webpack_require__(56);
+	var _isPlainObject = __webpack_require__(181);
 	
-	var _lodashLangIsPlainObject2 = _interopRequireDefault(_lodashLangIsPlainObject);
+	var _isPlainObject2 = _interopRequireDefault(_isPlainObject);
 	
-	var isInterpolatable = function isInterpolatable(obj) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var isInterpolatable = exports.isInterpolatable = function isInterpolatable(obj) {
 	  // d3 turns null into 0 and undefined into NaN, which we don't want.
 	  if (obj !== null) {
-	    switch (typeof obj) {
+	    switch (typeof obj === "undefined" ? "undefined" : _typeof(obj)) {
 	      case "undefined":
 	        return false;
 	      case "number":
@@ -4161,7 +9389,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	      case "object":
 	        // Don't try to interpolate class instances (except Date or Array).
-	        return obj instanceof Date || Array.isArray(obj) || (0, _lodashLangIsPlainObject2["default"])(obj);
+	        return obj instanceof Date || Array.isArray(obj) || (0, _isPlainObject2.default)(obj);
 	      case "function":
 	        // Careful! There may be extra properties on function objects that the
 	        // component expects to access - for instance, it may be a `d3.scale()`
@@ -4179,7 +9407,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return false;
 	};
 	
-	exports.isInterpolatable = isInterpolatable;
 	/**
 	 * Interpolate immediately to the end value at the given step `when`.
 	 * Some nicer default behavior might be to jump at the halfway point or return
@@ -4195,7 +9422,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
 	 * @returns {Function} An interpolation function.
 	 */
-	var interpolateImmediate = function interpolateImmediate(a, b) {
+	var interpolateImmediate = exports.interpolateImmediate = function interpolateImmediate(a, b) {
 	  var when = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
 	
 	  return function (t) {
@@ -4203,7 +9430,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	};
 	
-	exports.interpolateImmediate = interpolateImmediate;
 	/**
 	 * Interpolate to or from a function. The interpolated value will be a function
 	 * that calls `a` (if it's a function) and `b` (if it's a function) and calls
@@ -4216,7 +9442,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {any} b - End value.
 	 * @returns {Function} An interpolation function.
 	 */
-	var interpolateFunction = function interpolateFunction(a, b) {
+	var interpolateFunction = exports.interpolateFunction = function interpolateFunction(a, b) {
 	  return function (t) {
 	    if (t >= 1) {
 	      return b;
@@ -4225,12 +9451,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      /* eslint-disable no-invalid-this */
 	      var aval = typeof a === "function" ? a.apply(this, arguments) : a;
 	      var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	      return _d3Interpolate2["default"].value(aval, bval)(t);
+	      return _d3Interpolate2.default.value(aval, bval)(t);
 	    };
 	  };
 	};
 	
-	exports.interpolateFunction = interpolateFunction;
 	/**
 	 * By default, the list of interpolators used by `d3.interpolate` has a few
 	 * downsides:
@@ -4254,7 +9479,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {any} b - End value.
 	 * @returns {Function|undefined} An interpolation function, if necessary.
 	 */
-	var victoryInterpolator = function victoryInterpolator(a, b) {
+	var victoryInterpolator = exports.victoryInterpolator = function victoryInterpolator(a, b) {
 	  // If the values are strictly equal, or either value is not interpolatable,
 	  // just use either the start value `a` or end value `b` at every step, as
 	  // there is no reasonable in-between value.
@@ -4266,175 +9491,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 	
-	exports.victoryInterpolator = victoryInterpolator;
 	var interpolatorAdded = false;
 	
-	var addVictoryInterpolator = function addVictoryInterpolator() {
+	var addVictoryInterpolator = exports.addVictoryInterpolator = function addVictoryInterpolator() {
 	  if (!interpolatorAdded) {
-	    _d3Interpolate2["default"].values.push(victoryInterpolator);
+	    _d3Interpolate2.default.values.push(victoryInterpolator);
 	    interpolatorAdded = true;
 	  }
 	};
-	exports.addVictoryInterpolator = addVictoryInterpolator;
 
 /***/ },
-/* 56 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseForIn = __webpack_require__(57),
-	    isArguments = __webpack_require__(16),
-	    isObjectLike = __webpack_require__(10);
-	
-	/** `Object#toString` result references. */
-	var objectTag = '[object Object]';
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is a plain object, that is, an object created by the
-	 * `Object` constructor or one with a `[[Prototype]]` of `null`.
-	 *
-	 * **Note:** This method assumes objects created by the `Object` constructor
-	 * have no inherited enumerable properties.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a plain object, else `false`.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 * }
-	 *
-	 * _.isPlainObject(new Foo);
-	 * // => false
-	 *
-	 * _.isPlainObject([1, 2, 3]);
-	 * // => false
-	 *
-	 * _.isPlainObject({ 'x': 0, 'y': 0 });
-	 * // => true
-	 *
-	 * _.isPlainObject(Object.create(null));
-	 * // => true
-	 */
-	function isPlainObject(value) {
-	  var Ctor;
-	
-	  // Exit early for non `Object` objects.
-	  if (!(isObjectLike(value) && objToString.call(value) == objectTag && !isArguments(value)) ||
-	      (!hasOwnProperty.call(value, 'constructor') && (Ctor = value.constructor, typeof Ctor == 'function' && !(Ctor instanceof Ctor)))) {
-	    return false;
-	  }
-	  // IE < 9 iterates inherited properties before own properties. If the first
-	  // iterated property is an object's own property then there are no inherited
-	  // enumerable properties.
-	  var result;
-	  // In most environments an object's own properties are iterated before
-	  // its inherited properties. If the last iterated property is an object's
-	  // own property then there are no inherited enumerable properties.
-	  baseForIn(value, function(subValue, key) {
-	    result = key;
-	  });
-	  return result === undefined || hasOwnProperty.call(value, result);
-	}
-	
-	module.exports = isPlainObject;
-
-
-/***/ },
-/* 57 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseFor = __webpack_require__(58),
-	    keysIn = __webpack_require__(19);
-	
-	/**
-	 * The base implementation of `_.forIn` without support for callback
-	 * shorthands and `this` binding.
-	 *
-	 * @private
-	 * @param {Object} object The object to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Object} Returns `object`.
-	 */
-	function baseForIn(object, iteratee) {
-	  return baseFor(object, iteratee, keysIn);
-	}
-	
-	module.exports = baseForIn;
-
-
-/***/ },
-/* 58 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var createBaseFor = __webpack_require__(59);
-	
-	/**
-	 * The base implementation of `baseForIn` and `baseForOwn` which iterates
-	 * over `object` properties returned by `keysFunc` invoking `iteratee` for
-	 * each property. Iteratee functions may exit iteration early by explicitly
-	 * returning `false`.
-	 *
-	 * @private
-	 * @param {Object} object The object to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @param {Function} keysFunc The function to get the keys of `object`.
-	 * @returns {Object} Returns `object`.
-	 */
-	var baseFor = createBaseFor();
-	
-	module.exports = baseFor;
-
-
-/***/ },
-/* 59 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var toObject = __webpack_require__(36);
-	
-	/**
-	 * Creates a base function for `_.forIn` or `_.forInRight`.
-	 *
-	 * @private
-	 * @param {boolean} [fromRight] Specify iterating from right to left.
-	 * @returns {Function} Returns the new base function.
-	 */
-	function createBaseFor(fromRight) {
-	  return function(object, iteratee, keysFunc) {
-	    var iterable = toObject(object),
-	        props = keysFunc(object),
-	        length = props.length,
-	        index = fromRight ? length : -1;
-	
-	    while ((fromRight ? index-- : ++index < length)) {
-	      var key = props[index];
-	      if (iteratee(iterable[key], key, iterable) === false) {
-	        break;
-	      }
-	    }
-	    return object;
-	  };
-	}
-	
-	module.exports = createBaseFor;
-
-
-/***/ },
-/* 60 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4443,25 +9510,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryUtilIndex = __webpack_require__(61);
+	var _index = __webpack_require__(199);
 	
-	var _lodashObjectMerge = __webpack_require__(63);
+	var _merge = __webpack_require__(120);
 	
-	var _lodashObjectMerge2 = _interopRequireDefault(_lodashObjectMerge);
+	var _merge2 = _interopRequireDefault(_merge);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var defaultStyles = {
 	  stroke: "transparent",
@@ -4471,67 +9540,73 @@ return /******/ (function(modules) { // webpackBootstrap
 	  backgroundColor: "#ccc"
 	};
 	
-	var VictoryLabel = (function (_React$Component) {
+	var VictoryLabel = function (_React$Component) {
 	  _inherits(VictoryLabel, _React$Component);
 	
 	  function VictoryLabel() {
 	    _classCallCheck(this, VictoryLabel);
 	
-	    _get(Object.getPrototypeOf(VictoryLabel.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryLabel).apply(this, arguments));
 	  }
 	
 	  _createClass(VictoryLabel, [{
 	    key: "getStyles",
 	    value: function getStyles(props) {
-	      var style = props.style ? (0, _lodashObjectMerge2["default"])({}, defaultStyles, props.style) : defaultStyles;
-	      return _victoryUtilIndex.Helpers.evaluateStyle(style);
+	      var style = props.style ? (0, _merge2.default)({}, defaultStyles, props.style) : defaultStyles;
+	      var datum = props.datum || props.data;
+	      return _index.Helpers.evaluateStyle(style, datum);
 	    }
 	  }, {
 	    key: "getHeight",
 	    value: function getHeight(props, type) {
-	      var height = _victoryUtilIndex.Helpers.evaluateProp(props[type]);
+	      var datum = props.datum || props.data;
+	      var height = _index.Helpers.evaluateProp(props[type], datum);
 	      return typeof height === "number" ? height + "em" : height;
 	    }
 	  }, {
 	    key: "getContent",
 	    value: function getContent(props) {
-	      if (props.children) {
-	        var child = _victoryUtilIndex.Helpers.evaluateProp(props.children);
+	      var text = props.text || props.children;
+	      if (text) {
+	        var datum = props.datum || props.data;
+	        var child = _index.Helpers.evaluateProp(text, datum);
 	        return ("" + child).split("\n");
 	      }
-	      return [props.text];
+	      return [""];
 	    }
 	  }, {
 	    key: "getDy",
 	    value: function getDy(props, content, lineHeight) {
-	      var dy = props.dy ? _victoryUtilIndex.Helpers.evaluateProp(props.dy) : 0;
+	      var datum = props.datum || props.data;
+	      var dy = props.dy ? _index.Helpers.evaluateProp(props.dy, datum) : 0;
 	      var length = content.length;
 	      var capHeight = this.getHeight(props, "capHeight");
-	      var verticalAnchor = props.verticalAnchor ? _victoryUtilIndex.Helpers.evaluateProp(props.verticalAnchor) : "middle";
+	      var verticalAnchor = props.verticalAnchor ? _index.Helpers.evaluateProp(props.verticalAnchor, datum) : "middle";
 	      switch (verticalAnchor) {
 	        case "end":
-	          return _victoryUtilIndex.Style.calc(dy + " +  " + capHeight + " / 2 + (0.5 - " + length + ") * " + lineHeight);
+	          return _index.Style.calc(dy + " +  " + capHeight + " / 2 + (0.5 - " + length + ") * " + lineHeight);
 	        case "middle":
-	          return _victoryUtilIndex.Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + length + " / 2) * " + lineHeight);
+	          return _index.Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + length + " / 2) * " + lineHeight);
 	        default:
-	          return _victoryUtilIndex.Style.calc(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
+	          return _index.Style.calc(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
 	      }
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this = this;
+	      var _this2 = this;
 	
+	      var datum = this.props.datum || this.props.data;
 	      var lineHeight = this.getHeight(this.props, "lineHeight");
-	      var transform = this.props.transform && _victoryUtilIndex.Style.toTransformString(_victoryUtilIndex.Helpers.evaluateProp(this.props.transform));
-	      var textAnchor = this.props.textAnchor ? _victoryUtilIndex.Helpers.evaluateProp(this.props.textAnchor) : "start";
+	      var transform = this.props.transform && _index.Style.toTransformString(_index.Helpers.evaluateProp(this.props.transform, datum));
+	      var textAnchor = this.props.textAnchor ? _index.Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
 	      var content = this.getContent(this.props);
 	      var style = this.getStyles(this.props);
-	      var dx = this.props.dx ? _victoryUtilIndex.Helpers.evaluateProp(this.props.dx) : 0;
+	      var dx = this.props.dx ? _index.Helpers.evaluateProp(this.props.dx, datum) : 0;
 	      var dy = this.getDy(this.props, content, lineHeight);
-	      return _react2["default"].createElement(
+	      return _react2.default.createElement(
 	        "text",
-	        {
+	        _extends({
 	          x: this.props.x,
 	          y: this.props.y,
 	          dy: dy,
@@ -4539,115 +9614,119 @@ return /******/ (function(modules) { // webpackBootstrap
 	          textAnchor: textAnchor,
 	          transform: transform,
 	          style: style
-	        },
+	        }, this.props.events),
 	        content.map(function (line, i) {
-	          return _react2["default"].createElement(
+	          return _react2.default.createElement(
 	            "tspan",
-	            { key: i, x: _this.props.x, dy: i ? lineHeight : undefined },
+	            { key: i, x: _this2.props.x, dy: i ? lineHeight : undefined },
 	            line
 	          );
 	        })
 	      );
 	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The capHeight prop defines a text metric for the font being used: the
-	       * expected height of capital letters. This is necessary because of SVG,
-	       * which (a) positions the *bottom* of the text at `y`, and (b) has no
-	       * notion of line height. The value should ideally use the same units as
-	       * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
-	       */
-	      capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _victoryUtilIndex.PropTypes.nonNegative, _react.PropTypes.func]),
-	      /**
-	       * all Victory components will pass a data prop to their label component. This can
-	       * be used to calculate functional styles, and determine child text
-	       */
-	      data: _react.PropTypes.object,
-	      /**
-	       * all Victory components will pass a text prop to their label component.
-	       * This defines the content of the label when child nodes are absent. It
-	       * will be ignored if children are provided.
-	       */
-	      text: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	      /**
-	       * The children of this component define the content of the label. This
-	       * makes using the component similar to normal HTML spans or labels.
-	       * Currently, only strings are supported.
-	       */
-	      children: _react.PropTypes.oneOfType([// TODO: Expand child support in future release
-	      _react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
-	      /**
-	       * The lineHeight prop defines how much space a single line of text should
-	       * take up. Note that SVG has no notion of line-height, so the positioning
-	       * may differ slightly from what you would expect with CSS, but the result
-	       * is similar: a roughly equal amount of extra space is distributed above
-	       * and below the line of text. The value should ideally use the same units
-	       * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
-	       * is assumed to be ems.
-	       */
-	      lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _victoryUtilIndex.PropTypes.nonNegative, _react.PropTypes.func]),
-	      /**
-	       * The style prop applies CSS properties to the rendered `<text>` element.
-	       */
-	      style: _react.PropTypes.object,
-	      /**
-	       * The textAnchor prop defines how the text is horizontally positioned
-	       * relative to the given `x` and `y` coordinates.
-	       */
-	      textAnchor: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start", "middle", "end", "inherit"]), _react.PropTypes.func]),
-	      /**
-	       * The verticalAnchor prop defines how the text is vertically positioned
-	       * relative to the given `x` and `y` coordinates.
-	       */
-	      verticalAnchor: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start", "middle", "end"]), _react.PropTypes.func]),
-	      /**
-	       * The transform prop applies a transform to the rendered `<text>` element.
-	       * In addition to being a string, it can be an object containing transform
-	       * definitions for easier authoring.
-	       */
-	      transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object, _react.PropTypes.func]),
-	      /**
-	       * The x prop defines the x coordinate to use as a basis for horizontal
-	       * positioning.
-	       */
-	      x: _react.PropTypes.number,
-	      /**
-	       * The y prop defines the y coordinate to use as a basis for vertical
-	       * positioning.
-	       */
-	      y: _react.PropTypes.number,
-	      /**
-	       * The dx prop defines a horizontal shift from the `x` coordinate.
-	       */
-	      dx: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.func]),
-	      /**
-	       * The dy prop defines a vertical shift from the `y` coordinate. Since this
-	       * component already accounts for `capHeight`, `lineHeight`, and
-	       * `verticalAnchor`, this will usually not be necessary.
-	       */
-	      dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.func])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      capHeight: "0.71em", // Magic number from d3.
-	      lineHeight: 1
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return VictoryLabel;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryLabel;
-	module.exports = exports["default"];
+	VictoryLabel.propTypes = {
+	  /**
+	   * The capHeight prop defines a text metric for the font being used: the
+	   * expected height of capital letters. This is necessary because of SVG,
+	   * which (a) positions the *bottom* of the text at `y`, and (b) has no
+	   * notion of line height. The value should ideally use the same units as
+	   * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
+	   * is assumed to be ems.
+	   */
+	  capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _index.PropTypes.nonNegative, _react.PropTypes.func]),
+	  /**
+	   * Victory components can pass a datum prop to their label component. This can
+	   * be used to calculate functional styles, and determine child text
+	   */
+	  datum: _react.PropTypes.object,
+	  /**
+	   * Labels that apply to an entire data series will recieve the entire series
+	   * as `data` instead of an individual datum prop.
+	   */
+	  data: _react.PropTypes.array,
+	  /**
+	   * The events prop attaches arbitrary event handlers to the label component.
+	   * Event handlers are currently only called with their corresponding events.
+	   * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+	   */
+	  events: _react.PropTypes.object,
+	  /**
+	   * all Victory components will pass a text prop to their label component.
+	   * This defines the content of the label when child nodes are absent. It
+	   * will be ignored if children are provided.
+	   */
+	  text: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
+	  /**
+	   * The children of this component define the content of the label. This
+	   * makes using the component similar to normal HTML spans or labels.
+	   * strings, numbers, and functions of data / value are supported.
+	   */
+	  children: _react.PropTypes.oneOfType([// TODO: Expand child support in future release
+	  _react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
+	  /**
+	   * The lineHeight prop defines how much space a single line of text should
+	   * take up. Note that SVG has no notion of line-height, so the positioning
+	   * may differ slightly from what you would expect with CSS, but the result
+	   * is similar: a roughly equal amount of extra space is distributed above
+	   * and below the line of text. The value should ideally use the same units
+	   * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
+	   * is assumed to be ems.
+	   */
+	  lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _index.PropTypes.nonNegative, _react.PropTypes.func]),
+	  /**
+	   * The style prop applies CSS properties to the rendered `<text>` element.
+	   */
+	  style: _react.PropTypes.object,
+	  /**
+	   * The textAnchor prop defines how the text is horizontally positioned
+	   * relative to the given `x` and `y` coordinates.
+	   */
+	  textAnchor: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start", "middle", "end", "inherit"]), _react.PropTypes.func]),
+	  /**
+	   * The verticalAnchor prop defines how the text is vertically positioned
+	   * relative to the given `x` and `y` coordinates.
+	   */
+	  verticalAnchor: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start", "middle", "end"]), _react.PropTypes.func]),
+	  /**
+	   * The transform prop applies a transform to the rendered `<text>` element.
+	   * In addition to being a string, it can be an object containing transform
+	   * definitions for easier authoring.
+	   */
+	  transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object, _react.PropTypes.func]),
+	  /**
+	   * The x prop defines the x coordinate to use as a basis for horizontal
+	   * positioning.
+	   */
+	  x: _react.PropTypes.number,
+	  /**
+	   * The y prop defines the y coordinate to use as a basis for vertical
+	   * positioning.
+	   */
+	  y: _react.PropTypes.number,
+	  /**
+	   * The dx prop defines a horizontal shift from the `x` coordinate.
+	   */
+	  dx: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.func]),
+	  /**
+	   * The dy prop defines a vertical shift from the `y` coordinate. Since this
+	   * component already accounts for `capHeight`, `lineHeight`, and
+	   * `verticalAnchor`, this will usually not be necessary.
+	   */
+	  dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.func])
+	};
+	VictoryLabel.defaultProps = {
+	  capHeight: "0.71em", // Magic number from d3.
+	  lineHeight: 1
+	};
+	exports.default = VictoryLabel;
 
 /***/ },
-/* 61 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -4655,54 +9734,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
+	exports.Perf = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _collection = __webpack_require__(38);
 	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj["default"] = obj; return newObj; } }
+	var _collection2 = _interopRequireDefault(_collection);
 	
-	var _collection = __webpack_require__(31);
-	
-	var Collection = _interopRequireWildcard(_collection);
-	
-	var _helpers = __webpack_require__(32);
+	var _helpers = __webpack_require__(39);
 	
 	var _helpers2 = _interopRequireDefault(_helpers);
 	
-	var _log = __webpack_require__(41);
+	var _log = __webpack_require__(184);
 	
-	var Log = _interopRequireWildcard(_log);
+	var _log2 = _interopRequireDefault(_log);
 	
-	var _style = __webpack_require__(43);
+	var _style = __webpack_require__(186);
 	
-	var Style = _interopRequireWildcard(_style);
+	var _style2 = _interopRequireDefault(_style);
 	
-	var _type = __webpack_require__(48);
+	var _propTypes = __webpack_require__(191);
 	
-	var Type = _interopRequireWildcard(_type);
+	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _propTypes = __webpack_require__(49);
+	var _perf = __webpack_require__(200);
 	
-	var PropTypes = _interopRequireWildcard(_propTypes);
+	var _perf2 = _interopRequireDefault(_perf);
 	
-	var _perf = __webpack_require__(62);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Perf = _interopRequireWildcard(_perf);
-	
-	exports["default"] = {
-	  Collection: Collection,
-	  Helpers: _helpers2["default"],
-	  Log: Log,
-	  Style: Style,
-	  Type: Type,
-	  PropTypes: PropTypes,
-	  Perf: Perf
-	};
-	module.exports = exports["default"];
+	exports.Collection = _collection2.default;
+	exports.Helpers = _helpers2.default;
+	exports.Log = _log2.default;
+	exports.Style = _style2.default;
+	exports.PropTypes = _propTypes2.default;
+	exports.Perf = _perf2.default;
 
 /***/ },
-/* 62 */
+/* 200 */
 /***/ function(module, exports) {
 
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	/**
 	 * Memoizes multi-argument functions.
 	 *
@@ -4714,391 +9789,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * @return {Function}      Memoized `fn`.
 	 */
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var memoize = function memoize(fn) {
-	  var cache = {};
-	  return function () {
-	    var args = Array.prototype.slice.call(arguments);
-	    var hash = args.map(function (arg) {
-	      return typeof arg === "string" || typeof arg === "number" ? arg : JSON.stringify(arg);
-	    }).join("~");
-	    return hash in cache ? cache[hash] : cache[hash] = fn.apply(this, args); // eslint-disable-line no-invalid-this
-	  };
+	exports.default = {
+	  memoize: function memoize(fn) {
+	    var cache = {};
+	    return function () {
+	      var args = Array.prototype.slice.call(arguments);
+	      var hash = args.map(function (arg) {
+	        return typeof arg === "string" || typeof arg === "number" ? arg : JSON.stringify(arg);
+	      }).join("~");
+	      return hash in cache ? cache[hash] : cache[hash] = fn.apply(this, args); // eslint-disable-line no-invalid-this
+	    };
+	  }
 	};
-	exports.memoize = memoize;
 
 /***/ },
-/* 63 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseMerge = __webpack_require__(64),
-	    createAssigner = __webpack_require__(22);
-	
-	/**
-	 * Recursively merges own enumerable properties of the source object(s), that
-	 * don't resolve to `undefined` into the destination object. Subsequent sources
-	 * overwrite property assignments of previous sources. If `customizer` is
-	 * provided it's invoked to produce the merged values of the destination and
-	 * source properties. If `customizer` returns `undefined` merging is handled
-	 * by the method instead. The `customizer` is bound to `thisArg` and invoked
-	 * with five arguments: (objectValue, sourceValue, key, object, source).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} [sources] The source objects.
-	 * @param {Function} [customizer] The function to customize assigned values.
-	 * @param {*} [thisArg] The `this` binding of `customizer`.
-	 * @returns {Object} Returns `object`.
-	 * @example
-	 *
-	 * var users = {
-	 *   'data': [{ 'user': 'barney' }, { 'user': 'fred' }]
-	 * };
-	 *
-	 * var ages = {
-	 *   'data': [{ 'age': 36 }, { 'age': 40 }]
-	 * };
-	 *
-	 * _.merge(users, ages);
-	 * // => { 'data': [{ 'user': 'barney', 'age': 36 }, { 'user': 'fred', 'age': 40 }] }
-	 *
-	 * // using a customizer callback
-	 * var object = {
-	 *   'fruits': ['apple'],
-	 *   'vegetables': ['beet']
-	 * };
-	 *
-	 * var other = {
-	 *   'fruits': ['banana'],
-	 *   'vegetables': ['carrot']
-	 * };
-	 *
-	 * _.merge(object, other, function(a, b) {
-	 *   if (_.isArray(a)) {
-	 *     return a.concat(b);
-	 *   }
-	 * });
-	 * // => { 'fruits': ['apple', 'banana'], 'vegetables': ['beet', 'carrot'] }
-	 */
-	var merge = createAssigner(baseMerge);
-	
-	module.exports = merge;
-
-
-/***/ },
-/* 64 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayEach = __webpack_require__(65),
-	    baseMergeDeep = __webpack_require__(66),
-	    isArray = __webpack_require__(17),
-	    isArrayLike = __webpack_require__(11),
-	    isObject = __webpack_require__(9),
-	    isObjectLike = __webpack_require__(10),
-	    isTypedArray = __webpack_require__(68),
-	    keys = __webpack_require__(5);
-	
-	/**
-	 * The base implementation of `_.merge` without support for argument juggling,
-	 * multiple sources, and `this` binding `customizer` functions.
-	 *
-	 * @private
-	 * @param {Object} object The destination object.
-	 * @param {Object} source The source object.
-	 * @param {Function} [customizer] The function to customize merged values.
-	 * @param {Array} [stackA=[]] Tracks traversed source objects.
-	 * @param {Array} [stackB=[]] Associates values with source counterparts.
-	 * @returns {Object} Returns `object`.
-	 */
-	function baseMerge(object, source, customizer, stackA, stackB) {
-	  if (!isObject(object)) {
-	    return object;
-	  }
-	  var isSrcArr = isArrayLike(source) && (isArray(source) || isTypedArray(source)),
-	      props = isSrcArr ? undefined : keys(source);
-	
-	  arrayEach(props || source, function(srcValue, key) {
-	    if (props) {
-	      key = srcValue;
-	      srcValue = source[key];
-	    }
-	    if (isObjectLike(srcValue)) {
-	      stackA || (stackA = []);
-	      stackB || (stackB = []);
-	      baseMergeDeep(object, source, key, baseMerge, customizer, stackA, stackB);
-	    }
-	    else {
-	      var value = object[key],
-	          result = customizer ? customizer(value, srcValue, key, object, source) : undefined,
-	          isCommon = result === undefined;
-	
-	      if (isCommon) {
-	        result = srcValue;
-	      }
-	      if ((result !== undefined || (isSrcArr && !(key in object))) &&
-	          (isCommon || (result === result ? (result !== value) : (value === value)))) {
-	        object[key] = result;
-	      }
-	    }
-	  });
-	  return object;
-	}
-	
-	module.exports = baseMerge;
-
-
-/***/ },
-/* 65 */
-/***/ function(module, exports) {
-
-	/**
-	 * A specialized version of `_.forEach` for arrays without support for callback
-	 * shorthands and `this` binding.
-	 *
-	 * @private
-	 * @param {Array} array The array to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Array} Returns `array`.
-	 */
-	function arrayEach(array, iteratee) {
-	  var index = -1,
-	      length = array.length;
-	
-	  while (++index < length) {
-	    if (iteratee(array[index], index, array) === false) {
-	      break;
-	    }
-	  }
-	  return array;
-	}
-	
-	module.exports = arrayEach;
-
-
-/***/ },
-/* 66 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayCopy = __webpack_require__(67),
-	    isArguments = __webpack_require__(16),
-	    isArray = __webpack_require__(17),
-	    isArrayLike = __webpack_require__(11),
-	    isPlainObject = __webpack_require__(56),
-	    isTypedArray = __webpack_require__(68),
-	    toPlainObject = __webpack_require__(69);
-	
-	/**
-	 * A specialized version of `baseMerge` for arrays and objects which performs
-	 * deep merges and tracks traversed objects enabling objects with circular
-	 * references to be merged.
-	 *
-	 * @private
-	 * @param {Object} object The destination object.
-	 * @param {Object} source The source object.
-	 * @param {string} key The key of the value to merge.
-	 * @param {Function} mergeFunc The function to merge values.
-	 * @param {Function} [customizer] The function to customize merged values.
-	 * @param {Array} [stackA=[]] Tracks traversed source objects.
-	 * @param {Array} [stackB=[]] Associates values with source counterparts.
-	 * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
-	 */
-	function baseMergeDeep(object, source, key, mergeFunc, customizer, stackA, stackB) {
-	  var length = stackA.length,
-	      srcValue = source[key];
-	
-	  while (length--) {
-	    if (stackA[length] == srcValue) {
-	      object[key] = stackB[length];
-	      return;
-	    }
-	  }
-	  var value = object[key],
-	      result = customizer ? customizer(value, srcValue, key, object, source) : undefined,
-	      isCommon = result === undefined;
-	
-	  if (isCommon) {
-	    result = srcValue;
-	    if (isArrayLike(srcValue) && (isArray(srcValue) || isTypedArray(srcValue))) {
-	      result = isArray(value)
-	        ? value
-	        : (isArrayLike(value) ? arrayCopy(value) : []);
-	    }
-	    else if (isPlainObject(srcValue) || isArguments(srcValue)) {
-	      result = isArguments(value)
-	        ? toPlainObject(value)
-	        : (isPlainObject(value) ? value : {});
-	    }
-	    else {
-	      isCommon = false;
-	    }
-	  }
-	  // Add the source value to the stack of traversed objects and associate
-	  // it with its merged value.
-	  stackA.push(srcValue);
-	  stackB.push(result);
-	
-	  if (isCommon) {
-	    // Recursively merge objects and arrays (susceptible to call stack limits).
-	    object[key] = mergeFunc(result, srcValue, customizer, stackA, stackB);
-	  } else if (result === result ? (result !== value) : (value === value)) {
-	    object[key] = result;
-	  }
-	}
-	
-	module.exports = baseMergeDeep;
-
-
-/***/ },
-/* 67 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copies the values of `source` to `array`.
-	 *
-	 * @private
-	 * @param {Array} source The array to copy values from.
-	 * @param {Array} [array=[]] The array to copy values to.
-	 * @returns {Array} Returns `array`.
-	 */
-	function arrayCopy(source, array) {
-	  var index = -1,
-	      length = source.length;
-	
-	  array || (array = Array(length));
-	  while (++index < length) {
-	    array[index] = source[index];
-	  }
-	  return array;
-	}
-	
-	module.exports = arrayCopy;
-
-
-/***/ },
-/* 68 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isLength = __webpack_require__(14),
-	    isObjectLike = __webpack_require__(10);
-	
-	/** `Object#toString` result references. */
-	var argsTag = '[object Arguments]',
-	    arrayTag = '[object Array]',
-	    boolTag = '[object Boolean]',
-	    dateTag = '[object Date]',
-	    errorTag = '[object Error]',
-	    funcTag = '[object Function]',
-	    mapTag = '[object Map]',
-	    numberTag = '[object Number]',
-	    objectTag = '[object Object]',
-	    regexpTag = '[object RegExp]',
-	    setTag = '[object Set]',
-	    stringTag = '[object String]',
-	    weakMapTag = '[object WeakMap]';
-	
-	var arrayBufferTag = '[object ArrayBuffer]',
-	    float32Tag = '[object Float32Array]',
-	    float64Tag = '[object Float64Array]',
-	    int8Tag = '[object Int8Array]',
-	    int16Tag = '[object Int16Array]',
-	    int32Tag = '[object Int32Array]',
-	    uint8Tag = '[object Uint8Array]',
-	    uint8ClampedTag = '[object Uint8ClampedArray]',
-	    uint16Tag = '[object Uint16Array]',
-	    uint32Tag = '[object Uint32Array]';
-	
-	/** Used to identify `toStringTag` values of typed arrays. */
-	var typedArrayTags = {};
-	typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
-	typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
-	typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
-	typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
-	typedArrayTags[uint32Tag] = true;
-	typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
-	typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
-	typedArrayTags[dateTag] = typedArrayTags[errorTag] =
-	typedArrayTags[funcTag] = typedArrayTags[mapTag] =
-	typedArrayTags[numberTag] = typedArrayTags[objectTag] =
-	typedArrayTags[regexpTag] = typedArrayTags[setTag] =
-	typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is classified as a typed array.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
-	 * @example
-	 *
-	 * _.isTypedArray(new Uint8Array);
-	 * // => true
-	 *
-	 * _.isTypedArray([]);
-	 * // => false
-	 */
-	function isTypedArray(value) {
-	  return isObjectLike(value) && isLength(value.length) && !!typedArrayTags[objToString.call(value)];
-	}
-	
-	module.exports = isTypedArray;
-
-
-/***/ },
-/* 69 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseCopy = __webpack_require__(21),
-	    keysIn = __webpack_require__(19);
-	
-	/**
-	 * Converts `value` to a plain object flattening inherited enumerable
-	 * properties of `value` to own properties of the plain object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to convert.
-	 * @returns {Object} Returns the converted plain object.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.b = 2;
-	 * }
-	 *
-	 * Foo.prototype.c = 3;
-	 *
-	 * _.assign({ 'a': 1 }, new Foo);
-	 * // => { 'a': 1, 'b': 2 }
-	 *
-	 * _.assign({ 'a': 1 }, _.toPlainObject(new Foo));
-	 * // => { 'a': 1, 'b': 2, 'c': 3 }
-	 */
-	function toPlainObject(value) {
-	  return baseCopy(value, keysIn(value));
-	}
-	
-	module.exports = toPlainObject;
-
-
-/***/ },
-/* 70 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5109,49 +9814,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _defaults = __webpack_require__(2);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _pick = __webpack_require__(202);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _pick2 = _interopRequireDefault(_pick);
 	
-	var _lodashObjectDefaults = __webpack_require__(2);
-	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
-	
-	var _lodashObjectPick = __webpack_require__(71);
-	
-	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _axisLine = __webpack_require__(76);
+	var _axisLine = __webpack_require__(207);
 	
 	var _axisLine2 = _interopRequireDefault(_axisLine);
 	
-	var _grid = __webpack_require__(77);
+	var _axisLabel = __webpack_require__(208);
+	
+	var _axisLabel2 = _interopRequireDefault(_axisLabel);
+	
+	var _grid = __webpack_require__(214);
 	
 	var _grid2 = _interopRequireDefault(_grid);
 	
-	var _tick = __webpack_require__(78);
+	var _tick = __webpack_require__(215);
 	
 	var _tick2 = _interopRequireDefault(_tick);
 	
-	var _helperMethods = __webpack_require__(79);
+	var _tickLabel = __webpack_require__(216);
+	
+	var _tickLabel2 = _interopRequireDefault(_tickLabel);
+	
+	var _helperMethods = __webpack_require__(217);
 	
 	var _helperMethods2 = _interopRequireDefault(_helperMethods);
 	
-	var _helpersAxis = __webpack_require__(100);
+	var _axis = __webpack_require__(266);
 	
-	var _helpersAxis2 = _interopRequireDefault(_helpersAxis);
+	var _axis2 = _interopRequireDefault(_axis);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var defaultStyles = {
 	  axis: {
@@ -5199,30 +9912,41 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var style = props.style || {};
 	  var parentStyleProps = { height: props.height, width: props.width };
 	  return {
-	    parent: (0, _lodashObjectDefaults2["default"])(parentStyleProps, style.parent, defaultStyles.parent),
-	    axis: (0, _lodashObjectDefaults2["default"])({}, style.axis, defaultStyles.axis),
-	    axisLabel: (0, _lodashObjectDefaults2["default"])({}, style.axisLabel, defaultStyles.axisLabel),
-	    grid: (0, _lodashObjectDefaults2["default"])({}, style.grid, defaultStyles.grid),
-	    ticks: (0, _lodashObjectDefaults2["default"])({}, style.ticks, defaultStyles.ticks),
-	    tickLabels: (0, _lodashObjectDefaults2["default"])({}, style.tickLabels, defaultStyles.tickLabels)
+	    parent: (0, _defaults2.default)(parentStyleProps, style.parent, defaultStyles.parent),
+	    axis: (0, _defaults2.default)({}, style.axis, defaultStyles.axis),
+	    axisLabel: (0, _defaults2.default)({}, style.axisLabel, defaultStyles.axisLabel),
+	    grid: (0, _defaults2.default)({}, style.grid, defaultStyles.grid),
+	    ticks: (0, _defaults2.default)({}, style.ticks, defaultStyles.ticks),
+	    tickLabels: (0, _defaults2.default)({}, style.tickLabels, defaultStyles.tickLabels)
 	  };
 	};
 	
-	var VictoryAxis = (function (_React$Component) {
+	var VictoryAxis = function (_React$Component) {
 	  _inherits(VictoryAxis, _React$Component);
 	
 	  function VictoryAxis() {
 	    _classCallCheck(this, VictoryAxis);
 	
-	    _get(Object.getPrototypeOf(VictoryAxis.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryAxis).apply(this, arguments));
 	  }
 	
 	  _createClass(VictoryAxis, [{
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      this.state = {
+	        axisState: {},
+	        axisLabelState: {},
+	        gridState: {},
+	        ticksState: {},
+	        tickLabelsState: {}
+	      };
+	    }
+	  }, {
 	    key: "getTickProps",
 	    value: function getTickProps(props) {
-	      var stringTicks = _helpersAxis2["default"].stringTicks(props);
-	      var scale = _helperMethods2["default"].getScale(props);
-	      var ticks = _helperMethods2["default"].getTicks(props, scale);
+	      var stringTicks = _axis2.default.stringTicks(props);
+	      var scale = _helperMethods2.default.getScale(props);
+	      var ticks = _helperMethods2.default.getTicks(props, scale);
 	      return { scale: scale, ticks: ticks, stringTicks: stringTicks };
 	    }
 	  }, {
@@ -5231,9 +9955,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var style = getStyles(props);
 	      var padding = _victoryCore.Helpers.getPadding(props);
 	      var orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-	      var isVertical = _helpersAxis2["default"].isVertical(props);
-	      var labelPadding = _helperMethods2["default"].getLabelPadding(props, style);
-	      var offset = _helperMethods2["default"].getOffset(props, style);
+	      var isVertical = _axis2.default.isVertical(props);
+	      var labelPadding = _helperMethods2.default.getLabelPadding(props, style);
+	      var offset = _helperMethods2.default.getOffset(props, style);
 	      return { style: style, padding: padding, orientation: orientation, isVertical: isVertical, labelPadding: labelPadding, offset: offset };
 	    }
 	  }, {
@@ -5243,18 +9967,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var padding = layoutProps.padding;
 	      var isVertical = layoutProps.isVertical;
 	
-	      return _react2["default"].createElement(_axisLine2["default"], { key: "line",
+	      var getBoundEvents = _victoryCore.Helpers.getEvents.bind(this);
+	      return _react2.default.createElement(_axisLine2.default, _extends({ key: "line",
+	        events: getBoundEvents(this.props.events.axis, "axis"),
 	        style: style.axis,
 	        x1: isVertical ? null : padding.left,
 	        x2: isVertical ? null : props.width - padding.right,
 	        y1: isVertical ? padding.top : null,
 	        y2: isVertical ? props.height - padding.bottom : null
-	      });
+	      }, this.state.axisState[0]));
 	    }
 	  }, {
 	    key: "renderTicks",
 	    value: function renderTicks(props, layoutProps, tickProps) {
-	      var _this = this;
+	      var _this2 = this;
 	
 	      var style = layoutProps.style;
 	      var orientation = layoutProps.orientation;
@@ -5262,24 +9988,47 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var ticks = tickProps.ticks;
 	      var stringTicks = tickProps.stringTicks;
 	
-	      var tickFormat = _helperMethods2["default"].getTickFormat(props, tickProps);
+	      var tickFormat = _helperMethods2.default.getTickFormat(props, tickProps);
 	      return ticks.map(function (tick, index) {
-	        var position = scale(tick);
-	        return _react2["default"].createElement(_tick2["default"], { key: "tick-" + index,
-	          position: position,
+	        var isVertical = orientation === "left" || orientation === "right";
+	        var tickPosition = _helperMethods2.default.getTickPosition(style.ticks, orientation, isVertical);
+	        var getBoundEvents = _victoryCore.Helpers.getEvents.bind(_this2);
+	        var tickComponent = _react2.default.createElement(_tick2.default, _extends({ key: "tick-" + index,
+	          index: index,
+	          events: getBoundEvents(_this2.props.events.ticks, "ticks"),
+	          position: tickPosition,
 	          tick: stringTicks ? props.tickValues[tick - 1] : tick,
-	          orientation: orientation,
-	          label: tickFormat.call(_this, tick, index),
-	          style: {
-	            ticks: style.ticks,
-	            tickLabels: style.tickLabels
-	          }
-	        });
+	          style: style.ticks
+	        }, _this2.state.ticksState[index]));
+	        var label = tickFormat.call(_this2, tick, index);
+	        var labelComponent = void 0;
+	        if (label) {
+	          labelComponent = _react2.default.createElement(_tickLabel2.default, _extends({ key: "tick-label-" + index,
+	            index: index,
+	            events: getBoundEvents(_this2.props.events.tickLabels, "tickLabels"),
+	            position: tickPosition,
+	            label: label,
+	            tick: stringTicks ? props.tickValues[tick - 1] : tick,
+	            orientation: orientation,
+	            isVertical: isVertical,
+	            style: style.tickLabels
+	          }, _this2.state.tickLabelsState[index]));
+	        }
+	        var groupPosition = scale(tick);
+	        var transform = isVertical ? "translate(0, " + groupPosition + ")" : "translate(" + groupPosition + ", 0)";
+	        return _react2.default.createElement(
+	          "g",
+	          { key: "tick-group-" + index, transform: transform },
+	          tickComponent,
+	          labelComponent
+	        );
 	      });
 	    }
 	  }, {
 	    key: "renderGrid",
 	    value: function renderGrid(props, layoutProps, tickProps) {
+	      var _this3 = this;
+	
 	      var scale = tickProps.scale;
 	      var ticks = tickProps.ticks;
 	      var stringTicks = tickProps.stringTicks;
@@ -5299,14 +10048,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return ticks.map(function (tick, index) {
 	        // determine the position and translation of each gridline
 	        var position = scale(tick);
-	        return _react2["default"].createElement(_grid2["default"], { key: "grid-" + index,
+	        var getBoundEvents = _victoryCore.Helpers.getEvents.bind(_this3);
+	        return _react2.default.createElement(_grid2.default, _extends({ key: "grid-" + index,
+	          index: index,
+	          events: getBoundEvents(_this3.props.events.grid, "grid"),
 	          tick: stringTicks ? props.tickValues[tick - 1] : tick,
 	          x2: x2,
 	          y2: y2,
 	          xTransform: isVertical ? -xOffset : position,
 	          yTransform: isVertical ? position : yOffset,
 	          style: style.grid
-	        });
+	        }, _this3.state.gridState[index]));
 	      });
 	    }
 	  }, {
@@ -5315,13 +10067,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!props.label) {
 	        return undefined;
 	      }
-	      var newProps = this.getLableProps(props, layoutProps);
-	      return props.label.props ? _react2["default"].cloneElement(props.label, newProps) : _react2["default"].createElement(_victoryCore.VictoryLabel, newProps, props.label);
-	    }
-	  }, {
-	    key: "getLableProps",
-	    value: function getLableProps(props, layoutProps) {
-	      var componentProps = props.label.props || {};
 	      var style = layoutProps.style;
 	      var orientation = layoutProps.orientation;
 	      var padding = layoutProps.padding;
@@ -5335,20 +10080,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var y = sign * labelPadding;
 	      var verticalAnchor = sign < 0 ? "end" : "start";
 	      var transform = isVertical ? "rotate(-90)" : "";
-	      return {
-	        key: "label",
-	        x: componentProps.x || x,
-	        y: componentProps.y || y,
-	        textAnchor: componentProps.textAnchor || "middle",
-	        verticalAnchor: componentProps.verticalAnchor || verticalAnchor,
-	        style: (0, _lodashObjectDefaults2["default"])({}, style.axisLabel, componentProps.style),
-	        transform: componentProps.transform || transform
-	      };
+	      var getBoundEvents = _victoryCore.Helpers.getEvents.bind(this);
+	      return _react2.default.createElement(_axisLabel2.default, _extends({
+	        events: getBoundEvents(this.props.events.axisLabel, "axisLabels"),
+	        verticalAnchor: verticalAnchor,
+	        transform: transform,
+	        position: { x: x, y: y },
+	        label: this.props.label,
+	        style: style.axisLabel
+	      }, this.state.axisLabelState[0]));
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this2 = this;
+	      var _this4 = this;
 	
 	      // If animating, return a `VictoryAnimation` element that will create
 	      // a new `VictoryAxis` with nearly identical props, except (1) tweened
@@ -5357,13 +10102,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
-	        var whitelist = ["style", "domain", "range", "tickCount", "tickValues", "labelPadding", "offsetX", "offsetY", "padding", "width", "height"];
-	        var animateData = (0, _lodashObjectPick2["default"])(this.props, whitelist);
-	        return _react2["default"].createElement(
+	        var whitelist = ["style", "domain", "range", "tickCount", "tickValues", "offsetX", "offsetY", "padding", "width", "height"];
+	        var animateData = (0, _pick2.default)(this.props, whitelist);
+	        return _react2.default.createElement(
 	          _victoryCore.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
 	          function (props) {
-	            return _react2["default"].createElement(VictoryAxis, _extends({}, _this2.props, props, { animate: null }));
+	            return _react2.default.createElement(VictoryAxis, _extends({}, _this4.props, props, { animate: null }));
 	          }
 	        );
 	      }
@@ -5371,8 +10116,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var tickProps = this.getTickProps(this.props);
 	      var style = layoutProps.style;
 	
-	      var transform = _helperMethods2["default"].getTransform(this.props, layoutProps);
-	      var group = _react2["default"].createElement(
+	      var transform = _helperMethods2.default.getTransform(this.props, layoutProps);
+	      var group = _react2.default.createElement(
 	        "g",
 	        { style: style.parent, transform: transform },
 	        this.renderLabel(this.props, layoutProps),
@@ -5380,241 +10125,227 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.renderLine(this.props, layoutProps),
 	        this.renderGrid(this.props, layoutProps, tickProps)
 	      );
-	      return this.props.standalone ? _react2["default"].createElement(
+	      return this.props.standalone ? _react2.default.createElement(
 	        "svg",
-	        { style: style.parent },
+	        _extends({ style: style.parent }, this.props.events.parent),
 	        group
 	      ) : group;
 	    }
-	  }], [{
-	    key: "role",
-	    value: "axis",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. It this prop is
-	       * not given, the axis will not tween between changing data / style props.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
-	       */
-	      animate: _react.PropTypes.object,
-	      /**
-	       * This prop specifies whether a given axis is intended to cross another axis.
-	       */
-	      crossAxis: _react.PropTypes.bool,
-	      /**
-	       * The dependentAxis prop specifies whether the axis corresponds to the
-	       * dependent variable (usually y). This prop is useful when composing axis
-	       * with other components to form a chart.
-	       */
-	      dependentAxis: _react.PropTypes.bool,
-	      /**
-	       * The domain prop describes the range of values your axis will include. This prop should be
-	       * given as a array of the minimum and maximum expected values for your axis.
-	       * If this value is not given it will be calculated based on the scale or tickValues.
-	       * @examples [-1, 1]
-	       */
-	      domain: _victoryCore.PropTypes.domain,
-	      /**
-	       * The height prop specifies the height of the chart container element in pixels.
-	       */
-	      height: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The label prop specifies the label for your axis. This prop can be a string or
-	       * a label component.
-	       */
-	      label: _react.PropTypes.any,
-	      /**
-	       * The labelPadding prop specifies the padding in pixels for your axis label.
-	       */
-	      labelPadding: _react.PropTypes.number,
-	      /**
-	       * This value describes how far from the "edge" of its permitted area each axis
-	       * will be set back in the x-direction.  If this prop is not given,
-	       * the offset is calculated based on font size, axis orientation, and label padding.
-	       */
-	      offsetX: _react.PropTypes.number,
-	      /**
-	       * This value describes how far from the "edge" of its permitted area each axis
-	       * will be set back in the y-direction.  If this prop is not given,
-	       * the offset is calculated based on font size, axis orientation, and label padding.
-	       */
-	      offsetY: _react.PropTypes.number,
-	      /**
-	       * The orientation prop specifies the position and orientation of your axis.
-	       */
-	      orientation: _react.PropTypes.oneOf(["top", "bottom", "left", "right"]),
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	        top: _react.PropTypes.number,
-	        bottom: _react.PropTypes.number,
-	        left: _react.PropTypes.number,
-	        right: _react.PropTypes.number
-	      })]),
-	      /**
-	       * The scale prop determines which scales your axis should use. This prop can be
-	       * given as a `d3-scale@0.3.0` function or as a string corresponding to a supported d3-string
-	       * function.
-	       * @examples d3Scale.time(), "linear", "time", "log", "sqrt"
-	       */
-	      scale: _victoryCore.PropTypes.scale,
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryAxis with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react.PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. Victory Axis relies on Radium,
-	       * so valid Radium style objects should work for this prop, however height, width, and margin
-	       * are used to calculate range, and need to be expressed as a number of pixels.
-	       * Styles for axis lines, gridlines, and ticks are scoped to separate props.
-	       * @examples {axis: {stroke: "#756f6a"}, grid: {stroke: "grey"}, ticks: {stroke: "grey"},
-	       * tickLabels: {fontSize: 10, padding: 5}, axisLabel: {fontSize: 16, padding: 20}}
-	       */
-	      style: _react.PropTypes.shape({
-	        parent: _react.PropTypes.object,
-	        axis: _react.PropTypes.object,
-	        axisLabel: _react.PropTypes.object,
-	        grid: _react.PropTypes.object,
-	        ticks: _react.PropTypes.object,
-	        tickLabels: _react.PropTypes.object
-	      }),
-	      /**
-	       * The tickCount prop specifies how many ticks should be drawn on the axis if
-	       * tickValues are not explicitly provided.
-	       */
-	      tickCount: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The tickFormat prop specifies how tick values should be expressed visually.
-	       * tickFormat can be given as a function to be applied to every tickValue, or as
-	       * an array of display values for each tickValue.
-	       * @examples d3.time.format("%Y"), (x) => x.toPrecision(2), ["first", "second", "third"]
-	       */
-	      tickFormat: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.homogeneousArray]),
-	      /**
-	       * The tickValues prop explicitly specifies which tick values to draw on the axis.
-	       * @examples ["apples", "bananas", "oranges"], [2, 4, 6, 8]
-	       */
-	      tickValues: _victoryCore.PropTypes.homogeneousArray,
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _victoryCore.PropTypes.nonNegative
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      height: 300,
-	      padding: 50,
-	      scale: "linear",
-	      standalone: true,
-	      tickCount: 5,
-	      width: 450
-	    },
-	    enumerable: true
-	  }, {
-	    key: "getDomain",
-	    value: _helperMethods2["default"].getDomain.bind(_helperMethods2["default"]),
-	    enumerable: true
-	  }, {
-	    key: "getAxis",
-	    value: _helperMethods2["default"].getAxis.bind(_helperMethods2["default"]),
-	    enumerable: true
-	  }, {
-	    key: "getScale",
-	    value: _helperMethods2["default"].getScale.bind(_helperMethods2["default"]),
-	    enumerable: true
-	  }, {
-	    key: "getStyles",
-	    value: getStyles,
-	    enumerable: true
 	  }]);
 	
 	  return VictoryAxis;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryAxis;
-	module.exports = exports["default"];
+	VictoryAxis.role = "axis";
+	VictoryAxis.propTypes = {
+	  /**
+	   * The animate prop specifies props for victory-animation to use. It this prop is
+	   * not given, the axis will not tween between changing data / style props.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+	   */
+	  animate: _react.PropTypes.object,
+	  /**
+	   * This prop specifies whether a given axis is intended to cross another axis.
+	   */
+	  crossAxis: _react.PropTypes.bool,
+	  /**
+	   * The dependentAxis prop specifies whether the axis corresponds to the
+	   * dependent variable (usually y). This prop is useful when composing axis
+	   * with other components to form a chart.
+	   */
+	  dependentAxis: _react.PropTypes.bool,
+	  /**
+	   * The domain prop describes the range of values your axis will include. This prop should be
+	   * given as a array of the minimum and maximum expected values for your axis.
+	   * If this value is not given it will be calculated based on the scale or tickValues.
+	   * @examples [-1, 1]
+	   */
+	  domain: _victoryCore.PropTypes.domain,
+	  /**
+	   * The events prop attaches arbitrary event handlers to data and label elements
+	   * Event handlers are called with their corresponding events, corresponding component props,
+	   * and their index in the data array, and event name. The return value of event handlers
+	   * will be stored by unique index on the state object of VictoryAxis
+	   * i.e. `this.state.axisState[axisIndex] = {style: {fill: "red"}...}`, and will be
+	   * applied by index to the appropriate child component. Event props on the
+	   * parent namespace are just spread directly on to the top level svg of VictoryAxis
+	   * if one exists. If VictoryAxis is set up to render g elements i.e. when it is
+	   * rendered within chart, or when `standalone={false}` parent events will not be applied.
+	   *
+	   * @examples {axis: {
+	   *  onClick: () => return {style: {stroke: "green"}}
+	   *}}
+	   */
+	  events: _react.PropTypes.shape({
+	    parent: _react.PropTypes.object,
+	    axis: _react.PropTypes.object,
+	    axisLabel: _react.PropTypes.object,
+	    grid: _react.PropTypes.object,
+	    ticks: _react.PropTypes.object,
+	    tickLabels: _react.PropTypes.object
+	  }),
+	  /**
+	   * The height prop specifies the height of the chart container element in pixels.
+	   */
+	  height: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The label prop defines the label that will appear along the axis. This
+	   * prop should be given as a value or an entire, HTML-complete label
+	   * component. If a label component is given, it will be cloned. The new
+	   * element's properties x, y, textAnchor, verticalAnchor, and transform
+	   * will have defaults provided by the axis; styles filled out with
+	   * defaults provided by the axis, and overrides from the label component.
+	   * If a value is given, a new VictoryLabel will be created with props and
+	   * styles from the axis.
+	   */
+	  label: _react.PropTypes.any,
+	  /**
+	   * This value describes how far from the "edge" of its permitted area each axis
+	   * will be set back in the x-direction.  If this prop is not given,
+	   * the offset is calculated based on font size, axis orientation, and label padding.
+	   */
+	  offsetX: _react.PropTypes.number,
+	  /**
+	   * This value describes how far from the "edge" of its permitted area each axis
+	   * will be set back in the y-direction.  If this prop is not given,
+	   * the offset is calculated based on font size, axis orientation, and label padding.
+	   */
+	  offsetY: _react.PropTypes.number,
+	  /**
+	   * The orientation prop specifies the position and orientation of your axis.
+	   */
+	  orientation: _react.PropTypes.oneOf(["top", "bottom", "left", "right"]),
+	  /**
+	   * The padding props specifies the amount of padding in number of pixels between
+	   * the edge of the chart and any rendered child components. This prop can be given
+	   * as a number or as an object with padding specified for top, bottom, left
+	   * and right.
+	   */
+	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	    top: _react.PropTypes.number,
+	    bottom: _react.PropTypes.number,
+	    left: _react.PropTypes.number,
+	    right: _react.PropTypes.number
+	  })]),
+	  /**
+	   * The scale prop determines which scales your axis should use. This prop can be
+	   * given as a `d3-scale@0.3.0` function or as a string corresponding to a supported d3-string
+	   * function.
+	   * @examples d3Scale.time(), "linear", "time", "log", "sqrt"
+	   */
+	  scale: _victoryCore.PropTypes.scale,
+	  /**
+	   * The standalone prop determines whether the component will render a standalone svg
+	   * or a <g> tag that will be included in an external svg. Set standalone to false to
+	   * compose VictoryAxis with other components within an enclosing <svg> tag.
+	   */
+	  standalone: _react.PropTypes.bool,
+	  /**
+	   * The style prop specifies styles for your chart. Victory Axis relies on Radium,
+	   * so valid Radium style objects should work for this prop, however height, width, and margin
+	   * are used to calculate range, and need to be expressed as a number of pixels.
+	   * Styles for axis lines, gridlines, and ticks are scoped to separate props.
+	   * @examples {axis: {stroke: "#756f6a"}, grid: {stroke: "grey"}, ticks: {stroke: "grey"},
+	   * tickLabels: {fontSize: 10, padding: 5}, axisLabel: {fontSize: 16, padding: 20}}
+	   */
+	  style: _react.PropTypes.shape({
+	    parent: _react.PropTypes.object,
+	    axis: _react.PropTypes.object,
+	    axisLabel: _react.PropTypes.object,
+	    grid: _react.PropTypes.object,
+	    ticks: _react.PropTypes.object,
+	    tickLabels: _react.PropTypes.object
+	  }),
+	  /**
+	   * The tickCount prop specifies how many ticks should be drawn on the axis if
+	   * tickValues are not explicitly provided.
+	   */
+	  tickCount: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The tickFormat prop specifies how tick values should be expressed visually.
+	   * tickFormat can be given as a function to be applied to every tickValue, or as
+	   * an array of display values for each tickValue.
+	   * @examples d3.time.format("%Y"), (x) => x.toPrecision(2), ["first", "second", "third"]
+	   */
+	  tickFormat: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.homogeneousArray]),
+	  /**
+	   * The tickValues prop explicitly specifies which tick values to draw on the axis.
+	   * @examples ["apples", "bananas", "oranges"], [2, 4, 6, 8]
+	   */
+	  tickValues: _victoryCore.PropTypes.homogeneousArray,
+	  /**
+	   * The width props specifies the width of the chart container element in pixels
+	   */
+	  width: _victoryCore.PropTypes.nonNegative
+	};
+	VictoryAxis.defaultProps = {
+	  events: {},
+	  height: 300,
+	  padding: 50,
+	  scale: "linear",
+	  standalone: true,
+	  tickCount: 5,
+	  width: 450
+	};
+	VictoryAxis.getDomain = _helperMethods2.default.getDomain.bind(_helperMethods2.default);
+	VictoryAxis.getAxis = _helperMethods2.default.getAxis.bind(_helperMethods2.default);
+	VictoryAxis.getScale = _helperMethods2.default.getScale.bind(_helperMethods2.default);
+	VictoryAxis.getStyles = getStyles;
+	exports.default = VictoryAxis;
 
 /***/ },
-/* 71 */
+/* 202 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFlatten = __webpack_require__(72),
-	    bindCallback = __webpack_require__(23),
-	    pickByArray = __webpack_require__(74),
-	    pickByCallback = __webpack_require__(75),
-	    restParam = __webpack_require__(26);
+	var baseFlatten = __webpack_require__(203),
+	    basePick = __webpack_require__(205),
+	    rest = __webpack_require__(18);
 	
 	/**
-	 * Creates an object composed of the picked `object` properties. Property
-	 * names may be specified as individual arguments or as arrays of property
-	 * names. If `predicate` is provided it's invoked for each property of `object`
-	 * picking the properties `predicate` returns truthy for. The predicate is
-	 * bound to `thisArg` and invoked with three arguments: (value, key, object).
+	 * Creates an object composed of the picked `object` properties.
 	 *
 	 * @static
 	 * @memberOf _
 	 * @category Object
 	 * @param {Object} object The source object.
-	 * @param {Function|...(string|string[])} [predicate] The function invoked per
-	 *  iteration or property names to pick, specified as individual property
-	 *  names or arrays of property names.
-	 * @param {*} [thisArg] The `this` binding of `predicate`.
+	 * @param {...(string|string[])} [props] The property names to pick, specified
+	 *  individually or in arrays.
 	 * @returns {Object} Returns the new object.
 	 * @example
 	 *
-	 * var object = { 'user': 'fred', 'age': 40 };
+	 * var object = { 'a': 1, 'b': '2', 'c': 3 };
 	 *
-	 * _.pick(object, 'user');
-	 * // => { 'user': 'fred' }
-	 *
-	 * _.pick(object, _.isString);
-	 * // => { 'user': 'fred' }
+	 * _.pick(object, ['a', 'c']);
+	 * // => { 'a': 1, 'c': 3 }
 	 */
-	var pick = restParam(function(object, props) {
-	  if (object == null) {
-	    return {};
-	  }
-	  return typeof props[0] == 'function'
-	    ? pickByCallback(object, bindCallback(props[0], props[1], 3))
-	    : pickByArray(object, baseFlatten(props));
+	var pick = rest(function(object, props) {
+	  return object == null ? {} : basePick(object, baseFlatten(props, 1));
 	});
 	
 	module.exports = pick;
 
 
 /***/ },
-/* 72 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayPush = __webpack_require__(73),
-	    isArguments = __webpack_require__(16),
-	    isArray = __webpack_require__(17),
-	    isArrayLike = __webpack_require__(11),
-	    isObjectLike = __webpack_require__(10);
+	var arrayPush = __webpack_require__(204),
+	    isArguments = __webpack_require__(30),
+	    isArray = __webpack_require__(33),
+	    isArrayLikeObject = __webpack_require__(31);
 	
 	/**
-	 * The base implementation of `_.flatten` with added support for restricting
-	 * flattening and specifying the start index.
+	 * The base implementation of `_.flatten` with support for restricting flattening.
 	 *
 	 * @private
 	 * @param {Array} array The array to flatten.
-	 * @param {boolean} [isDeep] Specify a deep flatten.
+	 * @param {number} depth The maximum recursion depth.
 	 * @param {boolean} [isStrict] Restrict flattening to arrays-like objects.
 	 * @param {Array} [result=[]] The initial result value.
 	 * @returns {Array} Returns the new flattened array.
 	 */
-	function baseFlatten(array, isDeep, isStrict, result) {
+	function baseFlatten(array, depth, isStrict, result) {
 	  result || (result = []);
 	
 	  var index = -1,
@@ -5622,11 +10353,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  while (++index < length) {
 	    var value = array[index];
-	    if (isObjectLike(value) && isArrayLike(value) &&
+	    if (depth > 0 && isArrayLikeObject(value) &&
 	        (isStrict || isArray(value) || isArguments(value))) {
-	      if (isDeep) {
+	      if (depth > 1) {
 	        // Recursively flatten arrays (susceptible to call stack limits).
-	        baseFlatten(value, isDeep, isStrict, result);
+	        baseFlatten(value, depth - 1, isStrict, result);
 	      } else {
 	        arrayPush(result, value);
 	      }
@@ -5641,7 +10372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 73 */
+/* 204 */
 /***/ function(module, exports) {
 
 	/**
@@ -5667,69 +10398,66 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 74 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var toObject = __webpack_require__(36);
+	var arrayReduce = __webpack_require__(206);
 	
 	/**
-	 * A specialized version of `_.pick` which picks `object` properties specified
-	 * by `props`.
+	 * The base implementation of `_.pick` without support for individual
+	 * property names.
 	 *
 	 * @private
 	 * @param {Object} object The source object.
 	 * @param {string[]} props The property names to pick.
 	 * @returns {Object} Returns the new object.
 	 */
-	function pickByArray(object, props) {
-	  object = toObject(object);
-	
-	  var index = -1,
-	      length = props.length,
-	      result = {};
-	
-	  while (++index < length) {
-	    var key = props[index];
+	function basePick(object, props) {
+	  object = Object(object);
+	  return arrayReduce(props, function(result, key) {
 	    if (key in object) {
 	      result[key] = object[key];
 	    }
-	  }
-	  return result;
+	    return result;
+	  }, {});
 	}
 	
-	module.exports = pickByArray;
+	module.exports = basePick;
 
 
 /***/ },
-/* 75 */
-/***/ function(module, exports, __webpack_require__) {
+/* 206 */
+/***/ function(module, exports) {
 
-	var baseForIn = __webpack_require__(57);
-	
 	/**
-	 * A specialized version of `_.pick` which picks `object` properties `predicate`
-	 * returns truthy for.
+	 * A specialized version of `_.reduce` for arrays without support for
+	 * iteratee shorthands.
 	 *
 	 * @private
-	 * @param {Object} object The source object.
-	 * @param {Function} predicate The function invoked per iteration.
-	 * @returns {Object} Returns the new object.
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @param {*} [accumulator] The initial value.
+	 * @param {boolean} [initAccum] Specify using the first element of `array` as the initial value.
+	 * @returns {*} Returns the accumulated value.
 	 */
-	function pickByCallback(object, predicate) {
-	  var result = {};
-	  baseForIn(object, function(value, key, object) {
-	    if (predicate(value, key, object)) {
-	      result[key] = value;
-	    }
-	  });
-	  return result;
+	function arrayReduce(array, iteratee, accumulator, initAccum) {
+	  var index = -1,
+	      length = array.length;
+	
+	  if (initAccum && length) {
+	    accumulator = array[++index];
+	  }
+	  while (++index < length) {
+	    accumulator = iteratee(accumulator, array[index], index, array);
+	  }
+	  return accumulator;
 	}
 	
-	module.exports = pickByCallback;
+	module.exports = arrayReduce;
 
 
 /***/ },
-/* 76 */
+/* 207 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5738,58 +10466,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var AxisLine = (function (_React$Component) {
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AxisLine = function (_React$Component) {
 	  _inherits(AxisLine, _React$Component);
 	
 	  function AxisLine() {
 	    _classCallCheck(this, AxisLine);
 	
-	    _get(Object.getPrototypeOf(AxisLine.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AxisLine).apply(this, arguments));
 	  }
 	
 	  _createClass(AxisLine, [{
 	    key: "render",
 	    value: function render() {
-	      return _react2["default"].createElement("line", this.props);
+	      var events = _victoryCore.Helpers.getPartialEvents(this.props.events, 0, this.props);
+	      return _react2.default.createElement("line", _extends({}, this.props, events));
 	    }
-	  }], [{
-	    key: "role",
-	    value: "line",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      x1: _react.PropTypes.number,
-	      x2: _react.PropTypes.number,
-	      y1: _react.PropTypes.number,
-	      y2: _react.PropTypes.number,
-	      style: _react.PropTypes.object
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return AxisLine;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = AxisLine;
-	module.exports = exports["default"];
+	AxisLine.propTypes = {
+	  x1: _react.PropTypes.number,
+	  x2: _react.PropTypes.number,
+	  y1: _react.PropTypes.number,
+	  y2: _react.PropTypes.number,
+	  style: _react.PropTypes.object,
+	  events: _react.PropTypes.object
+	};
+	exports.default = AxisLine;
 
 /***/ },
-/* 77 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5798,69 +10524,381 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _defaults = __webpack_require__(2);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _assign = __webpack_require__(209);
 	
-	var _react = __webpack_require__(29);
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var GridLine = (function (_React$Component) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AxisLabel = function (_React$Component) {
+	  _inherits(AxisLabel, _React$Component);
+	
+	  function AxisLabel() {
+	    _classCallCheck(this, AxisLabel);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AxisLabel).apply(this, arguments));
+	  }
+	
+	  _createClass(AxisLabel, [{
+	    key: "renderLabelComponent",
+	    value: function renderLabelComponent(props) {
+	      var component = props.label;
+	      var style = (0, _defaults2.default)({}, component.props.style, props.style);
+	      var baseEvents = component && component.props.events ? (0, _defaults2.default)({}, component.props.events, props.events) : props.events;
+	      var events = _victoryCore.Helpers.getPartialEvents(baseEvents, 0, props);
+	      var newProps = (0, _assign2.default)({}, events, {
+	        x: component.props.x || props.position.x,
+	        y: component.props.y || props.position.y,
+	        text: component.props.text,
+	        textAnchor: component.props.textAnchor || "middle",
+	        verticalAnchor: component.props.verticalAnchor || props.verticalAnchor,
+	        transform: component.props.transform || props.transform,
+	        style: style
+	      });
+	      return _react2.default.cloneElement(component, newProps);
+	    }
+	  }, {
+	    key: "renderVictoryLabel",
+	    value: function renderVictoryLabel(props) {
+	      var events = _victoryCore.Helpers.getPartialEvents(this.props.events, 0, this.props);
+	      var text = typeof props.label === "string" ? props.label : null;
+	      return _react2.default.createElement(_victoryCore.VictoryLabel, _extends({
+	        x: props.position.x,
+	        y: props.position.y,
+	        textAnchor: "middle",
+	        verticalAnchor: props.verticalAnchor,
+	        transform: props.transform,
+	        style: props.style,
+	        text: text
+	      }, events));
+	    }
+	  }, {
+	    key: "renderLabel",
+	    value: function renderLabel(props) {
+	      return props.label && props.label.props ? this.renderLabelComponent(props) : this.renderVictoryLabel(props);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "g",
+	        null,
+	        this.renderLabel(this.props)
+	      );
+	    }
+	  }]);
+	
+	  return AxisLabel;
+	}(_react2.default.Component);
+	
+	AxisLabel.propTypes = {
+	  events: _react.PropTypes.object,
+	  label: _react.PropTypes.any,
+	  position: _react.PropTypes.object,
+	  verticalAnchor: _react.PropTypes.string,
+	  transform: _react.PropTypes.string,
+	  style: _react.PropTypes.object
+	};
+	exports.default = AxisLabel;
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignValue = __webpack_require__(8),
+	    copyObject = __webpack_require__(210),
+	    createAssigner = __webpack_require__(9),
+	    isArrayLike = __webpack_require__(11),
+	    isPrototype = __webpack_require__(35),
+	    keys = __webpack_require__(211);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	
+	/** Detect if properties shadowing those on `Object.prototype` are non-enumerable. */
+	var nonEnumShadows = !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf');
+	
+	/**
+	 * Assigns own enumerable properties of source objects to the destination
+	 * object. Source objects are applied from left to right. Subsequent sources
+	 * overwrite property assignments of previous sources.
+	 *
+	 * **Note:** This method mutates `object` and is loosely based on
+	 * [`Object.assign`](https://mdn.io/Object/assign).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} [sources] The source objects.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.c = 3;
+	 * }
+	 *
+	 * function Bar() {
+	 *   this.e = 5;
+	 * }
+	 *
+	 * Foo.prototype.d = 4;
+	 * Bar.prototype.f = 6;
+	 *
+	 * _.assign({ 'a': 1 }, new Foo, new Bar);
+	 * // => { 'a': 1, 'c': 3, 'e': 5 }
+	 */
+	var assign = createAssigner(function(object, source) {
+	  if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
+	    copyObject(source, keys(source), object);
+	    return;
+	  }
+	  for (var key in source) {
+	    if (hasOwnProperty.call(source, key)) {
+	      assignValue(object, key, source[key]);
+	    }
+	  }
+	});
+	
+	module.exports = assign;
+
+
+/***/ },
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var copyObjectWith = __webpack_require__(7);
+	
+	/**
+	 * Copies properties of `source` to `object`.
+	 *
+	 * @private
+	 * @param {Object} source The object to copy properties from.
+	 * @param {Array} props The property names to copy.
+	 * @param {Object} [object={}] The object to copy properties to.
+	 * @returns {Object} Returns `object`.
+	 */
+	function copyObject(source, props, object) {
+	  return copyObjectWith(source, props, object);
+	}
+	
+	module.exports = copyObject;
+
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseHas = __webpack_require__(212),
+	    baseKeys = __webpack_require__(213),
+	    indexKeys = __webpack_require__(28),
+	    isArrayLike = __webpack_require__(11),
+	    isIndex = __webpack_require__(17),
+	    isPrototype = __webpack_require__(35);
+	
+	/**
+	 * Creates an array of the own enumerable property names of `object`.
+	 *
+	 * **Note:** Non-object values are coerced to objects. See the
+	 * [ES spec](http://ecma-international.org/ecma-262/6.0/#sec-object.keys)
+	 * for more details.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.keys(new Foo);
+	 * // => ['a', 'b'] (iteration order is not guaranteed)
+	 *
+	 * _.keys('hi');
+	 * // => ['0', '1']
+	 */
+	function keys(object) {
+	  var isProto = isPrototype(object);
+	  if (!(isProto || isArrayLike(object))) {
+	    return baseKeys(object);
+	  }
+	  var indexes = indexKeys(object),
+	      skipIndexes = !!indexes,
+	      result = indexes || [],
+	      length = result.length;
+	
+	  for (var key in object) {
+	    if (baseHas(object, key) &&
+	        !(skipIndexes && (key == 'length' || isIndex(key, length))) &&
+	        !(isProto && key == 'constructor')) {
+	      result.push(key);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = keys;
+
+
+/***/ },
+/* 212 */
+/***/ function(module, exports) {
+
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Built-in value references. */
+	var getPrototypeOf = Object.getPrototypeOf;
+	
+	/**
+	 * The base implementation of `_.has` without support for deep paths.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} key The key to check.
+	 * @returns {boolean} Returns `true` if `key` exists, else `false`.
+	 */
+	function baseHas(object, key) {
+	  // Avoid a bug in IE 10-11 where objects with a [[Prototype]] of `null`,
+	  // that are composed entirely of index properties, return `false` for
+	  // `hasOwnProperty` checks of them.
+	  return hasOwnProperty.call(object, key) ||
+	    (typeof object == 'object' && key in object && getPrototypeOf(object) === null);
+	}
+	
+	module.exports = baseHas;
+
+
+/***/ },
+/* 213 */
+/***/ function(module, exports) {
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeKeys = Object.keys;
+	
+	/**
+	 * The base implementation of `_.keys` which doesn't skip the constructor
+	 * property of prototypes or treat sparse arrays as dense.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @returns {Array} Returns the array of property names.
+	 */
+	function baseKeys(object) {
+	  return nativeKeys(Object(object));
+	}
+	
+	module.exports = baseKeys;
+
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(36);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var GridLine = function (_React$Component) {
 	  _inherits(GridLine, _React$Component);
 	
 	  function GridLine() {
 	    _classCallCheck(this, GridLine);
 	
-	    _get(Object.getPrototypeOf(GridLine.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(GridLine).apply(this, arguments));
 	  }
 	
 	  _createClass(GridLine, [{
 	    key: "render",
 	    value: function render() {
-	      return _react2["default"].createElement(
+	      var props = this.props;
+	
+	      var events = _victoryCore.Helpers.getPartialEvents(props.events, props.index, props);
+	      return _react2.default.createElement(
 	        "g",
-	        { transform: "translate(" + this.props.xTransform + ", " + this.props.yTransform + ")" },
-	        _react2["default"].createElement("line", {
-	          x2: this.props.x2,
-	          y2: this.props.y2,
-	          style: _victoryCore.Helpers.evaluateStyle(this.props.style, this.props.tick)
-	        })
+	        { transform: "translate(" + props.xTransform + ", " + props.yTransform + ")" },
+	        _react2.default.createElement("line", _extends({}, events, {
+	          x2: props.x2,
+	          y2: props.y2,
+	          style: _victoryCore.Helpers.evaluateStyle(props.style, props.tick)
+	        }))
 	      );
 	    }
-	  }], [{
-	    key: "role",
-	    value: "grid",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      tick: _react.PropTypes.any,
-	      x2: _react.PropTypes.number,
-	      y2: _react.PropTypes.number,
-	      xTransform: _react.PropTypes.number,
-	      yTransform: _react.PropTypes.number,
-	      style: _react.PropTypes.object
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return GridLine;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = GridLine;
-	module.exports = exports["default"];
+	GridLine.role = "grid";
+	GridLine.propTypes = {
+	  index: _react.PropTypes.number,
+	  tick: _react.PropTypes.any,
+	  x2: _react.PropTypes.number,
+	  y2: _react.PropTypes.number,
+	  xTransform: _react.PropTypes.number,
+	  yTransform: _react.PropTypes.number,
+	  style: _react.PropTypes.object,
+	  events: _react.PropTypes.object
+	};
+	exports.default = GridLine;
 
 /***/ },
-/* 78 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -5869,159 +10907,196 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var Tick = (function (_React$Component) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Tick = function (_React$Component) {
 	  _inherits(Tick, _React$Component);
 	
 	  function Tick() {
 	    _classCallCheck(this, Tick);
 	
-	    _get(Object.getPrototypeOf(Tick.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tick).apply(this, arguments));
 	  }
 	
 	  _createClass(Tick, [{
-	    key: "getPosition",
-	    value: function getPosition(props, isVertical) {
-	      var orientationSign = { top: -1, left: -1, right: 1, bottom: 1 };
-	      var style = props.style.ticks;
-	      var tickSpacing = style.size + style.padding;
-	      var sign = orientationSign[props.orientation];
-	      return {
-	        x: isVertical ? sign * tickSpacing : 0,
-	        x2: isVertical ? sign * style.size : 0,
-	        y: isVertical ? 0 : sign * tickSpacing,
-	        y2: isVertical ? 0 : sign * style.size
-	      };
-	    }
-	  }, {
-	    key: "getAnchors",
-	    value: function getAnchors(props, isVertical) {
-	      var anchorOrientation = { top: "end", left: "end", right: "start", bottom: "start" };
-	      var anchor = anchorOrientation[props.orientation];
-	      return {
-	        textAnchor: isVertical ? anchor : "middle",
-	        verticalAnchor: isVertical ? "middle" : anchor
-	      };
-	    }
-	  }, {
-	    key: "renderLabel",
-	    value: function renderLabel(props, position, isVertical) {
-	      if (!props.label) {
-	        return undefined;
-	      }
-	      var componentProps = props.label.props ? props.label.props : {};
-	      var style = componentProps.style || props.style.tickLabels;
-	      var anchors = this.getAnchors(props, isVertical);
-	      var newProps = {
-	        x: position.x,
-	        y: position.y,
-	        textAnchor: componentProps.textAnchor || anchors.textAnchor,
-	        verticalAnchor: componentProps.verticalAnchor || anchors.verticalAnchor,
-	        style: _victoryCore.Helpers.evaluateStyle(style, props.tick)
-	      };
-	      return props.label.props ? _react2["default"].cloneElement(props.label, newProps) : _react2["default"].createElement(_victoryCore.VictoryLabel, newProps, props.label);
-	    }
-	  }, {
-	    key: "renderTick",
-	    value: function renderTick(props, position) {
-	      return _react2["default"].createElement("line", {
-	        x: position.x,
-	        x2: position.x2,
-	        y: position.y,
-	        y2: position.y2,
-	        style: _victoryCore.Helpers.evaluateStyle(props.style.ticks, props.ticks)
-	      });
-	    }
-	  }, {
 	    key: "render",
 	    value: function render() {
-	      var isVertical = this.props.orientation === "left" || this.props.orientation === "right";
-	      var transform = isVertical ? "translate(0, " + this.props.position + ")" : "translate(" + this.props.position + ", 0)";
-	      var position = this.getPosition(this.props, isVertical);
-	      return _react2["default"].createElement(
-	        "g",
-	        { transform: transform },
-	        this.renderTick(this.props, position),
-	        this.renderLabel(this.props, position, isVertical)
-	      );
+	      var style = _victoryCore.Helpers.evaluateStyle(this.props.style, this.props.tick);
+	      var events = _victoryCore.Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
+	      return _react2.default.createElement("line", _extends({}, events, {
+	        x2: this.props.position.x2,
+	        y2: this.props.position.y2,
+	        style: style
+	      }));
 	    }
-	  }], [{
-	    key: "role",
-	    value: "tick",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      position: _react.PropTypes.number,
-	      tick: _react.PropTypes.any,
-	      orientation: _react.PropTypes.oneOf(["top", "bottom", "left", "right"]),
-	      style: _react.PropTypes.object,
-	      label: _react.PropTypes.any
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return Tick;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = Tick;
-	module.exports = exports["default"];
+	Tick.role = "tick";
+	Tick.propTypes = {
+	  index: _react.PropTypes.number,
+	  position: _react.PropTypes.object,
+	  tick: _react.PropTypes.any,
+	  style: _react.PropTypes.object,
+	  events: _react.PropTypes.object
+	};
+	exports.default = Tick;
 
 /***/ },
-/* 79 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var _lodashLangIsFunction = __webpack_require__(8);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _lodashLangIsFunction2 = _interopRequireDefault(_lodashLangIsFunction);
+	var _defaults = __webpack_require__(2);
 	
-	var _lodashCollectionIncludes = __webpack_require__(80);
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
+	var _assign = __webpack_require__(209);
 	
-	var _lodashArrayWithout = __webpack_require__(86);
+	var _assign2 = _interopRequireDefault(_assign);
 	
-	var _lodashArrayWithout2 = _interopRequireDefault(_lodashArrayWithout);
+	var _react = __webpack_require__(36);
 	
-	var _lodashUtilityRange = __webpack_require__(92);
+	var _react2 = _interopRequireDefault(_react);
 	
-	var _lodashUtilityRange2 = _interopRequireDefault(_lodashUtilityRange);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _helpersScale = __webpack_require__(93);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var _helpersAxis = __webpack_require__(100);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	var _helpersAxis2 = _interopRequireDefault(_helpersAxis);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _helpersDomain = __webpack_require__(101);
+	var TickLabel = function (_React$Component) {
+	  _inherits(TickLabel, _React$Component);
 	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	  function TickLabel() {
+	    _classCallCheck(this, TickLabel);
 	
-	var _victoryCore = __webpack_require__(30);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TickLabel).apply(this, arguments));
+	  }
 	
-	module.exports = {
+	  _createClass(TickLabel, [{
+	    key: "getAnchors",
+	    value: function getAnchors(props) {
+	      var anchorOrientation = { top: "end", left: "end", right: "start", bottom: "start" };
+	      var anchor = anchorOrientation[props.orientation];
+	      return {
+	        textAnchor: props.isVertical ? anchor : "middle",
+	        verticalAnchor: props.isVertical ? "middle" : anchor
+	      };
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var props = this.props;
+	
+	      if (!props.label) {
+	        return undefined;
+	      }
+	      var componentProps = props.label.props || {};
+	      var style = componentProps.style || props.style;
+	      var anchors = this.getAnchors(props);
+	      var baseEvents = componentProps.events ? (0, _defaults2.default)({}, componentProps.events, props.events) : props.events;
+	      var events = _victoryCore.Helpers.getPartialEvents(baseEvents, props.index, props);
+	      var newProps = (0, _assign2.default)({}, events, {
+	        x: props.position.x,
+	        y: props.position.y,
+	        textAnchor: componentProps.textAnchor || anchors.textAnchor,
+	        verticalAnchor: componentProps.verticalAnchor || anchors.verticalAnchor,
+	        style: _victoryCore.Helpers.evaluateStyle(style, props.tick)
+	      });
+	      return props.label.props ? _react2.default.cloneElement(props.label, newProps) : _react2.default.createElement(_victoryCore.VictoryLabel, newProps, props.label);
+	    }
+	  }]);
+	
+	  return TickLabel;
+	}(_react2.default.Component);
+	
+	TickLabel.propTypes = {
+	  index: _react.PropTypes.number,
+	  position: _react.PropTypes.object,
+	  tick: _react.PropTypes.any,
+	  orientation: _react.PropTypes.oneOf(["top", "bottom", "left", "right"]),
+	  isVertical: _react.PropTypes.bool,
+	  style: _react.PropTypes.object,
+	  events: _react.PropTypes.object,
+	  label: _react.PropTypes.any
+	};
+	exports.default = TickLabel;
+
+/***/ },
+/* 217 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _isFunction = __webpack_require__(14);
+	
+	var _isFunction2 = _interopRequireDefault(_isFunction);
+	
+	var _includes = __webpack_require__(218);
+	
+	var _includes2 = _interopRequireDefault(_includes);
+	
+	var _without = __webpack_require__(224);
+	
+	var _without2 = _interopRequireDefault(_without);
+	
+	var _range = __webpack_require__(254);
+	
+	var _range2 = _interopRequireDefault(_range);
+	
+	var _scale = __webpack_require__(257);
+	
+	var _scale2 = _interopRequireDefault(_scale);
+	
+	var _axis = __webpack_require__(266);
+	
+	var _axis2 = _interopRequireDefault(_axis);
+	
+	var _domain = __webpack_require__(267);
+	
+	var _domain2 = _interopRequireDefault(_domain);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = {
 	  // exposed for use by VictoryChart
+	
 	  getDomain: function getDomain(props, axis) {
 	    if (axis && axis !== this.getAxis(props)) {
 	      return undefined;
@@ -6029,10 +11104,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (props.domain) {
 	      return props.domain;
 	    } else if (props.tickValues) {
-	      return _helpersDomain2["default"].getDomainFromTickValues(props);
+	      return _domain2.default.getDomainFromTickValues(props);
 	    }
 	    return undefined;
 	  },
+	
 	
 	  // exposed for use by VictoryChart
 	  getAxis: function getAxis(props, flipped) {
@@ -6046,47 +11122,46 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return flipped ? flippedAxis[axisType] : normalAxis[axisType];
 	  },
 	
+	
 	  // exposed for use by VictoryChart
 	  getScale: function getScale(props) {
 	    var axis = this.getAxis(props);
-	    var scale = _helpersScale2["default"].getBaseScale(props, axis);
+	    var scale = _scale2.default.getBaseScale(props, axis);
 	    var domain = this.getDomain(props) || scale.domain();
 	    scale.range(_victoryCore.Helpers.getRange(props, axis));
 	    scale.domain(domain);
 	    return scale;
 	  },
-	
 	  getTicks: function getTicks(props, scale) {
 	    if (props.tickValues) {
-	      if (_helpersAxis2["default"].stringTicks(props)) {
-	        return (0, _lodashUtilityRange2["default"])(1, props.tickValues.length + 1);
+	      if (_axis2.default.stringTicks(props)) {
+	        return (0, _range2.default)(1, props.tickValues.length + 1);
 	      }
 	      return props.tickValues;
-	    } else if (scale.ticks && (0, _lodashLangIsFunction2["default"])(scale.ticks)) {
+	    } else if (scale.ticks && (0, _isFunction2.default)(scale.ticks)) {
 	      var ticks = scale.ticks(props.tickCount);
 	      if (props.crossAxis) {
-	        return (0, _lodashCollectionIncludes2["default"])(ticks, 0) ? (0, _lodashArrayWithout2["default"])(ticks, 0) : ticks;
+	        return (0, _includes2.default)(ticks, 0) ? (0, _without2.default)(ticks, 0) : ticks;
 	      }
 	      return ticks;
 	    }
 	    return scale.domain();
 	  },
-	
 	  getTickFormat: function getTickFormat(props, tickProps) {
 	    var scale = tickProps.scale;
 	    var ticks = tickProps.ticks;
 	
-	    if (props.tickFormat && (0, _lodashLangIsFunction2["default"])(props.tickFormat)) {
+	    if (props.tickFormat && (0, _isFunction2.default)(props.tickFormat)) {
 	      return props.tickFormat;
 	    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
 	      return function (x, index) {
 	        return props.tickFormat[index];
 	      };
-	    } else if (_helpersAxis2["default"].stringTicks(props)) {
+	    } else if (_axis2.default.stringTicks(props)) {
 	      return function (x, index) {
 	        return props.tickValues[index];
 	      };
-	    } else if (scale.tickFormat && (0, _lodashLangIsFunction2["default"])(scale.tickFormat)) {
+	    } else if (scale.tickFormat && (0, _isFunction2.default)(scale.tickFormat)) {
 	      return scale.tickFormat(ticks.length);
 	    } else {
 	      return function (x) {
@@ -6094,20 +11169,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      };
 	    }
 	  },
-	
 	  getLabelPadding: function getLabelPadding(props, style) {
 	    var labelStyle = style.axisLabel;
 	    if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
 	      return labelStyle.padding;
 	    }
-	    var isVertical = _helpersAxis2["default"].isVertical(props);
+	    var isVertical = _axis2.default.isVertical(props);
 	    // TODO: magic numbers
 	    return props.label ? labelStyle.fontSize * (isVertical ? 2.3 : 1.6) : 0;
 	  },
-	
 	  getOffset: function getOffset(props, style) {
 	    var padding = _victoryCore.Helpers.getPadding(props);
-	    var isVertical = _helpersAxis2["default"].isVertical(props);
+	    var isVertical = _axis2.default.isVertical(props);
 	    var orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
 	    var labelPadding = this.getLabelPadding(props, style);
 	    var xPadding = orientation === "right" ? padding.right : padding.left;
@@ -6124,51 +11197,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	      y: offsetY || y
 	    };
 	  },
-	
 	  getTransform: function getTransform(props, layoutProps) {
 	    var offset = layoutProps.offset;
 	    var orientation = layoutProps.orientation;
 	
-	    var translate = ({
+	    var translate = {
 	      top: [0, offset.y],
 	      bottom: [0, props.height - offset.y],
 	      left: [offset.x, 0],
 	      right: [props.width - offset.x, 0]
-	    })[orientation];
+	    }[orientation];
 	    return "translate(" + translate[0] + ", " + translate[1] + ")";
+	  },
+	  getTickPosition: function getTickPosition(style, orientation, isVertical) {
+	    var orientationSign = { top: -1, left: -1, right: 1, bottom: 1 };
+	    var tickSpacing = style.size + style.padding;
+	    var sign = orientationSign[orientation];
+	    return {
+	      x: isVertical ? sign * tickSpacing : 0,
+	      x2: isVertical ? sign * style.size : 0,
+	      y: isVertical ? 0 : sign * tickSpacing,
+	      y2: isVertical ? 0 : sign * style.size
+	    };
 	  }
 	};
 
 /***/ },
-/* 80 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIndexOf = __webpack_require__(81),
-	    getLength = __webpack_require__(12),
-	    isArray = __webpack_require__(17),
-	    isIterateeCall = __webpack_require__(25),
-	    isLength = __webpack_require__(14),
-	    isString = __webpack_require__(83),
-	    values = __webpack_require__(84);
+	var baseIndexOf = __webpack_require__(219),
+	    isArrayLike = __webpack_require__(11),
+	    isString = __webpack_require__(34),
+	    toInteger = __webpack_require__(19),
+	    values = __webpack_require__(221);
 	
-	/* Native method references for those with the same name as other `lodash` methods. */
+	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeMax = Math.max;
 	
 	/**
-	 * Checks if `target` is in `collection` using
-	 * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
-	 * for equality comparisons. If `fromIndex` is negative, it's used as the offset
-	 * from the end of `collection`.
+	 * Checks if `value` is in `collection`. If `collection` is a string it's checked
+	 * for a substring of `value`, otherwise [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
+	 * is used for equality comparisons. If `fromIndex` is negative, it's used as
+	 * the offset from the end of `collection`.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @alias contains, include
 	 * @category Collection
 	 * @param {Array|Object|string} collection The collection to search.
-	 * @param {*} target The value to search for.
+	 * @param {*} value The value to search for.
 	 * @param {number} [fromIndex=0] The index to search from.
-	 * @param- {Object} [guard] Enables use as a callback for functions like `_.reduce`.
-	 * @returns {boolean} Returns `true` if a matching element is found, else `false`.
+	 * @param- {Object} [guard] Enables use as an iteratee for functions like `_.reduce`.
+	 * @returns {boolean} Returns `true` if `value` is found, else `false`.
 	 * @example
 	 *
 	 * _.includes([1, 2, 3], 1);
@@ -6183,33 +11263,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * _.includes('pebbles', 'eb');
 	 * // => true
 	 */
-	function includes(collection, target, fromIndex, guard) {
-	  var length = collection ? getLength(collection) : 0;
-	  if (!isLength(length)) {
-	    collection = values(collection);
-	    length = collection.length;
+	function includes(collection, value, fromIndex, guard) {
+	  collection = isArrayLike(collection) ? collection : values(collection);
+	  fromIndex = (fromIndex && !guard) ? toInteger(fromIndex) : 0;
+	
+	  var length = collection.length;
+	  if (fromIndex < 0) {
+	    fromIndex = nativeMax(length + fromIndex, 0);
 	  }
-	  if (typeof fromIndex != 'number' || (guard && isIterateeCall(target, fromIndex, guard))) {
-	    fromIndex = 0;
-	  } else {
-	    fromIndex = fromIndex < 0 ? nativeMax(length + fromIndex, 0) : (fromIndex || 0);
-	  }
-	  return (typeof collection == 'string' || !isArray(collection) && isString(collection))
-	    ? (fromIndex <= length && collection.indexOf(target, fromIndex) > -1)
-	    : (!!length && baseIndexOf(collection, target, fromIndex) > -1);
+	  return isString(collection)
+	    ? (fromIndex <= length && collection.indexOf(value, fromIndex) > -1)
+	    : (!!length && baseIndexOf(collection, value, fromIndex) > -1);
 	}
 	
 	module.exports = includes;
 
 
 /***/ },
-/* 81 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var indexOfNaN = __webpack_require__(82);
+	var indexOfNaN = __webpack_require__(220);
 	
 	/**
-	 * The base implementation of `_.indexOf` without support for binary searches.
+	 * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
 	 *
 	 * @private
 	 * @param {Array} array The array to search.
@@ -6236,7 +11313,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 82 */
+/* 220 */
 /***/ function(module, exports) {
 
 	/**
@@ -6265,52 +11342,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 83 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObjectLike = __webpack_require__(10);
-	
-	/** `Object#toString` result references. */
-	var stringTag = '[object String]';
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is classified as a `String` primitive or object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
-	 * @example
-	 *
-	 * _.isString('abc');
-	 * // => true
-	 *
-	 * _.isString(1);
-	 * // => false
-	 */
-	function isString(value) {
-	  return typeof value == 'string' || (isObjectLike(value) && objToString.call(value) == stringTag);
-	}
-	
-	module.exports = isString;
-
-
-/***/ },
-/* 84 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseValues = __webpack_require__(85),
-	    keys = __webpack_require__(5);
+	var baseValues = __webpack_require__(222),
+	    keys = __webpack_require__(211);
 	
 	/**
 	 * Creates an array of the own enumerable property values of `object`.
@@ -6338,16 +11374,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * // => ['h', 'i']
 	 */
 	function values(object) {
-	  return baseValues(object, keys(object));
+	  return object ? baseValues(object, keys(object)) : [];
 	}
 	
 	module.exports = values;
 
 
 /***/ },
-/* 85 */
-/***/ function(module, exports) {
+/* 222 */
+/***/ function(module, exports, __webpack_require__) {
 
+	var arrayMap = __webpack_require__(223);
+	
 	/**
 	 * The base implementation of `_.values` and `_.valuesIn` which creates an
 	 * array of `object` property values corresponding to the property names
@@ -6359,29 +11397,51 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Object} Returns the array of property values.
 	 */
 	function baseValues(object, props) {
-	  var index = -1,
-	      length = props.length,
-	      result = Array(length);
-	
-	  while (++index < length) {
-	    result[index] = object[props[index]];
-	  }
-	  return result;
+	  return arrayMap(props, function(key) {
+	    return object[key];
+	  });
 	}
 	
 	module.exports = baseValues;
 
 
 /***/ },
-/* 86 */
+/* 223 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.map` for arrays without support for iteratee
+	 * shorthands.
+	 *
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Array} Returns the new mapped array.
+	 */
+	function arrayMap(array, iteratee) {
+	  var index = -1,
+	      length = array.length,
+	      result = Array(length);
+	
+	  while (++index < length) {
+	    result[index] = iteratee(array[index], index, array);
+	  }
+	  return result;
+	}
+	
+	module.exports = arrayMap;
+
+
+/***/ },
+/* 224 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseDifference = __webpack_require__(87),
-	    isArrayLike = __webpack_require__(11),
-	    restParam = __webpack_require__(26);
+	var baseDifference = __webpack_require__(225),
+	    isArrayLikeObject = __webpack_require__(31),
+	    rest = __webpack_require__(18);
 	
 	/**
-	 * Creates an array excluding all provided values using
+	 * Creates an array excluding all given values using
 	 * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
 	 * for equality comparisons.
 	 *
@@ -6396,8 +11456,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * _.without([1, 2, 1, 3], 1, 2);
 	 * // => [3]
 	 */
-	var without = restParam(function(array, values) {
-	  return isArrayLike(array)
+	var without = rest(function(array, values) {
+	  return isArrayLikeObject(array)
 	    ? baseDifference(array, values)
 	    : [];
 	});
@@ -6406,57 +11466,68 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 87 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIndexOf = __webpack_require__(81),
-	    cacheIndexOf = __webpack_require__(88),
-	    createCache = __webpack_require__(89);
+	var SetCache = __webpack_require__(226),
+	    arrayIncludes = __webpack_require__(250),
+	    arrayIncludesWith = __webpack_require__(251),
+	    arrayMap = __webpack_require__(223),
+	    baseUnary = __webpack_require__(252),
+	    cacheHas = __webpack_require__(253);
 	
 	/** Used as the size to enable large array optimizations. */
 	var LARGE_ARRAY_SIZE = 200;
 	
 	/**
-	 * The base implementation of `_.difference` which accepts a single array
-	 * of values to exclude.
+	 * The base implementation of methods like `_.difference` without support for
+	 * excluding multiple arrays or iteratee shorthands.
 	 *
 	 * @private
 	 * @param {Array} array The array to inspect.
 	 * @param {Array} values The values to exclude.
+	 * @param {Function} [iteratee] The iteratee invoked per element.
+	 * @param {Function} [comparator] The comparator invoked per element.
 	 * @returns {Array} Returns the new array of filtered values.
 	 */
-	function baseDifference(array, values) {
-	  var length = array ? array.length : 0,
-	      result = [];
+	function baseDifference(array, values, iteratee, comparator) {
+	  var index = -1,
+	      includes = arrayIncludes,
+	      isCommon = true,
+	      length = array.length,
+	      result = [],
+	      valuesLength = values.length;
 	
 	  if (!length) {
 	    return result;
 	  }
-	  var index = -1,
-	      indexOf = baseIndexOf,
-	      isCommon = true,
-	      cache = (isCommon && values.length >= LARGE_ARRAY_SIZE) ? createCache(values) : null,
-	      valuesLength = values.length;
-	
-	  if (cache) {
-	    indexOf = cacheIndexOf;
+	  if (iteratee) {
+	    values = arrayMap(values, baseUnary(iteratee));
+	  }
+	  if (comparator) {
+	    includes = arrayIncludesWith;
 	    isCommon = false;
-	    values = cache;
+	  }
+	  else if (values.length >= LARGE_ARRAY_SIZE) {
+	    includes = cacheHas;
+	    isCommon = false;
+	    values = new SetCache(values);
 	  }
 	  outer:
 	  while (++index < length) {
-	    var value = array[index];
+	    var value = array[index],
+	        computed = iteratee ? iteratee(value) : value;
 	
-	    if (isCommon && value === value) {
+	    if (isCommon && computed === computed) {
 	      var valuesIndex = valuesLength;
 	      while (valuesIndex--) {
-	        if (values[valuesIndex] === value) {
+	        if (values[valuesIndex] === computed) {
 	          continue outer;
 	        }
 	      }
 	      result.push(value);
 	    }
-	    else if (indexOf(values, value, 0) < 0) {
+	    else if (!includes(values, computed, comparator)) {
 	      result.push(value);
 	    }
 	  }
@@ -6467,102 +11538,647 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 88 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(9);
-	
-	/**
-	 * Checks if `value` is in `cache` mimicking the return signature of
-	 * `_.indexOf` by returning `0` if the value is found, else `-1`.
-	 *
-	 * @private
-	 * @param {Object} cache The cache to search.
-	 * @param {*} value The value to search for.
-	 * @returns {number} Returns `0` if `value` is found, else `-1`.
-	 */
-	function cacheIndexOf(cache, value) {
-	  var data = cache.data,
-	      result = (typeof value == 'string' || isObject(value)) ? data.set.has(value) : data.hash[value];
-	
-	  return result ? 0 : -1;
-	}
-	
-	module.exports = cacheIndexOf;
-
-
-/***/ },
-/* 89 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {var SetCache = __webpack_require__(90),
-	    getNative = __webpack_require__(6);
-	
-	/** Native method references. */
-	var Set = getNative(global, 'Set');
-	
-	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeCreate = getNative(Object, 'create');
-	
-	/**
-	 * Creates a `Set` cache object to optimize linear searches of large arrays.
-	 *
-	 * @private
-	 * @param {Array} [values] The values to cache.
-	 * @returns {null|Object} Returns the new cache object if `Set` is supported, else `null`.
-	 */
-	function createCache(values) {
-	  return (nativeCreate && Set) ? new SetCache(values) : null;
-	}
-	
-	module.exports = createCache;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 90 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(global) {var cachePush = __webpack_require__(91),
-	    getNative = __webpack_require__(6);
-	
-	/** Native method references. */
-	var Set = getNative(global, 'Set');
-	
-	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeCreate = getNative(Object, 'create');
+	var MapCache = __webpack_require__(227),
+	    cachePush = __webpack_require__(249);
 	
 	/**
 	 *
-	 * Creates a cache object to store unique values.
+	 * Creates a set cache object to store unique values.
 	 *
 	 * @private
+	 * @constructor
 	 * @param {Array} [values] The values to cache.
 	 */
 	function SetCache(values) {
-	  var length = values ? values.length : 0;
+	  var index = -1,
+	      length = values ? values.length : 0;
 	
-	  this.data = { 'hash': nativeCreate(null), 'set': new Set };
-	  while (length--) {
-	    this.push(values[length]);
+	  this.__data__ = new MapCache;
+	  while (++index < length) {
+	    this.push(values[index]);
 	  }
 	}
 	
-	// Add functions to the `Set` cache.
+	// Add functions to the `SetCache`.
 	SetCache.prototype.push = cachePush;
 	
 	module.exports = SetCache;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
+
 
 /***/ },
-/* 91 */
+/* 227 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(9);
+	var mapClear = __webpack_require__(228),
+	    mapDelete = __webpack_require__(235),
+	    mapGet = __webpack_require__(241),
+	    mapHas = __webpack_require__(244),
+	    mapSet = __webpack_require__(246);
 	
 	/**
-	 * Adds `value` to the cache.
+	 * Creates a map cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [values] The values to cache.
+	 */
+	function MapCache(values) {
+	  var index = -1,
+	      length = values ? values.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = values[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	// Add functions to the `MapCache`.
+	MapCache.prototype.clear = mapClear;
+	MapCache.prototype['delete'] = mapDelete;
+	MapCache.prototype.get = mapGet;
+	MapCache.prototype.has = mapHas;
+	MapCache.prototype.set = mapSet;
+	
+	module.exports = MapCache;
+
+
+/***/ },
+/* 228 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Hash = __webpack_require__(229),
+	    Map = __webpack_require__(234);
+	
+	/**
+	 * Removes all key-value entries from the map.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf MapCache
+	 */
+	function mapClear() {
+	  this.__data__ = {
+	    'hash': new Hash,
+	    'map': Map ? new Map : [],
+	    'string': new Hash
+	  };
+	}
+	
+	module.exports = mapClear;
+
+
+/***/ },
+/* 229 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(230);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Creates an hash object.
+	 *
+	 * @private
+	 * @constructor
+	 * @returns {Object} Returns the new hash object.
+	 */
+	function Hash() {}
+	
+	// Avoid inheriting from `Object.prototype` when possible.
+	Hash.prototype = nativeCreate ? nativeCreate(null) : objectProto;
+	
+	module.exports = Hash;
+
+
+/***/ },
+/* 230 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(231);
+	
+	/* Built-in method references that are verified to be native. */
+	var nativeCreate = getNative(Object, 'create');
+	
+	module.exports = nativeCreate;
+
+
+/***/ },
+/* 231 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isNative = __webpack_require__(232);
+	
+	/**
+	 * Gets the native function at `key` of `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {string} key The key of the method to get.
+	 * @returns {*} Returns the function if it's native, else `undefined`.
+	 */
+	function getNative(object, key) {
+	  var value = object[key];
+	  return isNative(value) ? value : undefined;
+	}
+	
+	module.exports = getNative;
+
+
+/***/ },
+/* 232 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isFunction = __webpack_require__(14),
+	    isHostObject = __webpack_require__(233),
+	    isObjectLike = __webpack_require__(32);
+	
+	/** Used to match `RegExp` [syntax characters](http://ecma-international.org/ecma-262/6.0/#sec-patterns). */
+	var reRegExpChar = /[\\^$.*+?()[\]{}|]/g;
+	
+	/** Used to detect host constructors (Safari > 5). */
+	var reIsHostCtor = /^\[object .+?Constructor\]$/;
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = Function.prototype.toString;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Used to detect if a method is native. */
+	var reIsNative = RegExp('^' +
+	  funcToString.call(hasOwnProperty).replace(reRegExpChar, '\\$&')
+	  .replace(/hasOwnProperty|(function).*?(?=\\\()| for .+?(?=\\\])/g, '$1.*?') + '$'
+	);
+	
+	/**
+	 * Checks if `value` is a native function.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a native function, else `false`.
+	 * @example
+	 *
+	 * _.isNative(Array.prototype.push);
+	 * // => true
+	 *
+	 * _.isNative(_);
+	 * // => false
+	 */
+	function isNative(value) {
+	  if (value == null) {
+	    return false;
+	  }
+	  if (isFunction(value)) {
+	    return reIsNative.test(funcToString.call(value));
+	  }
+	  return isObjectLike(value) &&
+	    (isHostObject(value) ? reIsNative : reIsHostCtor).test(value);
+	}
+	
+	module.exports = isNative;
+
+
+/***/ },
+/* 233 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is a host object in IE < 9.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is a host object, else `false`.
+	 */
+	function isHostObject(value) {
+	  // Many host objects are `Object` objects that can coerce to strings
+	  // despite having improperly defined `toString` methods.
+	  var result = false;
+	  if (value != null && typeof value.toString != 'function') {
+	    try {
+	      result = !!(value + '');
+	    } catch (e) {}
+	  }
+	  return result;
+	}
+	
+	module.exports = isHostObject;
+
+
+/***/ },
+/* 234 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(231),
+	    root = __webpack_require__(24);
+	
+	/* Built-in method references that are verified to be native. */
+	var Map = getNative(root, 'Map');
+	
+	module.exports = Map;
+
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(234),
+	    assocDelete = __webpack_require__(236),
+	    hashDelete = __webpack_require__(238),
+	    isKeyable = __webpack_require__(240);
+	
+	/**
+	 * Removes `key` and its value from the map.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function mapDelete(key) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    return hashDelete(typeof key == 'string' ? data.string : data.hash, key);
+	  }
+	  return Map ? data.map['delete'](key) : assocDelete(data.map, key);
+	}
+	
+	module.exports = mapDelete;
+
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(237);
+	
+	/** Used for built-in method references. */
+	var arrayProto = Array.prototype;
+	
+	/** Built-in value references. */
+	var splice = arrayProto.splice;
+	
+	/**
+	 * Removes `key` and its value from the associative array.
+	 *
+	 * @private
+	 * @param {Array} array The array to query.
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function assocDelete(array, key) {
+	  var index = assocIndexOf(array, key);
+	  if (index < 0) {
+	    return false;
+	  }
+	  var lastIndex = array.length - 1;
+	  if (index == lastIndex) {
+	    array.pop();
+	  } else {
+	    splice.call(array, index, 1);
+	  }
+	  return true;
+	}
+	
+	module.exports = assocDelete;
+
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var eq = __webpack_require__(5);
+	
+	/**
+	 * Gets the index at which the first occurrence of `key` is found in `array`
+	 * of key-value pairs.
+	 *
+	 * @private
+	 * @param {Array} array The array to search.
+	 * @param {*} key The key to search for.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 */
+	function assocIndexOf(array, key) {
+	  var length = array.length;
+	  while (length--) {
+	    if (eq(array[length][0], key)) {
+	      return length;
+	    }
+	  }
+	  return -1;
+	}
+	
+	module.exports = assocIndexOf;
+
+
+/***/ },
+/* 238 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var hashHas = __webpack_require__(239);
+	
+	/**
+	 * Removes `key` and its value from the hash.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to modify.
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function hashDelete(hash, key) {
+	  return hashHas(hash, key) && delete hash[key];
+	}
+	
+	module.exports = hashDelete;
+
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(230);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Checks if a hash value for `key` exists.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to query.
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function hashHas(hash, key) {
+	  return nativeCreate ? hash[key] !== undefined : hasOwnProperty.call(hash, key);
+	}
+	
+	module.exports = hashHas;
+
+
+/***/ },
+/* 240 */
+/***/ function(module, exports) {
+
+	/**
+	 * Checks if `value` is suitable for use as unique object key.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is suitable, else `false`.
+	 */
+	function isKeyable(value) {
+	  var type = typeof value;
+	  return type == 'number' || type == 'boolean' ||
+	    (type == 'string' && value != '__proto__') || value == null;
+	}
+	
+	module.exports = isKeyable;
+
+
+/***/ },
+/* 241 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(234),
+	    assocGet = __webpack_require__(242),
+	    hashGet = __webpack_require__(243),
+	    isKeyable = __webpack_require__(240);
+	
+	/**
+	 * Gets the map value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function mapGet(key) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    return hashGet(typeof key == 'string' ? data.string : data.hash, key);
+	  }
+	  return Map ? data.map.get(key) : assocGet(data.map, key);
+	}
+	
+	module.exports = mapGet;
+
+
+/***/ },
+/* 242 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(237);
+	
+	/**
+	 * Gets the associative array value for `key`.
+	 *
+	 * @private
+	 * @param {Array} array The array to query.
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function assocGet(array, key) {
+	  var index = assocIndexOf(array, key);
+	  return index < 0 ? undefined : array[index][1];
+	}
+	
+	module.exports = assocGet;
+
+
+/***/ },
+/* 243 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(230);
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/**
+	 * Gets the hash value for `key`.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to query.
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function hashGet(hash, key) {
+	  if (nativeCreate) {
+	    var result = hash[key];
+	    return result === HASH_UNDEFINED ? undefined : result;
+	  }
+	  return hasOwnProperty.call(hash, key) ? hash[key] : undefined;
+	}
+	
+	module.exports = hashGet;
+
+
+/***/ },
+/* 244 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(234),
+	    assocHas = __webpack_require__(245),
+	    hashHas = __webpack_require__(239),
+	    isKeyable = __webpack_require__(240);
+	
+	/**
+	 * Checks if a map value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf MapCache
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function mapHas(key) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    return hashHas(typeof key == 'string' ? data.string : data.hash, key);
+	  }
+	  return Map ? data.map.has(key) : assocHas(data.map, key);
+	}
+	
+	module.exports = mapHas;
+
+
+/***/ },
+/* 245 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(237);
+	
+	/**
+	 * Checks if an associative array value for `key` exists.
+	 *
+	 * @private
+	 * @param {Array} array The array to query.
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function assocHas(array, key) {
+	  return assocIndexOf(array, key) > -1;
+	}
+	
+	module.exports = assocHas;
+
+
+/***/ },
+/* 246 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Map = __webpack_require__(234),
+	    assocSet = __webpack_require__(247),
+	    hashSet = __webpack_require__(248),
+	    isKeyable = __webpack_require__(240);
+	
+	/**
+	 * Sets the map `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf MapCache
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the map cache object.
+	 */
+	function mapSet(key, value) {
+	  var data = this.__data__;
+	  if (isKeyable(key)) {
+	    hashSet(typeof key == 'string' ? data.string : data.hash, key, value);
+	  } else if (Map) {
+	    data.map.set(key, value);
+	  } else {
+	    assocSet(data.map, key, value);
+	  }
+	  return this;
+	}
+	
+	module.exports = mapSet;
+
+
+/***/ },
+/* 247 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocIndexOf = __webpack_require__(237);
+	
+	/**
+	 * Sets the associative array `key` to `value`.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 */
+	function assocSet(array, key, value) {
+	  var index = assocIndexOf(array, key);
+	  if (index < 0) {
+	    array.push([key, value]);
+	  } else {
+	    array[index][1] = value;
+	  }
+	}
+	
+	module.exports = assocSet;
+
+
+/***/ },
+/* 248 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var nativeCreate = __webpack_require__(230);
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/**
+	 * Sets the hash `key` to `value`.
+	 *
+	 * @private
+	 * @param {Object} hash The hash to modify.
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 */
+	function hashSet(hash, key, value) {
+	  hash[key] = (nativeCreate && value === undefined) ? HASH_UNDEFINED : value;
+	}
+	
+	module.exports = hashSet;
+
+
+/***/ },
+/* 249 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isKeyable = __webpack_require__(240);
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/**
+	 * Adds `value` to the set cache.
 	 *
 	 * @private
 	 * @name push
@@ -6570,11 +12186,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {*} value The value to cache.
 	 */
 	function cachePush(value) {
-	  var data = this.data;
-	  if (typeof value == 'string' || isObject(value)) {
-	    data.set.add(value);
-	  } else {
-	    data.hash[value] = true;
+	  var map = this.__data__;
+	  if (isKeyable(value)) {
+	    var data = map.__data__,
+	        hash = typeof value == 'string' ? data.string : data.hash;
+	
+	    hash[value] = HASH_UNDEFINED;
+	  }
+	  else {
+	    map.set(value, HASH_UNDEFINED);
 	  }
 	}
 	
@@ -6582,24 +12202,124 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 92 */
+/* 250 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isIterateeCall = __webpack_require__(25);
+	var baseIndexOf = __webpack_require__(219);
 	
-	/* Native method references for those with the same name as other `lodash` methods. */
-	var nativeCeil = Math.ceil,
-	    nativeMax = Math.max;
+	/**
+	 * A specialized version of `_.includes` for arrays without support for
+	 * specifying an index to search from.
+	 *
+	 * @private
+	 * @param {Array} array The array to search.
+	 * @param {*} target The value to search for.
+	 * @returns {boolean} Returns `true` if `target` is found, else `false`.
+	 */
+	function arrayIncludes(array, value) {
+	  return !!array.length && baseIndexOf(array, value, 0) > -1;
+	}
+	
+	module.exports = arrayIncludes;
+
+
+/***/ },
+/* 251 */
+/***/ function(module, exports) {
+
+	/**
+	 * This function is like `arrayIncludes` except that it accepts a comparator.
+	 *
+	 * @private
+	 * @param {Array} array The array to search.
+	 * @param {*} target The value to search for.
+	 * @param {Function} comparator The comparator invoked per element.
+	 * @returns {boolean} Returns `true` if `target` is found, else `false`.
+	 */
+	function arrayIncludesWith(array, value, comparator) {
+	  var index = -1,
+	      length = array.length;
+	
+	  while (++index < length) {
+	    if (comparator(value, array[index])) {
+	      return true;
+	    }
+	  }
+	  return false;
+	}
+	
+	module.exports = arrayIncludesWith;
+
+
+/***/ },
+/* 252 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.unary` without support for storing wrapper metadata.
+	 *
+	 * @private
+	 * @param {Function} func The function to cap arguments for.
+	 * @returns {Function} Returns the new function.
+	 */
+	function baseUnary(func) {
+	  return function(value) {
+	    return func(value);
+	  };
+	}
+	
+	module.exports = baseUnary;
+
+
+/***/ },
+/* 253 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isKeyable = __webpack_require__(240);
+	
+	/** Used to stand-in for `undefined` hash values. */
+	var HASH_UNDEFINED = '__lodash_hash_undefined__';
+	
+	/**
+	 * Checks if `value` is in `cache`.
+	 *
+	 * @private
+	 * @param {Object} cache The set cache to search.
+	 * @param {*} value The value to search for.
+	 * @returns {number} Returns `true` if `value` is found, else `false`.
+	 */
+	function cacheHas(cache, value) {
+	  var map = cache.__data__;
+	  if (isKeyable(value)) {
+	    var data = map.__data__,
+	        hash = typeof value == 'string' ? data.string : data.hash;
+	
+	    return hash[value] === HASH_UNDEFINED;
+	  }
+	  return map.has(value);
+	}
+	
+	module.exports = cacheHas;
+
+
+/***/ },
+/* 254 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createRange = __webpack_require__(255);
 	
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
-	 * `start` up to, but not including, `end`. If `end` is not specified it's
-	 * set to `start` with `start` then set to `0`. If `end` is less than `start`
-	 * a zero-length range is created unless a negative `step` is specified.
+	 * `start` up to, but not including, `end`. A step of `-1` is used if a negative
+	 * `start` is specified without an `end` or `step`. If `end` is not specified
+	 * it's set to `start` with `start` then set to `0`.
+	 *
+	 * **Note:** JavaScript follows the IEEE-754 standard for resolving
+	 * floating-point values which can produce unexpected results.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @category Utility
+	 * @category Util
 	 * @param {number} [start=0] The start of the range.
 	 * @param {number} end The end of the range.
 	 * @param {number} [step=1] The value to increment or decrement by.
@@ -6608,6 +12328,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * _.range(4);
 	 * // => [0, 1, 2, 3]
+	 *
+	 * _.range(-4);
+	 * // => [0, -1, -2, -3]
 	 *
 	 * _.range(1, 5);
 	 * // => [1, 2, 3, 4]
@@ -6624,73 +12347,123 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * _.range(0);
 	 * // => []
 	 */
-	function range(start, end, step) {
-	  if (step && isIterateeCall(start, end, step)) {
-	    end = step = undefined;
-	  }
-	  start = +start || 0;
-	  step = step == null ? 1 : (+step || 0);
-	
-	  if (end == null) {
-	    end = start;
-	    start = 0;
-	  } else {
-	    end = +end || 0;
-	  }
-	  // Use `Array(length)` so engines like Chakra and V8 avoid slower modes.
-	  // See https://youtu.be/XAqIpGU8ZZk#t=17m25s for more details.
-	  var index = -1,
-	      length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
-	      result = Array(length);
-	
-	  while (++index < length) {
-	    result[index] = start;
-	    start += step;
-	  }
-	  return result;
-	}
+	var range = createRange();
 	
 	module.exports = range;
 
 
 /***/ },
-/* 93 */
+/* 255 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseRange = __webpack_require__(256),
+	    isIterateeCall = __webpack_require__(10),
+	    toNumber = __webpack_require__(20);
+	
+	/**
+	 * Creates a `_.range` or `_.rangeRight` function.
+	 *
+	 * @private
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {Function} Returns the new range function.
+	 */
+	function createRange(fromRight) {
+	  return function(start, end, step) {
+	    if (step && typeof step != 'number' && isIterateeCall(start, end, step)) {
+	      end = step = undefined;
+	    }
+	    // Ensure the sign of `-0` is preserved.
+	    start = toNumber(start);
+	    start = start === start ? start : 0;
+	    if (end === undefined) {
+	      end = start;
+	      start = 0;
+	    } else {
+	      end = toNumber(end) || 0;
+	    }
+	    step = step === undefined ? (start < end ? 1 : -1) : (toNumber(step) || 0);
+	    return baseRange(start, end, step, fromRight);
+	  };
+	}
+	
+	module.exports = createRange;
+
+
+/***/ },
+/* 256 */
+/***/ function(module, exports) {
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeCeil = Math.ceil,
+	    nativeMax = Math.max;
+	
+	/**
+	 * The base implementation of `_.range` and `_.rangeRight` which doesn't
+	 * coerce arguments to numbers.
+	 *
+	 * @private
+	 * @param {number} start The start of the range.
+	 * @param {number} end The end of the range.
+	 * @param {number} step The value to increment or decrement by.
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {Array} Returns the new array of numbers.
+	 */
+	function baseRange(start, end, step, fromRight) {
+	  var index = -1,
+	      length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
+	      result = Array(length);
+	
+	  while (length--) {
+	    result[fromRight ? length : ++index] = start;
+	    start += step;
+	  }
+	  return result;
+	}
+	
+	module.exports = baseRange;
+
+
+/***/ },
+/* 257 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var _lodashArrayFlatten = __webpack_require__(94);
+	var _flatten = __webpack_require__(258);
 	
-	var _lodashArrayFlatten2 = _interopRequireDefault(_lodashArrayFlatten);
+	var _flatten2 = _interopRequireDefault(_flatten);
 	
-	var _lodashCollectionIncludes = __webpack_require__(80);
+	var _includes = __webpack_require__(218);
 	
-	var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
+	var _includes2 = _interopRequireDefault(_includes);
 	
-	var _lodashLangIsFunction = __webpack_require__(8);
+	var _isFunction = __webpack_require__(14);
 	
-	var _lodashLangIsFunction2 = _interopRequireDefault(_lodashLangIsFunction);
+	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _d3Scale = __webpack_require__(95);
+	var _d3Scale = __webpack_require__(259);
 	
 	var _d3Scale2 = _interopRequireDefault(_d3Scale);
 	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	var supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 	
-	module.exports = {
+	exports.default = {
 	  validScale: function validScale(scale) {
 	    if (typeof scale === "function") {
-	      return (0, _lodashLangIsFunction2["default"])(scale.copy) && (0, _lodashLangIsFunction2["default"])(scale.domain) && (0, _lodashLangIsFunction2["default"])(scale.range);
+	      return (0, _isFunction2.default)(scale.copy) && (0, _isFunction2.default)(scale.domain) && (0, _isFunction2.default)(scale.range);
 	    } else if (typeof scale === "string") {
-	      return (0, _lodashCollectionIncludes2["default"])(supportedScaleStrings, scale);
+	      return (0, _includes2.default)(supportedScaleStrings, scale);
 	    }
 	    return false;
 	  },
-	
 	  isScaleDefined: function isScaleDefined(props, axis) {
 	    if (!props.scale) {
 	      return false;
@@ -6699,42 +12472,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return true;
 	  },
-	
 	  getScaleFromProps: function getScaleFromProps(props, axis) {
 	    if (!this.isScaleDefined(props, axis)) {
 	      return undefined;
 	    }
 	    var scale = props.scale[axis] || props.scale;
 	    if (this.validScale(scale)) {
-	      return (0, _lodashLangIsFunction2["default"])(scale) ? scale : _d3Scale2["default"][scale]();
+	      return (0, _isFunction2.default)(scale) ? scale : _d3Scale2.default[scale]();
 	    }
 	  },
-	
 	  getScaleTypeFromData: function getScaleTypeFromData(props, axis) {
 	    if (!props.data) {
 	      return "linear";
 	    }
 	    var accessor = _victoryCore.Helpers.createAccessor(props[axis]);
-	    var allData = (0, _lodashArrayFlatten2["default"])(props.data);
+	    var allData = (0, _flatten2.default)(props.data);
 	    var axisData = allData.map(accessor);
 	    return _victoryCore.Collection.containsDates(axisData) ? "time" : "linear";
 	  },
-	
 	  getBaseScale: function getBaseScale(props, axis) {
 	    var scale = this.getScaleFromProps(props, axis);
 	    if (scale) {
 	      return scale;
 	    }
-	    return _d3Scale2["default"][this.getScaleTypeFromData(props, axis)]();
+	    return _d3Scale2.default[this.getScaleTypeFromData(props, axis)]();
 	  },
-	
 	  getScaleType: function getScaleType(props, axis) {
 	    var scale = this.getScaleFromProps(props, axis);
 	    // if the scale was not given in props, it will be set to linear or time depending on data
 	    if (!scale) {
 	      return this.getScaleTypeFromData(props, axis);
 	    } else if (typeof scale === "string") {
-	      return (0, _lodashCollectionIncludes2["default"])(supportedScaleStrings, scale) ? scale : "invalid";
+	      return (0, _includes2.default)(supportedScaleStrings, scale) ? scale : "invalid";
 	    } else if (!this.validScale(scale)) {
 	      return "invalid";
 	    }
@@ -6750,49 +12519,38 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 94 */
+/* 258 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFlatten = __webpack_require__(72),
-	    isIterateeCall = __webpack_require__(25);
+	var baseFlatten = __webpack_require__(203);
 	
 	/**
-	 * Flattens a nested array. If `isDeep` is `true` the array is recursively
-	 * flattened, otherwise it's only flattened a single level.
+	 * Flattens `array` a single level deep.
 	 *
 	 * @static
 	 * @memberOf _
 	 * @category Array
 	 * @param {Array} array The array to flatten.
-	 * @param {boolean} [isDeep] Specify a deep flatten.
-	 * @param- {Object} [guard] Enables use as a callback for functions like `_.map`.
 	 * @returns {Array} Returns the new flattened array.
 	 * @example
 	 *
-	 * _.flatten([1, [2, 3, [4]]]);
-	 * // => [1, 2, 3, [4]]
-	 *
-	 * // using `isDeep`
-	 * _.flatten([1, [2, 3, [4]]], true);
-	 * // => [1, 2, 3, 4]
+	 * _.flatten([1, [2, [3, [4]], 5]]);
+	 * // => [1, 2, [3, [4]], 5]
 	 */
-	function flatten(array, isDeep, guard) {
+	function flatten(array) {
 	  var length = array ? array.length : 0;
-	  if (guard && isIterateeCall(array, isDeep, guard)) {
-	    isDeep = false;
-	  }
-	  return length ? baseFlatten(array, isDeep) : [];
+	  return length ? baseFlatten(array, 1) : [];
 	}
 	
 	module.exports = flatten;
 
 
 /***/ },
-/* 95 */
+/* 259 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(53), __webpack_require__(52), __webpack_require__(96), __webpack_require__(97), __webpack_require__(98), __webpack_require__(99)) :
+	   true ? factory(exports, __webpack_require__(260), __webpack_require__(261), __webpack_require__(262), __webpack_require__(263), __webpack_require__(264), __webpack_require__(265)) :
 	  typeof define === 'function' && define.amd ? define('d3-scale', ['exports', 'd3-color', 'd3-interpolate', 'd3-arrays', 'd3-format', 'd3-time-format', 'd3-time'], factory) :
 	  factory((global.d3_scale = {}),global.d3_color,global.d3_interpolate,global.d3_arrays,global.d3_format,global.d3_time_format,global.d3_time);
 	}(this, function (exports,d3Color,d3Interpolate,d3Arrays,d3Format,d3TimeFormat,d3Time) { 'use strict';
@@ -7668,7 +13426,1014 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 96 */
+/* 260 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function (global, factory) {
+	   true ? factory(exports) :
+	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	  (factory((global.d3_color = {})));
+	}(this, function (exports) { 'use strict';
+	
+	  function Color() {}
+	
+	  var darker = 0.7;
+	  var brighter = 1 / darker;
+	
+	  var reHex3 = /^#([0-9a-f]{3})$/;
+	  var reHex6 = /^#([0-9a-f]{6})$/;
+	  var reRgbInteger = /^rgb\(\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*,\s*([-+]?\d+)\s*\)$/;
+	  var reRgbPercent = /^rgb\(\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/;
+	  var reHslPercent = /^hsl\(\s*([-+]?\d+(?:\.\d+)?)\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*,\s*([-+]?\d+(?:\.\d+)?)%\s*\)$/;
+	  var named = {
+	    aliceblue: 0xf0f8ff,
+	    antiquewhite: 0xfaebd7,
+	    aqua: 0x00ffff,
+	    aquamarine: 0x7fffd4,
+	    azure: 0xf0ffff,
+	    beige: 0xf5f5dc,
+	    bisque: 0xffe4c4,
+	    black: 0x000000,
+	    blanchedalmond: 0xffebcd,
+	    blue: 0x0000ff,
+	    blueviolet: 0x8a2be2,
+	    brown: 0xa52a2a,
+	    burlywood: 0xdeb887,
+	    cadetblue: 0x5f9ea0,
+	    chartreuse: 0x7fff00,
+	    chocolate: 0xd2691e,
+	    coral: 0xff7f50,
+	    cornflowerblue: 0x6495ed,
+	    cornsilk: 0xfff8dc,
+	    crimson: 0xdc143c,
+	    cyan: 0x00ffff,
+	    darkblue: 0x00008b,
+	    darkcyan: 0x008b8b,
+	    darkgoldenrod: 0xb8860b,
+	    darkgray: 0xa9a9a9,
+	    darkgreen: 0x006400,
+	    darkgrey: 0xa9a9a9,
+	    darkkhaki: 0xbdb76b,
+	    darkmagenta: 0x8b008b,
+	    darkolivegreen: 0x556b2f,
+	    darkorange: 0xff8c00,
+	    darkorchid: 0x9932cc,
+	    darkred: 0x8b0000,
+	    darksalmon: 0xe9967a,
+	    darkseagreen: 0x8fbc8f,
+	    darkslateblue: 0x483d8b,
+	    darkslategray: 0x2f4f4f,
+	    darkslategrey: 0x2f4f4f,
+	    darkturquoise: 0x00ced1,
+	    darkviolet: 0x9400d3,
+	    deeppink: 0xff1493,
+	    deepskyblue: 0x00bfff,
+	    dimgray: 0x696969,
+	    dimgrey: 0x696969,
+	    dodgerblue: 0x1e90ff,
+	    firebrick: 0xb22222,
+	    floralwhite: 0xfffaf0,
+	    forestgreen: 0x228b22,
+	    fuchsia: 0xff00ff,
+	    gainsboro: 0xdcdcdc,
+	    ghostwhite: 0xf8f8ff,
+	    gold: 0xffd700,
+	    goldenrod: 0xdaa520,
+	    gray: 0x808080,
+	    green: 0x008000,
+	    greenyellow: 0xadff2f,
+	    grey: 0x808080,
+	    honeydew: 0xf0fff0,
+	    hotpink: 0xff69b4,
+	    indianred: 0xcd5c5c,
+	    indigo: 0x4b0082,
+	    ivory: 0xfffff0,
+	    khaki: 0xf0e68c,
+	    lavender: 0xe6e6fa,
+	    lavenderblush: 0xfff0f5,
+	    lawngreen: 0x7cfc00,
+	    lemonchiffon: 0xfffacd,
+	    lightblue: 0xadd8e6,
+	    lightcoral: 0xf08080,
+	    lightcyan: 0xe0ffff,
+	    lightgoldenrodyellow: 0xfafad2,
+	    lightgray: 0xd3d3d3,
+	    lightgreen: 0x90ee90,
+	    lightgrey: 0xd3d3d3,
+	    lightpink: 0xffb6c1,
+	    lightsalmon: 0xffa07a,
+	    lightseagreen: 0x20b2aa,
+	    lightskyblue: 0x87cefa,
+	    lightslategray: 0x778899,
+	    lightslategrey: 0x778899,
+	    lightsteelblue: 0xb0c4de,
+	    lightyellow: 0xffffe0,
+	    lime: 0x00ff00,
+	    limegreen: 0x32cd32,
+	    linen: 0xfaf0e6,
+	    magenta: 0xff00ff,
+	    maroon: 0x800000,
+	    mediumaquamarine: 0x66cdaa,
+	    mediumblue: 0x0000cd,
+	    mediumorchid: 0xba55d3,
+	    mediumpurple: 0x9370db,
+	    mediumseagreen: 0x3cb371,
+	    mediumslateblue: 0x7b68ee,
+	    mediumspringgreen: 0x00fa9a,
+	    mediumturquoise: 0x48d1cc,
+	    mediumvioletred: 0xc71585,
+	    midnightblue: 0x191970,
+	    mintcream: 0xf5fffa,
+	    mistyrose: 0xffe4e1,
+	    moccasin: 0xffe4b5,
+	    navajowhite: 0xffdead,
+	    navy: 0x000080,
+	    oldlace: 0xfdf5e6,
+	    olive: 0x808000,
+	    olivedrab: 0x6b8e23,
+	    orange: 0xffa500,
+	    orangered: 0xff4500,
+	    orchid: 0xda70d6,
+	    palegoldenrod: 0xeee8aa,
+	    palegreen: 0x98fb98,
+	    paleturquoise: 0xafeeee,
+	    palevioletred: 0xdb7093,
+	    papayawhip: 0xffefd5,
+	    peachpuff: 0xffdab9,
+	    peru: 0xcd853f,
+	    pink: 0xffc0cb,
+	    plum: 0xdda0dd,
+	    powderblue: 0xb0e0e6,
+	    purple: 0x800080,
+	    rebeccapurple: 0x663399,
+	    red: 0xff0000,
+	    rosybrown: 0xbc8f8f,
+	    royalblue: 0x4169e1,
+	    saddlebrown: 0x8b4513,
+	    salmon: 0xfa8072,
+	    sandybrown: 0xf4a460,
+	    seagreen: 0x2e8b57,
+	    seashell: 0xfff5ee,
+	    sienna: 0xa0522d,
+	    silver: 0xc0c0c0,
+	    skyblue: 0x87ceeb,
+	    slateblue: 0x6a5acd,
+	    slategray: 0x708090,
+	    slategrey: 0x708090,
+	    snow: 0xfffafa,
+	    springgreen: 0x00ff7f,
+	    steelblue: 0x4682b4,
+	    tan: 0xd2b48c,
+	    teal: 0x008080,
+	    thistle: 0xd8bfd8,
+	    tomato: 0xff6347,
+	    turquoise: 0x40e0d0,
+	    violet: 0xee82ee,
+	    wheat: 0xf5deb3,
+	    white: 0xffffff,
+	    whitesmoke: 0xf5f5f5,
+	    yellow: 0xffff00,
+	    yellowgreen: 0x9acd32
+	  };
+	
+	  color.prototype = Color.prototype = {
+	    displayable: function() {
+	      return this.rgb().displayable();
+	    },
+	    toString: function() {
+	      return this.rgb() + "";
+	    }
+	  };
+	
+	  function color(format) {
+	    var m;
+	    format = (format + "").trim().toLowerCase();
+	    return (m = reHex3.exec(format)) ? (m = parseInt(m[1], 16), new Rgb((m >> 8 & 0xf) | (m >> 4 & 0x0f0), (m >> 4 & 0xf) | (m & 0xf0), ((m & 0xf) << 4) | (m & 0xf))) // #f00
+	        : (m = reHex6.exec(format)) ? rgbn(parseInt(m[1], 16)) // #ff0000
+	        : (m = reRgbInteger.exec(format)) ? new Rgb(m[1], m[2], m[3]) // rgb(255,0,0)
+	        : (m = reRgbPercent.exec(format)) ? new Rgb(m[1] * 255 / 100, m[2] * 255 / 100, m[3] * 255 / 100) // rgb(100%,0%,0%)
+	        : (m = reHslPercent.exec(format)) ? new Hsl(m[1], m[2] / 100, m[3] / 100) // hsl(120,50%,50%)
+	        : named.hasOwnProperty(format) ? rgbn(named[format])
+	        : null;
+	  }
+	
+	  function rgbn(n) {
+	    return new Rgb(n >> 16 & 0xff, n >> 8 & 0xff, n & 0xff);
+	  }
+	
+	  function rgb(r, g, b) {
+	    if (arguments.length === 1) {
+	      if (!(r instanceof Color)) r = color(r);
+	      if (r) {
+	        r = r.rgb();
+	        b = r.b;
+	        g = r.g;
+	        r = r.r;
+	      } else {
+	        r = g = b = NaN;
+	      }
+	    }
+	    return new Rgb(r, g, b);
+	  }
+	
+	  function Rgb(r, g, b) {
+	    this.r = +r;
+	    this.g = +g;
+	    this.b = +b;
+	  }
+	
+	  var _rgb = rgb.prototype = Rgb.prototype = new Color;
+	
+	  _rgb.brighter = function(k) {
+	    k = k == null ? brighter : Math.pow(brighter, k);
+	    return new Rgb(this.r * k, this.g * k, this.b * k);
+	  };
+	
+	  _rgb.darker = function(k) {
+	    k = k == null ? darker : Math.pow(darker, k);
+	    return new Rgb(this.r * k, this.g * k, this.b * k);
+	  };
+	
+	  _rgb.rgb = function() {
+	    return this;
+	  };
+	
+	  _rgb.displayable = function() {
+	    return (0 <= this.r && this.r <= 255)
+	        && (0 <= this.g && this.g <= 255)
+	        && (0 <= this.b && this.b <= 255);
+	  };
+	
+	  _rgb.toString = function() {
+	    var r = Math.round(this.r),
+	        g = Math.round(this.g),
+	        b = Math.round(this.b);
+	    return "#"
+	        + (isNaN(r) || r <= 0 ? "00" : r < 16 ? "0" + r.toString(16) : r >= 255 ? "ff" : r.toString(16))
+	        + (isNaN(g) || g <= 0 ? "00" : g < 16 ? "0" + g.toString(16) : g >= 255 ? "ff" : g.toString(16))
+	        + (isNaN(b) || b <= 0 ? "00" : b < 16 ? "0" + b.toString(16) : b >= 255 ? "ff" : b.toString(16));
+	  };
+	
+	  function hsl(h, s, l) {
+	    if (arguments.length === 1) {
+	      if (h instanceof Hsl) {
+	        l = h.l;
+	        s = h.s;
+	        h = h.h;
+	      } else {
+	        if (!(h instanceof Color)) h = color(h);
+	        if (h) {
+	          if (h instanceof Hsl) return h;
+	          h = h.rgb();
+	          var r = h.r / 255,
+	              g = h.g / 255,
+	              b = h.b / 255,
+	              min = Math.min(r, g, b),
+	              max = Math.max(r, g, b),
+	              range = max - min;
+	          l = (max + min) / 2;
+	          if (range) {
+	            s = l < 0.5 ? range / (max + min) : range / (2 - max - min);
+	            if (r === max) h = (g - b) / range + (g < b) * 6;
+	            else if (g === max) h = (b - r) / range + 2;
+	            else h = (r - g) / range + 4;
+	            h *= 60;
+	          } else {
+	            h = NaN;
+	            s = l > 0 && l < 1 ? 0 : h;
+	          }
+	        } else {
+	          h = s = l = NaN;
+	        }
+	      }
+	    }
+	    return new Hsl(h, s, l);
+	  }
+	
+	  function Hsl(h, s, l) {
+	    this.h = +h;
+	    this.s = +s;
+	    this.l = +l;
+	  }
+	
+	  var _hsl = hsl.prototype = Hsl.prototype = new Color;
+	
+	  _hsl.brighter = function(k) {
+	    k = k == null ? brighter : Math.pow(brighter, k);
+	    return new Hsl(this.h, this.s, this.l * k);
+	  };
+	
+	  _hsl.darker = function(k) {
+	    k = k == null ? darker : Math.pow(darker, k);
+	    return new Hsl(this.h, this.s, this.l * k);
+	  };
+	
+	  _hsl.rgb = function() {
+	    var h = this.h % 360 + (this.h < 0) * 360,
+	        s = isNaN(h) || isNaN(this.s) ? 0 : this.s,
+	        l = this.l,
+	        m2 = l + (l < 0.5 ? l : 1 - l) * s,
+	        m1 = 2 * l - m2;
+	    return new Rgb(
+	      hsl2rgb(h >= 240 ? h - 240 : h + 120, m1, m2),
+	      hsl2rgb(h, m1, m2),
+	      hsl2rgb(h < 120 ? h + 240 : h - 120, m1, m2)
+	    );
+	  };
+	
+	  _hsl.displayable = function() {
+	    return (0 <= this.s && this.s <= 1 || isNaN(this.s))
+	        && (0 <= this.l && this.l <= 1);
+	  };
+	
+	  /* From FvD 13.37, CSS Color Module Level 3 */
+	  function hsl2rgb(h, m1, m2) {
+	    return (h < 60 ? m1 + (m2 - m1) * h / 60
+	        : h < 180 ? m2
+	        : h < 240 ? m1 + (m2 - m1) * (240 - h) / 60
+	        : m1) * 255;
+	  }
+	
+	  var deg2rad = Math.PI / 180;
+	  var rad2deg = 180 / Math.PI;
+	
+	  var Kn = 18;
+	  var Xn = 0.950470;
+	  var Yn = 1;
+	  var Zn = 1.088830;
+	  var t0 = 4 / 29;
+	  var t1 = 6 / 29;
+	  var t2 = 3 * t1 * t1;
+	  var t3 = t1 * t1 * t1;
+	  function lab(l, a, b) {
+	    if (arguments.length === 1) {
+	      if (l instanceof Lab) {
+	        b = l.b;
+	        a = l.a;
+	        l = l.l;
+	      } else if (l instanceof Hcl) {
+	        var h = l.h * deg2rad;
+	        b = Math.sin(h) * l.c;
+	        a = Math.cos(h) * l.c;
+	        l = l.l;
+	      } else {
+	        if (!(l instanceof Rgb)) l = rgb(l);
+	        b = rgb2xyz(l.r);
+	        a = rgb2xyz(l.g);
+	        l = rgb2xyz(l.b);
+	        var x = xyz2lab((0.4124564 * b + 0.3575761 * a + 0.1804375 * l) / Xn),
+	            y = xyz2lab((0.2126729 * b + 0.7151522 * a + 0.0721750 * l) / Yn),
+	            z = xyz2lab((0.0193339 * b + 0.1191920 * a + 0.9503041 * l) / Zn);
+	        b = 200 * (y - z);
+	        a = 500 * (x - y);
+	        l = 116 * y - 16;
+	      }
+	    }
+	    return new Lab(l, a, b);
+	  }
+	
+	  function Lab(l, a, b) {
+	    this.l = +l;
+	    this.a = +a;
+	    this.b = +b;
+	  }
+	
+	  var _lab = lab.prototype = Lab.prototype = new Color;
+	
+	  _lab.brighter = function(k) {
+	    return new Lab(this.l + Kn * (k == null ? 1 : k), this.a, this.b);
+	  };
+	
+	  _lab.darker = function(k) {
+	    return new Lab(this.l - Kn * (k == null ? 1 : k), this.a, this.b);
+	  };
+	
+	  _lab.rgb = function() {
+	    var y = (this.l + 16) / 116,
+	        x = isNaN(this.a) ? y : y + this.a / 500,
+	        z = isNaN(this.b) ? y : y - this.b / 200;
+	    y = Yn * lab2xyz(y);
+	    x = Xn * lab2xyz(x);
+	    z = Zn * lab2xyz(z);
+	    return new Rgb(
+	      xyz2rgb( 3.2404542 * x - 1.5371385 * y - 0.4985314 * z), // D65 -> sRGB
+	      xyz2rgb(-0.9692660 * x + 1.8760108 * y + 0.0415560 * z),
+	      xyz2rgb( 0.0556434 * x - 0.2040259 * y + 1.0572252 * z)
+	    );
+	  };
+	
+	  function xyz2lab(t) {
+	    return t > t3 ? Math.pow(t, 1 / 3) : t / t2 + t0;
+	  }
+	
+	  function lab2xyz(t) {
+	    return t > t1 ? t * t * t : t2 * (t - t0);
+	  }
+	
+	  function xyz2rgb(x) {
+	    return 255 * (x <= 0.0031308 ? 12.92 * x : 1.055 * Math.pow(x, 1 / 2.4) - 0.055);
+	  }
+	
+	  function rgb2xyz(x) {
+	    return (x /= 255) <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4);
+	  }
+	
+	  function hcl(h, c, l) {
+	    if (arguments.length === 1) {
+	      if (h instanceof Hcl) {
+	        l = h.l;
+	        c = h.c;
+	        h = h.h;
+	      } else {
+	        if (!(h instanceof Lab)) h = lab(h);
+	        l = h.l;
+	        c = Math.sqrt(h.a * h.a + h.b * h.b);
+	        h = Math.atan2(h.b, h.a) * rad2deg;
+	        if (h < 0) h += 360;
+	      }
+	    }
+	    return new Hcl(h, c, l);
+	  }
+	
+	  function Hcl(h, c, l) {
+	    this.h = +h;
+	    this.c = +c;
+	    this.l = +l;
+	  }
+	
+	  var _hcl = hcl.prototype = Hcl.prototype = new Color;
+	
+	  _hcl.brighter = function(k) {
+	    return new Hcl(this.h, this.c, this.l + Kn * (k == null ? 1 : k));
+	  };
+	
+	  _hcl.darker = function(k) {
+	    return new Hcl(this.h, this.c, this.l - Kn * (k == null ? 1 : k));
+	  };
+	
+	  _hcl.rgb = function() {
+	    return lab(this).rgb();
+	  };
+	
+	  var A = -0.14861;
+	  var B = +1.78277;
+	  var C = -0.29227;
+	  var D = -0.90649;
+	  var E = +1.97294;
+	  var ED = E * D;
+	  var EB = E * B;
+	  var BC_DA = B * C - D * A;
+	  function cubehelix(h, s, l) {
+	    if (arguments.length === 1) {
+	      if (h instanceof Cubehelix) {
+	        l = h.l;
+	        s = h.s;
+	        h = h.h;
+	      } else {
+	        if (!(h instanceof Rgb)) h = rgb(h);
+	        var r = h.r / 255, g = h.g / 255, b = h.b / 255;
+	        l = (BC_DA * b + ED * r - EB * g) / (BC_DA + ED - EB);
+	        var bl = b - l, k = (E * (g - l) - C * bl) / D;
+	        s = Math.sqrt(k * k + bl * bl) / (E * l * (1 - l)); // NaN if l=0 or l=1
+	        h = s ? Math.atan2(k, bl) * rad2deg - 120 : NaN;
+	        if (h < 0) h += 360;
+	      }
+	    }
+	    return new Cubehelix(h, s, l);
+	  }
+	
+	  function Cubehelix(h, s, l) {
+	    this.h = +h;
+	    this.s = +s;
+	    this.l = +l;
+	  }
+	
+	  var _cubehelix = cubehelix.prototype = Cubehelix.prototype = new Color;
+	
+	  _cubehelix.brighter = function(k) {
+	    k = k == null ? brighter : Math.pow(brighter, k);
+	    return new Cubehelix(this.h, this.s, this.l * k);
+	  };
+	
+	  _cubehelix.darker = function(k) {
+	    k = k == null ? darker : Math.pow(darker, k);
+	    return new Cubehelix(this.h, this.s, this.l * k);
+	  };
+	
+	  _cubehelix.rgb = function() {
+	    var h = isNaN(this.h) ? 0 : (this.h + 120) * deg2rad,
+	        l = +this.l,
+	        a = isNaN(this.s) ? 0 : this.s * l * (1 - l),
+	        cosh = Math.cos(h),
+	        sinh = Math.sin(h);
+	    return new Rgb(
+	      255 * (l + a * (A * cosh + B * sinh)),
+	      255 * (l + a * (C * cosh + D * sinh)),
+	      255 * (l + a * (E * cosh))
+	    );
+	  };
+	
+	  var version = "0.3.4";
+	
+	  exports.version = version;
+	  exports.color = color;
+	  exports.rgb = rgb;
+	  exports.hsl = hsl;
+	  exports.lab = lab;
+	  exports.hcl = hcl;
+	  exports.cubehelix = cubehelix;
+	
+	}));
+
+/***/ },
+/* 261 */
+/***/ function(module, exports, __webpack_require__) {
+
+	(function (global, factory) {
+	   true ? factory(exports, __webpack_require__(260)) :
+	  typeof define === 'function' && define.amd ? define('d3-interpolate', ['exports', 'd3-color'], factory) :
+	  factory((global.d3_interpolate = {}),global.d3_color);
+	}(this, function (exports,d3Color) { 'use strict';
+	
+	  function deltaHue(h1, h0) {
+	    var delta = h1 - h0;
+	    return delta > 180 || delta < -180
+	        ? delta - 360 * Math.round(delta / 360)
+	        : delta;
+	  };
+	
+	  function cubehelixGamma(gamma) {
+	    return function(a, b) {
+	      a = d3Color.cubehelix(a);
+	      b = d3Color.cubehelix(b);
+	      var ah = isNaN(a.h) ? b.h : a.h,
+	          as = isNaN(a.s) ? b.s : a.s,
+	          al = a.l,
+	          bh = isNaN(b.h) ? 0 : deltaHue(b.h, ah),
+	          bs = isNaN(b.s) ? 0 : b.s - as,
+	          bl = b.l - al;
+	      return function(t) {
+	        a.h = ah + bh * t;
+	        a.s = as + bs * t;
+	        a.l = al + bl * Math.pow(t, gamma);
+	        return a + "";
+	      };
+	    };
+	  };
+	
+	  function cubehelixGammaLong(gamma) {
+	    return function(a, b) {
+	      a = d3Color.cubehelix(a);
+	      b = d3Color.cubehelix(b);
+	      var ah = isNaN(a.h) ? b.h : a.h,
+	          as = isNaN(a.s) ? b.s : a.s,
+	          al = a.l,
+	          bh = isNaN(b.h) ? 0 : b.h - ah,
+	          bs = isNaN(b.s) ? 0 : b.s - as,
+	          bl = b.l - al;
+	      return function(t) {
+	        a.h = ah + bh * t;
+	        a.s = as + bs * t;
+	        a.l = al + bl * Math.pow(t, gamma);
+	        return a + "";
+	      };
+	    };
+	  };
+	
+	  function rgb(a, b) {
+	    a = d3Color.rgb(a);
+	    b = d3Color.rgb(b);
+	    var ar = a.r,
+	        ag = a.g,
+	        ab = a.b,
+	        br = b.r - ar,
+	        bg = b.g - ag,
+	        bb = b.b - ab;
+	    return function(t) {
+	      a.r = ar + br * t;
+	      a.g = ag + bg * t;
+	      a.b = ab + bb * t;
+	      return a + "";
+	    };
+	  };
+	
+	  function number(a, b) {
+	    return a = +a, b -= a, function(t) {
+	      return a + b * t;
+	    };
+	  };
+	
+	  function object(a, b) {
+	    var i = {},
+	        c = {},
+	        k;
+	
+	    for (k in a) {
+	      if (k in b) {
+	        i[k] = value(a[k], b[k]);
+	      } else {
+	        c[k] = a[k];
+	      }
+	    }
+	
+	    for (k in b) {
+	      if (!(k in a)) {
+	        c[k] = b[k];
+	      }
+	    }
+	
+	    return function(t) {
+	      for (k in i) c[k] = i[k](t);
+	      return c;
+	    };
+	  };
+	
+	  var reA = /[-+]?(?:\d+\.?\d*|\.?\d+)(?:[eE][-+]?\d+)?/g;
+	  var reB = new RegExp(reA.source, "g");
+	  function zero(b) {
+	    return function() {
+	      return b;
+	    };
+	  }
+	
+	  function one(b) {
+	    return function(t) {
+	      return b(t) + "";
+	    };
+	  }
+	
+	  function string(a, b) {
+	    var bi = reA.lastIndex = reB.lastIndex = 0, // scan index for next number in b
+	        am, // current match in a
+	        bm, // current match in b
+	        bs, // string preceding current number in b, if any
+	        i = -1, // index in s
+	        s = [], // string constants and placeholders
+	        q = []; // number interpolators
+	
+	    // Coerce inputs to strings.
+	    a = a + "", b = b + "";
+	
+	    // Interpolate pairs of numbers in a & b.
+	    while ((am = reA.exec(a))
+	        && (bm = reB.exec(b))) {
+	      if ((bs = bm.index) > bi) { // a string precedes the next number in b
+	        bs = b.slice(bi, bs);
+	        if (s[i]) s[i] += bs; // coalesce with previous string
+	        else s[++i] = bs;
+	      }
+	      if ((am = am[0]) === (bm = bm[0])) { // numbers in a & b match
+	        if (s[i]) s[i] += bm; // coalesce with previous string
+	        else s[++i] = bm;
+	      } else { // interpolate non-matching numbers
+	        s[++i] = null;
+	        q.push({i: i, x: number(am, bm)});
+	      }
+	      bi = reB.lastIndex;
+	    }
+	
+	    // Add remains of b.
+	    if (bi < b.length) {
+	      bs = b.slice(bi);
+	      if (s[i]) s[i] += bs; // coalesce with previous string
+	      else s[++i] = bs;
+	    }
+	
+	    // Special optimization for only a single match.
+	    // Otherwise, interpolate each of the numbers and rejoin the string.
+	    return s.length < 2 ? (q[0]
+	        ? one(q[0].x)
+	        : zero(b))
+	        : (b = q.length, function(t) {
+	            for (var i = 0, o; i < b; ++i) s[(o = q[i]).i] = o.x(t);
+	            return s.join("");
+	          });
+	  };
+	
+	  var values = [
+	    function(a, b) {
+	      var t = typeof b, c;
+	      return (t === "string" ? ((c = d3Color.color(b)) ? (b = c, rgb) : string)
+	          : b instanceof d3Color.color ? rgb
+	          : Array.isArray(b) ? array
+	          : t === "object" && isNaN(b) ? object
+	          : number)(a, b);
+	    }
+	  ];
+	
+	  function value(a, b) {
+	    var i = values.length, f;
+	    while (--i >= 0 && !(f = values[i](a, b)));
+	    return f;
+	  };
+	
+	  // TODO sparse arrays?
+	  function array(a, b) {
+	    var x = [],
+	        c = [],
+	        na = a.length,
+	        nb = b.length,
+	        n0 = Math.min(a.length, b.length),
+	        i;
+	
+	    for (i = 0; i < n0; ++i) x.push(value(a[i], b[i]));
+	    for (; i < na; ++i) c[i] = a[i];
+	    for (; i < nb; ++i) c[i] = b[i];
+	
+	    return function(t) {
+	      for (i = 0; i < n0; ++i) c[i] = x[i](t);
+	      return c;
+	    };
+	  };
+	
+	  function round(a, b) {
+	    return a = +a, b -= a, function(t) {
+	      return Math.round(a + b * t);
+	    };
+	  };
+	
+	  var rad2deg = 180 / Math.PI;
+	  var identity = {a: 1, b: 0, c: 0, d: 1, e: 0, f: 0};
+	  var g;
+	  // Compute x-scale and normalize the first row.
+	  // Compute shear and make second row orthogonal to first.
+	  // Compute y-scale and normalize the second row.
+	  // Finally, compute the rotation.
+	  function Transform(string) {
+	    if (!g) g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+	    if (string) g.setAttribute("transform", string), t = g.transform.baseVal.consolidate();
+	
+	    var t,
+	        m = t ? t.matrix : identity,
+	        r0 = [m.a, m.b],
+	        r1 = [m.c, m.d],
+	        kx = normalize(r0),
+	        kz = dot(r0, r1),
+	        ky = normalize(combine(r1, r0, -kz)) || 0;
+	
+	    if (r0[0] * r1[1] < r1[0] * r0[1]) {
+	      r0[0] *= -1;
+	      r0[1] *= -1;
+	      kx *= -1;
+	      kz *= -1;
+	    }
+	
+	    this.rotate = (kx ? Math.atan2(r0[1], r0[0]) : Math.atan2(-r1[0], r1[1])) * rad2deg;
+	    this.translate = [m.e, m.f];
+	    this.scale = [kx, ky];
+	    this.skew = ky ? Math.atan2(kz, ky) * rad2deg : 0;
+	  }
+	
+	  function dot(a, b) {
+	    return a[0] * b[0] + a[1] * b[1];
+	  }
+	
+	  function normalize(a) {
+	    var k = Math.sqrt(dot(a, a));
+	    if (k) a[0] /= k, a[1] /= k;
+	    return k;
+	  }
+	
+	  function combine(a, b, k) {
+	    a[0] += k * b[0];
+	    a[1] += k * b[1];
+	    return a;
+	  }
+	
+	  function pop(s) {
+	    return s.length ? s.pop() + "," : "";
+	  }
+	
+	  function translate(ta, tb, s, q) {
+	    if (ta[0] !== tb[0] || ta[1] !== tb[1]) {
+	      var i = s.push("translate(", null, ",", null, ")");
+	      q.push({i: i - 4, x: number(ta[0], tb[0])}, {i: i - 2, x: number(ta[1], tb[1])});
+	    } else if (tb[0] || tb[1]) {
+	      s.push("translate(" + tb + ")");
+	    }
+	  }
+	
+	  function rotate(ra, rb, s, q) {
+	    if (ra !== rb) {
+	      if (ra - rb > 180) rb += 360; else if (rb - ra > 180) ra += 360; // shortest path
+	      q.push({i: s.push(pop(s) + "rotate(", null, ")") - 2, x: number(ra, rb)});
+	    } else if (rb) {
+	      s.push(pop(s) + "rotate(" + rb + ")");
+	    }
+	  }
+	
+	  function skew(wa, wb, s, q) {
+	    if (wa !== wb) {
+	      q.push({i: s.push(pop(s) + "skewX(", null, ")") - 2, x: number(wa, wb)});
+	    } else if (wb) {
+	      s.push(pop(s) + "skewX(" + wb + ")");
+	    }
+	  }
+	
+	  function scale(ka, kb, s, q) {
+	    if (ka[0] !== kb[0] || ka[1] !== kb[1]) {
+	      var i = s.push(pop(s) + "scale(", null, ",", null, ")");
+	      q.push({i: i - 4, x: number(ka[0], kb[0])}, {i: i - 2, x: number(ka[1], kb[1])});
+	    } else if (kb[0] !== 1 || kb[1] !== 1) {
+	      s.push(pop(s) + "scale(" + kb + ")");
+	    }
+	  }
+	
+	  function transform(a, b) {
+	    var s = [], // string constants and placeholders
+	        q = []; // number interpolators
+	    a = new Transform(a), b = new Transform(b);
+	    translate(a.translate, b.translate, s, q);
+	    rotate(a.rotate, b.rotate, s, q);
+	    skew(a.skew, b.skew, s, q);
+	    scale(a.scale, b.scale, s, q);
+	    a = b = null; // gc
+	    return function(t) {
+	      var i = -1, n = q.length, o;
+	      while (++i < n) s[(o = q[i]).i] = o.x(t);
+	      return s.join("");
+	    };
+	  };
+	
+	  var rho = Math.SQRT2;
+	  var rho2 = 2;
+	  var rho4 = 4;
+	  var epsilon2 = 1e-12;
+	  function cosh(x) {
+	    return ((x = Math.exp(x)) + 1 / x) / 2;
+	  }
+	
+	  function sinh(x) {
+	    return ((x = Math.exp(x)) - 1 / x) / 2;
+	  }
+	
+	  function tanh(x) {
+	    return ((x = Math.exp(2 * x)) - 1) / (x + 1);
+	  }
+	
+	  // p0 = [ux0, uy0, w0]
+	  // p1 = [ux1, uy1, w1]
+	  function zoom(p0, p1) {
+	    var ux0 = p0[0], uy0 = p0[1], w0 = p0[2],
+	        ux1 = p1[0], uy1 = p1[1], w1 = p1[2],
+	        dx = ux1 - ux0,
+	        dy = uy1 - uy0,
+	        d2 = dx * dx + dy * dy,
+	        i,
+	        S;
+	
+	    // Special case for u0 ≅ u1.
+	    if (d2 < epsilon2) {
+	      S = Math.log(w1 / w0) / rho;
+	      i = function(t) {
+	        return [
+	          ux0 + t * dx,
+	          uy0 + t * dy,
+	          w0 * Math.exp(rho * t * S)
+	        ];
+	      }
+	    }
+	
+	    // General case.
+	    else {
+	      var d1 = Math.sqrt(d2),
+	          b0 = (w1 * w1 - w0 * w0 + rho4 * d2) / (2 * w0 * rho2 * d1),
+	          b1 = (w1 * w1 - w0 * w0 - rho4 * d2) / (2 * w1 * rho2 * d1),
+	          r0 = Math.log(Math.sqrt(b0 * b0 + 1) - b0),
+	          r1 = Math.log(Math.sqrt(b1 * b1 + 1) - b1);
+	      S = (r1 - r0) / rho;
+	      i = function(t) {
+	        var s = t * S,
+	            coshr0 = cosh(r0),
+	            u = w0 / (rho2 * d1) * (coshr0 * tanh(rho * s + r0) - sinh(r0));
+	        return [
+	          ux0 + u * dx,
+	          uy0 + u * dy,
+	          w0 * coshr0 / cosh(rho * s + r0)
+	        ];
+	      }
+	    }
+	
+	    i.duration = S * 1000;
+	
+	    return i;
+	  };
+	
+	  function hsl(a, b) {
+	    a = d3Color.hsl(a);
+	    b = d3Color.hsl(b);
+	    var ah = isNaN(a.h) ? b.h : a.h,
+	        as = isNaN(a.s) ? b.s : a.s,
+	        al = a.l,
+	        bh = isNaN(b.h) ? 0 : deltaHue(b.h, ah),
+	        bs = isNaN(b.s) ? 0 : b.s - as,
+	        bl = b.l - al;
+	    return function(t) {
+	      a.h = ah + bh * t;
+	      a.s = as + bs * t;
+	      a.l = al + bl * t;
+	      return a + "";
+	    };
+	  };
+	
+	  function hslLong(a, b) {
+	    a = d3Color.hsl(a);
+	    b = d3Color.hsl(b);
+	    var ah = isNaN(a.h) ? b.h : a.h,
+	        as = isNaN(a.s) ? b.s : a.s,
+	        al = a.l,
+	        bh = isNaN(b.h) ? 0 : b.h - ah,
+	        bs = isNaN(b.s) ? 0 : b.s - as,
+	        bl = b.l - al;
+	    return function(t) {
+	      a.h = ah + bh * t;
+	      a.s = as + bs * t;
+	      a.l = al + bl * t;
+	      return a + "";
+	    };
+	  };
+	
+	  function lab(a, b) {
+	    a = d3Color.lab(a);
+	    b = d3Color.lab(b);
+	    var al = a.l,
+	        aa = a.a,
+	        ab = a.b,
+	        bl = b.l - al,
+	        ba = b.a - aa,
+	        bb = b.b - ab;
+	    return function(t) {
+	      a.l = al + bl * t;
+	      a.a = aa + ba * t;
+	      a.b = ab + bb * t;
+	      return a + "";
+	    };
+	  };
+	
+	  function hcl(a, b) {
+	    a = d3Color.hcl(a);
+	    b = d3Color.hcl(b);
+	    var ah = isNaN(a.h) ? b.h : a.h,
+	        ac = isNaN(a.c) ? b.c : a.c,
+	        al = a.l,
+	        bh = isNaN(b.h) ? 0 : deltaHue(b.h, ah),
+	        bc = isNaN(b.c) ? 0 : b.c - ac,
+	        bl = b.l - al;
+	    return function(t) {
+	      a.h = ah + bh * t;
+	      a.c = ac + bc * t;
+	      a.l = al + bl * t;
+	      return a + "";
+	    };
+	  };
+	
+	  function hclLong(a, b) {
+	    a = d3Color.hcl(a);
+	    b = d3Color.hcl(b);
+	    var ah = isNaN(a.h) ? b.h : a.h,
+	        ac = isNaN(a.c) ? b.c : a.c,
+	        al = a.l,
+	        bh = isNaN(b.h) ? 0 : b.h - ah,
+	        bc = isNaN(b.c) ? 0 : b.c - ac,
+	        bl = b.l - al;
+	    return function(t) {
+	      a.h = ah + bh * t;
+	      a.c = ac + bc * t;
+	      a.l = al + bl * t;
+	      return a + "";
+	    };
+	  };
+	
+	  var cubehelix = cubehelixGamma(1);
+	  var cubehelixLong = cubehelixGammaLong(1);
+	
+	  var version = "0.2.1";
+	
+	  exports.version = version;
+	  exports.cubehelix = cubehelix;
+	  exports.cubehelixLong = cubehelixLong;
+	  exports.cubehelixGamma = cubehelixGamma;
+	  exports.cubehelixGammaLong = cubehelixGammaLong;
+	  exports.array = array;
+	  exports.number = number;
+	  exports.object = object;
+	  exports.round = round;
+	  exports.string = string;
+	  exports.transform = transform;
+	  exports.values = values;
+	  exports.value = value;
+	  exports.zoom = zoom;
+	  exports.rgb = rgb;
+	  exports.hsl = hsl;
+	  exports.hslLong = hslLong;
+	  exports.lab = lab;
+	  exports.hcl = hcl;
+	  exports.hclLong = hclLong;
+	
+	}));
+
+/***/ },
+/* 262 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -8215,7 +14980,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 97 */
+/* 263 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -8715,11 +15480,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 98 */
+/* 264 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(99)) :
+	   true ? factory(exports, __webpack_require__(265)) :
 	  typeof define === 'function' && define.amd ? define('d3-time-format', ['exports', 'd3-time'], factory) :
 	  factory((global.d3_time_format = {}),global.d3_time);
 	}(this, function (exports,d3Time) { 'use strict';
@@ -9540,7 +16305,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 99 */
+/* 265 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -9899,21 +16664,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 100 */
+/* 266 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	var _victoryCore = __webpack_require__(30);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	module.exports = {
+	var _victoryCore = __webpack_require__(37);
+	
+	exports.default = {
 	  getAxisType: function getAxisType(component) {
 	    if (!component.type || component.type.role !== "axis") {
 	      return undefined;
 	    }
 	    return component.props.dependentAxis ? "dependent" : "independent";
 	  },
-	
 	  getAxisComponent: function getAxisComponent(childComponents, axis) {
 	    var getAxis = function getAxis(component) {
 	      var flipped = childComponents.some(function (child) {
@@ -9926,7 +16694,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	    return axisComponents[0];
 	  },
-	
 	  getOrientation: function getOrientation(component, axis) {
 	    if (component.props && component.props.orientation) {
 	      return component.props.orientation;
@@ -9936,67 +16703,74 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var dependent = component.props.dependentAxis;
 	    return dependent && axis === "y" || !dependent && axis === "x" ? typicalOrientations[axis] : flippedOrientations[axis];
 	  },
-	
 	  getAxisOrientations: function getAxisOrientations(childComponents) {
 	    return {
 	      x: this.getOrientation(this.getAxisComponent(childComponents, "x"), "x"),
 	      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y")
 	    };
 	  },
-	
 	  isVertical: function isVertical(props) {
 	    var orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
 	    var vertical = { top: false, bottom: false, left: true, right: true };
 	    return vertical[orientation];
 	  },
-	
 	  stringTicks: function stringTicks(props) {
 	    return props.tickValues !== undefined && _victoryCore.Collection.containsStrings(props.tickValues);
 	  }
 	};
 
 /***/ },
-/* 101 */
+/* 267 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	var _flatten = __webpack_require__(258);
 	
-	var _lodashArrayFlatten = __webpack_require__(94);
+	var _flatten2 = _interopRequireDefault(_flatten);
 	
-	var _lodashArrayFlatten2 = _interopRequireDefault(_lodashArrayFlatten);
+	var _includes = __webpack_require__(218);
 	
-	var _lodashCollectionIncludes = __webpack_require__(80);
+	var _includes2 = _interopRequireDefault(_includes);
 	
-	var _lodashCollectionIncludes2 = _interopRequireDefault(_lodashCollectionIncludes);
-	
-	var _lodashArrayZipObject = __webpack_require__(40);
-	
-	var _lodashArrayZipObject2 = _interopRequireDefault(_lodashArrayZipObject);
-	
-	var _data = __webpack_require__(102);
+	var _data = __webpack_require__(268);
 	
 	var _data2 = _interopRequireDefault(_data);
 	
-	var _axis = __webpack_require__(100);
+	var _axis = __webpack_require__(266);
 	
 	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	module.exports = {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	exports.default = {
 	  getDomain: function getDomain(props, axis) {
 	    var propsDomain = this.getDomainFromProps(props, axis);
 	    if (propsDomain) {
 	      return propsDomain;
 	    }
-	    var dataset = _data2["default"].getData(props);
+	    var dataset = _data2.default.getData(props);
 	    return this.getDomainFromData(dataset, axis);
 	  },
-	
+	  getMultiSeriesDomain: function getMultiSeriesDomain(props, axis, datasets) {
+	    var propsDomain = this.getDomainFromProps(props, axis);
+	    if (propsDomain) {
+	      return this.padDomain(propsDomain, props, axis);
+	    }
+	    var ensureZero = function ensureZero(domain) {
+	      return axis === "y" ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
+	    };
+	    var dataDomain = ensureZero(this.getDomainFromGroupedData(props, axis, datasets));
+	    return this.padDomain(dataDomain, props, axis);
+	  },
 	  getDomainFromProps: function getDomainFromProps(props, axis) {
 	    if (props.domain && props.domain[axis]) {
 	      return props.domain[axis];
@@ -10004,9 +16778,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return props.domain;
 	    }
 	  },
-	
 	  getDomainFromData: function getDomainFromData(dataset, axis) {
-	    var allData = (0, _lodashArrayFlatten2["default"])(dataset).map(function (datum) {
+	    var allData = (0, _flatten2.default)(dataset).map(function (datum) {
 	      return datum[axis];
 	    });
 	    var min = Math.min.apply(Math, _toConsumableArray(allData));
@@ -10019,10 +16792,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return [min, max];
 	  },
-	
 	  getDomainFromTickValues: function getDomainFromTickValues(props) {
-	    var domain = undefined;
-	    if (_axis2["default"].stringTicks(props)) {
+	    var domain = void 0;
+	    if (_axis2.default.stringTicks(props)) {
 	      domain = [1, props.tickValues.length];
 	    } else {
 	      // coerce ticks to numbers
@@ -10031,34 +16803,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      domain = [Math.min.apply(Math, _toConsumableArray(ticks)), Math.max.apply(Math, _toConsumableArray(ticks))];
 	    }
-	    if (_axis2["default"].isVertical(props)) {
+	    if (_axis2.default.isVertical(props)) {
 	      domain.reverse();
 	    }
 	    return domain;
 	  },
-	
 	  getDomainFromCategories: function getDomainFromCategories(props, axis) {
 	    if (axis !== "x" || !props.categories) {
 	      return undefined;
 	    }
-	    var categories = (0, _lodashArrayFlatten2["default"])(props.categories);
-	    var stringArray = _victoryCore.Collection.containsStrings(categories) ? _data2["default"].getStringsFromCategories(props, axis) : [];
-	    var stringMap = stringArray.length === 0 ? null : (0, _lodashArrayZipObject2["default"])(stringArray.map(function (string, index) {
-	      return [string, index + 1];
-	    }));
+	    var categories = (0, _flatten2.default)(props.categories);
+	    var stringArray = _victoryCore.Collection.containsStrings(categories) ? _data2.default.getStringsFromCategories(props, axis) : [];
+	    var stringMap = stringArray.length === 0 ? null : stringArray.reduce(function (memo, string, index) {
+	      memo[string] = index + 1;
+	      return memo;
+	    }, {});
 	    var categoryValues = stringMap ? categories.map(function (value) {
 	      return stringMap[value];
 	    }) : categories;
 	    return [Math.min.apply(Math, _toConsumableArray(categoryValues)), Math.max.apply(Math, _toConsumableArray(categoryValues))];
 	  },
-	
-	  getDomainFromGroupedData: function getDomainFromGroupedData(props, axis) {
+	  getDomainFromGroupedData: function getDomainFromGroupedData(props, axis, datasets) {
 	    if (axis === "x" && props.categories) {
 	      return this.getDomainFromCategories(props, axis);
 	    }
 	    // find the global min and max
 	    var hasMultipleDatasets = props.stacked || this.shouldGroup(props);
-	    var datasets = _data2["default"].formatDatasets(props, hasMultipleDatasets).map(function (dataset) {
+	    datasets = datasets ? datasets.map(function (dataset) {
+	      return dataset.data;
+	    }) : _data2.default.formatDatasets(props, hasMultipleDatasets).map(function (dataset) {
 	      return dataset.data;
 	    });
 	    var globalDomain = this.getDomainFromData(datasets, axis);
@@ -10090,13 +16863,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return [domainMin, domainMax];
 	  },
-	
 	  shouldGroup: function shouldGroup(props) {
 	    // automatically create grouped bars if data is array of arrays
 	    // and x/y accessors are the default "x" and "y" keys,
 	    return !props.stacked && (props.grouped || typeof props.grouped === "undefined" && _victoryCore.Collection.isArrayOfArrays(props.data) && props.x === "x" && props.y === "y");
 	  },
-	
 	  isStacked: function isStacked(props, axis) {
 	    // checks whether grouped data is stacked,
 	    // whether there are multiple datasets to stack
@@ -10105,15 +16876,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return props.stacked === true && _victoryCore.Collection.isArrayOfArrays(props.data) && axis === "y";
 	  },
-	
 	  getCumulativeData: function getCumulativeData(datasets, axis) {
 	    var categories = [];
 	    var axisValues = [];
 	    datasets.forEach(function (dataset) {
 	      dataset.forEach(function (data) {
-	        if (data.category !== undefined && !(0, _lodashCollectionIncludes2["default"])(categories, data.category)) {
+	        if (data.category !== undefined && !(0, _includes2.default)(categories, data.category)) {
 	          categories.push(data.category);
-	        } else if (!(0, _lodashCollectionIncludes2["default"])(axisValues, data[axis])) {
+	        } else if (!(0, _includes2.default)(axisValues, data[axis])) {
 	          axisValues.push(data[axis]);
 	        }
 	      });
@@ -10137,7 +16907,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    return categories.length === 0 ? _dataByIndex() : _dataByCategory();
 	  },
-	
 	  padDomain: function padDomain(domain, props, axis) {
 	    if (!props.domainPadding) {
 	      return domain;
@@ -10157,7 +16926,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var adjustedMax = domainMax <= 0 && domainMax + padding >= 0 ? 0 : domainMax.valueOf() + padding;
 	    return domainMin instanceof Date || domainMax instanceof Date ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
 	  },
-	
 	  orientDomain: function orientDomain(domain, orientations, axis) {
 	    // If the other axis is in a reversed orientation, the domain of this axis
 	    // needs to be reversed
@@ -10176,7 +16944,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 102 */
+/* 268 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -10185,57 +16953,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _flatten = __webpack_require__(258);
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	var _flatten2 = _interopRequireDefault(_flatten);
 	
-	var _lodashArrayFlatten = __webpack_require__(94);
+	var _findIndex = __webpack_require__(269);
 	
-	var _lodashArrayFlatten2 = _interopRequireDefault(_lodashArrayFlatten);
+	var _findIndex2 = _interopRequireDefault(_findIndex);
 	
-	var _lodashArrayFindIndex = __webpack_require__(103);
+	var _isFunction = __webpack_require__(14);
 	
-	var _lodashArrayFindIndex2 = _interopRequireDefault(_lodashArrayFindIndex);
+	var _isFunction2 = _interopRequireDefault(_isFunction);
 	
-	var _lodashArrayUniq = __webpack_require__(121);
+	var _uniq = __webpack_require__(315);
 	
-	var _lodashArrayUniq2 = _interopRequireDefault(_lodashArrayUniq);
+	var _uniq2 = _interopRequireDefault(_uniq);
 	
-	var _lodashObjectDefaults = __webpack_require__(2);
+	var _defaults = __webpack_require__(2);
 	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	var _lodashObjectAssign = __webpack_require__(3);
+	var _assign = __webpack_require__(209);
 	
-	var _lodashObjectAssign2 = _interopRequireDefault(_lodashObjectAssign);
+	var _assign2 = _interopRequireDefault(_assign);
 	
-	var _lodashArrayZipObject = __webpack_require__(40);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _lodashArrayZipObject2 = _interopRequireDefault(_lodashArrayZipObject);
-	
-	var _victoryCore = __webpack_require__(30);
-	
-	var _scale = __webpack_require__(93);
+	var _scale = __webpack_require__(257);
 	
 	var _scale2 = _interopRequireDefault(_scale);
 	
-	exports["default"] = {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	exports.default = {
 	  // String Data
+	
 	  createStringMap: function createStringMap(props, axis) {
 	    var hasMultipleDatasets = arguments.length <= 2 || arguments[2] === undefined ? false : arguments[2];
 	
 	    var stringsFromAxes = this.getStringsFromAxes(props, axis);
 	    var stringsFromCategories = this.getStringsFromCategories(props, axis);
 	    var stringsFromData = hasMultipleDatasets ? props.data.reduce(function (prev, dataset) {
-	      return prev.concat(_victoryCore.Helpers.getStringsFromData((0, _lodashObjectDefaults2["default"])({}, { data: dataset }, props), axis));
+	      return prev.concat(_victoryCore.Helpers.getStringsFromData((0, _defaults2.default)({}, { data: dataset }, props), axis));
 	    }, []) : this.getStringsFromData(props, axis);
 	
-	    var allStrings = (0, _lodashArrayUniq2["default"])([].concat(_toConsumableArray(stringsFromAxes), _toConsumableArray(stringsFromCategories), _toConsumableArray(stringsFromData)));
-	    return allStrings.length === 0 ? null : (0, _lodashArrayZipObject2["default"])(allStrings.map(function (string, index) {
-	      return [string, index + 1];
-	    }));
+	    var allStrings = (0, _uniq2.default)([].concat(_toConsumableArray(stringsFromAxes), _toConsumableArray(stringsFromCategories), _toConsumableArray(stringsFromData)));
+	    return allStrings.length === 0 ? null : allStrings.reduce(function (memo, string, index) {
+	      memo[string] = index + 1;
+	      return memo;
+	    }, {});
 	  },
-	
 	  getStringsFromAxes: function getStringsFromAxes(props, axis) {
 	    if (!props.tickValues || !Array.isArray(props.tickValues) && !props.tickValues[axis]) {
 	      return [];
@@ -10245,19 +17014,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return typeof val === "string";
 	    });
 	  },
-	
 	  getStringsFromCategories: function getStringsFromCategories(props, axis) {
 	    // TODO generalize for independent vertical axes
 	    if (!props.categories || axis !== "x") {
 	      return [];
 	    } else {
-	      var categoryArray = (0, _lodashArrayFlatten2["default"])(props.categories);
+	      var categoryArray = (0, _flatten2.default)(props.categories);
 	      return categoryArray.filter(function (val) {
 	        return typeof val === "string";
 	      });
 	    }
 	  },
-	
 	  getStringsFromData: function getStringsFromData(props, axis) {
 	    if (!props.data) {
 	      return [];
@@ -10269,6 +17036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }, []);
 	  },
 	
+	
 	  // for components that take single datasets
 	  getData: function getData(props) {
 	    if (props.data) {
@@ -10277,10 +17045,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var data = this.generateData(props);
 	    return this.formatData(data, props);
 	  },
+	  getMultiSeriesData: function getMultiSeriesData(props, hasMultipleDatasets) {
+	    var _this = this;
 	
+	    if (props.data) {
+	      hasMultipleDatasets = hasMultipleDatasets || _victoryCore.Collection.isArrayOfArrays(props.data) && props.y === "y" && props.x === "x";
+	      return this.formatDatasets(props, hasMultipleDatasets);
+	    } else if (Array.isArray(props.y) && (0, _isFunction2.default)(props.y[0])) {
+	      return props.y.map(function (y, index) {
+	        var newProps = (0, _assign2.default)({}, props, { y: y });
+	        return {
+	          attrs: _this.getAttributes(props, index),
+	          data: _this.getData(newProps)
+	        };
+	      });
+	    } else {
+	      return [{
+	        attrs: this.getAttributes(props, 0),
+	        data: this.getData(props)
+	      }];
+	    }
+	  },
 	  generateData: function generateData(props) {
 	    // create an array of values evenly spaced across the x domain that include domain min/max
-	    var domain = props.domain ? props.domain.x || props.domain : _scale2["default"].getBaseScale(props, "x").domain();
+	    var domain = props.domain ? props.domain.x || props.domain : _scale2.default.getBaseScale(props, "x").domain();
 	    var samples = props.samples || 1;
 	    var max = Math.max.apply(Math, _toConsumableArray(domain));
 	    var values = Array.apply(undefined, _toConsumableArray(Array(samples))).map(function (val, index) {
@@ -10289,9 +17077,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
 	  },
-	
 	  formatData: function formatData(dataset, props, stringMap) {
-	    var _this = this;
+	    var _this2 = this;
 	
 	    if (!dataset) {
 	      return [];
@@ -10307,19 +17094,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return this.cleanData(dataset, props).map(function (datum) {
 	      var x = accessor.x(datum);
 	      var y = accessor.y(datum);
-	      var category = _this.determineCategoryIndex(x, props.categories);
-	      return (0, _lodashObjectAssign2["default"])({}, datum, { x: x, y: y }, typeof category !== "undefined" ? { category: category } : {},
+	      var category = _this2.determineCategoryIndex(x, props.categories);
+	      return (0, _assign2.default)({}, datum, { x: x, y: y }, typeof category !== "undefined" ? { category: category } : {},
 	      // map string data to numeric values, and add names
 	      typeof x === "string" ? { x: stringMap.x[x], xName: x } : {}, typeof y === "string" ? { y: stringMap.y[y], yName: y } : {});
 	    });
 	  },
+	
 	
 	  // For components that take multiple datasets
 	  //
 	  // NOTE: This code is in the hot path.  Future optimizations may be possible by
 	  // reducing the frequency and number of data transformations that occur here.
 	  formatDatasets: function formatDatasets(props, hasMultipleDatasets) {
-	    var _this2 = this;
+	    var _this3 = this;
 	
 	    // string map must be calculated using all datasets and shared
 	    var stringMap = {
@@ -10329,22 +17117,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var _format = function _format(dataset, index) {
 	      return {
-	        attrs: _this2.getAttributes(props, index),
-	        data: _this2.formatData(dataset, props, stringMap)
+	        attrs: _this3.getAttributes(props, index),
+	        data: _this3.formatData(dataset, props, stringMap)
 	      };
 	    };
-	
-	    return hasMultipleDatasets ? props.data.map(_format) : [_format(props.data, 0)];
+	    var data = props.data || this.generateData(props);
+	    return hasMultipleDatasets ? data.map(_format) : [_format(data, 0)];
 	  },
-	
 	  cleanData: function cleanData(dataset, props) {
 	    // Some scale types break when certain data is supplies. This method will
 	    // remove data points that break scales. So far this method only removes
 	    // zeroes for log scales
 	    // TODO other cases?
 	    var scaleType = {
-	      x: _scale2["default"].getScaleType(props, "x"),
-	      y: _scale2["default"].getScaleType(props, "y")
+	      x: _scale2.default.getScaleType(props, "x"),
+	      y: _scale2.default.getScaleType(props, "y")
 	    };
 	    var accessor = {
 	      x: _victoryCore.Helpers.createAccessor(props.x),
@@ -10360,18 +17147,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return rules(datum, "x") && rules(datum, "y");
 	    });
 	  },
-	
 	  determineCategoryIndex: function determineCategoryIndex(x, categories) {
 	    // if categories don't exist or are not given as an array of arrays, return undefined;
 	    if (!categories || !Array.isArray(categories[0])) {
 	      return undefined;
 	    }
 	    // determine which range band this x value belongs to, and return the index of that range band.
-	    return (0, _lodashArrayFindIndex2["default"])(categories, function (category) {
+	    return (0, _findIndex2.default)(categories, function (category) {
 	      return x >= Math.min.apply(Math, _toConsumableArray(category)) && x <= Math.max.apply(Math, _toConsumableArray(category));
 	    });
 	  },
-	
 	  getAttributes: function getAttributes(props, index) {
 	    var attributes = props.dataAttributes && props.dataAttributes[index] ? props.dataAttributes[index] : props.dataAttributes;
 	    if (attributes) {
@@ -10382,9 +17167,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var requiredAttributes = {
 	      name: attributes && attributes.name ? attributes.name : "data-" + index
 	    };
-	    return (0, _lodashObjectDefaults2["default"])(requiredAttributes, attributes);
+	    return (0, _defaults2.default)(requiredAttributes, attributes);
 	  },
-	
 	  getColor: function getColor(props, index) {
 	    // check for styles first
 	    if (props.style && props.style.data && props.style.data.fill) {
@@ -10394,36 +17178,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return colorScale[index % colorScale.length];
 	  }
 	};
-	module.exports = exports["default"];
 
 /***/ },
-/* 103 */
+/* 269 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createFindIndex = __webpack_require__(104);
+	var baseFindIndex = __webpack_require__(270),
+	    baseIteratee = __webpack_require__(271);
 	
 	/**
 	 * This method is like `_.find` except that it returns the index of the first
 	 * element `predicate` returns truthy for instead of the element itself.
 	 *
-	 * If a property name is provided for `predicate` the created `_.property`
-	 * style callback returns the property value of the given element.
-	 *
-	 * If a value is also provided for `thisArg` the created `_.matchesProperty`
-	 * style callback returns `true` for elements that have a matching property
-	 * value, else `false`.
-	 *
-	 * If an object is provided for `predicate` the created `_.matches` style
-	 * callback returns `true` for elements that have the properties of the given
-	 * object, else `false`.
-	 *
 	 * @static
 	 * @memberOf _
 	 * @category Array
 	 * @param {Array} array The array to search.
-	 * @param {Function|Object|string} [predicate=_.identity] The function invoked
-	 *  per iteration.
-	 * @param {*} [thisArg] The `this` binding of `predicate`.
+	 * @param {Function|Object|string} [predicate=_.identity] The function invoked per iteration.
 	 * @returns {number} Returns the index of the found element, else `-1`.
 	 * @example
 	 *
@@ -10433,106 +17204,104 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *   { 'user': 'pebbles', 'active': true }
 	 * ];
 	 *
-	 * _.findIndex(users, function(chr) {
-	 *   return chr.user == 'barney';
-	 * });
+	 * _.findIndex(users, function(o) { return o.user == 'barney'; });
 	 * // => 0
 	 *
-	 * // using the `_.matches` callback shorthand
+	 * // The `_.matches` iteratee shorthand.
 	 * _.findIndex(users, { 'user': 'fred', 'active': false });
 	 * // => 1
 	 *
-	 * // using the `_.matchesProperty` callback shorthand
-	 * _.findIndex(users, 'active', false);
+	 * // The `_.matchesProperty` iteratee shorthand.
+	 * _.findIndex(users, ['active', false]);
 	 * // => 0
 	 *
-	 * // using the `_.property` callback shorthand
+	 * // The `_.property` iteratee shorthand.
 	 * _.findIndex(users, 'active');
 	 * // => 2
 	 */
-	var findIndex = createFindIndex();
+	function findIndex(array, predicate) {
+	  return (array && array.length)
+	    ? baseFindIndex(array, baseIteratee(predicate, 3))
+	    : -1;
+	}
 	
 	module.exports = findIndex;
 
 
 /***/ },
-/* 104 */
-/***/ function(module, exports, __webpack_require__) {
+/* 270 */
+/***/ function(module, exports) {
 
-	var baseCallback = __webpack_require__(105),
-	    baseFindIndex = __webpack_require__(120);
-	
 	/**
-	 * Creates a `_.findIndex` or `_.findLastIndex` function.
+	 * The base implementation of `_.findIndex` and `_.findLastIndex` without
+	 * support for iteratee shorthands.
 	 *
 	 * @private
+	 * @param {Array} array The array to search.
+	 * @param {Function} predicate The function invoked per iteration.
 	 * @param {boolean} [fromRight] Specify iterating from right to left.
-	 * @returns {Function} Returns the new find function.
+	 * @returns {number} Returns the index of the matched value, else `-1`.
 	 */
-	function createFindIndex(fromRight) {
-	  return function(array, predicate, thisArg) {
-	    if (!(array && array.length)) {
-	      return -1;
+	function baseFindIndex(array, predicate, fromRight) {
+	  var length = array.length,
+	      index = fromRight ? length : -1;
+	
+	  while ((fromRight ? index-- : ++index < length)) {
+	    if (predicate(array[index], index, array)) {
+	      return index;
 	    }
-	    predicate = baseCallback(predicate, thisArg, 3);
-	    return baseFindIndex(array, predicate, fromRight);
-	  };
+	  }
+	  return -1;
 	}
 	
-	module.exports = createFindIndex;
+	module.exports = baseFindIndex;
 
 
 /***/ },
-/* 105 */
+/* 271 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMatches = __webpack_require__(106),
-	    baseMatchesProperty = __webpack_require__(117),
-	    bindCallback = __webpack_require__(23),
-	    identity = __webpack_require__(24),
-	    property = __webpack_require__(33);
+	var baseMatches = __webpack_require__(272),
+	    baseMatchesProperty = __webpack_require__(298),
+	    identity = __webpack_require__(312),
+	    isArray = __webpack_require__(33),
+	    property = __webpack_require__(313);
 	
 	/**
-	 * The base implementation of `_.callback` which supports specifying the
-	 * number of arguments to provide to `func`.
+	 * The base implementation of `_.iteratee`.
 	 *
 	 * @private
-	 * @param {*} [func=_.identity] The value to convert to a callback.
-	 * @param {*} [thisArg] The `this` binding of `func`.
-	 * @param {number} [argCount] The number of arguments to provide to `func`.
-	 * @returns {Function} Returns the callback.
+	 * @param {*} [value=_.identity] The value to convert to an iteratee.
+	 * @returns {Function} Returns the iteratee.
 	 */
-	function baseCallback(func, thisArg, argCount) {
-	  var type = typeof func;
+	function baseIteratee(value) {
+	  var type = typeof value;
 	  if (type == 'function') {
-	    return thisArg === undefined
-	      ? func
-	      : bindCallback(func, thisArg, argCount);
+	    return value;
 	  }
-	  if (func == null) {
+	  if (value == null) {
 	    return identity;
 	  }
 	  if (type == 'object') {
-	    return baseMatches(func);
+	    return isArray(value)
+	      ? baseMatchesProperty(value[0], value[1])
+	      : baseMatches(value);
 	  }
-	  return thisArg === undefined
-	    ? property(func)
-	    : baseMatchesProperty(func, thisArg);
+	  return property(value);
 	}
 	
-	module.exports = baseCallback;
+	module.exports = baseIteratee;
 
 
 /***/ },
-/* 106 */
+/* 272 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsMatch = __webpack_require__(107),
-	    getMatchData = __webpack_require__(114),
-	    toObject = __webpack_require__(36);
+	var baseIsMatch = __webpack_require__(273),
+	    getMatchData = __webpack_require__(294);
 	
 	/**
-	 * The base implementation of `_.matches` which does not clone `source`.
+	 * The base implementation of `_.matches` which doesn't clone `source`.
 	 *
 	 * @private
 	 * @param {Object} source The object of property values to match.
@@ -10548,11 +17317,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (object == null) {
 	        return false;
 	      }
-	      return object[key] === value && (value !== undefined || (key in toObject(object)));
+	      return object[key] === value &&
+	        (value !== undefined || (key in Object(object)));
 	    };
 	  }
 	  return function(object) {
-	    return baseIsMatch(object, matchData);
+	    return object === source || baseIsMatch(object, source, matchData);
 	  };
 	}
 	
@@ -10560,23 +17330,27 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 107 */
+/* 273 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqual = __webpack_require__(108),
-	    toObject = __webpack_require__(36);
+	var Stack = __webpack_require__(274),
+	    baseIsEqual = __webpack_require__(280);
+	
+	/** Used to compose bitmasks for comparison styles. */
+	var UNORDERED_COMPARE_FLAG = 1,
+	    PARTIAL_COMPARE_FLAG = 2;
 	
 	/**
-	 * The base implementation of `_.isMatch` without support for callback
-	 * shorthands and `this` binding.
+	 * The base implementation of `_.isMatch` without support for iteratee shorthands.
 	 *
 	 * @private
 	 * @param {Object} object The object to inspect.
-	 * @param {Array} matchData The propery names, values, and compare flags to match.
-	 * @param {Function} [customizer] The function to customize comparing objects.
+	 * @param {Object} source The object of property values to match.
+	 * @param {Array} matchData The property names, values, and compare flags to match.
+	 * @param {Function} [customizer] The function to customize comparisons.
 	 * @returns {boolean} Returns `true` if `object` is a match, else `false`.
 	 */
-	function baseIsMatch(object, matchData, customizer) {
+	function baseIsMatch(object, source, matchData, customizer) {
 	  var index = matchData.length,
 	      length = index,
 	      noCustomizer = !customizer;
@@ -10584,7 +17358,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  if (object == null) {
 	    return !length;
 	  }
-	  object = toObject(object);
+	  object = Object(object);
 	  while (index--) {
 	    var data = matchData[index];
 	    if ((noCustomizer && data[2])
@@ -10605,8 +17379,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return false;
 	      }
 	    } else {
-	      var result = customizer ? customizer(objValue, srcValue, key) : undefined;
-	      if (!(result === undefined ? baseIsEqual(srcValue, objValue, customizer, true) : result)) {
+	      var stack = new Stack,
+	          result = customizer ? customizer(objValue, srcValue, key, object, source, stack) : undefined;
+	
+	      if (!(result === undefined
+	            ? baseIsEqual(srcValue, objValue, customizer, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG, stack)
+	            : result
+	          )) {
 	        return false;
 	      }
 	    }
@@ -10618,65 +17397,240 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 108 */
+/* 274 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqualDeep = __webpack_require__(109),
-	    isObject = __webpack_require__(9),
-	    isObjectLike = __webpack_require__(10);
+	var stackClear = __webpack_require__(275),
+	    stackDelete = __webpack_require__(276),
+	    stackGet = __webpack_require__(277),
+	    stackHas = __webpack_require__(278),
+	    stackSet = __webpack_require__(279);
 	
 	/**
-	 * The base implementation of `_.isEqual` without support for `this` binding
-	 * `customizer` functions.
+	 * Creates a stack cache object to store key-value pairs.
+	 *
+	 * @private
+	 * @constructor
+	 * @param {Array} [values] The values to cache.
+	 */
+	function Stack(values) {
+	  var index = -1,
+	      length = values ? values.length : 0;
+	
+	  this.clear();
+	  while (++index < length) {
+	    var entry = values[index];
+	    this.set(entry[0], entry[1]);
+	  }
+	}
+	
+	// Add functions to the `Stack` cache.
+	Stack.prototype.clear = stackClear;
+	Stack.prototype['delete'] = stackDelete;
+	Stack.prototype.get = stackGet;
+	Stack.prototype.has = stackHas;
+	Stack.prototype.set = stackSet;
+	
+	module.exports = Stack;
+
+
+/***/ },
+/* 275 */
+/***/ function(module, exports) {
+
+	/**
+	 * Removes all key-value entries from the stack.
+	 *
+	 * @private
+	 * @name clear
+	 * @memberOf Stack
+	 */
+	function stackClear() {
+	  this.__data__ = { 'array': [], 'map': null };
+	}
+	
+	module.exports = stackClear;
+
+
+/***/ },
+/* 276 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocDelete = __webpack_require__(236);
+	
+	/**
+	 * Removes `key` and its value from the stack.
+	 *
+	 * @private
+	 * @name delete
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to remove.
+	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
+	 */
+	function stackDelete(key) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  return array ? assocDelete(array, key) : data.map['delete'](key);
+	}
+	
+	module.exports = stackDelete;
+
+
+/***/ },
+/* 277 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocGet = __webpack_require__(242);
+	
+	/**
+	 * Gets the stack value for `key`.
+	 *
+	 * @private
+	 * @name get
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to get.
+	 * @returns {*} Returns the entry value.
+	 */
+	function stackGet(key) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  return array ? assocGet(array, key) : data.map.get(key);
+	}
+	
+	module.exports = stackGet;
+
+
+/***/ },
+/* 278 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assocHas = __webpack_require__(245);
+	
+	/**
+	 * Checks if a stack value for `key` exists.
+	 *
+	 * @private
+	 * @name has
+	 * @memberOf Stack
+	 * @param {string} key The key of the entry to check.
+	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
+	 */
+	function stackHas(key) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  return array ? assocHas(array, key) : data.map.has(key);
+	}
+	
+	module.exports = stackHas;
+
+
+/***/ },
+/* 279 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var MapCache = __webpack_require__(227),
+	    assocSet = __webpack_require__(247);
+	
+	/** Used as the size to enable large array optimizations. */
+	var LARGE_ARRAY_SIZE = 200;
+	
+	/**
+	 * Sets the stack `key` to `value`.
+	 *
+	 * @private
+	 * @name set
+	 * @memberOf Stack
+	 * @param {string} key The key of the value to set.
+	 * @param {*} value The value to set.
+	 * @returns {Object} Returns the stack cache object.
+	 */
+	function stackSet(key, value) {
+	  var data = this.__data__,
+	      array = data.array;
+	
+	  if (array) {
+	    if (array.length < (LARGE_ARRAY_SIZE - 1)) {
+	      assocSet(array, key, value);
+	    } else {
+	      data.array = null;
+	      data.map = new MapCache(array);
+	    }
+	  }
+	  var map = data.map;
+	  if (map) {
+	    map.set(key, value);
+	  }
+	  return this;
+	}
+	
+	module.exports = stackSet;
+
+
+/***/ },
+/* 280 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsEqualDeep = __webpack_require__(281),
+	    isObject = __webpack_require__(15),
+	    isObjectLike = __webpack_require__(32);
+	
+	/**
+	 * The base implementation of `_.isEqual` which supports partial comparisons
+	 * and tracks traversed objects.
 	 *
 	 * @private
 	 * @param {*} value The value to compare.
 	 * @param {*} other The other value to compare.
-	 * @param {Function} [customizer] The function to customize comparing values.
-	 * @param {boolean} [isLoose] Specify performing partial comparisons.
-	 * @param {Array} [stackA] Tracks traversed `value` objects.
-	 * @param {Array} [stackB] Tracks traversed `other` objects.
+	 * @param {Function} [customizer] The function to customize comparisons.
+	 * @param {boolean} [bitmask] The bitmask of comparison flags.
+	 *  The bitmask may be composed of the following flags:
+	 *     1 - Unordered comparison
+	 *     2 - Partial comparison
+	 * @param {Object} [stack] Tracks traversed `value` and `other` objects.
 	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
 	 */
-	function baseIsEqual(value, other, customizer, isLoose, stackA, stackB) {
+	function baseIsEqual(value, other, customizer, bitmask, stack) {
 	  if (value === other) {
 	    return true;
 	  }
 	  if (value == null || other == null || (!isObject(value) && !isObjectLike(other))) {
 	    return value !== value && other !== other;
 	  }
-	  return baseIsEqualDeep(value, other, baseIsEqual, customizer, isLoose, stackA, stackB);
+	  return baseIsEqualDeep(value, other, baseIsEqual, customizer, bitmask, stack);
 	}
 	
 	module.exports = baseIsEqual;
 
 
 /***/ },
-/* 109 */
+/* 281 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var equalArrays = __webpack_require__(110),
-	    equalByTag = __webpack_require__(112),
-	    equalObjects = __webpack_require__(113),
-	    isArray = __webpack_require__(17),
-	    isTypedArray = __webpack_require__(68);
+	var Stack = __webpack_require__(274),
+	    equalArrays = __webpack_require__(282),
+	    equalByTag = __webpack_require__(284),
+	    equalObjects = __webpack_require__(289),
+	    getTag = __webpack_require__(290),
+	    isArray = __webpack_require__(33),
+	    isHostObject = __webpack_require__(233),
+	    isTypedArray = __webpack_require__(293);
+	
+	/** Used to compose bitmasks for comparison styles. */
+	var PARTIAL_COMPARE_FLAG = 2;
 	
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
 	    arrayTag = '[object Array]',
 	    objectTag = '[object Object]';
 	
-	/** Used for native method references. */
+	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
 	
 	/** Used to check objects for own properties. */
 	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objToString = objectProto.toString;
 	
 	/**
 	 * A specialized version of `baseIsEqual` for arrays and objects which performs
@@ -10687,83 +17641,63 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Object} object The object to compare.
 	 * @param {Object} other The other object to compare.
 	 * @param {Function} equalFunc The function to determine equivalents of values.
-	 * @param {Function} [customizer] The function to customize comparing objects.
-	 * @param {boolean} [isLoose] Specify performing partial comparisons.
-	 * @param {Array} [stackA=[]] Tracks traversed `value` objects.
-	 * @param {Array} [stackB=[]] Tracks traversed `other` objects.
+	 * @param {Function} [customizer] The function to customize comparisons.
+	 * @param {number} [bitmask] The bitmask of comparison flags. See `baseIsEqual` for more details.
+	 * @param {Object} [stack] Tracks traversed `object` and `other` objects.
 	 * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
 	 */
-	function baseIsEqualDeep(object, other, equalFunc, customizer, isLoose, stackA, stackB) {
+	function baseIsEqualDeep(object, other, equalFunc, customizer, bitmask, stack) {
 	  var objIsArr = isArray(object),
 	      othIsArr = isArray(other),
 	      objTag = arrayTag,
 	      othTag = arrayTag;
 	
 	  if (!objIsArr) {
-	    objTag = objToString.call(object);
-	    if (objTag == argsTag) {
-	      objTag = objectTag;
-	    } else if (objTag != objectTag) {
-	      objIsArr = isTypedArray(object);
-	    }
+	    objTag = getTag(object);
+	    objTag = objTag == argsTag ? objectTag : objTag;
 	  }
 	  if (!othIsArr) {
-	    othTag = objToString.call(other);
-	    if (othTag == argsTag) {
-	      othTag = objectTag;
-	    } else if (othTag != objectTag) {
-	      othIsArr = isTypedArray(other);
-	    }
+	    othTag = getTag(other);
+	    othTag = othTag == argsTag ? objectTag : othTag;
 	  }
-	  var objIsObj = objTag == objectTag,
-	      othIsObj = othTag == objectTag,
+	  var objIsObj = objTag == objectTag && !isHostObject(object),
+	      othIsObj = othTag == objectTag && !isHostObject(other),
 	      isSameTag = objTag == othTag;
 	
-	  if (isSameTag && !(objIsArr || objIsObj)) {
-	    return equalByTag(object, other, objTag);
+	  if (isSameTag && !objIsObj) {
+	    stack || (stack = new Stack);
+	    return (objIsArr || isTypedArray(object))
+	      ? equalArrays(object, other, equalFunc, customizer, bitmask, stack)
+	      : equalByTag(object, other, objTag, equalFunc, customizer, bitmask, stack);
 	  }
-	  if (!isLoose) {
+	  if (!(bitmask & PARTIAL_COMPARE_FLAG)) {
 	    var objIsWrapped = objIsObj && hasOwnProperty.call(object, '__wrapped__'),
 	        othIsWrapped = othIsObj && hasOwnProperty.call(other, '__wrapped__');
 	
 	    if (objIsWrapped || othIsWrapped) {
-	      return equalFunc(objIsWrapped ? object.value() : object, othIsWrapped ? other.value() : other, customizer, isLoose, stackA, stackB);
+	      stack || (stack = new Stack);
+	      return equalFunc(objIsWrapped ? object.value() : object, othIsWrapped ? other.value() : other, customizer, bitmask, stack);
 	    }
 	  }
 	  if (!isSameTag) {
 	    return false;
 	  }
-	  // Assume cyclic values are equal.
-	  // For more information on detecting circular references see https://es5.github.io/#JO.
-	  stackA || (stackA = []);
-	  stackB || (stackB = []);
-	
-	  var length = stackA.length;
-	  while (length--) {
-	    if (stackA[length] == object) {
-	      return stackB[length] == other;
-	    }
-	  }
-	  // Add `object` and `other` to the stack of traversed objects.
-	  stackA.push(object);
-	  stackB.push(other);
-	
-	  var result = (objIsArr ? equalArrays : equalObjects)(object, other, equalFunc, customizer, isLoose, stackA, stackB);
-	
-	  stackA.pop();
-	  stackB.pop();
-	
-	  return result;
+	  stack || (stack = new Stack);
+	  return equalObjects(object, other, equalFunc, customizer, bitmask, stack);
 	}
 	
 	module.exports = baseIsEqualDeep;
 
 
 /***/ },
-/* 110 */
+/* 282 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arraySome = __webpack_require__(111);
+	var arraySome = __webpack_require__(283);
+	
+	/** Used to compose bitmasks for comparison styles. */
+	var UNORDERED_COMPARE_FLAG = 1,
+	    PARTIAL_COMPARE_FLAG = 2;
 	
 	/**
 	 * A specialized version of `baseIsEqualDeep` for arrays with support for
@@ -10773,62 +17707,78 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Array} array The array to compare.
 	 * @param {Array} other The other array to compare.
 	 * @param {Function} equalFunc The function to determine equivalents of values.
-	 * @param {Function} [customizer] The function to customize comparing arrays.
-	 * @param {boolean} [isLoose] Specify performing partial comparisons.
-	 * @param {Array} [stackA] Tracks traversed `value` objects.
-	 * @param {Array} [stackB] Tracks traversed `other` objects.
+	 * @param {Function} customizer The function to customize comparisons.
+	 * @param {number} bitmask The bitmask of comparison flags. See `baseIsEqual` for more details.
+	 * @param {Object} stack Tracks traversed `array` and `other` objects.
 	 * @returns {boolean} Returns `true` if the arrays are equivalent, else `false`.
 	 */
-	function equalArrays(array, other, equalFunc, customizer, isLoose, stackA, stackB) {
+	function equalArrays(array, other, equalFunc, customizer, bitmask, stack) {
 	  var index = -1,
+	      isPartial = bitmask & PARTIAL_COMPARE_FLAG,
+	      isUnordered = bitmask & UNORDERED_COMPARE_FLAG,
 	      arrLength = array.length,
 	      othLength = other.length;
 	
-	  if (arrLength != othLength && !(isLoose && othLength > arrLength)) {
+	  if (arrLength != othLength && !(isPartial && othLength > arrLength)) {
 	    return false;
 	  }
+	  // Assume cyclic values are equal.
+	  var stacked = stack.get(array);
+	  if (stacked) {
+	    return stacked == other;
+	  }
+	  var result = true;
+	  stack.set(array, other);
+	
 	  // Ignore non-index properties.
 	  while (++index < arrLength) {
 	    var arrValue = array[index],
-	        othValue = other[index],
-	        result = customizer ? customizer(isLoose ? othValue : arrValue, isLoose ? arrValue : othValue, index) : undefined;
+	        othValue = other[index];
 	
-	    if (result !== undefined) {
-	      if (result) {
+	    if (customizer) {
+	      var compared = isPartial
+	        ? customizer(othValue, arrValue, index, other, array, stack)
+	        : customizer(arrValue, othValue, index, array, other, stack);
+	    }
+	    if (compared !== undefined) {
+	      if (compared) {
 	        continue;
 	      }
-	      return false;
+	      result = false;
+	      break;
 	    }
 	    // Recursively compare arrays (susceptible to call stack limits).
-	    if (isLoose) {
+	    if (isUnordered) {
 	      if (!arraySome(other, function(othValue) {
-	            return arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB);
+	            return arrValue === othValue || equalFunc(arrValue, othValue, customizer, bitmask, stack);
 	          })) {
-	        return false;
+	        result = false;
+	        break;
 	      }
-	    } else if (!(arrValue === othValue || equalFunc(arrValue, othValue, customizer, isLoose, stackA, stackB))) {
-	      return false;
+	    } else if (!(arrValue === othValue || equalFunc(arrValue, othValue, customizer, bitmask, stack))) {
+	      result = false;
+	      break;
 	    }
 	  }
-	  return true;
+	  stack['delete'](array);
+	  return result;
 	}
 	
 	module.exports = equalArrays;
 
 
 /***/ },
-/* 111 */
+/* 283 */
 /***/ function(module, exports) {
 
 	/**
-	 * A specialized version of `_.some` for arrays without support for callback
-	 * shorthands and `this` binding.
+	 * A specialized version of `_.some` for arrays without support for iteratee
+	 * shorthands.
 	 *
 	 * @private
 	 * @param {Array} array The array to iterate over.
 	 * @param {Function} predicate The function invoked per iteration.
-	 * @returns {boolean} Returns `true` if any element passes the predicate check,
-	 *  else `false`.
+	 * @returns {boolean} Returns `true` if any element passes the predicate check, else `false`.
 	 */
 	function arraySome(array, predicate) {
 	  var index = -1,
@@ -10846,16 +17796,35 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 112 */
-/***/ function(module, exports) {
+/* 284 */
+/***/ function(module, exports, __webpack_require__) {
 
+	var Symbol = __webpack_require__(285),
+	    Uint8Array = __webpack_require__(286),
+	    equalArrays = __webpack_require__(282),
+	    mapToArray = __webpack_require__(287),
+	    setToArray = __webpack_require__(288);
+	
+	/** Used to compose bitmasks for comparison styles. */
+	var UNORDERED_COMPARE_FLAG = 1,
+	    PARTIAL_COMPARE_FLAG = 2;
+	
 	/** `Object#toString` result references. */
 	var boolTag = '[object Boolean]',
 	    dateTag = '[object Date]',
 	    errorTag = '[object Error]',
+	    mapTag = '[object Map]',
 	    numberTag = '[object Number]',
 	    regexpTag = '[object RegExp]',
-	    stringTag = '[object String]';
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    symbolTag = '[object Symbol]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]';
+	
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolValueOf = symbolProto ? symbolProto.valueOf : undefined;
 	
 	/**
 	 * A specialized version of `baseIsEqualDeep` for comparing objects of
@@ -10868,10 +17837,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Object} object The object to compare.
 	 * @param {Object} other The other object to compare.
 	 * @param {string} tag The `toStringTag` of the objects to compare.
+	 * @param {Function} equalFunc The function to determine equivalents of values.
+	 * @param {Function} customizer The function to customize comparisons.
+	 * @param {number} bitmask The bitmask of comparison flags. See `baseIsEqual` for more details.
+	 * @param {Object} stack Tracks traversed `object` and `other` objects.
 	 * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
 	 */
-	function equalByTag(object, other, tag) {
+	function equalByTag(object, other, tag, equalFunc, customizer, bitmask, stack) {
 	  switch (tag) {
+	    case arrayBufferTag:
+	      if ((object.byteLength != other.byteLength) ||
+	          !equalFunc(new Uint8Array(object), new Uint8Array(other))) {
+	        return false;
+	      }
+	      return true;
+	
 	    case boolTag:
 	    case dateTag:
 	      // Coerce dates and booleans to numbers, dates to milliseconds and booleans
@@ -10883,15 +17863,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    case numberTag:
 	      // Treat `NaN` vs. `NaN` as equal.
-	      return (object != +object)
-	        ? other != +other
-	        : object == +other;
+	      return (object != +object) ? other != +other : object == +other;
 	
 	    case regexpTag:
 	    case stringTag:
 	      // Coerce regexes to strings and treat strings primitives and string
 	      // objects as equal. See https://es5.github.io/#x15.10.6.4 for more details.
 	      return object == (other + '');
+	
+	    case mapTag:
+	      var convert = mapToArray;
+	
+	    case setTag:
+	      var isPartial = bitmask & PARTIAL_COMPARE_FLAG;
+	      convert || (convert = setToArray);
+	
+	      if (object.size != other.size && !isPartial) {
+	        return false;
+	      }
+	      // Assume cyclic values are equal.
+	      var stacked = stack.get(object);
+	      if (stacked) {
+	        return stacked == other;
+	      }
+	      // Recursively compare objects (susceptible to call stack limits).
+	      return equalArrays(convert(object), convert(other), equalFunc, customizer, bitmask | UNORDERED_COMPARE_FLAG, stack.set(object, other));
+	
+	    case symbolTag:
+	      if (symbolValueOf) {
+	        return symbolValueOf.call(object) == symbolValueOf.call(other);
+	      }
 	  }
 	  return false;
 	}
@@ -10900,16 +17901,86 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 113 */
+/* 285 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(5);
+	var root = __webpack_require__(24);
 	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
+	/** Built-in value references. */
+	var Symbol = root.Symbol;
 	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
+	module.exports = Symbol;
+
+
+/***/ },
+/* 286 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var root = __webpack_require__(24);
+	
+	/** Built-in value references. */
+	var Uint8Array = root.Uint8Array;
+	
+	module.exports = Uint8Array;
+
+
+/***/ },
+/* 287 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `map` to an array.
+	 *
+	 * @private
+	 * @param {Object} map The map to convert.
+	 * @returns {Array} Returns the converted array.
+	 */
+	function mapToArray(map) {
+	  var index = -1,
+	      result = Array(map.size);
+	
+	  map.forEach(function(value, key) {
+	    result[++index] = [key, value];
+	  });
+	  return result;
+	}
+	
+	module.exports = mapToArray;
+
+
+/***/ },
+/* 288 */
+/***/ function(module, exports) {
+
+	/**
+	 * Converts `set` to an array.
+	 *
+	 * @private
+	 * @param {Object} set The set to convert.
+	 * @returns {Array} Returns the converted array.
+	 */
+	function setToArray(set) {
+	  var index = -1,
+	      result = Array(set.size);
+	
+	  set.forEach(function(value) {
+	    result[++index] = value;
+	  });
+	  return result;
+	}
+	
+	module.exports = setToArray;
+
+
+/***/ },
+/* 289 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseHas = __webpack_require__(212),
+	    keys = __webpack_require__(211);
+	
+	/** Used to compose bitmasks for comparison styles. */
+	var PARTIAL_COMPARE_FLAG = 2;
 	
 	/**
 	 * A specialized version of `baseIsEqualDeep` for objects with support for
@@ -10919,42 +17990,58 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Object} object The object to compare.
 	 * @param {Object} other The other object to compare.
 	 * @param {Function} equalFunc The function to determine equivalents of values.
-	 * @param {Function} [customizer] The function to customize comparing values.
-	 * @param {boolean} [isLoose] Specify performing partial comparisons.
-	 * @param {Array} [stackA] Tracks traversed `value` objects.
-	 * @param {Array} [stackB] Tracks traversed `other` objects.
+	 * @param {Function} customizer The function to customize comparisons.
+	 * @param {number} bitmask The bitmask of comparison flags. See `baseIsEqual` for more details.
+	 * @param {Object} stack Tracks traversed `object` and `other` objects.
 	 * @returns {boolean} Returns `true` if the objects are equivalent, else `false`.
 	 */
-	function equalObjects(object, other, equalFunc, customizer, isLoose, stackA, stackB) {
-	  var objProps = keys(object),
+	function equalObjects(object, other, equalFunc, customizer, bitmask, stack) {
+	  var isPartial = bitmask & PARTIAL_COMPARE_FLAG,
+	      objProps = keys(object),
 	      objLength = objProps.length,
 	      othProps = keys(other),
 	      othLength = othProps.length;
 	
-	  if (objLength != othLength && !isLoose) {
+	  if (objLength != othLength && !isPartial) {
 	    return false;
 	  }
 	  var index = objLength;
 	  while (index--) {
 	    var key = objProps[index];
-	    if (!(isLoose ? key in other : hasOwnProperty.call(other, key))) {
+	    if (!(isPartial ? key in other : baseHas(other, key))) {
 	      return false;
 	    }
 	  }
-	  var skipCtor = isLoose;
+	  // Assume cyclic values are equal.
+	  var stacked = stack.get(object);
+	  if (stacked) {
+	    return stacked == other;
+	  }
+	  var result = true;
+	  stack.set(object, other);
+	
+	  var skipCtor = isPartial;
 	  while (++index < objLength) {
 	    key = objProps[index];
 	    var objValue = object[key],
-	        othValue = other[key],
-	        result = customizer ? customizer(isLoose ? othValue : objValue, isLoose? objValue : othValue, key) : undefined;
+	        othValue = other[key];
 	
+	    if (customizer) {
+	      var compared = isPartial
+	        ? customizer(othValue, objValue, key, other, object, stack)
+	        : customizer(objValue, othValue, key, object, other, stack);
+	    }
 	    // Recursively compare objects (susceptible to call stack limits).
-	    if (!(result === undefined ? equalFunc(objValue, othValue, customizer, isLoose, stackA, stackB) : result)) {
-	      return false;
+	    if (!(compared === undefined
+	          ? (objValue === othValue || equalFunc(objValue, othValue, customizer, bitmask, stack))
+	          : compared
+	        )) {
+	      result = false;
+	      break;
 	    }
 	    skipCtor || (skipCtor = key == 'constructor');
 	  }
-	  if (!skipCtor) {
+	  if (result && !skipCtor) {
 	    var objCtor = object.constructor,
 	        othCtor = other.constructor;
 	
@@ -10963,31 +18050,204 @@ return /******/ (function(modules) { // webpackBootstrap
 	        ('constructor' in object && 'constructor' in other) &&
 	        !(typeof objCtor == 'function' && objCtor instanceof objCtor &&
 	          typeof othCtor == 'function' && othCtor instanceof othCtor)) {
-	      return false;
+	      result = false;
 	    }
 	  }
-	  return true;
+	  stack['delete'](object);
+	  return result;
 	}
 	
 	module.exports = equalObjects;
 
 
 /***/ },
-/* 114 */
+/* 290 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isStrictComparable = __webpack_require__(115),
-	    pairs = __webpack_require__(116);
+	var Map = __webpack_require__(234),
+	    Set = __webpack_require__(291),
+	    WeakMap = __webpack_require__(292);
+	
+	/** `Object#toString` result references. */
+	var mapTag = '[object Map]',
+	    objectTag = '[object Object]',
+	    setTag = '[object Set]',
+	    weakMapTag = '[object WeakMap]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to resolve the decompiled source of functions. */
+	var funcToString = Function.prototype.toString;
 	
 	/**
-	 * Gets the propery names, values, and compare flags of `object`.
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/** Used to detect maps, sets, and weakmaps. */
+	var mapCtorString = Map ? funcToString.call(Map) : '',
+	    setCtorString = Set ? funcToString.call(Set) : '',
+	    weakMapCtorString = WeakMap ? funcToString.call(WeakMap) : '';
+	
+	/**
+	 * Gets the `toStringTag` of `value`.
+	 *
+	 * @private
+	 * @param {*} value The value to query.
+	 * @returns {string} Returns the `toStringTag`.
+	 */
+	function getTag(value) {
+	  return objectToString.call(value);
+	}
+	
+	// Fallback for IE 11 providing `toStringTag` values for maps, sets, and weakmaps.
+	if ((Map && getTag(new Map) != mapTag) ||
+	    (Set && getTag(new Set) != setTag) ||
+	    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
+	  getTag = function(value) {
+	    var result = objectToString.call(value),
+	        Ctor = result == objectTag ? value.constructor : null,
+	        ctorString = typeof Ctor == 'function' ? funcToString.call(Ctor) : '';
+	
+	    if (ctorString) {
+	      switch (ctorString) {
+	        case mapCtorString: return mapTag;
+	        case setCtorString: return setTag;
+	        case weakMapCtorString: return weakMapTag;
+	      }
+	    }
+	    return result;
+	  };
+	}
+	
+	module.exports = getTag;
+
+
+/***/ },
+/* 291 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(231),
+	    root = __webpack_require__(24);
+	
+	/* Built-in method references that are verified to be native. */
+	var Set = getNative(root, 'Set');
+	
+	module.exports = Set;
+
+
+/***/ },
+/* 292 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var getNative = __webpack_require__(231),
+	    root = __webpack_require__(24);
+	
+	/* Built-in method references that are verified to be native. */
+	var WeakMap = getNative(root, 'WeakMap');
+	
+	module.exports = WeakMap;
+
+
+/***/ },
+/* 293 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isLength = __webpack_require__(16),
+	    isObjectLike = __webpack_require__(32);
+	
+	/** `Object#toString` result references. */
+	var argsTag = '[object Arguments]',
+	    arrayTag = '[object Array]',
+	    boolTag = '[object Boolean]',
+	    dateTag = '[object Date]',
+	    errorTag = '[object Error]',
+	    funcTag = '[object Function]',
+	    mapTag = '[object Map]',
+	    numberTag = '[object Number]',
+	    objectTag = '[object Object]',
+	    regexpTag = '[object RegExp]',
+	    setTag = '[object Set]',
+	    stringTag = '[object String]',
+	    weakMapTag = '[object WeakMap]';
+	
+	var arrayBufferTag = '[object ArrayBuffer]',
+	    float32Tag = '[object Float32Array]',
+	    float64Tag = '[object Float64Array]',
+	    int8Tag = '[object Int8Array]',
+	    int16Tag = '[object Int16Array]',
+	    int32Tag = '[object Int32Array]',
+	    uint8Tag = '[object Uint8Array]',
+	    uint8ClampedTag = '[object Uint8ClampedArray]',
+	    uint16Tag = '[object Uint16Array]',
+	    uint32Tag = '[object Uint32Array]';
+	
+	/** Used to identify `toStringTag` values of typed arrays. */
+	var typedArrayTags = {};
+	typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
+	typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
+	typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
+	typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
+	typedArrayTags[uint32Tag] = true;
+	typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
+	typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
+	typedArrayTags[dateTag] = typedArrayTags[errorTag] =
+	typedArrayTags[funcTag] = typedArrayTags[mapTag] =
+	typedArrayTags[numberTag] = typedArrayTags[objectTag] =
+	typedArrayTags[regexpTag] = typedArrayTags[setTag] =
+	typedArrayTags[stringTag] = typedArrayTags[weakMapTag] = false;
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a typed array.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isTypedArray(new Uint8Array);
+	 * // => true
+	 *
+	 * _.isTypedArray([]);
+	 * // => false
+	 */
+	function isTypedArray(value) {
+	  return isObjectLike(value) &&
+	    isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
+	}
+	
+	module.exports = isTypedArray;
+
+
+/***/ },
+/* 294 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isStrictComparable = __webpack_require__(295),
+	    toPairs = __webpack_require__(296);
+	
+	/**
+	 * Gets the property names, values, and compare flags of `object`.
 	 *
 	 * @private
 	 * @param {Object} object The object to query.
 	 * @returns {Array} Returns the match data of `object`.
 	 */
 	function getMatchData(object) {
-	  var result = pairs(object),
+	  var result = toPairs(object),
 	      length = result.length;
 	
 	  while (length--) {
@@ -11000,10 +18260,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 115 */
+/* 295 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(9);
+	var isObject = __webpack_require__(15);
 	
 	/**
 	 * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -11021,15 +18281,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 116 */
+/* 296 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var keys = __webpack_require__(5),
-	    toObject = __webpack_require__(36);
+	var baseToPairs = __webpack_require__(297),
+	    keys = __webpack_require__(211);
 	
 	/**
-	 * Creates a two dimensional array of the key-value pairs for `object`,
-	 * e.g. `[[key1, value1], [key2, value2]]`.
+	 * Creates an array of own enumerable key-value pairs for `object` which
+	 * can be consumed by `_.fromPairs`.
 	 *
 	 * @static
 	 * @memberOf _
@@ -11038,72 +18298,73 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @returns {Array} Returns the new array of key-value pairs.
 	 * @example
 	 *
-	 * _.pairs({ 'barney': 36, 'fred': 40 });
-	 * // => [['barney', 36], ['fred', 40]] (iteration order is not guaranteed)
+	 * function Foo() {
+	 *   this.a = 1;
+	 *   this.b = 2;
+	 * }
+	 *
+	 * Foo.prototype.c = 3;
+	 *
+	 * _.toPairs(new Foo);
+	 * // => [['a', 1], ['b', 2]] (iteration order is not guaranteed)
 	 */
-	function pairs(object) {
-	  object = toObject(object);
-	
-	  var index = -1,
-	      props = keys(object),
-	      length = props.length,
-	      result = Array(length);
-	
-	  while (++index < length) {
-	    var key = props[index];
-	    result[index] = [key, object[key]];
-	  }
-	  return result;
+	function toPairs(object) {
+	  return baseToPairs(object, keys(object));
 	}
 	
-	module.exports = pairs;
+	module.exports = toPairs;
 
 
 /***/ },
-/* 117 */
+/* 297 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(35),
-	    baseIsEqual = __webpack_require__(108),
-	    baseSlice = __webpack_require__(118),
-	    isArray = __webpack_require__(17),
-	    isKey = __webpack_require__(39),
-	    isStrictComparable = __webpack_require__(115),
-	    last = __webpack_require__(119),
-	    toObject = __webpack_require__(36),
-	    toPath = __webpack_require__(37);
+	var arrayMap = __webpack_require__(223);
 	
 	/**
-	 * The base implementation of `_.matchesProperty` which does not clone `srcValue`.
+	 * The base implementation of `_.toPairs` and `_.toPairsIn` which creates an array
+	 * of key-value pairs for `object` corresponding to the property names of `props`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array} props The property names to get values for.
+	 * @returns {Object} Returns the new array of key-value pairs.
+	 */
+	function baseToPairs(object, props) {
+	  return arrayMap(props, function(key) {
+	    return [key, object[key]];
+	  });
+	}
+	
+	module.exports = baseToPairs;
+
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseIsEqual = __webpack_require__(280),
+	    get = __webpack_require__(299),
+	    hasIn = __webpack_require__(306);
+	
+	/** Used to compose bitmasks for comparison styles. */
+	var UNORDERED_COMPARE_FLAG = 1,
+	    PARTIAL_COMPARE_FLAG = 2;
+	
+	/**
+	 * The base implementation of `_.matchesProperty` which doesn't clone `srcValue`.
 	 *
 	 * @private
 	 * @param {string} path The path of the property to get.
-	 * @param {*} srcValue The value to compare.
+	 * @param {*} srcValue The value to match.
 	 * @returns {Function} Returns the new function.
 	 */
 	function baseMatchesProperty(path, srcValue) {
-	  var isArr = isArray(path),
-	      isCommon = isKey(path) && isStrictComparable(srcValue),
-	      pathKey = (path + '');
-	
-	  path = toPath(path);
 	  return function(object) {
-	    if (object == null) {
-	      return false;
-	    }
-	    var key = pathKey;
-	    object = toObject(object);
-	    if ((isArr || !isCommon) && !(key in object)) {
-	      object = path.length == 1 ? object : baseGet(object, baseSlice(path, 0, -1));
-	      if (object == null) {
-	        return false;
-	      }
-	      key = last(path);
-	      object = toObject(object);
-	    }
-	    return object[key] === srcValue
-	      ? (srcValue !== undefined || (key in object))
-	      : baseIsEqual(srcValue, object[key], undefined, true);
+	    var objValue = get(object, path);
+	    return (objValue === undefined && objValue === srcValue)
+	      ? hasIn(object, path)
+	      : baseIsEqual(srcValue, objValue, undefined, UNORDERED_COMPARE_FLAG | PARTIAL_COMPARE_FLAG);
 	  };
 	}
 	
@@ -11111,45 +18372,354 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 118 */
-/***/ function(module, exports) {
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
 
+	var baseGet = __webpack_require__(300);
+	
 	/**
-	 * The base implementation of `_.slice` without an iteratee call guard.
+	 * Gets the value at `path` of `object`. If the resolved value is
+	 * `undefined` the `defaultValue` is used in its place.
 	 *
-	 * @private
-	 * @param {Array} array The array to slice.
-	 * @param {number} [start=0] The start position.
-	 * @param {number} [end=array.length] The end position.
-	 * @returns {Array} Returns the slice of `array`.
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} path The path of the property to get.
+	 * @param {*} [defaultValue] The value returned if the resolved value is `undefined`.
+	 * @returns {*} Returns the resolved value.
+	 * @example
+	 *
+	 * var object = { 'a': [{ 'b': { 'c': 3 } }] };
+	 *
+	 * _.get(object, 'a[0].b.c');
+	 * // => 3
+	 *
+	 * _.get(object, ['a', '0', 'b', 'c']);
+	 * // => 3
+	 *
+	 * _.get(object, 'a.b.c', 'default');
+	 * // => 'default'
 	 */
-	function baseSlice(array, start, end) {
-	  var index = -1,
-	      length = array.length;
-	
-	  start = start == null ? 0 : (+start || 0);
-	  if (start < 0) {
-	    start = -start > length ? 0 : (length + start);
-	  }
-	  end = (end === undefined || end > length) ? length : (+end || 0);
-	  if (end < 0) {
-	    end += length;
-	  }
-	  length = start > end ? 0 : ((end - start) >>> 0);
-	  start >>>= 0;
-	
-	  var result = Array(length);
-	  while (++index < length) {
-	    result[index] = array[index + start];
-	  }
-	  return result;
+	function get(object, path, defaultValue) {
+	  var result = object == null ? undefined : baseGet(object, path);
+	  return result === undefined ? defaultValue : result;
 	}
 	
-	module.exports = baseSlice;
+	module.exports = get;
 
 
 /***/ },
-/* 119 */
+/* 300 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCastPath = __webpack_require__(301),
+	    isKey = __webpack_require__(305);
+	
+	/**
+	 * The base implementation of `_.get` without support for default values.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} path The path of the property to get.
+	 * @returns {*} Returns the resolved value.
+	 */
+	function baseGet(object, path) {
+	  path = isKey(path, object) ? [path + ''] : baseCastPath(path);
+	
+	  var index = 0,
+	      length = path.length;
+	
+	  while (object != null && index < length) {
+	    object = object[path[index++]];
+	  }
+	  return (index && index == length) ? object : undefined;
+	}
+	
+	module.exports = baseGet;
+
+
+/***/ },
+/* 301 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(33),
+	    stringToPath = __webpack_require__(302);
+	
+	/**
+	 * Casts `value` to a path array if it's not one.
+	 *
+	 * @private
+	 * @param {*} value The value to inspect.
+	 * @returns {Array} Returns the cast property path array.
+	 */
+	function baseCastPath(value) {
+	  return isArray(value) ? value : stringToPath(value);
+	}
+	
+	module.exports = baseCastPath;
+
+
+/***/ },
+/* 302 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var toString = __webpack_require__(303);
+	
+	/** Used to match property names within property paths. */
+	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
+	
+	/** Used to match backslashes in property paths. */
+	var reEscapeChar = /\\(\\)?/g;
+	
+	/**
+	 * Converts `string` to a property path array.
+	 *
+	 * @private
+	 * @param {string} string The string to convert.
+	 * @returns {Array} Returns the property path array.
+	 */
+	function stringToPath(string) {
+	  var result = [];
+	  toString(string).replace(rePropName, function(match, number, quote, string) {
+	    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
+	  });
+	  return result;
+	}
+	
+	module.exports = stringToPath;
+
+
+/***/ },
+/* 303 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var Symbol = __webpack_require__(285),
+	    isSymbol = __webpack_require__(304);
+	
+	/** Used as references for various `Number` constants. */
+	var INFINITY = 1 / 0;
+	
+	/** Used to convert symbols to primitives and strings. */
+	var symbolProto = Symbol ? Symbol.prototype : undefined,
+	    symbolToString = symbolProto ? symbolProto.toString : undefined;
+	
+	/**
+	 * Converts `value` to a string if it's not one. An empty string is returned
+	 * for `null` and `undefined` values. The sign of `-0` is preserved.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to process.
+	 * @returns {string} Returns the string.
+	 * @example
+	 *
+	 * _.toString(null);
+	 * // => ''
+	 *
+	 * _.toString(-0);
+	 * // => '-0'
+	 *
+	 * _.toString([1, 2, 3]);
+	 * // => '1,2,3'
+	 */
+	function toString(value) {
+	  // Exit early for strings to avoid a performance hit in some environments.
+	  if (typeof value == 'string') {
+	    return value;
+	  }
+	  if (value == null) {
+	    return '';
+	  }
+	  if (isSymbol(value)) {
+	    return symbolToString ? symbolToString.call(value) : '';
+	  }
+	  var result = (value + '');
+	  return (result == '0' && (1 / value) == -INFINITY) ? '-0' : result;
+	}
+	
+	module.exports = toString;
+
+
+/***/ },
+/* 304 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isObjectLike = __webpack_require__(32);
+	
+	/** `Object#toString` result references. */
+	var symbolTag = '[object Symbol]';
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/**
+	 * Used to resolve the [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
+	 * of values.
+	 */
+	var objectToString = objectProto.toString;
+	
+	/**
+	 * Checks if `value` is classified as a `Symbol` primitive or object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Lang
+	 * @param {*} value The value to check.
+	 * @returns {boolean} Returns `true` if `value` is correctly classified, else `false`.
+	 * @example
+	 *
+	 * _.isSymbol(Symbol.iterator);
+	 * // => true
+	 *
+	 * _.isSymbol('abc');
+	 * // => false
+	 */
+	function isSymbol(value) {
+	  return typeof value == 'symbol' ||
+	    (isObjectLike(value) && objectToString.call(value) == symbolTag);
+	}
+	
+	module.exports = isSymbol;
+
+
+/***/ },
+/* 305 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isArray = __webpack_require__(33);
+	
+	/** Used to match property names within property paths. */
+	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
+	    reIsPlainProp = /^\w*$/;
+	
+	/**
+	 * Checks if `value` is a property name and not a property path.
+	 *
+	 * @private
+	 * @param {*} value The value to check.
+	 * @param {Object} [object] The object to query keys on.
+	 * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
+	 */
+	function isKey(value, object) {
+	  if (typeof value == 'number') {
+	    return true;
+	  }
+	  return !isArray(value) &&
+	    (reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
+	      (object != null && value in Object(object)));
+	}
+	
+	module.exports = isKey;
+
+
+/***/ },
+/* 306 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseHasIn = __webpack_require__(307),
+	    hasPath = __webpack_require__(308);
+	
+	/**
+	 * Checks if `path` is a direct or inherited property of `object`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} path The path to check.
+	 * @returns {boolean} Returns `true` if `path` exists, else `false`.
+	 * @example
+	 *
+	 * var object = _.create({ 'a': _.create({ 'b': _.create({ 'c': 3 }) }) });
+	 *
+	 * _.hasIn(object, 'a');
+	 * // => true
+	 *
+	 * _.hasIn(object, 'a.b.c');
+	 * // => true
+	 *
+	 * _.hasIn(object, ['a', 'b', 'c']);
+	 * // => true
+	 *
+	 * _.hasIn(object, 'b');
+	 * // => false
+	 */
+	function hasIn(object, path) {
+	  return hasPath(object, path, baseHasIn);
+	}
+	
+	module.exports = hasIn;
+
+
+/***/ },
+/* 307 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.hasIn` without support for deep paths.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} key The key to check.
+	 * @returns {boolean} Returns `true` if `key` exists, else `false`.
+	 */
+	function baseHasIn(object, key) {
+	  return key in Object(object);
+	}
+	
+	module.exports = baseHasIn;
+
+
+/***/ },
+/* 308 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseCastPath = __webpack_require__(301),
+	    isArguments = __webpack_require__(30),
+	    isArray = __webpack_require__(33),
+	    isIndex = __webpack_require__(17),
+	    isKey = __webpack_require__(305),
+	    isLength = __webpack_require__(16),
+	    isString = __webpack_require__(34),
+	    last = __webpack_require__(309),
+	    parent = __webpack_require__(310);
+	
+	/**
+	 * Checks if `path` exists on `object`.
+	 *
+	 * @private
+	 * @param {Object} object The object to query.
+	 * @param {Array|string} path The path to check.
+	 * @param {Function} hasFunc The function to check properties.
+	 * @returns {boolean} Returns `true` if `path` exists, else `false`.
+	 */
+	function hasPath(object, path, hasFunc) {
+	  if (object == null) {
+	    return false;
+	  }
+	  var result = hasFunc(object, path);
+	  if (!result && !isKey(path)) {
+	    path = baseCastPath(path);
+	    object = parent(object, path);
+	    if (object != null) {
+	      path = last(path);
+	      result = hasFunc(object, path);
+	    }
+	  }
+	  var length = object ? object.length : undefined;
+	  return result || (
+	    !!length && isLength(length) && isIndex(path, length) &&
+	    (isArray(object) || isString(object) || isArguments(object))
+	  );
+	}
+	
+	module.exports = hasPath;
+
+
+/***/ },
+/* 309 */
 /***/ function(module, exports) {
 
 	/**
@@ -11174,153 +18744,232 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 120 */
-/***/ function(module, exports) {
+/* 310 */
+/***/ function(module, exports, __webpack_require__) {
 
+	var baseSlice = __webpack_require__(311),
+	    get = __webpack_require__(299);
+	
 	/**
-	 * The base implementation of `_.findIndex` and `_.findLastIndex` without
-	 * support for callback shorthands and `this` binding.
+	 * Gets the parent value at `path` of `object`.
 	 *
 	 * @private
-	 * @param {Array} array The array to search.
-	 * @param {Function} predicate The function invoked per iteration.
-	 * @param {boolean} [fromRight] Specify iterating from right to left.
-	 * @returns {number} Returns the index of the matched value, else `-1`.
+	 * @param {Object} object The object to query.
+	 * @param {Array} path The path to get the parent value of.
+	 * @returns {*} Returns the parent value.
 	 */
-	function baseFindIndex(array, predicate, fromRight) {
-	  var length = array.length,
-	      index = fromRight ? length : -1;
-	
-	  while ((fromRight ? index-- : ++index < length)) {
-	    if (predicate(array[index], index, array)) {
-	      return index;
-	    }
-	  }
-	  return -1;
+	function parent(object, path) {
+	  return path.length == 1 ? object : get(object, baseSlice(path, 0, -1));
 	}
 	
-	module.exports = baseFindIndex;
+	module.exports = parent;
 
 
 /***/ },
-/* 121 */
+/* 311 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.slice` without an iteratee call guard.
+	 *
+	 * @private
+	 * @param {Array} array The array to slice.
+	 * @param {number} [start=0] The start position.
+	 * @param {number} [end=array.length] The end position.
+	 * @returns {Array} Returns the slice of `array`.
+	 */
+	function baseSlice(array, start, end) {
+	  var index = -1,
+	      length = array.length;
+	
+	  if (start < 0) {
+	    start = -start > length ? 0 : (length + start);
+	  }
+	  end = end > length ? length : end;
+	  if (end < 0) {
+	    end += length;
+	  }
+	  length = start > end ? 0 : ((end - start) >>> 0);
+	  start >>>= 0;
+	
+	  var result = Array(length);
+	  while (++index < length) {
+	    result[index] = array[index + start];
+	  }
+	  return result;
+	}
+	
+	module.exports = baseSlice;
+
+
+/***/ },
+/* 312 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns the first argument given to it.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value Any value.
+	 * @returns {*} Returns `value`.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 *
+	 * _.identity(object) === object;
+	 * // => true
+	 */
+	function identity(value) {
+	  return value;
+	}
+	
+	module.exports = identity;
+
+
+/***/ },
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCallback = __webpack_require__(105),
-	    baseUniq = __webpack_require__(122),
-	    isIterateeCall = __webpack_require__(25),
-	    sortedUniq = __webpack_require__(123);
+	var baseProperty = __webpack_require__(13),
+	    basePropertyDeep = __webpack_require__(314),
+	    isKey = __webpack_require__(305);
+	
+	/**
+	 * Creates a function that returns the value at `path` of a given object.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @param {Array|string} path The path of the property to get.
+	 * @returns {Function} Returns the new function.
+	 * @example
+	 *
+	 * var objects = [
+	 *   { 'a': { 'b': { 'c': 2 } } },
+	 *   { 'a': { 'b': { 'c': 1 } } }
+	 * ];
+	 *
+	 * _.map(objects, _.property('a.b.c'));
+	 * // => [2, 1]
+	 *
+	 * _.map(_.sortBy(objects, _.property(['a', 'b', 'c'])), 'a.b.c');
+	 * // => [1, 2]
+	 */
+	function property(path) {
+	  return isKey(path) ? baseProperty(path) : basePropertyDeep(path);
+	}
+	
+	module.exports = property;
+
+
+/***/ },
+/* 314 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseGet = __webpack_require__(300);
+	
+	/**
+	 * A specialized version of `baseProperty` which supports deep paths.
+	 *
+	 * @private
+	 * @param {Array|string} path The path of the property to get.
+	 * @returns {Function} Returns the new function.
+	 */
+	function basePropertyDeep(path) {
+	  return function(object) {
+	    return baseGet(object, path);
+	  };
+	}
+	
+	module.exports = basePropertyDeep;
+
+
+/***/ },
+/* 315 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseUniq = __webpack_require__(316);
 	
 	/**
 	 * Creates a duplicate-free version of an array, using
 	 * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
-	 * for equality comparisons, in which only the first occurence of each element
-	 * is kept. Providing `true` for `isSorted` performs a faster search algorithm
-	 * for sorted arrays. If an iteratee function is provided it's invoked for
-	 * each element in the array to generate the criterion by which uniqueness
-	 * is computed. The `iteratee` is bound to `thisArg` and invoked with three
-	 * arguments: (value, index, array).
-	 *
-	 * If a property name is provided for `iteratee` the created `_.property`
-	 * style callback returns the property value of the given element.
-	 *
-	 * If a value is also provided for `thisArg` the created `_.matchesProperty`
-	 * style callback returns `true` for elements that have a matching property
-	 * value, else `false`.
-	 *
-	 * If an object is provided for `iteratee` the created `_.matches` style
-	 * callback returns `true` for elements that have the properties of the given
-	 * object, else `false`.
+	 * for equality comparisons, in which only the first occurrence of each element
+	 * is kept.
 	 *
 	 * @static
 	 * @memberOf _
-	 * @alias unique
 	 * @category Array
 	 * @param {Array} array The array to inspect.
-	 * @param {boolean} [isSorted] Specify the array is sorted.
-	 * @param {Function|Object|string} [iteratee] The function invoked per iteration.
-	 * @param {*} [thisArg] The `this` binding of `iteratee`.
-	 * @returns {Array} Returns the new duplicate-value-free array.
+	 * @returns {Array} Returns the new duplicate free array.
 	 * @example
 	 *
 	 * _.uniq([2, 1, 2]);
 	 * // => [2, 1]
-	 *
-	 * // using `isSorted`
-	 * _.uniq([1, 1, 2], true);
-	 * // => [1, 2]
-	 *
-	 * // using an iteratee function
-	 * _.uniq([1, 2.5, 1.5, 2], function(n) {
-	 *   return this.floor(n);
-	 * }, Math);
-	 * // => [1, 2.5]
-	 *
-	 * // using the `_.property` callback shorthand
-	 * _.uniq([{ 'x': 1 }, { 'x': 2 }, { 'x': 1 }], 'x');
-	 * // => [{ 'x': 1 }, { 'x': 2 }]
 	 */
-	function uniq(array, isSorted, iteratee, thisArg) {
-	  var length = array ? array.length : 0;
-	  if (!length) {
-	    return [];
-	  }
-	  if (isSorted != null && typeof isSorted != 'boolean') {
-	    thisArg = iteratee;
-	    iteratee = isIterateeCall(array, isSorted, thisArg) ? undefined : isSorted;
-	    isSorted = false;
-	  }
-	  iteratee = iteratee == null ? iteratee : baseCallback(iteratee, thisArg, 3);
-	  return (isSorted)
-	    ? sortedUniq(array, iteratee)
-	    : baseUniq(array, iteratee);
+	function uniq(array) {
+	  return (array && array.length)
+	    ? baseUniq(array)
+	    : [];
 	}
 	
 	module.exports = uniq;
 
 
 /***/ },
-/* 122 */
+/* 316 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIndexOf = __webpack_require__(81),
-	    cacheIndexOf = __webpack_require__(88),
-	    createCache = __webpack_require__(89);
+	var SetCache = __webpack_require__(226),
+	    arrayIncludes = __webpack_require__(250),
+	    arrayIncludesWith = __webpack_require__(251),
+	    cacheHas = __webpack_require__(253),
+	    createSet = __webpack_require__(317),
+	    setToArray = __webpack_require__(288);
 	
 	/** Used as the size to enable large array optimizations. */
 	var LARGE_ARRAY_SIZE = 200;
 	
 	/**
-	 * The base implementation of `_.uniq` without support for callback shorthands
-	 * and `this` binding.
+	 * The base implementation of `_.uniqBy` without support for iteratee shorthands.
 	 *
 	 * @private
 	 * @param {Array} array The array to inspect.
-	 * @param {Function} [iteratee] The function invoked per iteration.
+	 * @param {Function} [iteratee] The iteratee invoked per element.
+	 * @param {Function} [comparator] The comparator invoked per element.
 	 * @returns {Array} Returns the new duplicate free array.
 	 */
-	function baseUniq(array, iteratee) {
+	function baseUniq(array, iteratee, comparator) {
 	  var index = -1,
-	      indexOf = baseIndexOf,
+	      includes = arrayIncludes,
 	      length = array.length,
 	      isCommon = true,
-	      isLarge = isCommon && length >= LARGE_ARRAY_SIZE,
-	      seen = isLarge ? createCache() : null,
-	      result = [];
+	      result = [],
+	      seen = result;
 	
-	  if (seen) {
-	    indexOf = cacheIndexOf;
+	  if (comparator) {
 	    isCommon = false;
-	  } else {
-	    isLarge = false;
+	    includes = arrayIncludesWith;
+	  }
+	  else if (length >= LARGE_ARRAY_SIZE) {
+	    var set = iteratee ? null : createSet(array);
+	    if (set) {
+	      return setToArray(set);
+	    }
+	    isCommon = false;
+	    includes = cacheHas;
+	    seen = new SetCache;
+	  }
+	  else {
 	    seen = iteratee ? [] : result;
 	  }
 	  outer:
 	  while (++index < length) {
 	    var value = array[index],
-	        computed = iteratee ? iteratee(value, index, array) : value;
+	        computed = iteratee ? iteratee(value) : value;
 	
-	    if (isCommon && value === value) {
+	    if (isCommon && computed === computed) {
 	      var seenIndex = seen.length;
 	      while (seenIndex--) {
 	        if (seen[seenIndex] === computed) {
@@ -11332,8 +18981,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      result.push(value);
 	    }
-	    else if (indexOf(seen, computed, 0) < 0) {
-	      if (iteratee || isLarge) {
+	    else if (!includes(seen, computed, comparator)) {
+	      if (seen !== result) {
 	        seen.push(computed);
 	      }
 	      result.push(value);
@@ -11346,103 +18995,116 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 123 */
-/***/ function(module, exports) {
+/* 317 */
+/***/ function(module, exports, __webpack_require__) {
 
+	var Set = __webpack_require__(291),
+	    noop = __webpack_require__(318);
+	
 	/**
-	 * An implementation of `_.uniq` optimized for sorted arrays without support
-	 * for callback shorthands and `this` binding.
+	 * Creates a set of `values`.
 	 *
 	 * @private
-	 * @param {Array} array The array to inspect.
-	 * @param {Function} [iteratee] The function invoked per iteration.
-	 * @returns {Array} Returns the new duplicate free array.
+	 * @param {Array} values The values to add to the set.
+	 * @returns {Object} Returns the new set.
 	 */
-	function sortedUniq(array, iteratee) {
-	  var seen,
-	      index = -1,
-	      length = array.length,
-	      resIndex = -1,
-	      result = [];
+	var createSet = !(Set && new Set([1, 2]).size === 2) ? noop : function(values) {
+	  return new Set(values);
+	};
 	
-	  while (++index < length) {
-	    var value = array[index],
-	        computed = iteratee ? iteratee(value, index, array) : value;
-	
-	    if (!index || seen !== computed) {
-	      seen = computed;
-	      result[++resIndex] = value;
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = sortedUniq;
+	module.exports = createSet;
 
 
 /***/ },
-/* 124 */
+/* 318 */
+/***/ function(module, exports) {
+
+	/**
+	 * A no-operation function that returns `undefined` regardless of the
+	 * arguments it receives.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 *
+	 * _.noop(object) === undefined;
+	 * // => true
+	 */
+	function noop() {
+	  // No operation performed.
+	}
+	
+	module.exports = noop;
+
+
+/***/ },
+/* 319 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _lodashObjectInvert = __webpack_require__(125);
+	var _invert = __webpack_require__(320);
 	
-	var _lodashObjectInvert2 = _interopRequireDefault(_lodashObjectInvert);
+	var _invert2 = _interopRequireDefault(_invert);
 	
-	var _lodashCollectionSortBy = __webpack_require__(126);
+	var _sortBy = __webpack_require__(327);
 	
-	var _lodashCollectionSortBy2 = _interopRequireDefault(_lodashCollectionSortBy);
+	var _sortBy2 = _interopRequireDefault(_sortBy);
 	
-	var _lodashObjectValues = __webpack_require__(84);
+	var _values = __webpack_require__(221);
 	
-	var _lodashObjectValues2 = _interopRequireDefault(_lodashObjectValues);
+	var _values2 = _interopRequireDefault(_values);
 	
-	var _lodashUtilityIdentity = __webpack_require__(24);
+	var _identity = __webpack_require__(312);
 	
-	var _lodashUtilityIdentity2 = _interopRequireDefault(_lodashUtilityIdentity);
+	var _identity2 = _interopRequireDefault(_identity);
 	
-	var _lodashMathSum = __webpack_require__(134);
+	var _sum = __webpack_require__(335);
 	
-	var _lodashMathSum2 = _interopRequireDefault(_lodashMathSum);
+	var _sum2 = _interopRequireDefault(_sum);
 	
-	var _lodashArrayUniq = __webpack_require__(121);
+	var _uniq = __webpack_require__(315);
 	
-	var _lodashArrayUniq2 = _interopRequireDefault(_lodashArrayUniq);
+	var _uniq2 = _interopRequireDefault(_uniq);
 	
-	var _lodashArrayZipObject = __webpack_require__(40);
+	var _axis = __webpack_require__(266);
 	
-	var _lodashArrayZipObject2 = _interopRequireDefault(_lodashArrayZipObject);
+	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _helpersAxis = __webpack_require__(100);
+	var _data = __webpack_require__(268);
 	
-	var _helpersAxis2 = _interopRequireDefault(_helpersAxis);
+	var _data2 = _interopRequireDefault(_data);
 	
-	var _helpersData = __webpack_require__(102);
+	var _domain = __webpack_require__(267);
 	
-	var _helpersData2 = _interopRequireDefault(_helpersData);
+	var _domain2 = _interopRequireDefault(_domain);
 	
-	var _helpersDomain = __webpack_require__(101);
-	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	module.exports = {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	exports.default = {
 	  getChildComponents: function getChildComponents(props, defaultAxes) {
 	    // set up a counter for component types
 	    var counts = {};
 	    var addChild = function addChild(child) {
 	      var type = child.type && child.type.role;
-	      var axis = _helpersAxis2["default"].getAxisType(child);
+	      var axis = _axis2.default.getAxisType(child);
 	      if (!counts[type]) {
 	        counts[type] = axis ? { independent: 0, dependent: 0 } : 0;
 	      }
@@ -11455,7 +19117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    var limitReached = function limitReached(child) {
 	      var type = child.type && child.type.role;
-	      var axis = _helpersAxis2["default"].getAxisType(child);
+	      var axis = _axis2.default.getAxisType(child);
 	      if (!counts[type]) {
 	        return false;
 	      } else if (axis) {
@@ -11478,7 +19140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var childComponents = [];
 	    // loop through children, and add each child to the childComponents array
 	    // unless the limit for that child type has already been reached.
-	    _react2["default"].Children.forEach(props.children, function (child) {
+	    _react2.default.Children.forEach(props.children, function (child) {
 	      if (!child || !child.type) {
 	        return;
 	      }
@@ -11502,7 +19164,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return childComponents;
 	  },
-	
 	  getDataComponents: function getDataComponents(childComponents, type) {
 	    var predicate = {
 	      all: function all(role) {
@@ -11520,9 +19181,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return predicate[type].call(null, role);
 	    });
 	  },
-	
 	  getDomain: function getDomain(props, childComponents, axis) {
-	    var domain = undefined;
+	    var domain = void 0;
 	    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
 	      domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
 	    } else {
@@ -11532,24 +19192,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }, []);
 	      domain = childDomains.length === 0 ? [0, 1] : [Math.min.apply(Math, _toConsumableArray(childDomains)), Math.max.apply(Math, _toConsumableArray(childDomains))];
 	    }
-	    var paddedDomain = _helpersDomain2["default"].padDomain(domain, props, axis);
-	    var orientations = _helpersAxis2["default"].getAxisOrientations(childComponents);
-	    return _helpersDomain2["default"].orientDomain(paddedDomain, orientations, axis);
+	    var paddedDomain = _domain2.default.padDomain(domain, props, axis);
+	    var orientations = _axis2.default.getAxisOrientations(childComponents);
+	    return _domain2.default.orientDomain(paddedDomain, orientations, axis);
 	  },
-	
 	  getAxisOffset: function getAxisOffset(props, calculatedProps) {
 	    var axisComponents = calculatedProps.axisComponents;
 	    var domain = calculatedProps.domain;
 	    var scale = calculatedProps.scale;
-	
 	    // make the axes line up, and cross when appropriate
+	
 	    var origin = {
 	      x: Math.max(Math.min.apply(Math, _toConsumableArray(domain.x)), 0),
 	      y: Math.max(Math.min.apply(Math, _toConsumableArray(domain.y)), 0)
 	    };
 	    var axisOrientations = {
-	      x: _helpersAxis2["default"].getOrientation(axisComponents.x, "x"),
-	      y: _helpersAxis2["default"].getOrientation(axisComponents.y, "y")
+	      x: _axis2.default.getOrientation(axisComponents.x, "x"),
+	      y: _axis2.default.getOrientation(axisComponents.y, "y")
 	    };
 	    var orientationOffset = {
 	      x: axisOrientations.y === "left" ? 0 : props.width,
@@ -11564,7 +19223,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      y: axisComponents.y.offsetY || calculatedOffset.y
 	    };
 	  },
-	
 	  getTicksFromData: function getTicksFromData(calculatedProps, axis) {
 	    var stringMap = calculatedProps.stringMap[axis];
 	    // if tickValues are defined for an axis component use them
@@ -11572,11 +19230,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var ticksFromCategories = categoryArray && _victoryCore.Collection.containsOnlyStrings(categoryArray) ? categoryArray.map(function (tick) {
 	      return stringMap[tick];
 	    }) : categoryArray;
-	    var ticksFromStringMap = stringMap && (0, _lodashObjectValues2["default"])(stringMap);
+	    var ticksFromStringMap = stringMap && (0, _values2.default)(stringMap);
 	    // when ticks is undefined, axis will determine it's own ticks
 	    return ticksFromCategories || ticksFromStringMap;
 	  },
-	
 	  getTicksFromAxis: function getTicksFromAxis(calculatedProps, axis, component) {
 	    var tickValues = component.props.tickValues;
 	    if (!tickValues) {
@@ -11587,59 +19244,56 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return stringMap[tick];
 	    }) : tickValues;
 	  },
-	
 	  getTicks: function getTicks() {
 	    return this.getTicksFromAxis.apply(this, arguments) || this.getTicksFromData.apply(this, arguments);
 	  },
-	
 	  getTickFormat: function getTickFormat(component, axis, calculatedProps) {
 	    var tickValues = component.props.tickValues;
 	    var stringMap = calculatedProps.stringMap[axis];
 	    if (tickValues && !_victoryCore.Collection.containsStrings(tickValues)) {
-	      return _lodashUtilityIdentity2["default"];
+	      return _identity2.default;
 	    } else if (stringMap !== null) {
-	      var _ret = (function () {
-	        var tickValueArray = (0, _lodashCollectionSortBy2["default"])((0, _lodashObjectValues2["default"])(stringMap), function (n) {
+	      var _ret = function () {
+	        var tickValueArray = (0, _sortBy2.default)((0, _values2.default)(stringMap), function (n) {
 	          return n;
 	        });
-	        var invertedStringMap = (0, _lodashObjectInvert2["default"])(stringMap);
+	        var invertedStringMap = (0, _invert2.default)(stringMap);
 	        var dataNames = tickValueArray.map(function (tick) {
 	          return invertedStringMap[tick];
 	        });
 	        // string ticks should have one tick of padding at the beginning
 	        var dataTicks = [""].concat(_toConsumableArray(dataNames), [""]);
 	        return {
-	          v: function (x) {
+	          v: function v(x) {
 	            return dataTicks[x];
 	          }
 	        };
-	      })();
+	      }();
 	
-	      if (typeof _ret === "object") return _ret.v;
+	      if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
 	    } else {
-	      return calculatedProps.scale[axis].tickFormat() || _lodashUtilityIdentity2["default"];
+	      return calculatedProps.scale[axis].tickFormat() || _identity2.default;
 	    }
 	  },
-	
 	  createStringMap: function createStringMap(childComponents, axis) {
-	    var axisComponent = _helpersAxis2["default"].getAxisComponent(childComponents, axis);
-	    var tickStrings = _helpersData2["default"].getStringsFromAxes(axisComponent.props, axis);
+	    var axisComponent = _axis2.default.getAxisComponent(childComponents, axis);
+	    var tickStrings = _data2.default.getStringsFromAxes(axisComponent.props, axis);
 	
 	    var categoryStrings = childComponents.reduce(function (prev, component) {
-	      var categoryData = _helpersData2["default"].getStringsFromCategories(component.props, axis);
+	      var categoryData = _data2.default.getStringsFromCategories(component.props, axis);
 	      return categoryData ? prev.concat(categoryData) : prev;
 	    }, []);
 	    var dataStrings = childComponents.reduce(function (prev, component) {
-	      var stringData = _helpersData2["default"].getStringsFromData(component.props, axis);
+	      var stringData = _data2.default.getStringsFromData(component.props, axis);
 	      return stringData ? prev.concat(stringData) : prev;
 	    }, []);
-	    var allStrings = (0, _lodashArrayUniq2["default"])([].concat(_toConsumableArray(tickStrings), _toConsumableArray(categoryStrings), _toConsumableArray(dataStrings)));
+	    var allStrings = (0, _uniq2.default)([].concat(_toConsumableArray(tickStrings), _toConsumableArray(categoryStrings), _toConsumableArray(dataStrings)));
 	
-	    return allStrings.length === 0 ? null : (0, _lodashArrayZipObject2["default"])(allStrings.map(function (string, index) {
-	      return [string, index + 1];
-	    }));
+	    return allStrings.length === 0 ? null : allStrings.reduce(function (memo, string, index) {
+	      memo[string] = index + 1;
+	      return memo;
+	    }, {});
 	  },
-	
 	  getCategories: function getCategories(childComponents) {
 	    var groupedComponents = this.getDataComponents(childComponents, "grouped");
 	    if (groupedComponents.length === 0) {
@@ -11649,7 +19303,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var allCategories = groupedComponents.reduce(function (prev, component) {
 	      var cats = component.props.categories;
 	      var categories = cats && _victoryCore.Collection.isArrayOfArrays(cats) ? cats.map(function (arr) {
-	        return (0, _lodashMathSum2["default"])(arr) / arr.length;
+	        return (0, _sum2.default)(arr) / arr.length;
 	      }) : cats;
 	      return categories && prev.indexOf(categories) === -1 ? prev.concat(categories) : prev;
 	    }, []);
@@ -11658,29 +19312,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 125 */
+/* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isIterateeCall = __webpack_require__(25),
-	    keys = __webpack_require__(5);
-	
-	/** Used for native method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
+	var constant = __webpack_require__(321),
+	    createInverter = __webpack_require__(322),
+	    identity = __webpack_require__(312);
 	
 	/**
 	 * Creates an object composed of the inverted keys and values of `object`.
 	 * If `object` contains duplicate values, subsequent values overwrite property
-	 * assignments of previous values unless `multiValue` is `true`.
+	 * assignments of previous values.
 	 *
 	 * @static
 	 * @memberOf _
 	 * @category Object
 	 * @param {Object} object The object to invert.
-	 * @param {boolean} [multiValue] Allow multiple values per key.
-	 * @param- {Object} [guard] Enables use as a callback for functions like `_.map`.
 	 * @returns {Object} Returns the new inverted object.
 	 * @example
 	 *
@@ -11688,131 +19335,277 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *
 	 * _.invert(object);
 	 * // => { '1': 'c', '2': 'b' }
-	 *
-	 * // with `multiValue`
-	 * _.invert(object, true);
-	 * // => { '1': ['a', 'c'], '2': ['b'] }
 	 */
-	function invert(object, multiValue, guard) {
-	  if (guard && isIterateeCall(object, multiValue, guard)) {
-	    multiValue = undefined;
-	  }
-	  var index = -1,
-	      props = keys(object),
-	      length = props.length,
-	      result = {};
-	
-	  while (++index < length) {
-	    var key = props[index],
-	        value = object[key];
-	
-	    if (multiValue) {
-	      if (hasOwnProperty.call(result, value)) {
-	        result[value].push(key);
-	      } else {
-	        result[value] = [key];
-	      }
-	    }
-	    else {
-	      result[value] = key;
-	    }
-	  }
-	  return result;
-	}
+	var invert = createInverter(function(result, value, key) {
+	  result[value] = key;
+	}, constant(identity));
 	
 	module.exports = invert;
 
 
 /***/ },
-/* 126 */
+/* 321 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a function that returns `value`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value The value to return from the new function.
+	 * @returns {Function} Returns the new function.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 * var getter = _.constant(object);
+	 *
+	 * getter() === object;
+	 * // => true
+	 */
+	function constant(value) {
+	  return function() {
+	    return value;
+	  };
+	}
+	
+	module.exports = constant;
+
+
+/***/ },
+/* 322 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCallback = __webpack_require__(105),
-	    baseMap = __webpack_require__(127),
-	    baseSortBy = __webpack_require__(131),
-	    compareAscending = __webpack_require__(132),
-	    isIterateeCall = __webpack_require__(25);
+	var baseInverter = __webpack_require__(323);
+	
+	/**
+	 * Creates a function like `_.invertBy`.
+	 *
+	 * @private
+	 * @param {Function} setter The function to set accumulator values.
+	 * @param {Function} toIteratee The function to resolve iteratees.
+	 * @returns {Function} Returns the new inverter function.
+	 */
+	function createInverter(setter, toIteratee) {
+	  return function(object, iteratee) {
+	    return baseInverter(object, setter, toIteratee(iteratee), {});
+	  };
+	}
+	
+	module.exports = createInverter;
+
+
+/***/ },
+/* 323 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseForOwn = __webpack_require__(324);
+	
+	/**
+	 * The base implementation of `_.invert` and `_.invertBy` which inverts
+	 * `object` with values transformed by `iteratee` and set by `setter`.
+	 *
+	 * @private
+	 * @param {Object} object The object to iterate over.
+	 * @param {Function} setter The function to set `accumulator` values.
+	 * @param {Function} iteratee The iteratee to transform values.
+	 * @param {Object} accumulator The initial inverted object.
+	 * @returns {Function} Returns `accumulator`.
+	 */
+	function baseInverter(object, setter, iteratee, accumulator) {
+	  baseForOwn(object, function(value, key, object) {
+	    setter(accumulator, iteratee(value), key, object);
+	  });
+	  return accumulator;
+	}
+	
+	module.exports = baseInverter;
+
+
+/***/ },
+/* 324 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFor = __webpack_require__(325),
+	    keys = __webpack_require__(211);
+	
+	/**
+	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Object} object The object to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {Object} Returns `object`.
+	 */
+	function baseForOwn(object, iteratee) {
+	  return object && baseFor(object, iteratee, keys);
+	}
+	
+	module.exports = baseForOwn;
+
+
+/***/ },
+/* 325 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createBaseFor = __webpack_require__(326);
+	
+	/**
+	 * The base implementation of `baseForIn` and `baseForOwn` which iterates
+	 * over `object` properties returned by `keysFunc` invoking `iteratee` for
+	 * each property. Iteratee functions may exit iteration early by explicitly
+	 * returning `false`.
+	 *
+	 * @private
+	 * @param {Object} object The object to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @param {Function} keysFunc The function to get the keys of `object`.
+	 * @returns {Object} Returns `object`.
+	 */
+	var baseFor = createBaseFor();
+	
+	module.exports = baseFor;
+
+
+/***/ },
+/* 326 */
+/***/ function(module, exports) {
+
+	/**
+	 * Creates a base function for methods like `_.forIn`.
+	 *
+	 * @private
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {Function} Returns the new base function.
+	 */
+	function createBaseFor(fromRight) {
+	  return function(object, iteratee, keysFunc) {
+	    var index = -1,
+	        iterable = Object(object),
+	        props = keysFunc(object),
+	        length = props.length;
+	
+	    while (length--) {
+	      var key = props[fromRight ? length : ++index];
+	      if (iteratee(iterable[key], key, iterable) === false) {
+	        break;
+	      }
+	    }
+	    return object;
+	  };
+	}
+	
+	module.exports = createBaseFor;
+
+
+/***/ },
+/* 327 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFlatten = __webpack_require__(203),
+	    baseOrderBy = __webpack_require__(328),
+	    isIterateeCall = __webpack_require__(10),
+	    rest = __webpack_require__(18);
 	
 	/**
 	 * Creates an array of elements, sorted in ascending order by the results of
-	 * running each element in a collection through `iteratee`. This method performs
-	 * a stable sort, that is, it preserves the original sort order of equal elements.
-	 * The `iteratee` is bound to `thisArg` and invoked with three arguments:
-	 * (value, index|key, collection).
-	 *
-	 * If a property name is provided for `iteratee` the created `_.property`
-	 * style callback returns the property value of the given element.
-	 *
-	 * If a value is also provided for `thisArg` the created `_.matchesProperty`
-	 * style callback returns `true` for elements that have a matching property
-	 * value, else `false`.
-	 *
-	 * If an object is provided for `iteratee` the created `_.matches` style
-	 * callback returns `true` for elements that have the properties of the given
-	 * object, else `false`.
+	 * running each element in a collection through each iteratee. This method
+	 * performs a stable sort, that is, it preserves the original sort order of
+	 * equal elements. The iteratees are invoked with one argument: (value).
 	 *
 	 * @static
 	 * @memberOf _
 	 * @category Collection
-	 * @param {Array|Object|string} collection The collection to iterate over.
-	 * @param {Function|Object|string} [iteratee=_.identity] The function invoked
-	 *  per iteration.
-	 * @param {*} [thisArg] The `this` binding of `iteratee`.
+	 * @param {Array|Object} collection The collection to iterate over.
+	 * @param {...(Function|Function[]|Object|Object[]|string|string[])} [iteratees=[_.identity]]
+	 *  The iteratees to sort by, specified individually or in arrays.
 	 * @returns {Array} Returns the new sorted array.
 	 * @example
 	 *
-	 * _.sortBy([1, 2, 3], function(n) {
-	 *   return Math.sin(n);
-	 * });
-	 * // => [3, 1, 2]
-	 *
-	 * _.sortBy([1, 2, 3], function(n) {
-	 *   return this.sin(n);
-	 * }, Math);
-	 * // => [3, 1, 2]
-	 *
 	 * var users = [
-	 *   { 'user': 'fred' },
-	 *   { 'user': 'pebbles' },
-	 *   { 'user': 'barney' }
+	 *   { 'user': 'fred',   'age': 48 },
+	 *   { 'user': 'barney', 'age': 36 },
+	 *   { 'user': 'fred',   'age': 42 },
+	 *   { 'user': 'barney', 'age': 34 }
 	 * ];
 	 *
-	 * // using the `_.property` callback shorthand
-	 * _.pluck(_.sortBy(users, 'user'), 'user');
-	 * // => ['barney', 'fred', 'pebbles']
+	 * _.sortBy(users, function(o) { return o.user; });
+	 * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
+	 *
+	 * _.sortBy(users, ['user', 'age']);
+	 * // => objects for [['barney', 34], ['barney', 36], ['fred', 42], ['fred', 48]]
+	 *
+	 * _.sortBy(users, 'user', function(o) {
+	 *   return Math.floor(o.age / 10);
+	 * });
+	 * // => objects for [['barney', 36], ['barney', 34], ['fred', 48], ['fred', 42]]
 	 */
-	function sortBy(collection, iteratee, thisArg) {
+	var sortBy = rest(function(collection, iteratees) {
 	  if (collection == null) {
 	    return [];
 	  }
-	  if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
-	    iteratee = undefined;
+	  var length = iteratees.length;
+	  if (length > 1 && isIterateeCall(collection, iteratees[0], iteratees[1])) {
+	    iteratees = [];
+	  } else if (length > 2 && isIterateeCall(iteratees[0], iteratees[1], iteratees[2])) {
+	    iteratees.length = 1;
 	  }
-	  var index = -1;
-	  iteratee = baseCallback(iteratee, thisArg, 3);
-	
-	  var result = baseMap(collection, function(value, key, collection) {
-	    return { 'criteria': iteratee(value, key, collection), 'index': ++index, 'value': value };
-	  });
-	  return baseSortBy(result, compareAscending);
-	}
+	  return baseOrderBy(collection, baseFlatten(iteratees, 1), []);
+	});
 	
 	module.exports = sortBy;
 
 
 /***/ },
-/* 127 */
+/* 328 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseEach = __webpack_require__(128),
+	var arrayMap = __webpack_require__(223),
+	    baseIteratee = __webpack_require__(271),
+	    baseMap = __webpack_require__(329),
+	    baseSortBy = __webpack_require__(332),
+	    compareMultiple = __webpack_require__(333);
+	
+	/**
+	 * The base implementation of `_.orderBy` without param guards.
+	 *
+	 * @private
+	 * @param {Array|Object} collection The collection to iterate over.
+	 * @param {Function[]|Object[]|string[]} iteratees The iteratees to sort by.
+	 * @param {string[]} orders The sort orders of `iteratees`.
+	 * @returns {Array} Returns the new sorted array.
+	 */
+	function baseOrderBy(collection, iteratees, orders) {
+	  var index = -1;
+	  iteratees = arrayMap(iteratees.length ? iteratees : Array(1), baseIteratee);
+	
+	  var result = baseMap(collection, function(value, key, collection) {
+	    var criteria = arrayMap(iteratees, function(iteratee) {
+	      return iteratee(value);
+	    });
+	    return { 'criteria': criteria, 'index': ++index, 'value': value };
+	  });
+	
+	  return baseSortBy(result, function(object, other) {
+	    return compareMultiple(object, other, orders);
+	  });
+	}
+	
+	module.exports = baseOrderBy;
+
+
+/***/ },
+/* 329 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseEach = __webpack_require__(330),
 	    isArrayLike = __webpack_require__(11);
 	
 	/**
-	 * The base implementation of `_.map` without support for callback shorthands
-	 * and `this` binding.
+	 * The base implementation of `_.map` without support for iteratee shorthands.
 	 *
 	 * @private
-	 * @param {Array|Object|string} collection The collection to iterate over.
+	 * @param {Array|Object} collection The collection to iterate over.
 	 * @param {Function} iteratee The function invoked per iteration.
 	 * @returns {Array} Returns the new mapped array.
 	 */
@@ -11830,20 +19623,19 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 128 */
+/* 330 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(129),
-	    createBaseEach = __webpack_require__(130);
+	var baseForOwn = __webpack_require__(324),
+	    createBaseEach = __webpack_require__(331);
 	
 	/**
-	 * The base implementation of `_.forEach` without support for callback
-	 * shorthands and `this` binding.
+	 * The base implementation of `_.forEach` without support for iteratee shorthands.
 	 *
 	 * @private
-	 * @param {Array|Object|string} collection The collection to iterate over.
+	 * @param {Array|Object} collection The collection to iterate over.
 	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Array|Object|string} Returns `collection`.
+	 * @returns {Array|Object} Returns `collection`.
 	 */
 	var baseEach = createBaseEach(baseForOwn);
 	
@@ -11851,35 +19643,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 129 */
+/* 331 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(58),
-	    keys = __webpack_require__(5);
-	
-	/**
-	 * The base implementation of `_.forOwn` without support for callback
-	 * shorthands and `this` binding.
-	 *
-	 * @private
-	 * @param {Object} object The object to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Object} Returns `object`.
-	 */
-	function baseForOwn(object, iteratee) {
-	  return baseFor(object, iteratee, keys);
-	}
-	
-	module.exports = baseForOwn;
-
-
-/***/ },
-/* 130 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getLength = __webpack_require__(12),
-	    isLength = __webpack_require__(14),
-	    toObject = __webpack_require__(36);
+	var isArrayLike = __webpack_require__(11);
 	
 	/**
 	 * Creates a `baseEach` or `baseEachRight` function.
@@ -11891,12 +19658,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 */
 	function createBaseEach(eachFunc, fromRight) {
 	  return function(collection, iteratee) {
-	    var length = collection ? getLength(collection) : 0;
-	    if (!isLength(length)) {
+	    if (collection == null) {
+	      return collection;
+	    }
+	    if (!isArrayLike(collection)) {
 	      return eachFunc(collection, iteratee);
 	    }
-	    var index = fromRight ? length : -1,
-	        iterable = toObject(collection);
+	    var length = collection.length,
+	        index = fromRight ? length : -1,
+	        iterable = Object(collection);
 	
 	    while ((fromRight ? index-- : ++index < length)) {
 	      if (iteratee(iterable[index], index, iterable) === false) {
@@ -11911,13 +19681,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 131 */
+/* 332 */
 /***/ function(module, exports) {
 
 	/**
-	 * The base implementation of `_.sortBy` which uses `comparer` to define
-	 * the sort order of `array` and replaces criteria objects with their
-	 * corresponding values.
+	 * The base implementation of `_.sortBy` which uses `comparer` to define the
+	 * sort order of `array` and replaces criteria objects with their corresponding
+	 * values.
 	 *
 	 * @private
 	 * @param {Array} array The array to sort.
@@ -11938,41 +19708,68 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 132 */
+/* 333 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCompareAscending = __webpack_require__(133);
+	var compareAscending = __webpack_require__(334);
 	
 	/**
-	 * Used by `_.sortBy` to compare transformed elements of a collection and stable
-	 * sort them in ascending order.
+	 * Used by `_.orderBy` to compare multiple properties of a value to another
+	 * and stable sort them.
+	 *
+	 * If `orders` is unspecified, all values are sorted in ascending order. Otherwise,
+	 * specify an order of "desc" for descending or "asc" for ascending sort order
+	 * of corresponding values.
 	 *
 	 * @private
 	 * @param {Object} object The object to compare.
 	 * @param {Object} other The other object to compare.
+	 * @param {boolean[]|string[]} orders The order to sort by for each property.
 	 * @returns {number} Returns the sort order indicator for `object`.
 	 */
-	function compareAscending(object, other) {
-	  return baseCompareAscending(object.criteria, other.criteria) || (object.index - other.index);
+	function compareMultiple(object, other, orders) {
+	  var index = -1,
+	      objCriteria = object.criteria,
+	      othCriteria = other.criteria,
+	      length = objCriteria.length,
+	      ordersLength = orders.length;
+	
+	  while (++index < length) {
+	    var result = compareAscending(objCriteria[index], othCriteria[index]);
+	    if (result) {
+	      if (index >= ordersLength) {
+	        return result;
+	      }
+	      var order = orders[index];
+	      return result * (order == 'desc' ? -1 : 1);
+	    }
+	  }
+	  // Fixes an `Array#sort` bug in the JS engine embedded in Adobe applications
+	  // that causes it, under certain circumstances, to provide the same value for
+	  // `object` and `other`. See https://github.com/jashkenas/underscore/pull/1247
+	  // for more details.
+	  //
+	  // This also ensures a stable sort in V8 and other engines.
+	  // See https://code.google.com/p/v8/issues/detail?id=90 for more details.
+	  return object.index - other.index;
 	}
 	
-	module.exports = compareAscending;
+	module.exports = compareMultiple;
 
 
 /***/ },
-/* 133 */
+/* 334 */
 /***/ function(module, exports) {
 
 	/**
-	 * The base implementation of `compareAscending` which compares values and
-	 * sorts them in ascending order without guaranteeing a stable sort.
+	 * Compares values to sort them in ascending order.
 	 *
 	 * @private
 	 * @param {*} value The value to compare.
 	 * @param {*} other The other value to compare.
 	 * @returns {number} Returns the sort order indicator for `value`.
 	 */
-	function baseCompareAscending(value, other) {
+	function compareAscending(value, other) {
 	  if (value !== other) {
 	    var valIsNull = value === null,
 	        valIsUndef = value === undefined,
@@ -11996,111 +19793,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	  return 0;
 	}
 	
-	module.exports = baseCompareAscending;
+	module.exports = compareAscending;
 
 
 /***/ },
-/* 134 */
+/* 335 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arraySum = __webpack_require__(135),
-	    baseCallback = __webpack_require__(105),
-	    baseSum = __webpack_require__(136),
-	    isArray = __webpack_require__(17),
-	    isIterateeCall = __webpack_require__(25),
-	    toIterable = __webpack_require__(137);
+	var baseSum = __webpack_require__(336),
+	    identity = __webpack_require__(312);
 	
 	/**
-	 * Gets the sum of the values in `collection`.
+	 * Computes the sum of the values in `array`.
 	 *
 	 * @static
 	 * @memberOf _
 	 * @category Math
-	 * @param {Array|Object|string} collection The collection to iterate over.
-	 * @param {Function|Object|string} [iteratee] The function invoked per iteration.
-	 * @param {*} [thisArg] The `this` binding of `iteratee`.
+	 * @param {Array} array The array to iterate over.
 	 * @returns {number} Returns the sum.
 	 * @example
 	 *
-	 * _.sum([4, 6]);
-	 * // => 10
-	 *
-	 * _.sum({ 'a': 4, 'b': 6 });
-	 * // => 10
-	 *
-	 * var objects = [
-	 *   { 'n': 4 },
-	 *   { 'n': 6 }
-	 * ];
-	 *
-	 * _.sum(objects, function(object) {
-	 *   return object.n;
-	 * });
-	 * // => 10
-	 *
-	 * // using the `_.property` callback shorthand
-	 * _.sum(objects, 'n');
-	 * // => 10
+	 * _.sum([4, 2, 8, 6]);
+	 * // => 20
 	 */
-	function sum(collection, iteratee, thisArg) {
-	  if (thisArg && isIterateeCall(collection, iteratee, thisArg)) {
-	    iteratee = undefined;
-	  }
-	  iteratee = baseCallback(iteratee, thisArg, 3);
-	  return iteratee.length == 1
-	    ? arraySum(isArray(collection) ? collection : toIterable(collection), iteratee)
-	    : baseSum(collection, iteratee);
+	function sum(array) {
+	  return (array && array.length)
+	    ? baseSum(array, identity)
+	    : 0;
 	}
 	
 	module.exports = sum;
 
 
 /***/ },
-/* 135 */
+/* 336 */
 /***/ function(module, exports) {
 
 	/**
-	 * A specialized version of `_.sum` for arrays without support for callback
-	 * shorthands and `this` binding..
+	 * The base implementation of `_.sum` without support for iteratee shorthands.
 	 *
 	 * @private
 	 * @param {Array} array The array to iterate over.
 	 * @param {Function} iteratee The function invoked per iteration.
 	 * @returns {number} Returns the sum.
 	 */
-	function arraySum(array, iteratee) {
-	  var length = array.length,
-	      result = 0;
+	function baseSum(array, iteratee) {
+	  var result,
+	      index = -1,
+	      length = array.length;
 	
-	  while (length--) {
-	    result += +iteratee(array[length]) || 0;
+	  while (++index < length) {
+	    var current = iteratee(array[index]);
+	    if (current !== undefined) {
+	      result = result === undefined ? current : (result + current);
+	    }
 	  }
-	  return result;
-	}
-	
-	module.exports = arraySum;
-
-
-/***/ },
-/* 136 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseEach = __webpack_require__(128);
-	
-	/**
-	 * The base implementation of `_.sum` without support for callback shorthands
-	 * and `this` binding.
-	 *
-	 * @private
-	 * @param {Array|Object|string} collection The collection to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {number} Returns the sum.
-	 */
-	function baseSum(collection, iteratee) {
-	  var result = 0;
-	  baseEach(collection, function(value, index, collection) {
-	    result += +iteratee(value, index, collection) || 0;
-	  });
 	  return result;
 	}
 	
@@ -12108,35 +19855,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 137 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isArrayLike = __webpack_require__(11),
-	    isObject = __webpack_require__(9),
-	    values = __webpack_require__(84);
-	
-	/**
-	 * Converts `value` to an array-like object if it's not one.
-	 *
-	 * @private
-	 * @param {*} value The value to process.
-	 * @returns {Array|Object} Returns the array-like object.
-	 */
-	function toIterable(value) {
-	  if (value == null) {
-	    return [];
-	  }
-	  if (!isArrayLike(value)) {
-	    return values(value);
-	  }
-	  return isObject(value) ? value : Object(value);
-	}
-	
-	module.exports = toIterable;
-
-
-/***/ },
-/* 138 */
+/* 337 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12147,57 +19866,57 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _sortBy = __webpack_require__(327);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _sortBy2 = _interopRequireDefault(_sortBy);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _pick = __webpack_require__(202);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _pick2 = _interopRequireDefault(_pick);
 	
-	var _lodashCollectionSortBy = __webpack_require__(126);
+	var _defaults = __webpack_require__(2);
 	
-	var _lodashCollectionSortBy2 = _interopRequireDefault(_lodashCollectionSortBy);
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	var _lodashObjectPick = __webpack_require__(71);
-	
-	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
-	
-	var _lodashObjectDefaults = __webpack_require__(2);
-	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _lineSegment = __webpack_require__(139);
+	var _lineSegment = __webpack_require__(338);
 	
 	var _lineSegment2 = _interopRequireDefault(_lineSegment);
 	
-	var _lineLabel = __webpack_require__(142);
+	var _lineLabel = __webpack_require__(341);
 	
 	var _lineLabel2 = _interopRequireDefault(_lineLabel);
 	
-	var _helpersScale = __webpack_require__(93);
+	var _scale = __webpack_require__(257);
 	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
+	var _scale2 = _interopRequireDefault(_scale);
 	
-	var _helpersDomain = __webpack_require__(101);
+	var _domain = __webpack_require__(267);
 	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	var _domain2 = _interopRequireDefault(_domain);
 	
-	var _helpersData = __webpack_require__(102);
+	var _data = __webpack_require__(268);
 	
-	var _helpersData2 = _interopRequireDefault(_helpersData);
+	var _data2 = _interopRequireDefault(_data);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _memoizerific = __webpack_require__(143);
+	var _lruMemoize = __webpack_require__(342);
 	
-	var _memoizerific2 = _interopRequireDefault(_memoizerific);
+	var _lruMemoize2 = _interopRequireDefault(_lruMemoize);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var defaultStyles = {
 	  data: {
@@ -12216,27 +19935,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 	
-	var VictoryLine = (function (_React$Component) {
+	var VictoryLine = function (_React$Component) {
 	  _inherits(VictoryLine, _React$Component);
 	
 	  function VictoryLine() {
 	    _classCallCheck(this, VictoryLine);
 	
-	    _get(Object.getPrototypeOf(VictoryLine.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryLine).apply(this, arguments));
 	  }
 	
 	  _createClass(VictoryLine, [{
 	    key: "componentWillMount",
 	    value: function componentWillMount() {
+	      this.state = {
+	        dataState: {},
+	        labelsState: {}
+	      };
 	      this.memoized = {
 	        // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-	        getStyles: (0, _memoizerific2["default"])(1)(_victoryCore.Helpers.getStyles)
+	        getStyles: (0, _lruMemoize2.default)(1, true)(_victoryCore.Helpers.getStyles)
 	      };
 	    }
 	  }, {
 	    key: "getDataSegments",
 	    value: function getDataSegments(dataset) {
-	      var orderedData = (0, _lodashCollectionSortBy2["default"])(dataset, "x");
+	      var orderedData = (0, _sortBy2.default)(dataset, "x");
 	      var segments = [];
 	      var segmentStartIndex = 0;
 	      orderedData.forEach(function (datum, index) {
@@ -12259,25 +19982,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // use fill instead of stroke for text
 	      var fill = style.data.stroke;
 	      var padding = style.labels.padding || 0;
-	      return (0, _lodashObjectDefaults2["default"])({ opacity: opacity, fill: fill, padding: padding }, style.labels);
+	      return (0, _defaults2.default)({}, style.labels, { opacity: opacity, fill: fill, padding: padding });
 	    }
 	  }, {
 	    key: "renderLine",
 	    value: function renderLine(calculatedProps) {
-	      var _this = this;
+	      var _this2 = this;
 	
 	      var dataSegments = calculatedProps.dataSegments;
 	      var scale = calculatedProps.scale;
 	      var style = calculatedProps.style;
 	
 	      return dataSegments.map(function (segment, index) {
-	        return _react2["default"].createElement(_lineSegment2["default"], {
+	        var getBoundEvents = _victoryCore.Helpers.getEvents.bind(_this2);
+	        return _react2.default.createElement(_lineSegment2.default, _extends({
 	          key: "line-segment-" + index,
+	          index: index,
+	          events: getBoundEvents(_this2.props.events.data, "data"),
 	          data: segment,
-	          interpolation: _this.props.interpolation,
+	          interpolation: _this2.props.interpolation,
 	          scale: scale,
 	          style: style.data
-	        });
+	        }, _this2.state.dataState[index]));
 	      });
 	    }
 	  }, {
@@ -12293,8 +20019,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	      var lastSegment = dataSegments[dataSegments.length - 1];
 	      var lastPoint = Array.isArray(lastSegment) ? lastSegment[lastSegment.length - 1] : lastSegment;
-	      return _react2["default"].createElement(_lineLabel2["default"], {
+	      var getBoundEvents = _victoryCore.Helpers.getEvents.bind(this);
+	      return _react2.default.createElement(_lineLabel2.default, _extends({
 	        key: "line-label",
+	        events: getBoundEvents(this.props.events.labels, "labels"),
 	        data: dataset,
 	        position: {
 	          x: scale.x.call(this, lastPoint.x),
@@ -12302,27 +20030,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	        },
 	        label: this.props.label,
 	        style: this.getLabelStyle(style)
-	      });
+	      }, this.state.labelsState[0]));
 	    }
 	  }, {
 	    key: "renderData",
 	    value: function renderData(props, style) {
-	      var dataset = _helpersData2["default"].getData(props);
+	      var dataset = _data2.default.getData(props);
 	      var dataSegments = this.getDataSegments(dataset);
 	      var range = {
 	        x: _victoryCore.Helpers.getRange(props, "x"),
 	        y: _victoryCore.Helpers.getRange(props, "y")
 	      };
 	      var domain = {
-	        x: _helpersDomain2["default"].getDomain(props, "x"),
-	        y: _helpersDomain2["default"].getDomain(props, "y")
+	        x: _domain2.default.getDomain(props, "x"),
+	        y: _domain2.default.getDomain(props, "y")
 	      };
 	      var scale = {
-	        x: _helpersScale2["default"].getBaseScale(props, "x").domain(domain.x).range(range.x),
-	        y: _helpersScale2["default"].getBaseScale(props, "y").domain(domain.y).range(range.y)
+	        x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
+	        y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
 	      };
 	      var calculatedProps = { dataset: dataset, dataSegments: dataSegments, scale: scale, style: style };
-	      return _react2["default"].createElement(
+	      return _react2.default.createElement(
 	        "g",
 	        { style: style.parent },
 	        this.renderLine(calculatedProps),
@@ -12332,7 +20060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      // If animating, return a `VictoryAnimation` element that will create
 	      // a new `VictoryLine` with nearly identical props, except (1) tweened
@@ -12343,182 +20071,190 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // prop whitelist/blacklist?
 	        // TODO: extract into helper
 	        var whitelist = ["data", "domain", "height", "padding", "samples", "style", "width", "x", "y"];
-	        var animateData = (0, _lodashObjectPick2["default"])(this.props, whitelist);
-	        return _react2["default"].createElement(
+	        var animateData = (0, _pick2.default)(this.props, whitelist);
+	        return _react2.default.createElement(
 	          _victoryCore.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
 	          function (props) {
-	            return _react2["default"].createElement(VictoryLine, _extends({}, _this2.props, props, { animate: null }));
+	            return _react2.default.createElement(VictoryLine, _extends({}, _this3.props, props, { animate: null }));
 	          }
 	        );
 	      }
 	      var style = this.memoized.getStyles(this.props.style, defaultStyles, this.props.height, this.props.width);
-	      var group = _react2["default"].createElement(
+	      var group = _react2.default.createElement(
 	        "g",
 	        { style: style.parent },
 	        this.renderData(this.props, style)
 	      );
-	      return this.props.standalone ? _react2["default"].createElement(
+	      return this.props.standalone ? _react2.default.createElement(
 	        "svg",
-	        { style: style.parent },
+	        _extends({ style: style.parent }, this.props.events.parent),
 	        group
 	      ) : group;
 	    }
-	  }], [{
-	    key: "role",
-	    value: "line",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. It this prop is
-	       * not given, the line will not tween between changing data / style props.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
-	       */
-	      animate: _react.PropTypes.object,
-	      /**
-	       * The data prop specifies the data to be plotted.
-	       * Data should be in the form of an array of data points.
-	       * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	       * but by default, an object with x and y properties is expected.
-	       * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
-	       * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
-	       */
-	      data: _react.PropTypes.array,
-	      /**
-	       * The domain prop describes the range of values your chart will include. This prop can be
-	       * given as a array of the minimum and maximum expected values for your chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	       */
-	      domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.domain,
-	        y: _victoryCore.PropTypes.domain
-	      })]),
-	      /**
-	       * The height props specifies the height of the chart container element in pixels
-	       */
-	      height: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The interpolation prop determines how data points should be connected
-	       * when plotting a line
-	       */
-	      interpolation: _react.PropTypes.oneOf(["basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen", "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotone", "natural", "radial", "step", "stepAfter", "stepBefore"]),
-	      /**
-	       * The label prop specifies a label to display at the end of a line component.
-	       * This prop can be given as a value, or as an entire, HTML-complete label component.
-	       * If given as a value, a new VictoryLabel will be created with props and
-	       * styles from the line. When given as a component, a new element will be
-	       * cloned from the label component. The new element will have default
-	       * values provided by the line for properties x, y, textAnchor, and
-	       * verticalAnchor; and styles filled out with defaults from the line, and
-	       * overrides from the datum.
-	       */
-	      label: _react.PropTypes.any,
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	        top: _react.PropTypes.number,
-	        bottom: _react.PropTypes.number,
-	        left: _react.PropTypes.number,
-	        right: _react.PropTypes.number
-	      })]),
-	      /**
-	       * The samples prop specifies how many individual points to plot when plotting
-	       * y as a function of x. Samples is ignored if x props are provided instead.
-	       */
-	      samples: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	       * as a d3 scale function, or as an object with scales specified for x and y
-	       * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	       */
-	      scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.scale,
-	        y: _victoryCore.PropTypes.scale
-	      })]),
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryLine with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react.PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. VictoryLine relies on Radium,
-	       * so valid Radium style objects should work for this prop, however height, width, and margin
-	       * are used to calculate range, and need to be expressed as a number of pixels
-	       * @examples {data: {stroke: "red"}, labels: {fontSize: 14}}
-	       */
-	      style: _react.PropTypes.shape({
-	        parent: _react.PropTypes.object,
-	        data: _react.PropTypes.object,
-	        labels: _react.PropTypes.object
-	      }),
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The x prop specifies how to access the X value of each data point.
-	       * If given as a function, it will be run on each data point, and returned value will be used.
-	       * If given as an integer, it will be used as an array index for array-type data points.
-	       * If given as a string, it will be used as a property key for object-type data points.
-	       * If given as an array of strings, or a string containing dots or brackets,
-	       * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	       * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	       * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	       */
-	      x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	      /**
-	       * The y prop specifies how to access the Y value of each data point.
-	       * If given as a function, it will be run on each data point, and returned value will be used.
-	       * If given as an integer, it will be used as an array index for array-type data points.
-	       * If given as a string, it will be used as a property key for object-type data points.
-	       * If given as an array of strings, or a string containing dots or brackets,
-	       * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	       * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	       * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	       */
-	      y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      height: 300,
-	      interpolation: "linear",
-	      padding: 50,
-	      samples: 50,
-	      scale: "linear",
-	      standalone: true,
-	      width: 450,
-	      x: "x",
-	      y: "y"
-	    },
-	    enumerable: true
-	  }, {
-	    key: "getDomain",
-	    value: _helpersDomain2["default"].getDomain.bind(_helpersDomain2["default"]),
-	    enumerable: true
 	  }]);
 	
 	  return VictoryLine;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryLine;
-	module.exports = exports["default"];
+	VictoryLine.role = "line";
+	VictoryLine.propTypes = {
+	  /**
+	   * The animate prop specifies props for victory-animation to use. It this prop is
+	   * not given, the line will not tween between changing data / style props.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+	   */
+	  animate: _react.PropTypes.object,
+	  /**
+	   * The data prop specifies the data to be plotted.
+	   * Data should be in the form of an array of data points.
+	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
+	   * but by default, an object with x and y properties is expected.
+	   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
+	   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+	   */
+	  data: _react.PropTypes.array,
+	  /**
+	   * The domain prop describes the range of values your chart will include. This prop can be
+	   * given as a array of the minimum and maximum expected values for your chart,
+	   * or as an object that specifies separate arrays for x and y.
+	   * If this prop is not provided, a domain will be calculated from data, or other
+	   * available information.
+	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
+	   */
+	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.domain,
+	    y: _victoryCore.PropTypes.domain
+	  })]),
+	  /**
+	   * The events prop attaches arbitrary event handlers to data and label elements
+	   * Event handlers are called with their corresponding events, corresponding component props,
+	   * and their index in the data array, and event name. The return value of event handlers
+	   * will be stored by unique index on the state object of VictoryLine
+	   * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+	   * applied to by index to the appropriate child component. Event props on the
+	   * parent namespace are just spread directly on to the top level svg of VictoryLine
+	   * if one exists. If VictoryLine is set up to render g elements i.e. when it is
+	   * rendered within chart, or when `standalone={false}` parent events will not be applied.
+	   *
+	   * @examples {data: {
+	   *  onClick: () => onClick: () => return {style: {stroke: "green"}}
+	   *}}
+	   */
+	  events: _react.PropTypes.shape({
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object,
+	    parent: _react.PropTypes.object
+	  }),
+	  /**
+	   * The height props specifies the height of the chart container element in pixels
+	   */
+	  height: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The interpolation prop determines how data points should be connected
+	   * when plotting a line
+	   */
+	  interpolation: _react.PropTypes.oneOf(["basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen", "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX", "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"]),
+	  /**
+	   * The label prop specifies a label to display at the end of a line component.
+	   * This prop can be given as a value, or as an entire, HTML-complete label component.
+	   * If given as a value, a new VictoryLabel will be created with props and
+	   * styles from the line. When given as a component, a new element will be
+	   * cloned from the label component. The new element will have default
+	   * values provided by the line for properties x, y, textAnchor, and
+	   * verticalAnchor; and styles filled out with defaults from the line, and
+	   * overrides from the datum.
+	   */
+	  label: _react.PropTypes.any,
+	  /**
+	   * The padding props specifies the amount of padding in number of pixels between
+	   * the edge of the chart and any rendered child components. This prop can be given
+	   * as a number or as an object with padding specified for top, bottom, left
+	   * and right.
+	   */
+	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	    top: _react.PropTypes.number,
+	    bottom: _react.PropTypes.number,
+	    left: _react.PropTypes.number,
+	    right: _react.PropTypes.number
+	  })]),
+	  /**
+	   * The samples prop specifies how many individual points to plot when plotting
+	   * y as a function of x. Samples is ignored if x props are provided instead.
+	   */
+	  samples: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The scale prop determines which scales your chart should use. This prop can be
+	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
+	   * as a d3 scale function, or as an object with scales specified for x and y
+	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
+	   */
+	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.scale,
+	    y: _victoryCore.PropTypes.scale
+	  })]),
+	  /**
+	   * The standalone prop determines whether the component will render a standalone svg
+	   * or a <g> tag that will be included in an external svg. Set standalone to false to
+	   * compose VictoryLine with other components within an enclosing <svg> tag.
+	   */
+	  standalone: _react.PropTypes.bool,
+	  /**
+	   * The style prop specifies styles for your chart. VictoryLine relies on Radium,
+	   * so valid Radium style objects should work for this prop, however height, width, and margin
+	   * are used to calculate range, and need to be expressed as a number of pixels
+	   * @examples {data: {stroke: "red"}, labels: {fontSize: 14}}
+	   */
+	  style: _react.PropTypes.shape({
+	    parent: _react.PropTypes.object,
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object
+	  }),
+	  /**
+	   * The width props specifies the width of the chart container element in pixels
+	   */
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The x prop specifies how to access the X value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+	   */
+	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The y prop specifies how to access the Y value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+	   */
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
+	};
+	VictoryLine.defaultProps = {
+	  events: {},
+	  height: 300,
+	  interpolation: "linear",
+	  padding: 50,
+	  samples: 50,
+	  scale: "linear",
+	  standalone: true,
+	  width: 450,
+	  x: "x",
+	  y: "y"
+	};
+	VictoryLine.getDomain = _domain2.default.getDomain.bind(_domain2.default);
+	exports.default = VictoryLine;
 
 /***/ },
-/* 139 */
+/* 338 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -12527,82 +20263,96 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Shape = __webpack_require__(140);
+	var _d3Shape = __webpack_require__(339);
 	
 	var _d3Shape2 = _interopRequireDefault(_d3Shape);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var LineSegment = (function (_React$Component) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var LineSegment = function (_React$Component) {
 	  _inherits(LineSegment, _React$Component);
 	
 	  function LineSegment() {
 	    _classCallCheck(this, LineSegment);
 	
-	    _get(Object.getPrototypeOf(LineSegment.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LineSegment).apply(this, arguments));
 	  }
 	
 	  _createClass(LineSegment, [{
+	    key: "toNewName",
+	    value: function toNewName(interpolation) {
+	      // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
+	      var capitalize = function capitalize(s) {
+	        return s && s[0].toUpperCase() + s.slice(1);
+	      };
+	      return "curve" + capitalize(interpolation);
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
-	      var style = _victoryCore.Helpers.evaluateStyle(this.props.style, this.props.data);
-	      var interpolation = _victoryCore.Helpers.evaluateProp(this.props.interpolation, this.props.data);
-	      var xScale = this.props.scale.x;
-	      var yScale = this.props.scale.y;
-	      var lineFunction = _d3Shape2["default"].line().curve(_d3Shape2["default"][interpolation]).x(function (data) {
+	      var props = this.props;
+	
+	      var style = _victoryCore.Helpers.evaluateStyle(props.style, props.data);
+	      var interpolation = _victoryCore.Helpers.evaluateProp(props.interpolation, props.data);
+	      var xScale = props.scale.x;
+	      var yScale = props.scale.y;
+	      var lineFunction = _d3Shape2.default.line().curve(_d3Shape2.default[this.toNewName(interpolation)]).x(function (data) {
 	        return xScale(data.x);
 	      }).y(function (data) {
 	        return yScale(data.y);
 	      });
-	      var path = lineFunction(this.props.data);
-	      return _react2["default"].createElement("path", { style: style, d: path });
+	      var path = lineFunction(props.data);
+	      var events = _victoryCore.Helpers.getPartialEvents(props.events, props.index, props);
+	      return _react2.default.createElement("path", _extends({ style: style, d: path }, events));
 	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      data: _react.PropTypes.array,
-	      interpolation: _react.PropTypes.string,
-	      scale: _react.PropTypes.object,
-	      style: _react.PropTypes.object
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return LineSegment;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = LineSegment;
-	module.exports = exports["default"];
+	LineSegment.propTypes = {
+	  index: _react2.default.PropTypes.number,
+	  data: _react.PropTypes.array,
+	  events: _react.PropTypes.object,
+	  interpolation: _react.PropTypes.string,
+	  scale: _react.PropTypes.object,
+	  style: _react.PropTypes.object
+	};
+	exports.default = LineSegment;
 
 /***/ },
-/* 140 */
+/* 339 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(141)) :
-	  typeof define === 'function' && define.amd ? define('d3-shape', ['exports', 'd3-path'], factory) :
-	  factory((global.d3_shape = {}),global.d3_path);
+	   true ? factory(exports, __webpack_require__(340)) :
+	  typeof define === 'function' && define.amd ? define(['exports', 'd3-path'], factory) :
+	  (factory((global.d3_shape = global.d3_shape || {}),global.d3_path));
 	}(this, function (exports,d3Path) { 'use strict';
+	
+	  var version = "0.6.0";
 	
 	  function constant(x) {
 	    return function constant() {
 	      return x;
 	    };
-	  };
+	  }
 	
 	  var epsilon = 1e-12;
 	  var pi = Math.PI;
@@ -12691,8 +20441,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        startAngle = arcStartAngle,
 	        endAngle = arcEndAngle,
 	        padAngle = arcPadAngle,
-	        context = null,
-	        output = null;
+	        context = null;
 	
 	    function arc() {
 	      var buffer,
@@ -12734,7 +20483,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	            rp = (ap > epsilon) && (padRadius ? +padRadius.apply(this, arguments) : Math.sqrt(r0 * r0 + r1 * r1)),
 	            rc = Math.min(Math.abs(r1 - r0) / 2, +cornerRadius.apply(this, arguments)),
 	            rc0 = rc,
-	            rc1 = rc;
+	            rc1 = rc,
+	            t0,
+	            t1;
 	
 	        // Apply padding? Note that since r1 ≥ r0, da1 ≥ da0.
 	        if (rp > epsilon) {
@@ -12777,8 +20528,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        // Does the sector’s outer ring have rounded corners?
 	        else if (rc1 > epsilon) {
-	          var t0 = cornerTangents(x00, y00, x01, y01, r1, rc1, cw),
-	              t1 = cornerTangents(x11, y11, x10, y10, r1, rc1, cw);
+	          t0 = cornerTangents(x00, y00, x01, y01, r1, rc1, cw);
+	          t1 = cornerTangents(x11, y11, x10, y10, r1, rc1, cw);
 	
 	          context.moveTo(t0.cx + t0.x01, t0.cy + t0.y01);
 	
@@ -12802,8 +20553,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	        // Does the sector’s inner ring (or point) have rounded corners?
 	        else if (rc0 > epsilon) {
-	          var t0 = cornerTangents(x10, y10, x11, y11, r0, -rc0, cw),
-	              t1 = cornerTangents(x01, y01, x00, y00, r0, -rc0, cw);
+	          t0 = cornerTangents(x10, y10, x11, y11, r0, -rc0, cw);
+	          t1 = cornerTangents(x01, y01, x00, y00, r0, -rc0, cw);
 	
 	          context.lineTo(t0.cx + t0.x01, t0.cy + t0.y01);
 	
@@ -12862,23 +20613,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	
 	    arc.context = function(_) {
-	      return arguments.length ? ((context = output = _ == null ? null : _), arc) : context;
+	      return arguments.length ? ((context = _ == null ? null : _), arc) : context;
 	    };
 	
 	    return arc;
-	  };
-	
-	  var slice = Array.prototype.slice;
-	
-	  function bind(curve, args) {
-	    if (args.length < 2) return curve;
-	    args = slice.call(args);
-	    args[0] = null;
-	    return function(context) {
-	      args[0] = context;
-	      return curve.apply(null, args);
-	    };
-	  };
+	  }
 	
 	  function Linear(context) {
 	    this._context = context;
@@ -12910,21 +20649,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  function curveLinear(context) {
 	    return new Linear(context);
-	  };
+	  }
 	
-	  function x(p) {
+	  function pointX(p) {
 	    return p[0];
-	  };
+	  }
 	
-	  function y(p) {
+	  function pointY(p) {
 	    return p[1];
-	  };
+	  }
 	
 	  function area() {
-	    var x0 = x,
+	    var x0 = pointX,
 	        x1 = null,
 	        y0 = constant(0),
-	        y1 = y,
+	        y1 = pointY,
 	        defined = constant(true),
 	        context = null,
 	        curve = curveLinear,
@@ -12941,7 +20680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          x0z = new Array(n),
 	          y0z = new Array(n);
 	
-	      if (!context) output = curve(buffer = d3Path.path());
+	      if (context == null) output = curve(buffer = d3Path.path());
 	
 	      for (i = 0; i <= n; ++i) {
 	        if (!(i < n && defined(d = data[i], i, data)) === defined0) {
@@ -12997,7 +20736,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	
 	    area.curve = function(_) {
-	      return arguments.length ? (curve = bind(_, arguments), context != null && (output = curve(context)), area) : curve;
+	      return arguments.length ? (curve = _, context != null && (output = curve(context)), area) : curve;
 	    };
 	
 	    area.context = function(_) {
@@ -13005,9 +20744,354 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	
 	    return area;
+	  }
+	
+	  function line() {
+	    var x = pointX,
+	        y = pointY,
+	        defined = constant(true),
+	        context = null,
+	        curve = curveLinear,
+	        output = null;
+	
+	    function line(data) {
+	      var i,
+	          n = data.length,
+	          d,
+	          defined0 = false,
+	          buffer;
+	
+	      if (context == null) output = curve(buffer = d3Path.path());
+	
+	      for (i = 0; i <= n; ++i) {
+	        if (!(i < n && defined(d = data[i], i, data)) === defined0) {
+	          if (defined0 = !defined0) output.lineStart();
+	          else output.lineEnd();
+	        }
+	        if (defined0) output.point(+x(d, i, data), +y(d, i, data));
+	      }
+	
+	      if (buffer) return output = null, buffer + "" || null;
+	    }
+	
+	    line.x = function(_) {
+	      return arguments.length ? (x = typeof _ === "function" ? _ : constant(+_), line) : x;
+	    };
+	
+	    line.y = function(_) {
+	      return arguments.length ? (y = typeof _ === "function" ? _ : constant(+_), line) : y;
+	    };
+	
+	    line.defined = function(_) {
+	      return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), line) : defined;
+	    };
+	
+	    line.curve = function(_) {
+	      return arguments.length ? (curve = _, context != null && (output = curve(context)), line) : curve;
+	    };
+	
+	    line.context = function(_) {
+	      return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
+	    };
+	
+	    return line;
+	  }
+	
+	  function descending(a, b) {
+	    return b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
+	  }
+	
+	  function identity(d) {
+	    return d;
+	  }
+	
+	  function pie() {
+	    var value = identity,
+	        sortValues = descending,
+	        sort = null,
+	        startAngle = constant(0),
+	        endAngle = constant(tau),
+	        padAngle = constant(0);
+	
+	    function pie(data) {
+	      var i,
+	          n = data.length,
+	          j,
+	          k,
+	          sum = 0,
+	          index = new Array(n),
+	          arcs = new Array(n),
+	          a0 = +startAngle.apply(this, arguments),
+	          da = Math.min(tau, Math.max(-tau, endAngle.apply(this, arguments) - a0)),
+	          a1,
+	          p = Math.min(Math.abs(da) / n, padAngle.apply(this, arguments)),
+	          pa = p * (da < 0 ? -1 : 1),
+	          v;
+	
+	      for (i = 0; i < n; ++i) {
+	        if ((v = arcs[index[i] = i] = +value(data[i], i, data)) > 0) {
+	          sum += v;
+	        }
+	      }
+	
+	      // Optionally sort the arcs by previously-computed values or by data.
+	      if (sortValues != null) index.sort(function(i, j) { return sortValues(arcs[i], arcs[j]); });
+	      else if (sort !== null) index.sort(function(i, j) { return sort(data[i], data[j]); });
+	
+	      // Compute the arcs! They are stored in the original data's order.
+	      for (i = 0, k = sum ? (da - n * pa) / sum : 0; i < n; ++i, a0 = a1) {
+	        j = index[i], v = arcs[j], a1 = a0 + (v > 0 ? v * k : 0) + pa, arcs[j] = {
+	          data: data[j],
+	          index: i,
+	          value: v,
+	          startAngle: a0,
+	          endAngle: a1,
+	          padAngle: p
+	        };
+	      }
+	
+	      return arcs;
+	    }
+	
+	    pie.value = function(_) {
+	      return arguments.length ? (value = typeof _ === "function" ? _ : constant(+_), pie) : value;
+	    };
+	
+	    pie.sortValues = function(_) {
+	      return arguments.length ? (sortValues = _, sort = null, pie) : sortValues;
+	    };
+	
+	    pie.sort = function(_) {
+	      return arguments.length ? (sort = _, sortValues = null, pie) : sort;
+	    };
+	
+	    pie.startAngle = function(_) {
+	      return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant(+_), pie) : startAngle;
+	    };
+	
+	    pie.endAngle = function(_) {
+	      return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant(+_), pie) : endAngle;
+	    };
+	
+	    pie.padAngle = function(_) {
+	      return arguments.length ? (padAngle = typeof _ === "function" ? _ : constant(+_), pie) : padAngle;
+	    };
+	
+	    return pie;
+	  }
+	
+	  function Radial(curve) {
+	    this._curve = curve;
+	  }
+	
+	  Radial.prototype = {
+	    areaStart: function() {
+	      this._curve.areaStart();
+	    },
+	    areaEnd: function() {
+	      this._curve.areaEnd();
+	    },
+	    lineStart: function() {
+	      this._curve.lineStart();
+	    },
+	    lineEnd: function() {
+	      this._curve.lineEnd();
+	    },
+	    point: function(a, r) {
+	      this._curve.point(r * Math.sin(a), r * -Math.cos(a));
+	    }
 	  };
 	
-	  function noop() {};
+	  function curveRadial(curve) {
+	
+	    function radial(context) {
+	      return new Radial(curve(context));
+	    }
+	
+	    radial._curve = curve;
+	
+	    return radial;
+	  }
+	
+	  function radialArea() {
+	    var a = area(),
+	        c = a.curve;
+	
+	    a.angle = a.x, delete a.x;
+	    a.startAngle = a.x0, delete a.x0;
+	    a.endAngle = a.x1, delete a.x1;
+	    a.radius = a.y, delete a.y;
+	    a.innerRadius = a.y0, delete a.y0;
+	    a.outerRadius = a.y1, delete a.y1;
+	
+	    a.curve = function(_) {
+	      return arguments.length ? c(curveRadial(_)) : c()._curve;
+	    };
+	
+	    return a.curve(curveLinear);
+	  }
+	
+	  function radialLine() {
+	    var l = line(),
+	        c = l.curve;
+	
+	    l.angle = l.x, delete l.x;
+	    l.radius = l.y, delete l.y;
+	
+	    l.curve = function(_) {
+	      return arguments.length ? c(curveRadial(_)) : c()._curve;
+	    };
+	
+	    return l.curve(curveLinear);
+	  }
+	
+	  var circle = {
+	    draw: function(context, size) {
+	      var r = Math.sqrt(size / pi);
+	      context.moveTo(r, 0);
+	      context.arc(0, 0, r, 0, tau);
+	    }
+	  };
+	
+	  var cross = {
+	    draw: function(context, size) {
+	      var r = Math.sqrt(size / 5) / 2;
+	      context.moveTo(-3 * r, -r);
+	      context.lineTo(-r, -r);
+	      context.lineTo(-r, -3 * r);
+	      context.lineTo(r, -3 * r);
+	      context.lineTo(r, -r);
+	      context.lineTo(3 * r, -r);
+	      context.lineTo(3 * r, r);
+	      context.lineTo(r, r);
+	      context.lineTo(r, 3 * r);
+	      context.lineTo(-r, 3 * r);
+	      context.lineTo(-r, r);
+	      context.lineTo(-3 * r, r);
+	      context.closePath();
+	    }
+	  };
+	
+	  var tan30 = Math.sqrt(1 / 3);
+	  var tan30_2 = tan30 * 2;
+	  var diamond = {
+	    draw: function(context, size) {
+	      var y = Math.sqrt(size / tan30_2),
+	          x = y * tan30;
+	      context.moveTo(0, -y);
+	      context.lineTo(x, 0);
+	      context.lineTo(0, y);
+	      context.lineTo(-x, 0);
+	      context.closePath();
+	    }
+	  };
+	
+	  var ka = 0.89081309152928522810;
+	  var kr = Math.sin(pi / 10) / Math.sin(7 * pi / 10);
+	  var kx = Math.sin(tau / 10) * kr;
+	  var ky = -Math.cos(tau / 10) * kr;
+	  var star = {
+	    draw: function(context, size) {
+	      var r = Math.sqrt(size * ka),
+	          x = kx * r,
+	          y = ky * r;
+	      context.moveTo(0, -r);
+	      context.lineTo(x, y);
+	      for (var i = 1; i < 5; ++i) {
+	        var a = tau * i / 5,
+	            c = Math.cos(a),
+	            s = Math.sin(a);
+	        context.lineTo(s * r, -c * r);
+	        context.lineTo(c * x - s * y, s * x + c * y);
+	      }
+	      context.closePath();
+	    }
+	  };
+	
+	  var square = {
+	    draw: function(context, size) {
+	      var w = Math.sqrt(size),
+	          x = -w / 2;
+	      context.rect(x, x, w, w);
+	    }
+	  };
+	
+	  var sqrt3 = Math.sqrt(3);
+	
+	  var triangle = {
+	    draw: function(context, size) {
+	      var y = -Math.sqrt(size / (sqrt3 * 3));
+	      context.moveTo(0, y * 2);
+	      context.lineTo(-sqrt3 * y, -y);
+	      context.lineTo(sqrt3 * y, -y);
+	      context.closePath();
+	    }
+	  };
+	
+	  var c = -0.5;
+	  var s = Math.sqrt(3) / 2;
+	  var k = 1 / Math.sqrt(12);
+	  var a = (k / 2 + 1) * 3;
+	  var wye = {
+	    draw: function(context, size) {
+	      var r = Math.sqrt(size / a),
+	          x0 = r / 2,
+	          y0 = r * k,
+	          x1 = x0,
+	          y1 = r * k + r,
+	          x2 = -x1,
+	          y2 = y1;
+	      context.moveTo(x0, y0);
+	      context.lineTo(x1, y1);
+	      context.lineTo(x2, y2);
+	      context.lineTo(c * x0 - s * y0, s * x0 + c * y0);
+	      context.lineTo(c * x1 - s * y1, s * x1 + c * y1);
+	      context.lineTo(c * x2 - s * y2, s * x2 + c * y2);
+	      context.lineTo(c * x0 + s * y0, c * y0 - s * x0);
+	      context.lineTo(c * x1 + s * y1, c * y1 - s * x1);
+	      context.lineTo(c * x2 + s * y2, c * y2 - s * x2);
+	      context.closePath();
+	    }
+	  };
+	
+	  var symbols = [
+	    circle,
+	    cross,
+	    diamond,
+	    square,
+	    star,
+	    triangle,
+	    wye
+	  ];
+	
+	  function symbol() {
+	    var type = constant(circle),
+	        size = constant(64),
+	        context = null;
+	
+	    function symbol() {
+	      var buffer;
+	      if (!context) context = buffer = d3Path.path();
+	      type.apply(this, arguments).draw(context, +size.apply(this, arguments));
+	      if (buffer) return context = null, buffer + "" || null;
+	    }
+	
+	    symbol.type = function(_) {
+	      return arguments.length ? (type = typeof _ === "function" ? _ : constant(_), symbol) : type;
+	    };
+	
+	    symbol.size = function(_) {
+	      return arguments.length ? (size = typeof _ === "function" ? _ : constant(+_), symbol) : size;
+	    };
+	
+	    symbol.context = function(_) {
+	      return arguments.length ? (context = _ == null ? null : _, symbol) : context;
+	    };
+	
+	    return symbol;
+	  }
+	
+	  function noop() {}
 	
 	  function point(that, x, y) {
 	    that._context.bezierCurveTo(
@@ -13018,7 +21102,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      (that._x0 + 4 * that._x1 + x) / 6,
 	      (that._y0 + 4 * that._y1 + y) / 6
 	    );
-	  };
+	  }
 	
 	  function Basis(context) {
 	    this._context = context;
@@ -13059,7 +21143,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  function basis(context) {
 	    return new Basis(context);
-	  };
+	  }
 	
 	  function BasisClosed(context) {
 	    this._context = context;
@@ -13109,7 +21193,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  function basisClosed(context) {
 	    return new BasisClosed(context);
-	  };
+	  }
 	
 	  function BasisOpen(context) {
 	    this._context = context;
@@ -13147,10 +21231,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  function basisOpen(context) {
 	    return new BasisOpen(context);
-	  };
+	  }
 	
 	  function Bundle(context, beta) {
-	    this._basis = basis(context);
+	    this._basis = new Basis(context);
 	    this._beta = beta;
 	  }
 	
@@ -13191,11 +21275,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function bundle(context, beta) {
-	    return beta == null ? new Bundle(context, 0.85)
-	        : (beta = +beta) === 1 ? basis(context)
-	        : new Bundle(context, beta);
-	  };
+	  var bundle = (function custom(beta) {
+	
+	    function bundle(context) {
+	      return beta === 1 ? new Basis(context) : new Bundle(context, beta);
+	    }
+	
+	    bundle.beta = function(beta) {
+	      return custom(+beta);
+	    };
+	
+	    return bundle;
+	  })(0.85);
 	
 	  function point$1(that, x, y) {
 	    that._context.bezierCurveTo(
@@ -13206,11 +21297,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      that._x2,
 	      that._y2
 	    );
-	  };
+	  }
 	
-	  function Cardinal(context, k) {
+	  function Cardinal(context, tension) {
 	    this._context = context;
-	    this._k = k;
+	    this._k = (1 - tension) / 6;
 	  }
 	
 	  Cardinal.prototype = {
@@ -13246,13 +21337,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function cardinal(context, tension) {
-	    return new Cardinal(context, (tension == null ? 1 : 1 - tension) / 6);
-	  };
+	  var cardinal = (function custom(tension) {
 	
-	  function CardinalClosed(context, k) {
+	    function cardinal(context) {
+	      return new Cardinal(context, tension);
+	    }
+	
+	    cardinal.tension = function(tension) {
+	      return custom(+tension);
+	    };
+	
+	    return cardinal;
+	  })(0);
+	
+	  function CardinalClosed(context, tension) {
 	    this._context = context;
-	    this._k = k;
+	    this._k = (1 - tension) / 6;
 	  }
 	
 	  CardinalClosed.prototype = {
@@ -13296,13 +21396,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function cardinalClosed(context, tension) {
-	    return new CardinalClosed(context, (tension == null ? 1 : 1 - tension) / 6);
-	  };
+	  var cardinalClosed = (function custom(tension) {
 	
-	  function CardinalOpen(context, k) {
+	    function cardinal(context) {
+	      return new CardinalClosed(context, tension);
+	    }
+	
+	    cardinal.tension = function(tension) {
+	      return custom(+tension);
+	    };
+	
+	    return cardinal;
+	  })(0);
+	
+	  function CardinalOpen(context, tension) {
 	    this._context = context;
-	    this._k = k;
+	    this._k = (1 - tension) / 6;
 	  }
 	
 	  CardinalOpen.prototype = {
@@ -13335,9 +21444,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function cardinalOpen(context, tension) {
-	    return new CardinalOpen(context, (tension == null ? 1 : 1 - tension) / 6);
-	  };
+	  var cardinalOpen = (function custom(tension) {
+	
+	    function cardinal(context) {
+	      return new CardinalOpen(context, tension);
+	    }
+	
+	    cardinal.tension = function(tension) {
+	      return custom(+tension);
+	    };
+	
+	    return cardinal;
+	  })(0);
 	
 	  function point$2(that, x, y) {
 	    var x1 = that._x1,
@@ -13360,7 +21478,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	
 	    that._context.bezierCurveTo(x1, y1, x2, y2, that._x2, that._y2);
-	  };
+	  }
 	
 	  function CatmullRom(context, alpha) {
 	    this._context = context;
@@ -13412,11 +21530,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function catmullRom(context, alpha) {
-	    return (alpha = alpha == null ? 0.5 : +alpha)
-	        ? new CatmullRom(context, alpha)
-	        : cardinal(context, 0);
-	  };
+	  var catmullRom = (function custom(alpha) {
+	
+	    function catmullRom(context) {
+	      return alpha ? new CatmullRom(context, alpha) : new Cardinal(context, 0);
+	    }
+	
+	    catmullRom.alpha = function(alpha) {
+	      return custom(+alpha);
+	    };
+	
+	    return catmullRom;
+	  })(0.5);
 	
 	  function CatmullRomClosed(context, alpha) {
 	    this._context = context;
@@ -13476,11 +21601,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function catmullRomClosed(context, alpha) {
-	    return (alpha = alpha == null ? 0.5 : +alpha)
-	        ? new CatmullRomClosed(context, alpha)
-	        : cardinalClosed(context, 0);
-	  };
+	  var catmullRomClosed = (function custom(alpha) {
+	
+	    function catmullRom(context) {
+	      return alpha ? new CatmullRomClosed(context, alpha) : new CardinalClosed(context, 0);
+	    }
+	
+	    catmullRom.alpha = function(alpha) {
+	      return custom(+alpha);
+	    };
+	
+	    return catmullRom;
+	  })(0.5);
 	
 	  function CatmullRomOpen(context, alpha) {
 	    this._context = context;
@@ -13529,52 +21661,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  function catmullRomOpen(context, alpha) {
-	    return (alpha = alpha == null ? 0.5 : +alpha)
-	        ? new CatmullRomOpen(context, alpha)
-	        : cardinalOpen(context, 0);
-	  };
+	  var catmullRomOpen = (function custom(alpha) {
 	
-	  var circle = {
-	    draw: function(context, size) {
-	      var r = Math.sqrt(size / pi);
-	      context.moveTo(r, 0);
-	      context.arc(0, 0, r, 0, tau);
+	    function catmullRom(context) {
+	      return alpha ? new CatmullRomOpen(context, alpha) : new CardinalOpen(context, 0);
 	    }
-	  };
 	
-	  var cross = {
-	    draw: function(context, size) {
-	      var r = Math.sqrt(size / 5) / 2;
-	      context.moveTo(-3 * r, -r);
-	      context.lineTo(-r, -r);
-	      context.lineTo(-r, -3 * r);
-	      context.lineTo(r, -3 * r);
-	      context.lineTo(r, -r);
-	      context.lineTo(3 * r, -r);
-	      context.lineTo(3 * r, r);
-	      context.lineTo(r, r);
-	      context.lineTo(r, 3 * r);
-	      context.lineTo(-r, 3 * r);
-	      context.lineTo(-r, r);
-	      context.lineTo(-3 * r, r);
-	      context.closePath();
-	    }
-	  };
+	    catmullRom.alpha = function(alpha) {
+	      return custom(+alpha);
+	    };
 	
-	  var tan30 = Math.sqrt(1 / 3);
-	  var tan30_2 = tan30 * 2;
-	  var diamond = {
-	    draw: function(context, size) {
-	      var y = Math.sqrt(size / tan30_2),
-	          x = y * tan30;
-	      context.moveTo(0, -y);
-	      context.lineTo(x, 0);
-	      context.lineTo(0, y);
-	      context.lineTo(-x, 0);
-	      context.closePath();
-	    }
-	  };
+	    return catmullRom;
+	  })(0.5);
 	
 	  function LinearClosed(context) {
 	    this._context = context;
@@ -13598,58 +21696,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  function linearClosed(context) {
 	    return new LinearClosed(context);
-	  };
-	
-	  function line() {
-	    var x$$ = x,
-	        y$$ = y,
-	        defined = constant(true),
-	        context = null,
-	        curve = curveLinear,
-	        output = null;
-	
-	    function line(data) {
-	      var i,
-	          n = data.length,
-	          d,
-	          defined0 = false,
-	          buffer;
-	
-	      if (!context) output = curve(buffer = d3Path.path());
-	
-	      for (i = 0; i <= n; ++i) {
-	        if (!(i < n && defined(d = data[i], i, data)) === defined0) {
-	          if (defined0 = !defined0) output.lineStart();
-	          else output.lineEnd();
-	        }
-	        if (defined0) output.point(+x$$(d, i, data), +y$$(d, i, data));
-	      }
-	
-	      if (buffer) return output = null, buffer + "" || null;
-	    }
-	
-	    line.x = function(_) {
-	      return arguments.length ? (x$$ = typeof _ === "function" ? _ : constant(+_), line) : x$$;
-	    };
-	
-	    line.y = function(_) {
-	      return arguments.length ? (y$$ = typeof _ === "function" ? _ : constant(+_), line) : y$$;
-	    };
-	
-	    line.defined = function(_) {
-	      return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), line) : defined;
-	    };
-	
-	    line.curve = function(_) {
-	      return arguments.length ? (curve = bind(_, arguments), context != null && (output = curve(context)), line) : curve;
-	    };
-	
-	    line.context = function(_) {
-	      return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
-	    };
-	
-	    return line;
-	  };
+	  }
 	
 	  function sign(x) {
 	    return x < 0 ? -1 : 1;
@@ -13662,8 +21709,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function slope3(that, x2, y2) {
 	    var h0 = that._x1 - that._x0,
 	        h1 = x2 - that._x1,
-	        s0 = (that._y1 - that._y0) / h0,
-	        s1 = (y2 - that._y1) / h1,
+	        s0 = (that._y1 - that._y0) / (h0 || h1 < 0 && -0),
+	        s1 = (y2 - that._y1) / (h1 || h0 < 0 && -0),
 	        p = (s0 * h1 + s1 * h0) / (h0 + h1);
 	    return (sign(s0) + sign(s1)) * Math.min(Math.abs(s0), Math.abs(s1), 0.5 * Math.abs(p)) || 0;
 	  }
@@ -13686,11 +21733,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    that._context.bezierCurveTo(x0 + dx, y0 + dx * t0, x1 - dx, y1 - dx * t1, x1, y1);
 	  }
 	
-	  function Monotone(context) {
+	  function MonotoneX(context) {
 	    this._context = context;
 	  }
 	
-	  Monotone.prototype = {
+	  MonotoneX.prototype = {
 	    areaStart: function() {
 	      this._line = 0;
 	    },
@@ -13729,9 +21776,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }
 	
-	  function monotone(context) {
-	    return new Monotone(context);
+	  function MonotoneY(context) {
+	    this._context = new ReflectContext(context);
+	  }
+	
+	  (MonotoneY.prototype = Object.create(MonotoneX.prototype)).point = function(x, y) {
+	    MonotoneX.prototype.point.call(this, y, x);
 	  };
+	
+	  function ReflectContext(context) {
+	    this._context = context;
+	  }
+	
+	  ReflectContext.prototype = {
+	    moveTo: function(x, y) { this._context.moveTo(y, x); },
+	    closePath: function() { this._context.closePath(); },
+	    lineTo: function(x, y) { this._context.lineTo(y, x); },
+	    bezierCurveTo: function(x1, y1, x2, y2, x, y) { this._context.bezierCurveTo(y1, x1, y2, x2, y, x); }
+	  };
+	
+	  function monotoneX(context) {
+	    return new MonotoneX(context);
+	  }
+	
+	  function monotoneY(context) {
+	    return new MonotoneY(context);
+	  }
 	
 	  function Natural(context) {
 	    this._context = context;
@@ -13797,260 +21867,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  function natural(context) {
 	    return new Natural(context);
-	  };
-	
-	  function descending(a, b) {
-	    return b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
-	  };
-	
-	  function identity(d) {
-	    return d;
-	  };
-	
-	  function pie() {
-	    var value = identity,
-	        sortValues = descending,
-	        sort = null,
-	        startAngle = constant(0),
-	        endAngle = constant(tau),
-	        padAngle = constant(0);
-	
-	    function pie(data) {
-	      var n = data.length,
-	          sum = 0,
-	          index = new Array(n),
-	          arcs = new Array(n),
-	          a0 = +startAngle.apply(this, arguments),
-	          da = Math.min(tau, Math.max(-tau, endAngle.apply(this, arguments) - a0)),
-	          a1,
-	          p = Math.min(Math.abs(da) / n, padAngle.apply(this, arguments)),
-	          pa = p * (da < 0 ? -1 : 1);
-	
-	      for (var i = 0, v; i < n; ++i) {
-	        if ((v = arcs[index[i] = i] = +value(data[i], i, data)) > 0) {
-	          sum += v;
-	        }
-	      }
-	
-	      // Optionally sort the arcs by previously-computed values or by data.
-	      if (sortValues != null) index.sort(function(i, j) { return sortValues(arcs[i], arcs[j]); });
-	      else if (sort !== null) index.sort(function(i, j) { return sort(data[i], data[j]); });
-	
-	      // Compute the arcs! They are stored in the original data's order.
-	      for (var i = 0, j, k = sum ? (da - n * pa) / sum : 0; i < n; ++i, a0 = a1) {
-	        j = index[i], v = arcs[j], a1 = a0 + (v > 0 ? v * k : 0) + pa, arcs[j] = {
-	          data: data[j],
-	          value: v,
-	          startAngle: a0,
-	          endAngle: a1,
-	          padAngle: p
-	        };
-	      }
-	
-	      return arcs;
-	    }
-	
-	    pie.value = function(_) {
-	      return arguments.length ? (value = typeof _ === "function" ? _ : constant(+_), pie) : value;
-	    };
-	
-	    pie.sortValues = function(_) {
-	      return arguments.length ? (sortValues = _, sort = null, pie) : sortValues;
-	    };
-	
-	    pie.sort = function(_) {
-	      return arguments.length ? (sort = _, sortValues = null, pie) : sort;
-	    };
-	
-	    pie.startAngle = function(_) {
-	      return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant(+_), pie) : startAngle;
-	    };
-	
-	    pie.endAngle = function(_) {
-	      return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant(+_), pie) : endAngle;
-	    };
-	
-	    pie.padAngle = function(_) {
-	      return arguments.length ? (padAngle = typeof _ === "function" ? _ : constant(+_), pie) : padAngle;
-	    };
-	
-	    return pie;
-	  };
-	
-	  function Radial(curve) {
-	    this._curve = curve;
 	  }
 	
-	  Radial.prototype = {
-	    areaStart: function() {
-	      this._curve.areaStart();
-	    },
-	    areaEnd: function() {
-	      this._curve.areaEnd();
-	    },
-	    lineStart: function() {
-	      this._curve.lineStart();
-	    },
-	    lineEnd: function() {
-	      this._curve.lineEnd();
-	    },
-	    point: function(a, r) {
-	      a -= halfPi, this._curve.point(r * Math.cos(a), r * Math.sin(a));
-	    }
-	  };
-	
-	  function curveRadial(curve, args) {
-	    curve = bind(curve, args);
-	
-	    function radial(context) {
-	      return new Radial(curve(context));
-	    }
-	
-	    radial._curve = curve;
-	
-	    return radial;
-	  };
-	
-	  function radialArea() {
-	    var a = area(),
-	        c = a.curve;
-	
-	    a.angle = a.x, delete a.x;
-	    a.startAngle = a.x0, delete a.x0;
-	    a.endAngle = a.x1, delete a.x1;
-	    a.radius = a.y, delete a.y;
-	    a.innerRadius = a.y0, delete a.y0;
-	    a.outerRadius = a.y1, delete a.y1;
-	
-	    a.curve = function(_) {
-	      return arguments.length ? c(curveRadial(_, arguments)) : c()._curve;
-	    };
-	
-	    return a.curve(curveLinear);
-	  };
-	
-	  function radialLine() {
-	    var l = line(),
-	        c = l.curve;
-	
-	    l.angle = l.x, delete l.x;
-	    l.radius = l.y, delete l.y;
-	
-	    l.curve = function(_) {
-	      return arguments.length ? c(curveRadial(_, arguments)) : c()._curve;
-	    };
-	
-	    return l.curve(curveLinear);
-	  };
-	
-	  var square = {
-	    draw: function(context, size) {
-	      var w = Math.sqrt(size),
-	          x = -w / 2;
-	      context.rect(x, x, w, w);
-	    }
-	  };
-	
-	  var ka = 0.89081309152928522810;
-	  var kr = Math.sin(pi / 10) / Math.sin(7 * pi / 10);
-	  var kx = Math.sin(tau / 10) * kr;
-	  var ky = -Math.cos(tau / 10) * kr;
-	  var star = {
-	    draw: function(context, size) {
-	      var r = Math.sqrt(size * ka),
-	          x = kx * r,
-	          y = ky * r;
-	      context.moveTo(0, -r);
-	      context.lineTo(x, y);
-	      for (var i = 1; i < 5; ++i) {
-	        var a = tau * i / 5,
-	            c = Math.cos(a),
-	            s = Math.sin(a);
-	        context.lineTo(s * r, -c * r);
-	        context.lineTo(c * x - s * y, s * x + c * y);
-	      }
-	      context.closePath();
-	    }
-	  };
-	
-	  function StepAfter(context) {
+	  function Step(context, t) {
 	    this._context = context;
-	  }
-	
-	  StepAfter.prototype = {
-	    areaStart: function() {
-	      this._line = 0;
-	    },
-	    areaEnd: function() {
-	      this._line = NaN;
-	    },
-	    lineStart: function() {
-	      this._y = NaN;
-	      this._point = 0;
-	    },
-	    lineEnd: function() {
-	      if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
-	      this._line = 1 - this._line;
-	    },
-	    point: function(x, y) {
-	      x = +x, y = +y;
-	      switch (this._point) {
-	        case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
-	        case 1: this._point = 2; // proceed
-	        default: {
-	          this._context.lineTo(x, this._y);
-	          this._context.lineTo(x, y);
-	          break;
-	        }
-	      }
-	      this._y = y;
-	    }
-	  };
-	
-	  function stepAfter(context) {
-	    return new StepAfter(context);
-	  };
-	
-	  function StepBefore(context) {
-	    this._context = context;
-	  }
-	
-	  StepBefore.prototype = {
-	    areaStart: function() {
-	      this._line = 0;
-	    },
-	    areaEnd: function() {
-	      this._line = NaN;
-	    },
-	    lineStart: function() {
-	      this._x = NaN;
-	      this._point = 0;
-	    },
-	    lineEnd: function() {
-	      if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
-	      this._line = 1 - this._line;
-	    },
-	    point: function(x, y) {
-	      x = +x, y = +y;
-	      switch (this._point) {
-	        case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
-	        case 1: this._point = 2; // proceed
-	        default: {
-	          this._context.lineTo(this._x, y);
-	          this._context.lineTo(x, y);
-	          break;
-	        }
-	      }
-	      this._x = x;
-	    }
-	  };
-	
-	  function stepBefore(context) {
-	    return new StepBefore(context);
-	  };
-	
-	  function Step(context) {
-	    this._context = context;
+	    this._t = t;
 	  }
 	
 	  Step.prototype = {
@@ -14065,7 +21886,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this._point = 0;
 	    },
 	    lineEnd: function() {
-	      if (this._point === 2) this._context.lineTo(this._x, this._y);
+	      if (0 < this._t && this._t < 1 && this._point === 2) this._context.lineTo(this._x, this._y);
 	      if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
 	      this._line = 1 - this._line;
 	    },
@@ -14075,9 +21896,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	        case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
 	        case 1: this._point = 2; // proceed
 	        default: {
-	          var x1 = (this._x + x) / 2;
-	          this._context.lineTo(x1, this._y);
-	          this._context.lineTo(x1, y);
+	          var t = x > this._x ? this._t : 1 - this._t;
+	          if (t <= 0) {
+	            this._context.lineTo(this._x, y);
+	            this._context.lineTo(x, y);
+	          } else if (t >= 1) {
+	            this._context.lineTo(x, this._y);
+	            this._context.lineTo(x, y);
+	          } else {
+	            var x1 = (this._x + x) * t;
+	            this._context.lineTo(x1, this._y);
+	            this._context.lineTo(x1, y);
+	          }
 	          break;
 	        }
 	      }
@@ -14086,130 +21916,228 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	
 	  function step(context) {
-	    return new Step(context);
-	  };
+	    return new Step(context, 0.5);
+	  }
 	
-	  var c = -0.5;
-	  var s = Math.sqrt(3) / 2;
-	  var k = 1 / Math.sqrt(12);
-	  var a = (k / 2 + 1) * 3;
-	  var wye = {
-	    draw: function(context, size) {
-	      var r = Math.sqrt(size / a),
-	          x0 = r / 2,
-	          y0 = r * k,
-	          x1 = x0,
-	          y1 = r * k + r,
-	          x2 = -x1,
-	          y2 = y1;
-	      context.moveTo(x0, y0);
-	      context.lineTo(x1, y1);
-	      context.lineTo(x2, y2);
-	      context.lineTo(c * x0 - s * y0, s * x0 + c * y0);
-	      context.lineTo(c * x1 - s * y1, s * x1 + c * y1);
-	      context.lineTo(c * x2 - s * y2, s * x2 + c * y2);
-	      context.lineTo(c * x0 + s * y0, c * y0 - s * x0);
-	      context.lineTo(c * x1 + s * y1, c * y1 - s * x1);
-	      context.lineTo(c * x2 + s * y2, c * y2 - s * x2);
-	      context.closePath();
+	  function stepBefore(context) {
+	    return new Step(context, 0);
+	  }
+	
+	  function stepAfter(context) {
+	    return new Step(context, 1);
+	  }
+	
+	  var slice = Array.prototype.slice;
+	
+	  function none(series, order) {
+	    if (!((n = series.length) > 1)) return;
+	    for (var i = 1, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
+	      s0 = s1, s1 = series[order[i]];
+	      for (var j = 0; j < m; ++j) {
+	        s1[j][1] += s1[j][0] = isNaN(s0[j][1]) ? s0[j][0] : s0[j][1];
+	      }
 	    }
-	  };
+	  }
 	
-	  var sqrt3 = Math.sqrt(3);
+	  function none$1(series) {
+	    var n = series.length, o = new Array(n);
+	    while (--n >= 0) o[n] = n;
+	    return o;
+	  }
 	
-	  var triangle = {
-	    draw: function(context, size) {
-	      var y = -Math.sqrt(size / (sqrt3 * 3));
-	      context.moveTo(0, y * 2);
-	      context.lineTo(-sqrt3 * y, -y);
-	      context.lineTo(sqrt3 * y, -y);
-	      context.closePath();
+	  function stackValue(d, key) {
+	    return d[key];
+	  }
+	
+	  function stack() {
+	    var keys = constant([]),
+	        order = none$1,
+	        offset = none,
+	        value = stackValue;
+	
+	    function stack(data) {
+	      var kz = keys.apply(this, arguments),
+	          i,
+	          m = data.length,
+	          n = kz.length,
+	          sz = new Array(n),
+	          oz;
+	
+	      for (i = 0; i < n; ++i) {
+	        for (var ki = kz[i], si = sz[i] = new Array(m), j = 0, sij; j < m; ++j) {
+	          si[j] = sij = [0, +value(data[j], ki, j, data)];
+	          sij.data = data[j];
+	        }
+	        si.key = ki;
+	      }
+	
+	      for (i = 0, oz = order(sz); i < n; ++i) {
+	        sz[oz[i]].index = i;
+	      }
+	
+	      offset(sz, oz);
+	      return sz;
 	    }
-	  };
 	
-	  var symbols = [
-	    circle,
-	    cross,
-	    diamond,
-	    square,
-	    star,
-	    triangle,
-	    wye
-	  ];
-	
-	  function symbol() {
-	    var type = constant(circle),
-	        size = constant(64),
-	        context = null;
-	
-	    function symbol() {
-	      var buffer;
-	      if (!context) context = buffer = d3Path.path();
-	      type.apply(this, arguments).draw(context, +size.apply(this, arguments));
-	      if (buffer) return context = null, buffer + "" || null;
-	    }
-	
-	    symbol.type = function(_) {
-	      return arguments.length ? (type = typeof _ === "function" ? _ : constant(_), symbol) : type;
+	    stack.keys = function(_) {
+	      return arguments.length ? (keys = typeof _ === "function" ? _ : constant(slice.call(_)), stack) : keys;
 	    };
 	
-	    symbol.size = function(_) {
-	      return arguments.length ? (size = typeof _ === "function" ? _ : constant(+_), symbol) : size;
+	    stack.value = function(_) {
+	      return arguments.length ? (value = typeof _ === "function" ? _ : constant(+_), stack) : value;
 	    };
 	
-	    symbol.context = function(_) {
-	      return arguments.length ? (context = _ == null ? null : _, symbol) : context;
+	    stack.order = function(_) {
+	      return arguments.length ? (order = _ == null ? none$1 : typeof _ === "function" ? _ : constant(slice.call(_)), stack) : order;
 	    };
 	
-	    return symbol;
-	  };
+	    stack.offset = function(_) {
+	      return arguments.length ? (offset = _ == null ? none : _, stack) : offset;
+	    };
 	
-	  var version = "0.2.2";
+	    return stack;
+	  }
+	
+	  function expand(series, order) {
+	    if (!((n = series.length) > 0)) return;
+	    for (var i, n, j = 0, m = series[0].length, y; j < m; ++j) {
+	      for (y = i = 0; i < n; ++i) y += series[i][j][1] || 0;
+	      if (y) for (i = 0; i < n; ++i) series[i][j][1] /= y;
+	    }
+	    none(series, order);
+	  }
+	
+	  function silhouette(series, order) {
+	    if (!((n = series.length) > 0)) return;
+	    for (var j = 0, s0 = series[order[0]], n, m = s0.length; j < m; ++j) {
+	      for (var i = 0, y = 0; i < n; ++i) y += series[i][j][1] || 0;
+	      s0[j][1] += s0[j][0] = -y / 2;
+	    }
+	    none(series, order);
+	  }
+	
+	  function wiggle(series, order) {
+	    if (!((n = series.length) > 0) || !((m = (s0 = series[order[0]]).length) > 0)) return;
+	    for (var y = 0, j = 1, s0, m, n; j < m; ++j) {
+	      for (var i = 0, s1 = 0, s2 = 0; i < n; ++i) {
+	        var si = series[order[i]],
+	            sij0 = si[j][1] || 0,
+	            sij1 = si[j - 1][1] || 0,
+	            s3 = (sij0 - sij1) / 2;
+	        for (var k = 0; k < i; ++k) {
+	          var sk = series[order[k]],
+	              skj0 = sk[j][1] || 0,
+	              skj1 = sk[j - 1][1] || 0;
+	          s3 += skj0 - skj1;
+	        }
+	        s1 += sij0, s2 += s3 * sij0;
+	      }
+	      s0[j - 1][1] += s0[j - 1][0] = y;
+	      if (s1) y -= s2 / s1;
+	    }
+	    s0[j - 1][1] += s0[j - 1][0] = y;
+	    none(series, order);
+	  }
+	
+	  function ascending(series) {
+	    var sums = series.map(sum);
+	    return none$1(series).sort(function(a, b) { return sums[a] - sums[b]; });
+	  }
+	
+	  function sum(series) {
+	    var s = 0, i = -1, n = series.length, v;
+	    while (++i < n) if (v = +series[i][1]) s += v;
+	    return s;
+	  }
+	
+	  function descending$1(series) {
+	    return ascending(series).reverse();
+	  }
+	
+	  function insideOut(series) {
+	    var n = series.length,
+	        i,
+	        j,
+	        sums = series.map(sum),
+	        order = none$1(series).sort(function(a, b) { return sums[b] - sums[a]; }),
+	        top = 0,
+	        bottom = 0,
+	        tops = [],
+	        bottoms = [];
+	
+	    for (i = 0; i < n; ++i) {
+	      j = order[i];
+	      if (top < bottom) {
+	        top += sums[j];
+	        tops.push(j);
+	      } else {
+	        bottom += sums[j];
+	        bottoms.push(j);
+	      }
+	    }
+	
+	    return bottoms.reverse().concat(tops);
+	  }
+	
+	  function reverse(series) {
+	    return none$1(series).reverse();
+	  }
 	
 	  exports.version = version;
 	  exports.arc = arc;
 	  exports.area = area;
-	  exports.basisClosed = basisClosed;
-	  exports.basisOpen = basisOpen;
-	  exports.basis = basis;
-	  exports.bundle = bundle;
-	  exports.cardinalClosed = cardinalClosed;
-	  exports.cardinalOpen = cardinalOpen;
-	  exports.cardinal = cardinal;
-	  exports.catmullRomClosed = catmullRomClosed;
-	  exports.catmullRomOpen = catmullRomOpen;
-	  exports.catmullRom = catmullRom;
-	  exports.circle = circle;
-	  exports.cross = cross;
-	  exports.diamond = diamond;
-	  exports.linearClosed = linearClosed;
-	  exports.linear = curveLinear;
 	  exports.line = line;
-	  exports.monotone = monotone;
-	  exports.natural = natural;
 	  exports.pie = pie;
 	  exports.radialArea = radialArea;
 	  exports.radialLine = radialLine;
-	  exports.square = square;
-	  exports.star = star;
-	  exports.stepAfter = stepAfter;
-	  exports.stepBefore = stepBefore;
-	  exports.step = step;
 	  exports.symbol = symbol;
 	  exports.symbols = symbols;
-	  exports.triangle = triangle;
-	  exports.wye = wye;
+	  exports.symbolCircle = circle;
+	  exports.symbolCross = cross;
+	  exports.symbolDiamond = diamond;
+	  exports.symbolSquare = square;
+	  exports.symbolStar = star;
+	  exports.symbolTriangle = triangle;
+	  exports.symbolWye = wye;
+	  exports.curveBasisClosed = basisClosed;
+	  exports.curveBasisOpen = basisOpen;
+	  exports.curveBasis = basis;
+	  exports.curveBundle = bundle;
+	  exports.curveCardinalClosed = cardinalClosed;
+	  exports.curveCardinalOpen = cardinalOpen;
+	  exports.curveCardinal = cardinal;
+	  exports.curveCatmullRomClosed = catmullRomClosed;
+	  exports.curveCatmullRomOpen = catmullRomOpen;
+	  exports.curveCatmullRom = catmullRom;
+	  exports.curveLinearClosed = linearClosed;
+	  exports.curveLinear = curveLinear;
+	  exports.curveMonotoneX = monotoneX;
+	  exports.curveMonotoneY = monotoneY;
+	  exports.curveNatural = natural;
+	  exports.curveStep = step;
+	  exports.curveStepAfter = stepAfter;
+	  exports.curveStepBefore = stepBefore;
+	  exports.stack = stack;
+	  exports.stackOffsetExpand = expand;
+	  exports.stackOffsetNone = none;
+	  exports.stackOffsetSilhouette = silhouette;
+	  exports.stackOffsetWiggle = wiggle;
+	  exports.stackOrderAscending = ascending;
+	  exports.stackOrderDescending = descending$1;
+	  exports.stackOrderInsideOut = insideOut;
+	  exports.stackOrderNone = none$1;
+	  exports.stackOrderReverse = reverse;
 	
 	}));
 
 /***/ },
-/* 141 */
+/* 340 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	  (factory((global.d3_path = {})));
+	  (factory((global.d3_path = global.d3_path || {})));
 	}(this, function (exports) { 'use strict';
 	
 	  var pi = Math.PI;
@@ -14227,6 +22155,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  Path.prototype = path.prototype = {
+	    constructor: Path,
 	    moveTo: function(x, y) {
 	      this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y);
 	    },
@@ -14354,7 +22283,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  };
 	
-	  var version = "0.1.4";
+	  var version = "0.1.5";
 	
 	  exports.version = version;
 	  exports.path = path;
@@ -14362,356 +22291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 142 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _lodashObjectDefaults = __webpack_require__(2);
-	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
-	
-	var _react = __webpack_require__(29);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _victoryCore = __webpack_require__(30);
-	
-	var LineLabel = (function (_React$Component) {
-	  _inherits(LineLabel, _React$Component);
-	
-	  function LineLabel() {
-	    _classCallCheck(this, LineLabel);
-	
-	    _get(Object.getPrototypeOf(LineLabel.prototype), "constructor", this).apply(this, arguments);
-	  }
-	
-	  _createClass(LineLabel, [{
-	    key: "renderLabelComponent",
-	    value: function renderLabelComponent(props) {
-	      var component = props.label;
-	      var baseStyle = (0, _lodashObjectDefaults2["default"])({ padding: 0 }, component.props.style, props.style);
-	      var style = _victoryCore.Helpers.evaluateStyle(baseStyle, props.data);
-	      var children = component.props.children || "";
-	      var newProps = {
-	        x: component.props.x || props.position.x + style.padding,
-	        y: component.props.y || props.position.y - style.padding,
-	        data: props.data,
-	        textAnchor: component.props.textAnchor || "start",
-	        verticalAnchor: component.props.verticalAnchor || "middle",
-	        style: style
-	      };
-	      return _react2["default"].cloneElement(component, newProps, children);
-	    }
-	  }, {
-	    key: "renderVictoryLabel",
-	    value: function renderVictoryLabel(props) {
-	      var style = _victoryCore.Helpers.evaluateStyle((0, _lodashObjectDefaults2["default"])({ padding: 0 }, props.style), props.data);
-	      return _react2["default"].createElement(
-	        _victoryCore.VictoryLabel,
-	        {
-	          x: props.position.x + style.padding,
-	          y: props.position.y - style.padding,
-	          textAnchor: "start",
-	          verticalAnchor: "middle",
-	          style: style
-	        },
-	        props.label
-	      );
-	    }
-	  }, {
-	    key: "renderLabel",
-	    value: function renderLabel(props) {
-	      return props.label && props.label.props ? this.renderLabelComponent(props) : this.renderVictoryLabel(props);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return _react2["default"].createElement(
-	        "g",
-	        null,
-	        this.renderLabel(this.props)
-	      );
-	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      data: _react.PropTypes.array,
-	      position: _react.PropTypes.object,
-	      style: _react.PropTypes.object
-	    },
-	    enumerable: true
-	  }]);
-	
-	  return LineLabel;
-	})(_react2["default"].Component);
-	
-	exports["default"] = LineLabel;
-	module.exports = exports["default"];
-
-/***/ },
-/* 143 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var MapOrSimilar = __webpack_require__(144);
-	
-	module.exports = function (limit) {
-	    var cache = new MapOrSimilar(),
-	        lru = [];
-	
-	    return function (fn) {
-	        var memoizerific = function () {
-	            var currentCache = cache,
-	                newMap,
-	                fnResult,
-	                argsLengthMinusOne = arguments.length - 1,
-	                lruPath = Array(argsLengthMinusOne + 1),
-	                isMemoized = true,
-	                i;
-	
-	            // loop through each argument to traverse the map tree
-	            for (i = 0; i < argsLengthMinusOne; i++) {
-	                lruPath[i] = {
-	                    cacheItem: currentCache,
-	                    arg: arguments[i]
-	                };
-	
-	                // if all arguments exist in map tree, the memoized result will be last value to be retrieved
-	                if (currentCache.has(arguments[i])) {
-	                    currentCache = currentCache.get(arguments[i]);
-	                    continue;
-	                }
-	
-	                isMemoized = false;
-	
-	                // make maps until last value
-	                newMap = new MapOrSimilar();
-	                currentCache.set(arguments[i], newMap);
-	                currentCache = newMap;
-	            }
-	
-	            // we are at the last arg, check if it is really memoized
-	            if (isMemoized) {
-	                if (currentCache.has(arguments[argsLengthMinusOne])) {
-	                    fnResult = currentCache.get(arguments[argsLengthMinusOne]);
-	                } else {
-	                    isMemoized = false;
-	                }
-	            }
-	
-	            if (!isMemoized) {
-	                fnResult = fn.apply(null, arguments);
-	                currentCache.set(arguments[argsLengthMinusOne], fnResult);
-	            }
-	
-	            if (limit > 0) {
-	                lruPath[argsLengthMinusOne] = {
-	                    cacheItem: currentCache,
-	                    arg: arguments[argsLengthMinusOne]
-	                };
-	
-	                if (isMemoized) {
-	                    moveToMostRecentLru(lru, lruPath);
-	                } else {
-	                    lru.push(lruPath);
-	                }
-	
-	                if (lru.length > limit) {
-	                    removeCachedResult(lru.shift());
-	                }
-	            }
-	
-	            memoizerific.wasMemoized = isMemoized;
-	
-	            return fnResult;
-	        };
-	
-	        memoizerific.limit = limit;
-	        memoizerific.wasMemoized = false;
-	        memoizerific.cache = cache;
-	        memoizerific.lru = lru;
-	
-	        return memoizerific;
-	    };
-	};
-	
-	// move current args to most recent position
-	function moveToMostRecentLru(lru, lruPath) {
-	    var lruLen = lru.length,
-	        lruPathLen = lruPath.length,
-	        isMatch,
-	        i, ii;
-	
-	    for (i = 0; i < lruLen; i++) {
-	        isMatch = true;
-	        for (ii = 0; ii < lruPathLen; ii++) {
-	            if (lru[i][ii].arg !== lruPath[ii].arg) {
-	                isMatch = false;
-	                break;
-	            }
-	        }
-	        if (isMatch) {
-	            break;
-	        }
-	    }
-	
-	    lru.push(lru.splice(i, 1)[0]);
-	}
-	
-	// remove least recently used cache item and all dead branches
-	function removeCachedResult(removedLru) {
-	    var removedLruLen = removedLru.length,
-	        currentLru = removedLru[removedLruLen - 1],
-	        tmp,
-	        i;
-	
-	    currentLru.cacheItem.delete(currentLru.arg);
-	
-	    // walk down the tree removing dead branches (size 0) along the way
-	    for (i = removedLruLen - 2; i >= 0; i--) {
-	        currentLru = removedLru[i];
-	        tmp = currentLru.cacheItem.get(currentLru.arg);
-	
-	        if (!tmp || !tmp.size) {
-	            currentLru.cacheItem.delete(currentLru.arg);
-	        } else {
-	            break;
-	        }
-	    }
-	}
-
-
-/***/ },
-/* 144 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {if (typeof Map !== 'function' || (process && process.env && process.env.TEST_MAPORSIMILAR === 'true')) {
-	    module.exports = __webpack_require__(145);
-	}
-	else {
-	    module.exports = Map;
-	}
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(42)))
-
-/***/ },
-/* 145 */
-/***/ function(module, exports) {
-
-	function Similar() {
-	    this.list = [];
-	    this.lastItem = undefined;
-	    this.size = 0;
-	
-	    return this;
-	}
-	
-	Similar.prototype.get = function(key) {
-	    var index;
-	
-	    if (this.lastItem && this.lastItem.key === key) {
-	        return this.lastItem.val;
-	    }
-	
-	    index = this.indexOf(key);
-	    if (index >= 0) {
-	        this.lastItem = this.list[index];
-	        return this.list[index].val;
-	    }
-	
-	    return undefined;
-	};
-	
-	Similar.prototype.set = function(key, val) {
-	    var index;
-	
-	    if (this.lastItem && this.lastItem.key === key) {
-	        this.lastItem.val = val;
-	        return this;
-	    }
-	
-	    index = this.indexOf(key);
-	    if (index >= 0) {
-	        this.lastItem = this.list[index];
-	        this.list[index].val = val;
-	        return this;
-	    }
-	
-	    this.lastItem = { key: key, val: val };
-	    this.list.push(this.lastItem);
-	    this.size++;
-	
-	    return this;
-	};
-	
-	Similar.prototype.delete = function(key) {
-	    var index;
-	
-	    if (this.lastItem && this.lastItem.key === key) {
-	        this.lastItem = undefined;
-	    }
-	
-	    index = this.indexOf(key);
-	    if (index >= 0) {
-	        this.size--;
-	        return this.list.splice(index, 1)[0];
-	    }
-	
-	    return undefined;
-	};
-	
-	
-	// important that has() doesn't use get() in case an existing key has a falsy value, in which case has() would return false
-	Similar.prototype.has = function(key) {
-	    var index;
-	
-	    if (this.lastItem && this.lastItem.key === key) {
-	        return true;
-	    }
-	
-	    index = this.indexOf(key);
-	    if (index >= 0) {
-	        this.lastItem = this.list[index];
-	        return true;
-	    }
-	
-	    return false;
-	};
-	
-	Similar.prototype.forEach = function(callback, thisArg) {
-	    var i;
-	    for (i = 0; i < this.size; i++) {
-	        callback.call(thisArg || this, this.list[i].val, this.list[i].key, this);
-	    }
-	};
-	
-	Similar.prototype.indexOf = function(key) {
-	    var i;
-	    for (i = 0; i < this.size; i++) {
-	        if (this.list[i].key === key) {
-	            return i;
-	        }
-	    }
-	    return -1;
-	};
-	
-	module.exports = Similar;
-
-/***/ },
-/* 146 */
+/* 341 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -14722,53 +22302,1121 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _defaults = __webpack_require__(2);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _assign = __webpack_require__(209);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _assign2 = _interopRequireDefault(_assign);
 	
-	var _lodashObjectPick = __webpack_require__(71);
-	
-	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _helpersScale = __webpack_require__(93);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var _helpersData = __webpack_require__(102);
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var _helpersData2 = _interopRequireDefault(_helpersData);
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	var _helpersDomain = __webpack_require__(101);
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	var LineLabel = function (_React$Component) {
+	  _inherits(LineLabel, _React$Component);
 	
-	var _victoryCore = __webpack_require__(30);
+	  function LineLabel() {
+	    _classCallCheck(this, LineLabel);
 	
-	var _memoizerific = __webpack_require__(143);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LineLabel).apply(this, arguments));
+	  }
 	
-	var _memoizerific2 = _interopRequireDefault(_memoizerific);
+	  _createClass(LineLabel, [{
+	    key: "renderLabelComponent",
+	    value: function renderLabelComponent(props) {
+	      var component = props.label;
+	      var baseStyle = (0, _defaults2.default)({}, component.props.style, props.style, { padding: 0 });
+	      var style = _victoryCore.Helpers.evaluateStyle(baseStyle, props.data);
+	      var baseEvents = component && component.props.events ? (0, _defaults2.default)({}, component.props.events, props.events) : props.events;
+	      var events = _victoryCore.Helpers.getPartialEvents(baseEvents, 0, props);
+	      var newProps = (0, _assign2.default)({}, events, {
+	        x: component.props.x || props.position.x + style.padding,
+	        y: component.props.y || props.position.y - style.padding,
+	        data: props.data,
+	        text: component.props.text,
+	        textAnchor: component.props.textAnchor || "start",
+	        verticalAnchor: component.props.verticalAnchor || "middle",
+	        style: style
+	      });
+	      return _react2.default.cloneElement(component, newProps);
+	    }
+	  }, {
+	    key: "renderVictoryLabel",
+	    value: function renderVictoryLabel(props) {
+	      var style = _victoryCore.Helpers.evaluateStyle((0, _defaults2.default)({}, props.style), props.data, { padding: 0 });
+	      var events = _victoryCore.Helpers.getPartialEvents(this.props.events, 0, this.props);
+	      return _react2.default.createElement(_victoryCore.VictoryLabel, _extends({
+	        x: props.position.x + style.padding,
+	        y: props.position.y - style.padding,
+	        data: props.data,
+	        textAnchor: "start",
+	        verticalAnchor: "middle",
+	        style: style,
+	        text: props.label
+	      }, events));
+	    }
+	  }, {
+	    key: "renderLabel",
+	    value: function renderLabel(props) {
+	      return props.label && props.label.props ? this.renderLabelComponent(props) : this.renderVictoryLabel(props);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "g",
+	        null,
+	        this.renderLabel(this.props)
+	      );
+	    }
+	  }]);
 	
-	var _bar = __webpack_require__(147);
+	  return LineLabel;
+	}(_react2.default.Component);
+	
+	LineLabel.propTypes = {
+	  data: _react.PropTypes.array,
+	  events: _react.PropTypes.object,
+	  label: _react.PropTypes.any,
+	  position: _react.PropTypes.object,
+	  style: _react.PropTypes.object
+	};
+	exports.default = LineLabel;
+
+/***/ },
+/* 342 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _memoize = __webpack_require__(343);
+	
+	var _memoize2 = _interopRequireDefault(_memoize);
+	
+	exports['default'] = _memoize2['default'];
+	module.exports = exports['default'];
+
+/***/ },
+/* 343 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports['default'] = memoize;
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+	
+	var _singletonCache = __webpack_require__(344);
+	
+	var _singletonCache2 = _interopRequireDefault(_singletonCache);
+	
+	var _lruCache = __webpack_require__(345);
+	
+	var _lruCache2 = _interopRequireDefault(_lruCache);
+	
+	var _deepEquals = __webpack_require__(346);
+	
+	var _deepEquals2 = _interopRequireDefault(_deepEquals);
+	
+	function createCache(limit, equals) {
+	  return limit === 1 ? _singletonCache2['default'](equals) : _lruCache2['default'](limit, equals);
+	}
+	
+	function memoize() {
+	  var limit = 1;
+	  var equals = function equals(valueA, valueB) {
+	    return valueA === valueB;
+	  };
+	  var deepObjects = false;
+	
+	  for (var _len = arguments.length, config = Array(_len), _key = 0; _key < _len; _key++) {
+	    config[_key] = arguments[_key];
+	  }
+	
+	  if (typeof config[0] === 'number') {
+	    limit = config.shift();
+	  }
+	  if (typeof config[0] === 'function') {
+	    equals = config.shift();
+	  }
+	  if (typeof config[0] === 'boolean') {
+	    deepObjects = config[0];
+	  }
+	
+	  var cache = createCache(limit, _deepEquals2['default'](equals, deepObjects));
+	
+	  return function (fn) {
+	    return function () {
+	      for (var _len2 = arguments.length, args = Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+	        args[_key2] = arguments[_key2];
+	      }
+	
+	      var value = cache.get(args);
+	      if (value === undefined) {
+	        value = fn.apply(fn, args);
+	        cache.put(args, value);
+	      }
+	      return value;
+	    };
+	  };
+	}
+	
+	module.exports = exports['default'];
+
+/***/ },
+/* 344 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	exports["default"] = singletonCache;
+	
+	function singletonCache(equals) {
+	  var entry = undefined;
+	  return {
+	    get: function get(key) {
+	      if (entry && equals(key, entry.key)) {
+	        return entry.value;
+	      }
+	    },
+	
+	    put: function put(key, value) {
+	      entry = { key: key, value: value };
+	    }
+	  };
+	}
+	
+	module.exports = exports["default"];
+
+/***/ },
+/* 345 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	exports.__esModule = true;
+	exports["default"] = lruCache;
+	
+	function lruCache(limit, equals) {
+	  var entries = [];
+	
+	  function get(key) {
+	    for (var index = 0; index < entries.length; index++) {
+	      var entry = entries[index];
+	      if (equals(key, entry.key)) {
+	        if (index > 0) {
+	          // move this entry to the top of the cache
+	          entries.splice(index, 1);
+	          entries.unshift(entry);
+	        }
+	        return entry.value;
+	      }
+	    }
+	  }
+	
+	  function put(key, value) {
+	    if (!get(key)) {
+	      entries.unshift({ key: key, value: value });
+	      if (entries.length > limit) {
+	        entries.pop();
+	      }
+	    }
+	  }
+	
+	  return { get: get, put: put };
+	}
+	
+	module.exports = exports["default"];
+
+/***/ },
+/* 346 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	exports.__esModule = true;
+	exports['default'] = deepEquals;
+	var hasOwn = Object.prototype.hasOwnProperty;
+	
+	function deepEquals(equals, deepObjects) {
+	  function deep(valueA, valueB) {
+	    if (equals(valueA, valueB)) {
+	      return true;
+	    }
+	
+	    if (Array.isArray(valueA)) {
+	      if (!Array.isArray(valueB) || valueA.length !== valueB.length) {
+	        return false;
+	      }
+	      for (var index = 0; index < valueA.length; index++) {
+	        if (!deep(valueA[index], valueB[index])) {
+	          return false;
+	        }
+	      }
+	      // could not find unequal items
+	      return true;
+	    }
+	
+	    if (Array.isArray(valueB)) {
+	      return false;
+	    }
+	
+	    if (typeof valueA === 'object') {
+	      if (typeof valueB !== 'object') {
+	        return false;
+	      }
+	
+	      var isANull = valueA === null;
+	      var isBNull = valueB === null;
+	      if (isANull || isBNull) {
+	        return isANull === isBNull;
+	      }
+	
+	      var aKeys = Object.keys(valueA);
+	      var bKeys = Object.keys(valueB);
+	
+	      if (aKeys.length !== bKeys.length) {
+	        return false;
+	      }
+	
+	      for (var index = 0; index < aKeys.length; index++) {
+	        var key = aKeys[index];
+	        if (hasOwn.call(valueA, key) && (!hasOwn.call(valueB, key) || !(deepObjects ? deep : equals)(valueA[key], valueB[key]))) {
+	          return false;
+	        }
+	      }
+	      // could not find unequal keys or values
+	      return true;
+	    }
+	    return false;
+	  }
+	
+	  return deep;
+	}
+	
+	module.exports = exports['default'];
+
+/***/ },
+/* 347 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _pick = __webpack_require__(202);
+	
+	var _pick2 = _interopRequireDefault(_pick);
+	
+	var _last = __webpack_require__(309);
+	
+	var _last2 = _interopRequireDefault(_last);
+	
+	var _defaults = __webpack_require__(2);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	var _omit = __webpack_require__(348);
+	
+	var _omit2 = _interopRequireDefault(_omit);
+	
+	var _react = __webpack_require__(36);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _data = __webpack_require__(268);
+	
+	var _data2 = _interopRequireDefault(_data);
+	
+	var _domain = __webpack_require__(267);
+	
+	var _domain2 = _interopRequireDefault(_domain);
+	
+	var _scale = __webpack_require__(257);
+	
+	var _scale2 = _interopRequireDefault(_scale);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	var _area = __webpack_require__(349);
+	
+	var _area2 = _interopRequireDefault(_area);
+	
+	var _areaLabel = __webpack_require__(350);
+	
+	var _areaLabel2 = _interopRequireDefault(_areaLabel);
+	
+	var _helperMethods = __webpack_require__(351);
+	
+	var _helperMethods2 = _interopRequireDefault(_helperMethods);
+	
+	var _lruMemoize = __webpack_require__(342);
+	
+	var _lruMemoize2 = _interopRequireDefault(_lruMemoize);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var defaultStyles = {
+	  data: {
+	    fill: "#756f6a",
+	    opacity: 1
+	  },
+	  labels: {
+	    fontSize: 12,
+	    padding: 4,
+	    fill: "black"
+	  }
+	};
+	
+	var VictoryArea = function (_React$Component) {
+	  _inherits(VictoryArea, _React$Component);
+	
+	  function VictoryArea() {
+	    _classCallCheck(this, VictoryArea);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryArea).apply(this, arguments));
+	  }
+	
+	  _createClass(VictoryArea, [{
+	    key: "componentWillMount",
+	    value: function componentWillMount() {
+	      this.state = {
+	        dataState: {},
+	        labelsState: {}
+	      };
+	      this.memoized = {
+	        // Provide performant, multiple-argument memoization with LRU cache-size of 1.
+	        getStyles: (0, _lruMemoize2.default)(1, true)(_victoryCore.Helpers.getStyles)
+	      };
+	    }
+	  }, {
+	    key: "renderAreas",
+	    value: function renderAreas(calculatedProps) {
+	      var _this2 = this;
+	
+	      var datasets = calculatedProps.datasets;
+	      var scale = calculatedProps.scale;
+	
+	      return datasets.map(function (dataset, index) {
+	        var baseStyle = calculatedProps.style;
+	        var style = (0, _defaults2.default)({}, (0, _omit2.default)(dataset.attrs, "name"), baseStyle.data);
+	        var dataWithBaseline = _helperMethods2.default.getBaseline(datasets, calculatedProps, index);
+	        var getBoundEvents = _victoryCore.Helpers.getEvents.bind(_this2);
+	        var areaComponent = _react2.default.createElement(_area2.default, _extends({ key: "area-" + index,
+	          index: index,
+	          scale: scale,
+	          style: style,
+	          events: getBoundEvents(_this2.props.events.data, "data"),
+	          interpolation: dataset.attrs.interpolation || _this2.props.interpolation,
+	          data: dataWithBaseline
+	        }, _this2.state.dataState[index]));
+	        var label = _this2.props.labels && _this2.props.labels[index];
+	        if (label) {
+	          var position = {
+	            x: scale.x.call(_this2, (0, _last2.default)(dataset.data).x),
+	            y: scale.y.call(_this2, (0, _last2.default)(dataset.data).y)
+	          };
+	          return _react2.default.createElement(
+	            "g",
+	            { key: "area-group-" + index },
+	            areaComponent,
+	            _react2.default.createElement(_areaLabel2.default, _extends({ key: "area-label-" + index,
+	              index: index,
+	              style: baseStyle.labels,
+	              data: dataset.data,
+	              events: getBoundEvents(_this2.props.events.labels, "labels"),
+	              position: position,
+	              labelText: label,
+	              labelComponent: _this2.props.labelComponent
+	            }, _this2.state.labelsState[index]))
+	          );
+	        }
+	        return areaComponent;
+	      });
+	    }
+	  }, {
+	    key: "renderData",
+	    value: function renderData(props, style) {
+	      var datasets = _data2.default.getMultiSeriesData(props);
+	      var padding = _victoryCore.Helpers.getPadding(props);
+	      var range = {
+	        x: _victoryCore.Helpers.getRange(props, "x"),
+	        y: _victoryCore.Helpers.getRange(props, "y")
+	      };
+	      var domain = {
+	        x: _domain2.default.getMultiSeriesDomain(props, "x", datasets),
+	        y: _domain2.default.getMultiSeriesDomain(props, "y", datasets)
+	      };
+	      var scale = {
+	        x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
+	        y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
+	      };
+	      var calculatedProps = {
+	        datasets: datasets, domain: domain, padding: padding, range: range, scale: scale, style: style, stacked: props.stacked
+	      };
+	      return this.renderAreas(calculatedProps);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this3 = this;
+	
+	      // If animating, return a `VictoryAnimation` element that will create
+	      // a new `VictoryBar` with nearly identical props, except (1) tweened
+	      // and (2) `animate` set to null so we don't recurse forever.
+	      if (this.props.animate) {
+	        // Do less work by having `VictoryAnimation` tween only values that
+	        // make sense to tween. In the future, allow customization of animated
+	        // prop whitelist/blacklist?
+	        var animateData = (0, _pick2.default)(this.props, ["data", "dataAttributes", "colorScale", "domain", "height", "padding", "style", "width"]);
+	        return _react2.default.createElement(
+	          _victoryCore.VictoryAnimation,
+	          _extends({}, this.props.animate, { data: animateData }),
+	          function (props) {
+	            return _react2.default.createElement(VictoryArea, _extends({}, _this3.props, props, { animate: null }));
+	          }
+	        );
+	      }
+	      var style = this.memoized.getStyles(this.props.style, defaultStyles, this.props.height, this.props.width);
+	      var group = _react2.default.createElement(
+	        "g",
+	        { style: style.parent },
+	        this.renderData(this.props, style)
+	      );
+	      return this.props.standalone ? _react2.default.createElement(
+	        "svg",
+	        _extends({ style: style.parent }, this.props.events.parent),
+	        group
+	      ) : group;
+	    }
+	  }]);
+	
+	  return VictoryArea;
+	}(_react2.default.Component);
+	
+	VictoryArea.role = "area";
+	VictoryArea.propTypes = {
+	  /**
+	   * The animate prop specifies props for victory-animation to use. It this prop is
+	   * not given, the bar chart will not tween between changing data / style props.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+	   */
+	  animate: _react.PropTypes.object,
+	  /**
+	   * The colorScale prop is an optional prop that defines the color scale the chart's areas
+	   * will be created on. This prop should be given as an array of CSS colors, or as a string
+	   * corresponding to one of the built in color scales. VictoryBar will automatically assign
+	   * values from this color scale to the areas unless colors are explicitly provided in the
+	   * `dataAttributes` prop.
+	   */
+	  colorScale: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.oneOf(["greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"])]),
+	  /**
+	   * The data prop specifies the data to be plotted. Data should be in the form of an array
+	   * of data points, or an array of arrays of data points for multiple datasets.
+	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
+	   * but by default, an object with x and y properties is expected.
+	   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
+	   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+	   */
+	  data: _react.PropTypes.array,
+	  /**
+	   * The dataAttributes prop describes how a data set should be styled.
+	   * This prop can be given as an object, or an array of objects. If this prop is
+	   * given as an array of objects, the properties of each object in the array will
+	   * be applied to the data points in the corresponding array of the data prop.
+	   * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
+	   */
+	  dataAttributes: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)]),
+	  /**
+	   * The domain prop describes the range of values your bar chart will cover. This prop can be
+	   * given as a array of the minimum and maximum expected values for your bar chart,
+	   * or as an object that specifies separate arrays for x and y.
+	   * If this prop is not provided, a domain will be calculated from data, or other
+	   * available information.
+	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
+	   */
+	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.domain,
+	    y: _victoryCore.PropTypes.domain
+	  })]),
+	  /**
+	   * The events prop attaches arbitrary event handlers to data and label elements
+	   * Event handlers are called with their corresponding events, corresponding component props,
+	   * and their index in the data array, and event name. The return value of event handlers
+	   * will be stored by unique index on the state object of VictoryArea
+	   * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+	   * applied by index to the appropriate child component. Event props on the
+	   * parent namespace are just spread directly on to the top level svg of VictoryArea
+	   * if one exists. If VictoryArea is set up to render g elements i.e. when it is
+	   * rendered within chart, or when `standalone={false}` parent events will not be applied.
+	   *
+	   * @examples {data: {
+	   *  onClick: () => onClick: () => return {style: {fill: "green"}}
+	   *}}
+	   */
+	  events: _react.PropTypes.shape({
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object,
+	    parent: _react.PropTypes.object
+	  }),
+	  /**
+	   * The height props specifies the height of the chart container element in pixels
+	   */
+	  height: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The interpolation prop determines how data points should be connected
+	   * when plotting a line
+	   */
+	  interpolation: _react.PropTypes.oneOf(["basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen", "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX", "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"]),
+	  /**
+	   * The labels prop defines labels that will appear above each area. This prop
+	   * should be given as an array of values.
+	   * @examples: ["spring", "summer", "fall", "winter"]
+	   */
+	  labels: _react.PropTypes.array,
+	  /**
+	  * The labelComponent prop takes in an entire, HTML-complete label
+	  * component which will be used to create labels for each area in the
+	  * chart. The new element created from the passed labelComponent will have
+	  * children preserved, or provided via the labels array, textAnchor, and verticalAnchor
+	  * preserved or default values provided by defaults; and styles filled out with defaults
+	  * provided by the style prop, and dataAttributes prop. If labelComponent is omitted,
+	  * but a labels array is specified, a new VictoryLabel will be created.
+	   */
+	  labelComponent: _react.PropTypes.element,
+	  /**
+	   * The padding props specifies the amount of padding in number of pixels between
+	   * the edge of the chart and any rendered child components. This prop can be given
+	   * as a number or as an object with padding specified for top, bottom, left
+	   * and right.
+	   */
+	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	    top: _react.PropTypes.number,
+	    bottom: _react.PropTypes.number,
+	    left: _react.PropTypes.number,
+	    right: _react.PropTypes.number
+	  })]),
+	  /**
+	   * The samples prop specifies how many individual points to plot when plotting
+	   * y as a function of x. Samples is ignored if x props are provided instead.
+	   */
+	  samples: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The scale prop determines which scales your chart should use. This prop can be
+	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
+	   * as a d3 scale function, or as an object with scales specified for x and y
+	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
+	   */
+	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.scale,
+	    y: _victoryCore.PropTypes.scale
+	  })]),
+	  /**
+	   * The stacked prop determines whether the chart should consist of stacked areas.
+	   * When this prop is set to true, the data prop *must* be an array of multiple data series
+	   * ie. not an array of data points, but an array of arrays of data points
+	   */
+	  stacked: _react.PropTypes.bool,
+	  /**
+	   * The standalone prop determines whether the component will render a standalone svg
+	   * or a <g> tag that will be included in an external svg. Set standalone to false to
+	   * compose VictoryBar with other components within an enclosing <svg> tag.
+	   */
+	  standalone: _react.PropTypes.bool,
+	  /**
+	   * The style prop specifies styles for your chart. VictoryBar relies on Radium,
+	   * so valid Radium style objects should work for this prop, however height, width, and margin
+	   * are used to calculate range, and need to be expressed as a number of pixels
+	   * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
+	   */
+	  style: _react.PropTypes.shape({
+	    parent: _react.PropTypes.object,
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object
+	  }),
+	  /**
+	   * The width prop specifies the width of the chart container element in pixels
+	   */
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The x prop specifies how to access the X value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+	   */
+	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The y prop specifies how to access the Y value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+	   */
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.arrayOf(_react.PropTypes.func)])
+	};
+	VictoryArea.defaultProps = {
+	  colorScale: "greyscale",
+	  events: {},
+	  height: 300,
+	  padding: 50,
+	  scale: "linear",
+	  samples: 50,
+	  stacked: false,
+	  standalone: true,
+	  interpolation: "linear",
+	  width: 450,
+	  x: "x",
+	  y: "y"
+	};
+	VictoryArea.getDomain = _domain2.default.getMultiSeriesDomain.bind(_domain2.default);
+	exports.default = VictoryArea;
+
+/***/ },
+/* 348 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayMap = __webpack_require__(223),
+	    baseDifference = __webpack_require__(225),
+	    baseFlatten = __webpack_require__(203),
+	    basePick = __webpack_require__(205),
+	    keysIn = __webpack_require__(21),
+	    rest = __webpack_require__(18);
+	
+	/**
+	 * The opposite of `_.pick`; this method creates an object composed of the
+	 * own and inherited enumerable properties of `object` that are not omitted.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The source object.
+	 * @param {...(string|string[])} [props] The property names to omit, specified
+	 *  individually or in arrays.
+	 * @returns {Object} Returns the new object.
+	 * @example
+	 *
+	 * var object = { 'a': 1, 'b': '2', 'c': 3 };
+	 *
+	 * _.omit(object, ['a', 'c']);
+	 * // => { 'b': '2' }
+	 */
+	var omit = rest(function(object, props) {
+	  if (object == null) {
+	    return {};
+	  }
+	  props = arrayMap(baseFlatten(props, 1), String);
+	  return basePick(object, baseDifference(keysIn(object), props));
+	});
+	
+	module.exports = omit;
+
+
+/***/ },
+/* 349 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(36);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _d3Shape = __webpack_require__(339);
+	
+	var _d3Shape2 = _interopRequireDefault(_d3Shape);
+	
+	var _assign = __webpack_require__(209);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Area = function (_React$Component) {
+	  _inherits(Area, _React$Component);
+	
+	  function Area() {
+	    _classCallCheck(this, Area);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Area).apply(this, arguments));
+	  }
+	
+	  _createClass(Area, [{
+	    key: "toNewName",
+	    value: function toNewName(interpolation) {
+	      // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
+	      var capitalize = function capitalize(s) {
+	        return s && s[0].toUpperCase() + s.slice(1);
+	      };
+	      return "curve" + capitalize(interpolation);
+	    }
+	  }, {
+	    key: "renderArea",
+	    value: function renderArea(style, interpolation, events) {
+	      var xScale = this.props.scale.x;
+	      var yScale = this.props.scale.y;
+	      var areaStroke = style.stroke ? "none" : style.fill;
+	      var areaStyle = (0, _assign2.default)({}, style, { stroke: areaStroke });
+	      var areaFunction = _d3Shape2.default.area().curve(_d3Shape2.default[this.toNewName(interpolation)]).x(function (data) {
+	        return xScale(data.x);
+	      }).y1(function (data) {
+	        return yScale(data.y0 + data.y);
+	      }).y0(function (data) {
+	        return yScale(data.y0);
+	      });
+	      var path = areaFunction(this.props.data);
+	
+	      return _react2.default.createElement("path", _extends({ style: areaStyle, d: path }, events));
+	    }
+	  }, {
+	    key: "renderLine",
+	    value: function renderLine(style, interpolation, events) {
+	      if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
+	        return undefined;
+	      }
+	      var lineStyle = (0, _assign2.default)({}, style, { fill: "none" });
+	      var xScale = this.props.scale.x;
+	      var yScale = this.props.scale.y;
+	      var lineFunction = _d3Shape2.default.line().curve(_d3Shape2.default[this.toNewName(interpolation)]).x(function (data) {
+	        return xScale(data.x);
+	      }).y(function (data) {
+	        return yScale(data.y0 + data.y);
+	      });
+	      var path = lineFunction(this.props.data);
+	      return _react2.default.createElement("path", _extends({ style: lineStyle, d: path }, events));
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var props = this.props;
+	
+	      var style = _victoryCore.Helpers.evaluateStyle(props.style, props.data);
+	      var interpolation = _victoryCore.Helpers.evaluateProp(props.interpolation, props.data);
+	      var events = _victoryCore.Helpers.getPartialEvents(props.events, props.index, props);
+	      return _react2.default.createElement(
+	        "g",
+	        null,
+	        this.renderArea(style, interpolation, events),
+	        this.renderLine(style, interpolation, events)
+	      );
+	    }
+	  }]);
+	
+	  return Area;
+	}(_react2.default.Component);
+	
+	Area.propTypes = {
+	  data: _react.PropTypes.array,
+	  interpolation: _react.PropTypes.string,
+	  index: _react.PropTypes.number,
+	  scale: _react.PropTypes.object,
+	  style: _react.PropTypes.object,
+	  events: _react.PropTypes.object
+	};
+	exports.default = Area;
+
+/***/ },
+/* 350 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _defaults = __webpack_require__(2);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	var _assign = __webpack_require__(209);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _react = __webpack_require__(36);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var AreaLabel = function (_React$Component) {
+	  _inherits(AreaLabel, _React$Component);
+	
+	  function AreaLabel() {
+	    _classCallCheck(this, AreaLabel);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AreaLabel).apply(this, arguments));
+	  }
+	
+	  _createClass(AreaLabel, [{
+	    key: "renderLabelComponent",
+	    value: function renderLabelComponent(props) {
+	      var component = props.labelComponent;
+	      var baseStyle = (0, _defaults2.default)({ padding: 0 }, component.props.style, props.style);
+	      var style = _victoryCore.Helpers.evaluateStyle(baseStyle, props.data);
+	      var children = component.props.children || props.labelText || "";
+	      var baseEvents = component && component.props.events ? (0, _defaults2.default)({}, component.props.events, props.events) : props.events;
+	      var events = _victoryCore.Helpers.getPartialEvents(baseEvents, props.index, props);
+	      var newProps = (0, _assign2.default)({}, events, {
+	        x: component.props.x || props.position.x + style.padding,
+	        y: component.props.y || props.position.y - style.padding,
+	        textAnchor: component.props.textAnchor || "start",
+	        verticalAnchor: component.props.verticalAnchor || "middle",
+	        style: style
+	      });
+	      return _react2.default.cloneElement(component, newProps, children);
+	    }
+	  }, {
+	    key: "renderVictoryLabel",
+	    value: function renderVictoryLabel(props) {
+	      var style = _victoryCore.Helpers.evaluateStyle((0, _defaults2.default)({ padding: 0 }, props.style), props.data);
+	      var events = _victoryCore.Helpers.getPartialEvents(props.events, props.index, props);
+	      return _react2.default.createElement(_victoryCore.VictoryLabel, _extends({
+	        x: props.position.x + style.padding,
+	        y: props.position.y - style.padding,
+	        data: props.data,
+	        textAnchor: "start",
+	        verticalAnchor: "middle",
+	        style: style,
+	        text: props.labelText
+	      }, events));
+	    }
+	  }, {
+	    key: "renderLabel",
+	    value: function renderLabel(props) {
+	      return props.labelComponent ? this.renderLabelComponent(props) : this.renderVictoryLabel(props);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "g",
+	        null,
+	        this.renderLabel(this.props)
+	      );
+	    }
+	  }]);
+	
+	  return AreaLabel;
+	}(_react2.default.Component);
+	
+	AreaLabel.propTypes = {
+	  data: _react.PropTypes.array,
+	  index: _react.PropTypes.number,
+	  labelComponent: _react.PropTypes.any,
+	  labelText: _react.PropTypes.string,
+	  position: _react.PropTypes.object,
+	  style: _react.PropTypes.object
+	};
+	exports.default = AreaLabel;
+
+/***/ },
+/* 351 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	
+	var _assign = __webpack_require__(209);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _layout = __webpack_require__(352);
+	
+	var _layout2 = _interopRequireDefault(_layout);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	exports.default = {
+	  getBaseline: function getBaseline(datasets, calculatedProps, index) {
+	    var domain = calculatedProps.domain;
+	    var stacked = calculatedProps.stacked;
+	
+	    if (index === 0 || stacked === false) {
+	      var _ret = function () {
+	        // TODO: assumes independent x axis
+	        var minY = Math.min.apply(Math, _toConsumableArray(domain.y)) > 0 ? Math.min.apply(Math, _toConsumableArray(domain.y)) : 0;
+	        return {
+	          v: datasets[index].data.map(function (datum) {
+	            return (0, _assign2.default)({ y0: minY }, datum);
+	          })
+	        };
+	      }();
+	
+	      if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
+	    } else {
+	      return datasets[index].data.map(function (datum) {
+	        var y0 = _layout2.default.getY0(datasets, datum, index);
+	        return (0, _assign2.default)({ y0: y0 }, datum);
+	      });
+	    }
+	  }
+	};
+
+/***/ },
+/* 352 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.default = {
+	  getY0: function getY0(datasets, datum, index) {
+	    var y = datum.y;
+	    var previousDataSets = datasets.slice(0, index);
+	    var previousPoints = previousDataSets.reduce(function (prev, dataset) {
+	      return prev.concat(dataset.data.filter(function (previousDatum) {
+	        return datum.x instanceof Date ? previousDatum.x.getTime() === datum.x.getTime() : previousDatum.x === datum.x;
+	      }).map(function (previousDatum) {
+	        return previousDatum.y || 0;
+	      }));
+	    }, []);
+	    return previousPoints.reduce(function (memo, value) {
+	      var sameSign = y < 0 && value < 0 || y >= 0 && value >= 0;
+	      return sameSign ? memo + value : memo;
+	    }, 0);
+	  }
+	};
+
+/***/ },
+/* 353 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _pick = __webpack_require__(202);
+	
+	var _pick2 = _interopRequireDefault(_pick);
+	
+	var _get = __webpack_require__(299);
+	
+	var _get2 = _interopRequireDefault(_get);
+	
+	var _lruMemoize = __webpack_require__(342);
+	
+	var _lruMemoize2 = _interopRequireDefault(_lruMemoize);
+	
+	var _react = __webpack_require__(36);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	var _bar = __webpack_require__(354);
 	
 	var _bar2 = _interopRequireDefault(_bar);
 	
-	var _barLabel = __webpack_require__(148);
+	var _barLabel = __webpack_require__(355);
 	
 	var _barLabel2 = _interopRequireDefault(_barLabel);
 	
-	var _helperMethods = __webpack_require__(149);
+	var _helperMethods = __webpack_require__(356);
 	
 	var _helperMethods2 = _interopRequireDefault(_helperMethods);
+	
+	var _data = __webpack_require__(268);
+	
+	var _data2 = _interopRequireDefault(_data);
+	
+	var _domain = __webpack_require__(267);
+	
+	var _domain2 = _interopRequireDefault(_domain);
+	
+	var _scale = __webpack_require__(257);
+	
+	var _scale2 = _interopRequireDefault(_scale);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var defaultStyles = {
 	  data: {
@@ -14788,55 +23436,64 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var defaultData = [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }];
 	
-	var VictoryBar = (function (_React$Component) {
+	var VictoryBar = function (_React$Component) {
 	  _inherits(VictoryBar, _React$Component);
 	
 	  function VictoryBar() {
 	    _classCallCheck(this, VictoryBar);
 	
-	    _get(Object.getPrototypeOf(VictoryBar.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryBar).apply(this, arguments));
 	  }
 	
 	  _createClass(VictoryBar, [{
 	    key: "componentWillMount",
 	    value: function componentWillMount() {
+	      this.state = {
+	        dataState: {},
+	        labelsState: {}
+	      };
 	      this.memoized = {
 	        // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-	        getStyles: (0, _memoizerific2["default"])(1)(_victoryCore.Helpers.getStyles)
+	        getStyles: (0, _lruMemoize2.default)(1, true)(_victoryCore.Helpers.getStyles)
 	      };
 	    }
 	  }, {
 	    key: "renderBars",
 	    value: function renderBars(dataset, seriesIndex, calculatedProps) {
-	      var _this = this;
+	      var _this2 = this;
 	
 	      return dataset.data.map(function (datum, barIndex) {
 	        var index = { seriesIndex: seriesIndex, barIndex: barIndex };
-	        var position = _helperMethods2["default"].getBarPosition(datum, index, calculatedProps);
+	        var position = _helperMethods2.default.getBarPosition(datum, index, calculatedProps);
 	        var baseStyle = calculatedProps.style;
-	        var style = _helperMethods2["default"].getBarStyle(datum, dataset, baseStyle);
-	        var barComponent = _react2["default"].createElement(_bar2["default"], { key: "series-" + seriesIndex + "-bar-" + barIndex,
-	          horizontal: _this.props.horizontal,
+	        var style = _helperMethods2.default.getBarStyle(datum, dataset, baseStyle);
+	        var getBoundEvents = _victoryCore.Helpers.getEvents.bind(_this2);
+	        var barComponent = _react2.default.createElement(_bar2.default, _extends({ key: "series-" + seriesIndex + "-bar-" + barIndex,
+	          horizontal: _this2.props.horizontal,
 	          style: style,
+	          index: index,
 	          position: position,
-	          datum: datum
-	        });
-	        var shouldPlotLabel = _helperMethods2["default"].shouldPlotLabel(seriesIndex, _this.props, calculatedProps.datasets);
+	          datum: datum,
+	          events: getBoundEvents(_this2.props.events.data, "data")
+	        }, (0, _get2.default)(_this2.state.dataState, [seriesIndex, barIndex], undefined)));
+	        var shouldPlotLabel = _helperMethods2.default.shouldPlotLabel(seriesIndex, _this2.props, calculatedProps.datasets);
 	        if (datum.label || shouldPlotLabel) {
-	          var labelIndex = _helperMethods2["default"].getLabelIndex(datum, calculatedProps);
-	          var labelText = _this.props.labels ? _this.props.labels[labelIndex] || _this.props.labels[0] : "";
-	          return _react2["default"].createElement(
+	          var labelIndex = _helperMethods2.default.getLabelIndex(datum, calculatedProps);
+	          var labelText = _this2.props.labels ? _this2.props.labels[labelIndex] || _this2.props.labels[0] : "";
+	          return _react2.default.createElement(
 	            "g",
 	            { key: "series-" + index + "-bar-" + barIndex },
 	            barComponent,
-	            _react2["default"].createElement(_barLabel2["default"], { key: "label-series-" + index + "-bar-" + barIndex,
-	              horizontal: _this.props.horizontal,
+	            _react2.default.createElement(_barLabel2.default, _extends({ key: "label-series-" + index + "-bar-" + barIndex,
+	              horizontal: _this2.props.horizontal,
 	              style: baseStyle.labels,
+	              index: index,
 	              position: position,
 	              datum: datum,
 	              labelText: datum.label || labelText,
-	              labelComponent: _this.props.labelComponent
-	            })
+	              labelComponent: _this2.props.labelComponent,
+	              events: getBoundEvents(_this2.props.events.labels, "labels")
+	            }, (0, _get2.default)(_this2.state.labelsState, [seriesIndex, barIndex], undefined)))
 	          );
 	        }
 	        return barComponent;
@@ -14848,12 +23505,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var stacked = props.stacked;
 	      var categories = props.categories;
 	
-	      var grouped = _helpersDomain2["default"].shouldGroup(props);
+	      var grouped = _domain2.default.shouldGroup(props);
 	      var hasMultipleDatasets = grouped || stacked;
-	      var datasets = _helpersData2["default"].formatDatasets(props, hasMultipleDatasets);
+	      var datasets = _data2.default.getMultiSeriesData(props, hasMultipleDatasets);
 	      var stringMap = {
-	        x: _helpersData2["default"].createStringMap(props, "x", hasMultipleDatasets),
-	        y: _helpersData2["default"].createStringMap(props, "y", hasMultipleDatasets)
+	        x: _data2.default.createStringMap(props, "x", hasMultipleDatasets),
+	        y: _data2.default.createStringMap(props, "y", hasMultipleDatasets)
 	      };
 	      var padding = _victoryCore.Helpers.getPadding(props);
 	      var range = {
@@ -14861,14 +23518,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        y: _victoryCore.Helpers.getRange(props, "y")
 	      };
 	      var domain = {
-	        x: _helperMethods2["default"].getDomain(props, "x"),
-	        y: _helperMethods2["default"].getDomain(props, "y")
+	        x: _domain2.default.getMultiSeriesDomain(props, "x", datasets),
+	        y: _domain2.default.getMultiSeriesDomain(props, "y", datasets)
 	      };
 	      var scale = {
-	        x: _helpersScale2["default"].getBaseScale(props, "x").domain(domain.x).range(range.x),
-	        y: _helpersScale2["default"].getBaseScale(props, "y").domain(domain.y).range(range.y)
+	        x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
+	        y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
 	      };
-	      var uniqueX = _helperMethods2["default"].getUniqueX(datasets);
+	      var uniqueX = _helperMethods2.default.getUniqueX(datasets);
 	      return {
 	        categories: categories, datasets: datasets, domain: domain, padding: padding, range: range, scale: scale,
 	        grouped: grouped, stacked: stacked, stringMap: stringMap, style: style, uniqueX: uniqueX
@@ -14877,17 +23534,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "renderData",
 	    value: function renderData(props, style) {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      var calculatedProps = this.calculateProps(props, style);
 	      return calculatedProps.datasets.map(function (dataset, index) {
-	        return _this2.renderBars(dataset, index, calculatedProps);
+	        return _this3.renderBars(dataset, index, calculatedProps);
 	      });
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this3 = this;
+	      var _this4 = this;
 	
 	      // If animating, return a `VictoryAnimation` element that will create
 	      // a new `VictoryBar` with nearly identical props, except (1) tweened
@@ -14897,258 +23554,245 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
 	        var whitelist = ["data", "dataAttributes", "categories", "colorScale", "domain", "height", "padding", "style", "width"];
-	        var animateData = (0, _lodashObjectPick2["default"])(this.props, whitelist);
-	        return _react2["default"].createElement(
+	        var animateData = (0, _pick2.default)(this.props, whitelist);
+	        return _react2.default.createElement(
 	          _victoryCore.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
 	          function (props) {
-	            return _react2["default"].createElement(VictoryBar, _extends({}, _this3.props, props, { animate: null }));
+	            return _react2.default.createElement(VictoryBar, _extends({}, _this4.props, props, { animate: null }));
 	          }
 	        );
 	      }
 	
 	      var style = this.memoized.getStyles(this.props.style, defaultStyles, this.props.height, this.props.width);
-	      var group = _react2["default"].createElement(
+	      var group = _react2.default.createElement(
 	        "g",
 	        { style: style.parent },
 	        this.renderData(this.props, style)
 	      );
-	      return this.props.standalone ? _react2["default"].createElement(
+	      return this.props.standalone ? _react2.default.createElement(
 	        "svg",
-	        { style: style.parent },
+	        _extends({ style: style.parent }, this.props.events.parent),
 	        group
 	      ) : group;
 	    }
-	  }], [{
-	    key: "role",
-	    value: "bar",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. It this prop is
-	       * not given, the bar chart will not tween between changing data / style props.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {velocity: 0.02, onEnd: () => alert("done!")}
-	       */
-	      animate: _react.PropTypes.object,
-	      /**
-	       * The data prop specifies the data to be plotted. Data should be in the form of an array
-	       * of data points, or an array of arrays of data points for multiple datasets.
-	       * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	       * but by default, an object with x and y properties is expected.
-	       * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
-	       * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
-	       */
-	      data: _react.PropTypes.array,
-	      /**
-	       * The dataAttributes prop describes how a data set should be styled.
-	       * This prop can be given as an object, or an array of objects. If this prop is
-	       * given as an array of objects, the properties of each object in the array will
-	       * be applied to the data points in the corresponding array of the data prop.
-	       * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
-	       */
-	      dataAttributes: _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)]),
-	      /**
-	       * The categories prop specifies the categories for a bar chart. This prop should
-	       * be given as an array of string values, numeric values, or arrays. When this prop is
-	       * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
-	       * allowing numeric data to be grouped into segments.
-	       * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
-	       */
-	      categories: _victoryCore.PropTypes.homogeneousArray,
-	      /**
-	       * The colorScale prop is an optional prop that defines the color scale the chart's bars
-	       * will be created on. This prop should be given as an array of CSS colors, or as a string
-	       * corresponding to one of the built in color scales. VictoryBar will automatically assign
-	       * values from this color scale to the bars unless colors are explicitly provided in the
-	       * `dataAttributes` prop.
-	       */
-	      colorScale: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.oneOf(["greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"])]),
-	      /**
-	       * The domain prop describes the range of values your bar chart will cover. This prop can be
-	       * given as a array of the minimum and maximum expected values for your bar chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	       */
-	      domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.domain,
-	        y: _victoryCore.PropTypes.domain
-	      })]),
-	      /**
-	       * The domainPadding prop specifies a number of pixels of padding to add to the
-	       * beginning and end of a domain. This prop is useful for preventing 0 pixel bars,
-	       * and taking bar width into account.
-	       */
-	      domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.nonNegative,
-	        y: _victoryCore.PropTypes.nonNegative
-	      }), _victoryCore.PropTypes.nonNegative]),
-	      /**
-	       * The grouped prop determines whether the chart should consist of sets of grouped bars.
-	       * When this prop is set to true, the data prop *must* be an array of multiple data series
-	       * ie. not an array of data points, but an array of arrays of data points.  If data is
-	       * given as an array or arrays, and data accessor props have default values
-	       * (ie. x={"x"} y={"y"}), the grouped prop will default to true.
-	       */
-	      grouped: _react.PropTypes.bool,
-	      /**
-	       * The height props specifies the height of the chart container element in pixels
-	       */
-	      height: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The horizontal prop determines whether the bars will be laid vertically or
-	       * horizontally. The bars will be vertical if this prop is false or unspecified,
-	       * or horizontal if the prop is set to true.
-	       */
-	      horizontal: _react.PropTypes.bool,
-	      /**
-	       * The labels prop defines labels that will appear above each bar or
-	       * group of bars in your bar chart. This prop should be given as an array of values.
-	       * The number of elements in the label array should be equal to number of elements in
-	       * the categories array, or if categories is not defined, to the number of unique
-	       * x values in your data. Use this prop to add labels to individual bars, stacked bars,
-	       * and groups of bars.
-	       * @examples: ["spring", "summer", "fall", "winter"]
-	       */
-	      labels: _react.PropTypes.array,
-	      /**
-	        * The labelComponent prop takes in an entire, HTML-complete label
-	        * component which will be used to create labels for each bar in the bar
-	        * chart. The new element created from the passed labelComponent will have
-	        * children preserved, or provided as the label property from the bar's
-	        * datum; property data provided by the bar's datum; properties x, y,
-	        * textAnchor, and verticalAnchor preserved or default values provided by
-	        * the bar; and styles filled out with defaults provided by the bar, and
-	        * overrides from the datum. If labelComponent is omitted, a new
-	        * VictoryLabel will be created with props and styles from the bar.
-	       */
-	      labelComponent: _react.PropTypes.element,
-	      /**
-	       * Deprecated: Use labelComponent instead!
-	       * The labelComponents prop defines labels - as entire, HTML-complete label
-	       * components - that will appear above each bar or group of bars in your
-	       * bar chart. This prop should be given as an array of elements. The number
-	       * of elements in the labelComponents array should be equal to the number
-	       * of elements in the categories array, or, if categories is not defined,
-	       * to the number of unique x values in your data. Use this prop to add
-	       * labels to individual bars, stacked bars, and groups of bars. The new
-	       * element created from each element of the labelComponents array will have
-	       * children preserved, or provided as the label from the bar's datum;
-	       * property data provided by the bar's datum; properties x, y, textAnchor,
-	       * and verticalAnchor preserved or default values provided by the bar; and
-	       * styles filled out with defaults provided by the bar. If you do not
-	       * provide enough elements in the labelComponents array, a new VictoryLabel
-	       * will be created with props and styles from the bar.
-	       labelComponents: PropTypes.deprecated(PropTypes.array, `You'll find you
-	                                            have less repetition if you use the
-	                                            new labelComponent propType`),
-	      */
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	        top: _react.PropTypes.number,
-	        bottom: _react.PropTypes.number,
-	        left: _react.PropTypes.number,
-	        right: _react.PropTypes.number
-	      })]),
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	       * as a d3 scale function, or as an object with scales specified for x and y
-	       * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	       */
-	      scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.scale,
-	        y: _victoryCore.PropTypes.scale
-	      })]),
-	      /**
-	       * The stacked prop determines whether the chart should consist of stacked bars.
-	       * When this prop is set to true, the data prop *must* be an array of multiple data series
-	       * ie. not an array of data points, but an array of arrays of data points
-	       */
-	      stacked: _react.PropTypes.bool,
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryBar with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react.PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your chart. VictoryBar relies on Radium,
-	       * so valid Radium style objects should work for this prop, however height, width, and margin
-	       * are used to calculate range, and need to be expressed as a number of pixels
-	       * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
-	       */
-	      style: _react.PropTypes.shape({
-	        parent: _react.PropTypes.object,
-	        data: _react.PropTypes.object,
-	        labels: _react.PropTypes.object
-	      }),
-	      /**
-	       * The width prop specifies the width of the chart container element in pixels
-	       */
-	      width: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The x prop specifies how to access the X value of each data point.
-	       * If given as a function, it will be run on each data point, and returned value will be used.
-	       * If given as an integer, it will be used as an array index for array-type data points.
-	       * If given as a string, it will be used as a property key for object-type data points.
-	       * If given as an array of strings, or a string containing dots or brackets,
-	       * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	       * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	       * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	       */
-	      x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	      /**
-	       * The y prop specifies how to access the Y value of each data point.
-	       * If given as a function, it will be run on each data point, and returned value will be used.
-	       * If given as an integer, it will be used as an array index for array-type data points.
-	       * If given as a string, it will be used as a property key for object-type data points.
-	       * If given as an array of strings, or a string containing dots or brackets,
-	       * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	       * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	       * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	       */
-	      y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      data: defaultData,
-	      colorScale: "greyscale",
-	      height: 300,
-	      padding: 50,
-	      scale: "linear",
-	      stacked: false,
-	      standalone: true,
-	      width: 450,
-	      x: "x",
-	      y: "y"
-	    },
-	    enumerable: true
-	  }, {
-	    key: "getDomain",
-	    value: _helperMethods2["default"].getDomain.bind(_helperMethods2["default"]),
-	    enumerable: true
 	  }]);
 	
 	  return VictoryBar;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryBar;
-	module.exports = exports["default"];
+	VictoryBar.role = "bar";
+	VictoryBar.propTypes = {
+	  /**
+	   * The animate prop specifies props for victory-animation to use. It this prop is
+	   * not given, the bar chart will not tween between changing data / style props.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+	   */
+	  animate: _react.PropTypes.object,
+	  /**
+	   * The data prop specifies the data to be plotted. Data should be in the form of an array
+	   * of data points, or an array of arrays of data points for multiple datasets.
+	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
+	   * but by default, an object with x and y properties is expected.
+	   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
+	   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+	   */
+	  data: _react.PropTypes.array,
+	  /**
+	   * The dataAttributes prop describes how a data set should be styled.
+	   * This prop can be given as an object, or an array of objects. If this prop is
+	   * given as an array of objects, the properties of each object in the array will
+	   * be applied to the data points in the corresponding array of the data prop.
+	   * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
+	   */
+	  dataAttributes: _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.matchDataLength, _react.PropTypes.oneOfType([_react.PropTypes.object, _react.PropTypes.arrayOf(_react.PropTypes.object)])]),
+	  /**
+	   * The categories prop specifies the categories for a bar chart. This prop should
+	   * be given as an array of string values, numeric values, or arrays. When this prop is
+	   * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
+	   * allowing numeric data to be grouped into segments.
+	   * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+	   */
+	  categories: _victoryCore.PropTypes.homogeneousArray,
+	  /**
+	   * The colorScale prop is an optional prop that defines the color scale the chart's bars
+	   * will be created on. This prop should be given as an array of CSS colors, or as a string
+	   * corresponding to one of the built in color scales. VictoryBar will automatically assign
+	   * values from this color scale to the bars unless colors are explicitly provided in the
+	   * `dataAttributes` prop.
+	   */
+	  colorScale: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.oneOf(["greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"])]),
+	  /**
+	   * The domain prop describes the range of values your bar chart will cover. This prop can be
+	   * given as a array of the minimum and maximum expected values for your bar chart,
+	   * or as an object that specifies separate arrays for x and y.
+	   * If this prop is not provided, a domain will be calculated from data, or other
+	   * available information.
+	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
+	   */
+	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.domain,
+	    y: _victoryCore.PropTypes.domain
+	  })]),
+	  /**
+	   * The domainPadding prop specifies a number of pixels of padding to add to the
+	   * beginning and end of a domain. This prop is useful for preventing 0 pixel bars,
+	   * and taking bar width into account.
+	   */
+	  domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.nonNegative,
+	    y: _victoryCore.PropTypes.nonNegative
+	  }), _victoryCore.PropTypes.nonNegative]),
+	  /**
+	   * The events prop attaches arbitrary event handlers to data and label elements
+	   * Event handlers are called with their corresponding events, corresponding component props,
+	   * and their index in the data array, and event name. The return value of event handlers
+	   * will be stored by unique index on the state object of VictoryBar
+	   * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+	   * applied by index to the appropriate child component. Event props on the
+	   * parent namespace are just spread directly on to the top level svg of VictoryBar
+	   * if one exists. If VictoryBar is set up to render g elements i.e. when it is
+	   * rendered within chart, or when `standalone={false}` parent events will not be applied.
+	   *
+	   * @examples {data: {
+	   *  onClick: () => onClick: () => return {style: {fill: "green"}}
+	   *}}
+	   */
+	  events: _react.PropTypes.shape({
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object,
+	    parent: _react.PropTypes.object
+	  }),
+	  /**
+	   * The grouped prop determines whether the chart should consist of sets of grouped bars.
+	   * When this prop is set to true, the data prop *must* be an array of multiple data series
+	   * ie. not an array of data points, but an array of arrays of data points.  If data is
+	   * given as an array or arrays, and data accessor props have default values
+	   * (ie. x={"x"} y={"y"}), the grouped prop will default to true.
+	   */
+	  grouped: _react.PropTypes.bool,
+	  /**
+	   * The height props specifies the height of the chart container element in pixels
+	   */
+	  height: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The horizontal prop determines whether the bars will be laid vertically or
+	   * horizontally. The bars will be vertical if this prop is false or unspecified,
+	   * or horizontal if the prop is set to true.
+	   */
+	  horizontal: _react.PropTypes.bool,
+	  /**
+	   * The labels prop defines labels that will appear above each bar or
+	   * group of bars in your bar chart. This prop should be given as an array of values.
+	   * The number of elements in the label array should be equal to number of elements in
+	   * the categories array, or if categories is not defined, to the number of unique
+	   * x values in your data. Use this prop to add labels to individual bars, stacked bars,
+	   * and groups of bars.
+	   * @examples: ["spring", "summer", "fall", "winter"]
+	   */
+	  labels: _react.PropTypes.array,
+	  /**
+	   * The labelComponent prop takes in an entire, HTML-complete label
+	   * component which will be used to create labels for each bar in the bar
+	   * chart. The new element created from the passed labelComponent will have
+	   * property data provided by the bar's datum; properties x, y, textAnchor,
+	   * and verticalAnchor preserved or default values provided by the bar; and
+	   * styles filled out with defaults provided by the bar, and overrides from
+	   * the datum. If labelComponent is omitted, a new VictoryLabel will be
+	   * created with props and styles from the bar.
+	   */
+	  labelComponent: _react.PropTypes.element,
+	  /**
+	   * The padding props specifies the amount of padding in number of pixels between
+	   * the edge of the chart and any rendered child components. This prop can be given
+	   * as a number or as an object with padding specified for top, bottom, left
+	   * and right.
+	   */
+	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	    top: _react.PropTypes.number,
+	    bottom: _react.PropTypes.number,
+	    left: _react.PropTypes.number,
+	    right: _react.PropTypes.number
+	  })]),
+	  /**
+	   * The scale prop determines which scales your chart should use. This prop can be
+	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
+	   * as a d3 scale function, or as an object with scales specified for x and y
+	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
+	   */
+	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.scale,
+	    y: _victoryCore.PropTypes.scale
+	  })]),
+	  /**
+	   * The stacked prop determines whether the chart should consist of stacked bars.
+	   * When this prop is set to true, the data prop *must* be an array of multiple data series
+	   * ie. not an array of data points, but an array of arrays of data points
+	   */
+	  stacked: _react.PropTypes.bool,
+	  /**
+	   * The standalone prop determines whether the component will render a standalone svg
+	   * or a <g> tag that will be included in an external svg. Set standalone to false to
+	   * compose VictoryBar with other components within an enclosing <svg> tag.
+	   */
+	  standalone: _react.PropTypes.bool,
+	  /**
+	   * The style prop specifies styles for your chart. VictoryBar relies on Radium,
+	   * so valid Radium style objects should work for this prop, however height, width, and margin
+	   * are used to calculate range, and need to be expressed as a number of pixels
+	   * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
+	   */
+	  style: _react.PropTypes.shape({
+	    parent: _react.PropTypes.object,
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object
+	  }),
+	  /**
+	   * The width prop specifies the width of the chart container element in pixels
+	   */
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The x prop specifies how to access the X value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+	   */
+	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The y prop specifies how to access the Y value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+	   */
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
+	};
+	VictoryBar.defaultProps = {
+	  colorScale: "greyscale",
+	  data: defaultData,
+	  events: {},
+	  height: 300,
+	  padding: 50,
+	  scale: "linear",
+	  stacked: false,
+	  standalone: true,
+	  width: 450,
+	  x: "x",
+	  y: "y"
+	};
+	VictoryBar.getDomain = _domain2.default.getMultiSeriesDomain.bind(_domain2.default);
+	exports.default = VictoryBar;
 
 /***/ },
-/* 147 */
+/* 354 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15157,29 +23801,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var Bar = (function (_React$Component) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Bar = function (_React$Component) {
 	  _inherits(Bar, _React$Component);
 	
 	  function Bar() {
 	    _classCallCheck(this, Bar);
 	
-	    _get(Object.getPrototypeOf(Bar.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Bar).apply(this, arguments));
 	  }
 	
 	  _createClass(Bar, [{
@@ -15208,46 +23854,37 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return this.props.horizontal ? this.getHorizontalBarPath(position, width) : this.getVerticalBarPath(position, width);
 	    }
 	  }, {
-	    key: "renderBar",
-	    value: function renderBar(props) {
-	      var style = _victoryCore.Helpers.evaluateStyle(props.style, props.datum);
+	    key: "render",
+	    value: function render() {
+	      var style = _victoryCore.Helpers.evaluateStyle(this.props.style, this.props.datum);
 	      // TODO better bar width calculation
-	      var barWidth = style.width;
-	      var path = props.position.independent ? this.getBarPath(props.position, barWidth) : undefined;
-	      return _react2["default"].createElement("path", {
+	      var barWidth = style.width || 8;
+	      var path = this.props.position.independent ? this.getBarPath(this.props.position, barWidth) : undefined;
+	      var index = [this.props.index.seriesIndex, this.props.index.barIndex];
+	      var events = _victoryCore.Helpers.getPartialEvents(this.props.events, index, this.props);
+	      return _react2.default.createElement("path", _extends({}, events, {
 	        d: path,
 	        style: style,
 	        shapeRendering: "optimizeSpeed"
-	      });
+	      }));
 	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return _react2["default"].createElement(
-	        "g",
-	        null,
-	        this.renderBar(this.props)
-	      );
-	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      position: _react.PropTypes.object,
-	      horizontal: _react.PropTypes.bool,
-	      style: _react.PropTypes.object,
-	      datum: _react.PropTypes.object
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return Bar;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = Bar;
-	module.exports = exports["default"];
+	Bar.propTypes = {
+	  index: _react.PropTypes.object,
+	  events: _react.PropTypes.object,
+	  position: _react.PropTypes.object,
+	  horizontal: _react.PropTypes.bool,
+	  style: _react.PropTypes.object,
+	  datum: _react.PropTypes.object
+	};
+	exports.default = Bar;
 
 /***/ },
-/* 148 */
+/* 355 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15256,33 +23893,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	var _defaults = __webpack_require__(2);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var _assign = __webpack_require__(209);
 	
-	var _lodashObjectDefaults = __webpack_require__(2);
+	var _assign2 = _interopRequireDefault(_assign);
 	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var BarLabel = (function (_React$Component) {
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var BarLabel = function (_React$Component) {
 	  _inherits(BarLabel, _React$Component);
 	
 	  function BarLabel() {
 	    _classCallCheck(this, BarLabel);
 	
-	    _get(Object.getPrototypeOf(BarLabel.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(BarLabel).apply(this, arguments));
 	  }
 	
 	  _createClass(BarLabel, [{
@@ -15313,38 +23956,43 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: "renderLabelComponent",
 	    value: function renderLabelComponent(props, position, anchors) {
 	      var component = props.labelComponent;
-	      var baseStyle = (0, _lodashObjectDefaults2["default"])({ padding: 0 }, component.props.style, props.style);
+	      var baseStyle = (0, _defaults2.default)({}, component.props.style, props.style, { padding: 0 });
 	      var style = _victoryCore.Helpers.evaluateStyle(baseStyle, props.datum);
 	      var padding = this.getlabelPadding(props, style);
-	      var children = component.props.children || props.labelText;
-	      var newProps = {
+	      var labelText = props.labelText || props.datum.label;
+	      var index = [props.index.seriesIndex, props.index.barIndex];
+	      var baseEvents = component && component.props.events ? (0, _defaults2.default)({}, component.props.events, props.events) : props.events;
+	      var events = _victoryCore.Helpers.getPartialEvents(baseEvents, index, props);
+	      var newProps = (0, _assign2.default)({}, events, {
+	        index: [props.index.seriesIndex, props.index.barIndex],
 	        x: component.props.x || position.x + padding.x,
 	        y: component.props.y || position.y - padding.y,
-	        data: props.datum, // Pass data for custom label component to access - todo: rename to datum
+	        datum: props.datum, // Pass datum for custom label component to access
+	        text: labelText,
 	        textAnchor: component.props.textAnchor || anchors.text,
 	        verticalAnchor: component.props.verticalAnchor || anchors.vertical,
 	        style: style
-	      };
-	      return _react2["default"].cloneElement(component, newProps, children);
+	      });
+	      return _react2.default.cloneElement(component, newProps);
 	    }
 	  }, {
 	    key: "renderVictoryLabel",
 	    value: function renderVictoryLabel(props, position, anchors) {
-	      var baseStyle = (0, _lodashObjectDefaults2["default"])({ padding: 0 }, props.style);
+	      var baseStyle = (0, _defaults2.default)({}, props.style, { padding: 0 });
 	      var style = _victoryCore.Helpers.evaluateStyle(baseStyle, props.datum);
 	      var padding = this.getlabelPadding(props, style);
-	      return _react2["default"].createElement(
-	        _victoryCore.VictoryLabel,
-	        {
-	          x: position.x + padding.x,
-	          y: position.y - padding.y,
-	          data: props.datum, // todo: rename to datum
-	          textAnchor: anchors.text,
-	          verticalAnchor: anchors.vertical,
-	          style: style
-	        },
-	        props.labelText
-	      );
+	      var index = [props.index.seriesIndex, props.index.barIndex];
+	      var events = _victoryCore.Helpers.getPartialEvents(props.events, index, props);
+	      return _react2.default.createElement(_victoryCore.VictoryLabel, _extends({
+	        x: position.x + padding.x,
+	        y: position.y - padding.y,
+	        datum: props.datum,
+	        index: [props.index.seriesIndex, props.index.barIndex],
+	        textAnchor: anchors.text,
+	        verticalAnchor: anchors.vertical,
+	        style: style,
+	        text: props.labelText
+	      }, events));
 	    }
 	  }, {
 	    key: "renderLabel",
@@ -15359,77 +24007,69 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      return _react2["default"].createElement(
+	      return _react2.default.createElement(
 	        "g",
 	        null,
 	        this.renderLabel(this.props)
 	      );
 	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      position: _react.PropTypes.object,
-	      horizontal: _react.PropTypes.bool,
-	      style: _react.PropTypes.object,
-	      datum: _react.PropTypes.object,
-	      labelText: _react.PropTypes.string,
-	      labelComponent: _react.PropTypes.any
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return BarLabel;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = BarLabel;
-	module.exports = exports["default"];
+	BarLabel.propTypes = {
+	  events: _react.PropTypes.object,
+	  position: _react.PropTypes.object,
+	  horizontal: _react.PropTypes.bool,
+	  style: _react.PropTypes.object,
+	  datum: _react.PropTypes.object,
+	  index: _react.PropTypes.object,
+	  labelText: _react.PropTypes.string,
+	  labelComponent: _react.PropTypes.any
+	};
+	exports.default = BarLabel;
 
 /***/ },
-/* 149 */
+/* 356 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	var _defaults = __webpack_require__(2);
 	
-	var _lodashObjectDefaults = __webpack_require__(2);
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
+	var _uniq = __webpack_require__(315);
 	
-	var _lodashArrayUniq = __webpack_require__(121);
+	var _uniq2 = _interopRequireDefault(_uniq);
 	
-	var _lodashArrayUniq2 = _interopRequireDefault(_lodashArrayUniq);
+	var _omit = __webpack_require__(348);
 	
-	var _lodashObjectOmit = __webpack_require__(150);
+	var _omit2 = _interopRequireDefault(_omit);
 	
-	var _lodashObjectOmit2 = _interopRequireDefault(_lodashObjectOmit);
+	var _layout = __webpack_require__(352);
 	
-	var _helpersDomain = __webpack_require__(101);
+	var _layout2 = _interopRequireDefault(_layout);
 	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	module.exports = {
-	  getDomain: function getDomain(props, axis) {
-	    var propsDomain = _helpersDomain2["default"].getDomainFromProps(props, axis);
-	    if (propsDomain) {
-	      return _helpersDomain2["default"].padDomain(propsDomain, props, axis);
-	    }
-	    var ensureZero = function ensureZero(domain) {
-	      return axis === "y" ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
-	    };
-	    var dataDomain = ensureZero(_helpersDomain2["default"].getDomainFromGroupedData(props, axis));
-	    return _helpersDomain2["default"].padDomain(dataDomain, props, axis);
-	  },
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
+	exports.default = {
 	  // Layout Helpers
+	
 	  getBarPosition: function getBarPosition(datum, index, calculatedProps) {
 	    var scale = calculatedProps.scale;
 	    var stacked = calculatedProps.stacked;
 	    var categories = calculatedProps.categories;
+	    var datasets = calculatedProps.datasets;
 	
-	    var yOffset = stacked ? this.getYOffset(datum, index, calculatedProps) : 0;
+	    var yOffset = stacked && index.seriesIndex !== 0 ? _layout2.default.getY0(datasets, datum, index.seriesIndex) : 0;
 	    var y0 = yOffset;
 	    var y1 = yOffset + datum.y;
 	    var x = stacked && !categories ? datum.x : this.adjustX(datum, index.seriesIndex, calculatedProps);
@@ -15442,28 +24082,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      dependent1: scale.y(formatValue(y1, "y"))
 	    };
 	  },
-	
-	  getYOffset: function getYOffset(datum, index, calculatedProps) {
-	    var datasets = calculatedProps.datasets;
-	
-	    if (index.seriesIndex === 0) {
-	      return 0;
-	    }
-	    var y = datum.y;
-	    var previousDataSets = datasets.slice(0, index.seriesIndex);
-	    var previousBars = previousDataSets.reduce(function (prev, dataset) {
-	      return prev.concat(dataset.data.filter(function (previousDatum) {
-	        return datum.x instanceof Date ? previousDatum.x.getTime() === datum.x.getTime() : previousDatum.x === datum.x;
-	      }).map(function (previousDatum) {
-	        return previousDatum.y || 0;
-	      }));
-	    }, []);
-	    return previousBars.reduce(function (memo, barValue) {
-	      var sameSign = y < 0 && barValue < 0 || y >= 0 && barValue >= 0;
-	      return sameSign ? memo + barValue : memo;
-	    }, 0);
-	  },
-	
 	  adjustX: function adjustX(datum, index, calculatedProps) {
 	    var stacked = calculatedProps.stacked;
 	    var categories = calculatedProps.categories;
@@ -15482,7 +24100,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return stacked ? x : x + centerOffset * totalWidth;
 	  },
-	
 	  pixelsToValue: function pixelsToValue(pixels, axis, calculatedProps) {
 	    if (pixels === 0) {
 	      return 0;
@@ -15494,6 +24111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return domainExtent / rangeExtent * pixels;
 	  },
 	
+	
 	  // Label Helpers
 	  shouldPlotLabel: function shouldPlotLabel(index, props, datasets) {
 	    var isCenter = Math.floor(datasets.length / 2) === index;
@@ -15503,15 +24121,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var labelExists = props.labels || props.labelComponents ? true : false;
 	    return plotGroupLabel && labelExists;
 	  },
-	
 	  getUniqueX: function getUniqueX(datasets) {
-	    return (0, _lodashArrayUniq2["default"])(datasets.reduce(function (prev, dataset) {
+	    return (0, _uniq2.default)(datasets.reduce(function (prev, dataset) {
 	      return prev.concat(dataset.data.map(function (d) {
 	        return d.x;
 	      }));
 	    }, []));
 	  },
-	
 	  getLabelIndex: function getLabelIndex(datum, calculatedProps) {
 	    var stringMap = calculatedProps.stringMap;
 	    var uniqueX = calculatedProps.uniqueX;
@@ -15526,95 +24142,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    }
 	  },
-	
 	  getBarStyle: function getBarStyle(datum, dataset, baseStyle) {
-	    var styleData = (0, _lodashObjectOmit2["default"])(datum, ["xName", "yName", "x", "y", "label", "category"]);
-	    return (0, _lodashObjectDefaults2["default"])({}, styleData, (0, _lodashObjectOmit2["default"])(dataset.attrs, "name"), baseStyle.data);
+	    var styleData = (0, _omit2.default)(datum, ["xName", "yName", "x", "y", "label", "category"]);
+	    return (0, _defaults2.default)({}, styleData, (0, _omit2.default)(dataset.attrs, "name"), baseStyle.data);
 	  }
 	};
 
 /***/ },
-/* 150 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayMap = __webpack_require__(151),
-	    baseDifference = __webpack_require__(87),
-	    baseFlatten = __webpack_require__(72),
-	    bindCallback = __webpack_require__(23),
-	    keysIn = __webpack_require__(19),
-	    pickByArray = __webpack_require__(74),
-	    pickByCallback = __webpack_require__(75),
-	    restParam = __webpack_require__(26);
-	
-	/**
-	 * The opposite of `_.pick`; this method creates an object composed of the
-	 * own and inherited enumerable properties of `object` that are not omitted.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @category Object
-	 * @param {Object} object The source object.
-	 * @param {Function|...(string|string[])} [predicate] The function invoked per
-	 *  iteration or property names to omit, specified as individual property
-	 *  names or arrays of property names.
-	 * @param {*} [thisArg] The `this` binding of `predicate`.
-	 * @returns {Object} Returns the new object.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred', 'age': 40 };
-	 *
-	 * _.omit(object, 'age');
-	 * // => { 'user': 'fred' }
-	 *
-	 * _.omit(object, _.isNumber);
-	 * // => { 'user': 'fred' }
-	 */
-	var omit = restParam(function(object, props) {
-	  if (object == null) {
-	    return {};
-	  }
-	  if (typeof props[0] != 'function') {
-	    var props = arrayMap(baseFlatten(props), String);
-	    return pickByArray(object, baseDifference(keysIn(object), props));
-	  }
-	  var predicate = bindCallback(props[0], props[1], 3);
-	  return pickByCallback(object, function(value, key, object) {
-	    return !predicate(value, key, object);
-	  });
-	});
-	
-	module.exports = omit;
-
-
-/***/ },
-/* 151 */
-/***/ function(module, exports) {
-
-	/**
-	 * A specialized version of `_.map` for arrays without support for callback
-	 * shorthands and `this` binding.
-	 *
-	 * @private
-	 * @param {Array} array The array to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Array} Returns the new mapped array.
-	 */
-	function arrayMap(array, iteratee) {
-	  var index = -1,
-	      length = array.length,
-	      result = Array(length);
-	
-	  while (++index < length) {
-	    result[index] = iteratee(array[index], index, array);
-	  }
-	  return result;
-	}
-	
-	module.exports = arrayMap;
-
-
-/***/ },
-/* 152 */
+/* 357 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15625,49 +24160,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _lodashObjectPick = __webpack_require__(71);
+	var _pick = __webpack_require__(202);
 	
-	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
+	var _pick2 = _interopRequireDefault(_pick);
 	
-	var _point = __webpack_require__(153);
+	var _omit = __webpack_require__(348);
+	
+	var _omit2 = _interopRequireDefault(_omit);
+	
+	var _defaults = __webpack_require__(2);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	var _point = __webpack_require__(358);
 	
 	var _point2 = _interopRequireDefault(_point);
 	
-	var _helpersScale = __webpack_require__(93);
+	var _pointLabel = __webpack_require__(360);
 	
-	var _helpersScale2 = _interopRequireDefault(_helpersScale);
+	var _pointLabel2 = _interopRequireDefault(_pointLabel);
 	
-	var _helpersDomain = __webpack_require__(101);
+	var _scale = __webpack_require__(257);
 	
-	var _helpersDomain2 = _interopRequireDefault(_helpersDomain);
+	var _scale2 = _interopRequireDefault(_scale);
 	
-	var _helpersData = __webpack_require__(102);
+	var _domain = __webpack_require__(267);
 	
-	var _helpersData2 = _interopRequireDefault(_helpersData);
+	var _domain2 = _interopRequireDefault(_domain);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _data = __webpack_require__(268);
 	
-	var _helperMethods = __webpack_require__(154);
+	var _data2 = _interopRequireDefault(_data);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	var _helperMethods = __webpack_require__(361);
 	
 	var _helperMethods2 = _interopRequireDefault(_helperMethods);
 	
-	var _memoizerific = __webpack_require__(143);
+	var _lruMemoize = __webpack_require__(342);
 	
-	var _memoizerific2 = _interopRequireDefault(_memoizerific);
+	var _lruMemoize2 = _interopRequireDefault(_lruMemoize);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
 	var defaultStyles = {
 	  data: {
@@ -15686,70 +24233,108 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	};
 	
-	var VictoryScatter = (function (_React$Component) {
+	var VictoryScatter = function (_React$Component) {
 	  _inherits(VictoryScatter, _React$Component);
 	
 	  function VictoryScatter() {
 	    _classCallCheck(this, VictoryScatter);
 	
-	    _get(Object.getPrototypeOf(VictoryScatter.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryScatter).apply(this, arguments));
 	  }
 	
 	  _createClass(VictoryScatter, [{
 	    key: "componentWillMount",
 	    value: function componentWillMount() {
+	      this.state = {
+	        dataState: {},
+	        labelsState: {}
+	      };
 	      this.memoized = {
 	        // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-	        getStyles: (0, _memoizerific2["default"])(1)(_victoryCore.Helpers.getStyles)
+	        getStyles: (0, _lruMemoize2.default)(1, true)(_victoryCore.Helpers.getStyles)
 	      };
 	    }
 	  }, {
+	    key: "getDataStyles",
+	    value: function getDataStyles(data, style) {
+	      var stylesFromData = (0, _omit2.default)(data, ["x", "y", "z", "size", "symbol", "name", "label"]);
+	      var baseDataStyle = (0, _defaults2.default)({}, stylesFromData, style);
+	      return _victoryCore.Helpers.evaluateStyle(baseDataStyle, data);
+	    }
+	  }, {
 	    key: "renderPoint",
-	    value: function renderPoint(data, index, calculatedProps) {
+	    value: function renderPoint(datum, index, calculatedProps) {
+	      var style = calculatedProps.style;
+	
 	      var position = {
-	        x: calculatedProps.scale.x.call(null, data.x),
-	        y: calculatedProps.scale.y.call(null, data.y)
+	        x: calculatedProps.scale.x.call(null, datum.x),
+	        y: calculatedProps.scale.y.call(null, datum.y)
 	      };
-	      return _react2["default"].createElement(_point2["default"], {
+	      var dataStyle = this.getDataStyles(datum, style.data);
+	      var baseSize = _helperMethods2.default.getSize(datum, this.props, calculatedProps);
+	      var size = _victoryCore.Helpers.evaluateProp(baseSize, datum);
+	      var getBoundEvents = _victoryCore.Helpers.getEvents.bind(this);
+	      var pointComponent = _react2.default.createElement(_point2.default, _extends({
 	        key: "point-" + index,
-	        labelComponent: this.props.labelComponent,
-	        showLabels: this.props.showLabels,
-	        style: calculatedProps.style,
+	        index: index,
+	        style: dataStyle,
 	        x: position.x,
 	        y: position.y,
-	        data: data,
-	        size: _helperMethods2["default"].getSize(data, this.props, calculatedProps),
-	        symbol: _helperMethods2["default"].getSymbol(data, this.props)
-	      });
+	        datum: datum,
+	        size: size,
+	        symbol: _helperMethods2.default.getSymbol(datum, this.props),
+	        events: getBoundEvents(this.props.events.data, "data")
+	      }, this.state.dataState[index]));
+	      if (datum.label && this.props.showLabels) {
+	        var matchedStyle = (0, _pick2.default)(dataStyle, ["opacity", "fill"]);
+	        var padding = style.labels.padding || size * 0.25;
+	        var baseLabelStyle = (0, _defaults2.default)({}, style.labels, matchedStyle, { padding: padding });
+	        var labelStyle = _victoryCore.Helpers.evaluateStyle(baseLabelStyle, datum);
+	        return _react2.default.createElement(
+	          "g",
+	          { key: "point-group-" + index },
+	          pointComponent,
+	          _react2.default.createElement(_pointLabel2.default, _extends({
+	            style: labelStyle,
+	            index: index,
+	            events: getBoundEvents(this.props.events.labels, "labels"),
+	            x: position.x,
+	            y: position.y,
+	            datum: datum,
+	            labelComponent: this.props.labelComponent
+	          }, this.state.labelsState[index]))
+	        );
+	      }
+	      return pointComponent;
 	    }
 	  }, {
 	    key: "renderData",
 	    value: function renderData(props, style) {
-	      var _this = this;
+	      var _this2 = this;
 	
-	      var data = _helpersData2["default"].getData(props);
+	      var data = _data2.default.getData(props);
 	      var range = {
 	        x: _victoryCore.Helpers.getRange(props, "x"),
 	        y: _victoryCore.Helpers.getRange(props, "y")
 	      };
 	      var domain = {
-	        x: _helpersDomain2["default"].getDomain(props, "x"),
-	        y: _helpersDomain2["default"].getDomain(props, "y")
+	        x: _domain2.default.getDomain(props, "x"),
+	        y: _domain2.default.getDomain(props, "y")
 	      };
 	      var scale = {
-	        x: _helpersScale2["default"].getBaseScale(props, "x").domain(domain.x).range(range.x),
-	        y: _helpersScale2["default"].getBaseScale(props, "y").domain(domain.y).range(range.y)
+	        x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
+	        y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
 	      };
 	      var z = props.bubbleProperty || "z";
 	      var calculatedProps = { data: data, scale: scale, style: style, z: z };
 	      return data.map(function (datum, index) {
-	        return _this.renderPoint(datum, index, calculatedProps);
+	        return _this2.renderPoint(datum, index, calculatedProps);
 	      });
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var _this2 = this;
+	      var _this3 = this;
 	
 	      // If animating, return a `VictoryAnimation` element that will create
 	      // a new `VictoryScatter` with nearly identical props, except (1) tweened
@@ -15758,205 +24343,212 @@ return /******/ (function(modules) { // webpackBootstrap
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
-	        var animateData = (0, _lodashObjectPick2["default"])(this.props, ["data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width", "x", "y"]);
+	        var animateData = (0, _pick2.default)(this.props, ["data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width", "x", "y"]);
 	
-	        return _react2["default"].createElement(
+	        return _react2.default.createElement(
 	          _victoryCore.VictoryAnimation,
 	          _extends({}, this.props.animate, { data: animateData }),
 	          function (props) {
-	            return _react2["default"].createElement(VictoryScatter, _extends({}, _this2.props, props, { animate: null }));
+	            return _react2.default.createElement(VictoryScatter, _extends({}, _this3.props, props, { animate: null }));
 	          }
 	        );
 	      }
 	      var style = this.memoized.getStyles(this.props.style, defaultStyles, this.props.height, this.props.width);
-	      var group = _react2["default"].createElement(
+	      var group = _react2.default.createElement(
 	        "g",
 	        { style: style.parent },
 	        this.renderData(this.props, style)
 	      );
-	      return this.props.standalone ? _react2["default"].createElement(
+	      return this.props.standalone ? _react2.default.createElement(
 	        "svg",
-	        { style: style.parent },
+	        _extends({ style: style.parent }, this.props.events.parent),
 	        group
 	      ) : group;
 	    }
-	  }], [{
-	    key: "role",
-	    value: "scatter",
-	    enumerable: true
-	  }, {
-	    key: "propTypes",
-	    value: {
-	      /**
-	       * The animate prop specifies props for victory-animation to use. It this prop is
-	       * not given, the scatter plot will not tween between changing data / style props.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * @examples {delay: 5, velocity: 0.02, onEnd: () => alert("woo!")}
-	       */
-	      animate: _react.PropTypes.object,
-	      /**
-	       * The bubbleProperty prop indicates which property of the data object should be used
-	       * to scale data points in a bubble chart
-	       */
-	      bubbleProperty: _react.PropTypes.string,
-	      /**
-	       * The data prop specifies the data to be plotted.
-	       * Data should be in the form of an array of data points.
-	       * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	       * but by default, an object with x and y properties is expected.
-	       * Other properties may be added to the data point object, such as fill, size, and symbol.
-	       * These properties will be interpreted and applied to the individual lines
-	       * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
-	       */
-	      data: _react.PropTypes.array,
-	      /**
-	       * The domain prop describes the range of values your chart will include. This prop can be
-	       * given as a array of the minimum and maximum expected values for your chart,
-	       * or as an object that specifies separate arrays for x and y.
-	       * If this prop is not provided, a domain will be calculated from data, or other
-	       * available information.
-	       * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	       */
-	      domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.domain,
-	        y: _victoryCore.PropTypes.domain
-	      })]),
-	      /**
-	       * The height props specifies the height of the chart container element in pixels
-	       */
-	      height: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The labelComponent prop takes in an entire, HTML-complete label component which will be used
-	       * to create labels for each point in the scatter plot. The new element created from the passed
-	       * labelComponent will have children preserved, or provided as the label property from the
-	       * point's datum; property data provided by the point's datum; properties x, y, dy, textAnchor,
-	       * and verticalAnchor preserved or default values provided by the point; and styles filled out
-	       * with defaults from the scatter, and overrides from the datum. If labelComponent is omitted, a
-	       * new VictoryLabel will be created with props and styles from the point.
-	       */
-	      labelComponent: _react.PropTypes.element,
-	      /**
-	       * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
-	       */
-	      maxBubbleSize: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The padding props specifies the amount of padding in number of pixels between
-	       * the edge of the chart and any rendered child components. This prop can be given
-	       * as a number or as an object with padding specified for top, bottom, left
-	       * and right.
-	       */
-	      padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	        top: _react.PropTypes.number,
-	        bottom: _react.PropTypes.number,
-	        left: _react.PropTypes.number,
-	        right: _react.PropTypes.number
-	      })]),
-	      /**
-	       * The samples prop specifies how many individual points to plot when plotting
-	       * y as a function of x. Samples is ignored if x props are provided instead.
-	       */
-	      samples: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The scale prop determines which scales your chart should use. This prop can be
-	       * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	       * as a d3 scale function, or as an object with scales specified for x and y
-	       * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	       */
-	      scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	        x: _victoryCore.PropTypes.scale,
-	        y: _victoryCore.PropTypes.scale
-	      })]),
-	      /**
-	       * The showLabels prop determines whether to show any labels associated with a data point.
-	       * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	       * If animations are running slowly, try setting this prop to false to cut down on
-	       * the number of svg nodes
-	       */
-	      showLabels: _react.PropTypes.bool,
-	      /**
-	       * The size prop determines how to scale each data point
-	       */
-	      size: _react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative, _react.PropTypes.func]),
-	      /**
-	       * The standalone prop determines whether the component will render a standalone svg
-	       * or a <g> tag that will be included in an external svg. Set standalone to false to
-	       * compose VictoryScatter with other components within an enclosing <svg> tag.
-	       */
-	      standalone: _react.PropTypes.bool,
-	      /**
-	       * The style prop specifies styles for your scatter plot. VictoryScatter relies on Radium,
-	       * so valid Radium style objects should work for this prop. Height, width, and
-	       * padding should be specified via the height, width, and padding props, as they
-	       * are used to calculate the alignment of components within chart.
-	       * @examples {parent: {margin: 50}, data: {fill: "red"}, labels: {padding: 20}}
-	       */
-	      style: _react.PropTypes.shape({
-	        parent: _react.PropTypes.object,
-	        data: _react.PropTypes.object,
-	        labels: _react.PropTypes.object
-	      }),
-	      /**
-	       * The symbol prop determines which symbol should be drawn to represent data points.
-	       */
-	      symbol: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]), _react.PropTypes.func]),
-	      /**
-	       * The width props specifies the width of the chart container element in pixels
-	       */
-	      width: _victoryCore.PropTypes.nonNegative,
-	      /**
-	       * The x prop specifies how to access the X value of each data point.
-	       * If given as a function, it will be run on each data point, and returned value will be used.
-	       * If given as an integer, it will be used as an array index for array-type data points.
-	       * If given as a string, it will be used as a property key for object-type data points.
-	       * If given as an array of strings, or a string containing dots or brackets,
-	       * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	       * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	       * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	       */
-	      x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	      /**
-	       * The y prop specifies how to access the Y value of each data point.
-	       * If given as a function, it will be run on each data point, and returned value will be used.
-	       * If given as an integer, it will be used as an array index for array-type data points.
-	       * If given as a string, it will be used as a property key for object-type data points.
-	       * If given as an array of strings, or a string containing dots or brackets,
-	       * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	       * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	       * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	       */
-	      y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      height: 300,
-	      padding: 50,
-	      samples: 50,
-	      scale: "linear",
-	      showLabels: true,
-	      size: 3,
-	      standalone: true,
-	      symbol: "circle",
-	      width: 450,
-	      x: "x",
-	      y: "y"
-	    },
-	    enumerable: true
-	  }, {
-	    key: "getDomain",
-	    value: _helpersDomain2["default"].getDomain.bind(_helpersDomain2["default"]),
-	    enumerable: true
 	  }]);
 	
 	  return VictoryScatter;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = VictoryScatter;
-	module.exports = exports["default"];
+	VictoryScatter.role = "scatter";
+	VictoryScatter.propTypes = {
+	  /**
+	   * The animate prop specifies props for victory-animation to use. It this prop is
+	   * not given, the scatter plot will not tween between changing data / style props.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * @examples {delay: 5, velocity: 0.02, onEnd: () => alert("woo!")}
+	   */
+	  animate: _react.PropTypes.object,
+	  /**
+	   * The bubbleProperty prop indicates which property of the data object should be used
+	   * to scale data points in a bubble chart
+	   */
+	  bubbleProperty: _react.PropTypes.string,
+	  /**
+	   * The data prop specifies the data to be plotted.
+	   * Data should be in the form of an array of data points.
+	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
+	   * but by default, an object with x and y properties is expected.
+	   * Other properties may be added to the data point object, such as fill, size, and symbol.
+	   * These properties will be interpreted and applied to the individual lines
+	   * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
+	   */
+	  data: _react.PropTypes.array,
+	  /**
+	   * The domain prop describes the range of values your chart will include. This prop can be
+	   * given as a array of the minimum and maximum expected values for your chart,
+	   * or as an object that specifies separate arrays for x and y.
+	   * If this prop is not provided, a domain will be calculated from data, or other
+	   * available information.
+	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
+	   */
+	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.domain,
+	    y: _victoryCore.PropTypes.domain
+	  })]),
+	  /**
+	   * The events prop attaches arbitrary event handlers to data and label elements
+	   * Event handlers are called with their corresponding events, corresponding component props,
+	   * and their index in the data array, and event name. The return value of event handlers
+	   * will be stored by unique index on the state object of VictoryScatter
+	   * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+	   * applied by index to the appropriate child component. Event props on the
+	   * parent namespace are just spread directly on to the top level svg of VictoryScatter
+	   * if one exists. If VictoryScatter is set up to render g elements i.e. when it is
+	   * rendered within chart, or when `standalone={false}` parent events will not be applied.
+	   *
+	   * @examples {data: {
+	   *  onClick: () => onClick: () => return {style: {fill: "green"}}
+	   *}}
+	   */
+	  events: _react.PropTypes.shape({
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object,
+	    parent: _react.PropTypes.object
+	  }),
+	  /**
+	   * The height props specifies the height of the chart container element in pixels
+	   */
+	  height: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The labelComponent prop takes in an entire, HTML-complete label component which will be used
+	   * to create labels for each point in the scatter plot. The new element created from the passed
+	   * labelComponent will have property data provided by the point's datum; properties x, y, dy,
+	   * textAnchor, and verticalAnchor preserved or default values provided by the point; and styles
+	   * filled out with defaults from the scatter, and overrides from the datum. If labelComponent is
+	   * omitted, a new VictoryLabel will be created with props and styles from the point.
+	   */
+	  labelComponent: _react.PropTypes.element,
+	  /**
+	   * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
+	   */
+	  maxBubbleSize: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The padding props specifies the amount of padding in number of pixels between
+	   * the edge of the chart and any rendered child components. This prop can be given
+	   * as a number or as an object with padding specified for top, bottom, left
+	   * and right.
+	   */
+	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
+	    top: _react.PropTypes.number,
+	    bottom: _react.PropTypes.number,
+	    left: _react.PropTypes.number,
+	    right: _react.PropTypes.number
+	  })]),
+	  /**
+	   * The samples prop specifies how many individual points to plot when plotting
+	   * y as a function of x. Samples is ignored if x props are provided instead.
+	   */
+	  samples: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The scale prop determines which scales your chart should use. This prop can be
+	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
+	   * as a d3 scale function, or as an object with scales specified for x and y
+	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
+	   */
+	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
+	    x: _victoryCore.PropTypes.scale,
+	    y: _victoryCore.PropTypes.scale
+	  })]),
+	  /**
+	   * The showLabels prop determines whether to show any labels associated with a data point.
+	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
+	   * If animations are running slowly, try setting this prop to false to cut down on
+	   * the number of svg nodes
+	   */
+	  showLabels: _react.PropTypes.bool,
+	  /**
+	   * The size prop determines how to scale each data point
+	   */
+	  size: _react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative, _react.PropTypes.func]),
+	  /**
+	   * The standalone prop determines whether the component will render a standalone svg
+	   * or a <g> tag that will be included in an external svg. Set standalone to false to
+	   * compose VictoryScatter with other components within an enclosing <svg> tag.
+	   */
+	  standalone: _react.PropTypes.bool,
+	  /**
+	   * The style prop specifies styles for your scatter plot. VictoryScatter relies on Radium,
+	   * so valid Radium style objects should work for this prop. Height, width, and
+	   * padding should be specified via the height, width, and padding props, as they
+	   * are used to calculate the alignment of components within chart.
+	   * @examples {parent: {margin: 50}, data: {fill: "red"}, labels: {padding: 20}}
+	   */
+	  style: _react.PropTypes.shape({
+	    parent: _react.PropTypes.object,
+	    data: _react.PropTypes.object,
+	    labels: _react.PropTypes.object
+	  }),
+	  /**
+	   * The symbol prop determines which symbol should be drawn to represent data points.
+	   */
+	  symbol: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]), _react.PropTypes.func]),
+	  /**
+	   * The width props specifies the width of the chart container element in pixels
+	   */
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The x prop specifies how to access the X value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+	   */
+	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The y prop specifies how to access the Y value of each data point.
+	   * If given as a function, it will be run on each data point, and returned value will be used.
+	   * If given as an integer, it will be used as an array index for array-type data points.
+	   * If given as a string, it will be used as a property key for object-type data points.
+	   * If given as an array of strings, or a string containing dots or brackets,
+	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+	   */
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
+	};
+	VictoryScatter.defaultProps = {
+	  events: {},
+	  height: 300,
+	  padding: 50,
+	  samples: 50,
+	  scale: "linear",
+	  showLabels: true,
+	  size: 3,
+	  standalone: true,
+	  symbol: "circle",
+	  width: 450,
+	  x: "x",
+	  y: "y"
+	};
+	VictoryScatter.getDomain = _domain2.default.getDomain.bind(_domain2.default);
+	exports.default = VictoryScatter;
 
 /***/ },
-/* 153 */
+/* 358 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -15965,168 +24557,258 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; desc = parent = undefined; continue _function; } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var _lodashObjectDefaults = __webpack_require__(2);
-	
-	var _lodashObjectDefaults2 = _interopRequireDefault(_lodashObjectDefaults);
-	
-	var _lodashObjectOmit = __webpack_require__(150);
-	
-	var _lodashObjectOmit2 = _interopRequireDefault(_lodashObjectOmit);
-	
-	var _lodashObjectPick = __webpack_require__(71);
-	
-	var _lodashObjectPick2 = _interopRequireDefault(_lodashObjectPick);
-	
-	var _react = __webpack_require__(29);
+	var _react = __webpack_require__(36);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryCore = __webpack_require__(30);
+	var _victoryCore = __webpack_require__(37);
 	
-	var _helperMethods = __webpack_require__(154);
+	var _pathHelpers = __webpack_require__(359);
 	
-	var Point = (function (_React$Component) {
+	var _pathHelpers2 = _interopRequireDefault(_pathHelpers);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Point = function (_React$Component) {
 	  _inherits(Point, _React$Component);
 	
 	  function Point() {
 	    _classCallCheck(this, Point);
 	
-	    _get(Object.getPrototypeOf(Point.prototype), "constructor", this).apply(this, arguments);
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Point).apply(this, arguments));
 	  }
 	
 	  _createClass(Point, [{
-	    key: "getStyle",
-	    value: function getStyle(props) {
-	      var stylesFromData = (0, _lodashObjectOmit2["default"])(props.data, ["x", "y", "z", "size", "symbol", "name", "label"]);
-	      var baseDataStyle = (0, _lodashObjectDefaults2["default"])({}, stylesFromData, props.style.data);
-	      var dataStyle = _victoryCore.Helpers.evaluateStyle(baseDataStyle, props.data);
-	      // match certain label styles to data if styles are not given
-	      var matchedStyle = (0, _lodashObjectPick2["default"])(dataStyle, ["opacity", "fill"]);
-	      var padding = props.style.labels.padding || props.size * 0.25;
-	      var baseLabelStyle = (0, _lodashObjectDefaults2["default"])({ padding: padding }, props.style.labels, matchedStyle);
-	      var labelStyle = _victoryCore.Helpers.evaluateStyle(baseLabelStyle, props.data);
-	      return { data: dataStyle, labels: labelStyle };
-	    }
-	  }, {
-	    key: "renderPoint",
-	    value: function renderPoint(props, style) {
-	      return _react2["default"].createElement("path", {
-	        style: style.data,
-	        d: (0, _helperMethods.getPath)(props),
-	        shapeRendering: "optimizeSpeed"
-	      });
-	    }
-	  }, {
-	    key: "renderLabel",
-	    value: function renderLabel(props, style) {
-	      if (props.showLabels === false || !props.data.label) {
-	        return undefined;
-	      }
-	      var component = props.labelComponent;
-	      var componentStyle = component && component.props.style || {};
-	      var baseStyle = (0, _lodashObjectDefaults2["default"])({}, componentStyle, style.labels);
-	      var labelStyle = _victoryCore.Helpers.evaluateStyle(baseStyle, props.data);
-	      var children = component && component.props.children || props.data.label;
-	      var labelProps = {
-	        x: component && component.props.x || props.x,
-	        y: component && component.props.y || props.y - labelStyle.padding,
-	        dy: component && component.props.dy,
-	        data: props.data,
-	        textAnchor: component && component.props.textAnchor || labelStyle.textAnchor,
-	        verticalAnchor: component && component.props.verticalAnchor || "end",
-	        style: labelStyle
+	    key: "getPath",
+	    value: function getPath(props) {
+	      var pathFunctions = {
+	        circle: _pathHelpers2.default.circle,
+	        square: _pathHelpers2.default.square,
+	        diamond: _pathHelpers2.default.diamond,
+	        triangleDown: _pathHelpers2.default.triangleDown,
+	        triangleUp: _pathHelpers2.default.triangleUp,
+	        plus: _pathHelpers2.default.plus,
+	        star: _pathHelpers2.default.star
 	      };
-	
-	      return component ? _react2["default"].cloneElement(component, labelProps, children) : _react2["default"].createElement(_victoryCore.VictoryLabel, labelProps, children);
+	      var symbol = _victoryCore.Helpers.evaluateProp(props.symbol, props.datum);
+	      return pathFunctions[symbol].call(null, props.x, props.y, props.size);
 	    }
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      var style = this.getStyle(this.props);
-	      return _react2["default"].createElement(
-	        "g",
-	        null,
-	        this.renderPoint(this.props, style),
-	        this.renderLabel(this.props, style)
-	      );
+	      var events = _victoryCore.Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
+	      return _react2.default.createElement("path", _extends({}, events, {
+	        style: this.props.style,
+	        d: this.getPath(this.props),
+	        shapeRendering: "optimizeSpeed"
+	      }));
 	    }
-	  }], [{
-	    key: "propTypes",
-	    value: {
-	      data: _react.PropTypes.shape({
-	        x: _react2["default"].PropTypes.any,
-	        y: _react2["default"].PropTypes.any
-	      }),
-	      labelComponent: _react2["default"].PropTypes.element,
-	      symbol: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]), _react.PropTypes.func]),
-	      size: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.func]),
-	      showLabels: _react2["default"].PropTypes.bool,
-	      style: _react.PropTypes.shape({
-	        data: _react2["default"].PropTypes.object,
-	        labels: _react2["default"].PropTypes.object
-	      }),
-	      x: _react2["default"].PropTypes.number,
-	      y: _react2["default"].PropTypes.number
-	    },
-	    enumerable: true
-	  }, {
-	    key: "defaultProps",
-	    value: {
-	      showLabels: true
-	    },
-	    enumerable: true
 	  }]);
 	
 	  return Point;
-	})(_react2["default"].Component);
+	}(_react2.default.Component);
 	
-	exports["default"] = Point;
-	module.exports = exports["default"];
+	Point.propTypes = {
+	  index: _react2.default.PropTypes.number,
+	  datum: _react.PropTypes.object,
+	  events: _react.PropTypes.object,
+	  symbol: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]), _react.PropTypes.func]),
+	  size: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.func]),
+	  style: _react.PropTypes.object,
+	  x: _react2.default.PropTypes.number,
+	  y: _react2.default.PropTypes.number
+	};
+	exports.default = Point;
 
 /***/ },
-/* 154 */
+/* 359 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+	var _range = __webpack_require__(254);
 	
-	var _lodashObjectValues = __webpack_require__(84);
+	var _range2 = _interopRequireDefault(_range);
 	
-	var _lodashObjectValues2 = _interopRequireDefault(_lodashObjectValues);
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var _pathHelpers = __webpack_require__(155);
+	exports.default = {
+	  circle: function circle(x, y, size) {
+	    return "M " + x + ", " + y + " m " + -size + ", 0\n      a " + size + ", " + size + " 0 1,0 " + size * 2 + ",0\n      a " + size + ", " + size + " 0 1,0 " + -size * 2 + ",0";
+	  },
+	  square: function square(x, y, size) {
+	    var baseSize = 0.87 * size;
+	    return "M " + (x - baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y - baseSize) + "\n      L " + (x - baseSize) + ", " + (y - baseSize) + "\n      z";
+	  },
+	  diamond: function diamond(x, y, size) {
+	    var baseSize = 0.87 * size;
+	    var length = Math.sqrt(2 * (baseSize * baseSize));
+	    return "M " + x + ", " + (y + length) + "\n      L " + (x + length) + ", " + y + "\n      L " + x + ", " + (y - length) + "\n      L " + (x - length) + ", " + y + "\n      z";
+	  },
+	  triangleDown: function triangleDown(x, y, size) {
+	    var height = size / 2 * Math.sqrt(3);
+	    return "M " + (x - size) + ", " + (y - size) + "\n      L " + (x + size) + ", " + (y - size) + "\n      L " + x + ", " + (y + height) + "\n      z";
+	  },
+	  triangleUp: function triangleUp(x, y, size) {
+	    var height = size / 2 * Math.sqrt(3);
+	    return "M " + (x - size) + ", " + (y + size) + "\n      L " + (x + size) + ", " + (y + size) + "\n      L " + x + ", " + (y - height) + "\n      z";
+	  },
+	  plus: function plus(x, y, size) {
+	    var baseSize = 1.1 * size;
+	    return "M " + (x - baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x - baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      z";
+	  },
+	  star: function star(x, y, size) {
+	    var baseSize = 1.35 * size;
+	    var angle = Math.PI / 5;
+	    var starCoords = (0, _range2.default)(10).map(function (index) {
+	      var length = index % 2 === 0 ? baseSize : baseSize / 2;
+	      return length * Math.sin(angle * (index + 1)) + x + ",\n        " + (length * Math.cos(angle * (index + 1)) + y);
+	    });
+	    return "M " + starCoords.join("L") + " z";
+	  }
+	};
+
+/***/ },
+/* 360 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
 	
-	var _pathHelpers2 = _interopRequireDefault(_pathHelpers);
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
 	
-	var _victoryCore = __webpack_require__(30);
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	module.exports = {
+	var _defaults = __webpack_require__(2);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	var _assign = __webpack_require__(209);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _react = __webpack_require__(36);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var PointLabel = function (_React$Component) {
+	  _inherits(PointLabel, _React$Component);
+	
+	  function PointLabel() {
+	    _classCallCheck(this, PointLabel);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(PointLabel).apply(this, arguments));
+	  }
+	
+	  _createClass(PointLabel, [{
+	    key: "renderLabel",
+	    value: function renderLabel(props) {
+	      if (props.showLabels === false || !props.datum.label) {
+	        return undefined;
+	      }
+	      var component = props.labelComponent;
+	      var componentStyle = component && component.props.style || {};
+	      var baseStyle = (0, _defaults2.default)({}, componentStyle, props.style);
+	      var labelStyle = _victoryCore.Helpers.evaluateStyle(baseStyle, props.datum);
+	      var labelText = component && component.props.text || props.datum.label;
+	      var baseEvents = component && component.props.events ? (0, _defaults2.default)({}, component.props.events, props.events) : props.events;
+	      var events = _victoryCore.Helpers.getPartialEvents(baseEvents, props.index, props);
+	      var labelProps = (0, _assign2.default)({}, events, {
+	        x: component && component.props.x || props.x,
+	        y: component && component.props.y || props.y - labelStyle.padding,
+	        dy: component && component.props.dy,
+	        datum: props.datum,
+	        text: labelText,
+	        textAnchor: component && component.props.textAnchor || labelStyle.textAnchor,
+	        verticalAnchor: component && component.props.verticalAnchor || "end",
+	        style: labelStyle
+	      });
+	
+	      return component ? _react2.default.cloneElement(component, labelProps) : _react2.default.createElement(_victoryCore.VictoryLabel, labelProps);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "g",
+	        null,
+	        this.renderLabel(this.props)
+	      );
+	    }
+	  }]);
+	
+	  return PointLabel;
+	}(_react2.default.Component);
+	
+	PointLabel.propTypes = {
+	  datum: _react.PropTypes.object,
+	  index: _react2.default.PropTypes.number,
+	  events: _react.PropTypes.object,
+	  labelComponent: _react2.default.PropTypes.element,
+	  style: _react.PropTypes.object,
+	  x: _react2.default.PropTypes.number,
+	  y: _react2.default.PropTypes.number
+	};
+	exports.default = PointLabel;
+
+/***/ },
+/* 361 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _values = __webpack_require__(221);
+	
+	var _values2 = _interopRequireDefault(_values);
+	
+	var _victoryCore = __webpack_require__(37);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
+	exports.default = {
 	  getSymbol: function getSymbol(data, props) {
 	    if (props.bubbleProperty) {
 	      return "circle";
 	    }
 	    return data.symbol || props.symbol;
 	  },
-	
 	  getBubbleSize: function getBubbleSize(datum, props, calculatedProps) {
 	    var data = calculatedProps.data;
 	    var z = calculatedProps.z;
 	
 	    var getMaxRadius = function getMaxRadius() {
-	      var minPadding = Math.min.apply(Math, _toConsumableArray((0, _lodashObjectValues2["default"])(_victoryCore.Helpers.getPadding(props))));
+	      var minPadding = Math.min.apply(Math, _toConsumableArray((0, _values2.default)(_victoryCore.Helpers.getPadding(props))));
 	      return Math.max(minPadding, 5);
 	    };
 	    var zData = data.map(function (point) {
@@ -16140,7 +24822,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var radius = Math.sqrt(area / Math.PI);
 	    return Math.max(radius, 1);
 	  },
-	
 	  getSize: function getSize(data, props, calculatedProps) {
 	    if (data.size) {
 	      return typeof data.size === "function" ? data.size : Math.max(data.size, 1);
@@ -16151,75 +24832,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    } else {
 	      return Math.max(props.size, 1);
 	    }
-	  },
-	
-	  getPath: function getPath(props) {
-	    var pathFunctions = {
-	      circle: _pathHelpers2["default"].circle,
-	      square: _pathHelpers2["default"].square,
-	      diamond: _pathHelpers2["default"].diamond,
-	      triangleDown: _pathHelpers2["default"].triangleDown,
-	      triangleUp: _pathHelpers2["default"].triangleUp,
-	      plus: _pathHelpers2["default"].plus,
-	      star: _pathHelpers2["default"].star
-	    };
-	    var size = _victoryCore.Helpers.evaluateProp(props.size, props.data);
-	    var symbol = _victoryCore.Helpers.evaluateProp(props.symbol, props.data);
-	    return pathFunctions[symbol].call(null, props.x, props.y, size);
-	  }
-	};
-
-/***/ },
-/* 155 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-	
-	var _lodashUtilityRange = __webpack_require__(92);
-	
-	var _lodashUtilityRange2 = _interopRequireDefault(_lodashUtilityRange);
-	
-	module.exports = {
-	  circle: function circle(x, y, size) {
-	    return "M " + x + ", " + y + " m " + -size + ", 0\n      a " + size + ", " + size + " 0 1,0 " + size * 2 + ",0\n      a " + size + ", " + size + " 0 1,0 " + -size * 2 + ",0";
-	  },
-	
-	  square: function square(x, y, size) {
-	    var baseSize = 0.87 * size;
-	    return "M " + (x - baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y - baseSize) + "\n      L " + (x - baseSize) + ", " + (y - baseSize) + "\n      z";
-	  },
-	
-	  diamond: function diamond(x, y, size) {
-	    var baseSize = 0.87 * size;
-	    var length = Math.sqrt(2 * (baseSize * baseSize));
-	    return "M " + x + ", " + (y + length) + "\n      L " + (x + length) + ", " + y + "\n      L " + x + ", " + (y - length) + "\n      L " + (x - length) + ", " + y + "\n      z";
-	  },
-	
-	  triangleDown: function triangleDown(x, y, size) {
-	    var height = size / 2 * Math.sqrt(3);
-	    return "M " + (x - size) + ", " + (y - size) + "\n      L " + (x + size) + ", " + (y - size) + "\n      L " + x + ", " + (y + height) + "\n      z";
-	  },
-	
-	  triangleUp: function triangleUp(x, y, size) {
-	    var height = size / 2 * Math.sqrt(3);
-	    return "M " + (x - size) + ", " + (y + size) + "\n      L " + (x + size) + ", " + (y + size) + "\n      L " + x + ", " + (y - height) + "\n      z";
-	  },
-	
-	  plus: function plus(x, y, size) {
-	    var baseSize = 1.1 * size;
-	    return "M " + (x - baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x - baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      z";
-	  },
-	
-	  star: function star(x, y, size) {
-	    var baseSize = 1.35 * size;
-	    var angle = Math.PI / 5;
-	    var starCoords = (0, _lodashUtilityRange2["default"])(10).map(function (index) {
-	      var length = index % 2 === 0 ? baseSize : baseSize / 2;
-	      return length * Math.sin(angle * (index + 1)) + x + ",\n        " + (length * Math.cos(angle * (index + 1)) + y);
-	    });
-	    return "M " + starCoords.join("L") + " z";
 	  }
 	};
 

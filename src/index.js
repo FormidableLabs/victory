@@ -1,8 +1,15 @@
-module.exports = {
-  VictoryChart: require("./components/victory-chart/victory-chart"),
-  VictoryLine: require("./components/victory-line/victory-line"),
-  VictoryAxis: require("./components/victory-axis/victory-axis"),
-  VictoryArea: require("./components/victory-area/victory-area"),
-  VictoryBar: require("./components/victory-bar/victory-bar"),
-  VictoryScatter: require("./components/victory-scatter/victory-scatter")
+import VictoryChart from "./components/victory-chart/victory-chart";
+import VictoryLine from "./components/victory-line/victory-line";
+import VictoryAxis from "./components/victory-axis/victory-axis";
+import VictoryArea from "./components/victory-area/victory-area";
+import VictoryBar from "./components/victory-bar/victory-bar";
+import VictoryScatter from "./components/victory-scatter/victory-scatter";
+
+export {
+  VictoryChart,
+  VictoryLine,
+  VictoryAxis,
+  VictoryArea,
+  VictoryBar,
+  VictoryScatter
 };

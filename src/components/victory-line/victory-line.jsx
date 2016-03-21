@@ -1,6 +1,6 @@
-import sortBy from "lodash/collection/sortBy";
-import pick from "lodash/object/pick";
-import defaults from "lodash/object/defaults";
+import sortBy from "lodash/sortBy";
+import pick from "lodash/pick";
+import defaults from "lodash/defaults";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineLabel from "./line-label";
@@ -8,7 +8,6 @@ import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
-import memoizerific from "memoizerific";
 
 const defaultStyles = {
   data: {
@@ -73,6 +72,26 @@ export default class VictoryLine extends React.Component {
       })
     ]),
     /**
+     * The events prop attaches arbitrary event handlers to data and label elements
+     * Event handlers are called with their corresponding events, corresponding component props,
+     * and their index in the data array, and event name. The return value of event handlers
+     * will be stored by unique index on the state object of VictoryLine
+     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * applied to by index to the appropriate child component. Event props on the
+     * parent namespace are just spread directly on to the top level svg of VictoryLine
+     * if one exists. If VictoryLine is set up to render g elements i.e. when it is
+     * rendered within chart, or when `standalone={false}` parent events will not be applied.
+     *
+     * @examples {data: {
+     *  onClick: () => onClick: () => return {style: {stroke: "green"}}
+     *}}
+     */
+    events: PropTypes.shape({
+      data: PropTypes.object,
+      labels: PropTypes.object,
+      parent: PropTypes.object
+    }),
+    /**
      * The height props specifies the height of the chart container element in pixels
      */
     height: CustomPropTypes.nonNegative,
@@ -93,7 +112,8 @@ export default class VictoryLine extends React.Component {
       "catmullRomOpen",
       "linear",
       "linearClosed",
-      "monotone",
+      "monotoneX",
+      "monotoneY",
       "natural",
       "radial",
       "step",
@@ -200,6 +220,7 @@ export default class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
+    events: {},
     height: 300,
     interpolation: "linear",
     padding: 50,
@@ -214,9 +235,9 @@ export default class VictoryLine extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
 
   componentWillMount() {
-    this.memoized = {
-      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: memoizerific(1)(Helpers.getStyles)
+    this.state = {
+      dataState: {},
+      labelsState: {}
     };
   }
 
@@ -243,19 +264,23 @@ export default class VictoryLine extends React.Component {
     // use fill instead of stroke for text
     const fill = style.data.stroke;
     const padding = style.labels.padding || 0;
-    return defaults({opacity, fill, padding}, style.labels);
+    return defaults({}, style.labels, {opacity, fill, padding});
   }
 
   renderLine(calculatedProps) {
     const {dataSegments, scale, style} = calculatedProps;
     return dataSegments.map((segment, index) => {
+      const getBoundEvents = Helpers.getEvents.bind(this);
       return (
         <LineSegment
           key={`line-segment-${index}`}
+          index={index}
+          events={getBoundEvents(this.props.events.data, "data")}
           data={segment}
           interpolation={this.props.interpolation}
           scale={scale}
           style={style.data}
+          {...this.state.dataState[index]}
         />
       );
     });
@@ -269,9 +294,11 @@ export default class VictoryLine extends React.Component {
     const lastSegment = dataSegments[dataSegments.length - 1];
     const lastPoint = Array.isArray(lastSegment) ?
       lastSegment[lastSegment.length - 1] : lastSegment;
+    const getBoundEvents = Helpers.getEvents.bind(this);
     return (
       <LineLabel
         key={`line-label`}
+        events={getBoundEvents(this.props.events.labels, "labels")}
         data={dataset}
         position={{
           x: scale.x.call(this, lastPoint.x),
@@ -279,6 +306,7 @@ export default class VictoryLine extends React.Component {
         }}
         label={this.props.label}
         style={this.getLabelStyle(style)}
+        {...this.state.labelsState[0]}
       />
     );
   }
@@ -326,9 +354,11 @@ export default class VictoryLine extends React.Component {
         </VictoryAnimation>
       );
     }
-    const style = this.memoized.getStyles(
+    const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      group;
   }
 }

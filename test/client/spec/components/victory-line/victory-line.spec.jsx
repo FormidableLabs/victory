@@ -1,33 +1,23 @@
 /**
  * Client tests
  */
+/* global sinon */
+/*eslint-disable max-nested-callbacks */
+
 import React from "react";
-import ReactDOM from "react-dom";
+import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
-// Use `TestUtils` to inject into DOM, simulate events, etc.
-// See: https://facebook.github.io/react/docs/test-utils.html
-import TestUtils from "react-addons-test-utils";
-
-const getElement = function (output, tagName) {
-  return ReactDOM.findDOMNode(
-    TestUtils.findRenderedDOMComponentWithTag(output, tagName)
-  );
-};
-
-let renderedComponent;
+import Line from "src/components/victory-line/line-segment";
 
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
-    before(() => {
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine/>);
-    });
-
     it("renders an svg with the correct width and height", () => {
-
-      const svg = getElement(renderedComponent, "svg");
-      // default width and height
-      expect(svg.style.width).to.equal(`${VictoryLine.defaultProps.width}px`);
-      expect(svg.style.height).to.equal(`${VictoryLine.defaultProps.height}px`);
+      const wrapper = shallow(
+        <VictoryLine/>
+      );
+      const svg = wrapper.find("svg");
+      expect(svg.prop("style").width).to.equal(VictoryLine.defaultProps.width);
+      expect(svg.prop("style").height).to.equal(VictoryLine.defaultProps.height);
     });
   });
 
@@ -42,9 +32,11 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(1);
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(1);
     });
 
     it("renders two line segments when there are two continuous sections of data", () => {
@@ -57,9 +49,11 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(2);
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(2);
     });
 
     it("renders two lines for two continuous sections of data with multiple nulls", () => {
@@ -72,9 +66,11 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(2);
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(2);
     });
 
     it("renders two lines for two sections of data with multiple nulls out of order", () => {
@@ -87,9 +83,11 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(2);
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(2);
     });
 
     it("renders two lines for two sections of data with starting/ending nulls", () => {
@@ -102,9 +100,11 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: null}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(2);
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(2);
     });
 
     it("renders three lines for three continuous sections of data", () => {
@@ -118,9 +118,11 @@ describe("components/victory-line", () => {
         {x: 7, y: 5},
         {x: 8, y: 3}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data}/>);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(3);
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(3);
     });
   });
 
@@ -130,18 +132,20 @@ describe("components/victory-line", () => {
         [1, 2],
         [3, 4]
       ];
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryLine data={data} x={0} y={1} />);
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(1);
+      const wrapper = shallow(
+        <VictoryLine data={data} x={0} y={1} />
+      );
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(1);
     });
 
     it("renders data values with null accessor", () => {
       const data = [1, 2, 3, 4];
-      renderedComponent = TestUtils.renderIntoDocument(
+      const wrapper = shallow(
         <VictoryLine data={data} x={null} y={null} />
       );
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(1);
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(1);
     });
 
     it("renders deeply nested data", () => {
@@ -149,11 +153,28 @@ describe("components/victory-line", () => {
         {a: {b: [{x: 1, y: 2}]}},
         {a: {b: [{x: 3, y: 4}]}}
       ];
-      renderedComponent = TestUtils.renderIntoDocument(
+      const wrapper = shallow(
         <VictoryLine data={data} x={'a.b[0].x'} y={'a.b.0.y'} />
       );
-      const path = TestUtils.scryRenderedDOMComponentsWithTag(renderedComponent, "path");
-      expect(path.length).to.equal(1);
+      const lines = wrapper.find(Line);
+      expect(lines.length).to.equal(1);
+    });
+  });
+
+  describe("event handling", () => {
+    it("attaches an event to data", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryLine events={{data: {onClick: clickHandler}}}/>
+      );
+      const Data = wrapper.find(Line);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
+        node.simulate("click");
+        expect(clickHandler.called).to.equal(true);
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+      });
     });
   });
 });

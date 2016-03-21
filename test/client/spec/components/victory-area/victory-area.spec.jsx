@@ -1,33 +1,41 @@
 /**
  * Client tests
  */
+/* global sinon */
+/*eslint-disable max-nested-callbacks */
+/* eslint no-unused-expressions: 0 */
 import React from "react";
-import ReactDOM from "react-dom";
+import { shallow, mount } from "enzyme";
 import VictoryArea from "src/components/victory-area/victory-area";
-// Use `TestUtils` to inject into DOM, simulate events, etc.
-// See: https://facebook.github.io/react/docs/test-utils.html
-import TestUtils from "react-addons-test-utils";
-
-const getElement = function (output, tagName) {
-  return ReactDOM.findDOMNode(
-    TestUtils.findRenderedDOMComponentWithTag(output, tagName)
-  );
-};
-
-let renderedComponent;
+import Area from "src/components/victory-area/area";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {
-    before(() => {
-      renderedComponent = TestUtils.renderIntoDocument(<VictoryArea/>);
-    });
-
     it("renders an svg with the correct width and height", () => {
+      const wrapper = shallow(
+        <VictoryArea/>
+      );
+      const svg = wrapper.find("svg");
+      expect(svg.prop("style").width).to.equal(VictoryArea.defaultProps.width);
+      expect(svg.prop("style").height).to.equal(VictoryArea.defaultProps.height);
+    });
+  });
 
-      const svg = getElement(renderedComponent, "svg");
-      // default width and height
-      expect(svg.style.width).to.equal(`${VictoryArea.defaultProps.width}px`);
-      expect(svg.style.height).to.equal(`${VictoryArea.defaultProps.height}px`);
+  describe("event handling", () => {
+    it("attaches an event to data", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryArea events={{data: {onClick: clickHandler}}}/>
+      );
+      const Data = wrapper.find(Area);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
+        node.childAt(0).simulate("click");
+        expect(clickHandler).called;
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
+      });
     });
   });
 });

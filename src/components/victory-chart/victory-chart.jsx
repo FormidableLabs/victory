@@ -1,4 +1,4 @@
-import defaults from "lodash/object/defaults";
+import defaults from "lodash/defaults";
 
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
@@ -51,6 +51,13 @@ export default class VictoryChart extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
+     * The events prop attaches arbitrary event handlers to the top level chart svg.
+     * To attach events to individual pieces of data, use the events prop in child componenets.
+     * Event handlers are currently only called with their corresponding events.
+     * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+     */
+    events: PropTypes.object,
+    /**
      * The height props specifies the height of the chart container element in pixels
      */
     height: CustomPropTypes.nonNegative,
@@ -102,6 +109,7 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
+    events: {},
     height: 300,
     width: 450,
     padding: 50,
@@ -203,7 +211,7 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
     return childComponents.map((child, index) => {
-      const style = defaults({parent: baseStyle.parent}, child.props.style);
+      const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
       return React.cloneElement(child, defaults({
         animate: child.props.animate || props.animate,
@@ -226,6 +234,8 @@ export default class VictoryChart extends React.Component {
         {this.getNewChildren(this.props, childComponents, style)}
       </g>
     );
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} {...this.props.events}>{group}</svg> :
+      group;
   }
 }

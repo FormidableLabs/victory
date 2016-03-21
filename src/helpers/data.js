@@ -1,10 +1,9 @@
-import flatten from "lodash/array/flatten";
-import findIndex from "lodash/array/findIndex";
-import isFunction from "lodash/lang/isFunction";
-import uniq from "lodash/array/uniq";
-import defaults from "lodash/object/defaults";
-import assign from "lodash/object/assign";
-import zipObject from "lodash/array/zipObject";
+import flatten from "lodash/flatten";
+import findIndex from "lodash/findIndex";
+import isFunction from "lodash/isFunction";
+import uniq from "lodash/uniq";
+import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import { Collection, Helpers, Style } from "victory-core";
 import Scale from "./scale";
 
@@ -21,7 +20,10 @@ export default {
 
     const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
     return allStrings.length === 0 ? null :
-      zipObject(allStrings.map((string, index) => [string, index + 1]));
+      allStrings.reduce((memo, string, index) => {
+        memo[string] = index + 1;
+        return memo;
+      }, {});
   },
 
   getStringsFromAxes(props, axis) {

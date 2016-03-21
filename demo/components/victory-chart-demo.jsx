@@ -168,6 +168,16 @@ class App extends React.Component {
               tickFormat={(x) => x.getFullYear()}
             />
             <VictoryLine
+              style={{
+                data: {stroke: "red", strokeWidth: 5},
+                labels: {fontSize: 12}
+              }}
+              events={{data: {
+                onClick: (evt) => {
+                  this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
+                }
+              }}}
+              label={this.state.label}
               data={[
                 {x: new Date(1982, 1, 1), y: 125},
                 {x: new Date(1987, 1, 1), y: 257},

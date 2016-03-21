@@ -191,6 +191,47 @@ Functional styles allow elements to determine their own styles based on data
 />
 ```
 
+### Events
+
+Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
+Event handlers on data and labels components are called with the event object, the props
+corresponding to that component, and the index of that component. Values returned from
+event handlers on data or labels will be stored as state on VictoryBar. Data and labels
+state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+
+```playground
+<VictoryBar
+  height={500}
+  padding={75}
+  colorScale={"cool"}
+  data={[
+    [
+      {x: 1, y: 1},
+      {x: 2, y: 2},
+      {x: 3, y: 3}
+    ],
+    [
+      {x: 1, y: 2},
+      {x: 2, y: 1},
+      {x: 3, y: 1}
+    ],
+    [
+      {x: 1, y: 3},
+      {x: 2, y: 4},
+      {x: 3, y: 2}
+    ],
+  ]}
+  events={{
+    data: {
+      onMouseOver: () => {
+        return {style: {fill: "tomato"}}
+      },
+      onMouseOut: () => null
+    }
+  }}
+/>
+```
+
 ### Animating
 
 VictoryBar animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.

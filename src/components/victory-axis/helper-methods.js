@@ -1,14 +1,14 @@
-import isFunction from "lodash/lang/isFunction";
-import includes from "lodash/collection/includes";
-import without from "lodash/array/without";
-import range from "lodash/utility/range";
+import isFunction from "lodash/isFunction";
+import includes from "lodash/includes";
+import without from "lodash/without";
+import range from "lodash/range";
 
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
 import { Helpers } from "victory-core";
 
-module.exports = {
+export default {
   // exposed for use by VictoryChart
   getDomain(props, axis) {
     if (axis && axis !== this.getAxis(props)) {
@@ -114,5 +114,17 @@ module.exports = {
       right: [props.width - offset.x, 0]
     }[orientation];
     return `translate(${translate[0]}, ${translate[1]})`;
+  },
+
+  getTickPosition(style, orientation, isVertical) {
+    const orientationSign = { top: -1, left: -1, right: 1, bottom: 1 };
+    const tickSpacing = style.size + style.padding;
+    const sign = orientationSign[orientation];
+    return {
+      x: isVertical ? sign * tickSpacing : 0,
+      x2: isVertical ? sign * style.size : 0,
+      y: isVertical ? 0 : sign * tickSpacing,
+      y2: isVertical ? 0 : sign * style.size
+    };
   }
 };
