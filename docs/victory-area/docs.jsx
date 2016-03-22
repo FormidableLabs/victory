@@ -15,10 +15,11 @@ class Docs extends React.Component {
           overview={require("!!raw!./ecology.md")}
           source={docgen.parse(require("!!raw!../../src/components/victory-area/victory-area"))}
           scope={{_, React, ReactDOM, VictoryArea}}
-          playgroundtheme="elegant" />
+          playgroundtheme="elegant"
+        />
         <Style rules={VictoryTheme}/>
       </div>
-    )
+    );
   }
 }
 

@@ -10,16 +10,21 @@ import { VictoryTheme } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
+    const victoryScatterSource = docgen.parse(
+      require("!!raw!../../src/components/victory-scatter/victory-scatter")
+    );
+
     return (
       <div>
         <Ecology
           overview={require("!!raw!./ecology.md")}
-          source={docgen.parse(require("!!raw!../../src/components/victory-scatter/victory-scatter"))}
+          source={victoryScatterSource}
           scope={{_, React, ReactDOM, symbolData, VictoryScatter}}
-          playgroundtheme="elegant" />
+          playgroundtheme="elegant"
+        />
         <Style rules={VictoryTheme}/>
       </div>
-    )
+    );
   }
 }
 

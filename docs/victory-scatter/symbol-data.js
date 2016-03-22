@@ -55,7 +55,7 @@ const symbolData = [
     label: "triangleUp",
     fill: "red",
     opacity: 0.8
-  },
+  }
 ];
 
 module.exports = symbolData;

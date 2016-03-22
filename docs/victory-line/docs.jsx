@@ -6,7 +6,6 @@ import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
 import { VictoryLine } from "../../src/index";
 import { VictoryTheme } from "formidable-landers";
-import {parse as parseComponent} from "react-docgen";
 
 class Docs extends React.Component {
   render() {
@@ -16,10 +15,11 @@ class Docs extends React.Component {
           overview={require("!!raw!./ecology.md")}
           source={docgen.parse(require("!!raw!../../src/components/victory-line/victory-line"))}
           scope={{_, React, ReactDOM, VictoryLine}}
-          playgroundtheme="elegant" />
+          playgroundtheme="elegant"
+        />
         <Style rules={VictoryTheme}/>
       </div>
-    )
+    );
   }
 }
 
