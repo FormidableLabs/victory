@@ -18,7 +18,8 @@
     "preversion": "builder run npm:preversion",
     "start": "builder run hot",
     "test": "builder run check",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
+    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
+    "docs-build-static": "echo 'Static docs generation for victory-chart is not supported.'"
   },
   "dependencies": {
     "builder": "~2.9.1",
