@@ -16,8 +16,10 @@
   "scripts": {
     "copy-cname": "cp docs/CNAME docs/build/CNAME",
     "copy-static-assets": "cp -r docs/static/ docs/build/static",
-    "docs-build-static": "webpack --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname",
+    "docs-build-static": "webpack --bail --config docs/webpack.config.static.js --progress && npm run copy-static-assets && npm run copy-cname",
     "docs-dev": "webpack-dev-server --port 3000 --config docs/webpack.config.dev.js --content-base docs",
+    "server-docs": "http-server docs/build",
+    "push-gh-pages": "git subtree push --prefix docs/build origin gh-pages",
     "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
     "preversion": "builder run npm:preversion",
     "server-docs": "http-server docs/build",
@@ -27,13 +29,13 @@
   },
   "dependencies": {
     "builder": "2.9.1",
-    "builder-victory-component": "^1.0.7",
+    "builder-victory-component": "^2.0.0",
     "victory-chart": "6.0.1",
     "victory-core": "1.2.2",
     "victory-pie": "2.0.1"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^1.0.7",
+    "builder-victory-component-dev": "^2.0.0",
     "chai": "^3.2.0",
     "ecology": "^1.2.0",
     "file-loader": "^0.8.5",
