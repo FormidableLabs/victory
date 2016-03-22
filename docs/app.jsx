@@ -13,13 +13,13 @@ const App = React.createClass({
 
   render() {
     return (
-      <div>
+      <StyleRoot>
         <ul>
           <li><Link to="/animation">Victory Animation Docs</Link></li>
           <li><Link to="/label">Victory Label Docs</Link></li>
         </ul>
         {this.props.children}
-      </div>
+      </StyleRoot>
     );
   }
 });
