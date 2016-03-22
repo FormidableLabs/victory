@@ -1,6 +1,7 @@
 import pick from "lodash/pick";
 import last from "lodash/last";
 import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import omit from "lodash/omit";
 
 import React, { PropTypes } from "react";
@@ -53,17 +54,6 @@ export default class VictoryArea extends React.Component {
      * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
      */
     data: PropTypes.array,
-    /**
-     * The dataAttributes prop describes how a data set should be styled.
-     * This prop can be given as an object, or an array of objects. If this prop is
-     * given as an array of objects, the properties of each object in the array will
-     * be applied to the data points in the corresponding array of the data prop.
-     * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
-     */
-    dataAttributes: PropTypes.oneOfType([
-      PropTypes.object,
-      PropTypes.arrayOf(PropTypes.object)
-    ]),
     /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
@@ -178,12 +168,6 @@ export default class VictoryArea extends React.Component {
       })
     ]),
     /**
-     * The stacked prop determines whether the chart should consist of stacked areas.
-     * When this prop is set to true, the data prop *must* be an array of multiple data series
-     * ie. not an array of data points, but an array of arrays of data points
-     */
-    stacked: PropTypes.bool,
-    /**
      * The standalone prop determines whether the component will render a standalone svg
      * or a <g> tag that will be included in an external svg. Set standalone to false to
      * compose VictoryBar with other components within an enclosing <svg> tag.
@@ -240,7 +224,6 @@ export default class VictoryArea extends React.Component {
   };
 
   static defaultProps = {
-    colorScale: "greyscale",
     events: {},
     height: 300,
     padding: 50,
@@ -254,7 +237,8 @@ export default class VictoryArea extends React.Component {
     y: "y"
   };
 
-  static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
+  static getDomain = Domain.getDomainWithZero.bind(Domain);
+  static getData = Data.getData.bind(Data);
 
   componentWillMount() {
     this.state = {
@@ -263,69 +247,71 @@ export default class VictoryArea extends React.Component {
     };
   }
 
-  renderAreas(calculatedProps) {
-    const {datasets, scale} = calculatedProps;
-    return datasets.map((dataset, index) => {
-      const baseStyle = calculatedProps.style;
-      const style = defaults({}, omit(dataset.attrs, "name"), baseStyle.data);
-      const dataWithBaseline = AreaHelpers.getBaseline(datasets, calculatedProps, index);
-      const getBoundEvents = Helpers.getEvents.bind(this);
-      const areaComponent = (
-        <Area key={`area-${index}`}
-          index={index}
-          scale={scale}
-          style={style}
-          events={getBoundEvents(this.props.events.data, "data")}
-          interpolation={dataset.attrs.interpolation || this.props.interpolation}
-          data={dataWithBaseline}
-          {...this.state.dataState[index]}
-        />
-      );
-      const label = this.props.labels && this.props.labels[index];
-      if (label) {
-        const position = {
-          x: scale.x.call(this, last(dataset.data).x),
-          y: scale.y.call(this, last(dataset.data).y)
-        };
-        return (
-          <g key={`area-group-${index}`}>
-            {areaComponent}
-            <AreaLabel key={`area-label-${index}`}
-              index={index}
-              style={baseStyle.labels}
-              data={dataset.data}
-              events={getBoundEvents(this.props.events.labels, "labels")}
-              position={position}
-              labelText={label}
-              labelComponent={this.props.labelComponent}
-              {...this.state.labelsState[index]}
-            />
-          </g>
-        );
-      }
-      return areaComponent;
+  getBaseline(dataset, calculatedProps) {
+    const {domain} = calculatedProps;
+    const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
+    return dataset.map((datum) => {
+      const y0 = datum.yOffset || minY;
+      return assign({y0}, datum);
     });
   }
 
+  renderArea(calculatedProps) {
+    const {data, scale, style} = calculatedProps;
+    const getBoundEvents = Helpers.getEvents.bind(this);
+    const areaComponent = (
+      <Area
+        scale={scale}
+        style={style.data}
+        events={getBoundEvents(this.props.events.data, "data")}
+        interpolation={this.props.interpolation}
+        data={this.getBaseline(data, calculatedProps)}
+        {...this.state.dataState[0]}
+      />
+    );
+    const label = this.props.labels;
+    if (label) {
+      const position = {
+        x: scale.x.call(this, last(data).x),
+        y: scale.y.call(this, last(data).y)
+      };
+      return (
+        <g>
+          {areaComponent}
+          <AreaLabel
+            style={style.labels}
+            data={data}
+            events={getBoundEvents(this.props.events.labels, "labels")}
+            position={position}
+            labelText={label}
+            labelComponent={this.props.labelComponent}
+            {...this.state.labelsState[0]}
+          />
+        </g>
+      );
+    }
+    return areaComponent;
+  }
+
   renderData(props, style) {
-    const datasets = Data.getMultiSeriesData(props);
-    const padding = Helpers.getPadding(props);
+    const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
     };
+    const padding = Helpers.getPadding(props);
     const domain = {
-      x: Domain.getMultiSeriesDomain(props, "x", datasets),
-      y: Domain.getMultiSeriesDomain(props, "y", datasets)
+      x: Domain.getDomainWithZero(props, "x"),
+      y: Domain.getDomainWithZero(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
     const calculatedProps = {
-      datasets, domain, padding, range, scale, style, stacked: props.stacked
+      style, data, domain, scale, padding
     };
-    return this.renderAreas(calculatedProps);
+    return this.renderArea(calculatedProps);
   }
 
   render() {

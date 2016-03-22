@@ -7,7 +7,6 @@ export default class Area extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     interpolation: PropTypes.string,
-    index: PropTypes.number,
     scale: PropTypes.object,
     style: PropTypes.object,
     events: PropTypes.object
@@ -55,7 +54,7 @@ export default class Area extends React.Component {
     const { props } = this;
     const style = Helpers.evaluateStyle(props.style, props.data);
     const interpolation = Helpers.evaluateProp(props.interpolation, props.data);
-    const events = Helpers.getPartialEvents(props.events, props.index, props);
+    const events = Helpers.getPartialEvents(props.events, 0, props);
     return (
       <g>
         {this.renderArea(style, interpolation, events)}

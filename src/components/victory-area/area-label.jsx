@@ -6,7 +6,6 @@ import { VictoryLabel, Helpers } from "victory-core";
 export default class AreaLabel extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    index: PropTypes.number,
     labelComponent: PropTypes.any,
     labelText: PropTypes.string,
     position: PropTypes.object,
@@ -20,7 +19,7 @@ export default class AreaLabel extends React.Component {
     const children = component.props.children || props.labelText || "";
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
-    const events = Helpers.getPartialEvents(baseEvents, props.index, props);
+    const events = Helpers.getPartialEvents(baseEvents, 0, props);
     const newProps = assign({}, events, {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
@@ -33,7 +32,7 @@ export default class AreaLabel extends React.Component {
 
   renderVictoryLabel(props) {
     const style = Helpers.evaluateStyle(defaults({padding: 0}, props.style), props.data);
-    const events = Helpers.getPartialEvents(props.events, props.index, props);
+    const events = Helpers.getPartialEvents(props.events, 0, props);
     return (
       <VictoryLabel
         x={props.position.x + style.padding}

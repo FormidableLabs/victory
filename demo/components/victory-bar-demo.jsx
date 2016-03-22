@@ -1,7 +1,7 @@
 /*global window:false*/
 import _ from "lodash";
 import React from "react";
-import {VictoryBar, VictoryChart} from "../../src/index";
+import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack} from "../../src/index";
 
 export default class App extends React.Component {
   constructor() {
@@ -65,111 +65,33 @@ export default class App extends React.Component {
   }
 
   render() {
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: 20
+    };
+
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
 
-        <VictoryBar
-          events={{data: {
-            onClick: (evt) => {
-              this.setState({colorScale: evt.clientX < 370 ? "cool" : "warm"});
-            }
-          }}}
-          stacked
-          data={_.times(5, () => _.range(32))}
-          x={null}
-          y={(d) => Math.sin(d * 0.2)}
-          colorScale={this.state.colorScale || "warm"}
-        />
+        <VictoryGroup style={{parent: parentStyle}} offset={18} colorScale={"qualitative"} animate={{duration: 2000}}>
+          {this.getBarData().map((data, index) => {
+            return <VictoryBar key={index} data={data}/>;
+          })}
+        </VictoryGroup>
 
-        <ChartWrap>
-          <VictoryBar
-            colorScale={"cool"}
-            stacked
-            height={250}
-            data={this.getBarData()}
-          />
-        </ChartWrap>
+        <VictoryGroup horizontal style={{parent: parentStyle}} offset={8} colorScale={"qualitative"} animate={{duration: 2000}}>
+          {this.getBarData().map((data, index) => {
+            return <VictoryBar key={index} data={data}/>;
+          })}
+        </VictoryGroup>
 
-        <ChartWrap>
-          <VictoryBar
-            grouped
-            colorScale={"qualitative"}
-            height={250}
-            data={this.getBarData()}
-          />
-        </ChartWrap>
+        <VictoryStack style={{parent: parentStyle}} colorScale={"qualitative"} animate={{duration: 2000}}>
+          {this.getBarData().map((data, index) => {
+            return <VictoryBar key={index} data={data}/>;
+          })}
+        </VictoryStack>
 
-        <ChartWrap>
-          <VictoryBar
-            stacked
-            colorScale={"qualitative"}
-            height={250}
-            data={this.getNumericBarData()}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            data={[[0, 1], [2, 3], [4, 5]]}
-            x={0}
-            y={1}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            height={250}
-            data={[["a", 1], ["b", 3], ["c", 5]]}
-            x={0}
-            y={1}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            height={250}
-            data={[{a: {b: {c: 1, d: 1}}}, {a: {b: {c: 2, d: 3}}}]}
-            x={"a.b.c"}
-            y={"a.b.d"}
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            stacked
-            data={[[["a", 1], ["b", 2], ["c", 3]], [["b", 1], ["c", 2], ["d", 3]]]}
-            x={0}
-            y={1}
-            colorScale="qualitative"
-          />
-        </ChartWrap>
-
-        <ChartWrap>
-          <VictoryBar
-            stacked
-            data={[
-              [
-                {x: "a", y: 2},
-                {x: "b", y: 3},
-                {x: "c", y: 4}
-              ],
-              [
-                {x: "c", y: 2},
-                {x: "d", y: 3},
-                {x: "e", y: 4}
-              ]
-            ]}
-            colorScale="warm"
-            events={{
-              data: {
-                onClick: () => {
-                  return {style: {fill: "cyan"}};
-                }
-              }
-            }}
-          />
-        </ChartWrap>
       </div>
     );
   }

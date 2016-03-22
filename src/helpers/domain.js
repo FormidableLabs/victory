@@ -15,6 +15,22 @@ export default {
     return this.getDomainFromData(dataset, axis);
   },
 
+  getDomainWithZero(props, axis) {
+    const propsDomain = this.getDomainFromProps(props, axis);
+    if (propsDomain) {
+      return propsDomain;
+    }
+    const ensureZero = (domain) => {
+      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+    };
+    const categoryDomain = this.getDomainFromCategories(props, axis);
+    if (categoryDomain) {
+      return ensureZero(categoryDomain);
+    }
+    const dataset = Data.getData(props);
+    return ensureZero(this.getDomainFromData(dataset, axis));
+  },
+
   getMultiSeriesDomain(props, axis, datasets) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
@@ -64,7 +80,7 @@ export default {
   },
 
   getDomainFromCategories(props, axis) {
-  
+
     if (axis !== "x" || !props.categories) {
       return undefined;
     }
@@ -85,13 +101,10 @@ export default {
     if (axis === "x" && props.categories) {
       return this.getDomainFromCategories(props, axis);
     }
-    // find the global min and max
-    datasets = datasets ? datasets.map((dataset) => dataset.data) :
-      Data.formatDatasets(props, true).map((dataset) => dataset.data);
     const globalDomain = this.getDomainFromData(datasets, axis);
 
     // find the cumulative max for stacked chart types
-    const cumulativeData = this.isStacked(props, axis, datasets) ?
+    const cumulativeData = axis === "y" ?
       this.getCumulativeData(datasets, axis) : [];
 
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
@@ -117,17 +130,6 @@ export default {
       return [0, adjustedMax];
     }
     return [domainMin, domainMax];
-  },
-
-  isStacked(props, axis) {
-    // checks whether grouped data is stacked,
-    // whether there are multiple datasets to stack
-    // and whether the current axis is y (dependent)
-    // TODO: check assumptions for inverted axis charts
-
-    return (props.stacked === true)
-      && Collection.isArrayOfArrays(datasets)
-      && (axis === "y");
   },
 
   getCumulativeData(datasets, axis) {

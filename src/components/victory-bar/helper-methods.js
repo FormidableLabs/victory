@@ -1,18 +1,15 @@
 import defaults from "lodash/defaults";
 import uniq from "lodash/uniq";
 import omit from "lodash/omit";
-import Layout from "../../helpers/layout";
 
 export default {
-  // Layout Helpers
-  getBarPosition(datum, index, calculatedProps) {
-    const { scale, stacked, categories, datasets } = calculatedProps;
-    const yOffset = stacked && index.seriesIndex !== 0 ?
-      Layout.getY0(datasets, datum, index.seriesIndex) : 0;
+  getBarPosition(datum, calculatedProps) {
+    const {scale} = calculatedProps;
+    const yOffset = datum.yOffset || 0;
+    const xOffset = datum.xOffset || 0;
     const y0 = yOffset;
-    const y1 = yOffset + datum.y;
-    const x = (stacked && !categories) ? datum.x :
-      this.adjustX(datum, index.seriesIndex, calculatedProps);
+    const y1 = datum.y + yOffset;
+    const x = datum.x + xOffset;
     const formatValue = (value, axis) => {
       return datum[axis] instanceof Date ? new Date(value) : value;
     };
@@ -21,36 +18,6 @@ export default {
       dependent0: scale.y(formatValue(y0, "y")),
       dependent1: scale.y(formatValue(y1, "y"))
     };
-  },
-
-  adjustX(datum, index, calculatedProps) {
-    const {stacked, categories} = calculatedProps;
-    const style = calculatedProps.style.data;
-    const x = datum.x;
-    const datasets = calculatedProps.datasets;
-    const center = datasets.length % 2 === 0 ?
-      datasets.length / 2 : (datasets.length - 1) / 2;
-    const centerOffset = index - center;
-    const totalWidth = this.pixelsToValue(style.padding, "x", calculatedProps) +
-      this.pixelsToValue(style.width, "x", calculatedProps);
-    if (datum.category !== undefined) {
-      // if this is category data, shift x to the center of its category
-      const rangeBand = categories[datum.category];
-      const bandCenter = (Math.max(...rangeBand) + Math.min(...rangeBand)) / 2;
-      return stacked ? bandCenter : bandCenter + (centerOffset * totalWidth);
-    }
-    return stacked ? x : x + (centerOffset * totalWidth);
-  },
-
-  pixelsToValue(pixels, axis, calculatedProps) {
-    if (pixels === 0) {
-      return 0;
-    }
-    const domain = calculatedProps.domain[axis];
-    const range = calculatedProps.range[axis];
-    const domainExtent = Math.max(...domain) - Math.min(...domain);
-    const rangeExtent = Math.max(...range) - Math.min(...range);
-    return domainExtent / rangeExtent * pixels;
   },
 
   // Label Helpers
