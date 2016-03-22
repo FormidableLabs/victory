@@ -1,8 +1,6 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import { Router, Route, Link } from "react-router";
-import AnimationDocs from "./victory-animation/docs";
-import LabelDocs from "./victory-label/docs";
+import { Link } from "react-router";
+import { StyleRoot } from "radium";
 
 const content = document.getElementById("content");
 
@@ -13,22 +11,19 @@ const App = React.createClass({
 
   render() {
     return (
-      <div>
+      <StyleRoot>
         <ul>
           <li><Link to="/animation">Victory Animation Docs</Link></li>
           <li><Link to="/label">Victory Label Docs</Link></li>
         </ul>
         {this.props.children}
-      </div>
+      </StyleRoot>
     );
   }
 });
 
-ReactDOM.render((
-  <Router>
-    <Route path="/" component={App}>
-      <Route path="animation" component={AnimationDocs}/>
-      <Route path="label" component={LabelDocs}/>
-    </Route>
-  </Router>
-), content);
+App.propTypes = {
+  children: React.PropTypes.element
+};
+
+export default App;
