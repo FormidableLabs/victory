@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router";
+import { StyleRoot } from "radium";
 
 const App = React.createClass({
   propTypes: {
@@ -8,7 +9,7 @@ const App = React.createClass({
 
   render() {
     return (
-      <div>
+      <StyleRoot>
         <ul>
           <li><Link to="/area">Victory Area Docs</Link></li>
           <li><Link to="/axis">Victory Axis Docs</Link></li>
@@ -18,7 +19,7 @@ const App = React.createClass({
           <li><Link to="/scatter">Victory Scatter Docs</Link></li>
         </ul>
         {this.props.children}
-      </div>
+      </StyleRoot>
     );
   }
 });
