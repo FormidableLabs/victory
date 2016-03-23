@@ -18,10 +18,11 @@ class Docs extends React.Component {
           scope={{
             React, ReactDOM, VictoryScatter, VictoryLine, VictoryAxis, VictoryBar, VictoryChart
           }}
-          playgroundtheme="elegant" />
+          playgroundtheme="elegant"
+        />
         <Style rules={VictoryTheme}/>
       </div>
-    )
+    );
   }
 }
 
