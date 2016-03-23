@@ -8,11 +8,11 @@ import LineDocs from "victory-chart/docs/victory-line/docs";
 import PieDocs from "victory-pie/docs/docs";
 import ScatterDocs from "victory-chart/docs/victory-scatter/docs";
 
-
 const routing = {
   base: "/"
 };
-const headerText = "Looking for a custom dashboard? Need help leveling up your data visualizations? Let’s talk!";
+const headerText = "Looking for a custom dashboard? Need help leveling up your data visualizations?"
+  + " Let’s talk!";
 
 const components = [
   {

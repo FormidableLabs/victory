@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 export default {
   // Fonts
   sansSerif: "'Karla', 'Helvetica Neue', Helvetica, Arial, sans-serif",
@@ -23,3 +24,4 @@ export default {
   paleRed: "#bd4139",
   red: "#bd1e13"
 };
+/* eslint-enable max-len */

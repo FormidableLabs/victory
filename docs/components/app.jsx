@@ -36,8 +36,11 @@ class App extends React.Component {
           <header className="Header">
             <div className="Row" style={{margin: "0 auto"}}>
               <h1 className="Logo u-textCenter">
-                <img src="static/logo-victory.svg" alt="Victory"
-                  width="230px" />
+                <img
+                  src="static/logo-victory.svg"
+                  alt="Victory"
+                  width="230px"
+                />
               </h1>
             </div>
           </header>
@@ -46,10 +49,10 @@ class App extends React.Component {
             <p className="Headline Headline--major u-textCenter">
               Victory
               <span style={{
-                  fontFamily: VictorySettings.sansSerif,
-                  fontSize: "0.35em",
-                  verticalAlign: "1em"
-                }}>&#8482;</span>
+                fontFamily: VictorySettings.sansSerif,
+                fontSize: "0.35em",
+                verticalAlign: "1em"
+              }}>&#8482;</span>
             </p>
             <div className="u-textCenter">
               <code className="Installer">npm install victory</code>
@@ -66,7 +69,8 @@ class App extends React.Component {
             <Ecology
               overview={require("!!raw!../ecology.md")}
               scope={{React, ReactDOM, VictoryChart, VictoryLine, VictoryPie}}
-              playgroundtheme="elegant" />
+              playgroundtheme="elegant"
+            />
           </div>
 
           <div className="Row">
