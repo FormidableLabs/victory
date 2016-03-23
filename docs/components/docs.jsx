@@ -69,7 +69,8 @@ class Docs extends React.Component {
             <Ecology
               overview={require("!!raw!../ecology-getting-started.md")}
               scope={{React, ReactDOM, V, VictoryChart, VictoryLine, VictoryPie}}
-              playgroundtheme="elegant" />
+              playgroundtheme="elegant"
+            />
             <h3>Explore the interactive docs:</h3>
             {this._renderDocsList()}
           </section>
