@@ -2,8 +2,6 @@ import React from "react";
 import { Link } from "react-router";
 import { StyleRoot } from "radium";
 
-const content = document.getElementById("content");
-
 const App = React.createClass({
   propTypes: {
     children: React.PropTypes.element
