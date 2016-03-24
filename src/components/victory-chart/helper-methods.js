@@ -83,7 +83,7 @@ export default {
     };
     return childComponents.filter((child) => {
       const role = child.type && child.type.role;
-      return role !== axis;
+      return role !== "axis";
     });
   },
 

@@ -2,7 +2,7 @@
 import React from "react";
 import _ from "lodash";
 import {
-  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter
+  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack
 } from "../../src/index";
 
 const UPDATE_INTERVAL = 2000;
@@ -203,20 +203,7 @@ class App extends React.Component {
             <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
-          <VictoryChart animate={{velocity: 0.02}} domainPadding={{x: 20}}>
-            <VictoryAxis orientation="top"/>
-            <VictoryBar
-              data={this.state.numericBarData}
-              dataAttributes={[
-                {fill: "cornflowerblue"},
-                {fill: "orange"},
-                {fill: "greenyellow"},
-                {fill: "gold"},
-                {fill: "tomato"}
-              ]}
-              categories={[[1, 3], [4, 7], [9, 11]]}
-            />
-          </VictoryChart>
+
 
           <VictoryChart animate={{velocity: 0.02}}
             domainPadding={{x: 100}}
@@ -225,17 +212,11 @@ class App extends React.Component {
               tickValues={["apples", "bananas", "oranges"]}
               tickFormat={() => ""}
             />
-            <VictoryBar stacked
-              data={this.state.barData}
-              dataAttributes={[
-                {fill: "cornflowerblue"},
-                {fill: "greenyellow"},
-                {fill: "gold"},
-                {fill: "orange"},
-                {fill: "tomato"}
-              ]}
-              labels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
-            />
+            <VictoryStack>
+              {this.state.barData.map((data, index) => {
+                return <VictoryBar data={data} key={index}/>
+              })}
+            </VictoryStack>
           </VictoryChart>
 
           <VictoryChart domainPadding={{x: 30, y: 30}}>
