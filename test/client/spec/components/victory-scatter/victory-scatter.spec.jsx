@@ -9,6 +9,11 @@ import _ from "lodash";
 import VictoryScatter from "src/components/victory-scatter/victory-scatter";
 import Point from "src/components/victory-scatter/point";
 
+class MyPoint extends React.Component {
+
+  render() { }
+}
+
 describe("components/victory-scatter", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
@@ -22,6 +27,16 @@ describe("components/victory-scatter", () => {
   });
 
   describe("rendering data", () => {
+    it("renders injected points for {x, y} shaped data (default)", () => {
+      const data = _.range(10).map((i) => ({x: i, y: i}));
+      const wrapper = shallow(
+        <VictoryScatter data={data} dataComponent={<MyPoint />} />
+      );
+
+      const points = wrapper.find(MyPoint);
+      expect(points.length).to.equal(10);
+    });
+
     it("renders points for {x, y} shaped data (default)", () => {
       const data = _.range(10).map((i) => ({x: i, y: i}));
       const wrapper = shallow(

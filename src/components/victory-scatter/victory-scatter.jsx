@@ -120,6 +120,17 @@ export default class VictoryScatter extends React.Component {
       })
     ]),
     /**
+     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
+     * create points for each datum in the scatter plot. The new element created from the passed
+     * dataComponent will have the property datum set by the scatter for the point it renders;
+     * properties x, y, size and symbol are calculated by the scatter for the datum; a key and index
+     * property set corresponding to the location of the datum in the data provided to the scatter;
+     * style calculated by the scatter based on the scatter's styles and the datum; and all the
+     * remaining properties from the scatter's data at the index of the datum.
+     * If a dataComponent is not provided, VictoryScatter's Point component will be used.
+     */
+    dataComponent: PropTypes.element,
+    /**
      * The samples prop specifies how many individual points to plot when plotting
      * y as a function of x. Samples is ignored if x props are provided instead.
      */
@@ -228,7 +239,8 @@ export default class VictoryScatter extends React.Component {
     symbol: "circle",
     width: 450,
     x: "x",
-    y: "y"
+    y: "y",
+    dataComponent: <Point />
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -248,47 +260,83 @@ export default class VictoryScatter extends React.Component {
     return Helpers.evaluateStyle(baseDataStyle, data);
   }
 
-  renderPoint(datum, index, calculatedProps) {
+  getMutualSubComponentProps(datum, index, calculatedProps) {
     const { style } = calculatedProps;
     const position = {
       x: calculatedProps.scale.x.call(null, datum.x),
       y: calculatedProps.scale.y.call(null, datum.y)
     };
-    const dataStyle = this.getDataStyles(datum, style.data);
+
     const baseSize = ScatterHelpers.getSize(datum, this.props, calculatedProps);
+
+    const symbol = ScatterHelpers.getSymbol(datum, this.props);
+
+    return {
+      index,
+      datum,
+      baseSize,
+      symbol,
+      style,
+      ...position
+    };
+  }
+
+  addDataComponentProps(mutualProps, getBoundEvents) {
+    const {datum, style, index, baseSize} = mutualProps;
+
+    const dataStyle = this.getDataStyles(datum, style.data);
     const size = Helpers.evaluateProp(baseSize, datum);
+    const events = getBoundEvents(this.props.events.data, "data");
+
+    return {
+      ...mutualProps,
+      size,
+      events,
+      key: `point-${index}`,
+      style: dataStyle,
+      ...this.state.dataState[index]
+    };
+  }
+
+  addLabelComponentProps(mutualProps, pointProps, getBoundEvents) {
+    const { datum, style, index } = mutualProps;
+    const dataStyle = pointProps.style;
+    const { size } = pointProps;
+
+    const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
+    const padding = style.labels.padding || size * 0.25;
+    const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});
+    const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
+
+    const events = getBoundEvents(this.props.events.labels, "labels");
+
+    return {
+      ...mutualProps,
+      events,
+      style: labelStyle,
+      labelComponent: this.props.labelComponent,
+      ...this.state.labelsState[index]
+    };
+  }
+
+  renderPoint(datum, index, calculatedProps) {
     const getBoundEvents = Helpers.getEvents.bind(this);
-    const pointComponent = (
-      <Point
-        key={`point-${index}`}
-        index={index}
-        style={dataStyle}
-        x={position.x}
-        y={position.y}
-        datum={datum}
-        size={size}
-        symbol={ScatterHelpers.getSymbol(datum, this.props)}
-        events={getBoundEvents(this.props.events.data, "data")}
-        {...this.state.dataState[index]}
-      />
-    );
+
+    const mutualProps = this.getMutualSubComponentProps(datum, index, calculatedProps);
+
+    const pointProps = this.addDataComponentProps(mutualProps, getBoundEvents);
+
+    const pointComponent = React.cloneElement(this.props.dataComponent, pointProps);
+
     if (datum.label && this.props.showLabels) {
-      const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
-      const padding = style.labels.padding || size * 0.25;
-      const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});
-      const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
+
+      const labelProps = this.addLabelComponentProps(mutualProps, pointProps, getBoundEvents);
+
       return (
         <g key={`point-group-${index}`}>
           {pointComponent}
           <PointLabel
-            style={labelStyle}
-            index={index}
-            events={getBoundEvents(this.props.events.labels, "labels")}
-            x={position.x}
-            y={position.y}
-            datum={datum}
-            labelComponent={this.props.labelComponent}
-            {...this.state.labelsState[index]}
+            {... labelProps}
           />
         </g>
       );
