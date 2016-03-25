@@ -1,9 +1,13 @@
 import assign from "lodash/assign";
 
 
+function getDatumKey(datum, idx) {
+  return (datum.key || idx).toString();
+}
+
 function getKeyedData(data) {
   return data.reduce((keyedData, datum, idx) => {
-    const key = (datum.key || idx).toString();
+    const key = getDatumKey(datum, idx);
     keyedData[key] = datum;
     return keyedData;
   }, {});
@@ -100,12 +104,24 @@ export function getInitialTransitionState (oldChildren, nextChildren) {
 }
 
 
+function getInitialChildProps(animate, data) {
+  data = data.map((datum, idx) => {
+    const key = getDatumKey(datum, idx);
+    return assign({}, datum, animate.onExit.before(datum));
+  });
+
+  return { data };
+}
+
 function getChildPropsOnExit(animate, data, exitingNodes, cb) {
+  // Whether or not _this_ child has exiting nodes, we want the exit-
+  // transition for all children to have the same duration, delay, etc.
+  animate = assign({}, animate, animate.onExit);
+
   if (exitingNodes) {
-    animate = assign({}, animate || {}, {
-      duration: 500,
-      onEnd: cb
-    });
+    // After the exit transition occurs, trigger the animations for
+    // nodes that are neither exiting or entering.
+    animate.onEnd = cb;
 
     // If nodes need to exit, all we want to do is to fade them out.
     data = data.map((datum, idx) => {
@@ -114,12 +130,6 @@ function getChildPropsOnExit(animate, data, exitingNodes, cb) {
         Object.assign({}, datum, { opacity: 0 }) :
         datum;
     })
-  } else {
-    // Although components without transitioning data may not seem like
-    // they need to animate here, VictoryAnimation uses old props to
-    // determine things like interpolated domain.  So we'll do a no-op
-    // animate here.
-    animate = { duration: 500 };
   }
 
   return { animate, data };
@@ -127,46 +137,37 @@ function getChildPropsOnExit(animate, data, exitingNodes, cb) {
 
 function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) {
   if (enteringNodes) {
-    // We want the nodes-to-enter to be factored into the target domain,
-    // but we do not want them to be displayed yet.
-      animate = enteringNodes ?
-        assign({}, animate || {}, {
-          delay: 0,
-          onEnd: cb
-        }) :
-        {};
+    // Perform a normal animation here, except - when it finishes - trigger
+    // the transition for entering nodes.
+    animate = assign({}, animate, { onEnd: cb });
 
-      data = data.map((datum, idx) => {
-        const key = (datum.key || idx).toString();
-        return enteringNodes[key] ?
-          Object.assign({}, datum, { opacity: 0 }) :
-          datum;
-      });    
+    // We want the entering nodes to be included in the transition target
+    // domain.  However, we may not want these nodes to be displayed initially,
+    // so perform the `onEnter.before` transformation on each node.
+    data = data.map((datum, idx) => {
+      const key = (datum.key || idx).toString();
+      return enteringNodes[key] ?
+        Object.assign({}, datum, animate.onEnter.before(datum)) :
+        datum;
+    });    
   }
 
   return { animate, data };
 }
 
 function getChildPropsOnEnter(animate, data, enteringNodes, cb) {
+  // Whether or not _this_ child has entering nodes, we want the entering-
+  // transition for all children to have the same duration, delay, etc.
+  animate = assign({}, animate, animate.onEnter);
+
   if (enteringNodes) {
     // Old nodes have been transitioned to their new values, and the
-    // domain should encompass the nodes that will now enter. So,
-    // fade in the new nodes.
-    animate = enteringNodes ?
-      assign({}, animate, {
-        delay: 0,
-        duration: 500
-      }) :
-      // Although components without transitioning data may not seem like
-      // they need to animate here, VictoryAnimation uses old props to
-      // determine things like interpolated domain.  For that reason,
-      // trigger VictoryAnimation use by passing an empty animation object.
-      { duration: 500 };
-
+    // domain should encompass the nodes that will now enter. So perform
+    // the `onEnter.after` transformation on each node.
     data = data.map((datum, idx) => {
-      const key = (datum.key || idx).toString();
+      const key = getDatumKey(datum, idx);
       return enteringNodes[key] ?
-        Object.assign({}, datum, { opacity: 1 }) :
+        assign({}, datum, animate.onEnter.after(datum)) :
         datum;
     });
   }
@@ -185,15 +186,22 @@ export function childTransitionProps(parentState, parentAnimate, setParentState,
   if (nodesWillExit) {
     const exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
     return getChildPropsOnExit(animate, data, exitingNodes, () => setParentState({ nodesWillExit: false }));
-  }
-  if (nodesWillEnter) {
+  } else if (nodesWillEnter) {
     const enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
-
-    if (enteringNodes) {
-      return nodesShouldEnter ?
-        getChildPropsOnEnter(animate, data, enteringNodes) :
-        getChildPropsBeforeEnter(animate, data, enteringNodes, () => setParentState({ nodesShouldEnter: true }));
-    }
+    return nodesShouldEnter ?
+      getChildPropsOnEnter(animate, data, enteringNodes) :
+      getChildPropsBeforeEnter(animate, data, enteringNodes, () => setParentState({ nodesShouldEnter: true }));
+  } else if (!parentState && animate.onExit) {
+    // This is the initial render, and nodes may enter when props change. Because
+    // animation interpolation is determined by old- and next- props, data may need
+    // to be augmented with certain properties.
+    //
+    // For example, it may be desired that exiting nodes go from `opacity: 1` to
+    // `opacity: 0`. Without setting this on a per-datum basis, the interpolation
+    // might go from `opacity: undefined` to `opacity: 0`, which would result in
+    // interpolated `opacity: NaN` values.
+    //
+    return getInitialChildProps(animate, data);
   }
 
   return { animate, data };
