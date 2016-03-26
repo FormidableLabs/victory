@@ -122,11 +122,11 @@ function getChildPropsOnExit(animate, data, exitingNodes, cb) { // eslint-disabl
     // nodes that are neither exiting or entering.
     animate.onEnd = cb;
 
-    // If nodes need to exit, all we want to do is to fade them out.
+    // If nodes need to exit, transform them with the provided onExit.after function.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
       return exitingNodes[key] ?
-        Object.assign({}, datum, { opacity: 0 }) :
+        Object.assign({}, datum, animate.onExit.after(datum)) :
         datum;
     });
   }
