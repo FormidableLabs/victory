@@ -2,6 +2,7 @@
 import _ from "lodash";
 import React from "react";
 import { VictoryPie } from "../src/index";
+import Slice from "../src/components/slice";
 
 const rand = () => Math.max(Math.floor(Math.random() * 10000), 1000);
 
@@ -16,6 +17,48 @@ const getData = () => {
     { x: "≥65", y: rand() }
   ];
 };
+
+class BorderLabelSlice extends React.Component {
+  static propTypes = {
+    ...Slice.propTypes,
+    index: React.PropTypes.number
+  };
+
+  render() {
+    const {index} = this.props;
+
+    return (
+      <g key={`slice-and-label-${index}`}>
+        {this.renderSlice(this.props)}
+        {this.renderLabel(this.props)}
+      </g>
+    );
+  }
+
+  renderSlice(props) {
+    return <Slice {...props} />;
+  }
+
+  renderLabel(props) {
+    const {pathFunction, datum, slice, index} = props;
+
+    const path = pathFunction({...slice, endAngle: slice.startAngle});
+
+    const pathId = `textPath-path-${index}`;
+
+    return (
+      <g>
+        <path id={pathId} d={path} />
+        <text>
+          <textPath xlinkHref={`#${pathId}`}>
+            {datum.label || datum.xName || datum.x}
+          </textPath>
+        </text>
+      </g>
+    );
+  }
+
+}
 
 export default class App extends React.Component {
 
@@ -98,6 +141,15 @@ export default class App extends React.Component {
         />
 
         <VictoryPie style={this.state.style} startAngle={-90} endAngle={90} />
+
+        <VictoryPie
+          style={{...this.state.style, labels: {fontSize: 0}}}
+          data={this.state.data}
+          innerRadius={100}
+          animate={{velocity: 0.03}}
+          colorScale={this.state.colorScale}
+          dataComponent={<BorderLabelSlice />}
+        />
 
         <VictoryPie
           style={this.state.style}
