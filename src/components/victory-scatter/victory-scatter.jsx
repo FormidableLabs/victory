@@ -38,26 +38,24 @@ export default class VictoryScatter extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or an object with
+     * these arrays of values specified for x and y. If this prop is not set,
+     * categorical data will be plotted in the order it was given in the data array
+     * @examples ["dogs", "cats", "mice"]
+     */
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    /**
      * The bubbleProperty prop indicates which property of the data object should be used
      * to scale data points in a bubble chart
      */
     bubbleProperty: PropTypes.string,
-    /**
-     * The categories prop specifies how categorical data for a chart should be ordered.
-     * This prop should be given as an array of string values, or two element arrays.
-     * or an object with these values for x and y. When categories are not given as an object
-     * they are assumed to refer to the independent variable (x). When categories are given
-     * as an array of arrays, the minimum and maximum values of the arrays define range bands,
-     * allowing numeric data to be grouped into segments.
-     * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
-     */
-    categories: PropTypes.oneOfType([
-      CustomPropTypes.homogeneousArray,
-      PropTypes.shape({
-        x: CustomPropTypes.homogeneousArray,
-        y: CustomPropTypes.homogeneousArray
-      })
-    ]),
     /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
@@ -155,13 +153,6 @@ export default class VictoryScatter extends React.Component {
       })
     ]),
     /**
-     * The showLabels prop determines whether to show any labels associated with a data point.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * If animations are running slowly, try setting this prop to false to cut down on
-     * the number of svg nodes
-     */
-    showLabels: PropTypes.bool,
-    /**
      * The size prop determines how to scale each data point
      */
     size: PropTypes.oneOfType([
@@ -239,7 +230,6 @@ export default class VictoryScatter extends React.Component {
     padding: 50,
     samples: 50,
     scale: "linear",
-    showLabels: true,
     size: 3,
     standalone: true,
     symbol: "circle",
@@ -289,7 +279,7 @@ export default class VictoryScatter extends React.Component {
         {...this.state.dataState[index]}
       />
     );
-    if (datum.label && this.props.showLabels) {
+    if (datum.label) {
       const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
       const padding = style.labels.padding || size * 0.25;
       const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});

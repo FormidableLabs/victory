@@ -6,10 +6,11 @@ import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
+import Wrapper from "../../helpers/wrapper";
 
 const defaultAxes = {
-  independent: <VictoryAxis animate={{velocity: 0.02}}/>,
-  dependent: <VictoryAxis dependentAxis animate={{velocity: 0.02}}/>
+  independent: <VictoryAxis/>,
+  dependent: <VictoryAxis dependentAxis/>
 };
 
 export default class VictoryChart extends React.Component {
@@ -147,23 +148,10 @@ export default class VictoryChart extends React.Component {
     };
   }
 
-  getGroupedDataProps(child, calculatedProps) {
-    const {domain, flipped, scale, stringMap} = calculatedProps;
-    const categoryAxis = flipped ? "y" : "x";
-    const categories = stringMap[categoryAxis] && Object.keys(stringMap[categoryAxis]);
-    return {
-      domain,
-      scale,
-      categories: child.props.categories || categories
-    };
-  }
-
   getChildProps(child, props, calculatedProps) {
     const type = child.type && child.type.role;
     if (type === "axis") {
       return this.getAxisProps(child, props, calculatedProps);
-    } else if (type === "bar") {
-      return this.getGroupedDataProps(child, calculatedProps);
     }
     return {
       domain: calculatedProps.domain,
@@ -187,9 +175,11 @@ export default class VictoryChart extends React.Component {
     };
     const baseScale = {
       x: Scale.getScaleFromProps(props, "x") ||
-        axisComponents.x.type.getScale(axisComponents.x.props),
+        axisComponents.x && axisComponents.x.type.getScale(axisComponents.x.props) ||
+        Scale.getDefaultScale(),
       y: Scale.getScaleFromProps(props, "y") ||
-        axisComponents.y.type.getScale(axisComponents.y.props)
+        axisComponents.y && axisComponents.y.type.getScale(axisComponents.y.props) ||
+        Scale.getDefaultScale()
     };
     const scale = {
       x: baseScale.x.domain(domain.x).range(range.x),
@@ -197,8 +187,8 @@ export default class VictoryChart extends React.Component {
     };
     // TODO: check
     const categories = {
-      x: ChartHelpers.getCategories(childComponents, "x"),
-      y: ChartHelpers.getCategories(childComponents, "y")
+      x: Wrapper.getCategories(childComponents, props, "x"),
+      y: Wrapper.getCategories(childComponents, props, "y")
     };
     const stringMap = {
       x: ChartHelpers.createStringMap(childComponents, "x"),

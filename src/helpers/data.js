@@ -1,11 +1,10 @@
-import flatten from "lodash/flatten";
-import findIndex from "lodash/findIndex";
-import isFunction from "lodash/isFunction";
 import uniq from "lodash/uniq";
 import defaults from "lodash/defaults";
 import assign from "lodash/assign";
-import { Collection, Helpers, Style } from "victory-core";
+import isObject from "lodash/isObject";
+import { Helpers, Collection } from "victory-core";
 import Scale from "./scale";
+import React from "react";
 
 export default {
   // String Data
@@ -35,26 +34,47 @@ export default {
   },
 
   getStringsFromCategories(props, axis) {
-    // TODO generalize for independent vertical axes
-    if (!props.categories || axis !== "x") {
+    const childComponents = props.children && React.Children.toArray(props.children);
+    if (!props.categories && !props.children) {
       return [];
-    } else {
-      const categoryArray = flatten(props.categories);
-      return categoryArray.filter((val) => typeof val === "string");
     }
+
+    const getCategoryStrings = (childProps) => {
+      const categories = this.getCategories(childProps, axis);
+      return categories && categories.filter((val) => typeof val === "string");
+    };
+
+    const categories = props.categories ?
+      getCategoryStrings(props) : childComponents.map((child) => getCategoryStrings(child.props));
+
+    return Collection.removeUndefined(categories);
+  },
+
+  getCategories(props, axis) {
+    if (props.categories && isObject(props.categories)) {
+      return props.categories[axis];
+    }
+    return props.categories;
   },
 
   getStringsFromData(props, axis) {
-    if (!props.data) {
+    const childComponents = props.children && React.Children.toArray(props.children);
+    if (!props.data && !props.children) {
       return [];
     }
-    const accessor = Helpers.createAccessor(
-      typeof props[axis] !== "undefined" ? props[axis] : axis
-    );
-    return props.data.reduce((prev, curr) => {
-      const datum = accessor(curr);
-      return typeof datum === "string" && prev.indexOf(datum) === -1 ? prev.concat(datum) : prev;
-    }, []);
+
+    const getStrings = (childProps) => {
+      const accessor = Helpers.createAccessor(
+        typeof childProps[axis] !== "undefined" ? childProps[axis] : axis
+      );
+      return childProps.data ? childProps.data.reduce((prev, curr) => {
+        const datum = accessor(curr);
+        return typeof datum === "string" && prev.indexOf(datum) === -1 ? prev.concat(datum) : prev;
+      }, []) : undefined;
+    };
+
+    return props.data ?
+      getStrings(props) : childComponents.map((child) => getStrings(child.props));
   },
 
   // for components that take single datasets
@@ -95,12 +115,10 @@ export default {
     return this.cleanData(dataset, props).map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
-      const category = this.determineCategoryIndex(x, props.categories);
       return assign(
           {},
           datum,
           { x, y },
-          typeof category !== "undefined" ? { category } : {},
           // map string data to numeric values, and add names
           typeof x === "string" ? { x: stringMap.x[x], xName: x } : {},
           typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
@@ -129,17 +147,6 @@ export default {
     };
     return dataset.filter((datum) => {
       return rules(datum, "x") && rules(datum, "y");
-    });
-  },
-
-  determineCategoryIndex(x, categories) {
-    // if categories don't exist or are not given as an array of arrays, return undefined;
-    if (!categories || !Array.isArray(categories[0])) {
-      return undefined;
-    }
-    // determine which range band this x value belongs to, and return the index of that range band.
-    return findIndex(categories, (category) => {
-      return (x >= Math.min(...category) && x <= Math.max(...category));
     });
   }
 };

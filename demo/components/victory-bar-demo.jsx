@@ -74,24 +74,51 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryBar</h1>
 
-        <VictoryGroup style={{parent: parentStyle}} offset={18} colorScale={"qualitative"} animate={{duration: 2000}}>
+        <VictoryGroup
+          style={{parent: parentStyle}} offset={18}
+          colorScale={"qualitative"}
+          animate={{duration: 2000}}
+          labels={["a", "b", "c"]}
+        >
           {this.getBarData().map((data, index) => {
             return <VictoryBar key={index} data={data}/>;
           })}
         </VictoryGroup>
 
-        <VictoryGroup horizontal style={{parent: parentStyle}} offset={8} colorScale={"qualitative"} animate={{duration: 2000}}>
+        <VictoryGroup horizontal style={{parent: parentStyle}} offset={8} colorScale={"cool"} animate={{duration: 2000}}>
           {this.getBarData().map((data, index) => {
             return <VictoryBar key={index} data={data}/>;
           })}
         </VictoryGroup>
 
-        <VictoryStack style={{parent: parentStyle}} colorScale={"qualitative"} animate={{duration: 2000}}>
+        <VictoryGroup style={{parent: parentStyle}} offset={15} animate={{duration: 2000}}>
+          <VictoryStack colorScale={"red"}>
+            {this.getBarData().map((data, index) => {
+              return <VictoryBar key={index} data={data}/>;
+            })}
+          </VictoryStack>
+          <VictoryStack colorScale={"green"}>
+            {this.getBarData().map((data, index) => {
+              return <VictoryBar key={index} data={data}/>;
+            })}
+          </VictoryStack>
+          <VictoryStack colorScale={"blue"}>
+            {this.getBarData().map((data, index) => {
+              return <VictoryBar key={index} data={data}/>;
+            })}
+          </VictoryStack>
+        </VictoryGroup>
+
+        <VictoryStack
+          style={{parent: parentStyle}}
+          animate={{duration: 2000}}
+          colorScale={"warm"}
+          labels={["one", "two", "three"]}
+        >
           {this.getBarData().map((data, index) => {
             return <VictoryBar key={index} data={data}/>;
           })}
         </VictoryStack>
-
       </div>
     );
   }

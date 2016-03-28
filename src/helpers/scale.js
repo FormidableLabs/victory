@@ -8,6 +8,10 @@ const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 
 export default {
 
+  getDefaultScale() {
+    return d3Scale.linear();
+  },
+
   validScale(scale) {
     if (typeof scale === "function") {
       return (isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range));

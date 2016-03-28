@@ -1,12 +1,10 @@
-import defaults from "lodash/defaults";
 import assign from "lodash/assign";
 import uniq from "lodash/uniq";
-
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Style } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
 import Scale from "../../helpers/scale";
-import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
+import Wrapper from "../../helpers/wrapper";
 
 const defaultStyles = {
   data: {
@@ -16,6 +14,8 @@ const defaultStyles = {
 };
 
 export default class VictoryStack extends React.Component {
+  static role = "wrapper";
+
   static propTypes = {
     /**
      * The animate prop specifies props for victory-animation to use. If this prop is
@@ -27,17 +27,27 @@ export default class VictoryStack extends React.Component {
     animate: PropTypes.object,
     /**
      * The categories prop specifies how categorical data for a chart should be ordered.
-     * This prop should be given as an array of string values, or two element arrays.
-     * or an object with these values for x and y. When categories are not given as an object
-     * they are assumed to refer to the independent variable (x). When categories are given
-     * as an array of arrays, the minimum and maximum values of the arrays define range bands,
-     * allowing numeric data to be grouped into segments. When this prop is set on
-     * the VictoryGroup wrapper, it will dictate the categories of the children. If this
-     * prop is not set, any categories on child component will be merged to create a
-     * shared set of categories.
-     * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+     * This prop should be given as an array of string values, or an object with
+     * these values for x and y. When categories are not given as an object
+     * When this prop is set on a wrapper component, it will dictate the categories of
+     * its the children. If this prop is not set, any categories on child component
+     * or catigorical data, will be merged to create a shared set of categories.
+     * @examples ["dogs", "cats", "mice"]
      */
-    categories: CustomPropTypes.homogeneousArray,
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    /**
+     * If you're not passing children to VictoryStack... you're probably doing it wrong.
+     */
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
+    ]),
     /**
      * The colorScale prop is an optional prop that defines the color scale the chart's bars
      * will be created on. This prop should be given as an array of CSS colors, or as a string
@@ -45,6 +55,7 @@ export default class VictoryStack extends React.Component {
      * values from this color scale to the bars unless colors are explicitly provided in the
      * `dataAttributes` prop.
      */
+
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
@@ -90,6 +101,31 @@ export default class VictoryStack extends React.Component {
      */
     horizontal: PropTypes.bool,
     /**
+     * The labels prop defines labels that will appear above stack of data.
+     * This prop should be given as an array of values or as a function of data.
+     * If given as an array, the number of elements in the array should be equal to
+     * the length of the data array. Stack labels will appear above the last
+     * series of the stack, and will override the labels prop of child components.
+     * To use group labels with individual data labels, individual labels should be
+     * added directly to data.
+     * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
+     */
+    labels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array
+    ]),
+    /**
+     * The labelComponent prop takes in an entire, HTML-complete label
+     * component which will be used to create labels for each stack of data in the
+     * chart. The new element created from the passed labelComponent will have
+     * property data provided by the bar's datum; properties x, y, textAnchor,
+     * and verticalAnchor preserved or default values provided by the data component; and
+     * styles filled out with defaults provided by the component, and overrides from
+     * the datum. If labelComponent is omitted, a new VictoryLabel will be
+     * created with props and styles from the bar.
+     */
+    labelComponent: PropTypes.element,
+    /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
      * as a number or as an object with padding specified for top, bottom, left
@@ -134,7 +170,12 @@ export default class VictoryStack extends React.Component {
     /**
      * The width props specifies the width of the chart container element in pixels
      */
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
+    /**
+     * The xOffset prop is used for grouping stacks of bars. This prop will be set
+     * by the VictoryGroup component wrapper, or can be set manually.
+     */
+    xOffset: PropTypes.number
   };
 
   static defaultProps = {
@@ -145,83 +186,19 @@ export default class VictoryStack extends React.Component {
     standalone: true
   };
 
-  static getDomain = Domain.getMultiSeriesDomain.bind(Domain)
-
-
-  getChildProps(child, calculatedProps) {
-    const {domain, flipped, scale, stringMap} = calculatedProps;
-    const categoryAxis = flipped ? "y" : "x";
-    const categories = stringMap[categoryAxis] && Object.keys(stringMap[categoryAxis]);
-    return {domain, scale, categories};
-  }
-
-  getColor(props, index) {
-    // check for styles first
-    if (props.style && props.style.data && props.style.data.fill) {
-      return props.style.data.fill;
-    }
-    const colorScale = Array.isArray(props.colorScale) ?
-      props.colorScale : Style.getColorScale(props.colorScale);
-    return colorScale[index % colorScale.length];
-  }
-
-  createStringMap(props, axis) {
-    const categoryStrings = props.children.reduce((prev, component) => {
-      const categoryData = Data.getStringsFromCategories(component.props, axis);
-      return categoryData ? prev.concat(categoryData) : prev;
-    }, []);
-    const dataStrings = props.children.reduce((prev, component) => {
-      const stringData = Data.getStringsFromData(component.props, axis);
-      return stringData ? prev.concat(stringData) : prev;
-    }, []);
-    const allStrings = uniq([...categoryStrings, ...dataStrings]);
-
-    return allStrings.length === 0 ? null :
-      allStrings.reduce((memo, string, index) => {
-        memo[string] = index + 1;
-        return memo;
-      }, {});
-  }
-
-  getCategories(props, axis) {
-    if (props.categories) {
-      return props.categories;
-    }
-    const allCategories = props.children.reduce((prev, component) => {
-      const cats = component.props.categories;
-      const categories = cats && Collection.isArrayOfArrays(cats) ?
-        cats.map((arr) => (sum(arr) / arr.length)) : cats;
-      return categories && prev.indexOf(categories) === -1 ? prev.concat(categories) : prev;
-    }, []);
-    return allCategories.length === 0 ? undefined : allCategories;
-  }
-
-  getDomain(props, axis) {
-    const childComponents = props.children;
-    let domain;
-    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
-      domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
-    } else {
-      const childDomains = childComponents.reduce((prev, component) => {
-        const childDomain = component.type.getDomain(component.props, axis);
-        return childDomain ? prev.concat(childDomain) : prev;
-      }, []);
-      domain = childDomains.length === 0 ?
-        [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
-    }
-    return Domain.padDomain(domain, props, axis);
-  }
+  static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
+  static getData = Wrapper.getData.bind(Wrapper);
 
   getCalculatedProps(props, childComponents, style) {
-    const flipped = props.horizontal || props.children.every(
+    const horizontal = props.horizontal || props.children.every(
       (component) => component.props.horizontal
     );
     const datasets = childComponents.map((child) => {
       return child.type.getData(child.props) || Data.getData(child.props);
     });
     const domain = {
-      x: Domain.getMultiSeriesDomain(props, "x", datasets),
-      y: Domain.getMultiSeriesDomain(props, "y", datasets)
+      x: Wrapper.getStackedDomain(props, "x", datasets),
+      y: Wrapper.getStackedDomain(props, "y", datasets)
     };
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -235,27 +212,12 @@ export default class VictoryStack extends React.Component {
       x: baseScale.x.domain(domain.x).range(range.x),
       y: baseScale.y.domain(domain.y).range(range.y)
     };
-    // TODO: check
     const categories = {
-      x: this.getCategories(props, "x"),
-      y: this.getCategories(props, "y")
+      x: Wrapper.getCategories(props, "x"),
+      y: Wrapper.getCategories(props, "y")
     };
-    const stringMap = {
-      x: this.createStringMap(props, "x"),
-      y: this.createStringMap(props, "y")
-    };
-    return {datasets, categories, range, domain, flipped, scale, stringMap, style};
-  }
-
-  pixelsToValue(pixels, axis, calculatedProps) {
-    if (pixels === 0) {
-      return 0;
-    }
-    const domain = calculatedProps.domain[axis];
-    const range = calculatedProps.range[axis];
-    const domainExtent = Math.max(...domain) - Math.min(...domain);
-    const rangeExtent = Math.max(...range) - Math.min(...range);
-    return domainExtent / rangeExtent * pixels;
+    const colorScale = props.colorScale;
+    return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
   getY0(datum, index, calculatedProps) {
@@ -280,39 +242,44 @@ export default class VictoryStack extends React.Component {
     return datasets[index].map((datum) => {
       return assign(datum, {
         yOffset: this.getY0(datum, index, calculatedProps),
-      })
+        xOffset: this.props.xOffset
+      });
     });
   }
 
-  getChildStyle(child, index, calculatedProps) {
-    const { style } = calculatedProps;
-    const fillOverride = this.getColor(this.props, index);
-    const childStyle = child.props.style || {};
-    const dataStyle = defaults({fill: fillOverride}, childStyle.data, style.data);
-    const labelsStyle = defaults({}, childStyle.labels, style.labels);
+  getLabels(index, props, datasets) {
+    if (!props.labels) {
+      return undefined;
+    }
+    return datasets.length === index + 1 ? props.labels : [];
+  }
+
+  getChildProps(props, calculatedProps) {
+    const { categories, domain, scale, horizontal } = calculatedProps;
     return {
-      parent: style.parent,
-      data: dataStyle,
-      labels: labelsStyle
+      height: props.height,
+      width: props.width,
+      padding: Helpers.getPadding(props),
+      standalone: false,
+      categories,
+      domain,
+      scale,
+      horizontal
     };
   }
 
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets, flipped } = calculatedProps;
+    const { datasets } = calculatedProps;
+    const childProps = this.getChildProps(props, calculatedProps);
     return childComponents.map((child, index) => {
-      const childProps = this.getChildProps(child, calculatedProps);
       const data = this.addLayoutData(datasets, index, calculatedProps);
-      const style = this.getChildStyle(child, index, calculatedProps);
-      return React.cloneElement(child, defaults({
-        horizontal: flipped,
+      const style = Wrapper.getChildStyle(child, index, calculatedProps);
+      return React.cloneElement(child, assign({
         animate: child.props.animate || props.animate,
-        height: props.height,
-        width: props.width,
-        padding: Helpers.getPadding(props),
-        ref: index,
         key: index,
-        standalone: false,
+        labels: this.getLabels(index, props, datasets) || child.props.labels,
+        labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data
       }, childProps));
@@ -322,7 +289,11 @@ export default class VictoryStack extends React.Component {
   render() {
     const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
-    const childComponents = this.props.children;
+    const childComponents = React.Children.toArray(this.props.children);
+    const types = uniq(childComponents.map((child) => child.type.role));
+    if (types.length > 1) {
+      Log.warn("Only components of the same type can be stacked");
+    }
     const calculatedProps = this.getCalculatedProps(this.props, childComponents, style);
     const group = (
       <g style={style.parent}>

@@ -38,14 +38,18 @@ export default class VictoryLine extends React.Component {
     animate: PropTypes.object,
     /**
      * The categories prop specifies how categorical data for a chart should be ordered.
-     * This prop should be given as an array of string values, or two element arrays.
-     * or an object with these values for x and y. When categories are not given as an object
-     * they are assumed to refer to the independent variable (x). When categories are given
-     * as an array of arrays, the minimum and maximum values of the arrays define range bands,
-     * allowing numeric data to be grouped into segments.
-     * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
+     * This prop should be given as an array of string values, or an object with
+     * these arrays of values specified for x and y. If this prop is not set,
+     * categorical data will be plotted in the order it was given in the data array
+     * @examples ["dogs", "cats", "mice"]
      */
-    categories: CustomPropTypes.homogeneousArray,
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
     /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.

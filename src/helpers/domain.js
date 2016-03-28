@@ -10,7 +10,6 @@ export default {
     if (propsDomain) {
       return propsDomain;
     }
-    const categoryData = this.getDomainFromCategories(props, axis);
     const dataset = Data.getData(props);
     return this.getDomainFromData(dataset, axis);
   },
@@ -29,18 +28,6 @@ export default {
     }
     const dataset = Data.getData(props);
     return ensureZero(this.getDomainFromData(dataset, axis));
-  },
-
-  getMultiSeriesDomain(props, axis, datasets) {
-    const propsDomain = this.getDomainFromProps(props, axis);
-    if (propsDomain) {
-      return this.padDomain(propsDomain, props, axis);
-    }
-    const ensureZero = (domain) => {
-      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
-    };
-    const dataDomain = ensureZero(this.getDomainFromGroupedData(props, axis, datasets));
-    return this.padDomain(dataDomain, props, axis);
   },
 
   getDomainFromProps(props, axis) {

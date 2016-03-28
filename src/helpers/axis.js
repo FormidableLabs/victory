@@ -20,11 +20,13 @@ export default {
   },
 
   getOrientation(component, axis) {
-    if (component.props && component.props.orientation) {
-      return component.props.orientation;
-    }
     const typicalOrientations = {x: "bottom", y: "left"};
     const flippedOrientations = {x: "left", y: "bottom"};
+    if (!component) {
+      return typicalOrientations[axis];
+    } else if (component.props && component.props.orientation) {
+      return component.props.orientation;
+    }
     const dependent = component.props.dependentAxis;
     return (dependent && axis === "y") || (!dependent && axis === "x") ?
       typicalOrientations[axis] : flippedOrientations[axis];
