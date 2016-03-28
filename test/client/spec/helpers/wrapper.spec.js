@@ -1,7 +1,7 @@
 /* eslint no-unused-expressions: 0 */
-import Layout from "src/helpers/layout";
+import Layout from "src/helpers/wrapper";
 
-describe("helpers/layout", () => {
+describe("helpers/wrapper", () => {
   describe("getY0", () => {
     const data = [
       {data: [{x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}]},

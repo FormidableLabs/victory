@@ -85,7 +85,9 @@ export default class App extends React.Component {
           })}
         </VictoryGroup>
 
-        <VictoryGroup horizontal style={{parent: parentStyle}} offset={8} colorScale={"cool"} animate={{duration: 2000}}>
+        <VictoryGroup horizontal style={{parent: parentStyle}} offset={8}
+          colorScale={"cool"} animate={{duration: 2000}}
+        >
           {this.getBarData().map((data, index) => {
             return <VictoryBar key={index} data={data}/>;
           })}
@@ -119,6 +121,55 @@ export default class App extends React.Component {
             return <VictoryBar key={index} data={data}/>;
           })}
         </VictoryStack>
+
+        <ChartWrap>
+          <VictoryBar
+            data={[[0, 1], [2, 3], [4, 5]]}
+            x={0}
+            y={1}
+          />
+        </ChartWrap>
+
+        <ChartWrap>
+          <VictoryBar
+            height={250}
+            data={[["a", 1], ["b", 3], ["c", 5]]}
+            x={0}
+            y={1}
+          />
+        </ChartWrap>
+
+        <ChartWrap>
+          <VictoryBar
+            height={250}
+            data={[{a: {b: {c: 1, d: 1}}}, {a: {b: {c: 2, d: 3}}}]}
+            x={"a.b.c"}
+            y={"a.b.d"}
+          />
+        </ChartWrap>
+
+          <VictoryStack colorScale="warm">
+            <VictoryBar
+              data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+              events={{
+                data: {
+                  onClick: () => {
+                    return {style: {fill: "cyan"}};
+                  }
+                }
+              }}
+            />
+            <VictoryBar
+              data={[{x: "c", y: 2}, {x: "d", y: 3}, {x: "e", y: 4}]}
+              events={{
+                data: {
+                  onClick: () => {
+                    return {style: {fill: "blue"}};
+                  }
+                }
+              }}
+            />
+          </VictoryStack>
       </div>
     );
   }

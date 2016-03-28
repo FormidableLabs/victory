@@ -203,14 +203,12 @@ class App extends React.Component {
             <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
-
-
           <VictoryChart animate={{duration: 2000}}
             domainPadding={{x: 100}}
           >
             <VictoryStack>
               {this.state.barData.map((data, index) => {
-                return <VictoryBar data={data} key={index}/>
+                return <VictoryBar data={data} key={index}/>;
               })}
             </VictoryStack>
           </VictoryChart>

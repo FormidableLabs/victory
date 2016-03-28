@@ -220,28 +220,10 @@ export default class VictoryStack extends React.Component {
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
-  getY0(datum, index, calculatedProps) {
-    const { datasets } = calculatedProps;
-    const y = datum.y;
-    const previousDataSets = datasets.slice(0, index);
-    const previousPoints = previousDataSets.reduce((prev, dataset) => {
-      return prev.concat(dataset
-        .filter((previousDatum) => datum.x instanceof Date
-          ? previousDatum.x.getTime() === datum.x.getTime()
-          : previousDatum.x === datum.x)
-        .map((previousDatum) => previousDatum.y || 0)
-      );
-    }, []);
-    return previousPoints.reduce((memo, value) => {
-      const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
-      return sameSign ? memo + value : memo;
-    }, 0);
-  }
-
   addLayoutData(datasets, index, calculatedProps) {
     return datasets[index].map((datum) => {
       return assign(datum, {
-        yOffset: this.getY0(datum, index, calculatedProps),
+        yOffset: Wrapper.getY0(datum, index, calculatedProps),
         xOffset: this.props.xOffset
       });
     });

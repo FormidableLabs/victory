@@ -155,12 +155,13 @@ export default class VictoryChart extends React.Component {
     }
     return {
       domain: calculatedProps.domain,
-      scale: calculatedProps.scale
+      scale: calculatedProps.scale,
+      categories: calculatedProps.categories
     };
   }
 
   getCalculatedProps(props, childComponents) {
-    const flipped = childComponents.some((component) => component.props.horizontal);
+    const horizontal = childComponents.some((component) => component.props.horizontal);
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
       y: Axis.getAxisComponent(childComponents, "y")
@@ -194,7 +195,7 @@ export default class VictoryChart extends React.Component {
       x: ChartHelpers.createStringMap(childComponents, "x"),
       y: ChartHelpers.createStringMap(childComponents, "y")
     };
-    return {axisComponents, categories, domain, flipped, scale, stringMap};
+    return {axisComponents, categories, domain, horizontal, scale, stringMap};
   }
 
   // the old ones were bad

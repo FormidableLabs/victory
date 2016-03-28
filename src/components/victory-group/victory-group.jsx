@@ -233,7 +233,7 @@ export default class VictoryGroup extends React.Component {
     return domainExtent / rangeExtent * pixels;
   }
 
-  getXOfset(datasets, index, calculatedProps) {
+  getXO(datasets, index, calculatedProps) {
     const center = datasets.length % 2 === 0 ?
       datasets.length / 2 : (datasets.length - 1) / 2;
     const totalWidth = this.pixelsToValue(this.props.offset, "x", calculatedProps);
@@ -274,7 +274,7 @@ export default class VictoryGroup extends React.Component {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     return childComponents.map((child, index) => {
-      const xOffset = this.getXOfset(datasets, index, calculatedProps);
+      const xOffset = this.getXO(datasets, index, calculatedProps);
       const data = datasets[index].map((datum) => assign(datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       return React.cloneElement(child, assign({
