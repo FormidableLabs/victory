@@ -61,6 +61,16 @@ export default class VictoryLine extends React.Component {
 
     data: PropTypes.array,
     /**
+     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
+     * create line segments between each point in the plotted line. The new element created from
+     * the passed dataComponent will have the property data set by the line for the segment it
+     * renders; properties scale and style calculated by the VictoryLine component; a key and index
+     * property set corresponding to the location of the segment in the data provided to the line;
+     * and all the remaining properties from the VictoryLine data at the index of the segment.
+     * If a dataComponent is not provided, VictoryLine's LineSegment component will be used.
+     */
+    dataComponent: PropTypes.element,
+    /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
      * or as an object that specifies separate arrays for x and y.
@@ -233,7 +243,8 @@ export default class VictoryLine extends React.Component {
     standalone: true,
     width: 450,
     x: "x",
-    y: "y"
+    y: "y",
+    dataComponent: <LineSegment />
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -273,20 +284,22 @@ export default class VictoryLine extends React.Component {
 
   renderLine(calculatedProps) {
     const {dataSegments, scale, style} = calculatedProps;
+    const {interpolation, dataComponent, events} = this.props;
+
     return dataSegments.map((segment, index) => {
-      const getBoundEvents = Helpers.getEvents.bind(this);
-      return (
-        <LineSegment
-          key={`line-segment-${index}`}
-          index={index}
-          events={getBoundEvents(this.props.events.data, "data")}
-          data={segment}
-          interpolation={this.props.interpolation}
-          scale={scale}
-          style={style.data}
-          {...this.state.dataState[index]}
-        />
-      );
+      const lineEvents = Helpers.getEvents.bind(this)(events.data, "data");
+      const key = `line-segment-${index}`;
+
+      return React.cloneElement(dataComponent, {
+        key,
+        index,
+        events: lineEvents,
+        data: segment,
+        interpolation,
+        scale,
+        style: style.data,
+        ...this.state.dataState[index]
+      });
     });
   }
 

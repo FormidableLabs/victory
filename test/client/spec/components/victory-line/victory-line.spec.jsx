@@ -9,6 +9,10 @@ import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";
 
+class MyLineSegment extends React.Component {
+  render() { }
+}
+
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
@@ -22,6 +26,27 @@ describe("components/victory-line", () => {
   });
 
   describe("rendering with null data", () => {
+    it("renders one dataComponent for the line when there is no null data", () => {
+      const data = [
+        {x: 1, y: 1},
+        {x: 2, y: 4},
+        {x: 3, y: 5},
+        {x: 4, y: 2},
+        {x: 5, y: 3},
+        {x: 6, y: 4},
+        {x: 7, y: 6}
+      ];
+      const wrapper = shallow(
+        <VictoryLine
+          data={data}
+          dataComponent={<MyLineSegment />}
+        />
+      );
+
+      const lines = wrapper.find(MyLineSegment);
+      expect(lines.length).to.equal(1);
+    });
+
     it("renders one line segment when there is no null data", () => {
       const data = [
         {x: 1, y: 1},
