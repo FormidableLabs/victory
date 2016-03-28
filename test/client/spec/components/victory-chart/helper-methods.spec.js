@@ -70,19 +70,10 @@ describe("victory-chart/helpers-methods", () => {
     const axis = getVictoryAxis({});
     const childComponents = [bar, line, axis];
 
-    it("returns only grouped data components (bar) when called with 'grouped'", () => {
-      const componentResult = Helpers.getDataComponents(childComponents, "grouped");
-      expect(componentResult).to.eql([bar]);
-    });
-
-    it("returns only single data components (not bar) when called with 'data'", () => {
-      const componentResult = Helpers.getDataComponents(childComponents, "data");
-      expect(componentResult).to.eql([line]);
-    });
-
-    it("returns all single data components when called with 'all'", () => {
-      const componentResult = Helpers.getDataComponents(childComponents, "all");
+    it("returns data components but not axis components", () => {
+      const componentResult = Helpers.getDataComponents(childComponents);
       expect(componentResult).to.have.members([bar, line]);
+      expect(componentResult).not.to.have.members([axis]);
     });
   });
 

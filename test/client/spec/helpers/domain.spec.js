@@ -232,7 +232,6 @@ describe("helpers/domain", () => {
       sandbox.spy(Domain, "getDomainFromData");
       sandbox.spy(Domain, "getDomainFromCategories");
       sandbox.spy(Domain, "getCumulativeData");
-      sandbox.spy(Domain, "isStacked");
     });
 
     afterEach(() => {
@@ -251,7 +250,6 @@ describe("helpers/domain", () => {
       expect(Domain.getDomainFromCategories).calledWith(props, "x").and.returned([1, 3]);
       expect(Domain.getDomainFromData).not.called;
       expect(Domain.getCumulativeData).not.called;
-      expect(Domain.isStacked).not.called;
       expect(domainResultX).to.eql([1, 3]);
     });
 
@@ -266,7 +264,6 @@ describe("helpers/domain", () => {
       const props = {data, grouped: true, x: "x", y: "y"};
       const domainResultY = Domain.getDomainFromGroupedData(props, "y");
       expect(Domain.getDomainFromData).calledOnce.and.returned([0, 2]);
-      expect(Domain.isStacked).calledWith(props, "y").and.returned(false);
       expect(Domain.getCumulativeData).not.called;
       expect(domainResultY).to.eql([0, 2]);
     });
@@ -275,7 +272,6 @@ describe("helpers/domain", () => {
       const props = {data: data[1], x: "x", y: "y"};
       const domainResultY = Domain.getDomainFromGroupedData(props, "y");
       expect(Domain.getDomainFromData).calledOnce.and.returned([0, 1]);
-      expect(Domain.isStacked).calledWith(props, "y").and.returned(false);
       expect(Domain.getCumulativeData).not.called;
       expect(domainResultY).to.eql([0, 1]);
     });
@@ -304,21 +300,6 @@ describe("helpers/domain", () => {
       const props = {categories: [[0, 2], [3, 5]]};
       const domainResult = Domain.getDomainFromCategories(props, "x");
       expect(domainResult).to.eql([0, 5]);
-    });
-  });
-
-  describe("shouldGroup", () => {
-    it("true if grouped prop is true", () => {
-      expect(Domain.shouldGroup({grouped: true})).to.eql(true);
-    });
-    it("false if grouped prop is false", () => {
-      expect(Domain.shouldGroup({grouped: false})).to.eql(false);
-    });
-    it("true if grouped is undefined, data is array-of-arrays, & accessors are default", () => {
-      const grouped = Domain.shouldGroup(
-        {data: [[{x: 0, y: 1}], [{x: 3, y: 4}]], x: "x", y: "y"}
-      );
-      expect(grouped).to.eql(true);
     });
   });
 });
