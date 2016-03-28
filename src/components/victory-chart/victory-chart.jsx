@@ -1,7 +1,11 @@
 import defaults from "lodash/defaults";
 
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
+import {
+  PropTypes as CustomPropTypes,
+  Helpers,
+  Transitions
+} from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -22,6 +26,13 @@ export default class VictoryChart extends React.Component {
      * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
      */
     animate: PropTypes.object,
+    /**
+     * If you're not passing children to VictoryChart... you're probably doint it wrong.
+     */
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -116,6 +127,28 @@ export default class VictoryChart extends React.Component {
     standalone: true
   };
 
+  componentWillReceiveProps(nextProps) {
+    if (!this.props.animate) {
+      return;
+    }
+
+    const {
+      nodesWillExit,
+      nodesWillEnter,
+      childrenTransitions,
+      nodesShouldEnter
+    } = Transitions.getInitialTransitionState(this.props.children, nextProps.children);
+
+    this.setState({
+      nodesWillExit,
+      nodesWillEnter,
+      childrenTransitions,
+      nodesShouldEnter,
+      oldProps: nodesWillExit ? this.props : null
+    });
+  }
+
+
   getStyles(props) {
     const styleProps = props.style && props.style.parent;
     return {
@@ -207,14 +240,22 @@ export default class VictoryChart extends React.Component {
     return {axisComponents, categories, domain, flipped, scale, stringMap};
   }
 
-  // the old ones were bad
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
+
+    const getTransitionProps = Transitions.getTransitionPropsFactory(
+      childComponents,
+      this.state,
+      this.props.animate,
+      (newState) => this.setState(newState)
+    );
+
     return childComponents.map((child, index) => {
+      const transitionProps = getTransitionProps(child.props, index);
       const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
+
       return React.cloneElement(child, defaults({
-        animate: child.props.animate || props.animate,
         height: props.height,
         width: props.width,
         padding: Helpers.getPadding(props),
@@ -222,13 +263,15 @@ export default class VictoryChart extends React.Component {
         key: index,
         standalone: false,
         style
-      }, childProps));
+      }, transitionProps, childProps));
     });
   }
 
   render() {
     const style = this.getStyles(this.props);
-    const childComponents = ChartHelpers.getChildComponents(this.props, defaultAxes);
+    const childComponents = this.state && this.state.nodesWillExit ?
+      ChartHelpers.getChildComponents(this.state.oldProps, defaultAxes) :
+      ChartHelpers.getChildComponents(this.props, defaultAxes);
     const group = (
       <g style={style.parent}>
         {this.getNewChildren(this.props, childComponents, style)}

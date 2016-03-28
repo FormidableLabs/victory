@@ -5,7 +5,10 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter
 } from "../../src/index";
 
-const UPDATE_INTERVAL = 2000;
+
+const UPDATE_INTERVAL = 3000;
+let scatterDataToggle = false;
+
 
 const chartStyle = {parent: {width: 500, height: 350, margin: 50}};
 class App extends React.Component {
@@ -71,11 +74,12 @@ class App extends React.Component {
     const colors =
       ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
     const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
-    return _.map(_.range(20), (index) => {
+    const elementNum = (scatterDataToggle = !scatterDataToggle) ? 10 : 40;
+    return _.map(_.range(elementNum), (index) => {
       const scaledIndex = _.floor(index % 7);
       return {
-        x: _.random(20),
-        y: _.random(20),
+        x: _.random(!scatterDataToggle ? 50 : 10) - (!scatterDataToggle ? 25 : 5),
+        y: _.random(!scatterDataToggle ? 50 : 10),
         size: _.random(8) + 3,
         symbol: symbols[scaledIndex],
         fill: colors[_.random(0, 6)],
@@ -191,7 +195,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart animate={{velocity: 0.02}}>
+          <VictoryChart animate={{duration: 750}}>
             <VictoryScatter data={this.state.scatterData}/>
             <VictoryLine y={(data) => data.x}/>
           </VictoryChart>
