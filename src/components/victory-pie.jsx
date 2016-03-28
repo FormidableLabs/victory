@@ -92,6 +92,16 @@ export default class VictoryPie extends React.Component {
      */
     data: PropTypes.array,
     /**
+     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
+     * create slices for each datum in the pie chart. The new element created from the passed
+     * dataComponent will have the property datum set by the pie chart for the point it renders;
+     * properties style and pathFunction calculated by VictoryPie; an index property set
+     * corresponding to the location of the datum in the data provided to the pie; events bound to
+     * the VictoryPie; and the d3 compatible slice object.
+     * If a dataComponent is not provided, VictoryPie's Slice component will be used.
+     */
+    dataComponent: PropTypes.element,
+    /**
      * The overall end angle of the pie in degrees. This prop is used in conjunction with
      * startAngle to create a pie that spans only a segment of a circle.
      */
@@ -240,7 +250,8 @@ export default class VictoryPie extends React.Component {
     standalone: true,
     width: 400,
     x: "x",
-    y: "y"
+    y: "y",
+    dataComponent: <Slice />
   };
 
   componentWillMount() {
@@ -259,17 +270,19 @@ export default class VictoryPie extends React.Component {
     const fill = colorScale[index % colorScale.length];
     const sliceStyle = defaults({}, {fill}, style.data);
     const getBoundEvents = Helpers.getEvents.bind(this);
+    const sliceComponent = React.cloneElement(this.props.dataComponent, {
+      index,
+      events: getBoundEvents(this.props.events.data, "data"),
+      slice,
+      pathFunction: makeSlicePath,
+      style: sliceStyle,
+      datum: slice.data,
+      ...this.state.dataState[index]
+    });
+
     return (
       <g key={index}>
-        <Slice
-          index={index}
-          events={getBoundEvents(this.props.events.data, "data")}
-          slice={slice}
-          pathFunction={makeSlicePath}
-          style={sliceStyle}
-          datum={slice.data}
-          {...this.state.dataState[index]}
-        />
+        {sliceComponent}
         <SliceLabel
           index={index}
           events={getBoundEvents(this.props.events.labels, "labels")}

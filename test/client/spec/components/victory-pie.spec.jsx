@@ -9,6 +9,10 @@ import { shallow, mount } from "enzyme";
 import VictoryPie from "src/components/victory-pie";
 import Slice from "src/components/slice";
 
+class PizzaSlice extends React.Component {
+  render() {}
+}
+
 describe("components/victory-pie", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
@@ -22,6 +26,18 @@ describe("components/victory-pie", () => {
   });
 
   describe("rendering data", () => {
+    it("renders dataComponents for {x, y} shaped data (default)", () => {
+      const data = _.range(5).map((i) => ({x: i, y: i}));
+      const wrapper = shallow(
+        <VictoryPie
+          data={data}
+          dataComponent={<PizzaSlice />}
+        />
+      );
+      const slices = wrapper.find(PizzaSlice);
+      expect(slices.length).to.equal(5);
+    });
+
     it("renders points for {x, y} shaped data (default)", () => {
       const data = _.range(5).map((i) => ({x: i, y: i}));
       const wrapper = shallow(<VictoryPie data={data}/>);
