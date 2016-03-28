@@ -46,6 +46,38 @@ const symbolStyle = {
   }
 };
 
+class CatPoint extends React.Component {
+  static propTypes = {
+    x: React.PropTypes.number,
+    y: React.PropTypes.number,
+    symbol: React.PropTypes.string
+  };
+
+  render() {
+    const {x, y, symbol} = this.props;
+
+    return (
+      <text x={x} y={y}>
+        {this.renderSymbol(symbol)}
+      </text>
+    );
+  }
+
+  static symbolMap = {
+    "circle": 0x1F431,
+    "diamond": 0x1F638,
+    "plus": 0x1F639,
+    "square": 0x1F63A,
+    "star": 0x1F63B,
+    "triangleDown": 0x1F63C,
+    "triangleUp": 0x1F63D
+  };
+
+  renderSymbol(symbol) {
+    return String.fromCodePoint(CatPoint.symbolMap[symbol]);
+  }
+}
+
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -72,6 +104,16 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryScatter</h1>
+        <VictoryScatter
+          style={style}
+          width={500}
+          height={500}
+          domain={[0, 600]}
+          animate={{velocity: 0.03}}
+          data={this.state.data}
+          dataComponent={<CatPoint />}
+        />
+
         <VictoryScatter
           style={style}
           width={500}
