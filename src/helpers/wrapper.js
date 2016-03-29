@@ -88,15 +88,8 @@ export default {
     return uniq([...categoryStrings, ...dataStrings]);
   },
 
-  getCategoriesFromProps(props, axis) {
-    if (props.categories && isObject(props.categories)) {
-      return props.categories[axis];
-    }
-    return props.categories;
-  },
-
   getCategories(props, axis) {
-    return this.getCategoriesFromProps(props, axis) || this.getStringsFromChildren(props, axis);
+    return Data.getCategories(props, axis) || this.getStringsFromChildren(props, axis);
   },
 
   getY0(datum, index, calculatedProps) {

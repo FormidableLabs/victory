@@ -126,6 +126,12 @@ export default {
   },
 
   getStringsFromChildData(child, axis) {
+    if (!child.props.data && !child.type.getData) {
+      return [];
+    }
+    if (child.props.data) {
+      return Data.getStringsFromData(child.props, axis);
+    }
     const data = flattenDeep(child.type.getData(child.props));
     const attr = axis === "x" ? "xName" : "yName";
     return data.reduce((prev, datum) => {
@@ -142,8 +148,7 @@ export default {
       return categoryData ? prev.concat(categoryData) : prev;
     }, []);
     const dataStrings = childComponents.reduce((prev, component) => {
-      const stringData = component.type.getData ?
-        this.getStringsFromChildData(component, axis) : [];
+      const stringData = this.getStringsFromChildData(component, axis);
       return stringData ? prev.concat(stringData) : prev;
     }, []);
     const allStrings = uniq(flatten([...tickStrings, ...categoryStrings, ...dataStrings]));

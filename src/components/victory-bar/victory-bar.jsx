@@ -229,7 +229,6 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseScale = Scale.getBaseScale.bind(Scale);
 
   componentWillMount() {
     this.state = {

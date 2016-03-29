@@ -47,14 +47,14 @@ export default {
     const categories = props.categories ?
       getCategoryStrings(props) : childComponents.map((child) => getCategoryStrings(child.props));
 
-    return Collection.removeUndefined(categories);
+    return categories ? Collection.removeUndefined(categories) : [];
   },
 
   getCategories(props, axis) {
-    if (props.categories && isObject(props.categories)) {
-      return props.categories[axis];
+    if (!props.categories) {
+      return undefined
     }
-    return props.categories;
+    return Array.isArray(props.categories) ? props.categories : props.categories[axis];
   },
 
   getStringsFromData(props, axis) {

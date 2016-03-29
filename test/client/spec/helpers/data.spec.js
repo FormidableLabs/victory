@@ -145,8 +145,6 @@ describe("helpers/data", () => {
       expect(formatted).to.be.an.array;
       expect(formatted[0]).to.have.keys(["x", "y"]);
     });
-
-
   });
 
   describe("getData", () => {

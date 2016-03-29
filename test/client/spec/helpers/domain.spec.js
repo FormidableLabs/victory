@@ -187,22 +187,16 @@ describe("helpers/domain", () => {
       expect(domainResult).to.eql([1, 3]);
     });
 
-    it("does not calculate a domain from categories for the dependent axis", () => {
-      const props = {categories: [1, 2, 3]};
+    it("calculates a domain from categories for the dependent axis", () => {
+      const props = {categories: {y: [ 1, 2, 3]}};
       const domainResult = Domain.getDomainFromCategories(props, "y");
-      expect(domainResult).to.be.undefined;
+      expect(domainResult).to.eql([1, 3]);
     });
 
     it("calculates a domain from string categories", () => {
-      const props = {categories: ["cats", "kittens"]};
+      const props = {categories: {x: ["cats", "kittens"]}};
       const domainResult = Domain.getDomainFromCategories(props, "x");
       expect(domainResult).to.eql([1, 2]);
-    });
-
-    it("calculates a domain from  category bands", () => {
-      const props = {categories: [[0, 2], [3, 5]]};
-      const domainResult = Domain.getDomainFromCategories(props, "x");
-      expect(domainResult).to.eql([0, 5]);
     });
   });
 });

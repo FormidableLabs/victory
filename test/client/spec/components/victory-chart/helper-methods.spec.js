@@ -157,6 +157,7 @@ describe("victory-chart/helpers-methods", () => {
         .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
       expect(Data.getStringsFromCategories).calledWith(lineComponent.props, "x").and.returned([]);
+      expect(Helpers.getStringsFromChildData).called;
       expect(stringResult).to.eql({a: 1, b: 2, c: 3, d: 4});
     });
   });

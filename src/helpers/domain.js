@@ -67,10 +67,10 @@ export default {
   },
 
   getDomainFromCategories(props, axis) {
-    if (axis !== "x" || !props.categories) {
+    const categories = Data.getCategories(props, axis);
+    if (!categories) {
       return undefined;
     }
-    const categories = flatten(props.categories);
     const stringArray = Collection.containsStrings(categories) ?
      Data.getStringsFromCategories(props, axis) : [];
     const stringMap = stringArray.length === 0 ? null :

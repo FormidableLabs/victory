@@ -248,6 +248,7 @@ export default class VictoryLine extends React.Component {
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
+  static getData = Data.getData.bind(Data);
 
   componentWillMount() {
     this.state = {

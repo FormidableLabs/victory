@@ -32,10 +32,6 @@ describe("helpers/wrapper", () => {
     it.skip("returns undefined if no categories are defined", () => {
 
     });
-
-    it.skip("returns undefined if no grouped data components are found", () => {
-
-    });
   });
 
 });
