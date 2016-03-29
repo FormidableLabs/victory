@@ -143,88 +143,6 @@ describe("helpers/domain", () => {
     });
   });
 
-  describe("getMultiSeriesDomain", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Domain, "getDomainFromGroupedData");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-    const data = [
-      [{x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}],
-      [{x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}],
-      [{x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2}]
-    ];
-    const noZero = [
-      [{x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}],
-      [{x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2}],
-      [{x: 1, y: 3}, {x: 2, y: 3}, {x: 3, y: 3}]
-    ];
-    const mixedData = [
-      [{x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}],
-      [{x: 1, y: 3}, {x: 2, y: 3}, {x: 3, y: 3}],
-      [{x: 1, y: -1}, {x: 2, y: -1}, {x: 3, y: -1}],
-      [{x: 1, y: -2}, {x: 2, y: -2}, {x: 3, y: -2}]
-    ];
-
-    it("calculates a domain from props", () => {
-      const props = {domain: {x: [1, 2], y: [2, 3]}};
-      const domainResultX = Domain.getMultiSeriesDomain(props, "x");
-      expect(Domain.getDomainFromGroupedData).notCalled;
-      expect(domainResultX).to.eql([1, 2]);
-      const domainResultY = Domain.getMultiSeriesDomain(props, "y");
-      expect(Domain.getDomainFromGroupedData).notCalled;
-      expect(domainResultY).to.eql([2, 3]);
-    });
-
-    it("calculates a domain from data", () => {
-      const props = {data, grouped: true, x: "x", y: "y"};
-      const domainResultX = Domain.getMultiSeriesDomain(props, "x");
-      expect(Domain.getDomainFromGroupedData).calledWith(props, "x")
-        .and.returned([1, 3]);
-      expect(domainResultX).to.eql([1, 3]);
-      const domainResultY = Domain.getMultiSeriesDomain(props, "y");
-      expect(Domain.getDomainFromGroupedData).calledWith(props, "y")
-        .and.returned([0, 2]);
-      expect(domainResultY).to.eql([0, 2]);
-    });
-
-    it("calculates a domain from data with negative and positive values", () => {
-      const props = {data: mixedData, grouped: true, x: "x", y: "y"};
-      const domainResultX = Domain.getMultiSeriesDomain(props, "x");
-      expect(domainResultX).to.eql([1, 3]);
-      const domainResultY = Domain.getMultiSeriesDomain(props, "y");
-      expect(domainResultY).to.eql([-2, 3]);
-    });
-
-    it("the domain of the dependent axis should always contain zero", () => {
-      const props = {data: noZero, grouped: true, x: "x", y: "y"};
-      const domainResultX = Domain.getMultiSeriesDomain(props, "x");
-      expect(domainResultX).to.eql([1, 3]);
-      const domainResultY = Domain.getMultiSeriesDomain(props, "y");
-      expect(domainResultY).to.eql([0, 3]);
-    });
-
-    it("calculates a stacked domain", () => {
-      const props = {data, stacked: true, x: "x", y: "y"};
-      const domainResultX = Domain.getMultiSeriesDomain(props, "x");
-      expect(domainResultX).to.eql([1, 3]);
-      const domainResultY = Domain.getMultiSeriesDomain(props, "y");
-      expect(domainResultY).to.eql([0, 3]);
-    });
-
-    it("calculates a stacked domain from data with negative and positive values", () => {
-      const props = {data: mixedData, stacked: true, x: "x", y: "y"};
-      const domainResultX = Domain.getMultiSeriesDomain(props, "x");
-      expect(domainResultX).to.eql([1, 3]);
-      const domainResultY = Domain.getMultiSeriesDomain(props, "y");
-      expect(domainResultY).to.eql([-3, 4]);
-    });
-  });
-
   describe("getDomainFromGroupedData", () => {
     let sandbox;
     beforeEach(() => {
@@ -245,35 +163,20 @@ describe("helpers/domain", () => {
     ];
 
     it("calculates a domain from categories for the independent axis", () => {
-      const props = {categories: [1, 2, 3], data, grouped: true, x: "x", y: "y"};
-      const domainResultX = Domain.getDomainFromGroupedData(props, "x");
+      const props = {categories: [1, 2, 3], data, x: "x", y: "y"};
+      const domainResultX = Domain.getDomainFromGroupedData(props, "x", data);
       expect(Domain.getDomainFromCategories).calledWith(props, "x").and.returned([1, 3]);
       expect(Domain.getDomainFromData).not.called;
       expect(Domain.getCumulativeData).not.called;
       expect(domainResultX).to.eql([1, 3]);
     });
 
-    it("does not calculate a domain from categories the dependent axis", () => {
-      const props = {categories: [1, 2, 3], data, grouped: true, x: "x", y: "y"};
-      const domainResultY = Domain.getDomainFromGroupedData(props, "y");
+    it("calculates a stacked domain for the dependent axis", () => {
+      const props = {categories: [1, 2, 3], data, x: "x", y: "y"};
+      const domainResultY = Domain.getDomainFromGroupedData(props, "y", data);
       expect(Domain.getDomainFromData).calledOnce.and.returned([0, 2]);
-      expect(domainResultY).to.eql([0, 2]);
-    });
-
-    it("does not calculate cumulative data if the bars are not stacked", () => {
-      const props = {data, grouped: true, x: "x", y: "y"};
-      const domainResultY = Domain.getDomainFromGroupedData(props, "y");
-      expect(Domain.getDomainFromData).calledOnce.and.returned([0, 2]);
-      expect(Domain.getCumulativeData).not.called;
-      expect(domainResultY).to.eql([0, 2]);
-    });
-
-    it("does not calculate cumulative data for a single data set", () => {
-      const props = {data: data[1], x: "x", y: "y"};
-      const domainResultY = Domain.getDomainFromGroupedData(props, "y");
-      expect(Domain.getDomainFromData).calledOnce.and.returned([0, 1]);
-      expect(Domain.getCumulativeData).not.called;
-      expect(domainResultY).to.eql([0, 1]);
+      expect(Domain.getCumulativeData).calledOnce;
+      expect(domainResultY).to.eql([0, 3]);
     });
   });
 

@@ -116,11 +116,6 @@ describe("helpers/data", () => {
   });
 
   describe("getStringsFromCategories", () => {
-    it("returns an array of strings when categories is an array", () => {
-      const props = {categories: [1, "three", 5]};
-      expect(Data.getStringsFromCategories(props, "x")).to.eql(["three"]);
-    });
-
     it("returns an empty array when no strings are present", () => {
       const props = {categories: [1, 3, 5]};
       expect(Data.getStringsFromCategories(props, "x")).to.eql([]);

@@ -38,7 +38,7 @@ export default {
       });
 
       return Collection.removeUndefined(
-        dataComponents.concat(dependentAxes[0], independentAxes[0])
+        dataComponents.concat(independentAxes[0], dependentAxes[0])
       );
     }
     return childComponents;

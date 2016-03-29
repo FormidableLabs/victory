@@ -70,7 +70,7 @@ describe("components/victory-bar", () => {
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.eql(initialProps);
-        expect(clickHandler.args[index][2]).to.eql([0, index]);
+        expect(clickHandler.args[index][2]).to.eql(index);
       });
     });
   });

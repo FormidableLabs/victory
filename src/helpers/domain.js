@@ -67,7 +67,6 @@ export default {
   },
 
   getDomainFromCategories(props, axis) {
-
     if (axis !== "x" || !props.categories) {
       return undefined;
     }
