@@ -59,45 +59,80 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.VictoryLabel = exports.VictoryAnimation = exports.Style = exports.PropTypes = exports.Log = exports.Helpers = exports.Collection = undefined;
+	exports.VictoryLabel = exports.VictoryAnimation = exports.Transitions = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
 	var _collection = __webpack_require__(1);
 	
-	var _collection2 = _interopRequireDefault(_collection);
+	Object.defineProperty(exports, "Collection", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_collection).default;
+	  }
+	});
 	
 	var _helpers = __webpack_require__(2);
 	
-	var _helpers2 = _interopRequireDefault(_helpers);
+	Object.defineProperty(exports, "Helpers", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_helpers).default;
+	  }
+	});
 	
 	var _log = __webpack_require__(148);
 	
-	var _log2 = _interopRequireDefault(_log);
+	Object.defineProperty(exports, "Log", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_log).default;
+	  }
+	});
 	
 	var _style = __webpack_require__(150);
 	
-	var _style2 = _interopRequireDefault(_style);
+	Object.defineProperty(exports, "Style", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_style).default;
+	  }
+	});
 	
 	var _propTypes = __webpack_require__(155);
 	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
+	Object.defineProperty(exports, "PropTypes", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_propTypes).default;
+	  }
+	});
 	
 	var _victoryAnimation = __webpack_require__(157);
 	
-	var _victoryAnimation2 = _interopRequireDefault(_victoryAnimation);
+	Object.defineProperty(exports, "VictoryAnimation", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_victoryAnimation).default;
+	  }
+	});
 	
 	var _victoryLabel = __webpack_require__(163);
 	
-	var _victoryLabel2 = _interopRequireDefault(_victoryLabel);
+	Object.defineProperty(exports, "VictoryLabel", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_victoryLabel).default;
+	  }
+	});
+	
+	var _transitions = __webpack_require__(166);
+	
+	var Transitions = _interopRequireWildcard(_transitions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.Collection = _collection2.default;
-	exports.Helpers = _helpers2.default;
-	exports.Log = _log2.default;
-	exports.PropTypes = _propTypes2.default;
-	exports.Style = _style2.default;
-	exports.VictoryAnimation = _victoryAnimation2.default;
-	exports.VictoryLabel = _victoryLabel2.default;
+	exports.Transitions = Transitions;
 
 /***/ },
 /* 1 */
@@ -8244,6 +8279,364 @@ return /******/ (function(modules) { // webpackBootstrap
 	    };
 	  }
 	};
+
+/***/ },
+/* 166 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.getInitialTransitionState = getInitialTransitionState;
+	exports.getTransitionPropsFactory = getTransitionPropsFactory;
+	
+	var _assign = __webpack_require__(167);
+	
+	var _assign2 = _interopRequireDefault(_assign);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function getDatumKey(datum, idx) {
+	  return (datum.key || idx).toString();
+	} /* eslint-disable func-style */
+	
+	function getKeyedData(data) {
+	  return data.reduce(function (keyedData, datum, idx) {
+	    var key = getDatumKey(datum, idx);
+	    keyedData[key] = datum;
+	    return keyedData;
+	  }, {});
+	}
+	
+	function getKeyedDataDifference(a, b) {
+	  var hasDifference = false;
+	  var difference = Object.keys(a).reduce(function (_difference, key) {
+	    if (!(key in b)) {
+	      hasDifference = true;
+	      _difference[key] = true;
+	    }
+	    return _difference;
+	  }, {});
+	  return hasDifference && difference;
+	}
+	
+	/**
+	 * Calculate which data-points exist in oldData and not nextData -
+	 * these are the `entering` data-points.  Also calculate which
+	 * data-points exist in nextData and not oldData - thses are the
+	 * `entering` data-points.
+	 *
+	 * @param  {Array} oldData   this.props.data Array
+	 * @param  {Array} nextData  this.props.data Array
+	 *
+	 * @return {Object}          Object with `entering` and `exiting` properties.
+	 *                           entering[datum.key] will be true if the data is
+	 *                           entering, and similarly for `exiting`.
+	 */
+	function getNodeTransitions(oldData, nextData) {
+	  var oldDataKeyed = getKeyedData(oldData);
+	  var nextDataKeyed = getKeyedData(nextData);
+	
+	  return {
+	    entering: getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
+	    exiting: getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
+	  };
+	}
+	
+	/**
+	 * If a parent component has animation enabled, calculate the transitions
+	 * for any data of any child component that supports data transitions
+	 * Data transitions are defined as any two datasets where data nodes exist
+	 * in the first set and not the second, in the second and not the first,
+	 * or both.
+	 *
+	 * @param  {Children}  oldChildren   this.props.children from old props
+	 * @param  {Children}  nextChildren  this.props.children from next props
+	 *
+	 * @return {Object}                  Object with the following properties:
+	 *                                    - nodesWillExit
+	 *                                    - nodesWillEnter
+	 *                                    - childrenTransitions
+	 *                                    - nodesShouldEnter
+	 */
+	function getInitialTransitionState(oldChildren, nextChildren) {
+	  var nodesWillExit = false;
+	  var nodesWillEnter = false;
+	
+	  // Children may be a single item, rather than an array.
+	  oldChildren = [].concat(oldChildren);
+	  nextChildren = [].concat(nextChildren);
+	
+	  var childrenTransitions = oldChildren.map(function (child, idx) {
+	    // TODO: Determine if/how we want to support variable-length children.
+	    var nextChild = nextChildren[idx];
+	    if (!nextChild || child.type !== nextChild.type) {
+	      return {};
+	    }
+	
+	    var _ref = child.type.supportsTransitions && getNodeTransitions(child.props.data, nextChild.props.data) || {};
+	
+	    var entering = _ref.entering;
+	    var exiting = _ref.exiting;
+	
+	
+	    nodesWillExit = nodesWillExit || !!exiting;
+	    nodesWillEnter = nodesWillEnter || !!entering;
+	
+	    return { entering: entering, exiting: exiting };
+	  });
+	
+	  return {
+	    nodesWillExit: nodesWillExit,
+	    nodesWillEnter: nodesWillEnter,
+	    childrenTransitions: childrenTransitions,
+	    // TODO: This may need to be refactored for the following situation.
+	    //       The component receives new props, and the data provided
+	    //       is a perfect match for the previous data and domain except
+	    //       for new nodes. In this case, we wouldn't want a delay before
+	    //       the new nodes appear.
+	    nodesShouldEnter: false
+	  };
+	}
+	
+	function getInitialChildProps(animate, data) {
+	  return {
+	    data: data.map(function (datum) {
+	      return (0, _assign2.default)({}, datum, animate.onExit.before(datum));
+	    })
+	  };
+	}
+	
+	function getChildPropsOnExit(animate, data, exitingNodes, cb) {
+	  // eslint-disable-line max-params
+	  // Whether or not _this_ child has exiting nodes, we want the exit-
+	  // transition for all children to have the same duration, delay, etc.
+	  animate = (0, _assign2.default)({}, animate, animate.onExit);
+	
+	  if (exitingNodes) {
+	    // After the exit transition occurs, trigger the animations for
+	    // nodes that are neither exiting or entering.
+	    animate.onEnd = cb;
+	
+	    // If nodes need to exit, transform them with the provided onExit.after function.
+	    data = data.map(function (datum, idx) {
+	      var key = (datum.key || idx).toString();
+	      return exitingNodes[key] ? Object.assign({}, datum, animate.onExit.after(datum)) : datum;
+	    });
+	  }
+	
+	  return { animate: animate, data: data };
+	}
+	
+	function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) {
+	  // eslint-disable-line max-params,max-len
+	  if (enteringNodes) {
+	    // Perform a normal animation here, except - when it finishes - trigger
+	    // the transition for entering nodes.
+	    animate = (0, _assign2.default)({}, animate, { onEnd: cb });
+	
+	    // We want the entering nodes to be included in the transition target
+	    // domain.  However, we may not want these nodes to be displayed initially,
+	    // so perform the `onEnter.before` transformation on each node.
+	    data = data.map(function (datum, idx) {
+	      var key = (datum.key || idx).toString();
+	      return enteringNodes[key] ? Object.assign({}, datum, animate.onEnter.before(datum)) : datum;
+	    });
+	  }
+	
+	  return { animate: animate, data: data };
+	}
+	
+	function getChildPropsOnEnter(animate, data, enteringNodes) {
+	  // Whether or not _this_ child has entering nodes, we want the entering-
+	  // transition for all children to have the same duration, delay, etc.
+	  animate = (0, _assign2.default)({}, animate, animate.onEnter);
+	
+	  if (enteringNodes) {
+	    // Old nodes have been transitioned to their new values, and the
+	    // domain should encompass the nodes that will now enter. So perform
+	    // the `onEnter.after` transformation on each node.
+	    data = data.map(function (datum, idx) {
+	      var key = getDatumKey(datum, idx);
+	      return enteringNodes[key] ? (0, _assign2.default)({}, datum, animate.onEnter.after(datum)) : datum;
+	    });
+	  }
+	  return { animate: animate, data: data };
+	}
+	
+	/**
+	 * For each transition type (enter, exit, move), find the longest duration
+	 * of each type from any of the children.
+	 *
+	 * @param  {Array}  children            `this.props.children` from parent component.
+	 * @param  {Object} childrenTransitions Child transitions data, as calculated by the
+	 *                                      `getInitialTransitionState` function.
+	 * @param  {Object} parentAnimate       `this.props.animate` from parent component, to
+	 *                                      be used for transition duration defaults.
+	 *
+	 * @return {Object}                     `{ exit, enter, move }`
+	 */
+	function getTransitionDurations(children, childrenTransitions, parentAnimate) {
+	  if (!childrenTransitions) {
+	    return {};
+	  }
+	
+	  return children.reduce(function (durations, child, idx) {
+	    if (childrenTransitions[idx] && childrenTransitions[idx].exiting && child.props.animate && child.props.animate.onExit && child.props.animate.onExit.duration > durations.exit) {
+	      durations.exit = child.props.animate.onExit.duration;
+	    }
+	    if (childrenTransitions[idx] && childrenTransitions[idx].entering && child.props.animate && child.props.animate.onEnter && child.props.animate.onEnter.duration > durations.enter) {
+	      durations.enter = child.props.animate.onEnter.duration;
+	    }
+	    if (child.props.animate && child.props.animate.duration > durations.move) {
+	      durations.move = child.props.animate.duration;
+	    }
+	
+	    return durations;
+	  }, {
+	    exit: parentAnimate.onExit && parentAnimate.onExit.duration || null,
+	    enter: parentAnimate.onEnter && parentAnimate.onEnter.duration || null,
+	    move: parentAnimate.duration || null
+	  });
+	}
+	
+	/**
+	 * getTransitionPropsFactory - putting the Java in JavaScript.  This will return a
+	 * function that returns prop transformations for a child, given that child's props
+	 * and its index in the parent's children array.
+	 *
+	 * In particular, this will include an `animate` object that is set appropriately
+	 * so that each child will be synchoronized for each stage of a transition
+	 * animation.  It will also include a transformed `data` object, where each datum
+	 * is transformed by `animate.onExit` and `animate.onEnter` `before` and `after`
+	 * functions.
+	 *
+	 * @param  {Array}  children       `this.props.children` for the parent component.
+	 * @param  {Object} parentState    `this.state` for the parent component.
+	 * @param  {Object} parentAnimate  `this.props.animate` for the parent component.
+	 * @param  {Object} setParentState Function that, when called, will `this.setState` on
+	 *                                 the parent component with the provided object.
+	 *
+	 * @return {Function}              Child-prop transformation function.
+	 */
+	function getTransitionPropsFactory(children, parentState, parentAnimate, setParentState) {
+	  // eslint-disable-line max-params,max-len
+	  var nodesWillExit = parentState && parentState.nodesWillExit;
+	  var nodesWillEnter = parentState && parentState.nodesWillEnter;
+	  var nodesShouldEnter = parentState && parentState.nodesShouldEnter;
+	  var childrenTransitions = parentState && parentState.childrenTransitions;
+	
+	  var transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
+	
+	  return function getTransitionProps(childProps, index) {
+	    var animate = childProps.animate || parentAnimate;
+	    var data = childProps.data;
+	
+	    if (nodesWillExit) {
+	      var exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
+	      // Synchronize exit-transition durations for all child components.
+	      animate = (0, _assign2.default)({}, animate, { duration: transitionDurations.exit });
+	
+	      return getChildPropsOnExit(animate, data, exitingNodes, function () {
+	        return setParentState({ nodesWillExit: false });
+	      });
+	    } else if (nodesWillEnter) {
+	      var enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
+	      animate = (0, _assign2.default)({}, animate,
+	      // Synchronize normal animate and enter-transition durations for all child
+	      // components, ONLY IF an enter-transition will occur.  Otherwise, child
+	      // components can have different durations for shared-node animations.
+	      { duration: transitionDurations[nodesShouldEnter ? "enter" : "move"] });
+	
+	      return nodesShouldEnter ? getChildPropsOnEnter(animate, data, enteringNodes) : getChildPropsBeforeEnter(animate, data, enteringNodes, function () {
+	        return setParentState({ nodesShouldEnter: true });
+	      });
+	    } else if (!parentState && animate.onExit) {
+	      // This is the initial render, and nodes may enter when props change. Because
+	      // animation interpolation is determined by old- and next- props, data may need
+	      // to be augmented with certain properties.
+	      //
+	      // For example, it may be desired that exiting nodes go from `opacity: 1` to
+	      // `opacity: 0`. Without setting this on a per-datum basis, the interpolation
+	      // might go from `opacity: undefined` to `opacity: 0`, which would result in
+	      // interpolated `opacity: NaN` values.
+	      //
+	      return getInitialChildProps(animate, data);
+	    }
+	
+	    return { animate: animate, data: data };
+	  };
+	}
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var assignValue = __webpack_require__(9),
+	    copyObject = __webpack_require__(116),
+	    createAssigner = __webpack_require__(10),
+	    isArrayLike = __webpack_require__(12),
+	    isPrototype = __webpack_require__(36),
+	    keys = __webpack_require__(117);
+	
+	/** Used for built-in method references. */
+	var objectProto = Object.prototype;
+	
+	/** Used to check objects for own properties. */
+	var hasOwnProperty = objectProto.hasOwnProperty;
+	
+	/** Built-in value references. */
+	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	
+	/** Detect if properties shadowing those on `Object.prototype` are non-enumerable. */
+	var nonEnumShadows = !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf');
+	
+	/**
+	 * Assigns own enumerable properties of source objects to the destination
+	 * object. Source objects are applied from left to right. Subsequent sources
+	 * overwrite property assignments of previous sources.
+	 *
+	 * **Note:** This method mutates `object` and is loosely based on
+	 * [`Object.assign`](https://mdn.io/Object/assign).
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The destination object.
+	 * @param {...Object} [sources] The source objects.
+	 * @returns {Object} Returns `object`.
+	 * @example
+	 *
+	 * function Foo() {
+	 *   this.c = 3;
+	 * }
+	 *
+	 * function Bar() {
+	 *   this.e = 5;
+	 * }
+	 *
+	 * Foo.prototype.d = 4;
+	 * Bar.prototype.f = 6;
+	 *
+	 * _.assign({ 'a': 1 }, new Foo, new Bar);
+	 * // => { 'a': 1, 'c': 3, 'e': 5 }
+	 */
+	var assign = createAssigner(function(object, source) {
+	  if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
+	    copyObject(source, keys(source), object);
+	    return;
+	  }
+	  for (var key in source) {
+	    if (hasOwnProperty.call(source, key)) {
+	      assignValue(object, key, source[key]);
+	    }
+	  }
+	});
+	
+	module.exports = assign;
+
 
 /***/ }
 /******/ ])
