@@ -1,7 +1,6 @@
 import uniq from "lodash/uniq";
 import defaults from "lodash/defaults";
 import assign from "lodash/assign";
-import isObject from "lodash/isObject";
 import { Helpers, Collection } from "victory-core";
 import Scale from "./scale";
 import React from "react";
@@ -52,7 +51,7 @@ export default {
 
   getCategories(props, axis) {
     if (!props.categories) {
-      return undefined
+      return undefined;
     }
     return Array.isArray(props.categories) ? props.categories : props.categories[axis];
   },

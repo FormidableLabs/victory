@@ -9,7 +9,6 @@ import { shallow, mount } from "enzyme";
 import _ from "lodash";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 import Bar from "src/components/victory-bar/bar";
-import Domain from "src/helpers/domain";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {

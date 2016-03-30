@@ -1,6 +1,5 @@
 import defaults from "lodash/defaults";
 import uniq from "lodash/uniq";
-import isObject from "lodash/isObject";
 import React from "react";
 import Data from "./data";
 import Domain from "./domain";

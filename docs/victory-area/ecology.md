@@ -45,55 +45,50 @@ assign a property to x or y, or process data on the fly.
 />
 ```
 
-Pass in an array of arrays of data objects to create a set of overlapping areas. The areas are automatically colored separately for each data series
+Wrap several VictoryArea components in the VictoryGroup wrapper to create a set of overlapping areas. The areas are automatically colored separately for each data series.
 
 ```playground
-<VictoryArea
-  height={500}
-  style={{data: {opacity: 0.3}}}
-  data={[
-    [
-      {x: 1, y: 1},
-      {x: 2, y: 2},
-      {x: 3, y: 3}
-    ],
-    [
-      {x: 1, y: 2},
-      {x: 2, y: 1},
-      {x: 3, y: 1}
-    ],
-    [
-      {x: 1, y: 3},
-      {x: 2, y: 4},
-      {x: 3, y: 2}
-    ],
-  ]}
-/>
+<VictoryGroup
+  height={500} style={{data: {opacity: 0.3}}}
+>
+  <VictoryArea
+    data={[
+      {x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}
+    ]}
+  />
+  <VictoryArea
+    data={[
+      {x: 1, y: 2}, {x: 2, y: 1}, {x: 3, y: 1}
+    ]}
+  />
+  <VictoryArea
+    data={[
+      {x: 1, y: 3}, {x: 2, y: 4}, {x: 3, y: 2}
+    ]}
+  />
+</VictoryGroup>
 ```
 
-Add the `stacked` prop to create a stacked layout. The y domain is automatically set to account for the cumulative maximum of the data:
+Wrap several VictoryArea components in the VictoryGroup wrapper to create a stacked layout. The y domain is automatically set to account for the cumulative maximum of the data:
 
 ```playground
-<VictoryArea stacked
-  height={500}
-  data={[
-    [
-      {x: 1, y: 1},
-      {x: 2, y: 2},
-      {x: 3, y: 3}
-    ],
-    [
-      {x: 1, y: 2},
-      {x: 2, y: 1},
-      {x: 3, y: 1}
-    ],
-    [
-      {x: 1, y: 3},
-      {x: 2, y: 4},
-      {x: 3, y: 2}
-    ],
-  ]}
-/>
+<VictoryStack height={500}>
+  <VictoryArea
+    data={[
+      {x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}
+    ]}
+  />
+  <VictoryArea
+    data={[
+      {x: 1, y: 2}, {x: 2, y: 1}, {x: 3, y: 1}
+    ]}
+  />
+  <VictoryArea
+    data={[
+      {x: 1, y: 3}, {x: 2, y: 4}, {x: 3, y: 2}
+    ]}
+  />
+</VictoryStack>
 ```
 
 ### Flexible and Configurable

@@ -34,7 +34,7 @@ describe("victory-chart/helpers-methods", () => {
     it("returns a pair of default axes when no children are given", () => {
       const children = [];
       const result = Helpers.getChildComponents({children}, defaultAxes);
-      expect(result).to.have.length(2)
+      expect(result).to.have.length(2);
       expect(result).to.deep.include.members([defaultAxes.independent, defaultAxes.dependent]);
     });
 
@@ -52,7 +52,7 @@ describe("victory-chart/helpers-methods", () => {
       const axis = getVictoryAxis({});
       const children = [axis];
       const result = Helpers.getChildComponents({children}, defaultAxes);
-      expect(result).to.have.length(1)
+      expect(result).to.have.length(1);
       expect(result[0].props).to.eql(axis.props);
     });
 
@@ -62,7 +62,7 @@ describe("victory-chart/helpers-methods", () => {
         getVictoryAxis({dependentAxis: true, orientation: "right"})
       ];
       const result = Helpers.getChildComponents({children}, defaultAxes);
-      expect(result).to.have.length(1)
+      expect(result).to.have.length(1);
       expect(result[0].props).to.eql(children[0].props);
     });
   });

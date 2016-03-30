@@ -1,11 +1,10 @@
 /**
  * Client tests
  */
-/* global sinon */
 /*eslint-disable max-nested-callbacks */
 
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import VictoryGroup from "src/components/victory-group/victory-group";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 
