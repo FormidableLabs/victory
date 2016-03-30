@@ -45,7 +45,7 @@ describe("victory-area methods", () => {
     it("should return yOffset if present", () => {
       const calculatedProps = {domain};
       const result = VictoryArea.prototype.getBaseline(stackedDatasets, calculatedProps);
-      const expectedResult = [{y0: 1, x: 1, y: 1, yOffset: 1}, {y0: 1, x: 2, y: 1, , yOffset: 1}];
+      const expectedResult = [{y0: 1, x: 1, y: 1, yOffset: 1}, {y0: 1, x: 2, y: 1, yOffset: 1}];
       expect(result).to.eql(expectedResult);
     });
   });
