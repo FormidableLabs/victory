@@ -150,7 +150,7 @@ class App extends React.Component {
   render() {
     return (
       <VictoryAxis
-        animate={{velocity: 0.01}}
+        animate={{duration: 3000}}
         style={this.state.style}
         tickValues={this.state.tickValues}
         tickFormat={[
