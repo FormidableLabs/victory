@@ -1,7 +1,7 @@
 /* eslint-disable func-style */
 
 import assign from "lodash/assign";
-
+import identity from "lodash/identity";
 
 function getDatumKey(datum, idx) {
   return (datum.key || idx).toString();
@@ -107,27 +107,27 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
 
 
 function getInitialChildProps(animate, data) {
+  const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
   return {
-    data: data.map((datum) => assign({}, datum, animate.onExit.before(datum)))
+    data: data.map((datum) => assign({}, datum, before(datum)))
   };
 }
 
 function getChildPropsOnExit(animate, data, exitingNodes, cb) { // eslint-disable-line max-params
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
-  animate = assign({}, animate, animate.onExit);
+  const onExit = animate && animate.onExit;
+  animate = assign({}, animate, onExit);
 
   if (exitingNodes) {
     // After the exit transition occurs, trigger the animations for
     // nodes that are neither exiting or entering.
     animate.onEnd = cb;
-
+    const after = animate.onExit && animate.onExit.after ? animate.onExit.after : identity;
     // If nodes need to exit, transform them with the provided onExit.after function.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return exitingNodes[key] ?
-        Object.assign({}, datum, animate.onExit.after(datum)) :
-        datum;
+      return exitingNodes[key] ? assign({}, datum, after(datum)) : datum;
     });
   }
 
@@ -139,15 +139,13 @@ function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) { // eslint-
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
     animate = assign({}, animate, { onEnd: cb });
-
+    const before = animate.onEnter && animate.onEnter.before ? animate.onEnter.before : identity;
     // We want the entering nodes to be included in the transition target
     // domain.  However, we may not want these nodes to be displayed initially,
     // so perform the `onEnter.before` transformation on each node.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return enteringNodes[key] ?
-        Object.assign({}, datum, animate.onEnter.before(datum)) :
-        datum;
+      return enteringNodes[key] ? assign({}, datum, before(datum)) : datum;
     });
   }
 
@@ -157,17 +155,17 @@ function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) { // eslint-
 function getChildPropsOnEnter(animate, data, enteringNodes) {
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
-  animate = assign({}, animate, animate.onEnter);
+  const onEnter = animate && animate.onEnter;
+  animate = assign({}, animate, onEnter);
 
   if (enteringNodes) {
     // Old nodes have been transitioned to their new values, and the
     // domain should encompass the nodes that will now enter. So perform
     // the `onEnter.after` transformation on each node.
+    const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
     data = data.map((datum, idx) => {
       const key = getDatumKey(datum, idx);
-      return enteringNodes[key] ?
-        assign({}, datum, animate.onEnter.after(datum)) :
-        datum;
+      return enteringNodes[key] ? assign({}, datum, after(datum)) : datum;
     });
   }
   return { animate, data };
@@ -277,7 +275,7 @@ export function getTransitionPropsFactory(children, parentState, parentAnimate, 
         getChildPropsOnEnter(animate, data, enteringNodes) :
         getChildPropsBeforeEnter(animate, data, enteringNodes, () =>
           setParentState({ nodesShouldEnter: true }));
-    } else if (!parentState && animate.onExit) {
+    } else if (!parentState && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because
       // animation interpolation is determined by old- and next- props, data may need
       // to be augmented with certain properties.
