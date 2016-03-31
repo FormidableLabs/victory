@@ -28,8 +28,7 @@ export default {
     const style = calculatedProps.style.data;
     const x = datum.x;
     const datasets = calculatedProps.datasets;
-    const center = datasets.length % 2 === 0 ?
-      datasets.length / 2 : (datasets.length - 1) / 2;
+    const center = (datasets.length - 1) / 2;
     const centerOffset = index - center;
     const totalWidth = this.pixelsToValue(style.padding, "x", calculatedProps) +
       this.pixelsToValue(style.width, "x", calculatedProps);
