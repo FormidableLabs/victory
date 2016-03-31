@@ -49,21 +49,28 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a set 
 
 ```playground
 <VictoryGroup
-  height={500} style={{data: {opacity: 0.3}}}
+  height={500}
+  style={{data: {opacity: 0.3}}}
 >
   <VictoryArea
     data={[
-      {x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}
+      {x: 1, y: 1},
+      {x: 2, y: 2},
+      {x: 3, y: 3}
     ]}
   />
   <VictoryArea
     data={[
-      {x: 1, y: 2}, {x: 2, y: 1}, {x: 3, y: 1}
+      {x: 1, y: 2},
+      {x: 2, y: 1},
+      {x: 3, y: 1}
     ]}
   />
   <VictoryArea
     data={[
-      {x: 1, y: 3}, {x: 2, y: 4}, {x: 3, y: 2}
+      {x: 1, y: 3},
+      {x: 2, y: 4},
+      {x: 3, y: 2}
     ]}
   />
 </VictoryGroup>
@@ -75,17 +82,23 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a stac
 <VictoryStack height={500}>
   <VictoryArea
     data={[
-      {x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}
+      {x: 1, y: 1},
+      {x: 2, y: 2},
+      {x: 3, y: 3}
     ]}
   />
   <VictoryArea
     data={[
-      {x: 1, y: 2}, {x: 2, y: 1}, {x: 3, y: 1}
+      {x: 1, y: 2},
+      {x: 2, y: 1},
+      {x: 3, y: 1}
     ]}
   />
   <VictoryArea
     data={[
-      {x: 1, y: 3}, {x: 2, y: 4}, {x: 3, y: 2}
+      {x: 1, y: 3},
+      {x: 2, y: 4},
+      {x: 3, y: 2}
     ]}
   />
 </VictoryStack>
@@ -96,39 +109,45 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a stac
 The sensible defaults VictoryArea provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
 
 ```playground
-<VictoryArea stacked
-  height={500}
-  padding={75}
-  style={{
-    data: {
-      strokeDasharray: "5,5",
-      strokeWidth: 2,
-      fillOpacity: 0.4
-    }
-  }}
-  data={[
-    [
+<VictoryStack
+  height={800}
+  style={{ data: {
+    strokeDasharray: "5,5",
+    strokeWidth: 2,
+    fillOpacity: 0.4
+  }}}
+>
+  <VictoryArea
+    style={{ data: {
+      fill: "tomato", stroke: "tomato"
+    }}}
+    data={[
       {x: 1, y: 1},
       {x: 2, y: 2},
       {x: 3, y: 3}
-    ],
-    [
+    ]}
+  />
+  <VictoryArea
+    style={{ data: {
+      fill: "orange", stroke: "orange"
+    }}}
+    data={[
       {x: 1, y: 2},
       {x: 2, y: 1},
       {x: 3, y: 1}
-    ],
-    [
+    ]}
+  />
+  <VictoryArea
+    style={{ data: {
+      fill: "gold", stroke: "gold"
+    }}}
+    data={[
       {x: 1, y: 3},
       {x: 2, y: 4},
       {x: 3, y: 2}
-    ],
-  ]}
-  dataAttributes={[
-    {fill: "tomato", stroke: "tomato"},
-    {fill: "orange", stroke: "orange"},
-    {fill: "gold", stroke: "gold"},
-  ]}
-/>
+    ]}
+  />
+</VictoryStack>
 ```
 
 ### Events
@@ -140,35 +159,23 @@ event handlers on data or labels will be stored as state on VictoryArea. Data an
 state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
 
 ```playground
-<VictoryArea stacked
-  height={500}
-  padding={75}
+<VictoryArea
+  height={400}
+  style={{data: {fill: "gold"}}}
   data={[
-    [
-      {x: 1, y: 1},
-      {x: 2, y: 2},
-      {x: 3, y: 3}
-    ],
-    [
-      {x: 1, y: 2},
-      {x: 2, y: 1},
-      {x: 3, y: 1}
-    ],
-    [
-      {x: 1, y: 3},
-      {x: 2, y: 4},
-      {x: 3, y: 2}
-    ],
+    {x: 1, y: 1},
+    {x: 2, y: 2},
+    {x: 3, y: 1},
+    {x: 4, y: 3},
+    {x: 5, y: 2},
+    {x: 6, y: 5}
   ]}
-  colorScale={"warm"}
-  events={{
-    data: {
-      onMouseOver: () => {
-        return {style: {fill: "orange"}}
-      },
-      onMouseOut: () => null
+  events={{ data: {
+    onClick: (evt, props) => {
+      return props.style.fill === "gold" ?
+        {style: {fill: "orange"}} : null
     }
-  }}
+  }}}
 />
 ```
 
@@ -208,20 +215,22 @@ class App extends React.Component {
 
   render() {
     return (
-      <VictoryArea
-        stacked
-        height={600}
-        padding={75}
-        animate={{duration: 2000}}
-        data={this.state.data}
-        dataAttributes={[
-          {fill: "black"},
-          {fill: "cornflowerblue"},
-          {fill: "tomato"},
-          {fill: "orange"},
-          {fill: "gold"}
-        ]}
-      />  
+     <VictoryStack height={600}
+      animate={{duration: 2000}}
+      colorScale={[
+        "black", "cornflowerblue",
+        "tomato", "orange", "gold"
+      ]}
+    >
+      {this.state.data.map((data, i) => {
+        return (
+          <VictoryArea key={i}
+            data={data}
+          />
+        );
+      })}
+    </VictoryStack>
+
     );
   }
 }

@@ -1,4 +1,6 @@
 import pick from "lodash/pick";
+import omit from "lodash/omit";
+import defaults from "lodash/defaults";
 import get from "lodash/get";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
@@ -269,6 +271,13 @@ export default class VictoryBar extends React.Component {
     };
   }
 
+  getBarStyle(datum, baseStyle) {
+    const styleData = omit(datum, [
+      "xName", "yName", "x", "y", "label"
+    ]);
+    return defaults({}, styleData, baseStyle);
+  }
+
   renderData(props, data, style) {
     return data.map((datum, index) => {
       const position = this.getBarPosition(props, datum);
@@ -276,7 +285,7 @@ export default class VictoryBar extends React.Component {
       const barComponent = (
         <Bar key={`bar-${index}`}
           horizontal={props.horizontal}
-          style={style.data}
+          style={this.getBarStyle(datum, style.data)}
           index={index}
           position={position}
           datum={datum}

@@ -195,7 +195,7 @@ class App extends React.Component {
         style={{data: this.state.style}}
         height={600}
         interpolation="basis"
-        animate={{velocity: 0.02}}
+        animate={{duration: 1500}}
         y={this.state.y}
       />
 

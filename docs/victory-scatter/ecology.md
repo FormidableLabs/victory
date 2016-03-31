@@ -137,7 +137,7 @@ Functional styles allow elements to determine their own styles based on data
       "triangleUp" : "triangleDown"
     }
     y={(d) => Math.sin(2 * Math.PI * d.x)}
-    sample={25}
+    samples={25}
   />
 ```
 
@@ -224,18 +224,52 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 3000);
+    }, 2000);
   }
 
   render() {
     return (
       <VictoryScatter
         height={600}
-        domain={{x: [0, 100], y: [0, 100]}}
-        animate={{velocity: 0.02}}
+        domain={[0, 100]}
+        animate={{duration: 2000}}
         data={this.state.data}
       />
 
+    );
+  }
+}
+ReactDOM.render(<App/>, mountNode);
+
+```
+
+### Custom Data and Label Components
+
+VictoryScatter accepts custom data and label components via the `dataComponent` and `labelComponent` props. Custom components will soon be supported across all chart types (VictoryLine, VictoryBar, VictoryArea, VictoryPie).
+
+```playground_norender
+class CatPoint extends React.Component {
+  render() {
+    const {x, y, datum} = this.props;
+    const cat = datum.y >= 0 ?
+      0x1F63B : 0x1F639;
+    return (
+      <text x={x} y={y} fontSize={20}>
+        {String.fromCodePoint(cat)}
+      </text>
+    );
+  }
+}
+
+class App extends React.Component {
+  render() {
+    return (
+      <VictoryScatter
+        height={500}
+        y={(d) => Math.sin(2 * Math.PI * d.x)}
+        samples={25}
+        dataComponent={<CatPoint/>}
+      />
     );
   }
 }

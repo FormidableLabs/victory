@@ -69,7 +69,7 @@ or compose components of different types on the same chart
       {x: 1.8, y: 3}
     ]}/>
   <VictoryLine
-    y={(data) => 0.3 * data.x * data.x}/>
+    y={(data) => data.x}/>
   <VictoryBar
     style={{data: {fill: "blue"}}}
     data={[
@@ -131,34 +131,36 @@ Stacked bar charts and non-numeric data are supported too!
 <VictoryChart
   height={500}
   domainPadding={{x: 100}}>
-  <VictoryBar stacked
-    data={[
-      [
-        {x: "apples", y: 1},
-        {x: "bananas", y: 3},
-        {x: "oranges", y: 3}
-      ],
-      [
-        {x: "apples", y: 2},
-        {x: "bananas", y: 1},
-        {x: "oranges", y: 3}
-      ],
-      [
-        {x: "apples", y: 3},
-        {x: "bananas", y: 1},
-        {x: "oranges", y: 1}
-      ]
-    ]}
-    dataAttributes={[
-      {fill: "cornflowerblue"},
-      {fill: "gold"},
-      {fill: "tomato"}
-    ]}
+  <VictoryStack
     labels={[
       "apples\n(fuji)",
       "bananas",
       "oranges\n(navel)"
-    ]}/>
+    ]}
+    colorScale={"qualitative"}
+  >
+    <VictoryBar
+      data={[
+        {x: "apples", y: 1},
+        {x: "bananas", y: 3},
+        {x: "oranges", y: 3}
+      ]}
+    />
+    <VictoryBar
+      data={[
+        {x: "apples", y: 2},
+        {x: "bananas", y: 1},
+        {x: "oranges", y: 3}
+      ]}
+    />
+    <VictoryBar
+        data={[
+        {x: "apples", y: 3},
+        {x: "bananas", y: 1},
+        {x: "oranges", y: 1}
+      ]}
+    />
+  </VictoryStack>
 </VictoryChart>
 ```
 
@@ -232,18 +234,17 @@ class App extends React.Component {
         data: this.getData(),
         style: this.getStyles()
       });
-    }, 3000);
+    }, 2000);
   }
 
   render() {
     return (
       <VictoryChart height={500}
-        animate={{velocity: 0.02}}>
-        <VictoryAxis dependentAxis
-          style={{grid: {strokeWidth: 1}}}/>
+        animate={{duration: 2000}}>
         <VictoryLine
           data={this.state.data}
-          style={{data: this.state.style}}/>
+          style={{data: this.state.style}}
+        />
       </VictoryChart>
     );
   }
