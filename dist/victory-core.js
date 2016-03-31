@@ -8296,11 +8296,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
+	var _identity = __webpack_require__(49);
+	
+	var _identity2 = _interopRequireDefault(_identity);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/* eslint-disable func-style */
 	
 	function getDatumKey(datum, idx) {
 	  return (datum.key || idx).toString();
-	} /* eslint-disable func-style */
+	}
 	
 	function getKeyedData(data) {
 	  return data.reduce(function (keyedData, datum, idx) {
@@ -8402,9 +8408,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function getInitialChildProps(animate, data) {
+	  var before = animate.onExit && animate.onExit.before ? animate.onExit.before : _identity2.default;
 	  return {
 	    data: data.map(function (datum) {
-	      return (0, _assign2.default)({}, datum, animate.onExit.before(datum));
+	      return (0, _assign2.default)({}, datum, before(datum));
 	    })
 	  };
 	}
@@ -8413,18 +8420,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // eslint-disable-line max-params
 	  // Whether or not _this_ child has exiting nodes, we want the exit-
 	  // transition for all children to have the same duration, delay, etc.
-	  animate = (0, _assign2.default)({}, animate, animate.onExit);
+	  var onExit = animate && animate.onExit;
+	  animate = (0, _assign2.default)({}, animate, onExit);
 	
 	  if (exitingNodes) {
-	    // After the exit transition occurs, trigger the animations for
-	    // nodes that are neither exiting or entering.
-	    animate.onEnd = cb;
-	
-	    // If nodes need to exit, transform them with the provided onExit.after function.
-	    data = data.map(function (datum, idx) {
-	      var key = (datum.key || idx).toString();
-	      return exitingNodes[key] ? Object.assign({}, datum, animate.onExit.after(datum)) : datum;
-	    });
+	    (function () {
+	      // After the exit transition occurs, trigger the animations for
+	      // nodes that are neither exiting or entering.
+	      animate.onEnd = cb;
+	      var after = animate.onExit && animate.onExit.after ? animate.onExit.after : _identity2.default;
+	      // If nodes need to exit, transform them with the provided onExit.after function.
+	      data = data.map(function (datum, idx) {
+	        var key = (datum.key || idx).toString();
+	        return exitingNodes[key] ? (0, _assign2.default)({}, datum, after(datum)) : datum;
+	      });
+	    })();
 	  }
 	
 	  return { animate: animate, data: data };
@@ -8433,17 +8443,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) {
 	  // eslint-disable-line max-params,max-len
 	  if (enteringNodes) {
-	    // Perform a normal animation here, except - when it finishes - trigger
-	    // the transition for entering nodes.
-	    animate = (0, _assign2.default)({}, animate, { onEnd: cb });
-	
-	    // We want the entering nodes to be included in the transition target
-	    // domain.  However, we may not want these nodes to be displayed initially,
-	    // so perform the `onEnter.before` transformation on each node.
-	    data = data.map(function (datum, idx) {
-	      var key = (datum.key || idx).toString();
-	      return enteringNodes[key] ? Object.assign({}, datum, animate.onEnter.before(datum)) : datum;
-	    });
+	    (function () {
+	      // Perform a normal animation here, except - when it finishes - trigger
+	      // the transition for entering nodes.
+	      animate = (0, _assign2.default)({}, animate, { onEnd: cb });
+	      var before = animate.onEnter && animate.onEnter.before ? animate.onEnter.before : _identity2.default;
+	      // We want the entering nodes to be included in the transition target
+	      // domain.  However, we may not want these nodes to be displayed initially,
+	      // so perform the `onEnter.before` transformation on each node.
+	      data = data.map(function (datum, idx) {
+	        var key = (datum.key || idx).toString();
+	        return enteringNodes[key] ? (0, _assign2.default)({}, datum, before(datum)) : datum;
+	      });
+	    })();
 	  }
 	
 	  return { animate: animate, data: data };
@@ -8452,16 +8464,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	function getChildPropsOnEnter(animate, data, enteringNodes) {
 	  // Whether or not _this_ child has entering nodes, we want the entering-
 	  // transition for all children to have the same duration, delay, etc.
-	  animate = (0, _assign2.default)({}, animate, animate.onEnter);
+	  var onEnter = animate && animate.onEnter;
+	  animate = (0, _assign2.default)({}, animate, onEnter);
 	
 	  if (enteringNodes) {
-	    // Old nodes have been transitioned to their new values, and the
-	    // domain should encompass the nodes that will now enter. So perform
-	    // the `onEnter.after` transformation on each node.
-	    data = data.map(function (datum, idx) {
-	      var key = getDatumKey(datum, idx);
-	      return enteringNodes[key] ? (0, _assign2.default)({}, datum, animate.onEnter.after(datum)) : datum;
-	    });
+	    (function () {
+	      // Old nodes have been transitioned to their new values, and the
+	      // domain should encompass the nodes that will now enter. So perform
+	      // the `onEnter.after` transformation on each node.
+	      var after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : _identity2.default;
+	      data = data.map(function (datum, idx) {
+	        var key = getDatumKey(datum, idx);
+	        return enteringNodes[key] ? (0, _assign2.default)({}, datum, after(datum)) : datum;
+	      });
+	    })();
 	  }
 	  return { animate: animate, data: data };
 	}
@@ -8553,7 +8569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return nodesShouldEnter ? getChildPropsOnEnter(animate, data, enteringNodes) : getChildPropsBeforeEnter(animate, data, enteringNodes, function () {
 	        return setParentState({ nodesShouldEnter: true });
 	      });
-	    } else if (!parentState && animate.onExit) {
+	    } else if (!parentState && animate && animate.onExit) {
 	      // This is the initial render, and nodes may enter when props change. Because
 	      // animation interpolation is determined by old- and next- props, data may need
 	      // to be augmented with certain properties.
