@@ -411,10 +411,10 @@ export default class VictoryAxis extends React.Component {
     const transform = AxisHelpers.getTransform(this.props, layoutProps);
     const group = (
       <g style={style.parent} transform={transform}>
-        {this.renderLabel(this.props, layoutProps)}
-        {this.renderTicks(this.props, layoutProps, tickProps)}
-        {this.renderLine(this.props, layoutProps)}
         {this.renderGrid(this.props, layoutProps, tickProps)}
+        {this.renderLine(this.props, layoutProps)}
+        {this.renderTicks(this.props, layoutProps, tickProps)}
+        {this.renderLabel(this.props, layoutProps)}
       </g>
     );
     return this.props.standalone ? (
