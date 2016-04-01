@@ -249,7 +249,11 @@ export function getTransitionPropsFactory(children, parentState, parentAnimate, 
 
   const transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
 
-  return function getTransitionProps(childProps, childType, index) {
+  return function getTransitionProps(childProps, childType, index) { // eslint-disable-line max-statements,max-len
+    if (!childProps.data) {
+      return {};
+    }
+
     let animate = assign({}, childProps.animate || parentAnimate);
 
     if (childType.defaultTransitions) {
