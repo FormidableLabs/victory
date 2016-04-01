@@ -251,7 +251,7 @@ export default class VictoryChart extends React.Component {
     );
 
     return childComponents.map((child, index) => {
-      const transitionProps = getTransitionProps(child.props, index);
+      const transitionProps = getTransitionProps(child.props, child.type, index);
       const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
 
