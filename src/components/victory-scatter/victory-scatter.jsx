@@ -29,7 +29,19 @@ const defaultStyles = {
 
 export default class VictoryScatter extends React.Component {
   static role = "scatter";
-  static supportsTransitions = true;
+
+  static defaultTransitions = {
+    onExit: {
+      duration: 600,
+      before: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 }),
+      after: () => ({ opacity: 0 })
+    },
+    onEnter: {
+      duration: 600,
+      before: () => ({ opacity: 0 }),
+      after: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 })
+    }
+  }
 
   static propTypes = {
     /**

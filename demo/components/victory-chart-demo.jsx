@@ -195,9 +195,23 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart animate={{duration: 750}}>
-            <VictoryScatter data={this.state.scatterData}/>
-            <VictoryLine y={(data) => data.x}/>
+          <VictoryChart animate={{ duration: 1500 }}>
+            <VictoryScatter
+              data={this.state.scatterData}
+              animate={{
+                onExit: {
+                  duration: 500,
+                  before: () => ({ opacity: 1 }),
+                  after: (datum) => {
+                    return {
+                      opacity: 0,
+                      x: datum.x + ((Math.random() - 0.5) * 8),
+                      y: datum.y + ((Math.random() - 0.5) * 8)
+                    };
+                  }
+                }
+              }}
+            />
           </VictoryChart>
 
           <VictoryChart>
