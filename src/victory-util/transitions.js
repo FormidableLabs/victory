@@ -82,7 +82,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     }
 
     const { entering, exiting } =
-      child.type.supportsTransitions &&
+      child.type.defaultTransitions &&
       getNodeTransitions(child.props.data, nextChild.props.data) ||
       {};
 
@@ -249,21 +249,30 @@ export function getTransitionPropsFactory(children, parentState, parentAnimate, 
 
   const transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
 
-  return function getTransitionProps(childProps, index) {
-    let animate = childProps.animate || parentAnimate;
+  return function getTransitionProps(childProps, childType, index) { // eslint-disable-line max-statements,max-len
+    if (!childProps.data) {
+      return {};
+    }
+
+    let animate = assign({}, childProps.animate || parentAnimate);
+
+    if (childType.defaultTransitions) {
+      animate.onExit = animate.onExit || childType.defaultTransitions.onExit;
+      animate.onEnter = animate.onEnter || childType.defaultTransitions.onEnter;
+    }
+
     const data = childProps.data;
 
     if (nodesWillExit) {
       const exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
       // Synchronize exit-transition durations for all child components.
-      animate = assign({}, animate, { duration: transitionDurations.exit });
+      animate = assign(animate, { duration: transitionDurations.exit });
 
       return getChildPropsOnExit(animate, data, exitingNodes, () =>
         setParentState({ nodesWillExit: false }));
     } else if (nodesWillEnter) {
       const enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
       animate = assign(
-        {},
         animate,
         // Synchronize normal animate and enter-transition durations for all child
         // components, ONLY IF an enter-transition will occur.  Otherwise, child
