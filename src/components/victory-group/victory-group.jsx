@@ -234,8 +234,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getXO(datasets, index, calculatedProps) {
-    const center = datasets.length % 2 === 0 ?
-      datasets.length / 2 : (datasets.length - 1) / 2;
+      const center = (datasets.length - 1) / 2;
     const totalWidth = this.pixelsToValue(this.props.offset, "x", calculatedProps);
     return (index - center) * totalWidth;
   }
