@@ -1,5 +1,6 @@
 import defaults from "lodash/defaults";
 import uniq from "lodash/uniq";
+import flatten from "lodash/flatten";
 import React from "react";
 import Data from "./data";
 import Domain from "./domain";
@@ -62,7 +63,8 @@ export default {
 
   getChildStyle(child, index, calculatedProps) {
     const { style } = calculatedProps;
-    const defaultFill = child.type.role === "wrapper" ?
+    const role = child.type && child.type.role;
+    const defaultFill = role === "group-wrapper" || role === "stack-wrapper" ?
       undefined : this.getColor(calculatedProps, index);
     const childStyle = child.props.style || {};
     const dataStyle = defaults({}, childStyle.data, style.data, {fill: defaultFill});
@@ -84,11 +86,13 @@ export default {
       const stringData = Data.getStringsFromData(component.props, axis);
       return stringData ? prev.concat(stringData) : prev;
     }, []);
-    return uniq([...categoryStrings, ...dataStrings]);
+    return uniq(flatten([...categoryStrings, ...dataStrings]));
   },
 
   getCategories(props, axis) {
-    return Data.getCategories(props, axis) || this.getStringsFromChildren(props, axis);
+    const categories = Data.getCategories(props, axis) ||
+      this.getStringsFromChildren(props, axis);
+    return categories.length > 0 ? categories : undefined;
   },
 
   getY0(datum, index, calculatedProps) {

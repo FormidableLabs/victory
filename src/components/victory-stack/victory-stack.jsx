@@ -14,7 +14,7 @@ const defaultStyles = {
 };
 
 export default class VictoryStack extends React.Component {
-  static role = "wrapper";
+  static role = "stack-wrapper";
 
   static propTypes = {
     /**
@@ -275,6 +275,9 @@ export default class VictoryStack extends React.Component {
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.length > 1) {
       Log.warn("Only components of the same type can be stacked");
+    }
+    if (types.some((type) => type === "group-wrapper")) {
+      Log.warn("It is not possible to stack groups.");
     }
     const calculatedProps = this.getCalculatedProps(this.props, childComponents, style);
     const group = (

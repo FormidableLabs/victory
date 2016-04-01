@@ -4,7 +4,6 @@ import values from "lodash/values";
 import identity from "lodash/identity";
 import uniq from "lodash/uniq";
 import flatten from "lodash/flatten";
-import flattenDeep from "lodash/flattenDeep";
 import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -132,7 +131,7 @@ export default {
     if (child.props.data) {
       return Data.getStringsFromData(child.props, axis);
     }
-    const data = flattenDeep(child.type.getData(child.props));
+    const data = flatten(child.type.getData(child.props));
     const attr = axis === "x" ? "xName" : "yName";
     return data.reduce((prev, datum) => {
       return datum[attr] ? prev.concat(datum[attr]) : prev;

@@ -14,7 +14,7 @@ const defaultStyles = {
 };
 
 export default class VictoryGroup extends React.Component {
-  static role = "wrapper";
+  static role = "group-wrapper";
 
   static propTypes = {
     /**
@@ -234,7 +234,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getXO(datasets, index, calculatedProps) {
-      const center = (datasets.length - 1) / 2;
+    const center = (datasets.length - 1) / 2;
     const totalWidth = this.pixelsToValue(this.props.offset, "x", calculatedProps);
     return (index - center) * totalWidth;
   }
@@ -262,7 +262,8 @@ export default class VictoryGroup extends React.Component {
   }
 
   getColorScale(props, child) {
-    if (child.type.role !== "wrapper") {
+    const role = child.type && child.type.role;
+    if (role !== "group-wrapper" && role !== "stack-wrapper") {
       return undefined;
     }
     return child.props.colorScale || props.colorScale;
@@ -283,7 +284,7 @@ export default class VictoryGroup extends React.Component {
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data,
-        xOffset: child.type.role === "wrapper" ? xOffset : undefined,
+        xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
       }, childProps));
     });
