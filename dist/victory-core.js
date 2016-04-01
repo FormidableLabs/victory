@@ -8382,7 +8382,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return {};
 	    }
 	
-	    var _ref = child.type.supportsTransitions && getNodeTransitions(child.props.data, nextChild.props.data) || {};
+	    var _ref = child.type.defaultTransitions && getNodeTransitions(child.props.data, nextChild.props.data) || {};
 	
 	    var entering = _ref.entering;
 	    var exiting = _ref.exiting;
@@ -8546,21 +8546,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  var transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
 	
-	  return function getTransitionProps(childProps, index) {
-	    var animate = childProps.animate || parentAnimate;
+	  return function getTransitionProps(childProps, childType, index) {
+	    // eslint-disable-line max-statements,max-len
+	    if (!childProps.data) {
+	      return {};
+	    }
+	
+	    var animate = (0, _assign2.default)({}, childProps.animate || parentAnimate);
+	
+	    if (childType.defaultTransitions) {
+	      animate.onExit = animate.onExit || childType.defaultTransitions.onExit;
+	      animate.onEnter = animate.onEnter || childType.defaultTransitions.onEnter;
+	    }
+	
 	    var data = childProps.data;
 	
 	    if (nodesWillExit) {
 	      var exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
 	      // Synchronize exit-transition durations for all child components.
-	      animate = (0, _assign2.default)({}, animate, { duration: transitionDurations.exit });
+	      animate = (0, _assign2.default)(animate, { duration: transitionDurations.exit });
 	
 	      return getChildPropsOnExit(animate, data, exitingNodes, function () {
 	        return setParentState({ nodesWillExit: false });
 	      });
 	    } else if (nodesWillEnter) {
 	      var enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
-	      animate = (0, _assign2.default)({}, animate,
+	      animate = (0, _assign2.default)(animate,
 	      // Synchronize normal animate and enter-transition durations for all child
 	      // components, ONLY IF an enter-transition will occur.  Otherwise, child
 	      // components can have different durations for shared-node animations.
