@@ -52,6 +52,20 @@ export default class VictoryScatter extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or an object with
+     * these arrays of values specified for x and y. If this prop is not set,
+     * categorical data will be plotted in the order it was given in the data array
+     * @examples ["dogs", "cats", "mice"]
+     */
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    /**
      * The bubbleProperty prop indicates which property of the data object should be used
      * to scale data points in a bubble chart
      */
@@ -65,6 +79,7 @@ export default class VictoryScatter extends React.Component {
      * These properties will be interpreted and applied to the individual lines
      * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
      */
+
     data: PropTypes.array,
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
@@ -163,13 +178,6 @@ export default class VictoryScatter extends React.Component {
       })
     ]),
     /**
-     * The showLabels prop determines whether to show any labels associated with a data point.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * If animations are running slowly, try setting this prop to false to cut down on
-     * the number of svg nodes
-     */
-    showLabels: PropTypes.bool,
-    /**
      * The size prop determines how to scale each data point
      */
     size: PropTypes.oneOfType([
@@ -247,7 +255,6 @@ export default class VictoryScatter extends React.Component {
     padding: 50,
     samples: 50,
     scale: "linear",
-    showLabels: true,
     size: 3,
     standalone: true,
     symbol: "circle",
@@ -258,6 +265,7 @@ export default class VictoryScatter extends React.Component {
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
+  static getData = Data.getData.bind(Data);
 
   componentWillMount() {
     this.state = {
@@ -335,17 +343,11 @@ export default class VictoryScatter extends React.Component {
 
   renderPoint(datum, index, calculatedProps) {
     const getBoundEvents = Helpers.getEvents.bind(this);
-
     const mutualProps = this.getMutualSubComponentProps(datum, index, calculatedProps);
-
     const pointProps = this.addDataComponentProps(mutualProps, getBoundEvents);
-
     const pointComponent = React.cloneElement(this.props.dataComponent, pointProps);
-
-    if (datum.label && this.props.showLabels) {
-
+    if (datum.label) {
       const labelProps = this.addLabelComponentProps(mutualProps, pointProps, getBoundEvents);
-
       return (
         <g key={`point-group-${index}`}>
           {pointComponent}

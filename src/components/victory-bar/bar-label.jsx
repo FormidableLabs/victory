@@ -11,7 +11,7 @@ export default class BarLabel extends React.Component {
     horizontal: PropTypes.bool,
     style: PropTypes.object,
     datum: PropTypes.object,
-    index: PropTypes.object,
+    index: PropTypes.number,
     labelText: PropTypes.string,
     labelComponent: PropTypes.any
   };

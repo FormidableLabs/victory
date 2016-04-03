@@ -116,11 +116,6 @@ describe("helpers/data", () => {
   });
 
   describe("getStringsFromCategories", () => {
-    it("returns an array of strings when categories is an array", () => {
-      const props = {categories: [1, "three", 5]};
-      expect(Data.getStringsFromCategories(props, "x")).to.eql(["three"]);
-    });
-
     it("returns an empty array when no strings are present", () => {
       const props = {categories: [1, 3, 5]};
       expect(Data.getStringsFromCategories(props, "x")).to.eql([]);
@@ -136,8 +131,6 @@ describe("helpers/data", () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Data, "cleanData");
-      sandbox.spy(Data, "determineCategoryIndex");
-      sandbox.spy(Data, "getAttributes");
     });
 
     afterEach(() => {
@@ -146,49 +139,11 @@ describe("helpers/data", () => {
 
     it("formats a single dataset", () => {
       const dataset = [{x: 1, y: 3}, {x: 2, y: 5}];
-      const props = {categories: [[0, 1], [2, 3]]};
+      const props = {};
       const formatted = Data.formatData(dataset, props);
-      expect(Data.determineCategoryIndex).called.and.not.returned(undefined);
       expect(Data.cleanData).called.and.returned(dataset);
-      expect(Data.getAttributes).not.called;
       expect(formatted).to.be.an.array;
-      expect(formatted[0]).to.have.keys(["x", "y", "category"]);
-    });
-
-
-  });
-
-  describe("formatDatasets", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Data, "cleanData");
-      sandbox.spy(Data, "determineCategoryIndex");
-      sandbox.spy(Data, "getAttributes");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("formats a array of data sets, and adds attributes", () => {
-      const datasets = [
-        [{x: 1, y: 3}, {x: 2, y: 5}],
-        [{x: 1, y: 2}, {x: 2, y: 4}]
-      ];
-      const dataAttributes = [{name: "a", fill: "red"}, {name: "b", fill: "blue"}];
-      const props = {dataAttributes, data: datasets, x: "x", y: "y"};
-      const formatted = Data.formatDatasets(props, true);
-      expect(Data.determineCategoryIndex).called.and.returned(undefined);
-      expect(Data.cleanData).calledTwice.and.returned(datasets[0], datasets[1]);
-      expect(Data.getAttributes).calledTwice.and.returned(dataAttributes[0], dataAttributes[1]);
-      expect(formatted).to.be.an("array").and.have.length(2);
-      expect(formatted[0]).to.eql({
-        data: [{x: 1, y: 3}, {x: 2, y: 5}], attrs: {name: "a", fill: "red"}
-      });
-      expect(formatted[1]).to.eql({
-        data: [{x: 1, y: 2}, {x: 2, y: 4}], attrs: {name: "b", fill: "blue"}
-      });
+      expect(formatted[0]).to.have.keys(["x", "y"]);
     });
   });
 
@@ -228,69 +183,6 @@ describe("helpers/data", () => {
       const returnData = Data.getData(props);
       expect(Data.generateData).calledOnce.and.returned(expectedReturn);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
-      expect(returnData).to.eql(expectedReturn);
-    });
-  });
-
-  describe("getMultiSeriesData", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Data, "getData");
-      sandbox.spy(Data, "getAttributes");
-      sandbox.spy(Data, "formatDatasets");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("formats and returns the data prop", () => {
-      const data = [{x: "kittens", y: 3}, {x: "cats", y: 5}];
-      const props = {data, x: "x", y: "y"};
-      const expectedReturn = [{
-        data: [{x: 1, xName: "kittens", y: 3}, {x: 2, xName: "cats", y: 5}],
-        attrs: {name: "data-0", fill: "#7d7d7d"}
-      }];
-      const returnData = Data.getMultiSeriesData(props);
-      expect(Data.getData).notCalled;
-      expect(Data.formatDatasets).calledOnce.and.returned(expectedReturn);
-      expect(returnData).to.eql(expectedReturn);
-    });
-
-    it("generates a dataset from domain", () => {
-      const expectedReturn = [{
-        data: [{x: 0, y: 0}, {x: 10, y: 10}],
-        attrs: {name: "data-0", fill: "#7d7d7d"}
-      }];
-      const props = {x: "x", y: "y", domain: {x: [0, 10], y: [0, 10]}};
-      const returnData = Data.getMultiSeriesData(props);
-      expect(Data.getData).calledOnce.and.returned(expectedReturn[0].data);
-      expect(Data.getAttributes).calledOnce.and.returned(expectedReturn[0].attrs);
-      expect(returnData).to.eql(expectedReturn);
-    });
-
-    it("generates a dataset from domain", () => {
-      const expectedReturn = [
-        {
-          data: [{x: 0, y: 1}, {x: 10, y: 11}],
-          attrs: {name: "data-0", fill: "#7d7d7d"}
-        },
-        {
-          data: [{x: 0, y: 2}, {x: 10, y: 12}],
-          attrs: {name: "data-1", fill: "#5e5e5e"}
-        }
-      ];
-      const y = [
-        (data) => data.x + 1,
-        (data) => data.x + 2
-      ];
-      const props = {y, x: "x", domain: {x: [0, 10], y: [0, 10]}};
-      const returnData = Data.getMultiSeriesData(props);
-      expect(Data.getData).calledTwice
-        .and.returned(expectedReturn[0].data);
-      expect(Data.getAttributes).calledTwice
-        .and.returned(expectedReturn[0].attrs);
       expect(returnData).to.eql(expectedReturn);
     });
   });

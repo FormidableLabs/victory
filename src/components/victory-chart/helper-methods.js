@@ -2,113 +2,58 @@ import invert from "lodash/invert";
 import sortBy from "lodash/sortBy";
 import values from "lodash/values";
 import identity from "lodash/identity";
-import sum from "lodash/sum";
 import uniq from "lodash/uniq";
+import flatten from "lodash/flatten";
 import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
+import Wrapper from "../../helpers/wrapper";
 import React from "react";
 import { Collection, Log } from "victory-core";
 
 export default {
   getChildComponents(props, defaultAxes) {
-    // set up a counter for component types
-    const counts = {};
-    const addChild = (child) => {
-      const type = child.type && child.type.role;
-      const axis = Axis.getAxisType(child);
-      if (!counts[type]) {
-        counts[type] = axis ? {independent: 0, dependent: 0} : 0;
-      }
-      if (axis) {
-        counts[type][axis] = counts[type][axis] += 1;
-      } else {
-        counts[type] = counts[type] += 1;
-      }
-    };
-
-    const limitReached = (child) => {
-      const type = child.type && child.type.role;
-      const axis = Axis.getAxisType(child);
-      if (!counts[type]) {
-        return false;
-      } else if (axis) {
-        return counts[type][axis] >= 1;
-      } else if (type === "bar") {
-        // TODO: should we remove the limit on grouped data types?
-        return counts[type] >= 1;
-      }
-      return false;
-    };
-
-    const total = (type, axis) => {
-      const totalCount = (axis && counts[type]) ?
-        counts[type][axis] : counts[type];
-      return totalCount || 0;
-    };
-
-    if (!props.children) {
+    const childComponents = React.Children.toArray(props.children);
+    if (childComponents.length === 0) {
       return [defaultAxes.independent, defaultAxes.dependent];
     }
-    const childComponents = [];
-    // loop through children, and add each child to the childComponents array
-    // unless the limit for that child type has already been reached.
-    React.Children.forEach(props.children, (child) => {
-      if (!child || !child.type) { return; }
-      const type = child.type && child.type.role;
-      if (limitReached(child)) {
-        const msg = type === "axis" ?
-          `Only one VictoryAxis component of each axis type is allowed when using the ` +
-          `VictoryChart wrapper. Only the first axis will be used. Please compose ` +
-          `multi-axis charts manually` :
-          `Only one " + type + "component is allowed per chart. If you are trying ` +
-          `to plot several datasets, please pass an array of data arrays directly ` +
-          `into ${type}.`;
-        Log.warn(msg);
-      } else {
-        childComponents.push(child);
-      }
-      addChild(child);
+
+    const axisComponents = childComponents.filter((component) => {
+      return component.type && component.type.role === "axis";
     });
 
-    // Add default axis components if necessary
-    // TODO: should we add both axes by default?
-    if (total("axis", "independent") < 1) {
-      childComponents.push(defaultAxes.independent);
+    if (axisComponents.length === 0) {
+      return childComponents.concat(defaultAxes.independent, defaultAxes.dependent);
     }
-    if (total("axis", "dependent") < 1) {
-      childComponents.push(defaultAxes.dependent);
+    const dependentAxes = axisComponents.filter((component) => component.props.dependentAxis);
+    const independentAxes = axisComponents.filter((component) => !component.props.dependentAxis);
+    if (dependentAxes.length > 1 || independentAxes.length > 1) {
+      const msg = `Only one VictoryAxis component of each axis type is allowed when` +
+        `using the VictoryChart wrapper. Only the first axis will be used. Please compose ` +
+        `multi-axis charts manually`;
+      Log.warn(msg);
+      const dataComponents = childComponents.filter((component) => {
+        return component.type && component.type.role !== "axis";
+      });
+
+      return Collection.removeUndefined(
+        dataComponents.concat(independentAxes[0], dependentAxes[0])
+      );
     }
     return childComponents;
   },
 
-  getDataComponents(childComponents, type) {
-    const predicate = {
-      all: (role) => role !== "axis",
-      data: (role) => role !== "axis" && role !== "bar",
-      grouped: (role) => role === "bar"
-    };
+  getDataComponents(childComponents) {
     return childComponents.filter((child) => {
       const role = child.type && child.type.role;
-      return predicate[type].call(null, role);
+      return role !== "axis";
     });
   },
 
   getDomain(props, childComponents, axis) {
-    let domain;
-    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
-      domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
-    } else {
-      const childDomains = childComponents.reduce((prev, component) => {
-        const childDomain = component.type.getDomain(component.props, axis);
-        return childDomain ? prev.concat(childDomain) : prev;
-      }, []);
-      domain = childDomains.length === 0 ?
-        [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
-    }
-    const paddedDomain = Domain.padDomain(domain, props, axis);
+    const domain = Wrapper.getDomainFromChildren(props, axis);
     const orientations = Axis.getAxisOrientations(childComponents);
-    return Domain.orientDomain(paddedDomain, orientations, axis);
+    return Domain.orientDomain(domain, orientations, axis);
   },
 
   getAxisOffset(props, calculatedProps) {
@@ -131,8 +76,8 @@ export default {
       y: Math.abs(orientationOffset.y - scale.y.call(null, origin.y))
     };
     return {
-      x: axisComponents.x.offsetX || calculatedOffset.x,
-      y: axisComponents.y.offsetY || calculatedOffset.y
+      x: axisComponents.x && axisComponents.x.offsetX || calculatedOffset.x,
+      y: axisComponents.y && axisComponents.y.offsetY || calculatedOffset.y
     };
   },
 
@@ -144,7 +89,8 @@ export default {
       categoryArray.map((tick) => stringMap[tick]) : categoryArray;
     const ticksFromStringMap = stringMap && values(stringMap);
     // when ticks is undefined, axis will determine it's own ticks
-    return ticksFromCategories || ticksFromStringMap;
+    return ticksFromCategories && ticksFromCategories.length !== 0 ?
+      ticksFromCategories : ticksFromStringMap;
   },
 
   getTicksFromAxis(calculatedProps, axis, component) {
@@ -178,39 +124,37 @@ export default {
     }
   },
 
+  getStringsFromChildData(child, axis) {
+    if (!child.props.data && !child.type.getData) {
+      return [];
+    }
+    if (child.props.data) {
+      return Data.getStringsFromData(child.props, axis);
+    }
+    const data = flatten(child.type.getData(child.props));
+    const attr = axis === "x" ? "xName" : "yName";
+    return data.reduce((prev, datum) => {
+      return datum[attr] ? prev.concat(datum[attr]) : prev;
+    }, []);
+  },
+
   createStringMap(childComponents, axis) {
     const axisComponent = Axis.getAxisComponent(childComponents, axis);
-    const tickStrings = Data.getStringsFromAxes(axisComponent.props, axis);
+    const tickStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
 
     const categoryStrings = childComponents.reduce((prev, component) => {
       const categoryData = Data.getStringsFromCategories(component.props, axis);
       return categoryData ? prev.concat(categoryData) : prev;
     }, []);
     const dataStrings = childComponents.reduce((prev, component) => {
-      const stringData = Data.getStringsFromData(component.props, axis);
+      const stringData = this.getStringsFromChildData(component, axis);
       return stringData ? prev.concat(stringData) : prev;
     }, []);
-    const allStrings = uniq([...tickStrings, ...categoryStrings, ...dataStrings]);
-
+    const allStrings = uniq(flatten([...tickStrings, ...categoryStrings, ...dataStrings]));
     return allStrings.length === 0 ? null :
       allStrings.reduce((memo, string, index) => {
         memo[string] = index + 1;
         return memo;
       }, {});
-  },
-
-  getCategories(childComponents) {
-    const groupedComponents = this.getDataComponents(childComponents, "grouped");
-    if (groupedComponents.length === 0) {
-      return undefined;
-    }
-    // otherwise, create a set of groupedComponent categories
-    const allCategories = groupedComponents.reduce((prev, component) => {
-      const cats = component.props.categories;
-      const categories = cats && Collection.isArrayOfArrays(cats) ?
-        cats.map((arr) => (sum(arr) / arr.length)) : cats;
-      return categories && prev.indexOf(categories) === -1 ? prev.concat(categories) : prev;
-    }, []);
-    return allCategories.length === 0 ? undefined : allCategories;
   }
 };

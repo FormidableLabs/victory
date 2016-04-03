@@ -14,16 +14,20 @@ export default {
     return this.getDomainFromData(dataset, axis);
   },
 
-  getMultiSeriesDomain(props, axis, datasets) {
+  getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return this.padDomain(propsDomain, props, axis);
+      return propsDomain;
     }
     const ensureZero = (domain) => {
       return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
     };
-    const dataDomain = ensureZero(this.getDomainFromGroupedData(props, axis, datasets));
-    return this.padDomain(dataDomain, props, axis);
+    const categoryDomain = this.getDomainFromCategories(props, axis);
+    if (categoryDomain) {
+      return ensureZero(categoryDomain);
+    }
+    const dataset = Data.getData(props);
+    return ensureZero(this.getDomainFromData(dataset, axis));
   },
 
   getDomainFromProps(props, axis) {
@@ -63,10 +67,10 @@ export default {
   },
 
   getDomainFromCategories(props, axis) {
-    if (axis !== "x" || !props.categories) {
+    const categories = Data.getCategories(props, axis);
+    if (!categories) {
       return undefined;
     }
-    const categories = flatten(props.categories);
     const stringArray = Collection.containsStrings(categories) ?
      Data.getStringsFromCategories(props, axis) : [];
     const stringMap = stringArray.length === 0 ? null :
@@ -83,14 +87,10 @@ export default {
     if (axis === "x" && props.categories) {
       return this.getDomainFromCategories(props, axis);
     }
-    // find the global min and max
-    const hasMultipleDatasets = props.stacked || this.shouldGroup(props);
-    datasets = datasets ? datasets.map((dataset) => dataset.data) :
-      Data.formatDatasets(props, hasMultipleDatasets).map((dataset) => dataset.data);
     const globalDomain = this.getDomainFromData(datasets, axis);
 
     // find the cumulative max for stacked chart types
-    const cumulativeData = this.isStacked(props, axis) ?
+    const cumulativeData = axis === "y" ?
       this.getCumulativeData(datasets, axis) : [];
 
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
@@ -116,26 +116,6 @@ export default {
       return [0, adjustedMax];
     }
     return [domainMin, domainMax];
-  },
-
-  shouldGroup(props) {
-    // automatically create grouped bars if data is array of arrays
-    // and x/y accessors are the default "x" and "y" keys,
-    return !props.stacked && (props.grouped || (
-      typeof props.grouped === "undefined" && Collection.isArrayOfArrays(props.data) &&
-      props.x === "x" && props.y === "y"
-    ));
-  },
-
-  isStacked(props, axis) {
-    // checks whether grouped data is stacked,
-    // whether there are multiple datasets to stack
-    // and whether the current axis is y (dependent)
-    // TODO: check assumptions for inverted axis charts
-
-    return (props.stacked === true)
-      && Collection.isArrayOfArrays(props.data)
-      && (axis === "y");
   },
 
   getCumulativeData(datasets, axis) {

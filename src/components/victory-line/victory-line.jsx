@@ -37,6 +37,20 @@ export default class VictoryLine extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or an object with
+     * these arrays of values specified for x and y. If this prop is not set,
+     * categorical data will be plotted in the order it was given in the data array
+     * @examples ["dogs", "cats", "mice"]
+     */
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
      * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
@@ -44,6 +58,7 @@ export default class VictoryLine extends React.Component {
      * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
      * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
      */
+
     data: PropTypes.array,
     /**
      * The dataComponent prop takes an entire, HTML-complete data component which will be used to
@@ -233,6 +248,7 @@ export default class VictoryLine extends React.Component {
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
+  static getData = Data.getData.bind(Data);
 
   componentWillMount() {
     this.state = {

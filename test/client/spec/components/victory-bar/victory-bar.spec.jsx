@@ -9,7 +9,6 @@ import { shallow, mount } from "enzyme";
 import _ from "lodash";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 import Bar from "src/components/victory-bar/bar";
-import Domain from "src/helpers/domain";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
@@ -57,50 +56,6 @@ describe("components/victory-bar", () => {
     });
   });
 
-  describe("rendering multiple datasets", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Domain, "isStacked");
-      sandbox.spy(Domain, "shouldGroup");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("renders grouped bars if grouped prop is true", () => {
-      const datasets = _.range(3).map(() => _.range(10).map((i) => ({x: i, y: i})));
-      const wrapper = shallow(
-        <VictoryBar grouped data={datasets}/>
-      );
-      expect(Domain.shouldGroup).called.and.returned(true);
-      expect(Domain.isStacked).called.and.returned(false);
-      const bars = wrapper.find(Bar);
-      expect(bars.length).to.equal(30);
-    });
-
-    it("renders stacked bars if stacked prop is true", () => {
-      const datasets = _.range(4).map(() => _.range(10).map((i) => ({x: i, y: i})));
-      const wrapper = shallow(
-        <VictoryBar stacked data={datasets}/>
-      );
-      expect(Domain.shouldGroup).called.and.returned(false);
-      expect(Domain.isStacked).called.and.returned(true);
-      const bars = wrapper.find(Bar);
-      expect(bars.length).to.equal(40);
-    });
-
-    it("renders grouped if grouped is undefined, data is 2d array, & default accessors", () => {
-      const datasets = _.range(5).map(() => _.range(10).map((i) => ({x: i, y: i})));
-      const wrapper = shallow(<VictoryBar data={datasets}/>);
-      expect(Domain.shouldGroup).called.and.returned(true);
-      expect(Domain.isStacked).called.and.returned(false);
-      const bars = wrapper.find(Bar);
-      expect(bars.length).to.equal(50);
-    });
-  });
-
   describe("event handling", () => {
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
@@ -114,7 +69,7 @@ describe("components/victory-bar", () => {
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.eql(initialProps);
-        expect(clickHandler.args[index][2]).to.eql([0, index]);
+        expect(clickHandler.args[index][2]).to.eql(index);
       });
     });
   });

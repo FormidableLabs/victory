@@ -1,11 +1,12 @@
 import pick from "lodash/pick";
+import omit from "lodash/omit";
+import defaults from "lodash/defaults";
 import get from "lodash/get";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 
 import Bar from "./bar";
 import BarLabel from "./bar-label";
-import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
@@ -44,49 +45,28 @@ export default class VictoryBar extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or an object with
+     * these arrays of values specified for x and y. If this prop is not set,
+     * categorical data will be plotted in the order it was given in the data array
+     * @examples ["dogs", "cats", "mice"]
+     */
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    /**
      * The data prop specifies the data to be plotted. Data should be in the form of an array
-     * of data points, or an array of arrays of data points for multiple datasets.
-     * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-     * but by default, an object with x and y properties is expected.
+     * of data points. Each data point may be any format you wish
+     * (depending on the `x` and `y` accessor props), but by default, an object
+     * with x and y properties is expected.
      * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
      * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
      */
     data: PropTypes.array,
-    /**
-     * The dataAttributes prop describes how a data set should be styled.
-     * This prop can be given as an object, or an array of objects. If this prop is
-     * given as an array of objects, the properties of each object in the array will
-     * be applied to the data points in the corresponding array of the data prop.
-     * @examples {fill: "blue", opacity: 0.6}, [{fill: "red"}, {fill: "orange"}]
-     */
-    dataAttributes: CustomPropTypes.allOfType([
-      CustomPropTypes.matchDataLength,
-      PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.arrayOf(PropTypes.object)
-      ])
-    ]),
-    /**
-     * The categories prop specifies the categories for a bar chart. This prop should
-     * be given as an array of string values, numeric values, or arrays. When this prop is
-     * given as an array of arrays, the minimum and maximum values of the arrays define range bands,
-     * allowing numeric data to be grouped into segments.
-     * @examples ["dogs", "cats", "mice"], [[0, 5], [5, 10], [10, 15]]
-     */
-    categories: CustomPropTypes.homogeneousArray,
-    /**
-     * The colorScale prop is an optional prop that defines the color scale the chart's bars
-     * will be created on. This prop should be given as an array of CSS colors, or as a string
-     * corresponding to one of the built in color scales. VictoryBar will automatically assign
-     * values from this color scale to the bars unless colors are explicitly provided in the
-     * `dataAttributes` prop.
-     */
-    colorScale: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
-      ])
-    ]),
     /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
@@ -101,18 +81,6 @@ export default class VictoryBar extends React.Component {
         x: CustomPropTypes.domain,
         y: CustomPropTypes.domain
       })
-    ]),
-    /**
-     * The domainPadding prop specifies a number of pixels of padding to add to the
-     * beginning and end of a domain. This prop is useful for preventing 0 pixel bars,
-     * and taking bar width into account.
-     */
-    domainPadding: PropTypes.oneOfType([
-      PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
-      }),
-      CustomPropTypes.nonNegative
     ]),
     /**
      * The events prop attaches arbitrary event handlers to data and label elements
@@ -135,14 +103,6 @@ export default class VictoryBar extends React.Component {
       parent: PropTypes.object
     }),
     /**
-     * The grouped prop determines whether the chart should consist of sets of grouped bars.
-     * When this prop is set to true, the data prop *must* be an array of multiple data series
-     * ie. not an array of data points, but an array of arrays of data points.  If data is
-     * given as an array or arrays, and data accessor props have default values
-     * (ie. x={"x"} y={"y"}), the grouped prop will default to true.
-     */
-    grouped: PropTypes.bool,
-    /**
      * The height props specifies the height of the chart container element in pixels
      */
     height: CustomPropTypes.nonNegative,
@@ -153,15 +113,16 @@ export default class VictoryBar extends React.Component {
      */
     horizontal: PropTypes.bool,
     /**
-     * The labels prop defines labels that will appear above each bar or
-     * group of bars in your bar chart. This prop should be given as an array of values.
-     * The number of elements in the label array should be equal to number of elements in
-     * the categories array, or if categories is not defined, to the number of unique
-     * x values in your data. Use this prop to add labels to individual bars, stacked bars,
-     * and groups of bars.
-     * @examples: ["spring", "summer", "fall", "winter"]
+     * The labels prop defines labels that will appear above each bar in your bar chart.
+     * This prop should be given as an array of values or as a function of data.
+     * If given as an array, the number of elements in the array should be equal to
+     * the length of the data array. Labels may also be added directly to the data object
+     * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
-    labels: PropTypes.array,
+    labels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array
+    ]),
     /**
      * The labelComponent prop takes in an entire, HTML-complete label
      * component which will be used to create labels for each bar in the bar
@@ -201,12 +162,6 @@ export default class VictoryBar extends React.Component {
         y: CustomPropTypes.scale
       })
     ]),
-    /**
-     * The stacked prop determines whether the chart should consist of stacked bars.
-     * When this prop is set to true, the data prop *must* be an array of multiple data series
-     * ie. not an array of data points, but an array of arrays of data points
-     */
-    stacked: PropTypes.bool,
     /**
      * The standalone prop determines whether the component will render a standalone svg
      * or a <g> tag that will be included in an external svg. Set standalone to false to
@@ -263,20 +218,19 @@ export default class VictoryBar extends React.Component {
   };
 
   static defaultProps = {
-    colorScale: "greyscale",
     data: defaultData,
     events: {},
     height: 300,
     padding: 50,
     scale: "linear",
-    stacked: false,
     standalone: true,
     width: 450,
     x: "x",
     y: "y"
   };
 
-  static getDomain = Domain.getMultiSeriesDomain.bind(Domain);
+  static getDomain = Domain.getDomainWithZero.bind(Domain);
+  static getData = Data.getData.bind(Data);
 
   componentWillMount() {
     this.state = {
@@ -285,85 +239,80 @@ export default class VictoryBar extends React.Component {
     };
   }
 
-  renderBars(dataset, seriesIndex, calculatedProps) {
-    return dataset.data.map((datum, barIndex) => {
-      const index = {seriesIndex, barIndex};
-      const position = BarHelpers.getBarPosition(datum, index, calculatedProps);
-      const baseStyle = calculatedProps.style;
-      const style = BarHelpers.getBarStyle(datum, dataset, baseStyle);
-      const getBoundEvents = Helpers.getEvents.bind(this);
-      const barComponent = (
-        <Bar key={`series-${seriesIndex}-bar-${barIndex}`}
-          horizontal={this.props.horizontal}
-          style={style}
-          index={index}
-          position={position}
-          datum={datum}
-          events={getBoundEvents(this.props.events.data, "data")}
-          {...get(this.state.dataState, [seriesIndex, barIndex], undefined)}
-        />
-      );
-      const shouldPlotLabel = BarHelpers.shouldPlotLabel(
-        seriesIndex, this.props, calculatedProps.datasets
-      );
-      if (datum.label || shouldPlotLabel) {
-        const labelIndex = BarHelpers.getLabelIndex(datum, calculatedProps);
-        const labelText = this.props.labels ?
-          this.props.labels[labelIndex] || this.props.labels[0] : "";
-        return (
-          <g key={`series-${index}-bar-${barIndex}`}>
-            {barComponent}
-            <BarLabel key={`label-series-${index}-bar-${barIndex}`}
-              horizontal={this.props.horizontal}
-              style={baseStyle.labels}
-              index={index}
-              position={position}
-              datum={datum}
-              labelText={datum.label || labelText}
-              labelComponent={this.props.labelComponent}
-              events={getBoundEvents(this.props.events.labels, "labels")}
-              {...get(this.state.labelsState, [seriesIndex, barIndex], undefined)}
-            />
-          </g>
-        );
-      }
-      return barComponent;
-    });
-  }
-
-  calculateProps(props, style) {
-    const {stacked, categories} = props;
-    const grouped = Domain.shouldGroup(props);
-    const hasMultipleDatasets = (grouped || stacked);
-    const datasets = Data.getMultiSeriesData(props, hasMultipleDatasets);
-    const stringMap = {
-      x: Data.createStringMap(props, "x", hasMultipleDatasets),
-      y: Data.createStringMap(props, "y", hasMultipleDatasets)
-    };
-    const padding = Helpers.getPadding(props);
+  getScale(props) {
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Domain.getMultiSeriesDomain(props, "x", datasets),
-      y: Domain.getMultiSeriesDomain(props, "y", datasets)
+      x: Domain.getDomainWithZero(props, "x"),
+      y: Domain.getDomainWithZero(props, "y")
     };
-    const scale = {
+    return {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    const uniqueX = BarHelpers.getUniqueX(datasets);
+  }
+
+  getBarPosition(props, datum) {
+    const yOffset = datum.yOffset || 0;
+    const xOffset = datum.xOffset || 0;
+    const y0 = yOffset;
+    const y1 = datum.y + yOffset;
+    const x = datum.x + xOffset;
+    const formatValue = (value, axis) => {
+      return datum[axis] instanceof Date ? new Date(value) : value;
+    };
+    const scale = this.getScale(props);
     return {
-      categories, datasets, domain, padding, range, scale,
-      grouped, stacked, stringMap, style, uniqueX
+      independent: scale.x(formatValue(x, "x")),
+      dependent0: scale.y(formatValue(y0, "y")),
+      dependent1: scale.y(formatValue(y1, "y"))
     };
   }
 
-  renderData(props, style) {
-    const calculatedProps = this.calculateProps(props, style);
-    return calculatedProps.datasets.map((dataset, index) => {
-      return this.renderBars(dataset, index, calculatedProps);
+  getBarStyle(datum, baseStyle) {
+    const styleData = omit(datum, [
+      "xName", "yName", "x", "y", "label"
+    ]);
+    return defaults({}, styleData, baseStyle);
+  }
+
+  renderData(props, data, style) {
+    return data.map((datum, index) => {
+      const position = this.getBarPosition(props, datum);
+      const getBoundEvents = Helpers.getEvents.bind(this);
+      const barComponent = (
+        <Bar key={`bar-${index}`}
+          horizontal={props.horizontal}
+          style={this.getBarStyle(datum, style.data)}
+          index={index}
+          position={position}
+          datum={datum}
+          events={getBoundEvents(props.events.data, "data")}
+          {...get(this.state.dataState, index, undefined)}
+        />
+      );
+      if (datum.label || props.labels) {
+        const labelText = props.labels ? props.labels[index] || props.labels[0] : "";
+        return (
+          <g key={`bar-${index}`}>
+            {barComponent}
+            <BarLabel key={`bar-label-${index}`}
+              horizontal={props.horizontal}
+              style={style.labels}
+              index={index}
+              position={position}
+              datum={datum}
+              labelText={datum.label || labelText}
+              labelComponent={props.labelComponent}
+              events={getBoundEvents(props.events.labels, "labels")}
+              {...get(this.state.labelsState, index, undefined)}
+            />
+          </g>
+        );
+      }
+      return barComponent;
     });
   }
 
@@ -376,8 +325,7 @@ export default class VictoryBar extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "dataAttributes", "categories", "colorScale", "domain", "height",
-        "padding", "style", "width"
+        "data", "domain", "height", "padding", "style", "width"
       ];
       const animateData = pick(this.props, whitelist);
       return (
@@ -389,7 +337,8 @@ export default class VictoryBar extends React.Component {
 
     const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
-    const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
+    const data = Data.getData(this.props);
+    const group = <g style={style.parent}>{this.renderData(this.props, data, style)}</g>;
     return this.props.standalone ?
       <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
       group;

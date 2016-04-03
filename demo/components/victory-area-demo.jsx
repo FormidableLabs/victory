@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import _ from "lodash";
-import {VictoryArea} from "../../src/index";
+import {VictoryArea, VictoryStack, VictoryGroup} from "../../src/index";
 
 export default class App extends React.Component {
   constructor() {
@@ -82,36 +82,45 @@ export default class App extends React.Component {
           animate={{velocity: 0.03}}
         />
 
-        <VictoryArea
-          stacked
+        <VictoryStack style={{parent: {border: "1px solid black", margin: "5px"}}}>
+          <VictoryArea
+            data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
+          />
+          <VictoryArea
+            data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
+          />
+          <VictoryArea
+            data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
+          />
+          <VictoryArea
+            data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
+          />
+        </VictoryStack>
+
+        <VictoryGroup
+          style={{
+            parent: {border: "1px solid black", margin: "5px"},
+            data: {strokeWidth: 2, fillOpacity: 0.4}
+          }}
+        >
+          <VictoryArea
+            style={{data: {fill: "cyan", stroke: "cyan"}}}
+            data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
+          />
+          <VictoryArea
+            style={{data: {fill: "magenta", stroke: "magenta"}}}
+            data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
+          />
+        </VictoryGroup>
+
+        <VictoryStack
           style={{parent: {border: "1px solid black", margin: "5px"}}}
-          data={[
-            [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}],
-            [{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}],
-            [{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}],
-            [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]
-          ]}
-        />
-
-        <VictoryArea
-          dataAttributes={[
-            {fill: "cyan", stroke: "cyan", strokeWidth: 2, fillOpacity: 0.4},
-            {fill: "magenta", stroke: "magenta", strokeWidth: 2, fillOpacity: 0.4}
-          ]}
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {opacity: 0.4}}}
-          data={[
-            [{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}],
-            [{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]
-          ]}
-        />
-
-        <VictoryArea
-          stacked
           colorScale={"green"}
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
-          data={this.state.groupedData}
-          animate={{velocity: 0.03}}
-        />
+          animate={{duration: 2000}}
+        >
+          {this.state.groupedData.map((data, index) => <VictoryArea data={data} key={index}/>)}
+        </VictoryStack>
+
 
         <VictoryArea
           style={{parent: {border: "1px solid black", margin: "5px"}, data: {fill: "red"}}}
@@ -175,16 +184,10 @@ export default class App extends React.Component {
           ]}
         />
 
-      <VictoryArea
-        style={{
-          parent: {border: "1px solid black", margin: "5px"},
-          data: {opacity: 0.4}
-        }}
-        y={[
-          (data) => Math.sin(data.x),
-          (data) => Math.cos(data.x)
-        ]}
-      />
+      <svg width={450} height={300} style={{border: "1px solid black", margin: "5px"}}>
+        <VictoryArea y={(data) => Math.sin(data.x)} style={{data: {opacity: 0.4}}}/>
+        <VictoryArea y={(data) => Math.cos(data.x)} style={{data: {opacity: 0.4}}}/>
+      </svg>
       </div>
     );
   }

@@ -8,6 +8,7 @@ import Data from "src/helpers/data";
 import Domain from "src/helpers/domain";
 import Axis from "src/helpers/axis";
 import Scale from "src/helpers/scale";
+import Wrapper from "src/helpers/wrapper";
 import identity from "lodash/identity";
 
 describe("victory-chart/helpers-methods", () => {
@@ -31,14 +32,28 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("returns a pair of default axes when no children are given", () => {
-      expect(Helpers.getChildComponents({}, defaultAxes))
-        .to.eql([defaultAxes.independent, defaultAxes.dependent]);
+      const children = [];
+      const result = Helpers.getChildComponents({children}, defaultAxes);
+      expect(result).to.have.length(2);
+      expect(result).to.deep.include.members([defaultAxes.independent, defaultAxes.dependent]);
     });
 
-    it("adds a default axis so that there are always two axes", () => {
-      const children = [getVictoryAxis({dependentAxis: true})];
-      expect(Helpers.getChildComponents({children}, defaultAxes))
-        .to.eql([children[0], defaultAxes.independent]);
+    it("adds default axes when none of the children are axis components", () => {
+      const line = getVictoryLine({});
+      const children = [line];
+      const result = Helpers.getChildComponents({children}, defaultAxes);
+      expect(result).to.have.length(3);
+      expect(result).to.deep.include.members([
+        defaultAxes.independent, defaultAxes.dependent
+      ]);
+    });
+
+    it("does not add default axes if axis any axis components exist in children", () => {
+      const axis = getVictoryAxis({});
+      const children = [axis];
+      const result = Helpers.getChildComponents({children}, defaultAxes);
+      expect(result).to.have.length(1);
+      expect(result[0].props).to.eql(axis.props);
     });
 
     it("only ever returns one axis of a particular type", () => {
@@ -46,21 +61,9 @@ describe("victory-chart/helpers-methods", () => {
         getVictoryAxis({dependentAxis: true}),
         getVictoryAxis({dependentAxis: true, orientation: "right"})
       ];
-      const componentResult = Helpers.getChildComponents({children}, defaultAxes);
-      expect(componentResult).to.have.length(2)
-        .and.to.eql([children[0], defaultAxes.independent]);
-      expect(Log.warn).calledOnce;
-    });
-
-    it("only returns one the first bar component", () => {
-      const children = [
-        getVictoryBar({categories: [1, 2, 3]}),
-        getVictoryBar({categories: [4, 5, 6]})
-      ];
-      const componentResult = Helpers.getChildComponents({children}, defaultAxes);
-      expect(componentResult).to.have.length(3)
-        .and.to.eql([children[0], defaultAxes.independent, defaultAxes.dependent]);
-      expect(Log.warn).calledOnce;
+      const result = Helpers.getChildComponents({children}, defaultAxes);
+      expect(result).to.have.length(1);
+      expect(result[0].props).to.eql(children[0].props);
     });
   });
 
@@ -70,19 +73,10 @@ describe("victory-chart/helpers-methods", () => {
     const axis = getVictoryAxis({});
     const childComponents = [bar, line, axis];
 
-    it("returns only grouped data components (bar) when called with 'grouped'", () => {
-      const componentResult = Helpers.getDataComponents(childComponents, "grouped");
-      expect(componentResult).to.eql([bar]);
-    });
-
-    it("returns only single data components (not bar) when called with 'data'", () => {
-      const componentResult = Helpers.getDataComponents(childComponents, "data");
-      expect(componentResult).to.eql([line]);
-    });
-
-    it("returns all single data components when called with 'all'", () => {
-      const componentResult = Helpers.getDataComponents(childComponents, "all");
+    it("returns data components but not axis components", () => {
+      const componentResult = Helpers.getDataComponents(childComponents);
       expect(componentResult).to.have.members([bar, line]);
+      expect(componentResult).not.to.have.members([axis]);
     });
   });
 
@@ -94,6 +88,7 @@ describe("victory-chart/helpers-methods", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
+      sandbox.spy(Wrapper, "getDomainFromChildren");
       sandbox.spy(Domain, "padDomain");
       sandbox.spy(victoryLine.type, "getDomain");
     });
@@ -111,9 +106,10 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("calculates a domain from child components", () => {
-      const props = {};
+      const props = {children: childComponents};
       const domainResultX = Helpers.getDomain(props, childComponents, "x");
-      expect(victoryLine.type.getDomain).calledWith(victoryLine.props, "x");
+      expect(Wrapper.getDomainFromChildren).calledWith(props, "x");
+      expect(victoryLine.type.getDomain).calledWith(victoryLine.props);
       expect(Domain.padDomain).calledWith(victoryLine.props.domain, props, "x")
         .and.returned(victoryLine.props.domain);
       expect(domainResultX).to.eql(victoryLine.props.domain);
@@ -127,7 +123,7 @@ describe("victory-chart/helpers-methods", () => {
       sandbox.spy(Axis, "getAxisComponent");
       sandbox.spy(Data, "getStringsFromAxes");
       sandbox.spy(Data, "getStringsFromCategories");
-      sandbox.spy(Data, "getStringsFromData");
+      sandbox.spy(Helpers, "getStringsFromChildData");
     });
 
     afterEach(() => {
@@ -143,7 +139,7 @@ describe("victory-chart/helpers-methods", () => {
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
         .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
-      expect(Data.getStringsFromData).calledWith(axisComponent.props, "x").and.returned([]);
+      expect(Helpers.getStringsFromChildData).notCalled;
       expect(stringResult).to.eql({a: 1, b: 2, c: 3});
     });
 
@@ -161,49 +157,8 @@ describe("victory-chart/helpers-methods", () => {
         .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
       expect(Data.getStringsFromCategories).calledWith(lineComponent.props, "x").and.returned([]);
-      expect(Data.getStringsFromData).calledWith(axisComponent.props, "x").and.returned([]);
-      expect(Data.getStringsFromData).calledWith(lineComponent.props, "x")
-        .and.returned(["b", "c", "d"]);
+      expect(Helpers.getStringsFromChildData).called;
       expect(stringResult).to.eql({a: 1, b: 2, c: 3, d: 4});
-    });
-  });
-
-  describe("getCategories", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Helpers, "getDataComponents");
-    });
-
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("returns a set of categories from a component", () => {
-      const victoryBar = getVictoryBar({categories: [1, 2, 3]});
-      const childComponents = [victoryBar];
-      const categoryResult = Helpers.getCategories(childComponents);
-      expect(Helpers.getDataComponents).calledWith(childComponents, "grouped")
-        .and.returned([victoryBar]);
-      expect(categoryResult).to.eql(victoryBar.props.categories);
-    });
-
-    it("returns undefined if no categories are defined", () => {
-      const victoryBar = getVictoryBar({});
-      const childComponents = [victoryBar];
-      const categoryResult = Helpers.getCategories(childComponents);
-      expect(Helpers.getDataComponents).calledWith(childComponents, "grouped")
-        .and.returned([victoryBar]);
-      expect(categoryResult).to.be.undefined;
-    });
-
-    it("returns undefined if no grouped data components are found", () => {
-      const victoryLine = getVictoryLine({});
-      const childComponents = [victoryLine];
-      const categoryResult = Helpers.getCategories(childComponents);
-      expect(Helpers.getDataComponents).calledWith(childComponents, "grouped")
-        .and.returned([]);
-      expect(categoryResult).to.be.undefined;
     });
   });
 

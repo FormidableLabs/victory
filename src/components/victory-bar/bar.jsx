@@ -4,7 +4,7 @@ import { Helpers } from "victory-core";
 export default class Bar extends React.Component {
 
   static propTypes = {
-    index: PropTypes.object,
+    index: PropTypes.number,
     events: PropTypes.object,
     position: PropTypes.object,
     horizontal: PropTypes.bool,
@@ -43,8 +43,7 @@ export default class Bar extends React.Component {
     const barWidth = style.width || 8;
     const path = this.props.position.independent ?
       this.getBarPath(this.props.position, barWidth) : undefined;
-    const index = [this.props.index.seriesIndex, this.props.index.barIndex];
-    const events = Helpers.getPartialEvents(this.props.events, index, this.props);
+    const events = Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
     return (
       <path
         {...events}

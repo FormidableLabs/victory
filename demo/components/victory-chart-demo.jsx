@@ -2,7 +2,7 @@
 import React from "react";
 import _ from "lodash";
 import {
-  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter
+  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
 
 
@@ -221,39 +221,14 @@ class App extends React.Component {
             <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
-          <VictoryChart animate={{velocity: 0.02}} domainPadding={{x: 20}}>
-            <VictoryAxis orientation="top"/>
-            <VictoryBar
-              data={this.state.numericBarData}
-              dataAttributes={[
-                {fill: "cornflowerblue"},
-                {fill: "orange"},
-                {fill: "greenyellow"},
-                {fill: "gold"},
-                {fill: "tomato"}
-              ]}
-              categories={[[1, 3], [4, 7], [9, 11]]}
-            />
-          </VictoryChart>
-
-          <VictoryChart animate={{velocity: 0.02}}
+          <VictoryChart animate={{duration: 2000}}
             domainPadding={{x: 100}}
           >
-            <VictoryAxis
-              tickValues={["apples", "bananas", "oranges"]}
-              tickFormat={() => ""}
-            />
-            <VictoryBar stacked
-              data={this.state.barData}
-              dataAttributes={[
-                {fill: "cornflowerblue"},
-                {fill: "greenyellow"},
-                {fill: "gold"},
-                {fill: "orange"},
-                {fill: "tomato"}
-              ]}
-              labels={["apples\n(fuji)", "bananas", "oranges\n(navel)"]}
-            />
+            <VictoryStack>
+              {this.state.barData.map((data, index) => {
+                return <VictoryBar data={data} key={index}/>;
+              })}
+            </VictoryStack>
           </VictoryChart>
 
           <VictoryChart domainPadding={{x: 30, y: 30}}>
@@ -295,6 +270,26 @@ class App extends React.Component {
               style={{data: {stroke: "gold", strokeWidth: 3}}}
               label="LINE"
             />
+          </VictoryChart>
+
+          <VictoryChart domainPadding={{x: 50}} animate={{duration: 2000}}>
+            <VictoryGroup offset={15}>
+              <VictoryStack colorScale={"red"}>
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar key={index} data={data}/>;
+                })}
+              </VictoryStack>
+              <VictoryStack colorScale={"green"}>
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar key={index} data={data}/>;
+                })}
+              </VictoryStack>
+              <VictoryStack colorScale={"blue"}>
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar key={index} data={data}/>;
+                })}
+              </VictoryStack>
+            </VictoryGroup>
           </VictoryChart>
         </p>
       </div>
