@@ -24,6 +24,18 @@ const defaultStyles = {
 
 export default class VictoryArea extends React.Component {
   static role = "area";
+
+  static defaultTransitions = {
+    onExit: {
+      duration: 600,
+      after: (datum) => ({ y: 0 })
+    },
+    onEnter: {
+      duration: 600,
+      before: (datum) => ({ y: 0 }),
+    }
+  };
+
   static propTypes = {
     /**
      * The animate prop specifies props for victory-animation to use. It this prop is

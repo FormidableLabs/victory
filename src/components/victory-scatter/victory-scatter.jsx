@@ -41,7 +41,7 @@ export default class VictoryScatter extends React.Component {
       before: () => ({ opacity: 0 }),
       after: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 })
     }
-  }
+  };
 
   static propTypes = {
     /**

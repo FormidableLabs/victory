@@ -28,6 +28,20 @@ const defaultStyles = {
 
 export default class VictoryLine extends React.Component {
   static role = "line";
+
+  static defaultTransitions = {
+    onExit: {
+      duration: 600,
+      before: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 }),
+      after: () => ({ opacity: 0 })
+    },
+    onEnter: {
+      duration: 600,
+      before: () => ({ opacity: 0 }),
+      after: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 })
+    }
+  };
+
   static propTypes = {
     /**
      * The animate prop specifies props for victory-animation to use. It this prop is
