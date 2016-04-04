@@ -40,7 +40,7 @@ export default class VictoryBar extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 600,
-      before: (datum) => ({ y: datum.y }),
+      before: (datum) => ({y: datum.y}),
       after: () => ({ y: 0 })
     },
     onEnter: {

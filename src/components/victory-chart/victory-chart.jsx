@@ -138,7 +138,7 @@ export default class VictoryChart extends React.Component {
       nodesWillEnter,
       childrenTransitions,
       nodesShouldEnter
-    } = Transitions.getInitialTransitionState(this.props.children, nextProps.children);
+    } = Transitions.getInitialTransitionState(this.props, nextProps);
 
     this.setState({
       nodesWillExit,
@@ -148,7 +148,6 @@ export default class VictoryChart extends React.Component {
       oldProps: nodesWillExit ? this.props : null
     });
   }
-
 
   getStyles(props) {
     const styleProps = props.style && props.style.parent;
@@ -194,6 +193,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getCalculatedProps(props, childComponents) {
+    // props = this.state && this.state.oldProps ? this.state.oldProps : props;
     const horizontal = childComponents.some((component) => component.props.horizontal);
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
@@ -235,9 +235,8 @@ export default class VictoryChart extends React.Component {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
 
     const getTransitionProps = Transitions.getTransitionPropsFactory(
-      childComponents,
+      props,
       this.state,
-      this.props.animate,
       (newState) => this.setState(newState)
     );
 

@@ -130,9 +130,16 @@ class App extends React.Component {
         <p>
 
 
-          <VictoryChart animate={{ duration: 600 }} padding={0}>
+          <VictoryChart animate={{ duration: 600 }}>
             <VictoryBar
               data={this.state.barTransitionData}
+              animate={{
+                onExit: {
+                  duration: 500,
+                  before: (datum) => ({ y: datum.y}),
+                  after: () => ({y: 0})
+                }
+              }}
             />
           </VictoryChart>
 
