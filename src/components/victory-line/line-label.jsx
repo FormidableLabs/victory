@@ -1,5 +1,4 @@
 import defaults from "lodash/defaults";
-import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers} from "victory-core";
 
@@ -19,15 +18,16 @@ export default class LineLabel extends React.Component {
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, 0, props);
-    const newProps = assign({}, events, {
+    const newProps = {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
       data: props.data,
       text: component.props.text,
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
-      style
-    });
+      style,
+      events
+    };
     return React.cloneElement(component, newProps);
   }
 
@@ -43,7 +43,7 @@ export default class LineLabel extends React.Component {
         verticalAnchor={"middle"}
         style={style}
         text={props.label}
-        {...events}
+        events={events}
       />
     );
   }

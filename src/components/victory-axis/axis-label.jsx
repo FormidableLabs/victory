@@ -1,5 +1,4 @@
 import defaults from "lodash/defaults";
-import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
 
@@ -19,15 +18,16 @@ export default class AxisLabel extends React.Component {
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, 0, props);
-    const newProps = assign({}, events, {
+    const newProps = {
       x: component.props.x || props.position.x,
       y: component.props.y || props.position.y,
       text: component.props.text,
       textAnchor: component.props.textAnchor || "middle",
       verticalAnchor: component.props.verticalAnchor || props.verticalAnchor,
       transform: component.props.transform || props.transform,
-      style
-    });
+      style,
+      events
+    };
     return React.cloneElement(component, newProps);
   }
 
@@ -43,7 +43,7 @@ export default class AxisLabel extends React.Component {
         transform={props.transform}
         style={props.style}
         text={text}
-        {...events}
+        events={events}
       />
     );
   }

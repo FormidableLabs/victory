@@ -1,5 +1,4 @@
 import defaults from "lodash/defaults";
-import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
 
@@ -48,7 +47,7 @@ export default class BarLabel extends React.Component {
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, index, props);
-    const newProps = assign({}, events, {
+    const newProps = {
       index: [props.index.seriesIndex, props.index.barIndex],
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
@@ -56,8 +55,9 @@ export default class BarLabel extends React.Component {
       text: labelText,
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
-      style
-    });
+      style,
+      events
+    };
     return React.cloneElement(component, newProps);
   }
 
@@ -77,7 +77,7 @@ export default class BarLabel extends React.Component {
         verticalAnchor={anchors.vertical}
         style={style}
         text={props.labelText}
-        {...events}
+        events={events}
       />
     );
   }
