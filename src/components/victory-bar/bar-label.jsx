@@ -85,8 +85,8 @@ export default class BarLabel extends React.Component {
   renderLabel(props) {
     const anchors = this.getLabelAnchors(props);
     const position = {
-      x: props.horizontal ? props.position.dependent1 : props.position.independent,
-      y: props.horizontal ? props.position.independent : props.position.dependent1
+      x: props.horizontal ? props.position.y1 : props.position.x,
+      y: props.horizontal ? props.position.x : props.position.y1
     };
     return props.labelComponent ?
       this.renderLabelComponent(props, position, anchors) :

@@ -11,10 +11,10 @@ import Area from "src/components/victory-area/area";
 
 describe("victory-area methods", () => {
   describe("getBaseline", () => {
-    const datasets = [
+    const data = [
       {x: 1, y: 1}, {x: 2, y: 1}
     ];
-    const stackedDatasets = [
+    const stackedData = [
       {x: 1, y: 1, yOffset: 1}, {x: 2, y: 1, yOffset: 1}
     ];
     const domain = {x: [0, 10], y: [0, 10]};
@@ -22,29 +22,29 @@ describe("victory-area methods", () => {
     const negativeDomain = {x: [0, 10], y: [-1, 10]};
 
     it("should return the minimum yOffset is not present", () => {
-      const calculatedProps = {domain};
-      const result = VictoryArea.prototype.getBaseline(datasets, calculatedProps);
+      const calculatedProps = {domain, data};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 0, x: 1, y: 1}, {y0: 0, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return the domain minimum when it is greater than zero", () => {
-      const calculatedProps = {domain: nonZeroDomain};
-      const result = VictoryArea.prototype.getBaseline(datasets, calculatedProps);
+      const calculatedProps = {domain: nonZeroDomain, data};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 1, x: 1, y: 1}, {y0: 1, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return zero when the domain minimum is negative", () => {
-      const calculatedProps = {domain: negativeDomain};
-      const result = VictoryArea.prototype.getBaseline(datasets, calculatedProps);
+      const calculatedProps = {domain: negativeDomain, data};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 0, x: 1, y: 1}, {y0: 0, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return yOffset if present", () => {
-      const calculatedProps = {domain};
-      const result = VictoryArea.prototype.getBaseline(stackedDatasets, calculatedProps);
+      const calculatedProps = {domain, data: stackedData};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 1, x: 1, y: 1, yOffset: 1}, {y0: 1, x: 2, y: 1, yOffset: 1}];
       expect(result).to.eql(expectedResult);
     });

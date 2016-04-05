@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import pick from "lodash/pick";
 import omit from "lodash/omit";
 import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import Point from "./point";
 import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
@@ -282,7 +283,7 @@ export default class VictoryScatter extends React.Component {
     return Helpers.evaluateStyle(baseDataStyle, data);
   }
 
-  getMutualSubComponentProps(datum, index, calculatedProps) {
+  getSharedProps(datum, index, calculatedProps) {
     const { style } = calculatedProps;
     const position = {
       x: calculatedProps.scale.x.call(null, datum.x),
@@ -293,37 +294,28 @@ export default class VictoryScatter extends React.Component {
 
     const symbol = ScatterHelpers.getSymbol(datum, this.props);
 
-    return {
-      index,
-      datum,
-      baseSize,
-      symbol,
-      style,
-      ...position
-    };
+    return assign({}, {index, datum, baseSize, symbol, style}, position);
   }
 
-  addDataComponentProps(mutualProps, getBoundEvents) {
-    const {datum, style, index, baseSize} = mutualProps;
+  addDataProps(sharedProps, getBoundEvents) {
+    const {datum, style, index, baseSize} = sharedProps;
 
     const dataStyle = this.getDataStyles(datum, style.data);
     const size = Helpers.evaluateProp(baseSize, datum);
     const events = getBoundEvents(this.props.events.data, "data");
 
-    return {
-      ...mutualProps,
-      size,
-      events,
-      key: `point-${index}`,
-      style: dataStyle,
-      ...this.state.dataState[index]
-    };
+    return assign(
+      {},
+      sharedProps,
+      {key: `point-${index}`, style: dataStyle, events, size},
+      this.state.dataState[index]
+    );
   }
 
-  addLabelComponentProps(mutualProps, pointProps, getBoundEvents) {
-    const { datum, style, index } = mutualProps;
-    const dataStyle = pointProps.style;
-    const { size } = pointProps;
+  addLabelProps(sharedProps, dataProps, getBoundEvents) {
+    const { datum, style, index } = sharedProps;
+    const dataStyle = dataProps.style;
+    const { size } = dataProps;
 
     const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
     const padding = style.labels.padding || size * 0.25;
@@ -332,28 +324,25 @@ export default class VictoryScatter extends React.Component {
 
     const events = getBoundEvents(this.props.events.labels, "labels");
 
-    return {
-      ...mutualProps,
-      events,
-      style: labelStyle,
-      labelComponent: this.props.labelComponent,
-      ...this.state.labelsState[index]
-    };
+    return assign(
+      {},
+      sharedProps,
+      {style: labelStyle, labelComponent: this.props.labelComponent, events},
+      this.state.labelsState[index]
+    );
   }
 
   renderPoint(datum, index, calculatedProps) {
     const getBoundEvents = Helpers.getEvents.bind(this);
-    const mutualProps = this.getMutualSubComponentProps(datum, index, calculatedProps);
-    const pointProps = this.addDataComponentProps(mutualProps, getBoundEvents);
-    const pointComponent = React.cloneElement(this.props.dataComponent, pointProps);
+    const sharedProps = this.getSharedProps(datum, index, calculatedProps);
+    const dataProps = this.addDataProps(sharedProps, getBoundEvents);
+    const pointComponent = React.cloneElement(this.props.dataComponent, dataProps);
     if (datum.label) {
-      const labelProps = this.addLabelComponentProps(mutualProps, pointProps, getBoundEvents);
+      const labelProps = this.addLabelProps(sharedProps, dataProps, getBoundEvents);
       return (
         <g key={`point-group-${index}`}>
           {pointComponent}
-          <PointLabel
-            {... labelProps}
-          />
+          <PointLabel {...labelProps}/>
         </g>
       );
     }

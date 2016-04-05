@@ -1,7 +1,7 @@
 import pick from "lodash/pick";
 import omit from "lodash/omit";
 import defaults from "lodash/defaults";
-import get from "lodash/get";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
 
@@ -67,6 +67,15 @@ export default class VictoryBar extends React.Component {
      * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
      */
     data: PropTypes.array,
+    /**
+     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
+     * create bars for each datum in the chart. The new element created from the passed
+     * dataComponent will be provided with the following properties calculated by VictoryBar:
+     * datum, index, style, events, horizontal (boolean), and position as object with
+     * values for x, y0, and y1. If a dataComponent is not provided, VictoryBar will
+     * use its default Bar component.
+     */
+    dataComponent: PropTypes.element,
     /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
@@ -219,6 +228,7 @@ export default class VictoryBar extends React.Component {
 
   static defaultProps = {
     data: defaultData,
+    dataComponent: <Bar/>,
     events: {},
     height: 300,
     padding: 50,
@@ -265,9 +275,9 @@ export default class VictoryBar extends React.Component {
     };
     const scale = this.getScale(props);
     return {
-      independent: scale.x(formatValue(x, "x")),
-      dependent0: scale.y(formatValue(y0, "y")),
-      dependent1: scale.y(formatValue(y1, "y"))
+      x: scale.x(formatValue(x, "x")),
+      y0: scale.y(formatValue(y0, "y")),
+      y1: scale.y(formatValue(y1, "y"))
     };
   }
 
@@ -278,37 +288,39 @@ export default class VictoryBar extends React.Component {
     return defaults({}, styleData, baseStyle);
   }
 
+  getSharedProps(props, datum, index) {
+    const horizontal = props.horizontal;
+    const position = this.getBarPosition(props, datum);
+    return { index, horizontal, datum, position };
+  }
+
   renderData(props, data, style) {
     return data.map((datum, index) => {
-      const position = this.getBarPosition(props, datum);
+      const sharedProps = this.getSharedProps(props, datum, index);
       const getBoundEvents = Helpers.getEvents.bind(this);
-      const barComponent = (
-        <Bar key={`bar-${index}`}
-          horizontal={props.horizontal}
-          style={this.getBarStyle(datum, style.data)}
-          index={index}
-          position={position}
-          datum={datum}
-          events={getBoundEvents(props.events.data, "data")}
-          {...get(this.state.dataState, index, undefined)}
-        />
+      const barStyle = this.getBarStyle(datum, style.data);
+      const events = getBoundEvents(props.events.data, "data");
+      const barProps = assign(
+        {key: `bar-${index}`, style: barStyle, events},
+        sharedProps,
+        this.state.dataState[index]
       );
+      const barComponent = React.cloneElement(this.props.dataComponent, barProps);
       if (datum.label || props.labels) {
-        const labelText = props.labels ? props.labels[index] || props.labels[0] : "";
+        const labelText = datum.label || (props.labels && props.labels[index]) || "";
+        const labelEvents = getBoundEvents(props.events.labels, "labels");
+        const labelProps = assign(
+          {
+            key: `bar-label-${index}`, style: style.labels, events: labelEvents,
+            labelText, labelComponent: props.labelComponent
+          },
+          sharedProps,
+          this.state.labelsState[index]
+        );
         return (
           <g key={`bar-${index}`}>
             {barComponent}
-            <BarLabel key={`bar-label-${index}`}
-              horizontal={props.horizontal}
-              style={style.labels}
-              index={index}
-              position={position}
-              datum={datum}
-              labelText={datum.label || labelText}
-              labelComponent={props.labelComponent}
-              events={getBoundEvents(props.events.labels, "labels")}
-              {...get(this.state.labelsState, index, undefined)}
-            />
+            <BarLabel {...labelProps}/>
           </g>
         );
       }
