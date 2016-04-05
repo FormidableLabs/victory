@@ -252,10 +252,10 @@ class CatPoint extends React.Component {
   render() {
     const {x, y, datum} = this.props;
     const cat = datum.y >= 0 ?
-      0x1F63B : 0x1F639;
+      '😻' : '😹';
     return (
       <text x={x} y={y} fontSize={20}>
-        {String.fromCodePoint(cat)}
+        {cat}
       </text>
     );
   }
