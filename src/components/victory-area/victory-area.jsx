@@ -1,7 +1,6 @@
 import pick from "lodash/pick";
 import last from "lodash/last";
 import assign from "lodash/assign";
-
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";

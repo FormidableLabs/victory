@@ -31,7 +31,7 @@ export default class AreaLabel extends React.Component {
   }
 
   renderVictoryLabel(props) {
-    const style = Helpers.evaluateStyle(defaults({padding: 0}, props.style), props.data);
+    const style = Helpers.evaluateStyle(defaults({}, props.style), props.data, {padding: 0});
     const events = Helpers.getPartialEvents(props.events, 0, props);
     return (
       <VictoryLabel
