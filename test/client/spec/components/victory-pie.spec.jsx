@@ -8,6 +8,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryPie from "src/components/victory-pie";
 import Slice from "src/components/slice";
+import SliceLabel from "src/components/slice-label";
 
 describe("components/victory-pie", () => {
   describe("default component rendering", () => {
@@ -64,6 +65,21 @@ describe("components/victory-pie", () => {
       const Slices = wrapper.find(Slice);
       Slices.forEach((node, index) => {
         const initialProps = Slices.at(index).props();
+        node.simulate("click");
+        expect(clickHandler.called).to.equal(true);
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
+      });
+    });
+    it("attaches an event to label", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryPie events={{labels: {onClick: clickHandler}}}/>
+      );
+      const SliceLabels = wrapper.find(SliceLabel);
+      SliceLabels.forEach((node, index) => {
+        const initialProps = SliceLabels.at(index).props();
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object

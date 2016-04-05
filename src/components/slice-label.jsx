@@ -48,7 +48,7 @@ export default class SliceLabel extends React.Component {
         datum={props.datum}
         style={style}
         text={label}
-        {...events}
+        events={events}
       />
     );
   }
