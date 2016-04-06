@@ -3,12 +3,14 @@
  */
 /*eslint-disable max-nested-callbacks */
 /* global sinon */
+/* eslint no-unused-expressions: 0 */
 
 import React from "react";
 import { shallow, mount } from "enzyme";
 import _ from "lodash";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 import Bar from "src/components/victory-bar/bar";
+import { VictoryLabel } from "victory-core";
 
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
@@ -69,6 +71,25 @@ describe("components/victory-bar", () => {
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
+      });
+    });
+    it("attaches an event to a label", () => {
+      const clickHandler = sinon.spy();
+      const data = [
+        {x: 0, y: 0, label: "0"},
+        {x: 1, y: 1, label: "1"},
+        {x: 2, y: 2, label: "2"}
+      ];
+      const wrapper = mount(
+        <VictoryBar data={data} events={{labels: {onClick: clickHandler}}}/>
+      );
+      const Labels = wrapper.find(VictoryLabel);
+      Labels.forEach((node, index) => {
+        node.childAt(0).simulate("click");
+        expect(clickHandler).called;
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.contain({labelText: `${index}`});
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

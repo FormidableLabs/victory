@@ -7,6 +7,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryArea from "src/components/victory-area/victory-area";
+import { VictoryLabel } from "victory-core";
 import Area from "src/components/victory-area/area";
 
 describe("victory-area methods", () => {
@@ -76,6 +77,21 @@ describe("components/victory-area", () => {
         expect(clickHandler).called;
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
+      });
+    });
+
+    it("attaches an event to a label", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryArea label={"okay"} events={{labels: {onClick: clickHandler}}}/>
+      );
+      const Labels = wrapper.find(VictoryLabel);
+      Labels.forEach((node, index) => {
+        node.childAt(0).simulate("click");
+        expect(clickHandler).called;
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.contain({labelText: "okay"});
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

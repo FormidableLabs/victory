@@ -48,7 +48,7 @@ export default class BarLabel extends React.Component {
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, index, props);
     const newProps = {
-      index: [props.index.seriesIndex, props.index.barIndex],
+      index: props.index,
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
       datum: props.datum, // Pass datum for custom label component to access
@@ -65,7 +65,7 @@ export default class BarLabel extends React.Component {
     const baseStyle = defaults({}, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
-    const index = [props.index.seriesIndex, props.index.barIndex];
+    const index = props.index;
     const events = Helpers.getPartialEvents(props.events, index, props);
     return (
       <VictoryLabel
