@@ -9,7 +9,13 @@ const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 export default {
 
   getDefaultScale() {
-    return d3Scale.linear();
+    return d3Scale.scaleLinear();
+  },
+
+  toNewName(scale) {
+    // d3 scale changed the naming scheme for scale from "linear" -> "scaleLinear" etc.
+    const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
+    return `scale${capitalize(scale)}`;
   },
 
   validScale(scale) {
@@ -36,7 +42,7 @@ export default {
     }
     const scale = props.scale[axis] || props.scale;
     if (this.validScale(scale)) {
-      return isFunction(scale) ? scale : d3Scale[scale]();
+      return isFunction(scale) ? scale : d3Scale[this.toNewName(scale)]();
     }
   },
 
@@ -55,7 +61,8 @@ export default {
     if (scale) {
       return scale;
     }
-    return d3Scale[this.getScaleTypeFromData(props, axis)]();
+    const dataScale = this.getScaleTypeFromData(props, axis);
+    return d3Scale[this.toNewName(dataScale)]();
   },
 
   getScaleType(props, axis) {
