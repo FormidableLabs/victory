@@ -190,23 +190,32 @@ function getTransitionDurations(children, childrenTransitions, parentAnimate) {
   }
 
   return children.reduce((durations, child, idx) => {
+    const onExit =
+      child.props.animate &&
+      child.props.animate.onExit ||
+      child.type.defaultTransitions &&
+      child.type.defaultTransitions.onExit;
+    const onEnter =
+      child.props.animate &&
+      child.props.animate.onEnter ||
+      child.type.defaultTransitions &&
+      child.type.defaultTransitions.onEnter;
+
     if (
       childrenTransitions[idx] &&
       childrenTransitions[idx].exiting &&
-      child.props.animate &&
-      child.props.animate.onExit &&
-      child.props.animate.onExit.duration > durations.exit
+      onExit &&
+      onExit.duration > durations.exit
     ) {
-      durations.exit = child.props.animate.onExit.duration;
+      durations.exit = onExit.duration;
     }
     if (
       childrenTransitions[idx] &&
       childrenTransitions[idx].entering &&
-      child.props.animate &&
-      child.props.animate.onEnter &&
-      child.props.animate.onEnter.duration > durations.enter
+      onEnter &&
+      onEnter.duration > durations.enter
     ) {
-      durations.enter = child.props.animate.onEnter.duration;
+      durations.enter = onEnter.duration;
     }
     if (
       child.props.animate &&
