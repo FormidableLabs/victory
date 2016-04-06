@@ -109,7 +109,8 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
 function getInitialChildProps(animate, data) {
   const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
   return {
-    data: data.map((datum) => assign({}, datum, before(datum)))
+    data: data.map((datum) => assign({}, datum, before(datum))),
+    animate: {}
   };
 }
 
