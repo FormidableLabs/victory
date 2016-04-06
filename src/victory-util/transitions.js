@@ -109,8 +109,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
 function getInitialChildProps(animate, data) {
   const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
   return {
-    data: data && data.map((datum) => assign({}, datum, before(datum))),
-    animate: {}
+    data: data.map((datum) => assign({}, datum, before(datum)))
   };
 }
 
@@ -190,32 +189,23 @@ function getTransitionDurations(children, childrenTransitions, parentAnimate) {
   }
 
   return children.reduce((durations, child, idx) => {
-    const onExit =
-      child.props.animate &&
-      child.props.animate.onExit ||
-      child.type.defaultTransitions &&
-      child.type.defaultTransitions.onExit;
-    const onEnter =
-      child.props.animate &&
-      child.props.animate.onEnter ||
-      child.type.defaultTransitions &&
-      child.type.defaultTransitions.onEnter;
-
     if (
       childrenTransitions[idx] &&
       childrenTransitions[idx].exiting &&
-      onExit &&
-      onExit.duration > durations.exit
+      child.props.animate &&
+      child.props.animate.onExit &&
+      child.props.animate.onExit.duration > durations.exit
     ) {
-      durations.exit = onExit.duration;
+      durations.exit = child.props.animate.onExit.duration;
     }
     if (
       childrenTransitions[idx] &&
       childrenTransitions[idx].entering &&
-      onEnter &&
-      onEnter.duration > durations.enter
+      child.props.animate &&
+      child.props.animate.onEnter &&
+      child.props.animate.onEnter.duration > durations.enter
     ) {
-      durations.enter = onEnter.duration;
+      durations.enter = child.props.animate.onEnter.duration;
     }
     if (
       child.props.animate &&
@@ -260,6 +250,10 @@ export function getTransitionPropsFactory(children, parentState, parentAnimate, 
   const transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
 
   return function getTransitionProps(childProps, childType, index) { // eslint-disable-line max-statements,max-len
+    if (!childProps.data) {
+      return {};
+    }
+
     let animate = assign({}, childProps.animate || parentAnimate);
 
     if (childType.defaultTransitions) {
