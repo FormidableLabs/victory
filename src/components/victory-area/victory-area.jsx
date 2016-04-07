@@ -28,7 +28,7 @@ export default class VictoryArea extends React.Component {
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the bar chart will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+     * @examples {duration: 500, onEnd: () => alert("done!")}
      */
     animate: PropTypes.object,
     /**

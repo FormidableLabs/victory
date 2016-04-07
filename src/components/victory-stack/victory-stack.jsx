@@ -22,7 +22,7 @@ export default class VictoryStack extends React.Component {
      * given, all children defined in chart will pass the options specified in this prop to
      * victory-animation, unless they have animation props of their own specified.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
+     * @examples {duration: 500, onEnd: () => alert("woo!")}
      */
     animate: PropTypes.object,
     /**
