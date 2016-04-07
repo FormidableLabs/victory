@@ -146,7 +146,7 @@ export default class App extends React.Component {
           style={{...this.state.style, labels: {fontSize: 0}}}
           data={this.state.data}
           innerRadius={100}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           colorScale={this.state.colorScale}
           dataComponent={<BorderLabelSlice />}
         />
@@ -155,7 +155,7 @@ export default class App extends React.Component {
           style={this.state.style}
           data={this.state.data}
           innerRadius={100}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           colorScale={this.state.colorScale}
         />
 
@@ -171,7 +171,7 @@ export default class App extends React.Component {
           data={_.range(0, 6).map((i) => [i, Math.random()])}
           x={0}
           y={1}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           style={this.state.style}
           colorScale="warm"
         />
@@ -181,7 +181,7 @@ export default class App extends React.Component {
           x={0}
           y={1}
           style={this.state.style}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           colorScale="qualitative"
         />
       </div>

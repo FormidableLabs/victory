@@ -204,14 +204,14 @@ class App extends React.Component {
   componentDidMount() {
     setInterval(() => {
       this.setState({data: this.getData()});
-    }, 3000);
+    }, 2000);
   }
 
   render() {
     return (
       <VictoryPie
         data={this.state.data}
-        animate={{velocity: 0.02}}
+        animate={{duration: 2000}}
       />
     );
   }

@@ -11,7 +11,6 @@ import {
 } from "victory-core";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
-import lruMemoize from "lru-memoize";
 
 const defaultStyles = {
   data: {
@@ -57,7 +56,7 @@ export default class VictoryPie extends React.Component {
      * The animate prop specifies props for victory-animation to use. If this prop is
      * not given, the pie chart will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+     * @examples {duration: 500, onEnd: () => alert("done!")}
      */
     animate: PropTypes.object,
     /**
@@ -259,10 +258,6 @@ export default class VictoryPie extends React.Component {
       dataState: {},
       labelsState: {}
     };
-    this.memoized = {
-      // Provide performant, multiple-argument memoization with LRU cache-size of 1.
-      getStyles: lruMemoize(1, true)(Helpers.getStyles)
-    };
   }
 
   renderSlice(slice, index, calculatedProps) {
@@ -342,7 +337,7 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const style = this.memoized.getStyles(
+    const style = Helpers.getStyles(
       this.props.style,
       defaultStyles,
       this.props.height,
