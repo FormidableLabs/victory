@@ -107,7 +107,7 @@ export default class App extends React.Component {
           style={{parent: {border: "1px solid black", margin: "5px"}, data: this.state.style}}
           data={this.state.data}
           label={"label\none"}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
         />
 
         <VictoryLine

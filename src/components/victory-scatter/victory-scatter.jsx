@@ -49,7 +49,7 @@ export default class VictoryScatter extends React.Component {
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the scatter plot will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {delay: 5, velocity: 0.02, onEnd: () => alert("woo!")}
+     * @examples {delay: 5, duration: 500, onEnd: () => alert("woo!")}
      */
     animate: PropTypes.object,
     /**

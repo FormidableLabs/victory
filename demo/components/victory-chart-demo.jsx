@@ -147,7 +147,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{velocity: 0.02}}>
+          <VictoryChart style={chartStyle} animate={{duration: 2000}}>
             <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
               data={this.state.lineData}

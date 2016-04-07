@@ -65,7 +65,7 @@ export default class App extends React.Component {
             label={<VictoryLabel>{"animation\nwow!"}</VictoryLabel>}
             tickValues={this.state.tickValues}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
-            animate={{velocity: 0.01}}
+            animate={{duration: 2000}}
           />
         </div>
         <div>

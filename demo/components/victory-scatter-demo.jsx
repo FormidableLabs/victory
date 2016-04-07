@@ -109,7 +109,7 @@ export default class App extends React.Component {
           width={500}
           height={500}
           domain={[0, 600]}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           data={this.state.data}
           dataComponent={<CatPoint />}
         />
@@ -119,7 +119,7 @@ export default class App extends React.Component {
           width={500}
           height={500}
           domain={[0, 600]}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           data={this.state.data}
         />
 
