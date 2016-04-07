@@ -23,6 +23,14 @@ describe("components/victory-label", () => {
     expect(output.html()).to.contain("such text, wow");
   });
 
+  it("has a transform property that rotates the text to match the labelAngle prop", () => {
+    const wrapper = shallow(
+      <VictoryLabel angle={46} text={"such text, wow"}/>
+    );
+    const output = wrapper.find("text");
+    expect(output.prop("transform")).to.contain("rotate(46");
+  });
+
   describe("event handling", () => {
     it("attaches an to the parent object", () => {
       const clickHandler = sinon.spy();

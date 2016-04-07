@@ -13,6 +13,13 @@ const defaultStyles = {
 export default class VictoryLabel extends React.Component {
   static propTypes = {
     /**
+     * Specifies the angle to rotate the text by.
+     */
+    angle: PropTypes.oneOfType([
+      PropTypes.string,
+      PropTypes.number
+    ]),
+    /**
      * The capHeight prop defines a text metric for the font being used: the
      * expected height of capital letters. This is necessary because of SVG,
      * which (a) positions the *bottom* of the text at `y`, and (b) has no
@@ -192,11 +199,19 @@ export default class VictoryLabel extends React.Component {
     }
   }
 
+  getTransform(props) {
+    const {transform, datum, x, y, angle} = props;
+    const transformPart = transform && Helpers.evaluateProp(transform, datum);
+    const rotatePart = angle && {rotate: [angle, x, y]};
+
+    return Style.toTransformString(transformPart, rotatePart);
+  }
+
   render() {
     const datum = this.props.datum || this.props.data;
     const lineHeight = this.getHeight(this.props, "lineHeight");
-    const transform = this.props.transform &&
-      Style.toTransformString(Helpers.evaluateProp(this.props.transform, datum));
+    const transform = this.getTransform(this.props);
+
     const textAnchor = this.props.textAnchor ?
       Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
     const content = this.getContent(this.props);

@@ -1,16 +1,20 @@
 import reduceCSSCalc from "reduce-css-calc";
 
-export default {
-  /**
-   * Given an object with CSS/SVG transform definitions, return the string value
-   * for use with the `transform` CSS property or SVG attribute. Note that we
-   * can't always guarantee the order will match the author's intended order, so
-   * authors should only use the object notation if they know that their transform
-   * is commutative or that there is only one.
-   * @param {Object} obj An object of transform definitions.
-   * @returns {String} The generated transform string.
-   */
-  toTransformString(obj) {
+/**
+ * Given an object with CSS/SVG transform definitions, return the string value
+ * for use with the `transform` CSS property or SVG attribute. Note that we
+ * can't always guarantee the order will match the author's intended order, so
+ * authors should only use the object notation if they know that their transform
+ * is commutative or that there is only one.
+ * @param {Object} obj An object of transform definitions.
+ * @returns {String} The generated transform string.
+ */
+const toTransformString = function (obj, ...more) {
+  if (more.length > 0) {
+    return more.reduce((memo, currentObj) => {
+      return [memo, toTransformString(currentObj)].join(" ");
+    }, toTransformString(obj));
+  } else {
     if (!obj || typeof obj === "string") {
       return obj;
     }
@@ -22,7 +26,12 @@ export default {
       }
     }
     return transforms.join(" ");
-  },
+  }
+};
+
+export default {
+
+  toTransformString,
 
   calc(expr, precision) {
     return reduceCSSCalc(`calc(${expr})`, precision);
