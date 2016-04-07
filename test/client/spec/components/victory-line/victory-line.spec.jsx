@@ -3,11 +3,13 @@
  */
 /* global sinon */
 /*eslint-disable max-nested-callbacks */
+/* eslint no-unused-expressions: 0 */
 
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";
+import { VictoryLabel } from "victory-core";
 
 class MyLineSegment extends React.Component {
   render() { }
@@ -199,6 +201,20 @@ describe("components/victory-line", () => {
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.eql(initialProps);
+      });
+    });
+
+    it("attaches an event to a label", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryLine label={"okay"} events={{labels: {onClick: clickHandler}}}/>
+      );
+      const Labels = wrapper.find(VictoryLabel);
+      Labels.forEach((node, index) => {
+        node.childAt(0).simulate("click");
+        expect(clickHandler).called;
+        expect(clickHandler.args[index][1]).to.contain({label: "okay"});
+        expect(clickHandler.args[index][2]).to.eql(index);
       });
     });
   });

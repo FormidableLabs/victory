@@ -13,23 +13,23 @@ export default class Bar extends React.Component {
   };
 
   getVerticalBarPath(position, width) {
-    const {independent, dependent0, dependent1} = position;
+    const {x, y0, y1} = position;
     const size = width / 2;
-    return `M ${independent - size}, ${dependent0}
-      L ${independent - size}, ${dependent1}
-      L ${independent + size}, ${dependent1}
-      L ${independent + size}, ${dependent0}
-      L ${independent - size}, ${dependent0}`;
+    return `M ${x - size}, ${y0}
+      L ${x - size}, ${y1}
+      L ${x + size}, ${y1}
+      L ${x + size}, ${y0}
+      L ${x - size}, ${y0}`;
   }
 
   getHorizontalBarPath(position, width) {
-    const {independent, dependent0, dependent1} = position;
+    const {x, y0, y1} = position;
     const size = width / 2;
-    return `M ${dependent0}, ${independent - size}
-      L ${dependent0}, ${independent + size}
-      L ${dependent1}, ${independent + size}
-      L ${dependent1}, ${independent - size}
-      L ${dependent0}, ${independent - size}`;
+    return `M ${y0}, ${x - size}
+      L ${y0}, ${x + size}
+      L ${y1}, ${x + size}
+      L ${y1}, ${x - size}
+      L ${y0}, ${x - size}`;
   }
 
   getBarPath(position, width) {
@@ -41,7 +41,7 @@ export default class Bar extends React.Component {
     const style = Helpers.evaluateStyle(this.props.style, this.props.datum);
     // TODO better bar width calculation
     const barWidth = style.width || 8;
-    const path = typeof this.props.position.independent === "number" ?
+    const path = typeof this.props.position.x === "number" ?
       this.getBarPath(this.props.position, barWidth) : undefined;
     const events = Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
     return (

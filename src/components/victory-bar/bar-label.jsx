@@ -1,5 +1,4 @@
 import defaults from "lodash/defaults";
-import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
 
@@ -48,16 +47,17 @@ export default class BarLabel extends React.Component {
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, index, props);
-    const newProps = assign({}, events, {
-      index: [props.index.seriesIndex, props.index.barIndex],
+    const newProps = {
+      index: props.index,
       x: component.props.x || position.x + padding.x,
       y: component.props.y || position.y - padding.y,
       datum: props.datum, // Pass datum for custom label component to access
       text: labelText,
       textAnchor: component.props.textAnchor || anchors.text,
       verticalAnchor: component.props.verticalAnchor || anchors.vertical,
-      style
-    });
+      style,
+      events
+    };
     return React.cloneElement(component, newProps);
   }
 
@@ -65,7 +65,7 @@ export default class BarLabel extends React.Component {
     const baseStyle = defaults({}, props.style, {padding: 0});
     const style = Helpers.evaluateStyle(baseStyle, props.datum);
     const padding = this.getlabelPadding(props, style);
-    const index = [props.index.seriesIndex, props.index.barIndex];
+    const index = props.index;
     const events = Helpers.getPartialEvents(props.events, index, props);
     return (
       <VictoryLabel
@@ -77,7 +77,7 @@ export default class BarLabel extends React.Component {
         verticalAnchor={anchors.vertical}
         style={style}
         text={props.labelText}
-        {...events}
+        events={events}
       />
     );
   }
@@ -85,8 +85,8 @@ export default class BarLabel extends React.Component {
   renderLabel(props) {
     const anchors = this.getLabelAnchors(props);
     const position = {
-      x: props.horizontal ? props.position.dependent1 : props.position.independent,
-      y: props.horizontal ? props.position.independent : props.position.dependent1
+      x: props.horizontal ? props.position.y1 : props.position.x,
+      y: props.horizontal ? props.position.x : props.position.y1
     };
     return props.labelComponent ?
       this.renderLabelComponent(props, position, anchors) :
