@@ -21,8 +21,17 @@ describe("components/victory-pie", () => {
         <VictoryPie/>
       );
       const svg = wrapper.find("svg");
-      expect(svg.prop("style").width).to.equal(VictoryPie.defaultProps.width);
-      expect(svg.prop("style").height).to.equal(VictoryPie.defaultProps.height);
+      expect(svg.prop("style").width).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
+    });
+
+    it("renders an svg with the correct viewBox", () => {
+      const wrapper = shallow(
+        <VictoryPie/>
+      );
+      const svg = wrapper.find("svg");
+      const viewBoxValue = `0 0 ${VictoryPie.defaultProps.width} ${VictoryPie.defaultProps.height}`;
+      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
 

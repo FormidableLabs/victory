@@ -79,7 +79,8 @@ export default class App extends React.Component {
       style: {
         parent: {
           border: "1px solid #ccc",
-          margin: 20
+          margin: "2%",
+          maxWidth: "40%"
         },
         data: {
           strokeWidth: 2
@@ -106,84 +107,93 @@ export default class App extends React.Component {
   }
 
   render() {
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
     return (
       <div>
         <h1>VictoryPie Demo</h1>
 
-        <VictoryPie
-          style={this.state.style}
-          events={{
-            data: {
-              onClick: (evt, props) => {
-                return {
-                  style: _.assign({}, props.style, {opacity: props.style.opacity === 1 ? 0.6 : 1})
-                };
+        <div style={containerStyle}>
+          <VictoryPie
+            style={this.state.style}
+            events={{
+              data: {
+                onClick: (evt, props) => {
+                  return {
+                    style: _.assign({}, props.style, {opacity: props.style.opacity === 1 ? 0.6 : 1})
+                  };
+                }
               }
-            }
-          }}
-        />
+            }}
+          />
 
-        <VictoryPie
-          style={{
-            parent: {border: "1px solid #ccc", margin: 20},
-            labels: {fontSize: 20, padding: 100, fill: "white"}
-          }}
-          colorScale="greyscale"
-        />
+          <VictoryPie
+            style={{
+              parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
+              labels: {fontSize: 20, padding: 100, fill: "white"}
+            }}
+            colorScale="greyscale"
+          />
 
-        <VictoryPie style={this.state.style} innerRadius={140}/>
+          <VictoryPie style={this.state.style} innerRadius={140} />
 
-        <VictoryPie
-          style={{
-            parent: {border: "1px solid #ccc", margin: 20},
-            data: {stroke: "transparent", opacity: 0.4}
-          }}
-        />
+          <VictoryPie
+            style={{
+              parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
+              data: {stroke: "transparent", opacity: 0.4}
+            }}
+          />
 
-        <VictoryPie style={this.state.style} startAngle={-90} endAngle={90} />
+          <VictoryPie style={this.state.style} startAngle={-90} endAngle={90} />
 
-        <VictoryPie
-          style={{...this.state.style, labels: {fontSize: 0}}}
-          data={this.state.data}
-          innerRadius={100}
-          animate={{duration: 2000}}
-          colorScale={this.state.colorScale}
-          dataComponent={<BorderLabelSlice />}
-        />
+          <VictoryPie
+            style={{...this.state.style, labels: {fontSize: 0}}}
+            data={this.state.data}
+            innerRadius={100}
+            animate={{duration: 2000}}
+            colorScale={this.state.colorScale}
+            dataComponent={<BorderLabelSlice />}
+          />
 
-        <VictoryPie
-          style={this.state.style}
-          data={this.state.data}
-          innerRadius={100}
-          animate={{duration: 2000}}
-          colorScale={this.state.colorScale}
-        />
+          <VictoryPie
+            style={this.state.style}
+            data={this.state.data}
+            innerRadius={100}
+            animate={{duration: 2000}}
+            colorScale={this.state.colorScale}
+          />
 
-        <VictoryPie
-          style={this.state.style}
-          endAngle={90}
-          innerRadius={140}
-          padAngle={5}
-          startAngle={-90}
-        />
+          <VictoryPie
+            style={this.state.style}
+            endAngle={90}
+            innerRadius={140}
+            padAngle={5}
+            startAngle={-90}
+          />
 
-        <VictoryPie
-          data={_.range(0, 6).map((i) => [i, Math.random()])}
-          x={0}
-          y={1}
-          animate={{duration: 2000}}
-          style={this.state.style}
-          colorScale="warm"
-        />
+          <VictoryPie
+            data={_.range(0, 6).map((i) => [i, Math.random()])}
+            x={0}
+            y={1}
+            animate={{duration: 2000}}
+            style={this.state.style}
+            colorScale="warm"
+          />
 
-        <VictoryPie
-          data={_.range(0, 6).map((i) => [i, Math.random()])}
-          x={0}
-          y={1}
-          style={this.state.style}
-          animate={{duration: 2000}}
-          colorScale="qualitative"
-        />
+          <VictoryPie
+            data={_.range(0, 6).map((i) => [i, Math.random()])}
+            x={0}
+            y={1}
+            style={this.state.style}
+            animate={{duration: 2000}}
+            colorScale="qualitative"
+          />
+        </div>
       </div>
     );
   }

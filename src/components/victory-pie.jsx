@@ -340,8 +340,8 @@ export default class VictoryPie extends React.Component {
     const style = Helpers.getStyles(
       this.props.style,
       defaultStyles,
-      this.props.height,
-      this.props.width)
+      "auto",
+      "100%")
     ;
     const padding = Helpers.getPadding(this.props);
     const radius = getRadius(this.props, padding);
@@ -356,7 +356,13 @@ export default class VictoryPie extends React.Component {
     );
 
     return this.props.standalone ?
-      <svg style={parentStyle} {...this.props.events.parent}>{group}</svg> :
+      <svg
+        style={parentStyle}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
+        {group}
+      </svg> :
       group;
   }
 }
