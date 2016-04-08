@@ -390,10 +390,20 @@ export default class VictoryScatter extends React.Component {
       );
     }
     const style = Helpers.getStyles(
-      this.props.style, defaultStyles, this.props.height, this.props.width);
+      this.props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

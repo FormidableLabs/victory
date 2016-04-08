@@ -59,8 +59,18 @@ describe("components/victory-area", () => {
         <VictoryArea/>
       );
       const svg = wrapper.find("svg");
-      expect(svg.prop("style").width).to.equal(VictoryArea.defaultProps.width);
-      expect(svg.prop("style").height).to.equal(VictoryArea.defaultProps.height);
+      expect(svg.prop("style").width).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
+    });
+
+    it("renders an svg with the correct viewbox", () => {
+      const wrapper = shallow(
+        <VictoryArea/>
+      );
+      const svg = wrapper.find("svg");
+      const viewBoxValue =
+        `0 0 ${VictoryArea.defaultProps.width} ${VictoryArea.defaultProps.height}`;
+      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
 

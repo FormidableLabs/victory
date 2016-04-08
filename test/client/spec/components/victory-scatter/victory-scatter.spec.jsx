@@ -23,8 +23,18 @@ describe("components/victory-scatter", () => {
         <VictoryScatter/>
       );
       const svg = wrapper.find("svg");
-      expect(svg.prop("style").width).to.equal(VictoryScatter.defaultProps.width);
-      expect(svg.prop("style").height).to.equal(VictoryScatter.defaultProps.height);
+      expect(svg.prop("style").width).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
+    });
+
+    it("renders an svg with the correct viewBox", () => {
+      const wrapper = shallow(
+        <VictoryScatter/>
+      );
+      const svg = wrapper.find("svg");
+      const viewBoxValue =
+        `0 0 ${VictoryScatter.defaultProps.width} ${VictoryScatter.defaultProps.height}`;
+      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
 
