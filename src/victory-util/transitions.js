@@ -203,32 +203,23 @@ function getTransitionDurations(props, childrenTransitions) {
   const children = React.Children.toArray(props.children);
   if (children) {
     return children.reduce((durations, child, idx) => {
-      const onExit =
-        child.props.animate &&
-        child.props.animate.onExit ||
-        child.type.defaultTransitions &&
-        child.type.defaultTransitions.onExit;
-      const onEnter =
-        child.props.animate &&
-        child.props.animate.onEnter ||
-        child.type.defaultTransitions &&
-        child.type.defaultTransitions.onEnter;
-
       if (
         childrenTransitions[idx] &&
         childrenTransitions[idx].exiting &&
-        onExit &&
-        onExit.duration > durations.exit
+        child.props.animate &&
+        child.props.animate.onExit &&
+        child.props.animate.onExit.duration > durations.exit
       ) {
-        durations.exit = onExit.duration;
+        durations.exit = child.props.animate.onExit.duration;
       }
       if (
         childrenTransitions[idx] &&
         childrenTransitions[idx].entering &&
-        onEnter &&
-        onEnter.duration > durations.enter
+        child.props.animate &&
+        child.props.animate.onEnter &&
+        child.props.animate.onEnter.duration > durations.enter
       ) {
-        durations.enter = onEnter.duration;
+        durations.enter = child.props.animate.onEnter.duration;
       }
       if (
         child.props.animate &&
