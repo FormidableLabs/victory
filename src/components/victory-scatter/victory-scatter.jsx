@@ -7,7 +7,7 @@ import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
 const defaultStyles = {
@@ -33,13 +33,13 @@ export default class VictoryScatter extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 600,
-      before: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 }),
+      before: (datum) => ({ opacity: datum.opacity || 1 }),
       after: () => ({ opacity: 0 })
     },
     onEnter: {
       duration: 600,
       before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 })
+      after: (datum) => ({ opacity: datum.opacity || 1 })
     }
   };
 
@@ -389,15 +389,14 @@ export default class VictoryScatter extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      const whitelist = [
         "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size",
         "style", "width", "x", "y"
-      ]);
-
+      ];
       return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryScatter {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          <VictoryScatter {...this.props}/>
+        </VictoryTransition>
       );
     }
     const style = Helpers.getStyles(

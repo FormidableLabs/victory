@@ -6,7 +6,7 @@ import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
 import Area from "./area";
 import AreaLabel from "./area-label";
 
@@ -28,11 +28,13 @@ export default class VictoryArea extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 600,
-      after: (datum) => ({ y: 0 })
+      before: (datum) => ({y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset }),
+      after: () => ({ y: 0, yOffset: 0, xOffset: 0 })
     },
     onEnter: {
       duration: 600,
-      before: (datum) => ({ y: 0 }),
+      before: () => ({ y: 0, yOffset: 0, xOffset: 0 }),
+      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset })
     }
   };
 
@@ -327,22 +329,17 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryBar` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
     if (this.props.animate) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      const whitelist = [
         "data", "domain", "height", "padding", "style", "width"
-      ]);
+      ];
       return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryArea {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          <VictoryArea {...this.props}/>
+        </VictoryTransition>
       );
     }
+
     const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;

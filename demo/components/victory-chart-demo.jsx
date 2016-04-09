@@ -133,7 +133,7 @@ class App extends React.Component {
               data={this.state.barTransitionData}
               animate={{
                 onExit: {
-                  duration: 1000,
+                  duration: 500,
                   before: (datum) => ({ y: datum.y}),
                   after: () => ({y: 0})
                 },
@@ -196,7 +196,7 @@ class App extends React.Component {
                 new Date(2010, 1, 1),
                 new Date(2020, 1, 1)
               ]}
-              tickFormat={(x) => x.getFullYear()}
+              tickFormat={(x) => new Date(x).getFullYear()}
             />
             <VictoryLine
               style={{
@@ -222,7 +222,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart animate={{ duration: 1500 }}>
+          <VictoryChart animate={{ duration: 2000 }}>
             <VictoryScatter
               data={this.state.scatterData}
               animate={{

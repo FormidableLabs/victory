@@ -7,7 +7,7 @@ import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
 
 const defaultStyles = {
   data: {
@@ -32,13 +32,13 @@ export default class VictoryLine extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 600,
-      before: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 }),
+      before: (datum) => ({ opacity: datum.opacity || 1 }),
       after: () => ({ opacity: 0 })
     },
     onEnter: {
       duration: 600,
       before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 })
+      after: (datum) => ({ opacity: datum.opacity || 1 })
     }
   };
 
@@ -379,11 +379,10 @@ export default class VictoryLine extends React.Component {
       const whitelist = [
         "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
       ];
-      const animateData = pick(this.props, whitelist);
       return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryLine {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          <VictoryLine {...this.props}/>
+        </VictoryTransition>
       );
     }
     const style = Helpers.getStyles(

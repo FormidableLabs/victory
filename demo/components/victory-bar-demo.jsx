@@ -8,6 +8,8 @@ export default class App extends React.Component {
     super();
     this.state = {
       barData: this.getBarData(),
+      barTransitionData: this.getBarTransitionData(),
+      multiTransitionData: this.getMultiTransitionData(),
       numericBarData: this.getNumericBarData()
     };
   }
@@ -50,14 +52,32 @@ export default class App extends React.Component {
     });
   }
 
+  getBarTransitionData() {
+    const bars = _.random(6, 10);
+    return _.map(_.range(bars), (bar) => {
+      return {x: bar, y: _.random(2, 10)}
+    })
+  }
+
+  getMultiTransitionData() {
+    const bars = _.random(6, 10);
+    return _.map(_.range(5), () => {
+      return _.map(_.range(bars), (bar) => {
+        return {x: bar, y: _.random(2, 10)}
+      });
+    });
+  }
+
   componentDidMount() {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         barData: this.getBarData(),
+        barTransitionData: this.getBarTransitionData(),
+        multiTransitionData: this.getMultiTransitionData(),
         numericBarData: this.getNumericBarData()
       });
-    }, 4000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -73,6 +93,20 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
+        <VictoryBar
+          style={{parent: parentStyle}} animate={{duration: 1000}}
+          data={this.state.barTransitionData}
+        />
+
+        <VictoryStack
+          style={{parent: parentStyle}}
+          animate={{duration: 1000}}
+          colorScale={"warm"}
+        >
+          {this.state.multiTransitionData.map((data, index) => {
+            return <VictoryBar key={index} data={data}/>;
+          })}
+        </VictoryStack>
 
         <VictoryGroup
           style={{parent: parentStyle}} offset={18}

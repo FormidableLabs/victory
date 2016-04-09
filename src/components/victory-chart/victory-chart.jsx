@@ -1,4 +1,5 @@
 import defaults from "lodash/defaults";
+import partialRight from "lodash/partialRight";
 
 import React, { PropTypes } from "react";
 import {
@@ -132,13 +133,18 @@ export default class VictoryChart extends React.Component {
     if (!this.props.animate) {
       return;
     }
-
+    const notAxis = (child) => {
+      const role = child.type && child.type.role;
+      return role && role !== "axis";
+    };
+    const oldChildren = this.getFlatChildren(this.props).filter((child) => notAxis(child));
+    const nextChildren = this.getFlatChildren(nextProps).filter((child) => notAxis(child));
     const {
       nodesWillExit,
       nodesWillEnter,
       childrenTransitions,
       nodesShouldEnter
-    } = Transitions.getInitialTransitionState(this.props, nextProps);
+    } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
     this.setState({
       nodesWillExit,
@@ -147,6 +153,20 @@ export default class VictoryChart extends React.Component {
       nodesShouldEnter,
       oldProps: nodesWillExit ? this.props : null
     });
+  }
+
+  getFlatChildren(props) {
+    const allFlat = ([first, ...rest]) => {
+      if (typeof first === "undefined") {
+        return [];
+      } else if (first.props.children) {
+        return [...allFlat(React.Children.toArray(first.props.children))];
+      } else {
+        return [first, ...allFlat(rest)];
+      }
+    }
+    const children = React.Children.toArray(props.children);
+    return allFlat(children);
   }
 
   getStyles(props) {
@@ -231,22 +251,30 @@ export default class VictoryChart extends React.Component {
     return {axisComponents, categories, domain, horizontal, scale, stringMap};
   }
 
+  getAnimationProps(props, child, index) {
+    let getTransitions = props.animate && props.animate.getTransitions;
+    let parentState = props.animate && props.animate.parentState || this.state;
+    if (!getTransitions) {
+      const getTransitionProps = Transitions.getTransitionPropsFactory(
+        props,
+        this.state,
+        (newState) => this.setState(newState)
+      );
+      getTransitions = partialRight(getTransitionProps, index);
+    }
+    return defaults({getTransitions, parentState}, props.animate, child.props.animate);
+  }
+
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
 
-    const getTransitionProps = Transitions.getTransitionPropsFactory(
-      props,
-      this.state,
-      (newState) => this.setState(newState)
-    );
-
     return childComponents.map((child, index) => {
-      const transitionProps = getTransitionProps(child.props, child.type, index);
+      // const transitionProps = getTransitionProps(child.props, child.type, index);
       // const transitionProps = getTransitionProps(props, child, index);
       const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
-
-      return React.cloneElement(child, defaults({
+      const newProps = defaults({
+        animate: this.getAnimationProps(props, child, index),
         height: props.height,
         width: props.width,
         padding: Helpers.getPadding(props),
@@ -254,22 +282,23 @@ export default class VictoryChart extends React.Component {
         key: index,
         standalone: false,
         style
-      }, transitionProps, childProps));
+      }, childProps);
+      return React.cloneElement(child, newProps);
     });
   }
 
   render() {
-    const style = this.getStyles(this.props);
-    const propsToRender = this.state && this.state.nodesWillExit ?
+    const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const childComponents = ChartHelpers.getChildComponents(propsToRender, defaultAxes);
+    const style = this.getStyles(props);
+    const childComponents = ChartHelpers.getChildComponents(props, defaultAxes);
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(propsToRender, childComponents, style)}
+        {this.getNewChildren(props, childComponents, style)}
       </g>
     );
-    return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events}>{group}</svg> :
+    return props.standalone ?
+      <svg style={style.parent} {...props.events}>{group}</svg> :
       group;
   }
 }
