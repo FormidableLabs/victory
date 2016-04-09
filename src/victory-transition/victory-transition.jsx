@@ -14,57 +14,62 @@ export default class VictoryTransition extends React.Component {
     animate: React.PropTypes.object,
     children: React.PropTypes.node,
     defaultTransitions: React.PropTypes.object,
-    propsToAnimate: React.PropTypes.array
+    animationWhitelist: React.PropTypes.array
   };
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.animate) {
+    const { animate }= this.props;
+    if (!animate) {
       return;
     }
+    if (animate.parentState){
+      const oldProps = animate.parentState.nodesWillExit ? this.props : null;
+      this.setState(assign({}, animate.state, {oldProps}));
+    } else {
+      const {
+        nodesWillExit,
+        nodesWillEnter,
+        childrenTransitions,
+        nodesShouldEnter
+      } = Transitions.getInitialTransitionState([this.props.children], [nextProps.children]);
 
-    const {
-      nodesWillExit,
-      nodesWillEnter,
-      childrenTransitions,
-      nodesShouldEnter
-    } = Transitions.getInitialTransitionState(this.props, nextProps);
-
-    this.setState({
-      nodesWillExit,
-      nodesWillEnter,
-      childrenTransitions,
-      nodesShouldEnter,
-      oldProps: nodesWillExit ? this.props : null
-    });
+      this.setState({
+        nodesWillExit,
+        nodesWillEnter,
+        childrenTransitions,
+        nodesShouldEnter,
+        oldProps: nodesWillExit ? this.props : null
+      });
+    }
   }
 
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const getTransitionProps = Transitions.getTransitionPropsFactory(
-      props,
-      this.state,
-      (newState) => this.setState(newState)
-    );
-    const child = React.Children.only(props.children);
+    const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
+      this.props.animate.getTransitions :
+      Transitions.getTransitionPropsFactory(
+        props,
+        this.state,
+        (newState) => this.setState(newState)
+      );
+    const child = React.Children.toArray(props.children)[0];
     const domain = {
       x: child.type.getDomain(child.props, "x"),
       y: child.type.getDomain(child.props, "y")
     };
-    const transitionProps = getTransitionProps(child.props, child.type, 0);
+    const transitionProps = getTransitionProps(child);
     // Do less work by having `VictoryAnimation` tween only values that
     // make sense to tween. In the future, allow customization of animated
     // prop whitelist/blacklist?
-    const whitelist = [
-      "data", "domain", "height", "padding", "style", "width"
-    ];
     const combinedProps = defaults({domain}, transitionProps, child.props);
-    const animateData = pick(combinedProps, whitelist);
+    const propsToAnimate = props.animationWhitelist ?
+      pick(combinedProps, props.animationWhitelist) : combinedProps;
 
     return (
-      <VictoryAnimation {...combinedProps.animate} data={animateData}>
+      <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
-          return React.cloneElement(child, defaults({animate: null}, newProps, combinedProps))
+          return React.cloneElement(child, defaults({animate: null}, newProps, combinedProps));
         }}
       </VictoryAnimation>
     );

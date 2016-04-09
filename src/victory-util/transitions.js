@@ -42,13 +42,20 @@ function getKeyedDataDifference(a, b) {
  *                           entering, and similarly for `exiting`.
  */
 function getNodeTransitions(oldData, nextData) {
-  const oldDataKeyed = getKeyedData(oldData);
-  const nextDataKeyed = getKeyedData(nextData);
+  const oldDataKeyed = oldData && getKeyedData(oldData);
+  const nextDataKeyed = nextData && getKeyedData(nextData);
 
   return {
-    entering: getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
-    exiting: getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
+    entering: oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
+    exiting: nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
   };
+}
+
+function getChildData(child) {
+  if (child.type && child.type.getData) {
+    return child.type.getData(child.props);
+  }
+  return child.props && child.props.data || false;
 }
 
 /**
@@ -67,39 +74,25 @@ function getNodeTransitions(oldData, nextData) {
  *                                    - childrenTransitions
  *                                    - nodesShouldEnter
  */
-export function getInitialTransitionState(oldProps, nextProps) {
+export function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;
   let nodesWillEnter = false;
-  let childrenTransitions = {};
-  if (oldProps.children && nextProps.children) {
-    // Children may be a single item, rather than an array.
-    const oldChildren = React.Children.toArray(oldProps.children);
-    const nextChildren = React.Children.toArray(nextProps.children);
+  const childrenTransitions = oldChildren.map((child, idx) => {
+    // TODO: Determine if/how we want to support variable-length children.
+    const nextChild = nextChildren[idx];
+    if (!nextChild || child.type !== nextChild.type) {
+      return {};
+    }
 
-    childrenTransitions = oldChildren.map((child, idx) => {
-      // TODO: Determine if/how we want to support variable-length children.
-      const nextChild = nextChildren[idx];
-      if (!nextChild || child.type !== nextChild.type) {
-        return {};
-      }
-
-      const { entering, exiting } =
-        child.type.defaultTransitions &&
-        getNodeTransitions(child.props.data, nextChild.props.data) || {};
-
-      nodesWillExit = nodesWillExit || !!exiting;
-      nodesWillEnter = nodesWillEnter || !!entering;
-
-      return { entering, exiting };
-    });
-  } else {
     const { entering, exiting } =
-      getNodeTransitions(oldProps.data, nextProps.data) || {};
+      child.type.defaultTransitions &&
+      getNodeTransitions(getChildData(child), getChildData(nextChild)) || {};
 
     nodesWillExit = nodesWillExit || !!exiting;
     nodesWillEnter = nodesWillEnter || !!entering;
-    childrenTransitions = { entering, exiting };
-  }
+
+    return { entering, exiting };
+  });
 
   return {
     nodesWillExit,
@@ -286,19 +279,19 @@ export function getTransitionPropsFactory(props, state, setState) {
         setState({ nodesShouldEnter: true }));
   };
 
-  return function getTransitionProps(childProps, childType, index) {
-    if (!childProps.data) {
+  return function getTransitionProps(child, index) {
+    const type = child.type;
+    const data = getChildData(child);
+    if (!data) {
       return {};
     }
+    const animate = assign({}, child.props.animate || props.animate);
 
-    const animate = assign({}, childProps.animate || props.animate);
-
-    if (childType && childType.defaultTransitions) {
-      animate.onExit = animate.onExit || childType.defaultTransitions.onExit;
-      animate.onEnter = animate.onEnter || childType.defaultTransitions.onEnter;
+    if (type && type.defaultTransitions) {
+      animate.onExit = animate.onExit || type.defaultTransitions.onExit;
+      animate.onEnter = animate.onEnter || type.defaultTransitions.onEnter;
     }
 
-    const data = childProps.data;
     index = typeof index === "number" ? index : 0;
     if (nodesWillExit) {
       const exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
