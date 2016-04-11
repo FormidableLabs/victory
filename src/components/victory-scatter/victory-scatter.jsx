@@ -377,7 +377,9 @@ export default class VictoryScatter extends React.Component {
     const z = props.bubbleProperty || "z";
     const calculatedProps = {data, scale, style, z};
     return data.map((datum, index) => {
-      return this.renderPoint(datum, index, calculatedProps);
+      const deadNodes = this.props.deadNodes || [];
+      return (deadNodes.indexOf(`${index}`) !== -1) ?
+        null : this.renderPoint(datum, index, calculatedProps);
     });
   }
 
@@ -395,10 +397,11 @@ export default class VictoryScatter extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          <VictoryScatter {...this.props}/>
+          <VictoryScatter {...this.props} deadNodes={this.props.deadNodes}/>
         </VictoryTransition>
       );
     }
+
     const style = Helpers.getStyles(
       this.props.style, defaultStyles, this.props.height, this.props.width);
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;

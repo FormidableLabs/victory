@@ -129,16 +129,18 @@ export default class VictoryChart extends React.Component {
     standalone: true
   };
 
+  componentDidMount() {
+    const children = this.getFlatChildren(this.props);
+    this.setState({deadNodes: children.map((child) => [])});
+  }
+
   componentWillReceiveProps(nextProps) {
     if (!this.props.animate) {
       return;
     }
-    const notAxis = (child) => {
-      const role = child.type && child.type.role;
-      return role && role !== "axis";
-    };
-    const oldChildren = this.getFlatChildren(this.props).filter((child) => notAxis(child));
-    const nextChildren = this.getFlatChildren(nextProps).filter((child) => notAxis(child));
+    const oldChildren = this.getFlatChildren(this.props)
+    const nextChildren = this.getFlatChildren(nextProps)
+
     const {
       nodesWillExit,
       nodesWillEnter,
@@ -160,7 +162,7 @@ export default class VictoryChart extends React.Component {
       if (typeof first === "undefined") {
         return [];
       } else if (first.props.children) {
-        return [...allFlat(React.Children.toArray(first.props.children))];
+        return [...allFlat(React.Children.toArray(first.props.children)), ...allFlat(rest)];
       } else {
         return [first, ...allFlat(rest)];
       }
@@ -265,12 +267,19 @@ export default class VictoryChart extends React.Component {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   }
 
+  getDeadNodes(child, index) {
+    const deadNodes = this.state && this.state.deadNodes || [];
+    if (child.type.role === "group-wrapper" || child.type.role ==="stack-wrapper") {
+      const children = this.getFlatChildren(child.props.children);
+      return deadNodes.slice(index + 1, index + children.length + 2);
+    }
+    return deadNodes[index]
+  }
+
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
 
     return childComponents.map((child, index) => {
-      // const transitionProps = getTransitionProps(child.props, child.type, index);
-      // const transitionProps = getTransitionProps(props, child, index);
       const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
@@ -281,7 +290,8 @@ export default class VictoryChart extends React.Component {
         ref: index,
         key: index,
         standalone: false,
-        style
+        style,
+        deadNodes: this.getDeadNodes(child, index)
       }, childProps);
       return React.cloneElement(child, newProps);
     });

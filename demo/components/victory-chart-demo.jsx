@@ -8,8 +8,6 @@ import {
 
 
 const UPDATE_INTERVAL = 3000;
-let scatterDataToggle = false;
-
 
 const chartStyle = {parent: {width: 500, height: 350, margin: 50}};
 class App extends React.Component {
@@ -75,8 +73,8 @@ class App extends React.Component {
   getBarTransitionData() {
     const bars = _.random(6, 10);
     return _.map(_.range(bars), (bar) => {
-      return {x: bar, y: _.random(2, 10)}
-    })
+      return {x: bar, y: _.random(2, 10)};
+    });
   }
 
   getScatterData() {
@@ -228,13 +226,13 @@ class App extends React.Component {
               animate={{
                 onExit: {
                   duration: 500,
-                  before: (datum) => ({ opacity: 0.5}),
+                  before: (datum) => ({ opacity: datum.opacity || 0.5}),
                   after: () => ({opacity: 0.1})
                 },
                 onEnter: {
                   duration: 500,
                   before: () => ({ opacity: 0.1 }),
-                  after: (datum) => ({ opacity: 0.5 })
+                  after: (datum) => ({ opacity: datum.opacity || 0.5 })
                 }
               }}
             />
@@ -316,6 +314,23 @@ class App extends React.Component {
                 })}
               </VictoryStack>
             </VictoryGroup>
+          </VictoryChart>
+
+          <VictoryChart>
+            <VictoryStack colorScale={"qualitative"}>
+              <VictoryArea
+                data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
+              />
+              <VictoryArea
+                data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
+              />
+              <VictoryArea
+                data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
+              />
+              <VictoryArea
+                data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
+              />
+            </VictoryStack>
           </VictoryChart>
 
         </p>

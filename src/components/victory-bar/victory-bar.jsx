@@ -293,7 +293,11 @@ export default class VictoryBar extends React.Component {
   }
 
   renderData(props, data, style) {
+    const deadNodes = props.deadNodes || [];
     return data.map((datum, index) => {
+      if (deadNodes.indexOf(`${index}`) !== -1) {
+        return null;
+      }
       const position = this.getBarPosition(props, datum);
       const getBoundEvents = Helpers.getEvents.bind(this);
       const barComponent = (
@@ -331,6 +335,7 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
+
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
