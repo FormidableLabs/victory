@@ -4,7 +4,6 @@ import defaults from "lodash/defaults";
 import assign from "lodash/assign";
 import pick from "lodash/pick";
 
-
 export default class VictoryTransition extends React.Component {
   static propTypes = {
     /**
@@ -17,29 +16,41 @@ export default class VictoryTransition extends React.Component {
     animationWhitelist: React.PropTypes.array
   };
 
+  componentDidMount() {
+    const child = React.Children.toArray(this.props.children)[0];
+    this.setState({deadNodes: child.props.deadNodes || []});
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { animate }= this.props;
+    const child = React.Children.toArray(nextProps.children)[0];
+    const deadNodes = child.props.deadNodes || [];
+    this.setState(
+      assign({ deadNodes }, this.getTransitionState(this.props, nextProps))
+    );
+  }
+
+  getTransitionState(props, nextProps) {
+    const { animate } = props;
     if (!animate) {
       return;
     }
     if (animate.parentState){
-      const oldProps = animate.parentState.nodesWillExit ? this.props : null;
-      this.setState(assign({}, animate.state, {oldProps}));
+      const oldProps = animate.parentState.nodesWillExit ? props : null;
+      return assign({}, animate.state, {oldProps});
     } else {
       const {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter
-      } = Transitions.getInitialTransitionState([this.props.children], [nextProps.children]);
-
-      this.setState({
+      } = Transitions.getInitialTransitionState([props.children], [nextProps.children]);
+      return{
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        oldProps: nodesWillExit ? this.props : null
-      });
+        oldProps: nodesWillExit ? props : null
+      };
     }
   }
 
@@ -65,11 +76,13 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults({domain}, transitionProps, child.props);
     const propsToAnimate = props.animationWhitelist ?
       pick(combinedProps, props.animationWhitelist) : combinedProps;
-
+    const deadNodes = this.state && this.state.deadNodes;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
-          return React.cloneElement(child, defaults({animate: null}, newProps, combinedProps));
+          const component = React.cloneElement(
+            child, defaults({animate: null, deadNodes}, newProps, this.props))
+          return component;
         }}
       </VictoryAnimation>
     );
