@@ -129,11 +129,6 @@ export default class VictoryChart extends React.Component {
     standalone: true
   };
 
-  componentDidMount() {
-    const children = this.getFlatChildren(this.props);
-    this.setState({deadNodes: children.map((child) => [])});
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!this.props.animate) {
       return;
@@ -267,15 +262,6 @@ export default class VictoryChart extends React.Component {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   }
 
-  getDeadNodes(child, index) {
-    const deadNodes = this.state && this.state.deadNodes || [];
-    if (child.type.role === "group-wrapper" || child.type.role ==="stack-wrapper") {
-      const children = this.getFlatChildren(child.props.children);
-      return deadNodes.slice(index + 1, index + children.length + 2);
-    }
-    return deadNodes[index]
-  }
-
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
 
@@ -291,7 +277,6 @@ export default class VictoryChart extends React.Component {
         key: index,
         standalone: false,
         style,
-        deadNodes: this.getDeadNodes(child, index)
       }, childProps);
       return React.cloneElement(child, newProps);
     });

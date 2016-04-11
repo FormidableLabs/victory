@@ -191,11 +191,6 @@ export default class VictoryStack extends React.Component {
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
-  componentDidMount() {
-    const children = this.getFlatChildren(this.props);
-    this.setState({deadNodes: this.props.deadNodes || children.map((child) => [])});
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!this.props.animate || this.props.animate.parentTransitions) {
       return;
@@ -221,23 +216,6 @@ export default class VictoryStack extends React.Component {
         oldProps: nodesWillExit ? this.props : null
       });
     }
-    if (this.props.deadNodes) {
-      this.setState({deadNodes: this.props.deadNodes})
-    }
-  }
-
-  getFlatChildren(props) {
-    const allFlat = ([first, ...rest]) => {
-      if (typeof first === "undefined") {
-        return [];
-      } else if (first.props.children) {
-        return [...allFlat(React.Children.toArray(first.props.children)), ...allFlat(rest)];
-      } else {
-        return [first, ...allFlat(rest)];
-      }
-    }
-    const children = React.Children.toArray(props.children);
-    return allFlat(children);
   }
 
   getCalculatedProps(props, childComponents, style) {
@@ -315,20 +293,10 @@ export default class VictoryStack extends React.Component {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   }
 
-  getDeadNodes(child, index) {
-    const deadNodes = this.state && this.state.deadNodes || [];
-    // if (child.type.role === "group-wrapper") {
-    //   const children = this.getFlatChildren(child.props.children);
-    //   return deadNodes.slice(index + 1, index + children.length + 2);
-    // }
-    return deadNodes[index]
-  }
-
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
-    const deadNodes = this.state && this.state.deadNodes || [];
     return childComponents.map((child, index) => {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
@@ -338,8 +306,7 @@ export default class VictoryStack extends React.Component {
         labels: this.getLabels(props, datasets, index) || child.props.labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
-        data,
-        deadNodes: this.getDeadNodes(child, index)
+        data
       }, childProps));
     });
   }

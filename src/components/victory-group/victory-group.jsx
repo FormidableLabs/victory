@@ -192,11 +192,6 @@ export default class VictoryGroup extends React.Component {
   static getDomain = Wrapper.getDomainFromChildren.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
-  componentDidMount() {
-    const children = React.Children.toArray(this.props.children);
-    this.setState({deadNodes: this.props.deadNodes || children.map((child) => [])});
-  }
-
   componentWillReceiveProps(nextProps) {
     if (!this.props.animate || this.props.animate.parentTransitions) {
       return;
@@ -218,9 +213,6 @@ export default class VictoryGroup extends React.Component {
         nodesShouldEnter,
         oldProps: nodesWillExit ? this.props : null
       });
-    }
-    if (this.props.deadNodes) {
-      this.setState({deadNodes: this.props.deadNodes})
     }
   }
 
@@ -321,7 +313,6 @@ export default class VictoryGroup extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
-    const deadNodes = this.state && this.state.deadNodes || [];
     return childComponents.map((child, index) => {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
       const data = datasets[index].map((datum) => assign(datum, {xOffset}));
@@ -335,7 +326,6 @@ export default class VictoryGroup extends React.Component {
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child),
-        deadNodes: deadNodes[index]
       }, childProps));
     });
   }
