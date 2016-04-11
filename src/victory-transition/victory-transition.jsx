@@ -16,17 +16,8 @@ export default class VictoryTransition extends React.Component {
     animationWhitelist: React.PropTypes.array
   };
 
-  componentDidMount() {
-    const child = React.Children.toArray(this.props.children)[0];
-    this.setState({deadNodes: child.props.deadNodes || []});
-  }
-
   componentWillReceiveProps(nextProps) {
-    const child = React.Children.toArray(nextProps.children)[0];
-    const deadNodes = child.props.deadNodes || [];
-    this.setState(
-      assign({ deadNodes }, this.getTransitionState(this.props, nextProps))
-    );
+    this.setState(this.getTransitionState(this.props, nextProps));
   }
 
   getTransitionState(props, nextProps) {
@@ -76,12 +67,11 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults({domain}, transitionProps, child.props);
     const propsToAnimate = props.animationWhitelist ?
       pick(combinedProps, props.animationWhitelist) : combinedProps;
-    const deadNodes = this.state && this.state.deadNodes;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
           const component = React.cloneElement(
-            child, defaults({animate: null, deadNodes}, newProps, this.props))
+            child, defaults({animate: null}, newProps, combinedProps))
           return component;
         }}
       </VictoryAnimation>

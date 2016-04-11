@@ -257,21 +257,17 @@ export function getTransitionPropsFactory(props, state, setState) {
   const nodesWillEnter = state && state.nodesWillEnter;
   const nodesShouldEnter = state && state.nodesShouldEnter;
   const childrenTransitions = state && state.childrenTransitions;
-  const deadNodes = state && state.deadNodes;
   const transitionDurations = getTransitionDurations(props, childrenTransitions);
 
-  const onExit = function (nodes, data, animate, index) { // eslint-disable-line max-params
+  const onExit = function (nodes, data, animate) {
     animate = assign(animate, { duration: transitionDurations.exit });
 
     return getChildPropsOnExit(animate, data, nodes, () => {
-      const currentArray = deadNodes && deadNodes[index] || [];
-      const dead = uniq(currentArray.concat(Object.keys(nodes)));
-      deadNodes[index] = dead;
-      setState({ nodesWillExit: false, deadNodes});
+      setState({ nodesWillExit: false});
     });
   };
 
-  const onEnter = function (nodes, data, animate, index) { // eslint-disable-line max-params
+  const onEnter = function (nodes, data, animate) {
     animate = assign(
       animate,
       // Synchronize normal animate and enter-transition durations for all child
@@ -283,10 +279,7 @@ export function getTransitionPropsFactory(props, state, setState) {
     return nodesShouldEnter ?
       getChildPropsOnEnter(animate, data, nodes) :
       getChildPropsBeforeEnter(animate, data, nodes, () => {
-        const currentArray = deadNodes && deadNodes[index] || [];
-        const dead = currentArray.filter((node) => Object.keys(nodes).indexOf(node) === -1);
-        deadNodes[index] = dead;
-        setState({ nodesShouldEnter: true, deadNodes})
+        setState({ nodesShouldEnter: true })
       });
   };
 
@@ -306,10 +299,10 @@ export function getTransitionPropsFactory(props, state, setState) {
     if (nodesWillExit) {
       const exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
       // Synchronize exit-transition durations for all child components.
-      return onExit(exitingNodes, data, animate, index);
+      return onExit(exitingNodes, data, animate);
     } else if (nodesWillEnter) {
       const enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
-      return onEnter(enteringNodes, data, animate, index);
+      return onEnter(enteringNodes, data, animate);
     } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because
       // animation interpolation is determined by old- and next- props, data may need

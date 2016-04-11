@@ -88,6 +88,33 @@ export const interpolateFunction = function (a, b) {
 };
 
 /**
+ * Interpolate between array values. Remove any values from the result that do not
+ * exist in the end value
+ *
+ * @param {any} a - Start value.
+ * @param {any} b - End value.
+ * @returns {Function} An interpolation function.
+ */
+export const interpolateArray = function (a, b) {
+  var x = [],
+      c = [],
+      na = a ? a.length : 0,
+      nb = b ? b.length : 0,
+      n0 = Math.min(na, nb),
+      i;
+
+  for (i = 0; i < n0; ++i) x.push(d3Interpolate.value(a[i], b[i]));
+  for (; i < na; ++i) c[i] = a[i];
+  for (; i < nb; ++i) c[i] = b[i];
+
+  return function(t) {
+    for (i = 0; i < n0; ++i) c[i] = x[i](t);
+    return c.slice(0, nb);
+  };
+};
+
+
+/**
  * By default, the list of interpolators used by `d3.interpolate` has a few
  * downsides:
  *
@@ -119,6 +146,9 @@ export const victoryInterpolator = function (a, b) {
   }
   if (typeof a === "function" || typeof b === "function") {
     return interpolateFunction(a, b);
+  }
+  if (Array.isArray(a) && Array.isArray(b)) {
+    return interpolateArray(a, b);
   }
 };
 
