@@ -196,8 +196,8 @@ export default class VictoryGroup extends React.Component {
     if (!this.props.animate || this.props.animate.parentTransitions) {
       return;
     }
-    if (this.props.animate.state){
-      this.setState(this.props.animate.state);
+    if (this.props.animate.parentState) {
+      this.setState(this.props.animate.parentState);
     } else {
       const {
         nodesWillExit,
@@ -297,7 +297,7 @@ export default class VictoryGroup extends React.Component {
 
   getAnimationProps(props, child, index) {
     let getTransitions = props.animate && props.animate.getTransitions;
-    let parentState = props.animate && props.animate.parentState || this.state;
+    const parentState = props.animate && props.animate.parentState || this.state;
     if (!getTransitions) {
       const getTransitionProps = Transitions.getTransitionPropsFactory(
         props,
@@ -325,7 +325,7 @@ export default class VictoryGroup extends React.Component {
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
-        colorScale: this.getColorScale(props, child),
+        colorScale: this.getColorScale(props, child)
       }, childProps));
     });
   }

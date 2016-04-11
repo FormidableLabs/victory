@@ -1,5 +1,4 @@
 import sortBy from "lodash/sortBy";
-import pick from "lodash/pick";
 import defaults from "lodash/defaults";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";

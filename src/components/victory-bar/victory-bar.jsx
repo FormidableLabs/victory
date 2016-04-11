@@ -1,4 +1,3 @@
-import pick from "lodash/pick";
 import omit from "lodash/omit";
 import defaults from "lodash/defaults";
 import get from "lodash/get";

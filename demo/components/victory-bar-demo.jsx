@@ -55,15 +55,15 @@ export default class App extends React.Component {
   getBarTransitionData() {
     const bars = _.random(6, 10);
     return _.map(_.range(bars), (bar) => {
-      return {x: bar, y: _.random(2, 10)}
-    })
+      return {x: bar, y: _.random(2, 10)};
+    });
   }
 
   getMultiTransitionData() {
     const bars = _.random(6, 10);
     return _.map(_.range(5), () => {
       return _.map(_.range(bars), (bar) => {
-        return {x: bar, y: _.random(2, 10)}
+        return {x: bar, y: _.random(2, 10)};
       });
     });
   }

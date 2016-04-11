@@ -16,6 +16,20 @@ export default {
     });
   },
 
+  flattenChildren(props) {
+    const allFlat = ([first, ...rest]) => {
+      if (typeof first === "undefined") {
+        return [];
+      } else if (first.props.children) {
+        return [...allFlat(React.Children.toArray(first.props.children)), ...allFlat(rest)];
+      } else {
+        return [first, ...allFlat(rest)];
+      }
+    };
+    const children = React.Children.toArray(props.children);
+    return allFlat(children);
+  },
+
   getDomainFromChildren(props, axis) {
     const childComponents = React.Children.toArray(props.children);
     let domain;

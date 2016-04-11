@@ -377,7 +377,7 @@ export default class VictoryScatter extends React.Component {
     const z = props.bubbleProperty || "z";
     const calculatedProps = {data, scale, style, z};
     return data.map((datum, index) => {
-        return this.renderPoint(datum, index, calculatedProps);
+      return this.renderPoint(datum, index, calculatedProps);
     });
   }
 

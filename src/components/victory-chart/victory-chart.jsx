@@ -133,8 +133,8 @@ export default class VictoryChart extends React.Component {
     if (!this.props.animate) {
       return;
     }
-    const oldChildren = this.getFlatChildren(this.props)
-    const nextChildren = this.getFlatChildren(nextProps)
+    const oldChildren = Wrapper.flattenChildren(this.props);
+    const nextChildren = Wrapper.flattenChildren(nextProps);
 
     const {
       nodesWillExit,
@@ -150,20 +150,6 @@ export default class VictoryChart extends React.Component {
       nodesShouldEnter,
       oldProps: nodesWillExit ? this.props : null
     });
-  }
-
-  getFlatChildren(props) {
-    const allFlat = ([first, ...rest]) => {
-      if (typeof first === "undefined") {
-        return [];
-      } else if (first.props.children) {
-        return [...allFlat(React.Children.toArray(first.props.children)), ...allFlat(rest)];
-      } else {
-        return [first, ...allFlat(rest)];
-      }
-    }
-    const children = React.Children.toArray(props.children);
-    return allFlat(children);
   }
 
   getStyles(props) {
@@ -250,7 +236,7 @@ export default class VictoryChart extends React.Component {
 
   getAnimationProps(props, child, index) {
     let getTransitions = props.animate && props.animate.getTransitions;
-    let parentState = props.animate && props.animate.parentState || this.state;
+    const parentState = props.animate && props.animate.parentState || this.state;
     if (!getTransitions) {
       const getTransitionProps = Transitions.getTransitionPropsFactory(
         props,
@@ -276,7 +262,7 @@ export default class VictoryChart extends React.Component {
         ref: index,
         key: index,
         standalone: false,
-        style,
+        style
       }, childProps);
       return React.cloneElement(child, newProps);
     });

@@ -1,4 +1,3 @@
-import pick from "lodash/pick";
 import last from "lodash/last";
 import assign from "lodash/assign";
 

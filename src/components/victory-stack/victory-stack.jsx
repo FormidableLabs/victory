@@ -195,11 +195,11 @@ export default class VictoryStack extends React.Component {
     if (!this.props.animate || this.props.animate.parentTransitions) {
       return;
     }
-    if (this.props.animate.state){
-      this.setState(this.props.animate.state);
+    if (this.props.animate.parentState) {
+      this.setState(this.props.animate.parentState);
     } else {
-      const oldChildren = this.getFlatChildren(this.props)
-      const nextChildren = this.getFlatChildren(nextProps)
+      const oldChildren = Wrapper.flattenChildren(this.props);
+      const nextChildren = Wrapper.flattenChildren(nextProps);
 
       const {
         nodesWillExit,
@@ -249,7 +249,7 @@ export default class VictoryStack extends React.Component {
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
-  addLayoutData(props, calculatedProps, datasets, index,) { // eslint-disable-line max-params
+  addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
     return datasets[index].map((datum) => {
       return assign(datum, {
         yOffset: Wrapper.getY0(datum, index, calculatedProps),
@@ -281,7 +281,7 @@ export default class VictoryStack extends React.Component {
 
   getAnimationProps(props, child, index) {
     let getTransitions = props.animate && props.animate.getTransitions;
-    let parentState = props.animate && props.animate.parentState || this.state;
+    const parentState = props.animate && props.animate.parentState || this.state;
     if (!getTransitions) {
       const getTransitionProps = Transitions.getTransitionPropsFactory(
         props,
