@@ -154,8 +154,8 @@ export default class VictoryChart extends React.Component {
     const styleProps = props.style && props.style.parent;
     return {
       parent: defaults({
-        height: props.height,
-        width: props.width
+        height: "auto",
+        width: "100%"
       },
       styleProps
     )};
@@ -269,7 +269,13 @@ export default class VictoryChart extends React.Component {
       </g>
     );
     return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events}>{group}</svg> :
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

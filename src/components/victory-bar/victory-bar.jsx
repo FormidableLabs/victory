@@ -348,11 +348,21 @@ export default class VictoryBar extends React.Component {
     }
 
     const style = Helpers.getStyles(
-      this.props.style, defaultStyles, this.props.height, this.props.width);
+      this.props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
     const data = Data.getData(this.props);
     const group = <g style={style.parent}>{this.renderData(this.props, data, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

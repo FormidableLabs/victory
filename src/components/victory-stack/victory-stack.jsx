@@ -270,7 +270,11 @@ export default class VictoryStack extends React.Component {
 
   render() {
     const style = Helpers.getStyles(
-      this.props.style, defaultStyles, this.props.height, this.props.width);
+      this.props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
     const childComponents = React.Children.toArray(this.props.children);
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.length > 1) {
@@ -285,6 +289,13 @@ export default class VictoryStack extends React.Component {
         {this.getNewChildren(this.props, childComponents, calculatedProps)}
       </g>
     );
-    return this.props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+      >
+        {group}
+      </svg> :
+      group;
   }
 }
