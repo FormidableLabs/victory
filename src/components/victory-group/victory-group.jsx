@@ -22,7 +22,7 @@ export default class VictoryGroup extends React.Component {
      * given, all children defined in chart will pass the options specified in this prop to
      * victory-animation, unless they have animation props of their own specified.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
+     * @examples {duration: 500, onEnd: () => alert("woo!")}
      */
     animate: PropTypes.object,
     /**
@@ -212,8 +212,8 @@ export default class VictoryGroup extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const baseScale = {
-      x: Scale.getScaleFromProps(props, "x") || "linear",
-      y: Scale.getScaleFromProps(props, "y") || "linear"
+      x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
+      y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
     };
     const scale = {
       x: baseScale.x.domain(domain.x).range(range.x),
@@ -299,8 +299,7 @@ export default class VictoryGroup extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const style = Helpers.getStyles(
-      props.style, defaultStyles, props.height, props.width);
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const childComponents = React.Children.toArray(props.children);
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.length > 1) {
@@ -312,6 +311,10 @@ export default class VictoryGroup extends React.Component {
         {this.getNewChildren(props, childComponents, calculatedProps)}
       </g>
     );
-    return props.standalone ? <svg style={style.parent}>{group}</svg> : group;
+    return this.props.standalone ?
+      <svg style={style.parent} viewBox={`0 0 ${props.width} ${props.height}`}>
+        {group}
+      </svg> :
+      group;
   }
 }

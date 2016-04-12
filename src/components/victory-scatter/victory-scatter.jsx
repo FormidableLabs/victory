@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import pick from "lodash/pick";
 import omit from "lodash/omit";
 import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import Point from "./point";
 import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
@@ -48,7 +49,7 @@ export default class VictoryScatter extends React.Component {
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the scatter plot will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {delay: 5, velocity: 0.02, onEnd: () => alert("woo!")}
+     * @examples {delay: 5, duration: 500, onEnd: () => alert("woo!")}
      */
     animate: PropTypes.object,
     /**
@@ -123,10 +124,11 @@ export default class VictoryScatter extends React.Component {
     /**
      * The labelComponent prop takes in an entire, HTML-complete label component which will be used
      * to create labels for each point in the scatter plot. The new element created from the passed
-     * labelComponent will have property data provided by the point's datum; properties x, y, dy,
-     * textAnchor, and verticalAnchor preserved or default values provided by the point; and styles
-     * filled out with defaults from the scatter, and overrides from the datum. If labelComponent is
-     * omitted, a new VictoryLabel will be created with props and styles from the point.
+     * labelComponent will have property data provided by the point's datum; properties
+     * position (x, y), dy, textAnchor, and verticalAnchor preserved or default values
+     * provided by the point; and styles filled out with defaults from the scatter,
+     * and overrides from the datum. If labelComponent is omitted, a new VictoryLabel
+     * will be created with props and styles from the point.
      */
     labelComponent: PropTypes.element,
     /**
@@ -152,11 +154,12 @@ export default class VictoryScatter extends React.Component {
      * The dataComponent prop takes an entire, HTML-complete data component which will be used to
      * create points for each datum in the scatter plot. The new element created from the passed
      * dataComponent will have the property datum set by the scatter for the point it renders;
-     * properties x, y, size and symbol are calculated by the scatter for the datum; a key and index
-     * property set corresponding to the location of the datum in the data provided to the scatter;
-     * style calculated by the scatter based on the scatter's styles and the datum; and all the
-     * remaining properties from the scatter's data at the index of the datum.
-     * If a dataComponent is not provided, VictoryScatter's Point component will be used.
+     * properties position (x, y), size and symbol are calculated by the scatter for the datum;
+     * a key and index property set corresponding to the location of the datum in the data
+     * provided to the scatter; style calculated by the scatter based on the scatter's
+     * styles and the datum; and all the remaining properties from the scatter's data
+     * at the index of the datum. If a dataComponent is not provided, VictoryScatter's
+     * Point component will be used.
      */
     dataComponent: PropTypes.element,
     /**
@@ -282,7 +285,7 @@ export default class VictoryScatter extends React.Component {
     return Helpers.evaluateStyle(baseDataStyle, data);
   }
 
-  getMutualSubComponentProps(datum, index, calculatedProps) {
+  getSharedProps(datum, index, calculatedProps) {
     const { style } = calculatedProps;
     const position = {
       x: calculatedProps.scale.x.call(null, datum.x),
@@ -293,37 +296,28 @@ export default class VictoryScatter extends React.Component {
 
     const symbol = ScatterHelpers.getSymbol(datum, this.props);
 
-    return {
-      index,
-      datum,
-      baseSize,
-      symbol,
-      style,
-      ...position
-    };
+    return {index, datum, baseSize, symbol, style, position};
   }
 
-  addDataComponentProps(mutualProps, getBoundEvents) {
-    const {datum, style, index, baseSize} = mutualProps;
+  addDataProps(sharedProps, getBoundEvents) {
+    const {datum, style, index, baseSize} = sharedProps;
 
     const dataStyle = this.getDataStyles(datum, style.data);
     const size = Helpers.evaluateProp(baseSize, datum);
     const events = getBoundEvents(this.props.events.data, "data");
 
-    return {
-      ...mutualProps,
-      size,
-      events,
-      key: `point-${index}`,
-      style: dataStyle,
-      ...this.state.dataState[index]
-    };
+    return assign(
+      {},
+      sharedProps,
+      {key: `point-${index}`, style: dataStyle, events, size},
+      this.state.dataState[index]
+    );
   }
 
-  addLabelComponentProps(mutualProps, pointProps, getBoundEvents) {
-    const { datum, style, index } = mutualProps;
-    const dataStyle = pointProps.style;
-    const { size } = pointProps;
+  addLabelProps(sharedProps, dataProps, getBoundEvents) {
+    const { datum, style, index } = sharedProps;
+    const dataStyle = dataProps.style;
+    const { size } = dataProps;
 
     const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
     const padding = style.labels.padding || size * 0.25;
@@ -332,28 +326,25 @@ export default class VictoryScatter extends React.Component {
 
     const events = getBoundEvents(this.props.events.labels, "labels");
 
-    return {
-      ...mutualProps,
-      events,
-      style: labelStyle,
-      labelComponent: this.props.labelComponent,
-      ...this.state.labelsState[index]
-    };
+    return assign(
+      {},
+      sharedProps,
+      {style: labelStyle, labelComponent: this.props.labelComponent, events},
+      this.state.labelsState[index]
+    );
   }
 
   renderPoint(datum, index, calculatedProps) {
     const getBoundEvents = Helpers.getEvents.bind(this);
-    const mutualProps = this.getMutualSubComponentProps(datum, index, calculatedProps);
-    const pointProps = this.addDataComponentProps(mutualProps, getBoundEvents);
-    const pointComponent = React.cloneElement(this.props.dataComponent, pointProps);
+    const sharedProps = this.getSharedProps(datum, index, calculatedProps);
+    const dataProps = this.addDataProps(sharedProps, getBoundEvents);
+    const pointComponent = React.cloneElement(this.props.dataComponent, dataProps);
     if (datum.label) {
-      const labelProps = this.addLabelComponentProps(mutualProps, pointProps, getBoundEvents);
+      const labelProps = this.addLabelProps(sharedProps, dataProps, getBoundEvents);
       return (
         <g key={`point-group-${index}`}>
           {pointComponent}
-          <PointLabel
-            {... labelProps}
-          />
+          <PointLabel {...labelProps}/>
         </g>
       );
     }
@@ -401,10 +392,20 @@ export default class VictoryScatter extends React.Component {
     }
 
     const style = Helpers.getStyles(
-      this.props.style, defaultStyles, this.props.height, this.props.width);
+      this.props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

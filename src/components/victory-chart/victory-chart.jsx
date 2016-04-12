@@ -19,7 +19,7 @@ export default class VictoryChart extends React.Component {
      * given, all children defined in chart will pass the options specified in this prop to
      * victory-animation, unless they have animation props of their own specified.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("woo!")}
+     * @examples {duration: 500, onEnd: () => alert("woo!")}
      */
     animate: PropTypes.object,
     /**
@@ -132,8 +132,8 @@ export default class VictoryChart extends React.Component {
     const styleProps = props.style && props.style.parent;
     return {
       parent: defaults({
-        height: props.height,
-        width: props.width
+        height: "auto",
+        width: "100%"
       },
       styleProps
     )};
@@ -240,8 +240,14 @@ export default class VictoryChart extends React.Component {
         {this.getNewChildren(props, childComponents, style)}
       </g>
     );
-    return props.standalone ?
-      <svg style={style.parent} {...props.events}>{group}</svg> :
+    return this.props.standalone ?
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${props.width} ${props.height}`}
+        {...props.events}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

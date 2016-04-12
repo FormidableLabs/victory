@@ -22,7 +22,9 @@ export default {
       return;
     }
     if (this.props.animate.parentState) {
-      this.setState(this.props.animate.parentState);
+      const nodesWillExit = this.props.animate.parentState.nodesWillExit;
+      const oldProps = nodesWillExit ? this.props : null;
+      this.setState(defaults({oldProps}, this.props.animate.parentState));
     } else {
       const oldChildren = React.Children.toArray(this.props.children);
       const nextChildren = React.Children.toArray(nextProps.children);

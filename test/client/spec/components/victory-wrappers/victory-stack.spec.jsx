@@ -18,8 +18,21 @@ describe("components/victory-stack", () => {
         </VictoryStack>
       );
       const svg = wrapper.find("svg");
-      expect(svg.prop("style").width).to.equal(VictoryStack.defaultProps.width);
-      expect(svg.prop("style").height).to.equal(VictoryStack.defaultProps.height);
+      expect(svg.prop("style").width).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
+    });
+
+    it("renders an svg with the correct viewBox", () => {
+      const wrapper = shallow(
+        <VictoryStack>
+          <VictoryBar/>
+          <VictoryBar/>
+        </VictoryStack>
+      );
+      const svg = wrapper.find("svg");
+      const viewBoxValue =
+        `0 0 ${VictoryStack.defaultProps.width} ${VictoryStack.defaultProps.height}`;
+      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
 });

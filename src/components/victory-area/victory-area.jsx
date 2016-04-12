@@ -1,6 +1,5 @@
 import last from "lodash/last";
 import assign from "lodash/assign";
-
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -42,7 +41,7 @@ export default class VictoryArea extends React.Component {
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the bar chart will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+     * @examples {duration: 500, onEnd: () => alert("done!")}
      */
     animate: PropTypes.object,
     /**
@@ -68,6 +67,14 @@ export default class VictoryArea extends React.Component {
      * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
      */
     data: PropTypes.array,
+    /**
+     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
+     * create an area. The new element created from the passed dataComponent will be provided
+     * with the following properties calculated by VictoryArea: a scale object, an array of
+     * modified data objects (including x, y, and calculated y0), interpolation, style, and events
+     * If a dataComponent is not provided, VictoryArea will use its default Area component.
+     */
+    dataComponent: PropTypes.element,
     /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
@@ -133,11 +140,10 @@ export default class VictoryArea extends React.Component {
       "stepBefore"
     ]),
     /**
-     * The labels prop defines labels that will appear above each area. This prop
-     * should be given as an array of values.
-     * @examples: ["spring", "summer", "fall", "winter"]
+     * The label prop defines labels that will appear at the edge of each area. This prop
+     * should be given as a string
      */
-    labels: PropTypes.array,
+    label: PropTypes.string,
     /**
     * The labelComponent prop takes in an entire, HTML-complete label
     * component which will be used to create labels for each area in the
@@ -238,6 +244,7 @@ export default class VictoryArea extends React.Component {
   };
 
   static defaultProps = {
+    dataComponent: <Area/>,
     events: {},
     height: 300,
     padding: 50,
@@ -260,33 +267,31 @@ export default class VictoryArea extends React.Component {
     };
   }
 
-  getBaseline(dataset, calculatedProps) {
-    const {domain} = calculatedProps;
+  getBaseline(calculatedProps) {
+    const {data, domain} = calculatedProps;
     const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
-    return dataset.map((datum) => {
+    return data.map((datum) => {
       const y0 = datum.yOffset || minY;
       return assign({y0}, datum);
     });
   }
 
-  renderArea(calculatedProps) {
-    const {data, scale, style} = calculatedProps;
+  renderArea(props, calculatedProps) {
+    const {scale, style} = calculatedProps;
+    const {interpolation, events, label, labelComponent, dataComponent} = props;
     const getBoundEvents = Helpers.getEvents.bind(this);
-    const areaComponent = (
-      <Area
-        scale={scale}
-        style={style.data}
-        events={getBoundEvents(this.props.events.data, "data")}
-        interpolation={this.props.interpolation}
-        data={this.getBaseline(data, calculatedProps)}
-        {...this.state.dataState[0]}
-      />
+    const dataEvents = getBoundEvents(events.data, "data");
+    const data = this.getBaseline(calculatedProps);
+    const areaProps = assign(
+      {scale, interpolation, data, events: dataEvents, style: style.data},
+      this.state.dataState[0]
     );
-    const label = this.props.labels;
+    const areaComponent = React.cloneElement(dataComponent, areaProps);
     if (label) {
+      const lastData = last(data);
       const position = {
-        x: scale.x.call(this, last(data).x),
-        y: scale.y.call(this, last(data).y)
+        x: scale.x.call(this, lastData.x),
+        y: scale.y.call(this, lastData.y + lastData.y0)
       };
       return (
         <g>
@@ -294,10 +299,10 @@ export default class VictoryArea extends React.Component {
           <AreaLabel
             style={style.labels}
             data={data}
-            events={getBoundEvents(this.props.events.labels, "labels")}
+            events={getBoundEvents(events.labels, "labels")}
             position={position}
             labelText={label}
-            labelComponent={this.props.labelComponent}
+            labelComponent={labelComponent}
             {...this.state.labelsState[0]}
           />
         </g>
@@ -324,7 +329,7 @@ export default class VictoryArea extends React.Component {
     const calculatedProps = {
       style, data, domain, scale, padding
     };
-    return this.renderArea(calculatedProps);
+    return this.renderArea(props, calculatedProps);
   }
 
   render() {
@@ -340,10 +345,20 @@ export default class VictoryArea extends React.Component {
     }
 
     const style = Helpers.getStyles(
-      this.props.style, defaultStyles, this.props.height, this.props.width);
+      this.props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

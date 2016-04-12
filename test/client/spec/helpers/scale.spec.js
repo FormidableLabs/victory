@@ -26,7 +26,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a scale from `getScaleFromProps` when a d3 scale is provided", () => {
-      const props = {scale: d3Scale.log()};
+      const props = {scale: d3Scale.scaleLog()};
       const baseScale = Scale.getBaseScale(props, "x");
       expect(Scale.getScaleFromProps).to.be.calledOnce;
       expect(Scale.getScaleTypeFromData).not.to.be.called;
@@ -113,7 +113,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns 'log' for log scales", () => {
-      const props = {scale: {x: d3Scale.log()}};
+      const props = {scale: {x: d3Scale.scaleLog()}};
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleFromProps).calledWith(props, "x").and.returned(props.scale.x);
       expect(Scale.getScaleTypeFromData).not.called;
@@ -121,7 +121,7 @@ describe("helpers/scale", () => {
     });
 
     it("uses data to distinguish between time and linear scales", () => {
-      const props = {scale: {x: d3Scale.linear()}};
+      const props = {scale: {x: d3Scale.scaleLinear()}};
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleFromProps).calledWith(props, "x").and.returned(props.scale.x);
       expect(Scale.getScaleTypeFromData).calledWith(props, "x").and.returned("linear");
@@ -147,7 +147,7 @@ describe("helpers/scale", () => {
 
   describe("validScale", () => {
     it("returns true for valid scale functions", () => {
-      expect(Scale.validScale(d3Scale.log())).to.equal(true);
+      expect(Scale.validScale(d3Scale.scaleLog())).to.equal(true);
     });
 
     it("returns true for strings corresponding to valid scales", () => {

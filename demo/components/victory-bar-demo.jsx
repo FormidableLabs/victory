@@ -85,10 +85,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const parentStyle = {
-      border: "1px solid #ccc",
-      margin: 20
-    };
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
 
     return (
       <div className="demo">

@@ -7,14 +7,15 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryArea from "src/components/victory-area/victory-area";
+import { VictoryLabel } from "victory-core";
 import Area from "src/components/victory-area/area";
 
 describe("victory-area methods", () => {
   describe("getBaseline", () => {
-    const datasets = [
+    const data = [
       {x: 1, y: 1}, {x: 2, y: 1}
     ];
-    const stackedDatasets = [
+    const stackedData = [
       {x: 1, y: 1, yOffset: 1}, {x: 2, y: 1, yOffset: 1}
     ];
     const domain = {x: [0, 10], y: [0, 10]};
@@ -22,29 +23,29 @@ describe("victory-area methods", () => {
     const negativeDomain = {x: [0, 10], y: [-1, 10]};
 
     it("should return the minimum yOffset is not present", () => {
-      const calculatedProps = {domain};
-      const result = VictoryArea.prototype.getBaseline(datasets, calculatedProps);
+      const calculatedProps = {domain, data};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 0, x: 1, y: 1}, {y0: 0, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return the domain minimum when it is greater than zero", () => {
-      const calculatedProps = {domain: nonZeroDomain};
-      const result = VictoryArea.prototype.getBaseline(datasets, calculatedProps);
+      const calculatedProps = {domain: nonZeroDomain, data};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 1, x: 1, y: 1}, {y0: 1, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return zero when the domain minimum is negative", () => {
-      const calculatedProps = {domain: negativeDomain};
-      const result = VictoryArea.prototype.getBaseline(datasets, calculatedProps);
+      const calculatedProps = {domain: negativeDomain, data};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 0, x: 1, y: 1}, {y0: 0, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return yOffset if present", () => {
-      const calculatedProps = {domain};
-      const result = VictoryArea.prototype.getBaseline(stackedDatasets, calculatedProps);
+      const calculatedProps = {domain, data: stackedData};
+      const result = VictoryArea.prototype.getBaseline(calculatedProps);
       const expectedResult = [{y0: 1, x: 1, y: 1, yOffset: 1}, {y0: 1, x: 2, y: 1, yOffset: 1}];
       expect(result).to.eql(expectedResult);
     });
@@ -58,8 +59,18 @@ describe("components/victory-area", () => {
         <VictoryArea/>
       );
       const svg = wrapper.find("svg");
-      expect(svg.prop("style").width).to.equal(VictoryArea.defaultProps.width);
-      expect(svg.prop("style").height).to.equal(VictoryArea.defaultProps.height);
+      expect(svg.prop("style").width).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
+    });
+
+    it("renders an svg with the correct viewbox", () => {
+      const wrapper = shallow(
+        <VictoryArea/>
+      );
+      const svg = wrapper.find("svg");
+      const viewBoxValue =
+        `0 0 ${VictoryArea.defaultProps.width} ${VictoryArea.defaultProps.height}`;
+      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
 
@@ -76,6 +87,21 @@ describe("components/victory-area", () => {
         expect(clickHandler).called;
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(clickHandler.args[index][2]).to.eql(index);
+      });
+    });
+
+    it("attaches an event to a label", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryArea label={"okay"} events={{labels: {onClick: clickHandler}}}/>
+      );
+      const Labels = wrapper.find(VictoryLabel);
+      Labels.forEach((node, index) => {
+        node.childAt(0).simulate("click");
+        expect(clickHandler).called;
+        // the first argument is the standard evt object
+        expect(clickHandler.args[index][1]).to.contain({labelText: "okay"});
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

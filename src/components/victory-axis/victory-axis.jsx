@@ -59,7 +59,7 @@ const orientationSign = {
 
 const getStyles = (props) => {
   const style = props.style || {};
-  const parentStyleProps = { height: props.height, width: props.width };
+  const parentStyleProps = { height: "auto", width: "100%" };
   return {
     parent: defaults(parentStyleProps, style.parent, defaultStyles.parent),
     axis: defaults({}, style.axis, defaultStyles.axis),
@@ -77,7 +77,7 @@ export default class VictoryAxis extends React.Component {
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the axis will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+     * @examples {duration: 500, onEnd: () => alert("done!")}
      */
     animate: PropTypes.object,
     /**
@@ -418,7 +418,11 @@ export default class VictoryAxis extends React.Component {
       </g>
     );
     return this.props.standalone ? (
-      <svg style={style.parent} {...this.props.events.parent}>
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
         {group}
       </svg>
     ) : group;

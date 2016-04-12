@@ -13,8 +13,18 @@ describe("components/victory-chart", () => {
         <VictoryChart/>
       );
       const svg = wrapper.find("svg");
-      expect(svg.prop("style").width).to.equal(VictoryChart.defaultProps.width);
-      expect(svg.prop("style").height).to.equal(VictoryChart.defaultProps.height);
+      expect(svg.prop("style").width).to.equal("100%");
+      expect(svg.prop("style").height).to.equal("auto");
+    });
+
+    it("renders an svg with the correct viewBox", () => {
+      const wrapper = shallow(
+        <VictoryChart/>
+      );
+      const svg = wrapper.find("svg");
+      const viewBoxValue =
+        `0 0 ${VictoryChart.defaultProps.width} ${VictoryChart.defaultProps.height}`;
+      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });
 

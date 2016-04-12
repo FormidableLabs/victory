@@ -46,7 +46,7 @@ export default class VictoryLine extends React.Component {
      * The animate prop specifies props for victory-animation to use. It this prop is
      * not given, the line will not tween between changing data / style props.
      * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {velocity: 0.02, onEnd: () => alert("done!")}
+     * @examples {duration: 500, onEnd: () => alert("done!")}
      */
     animate: PropTypes.object,
     /**
@@ -385,10 +385,20 @@ export default class VictoryLine extends React.Component {
       );
     }
     const style = Helpers.getStyles(
-      this.props.style, defaultStyles, this.props.height, this.props.width);
+      this.props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
     const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
     return this.props.standalone ?
-      <svg style={style.parent} {...this.props.events.parent}>{group}</svg> :
+      <svg
+        style={style.parent}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        {...this.props.events.parent}
+      >
+        {group}
+      </svg> :
       group;
   }
 }

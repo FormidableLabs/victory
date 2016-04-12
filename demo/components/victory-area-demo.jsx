@@ -71,35 +71,39 @@ export default class App extends React.Component {
   }
 
   render() {
+    const style = {
+      parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
+    };
+
     return (
       <div className="demo">
-        <VictoryArea/>
+        <VictoryArea style={style}/>
 
         <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: this.state.style}}
+          style={{parent: style.parent, data: this.state.style}}
           data={this.state.data}
           label={"label\none"}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
         />
 
-        <VictoryStack style={{parent: {border: "1px solid black", margin: "5px"}}}>
-          <VictoryArea
+      <VictoryStack style={{parent: style.parent}}>
+          <VictoryArea label={"one"}
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
-          <VictoryArea
+          <VictoryArea label={"two"}
             data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
           />
-          <VictoryArea
+          <VictoryArea label={"three"}
             data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
           />
-          <VictoryArea
+          <VictoryArea label={"four"}
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
         </VictoryStack>
 
         <VictoryGroup
           style={{
-            parent: {border: "1px solid black", margin: "5px"},
+            parent: style.parent,
             data: {strokeWidth: 2, fillOpacity: 0.4}
           }}
         >
@@ -114,7 +118,7 @@ export default class App extends React.Component {
         </VictoryGroup>
 
         <VictoryStack
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: style.parent}}
           colorScale={"green"}
           animate={{duration: 2000}}
         >
@@ -123,7 +127,7 @@ export default class App extends React.Component {
 
 
         <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {fill: "red"}}}
+          style={{parent: style.parent, data: {fill: "red"}}}
           interpolation={"basis"}
           data={_.range(0, 100)}
           x={null}
@@ -132,7 +136,7 @@ export default class App extends React.Component {
 
         <VictoryArea
           style={{
-            parent: {border: "1px solid black", margin: "5px"},
+            parent: style.parent,
             data: {fill: "gold"}
           }}
           data={this.state.arrayData}
@@ -155,7 +159,7 @@ export default class App extends React.Component {
         />
 
         <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: style.parent}}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},
@@ -169,7 +173,7 @@ export default class App extends React.Component {
         />
 
         <VictoryArea
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: style.parent}}
           data={[
             {x: 1, y: 1},
             {x: 2, y: 3},
@@ -184,7 +188,7 @@ export default class App extends React.Component {
           ]}
         />
 
-      <svg width={450} height={300} style={{border: "1px solid black", margin: "5px"}}>
+      <svg width={450} height={300} style={style.parent}>
         <VictoryArea y={(data) => Math.sin(data.x)} style={{data: {opacity: 0.4}}}/>
         <VictoryArea y={(data) => Math.cos(data.x)} style={{data: {opacity: 0.4}}}/>
       </svg>

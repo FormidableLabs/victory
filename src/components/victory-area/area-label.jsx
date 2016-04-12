@@ -1,5 +1,4 @@
 import defaults from "lodash/defaults";
-import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import { VictoryLabel, Helpers } from "victory-core";
 
@@ -20,18 +19,19 @@ export default class AreaLabel extends React.Component {
     const baseEvents = component && component.props.events ?
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, 0, props);
-    const newProps = assign({}, events, {
+    const newProps = {
       x: component.props.x || props.position.x + style.padding,
       y: component.props.y || props.position.y - style.padding,
       textAnchor: component.props.textAnchor || "start",
       verticalAnchor: component.props.verticalAnchor || "middle",
-      style
-    });
+      style,
+      events
+    };
     return React.cloneElement(component, newProps, children);
   }
 
   renderVictoryLabel(props) {
-    const style = Helpers.evaluateStyle(defaults({padding: 0}, props.style), props.data);
+    const style = Helpers.evaluateStyle(defaults({}, props.style), props.data, {padding: 0});
     const events = Helpers.getPartialEvents(props.events, 0, props);
     return (
       <VictoryLabel
@@ -42,7 +42,7 @@ export default class AreaLabel extends React.Component {
         verticalAnchor={"middle"}
         style={style}
         text={props.labelText}
-        {...events}
+        events={events}
       />
     );
   }

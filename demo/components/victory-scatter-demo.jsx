@@ -25,17 +25,11 @@ const getData = () => {
 };
 
 const style = {
-  parent: {
-    border: "1px solid #ccc",
-    margin: 20
-  }
+  parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
 };
 
 const symbolStyle = {
-  parent: {
-    border: "1px solid #ccc",
-    margin: 20
-  },
+  parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
   data: {
     fill: "red"
   },
@@ -109,7 +103,7 @@ export default class App extends React.Component {
           width={500}
           height={500}
           domain={[0, 600]}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           data={this.state.data}
           dataComponent={<CatPoint />}
         />
@@ -119,16 +113,15 @@ export default class App extends React.Component {
           width={500}
           height={500}
           domain={[0, 600]}
-          animate={{velocity: 0.03}}
+          animate={{duration: 2000}}
           data={this.state.data}
         />
 
         <VictoryScatter
-          style={_.merge(
-            {},
-            style,
-            {data: {fill: (data) => data.y > 0 ? "red" : "blue"}}
-          )}
+          style={{
+            parent: style.parent,
+            data: {fill: (data) => data.y > 0 ? "red" : "blue"}
+          }}
           width={500}
           height={500}
           symbol={(data) => data.y > 0 ? "triangleUp" : "triangleDown"}
@@ -137,20 +130,19 @@ export default class App extends React.Component {
         />
 
         <VictoryScatter
+          style={symbolStyle}
           width={500}
           height={500}
           padding={50}
           labelComponent={<VictoryLabel style={{fill: "red"}}/>}
-          style={symbolStyle}
           data={symbolData}
         />
 
         <VictoryScatter
-          style={_.merge(
-            {},
-            style,
-            {data: {fill: "blue", opacity: 0.7}}
-          )}
+          style={{
+            parent: style.parent,
+            data: {fill: "blue", opacity: 0.7}
+          }}
           width={500}
           height={500}
           bubbleProperty="z"
@@ -159,12 +151,10 @@ export default class App extends React.Component {
           data={bubbleData}
         />
 
-        <svg style={_.merge({width: 500, height: 300}, style.parent)}>
+      <svg style={style} width={500} height={300}>
           <VictoryScatter
-            width={500}
-            height={300}
             style={style}
-            containerElement="g"
+            standalone={false}
           />
         </svg>
 
@@ -200,18 +190,21 @@ export default class App extends React.Component {
         />
 
         <VictoryScatter
+          style={style}
           data={_.range(0, 50)}
           x={null}
           y={(d) => d * d * Math.random()}
         />
 
         <VictoryScatter
+          style={style}
           data={_.range(0, 100).map((i) => [i, i * 3287 % 100])}
           x={0}
           y={1}
         />
 
         <VictoryScatter
+          style={style}
           data={_.range(0, 200).map((i) => {
             return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}

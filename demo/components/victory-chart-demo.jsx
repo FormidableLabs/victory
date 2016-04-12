@@ -9,7 +9,6 @@ import {
 
 const UPDATE_INTERVAL = 3000;
 
-const chartStyle = {parent: {width: 500, height: 350, margin: 50}};
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -133,17 +132,25 @@ class App extends React.Component {
   }
 
   render() {
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+    const chartStyle = {parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}};
     return (
       <div className="demo">
         <h1>VictoryChart</h1>
-        <p>
-          <VictoryChart animate={{ duration: 1500 }}>
+        <div style={containerStyle}>
+          <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
             <VictoryBar
               data={this.state.barTransitionData}
             />
           </VictoryChart>
 
-          <VictoryChart animate={{duration: 1000}}>
+          <VictoryChart style={chartStyle} animate={{duration: 1000}}>
             <VictoryStack colorScale={"warm"}>
               {this.state.multiBarTransitionData.map((data, index) => {
                 return <VictoryBar key={index} data={data}/>;
@@ -151,21 +158,21 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart/>
+          <VictoryChart style={chartStyle}/>
 
-          <VictoryChart height={500} width={200}>
+          <VictoryChart style={chartStyle}>
             <VictoryScatter/>
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryLine/>
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryBar/>
           </VictoryChart>
 
-          <VictoryChart scale={"linear"}>
+          <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}
@@ -180,7 +187,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} animate={{velocity: 0.02}}>
+          <VictoryChart style={chartStyle} animate={{duration: 2000}}>
             <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
             <VictoryLine
               data={this.state.lineData}
@@ -228,7 +235,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart animate={{ duration: 2000 }}>
+          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryScatter
               data={this.state.scatterData}
               animate={{
@@ -246,14 +253,14 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryAxis dependentAxis orientation="right"/>
             <VictoryAxis orientation="top"/>
             <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
             <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
-          <VictoryChart animate={{duration: 2000}}
+          <VictoryChart style={chartStyle} animate={{duration: 2000}}
             domainPadding={{x: 100}}
           >
             <VictoryStack>
@@ -263,7 +270,7 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart domainPadding={{x: 30, y: 30}}>
+          <VictoryChart style={chartStyle} domainPadding={{x: 30, y: 30}}>
             <VictoryAxis
               tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
               tickFormat={(x) => `${x}\ntick`}
@@ -304,7 +311,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart domainPadding={{x: 50}} animate={{duration: 2000}}>
+          <VictoryChart style={chartStyle} domainPadding={{x: 50}} animate={{duration: 2000}}>
             <VictoryGroup offset={15}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
@@ -324,7 +331,7 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryStack colorScale={"qualitative"}>
               <VictoryArea
                 data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
@@ -341,7 +348,7 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryChart>
 
-        </p>
+        </div>
       </div>
     );
   }
