@@ -1,5 +1,6 @@
 import React from "react";
-import { Transitions, VictoryAnimation } from "../index";
+import VictoryAnimation from "../victory-animation/victory-animation";
+import { Transitions } from "../victory-util/index";
 import defaults from "lodash/defaults";
 import pick from "lodash/pick";
 
