@@ -1,12 +1,6 @@
 import defaults from "lodash/defaults";
-import partialRight from "lodash/partialRight";
-
 import React, { PropTypes } from "react";
-import {
-  PropTypes as CustomPropTypes,
-  Helpers,
-  Transitions
-} from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -130,26 +124,8 @@ export default class VictoryChart extends React.Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.animate) {
-      return;
-    }
-    const oldChildren = Wrapper.flattenChildren(this.props);
-    const nextChildren = Wrapper.flattenChildren(nextProps);
-
-    const {
-      nodesWillExit,
-      nodesWillEnter,
-      childrenTransitions,
-      nodesShouldEnter
-    } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-
-    this.setState({
-      nodesWillExit,
-      nodesWillEnter,
-      childrenTransitions,
-      nodesShouldEnter,
-      oldProps: nodesWillExit ? this.props : null
-    });
+    const setAnimationState = Wrapper.setAnimationState.bind(this);
+    setAnimationState(nextProps);
   }
 
   getStyles(props) {
@@ -234,28 +210,14 @@ export default class VictoryChart extends React.Component {
     return {axisComponents, categories, domain, horizontal, scale, stringMap};
   }
 
-  getAnimationProps(props, child, index) {
-    let getTransitions = props.animate && props.animate.getTransitions;
-    const parentState = props.animate && props.animate.parentState || this.state;
-    if (!getTransitions) {
-      const getTransitionProps = Transitions.getTransitionPropsFactory(
-        props,
-        this.state,
-        (newState) => this.setState(newState)
-      );
-      getTransitions = partialRight(getTransitionProps, index);
-    }
-    return defaults({getTransitions, parentState}, props.animate, child.props.animate);
-  }
-
   getNewChildren(props, childComponents, baseStyle) {
     const calculatedProps = this.getCalculatedProps(props, childComponents);
-
+    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
       const style = defaults({}, child.props.style, {parent: baseStyle.parent});
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
-        animate: this.getAnimationProps(props, child, index),
+        animate: getAnimationProps(props, child, index),
         height: props.height,
         width: props.width,
         padding: Helpers.getPadding(props),

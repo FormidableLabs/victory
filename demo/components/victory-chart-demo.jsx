@@ -19,6 +19,7 @@ class App extends React.Component {
       numericBarData: this.getNumericBarData(),
       barData: this.getBarData(),
       barTransitionData: this.getBarTransitionData(),
+      multiBarTransitionData: this.getMultiBarTransitionData(),
       lineStyle: this.getStyles()
     };
   }
@@ -77,6 +78,15 @@ class App extends React.Component {
     });
   }
 
+  getMultiBarTransitionData() {
+    const bars = _.random(6, 10);
+    return _.map(_.range(5), () => {
+      return _.map(_.range(bars), (bar) => {
+        return {x: bar, y: _.random(2, 10)};
+      });
+    });
+  }
+
   getScatterData() {
     const colors =
       ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
@@ -111,6 +121,7 @@ class App extends React.Component {
         lineData: this.getData(),
         barData: this.getBarData(),
         barTransitionData: this.getBarTransitionData(),
+        multiBarTransitionData: this.getMultiBarTransitionData(),
         numericBarData: this.getNumericBarData(),
         lineStyle: this.getStyles()
       });
@@ -129,20 +140,17 @@ class App extends React.Component {
           <VictoryChart animate={{ duration: 1500 }}>
             <VictoryBar
               data={this.state.barTransitionData}
-              animate={{
-                onExit: {
-                  duration: 500,
-                  before: (datum) => ({ y: datum.y}),
-                  after: () => ({y: 0})
-                },
-                onEnter: {
-                  duration: 500,
-                  before: () => ({ y: 0 }),
-                  after: (datum) => ({ y: datum.y })
-                }
-              }}
             />
           </VictoryChart>
+
+          <VictoryChart animate={{duration: 1000}}>
+            <VictoryStack colorScale={"warm"}>
+              {this.state.multiBarTransitionData.map((data, index) => {
+                return <VictoryBar key={index} data={data}/>;
+              })}
+            </VictoryStack>
+          </VictoryChart>
+
           <VictoryChart/>
 
           <VictoryChart height={500} width={200}>

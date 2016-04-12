@@ -1,9 +1,7 @@
 import assign from "lodash/assign";
-import defaults from "lodash/defaults";
 import uniq from "lodash/uniq";
-import partialRight from "lodash/partialRight";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, Transitions } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
 import Scale from "../../helpers/scale";
 import Data from "../../helpers/data";
 import Wrapper from "../../helpers/wrapper";
@@ -192,30 +190,8 @@ export default class VictoryStack extends React.Component {
   static getData = Wrapper.getData.bind(Wrapper);
 
   componentWillReceiveProps(nextProps) {
-    if (!this.props.animate || this.props.animate.parentTransitions) {
-      return;
-    }
-    if (this.props.animate.parentState) {
-      this.setState(this.props.animate.parentState);
-    } else {
-      const oldChildren = Wrapper.flattenChildren(this.props);
-      const nextChildren = Wrapper.flattenChildren(nextProps);
-
-      const {
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter
-      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-
-      this.setState({
-        nodesWillExit,
-        nodesWillEnter,
-        childrenTransitions,
-        nodesShouldEnter,
-        oldProps: nodesWillExit ? this.props : null
-      });
-    }
+    const setAnimationState = Wrapper.setAnimationState.bind(this);
+    setAnimationState(nextProps);
   }
 
   getCalculatedProps(props, childComponents, style) {
@@ -279,29 +255,16 @@ export default class VictoryStack extends React.Component {
     };
   }
 
-  getAnimationProps(props, child, index) {
-    let getTransitions = props.animate && props.animate.getTransitions;
-    const parentState = props.animate && props.animate.parentState || this.state;
-    if (!getTransitions) {
-      const getTransitionProps = Transitions.getTransitionPropsFactory(
-        props,
-        this.state,
-        (newState) => this.setState(newState)
-      );
-      getTransitions = partialRight(getTransitionProps, index);
-    }
-    return defaults({getTransitions, parentState}, props.animate, child.props.animate);
-  }
-
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
+    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       return React.cloneElement(child, assign({
-        animate: this.getAnimationProps(props, child, index),
+        animate: getAnimationProps(props, child, index),
         key: index,
         labels: this.getLabels(props, datasets, index) || child.props.labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
