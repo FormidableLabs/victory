@@ -1,7 +1,6 @@
 import React from "react";
 import { Transitions, VictoryAnimation } from "../index";
 import defaults from "lodash/defaults";
-import assign from "lodash/assign";
 import pick from "lodash/pick";
 
 export default class VictoryTransition extends React.Component {
@@ -12,7 +11,6 @@ export default class VictoryTransition extends React.Component {
      */
     animate: React.PropTypes.object,
     children: React.PropTypes.node,
-    defaultTransitions: React.PropTypes.object,
     animationWhitelist: React.PropTypes.array
   };
 
@@ -23,10 +21,10 @@ export default class VictoryTransition extends React.Component {
   getTransitionState(props, nextProps) {
     const { animate } = props;
     if (!animate) {
-      return undefined;
+      return {};
     } else if (animate.parentState) {
       const oldProps = animate.parentState.nodesWillExit ? props : null;
-      return assign({}, animate.state, {oldProps});
+      return {oldProps};
     } else {
       const {
         nodesWillExit,

@@ -1,5 +1,4 @@
 /* eslint-disable func-style */
-
 import assign from "lodash/assign";
 import identity from "lodash/identity";
 import React from "react";
@@ -77,22 +76,33 @@ function getChildData(child) {
 export function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;
   let nodesWillEnter = false;
-  const childrenTransitions = oldChildren.map((child, idx) => {
-    // TODO: Determine if/how we want to support variable-length children.
-    const nextChild = nextChildren[idx];
-    if (!nextChild || child.type !== nextChild.type) {
+
+  const getTransition = (oldChild, newChild) => {
+    if (!newChild || oldChild.type !== newChild.type) {
       return {};
     }
 
     const { entering, exiting } =
-      child.type.defaultTransitions &&
-      getNodeTransitions(getChildData(child), getChildData(nextChild)) || {};
+      oldChild.type.defaultTransitions &&
+      getNodeTransitions(getChildData(oldChild), getChildData(newChild)) || {};
 
     nodesWillExit = nodesWillExit || !!exiting;
     nodesWillEnter = nodesWillEnter || !!entering;
 
     return { entering: entering || false, exiting: exiting || false };
-  });
+  };
+
+  const getTransitionsFromChildren = (old, next) => {
+    return old.map((child, idx) => {
+      if (child.props.children) {
+        return getTransitionsFromChildren(old[idx].props.children, next[idx].props.children);
+      } else {
+        return getTransition(child, next[idx]);
+      }
+    });
+  };
+
+  const childrenTransitions = getTransitionsFromChildren(oldChildren, nextChildren);
   return {
     nodesWillExit,
     nodesWillEnter,
@@ -258,7 +268,6 @@ export function getTransitionPropsFactory(props, state, setState) {
 
   const onExit = function (nodes, data, animate) {
     animate = assign(animate, { duration: transitionDurations.exit });
-
     return getChildPropsOnExit(animate, data, nodes, () => {
       setState({ nodesWillExit: false});
     });
