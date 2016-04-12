@@ -23,9 +23,8 @@ export default class VictoryTransition extends React.Component {
   getTransitionState(props, nextProps) {
     const { animate } = props;
     if (!animate) {
-      return;
-    }
-    if (animate.parentState){
+      return undefined;
+    } else if (animate.parentState) {
       const oldProps = animate.parentState.nodesWillExit ? props : null;
       return assign({}, animate.state, {oldProps});
     } else {
@@ -35,7 +34,7 @@ export default class VictoryTransition extends React.Component {
         childrenTransitions,
         nodesShouldEnter
       } = Transitions.getInitialTransitionState([props.children], [nextProps.children]);
-      return{
+      return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
@@ -71,7 +70,7 @@ export default class VictoryTransition extends React.Component {
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
           const component = React.cloneElement(
-            child, defaults({animate: null}, newProps, combinedProps))
+            child, defaults({animate: null}, newProps, combinedProps));
           return component;
         }}
       </VictoryAnimation>
