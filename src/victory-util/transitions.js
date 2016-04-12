@@ -2,9 +2,6 @@
 
 import assign from "lodash/assign";
 import identity from "lodash/identity";
-import uniq from "lodash/uniq";
-import without from "lodash/without";
-import pullAt from "lodash/pullAt";
 import React from "react";
 
 function getDatumKey(datum, idx) {
@@ -68,8 +65,8 @@ function getChildData(child) {
  * in the first set and not the second, in the second and not the first,
  * or both.
  *
- * @param  {Object}  oldProps   this.props.children from old props
- * @param  {Object}  nextProps  this.props.children from next props
+ * @param  {Object}  oldChildren   this.props.children from old props
+ * @param  {Object}  nextChildren  this.props.children from next props
  *
  * @return {Object}                  Object with the following properties:
  *                                    - nodesWillExit
@@ -279,21 +276,20 @@ export function getTransitionPropsFactory(props, state, setState) {
     return nodesShouldEnter ?
       getChildPropsOnEnter(animate, data, nodes) :
       getChildPropsBeforeEnter(animate, data, nodes, () => {
-        setState({ nodesShouldEnter: true })
+        setState({ nodesShouldEnter: true });
       });
   };
 
   return function getTransitionProps(child, index) {
-    const type = child.type;
     const data = getChildData(child);
     if (!data) {
       return {};
     }
     const animate = assign({}, child.props.animate || props.animate);
 
-    if (type && type.defaultTransitions) {
-      animate.onExit = animate.onExit || type.defaultTransitions.onExit;
-      animate.onEnter = animate.onEnter || type.defaultTransitions.onEnter;
+    if (child.type && child.type.defaultTransitions) {
+      animate.onExit = animate.onExit || child.type.defaultTransitions.onExit;
+      animate.onEnter = animate.onEnter || child.type.defaultTransitions.onEnter;
     }
     index = typeof index === "number" ? index : 0;
     if (nodesWillExit) {

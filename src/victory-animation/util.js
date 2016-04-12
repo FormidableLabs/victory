@@ -88,28 +88,29 @@ export const interpolateFunction = function (a, b) {
 };
 
 /**
- * Interpolate between array values. Remove any values from the result that do not
- * exist in the end value
+ * This function is adapted from https://github.com/d3-interpolate/master/src/array.js
+ * This function may be removed pending the merge of https://github.com/d3/d3-interpolate/pull/19
+ * This function differs from d3-interpolate in that it wont return an array longer
+ * than the end array.
  *
  * @param {any} a - Start value.
  * @param {any} b - End value.
  * @returns {Function} An interpolation function.
  */
 export const interpolateArray = function (a, b) {
-  var x = [],
-      c = [],
-      na = a ? a.length : 0,
-      nb = b ? b.length : 0,
-      n0 = Math.min(na, nb),
-      i;
+  const x = [];
+  const c = [];
+  const na = a ? a.length : 0;
+  const nb = b ? b.length : 0;
+  const n0 = Math.min(na, nb);
+  let i;
 
-  for (i = 0; i < n0; ++i) x.push(d3Interpolate.value(a[i], b[i]));
-  for (; i < na; ++i) c[i] = a[i];
-  for (; i < nb; ++i) c[i] = b[i];
+  for (i = 0; i < n0; ++i) { x.push(d3Interpolate.value(a[i], b[i])); }
+  for (i = 0; i < nb; ++i) { c[i] = b[i]; }
 
-  return function(t) {
-    for (i = 0; i < n0; ++i) c[i] = x[i](t);
-    return c.slice(0, nb);
+  return function (t) {
+    for (i = 0; i < n0; ++i) { c[i] = x[i](t); }
+    return c;
   };
 };
 

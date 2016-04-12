@@ -203,8 +203,7 @@ export default class VictoryLabel extends React.Component {
     const {transform, datum, x, y, angle} = props;
     const transformPart = transform && Helpers.evaluateProp(transform, datum);
     const rotatePart = angle && {rotate: [angle, x, y]};
-
-    return Style.toTransformString(transformPart, rotatePart);
+    return (transformPart || angle) && Style.toTransformString(transformPart, rotatePart);
   }
 
   render() {
