@@ -61,10 +61,12 @@ export default class VictoryTransition extends React.Component {
         (newState) => this.setState(newState)
       );
     const child = React.Children.toArray(props.children)[0];
-    const domain = {
-      x: child.type.getDomain(child.props, "x"),
-      y: child.type.getDomain(child.props, "y")
-    };
+    const domain = child.type.role === "axis" ?
+      child.type.getDomain(child.props) :
+      {
+        x: child.type.getDomain(child.props, "x"),
+        y: child.type.getDomain(child.props, "y")
+      };
     const transitionProps = getTransitionProps(child);
     // Do less work by having `VictoryAnimation` tween only values that
     // make sense to tween. In the future, allow customization of animated
