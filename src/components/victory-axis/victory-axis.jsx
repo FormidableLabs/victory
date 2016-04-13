@@ -1,12 +1,6 @@
 import defaults from "lodash/defaults";
-import pick from "lodash/pick";
-
 import React, { PropTypes } from "react";
-import {
-  PropTypes as CustomPropTypes,
-  VictoryAnimation,
-  Helpers
-} from "victory-core";
+import { PropTypes as CustomPropTypes, VictoryTransition, Helpers } from "victory-core";
 import AxisLine from "./axis-line";
 import AxisLabel from "./axis-label";
 import GridLine from "./grid";
@@ -72,6 +66,15 @@ const getStyles = (props) => {
 
 export default class VictoryAxis extends React.Component {
   static role = "axis";
+  static defaultTransitions = {
+    onExit: {
+      duration: 500
+    },
+    onEnter: {
+      duration: 500
+    }
+  };
+
   static propTypes = {
     /**
      * The animate prop specifies props for victory-animation to use. It this prop is
@@ -387,9 +390,6 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryAxis` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
     if (this.props.animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -398,11 +398,10 @@ export default class VictoryAxis extends React.Component {
         "style", "domain", "range", "tickCount", "tickValues",
         "offsetX", "offsetY", "padding", "width", "height"
       ];
-      const animateData = pick(this.props, whitelist);
       return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryAxis {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          <VictoryAxis {...this.props}/>
+        </VictoryTransition>
       );
     }
     const layoutProps = this.getLayoutProps(this.props);
