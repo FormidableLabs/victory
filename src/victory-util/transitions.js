@@ -64,8 +64,8 @@ function getChildData(child) {
  * in the first set and not the second, in the second and not the first,
  * or both.
  *
- * @param  {Child}  oldChildren   this.props.children from old props
- * @param  {Child}  nextChildren  this.props.children from next props
+ * @param  {Children}  oldChildren   this.props.children from old props
+ * @param  {Children}  nextChildren  this.props.children from next props
  *
  * @return {Object}                  Object with the following properties:
  *                                    - nodesWillExit
