@@ -9,8 +9,26 @@ export default class App extends React.Component {
     this.state = {
       data: this.getData(),
       arrayData: this.getArrayData(),
-      groupedData: this.getGroupedData()
+      groupedData: this.getGroupedData(),
+      multiTransitionData: this.getMultiTransitionData(),
+      areaTransitionData: this.getAreaTransitionData()
     };
+  }
+
+  getMultiTransitionData() {
+    const areas = _.random(8, 10);
+    return _.map(_.range(5), () => {
+      return _.map(_.range(areas), (area) => {
+        return {x: area, y: _.random(2, 10)};
+      });
+    });
+  }
+
+  getAreaTransitionData() {
+    const areas = _.random(6, 10);
+    return _.map(_.range(areas), (area) => {
+      return {x: area, y: _.random(2, 10)};
+    });
   }
 
   getData() {
@@ -65,6 +83,8 @@ export default class App extends React.Component {
       this.setState({
         data: this.getData(),
         groupedData: this.getGroupedData(),
+        multiTransitionData: this.getMultiTransitionData(),
+        areaTransitionData: this.getAreaTransitionData(),
         style: this.getStyles()
       });
     }, 2000);
@@ -77,6 +97,22 @@ export default class App extends React.Component {
 
     return (
       <div className="demo">
+
+        <VictoryArea
+          style={style} animate={{duration: 1000}}
+          data={this.state.areaTransitionData}
+        />
+
+        <VictoryStack
+          style={style}
+          animate={{duration: 1000}}
+          colorScale={"warm"}
+        >
+          {this.state.multiTransitionData.map((data, index) => {
+            return <VictoryArea key={index} data={data} interpolation={"basis"}/>;
+          })}
+        </VictoryStack>
+
         <VictoryArea style={style}/>
 
         <VictoryArea

@@ -25,12 +25,12 @@ export default class VictoryArea extends React.Component {
 
   static defaultTransitions = {
     onExit: {
-      duration: 600,
+      duration: 500,
       before: (datum) => ({y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset }),
       after: () => ({ y: 0, yOffset: 0, xOffset: 0 })
     },
     onEnter: {
-      duration: 600,
+      duration: 500,
       before: () => ({ y: 0, yOffset: 0, xOffset: 0 }),
       after: (datum) => ({ y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset })
     }

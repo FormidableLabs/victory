@@ -30,14 +30,14 @@ export default class VictoryLine extends React.Component {
 
   static defaultTransitions = {
     onExit: {
-      duration: 600,
-      before: (datum) => ({ opacity: datum.opacity || 1 }),
-      after: () => ({ opacity: 0 })
+      duration: 500,
+      before: (datum) => ({ y: datum.y}),
+      after: () => ({ y: null })
     },
     onEnter: {
-      duration: 600,
-      before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
+      duration: 500,
+      before: () => ({ y: null }),
+      after: (datum) => ({ y: datum.y})
     }
   };
 

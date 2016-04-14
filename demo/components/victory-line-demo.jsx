@@ -27,14 +27,16 @@ class PointedLine extends React.Component {
           y: scale.y.call(null, y)
         };
 
-        return (<Point
-          symbol="circle"
-          size={2}
-          key={`line-${index}-point-${pointIndex}`}
-          index={parseFloat(`${index}.${pointIndex}`)}
-          datum={datum}
-          {...position}
-                />);
+        return (
+          <Point
+            symbol="circle"
+            size={2}
+            key={`line-${index}-point-${pointIndex}`}
+            index={parseFloat(`${index}.${pointIndex}`)}
+            datum={datum}
+            position={position}
+          />
+        );
       })
     );
   }
@@ -56,12 +58,20 @@ export default class App extends React.Component {
     super();
     this.state = {
       data: this.getData(),
+      transitionData: this.getTransitionData(),
       arrayData: this.getArrayData(),
       style: {
         stroke: "blue",
         strokeWidth: 2
       }
     };
+  }
+
+  getTransitionData() {
+    const lines = _.random(6, 10);
+    return _.map(_.range(lines), (line) => {
+      return {x: line, y: _.random(2, 10)};
+    });
   }
 
   getData() {
@@ -89,6 +99,7 @@ export default class App extends React.Component {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
+        transitionData: this.getTransitionData(),
         style: this.getStyles()
       });
     }, 2000);
@@ -104,11 +115,17 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryLine</h1>
 
+          <VictoryLine
+            style={{parent: parentStyle, data: this.state.style}}
+            data={this.state.transitionData}
+            animate={{duration: 800}}
+          />
+
         <VictoryLine
           style={{parent: parentStyle, data: this.state.style}}
           data={this.state.data}
           label={"label\none"}
-          animate={{duration: 2000}}
+          animate={{duration: 1500}}
         />
 
         <VictoryLine
