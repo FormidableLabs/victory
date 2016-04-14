@@ -1,5 +1,16 @@
 VictoryCore Changelog
 =====================
+## 1.4.0 (2016-04-14)
+
+- Adds a VictoryTransition wrapper to facilitate enter and exit transitions for any components with an array `data` prop.
+- Supports coordinating transitions for deeply nested children (i.e. stacked bar charts)
+- Modifies array interpolation so that the interpolated array is never longer than the end array. See https://github.com/d3/d3-interpolate/pull/19
+
+## 1.3.0 (2016-03-28)
+
+- Adds initial enter and exit transition support
+- Adds a `labelAngle` prop to VictoryLabel
+- Improves transformations
 
 ## 1.2.1 (2016-03-15)
 
