@@ -59,7 +59,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.VictoryLabel = exports.VictoryAnimation = exports.Transitions = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
+	exports.VictoryTransition = exports.VictoryLabel = exports.VictoryAnimation = exports.Transitions = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
 	var _collection = __webpack_require__(1);
 	
@@ -124,7 +124,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _transitions = __webpack_require__(166);
+	var _victoryTransition = __webpack_require__(167);
+	
+	Object.defineProperty(exports, "VictoryTransition", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_victoryTransition).default;
+	  }
+	});
+	
+	var _transitions = __webpack_require__(165);
 	
 	var Transitions = _interopRequireWildcard(_transitions);
 	
@@ -5702,18 +5711,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = {
-	  /**
-	   * Given an object with CSS/SVG transform definitions, return the string value
-	   * for use with the `transform` CSS property or SVG attribute. Note that we
-	   * can't always guarantee the order will match the author's intended order, so
-	   * authors should only use the object notation if they know that their transform
-	   * is commutative or that there is only one.
-	   * @param {Object} obj An object of transform definitions.
-	   * @returns {String} The generated transform string.
-	   */
+	/**
+	 * Given an object with CSS/SVG transform definitions, return the string value
+	 * for use with the `transform` CSS property or SVG attribute. Note that we
+	 * can't always guarantee the order will match the author's intended order, so
+	 * authors should only use the object notation if they know that their transform
+	 * is commutative or that there is only one.
+	 * @param {Object} obj An object of transform definitions.
+	 * @returns {String} The generated transform string.
+	 */
+	var toTransformString = function toTransformString(obj) {
+	  for (var _len = arguments.length, more = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+	    more[_key - 1] = arguments[_key];
+	  }
 	
-	  toTransformString: function toTransformString(obj) {
+	  if (more.length > 0) {
+	    return more.reduce(function (memo, currentObj) {
+	      return [memo, toTransformString(currentObj)].join(" ");
+	    }, toTransformString(obj));
+	  } else {
 	    if (!obj || typeof obj === "string") {
 	      return obj;
 	    }
@@ -5725,7 +5741,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	    return transforms.join(" ");
-	  },
+	  }
+	};
+	
+	exports.default = {
+	
+	  toTransformString: toTransformString,
+	
 	  calc: function calc(expr, precision) {
 	    return (0, _reduceCssCalc2.default)("calc(" + expr + ")", precision);
 	  },
@@ -7172,7 +7194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var cubehelix = cubehelixGamma(1);
 	  var cubehelixLong = cubehelixGammaLong(1);
 	
-	  var version = "0.2.1";
+	  var version = "0.2.0";
 	
 	  exports.version = version;
 	  exports.cubehelix = cubehelix;
@@ -7832,7 +7854,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.addVictoryInterpolator = exports.victoryInterpolator = exports.interpolateFunction = exports.interpolateImmediate = exports.isInterpolatable = undefined;
+	exports.addVictoryInterpolator = exports.victoryInterpolator = exports.interpolateArray = exports.interpolateFunction = exports.interpolateImmediate = exports.isInterpolatable = undefined;
 	
 	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
@@ -7935,6 +7957,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	/**
+	 * This function is adapted from https://github.com/d3-interpolate/master/src/array.js
+	 * This function may be removed pending the merge of https://github.com/d3/d3-interpolate/pull/19
+	 * This function differs from d3-interpolate in that it wont return an array longer
+	 * than the end array.
+	 *
+	 * @param {any} a - Start value.
+	 * @param {any} b - End value.
+	 * @returns {Function} An interpolation function.
+	 */
+	var interpolateArray = exports.interpolateArray = function interpolateArray(a, b) {
+	  var x = [];
+	  var c = [];
+	  var na = a ? a.length : 0;
+	  var nb = b ? b.length : 0;
+	  var n0 = Math.min(na, nb);
+	  var i = void 0;
+	
+	  for (i = 0; i < n0; ++i) {
+	    x.push(_d3Interpolate2.default.value(a[i], b[i]));
+	  }
+	  for (i = 0; i < nb; ++i) {
+	    c[i] = b[i];
+	  }
+	
+	  return function (t) {
+	    for (i = 0; i < n0; ++i) {
+	      c[i] = x[i](t);
+	    }
+	    return c;
+	  };
+	};
+	
+	/**
 	 * By default, the list of interpolators used by `d3.interpolate` has a few
 	 * downsides:
 	 *
@@ -7966,6 +8021,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	  if (typeof a === "function" || typeof b === "function") {
 	    return interpolateFunction(a, b);
+	  }
+	  if (Array.isArray(a) && Array.isArray(b)) {
+	    return interpolateArray(a, b);
 	  }
 	};
 	
@@ -8070,13 +8128,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
+	    key: "getTransform",
+	    value: function getTransform(props) {
+	      var transform = props.transform;
+	      var datum = props.datum;
+	      var x = props.x;
+	      var y = props.y;
+	      var angle = props.angle;
+	
+	      var transformPart = transform && _index.Helpers.evaluateProp(transform, datum);
+	      var rotatePart = angle && { rotate: [angle, x, y] };
+	      return (transformPart || angle) && _index.Style.toTransformString(transformPart, rotatePart);
+	    }
+	  }, {
 	    key: "render",
 	    value: function render() {
 	      var _this2 = this;
 	
 	      var datum = this.props.datum || this.props.data;
 	      var lineHeight = this.getHeight(this.props, "lineHeight");
-	      var transform = this.props.transform && _index.Style.toTransformString(_index.Helpers.evaluateProp(this.props.transform, datum));
+	      var transform = this.getTransform(this.props);
+	
 	      var textAnchor = this.props.textAnchor ? _index.Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
 	      var content = this.getContent(this.props);
 	      var style = this.getStyles(this.props);
@@ -8108,6 +8180,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}(_react2.default.Component);
 	
 	VictoryLabel.propTypes = {
+	  /**
+	   * Specifies the angle to rotate the text by.
+	   */
+	  angle: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
 	  /**
 	   * The capHeight prop defines a text metric for the font being used: the
 	   * expected height of capital letters. This is necessary because of SVG,
@@ -8212,7 +8288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.Perf = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
+	exports.PropTypes = exports.Transitions = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
 	var _collection = __webpack_require__(1);
 	
@@ -8234,9 +8310,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _propTypes2 = _interopRequireDefault(_propTypes);
 	
-	var _perf = __webpack_require__(165);
+	var _transitions = __webpack_require__(165);
 	
-	var _perf2 = _interopRequireDefault(_perf);
+	var Transitions = _interopRequireWildcard(_transitions);
+	
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -8244,44 +8322,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.Helpers = _helpers2.default;
 	exports.Log = _log2.default;
 	exports.Style = _style2.default;
+	exports.Transitions = Transitions;
 	exports.PropTypes = _propTypes2.default;
-	exports.Perf = _perf2.default;
 
 /***/ },
 /* 165 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/**
-	 * Memoizes multi-argument functions.
-	 *
-	 * NOTE: If `fn` receives another function as its argument, memoization is
-	 * not guaranteed to work.  The function will be strigified, but it will
-	 * no longer be a closure.
-	 *
-	 * @param  {Function}  fn  The function to memoize
-	 *
-	 * @return {Function}      Memoized `fn`.
-	 */
-	exports.default = {
-	  memoize: function memoize(fn) {
-	    var cache = {};
-	    return function () {
-	      var args = Array.prototype.slice.call(arguments);
-	      var hash = args.map(function (arg) {
-	        return typeof arg === "string" || typeof arg === "number" ? arg : JSON.stringify(arg);
-	      }).join("~");
-	      return hash in cache ? cache[hash] : cache[hash] = fn.apply(this, args); // eslint-disable-line no-invalid-this
-	    };
-	  }
-	};
-
-/***/ },
-/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8292,9 +8337,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getInitialTransitionState = getInitialTransitionState;
 	exports.getTransitionPropsFactory = getTransitionPropsFactory;
 	
-	var _assign = __webpack_require__(167);
+	var _assign = __webpack_require__(166);
 	
 	var _assign2 = _interopRequireDefault(_assign);
+	
+	var _defaults = __webpack_require__(3);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
 	var _identity = __webpack_require__(49);
 	
@@ -8302,11 +8351,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	/* eslint-disable func-style */
-	
 	function getDatumKey(datum, idx) {
 	  return (datum.key || idx).toString();
-	}
+	} /* eslint-disable func-style */
+	
 	
 	function getKeyedData(data) {
 	  return data.reduce(function (keyedData, datum, idx) {
@@ -8342,13 +8390,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *                           entering, and similarly for `exiting`.
 	 */
 	function getNodeTransitions(oldData, nextData) {
-	  var oldDataKeyed = getKeyedData(oldData);
-	  var nextDataKeyed = getKeyedData(nextData);
+	  var oldDataKeyed = oldData && getKeyedData(oldData);
+	  var nextDataKeyed = nextData && getKeyedData(nextData);
 	
 	  return {
-	    entering: getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
-	    exiting: getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
+	    entering: oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
+	    exiting: nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
 	  };
+	}
+	
+	function getChildData(child) {
+	  if (child.type && child.type.getData) {
+	    return child.type.getData(child.props);
+	  }
+	  return child.props && child.props.data || false;
 	}
 	
 	/**
@@ -8371,18 +8426,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var nodesWillExit = false;
 	  var nodesWillEnter = false;
 	
-	  // Children may be a single item, rather than an array.
-	  oldChildren = [].concat(oldChildren);
-	  nextChildren = [].concat(nextChildren);
-	
-	  var childrenTransitions = oldChildren.map(function (child, idx) {
-	    // TODO: Determine if/how we want to support variable-length children.
-	    var nextChild = nextChildren[idx];
-	    if (!nextChild || child.type !== nextChild.type) {
+	  var getTransition = function getTransition(oldChild, newChild) {
+	    if (!newChild || oldChild.type !== newChild.type) {
 	      return {};
 	    }
 	
-	    var _ref = child.type.defaultTransitions && getNodeTransitions(child.props.data, nextChild.props.data) || {};
+	    var _ref = getNodeTransitions(getChildData(oldChild), getChildData(newChild)) || {};
 	
 	    var entering = _ref.entering;
 	    var exiting = _ref.exiting;
@@ -8391,9 +8440,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    nodesWillExit = nodesWillExit || !!exiting;
 	    nodesWillEnter = nodesWillEnter || !!entering;
 	
-	    return { entering: entering, exiting: exiting };
-	  });
+	    return { entering: entering || false, exiting: exiting || false };
+	  };
 	
+	  var getTransitionsFromChildren = function getTransitionsFromChildren(old, next) {
+	    return old.map(function (child, idx) {
+	      if (child.props.children) {
+	        return getTransitionsFromChildren(old[idx].props.children, next[idx].props.children);
+	      } else {
+	        return getTransition(child, next[idx]);
+	      }
+	    });
+	  };
+	
+	  var childrenTransitions = getTransitionsFromChildren(oldChildren, nextChildren);
 	  return {
 	    nodesWillExit: nodesWillExit,
 	    nodesWillEnter: nodesWillEnter,
@@ -8436,7 +8496,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	    })();
 	  }
-	
 	  return { animate: animate, data: data };
 	}
 	
@@ -8483,42 +8542,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	/**
-	 * For each transition type (enter, exit, move), find the longest duration
-	 * of each type from any of the children.
-	 *
-	 * @param  {Array}  children            `this.props.children` from parent component.
-	 * @param  {Object} childrenTransitions Child transitions data, as calculated by the
-	 *                                      `getInitialTransitionState` function.
-	 * @param  {Object} parentAnimate       `this.props.animate` from parent component, to
-	 *                                      be used for transition duration defaults.
-	 *
-	 * @return {Object}                     `{ exit, enter, move }`
-	 */
-	function getTransitionDurations(children, childrenTransitions, parentAnimate) {
-	  if (!childrenTransitions) {
-	    return {};
-	  }
-	
-	  return children.reduce(function (durations, child, idx) {
-	    if (childrenTransitions[idx] && childrenTransitions[idx].exiting && child.props.animate && child.props.animate.onExit && child.props.animate.onExit.duration > durations.exit) {
-	      durations.exit = child.props.animate.onExit.duration;
-	    }
-	    if (childrenTransitions[idx] && childrenTransitions[idx].entering && child.props.animate && child.props.animate.onEnter && child.props.animate.onEnter.duration > durations.enter) {
-	      durations.enter = child.props.animate.onEnter.duration;
-	    }
-	    if (child.props.animate && child.props.animate.duration > durations.move) {
-	      durations.move = child.props.animate.duration;
-	    }
-	
-	    return durations;
-	  }, {
-	    exit: parentAnimate.onExit && parentAnimate.onExit.duration || null,
-	    enter: parentAnimate.onEnter && parentAnimate.onEnter.duration || null,
-	    move: parentAnimate.duration || null
-	  });
-	}
-	
-	/**
 	 * getTransitionPropsFactory - putting the Java in JavaScript.  This will return a
 	 * function that returns prop transformations for a child, given that child's props
 	 * and its index in the parent's children array.
@@ -8529,58 +8552,59 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * is transformed by `animate.onExit` and `animate.onEnter` `before` and `after`
 	 * functions.
 	 *
-	 * @param  {Array}  children       `this.props.children` for the parent component.
-	 * @param  {Object} parentState    `this.state` for the parent component.
-	 * @param  {Object} parentAnimate  `this.props.animate` for the parent component.
-	 * @param  {Object} setParentState Function that, when called, will `this.setState` on
+	 * @param  {Object}  props       `this.props` for the parent component.
+	 * @param  {Object} state        `this.state` for the parent component.
+	 * @param  {Function} setState    Function that, when called, will `this.setState` on
 	 *                                 the parent component with the provided object.
 	 *
 	 * @return {Function}              Child-prop transformation function.
 	 */
-	function getTransitionPropsFactory(children, parentState, parentAnimate, setParentState) {
-	  // eslint-disable-line max-params,max-len
-	  var nodesWillExit = parentState && parentState.nodesWillExit;
-	  var nodesWillEnter = parentState && parentState.nodesWillEnter;
-	  var nodesShouldEnter = parentState && parentState.nodesShouldEnter;
-	  var childrenTransitions = parentState && parentState.childrenTransitions;
+	function getTransitionPropsFactory(props, state, setState) {
+	  var nodesWillExit = state && state.nodesWillExit;
+	  var nodesWillEnter = state && state.nodesWillEnter;
+	  var nodesShouldEnter = state && state.nodesShouldEnter;
+	  var childrenTransitions = state && state.childrenTransitions || [];
+	  var transitionDurations = {
+	    enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
+	    exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
+	    move: props.animate && props.animate.duration
+	  };
 	
-	  var transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
+	  var onExit = function onExit(nodes, data, animate) {
+	    return getChildPropsOnExit(animate, data, nodes, function () {
+	      setState({ nodesWillExit: false });
+	    });
+	  };
 	
-	  return function getTransitionProps(childProps, childType, index) {
-	    // eslint-disable-line max-statements,max-len
-	    if (!childProps.data) {
-	      return {};
-	    }
+	  var onEnter = function onEnter(nodes, data, animate) {
+	    return nodesShouldEnter ? getChildPropsOnEnter(animate, data, nodes) : getChildPropsBeforeEnter(animate, data, nodes, function () {
+	      setState({ nodesShouldEnter: true });
+	    });
+	  };
 	
-	    var animate = (0, _assign2.default)({}, childProps.animate || parentAnimate);
+	  var getChildTransitionDuration = function getChildTransitionDuration(child, type) {
+	    var animate = child.props.animate;
+	    var defaultTransitions = child.type && child.type.defaultTransitions;
+	    return animate[type] && animate[type].duration || defaultTransitions[type] && defaultTransitions[type].duration;
+	  };
 	
-	    if (childType.defaultTransitions) {
-	      animate.onExit = animate.onExit || childType.defaultTransitions.onExit;
-	      animate.onEnter = animate.onEnter || childType.defaultTransitions.onEnter;
-	    }
-	
-	    var data = childProps.data;
-	
+	  return function getTransitionProps(child, index) {
+	    var data = getChildData(child) || [];
+	    var animate = (0, _defaults2.default)({}, props.animate, child.props.animate, child.type.defaultTransitions);
+	    var childTransitions = childrenTransitions[index] || childrenTransitions[0];
 	    if (nodesWillExit) {
-	      var exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
-	      // Synchronize exit-transition durations for all child components.
-	      animate = (0, _assign2.default)(animate, { duration: transitionDurations.exit });
-	
-	      return getChildPropsOnExit(animate, data, exitingNodes, function () {
-	        return setParentState({ nodesWillExit: false });
-	      });
+	      var exitingNodes = childTransitions && childTransitions.exiting;
+	      var exit = transitionDurations.exit || getChildTransitionDuration(child, "onExit");
+	      // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
+	      var animation = exitingNodes ? { duration: exit } : { delay: exit };
+	      return onExit(exitingNodes, data, (0, _assign2.default)({}, animate, animation));
 	    } else if (nodesWillEnter) {
-	      var enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
-	      animate = (0, _assign2.default)(animate,
-	      // Synchronize normal animate and enter-transition durations for all child
-	      // components, ONLY IF an enter-transition will occur.  Otherwise, child
-	      // components can have different durations for shared-node animations.
-	      { duration: transitionDurations[nodesShouldEnter ? "enter" : "move"] });
-	
-	      return nodesShouldEnter ? getChildPropsOnEnter(animate, data, enteringNodes) : getChildPropsBeforeEnter(animate, data, enteringNodes, function () {
-	        return setParentState({ nodesShouldEnter: true });
-	      });
-	    } else if (!parentState && animate && animate.onExit) {
+	      var enteringNodes = childTransitions && childTransitions.entering;
+	      var enter = transitionDurations.enter || getChildTransitionDuration(child, "onEnter");
+	      var move = transitionDurations.move || child.props.animate && child.props.animate.duration;
+	      var _animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
+	      return onEnter(enteringNodes, data, (0, _assign2.default)({}, animate, _animation));
+	    } else if (!state && animate && animate.onExit) {
 	      // This is the initial render, and nodes may enter when props change. Because
 	      // animation interpolation is determined by old- and next- props, data may need
 	      // to be augmented with certain properties.
@@ -8592,13 +8616,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      //
 	      return getInitialChildProps(animate, data);
 	    }
-	
 	    return { animate: animate, data: data };
 	  };
 	}
 
 /***/ },
-/* 167 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assignValue = __webpack_require__(9),
@@ -8663,6 +8686,275 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	
 	module.exports = assign;
+
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(156);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _victoryAnimation = __webpack_require__(157);
+	
+	var _victoryAnimation2 = _interopRequireDefault(_victoryAnimation);
+	
+	var _index = __webpack_require__(164);
+	
+	var _defaults = __webpack_require__(3);
+	
+	var _defaults2 = _interopRequireDefault(_defaults);
+	
+	var _pick = __webpack_require__(168);
+	
+	var _pick2 = _interopRequireDefault(_pick);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var VictoryTransition = function (_React$Component) {
+	  _inherits(VictoryTransition, _React$Component);
+	
+	  function VictoryTransition() {
+	    _classCallCheck(this, VictoryTransition);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryTransition).apply(this, arguments));
+	  }
+	
+	  _createClass(VictoryTransition, [{
+	    key: "componentWillReceiveProps",
+	    value: function componentWillReceiveProps(nextProps) {
+	      this.setState(this.getTransitionState(this.props, nextProps));
+	    }
+	  }, {
+	    key: "getTransitionState",
+	    value: function getTransitionState(props, nextProps) {
+	      var animate = props.animate;
+	
+	      if (!animate) {
+	        return {};
+	      } else if (animate.parentState) {
+	        var oldProps = animate.parentState.nodesWillExit ? props : null;
+	        return { oldProps: oldProps };
+	      } else {
+	        var _Transitions$getIniti = _index.Transitions.getInitialTransitionState([props.children], [nextProps.children]);
+	
+	        var nodesWillExit = _Transitions$getIniti.nodesWillExit;
+	        var nodesWillEnter = _Transitions$getIniti.nodesWillEnter;
+	        var childrenTransitions = _Transitions$getIniti.childrenTransitions;
+	        var nodesShouldEnter = _Transitions$getIniti.nodesShouldEnter;
+	
+	        return {
+	          nodesWillExit: nodesWillExit,
+	          nodesWillEnter: nodesWillEnter,
+	          childrenTransitions: childrenTransitions,
+	          nodesShouldEnter: nodesShouldEnter,
+	          oldProps: nodesWillExit ? props : null
+	        };
+	      }
+	    }
+	  }, {
+	    key: "getChildDomain",
+	    value: function getChildDomain(child) {
+	      var getDomain = child.type && child.type.getDomain;
+	      if (!getDomain) {
+	        return undefined;
+	      }
+	      return child.type && child.type.role === "axis" ? getDomain(child.props) : {
+	        x: getDomain(child.props, "x"),
+	        y: getDomain(child.props, "y")
+	      };
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _this2 = this;
+	
+	      var props = this.state && this.state.nodesWillExit ? this.state.oldProps : this.props;
+	      var getTransitionProps = this.props.animate && this.props.animate.getTransitions ? this.props.animate.getTransitions : _index.Transitions.getTransitionPropsFactory(props, this.state, function (newState) {
+	        return _this2.setState(newState);
+	      });
+	      var child = _react2.default.Children.toArray(props.children)[0];
+	      var transitionProps = getTransitionProps(child);
+	      var combinedProps = (0, _defaults2.default)({ domain: this.getChildDomain(child) }, transitionProps, child.props);
+	      var propsToAnimate = props.animationWhitelist ? (0, _pick2.default)(combinedProps, props.animationWhitelist) : combinedProps;
+	      return _react2.default.createElement(
+	        _victoryAnimation2.default,
+	        _extends({}, combinedProps.animate, { data: propsToAnimate }),
+	        function (newProps) {
+	          var component = _react2.default.cloneElement(child, (0, _defaults2.default)({ animate: null }, newProps, combinedProps));
+	          return component;
+	        }
+	      );
+	    }
+	  }]);
+	
+	  return VictoryTransition;
+	}(_react2.default.Component);
+	
+	VictoryTransition.propTypes = {
+	  /**
+	   * The animate prop specifies an animation config for the transition.
+	   * This prop should be given as an object.
+	   */
+	  animate: _react2.default.PropTypes.object,
+	  /**
+	   * VictoryTransition animates a single child component
+	   */
+	  children: _react2.default.PropTypes.node,
+	  /**
+	   * This prop specifies which of the child's props are safe to interpolate.
+	   * This props should be given as an array.
+	   */
+	  animationWhitelist: _react2.default.PropTypes.array
+	};
+	exports.default = VictoryTransition;
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseFlatten = __webpack_require__(169),
+	    basePick = __webpack_require__(171),
+	    rest = __webpack_require__(19);
+	
+	/**
+	 * Creates an object composed of the picked `object` properties.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @category Object
+	 * @param {Object} object The source object.
+	 * @param {...(string|string[])} [props] The property names to pick, specified
+	 *  individually or in arrays.
+	 * @returns {Object} Returns the new object.
+	 * @example
+	 *
+	 * var object = { 'a': 1, 'b': '2', 'c': 3 };
+	 *
+	 * _.pick(object, ['a', 'c']);
+	 * // => { 'a': 1, 'c': 3 }
+	 */
+	var pick = rest(function(object, props) {
+	  return object == null ? {} : basePick(object, baseFlatten(props, 1));
+	});
+	
+	module.exports = pick;
+
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayPush = __webpack_require__(170),
+	    isArguments = __webpack_require__(31),
+	    isArray = __webpack_require__(34),
+	    isArrayLikeObject = __webpack_require__(32);
+	
+	/**
+	 * The base implementation of `_.flatten` with support for restricting flattening.
+	 *
+	 * @private
+	 * @param {Array} array The array to flatten.
+	 * @param {number} depth The maximum recursion depth.
+	 * @param {boolean} [isStrict] Restrict flattening to arrays-like objects.
+	 * @param {Array} [result=[]] The initial result value.
+	 * @returns {Array} Returns the new flattened array.
+	 */
+	function baseFlatten(array, depth, isStrict, result) {
+	  result || (result = []);
+	
+	  var index = -1,
+	      length = array.length;
+	
+	  while (++index < length) {
+	    var value = array[index];
+	    if (depth > 0 && isArrayLikeObject(value) &&
+	        (isStrict || isArray(value) || isArguments(value))) {
+	      if (depth > 1) {
+	        // Recursively flatten arrays (susceptible to call stack limits).
+	        baseFlatten(value, depth - 1, isStrict, result);
+	      } else {
+	        arrayPush(result, value);
+	      }
+	    } else if (!isStrict) {
+	      result[result.length] = value;
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = baseFlatten;
+
+
+/***/ },
+/* 170 */
+/***/ function(module, exports) {
+
+	/**
+	 * Appends the elements of `values` to `array`.
+	 *
+	 * @private
+	 * @param {Array} array The array to modify.
+	 * @param {Array} values The values to append.
+	 * @returns {Array} Returns `array`.
+	 */
+	function arrayPush(array, values) {
+	  var index = -1,
+	      length = values.length,
+	      offset = array.length;
+	
+	  while (++index < length) {
+	    array[offset + index] = values[index];
+	  }
+	  return array;
+	}
+	
+	module.exports = arrayPush;
+
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var arrayReduce = __webpack_require__(134);
+	
+	/**
+	 * The base implementation of `_.pick` without support for individual
+	 * property names.
+	 *
+	 * @private
+	 * @param {Object} object The source object.
+	 * @param {string[]} props The property names to pick.
+	 * @returns {Object} Returns the new object.
+	 */
+	function basePick(object, props) {
+	  object = Object(object);
+	  return arrayReduce(props, function(result, key) {
+	    if (key in object) {
+	      result[key] = object[key];
+	    }
+	    return result;
+	  }, {});
+	}
+	
+	module.exports = basePick;
 
 
 /***/ }
