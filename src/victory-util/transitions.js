@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
-
 import assign from "lodash/assign";
+import defaults from "lodash/defaults";
 import identity from "lodash/identity";
 
 function getDatumKey(datum, idx) {
@@ -41,13 +41,20 @@ function getKeyedDataDifference(a, b) {
  *                           entering, and similarly for `exiting`.
  */
 function getNodeTransitions(oldData, nextData) {
-  const oldDataKeyed = getKeyedData(oldData);
-  const nextDataKeyed = getKeyedData(nextData);
+  const oldDataKeyed = oldData && getKeyedData(oldData);
+  const nextDataKeyed = nextData && getKeyedData(nextData);
 
   return {
-    entering: getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
-    exiting: getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
+    entering: oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
+    exiting: nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
   };
+}
+
+function getChildData(child) {
+  if (child.type && child.type.getData) {
+    return child.type.getData(child.props);
+  }
+  return child.props && child.props.data || false;
 }
 
 /**
@@ -70,28 +77,31 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;
   let nodesWillEnter = false;
 
-  // Children may be a single item, rather than an array.
-  oldChildren = [].concat(oldChildren);
-  nextChildren = [].concat(nextChildren);
-
-  const childrenTransitions = oldChildren.map((child, idx) => {
-    // TODO: Determine if/how we want to support variable-length children.
-    const nextChild = nextChildren[idx];
-    if (!nextChild || child.type !== nextChild.type) {
+  const getTransition = (oldChild, newChild) => {
+    if (!newChild || oldChild.type !== newChild.type) {
       return {};
     }
 
     const { entering, exiting } =
-      child.type.defaultTransitions &&
-      getNodeTransitions(child.props.data, nextChild.props.data) ||
-      {};
+      getNodeTransitions(getChildData(oldChild), getChildData(newChild)) || {};
 
     nodesWillExit = nodesWillExit || !!exiting;
     nodesWillEnter = nodesWillEnter || !!entering;
 
-    return { entering, exiting };
-  });
+    return { entering: entering || false, exiting: exiting || false };
+  };
 
+  const getTransitionsFromChildren = (old, next) => {
+    return old.map((child, idx) => {
+      if (child.props.children) {
+        return getTransitionsFromChildren(old[idx].props.children, next[idx].props.children);
+      } else {
+        return getTransition(child, next[idx]);
+      }
+    });
+  };
+
+  const childrenTransitions = getTransitionsFromChildren(oldChildren, nextChildren);
   return {
     nodesWillExit,
     nodesWillEnter,
@@ -104,7 +114,6 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     nodesShouldEnter: false
   };
 }
-
 
 function getInitialChildProps(animate, data) {
   const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
@@ -130,7 +139,6 @@ function getChildPropsOnExit(animate, data, exitingNodes, cb) { // eslint-disabl
       return exitingNodes[key] ? assign({}, datum, after(datum)) : datum;
     });
   }
-
   return { animate, data };
 }
 
@@ -172,57 +180,6 @@ function getChildPropsOnEnter(animate, data, enteringNodes) {
 }
 
 /**
- * For each transition type (enter, exit, move), find the longest duration
- * of each type from any of the children.
- *
- * @param  {Array}  children            `this.props.children` from parent component.
- * @param  {Object} childrenTransitions Child transitions data, as calculated by the
- *                                      `getInitialTransitionState` function.
- * @param  {Object} parentAnimate       `this.props.animate` from parent component, to
- *                                      be used for transition duration defaults.
- *
- * @return {Object}                     `{ exit, enter, move }`
- */
-function getTransitionDurations(children, childrenTransitions, parentAnimate) {
-  if (!childrenTransitions) {
-    return {};
-  }
-
-  return children.reduce((durations, child, idx) => {
-    if (
-      childrenTransitions[idx] &&
-      childrenTransitions[idx].exiting &&
-      child.props.animate &&
-      child.props.animate.onExit &&
-      child.props.animate.onExit.duration > durations.exit
-    ) {
-      durations.exit = child.props.animate.onExit.duration;
-    }
-    if (
-      childrenTransitions[idx] &&
-      childrenTransitions[idx].entering &&
-      child.props.animate &&
-      child.props.animate.onEnter &&
-      child.props.animate.onEnter.duration > durations.enter
-    ) {
-      durations.enter = child.props.animate.onEnter.duration;
-    }
-    if (
-      child.props.animate &&
-      child.props.animate.duration > durations.move
-    ) {
-      durations.move = child.props.animate.duration;
-    }
-
-    return durations;
-  }, {
-    exit: parentAnimate.onExit && parentAnimate.onExit.duration || null,
-    enter: parentAnimate.onEnter && parentAnimate.onEnter.duration || null,
-    move: parentAnimate.duration || null
-  });
-}
-
-/**
  * getTransitionPropsFactory - putting the Java in JavaScript.  This will return a
  * function that returns prop transformations for a child, given that child's props
  * and its index in the parent's children array.
@@ -233,58 +190,65 @@ function getTransitionDurations(children, childrenTransitions, parentAnimate) {
  * is transformed by `animate.onExit` and `animate.onEnter` `before` and `after`
  * functions.
  *
- * @param  {Array}  children       `this.props.children` for the parent component.
- * @param  {Object} parentState    `this.state` for the parent component.
- * @param  {Object} parentAnimate  `this.props.animate` for the parent component.
- * @param  {Object} setParentState Function that, when called, will `this.setState` on
+ * @param  {Object}  props       `this.props` for the parent component.
+ * @param  {Object} state        `this.state` for the parent component.
+ * @param  {Function} setState    Function that, when called, will `this.setState` on
  *                                 the parent component with the provided object.
  *
  * @return {Function}              Child-prop transformation function.
  */
-export function getTransitionPropsFactory(children, parentState, parentAnimate, setParentState) { // eslint-disable-line max-params,max-len
-  const nodesWillExit = parentState && parentState.nodesWillExit;
-  const nodesWillEnter = parentState && parentState.nodesWillEnter;
-  const nodesShouldEnter = parentState && parentState.nodesShouldEnter;
-  const childrenTransitions = parentState && parentState.childrenTransitions;
+export function getTransitionPropsFactory(props, state, setState) {
+  const nodesWillExit = state && state.nodesWillExit;
+  const nodesWillEnter = state && state.nodesWillEnter;
+  const nodesShouldEnter = state && state.nodesShouldEnter;
+  const childrenTransitions = state && state.childrenTransitions || [];
+  const transitionDurations = {
+    enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
+    exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
+    move: props.animate && props.animate.duration
+  };
 
-  const transitionDurations = getTransitionDurations(children, childrenTransitions, parentAnimate);
+  const onExit = (nodes, data, animate) => {
+    return getChildPropsOnExit(animate, data, nodes, () => {
+      setState({ nodesWillExit: false });
+    });
+  };
 
-  return function getTransitionProps(childProps, childType, index) { // eslint-disable-line max-statements,max-len
-    if (!childProps.data) {
-      return {};
-    }
+  const onEnter = (nodes, data, animate) => {
+    return nodesShouldEnter ?
+      getChildPropsOnEnter(animate, data, nodes) :
+      getChildPropsBeforeEnter(animate, data, nodes, () => {
+        setState({ nodesShouldEnter: true });
+      });
+  };
 
-    let animate = assign({}, childProps.animate || parentAnimate);
+  const getChildTransitionDuration = function (child, type) {
+    const animate = child.props.animate;
+    const defaultTransitions = child.type && child.type.defaultTransitions;
+    return animate[type] && animate[type].duration ||
+      defaultTransitions[type] && defaultTransitions[type].duration;
+  };
 
-    if (childType.defaultTransitions) {
-      animate.onExit = animate.onExit || childType.defaultTransitions.onExit;
-      animate.onEnter = animate.onEnter || childType.defaultTransitions.onEnter;
-    }
-
-    const data = childProps.data;
-
+  return function getTransitionProps(child, index) {
+    const data = getChildData(child) || [];
+    const animate = defaults(
+      {}, props.animate, child.props.animate, child.type.defaultTransitions
+    );
+    const childTransitions = childrenTransitions[index] || childrenTransitions[0];
     if (nodesWillExit) {
-      const exitingNodes = childrenTransitions[index] && childrenTransitions[index].exiting;
-      // Synchronize exit-transition durations for all child components.
-      animate = assign(animate, { duration: transitionDurations.exit });
-
-      return getChildPropsOnExit(animate, data, exitingNodes, () =>
-        setParentState({ nodesWillExit: false }));
+      const exitingNodes = childTransitions && childTransitions.exiting;
+      const exit = transitionDurations.exit || getChildTransitionDuration(child, "onExit");
+      // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
+      const animation = exitingNodes ? {duration: exit} : {delay: exit};
+      return onExit(exitingNodes, data, assign({}, animate, animation));
     } else if (nodesWillEnter) {
-      const enteringNodes = childrenTransitions[index] && childrenTransitions[index].entering;
-      animate = assign(
-        animate,
-        // Synchronize normal animate and enter-transition durations for all child
-        // components, ONLY IF an enter-transition will occur.  Otherwise, child
-        // components can have different durations for shared-node animations.
-        { duration: transitionDurations[nodesShouldEnter ? "enter" : "move"] }
-      );
-
-      return nodesShouldEnter ?
-        getChildPropsOnEnter(animate, data, enteringNodes) :
-        getChildPropsBeforeEnter(animate, data, enteringNodes, () =>
-          setParentState({ nodesShouldEnter: true }));
-    } else if (!parentState && animate && animate.onExit) {
+      const enteringNodes = childTransitions && childTransitions.entering;
+      const enter = transitionDurations.enter || getChildTransitionDuration(child, "onEnter");
+      const move = transitionDurations.move ||
+        child.props.animate && child.props.animate.duration;
+      const animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
+      return onEnter(enteringNodes, data, assign({}, animate, animation));
+    } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because
       // animation interpolation is determined by old- and next- props, data may need
       // to be augmented with certain properties.
@@ -296,7 +260,6 @@ export function getTransitionPropsFactory(children, parentState, parentAnimate, 
       //
       return getInitialChildProps(animate, data);
     }
-
     return { animate, data };
 
   };

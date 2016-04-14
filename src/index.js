@@ -8,3 +8,4 @@ export { Transitions };
 
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryLabel } from "./victory-label/victory-label";
+export { default as VictoryTransition } from "./victory-transition/victory-transition";
