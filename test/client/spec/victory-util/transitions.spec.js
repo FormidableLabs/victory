@@ -56,16 +56,52 @@ describe("getInitialTransitionState", () => {
 });
 
 describe("getTransitionPropsFactory", () => {
-  it("returns a function that describes props entering", () => {
+  const toZero = sinon.spy(() => ({y: 0}));
+  const makeChild = (data) => {
+    return {
+      type: {
+        defaultTransitions: {
+          onExit: {duration: 1, after: toZero },
+          onEnter: {duration: 2, before: toZero }
+        }
+      },
+      props: {data, animate: {duration: 0}}
+    };
+  };
+
+  const callback = sinon.stub();
+
+  it("returns a function that describes data exiting", () => {
+    const exitingState = {
+      childrenTransitions: [{entering: false, exiting: {1: true}}],
+      nodesWillExit: true,
+      nodesWillEnter: false,
+      nodesShouldEnter: false
+    };
+    const result = Transitions.getTransitionPropsFactory({}, exitingState, callback);
+    const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
+    const calledResult = result(child);
+    expect(result).to.be.a("function");
+    expect(calledResult).to.have.keys(["animate", "data"]);
+    expect(toZero).calledWith({x: 2, y: 3});
+    expect(calledResult.data).to.eql([{x: 1, y: 1}, {x: 2, y: 0}]);
+    expect(calledResult.animate.duration).to.equal(child.type.defaultTransitions.onExit.duration);
+  });
+
+  it("returns a function that describes data entering", () => {
     const enteringState = {
       childrenTransitions: [{entering: {1: true}, exiting: false}],
       nodesWillExit: false,
       nodesWillEnter: true,
       nodesShouldEnter: false
     };
-    const callback = sinon.stub();
     const result = Transitions.getTransitionPropsFactory({}, enteringState, callback);
+    const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
+    const calledResult = result(child);
     expect(result).to.be.a("function");
+    expect(calledResult).to.have.keys(["animate", "data"]);
+    expect(toZero).calledWith({x: 2, y: 3});
+    expect(calledResult.data).to.eql([{x: 1, y: 1}, {x: 2, y: 0}]);
   });
 
 });
