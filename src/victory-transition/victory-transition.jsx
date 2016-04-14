@@ -50,6 +50,19 @@ export default class VictoryTransition extends React.Component {
     }
   }
 
+  getChildDomain(child) {
+    const getDomain = child.type && child.type.getDomain;
+    if (!getDomain) {
+      return undefined;
+    }
+    return child.type && child.type.role === "axis" ?
+      getDomain(child.props) :
+      {
+        x: getDomain(child.props, "x"),
+        y: getDomain(child.props, "y")
+      };
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
@@ -61,17 +74,10 @@ export default class VictoryTransition extends React.Component {
         (newState) => this.setState(newState)
       );
     const child = React.Children.toArray(props.children)[0];
-    const domain = child.type.role === "axis" ?
-      child.type.getDomain(child.props) :
-      {
-        x: child.type.getDomain(child.props, "x"),
-        y: child.type.getDomain(child.props, "y")
-      };
     const transitionProps = getTransitionProps(child);
-    // Do less work by having `VictoryAnimation` tween only values that
-    // make sense to tween. In the future, allow customization of animated
-    // prop whitelist/blacklist?
-    const combinedProps = defaults({domain}, transitionProps, child.props);
+    const combinedProps = defaults(
+      {domain: this.getChildDomain(child)}, transitionProps, child.props
+    );
     const propsToAnimate = props.animationWhitelist ?
       pick(combinedProps, props.animationWhitelist) : combinedProps;
     return (
