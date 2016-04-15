@@ -8341,9 +8341,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _assign2 = _interopRequireDefault(_assign);
 	
-	var _merge = __webpack_require__(84);
+	var _defaults = __webpack_require__(3);
 	
-	var _merge2 = _interopRequireDefault(_merge);
+	var _defaults2 = _interopRequireDefault(_defaults);
 	
 	var _identity = __webpack_require__(49);
 	
@@ -8589,8 +8589,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	
 	  return function getTransitionProps(child, index) {
+	    // eslint-disable-line max-statements
 	    var data = getChildData(child) || [];
-	    var animate = (0, _merge2.default)({}, child.type.defaultTransitions, child.props.animate, props.animate);
+	    var animate = (0, _defaults2.default)({}, props.animate, child.props.animate);
+	
+	    animate.onExit = (0, _defaults2.default)({}, animate.onExit, child.type.defaultTransitions && child.type.defaultTransitions.onExit);
+	    animate.onEnter = (0, _defaults2.default)({}, animate.onEnter, child.type.defaultTransitions && child.type.defaultTransitions.onEnter);
+	
 	    var childTransitions = childrenTransitions[index] || childrenTransitions[0];
 	    if (nodesWillExit) {
 	      var exitingNodes = childTransitions && childTransitions.exiting;
