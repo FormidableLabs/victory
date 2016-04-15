@@ -197,6 +197,9 @@ Time series data is also supported:
 ### Animating
 
 VictoryChart animates with [VictoryAnimation][] as data changes. Child components stay in sync.
+Victory components have default transition behaviors for entering and exiting data nodes.
+Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
+Values returned from `before` and `after` functions will alter the data prop of entering or exiting nodes.
 
 ```playground_norender
 class App extends React.Component {
@@ -204,35 +207,23 @@ class App extends React.Component {
     super(props);
     this.state = {
       data: this.getData(),
-      style: this.getStyles()
     };
   }
 
   getData() {
-    return _.map(_.range(25), (i) => {
+    const n = _.random(4, 10)
+    return _.map(_.range(n), (i) => {
       return {
         x: i,
-        y: Math.random()
+        y: _.random(2, 10)
       };
     });
-  }
-
-  getStyles() {
-    const colors = [
-      "red", "orange", "magenta",
-      "gold", "blue", "purple"
-    ];
-    return {
-      stroke: colors[_.random(0, 5)],
-      strokeWidth: _.random(1, 5)
-    };
   }
 
   componentDidMount() {
     setInterval(() => {
       this.setState({
-        data: this.getData(),
-        style: this.getStyles()
+        data: this.getData()
       });
     }, 2000);
   }
@@ -240,10 +231,24 @@ class App extends React.Component {
   render() {
     return (
       <VictoryChart height={500}
-        animate={{duration: 2000}}>
-        <VictoryLine
+        animate={{duration: 1000}}>
+        <VictoryBar
           data={this.state.data}
-          style={{data: this.state.style}}
+          style={{
+            data: {
+              fill: "tomato", width: 12
+            }
+          }}
+          animate={{
+            onExit: {
+              duration: 500,
+              before: () => ({
+                y: 0,
+                fill: "orange",
+                label: "BYE"
+              })
+            }
+          }}
         />
       </VictoryChart>
     );

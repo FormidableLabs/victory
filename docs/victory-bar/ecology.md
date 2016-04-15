@@ -222,6 +222,9 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
 ### Animating
 
 VictoryBar animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
+VictoryBar defines a set of default transition behaviors for entering and exiting data nodes.
+Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
+Values returned from `before` and `after` functions will alter the data prop of entering or exiting nodes.
 
 ```playground_norender
 class App extends React.Component {
@@ -233,12 +236,11 @@ class App extends React.Component {
   }
 
   getData() {
+    const num = _.random(3, 5);
     return _.map(_.range(4), (index) => {
-      return [
-        {x: "apples", y: _.random(1, 5)},
-        {x: "oranges", y: _.random(1, 5)},
-        {x: "bananas", y: _.random(1, 5)}
-      ];
+      return _.map(_.range(num), (i) => {
+        return {x: i, y: _.random(2, 10)};
+      })
     });
   }
 
@@ -247,7 +249,7 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 2000);
+    }, 3000);
   }
 
   render() {
@@ -255,13 +257,14 @@ class App extends React.Component {
       <VictoryGroup
         height={600}
         offset={15}
-        animate={{duration: 2000}}
-        colorScale={[
-          "cornflowerblue",
-          "tomato",
-          "orange",
-          "gold",
-        ]}
+        colorScale={"qualitative"}
+        animate={{
+          duration: 500,
+          onExit: {
+            duration: 1000,
+            before: () => ({y: -1})
+          },
+        }}
       >
         {this.state.data.map((data, i) => {
           return (

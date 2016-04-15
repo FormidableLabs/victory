@@ -39,7 +39,12 @@ export default class App extends React.Component {
   }
 
   render() {
+    const style = {
+      parent: {margin: "2%", maxWidth: "40%"}
+    };
+
     const styleOverrides = {
+      parent: {margin: "2%", maxWidth: "40%"},
       axis: {
         stroke: "black"
       },
@@ -83,6 +88,7 @@ export default class App extends React.Component {
               }
             }}
             style={{
+              parent: style.parent,
               axis: {strokeWidth: 4},
               grid: {stroke: "black", strokeWidth: 1}
             }}
@@ -98,7 +104,7 @@ export default class App extends React.Component {
         </div>
         <div>
         <h2>X-Y Axis</h2>
-          <svg style={{width: 500, height: 400}}>
+          <svg style={style} width={500} height={400}>
             <VictoryAxis crossAxis
               width={500}
               height={400}
@@ -118,6 +124,7 @@ export default class App extends React.Component {
         <div>
         <h2>Log Scale Axis</h2>
           <VictoryAxis
+            style={style}
             label="cool log axis"
             padding={{top: 10, bottom: 60}}
             orientation="left"
@@ -126,6 +133,7 @@ export default class App extends React.Component {
             offsetX={50}
           />
           <VictoryAxis
+            style={style}
             label="cool log axis"
             padding={{top: 10, bottom: 60}}
             orientation="right"

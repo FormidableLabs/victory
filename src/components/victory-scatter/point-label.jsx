@@ -9,8 +9,7 @@ export default class PointLabel extends React.Component {
     events: PropTypes.object,
     labelComponent: React.PropTypes.element,
     style: PropTypes.object,
-    x: React.PropTypes.number,
-    y: React.PropTypes.number
+    position: PropTypes.object
   };
 
   renderLabel(props) {
@@ -26,8 +25,8 @@ export default class PointLabel extends React.Component {
       defaults({}, component.props.events, props.events) : props.events;
     const events = Helpers.getPartialEvents(baseEvents, props.index, props);
     const labelProps = {
-      x: component && component.props.x || props.x,
-      y: component && component.props.y || props.y - labelStyle.padding,
+      x: component && component.props.x || props.position.x,
+      y: component && component.props.y || props.position.y - labelStyle.padding,
       dy: component && component.props.dy,
       datum: props.datum,
       text: labelText,

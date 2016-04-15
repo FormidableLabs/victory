@@ -8,7 +8,7 @@ import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers, VictoryAnimation } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
 const defaultStyles = {
@@ -34,22 +34,21 @@ export default class VictoryScatter extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 600,
-      before: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 }),
-      after: () => ({ opacity: 0 })
+      before: () => ({ opacity: 0 })
     },
     onEnter: {
       duration: 600,
       before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: "opacity" in datum ? datum.opacity : 1 })
+      after: (datum) => ({ opacity: datum.opacity || 1 })
     }
-  }
+  };
 
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. It this prop is
-     * not given, the scatter plot will not tween between changing data / style props.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {delay: 5, duration: 500, onEnd: () => alert("woo!")}
+     * The animate prop specifies props for VictoryAnimation to use. The animate prop should
+     * also be used to specify enter and exit transition configurations with the `onExit`
+     * and `onEnter` namespaces respectively.
+     * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
      */
     animate: PropTypes.object,
     /**
@@ -82,6 +81,18 @@ export default class VictoryScatter extends React.Component {
      */
 
     data: PropTypes.array,
+    /**
+     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
+     * create points for each datum in the scatter plot. The new element created from the passed
+     * dataComponent will have the property datum set by the scatter for the point it renders;
+     * properties position (x, y), size and symbol are calculated by the scatter for the datum;
+     * a key and index property set corresponding to the location of the datum in the data
+     * provided to the scatter; style calculated by the scatter based on the scatter's
+     * styles and the datum; and all the remaining properties from the scatter's data
+     * at the index of the datum. If a dataComponent is not provided, VictoryScatter's
+     * Point component will be used.
+     */
+    dataComponent: PropTypes.element,
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -118,16 +129,18 @@ export default class VictoryScatter extends React.Component {
       parent: PropTypes.object
     }),
     /**
-     * The height props specifies the height of the chart container element in pixels
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
      * The labelComponent prop takes in an entire, HTML-complete label component which will be used
      * to create labels for each point in the scatter plot. The new element created from the passed
-     * labelComponent will have property data provided by the point's datum; properties x, y, dy,
-     * textAnchor, and verticalAnchor preserved or default values provided by the point; and styles
-     * filled out with defaults from the scatter, and overrides from the datum. If labelComponent is
-     * omitted, a new VictoryLabel will be created with props and styles from the point.
+     * labelComponent will have property data provided by the point's datum; properties
+     * position (x, y), dy, textAnchor, and verticalAnchor preserved or default values
+     * provided by the point; and styles filled out with defaults from the scatter,
+     * and overrides from the datum. If labelComponent is omitted, a new VictoryLabel
+     * will be created with props and styles from the point.
      */
     labelComponent: PropTypes.element,
     /**
@@ -149,17 +162,6 @@ export default class VictoryScatter extends React.Component {
         right: PropTypes.number
       })
     ]),
-    /**
-     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
-     * create points for each datum in the scatter plot. The new element created from the passed
-     * dataComponent will have the property datum set by the scatter for the point it renders;
-     * properties x, y, size and symbol are calculated by the scatter for the datum; a key and index
-     * property set corresponding to the location of the datum in the data provided to the scatter;
-     * style calculated by the scatter based on the scatter's styles and the datum; and all the
-     * remaining properties from the scatter's data at the index of the datum.
-     * If a dataComponent is not provided, VictoryScatter's Point component will be used.
-     */
-    dataComponent: PropTypes.element,
     /**
      * The samples prop specifies how many individual points to plot when plotting
      * y as a function of x. Samples is ignored if x props are provided instead.
@@ -192,11 +194,11 @@ export default class VictoryScatter extends React.Component {
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your scatter plot. VictoryScatter relies on Radium,
-     * so valid Radium style objects should work for this prop. Height, width, and
-     * padding should be specified via the height, width, and padding props, as they
-     * are used to calculate the alignment of components within chart.
-     * @examples {parent: {margin: 50}, data: {fill: "red"}, labels: {padding: 20}}
+     * The style prop specifies styles for your VictoryScatter. Any valid inline style properties
+     * will be applied. Height, width, and padding should be specified via the height,
+     * width, and padding props, as they are used to calculate the alignment of
+     * components within chart.
+     * @examples {data: {fill: "red"}, labels: {fontSize: 12}}
      */
     style: PropTypes.shape({
       parent: PropTypes.object,
@@ -213,7 +215,8 @@ export default class VictoryScatter extends React.Component {
       PropTypes.func
     ]),
     /**
-     * The width props specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative,
     /**
@@ -294,7 +297,7 @@ export default class VictoryScatter extends React.Component {
 
     const symbol = ScatterHelpers.getSymbol(datum, this.props);
 
-    return assign({}, {index, datum, baseSize, symbol, style}, position);
+    return {index, datum, baseSize, symbol, style, position};
   }
 
   addDataProps(sharedProps, getBoundEvents) {
@@ -378,17 +381,17 @@ export default class VictoryScatter extends React.Component {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      const whitelist = [
         "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size",
         "style", "width", "x", "y"
-      ]);
-
+      ];
       return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryScatter {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          <VictoryScatter {...this.props}/>
+        </VictoryTransition>
       );
     }
+
     const style = Helpers.getStyles(
       this.props.style,
       defaultStyles,

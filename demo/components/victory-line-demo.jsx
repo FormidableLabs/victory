@@ -27,14 +27,16 @@ class PointedLine extends React.Component {
           y: scale.y.call(null, y)
         };
 
-        return (<Point
-          symbol="circle"
-          size={2}
-          key={`line-${index}-point-${pointIndex}`}
-          index={parseFloat(`${index}.${pointIndex}`)}
-          datum={datum}
-          {...position}
-                />);
+        return (
+          <Point
+            symbol="circle"
+            size={2}
+            key={`line-${index}-point-${pointIndex}`}
+            index={parseFloat(`${index}.${pointIndex}`)}
+            datum={datum}
+            position={position}
+          />
+        );
       })
     );
   }
@@ -56,12 +58,20 @@ export default class App extends React.Component {
     super();
     this.state = {
       data: this.getData(),
+      transitionData: this.getTransitionData(),
       arrayData: this.getArrayData(),
       style: {
         stroke: "blue",
         strokeWidth: 2
       }
     };
+  }
+
+  getTransitionData() {
+    const lines = _.random(6, 10);
+    return _.map(_.range(lines), (line) => {
+      return {x: line, y: _.random(2, 10)};
+    });
   }
 
   getData() {
@@ -89,6 +99,7 @@ export default class App extends React.Component {
     this.setStateInterval = window.setInterval(() => {
       this.setState({
         data: this.getData(),
+        transitionData: this.getTransitionData(),
         style: this.getStyles()
       });
     }, 2000);
@@ -99,19 +110,26 @@ export default class App extends React.Component {
   }
 
   render() {
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
     return (
       <div className="demo">
         <h1>VictoryLine</h1>
 
+          <VictoryLine
+            style={{parent: parentStyle, data: this.state.style}}
+            data={this.state.transitionData}
+            animate={{duration: 800}}
+          />
+
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: this.state.style}}
+          style={{parent: parentStyle, data: this.state.style}}
           data={this.state.data}
           label={"label\none"}
-          animate={{duration: 2000}}
+          animate={{duration: 1500}}
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}, data: {stroke: "blue"}}}
+          style={{parent: parentStyle, data: {stroke: "blue"}}}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           label={<VictoryLabel>{"label\ntwo"}</VictoryLabel>}
           sample={25}
@@ -119,7 +137,7 @@ export default class App extends React.Component {
 
         <VictoryLine
           style={{
-            parent: {border: "1px solid black", margin: "5px"},
+            parent: parentStyle,
             data: {stroke: "red", strokeWidth: 6}
           }}
           events={{data: {
@@ -134,7 +152,7 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: parentStyle}}
           data={this.state.arrayData}
           x={0}
           y={1}
@@ -142,14 +160,14 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: parentStyle}}
           data={this.state.arrayData}
           x={0}
           y={1}
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: parentStyle}}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},
@@ -163,7 +181,7 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: parentStyle}}
           data={[
             {x: 1, y: 1},
             {x: 2, y: 3},
@@ -179,7 +197,7 @@ export default class App extends React.Component {
         />
 
         <VictoryLine
-          style={{parent: {border: "1px solid black", margin: "5px"}}}
+          style={{parent: parentStyle}}
           scale={{x: "linear", y: "log"}}
         />
       </div>

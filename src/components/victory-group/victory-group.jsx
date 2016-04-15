@@ -18,11 +18,14 @@ export default class VictoryGroup extends React.Component {
 
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. If this prop is
-     * given, all children defined in chart will pass the options specified in this prop to
-     * victory-animation, unless they have animation props of their own specified.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {duration: 500, onEnd: () => alert("woo!")}
+     * The animate prop specifies props for VictoryAnimation to use. If this prop is
+     * given, all children of VictoryGroup will pass the options specified in this prop to
+     * VictoryTransition and VictoryAnimation. Child animation props will be added for any
+     * values not provided via the animation prop for VictoryGroup. The animate prop should
+     * also be used to specify enter and exit transition configurations with the `onExit`
+     * and `onEnter` namespaces respectively. VictoryGroup will coodrinate transitions between all
+     * of its child components so that animation stays in sync
+     * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
      */
     animate: PropTypes.object,
     /**
@@ -42,7 +45,9 @@ export default class VictoryGroup extends React.Component {
       })
     ]),
     /**
-     * If you're not passing children to VictoryGroup... you're probably doing it wrong.
+     * VictoryGroup is a wrapper component that controls the layout and animation behaviors of its
+     * children. VictoryGroup creates a grouped layout for  VictoryArea, or VictoryBar components.
+     * VictoryGroup  can also group components wrapped in VictoryStack
      */
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
@@ -90,7 +95,8 @@ export default class VictoryGroup extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
-     * The height props specifies the height of the chart container element in pixels
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
@@ -173,7 +179,8 @@ export default class VictoryGroup extends React.Component {
       labels: PropTypes.object
     }),
     /**
-     * The width props specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative
   };
@@ -189,6 +196,11 @@ export default class VictoryGroup extends React.Component {
 
   static getDomain = Wrapper.getDomainFromChildren.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
+
+  componentWillReceiveProps(nextProps) {
+    const setAnimationState = Wrapper.setAnimationState.bind(this);
+    setAnimationState(nextProps);
+  }
 
   getCalculatedProps(props, childComponents, style) {
     const horizontal = props.horizontal || props.children.every(
@@ -207,8 +219,8 @@ export default class VictoryGroup extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const baseScale = {
-      x: Scale.getScaleFromProps(props, "x") || "linear",
-      y: Scale.getScaleFromProps(props, "y") || "linear"
+      x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
+      y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
     };
     const scale = {
       x: baseScale.x.domain(domain.x).range(range.x),
@@ -233,13 +245,13 @@ export default class VictoryGroup extends React.Component {
     return domainExtent / rangeExtent * pixels;
   }
 
-  getXO(datasets, index, calculatedProps) {
+  getXO(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
     const center = (datasets.length - 1) / 2;
-    const totalWidth = this.pixelsToValue(this.props.offset, "x", calculatedProps);
+    const totalWidth = this.pixelsToValue(props.offset, "x", calculatedProps);
     return (index - center) * totalWidth;
   }
 
-  getLabels(index, props, datasets) {
+  getLabels(props, datasets, index) {
     if (!props.labels) {
       return undefined;
     }
@@ -273,14 +285,15 @@ export default class VictoryGroup extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
+    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
-      const xOffset = this.getXO(datasets, index, calculatedProps);
+      const xOffset = this.getXO(props, calculatedProps, datasets, index);
       const data = datasets[index].map((datum) => assign(datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       return React.cloneElement(child, assign({
-        animate: child.props.animate || props.animate,
+        animate: getAnimationProps(props, child, index),
         key: index,
-        labels: this.getLabels(index, props, datasets) || child.props.labels,
+        labels: this.getLabels(props, datasets, index) || child.props.labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data,
@@ -291,28 +304,22 @@ export default class VictoryGroup extends React.Component {
   }
 
   render() {
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
-    const childComponents = React.Children.toArray(this.props.children);
+    const props = this.state && this.state.nodesWillExit ?
+      this.state.oldProps : this.props;
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const childComponents = React.Children.toArray(props.children);
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.length > 1) {
       Log.warn("Only components of the same type can be grouped");
     }
-    const calculatedProps = this.getCalculatedProps(this.props, childComponents, style);
+    const calculatedProps = this.getCalculatedProps(props, childComponents, style);
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(this.props, childComponents, calculatedProps)}
+        {this.getNewChildren(props, childComponents, calculatedProps)}
       </g>
     );
     return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-      >
+      <svg style={style.parent} viewBox={`0 0 ${props.width} ${props.height}`}>
         {group}
       </svg> :
       group;

@@ -188,6 +188,9 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
 ### Animating
 
 VictoryScatter animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
+VictoryScatter defines a set of default transition behaviors for entering and exiting data nodes.
+Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
+Values returned from `before` and `after` functions will alter the data prop of entering and exiting nodes. In the example below, the opacity of the entering nodes is set to 0.3, so that the transition is more apparent.
 
 ```playground_norender
 class App extends React.Component {
@@ -200,21 +203,19 @@ class App extends React.Component {
 
   getData() {
     const colors =[
-      "violet", "tomato", "cornflowerblue",
-      "turquoise",  "greenyellow", "orange"
+      "orange", "tomato", "gold", "cyan"
     ];
     const symbols = [
-      "circle", "star", "square", "diamond",
-      "triangleUp", "triangleDown", "plus"
+      "circle", "star", "plus", "diamond"
     ];
-    return _.map(_.range(25), (index) => {
+    const samples = _.random(5, 25);
+    return _.map(_.range(samples), (i) => {
       return {
         x: _.random(100),
         y: _.random(100),
         size: _.random(15) + 3,
-        symbol: symbols[index % 7],
-        fill: colors[_.random(0, 5)],
-        opacity: _.random(0.3, 1)
+        symbol: symbols[i % 4],
+        fill: colors[_.random(0, 3)],
       };
     });
   }
@@ -232,7 +233,14 @@ class App extends React.Component {
       <VictoryScatter
         height={600}
         domain={[0, 100]}
-        animate={{duration: 2000}}
+        animate={{
+          duration: 1000,
+          onEnter: {
+            duration: 500,
+            before: () => ({opacity: 0.3}),
+            after: () => ({opacity: 1})
+          }
+        }}
         data={this.state.data}
       />
 
@@ -245,16 +253,16 @@ ReactDOM.render(<App/>, mountNode);
 
 ### Custom Data and Label Components
 
-VictoryScatter accepts custom data and label components via the `dataComponent` and `labelComponent` props. Custom components will soon be supported across all chart types (VictoryLine, VictoryBar, VictoryArea, VictoryPie).
+VictoryScatter accepts custom data and label components via the `dataComponent` and `labelComponent` props. Custom components are supported across all chart types (VictoryLine, VictoryBar, VictoryArea, VictoryPie).
 
 ```playground_norender
 class CatPoint extends React.Component {
   render() {
-    const {x, y, datum} = this.props;
+    const {position, datum} = this.props;
     const cat = datum.y >= 0 ?
       '😻' : '😹';
     return (
-      <text x={x} y={y} fontSize={20}>
+      <text {...position} fontSize={20}>
         {cat}
       </text>
     );

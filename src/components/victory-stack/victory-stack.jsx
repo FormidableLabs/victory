@@ -18,11 +18,14 @@ export default class VictoryStack extends React.Component {
 
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. If this prop is
-     * given, all children defined in chart will pass the options specified in this prop to
-     * victory-animation, unless they have animation props of their own specified.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {duration: 500, onEnd: () => alert("woo!")}
+     * The animate prop specifies props for VictoryAnimation to use. If this prop is
+     * given, all children of VictoryStack will pass the options specified in this prop to
+     * VictoryTransition and VictoryAnimation. Child animation props will be added for any
+     * values not provided via the animation prop for VictoryStack. The animate prop should
+     * also be used to specify enter and exit transition configurations with the `onExit`
+     * and `onEnter` namespaces respectively. VictoryStack will coodrinate transitions between all
+     * of its child components so that animation stays in sync
+     * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
      */
     animate: PropTypes.object,
     /**
@@ -42,7 +45,8 @@ export default class VictoryStack extends React.Component {
       })
     ]),
     /**
-     * If you're not passing children to VictoryStack... you're probably doing it wrong.
+     * VictoryStack is a wrapper component that controls the layout and animation behaviors of its
+     * children. VictoryStack creates a stacked layout for  VictoryArea, or VictoryBar components.
      */
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
@@ -91,7 +95,8 @@ export default class VictoryStack extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
-     * The height props specifies the height of the chart container element in pixels
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
@@ -168,7 +173,8 @@ export default class VictoryStack extends React.Component {
       labels: PropTypes.object
     }),
     /**
-     * The width props specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative,
     /**
@@ -189,8 +195,13 @@ export default class VictoryStack extends React.Component {
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
+  componentWillReceiveProps(nextProps) {
+    const setAnimationState = Wrapper.setAnimationState.bind(this);
+    setAnimationState(nextProps);
+  }
+
   getCalculatedProps(props, childComponents, style) {
-    const horizontal = props.horizontal || props.children.every(
+    const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
     const datasets = childComponents.map((child) => {
@@ -205,8 +216,8 @@ export default class VictoryStack extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const baseScale = {
-      x: Scale.getScaleFromProps(props, "x") || "linear",
-      y: Scale.getScaleFromProps(props, "y") || "linear"
+      x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
+      y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
     };
     const scale = {
       x: baseScale.x.domain(domain.x).range(range.x),
@@ -220,16 +231,16 @@ export default class VictoryStack extends React.Component {
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
-  addLayoutData(datasets, index, calculatedProps) {
+  addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
     return datasets[index].map((datum) => {
       return assign(datum, {
         yOffset: Wrapper.getY0(datum, index, calculatedProps),
-        xOffset: this.props.xOffset
+        xOffset: props.xOffset
       });
     });
   }
 
-  getLabels(index, props, datasets) {
+  getLabels(props, datasets, index) {
     if (!props.labels) {
       return undefined;
     }
@@ -254,13 +265,14 @@ export default class VictoryStack extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
+    const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
-      const data = this.addLayoutData(datasets, index, calculatedProps);
+      const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       return React.cloneElement(child, assign({
-        animate: child.props.animate || props.animate,
+        animate: getAnimationProps(props, child, index),
         key: index,
-        labels: this.getLabels(index, props, datasets) || child.props.labels,
+        labels: this.getLabels(props, datasets, index) || child.props.labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data
@@ -269,13 +281,10 @@ export default class VictoryStack extends React.Component {
   }
 
   render() {
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
-    const childComponents = React.Children.toArray(this.props.children);
+    const props = this.state && this.state.nodesWillExit ?
+      this.state.oldProps : this.props;
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const childComponents = React.Children.toArray(props.children);
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.length > 1) {
       Log.warn("Only components of the same type can be stacked");
@@ -283,17 +292,14 @@ export default class VictoryStack extends React.Component {
     if (types.some((type) => type === "group-wrapper")) {
       Log.warn("It is not possible to stack groups.");
     }
-    const calculatedProps = this.getCalculatedProps(this.props, childComponents, style);
+    const calculatedProps = this.getCalculatedProps(props, childComponents, style);
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(this.props, childComponents, calculatedProps)}
+        {this.getNewChildren(props, childComponents, calculatedProps)}
       </g>
     );
-    return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-      >
+    return props.standalone ?
+      <svg style={style.parent} viewBox={`0 0 ${props.width} ${props.height}`}>
         {group}
       </svg> :
       group;

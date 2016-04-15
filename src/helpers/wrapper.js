@@ -1,10 +1,11 @@
 import defaults from "lodash/defaults";
 import uniq from "lodash/uniq";
 import flatten from "lodash/flatten";
+import partialRight from "lodash/partialRight";
 import React from "react";
 import Data from "./data";
 import Domain from "./domain";
-import { Style } from "victory-core";
+import { Style, Transitions, Collection } from "victory-core";
 
 
 export default {
@@ -14,6 +15,56 @@ export default {
       const getData = child.type.getData || Data.getData;
       return getData(child.props);
     });
+  },
+
+  setAnimationState(nextProps) {
+    if (!this.props.animate) {
+      return;
+    }
+    if (this.props.animate.parentState) {
+      const nodesWillExit = this.props.animate.parentState.nodesWillExit;
+      const oldProps = nodesWillExit ? this.props : null;
+      this.setState(defaults({oldProps}, this.props.animate.parentState));
+    } else {
+      const oldChildren = React.Children.toArray(this.props.children);
+      const nextChildren = React.Children.toArray(nextProps.children);
+      const {
+        nodesWillExit,
+        nodesWillEnter,
+        childrenTransitions,
+        nodesShouldEnter
+      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
+
+      this.setState({
+        nodesWillExit,
+        nodesWillEnter,
+        childrenTransitions,
+        nodesShouldEnter,
+        oldProps: nodesWillExit ? this.props : null
+      });
+    }
+  },
+
+  getAnimationProps(props, child, index) {
+    const getFilteredState = () => {
+      let childrenTransitions = this.state && this.state.childrenTransitions;
+      childrenTransitions = Collection.isArrayOfArrays(childrenTransitions) ?
+        childrenTransitions[index] : childrenTransitions;
+      return defaults({childrenTransitions}, this.state);
+    };
+
+    let getTransitions = props.animate && props.animate.getTransitions;
+    const state = getFilteredState();
+    const parentState = props.animate && props.animate.parentState || state;
+    if (!getTransitions) {
+      const getTransitionProps = Transitions.getTransitionPropsFactory(
+        props,
+        state,
+        (newState) => this.setState(newState)
+      );
+      getTransitions = partialRight(getTransitionProps, index);
+    }
+    return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
   getDomainFromChildren(props, axis) {

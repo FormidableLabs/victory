@@ -2,15 +2,13 @@
 import React from "react";
 import _ from "lodash";
 import {
-  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack, VictoryGroup
+  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
+  VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
 
 
 const UPDATE_INTERVAL = 3000;
-let scatterDataToggle = false;
 
-
-const chartStyle = {parent: {width: 500, height: 350, margin: 50}};
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -19,6 +17,8 @@ class App extends React.Component {
       lineData: this.getData(),
       numericBarData: this.getNumericBarData(),
       barData: this.getBarData(),
+      barTransitionData: this.getBarTransitionData(),
+      multiBarTransitionData: this.getMultiBarTransitionData(),
       lineStyle: this.getStyles()
     };
   }
@@ -70,20 +70,36 @@ class App extends React.Component {
     });
   }
 
+  getBarTransitionData() {
+    const bars = _.random(6, 10);
+    return _.map(_.range(bars), (bar) => {
+      return {x: bar, y: _.random(2, 10)};
+    });
+  }
+
+  getMultiBarTransitionData() {
+    const bars = _.random(6, 10);
+    return _.map(_.range(5), () => {
+      return _.map(_.range(bars), (bar) => {
+        return {x: bar, y: _.random(2, 10)};
+      });
+    });
+  }
+
   getScatterData() {
     const colors =
       ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
     const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
-    const elementNum = (scatterDataToggle = !scatterDataToggle) ? 10 : 40;
+    const elementNum = _.random(10, 40);
     return _.map(_.range(elementNum), (index) => {
       const scaledIndex = _.floor(index % 7);
       return {
-        x: _.random(!scatterDataToggle ? 50 : 10) - (!scatterDataToggle ? 25 : 5),
-        y: _.random(!scatterDataToggle ? 50 : 10),
+        x: _.random(10, 50),
+        y: _.random(2, 100),
         size: _.random(8) + 3,
         symbol: symbols[scaledIndex],
         fill: colors[_.random(0, 6)],
-        opacity: _.random(0.3, 1)
+        opacity: 1
       };
     });
   }
@@ -103,6 +119,8 @@ class App extends React.Component {
         scatterData: this.getScatterData(),
         lineData: this.getData(),
         barData: this.getBarData(),
+        barTransitionData: this.getBarTransitionData(),
+        multiBarTransitionData: this.getMultiBarTransitionData(),
         numericBarData: this.getNumericBarData(),
         lineStyle: this.getStyles()
       });
@@ -114,25 +132,47 @@ class App extends React.Component {
   }
 
   render() {
+    const containerStyle = {
+      display: "flex",
+      flexDirection: "row",
+      flexWrap: "wrap",
+      alignItems: "center",
+      justifyContent: "center"
+    };
+    const chartStyle = {parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}};
     return (
       <div className="demo">
         <h1>VictoryChart</h1>
-        <p>
-          <VictoryChart/>
+        <div style={containerStyle}>
+          <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
+            <VictoryBar
+              data={this.state.barTransitionData}
+            />
+          </VictoryChart>
 
-          <VictoryChart height={500} width={200}>
+          <VictoryChart style={chartStyle} animate={{duration: 1000}}>
+            <VictoryStack colorScale={"warm"}>
+              {this.state.multiBarTransitionData.map((data, index) => {
+                return <VictoryBar key={index} data={data}/>;
+              })}
+            </VictoryStack>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}/>
+
+          <VictoryChart style={chartStyle}>
             <VictoryScatter/>
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryLine/>
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryBar/>
           </VictoryChart>
 
-          <VictoryChart scale={"linear"}>
+          <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}
@@ -169,7 +209,7 @@ class App extends React.Component {
                 new Date(2010, 1, 1),
                 new Date(2020, 1, 1)
               ]}
-              tickFormat={(x) => x.getFullYear()}
+              tickFormat={(x) => new Date(x).getFullYear()}
             />
             <VictoryLine
               style={{
@@ -195,33 +235,31 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart animate={{ duration: 1500 }}>
+          <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryScatter
               data={this.state.scatterData}
               animate={{
                 onExit: {
                   duration: 500,
-                  before: () => ({ opacity: 1 }),
-                  after: (datum) => {
-                    return {
-                      opacity: 0,
-                      x: datum.x + ((Math.random() - 0.5) * 8),
-                      y: datum.y + ((Math.random() - 0.5) * 8)
-                    };
-                  }
+                  before: () => ({opacity: 0.3})
+                },
+                onEnter: {
+                  duration: 500,
+                  before: () => ({ opacity: 0.3 }),
+                  after: (datum) => ({ opacity: datum.opacity || 1 })
                 }
               }}
             />
           </VictoryChart>
 
-          <VictoryChart>
+          <VictoryChart style={chartStyle}>
             <VictoryAxis dependentAxis orientation="right"/>
             <VictoryAxis orientation="top"/>
             <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
             <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>
 
-          <VictoryChart animate={{duration: 2000}}
+          <VictoryChart style={chartStyle} animate={{duration: 2000}}
             domainPadding={{x: 100}}
           >
             <VictoryStack>
@@ -231,7 +269,7 @@ class App extends React.Component {
             </VictoryStack>
           </VictoryChart>
 
-          <VictoryChart domainPadding={{x: 30, y: 30}}>
+          <VictoryChart style={chartStyle} domainPadding={{x: 30, y: 30}}>
             <VictoryAxis
               tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
               tickFormat={(x) => `${x}\ntick`}
@@ -272,7 +310,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart domainPadding={{x: 50}} animate={{duration: 2000}}>
+          <VictoryChart style={chartStyle} domainPadding={{x: 50}} animate={{duration: 2000}}>
             <VictoryGroup offset={15}>
               <VictoryStack colorScale={"red"}>
                 {this.getBarData().map((data, index) => {
@@ -291,7 +329,25 @@ class App extends React.Component {
               </VictoryStack>
             </VictoryGroup>
           </VictoryChart>
-        </p>
+
+          <VictoryChart style={chartStyle}>
+            <VictoryStack colorScale={"qualitative"}>
+              <VictoryArea
+                data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
+              />
+              <VictoryArea
+                data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
+              />
+              <VictoryArea
+                data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
+              />
+              <VictoryArea
+                data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
+              />
+            </VictoryStack>
+          </VictoryChart>
+
+        </div>
       </div>
     );
   }
