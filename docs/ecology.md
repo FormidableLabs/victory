@@ -182,6 +182,10 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
 ### Animating
 
 VictoryPie animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
+VictoryPie defines a set of default transition behaviors for entering and exiting data nodes.
+Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
+Values returned from `before` and `after` functions will alter the data prop of entering
+and exiting nodes.
 
 
 ```playground_norender
@@ -192,13 +196,14 @@ class App extends React.Component {
   }
 
   getData() {
-    return [
-      { x: "A", y: 0.2 + Math.random() },
-      { x: "B", y: 0.2 + Math.random() },
-      { x: "C", y: 0.2 + Math.random() },
-      { x: "D", y: 0.2 + Math.random() },
-      { x: "E", y: 0.2 + Math.random() }
-    ];
+    const samples =  _.random(6, 10);
+    return _.range(samples).map((data) => {
+      return {
+        x: data,
+        y: _.random(3, 10),
+        label: `#${data}`
+      };
+    })
   }
 
   componentDidMount() {
@@ -211,7 +216,16 @@ class App extends React.Component {
     return (
       <VictoryPie
         data={this.state.data}
-        animate={{duration: 2000}}
+        animate={{
+          duration: 1000,
+          onEnter: {
+            duration: 500,
+            before: () =>
+              ({y: 0, label: " "}),
+            after: (datum) =>
+              ({y: datum.y, label: "NEW"})
+          }
+        }}
       />
     );
   }
