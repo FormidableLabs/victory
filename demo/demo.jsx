@@ -4,27 +4,6 @@ import React from "react";
 import { VictoryPie } from "../src/index";
 import Slice from "../src/components/slice";
 
-const rand = () => Math.max(Math.floor(Math.random() * 10000), 1000);
-
-const getData = () => {
-  return [
-    { x: "<5", y: rand(), label: "A", fill: "grey" },
-    { x: "5-13", y: rand() },
-    { x: "14-17", y: rand() },
-    { x: "18-24", y: rand() },
-    { x: "25-44", y: rand() },
-    { x: "45-64", y: rand() },
-    { x: "≥65", y: rand() }
-  ];
-};
-
-const getTransitionData = () => {
-  const data = _.random(6, 10);
-  return _.map(_.range(data), (datum) => {
-    return {x: datum, y: _.random(2, 10)};
-  });
-};
-
 class BorderLabelSlice extends React.Component {
   static propTypes = {
     ...Slice.propTypes,
@@ -72,8 +51,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: getData(),
-      transitionData: getTransitionData(),
+      data: this.getData(),
+      transitionData: this.getTransitionData(),
       colorScale: [
         "#D85F49",
         "#F66D3B",
@@ -105,10 +84,34 @@ export default class App extends React.Component {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData(),
-        transitionData: getTransitionData()
+        data: this.getData(),
+        transitionData: this.getTransitionData()
       });
     }, 2000);
+  }
+
+  getTransitionData() {
+    const data = _.random(6, 10);
+    return _.map(_.range(data), (datum) => {
+      return {
+        x: datum,
+        y: _.random(2, 10),
+        label: `#${datum}`
+      };
+    });
+  }
+
+  getData() {
+    const rand = () => Math.max(Math.floor(Math.random() * 10000), 1000);
+    return [
+      { x: "<5", y: rand(), label: "A", fill: "grey" },
+      { x: "5-13", y: rand() },
+      { x: "14-17", y: rand() },
+      { x: "18-24", y: rand() },
+      { x: "25-44", y: rand() },
+      { x: "45-64", y: rand() },
+      { x: "≥65", y: rand() }
+    ];
   }
 
   componentWillUnmount() {
@@ -215,11 +218,3 @@ export default class App extends React.Component {
     );
   }
 }
-
-App.propTypes = {
-  data: React.PropTypes.array
-};
-
-App.defaultProps = {
-  data: getData()
-};

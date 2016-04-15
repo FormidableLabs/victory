@@ -53,8 +53,7 @@ export default class VictoryPie extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: (datum) => ({ y: datum.y, label: datum.label }),
-      after: () => ({ y: 0, label: " " })
+      before: () => ({ y: 0, label: " " })
     },
     onEnter: {
       duration: 500,
