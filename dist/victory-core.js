@@ -8468,10 +8468,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function getInitialChildProps(animate, data) {
-	  var before = animate.onExit && animate.onExit.before ? animate.onExit.before : _identity2.default;
+	  var after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : _identity2.default;
 	  return {
 	    data: data.map(function (datum) {
-	      return (0, _assign2.default)({}, datum, before(datum));
+	      return (0, _assign2.default)({}, datum, after(datum));
 	    })
 	  };
 	}
@@ -8488,11 +8488,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // After the exit transition occurs, trigger the animations for
 	      // nodes that are neither exiting or entering.
 	      animate.onEnd = cb;
-	      var after = animate.onExit && animate.onExit.after ? animate.onExit.after : _identity2.default;
-	      // If nodes need to exit, transform them with the provided onExit.after function.
+	      var before = animate.onExit && animate.onExit.before ? animate.onExit.before : _identity2.default;
+	      // If nodes need to exit, transform them with the provided onExit.before function.
 	      data = data.map(function (datum, idx) {
 	        var key = (datum.key || idx).toString();
-	        return exitingNodes[key] ? (0, _assign2.default)({}, datum, after(datum)) : datum;
+	        return exitingNodes[key] ? (0, _assign2.default)({}, datum, before(datum)) : datum;
 	      });
 	    })();
 	  }
