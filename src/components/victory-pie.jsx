@@ -2,12 +2,11 @@ import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
 import defaults from "lodash/defaults";
 import assign from "lodash/assign";
-import pick from "lodash/pick";
 import {
   PropTypes as CustomPropTypes,
   Helpers,
   Style,
-  VictoryAnimation
+  VictoryTransition
 } from "victory-core";
 import Slice from "./slice";
 import SliceLabel from "./slice-label";
@@ -51,6 +50,19 @@ const getLabelPosition = function (props, style, radius) {
 };
 
 export default class VictoryPie extends React.Component {
+  static defaultTransitions = {
+    onExit: {
+      duration: 500,
+      before: (datum) => ({ y: datum.y, label: datum.label }),
+      after: () => ({ y: 0, label: " " })
+    },
+    onEnter: {
+      duration: 500,
+      before: () => ({ y: 0, label: " " }),
+      after: (datum) => ({ y: datum.y, label: datum.label })
+    }
+  };
+
   static propTypes = {
     /**
      * The animate prop specifies props for victory-animation to use. If this prop is
@@ -260,14 +272,14 @@ export default class VictoryPie extends React.Component {
     };
   }
 
-  renderSlice(slice, index, calculatedProps) {
+  renderSlice(props, calculatedProps, slice, index) { // eslint-disable-line max-params
     const {style, colorScale, makeSlicePath, labelPosition} = calculatedProps;
     const fill = colorScale[index % colorScale.length];
     const sliceStyle = defaults({}, {fill}, style.data);
     const getBoundEvents = Helpers.getEvents.bind(this);
-    const sliceComponent = React.cloneElement(this.props.dataComponent, {
+    const sliceComponent = React.cloneElement(props.dataComponent, {
       index,
-      events: getBoundEvents(this.props.events.data, "data"),
+      events: getBoundEvents(props.events.data, "data"),
       slice,
       pathFunction: makeSlicePath,
       style: sliceStyle,
@@ -280,8 +292,8 @@ export default class VictoryPie extends React.Component {
         {sliceComponent}
         <SliceLabel
           index={index}
-          events={getBoundEvents(this.props.events.labels, "labels")}
-          labels={this.props.labels}
+          events={getBoundEvents(props.events.labels, "labels")}
+          labels={props.labels}
           style={style.labels}
           positionFunction={labelPosition.centroid}
           slice={slice}
@@ -316,24 +328,24 @@ export default class VictoryPie extends React.Component {
 
     return (<g>
       {slices.map((slice, index) => {
-        return this.renderSlice(slice, index, calculatedProps);
+        return this.renderSlice(props, calculatedProps, slice, index);
       })}
     </g>);
   }
 
   render() {
+    // If animating, return a `VictoryAnimation` element that will create
+    // a new `VictoryBar` with nearly identical props, except (1) tweened
+    // and (2) `animate` set to null so we don't recurse forever.
     if (this.props.animate) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const animateData = pick(this.props, [
+      const whitelist = [
         "data", "endAngle", "height", "innerRadius", "padAngle", "padding",
         "colorScale", "startAngle", "style", "width"
-      ]);
+      ];
       return (
-        <VictoryAnimation {...this.props.animate} data={animateData}>
-          {(props) => <VictoryPie {...this.props} {...props} animate={null}/>}
-        </VictoryAnimation>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          <VictoryPie {...this.props}/>
+        </VictoryTransition>
       );
     }
 
