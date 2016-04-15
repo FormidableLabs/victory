@@ -224,7 +224,7 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
 VictoryBar animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
 VictoryBar defines a set of default transition behaviors for entering and exiting data nodes.
 Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
-Values returned from `before` and `after` functions will alter the data prop of entering.
+Values returned from `before` and `after` functions will alter the data prop of entering or exiting nodes.
 
 ```playground_norender
 class App extends React.Component {
@@ -262,7 +262,7 @@ class App extends React.Component {
           duration: 500,
           onExit: {
             duration: 1000,
-            after: () => ({y: -1})
+            before: () => ({y: -1})
           },
         }}
       >

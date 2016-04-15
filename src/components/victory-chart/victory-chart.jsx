@@ -15,15 +15,22 @@ const defaultAxes = {
 export default class VictoryChart extends React.Component {
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. If this prop is
+     * The animate prop specifies props for VictoryAnimation to use. If this prop is
      * given, all children defined in chart will pass the options specified in this prop to
-     * victory-animation, unless they have animation props of their own specified.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {duration: 500, onEnd: () => alert("woo!")}
+     * VictoryTransition and VictoryAnimation. Child animation props will be added for any
+     * values not provided via the animation prop for VictoryChart. The animate prop should
+     * also be used to specify enter and exit transition configurations with the `onExit`
+     * and `onEnter` namespaces respectively. VictoryChart will coodrinate transitions between all
+     * of its child components so that animation stays in sync
+     * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
      */
     animate: PropTypes.object,
     /**
-     * If you're not passing children to VictoryChart... you're probably doint it wrong.
+     * VictoryChart is a wrapper component that controls the layout and animation behaviors of its
+     * children. VictoryChart works with VictoryArea, VictoryAxis, VictoryBar, VictoryLine, and
+     * VictoryScatter. Wrapper components like VictoryGroup and VictoryStack may also be
+     * wrapped with VictoryChart. If not children are provided, VictoryChart will render a
+     * set of empty axes.
      */
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
@@ -60,12 +67,13 @@ export default class VictoryChart extends React.Component {
     /**
      * The events prop attaches arbitrary event handlers to the top level chart svg.
      * To attach events to individual pieces of data, use the events prop in child componenets.
-     * Event handlers are currently only called with their corresponding events.
+     * Event handlers on VictoryCharts are called with their corresponding events.
      * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
      */
     events: PropTypes.object,
     /**
-     * The height props specifies the height of the chart container element in pixels
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
@@ -85,8 +93,9 @@ export default class VictoryChart extends React.Component {
     ]),
     /**
      * The scale prop determines which scales your chart should use. This prop can be
-     * given as a function, or as an object that specifies separate functions for x and y.
-     * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
+     * given as a string or a function, or as an object that specifies separate scales for x and y.
+     * Supported string scales are "linear", "time", "log" and "sqrt"
+     * @examples d3.time.scale(), {x: "linear", y: "log" }
      */
     scale: PropTypes.oneOfType([
       CustomPropTypes.scale,
@@ -98,19 +107,22 @@ export default class VictoryChart extends React.Component {
     /**
      * The standalone prop determines whether the component will render a standalone svg
      * or a <g> tag that will be included in an external svg. Set standalone to false to
-     * compose VictoryChart with other components within an enclosing <svg> tag.
+     * compose VictoryChart with other components within an enclosing <svg> tag. Victory
+     * Component are responsive by default. If you need to create a fixed-size chart, set
+     * standalone to false, and wrap VictoryChart in a custom <svg>
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your chart. Victory Chart relies on Radium,
-     * so valid Radium style objects should work for this prop. Height, width, and
-     * padding should be specified via the height, width, and padding props, as they
-     * are used to calculate the alignment of components within chart.
-     * @examples {background: transparent, margin: 50}
+     * The style prop specifies styles for your chart. Any valid inline style properties
+     * will be applied. Height, width, and padding should be specified via the height,
+     * width, and padding props, as they are used to calculate the alignment of
+     * components within chart.
+     * @examples {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
      */
     style: PropTypes.object,
     /**
-     * The width props specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative
   };

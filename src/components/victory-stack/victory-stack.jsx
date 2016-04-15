@@ -18,11 +18,14 @@ export default class VictoryStack extends React.Component {
 
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. If this prop is
-     * given, all children defined in chart will pass the options specified in this prop to
-     * victory-animation, unless they have animation props of their own specified.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {duration: 500, onEnd: () => alert("woo!")}
+     * The animate prop specifies props for VictoryAnimation to use. If this prop is
+     * given, all children of VictoryStack will pass the options specified in this prop to
+     * VictoryTransition and VictoryAnimation. Child animation props will be added for any
+     * values not provided via the animation prop for VictoryStack. The animate prop should
+     * also be used to specify enter and exit transition configurations with the `onExit`
+     * and `onEnter` namespaces respectively. VictoryStack will coodrinate transitions between all
+     * of its child components so that animation stays in sync
+     * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
      */
     animate: PropTypes.object,
     /**
@@ -42,7 +45,8 @@ export default class VictoryStack extends React.Component {
       })
     ]),
     /**
-     * If you're not passing children to VictoryStack... you're probably doing it wrong.
+     * VictoryStack is a wrapper component that controls the layout and animation behaviors of its
+     * children. VictoryStack creates a stacked layout for  VictoryArea, or VictoryBar components.
      */
     children: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.node),
@@ -91,7 +95,8 @@ export default class VictoryStack extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
-     * The height props specifies the height of the chart container element in pixels
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
@@ -168,7 +173,8 @@ export default class VictoryStack extends React.Component {
       labels: PropTypes.object
     }),
     /**
-     * The width props specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative,
     /**

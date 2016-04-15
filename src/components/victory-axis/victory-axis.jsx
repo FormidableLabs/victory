@@ -124,7 +124,8 @@ export default class VictoryAxis extends React.Component {
       tickLabels: PropTypes.object
     }),
     /**
-     * The height prop specifies the height of the chart container element in pixels.
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
@@ -183,10 +184,10 @@ export default class VictoryAxis extends React.Component {
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your chart. Victory Axis relies on Radium,
-     * so valid Radium style objects should work for this prop, however height, width, and margin
-     * are used to calculate range, and need to be expressed as a number of pixels.
-     * Styles for axis lines, gridlines, and ticks are scoped to separate props.
+     * The style prop specifies styles for your VictoryAxis. Any valid inline style properties
+     * will be applied. Height, width, and padding should be specified via the height,
+     * width, and padding props, as they are used to calculate the alignment of
+     * components within chart.
      * @examples {axis: {stroke: "#756f6a"}, grid: {stroke: "grey"}, ticks: {stroke: "grey"},
      * tickLabels: {fontSize: 10, padding: 5}, axisLabel: {fontSize: 16, padding: 20}}
      */
@@ -219,7 +220,8 @@ export default class VictoryAxis extends React.Component {
      */
     tickValues: CustomPropTypes.homogeneousArray,
     /**
-     * The width props specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative
   };

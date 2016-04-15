@@ -241,13 +241,12 @@ class App extends React.Component {
               animate={{
                 onExit: {
                   duration: 500,
-                  before: (datum) => ({ opacity: datum.opacity || 0.5}),
-                  after: () => ({opacity: 0.1})
+                  before: () => ({opacity: 0.3})
                 },
                 onEnter: {
                   duration: 500,
-                  before: () => ({ opacity: 0.1 }),
-                  after: (datum) => ({ opacity: datum.opacity || 0.5 })
+                  before: () => ({ opacity: 0.3 }),
+                  after: (datum) => ({ opacity: datum.opacity || 1 })
                 }
               }}
             />

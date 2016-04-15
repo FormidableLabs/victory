@@ -190,9 +190,7 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
 VictoryScatter animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
 VictoryScatter defines a set of default transition behaviors for entering and exiting data nodes.
 Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
-Values returned from `before` and `after` functions will alter the data prop of entering.
-and exiting nodes. In the example below, the opacity of the entering nodes is set to 0.3, so
-that the transition is more apparent.
+Values returned from `before` and `after` functions will alter the data prop of entering and exiting nodes. In the example below, the opacity of the entering nodes is set to 0.3, so that the transition is more apparent.
 
 ```playground_norender
 class App extends React.Component {
@@ -255,7 +253,7 @@ ReactDOM.render(<App/>, mountNode);
 
 ### Custom Data and Label Components
 
-VictoryScatter accepts custom data and label components via the `dataComponent` and `labelComponent` props. Custom components will soon be supported across all chart types (VictoryLine, VictoryBar, VictoryArea, VictoryPie).
+VictoryScatter accepts custom data and label components via the `dataComponent` and `labelComponent` props. Custom components are supported across all chart types (VictoryLine, VictoryBar, VictoryArea, VictoryPie).
 
 ```playground_norender
 class CatPoint extends React.Component {

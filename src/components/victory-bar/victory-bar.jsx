@@ -39,8 +39,7 @@ export default class VictoryBar extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: (datum) => ({y: datum.y, yOffset: datum.yOffset }),
-      after: () => ({ y: 0, yOffset: 0 })
+      before: () => ({ y: 0, yOffset: 0 })
     },
     onEnter: {
       duration: 500,
@@ -51,10 +50,10 @@ export default class VictoryBar extends React.Component {
 
   static propTypes = {
     /**
-     * The animate prop specifies props for victory-animation to use. It this prop is
-     * not given, the bar chart will not tween between changing data / style props.
-     * Large datasets might animate slowly due to the inherent limits of svg rendering.
-     * @examples {duration: 500, onEnd: () => alert("done!")}
+     * The animate prop specifies props for VictoryAnimation to use. The animate prop should
+     * also be used to specify enter and exit transition configurations with the `onExit`
+     * and `onEnter` namespaces respectively.
+     * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
      */
     animate: PropTypes.object,
     /**
@@ -125,7 +124,8 @@ export default class VictoryBar extends React.Component {
       parent: PropTypes.object
     }),
     /**
-     * The height props specifies the height of the chart container element in pixels
+     * The height props specifies the height the svg viewBox of the chart container.
+     * This value should be given as a number of pixels
      */
     height: CustomPropTypes.nonNegative,
     /**
@@ -191,9 +191,10 @@ export default class VictoryBar extends React.Component {
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your chart. VictoryBar relies on Radium,
-     * so valid Radium style objects should work for this prop, however height, width, and margin
-     * are used to calculate range, and need to be expressed as a number of pixels
+     * The style prop specifies styles for your VictoryBar. Any valid inline style properties
+     * will be applied. Height, width, and padding should be specified via the height,
+     * width, and padding props, as they are used to calculate the alignment of
+     * components within chart.
      * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
      */
     style: PropTypes.shape({
@@ -202,7 +203,8 @@ export default class VictoryBar extends React.Component {
       labels: PropTypes.object
     }),
     /**
-     * The width prop specifies the width of the chart container element in pixels
+     * The width props specifies the width of the svg viewBox of the chart container
+     * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative,
     /**
