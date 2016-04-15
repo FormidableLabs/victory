@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 2.1.0 (2016-04-15)
+
+- Add support for custom data components
+- Add support for enter and exit transitions, and add default transitions
+
 ## 2.0.0 (2016-03-15)
 
 - Add event handling via an `events` prop
