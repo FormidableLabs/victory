@@ -1,5 +1,25 @@
 # Victory Changelog
 
+## 0.6.0 (2016-04-15)
+
+**BREAKING CHANGES**
+
+- VictoryBar and VictoryArea no longer support multiple datasets.
+- VictoryStack and VictoryGroup define stacked and grouped layouts for their children
+- Custom data components supported on for VictoryBar, VictoryLine, VictoryScatter,
+  VictoryArea, and VictoryPie via the `dataComponent` prop
+- Enter and exit transitions animate. Enter and exit transition defaults defined
+  VictoryBar, VictoryArea, VictoryScatter, VictoryLine and VictoryPie. Custom transitions may be
+  defined via the `onExit` and `onEnter` properties of the `animation` prop
+- Top level svgs are all responsive by default (using svg viewBox). To render a fixed size
+  component, set the `standalone` prop to false and render the component inside an svg tag
+
+## 0.5.0 (2016-03-15)
+
+- Adds VictoryArea as a data type compatible with VictoryChart.
+- Supports custom label components
+- Upgrades all repos to lodash 4
+
 ## 0.4.1 (2016-03-01)
 
 - Remove dependency on Radium

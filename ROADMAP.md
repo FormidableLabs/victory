@@ -8,7 +8,7 @@ We'd love :heart: to hear what you think we should build! First, please [search 
 
 ## Releases
 
-### [Alpha](https://github.com/FormidableLabs/victory/milestones/Alpha)
+### Alpha
 
 Released: December 2015 ([`v0.1.0`](https://github.com/FormidableLabs/victory/releases/tag/v0.1.0))
 
@@ -22,21 +22,38 @@ Released: December 2015 ([`v0.1.0`](https://github.com/FormidableLabs/victory/re
 - [victory-scatter](https://github.com/FormidableLabs/victory-scatter)
 - Basic code coverage across all Victory components (#37)
 
-### [Alpha 2](https://github.com/FormidableLabs/victory/milestones/Alpha%202)
+### Alpha 2
 Expected release: End of February 2016
 - Code reorganization and infrastructure improvements
 - [Perf improvements](https://github.com/FormidableLabs/victory/issues/141)
 - [Enhancements for victory-label](https://github.com/FormidableLabs/victory-label/issues/35)
 - [victory-area](https://github.com/FormidableLabs/victory/issues/40)
 - [Support data accessor functions](https://github.com/FormidableLabs/victory/issues/84)
-- Basic interactivity support via an event object
-- [Support for custom data and label components](https://github.com/FormidableLabs/victory-chart/issues/100)
+- Interactivity support with data callbacks via an event object
+- [Support for custom label components](https://github.com/FormidableLabs/victory-chart/issues/100)
 - 75% code coverage across all Victory components
 
-### [Alpha 3](https://github.com/FormidableLabs/victory/milestones/Alpha%203)
+### Alpha 3
 Expected release: End of March 2016
+- VictoryStack and VictoryGroup component wrappers
+- Customizable enter and exit transitions with sensible defaults for VictoryArea,
+  VictoryBar, VictoryLine, VictoryPie, and VictoryScatter.
+- All rendered components are responsive by default
+- Custom data component support for VictoryArea, VictoryBar, VictoryLine, VictoryPie,
+  and VictoryScatter.
+
+### Alpha 4
+Expected release: End of April 2016
+- [Markers and labels for VictoryLine and VictoryArea](https://github.com/FormidableLabs/victory-chart/issues/164)
 - [victory-tooltip](https://github.com/FormidableLabs/victory/issues/83)
-- [victory-legend](https://github.com/FormidableLabs/victory/issues/35)
-- Interactivity support with data callbacks
 - Support for inverted axes in all chart types
-- 90% code coverage across all Victory components
+- Constraints based layout system for all Victory components
+- Strategy and proof of concept for React Native support
+
+### Alpha 5
+Expected release: End of May 2016
+- Above 90% code coverage for all Victory components
+- Fleshed out React Native support
+
+### Stable Beta
+Expected release: End of June 2016

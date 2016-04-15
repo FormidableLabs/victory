@@ -1,6 +1,7 @@
 import React from "react";
 import {
   VictoryAxis,
+  VictoryArea,
   VictoryBar,
   VictoryChart,
   VictoryLine,
@@ -10,6 +11,9 @@ import {
 
 export default class App extends React.Component {
   render() {
+    const style = {
+      parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
+    };
     return (
       <div className="demo">
         <h1>Victory Demo</h1>
@@ -18,17 +22,17 @@ export default class App extends React.Component {
 
         <h3>VictoryPie</h3>
         <p>Default props</p>
-        <VictoryPie/>
+        <VictoryPie style={style}/>
 
         <h3>VictoryChart</h3>
         <p>Line chart of function <code>y = x^2</code></p>
-        <VictoryChart>
+        <VictoryChart style={style}>
           <VictoryLine y={(data) => data.x * data.x}/>
         </VictoryChart>
 
         <h3>VictoryChart</h3>
         <p>Custom axes and tickformats; Bar + line chart</p>
-        <VictoryChart domainPadding={{x: 30, y: 30}}>
+        <VictoryChart style={style} domainPadding={{x: 30, y: 30}}>
           <VictoryAxis
             tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
             tickFormat={(x) => `${x}\ntick`}
@@ -73,19 +77,23 @@ export default class App extends React.Component {
 
         <h3>VictoryAxis</h3>
         <p>Default props</p>
-        <VictoryAxis/>
+        <VictoryAxis style={style}/>
 
         <h3>VictoryBar</h3>
         <p>Default props</p>
-        <VictoryBar/>
+        <VictoryBar style={style}/>
 
         <h3>VictoryLine</h3>
         <p>Default props</p>
-        <VictoryLine/>
+        <VictoryLine style={style}/>
 
         <h3>VictoryScatter</h3>
         <p>Default props</p>
-        <VictoryScatter/>
+        <VictoryScatter style={style}/>
+
+          <h3>VictoryArea</h3>
+          <p>Default props</p>
+          <VictoryArea style={style}/>
 
       </div>
     );

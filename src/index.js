@@ -1,25 +1,33 @@
 import {
   VictoryAnimation,
-  VictoryLabel} from "victory-core";
+  VictoryLabel,
+  VictoryTransition
+} from "victory-core";
 
 import {
   VictoryAxis,
   VictoryArea,
   VictoryBar,
   VictoryChart,
+  VictoryGroup,
   VictoryLine,
-  VictoryScatter} from "victory-chart";
+  VictoryScatter,
+  VictoryStack
+} from "victory-chart";
 
 import {VictoryPie} from "victory-pie";
 
 export {
   VictoryAnimation,
-  VictoryAxis,
   VictoryArea,
+  VictoryAxis,
   VictoryBar,
   VictoryChart,
+  VictoryGroup,
   VictoryLine,
   VictoryLabel,
   VictoryPie,
-  VictoryScatter
+  VictoryScatter,
+  VictoryStack,
+  VictoryTransition
 };
