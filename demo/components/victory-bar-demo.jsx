@@ -60,8 +60,8 @@ export default class App extends React.Component {
   }
 
   getMultiTransitionData() {
-    const bars = _.random(6, 10);
-    return _.map(_.range(5), () => {
+    const bars = _.random(3, 5);
+    return _.map(_.range(4), () => {
       return _.map(_.range(bars), (bar) => {
         return {x: bar, y: _.random(2, 10)};
       });
@@ -91,7 +91,16 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryBar</h1>
         <VictoryBar
-          style={{parent: parentStyle}} animate={{duration: 1000}}
+          style={{parent: parentStyle}}
+          animate={{
+            duration: 500,
+            onExit: {
+              duration: 1000
+            },
+            onEnter: {
+              duration: 500
+            }
+          }}
           data={this.state.barTransitionData}
         />
 
@@ -104,6 +113,17 @@ export default class App extends React.Component {
             return <VictoryBar key={index} data={data}/>;
           })}
         </VictoryStack>
+
+        <VictoryGroup
+          offset={15}
+          style={{parent: parentStyle}}
+          animate={{duration: 1000}}
+          colorScale={"qualitative"}
+        >
+          {this.state.multiTransitionData.map((data, index) => {
+            return <VictoryBar key={index} data={data}/>;
+          })}
+        </VictoryGroup>
 
         <VictoryGroup
           style={{parent: parentStyle}} offset={18}
