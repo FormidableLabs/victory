@@ -18,6 +18,13 @@ const getData = () => {
   ];
 };
 
+const getTransitionData = () => {
+  const data = _.random(6, 10);
+  return _.map(_.range(data), (datum) => {
+    return {x: datum, y: _.random(2, 10)};
+  });
+};
+
 class BorderLabelSlice extends React.Component {
   static propTypes = {
     ...Slice.propTypes,
@@ -65,7 +72,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: props.data,
+      data: getData(),
+      transitionData: getTransitionData(),
       colorScale: [
         "#D85F49",
         "#F66D3B",
@@ -97,7 +105,8 @@ export default class App extends React.Component {
     /* eslint-disable react/no-did-mount-set-state */
     this.setStateInterval = window.setInterval(() => {
       this.setState({
-        data: getData()
+        data: getData(),
+        transitionData: getTransitionData()
       });
     }, 2000);
   }
@@ -119,6 +128,14 @@ export default class App extends React.Component {
         <h1>VictoryPie Demo</h1>
 
         <div style={containerStyle}>
+          <VictoryPie animate={{duration: 1000}}
+            style={{
+              parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
+              labels: {fontSize: 10, padding: 100, fill: "white"}
+            }}
+            data={this.state.transitionData}
+          />
+
           <VictoryPie
             style={this.state.style}
             events={{
