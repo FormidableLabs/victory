@@ -1,6 +1,6 @@
 /* eslint-disable func-style */
 import assign from "lodash/assign";
-import defaults from "lodash/defaults";
+import merge from "lodash/merge";
 import identity from "lodash/identity";
 
 function getDatumKey(datum, idx) {
@@ -231,8 +231,8 @@ export function getTransitionPropsFactory(props, state, setState) {
 
   return function getTransitionProps(child, index) {
     const data = getChildData(child) || [];
-    const animate = defaults(
-      {}, props.animate, child.props.animate, child.type.defaultTransitions
+    const animate = merge(
+      {}, child.type.defaultTransitions, child.props.animate, props.animate
     );
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];
     if (nodesWillExit) {
