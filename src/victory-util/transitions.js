@@ -116,9 +116,9 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
 }
 
 function getInitialChildProps(animate, data) {
-  const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
+  const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
   return {
-    data: data.map((datum) => assign({}, datum, before(datum)))
+    data: data.map((datum) => assign({}, datum, after(datum)))
   };
 }
 
@@ -132,11 +132,11 @@ function getChildPropsOnExit(animate, data, exitingNodes, cb) { // eslint-disabl
     // After the exit transition occurs, trigger the animations for
     // nodes that are neither exiting or entering.
     animate.onEnd = cb;
-    const after = animate.onExit && animate.onExit.after ? animate.onExit.after : identity;
-    // If nodes need to exit, transform them with the provided onExit.after function.
+    const before = animate.onExit && animate.onExit.before ? animate.onExit.before : identity;
+    // If nodes need to exit, transform them with the provided onExit.before function.
     data = data.map((datum, idx) => {
       const key = (datum.key || idx).toString();
-      return exitingNodes[key] ? assign({}, datum, after(datum)) : datum;
+      return exitingNodes[key] ? assign({}, datum, before(datum)) : datum;
     });
   }
   return { animate, data };

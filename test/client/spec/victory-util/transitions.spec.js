@@ -61,7 +61,7 @@ describe("getTransitionPropsFactory", () => {
     return {
       type: {
         defaultTransitions: {
-          onExit: {duration: 1, after: toZero },
+          onExit: {duration: 1, before: toZero },
           onEnter: {duration: 2, before: toZero }
         }
       },
