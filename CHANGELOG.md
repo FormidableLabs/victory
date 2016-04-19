@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 0.6.1 (2016-04-19)
+
+- Fixes a bug in VictoryChart, VictoryGroup and VictoryStack, which was causing null animation props to be ignored.
+
 ## 0.6.0 (2016-04-15)
 
 **BREAKING CHANGES**
