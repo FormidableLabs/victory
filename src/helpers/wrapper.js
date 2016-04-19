@@ -46,6 +46,9 @@ export default {
   },
 
   getAnimationProps(props, child, index) {
+    if (!props.animate) {
+      return child.props.animate;
+    }
     const getFilteredState = () => {
       let childrenTransitions = this.state && this.state.childrenTransitions;
       childrenTransitions = Collection.isArrayOfArrays(childrenTransitions) ?
