@@ -17653,6 +17653,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getAnimationProps: function getAnimationProps(props, child, index) {
 	    var _this = this;
 	
+	    if (!props.animate) {
+	      return child.props.animate;
+	    }
 	    var getFilteredState = function getFilteredState() {
 	      var childrenTransitions = _this.state && _this.state.childrenTransitions;
 	      childrenTransitions = _victoryCore.Collection.isArrayOfArrays(childrenTransitions) ? childrenTransitions[index] : childrenTransitions;
