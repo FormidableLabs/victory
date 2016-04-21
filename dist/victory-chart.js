@@ -21152,6 +21152,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return { index: index, horizontal: horizontal, datum: datum, position: position };
 	    }
 	  }, {
+	    key: "getLabel",
+	    value: function getLabel(props, datum, index) {
+	      var propsLabel = Array.isArray(props.labels) ? props.labels[index] : _victoryCore.Helpers.evaluateProp(props.labels, datum);
+	      return datum.label || propsLabel;
+	    }
+	  }, {
 	    key: "renderData",
 	    value: function renderData(props, data, style) {
 	      var _this2 = this;
@@ -21163,12 +21169,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var events = getBoundEvents(props.events.data, "data");
 	        var barProps = (0, _assign2.default)({ key: "bar-" + index, style: barStyle, events: events }, sharedProps, _this2.state.dataState[index]);
 	        var barComponent = _react2.default.cloneElement(_this2.props.dataComponent, barProps);
-	        if (datum.label || props.labels) {
-	          var labelText = datum.label || props.labels && props.labels[index] || "";
+	        var labelText = _this2.getLabel(props, datum, index);
+	        if (labelText) {
 	          var labelEvents = getBoundEvents(props.events.labels, "labels");
 	          var labelProps = (0, _assign2.default)({
-	            key: "bar-label-" + index, style: style.labels, events: labelEvents,
-	            labelText: labelText, labelComponent: props.labelComponent
+	            key: "bar-label-" + index,
+	            style: style.labels,
+	            events: labelEvents,
+	            labelText: labelText,
+	            labelComponent: props.labelComponent
 	          }, sharedProps, _this2.state.labelsState[index]);
 	          return _react2.default.createElement(
 	            "g",
@@ -22559,7 +22568,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!props.labels) {
 	        return undefined;
 	      }
-	      return Math.floor(datasets.length / 2) === index ? props.labels : [];
+	      return Math.floor(datasets.length / 2) === index ? props.labels : undefined;
 	    }
 	  }, {
 	    key: "getChildProps",
@@ -22921,7 +22930,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (!props.labels) {
 	        return undefined;
 	      }
-	      return datasets.length === index + 1 ? props.labels : [];
+	      return datasets.length === index + 1 ? props.labels : undefined;
 	    }
 	  }, {
 	    key: "getChildProps",
