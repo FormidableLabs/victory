@@ -309,6 +309,12 @@ export default class VictoryBar extends React.Component {
     return { index, horizontal, datum, position };
   }
 
+  getLabel(props, datum, index) {
+    const propsLabel = Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
+    return datum.label || propsLabel;
+  }
+
   renderData(props, data, style) {
     return data.map((datum, index) => {
       const sharedProps = this.getSharedProps(props, datum, index);
@@ -321,13 +327,16 @@ export default class VictoryBar extends React.Component {
         this.state.dataState[index]
       );
       const barComponent = React.cloneElement(this.props.dataComponent, barProps);
-      if (datum.label || props.labels) {
-        const labelText = datum.label || (props.labels && props.labels[index]) || "";
+      const labelText = this.getLabel(props, datum, index);
+      if (labelText) {
         const labelEvents = getBoundEvents(props.events.labels, "labels");
         const labelProps = assign(
           {
-            key: `bar-label-${index}`, style: style.labels, events: labelEvents,
-            labelText, labelComponent: props.labelComponent
+            key: `bar-label-${index}`,
+            style: style.labels,
+            events: labelEvents,
+            labelText,
+            labelComponent: props.labelComponent
           },
           sharedProps,
           this.state.labelsState[index]

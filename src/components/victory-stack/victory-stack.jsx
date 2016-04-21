@@ -244,7 +244,7 @@ export default class VictoryStack extends React.Component {
     if (!props.labels) {
       return undefined;
     }
-    return datasets.length === index + 1 ? props.labels : [];
+    return datasets.length === index + 1 ? props.labels : undefined;
   }
 
   getChildProps(props, calculatedProps) {

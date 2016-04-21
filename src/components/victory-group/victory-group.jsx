@@ -255,7 +255,7 @@ export default class VictoryGroup extends React.Component {
     if (!props.labels) {
       return undefined;
     }
-    return Math.floor(datasets.length / 2) === index ? props.labels : [];
+    return Math.floor(datasets.length / 2) === index ? props.labels : undefined;
   }
 
   getChildProps(props, calculatedProps) {
