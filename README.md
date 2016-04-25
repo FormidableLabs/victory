@@ -7,7 +7,7 @@ Victory
 
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
-See the docs and examples on the website: http://victory.formidable.com.
+See the docs and examples on the website: http://formidable.com/open-source/victory.
 
 You can also join the Gitter chat room at https://gitter.im/FormidableLabs/victory.
 
@@ -68,19 +68,20 @@ import * as V from "victory"
 
 You can read about these Victory components via interactive docs!
 
-- [VictoryAxis](http://victory.formidable.com/docs/victory-axis)
-- [VictoryBar](http://victory.formidable.com/docs/victory-bar)
-- [VictoryChart](http://victory.formidable.com/docs/victory-chart)
-- [VictoryLine](http://victory.formidable.com/docs/victory-line)
-- [VictoryPie](http://victory.formidable.com/docs/victory-pie)
-- [VictoryScatter](http://victory.formidable.com/docs/victory-scatter)
-- [VictoryLabel](http://victory.formidable.com/docs/victory-label)
-- [VictoryAnimation](http://victory.formidable.com/docs/victory-animation)
+- [VictoryAxis](http://formidable.com/open-source/victory/docs/victory-axis)
+- [VictoryArea](http://formidable.com/open-source/victory/docs/victory-area)
+- [VictoryBar](http://formidable.com/open-source/victory/docs/victory-bar)
+- [VictoryChart](http://formidable.com/open-source/victory/docs/victory-chart)
+- [VictoryLine](http://formidable.com/open-source/victory/docs/victory-line)
+- [VictoryPie](http://formidable.com/open-source/victory/docs/victory-pie)
+- [VictoryScatter](http://formidable.com/open-source/victory/docs/victory-scatter)
+- [VictoryLabel](http://formidable.com/open-source/victory/docs/victory-label)
+- [VictoryAnimation](http://formidable.com/open-source/victory/docs/victory-animation)
 
 
 ## Animation
 
-Wrap any Victory component with [VictoryAnimation][] and it will transition smoothly between states whenever data changes. VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
+Wrap any Victory component with [VictoryAnimation](http://formidable.com/open-source/victory/docs/victory-animation) and it will transition smoothly between states whenever data changes. VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
 
 ## Contributing
 
