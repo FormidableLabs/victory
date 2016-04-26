@@ -13,8 +13,12 @@
     "url": "https://github.com/FormidableLabs/victory-core/issues"
   },
   "homepage": "https://github.com/FormidableLabs/victory-core",
+  "engineStrict" : true,
+  "engines": {
+    "npm": ">=3.0.0"
+  },
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
+    "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "start": "builder run hot",
     "test": "builder run check",
