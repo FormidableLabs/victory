@@ -30,7 +30,7 @@
     "builder-victory-component": "^2.1.1",
     "d3-scale": "^0.6.0",
     "d3-shape": "^0.6.0",
-    "lodash": "~4.6.1",
+    "lodash": "^4.11.0",
     "victory-core": "^1.4.3"
   },
   "devDependencies": {
