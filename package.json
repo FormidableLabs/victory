@@ -31,7 +31,7 @@
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-timer": "^0.0.6",
-    "lodash": "~4.6.1",
+    "lodash": "^4.11.0",
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
