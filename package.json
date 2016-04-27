@@ -26,14 +26,14 @@
     "docs-build-static": "echo 'Static docs generation for victory-pie is not supported"
   },
   "dependencies": {
-    "builder-victory-component": "^2.1.0",
+    "builder-victory-component": "^2.1.2",
     "builder": "~2.9.1",
     "d3-shape": "^0.6.0",
     "lodash": "^4.6.1",
     "victory-core": "^1.4.3"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.1.0",
+    "builder-victory-component-dev": "^2.1.2",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
     "ecology": "^1.2.0",
