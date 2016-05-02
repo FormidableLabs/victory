@@ -1,11 +1,13 @@
 /**
  * Client tests
  */
-/*eslint-disable max-nested-callbacks */
+/*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 /* global sinon */
 import _ from "lodash";
 import React from "react";
 import { shallow, mount } from "enzyme";
+import { Style } from "victory-core";
+import SvgTestHelper from "../../../svg-test-helper";
 import VictoryPie from "src/components/victory-pie";
 import Slice from "src/components/slice";
 import SliceLabel from "src/components/slice-label";
@@ -32,6 +34,32 @@ describe("components/victory-pie", () => {
       const svg = wrapper.find("svg");
       const viewBoxValue = `0 0 ${VictoryPie.defaultProps.width} ${VictoryPie.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+    });
+
+    it("renders 5 slices", () => {
+      const wrapper = shallow(
+        <VictoryPie/>
+      );
+
+      const slices = wrapper.find(Slice);
+      expect(slices).to.have.lengthOf(5);
+    });
+
+    it("renders each slice as a circular sector", () => {
+      const wrapper = shallow(
+        <VictoryPie/>
+      );
+      const slices = wrapper.find(Slice);
+      slices.forEach(SvgTestHelper.expectIsCircularSection);
+    });
+
+    it("renders 5 slice labels", () => {
+      const wrapper = shallow(
+        <VictoryPie/>
+      );
+
+      const labels = wrapper.find(SliceLabel);
+      expect(labels).to.have.lengthOf(5);
     });
   });
 
@@ -78,6 +106,143 @@ describe("components/victory-pie", () => {
       );
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(8);
+    });
+  });
+
+  describe("the `startAngle` prop", () => {
+    it("determines the counter clockwise angle relative to a cartesian Y axis of a vector extending from the origin to the _first drawn coordinate_ of the first slice ", () => {
+      [0, 90, 180, 270].map((angle) => {
+        const wrapper = shallow(
+          <VictoryPie startAngle={angle}/>
+        );
+
+        const firstSlice = wrapper.find(Slice).first();
+        const coordinates = SvgTestHelper.getSliceArcStart(firstSlice);
+        const renderedAngle = SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(coordinates);
+
+        // There is a small degree of inprecision due to how D3 renders the paths
+        expect(renderedAngle).to.be.closeTo(angle, 0.0001);
+      });
+    });
+  });
+
+  describe("the `innerRadius` prop", () => {
+    it("renders the slices as annular sections", () => {
+      const wrapper = shallow(
+        <VictoryPie innerRadius={70}/>
+      );
+
+      const slices = wrapper.find(Slice);
+      slices.forEach(SvgTestHelper.expectIsAnnularSection);
+    });
+
+    it("determines the distance in pixels between the origin & the inner edge of the sections", () => {
+      const wrapper = shallow(
+        <VictoryPie innerRadius={70}/>
+      );
+
+      const slices = wrapper.find(Slice);
+      slices.forEach((slice) => {
+        expect(SvgTestHelper.getInnerRadiusOfCircularOrAnnularSlice(slice)).to.eql(70);
+      });
+    });
+  });
+
+  describe("`startAngle` in conjunction with `endAngle`", () => {
+    it("renders a portion of a chart from `startAngle` to `endAngle`", () => {
+      const wrapper = shallow(
+        <VictoryPie startAngle={-90} endAngle={90}/>
+      );
+
+      const slices = wrapper.find(Slice);
+      const firstSlice = slices.first();
+      const lastSlice = slices.last();
+      const arcStart = SvgTestHelper.getSliceArcStart(firstSlice);
+      const arcEnd = SvgTestHelper.getSliceArcEnd(lastSlice);
+
+      expect(SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(arcStart)).to.eql(270);
+      expect(SvgTestHelper.getSvgCoordinatesAngleFromCartesianYAxis(arcEnd)).to.eql(90);
+    });
+  });
+
+  describe("the `width` prop", () => {
+    it("determines the width of the containing viewBox", () => {
+      const width = 200;
+      const wrapper = shallow(
+        <VictoryPie width={width} />
+      );
+
+      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 ${width} ${VictoryPie.defaultProps.height}`);
+    });
+  });
+
+  describe("the `height` prop", () => {
+    it("determines the height of the containing viewBox", () => {
+      const height = 200;
+      const wrapper = shallow(
+        <VictoryPie height={height} />
+      );
+
+      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 ${VictoryPie.defaultProps.width} ${height}`);
+    });
+  });
+
+  describe("the `colorScale` prop", () => {
+    describe("if provided an array of CSS colors", () => {
+      it("renders each slice with the next color in the array, reiterating through colors as necessary", () => {
+        const data = _.range(5);
+        const colorScale = ["#fffff", "#eeeee", "#ddddd"];
+        const wrapper = shallow(
+          <VictoryPie data={data} colorScale={colorScale}/>
+        );
+
+        const slices = wrapper.find(Slice);
+        expect(slices.length).to.equal(5);
+        slices.forEach((slice, i) => {
+          expect(slice).to.have.style("fill", colorScale[i % colorScale.length]);
+        });
+      });
+    });
+
+    describe("if provided a string", () => {
+      describe("and the string is a valid victory color scale", () => {
+        it("renders the chart using the given color scale", () => {
+          const VALID_VICTORY_COLOR_SCALE_NAMES = ["greyscale", "qualitative",
+            "heatmap", "warm", "cool", "red", "green", "blue"];
+
+          VALID_VICTORY_COLOR_SCALE_NAMES.map((colorScaleName) => {
+            const colorScale = Style.getColorScale(colorScaleName);
+            const data = _.range(colorScale.length + 1);
+            const wrapper = shallow(
+              <VictoryPie colorScale={colorScale} data={data}/>
+            );
+
+            wrapper.find(Slice).map((slice, i) => {
+              const expectedColor = colorScale[i % colorScale.length];
+              expect(slice, `Slice at index ${i} rendered with color scale ${colorScale} has fill color ${expectedColor}`).to.have.style("fill", expectedColor);
+            });
+          });
+        });
+      });
+
+      describe("and the string isn't a valid victory color scale", () => {
+        it("renders the chart using the victory greyscale", () => {
+          it("renders slices using the victory greyscale", () => {
+            const invalidColorScale = "foobar";
+            const greyscale = Style.getColorScale("greyscale");
+            const data = _.range(greyscale.length);
+
+            const wrapper = shallow(
+              <VictoryPie colorScale={invalidColorScale} data={data}/>
+            );
+
+            const slices = wrapper.find(Slice);
+            slices.map((slice, i) => {
+              expect(slice).to.have.style("fill", greyscale[i]);
+            });
+          });
+        });
+      });
     });
   });
 

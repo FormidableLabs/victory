@@ -18,7 +18,7 @@ window.expect = chai.expect;
 
 // Plugins
 chai.use(sinonChai);
-chai.use(chaiEnzyme);
+chai.use(chaiEnzyme());
 
 // Mocha (part of static include).
 window.mocha.setup({
