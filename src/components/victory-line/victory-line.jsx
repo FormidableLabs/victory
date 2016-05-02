@@ -1,12 +1,14 @@
 import sortBy from "lodash/sortBy";
 import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
-import LineLabel from "./line-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+} from "victory-core";
 
 const defaultStyles = {
   data: {
@@ -148,16 +150,25 @@ export default class VictoryLine extends React.Component {
       "stepBefore"
     ]),
     /**
-     * The label prop specifies a label to display at the end of a line component.
-     * This prop can be given as a value, or as an entire, HTML-complete label component.
-     * If given as a value, a new VictoryLabel will be created with props and
-     * styles from the line. When given as a component, a new element will be
-     * cloned from the label component. The new element will have default
-     * values provided by the line for properties x, y, textAnchor, and
-     * verticalAnchor; and styles filled out with defaults from the line, and
-     * overrides from the datum.
+     * The label prop defines the label that will appear at the end of the line.
+     * This prop should be given a string or as a function of data.
+     * @examples: "Series 1", (data) => `${data.length} points`
      */
-    label: PropTypes.any,
+    label: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.string
+    ]),
+    /**
+     * The labelComponent prop takes in an entire label component which will be used
+     * to create a label for the line. The new element created from the passed
+     * labelComponent will have the following properties position (x, y), textAnchor,
+     * and verticalAnchor, style, index, bound events created from the events prop, and
+     * access to the entire line data series via a data prop. If labelComponent is omitted,
+     * a new VictoryLabel will be created. This labelComponent prop should be used to
+     * provide a series label for VictoryLine. If individual labels are required for each
+     * data point, they should be created by composing VictoryLine with VictoryScatter.
+     */
+    labelComponent: PropTypes.any,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
@@ -259,7 +270,7 @@ export default class VictoryLine extends React.Component {
     width: 450,
     x: "x",
     y: "y",
-    dataComponent: <LineSegment />
+    dataComponent: <LineSegment/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -288,60 +299,63 @@ export default class VictoryLine extends React.Component {
     });
   }
 
-  getLabelStyle(style) {
+  getLabelStyle(labelStyle, dataStyle) {
     // match labels styles to data style by default (fill, opacity, others?)
-    const opacity = style.data.opacity;
+    const opacity = dataStyle.opacity;
     // match label color to data color if it is not given.
     // use fill instead of stroke for text
-    const fill = style.data.stroke;
-    const padding = style.labels.padding || 0;
-    return defaults({}, style.labels, {opacity, fill, padding});
+    const fill = dataStyle.stroke;
+    const padding = labelStyle.padding || 0;
+    return defaults({}, labelStyle, {opacity, fill, padding});
   }
 
   renderLine(calculatedProps) {
     const {dataSegments, scale, style} = calculatedProps;
-    const {interpolation, dataComponent, events} = this.props;
-
+    const {data, interpolation, dataComponent, events, label, labelComponent} = this.props;
+    const getEvents = Helpers.getEvents.bind(this);
+    const lineEvents = getEvents(events.data, "data");
     return dataSegments.map((segment, index) => {
-      const lineEvents = Helpers.getEvents.bind(this)(events.data, "data");
-      const key = `line-segment-${index}`;
-
-      return React.cloneElement(dataComponent, {
-        key,
-        index,
-        events: lineEvents,
+      const lineProps = assign({
+        key: `line-segment-${index}`,
         data: segment,
-        interpolation,
-        scale,
-        style: style.data,
-        ...this.state.dataState[index]
-      });
+        style: Helpers.evaluateStyle(style.data, segment),
+        interpolation: Helpers.evaluateProp(interpolation, segment),
+        scale
+      }, this.state.dataState[index]);
+      const segmentComponent = React.cloneElement(dataComponent, assign({
+        events: Helpers.getPartialEvents(lineEvents, index, lineProps)
+      }, lineProps));
+      if (index === dataSegments.length - 1 && (label || labelComponent)) {
+        const component = labelComponent || <VictoryLabel/>;
+        const lastPoint = Array.isArray(segment) ? segment[segment.length - 1] : segment;
+        const labelStyle = this.getLabelStyle(style.labels, lineProps.style);
+        const labelEvents = getEvents(events.labels, "labels");
+        const labelProps = defaults(
+          {},
+          this.state.labelsState[0],
+          component.props,
+          {
+            x: scale.x.call(this, lastPoint.x) + labelStyle.padding,
+            y: scale.y.call(this, lastPoint.y),
+            style: labelStyle,
+            data,
+            text: Helpers.evaluateProp(label, data),
+            textAnchor: "start",
+            verticalAnchor: "middle"
+          }
+        );
+        const labelSegmentComponent = React.cloneElement(component, assign({
+          events: Helpers.getPartialEvents(labelEvents, 0, labelProps)
+        }, labelProps));
+        return (
+          <g key={`line-label-${index}`}>
+            {labelSegmentComponent}
+            {segmentComponent}
+          </g>
+        );
+      }
+      return segmentComponent;
     });
-  }
-
-  renderLabel(calculatedProps) {
-    const {dataset, dataSegments, scale, style} = calculatedProps;
-    if (!this.props.label) {
-      return undefined;
-    }
-    const lastSegment = dataSegments[dataSegments.length - 1];
-    const lastPoint = Array.isArray(lastSegment) ?
-      lastSegment[lastSegment.length - 1] : lastSegment;
-    const getBoundEvents = Helpers.getEvents.bind(this);
-    return (
-      <LineLabel
-        key={`line-label`}
-        events={getBoundEvents(this.props.events.labels, "labels")}
-        data={dataset}
-        position={{
-          x: scale.x.call(this, lastPoint.x),
-          y: scale.y.call(this, lastPoint.y)
-        }}
-        label={this.props.label}
-        style={this.getLabelStyle(style)}
-        {...this.state.labelsState[0]}
-      />
-    );
   }
 
   renderData(props, style) {
@@ -363,7 +377,6 @@ export default class VictoryLine extends React.Component {
     return (
       <g style={style.parent}>
         {this.renderLine(calculatedProps)}
-        {this.renderLabel(calculatedProps)}
       </g>
     );
   }

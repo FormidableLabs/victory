@@ -4,7 +4,6 @@ import _ from "lodash";
 import {VictoryLine} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";
-import {VictoryLabel} from "victory-core";
 
 class PointedLine extends React.Component {
   static propTypes = {
@@ -131,7 +130,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle, data: {stroke: "blue"}}}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
-          label={<VictoryLabel>{"label\ntwo"}</VictoryLabel>}
           sample={25}
         />
 

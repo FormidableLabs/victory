@@ -1,10 +1,8 @@
 import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
-import { Helpers } from "victory-core";
 
 export default class LineSegment extends React.Component {
   static propTypes = {
-    index: React.PropTypes.number,
     data: PropTypes.array,
     events: PropTypes.object,
     interpolation: PropTypes.string,
@@ -19,17 +17,14 @@ export default class LineSegment extends React.Component {
   }
 
   render() {
-    const { props } = this;
-    const style = Helpers.evaluateStyle(props.style, props.data);
-    const interpolation = Helpers.evaluateProp(props.interpolation, props.data);
-    const xScale = props.scale.x;
-    const yScale = props.scale.y;
+    const { events, style, interpolation, scale, data } = this.props;
+    const xScale = scale.x;
+    const yScale = scale.y;
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
-      .x((data) => xScale(data.x))
-      .y((data) => yScale(data.y));
-    const path = lineFunction(props.data);
-    const events = Helpers.getPartialEvents(props.events, props.index, props);
+      .x((d) => xScale(d.x))
+      .y((d) => yScale(d.y));
+    const path = lineFunction(data);
     return (
       <path style={style} d={path} {...events}/>
     );
