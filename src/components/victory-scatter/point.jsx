@@ -19,7 +19,8 @@ export default class Point extends React.Component {
       PropTypes.func
     ]),
     style: PropTypes.object,
-    position: PropTypes.object
+    x: React.PropTypes.number,
+    y: React.PropTypes.number
   };
 
   getPath(props) {
@@ -33,7 +34,7 @@ export default class Point extends React.Component {
       star: pathHelpers.star
     };
     const symbol = Helpers.evaluateProp(props.symbol, props.datum);
-    return pathFunctions[symbol].call(null, props.position.x, props.position.y, props.size);
+    return pathFunctions[symbol].call(null, props.x, props.y, props.size);
   }
 
   render() {

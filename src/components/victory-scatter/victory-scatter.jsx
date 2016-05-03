@@ -4,11 +4,12 @@ import omit from "lodash/omit";
 import defaults from "lodash/defaults";
 import assign from "lodash/assign";
 import Point from "./point";
-import PointLabel from "./point-label";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+} from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
 const defaultStyles = {
@@ -85,7 +86,7 @@ export default class VictoryScatter extends React.Component {
      * The dataComponent prop takes an entire, HTML-complete data component which will be used to
      * create points for each datum in the scatter plot. The new element created from the passed
      * dataComponent will have the property datum set by the scatter for the point it renders;
-     * properties position (x, y), size and symbol are calculated by the scatter for the datum;
+     * properties x, y, size and symbol are calculated by the scatter for the datum;
      * a key and index property set corresponding to the location of the datum in the data
      * provided to the scatter; style calculated by the scatter based on the scatter's
      * styles and the datum; and all the remaining properties from the scatter's data
@@ -134,15 +135,27 @@ export default class VictoryScatter extends React.Component {
      */
     height: CustomPropTypes.nonNegative,
     /**
-     * The labelComponent prop takes in an entire, HTML-complete label component which will be used
-     * to create labels for each point in the scatter plot. The new element created from the passed
-     * labelComponent will have property data provided by the point's datum; properties
-     * position (x, y), dy, textAnchor, and verticalAnchor preserved or default values
-     * provided by the point; and styles filled out with defaults from the scatter,
-     * and overrides from the datum. If labelComponent is omitted, a new VictoryLabel
-     * will be created with props and styles from the point.
+     * The labelComponent prop takes in an entire label component which will be used
+     * to create labels for each point in the scatter. The new element created from
+     * the passed labelComponent will be supplied with the following properties:
+     * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
+     * any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If labelComponent is omitted,
+     * a new VictoryLabel will be created with props described above.
      */
     labelComponent: PropTypes.element,
+    /**
+     * The labels prop defines labels that will appear with each point in your chart.
+     * This prop should be given as an array of values or as a function of data.
+     * If given as an array, the number of elements in the array should be equal to
+     * the length of the data array. Labels may also be added directly to the data object
+     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
+     */
+    labels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array
+    ]),
     /**
      * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
      */
@@ -197,7 +210,9 @@ export default class VictoryScatter extends React.Component {
      * The style prop specifies styles for your VictoryScatter. Any valid inline style properties
      * will be applied. Height, width, and padding should be specified via the height,
      * width, and padding props, as they are used to calculate the alignment of
-     * components within chart.
+     * components within chart. In addition to normal style properties, angle and verticalAnchor
+     * may also be specified via the labels object, and they will be passed as props to
+     * VictoryLabel, or any custom labelComponent.
      * @examples {data: {fill: "red"}, labels: {fontSize: 12}}
      */
     style: PropTypes.shape({
@@ -265,7 +280,8 @@ export default class VictoryScatter extends React.Component {
     width: 450,
     x: "x",
     y: "y",
-    dataComponent: <Point />
+    dataComponent: <Point/>,
+    labelComponent: <VictoryLabel/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -286,73 +302,72 @@ export default class VictoryScatter extends React.Component {
     return Helpers.evaluateStyle(baseDataStyle, data);
   }
 
-  getSharedProps(datum, index, calculatedProps) {
-    const { style } = calculatedProps;
-    const position = {
-      x: calculatedProps.scale.x.call(null, datum.x),
-      y: calculatedProps.scale.y.call(null, datum.y)
-    };
-
-    const baseSize = ScatterHelpers.getSize(datum, this.props, calculatedProps);
-
-    const symbol = ScatterHelpers.getSymbol(datum, this.props);
-
-    return {index, datum, baseSize, symbol, style, position};
+  getLabelText(props, datum, index) {
+    const propsLabel = Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
+    return datum.label || propsLabel;
   }
 
-  addDataProps(sharedProps, getBoundEvents) {
-    const {datum, style, index, baseSize} = sharedProps;
-
-    const dataStyle = this.getDataStyles(datum, style.data);
-    const size = Helpers.evaluateProp(baseSize, datum);
-    const events = getBoundEvents(this.props.events.data, "data");
-
-    return assign(
-      {},
-      sharedProps,
-      {key: `point-${index}`, style: dataStyle, events, size},
-      this.state.dataState[index]
-    );
+  getLabelStyle(labelStyle, dataProps) {
+    const { datum, size, style } = dataProps;
+    const matchedStyle = pick(style, ["opacity", "fill"]);
+    const padding = labelStyle.padding || size * 0.25;
+    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
+    return Helpers.evaluateStyle(baseLabelStyle, datum);
   }
 
-  addLabelProps(sharedProps, dataProps, getBoundEvents) {
-    const { datum, style, index } = sharedProps;
-    const dataStyle = dataProps.style;
-    const { size } = dataProps;
-
-    const matchedStyle = pick(dataStyle, ["opacity", "fill"]);
-    const padding = style.labels.padding || size * 0.25;
-    const baseLabelStyle = defaults({}, style.labels, matchedStyle, {padding});
-    const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
-
-    const events = getBoundEvents(this.props.events.labels, "labels");
-
-    return assign(
-      {},
-      sharedProps,
-      {style: labelStyle, labelComponent: this.props.labelComponent, events},
-      this.state.labelsState[index]
-    );
+  renderData(props, calculatedProps, style) {
+    const getEvents = Helpers.getEvents.bind(this);
+    const dataEvents = getEvents(props.events.data, "data");
+    const labelEvents = getEvents(props.events.labels, "labels");
+    const { scale, data } = calculatedProps;
+    return data.map((datum, index) => {
+      const x = scale.x(datum.x);
+      const y = scale.y(datum.y);
+      const size = ScatterHelpers.getSize(datum, props, calculatedProps);
+      const symbol = ScatterHelpers.getSymbol(datum, props);
+      const dataStyle = this.getDataStyles(datum, style.data);
+      const dataProps = assign({
+        x, y, size, datum, symbol, index, style: dataStyle, key: `point-${index}`
+      }, this.state.dataState[index]);
+      const pointComponent = React.cloneElement(props.dataComponent, assign(
+        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+      ));
+      const text = this.getLabelText(props, dataProps.datum, index);
+      if (text) {
+        const labelStyle = this.getLabelStyle(style.labels, dataProps);
+        const labelProps = defaults(
+          {},
+          this.state.labelsState[index],
+          props.labelComponent.props,
+          {
+            key: `point-label-${index}`,
+            style: labelStyle,
+            x,
+            y: y - labelStyle.padding,
+            text,
+            index,
+            datum: dataProps.datum,
+            textAnchor: labelStyle.textAnchor,
+            verticalAnchor: labelStyle.verticalAnchor || "end",
+            angle: labelStyle.angle
+          }
+        );
+        const pointLabel = React.cloneElement(props.labelComponent, assign({
+          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+        }, labelProps));
+        return (
+          <g key={`point-group-${index}`}>
+            {pointComponent}
+            {pointLabel}
+          </g>
+        );
+      }
+      return pointComponent;
+    });
   }
 
-  renderPoint(datum, index, calculatedProps) {
-    const getBoundEvents = Helpers.getEvents.bind(this);
-    const sharedProps = this.getSharedProps(datum, index, calculatedProps);
-    const dataProps = this.addDataProps(sharedProps, getBoundEvents);
-    const pointComponent = React.cloneElement(this.props.dataComponent, dataProps);
-    if (datum.label) {
-      const labelProps = this.addLabelProps(sharedProps, dataProps, getBoundEvents);
-      return (
-        <g key={`point-group-${index}`}>
-          {pointComponent}
-          <PointLabel {...labelProps}/>
-        </g>
-      );
-    }
-    return pointComponent;
-  }
-
-  renderData(props, style) {
+  getCalculatedProps(props, style) {
     const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -367,10 +382,7 @@ export default class VictoryScatter extends React.Component {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
     const z = props.bubbleProperty || "z";
-    const calculatedProps = {data, scale, style, z};
-    return data.map((datum, index) => {
-      return this.renderPoint(datum, index, calculatedProps);
-    });
+    return {data, scale, style, z};
   }
 
   render() {
@@ -398,7 +410,8 @@ export default class VictoryScatter extends React.Component {
       "auto",
       "100%"
     );
-    const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
+    const calculatedProps = this.getCalculatedProps(this.props, style);
+    const group = <g style={style.parent}>{this.renderData(this.props, calculatedProps, style)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}

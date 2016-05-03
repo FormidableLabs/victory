@@ -22,8 +22,8 @@ class PointedLine extends React.Component {
         const {x, y} = datum;
 
         const position = {
-          x: scale.x.call(null, x),
-          y: scale.y.call(null, y)
+          x: scale.x(x),
+          y: scale.y(y)
         };
 
         return (
@@ -33,7 +33,7 @@ class PointedLine extends React.Component {
             key={`line-${index}-point-${pointIndex}`}
             index={parseFloat(`${index}.${pointIndex}`)}
             datum={datum}
-            position={position}
+            {...position}
           />
         );
       })

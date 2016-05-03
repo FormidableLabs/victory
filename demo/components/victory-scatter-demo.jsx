@@ -34,7 +34,7 @@ const symbolStyle = {
     fill: "red"
   },
   labels: {
-    padding: 25,
+    padding: 15,
     fontSize: 15,
     fill: "grey"
   }
@@ -42,15 +42,16 @@ const symbolStyle = {
 
 class CatPoint extends React.Component {
   static propTypes = {
-    position: React.PropTypes.object,
+    x: React.PropTypes.number,
+    y: React.PropTypes.number,
     symbol: React.PropTypes.string
   };
 
   render() {
-    const {position, symbol} = this.props;
+    const {x, y, symbol} = this.props;
 
     return (
-      <text x={position.x} y={position.y}>
+      <text x={x} y={y}>
         {this.renderSymbol(symbol)}
       </text>
     );
@@ -123,7 +124,7 @@ export default class App extends React.Component {
           }}
           width={500}
           height={500}
-          symbol={(data) => data.y > 0 ? "triangleUp" : "triangleDown"}
+          symbol={(d) => d.y > 0 ? "triangleUp" : "triangleDown"}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
           sample={25}
         />

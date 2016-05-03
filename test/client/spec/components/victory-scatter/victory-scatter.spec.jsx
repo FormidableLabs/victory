@@ -98,7 +98,8 @@ describe("components/victory-scatter", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(_.omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(_.omit(initialProps, ["events", "key"]));
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

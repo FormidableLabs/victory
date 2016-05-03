@@ -6,6 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
+import _ from "lodash";
 import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";
@@ -210,7 +211,8 @@ describe("components/victory-line", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(_.omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(_.omit(initialProps, ["events", "key"]));
       });
     });
 
@@ -223,7 +225,7 @@ describe("components/victory-line", () => {
       Labels.forEach((node, index) => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
-        expect(clickHandler.args[index][1]).to.contain({label: "okay"});
+        expect(clickHandler.args[index][1]).to.contain({text: "okay"});
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

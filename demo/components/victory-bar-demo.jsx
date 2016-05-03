@@ -91,7 +91,11 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryBar</h1>
         <VictoryBar
-          style={{parent: parentStyle}}
+          style={{
+            parent: parentStyle,
+            labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
+          }}
+          labels={() => "HELLO"}
           animate={{
             duration: 500,
             onExit: {
@@ -199,7 +203,7 @@ export default class App extends React.Component {
           />
         </ChartWrap>
 
-          <VictoryStack colorScale="warm">
+          <VictoryStack colorScale="warm" style={{parent: parentStyle}}>
             <VictoryBar
               data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
               events={{
@@ -239,10 +243,12 @@ class ChartWrap extends React.Component {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const props = _.assign({}, this.props, {style: {parent: parentStyle}});
     return (
       <div>
-        {React.cloneElement(this.props.children, this.props)}
-        <VictoryChart {...this.props}>{this.props.children}</VictoryChart>
+        {React.cloneElement(this.props.children, props)}
+        <VictoryChart {...props}>{this.props.children}</VictoryChart>
       </div>
     );
   }
