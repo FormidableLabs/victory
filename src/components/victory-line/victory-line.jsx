@@ -151,7 +151,9 @@ export default class VictoryLine extends React.Component {
     ]),
     /**
      * The label prop defines the label that will appear at the end of the line.
-     * This prop should be given a string or as a function of data.
+     * This prop should be given a string or as a function of data. If individual
+     * labels are required for each data point, they should be created by composing
+     * VictoryLine with VictoryScatter
      * @examples: "Series 1", (data) => `${data.length} points`
      */
     label: PropTypes.oneOfType([
