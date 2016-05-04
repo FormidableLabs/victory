@@ -7,7 +7,8 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
-import _ from "lodash";
+import omit from "lodash/omit";
+import range from "lodash/range";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 import Bar from "src/components/victory-bar/bar";
 import { VictoryLabel } from "victory-core";
@@ -36,21 +37,21 @@ describe("components/victory-bar", () => {
 
   describe("rendering data", () => {
     it("renders bars for {x, y} shaped data (default)", () => {
-      const data = _.range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({x: i, y: i}));
       const wrapper = shallow(<VictoryBar data={data}/>);
       const bars = wrapper.find(Bar);
       expect(bars.length).to.equal(10);
     });
 
     it("renders bars for array-shaped data", () => {
-      const data = _.range(20).map((i) => [i, i]);
+      const data = range(20).map((i) => [i, i]);
       const wrapper = shallow(<VictoryBar data={data} x={0} y={1}/>);
       const bars = wrapper.find(Bar);
       expect(bars.length).to.equal(20);
     });
 
     it("renders bars for deeply-nested data", () => {
-      const data = _.range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
+      const data = range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
       const wrapper = shallow(
         <VictoryBar data={data} x="a.b[0].x" y="a.b[0].y"/>
       );
@@ -59,7 +60,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders bars values with null accessor", () => {
-      const data = _.range(30);
+      const data = range(30);
       const wrapper = shallow(
         <VictoryBar data={data} x={null} y={null}/>
       );
@@ -80,8 +81,8 @@ describe("components/victory-bar", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(_.omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(_.omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

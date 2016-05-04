@@ -282,11 +282,11 @@ export default class VictoryLine extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
 
-  componentWillMount() {
-    this.state = {
-      dataState: {},
-      labelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
 
   getDataSegments(dataset) {
@@ -318,12 +318,11 @@ export default class VictoryLine extends React.Component {
   renderLine(props, calculatedProps) {
     const {dataSegments, scale, style} = calculatedProps;
     const {data, interpolation, dataComponent, events, label, labelComponent} = props;
-    const getEvents = Helpers.getEvents.bind(this);
-    const dataEvents = getEvents(events.data, "data");
+    const dataEvents = this.getEvents(events.data, "data");
     return dataSegments.map((segment, index) => {
       const dataProps = defaults(
         {},
-        this.state.dataState[index],
+        this.getEventState(index, "data"),
         dataComponent.props,
         {
           key: `line-segment-${index}`,
@@ -337,13 +336,13 @@ export default class VictoryLine extends React.Component {
         events: Helpers.getPartialEvents(dataEvents, index, dataProps)
       }, dataProps));
       const text = Helpers.evaluateProp(label, data);
-      if (index === dataSegments.length - 1 && text !== null && typeof text !== undefined) {
+      if (index === dataSegments.length - 1 && text !== null && text !== undefined) {
         const lastPoint = Array.isArray(segment) ? segment[segment.length - 1] : segment;
         const labelStyle = this.getLabelStyle(style.labels, dataProps.style);
-        const labelEvents = getEvents(events.labels, "labels");
+        const labelEvents = this.getEvents(events.labels, "labels");
         const labelProps = defaults(
           {},
-          this.state.labelsState[0],
+          this.getEventState(index, "labels"),
           labelComponent.props,
           {
             x: scale.x.call(this, lastPoint.x) + labelStyle.padding,

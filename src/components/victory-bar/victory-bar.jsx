@@ -150,7 +150,7 @@ export default class VictoryBar extends React.Component {
      * to create labels for each bar in the bar chart. The new element created from
      * the passed labelComponent will be supplied with the following properties:
      * x, y, y0, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
-     * any of these props may be overridden by passing in props to the supplied component,
+     * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If labelComponent is omitted,
      * a new VictoryLabel will be created with props described above.
      */
@@ -259,11 +259,11 @@ export default class VictoryBar extends React.Component {
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
 
-  componentWillMount() {
-    this.state = {
-      dataState: {},
-      labelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
 
   getScale(props) {
@@ -344,16 +344,15 @@ export default class VictoryBar extends React.Component {
 
   renderData(props, data, style) {
     const scale = this.getScale(props);
-    const getEvents = Helpers.getEvents.bind(this);
-    const dataEvents = getEvents(props.events.data, "data");
-    const labelEvents = getEvents(props.events.labels, "labels");
+    const dataEvents = this.getEvents(props.events.data, "data");
+    const labelEvents = this.getEvents(props.events.labels, "labels");
     const { horizontal, labelComponent } = props;
     return data.map((datum, index) => {
       const position = this.getBarPosition(props, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = defaults(
         {},
-        this.state.dataState[index],
+        this.getEventState(index, "data"),
         props.dataComponent.props,
         position,
         {
@@ -368,7 +367,7 @@ export default class VictoryBar extends React.Component {
         {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
       ));
       const text = this.getLabel(props, dataProps.datum, index);
-      if (text !== null && typeof text !== undefined) {
+      if (text !== null && text !== undefined) {
         const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
         const padding = this.getlabelPadding(labelStyle, horizontal);
         const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
@@ -378,7 +377,7 @@ export default class VictoryBar extends React.Component {
         };
         const labelProps = defaults(
           {},
-          this.state.labelsState[index],
+          this.getEventState(index, "labels"),
           labelComponent.props,
           {
             key: `bar-label-${index}`,

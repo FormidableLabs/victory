@@ -6,7 +6,8 @@
 /* eslint no-unused-expressions: 0 */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import _ from "lodash";
+import omit from "lodash/omit";
+import range from "lodash/range";
 import VictoryScatter from "src/components/victory-scatter/victory-scatter";
 import Point from "src/components/victory-scatter/point";
 import { VictoryLabel } from "victory-core";
@@ -40,7 +41,7 @@ describe("components/victory-scatter", () => {
 
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
-      const data = _.range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({x: i, y: i}));
       const wrapper = shallow(
         <VictoryScatter data={data} dataComponent={<MyPoint />} />
       );
@@ -50,7 +51,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = _.range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({x: i, y: i}));
       const wrapper = shallow(
         <VictoryScatter data={data}/>
       );
@@ -59,7 +60,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points for array-shaped data", () => {
-      const data = _.range(20).map((i) => [i, i]);
+      const data = range(20).map((i) => [i, i]);
       const wrapper = shallow(
         <VictoryScatter data={data} x={0} y={1}/>
       );
@@ -68,7 +69,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = _.range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
+      const data = range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
       const wrapper = shallow(
         <VictoryScatter data={data} x="a.b[0].x" y="a.b[0].y"/>
       );
@@ -77,7 +78,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders data values with null accessor", () => {
-      const data = _.range(30);
+      const data = range(30);
       const wrapper = shallow(
         <VictoryScatter data={data} x={null} y={null}/>
       );
@@ -98,8 +99,8 @@ describe("components/victory-scatter", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(_.omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(_.omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

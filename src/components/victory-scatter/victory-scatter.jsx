@@ -287,11 +287,11 @@ export default class VictoryScatter extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
 
-  componentWillMount() {
-    this.state = {
-      dataState: {},
-      labelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
 
   getDataStyles(data, style) {
@@ -317,9 +317,8 @@ export default class VictoryScatter extends React.Component {
   }
 
   renderData(props, calculatedProps, style) {
-    const getEvents = Helpers.getEvents.bind(this);
-    const dataEvents = getEvents(props.events.data, "data");
-    const labelEvents = getEvents(props.events.labels, "labels");
+    const dataEvents = this.getEvents(props.events.data, "data");
+    const labelEvents = this.getEvents(props.events.labels, "labels");
     const { scale, data } = calculatedProps;
     return data.map((datum, index) => {
       const x = scale.x(datum.x);
@@ -327,18 +326,23 @@ export default class VictoryScatter extends React.Component {
       const size = ScatterHelpers.getSize(datum, props, calculatedProps);
       const symbol = ScatterHelpers.getSymbol(datum, props);
       const dataStyle = this.getDataStyles(datum, style.data);
-      const dataProps = assign({
-        x, y, size, datum, symbol, index, style: dataStyle, key: `point-${index}`
-      }, this.state.dataState[index]);
+      const dataProps = defaults(
+        {},
+        this.getEventState(index, "data"),
+        props.dataComponent.props,
+        {
+          x, y, size, datum, symbol, index, style: dataStyle, key: `point-${index}`
+        }
+      );
       const pointComponent = React.cloneElement(props.dataComponent, assign(
         {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
       ));
       const text = this.getLabelText(props, dataProps.datum, index);
-      if (text !== null && typeof text !== undefined) {
+      if (text !== null && text !== undefined) {
         const labelStyle = this.getLabelStyle(style.labels, dataProps);
         const labelProps = defaults(
           {},
-          this.state.labelsState[index],
+          this.getEventState(index, "labels"),
           props.labelComponent.props,
           {
             key: `point-label-${index}`,

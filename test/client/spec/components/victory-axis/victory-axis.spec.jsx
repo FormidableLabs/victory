@@ -5,6 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 
 import React from "react";
+import omit from "lodash/omit";
 import { shallow, mount } from "enzyme";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
 import AxisLine from "src/components/victory-axis/axis-line";
@@ -43,7 +44,8 @@ describe("components/victory-axis", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1]).to.eql(initialProps);
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });

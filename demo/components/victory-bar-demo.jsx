@@ -209,7 +209,7 @@ export default class App extends React.Component {
               events={{
                 data: {
                   onClick: () => {
-                    return {style: {fill: "cyan"}};
+                    return {data: {style: {fill: "cyan"}}};
                   }
                 }
               }}
@@ -219,7 +219,7 @@ export default class App extends React.Component {
               events={{
                 data: {
                   onClick: () => {
-                    return {style: {fill: "blue"}};
+                    return {data: {style: {fill: "blue"}}};
                   }
                 }
               }}

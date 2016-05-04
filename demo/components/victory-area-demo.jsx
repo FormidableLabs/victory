@@ -180,16 +180,16 @@ export default class App extends React.Component {
           y={1}
           events={{data: {
             onMouseOver: () => {
-              return {
+              return {data: {
                 style: {
                   fill: "gold",
                   stroke: "orange",
                   strokeWidth: 3
                 }
-              };
+              }};
             },
             onMouseOut: () => {
-              return null;
+              return {data: null};
             }
           }}}
         />

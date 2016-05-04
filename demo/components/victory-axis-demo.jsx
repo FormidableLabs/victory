@@ -67,7 +67,8 @@ export default class App extends React.Component {
           <h2>Animating Axis</h2>
           <VictoryAxis style={styleOverrides}
             padding={60}
-            label={<VictoryLabel>{"animation\nwow!"}</VictoryLabel>}
+            label={"animation\nwow!"}
+            axisLabelComponent={<VictoryLabel angle={25}/>}
             tickValues={this.state.tickValues}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
             animate={{duration: 2000}}

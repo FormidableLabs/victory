@@ -270,11 +270,11 @@ export default class VictoryArea extends React.Component {
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
 
-  componentWillMount() {
-    this.state = {
-      dataState: {},
-      labelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
 
   getDataWithBaseline(props, domain) {
@@ -289,11 +289,10 @@ export default class VictoryArea extends React.Component {
   renderArea(props, calculatedProps) {
     const {scale, style, data} = calculatedProps;
     const {dataComponent, labelComponent, interpolation, events, label} = props;
-    const getEvents = Helpers.getEvents.bind(this);
-    const dataEvents = getEvents(events.data, "data");
+    const dataEvents = this.getEvents(events.data, "data");
     const dataProps = defaults(
       {},
-      this.state.dataState[0],
+      this.getEventState(0, "data"),
       dataComponent.props,
       {scale, interpolation, data, style: Helpers.evaluateStyle(style.data, data)},
     );
@@ -301,13 +300,13 @@ export default class VictoryArea extends React.Component {
       {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, 0, dataProps)}
     ));
     const text = Helpers.evaluateProp(label, dataProps.data);
-    if (text !== null && typeof text !== undefined) {
-      const labelEvents = getEvents(events.labels, "labels");
+    if (text !== null && text !== undefined) {
+      const labelEvents = this.getEvents(events.labels, "labels");
       const lastData = last(data);
       const labelStyle = Helpers.evaluateStyle(style.labels, dataProps.data);
       const labelProps = defaults(
         {},
-        this.state.labelsState[0],
+        this.getEventState(0, "labels"),
         labelComponent.props,
         {
           x: scale.x(lastData.x) + labelStyle.padding,

@@ -6,7 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import _ from "lodash";
+import omit from "lodash/omit";
 import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";
@@ -211,8 +211,8 @@ describe("components/victory-line", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(_.omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(_.omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
       });
     });
 
