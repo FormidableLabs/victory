@@ -87,6 +87,64 @@ Add labels, style the data, change the interpolation, add a custom domain:
  />
 ```
 
+### Data Markers
+
+To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter.
+
+```playground
+<svg width={500} height={500}>
+  <VictoryLine
+    width={500}
+    height={300}
+    standalone={false}
+    interpolation={"cardinal"}
+    style={{
+      data: {
+        stroke: "#822722",
+        strokeWidth: 3
+      }
+    }}
+    data={[
+      {x: 0, y: 1},
+      {x: 1, y: 3},
+      {x: 2, y: 2},      
+      {x: 3, y: 4},
+      {x: 4, y: 3},
+      {x: 5, y: 5}
+    ]}
+  />
+  <VictoryScatter
+    width={500}
+    height={300}
+    standalone={false}
+    style={{
+      data: {
+        fill: "#822722",
+        stroke: "white",
+        strokeWidth: 3
+      },
+      labels: {
+        fill: "#822722",
+        fontSize: 14,
+        padding: 12
+      }
+    }}
+    size={6}
+    labels={[
+     "a", "b", "c", "d", "e", "f"
+    ]}
+    data={[
+      {x: 0, y: 1},
+      {x: 1, y: 3},
+      {x: 2, y: 2},      
+      {x: 3, y: 4},
+      {x: 4, y: 3},
+      {x: 5, y: 5}
+    ]}
+  />
+</svg>
+```
+
 ### Functional styles
 
 VictoryLine also supports functional styles. Unlike other data components, style for VictoryLine  will be evaluated as a function of the entire dataset rather than a single data point.

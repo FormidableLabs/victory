@@ -336,7 +336,8 @@ export default class VictoryLine extends React.Component {
       const segmentComponent = React.cloneElement(dataComponent, assign({
         events: Helpers.getPartialEvents(dataEvents, index, dataProps)
       }, dataProps));
-      if (index === dataSegments.length - 1 && label) {
+      const text = Helpers.evaluateProp(label, data);
+      if (index === dataSegments.length - 1 && text !== null && typeof text !== undefined) {
         const lastPoint = Array.isArray(segment) ? segment[segment.length - 1] : segment;
         const labelStyle = this.getLabelStyle(style.labels, dataProps.style);
         const labelEvents = getEvents(events.labels, "labels");
@@ -349,7 +350,7 @@ export default class VictoryLine extends React.Component {
             y: scale.y.call(this, lastPoint.y),
             style: labelStyle,
             data,
-            text: Helpers.evaluateProp(label, data),
+            text,
             textAnchor: labelStyle.textAnchor || "start",
             verticalAnchor: labelStyle.verticalAnchor || "middle",
             angle: labelStyle.angle

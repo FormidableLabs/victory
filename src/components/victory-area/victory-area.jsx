@@ -301,7 +301,7 @@ export default class VictoryArea extends React.Component {
       {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, 0, dataProps)}
     ));
     const text = Helpers.evaluateProp(label, dataProps.data);
-    if (text) {
+    if (text !== null && typeof text !== undefined) {
       const labelEvents = getEvents(events.labels, "labels");
       const lastData = last(data);
       const labelStyle = Helpers.evaluateStyle(style.labels, dataProps.data);

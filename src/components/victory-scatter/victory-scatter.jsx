@@ -334,7 +334,7 @@ export default class VictoryScatter extends React.Component {
         {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
       ));
       const text = this.getLabelText(props, dataProps.datum, index);
-      if (text) {
+      if (text !== null && typeof text !== undefined) {
         const labelStyle = this.getLabelStyle(style.labels, dataProps);
         const labelProps = defaults(
           {},

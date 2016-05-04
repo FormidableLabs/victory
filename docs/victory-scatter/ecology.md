@@ -258,11 +258,11 @@ VictoryScatter accepts custom data and label components via the `dataComponent` 
 ```playground_norender
 class CatPoint extends React.Component {
   render() {
-    const {position, datum} = this.props;
+    const {x, y, datum} = this.props;
     const cat = datum.y >= 0 ?
       '😻' : '😹';
     return (
-      <text {...position} fontSize={20}>
+      <text x={x} y={y} fontSize={30}>
         {cat}
       </text>
     );

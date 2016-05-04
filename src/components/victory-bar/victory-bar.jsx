@@ -368,7 +368,7 @@ export default class VictoryBar extends React.Component {
         {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
       ));
       const text = this.getLabel(props, dataProps.datum, index);
-      if (text) {
+      if (text !== null && typeof text !== undefined) {
         const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
         const padding = this.getlabelPadding(labelStyle, horizontal);
         const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
