@@ -372,6 +372,10 @@ export default class VictoryBar extends React.Component {
         const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
         const padding = this.getlabelPadding(labelStyle, horizontal);
         const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
+        const labelPosition = {
+          x: horizontal ? position.y : position.x,
+          y: horizontal ? position.x : position.y
+        };
         const labelProps = defaults(
           {},
           this.state.labelsState[index],
@@ -379,8 +383,8 @@ export default class VictoryBar extends React.Component {
           {
             key: `bar-label-${index}`,
             style: labelStyle,
-            x: position.x + padding.x,
-            y: position.y - padding.y,
+            x: labelPosition.x + padding.x,
+            y: labelPosition.y - padding.y,
             y0: position.y0,
             text,
             index,
