@@ -1,5 +1,19 @@
 VictoryCore Changelog
 =====================
+## 2.0.0 (2016-05-05)
+
+- Changes how events are stored on state to facilitate interactions between elements
+- This is a breaking change, as it will require the namespace to be returned with any other props from the event handler like so:
+```
+events: {
+ data: {
+  onClick: () => {
+   return { data: { style: {fill: "red"} }, labels: { style: {fill: "black"} } };  
+  }
+ }
+}
+```
+
 ## 1.4.0 (2016-04-14)
 
 - Adds a VictoryTransition wrapper to facilitate enter and exit transitions for any components with an array `data` prop.
