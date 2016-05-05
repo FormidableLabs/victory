@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "1.4.3",
+  "version": "2.0.0",
   "description": "Victory Core",
   "main": "lib/index.js",
   "repository": {
@@ -13,7 +13,7 @@
     "url": "https://github.com/FormidableLabs/victory-core/issues"
   },
   "homepage": "https://github.com/FormidableLabs/victory-core",
-  "engineStrict" : true,
+  "engineStrict": true,
   "engines": {
     "npm": ">=3.0.0"
   },
