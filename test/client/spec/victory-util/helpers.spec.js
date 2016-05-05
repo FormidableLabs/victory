@@ -176,12 +176,12 @@ describe("helpers", () => {
         props: {
           events: {
             data: {
-              onClick: () => "foo"
+              onClick: () => { return {data: "foo"}; }
             }
           }
         },
         setState: (x) => x,
-        state: { dataState: {} }
+        state: {}
       };
       sandbox.spy(fake, "setState");
     });
@@ -199,8 +199,8 @@ describe("helpers", () => {
       expect(partialEvents).to.have.keys(["onClick"]);
       partialEvents.onClick();
       expect(fake.setState).calledWith({
-        dataState: {
-          [index]: "foo"
+        [index]: {
+          data: "foo"
         }
       });
     });
