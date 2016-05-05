@@ -2,7 +2,6 @@ import defaults from "lodash/defaults";
 import isFunction from "lodash/isFunction";
 import property from "lodash/property";
 import partial from "lodash/partial";
-import set from "lodash/set";
 import merge from "lodash/merge";
 
 
