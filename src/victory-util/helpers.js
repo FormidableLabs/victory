@@ -150,14 +150,13 @@ export default {
   },
 
   getEvents(events, namespace) {
-    const stateName = `${namespace}State`;
     const onEvent = (evt, childProps, index, eventName) => {
       if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
         this.setState({
-          [stateName]: merge(
+          [index]: merge(
             {},
-            this.state[stateName],
-            set({}, index, this.props.events[namespace][eventName](evt, childProps, index))
+            this.state[index],
+            this.props.events[namespace][eventName](evt, childProps, index)
           )
         });
       }
@@ -168,5 +167,9 @@ export default {
         memo[event] = onEvent;
         return memo;
       }, {}) : {};
+  },
+
+  getEventState(index, namespace) {
+    return this.state[index] && this.state[index][namespace];
   }
 };
