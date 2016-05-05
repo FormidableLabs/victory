@@ -13,8 +13,12 @@
     "url": "https://github.com/formidablelabs/victory-chart/issues"
   },
   "homepage": "https://github.com/formidablelabs/victory-chart",
+  "engineStrict" : true,
+  "engines": {
+    "npm": ">=3.0.0"
+  },
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall || (echo 'POSTINSTALL FAILED: If using npm v2, please upgrade to npm v3. See bug https://github.com/FormidableLabs/builder/issues/35' && exit 1)",
+    "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
     "start": "builder run hot",
     "test": "builder run check",
@@ -26,7 +30,7 @@
     "builder-victory-component": "^2.1.1",
     "d3-scale": "^0.6.0",
     "d3-shape": "^0.6.0",
-    "lodash": "~4.6.1",
+    "lodash": "^4.11.0",
     "victory-core": "^2.0.0"
   },
   "devDependencies": {
