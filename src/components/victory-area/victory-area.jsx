@@ -12,8 +12,7 @@ import Area from "./area";
 
 const defaultStyles = {
   data: {
-    fill: "#756f6a",
-    opacity: 1
+    fill: "#756f6a"
   },
   labels: {
     fontSize: 12,
@@ -95,15 +94,15 @@ export default class VictoryArea extends React.Component {
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
      * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by unique index on the state object of VictoryArea
-     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * will be stored by index and namespace on the state object of VictoryArea
+     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
      * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryArea
      * if one exists. If VictoryArea is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
      *
      * @examples {data: {
-     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
     events: PropTypes.shape({
@@ -267,7 +266,7 @@ export default class VictoryArea extends React.Component {
     y: "y"
   };
 
-  static getDomain = Domain.getDomainWithZero.bind(Domain);
+  static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
 
   constructor() {
@@ -281,8 +280,9 @@ export default class VictoryArea extends React.Component {
     const data = Data.getData(props);
     const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
     return data.map((datum) => {
+      const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
       const y0 = datum.yOffset || minY;
-      return assign({y0}, datum);
+      return assign({y0, y1}, datum);
     });
   }
 
@@ -310,7 +310,7 @@ export default class VictoryArea extends React.Component {
         labelComponent.props,
         {
           x: scale.x(lastData.x) + labelStyle.padding,
-          y: scale.y(lastData.y + lastData.y0),
+          y: scale.y(lastData.y1),
           y0: scale.y(lastData.y0),
           style: labelStyle,
           data: dataProps.data,
@@ -339,8 +339,8 @@ export default class VictoryArea extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Domain.getDomainWithZero(props, "x"),
-      y: Domain.getDomainWithZero(props, "y")
+      x: Domain.getDomain(props, "x"),
+      y: Domain.getDomain(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),

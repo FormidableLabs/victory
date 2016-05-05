@@ -96,10 +96,11 @@ export default class VictoryAxis extends React.Component {
     /**
      * The axisLabelComponent prop takes in an entire component which will be used
      * to create the axis label. The new element created from the passed axisLabelComponent
-     * will be supplied with the following properties: x1, y1, x2, y2, style and events.
-     * Any of these props may be overridden by passing in props to the supplied component,
-     * or modified or ignored within the custom component itself. If an axisLabelComponent
-     * is not supplied, a new VictoryLabel will be created with props described above
+     * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
+     * angle, transform, style and events. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within
+     * the custom component itself. If an axisLabelComponent is not supplied, a new
+     * VictoryLabel will be created with props described above
      */
     axisLabelComponent: PropTypes.element,
     /**
@@ -123,15 +124,16 @@ export default class VictoryAxis extends React.Component {
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
      * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by unique index on the state object of VictoryAxis
-     * i.e. `this.state.axisState[axisIndex] = {style: {fill: "red"}...}`, and will be
+     * will be stored by index and namespace on the state object of VictoryAxis
+     * i.e. `this.state.[index].axis = {style: {fill: "red"}...}`, and will be
      * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryAxis
      * if one exists. If VictoryAxis is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
      *
-     * @examples {axis: {
-     *  onClick: () => return {style: {stroke: "green"}}
+     * @examples {ticks: {
+     *  onClick: () =>
+     *   return {ticks: {style: {stroke: "green"}}, tickLabels: {style: {stroke: "black"}}
      *}}
      */
     events: PropTypes.shape({
@@ -145,10 +147,10 @@ export default class VictoryAxis extends React.Component {
     /**
      * The gridComponent prop takes in an entire component which will be used
      * to create grid lines. The new element created from the passed gridComponent
-     * will be supplied with the following properties: x1, y1, x2, y2, style and events.
+     * will be supplied with the following properties: x2, y2, tick, style and events.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a gridComponent
-     * is not supplied, VictoryAxis will render its default Gick component..
+     * is not supplied, VictoryAxis will render its default GridLine component.
      */
     gridComponent: PropTypes.element,
     /**
@@ -230,7 +232,7 @@ export default class VictoryAxis extends React.Component {
     /**
      * The tickComponent prop takes in an entire component which will be used
      * to create tick lines. The new element created from the passed tickComponent
-     * will be supplied with the following properties: x2, y2, style and events.
+     * will be supplied with the following properties: x2, y2, tick, style and events.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a tickComponent
      * is not supplied, VictoryAxis will render its default Tick component.
@@ -243,11 +245,12 @@ export default class VictoryAxis extends React.Component {
     tickCount: CustomPropTypes.nonNegative,
     /**
      * The tickLabelComponent prop takes in an entire component which will be used
-     * to create tick labels. The new element created from the passed tickLabelComponent
-     * will be supplied with the following properties: x1, y1, x2, y2, style and events.
-     * Any of these props may be overridden by passing in props to the supplied component,
-     * or modified or ignored within the custom component itself. If a tickLabelComponent
-     * is not supplied, a new VictoryLabel will be created with props described above
+     * to create the tick labels. The new element created from the passed tickLabelComponent
+     * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
+     * angle, tick, style and events. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within
+     * the custom component itself. If an tickLabelComponent is not supplied, a new
+     * VictoryLabel will be created with props described above
      */
     tickLabelComponent: PropTypes.element,
     /**

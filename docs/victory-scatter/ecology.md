@@ -145,9 +145,9 @@ Functional styles allow elements to determine their own styles based on data
 
 Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
 Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Values returned from
-event handlers on data or labels will be stored as state on VictoryScatter. Data and labels
-state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+corresponding to that component, and the index of that component. Objects returned from
+event handlers are stored by index and namespace in state, and applied as props to
+appropriate child components.
 
 ```playground
   <VictoryScatter
@@ -158,6 +158,9 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
       {x: 4, y: 2},
       {x: 5, y: 5}
     ]}
+    labels={[
+      "a", "b", "c", "d", "e"
+    ]}
     size={8}
     symbol={"star"}
     style={{
@@ -165,6 +168,10 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
         fill: "gold",
         stroke: "orange",
         strokeWidth: 3
+      },
+      labels: {
+        fill: "none",
+        padding: 12
       }
     }}
     events={{
@@ -172,13 +179,22 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
         onClick: (evt, props) => {
           return props.symbol === "star" ?
             {
-              symbol: "circle",
-              style: {
-                fill: "cyan",
-                stroke: "blue",
-                strokeWidth: 3
+              data: {
+                symbol: "circle",
+                style: {
+                  fill: "cyan",
+                  stroke: "blue",
+                  strokeWidth: 3
+                }
+              },
+              labels: {
+                style: {
+                  fill: "blue",
+                  fontSize: 18
+                }
               }
-            } : null;
+            } :
+            {data: null, labels: null};
         }
       }
     }}

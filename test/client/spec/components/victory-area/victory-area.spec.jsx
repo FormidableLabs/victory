@@ -34,31 +34,33 @@ describe("victory-area methods", () => {
     const nonZeroDomain = {x: [0, 10], y: [1, 10]};
     const negativeDomain = {x: [0, 10], y: [-1, 10]};
 
-    it("should return the minimum yOffset is not present", () => {
+    it("should return the minimum if yOffset is not present", () => {
       const props = {data};
       const result = VictoryArea.prototype.getDataWithBaseline(props, domain);
-      const expectedResult = [{y0: 0, x: 1, y: 1}, {y0: 0, x: 2, y: 1}];
+      const expectedResult = [{y0: 0, y1: 1, x: 1, y: 1}, {y0: 0, y1: 1, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return the domain minimum when it is greater than zero", () => {
       const props = {data};
       const result = VictoryArea.prototype.getDataWithBaseline(props, nonZeroDomain);
-      const expectedResult = [{y0: 1, x: 1, y: 1}, {y0: 1, x: 2, y: 1}];
+      const expectedResult = [{y0: 1, y1: 1, x: 1, y: 1}, {y0: 1, y1: 1, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return zero when the domain minimum is negative", () => {
       const props = {data};
       const result = VictoryArea.prototype.getDataWithBaseline(props, negativeDomain);
-      const expectedResult = [{y0: 0, x: 1, y: 1}, {y0: 0, x: 2, y: 1}];
+      const expectedResult = [{y0: 0, y1: 1, x: 1, y: 1}, {y0: 0, y1: 1, x: 2, y: 1}];
       expect(result).to.eql(expectedResult);
     });
 
     it("should return yOffset if present", () => {
       const props = {data: stackedData};
       const result = VictoryArea.prototype.getDataWithBaseline(props, domain);
-      const expectedResult = [{y0: 1, x: 1, y: 1, yOffset: 1}, {y0: 1, x: 2, y: 1, yOffset: 1}];
+      const expectedResult = [
+        {y0: 1, y1: 2, x: 1, y: 1, yOffset: 1}, {y0: 1, y1: 2, x: 2, y: 1, yOffset: 1}
+      ];
       expect(result).to.eql(expectedResult);
     });
   });

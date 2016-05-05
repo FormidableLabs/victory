@@ -10,6 +10,10 @@ export default {
     if (propsDomain) {
       return propsDomain;
     }
+    const categoryDomain = this.getDomainFromCategories(props, axis);
+    if (categoryDomain) {
+      return categoryDomain;
+    }
     const dataset = Data.getData(props);
     return this.getDomainFromData(dataset, axis);
   },

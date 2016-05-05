@@ -106,15 +106,15 @@ export default class VictoryBar extends React.Component {
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
      * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by unique index on the state object of VictoryBar
-     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * will be stored by index and namespace on the state object of VictoryBar
+     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
      * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryBar
      * if one exists. If VictoryBar is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
      *
      * @examples {data: {
-     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
     events: PropTypes.shape({

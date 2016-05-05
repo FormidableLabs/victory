@@ -176,9 +176,9 @@ VictoryLine also supports functional styles. Unlike other data components, style
 
 Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
 Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Values returned from
-event handlers on data or labels will be stored as state on VictoryLine. Data and labels
-state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+corresponding to that component, and the index of that component. Objects returned from
+event handlers are stored by index and namespace in state, and applied as props to
+appropriate child components.
 
 ```playground
  <VictoryLine
@@ -199,8 +199,8 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
        onClick: (evt, props) => {
          const i = props.interpolation;
          return i === "linear" ?
-          {interpolation: "cardinal"} :
-          null;
+          {data: {interpolation: "cardinal"}} :
+          {data: null};
        }
      }
    }}
