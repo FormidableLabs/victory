@@ -1,10 +1,10 @@
 /*global window:false */
 import React from "react";
-import _ from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 import {VictoryLine} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";
-import {VictoryLabel} from "victory-core";
 
 class PointedLine extends React.Component {
   static propTypes = {
@@ -23,8 +23,8 @@ class PointedLine extends React.Component {
         const {x, y} = datum;
 
         const position = {
-          x: scale.x.call(null, x),
-          y: scale.y.call(null, y)
+          x: scale.x(x),
+          y: scale.y(y)
         };
 
         return (
@@ -34,7 +34,7 @@ class PointedLine extends React.Component {
             key={`line-${index}-point-${pointIndex}`}
             index={parseFloat(`${index}.${pointIndex}`)}
             datum={datum}
-            position={position}
+            {...position}
           />
         );
       })
@@ -68,14 +68,14 @@ export default class App extends React.Component {
   }
 
   getTransitionData() {
-    const lines = _.random(6, 10);
-    return _.map(_.range(lines), (line) => {
-      return {x: line, y: _.random(2, 10)};
+    const lines = random(6, 10);
+    return range(lines).map((line) => {
+      return {x: line, y: random(2, 10)};
     });
   }
 
   getData() {
-    return _.map(_.range(100), (i) => {
+    return range(100).map((i) => {
       return {
         x: i,
         y: Math.random()
@@ -83,14 +83,14 @@ export default class App extends React.Component {
     });
   }
   getArrayData() {
-    return _.range(40).map((i) => [i, i + (Math.random() * 3)]);
+    return range(40).map((i) => [i, i + (Math.random() * 3)]);
   }
 
   getStyles() {
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
-      stroke: colors[_.random(0, 5)],
-      strokeWidth: _.random(1, 5)
+      stroke: colors[random(0, 5)],
+      strokeWidth: random(1, 5)
     };
   }
 
@@ -131,7 +131,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle, data: {stroke: "blue"}}}
           y={(d) => Math.sin(2 * Math.PI * d.x)}
-          label={<VictoryLabel>{"label\ntwo"}</VictoryLabel>}
           sample={25}
         />
 
@@ -146,7 +145,7 @@ export default class App extends React.Component {
             }
           }}}
           label={this.state.label}
-          data={_.range(0, 100)}
+          data={range(0, 100)}
           x={null}
           y={(d) => d * d}
         />

@@ -150,18 +150,78 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 </VictoryStack>
 ```
 
+### Data Markers
+
+To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter.
+
+```playground
+<svg width={500} height={500}>
+  <VictoryArea
+    width={500}
+    height={300}
+    standalone={false}
+    style={{
+      data: {
+        fill: "teal",
+        opacity: 0.3
+      }
+    }}
+    data={[
+      {x: 0, y: 0},
+      {x: 1, y: 3},
+      {x: 2, y: 2},      
+      {x: 3, y: 4},
+      {x: 4, y: 3},
+      {x: 5, y: 5}
+    ]}
+  />
+  <VictoryScatter
+    width={500}
+    height={300}
+    standalone={false}
+    style={{
+      data: {
+        fill: "teal",
+      },
+      labels: {
+        fill: "teal",
+        fontSize: 14,
+        padding: 12
+      }
+    }}
+    size={4}
+    labels={[
+     "a", "b", "c", "d", "e", "f"
+    ]}
+    data={[
+      {x: 0, y: 0},
+      {x: 1, y: 3},
+      {x: 2, y: 2},      
+      {x: 3, y: 4},
+      {x: 4, y: 3},
+      {x: 5, y: 5}
+    ]}
+  />
+</svg>
+```
+
 ### Events
 
 Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
 Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Values returned from
-event handlers on data or labels will be stored as state on VictoryArea. Data and labels
-state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+corresponding to that component, and the index of that component. Objects returned from
+event handlers are stored by index and namespace in state, and applied as props to
+appropriate child components. In the case of VictoryArea, the `data` name space applies
+to the rendered area, and the `labels` namespace applies to the series label.
 
 ```playground
 <VictoryArea
   height={400}
-  style={{data: {fill: "gold"}}}
+  style={{
+    data: {fill: "gold"},
+    labels: {fill: "none"}
+  }}
+  label={"AREA"}
   data={[
     {x: 1, y: 1},
     {x: 2, y: 2},
@@ -173,7 +233,11 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
   events={{ data: {
     onClick: (evt, props) => {
       return props.style.fill === "gold" ?
-        {style: {fill: "orange"}} : null
+        {
+          data: {style: {fill: "orange"}},
+          labels: {style: {fill: "black"}}
+        } :
+        {data: null, labels: null}
     }
   }}}
 />
@@ -194,13 +258,13 @@ class App extends React.Component {
   }
 
   getData() {
-    return _.map(_.range(5), (index) => {
+    return [1, 2, 3, 4, 5].map((index) => {
       return [
-        {x: "apples", y: _.random(1, 5)},
-        {x: "oranges", y: _.random(1, 5)},
-        {x: "bananas", y: _.random(1, 5)},
-        {x: "peaches", y: _.random(1, 5)},
-        {x: "pears", y: _.random(1, 5)}
+        {x: "apples", y: Math.random()},
+        {x: "oranges", y: Math.random()},
+        {x: "bananas", y: Math.random()},
+        {x: "peaches", y: Math.random()},
+        {x: "pears", y: Math.random()}
       ];
     });
   }

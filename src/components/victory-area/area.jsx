@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
-import d3Shape from "d3-shape";
 import assign from "lodash/assign";
-import { Helpers } from "victory-core";
+import d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
   static propTypes = {
@@ -26,7 +25,7 @@ export default class Area extends React.Component {
     const areaFunction = d3Shape.area()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
-      .y1((data) => yScale(data.y0 + data.y))
+      .y1((data) => yScale(data.y1))
       .y0((data) => yScale(data.y0));
     const path = areaFunction(this.props.data);
 
@@ -43,7 +42,7 @@ export default class Area extends React.Component {
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((data) => xScale(data.x))
-      .y((data) => yScale(data.y0 + data.y));
+      .y((data) => yScale(data.y1));
     const path = lineFunction(this.props.data);
     return (
       <path style={lineStyle} d={path} {...events}/>
@@ -51,10 +50,7 @@ export default class Area extends React.Component {
   }
 
   render() {
-    const { props } = this;
-    const style = Helpers.evaluateStyle(props.style, props.data);
-    const interpolation = Helpers.evaluateProp(props.interpolation, props.data);
-    const events = Helpers.getPartialEvents(props.events, 0, props);
+    const { style, interpolation, events } = this.props;
     return (
       <g>
         {this.renderArea(style, interpolation, events)}

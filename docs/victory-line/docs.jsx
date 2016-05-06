@@ -1,10 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Ecology from "ecology";
-import _ from "lodash";
+import random from "lodash/random";
 import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
-import { VictoryLine } from "../../src/index";
+import { VictoryLine, VictoryScatter } from "../../src/index";
 import { VictoryTheme } from "formidable-landers";
 
 class Docs extends React.Component {
@@ -14,7 +14,7 @@ class Docs extends React.Component {
         <Ecology
           overview={require("!!raw!./ecology.md")}
           source={docgen.parse(require("!!raw!../../src/components/victory-line/victory-line"))}
-          scope={{_, React, ReactDOM, VictoryLine}}
+          scope={{random, React, ReactDOM, VictoryLine, VictoryScatter}}
           playgroundtheme="elegant"
         />
         <Style rules={VictoryTheme}/>

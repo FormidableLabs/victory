@@ -1,11 +1,12 @@
 import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, VictoryTransition, Helpers } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+} from "victory-core";
 import AxisLine from "./axis-line";
-import AxisLabel from "./axis-label";
 import GridLine from "./grid";
 import Tick from "./tick";
-import TickLabel from "./tick-label";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
@@ -84,6 +85,25 @@ export default class VictoryAxis extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The axisComponent prop takes in an entire component which will be used
+     * to create the axis line. The new element created from the passed axisComponent
+     * will be supplied with the following properties: x1, y1, x2, y2, style and events.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If an axisComponent
+     * is not supplied, VictoryAxis will render its default AxisLine component.
+     */
+    axisComponent: PropTypes.element,
+    /**
+     * The axisLabelComponent prop takes in an entire component which will be used
+     * to create the axis label. The new element created from the passed axisLabelComponent
+     * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
+     * angle, transform, style and events. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within
+     * the custom component itself. If an axisLabelComponent is not supplied, a new
+     * VictoryLabel will be created with props described above
+     */
+    axisLabelComponent: PropTypes.element,
+    /**
      * This prop specifies whether a given axis is intended to cross another axis.
      */
     crossAxis: PropTypes.bool,
@@ -104,15 +124,16 @@ export default class VictoryAxis extends React.Component {
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
      * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by unique index on the state object of VictoryAxis
-     * i.e. `this.state.axisState[axisIndex] = {style: {fill: "red"}...}`, and will be
+     * will be stored by index and namespace on the state object of VictoryAxis
+     * i.e. `this.state.[index].axis = {style: {fill: "red"}...}`, and will be
      * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryAxis
      * if one exists. If VictoryAxis is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
      *
-     * @examples {axis: {
-     *  onClick: () => return {style: {stroke: "green"}}
+     * @examples {ticks: {
+     *  onClick: () =>
+     *   return {ticks: {style: {stroke: "green"}}, tickLabels: {style: {stroke: "black"}}
      *}}
      */
     events: PropTypes.shape({
@@ -123,6 +144,15 @@ export default class VictoryAxis extends React.Component {
       ticks: PropTypes.object,
       tickLabels: PropTypes.object
     }),
+    /**
+     * The gridComponent prop takes in an entire component which will be used
+     * to create grid lines. The new element created from the passed gridComponent
+     * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a gridComponent
+     * is not supplied, VictoryAxis will render its default GridLine component.
+     */
+    gridComponent: PropTypes.element,
     /**
      * The height props specifies the height the svg viewBox of the chart container.
      * This value should be given as a number of pixels
@@ -200,10 +230,29 @@ export default class VictoryAxis extends React.Component {
       tickLabels: PropTypes.object
     }),
     /**
+     * The tickComponent prop takes in an entire component which will be used
+     * to create tick lines. The new element created from the passed tickComponent
+     * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a tickComponent
+     * is not supplied, VictoryAxis will render its default Tick component.
+     */
+    tickComponent: PropTypes.element,
+    /**
      * The tickCount prop specifies how many ticks should be drawn on the axis if
      * tickValues are not explicitly provided.
      */
     tickCount: CustomPropTypes.nonNegative,
+    /**
+     * The tickLabelComponent prop takes in an entire component which will be used
+     * to create the tick labels. The new element created from the passed tickLabelComponent
+     * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
+     * angle, tick, style and events. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within
+     * the custom component itself. If an tickLabelComponent is not supplied, a new
+     * VictoryLabel will be created with props described above
+     */
+    tickLabelComponent: PropTypes.element,
     /**
      * The tickFormat prop specifies how tick values should be expressed visually.
      * tickFormat can be given as a function to be applied to every tickValue, or as
@@ -227,6 +276,11 @@ export default class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
+    axisComponent: <AxisLine/>,
+    axisLabelComponent: <VictoryLabel/>,
+    tickLabelComponent: <VictoryLabel/>,
+    tickComponent: <Tick/>,
+    gridComponent: <GridLine/>,
     events: {},
     height: 300,
     padding: 50,
@@ -241,15 +295,13 @@ export default class VictoryAxis extends React.Component {
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
   static getStyles = getStyles;
 
-  componentWillMount() {
-    this.state = {
-      axisState: {},
-      axisLabelState: {},
-      gridState: {},
-      ticksState: {},
-      tickLabelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
+
 
   getTickProps(props) {
     const stringTicks = Axis.stringTicks(props);
@@ -270,60 +322,91 @@ export default class VictoryAxis extends React.Component {
 
   renderLine(props, layoutProps) {
     const {style, padding, isVertical} = layoutProps;
-    const getBoundEvents = Helpers.getEvents.bind(this);
-    return (
-      <AxisLine key="line"
-        events={getBoundEvents(this.props.events.axis, "axis")}
-        style={style.axis}
-        x1={isVertical ? null : padding.left}
-        x2={isVertical ? null : props.width - padding.right}
-        y1={isVertical ? padding.top : null}
-        y2={isVertical ? props.height - padding.bottom : null}
-        {...this.state.axisState[0]}
-      />
+    const axisEvents = this.getEvents(props.events.axis, "axis");
+    const axisProps = defaults(
+      {},
+      this.getEventState(0, "axis"),
+      props.axisComponent.props,
+      {
+        style: style.axis,
+        x1: isVertical ? null : padding.left,
+        x2: isVertical ? null : props.width - padding.right,
+        y1: isVertical ? padding.top : null,
+        y2: isVertical ? props.height - padding.bottom : null
+      }
     );
+    return React.cloneElement(props.axisComponent, assign(
+      {}, axisProps, { events: Helpers.getPartialEvents(axisEvents, 0, axisProps) }
+    ));
   }
 
-  renderTicks(props, layoutProps, tickProps) {
-    const {style, orientation} = layoutProps;
-    const {scale, ticks, stringTicks} = tickProps;
-    const tickFormat = AxisHelpers.getTickFormat(props, tickProps);
-    return ticks.map((tick, index) => {
-      const isVertical = orientation === "left" || orientation === "right";
-      const tickPosition = AxisHelpers.getTickPosition(style.ticks, orientation, isVertical);
-      const getBoundEvents = Helpers.getEvents.bind(this);
-      const tickComponent = (
-        <Tick key={`tick-${index}`}
-          index={index}
-          events={getBoundEvents(this.props.events.ticks, "ticks")}
-          position={tickPosition}
-          tick={stringTicks ? props.tickValues[tick - 1] : tick}
-          style={style.ticks}
-          {...this.state.ticksState[index]}
-        />
+  getAnchors(orientation, isVertical) {
+    const anchorOrientation = { top: "end", left: "end", right: "start", bottom: "start" };
+    const anchor = anchorOrientation[orientation];
+    return {
+      textAnchor: isVertical ? anchor : "middle",
+      verticalAnchor: isVertical ? "middle" : anchor
+    };
+  }
+
+  renderTicks(props, layoutProps, dataProps) {
+    const {style, orientation, isVertical} = layoutProps;
+    const {scale, ticks, stringTicks} = dataProps;
+    const tickFormat = AxisHelpers.getTickFormat(props, dataProps);
+    const tickPosition = AxisHelpers.getTickPosition(style.ticks, orientation, isVertical);
+    const tickEvents = this.getEvents(props.events.ticks, "ticks");
+    const labelEvents = this.getEvents(props.events.tickLabels, "tickLabels");
+
+    return ticks.map((data, index) => {
+      const tick = stringTicks ? props.tickValues[data - 1] : data;
+      const groupPosition = scale(data);
+      const yTransform = isVertical ? groupPosition : 0;
+      const xTransform = isVertical ? 0 : groupPosition;
+      const tickProps = defaults(
+        {},
+        this.getEventState(index, "ticks"),
+        props.tickComponent.props,
+        {
+          key: `tick-${index}`,
+          style: Helpers.evaluateStyle(style.ticks, tick),
+          x1: xTransform,
+          y1: yTransform,
+          x2: xTransform + tickPosition.x2,
+          y2: yTransform + tickPosition.y2,
+          tick
+        }
       );
-      const label = tickFormat.call(this, tick, index);
+      const tickComponent = React.cloneElement(props.tickComponent, assign(
+        {}, tickProps, {events: Helpers.getPartialEvents(tickEvents, index, tickProps)}
+      ));
       let labelComponent;
-      if (label) {
-        labelComponent = (
-          <TickLabel key={`tick-label-${index}`}
-            index={index}
-            events={getBoundEvents(this.props.events.tickLabels, "tickLabels")}
-            position={tickPosition}
-            label={label}
-            tick={stringTicks ? props.tickValues[tick - 1] : tick}
-            orientation={orientation}
-            isVertical={isVertical}
-            style={style.tickLabels}
-            {...this.state.tickLabelsState[index]}
-          />
+      const label = tickFormat.call(this, tick, index);
+      if (label !== null && label !== undefined) {
+        const anchors = this.getAnchors(orientation, isVertical);
+        const labelStyle = Helpers.evaluateStyle(style.tickLabels, tick);
+        const labelProps = defaults(
+          {},
+          this.getEventState(index, "tickLabels"),
+          props.tickLabelComponent.props,
+          {
+            key: `tick-label-${index}`,
+            style: labelStyle,
+            x: xTransform + tickPosition.x,
+            y: yTransform + tickPosition.y,
+            verticalAnchor: labelStyle.verticalAnchor || anchors.verticalAnchor,
+            textAnchor: labelStyle.textAnchor || anchors.textAnchor,
+            angle: labelStyle.angle,
+            text: label,
+            tick
+          }
         );
+        labelComponent = React.cloneElement(props.tickLabelComponent, assign(
+          {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, index, labelProps)}
+        ));
       }
-      const groupPosition = scale(tick);
-      const transform = isVertical ?
-        `translate(0, ${groupPosition})` : `translate(${groupPosition}, 0)`;
+
       return (
-        <g key={`tick-group-${index}`} transform={transform}>
+        <g key={`tick-group-${index}`}>
           {tickComponent}
           {labelComponent}
         </g>
@@ -343,23 +426,31 @@ export default class VictoryAxis extends React.Component {
       sign * (props.width - (padding.left + padding.right)) : 0;
     const y2 = isVertical ?
       0 : sign * (props.height - (padding.top + padding.bottom));
-    return ticks.map((tick, index) => {
+    const gridEvents = this.getEvents(props.events.grid, "grid");
+    return ticks.map((data, index) => {
+      const tick = stringTicks ? props.tickValues[data - 1] : data;
       // determine the position and translation of each gridline
-      const position = scale(tick);
-      const getBoundEvents = Helpers.getEvents.bind(this);
-      return (
-        <GridLine key={`grid-${index}`}
-          index={index}
-          events={getBoundEvents(this.props.events.grid, "grid")}
-          tick={stringTicks ? props.tickValues[tick - 1] : tick}
-          x2={x2}
-          y2={y2}
-          xTransform={isVertical ? -xOffset : position}
-          yTransform={isVertical ? position : yOffset}
-          style={style.grid}
-          {...this.state.gridState[index]}
-        />
+      const position = scale(data);
+      const xTransform = isVertical ? -xOffset : position;
+      const yTransform = isVertical ? position : yOffset;
+      const gridProps = defaults(
+        {},
+        this.getEventState(index, "grid"),
+        props.gridComponent.props,
+        {
+          key: `grid-${index}`,
+          style: Helpers.evaluateStyle(style.grid, tick),
+          x1: xTransform,
+          y1: yTransform,
+          x2: x2 + xTransform,
+          y2: y2 + yTransform,
+          tick
+        }
       );
+      const gridComponent = React.cloneElement(props.gridComponent, assign(
+        {}, gridProps, {events: Helpers.getPartialEvents(gridEvents, index, gridProps)}
+      ));
+      return gridComponent;
     });
   }
 
@@ -377,18 +468,26 @@ export default class VictoryAxis extends React.Component {
     const y = sign * labelPadding;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const transform = isVertical ? "rotate(-90)" : "";
-    const getBoundEvents = Helpers.getEvents.bind(this);
-    return (
-      <AxisLabel
-        events={getBoundEvents(this.props.events.axisLabel, "axisLabels")}
-        verticalAnchor={verticalAnchor}
-        transform={transform}
-        position={{x, y}}
-        label={this.props.label}
-        style={style.axisLabel}
-        {...this.state.axisLabelState[0]}
-      />
+    const labelEvents = this.getEvents(props.events.axisLabel, "axisLabel");
+    const labelStyle = style.axisLabel;
+    const labelProps = defaults(
+      {},
+      this.getEventState(0, "axisLabel"),
+      props.axisLabelComponent.props,
+      {
+        verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
+        textAnchor: labelStyle.textAnchor || "middle",
+        angle: labelStyle.angle,
+        style: labelStyle,
+        transform,
+        x,
+        y,
+        text: props.label
+      }
     );
+    return React.cloneElement(props.axisLabelComponent, assign(
+      {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, 0, labelProps)}
+    ));
   }
 
   render() {

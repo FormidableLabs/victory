@@ -87,6 +87,64 @@ Add labels, style the data, change the interpolation, add a custom domain:
  />
 ```
 
+### Data Markers
+
+To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter.
+
+```playground
+<svg width={500} height={500}>
+  <VictoryLine
+    width={500}
+    height={300}
+    standalone={false}
+    interpolation={"cardinal"}
+    style={{
+      data: {
+        stroke: "#822722",
+        strokeWidth: 3
+      }
+    }}
+    data={[
+      {x: 0, y: 1},
+      {x: 1, y: 3},
+      {x: 2, y: 2},      
+      {x: 3, y: 4},
+      {x: 4, y: 3},
+      {x: 5, y: 5}
+    ]}
+  />
+  <VictoryScatter
+    width={500}
+    height={300}
+    standalone={false}
+    style={{
+      data: {
+        fill: "#822722",
+        stroke: "white",
+        strokeWidth: 3
+      },
+      labels: {
+        fill: "#822722",
+        fontSize: 14,
+        padding: 12
+      }
+    }}
+    size={6}
+    labels={[
+     "a", "b", "c", "d", "e", "f"
+    ]}
+    data={[
+      {x: 0, y: 1},
+      {x: 1, y: 3},
+      {x: 2, y: 2},      
+      {x: 3, y: 4},
+      {x: 4, y: 3},
+      {x: 5, y: 5}
+    ]}
+  />
+</svg>
+```
+
 ### Functional styles
 
 VictoryLine also supports functional styles. Unlike other data components, style for VictoryLine  will be evaluated as a function of the entire dataset rather than a single data point.
@@ -96,10 +154,9 @@ VictoryLine also supports functional styles. Unlike other data components, style
    style={{
     data: {
       stroke: (data) => {
-        const max = _.max(data.map(
-          (datum) => datum.y)
-        );
-        return max > 2 ? "red" : "blue";
+        const y = data.map((d) => d.y);
+        return Math.max(...y) > 2 ?
+          "red" : "blue";
       }
     }
    }}
@@ -118,9 +175,9 @@ VictoryLine also supports functional styles. Unlike other data components, style
 
 Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
 Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Values returned from
-event handlers on data or labels will be stored as state on VictoryLine. Data and labels
-state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+corresponding to that component, and the index of that component. Objects returned from
+event handlers are stored by index and namespace in state, and applied as props to
+appropriate child components.
 
 ```playground
  <VictoryLine
@@ -141,8 +198,8 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
        onClick: (evt, props) => {
          const i = props.interpolation;
          return i === "linear" ?
-          {interpolation: "cardinal"} :
-          null;
+          {data: {interpolation: "cardinal"}} :
+          {data: null};
        }
      }
    }}
@@ -164,7 +221,7 @@ class App extends React.Component {
   }
 
   getYFunction() {
-    const n = _.random(2, 7);
+    const n = random(2, 7);
     return (data) => Math.exp(-n * data.x) *
       Math.sin(2 * n * Math.PI * data.x);
   }
@@ -175,8 +232,8 @@ class App extends React.Component {
       "gold", "blue", "purple"
     ];
     return {
-      stroke: colors[_.random(0, 5)],
-      strokeWidth: _.random(1, 5)
+      stroke: colors[random(0, 5)],
+      strokeWidth: random(1, 5)
     };
   }
 

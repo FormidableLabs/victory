@@ -1,5 +1,6 @@
 import Ecology from "ecology";
-import _ from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 import Radium, { Style } from "radium";
 import React from "react";
 import ReactDOM from "react-dom";
@@ -19,7 +20,7 @@ class Docs extends React.Component {
         <Ecology
           overview={require("!!raw!./ecology.md")}
           source={victoryScatterSource}
-          scope={{_, React, ReactDOM, symbolData, VictoryScatter}}
+          scope={{range, random, React, ReactDOM, symbolData, VictoryScatter}}
           playgroundtheme="elegant"
         />
         <Style rules={VictoryTheme}/>

@@ -6,7 +6,8 @@ export default {
     if (props.bubbleProperty) {
       return "circle";
     }
-    return data.symbol || props.symbol;
+    const symbol = data.symbol || props.symbol;
+    return Helpers.evaluateProp(symbol, data);
   },
 
   getBubbleSize(datum, props, calculatedProps) {
@@ -26,14 +27,16 @@ export default {
   },
 
   getSize(data, props, calculatedProps) {
+    let size;
     if (data.size) {
-      return typeof data.size === "function" ? data.size : Math.max(data.size, 1);
+      size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
     } else if (typeof props.size === "function") {
-      return props.size;
+      size = props.size;
     } else if (data[calculatedProps.z]) {
-      return this.getBubbleSize(data, props, calculatedProps);
+      size = this.getBubbleSize(data, props, calculatedProps);
     } else {
-      return Math.max(props.size, 1);
+      size = Math.max(props.size, 1);
     }
+    return Helpers.evaluateProp(size, data);
   }
 };

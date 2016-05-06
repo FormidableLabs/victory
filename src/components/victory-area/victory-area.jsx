@@ -1,17 +1,18 @@
 import last from "lodash/last";
+import defaults from "lodash/defaults";
 import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import { PropTypes as CustomPropTypes, Helpers, VictoryTransition } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+} from "victory-core";
 import Area from "./area";
-import AreaLabel from "./area-label";
 
 const defaultStyles = {
   data: {
-    fill: "#756f6a",
-    opacity: 1
+    fill: "#756f6a"
   },
   labels: {
     fontSize: 12,
@@ -67,11 +68,13 @@ export default class VictoryArea extends React.Component {
      */
     data: PropTypes.array,
     /**
-     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
-     * create an area. The new element created from the passed dataComponent will be provided
-     * with the following properties calculated by VictoryArea: a scale object, an array of
-     * modified data objects (including x, y, and calculated y0), interpolation, style, and events
-     * If a dataComponent is not provided, VictoryArea will use its default Area component.
+     * The dataComponent prop takes an entire component which will be used to create an area.
+     * The new element created from the passed dataComponent will be provided with the
+     * following properties calculated by VictoryArea: a scale, style, events, interpolation,
+     * and an array of modified data objects (including x, y, and calculated y0 and y1).
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryArea will use its default Area component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -93,15 +96,15 @@ export default class VictoryArea extends React.Component {
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
      * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by unique index on the state object of VictoryArea
-     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * will be stored by index and namespace on the state object of VictoryArea
+     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
      * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryArea
      * if one exists. If VictoryArea is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
      *
      * @examples {data: {
-     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
     events: PropTypes.shape({
@@ -140,18 +143,23 @@ export default class VictoryArea extends React.Component {
       "stepBefore"
     ]),
     /**
-     * The label prop defines labels that will appear at the edge of each area. This prop
-     * should be given as a string
+     * The label prop defines the label that will appear at the edge of the area.
+     * This prop should be given a string or as a function of data. If individual
+     * labels are required for each data point, they should be created by composing
+     * VictoryArea with VictoryScatter
+     * @examples: "Series 1", (data) => `${data.length} points`
      */
     label: PropTypes.string,
     /**
-    * The labelComponent prop takes in an entire, HTML-complete label
-    * component which will be used to create labels for each area in the
-    * chart. The new element created from the passed labelComponent will have
-    * children preserved, or provided via the labels array, textAnchor, and verticalAnchor
-    * preserved or default values provided by defaults; and styles filled out with defaults
-    * provided by the style prop, and dataAttributes prop. If labelComponent is omitted,
-    * but a labels array is specified, a new VictoryLabel will be created.
+     * The labelComponent prop takes in an entire label component which will be used
+     * to create a label for the area. The new element created from the passed labelComponent
+     * will be supplied with the following properties: x, y, index, data, verticalAnchor,
+     * textAnchor, angle, style, text, and events. any of these props may be overridden
+     * by passing in props to the supplied component, or modified or ignored within
+     * the custom component itself. If labelComponent is omitted, a new VictoryLabel
+     * will be created with props described above. This labelComponent prop should be used to
+     * provide a series label for VictoryLine. If individual labels are required for each
+     * data point, they should be created by composing VictoryArea with VictoryScatter
      */
     labelComponent: PropTypes.element,
     /**
@@ -247,6 +255,7 @@ export default class VictoryArea extends React.Component {
 
   static defaultProps = {
     dataComponent: <Area/>,
+    labelComponent: <VictoryLabel/>,
     events: {},
     height: 300,
     padding: 50,
@@ -262,51 +271,69 @@ export default class VictoryArea extends React.Component {
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
 
-  componentWillMount() {
-    this.state = {
-      dataState: {},
-      labelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
 
-  getBaseline(calculatedProps) {
-    const {data, domain} = calculatedProps;
+  getDataWithBaseline(props, domain) {
+    const data = Data.getData(props);
     const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
     return data.map((datum) => {
+      const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
       const y0 = datum.yOffset || minY;
-      return assign({y0}, datum);
+      return assign({y0, y1}, datum);
     });
   }
 
   renderArea(props, calculatedProps) {
-    const {scale, style} = calculatedProps;
-    const {interpolation, events, label, labelComponent, dataComponent} = props;
-    const getBoundEvents = Helpers.getEvents.bind(this);
-    const dataEvents = getBoundEvents(events.data, "data");
-    const data = this.getBaseline(calculatedProps);
-    const areaProps = assign(
-      {scale, interpolation, data, events: dataEvents, style: style.data},
-      this.state.dataState[0]
+    const {scale, style, data} = calculatedProps;
+    const {dataComponent, labelComponent, interpolation, events, label} = props;
+    const dataEvents = this.getEvents(events.data, "data");
+    const dataProps = defaults(
+      {},
+      this.getEventState(0, "data"),
+      dataComponent.props,
+      {
+        scale,
+        interpolation: Helpers.evaluateProp(interpolation, data),
+        data,
+        style: Helpers.evaluateStyle(style.data, data)
+      }
     );
-    const areaComponent = React.cloneElement(dataComponent, areaProps);
-    if (label) {
+    const areaComponent = React.cloneElement(dataComponent, assign(
+      {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, 0, dataProps)}
+    ));
+    const text = Helpers.evaluateProp(label, dataProps.data);
+    if (text !== null && text !== undefined) {
+      const labelEvents = this.getEvents(events.labels, "labels");
       const lastData = last(data);
-      const position = {
-        x: scale.x.call(this, lastData.x),
-        y: scale.y.call(this, lastData.y + lastData.y0)
-      };
+      const labelStyle = Helpers.evaluateStyle(style.labels, dataProps.data);
+      const labelProps = defaults(
+        {},
+        this.getEventState(0, "labels"),
+        labelComponent.props,
+        {
+          x: scale.x(lastData.x) + labelStyle.padding,
+          y: scale.y(lastData.y1),
+          y0: scale.y(lastData.y0),
+          style: labelStyle,
+          data: dataProps.data,
+          textAnchor: labelStyle.textAnchor || "start",
+          verticalAnchor: labelStyle.verticalAnchor || "middle",
+          angle: labelStyle.angle,
+          text
+        }
+      );
+      const areaLabelComponent = React.cloneElement(labelComponent, assign(
+        {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, 0, labelProps)}
+      ));
       return (
         <g>
           {areaComponent}
-          <AreaLabel
-            style={style.labels}
-            data={data}
-            events={getBoundEvents(events.labels, "labels")}
-            position={position}
-            labelText={label}
-            labelComponent={labelComponent}
-            {...this.state.labelsState[0]}
-          />
+          {areaLabelComponent}
         </g>
       );
     }
@@ -314,12 +341,10 @@ export default class VictoryArea extends React.Component {
   }
 
   renderData(props, style) {
-    const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
     };
-    const padding = Helpers.getPadding(props);
     const domain = {
       x: Domain.getDomainWithZero(props, "x"),
       y: Domain.getDomainWithZero(props, "y")
@@ -328,9 +353,8 @@ export default class VictoryArea extends React.Component {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    const calculatedProps = {
-      style, data, domain, scale, padding
-    };
+    const data = this.getDataWithBaseline(props, domain);
+    const calculatedProps = { style, data, scale };
     return this.renderArea(props, calculatedProps);
   }
 

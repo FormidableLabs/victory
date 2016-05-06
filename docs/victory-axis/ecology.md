@@ -122,13 +122,13 @@ class App extends React.Component {
   }
 
   getTickValues() {
-    return _.map(_.range(5), (i) => {
-      return 10 * i + _.random(5);
+    return range(5).map((i) => {
+      return 10 * i + random(5);
     });
   }
 
   getStyles() {
-    const n = _.random(0, 1);
+    const n = random(0, 1);
     const tickColors = ["black", "red"];
     return {
       axis: {stroke: "black"},

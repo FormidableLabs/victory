@@ -193,14 +193,20 @@ Functional styles allow elements to determine their own styles based on data
 
 Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
 Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Values returned from
-event handlers on data or labels will be stored as state on VictoryBar. Data and labels
-state can be accessed by index on the `dataState`, and `labelsState` state objects respectively.
+corresponding to that component, and the index of that component. Objects returned from
+event handlers are stored by index and namespace in state, and applied as props to
+appropriate child components.
 
 ```playground
 <VictoryBar
   height={500}
-  style={{data: {fill: "orange"}}}
+  style={{
+    data: {fill: "orange"},
+    labels: {fill: "none"}
+  }}
+  labels={[
+    "a", "b", "c", "d", "e"
+  ]}
   data={[
     {x: 1, y: 1},
     {x: 2, y: 2},
@@ -210,10 +216,18 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
   ]}
   events={{
     data: {
-      onClick: () => {
-        return {style: {fill: "tomato"}}
+      onMouseOver: () => {
+        return {
+          data: {style: {fill: "tomato"}},
+          labels: {style: {fill: "tomato"}}
+        };
       },
-      onMouseOut: () => null
+      onMouseOut: () => {
+        return {
+          data: null,
+          labels: null
+        }
+      }
     }
   }}
 />
@@ -236,10 +250,10 @@ class App extends React.Component {
   }
 
   getData() {
-    const num = _.random(3, 5);
-    return _.map(_.range(4), (index) => {
-      return _.map(_.range(num), (i) => {
-        return {x: i, y: _.random(2, 10)};
+    const num = random(3, 5);
+    return range(4).map((index) => {
+      return range(num).map((i) => {
+        return {x: i, y: random(2, 10)};
       })
     });
   }

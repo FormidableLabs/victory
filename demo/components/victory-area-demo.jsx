@@ -1,6 +1,7 @@
 /*global window:false */
 import React from "react";
-import _ from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 import {VictoryArea, VictoryStack, VictoryGroup} from "../../src/index";
 
 export default class App extends React.Component {
@@ -16,23 +17,23 @@ export default class App extends React.Component {
   }
 
   getMultiTransitionData() {
-    const areas = _.random(8, 10);
-    return _.map(_.range(5), () => {
-      return _.map(_.range(areas), (area) => {
-        return {x: area, y: _.random(2, 10)};
+    const areas = random(8, 10);
+    return range(5).map(() => {
+      return range(areas).map((area) => {
+        return {x: area, y: random(2, 10)};
       });
     });
   }
 
   getAreaTransitionData() {
-    const areas = _.random(6, 10);
-    return _.map(_.range(areas), (area) => {
-      return {x: area, y: _.random(2, 10)};
+    const areas = random(6, 10);
+    return range(areas).map((area) => {
+      return {x: area, y: random(2, 10)};
     });
   }
 
   getData() {
-    return _.map(_.range(100), (i) => {
+    return range(100).map((i) => {
       return {
         x: i,
         y: Math.random()
@@ -41,40 +42,40 @@ export default class App extends React.Component {
   }
 
   getGroupedData() {
-    return _.map(_.range(7), () => {
+    return range(7).map(() => {
       return [
         {
           x: "rabbits",
-          y: _.random(1, 5)
+          y: random(1, 5)
         },
         {
           x: "cats",
-          y: _.random(1, 10)
+          y: random(1, 10)
         },
         {
           x: "dogs",
-          y: _.random(2, 10)
+          y: random(2, 10)
         },
         {
           x: "birds",
-          y: _.random(2, 10)
+          y: random(2, 10)
         },
         {
           x: "frogs",
-          y: _.random(2, 15)
+          y: random(2, 15)
         }
       ];
     });
   }
 
   getArrayData() {
-    return _.range(40).map((i) => [i, i + (Math.random() * 3)]);
+    return range(40).map((i) => [i, i + (Math.random() * 3)]);
   }
 
   getStyles() {
     const colors = ["red", "orange", "gold", "tomato", "magenta", "purple"];
     return {
-      fill: colors[_.random(0, 5)]
+      fill: colors[random(0, 5)]
     };
   }
 
@@ -165,7 +166,7 @@ export default class App extends React.Component {
         <VictoryArea
           style={{parent: style.parent, data: {fill: "red"}}}
           interpolation={"basis"}
-          data={_.range(0, 100)}
+          data={range(0, 100)}
           x={null}
           y={(d) => Math.sin(d)}
         />
@@ -180,16 +181,16 @@ export default class App extends React.Component {
           y={1}
           events={{data: {
             onMouseOver: () => {
-              return {
+              return {data: {
                 style: {
                   fill: "gold",
                   stroke: "orange",
                   strokeWidth: 3
                 }
-              };
+              }};
             },
             onMouseOut: () => {
-              return null;
+              return {data: null};
             }
           }}}
         />

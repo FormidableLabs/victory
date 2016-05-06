@@ -211,11 +211,11 @@ class App extends React.Component {
   }
 
   getData() {
-    const n = _.random(4, 10)
-    return _.map(_.range(n), (i) => {
+    const n = random(4, 10)
+    return range(n).map((i) => {
       return {
         x: i,
-        y: _.random(2, 10)
+        y: random(2, 10)
       };
     });
   }

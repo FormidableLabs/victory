@@ -1,6 +1,7 @@
 /*global window:false*/
-import _ from "lodash";
 import React from "react";
+import range from "lodash/range";
+import random from "lodash/random";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack} from "../../src/index";
 
 export default class App extends React.Component {
@@ -15,55 +16,55 @@ export default class App extends React.Component {
   }
 
   getBarData() {
-    return _.map(_.range(5), () => {
+    return range(5).map(() => {
       return [
         {
           x: "rabbits",
-          y: _.random(1, 5)
+          y: random(1, 5)
         },
         {
           x: "cats",
-          y: _.random(1, 10)
+          y: random(1, 10)
         },
         {
           x: "dogs",
-          y: _.random(0, 15)
+          y: random(0, 15)
         }
       ];
     });
   }
 
   getNumericBarData() {
-    return _.map(_.range(5), () => {
+    return range(5).map(() => {
       return [
         {
-          x: _.random(1, 3),
-          y: _.random(1, 5)
+          x: random(1, 3),
+          y: random(1, 5)
         },
         {
-          x: _.random(4, 7),
-          y: _.random(1, 10)
+          x: random(4, 7),
+          y: random(1, 10)
         },
         {
-          x: _.random(9, 11),
-          y: _.random(0, 15)
+          x: random(9, 11),
+          y: random(0, 15)
         }
       ];
     });
   }
 
   getBarTransitionData() {
-    const bars = _.random(6, 10);
-    return _.map(_.range(bars), (bar) => {
-      return {x: bar, y: _.random(2, 10)};
+    const bars = random(6, 10);
+    return range(bars).map((bar) => {
+      return {x: bar, y: random(2, 10)};
     });
   }
 
   getMultiTransitionData() {
-    const bars = _.random(3, 5);
-    return _.map(_.range(4), () => {
-      return _.map(_.range(bars), (bar) => {
-        return {x: bar, y: _.random(2, 10)};
+    const bars = random(3, 5);
+    return range(4).map(() => {
+      return range(bars).map((bar) => {
+        return {x: bar, y: random(2, 10)};
       });
     });
   }
@@ -91,7 +92,11 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryBar</h1>
         <VictoryBar
-          style={{parent: parentStyle}}
+          style={{
+            parent: parentStyle,
+            labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
+          }}
+          labels={() => "HELLO"}
           animate={{
             duration: 500,
             onExit: {
@@ -199,13 +204,13 @@ export default class App extends React.Component {
           />
         </ChartWrap>
 
-          <VictoryStack colorScale="warm">
+          <VictoryStack colorScale="warm" style={{parent: parentStyle}}>
             <VictoryBar
               data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
               events={{
                 data: {
                   onClick: () => {
-                    return {style: {fill: "cyan"}};
+                    return {data: {style: {fill: "cyan"}}};
                   }
                 }
               }}
@@ -215,7 +220,7 @@ export default class App extends React.Component {
               events={{
                 data: {
                   onClick: () => {
-                    return {style: {fill: "blue"}};
+                    return {data: {style: {fill: "blue"}}};
                   }
                 }
               }}
@@ -239,10 +244,12 @@ class ChartWrap extends React.Component {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
     return (
       <div>
-        {React.cloneElement(this.props.children, this.props)}
-        <VictoryChart {...this.props}>{this.props.children}</VictoryChart>
+        {React.cloneElement(this.props.children, props)}
+        <VictoryChart {...props}>{this.props.children}</VictoryChart>
       </div>
     );
   }
