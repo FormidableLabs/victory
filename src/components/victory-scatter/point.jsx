@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-import { Helpers } from "victory-core";
 import pathHelpers from "./path-helpers";
 
 
@@ -18,6 +17,7 @@ export default class Point extends React.Component {
       PropTypes.number,
       PropTypes.func
     ]),
+    scale: PropTypes.object,
     style: PropTypes.object,
     x: React.PropTypes.number,
     y: React.PropTypes.number
@@ -33,15 +33,13 @@ export default class Point extends React.Component {
       plus: pathHelpers.plus,
       star: pathHelpers.star
     };
-    const symbol = Helpers.evaluateProp(props.symbol, props.datum);
-    return pathFunctions[symbol].call(null, props.x, props.y, props.size);
+    return pathFunctions[props.symbol].call(null, props.x, props.y, props.size);
   }
 
   render() {
-    const events = Helpers.getPartialEvents(this.props.events, this.props.index, this.props);
     return (
       <path
-        {...events}
+        {...this.props.events}
         style={this.props.style}
         d={this.getPath(this.props)}
         shapeRendering="optimizeSpeed"

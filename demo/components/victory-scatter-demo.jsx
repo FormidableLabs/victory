@@ -1,6 +1,7 @@
 /*global window:false */
 import React from "react";
-import _ from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
@@ -11,15 +12,15 @@ const getData = () => {
     ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
   const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
   // symbol: symbols[scaledIndex],
-  return _.map(_.range(100), (index) => {
-    const scaledIndex = _.floor(index % 7);
+  return range(100).map((index) => {
+    const scaledIndex = Math.floor(index % 7);
     return {
-      x: _.random(600),
-      y: _.random(600),
-      size: _.random(15) + 3,
+      x: random(600),
+      y: random(600),
+      size: random(15) + 3,
       symbol: symbols[scaledIndex],
-      fill: colors[_.random(0, 6)],
-      opacity: _.random(0.3, 1)
+      fill: colors[random(0, 6)],
+      opacity: random(0.3, 1)
     };
   });
 };
@@ -191,21 +192,21 @@ export default class App extends React.Component {
 
         <VictoryScatter
           style={style}
-          data={_.range(0, 50)}
+          data={range(0, 50)}
           x={null}
           y={(d) => d * d * Math.random()}
         />
 
         <VictoryScatter
           style={style}
-          data={_.range(0, 100).map((i) => [i, i * 3287 % 100])}
+          data={range(0, 100).map((i) => [i, i * 3287 % 100])}
           x={0}
           y={1}
         />
 
         <VictoryScatter
           style={style}
-          data={_.range(0, 200).map((i) => {
+          data={range(0, 200).map((i) => {
             return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}
           x="a.x"

@@ -75,13 +75,13 @@ export default class VictoryLine extends React.Component {
 
     data: PropTypes.array,
     /**
-     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
-     * create line segments between each point in the plotted line. The new element created from
-     * the passed dataComponent will have the property data set by the line for the segment it
-     * renders; properties scale and style calculated by the VictoryLine component; a key and index
-     * property set corresponding to the location of the segment in the data provided to the line;
-     * and all the remaining properties from the VictoryLine data at the index of the segment.
-     * If a dataComponent is not provided, VictoryLine's LineSegment component will be used.
+     * The dataComponent prop takes an entire component which will be used to create line segments
+     * for each continuous set of data. (i.e. null data will result in multiple line segments)
+     * The new element created from the passed dataComponent will be provided with the following
+     * properties calculated by VictoryLine: data, index, scale, interpolation, and events.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is not
+     * provided, VictoryLine will use its default LineSegment component.
      */
     dataComponent: PropTypes.element,
     /**

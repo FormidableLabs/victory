@@ -154,10 +154,9 @@ VictoryLine also supports functional styles. Unlike other data components, style
    style={{
     data: {
       stroke: (data) => {
-        const max = _.max(data.map(
-          (datum) => datum.y)
-        );
-        return max > 2 ? "red" : "blue";
+        const y = data.map((d) => d.y);
+        return Math.max(...y) > 2 ?
+          "red" : "blue";
       }
     }
    }}
@@ -222,7 +221,7 @@ class App extends React.Component {
   }
 
   getYFunction() {
-    const n = _.random(2, 7);
+    const n = random(2, 7);
     return (data) => Math.exp(-n * data.x) *
       Math.sin(2 * n * Math.PI * data.x);
   }
@@ -233,8 +232,8 @@ class App extends React.Component {
       "gold", "blue", "purple"
     ];
     return {
-      stroke: colors[_.random(0, 5)],
-      strokeWidth: _.random(1, 5)
+      stroke: colors[random(0, 5)],
+      strokeWidth: random(1, 5)
     };
   }
 

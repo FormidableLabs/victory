@@ -1,6 +1,6 @@
 import last from "lodash/last";
-import assign from "lodash/assign";
 import defaults from "lodash/defaults";
+import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -68,11 +68,13 @@ export default class VictoryArea extends React.Component {
      */
     data: PropTypes.array,
     /**
-     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
-     * create an area. The new element created from the passed dataComponent will be provided
-     * with the following properties calculated by VictoryArea: a scale object, an array of
-     * modified data objects (including x, y, and calculated y0), interpolation, style, and events
-     * If a dataComponent is not provided, VictoryArea will use its default Area component.
+     * The dataComponent prop takes an entire component which will be used to create an area.
+     * The new element created from the passed dataComponent will be provided with the
+     * following properties calculated by VictoryArea: a scale, style, events, interpolation,
+     * and an array of modified data objects (including x, y, and calculated y0 and y1).
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryArea will use its default Area component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -266,7 +268,7 @@ export default class VictoryArea extends React.Component {
     y: "y"
   };
 
-  static getDomain = Domain.getDomain.bind(Domain);
+  static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
 
   constructor() {
@@ -294,7 +296,12 @@ export default class VictoryArea extends React.Component {
       {},
       this.getEventState(0, "data"),
       dataComponent.props,
-      {scale, interpolation, data, style: Helpers.evaluateStyle(style.data, data)},
+      {
+        scale,
+        interpolation: Helpers.evaluateProp(interpolation, data),
+        data,
+        style: Helpers.evaluateStyle(style.data, data)
+      }
     );
     const areaComponent = React.cloneElement(dataComponent, assign(
       {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, 0, dataProps)}
@@ -339,8 +346,8 @@ export default class VictoryArea extends React.Component {
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
+      x: Domain.getDomainWithZero(props, "x"),
+      y: Domain.getDomainWithZero(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),

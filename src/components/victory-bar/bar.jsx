@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-import { Helpers } from "victory-core";
 
 export default class Bar extends React.Component {
 
@@ -7,6 +6,7 @@ export default class Bar extends React.Component {
     index: PropTypes.number,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
+    scale: PropTypes.object,
     style: PropTypes.object,
     datum: PropTypes.object,
     x: React.PropTypes.number,
@@ -40,16 +40,15 @@ export default class Bar extends React.Component {
   }
 
   render() {
-    const style = Helpers.evaluateStyle(this.props.style, this.props.datum);
     // TODO better bar width calculation
-    const barWidth = style.width || 8;
+    const barWidth = this.props.style.width || 8;
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
     return (
       <path
         {...this.props.events}
         d={path}
-        style={style}
+        style={this.props.style}
         shapeRendering="optimizeSpeed"
       />
     );

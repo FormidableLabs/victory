@@ -1,6 +1,7 @@
 /*global window:false */
 import React from "react";
-import _ from "lodash";
+import range from "lodash/range";
+import random from "lodash/random";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
@@ -24,7 +25,7 @@ class App extends React.Component {
   }
 
   getData() {
-    return _.map(_.range(20), (i) => {
+    return range(20).map((i) => {
       return {
         x: i,
         y: Math.random()
@@ -33,55 +34,55 @@ class App extends React.Component {
   }
 
   getNumericBarData() {
-    return _.map(_.range(5), () => {
+    return range(5).map(() => {
       return [
         {
-          x: _.random(1, 3),
-          y: _.random(1, 5)
+          x: random(1, 3),
+          y: random(1, 5)
         },
         {
-          x: _.random(4, 7),
-          y: _.random(1, 10)
+          x: random(4, 7),
+          y: random(1, 10)
         },
         {
-          x: _.random(9, 11),
-          y: _.random(1, 15)
+          x: random(9, 11),
+          y: random(1, 15)
         }
       ];
     });
   }
 
   getBarData() {
-    return _.map(_.range(5), () => {
+    return range(5).map(() => {
       return [
         {
           x: "apples",
-          y: _.random(2, 5)
+          y: random(2, 5)
         },
         {
           x: "bananas",
-          y: _.random(2, 10)
+          y: random(2, 10)
         },
         {
           x: "oranges",
-          y: _.random(0, 15)
+          y: random(0, 15)
         }
       ];
     });
   }
 
   getBarTransitionData() {
-    const bars = _.random(6, 10);
-    return _.map(_.range(bars), (bar) => {
-      return {x: bar, y: _.random(2, 10)};
+    const bars = random(6, 10);
+    return range(bars).map((bar) => {
+      return {x: bar, y: random(2, 10)};
     });
   }
 
   getMultiBarTransitionData() {
-    const bars = _.random(6, 10);
-    return _.map(_.range(5), () => {
-      return _.map(_.range(bars), (bar) => {
-        return {x: bar, y: _.random(2, 10)};
+    const bars = random(6, 10);
+    return range(5).map(() => {
+      return range(bars).map((bar) => {
+        return {x: bar, y: random(2, 10)};
       });
     });
   }
@@ -90,15 +91,15 @@ class App extends React.Component {
     const colors =
       ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
     const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
-    const elementNum = _.random(10, 40);
-    return _.map(_.range(elementNum), (index) => {
-      const scaledIndex = _.floor(index % 7);
+    const elementNum = random(10, 40);
+    return range(elementNum).map((index) => {
+      const scaledIndex = Math.floor(index % 7);
       return {
-        x: _.random(10, 50),
-        y: _.random(2, 100),
-        size: _.random(8) + 3,
+        x: random(10, 50),
+        y: random(2, 100),
+        size: random(8) + 3,
         symbol: symbols[scaledIndex],
-        fill: colors[_.random(0, 6)],
+        fill: colors[random(0, 6)],
         opacity: 1
       };
     });
@@ -107,8 +108,8 @@ class App extends React.Component {
   getStyles() {
     const colors = ["red", "orange", "cyan", "green", "blue", "purple"];
     return {
-      stroke: colors[_.random(0, 5)],
-      strokeWidth: [_.random(1, 3)]
+      stroke: colors[random(0, 5)],
+      strokeWidth: [random(1, 3)]
     };
   }
 

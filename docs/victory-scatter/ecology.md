@@ -224,14 +224,14 @@ class App extends React.Component {
     const symbols = [
       "circle", "star", "plus", "diamond"
     ];
-    const samples = _.random(5, 25);
-    return _.map(_.range(samples), (i) => {
+    const samples = random(5, 25);
+    return range(samples).map((i) => {
       return {
-        x: _.random(100),
-        y: _.random(100),
-        size: _.random(15) + 3,
+        x: random(100),
+        y: random(100),
+        size: random(15) + 3,
         symbol: symbols[i % 4],
-        fill: colors[_.random(0, 3)],
+        fill: colors[random(0, 3)],
       };
     });
   }

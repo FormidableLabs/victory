@@ -80,11 +80,13 @@ export default class VictoryBar extends React.Component {
      */
     data: PropTypes.array,
     /**
-     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
-     * create bars for each datum in the chart. The new element created from the passed
-     * dataComponent will be provided with the following properties calculated by VictoryBar:
-     * datum, index, style, events, horizontal (boolean), x, y, and y0. If a dataComponent
-     * is not provided, VictoryBar will use its default Bar component.
+     * The dataComponent prop takes an entire component which will be used to create bars for
+     * each datum in the chart. The new element created from the passed dataComponent will be
+     * provided with the following properties calculated by VictoryBar: datum, index, scale,
+     * style, events, horizontal (boolean), x, y, and y0. Any of these props may be overridden
+     * by passing in props to the supplied component, or modified or ignored within the custom
+     * component itself. If a dataComponent is not provided, VictoryBar will use its default
+     * Bar component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -360,6 +362,7 @@ export default class VictoryBar extends React.Component {
           style: Helpers.evaluateStyle(barStyle, datum),
           index,
           datum,
+          scale,
           horizontal
         }
       );

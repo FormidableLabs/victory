@@ -167,7 +167,7 @@ To create markers and labels for individual data points along an area, just comp
       }
     }}
     data={[
-      {x: 0, y: 1},
+      {x: 0, y: 0},
       {x: 1, y: 3},
       {x: 2, y: 2},      
       {x: 3, y: 4},
@@ -194,7 +194,7 @@ To create markers and labels for individual data points along an area, just comp
      "a", "b", "c", "d", "e", "f"
     ]}
     data={[
-      {x: 0, y: 1},
+      {x: 0, y: 0},
       {x: 1, y: 3},
       {x: 2, y: 2},      
       {x: 3, y: 4},
@@ -258,13 +258,13 @@ class App extends React.Component {
   }
 
   getData() {
-    return _.map(_.range(5), (index) => {
+    return [1, 2, 3, 4, 5].map((index) => {
       return [
-        {x: "apples", y: _.random(1, 5)},
-        {x: "oranges", y: _.random(1, 5)},
-        {x: "bananas", y: _.random(1, 5)},
-        {x: "peaches", y: _.random(1, 5)},
-        {x: "pears", y: _.random(1, 5)}
+        {x: "apples", y: Math.random()},
+        {x: "oranges", y: Math.random()},
+        {x: "bananas", y: Math.random()},
+        {x: "peaches", y: Math.random()},
+        {x: "pears", y: Math.random()}
       ];
     });
   }

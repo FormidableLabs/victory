@@ -83,15 +83,12 @@ export default class VictoryScatter extends React.Component {
 
     data: PropTypes.array,
     /**
-     * The dataComponent prop takes an entire, HTML-complete data component which will be used to
-     * create points for each datum in the scatter plot. The new element created from the passed
-     * dataComponent will have the property datum set by the scatter for the point it renders;
-     * properties x, y, size and symbol are calculated by the scatter for the datum;
-     * a key and index property set corresponding to the location of the datum in the data
-     * provided to the scatter; style calculated by the scatter based on the scatter's
-     * styles and the datum; and all the remaining properties from the scatter's data
-     * at the index of the datum. If a dataComponent is not provided, VictoryScatter's
-     * Point component will be used.
+     * The dataComponent prop takes an entire component which will be used to create points for
+     * each datum in the chart. The new element created from the passed dataComponent will be
+     * provided with the following properties calculated by VictoryScatter: datum, index, scale,
+     * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
+     * props to the supplied component, or modified or ignored within the custom component itself.
+     * If a dataComponent is not provided, VictoryScatter will use its default Point component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -331,7 +328,7 @@ export default class VictoryScatter extends React.Component {
         this.getEventState(index, "data"),
         props.dataComponent.props,
         {
-          x, y, size, datum, symbol, index, style: dataStyle, key: `point-${index}`
+          x, y, size, scale, datum, symbol, index, style: dataStyle, key: `point-${index}`
         }
       );
       const pointComponent = React.cloneElement(props.dataComponent, assign(

@@ -250,10 +250,10 @@ class App extends React.Component {
   }
 
   getData() {
-    const num = _.random(3, 5);
-    return _.map(_.range(4), (index) => {
-      return _.map(_.range(num), (i) => {
-        return {x: i, y: _.random(2, 10)};
+    const num = random(3, 5);
+    return range(4).map((index) => {
+      return range(num).map((i) => {
+        return {x: i, y: random(2, 10)};
       })
     });
   }

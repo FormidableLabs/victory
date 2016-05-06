@@ -147,7 +147,7 @@ export default class VictoryAxis extends React.Component {
     /**
      * The gridComponent prop takes in an entire component which will be used
      * to create grid lines. The new element created from the passed gridComponent
-     * will be supplied with the following properties: x2, y2, tick, style and events.
+     * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a gridComponent
      * is not supplied, VictoryAxis will render its default GridLine component.
@@ -232,7 +232,7 @@ export default class VictoryAxis extends React.Component {
     /**
      * The tickComponent prop takes in an entire component which will be used
      * to create tick lines. The new element created from the passed tickComponent
-     * will be supplied with the following properties: x2, y2, tick, style and events.
+     * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a tickComponent
      * is not supplied, VictoryAxis will render its default Tick component.
@@ -359,6 +359,9 @@ export default class VictoryAxis extends React.Component {
 
     return ticks.map((data, index) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
+      const groupPosition = scale(data);
+      const yTransform = isVertical ? groupPosition : 0;
+      const xTransform = isVertical ? 0 : groupPosition;
       const tickProps = defaults(
         {},
         this.getEventState(index, "ticks"),
@@ -366,8 +369,10 @@ export default class VictoryAxis extends React.Component {
         {
           key: `tick-${index}`,
           style: Helpers.evaluateStyle(style.ticks, tick),
-          x2: tickPosition.x2,
-          y2: tickPosition.y2,
+          x1: xTransform,
+          y1: yTransform,
+          x2: xTransform + tickPosition.x2,
+          y2: yTransform + tickPosition.y2,
           tick
         }
       );
@@ -386,8 +391,8 @@ export default class VictoryAxis extends React.Component {
           {
             key: `tick-label-${index}`,
             style: labelStyle,
-            x: tickPosition.x,
-            y: tickPosition.y,
+            x: xTransform + tickPosition.x,
+            y: yTransform + tickPosition.y,
             verticalAnchor: labelStyle.verticalAnchor || anchors.verticalAnchor,
             textAnchor: labelStyle.textAnchor || anchors.textAnchor,
             angle: labelStyle.angle,
@@ -399,11 +404,9 @@ export default class VictoryAxis extends React.Component {
           {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, index, labelProps)}
         ));
       }
-      const groupPosition = scale(data);
-      const transform = isVertical ?
-        `translate(0, ${groupPosition})` : `translate(${groupPosition}, 0)`;
+
       return (
-        <g key={`tick-group-${index}`} transform={transform}>
+        <g key={`tick-group-${index}`}>
           {tickComponent}
           {labelComponent}
         </g>
@@ -437,19 +440,17 @@ export default class VictoryAxis extends React.Component {
         {
           key: `grid-${index}`,
           style: Helpers.evaluateStyle(style.grid, tick),
-          x2,
-          y2,
+          x1: xTransform,
+          y1: yTransform,
+          x2: x2 + xTransform,
+          y2: y2 + yTransform,
           tick
         }
       );
       const gridComponent = React.cloneElement(props.gridComponent, assign(
         {}, gridProps, {events: Helpers.getPartialEvents(gridEvents, index, gridProps)}
       ));
-      return (
-        <g transform={`translate(${xTransform}, ${yTransform})`}>
-          {gridComponent}
-        </g>
-      );
+      return gridComponent;
     });
   }
 
