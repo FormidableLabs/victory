@@ -5,7 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import _ from "lodash";
+import omit from "lodash/omit";
 import { shallow, mount } from "enzyme";
 import VictoryArea from "src/components/victory-area/victory-area";
 import { VictoryLabel } from "victory-core";
@@ -100,8 +100,8 @@ describe("components/victory-area", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         // the first argument is the standard evt object
-        expect(_.omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(_.omit(initialProps, ["events", "key"]));
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
         expect(clickHandler.args[index][2]).to.eql(index);
       });
     });
