@@ -93,15 +93,17 @@ export default {
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
     const fontSize = style.axisLabel.fontSize;
-    const offsetX = (props.offsetX !== null) && (props.offsetX !== undefined) ? props.offsetX: xPadding;
-    const offsetY = (props.offsetY !== null) && (props.offsetY !== undefined) ? props.offsetY: yPadding;
+    const offsetX = (props.offsetX !== null) && (props.offsetX !== undefined)
+      ? props.offsetX : xPadding;
+    const offsetY = (props.offsetY !== null) && (props.offsetY !== undefined)
+      ? props.offsetY : yPadding;
     const totalPadding = fontSize + (2 * style.ticks.size) + labelPadding;
     const minimumPadding = 1.2 * fontSize; // TODO: magic numbers
     const x = isVertical ? totalPadding : minimumPadding;
     const y = isVertical ? minimumPadding : totalPadding;
     return {
-      x: (offsetX !== null) && (offsetX !== undefined) ?  offsetX : x,
-      y: (offsetY !== null) && (offsetY !== undefined) ?  offsetY : y
+      x: (offsetX !== null) && (offsetX !== undefined) ? offsetX : x,
+      y: (offsetY !== null) && (offsetY !== undefined) ? offsetY : y
     };
   },
 
