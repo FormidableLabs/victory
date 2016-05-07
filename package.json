@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "^2.1.0",
+    "builder-victory-component": "^2.1.3",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-timer": "^0.0.6",
@@ -35,7 +35,7 @@
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.1.0",
+    "builder-victory-component-dev": "^2.1.3",
     "chai": "^3.2.0",
     "ecology": "^1.2.0",
     "enzyme": "^2.0.0",
