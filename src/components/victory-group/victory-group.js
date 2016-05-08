@@ -1,4 +1,3 @@
-import _ from "lodash";
 import uniq from "lodash/uniq";
 import assign from "lodash/assign";
 import React, { PropTypes } from "react";
@@ -204,8 +203,8 @@ export default class VictoryGroup extends React.Component {
   }
 
   getCalculatedProps(props, childComponents, style) {
-    const horizontal = props.horizontal || _.every( props.children,
-      (child) => _.get(child, `props.horizontal`, false)
+    const horizontal = props.horizontal || childComponents.every(
+          (component) => component.props.horizontal
     );
     const datasets = childComponents.map((child) => {
       const getData = child.type.getData || Data.getData;
