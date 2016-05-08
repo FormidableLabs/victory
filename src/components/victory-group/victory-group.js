@@ -203,7 +203,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getCalculatedProps(props, childComponents, style) {
-    const horizontal = props.horizontal || props.children.every(
+    const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
     const datasets = childComponents.map((child) => {
