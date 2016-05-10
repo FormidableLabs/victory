@@ -34,7 +34,7 @@
     "victory-core": "^1.4.3"
   },
   "devDependencies": {
-    "@kadira/storybook": "^1.20.0",
+    "@kadira/storybook": "^1.25.0",
     "builder-victory-component-dev": "^2.1.2",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
