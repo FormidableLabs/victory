@@ -1,5 +1,6 @@
 import omit from "lodash/omit";
 import defaults from "lodash/defaults";
+import isFunction from "lodash/isFunction";
 import assign from "lodash/assign";
 import React, { PropTypes } from "react";
 import {
@@ -123,6 +124,12 @@ export default class VictoryBar extends React.Component {
       data: PropTypes.object,
       labels: PropTypes.object,
       parent: PropTypes.object
+    }),
+    eventKey: PropTypes.string,
+
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.object,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -344,17 +351,30 @@ export default class VictoryBar extends React.Component {
     };
   }
 
+  getAllEvents(props, type) {
+    const sharedEvents = props.sharedEvents && props.sharedEvents.events;
+    const ownEvents = this.getEvents(props.events[type], type);
+    if (!sharedEvents) {
+      return ownEvents;
+    }
+    return assign({}, sharedEvents[type], ownEvents);
+  }
+
   renderData(props, data, style) {
     const scale = this.getScale(props);
-    const dataEvents = this.getEvents(props.events.data, "data");
-    const labelEvents = this.getEvents(props.events.labels, "labels");
-    const { horizontal, labelComponent } = props;
+    const dataEvents = this.getAllEvents(props, "data")
+    const labelEvents = this.getAllEvents(props, "labels");
+    const { horizontal, labelComponent, sharedEvents} = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
     return data.map((datum, index) => {
+      const eventKey = datum.eventKey;
       const position = this.getBarPosition(props, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = defaults(
         {},
-        this.getEventState(index, "data"),
+        this.getEventState(eventKey, "data"),
+        getSharedEventState(eventKey, "data"),
         props.dataComponent.props,
         position,
         {
@@ -367,7 +387,7 @@ export default class VictoryBar extends React.Component {
         }
       );
       const barComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, datum.eventKey, dataProps)}
       ));
       const text = this.getLabel(props, dataProps.datum, index);
       if (text !== null && text !== undefined) {
@@ -380,7 +400,8 @@ export default class VictoryBar extends React.Component {
         };
         const labelProps = defaults(
           {},
-          this.getEventState(index, "labels"),
+          this.getEventState(eventKey, "labels"),
+          getSharedEventState(eventKey, "labels"),
           labelComponent.props,
           {
             key: `bar-label-${index}`,
@@ -410,6 +431,13 @@ export default class VictoryBar extends React.Component {
     });
   }
 
+  addEventKeys(props, data) {
+    return data.map((datum, index) => {
+      const eventKey = datum.eventKey || datum[props.eventKey] || index;
+      return assign({eventKey}, datum);
+    });
+  }
+
   render() {
 
     // If animating, return a `VictoryAnimation` element that will create
@@ -432,7 +460,7 @@ export default class VictoryBar extends React.Component {
       "auto",
       "100%"
     );
-    const data = Data.getData(this.props);
+    const data = this.addEventKeys(this.props, Data.getData(this.props));
     const group = <g style={style.parent}>{this.renderData(this.props, data, style)}</g>;
     return this.props.standalone ?
       <svg
