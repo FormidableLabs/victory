@@ -7,6 +7,7 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
+import SvgTestHelper from "../../../../svg-test-helper";
 import omit from "lodash/omit";
 import range from "lodash/range";
 import VictoryBar from "src/components/victory-bar/victory-bar";
@@ -32,6 +33,22 @@ describe("components/victory-bar", () => {
       const viewBoxValue =
         `0 0 ${VictoryBar.defaultProps.width} ${VictoryBar.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+    });
+
+    it("renders 4 bars", () => {
+      const wrapper = shallow(
+        <VictoryBar/>
+      );
+      const bars = wrapper.find(Bar);
+      expect(bars.length).to.equal(4);
+    });
+
+    it("renders each bar as a rectangle", () => {
+      const wrapper = shallow(
+        <VictoryBar/>
+      );
+      const bars = wrapper.find(Bar);
+      bars.forEach(SvgTestHelper.expectIsRectangular);
     });
   });
 
