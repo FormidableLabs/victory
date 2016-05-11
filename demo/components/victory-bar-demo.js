@@ -2,7 +2,7 @@
 import React from "react";
 import range from "lodash/range";
 import random from "lodash/random";
-import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack} from "../../src/index";
+import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryEvents} from "../../src/index";
 
 export default class App extends React.Component {
   constructor() {
@@ -226,6 +226,37 @@ export default class App extends React.Component {
               }}
             />
           </VictoryStack>
+
+          <svg width={500} height={300} style={{parent: parentStyle}}>
+            <VictoryEvents
+              events={{
+                data: {
+                  onClick: () => {
+                    console.log("SHARED EVENT")
+                    return {data: {style: {fill: "cyan", width: 25}}};
+                  }
+                }
+              }}
+            >
+              <VictoryBar
+                style={{
+                  data: {width: 25, fill: "gold"}
+                }}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+              />
+              <VictoryBar
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+                events={{
+                  data: {
+                    onClick: () => {
+                      console.log("SINGLE EVENT ")
+                      return {data: {style: {fill: "blue"}}};
+                    }
+                  }
+                }}
+              />
+          </VictoryEvents>
+        </svg>
       </div>
     );
   }
