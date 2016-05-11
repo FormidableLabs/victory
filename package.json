@@ -13,7 +13,7 @@
     "url": "https://github.com/FormidableLabs/victory-pie/issues"
   },
   "homepage": "https://github.com/FormidableLabs/victory-pie",
-  "engineStrict" : true,
+  "engineStrict": true,
   "engines": {
     "npm": ">=3.0.0"
   },
@@ -23,7 +23,8 @@
     "start": "builder run hot",
     "test": "builder run check",
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
-    "docs-build-static": "echo 'Static docs generation for victory-pie is not supported"
+    "docs-build-static": "echo 'Static docs generation for victory-pie is not supported",
+    "storybook": "start-storybook -p 3001"
   },
   "dependencies": {
     "builder-victory-component": "^2.1.3",
@@ -33,6 +34,7 @@
     "victory-core": "^1.4.3"
   },
   "devDependencies": {
+    "@kadira/storybook": "^1.25.0",
     "builder-victory-component-dev": "^2.1.3",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
