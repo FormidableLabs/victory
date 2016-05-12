@@ -20,13 +20,47 @@ const helpers = {
     return Math.abs(commands[0].args[1] - commands[1].args[1]);
   },
 
-  getPointCoordinates(wrapper) {
+  getCartesianPointCoordinates(pointWrapper, chartWrapper, domain, range) {
+    const svgPadding = 50;
+
+    const svgCoords = this.getSvgPointCoordinates(pointWrapper);
+    const chartCoords = svgCoords.map(coord => coord - svgPadding);
+
+    const viewBoxDimensions = chartWrapper.prop("viewBox").split(" ");
+    const svgSize = [
+      viewBoxDimensions[2] - viewBoxDimensions[0],
+      viewBoxDimensions[3] - viewBoxDimensions[1]
+    ];
+    const chartSize = svgSize.map(dimension => dimension - svgPadding * 2);
+
+    return convertSvgCoordinatesToCartesian(
+      chartCoords,
+      chartSize,
+      domain,
+      range
+    );
+  },
+
+  getSvgPointCoordinates(wrapper) {
     const commands = getPathCommandsFromWrapper(wrapper);
     return commands[0].args;
   }
 };
 
 const SvgTestHelper = Object.assign({}, expectations, helpers);
+
+function convertSvgCoordinatesToCartesian(coords, svgSize, domain, range) {
+  const cartesianX = coords[0];
+  const cartesianY = svgSize[1] - coords[1];
+
+  const scaledX = cartesianX / svgSize[0] * (domain[1] - domain[0]);
+  const scaledY = cartesianY / svgSize[1] * (range[1] - range[0]);
+
+  const shiftedX = scaledX + domain[0];
+  const shiftedY = scaledY + range[0];
+
+  return [shiftedX, shiftedY];
+}
 
 function exhibitsShapeSequence(wrapper, shapeSequence) {
   const commands = getPathCommandsFromWrapper(wrapper);
