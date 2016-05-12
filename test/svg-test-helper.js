@@ -21,7 +21,6 @@ const helpers = {
   },
 
   getPointCoordinates(wrapper) {
-    expections.expectIsCircular(wrapper);
     const commands = getPathCommandsFromWrapper(wrapper);
     return commands[0].args;
   }
