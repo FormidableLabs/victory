@@ -105,13 +105,11 @@ describe("components/victory-scatter", () => {
 
     it("renders points in the correct positions", () => {
       const wrapper = shallow(
-        <VictoryScatter
-          data={[[{x: 1, y: 2}], [{x: 3, y: 1}], [{x: 5, y: 4}]]}
-        />
+        <VictoryScatter data={[{x: 1, y: 3}, {x: 2, y: 5}, {x: 3, y: 4}]}/>
       );
       const points = wrapper.find(Point);
       const coordinates = points.map(SvgTestHelper.getPointCoordinates);
-      console.log(coordinates);
+      expect(coordinates).to.eql([[50, 250], [225, 50], [400, 150]]);
     });
   });
 
