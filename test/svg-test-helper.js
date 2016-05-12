@@ -18,6 +18,12 @@ const helpers = {
     expectations.expectIsRectangular(wrapper);
     const commands = getPathCommandsFromWrapper(wrapper);
     return Math.abs(commands[0].args[1] - commands[1].args[1]);
+  },
+
+  getPointCoordinates(wrapper) {
+    expections.expectIsCircular(wrapper);
+    const commands = getPathCommandsFromWrapper(wrapper);
+    return commands[0].args;
   }
 };
 
