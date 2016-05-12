@@ -8,6 +8,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import omit from "lodash/omit";
 import range from "lodash/range";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryScatter from "src/components/victory-scatter/victory-scatter";
 import Point from "src/components/victory-scatter/point";
 import { VictoryLabel } from "victory-core";
@@ -44,6 +45,14 @@ describe("components/victory-scatter", () => {
       );
       const points = wrapper.find(Point);
       expect(points.length).to.equal(51);
+    });
+
+    it("renders each point as a circle", () => {
+      const wrapper = shallow(
+        <VictoryScatter/>
+      );
+      const points = wrapper.find(Point);
+      points.forEach(SvgTestHelper.expectIsCircular);
     });
   });
 
