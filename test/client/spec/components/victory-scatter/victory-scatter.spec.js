@@ -103,13 +103,23 @@ describe("components/victory-scatter", () => {
       expect(points.length).to.equal(30);
     });
 
-    it("renders points in the correct positions", () => {
+    it.only("renders points in the correct positions", () => {
+      const data = [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}];
       const wrapper = shallow(
-        <VictoryScatter data={[{x: 1, y: 3}, {x: 2, y: 5}, {x: 3, y: 4}]}/>
+        <VictoryScatter data={data}/>
       );
+
       const points = wrapper.find(Point);
-      const coordinates = points.map(SvgTestHelper.getPointCoordinates);
-      expect(coordinates).to.eql([[50, 250], [225, 50], [400, 150]]);
+      const coordinates = points.map(point => {
+        return SvgTestHelper.getCartesianPointCoordinates(
+          point,
+          wrapper,
+          [0, 5],
+          [0, 5]
+        );
+      });
+
+      expect(coordinates).to.eql([[0, 0], [2, 3], [5, 5]]);
     });
   });
 
