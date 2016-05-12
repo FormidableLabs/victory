@@ -102,6 +102,17 @@ describe("components/victory-scatter", () => {
       const points = wrapper.find(Point);
       expect(points.length).to.equal(30);
     });
+
+    it("renders points in the correct positions", () => {
+      const wrapper = shallow(
+        <VictoryScatter
+          data={[[{x: 1, y: 2}], [{x: 3, y: 1}], [{x: 5, y: 4}]]}
+        />
+      );
+      const points = wrapper.find(Point);
+      const coordinates = points.map(SvgTestHelper.getPointCoordinates);
+      console.log(coordinates);
+    });
   });
 
   describe("event handling", () => {
