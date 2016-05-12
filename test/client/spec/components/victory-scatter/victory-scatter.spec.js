@@ -37,6 +37,14 @@ describe("components/victory-scatter", () => {
         `0 0 ${VictoryScatter.defaultProps.width} ${VictoryScatter.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
+
+    it("renders 51 points", () => {
+      const wrapper = shallow(
+        <VictoryScatter/>
+      );
+      const points = wrapper.find(Point);
+      expect(points.length).to.equal(51);
+    });
   });
 
   describe("rendering data", () => {
