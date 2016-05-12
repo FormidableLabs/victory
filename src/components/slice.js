@@ -1,7 +1,4 @@
 import React, { PropTypes } from "react";
-import { Helpers } from "victory-core";
-import defaults from "lodash/defaults";
-import omit from "lodash/omit";
 
 export default class Slice extends React.Component {
   static propTypes = {
@@ -14,14 +11,12 @@ export default class Slice extends React.Component {
   };
 
   renderSlice(props) {
-    const dataStyles = omit(props.slice.data, ["x", "y", "label"]);
-    const style = Helpers.evaluateStyle(defaults({}, dataStyles, props.style), props.slice.data);
-    const events = Helpers.getPartialEvents(props.events, props.index, props);
+
     return (
       <path
         d={props.pathFunction(props.slice)}
-        style={style}
-        {...events}
+        style={props.style}
+        {...props.events}
       />
     );
   }

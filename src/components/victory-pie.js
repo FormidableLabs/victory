@@ -1,15 +1,14 @@
 import React, { PropTypes } from "react";
 import d3Shape from "d3-shape";
-import defaults from "lodash/defaults";
-import assign from "lodash/assign";
+import { assign, defaults, isFunction, omit } from "lodash";
 import {
   PropTypes as CustomPropTypes,
   Helpers,
   Style,
+  VictoryLabel,
   VictoryTransition
 } from "victory-core";
 import Slice from "./slice";
-import SliceLabel from "./slice-label";
 
 const defaultStyles = {
   data: {
@@ -26,27 +25,6 @@ const defaultStyles = {
     fontSize: 10,
     textAnchor: "middle"
   }
-};
-
-const degreesToRadians = function (degrees) {
-  return degrees * (Math.PI / 180);
-};
-
-const getRadius = function (props, padding) {
-  return Math.min(
-    props.width - padding.left - padding.right,
-    props.height - padding.top - padding.bottom
-  ) / 2;
-};
-
-const getLabelPosition = function (props, style, radius) {
-  // TODO: better label positioning
-  const innerRadius = props.innerRadius ?
-  props.innerRadius + style.labels.padding :
-    style.labels.padding;
-  return d3Shape.arc()
-    .outerRadius(radius)
-    .innerRadius(innerRadius);
 };
 
 export default class VictoryPie extends React.Component {
@@ -147,13 +125,27 @@ export default class VictoryPie extends React.Component {
      */
     innerRadius: CustomPropTypes.nonNegative,
     /**
-     * This prop specifies the labels that will be applied to your data. This prop can be
-     * passed in as an array of values, in the same order as your data, or as a function
-     * to be applied to each data point. If this prop is not specified, the x value
-     * of each data point will be used as a label. An array of custom components may also
-     * be passed in.
+     * The labelComponent prop takes in an entire label component which will be used
+     * to create labels for each slice in the pie chart. The new element created from
+     * the passed labelComponent will be supplied with the following properties:
+     * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
+     * any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If labelComponent is omitted,
+     * a new VictoryLabel will be created with props described above.
      */
-    labels: PropTypes.element,
+    labelComponent: PropTypes.element,
+    /**
+     * The labels prop defines labels that will appear in each slice on your pie chart.
+     * This prop should be given as an array of values or as a function of data.
+     * If given as an array, the number of elements in the array should be equal to
+     * the length of the data array. Labels may also be added directly to the data object
+     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
+     */
+    labels: PropTypes.oneOfType([
+      PropTypes.func,
+      PropTypes.array
+    ]),
     /**
      * The padAngle prop determines the amount of separation between adjacent data slices
      * in number of degrees
@@ -261,75 +253,143 @@ export default class VictoryPie extends React.Component {
     width: 400,
     x: "x",
     y: "y",
-    dataComponent: <Slice />
+    dataComponent: <Slice/>,
+    labelComponent: <VictoryLabel/>
   };
 
-  componentWillMount() {
-    this.state = {
-      dataState: {},
-      labelsState: {}
-    };
+  constructor() {
+    super();
+    this.state = {};
+    this.getEvents = Helpers.getEvents.bind(this);
+    this.getEventState = Helpers.getEventState.bind(this);
   }
 
-  renderSlice(props, calculatedProps, slice, index) { // eslint-disable-line max-params
-    const {style, colorScale, makeSlicePath, labelPosition} = calculatedProps;
-    const fill = colorScale[index % colorScale.length];
-    const sliceStyle = defaults({}, {fill}, style.data);
-    const getBoundEvents = Helpers.getEvents.bind(this);
-    const sliceComponent = React.cloneElement(props.dataComponent, {
-      index,
-      events: getBoundEvents(props.events.data, "data"),
-      slice,
-      pathFunction: makeSlicePath,
-      style: sliceStyle,
-      datum: slice.data,
-      ...this.state.dataState[index]
-    });
-
-    return (
-      <g key={index}>
-        {sliceComponent}
-        <SliceLabel
-          index={index}
-          events={getBoundEvents(props.events.labels, "labels")}
-          labels={props.labels}
-          style={style.labels}
-          positionFunction={labelPosition.centroid}
-          slice={slice}
-          datum={slice.data}
-          {...this.state.labelsState[index]}
-        />
-      </g>
-    );
+  getColor(style, colors, index) {
+    if (style && style.data && style.data.fill) {
+      return style.data.fill;
+    }
+    return colors[index % colors.length];
   }
 
-  renderData(props, calculatedProps) {
-    const {style, radius} = calculatedProps;
-    const data = Helpers.getData(props);
-    const labelPosition = getLabelPosition(props, style, radius);
-    const colorScale = Array.isArray(props.colorScale) ?
-      props.colorScale : Style.getColorScale(props.colorScale);
-    const makeSlicePath = d3Shape.arc()
+  getRadius(props, padding) {
+    return Math.min(
+      props.width - padding.left - padding.right,
+      props.height - padding.top - padding.bottom
+    ) / 2;
+  }
+
+  getLabelPosition(props, style, radius) {
+    // TODO: better label positioning
+    const innerRadius = props.innerRadius ?
+    props.innerRadius + style.labels.padding :
+      style.labels.padding;
+    return d3Shape.arc()
       .outerRadius(radius)
-      .innerRadius(this.props.innerRadius);
+      .innerRadius(innerRadius);
+  }
 
-    calculatedProps = assign(calculatedProps,
-      {data, colorScale, makeSlicePath, labelPosition}
-    );
+  getLabelText(props, datum, index) {
+    if (datum.label) {
+      return datum.label;
+    } else if (Array.isArray(props.labels)) {
+      return props.labels[index];
+    }
+    return isFunction(props.labels) ? props.labels(datum) : undefined;
+  }
 
-    const pie = d3Shape.pie()
+  getSliceFunction(props) {
+    const degreesToRadians = (degrees) => {
+      return degrees * (Math.PI / 180);
+    };
+
+    return d3Shape.pie()
       .sort(null)
       .startAngle(degreesToRadians(props.startAngle))
       .endAngle(degreesToRadians(props.endAngle))
       .padAngle(degreesToRadians(props.padAngle))
       .value((datum) => { return datum.y; });
-    const slices = pie(data);
+  }
 
-    return (<g>
-      {slices.map((slice, index) => {
-        return this.renderSlice(props, calculatedProps, slice, index);
-      })}
-    </g>);
+  renderData(props, calculatedProps) {
+    const {style, colors, pathFunction, labelPosition, data} = calculatedProps;
+    const dataEvents = this.getEvents(props.events.data, "data");
+    const labelEvents = this.getEvents(props.events.labels, "labels");
+    const layoutFunction = this.getSliceFunction(props);
+    const slices = layoutFunction(data);
+
+    return (slices.map((slice, index) => {
+      const fill = this.getColor(style, colors, index);
+      const datum = slice.data;
+      const dataStyles = omit(slice.data, ["x", "y", "label"]);
+      const sliceStyle = defaults({}, {fill}, style.data, dataStyles);
+      const dataProps = defaults(
+        {},
+        this.getEventState(index, "data"),
+        props.dataComponent.props,
+        {
+          key: `slice-${index}`,
+          index,
+          slice,
+          pathFunction,
+          style: Helpers.evaluateStyle(sliceStyle, datum),
+          datum
+        }
+      );
+      const sliceComponent = React.cloneElement(props.dataComponent, assign(
+        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+      ));
+      const text = this.getLabelText(props, datum, index);
+      if (text !== null && text !== undefined) {
+        const position = labelPosition.centroid(slice);
+        const labelStyle = Helpers.evaluateStyle(
+          assign({padding: 0}, style.labels),
+          dataProps.datum
+        );
+        const labelProps = defaults(
+          {},
+          this.getEventState(index, "labels"),
+          props.labelComponent.props,
+          {
+            key: `slice-label-${index}`,
+            style: labelStyle,
+            x: position[0],
+            y: position[1],
+            slice,
+            text,
+            index,
+            datum: dataProps.datum,
+            textAnchor: labelStyle.textAnchor || "start",
+            verticalAnchor: labelStyle.verticalAnchor || "middle",
+            angle: labelStyle.angle
+          }
+        );
+        const sliceLabel = React.cloneElement(props.labelComponent, assign({
+          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+        }, labelProps));
+        return (
+          <g key={`slice-group-${index}`}>
+            {sliceComponent}
+            {sliceLabel}
+          </g>
+        );
+      }
+      return sliceComponent;
+    }));
+  }
+
+  getCalculatedProps(props) {
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const colors = Array.isArray(props.colorScale) ?
+      props.colorScale : Style.getColorScale(props.colorScale);
+    const padding = Helpers.getPadding(props);
+    const radius = this.getRadius(props, padding);
+    const data = Helpers.getData(props);
+    const labelPosition = this.getLabelPosition(props, style, radius);
+    const pathFunction = d3Shape.arc()
+      .outerRadius(radius)
+      .innerRadius(props.innerRadius);
+    return {style, colors, padding, radius, data, labelPosition, pathFunction};
+
   }
 
   render() {
@@ -348,27 +408,19 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%")
-    ;
-    const padding = Helpers.getPadding(this.props);
-    const radius = getRadius(this.props, padding);
-    const parentStyle = style.parent;
+    const calculatedProps = this.getCalculatedProps(this.props);
+    const { style, padding, radius } = calculatedProps;
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
-
     const group = (
-      <g style={parentStyle} transform={`translate(${xOffset}, ${yOffset})`}>
-        {this.renderData(this.props, {style, padding, radius})}
+      <g style={style.parent} transform={`translate(${xOffset}, ${yOffset})`}>
+        {this.renderData(this.props, calculatedProps)}
       </g>
     );
 
     return this.props.standalone ?
       <svg
-        style={parentStyle}
+        style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         {...this.props.events.parent}
       >
