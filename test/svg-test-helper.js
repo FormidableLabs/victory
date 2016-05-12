@@ -3,7 +3,7 @@ import $ from "cheerio";
 const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 
-const SvgTestHelper = {
+const expectations = {
   expectIsRectangular(wrapper) {
     expect(exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)).to.be.true;
   },
@@ -12,6 +12,16 @@ const SvgTestHelper = {
     expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
   }
 };
+
+const helpers = {
+  getBarHeight(wrapper) {
+    expectations.expectIsRectangular(wrapper);
+    const commands = getPathCommandsFromWrapper(wrapper);
+    return Math.abs(commands[0].args[1] - commands[1].args[1]);
+  }
+};
+
+const SvgTestHelper = Object.assign({}, expectations, helpers);
 
 function exhibitsShapeSequence(wrapper, shapeSequence) {
   const commands = getPathCommandsFromWrapper(wrapper);
