@@ -1,17 +1,22 @@
 import $ from "cheerio";
 
-const SvgTestHelper = {
-  RECTANGULAR_SEQUENCE: ["M", "L", "L", "L", "L"],
+const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
+const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 
+const SvgTestHelper = {
   expectIsRectangular(wrapper) {
-    expect(exhibitsRectangularDirectionSequence(wrapper)).to.be.true;
+    expect(exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)).to.be.true;
+  },
+
+  expectIsCircular(wrapper) {
+    expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
   }
 };
 
-function exhibitsRectangularDirectionSequence(wrapper) {
+function exhibitsShapeSequence(wrapper, shapeSequence) {
   const commands = getPathCommandsFromWrapper(wrapper);
   return commands.every((command, index) => {
-    return command.name === SvgTestHelper.RECTANGULAR_SEQUENCE[index];
+    return command.name === shapeSequence[index];
   });
 }
 
