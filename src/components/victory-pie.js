@@ -62,13 +62,6 @@ export default class VictoryPie extends React.Component {
       ])
     ]),
     /**
-     * Objects in the data array must be of the form { x: <x-val>, y: <y-val> }, where <x-val>
-     * is the slice label (string or number), and <y-val> is the corresponding number
-     * used to calculate arc length as a proportion of the pie's circumference.
-     * If the data prop is omitted, the pie will render sample data.
-     */
-
-    /**
      * The data prop specifies the data to be plotted,
      * where data X-value is the slice label (string or number),
      * and Y-value is the corresponding number value represented by the slice
@@ -98,15 +91,15 @@ export default class VictoryPie extends React.Component {
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
      * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by unique index on the state object of VictoryPie
-     * i.e. `this.state.dataState[dataIndex] = {style: {fill: "red"}...}`, and will be
+     * will be stored by index and namespace on the state object of VictoryBar
+     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
      * applied by index to the appropriate child component. Event props on the
      * parent namespace are just spread directly on to the top level svg of VictoryPie
      * if one exists. If VictoryPie is set up to render g elements i.e. when it is
      * rendered within chart, or when `standalone={false}` parent events will not be applied.
      *
      * @examples {data: {
-     *  onClick: () => onClick: () => return {style: {fill: "green"}}
+     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
     events: PropTypes.shape({
