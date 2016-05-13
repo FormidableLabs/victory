@@ -43,7 +43,7 @@ Expected release: End of March 2016
   and VictoryScatter.
 
 ### Alpha 4
-Expected release: End of April 2016
+Expected release: End of May 2016
 - [Markers and labels for VictoryLine and VictoryArea](https://github.com/FormidableLabs/victory-chart/issues/164)
 - [victory-tooltip](https://github.com/FormidableLabs/victory/issues/83)
 - Support for inverted axes in all chart types
@@ -51,9 +51,7 @@ Expected release: End of April 2016
 - Strategy and proof of concept for React Native support
 
 ### Alpha 5
-Expected release: End of May 2016
+Expected release: End of June 2016
 - Above 90% code coverage for all Victory components
 - Fleshed out React Native support
 
-### Stable Beta
-Expected release: End of June 2016
