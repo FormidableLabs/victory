@@ -172,7 +172,11 @@ state can be accessed by index on the `dataState`, and `labelsState` state objec
         onClick: (evt, props) => {
           const fill = props.style.fill;
           return fill === "pink" ?
-            null : {style: {fill: "pink"}};
+            { data: null, labels: null } :
+            {
+              data: {style: {fill: "pink"}},
+              labels: {style: {fontSize: 20}}
+            };
         }
       }
     }}
@@ -196,11 +200,11 @@ class App extends React.Component {
   }
 
   getData() {
-    const samples =  _.random(6, 10);
-    return _.range(samples).map((data) => {
+    const samples =  random(6, 10);
+    return range(samples).map((data) => {
       return {
         x: data,
-        y: _.random(3, 10),
+        y: random(3, 10),
         label: `#${data}`
       };
     })
