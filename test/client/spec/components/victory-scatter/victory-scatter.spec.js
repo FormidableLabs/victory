@@ -103,20 +103,13 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points in the correct positions", () => {
-      const props = {
-        data: [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}],
-        padding: 100
-      };
+      const svgDimensions = {width: 350, height: 200, padding: 75};
       const wrapper = shallow(
-        <VictoryScatter {...props}/>
+        <VictoryScatter
+          data={[{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}]}
+          {...svgDimensions}
+        />
       );
-
-      const viewBoxDimensions = wrapper.prop("viewBox").split(" ");
-      const svgDimensions = {
-        width: viewBoxDimensions[2] - viewBoxDimensions[0],
-        height: viewBoxDimensions[3] - viewBoxDimensions[1],
-        padding: props.padding
-      };
       const domain = {x: [0, 5], y: [0, 5]};
 
       const points = wrapper.find(Point);
