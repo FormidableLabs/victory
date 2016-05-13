@@ -7,8 +7,8 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { omit } from "lodash";
-import range from "lodash/range";
+import { omit, range } from "lodash";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 import Bar from "src/components/victory-bar/bar";
 import { VictoryLabel } from "victory-core";
@@ -32,6 +32,22 @@ describe("components/victory-bar", () => {
       const viewBoxValue =
         `0 0 ${VictoryBar.defaultProps.width} ${VictoryBar.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+    });
+
+    it("renders 4 bars", () => {
+      const wrapper = shallow(
+        <VictoryBar/>
+      );
+      const bars = wrapper.find(Bar);
+      expect(bars.length).to.equal(4);
+    });
+
+    it("renders each bar as a rectangle", () => {
+      const wrapper = shallow(
+        <VictoryBar/>
+      );
+      const bars = wrapper.find(Bar);
+      bars.forEach(SvgTestHelper.expectIsRectangular);
     });
   });
 
@@ -66,6 +82,17 @@ describe("components/victory-bar", () => {
       );
       const bars = wrapper.find(Bar);
       expect(bars.length).to.equal(30);
+    });
+
+    it("renders bars with appropriate relative heights", () => {
+      const wrapper = shallow(
+        <VictoryBar data={[{x: 1, y: 1}, {x: 2, y: 2}, {x: 3, y: 3}]}/>
+      );
+      const bars = wrapper.find(Bar);
+      const heights = bars.map(SvgTestHelper.getBarHeight);
+
+      expect(heights[1] / 2).to.be.closeTo(heights[0], 0.01);
+      expect(heights[2] / 3 * 2).to.be.closeTo(heights[1], 0.01);
     });
   });
 

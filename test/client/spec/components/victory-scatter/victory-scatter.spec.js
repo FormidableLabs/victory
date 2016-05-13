@@ -7,6 +7,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import { omit, range } from "lodash";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryScatter from "src/components/victory-scatter/victory-scatter";
 import Point from "src/components/victory-scatter/point";
 import { VictoryLabel } from "victory-core";
@@ -35,6 +36,22 @@ describe("components/victory-scatter", () => {
       const viewBoxValue =
         `0 0 ${VictoryScatter.defaultProps.width} ${VictoryScatter.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+    });
+
+    it("renders 51 points", () => {
+      const wrapper = shallow(
+        <VictoryScatter/>
+      );
+      const points = wrapper.find(Point);
+      expect(points.length).to.equal(51);
+    });
+
+    it("renders each point as a circle", () => {
+      const wrapper = shallow(
+        <VictoryScatter/>
+      );
+      const points = wrapper.find(Point);
+      points.forEach(SvgTestHelper.expectIsCircular);
     });
   });
 
@@ -83,6 +100,29 @@ describe("components/victory-scatter", () => {
       );
       const points = wrapper.find(Point);
       expect(points.length).to.equal(30);
+    });
+
+    it("renders points in the correct positions", () => {
+      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const wrapper = shallow(
+        <VictoryScatter
+          data={[{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}]}
+          {...svgDimensions}
+        />
+      );
+      const domain = {x: [0, 5], y: [0, 5]};
+
+      const points = wrapper.find(Point);
+      const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
+      const coordinates = svgCoordinates.map((coord) => {
+        return SvgTestHelper.convertSvgCoordinatesToCartesian(
+          coord,
+          svgDimensions,
+          domain
+        );
+      });
+
+      expect(coordinates).to.eql([[0, 0], [2, 3], [5, 5]]);
     });
   });
 
