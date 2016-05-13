@@ -6,8 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import omit from "lodash/omit";
-import range from "lodash/range";
+import { omit, range } from "lodash";
 import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryScatter from "src/components/victory-scatter/victory-scatter";
 import Point from "src/components/victory-scatter/point";

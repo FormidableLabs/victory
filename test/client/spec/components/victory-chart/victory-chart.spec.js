@@ -5,6 +5,7 @@
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryChart from "src/components/victory-chart/victory-chart";
+import VictoryAxis from "src/components/victory-axis/victory-axis";
 
 describe("components/victory-chart", () => {
   describe("default component rendering", () => {
@@ -36,6 +37,38 @@ describe("components/victory-chart", () => {
       );
       wrapper.find("svg").simulate("click");
       expect(clickHandler.called).to.equal(true);
+    });
+  });
+
+  describe("axis rendering", () => {
+    it("renders two axes by default", () => {
+      const wrapper = shallow(
+        <VictoryChart/>
+      );
+      const axes = wrapper.find(VictoryAxis);
+      expect(axes).to.have.lengthOf(2);
+    });
+
+    it("renders one axis if one axis is given", () => {
+      const wrapper = shallow(
+        <VictoryChart>
+          <VictoryAxis/>
+        </VictoryChart>
+      );
+      const axes = wrapper.find(VictoryAxis);
+      expect(axes).to.have.lengthOf(1);
+    });
+
+    it("allows axis to control the crossAxis, and offset props", () => {
+      const wrapper = shallow(
+        <VictoryChart>
+          <VictoryAxis crossAxis={false} offsetX={50} offsetY={50}/>
+        </VictoryChart>
+      );
+      const axes = wrapper.find(VictoryAxis);
+      expect(axes.prop("crossAxis")).to.equal(false);
+      expect(axes.prop("offsetX")).to.equal(50);
+      expect(axes.prop("offsetY")).to.equal(50);
     });
   });
 });

@@ -2,8 +2,7 @@
 import React from "react";
 import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
-import range from "lodash/range";
-import random from "lodash/random";
+import { random, range } from "lodash";
 
 export default class App extends React.Component {
   constructor() {
@@ -32,7 +31,7 @@ export default class App extends React.Component {
         tickValues: this.getTickValues(),
         domain: this.getDomain()
       });
-    }, 20000);
+    }, 2000);
   }
 
   componentWillUnmount() {

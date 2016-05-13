@@ -1,6 +1,5 @@
 import last from "lodash/last";
-import defaults from "lodash/defaults";
-import assign from "lodash/assign";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -324,6 +323,7 @@ export default class VictoryArea extends React.Component {
           textAnchor: labelStyle.textAnchor || "start",
           verticalAnchor: labelStyle.verticalAnchor || "middle",
           angle: labelStyle.angle,
+          scale,
           text
         }
       );

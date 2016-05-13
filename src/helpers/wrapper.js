@@ -1,7 +1,4 @@
-import defaults from "lodash/defaults";
-import uniq from "lodash/uniq";
-import flatten from "lodash/flatten";
-import partialRight from "lodash/partialRight";
+import { defaults, flatten, partialRight, uniq } from "lodash";
 import React from "react";
 import Data from "./data";
 import Domain from "./domain";

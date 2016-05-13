@@ -1,8 +1,4 @@
-import isFunction from "lodash/isFunction";
-import includes from "lodash/includes";
-import without from "lodash/without";
-import range from "lodash/range";
-
+import { includes, isFunction, range, without } from "lodash";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";

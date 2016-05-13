@@ -5,7 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 
 import React from "react";
-import omit from "lodash/omit";
+import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
 import AxisLine from "src/components/victory-axis/axis-line";

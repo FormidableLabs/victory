@@ -1,7 +1,6 @@
 /*global window:false */
 import React from "react";
-import range from "lodash/range";
-import random from "lodash/random";
+import { random, range } from "lodash";
 import {VictoryLine} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";

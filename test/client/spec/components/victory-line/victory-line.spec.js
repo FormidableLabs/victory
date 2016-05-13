@@ -6,7 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import omit from "lodash/omit";
+import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";

@@ -1,8 +1,5 @@
 import React, { PropTypes } from "react";
-import pick from "lodash/pick";
-import omit from "lodash/omit";
-import defaults from "lodash/defaults";
-import assign from "lodash/assign";
+import { assign, defaults, pick, omit } from "lodash";
 import Point from "./point";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
@@ -348,6 +345,7 @@ export default class VictoryScatter extends React.Component {
             y: y - labelStyle.padding,
             text,
             index,
+            scale,
             datum: dataProps.datum,
             textAnchor: labelStyle.textAnchor,
             verticalAnchor: labelStyle.verticalAnchor || "end",

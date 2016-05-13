@@ -1,4 +1,4 @@
-import defaults from "lodash/defaults";
+import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
@@ -160,14 +160,15 @@ export default class VictoryChart extends React.Component {
       child.props.tickFormat || ChartHelpers.getTickFormat(child, axis, calculatedProps);
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
+    const crossAxis = child.props.crossAxis === false ? false : true;
     return {
       domain: domain[axis],
       scale: scale[axis],
       tickValues,
       tickFormat,
-      offsetY,
-      offsetX,
-      crossAxis: true
+      offsetY: child.props.offsetY || offsetY,
+      offsetX: child.props.offsetX || offsetX,
+      crossAxis
     };
   }
 
