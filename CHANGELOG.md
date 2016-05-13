@@ -1,5 +1,19 @@
 # VictoryPie Changelog
 
+## 3.0.0 (2016-05-13)
+
+ - improves consistency for `labelComponent` and `dataComponent` props. Replaces a custom `SliceLabel` component with `VictoryLabel` to make the api more consistent and predictable. **This is a breaking change for custom label components**, as `VictoryLabel` expects a different set of props than the previous `SliceLabel` component. See [VictoryLabel](http://formidable.com/open-source/victory/docs/victory-label) for more detail.
+
+- Functional styles and props are now all evaluated before they are passed as props to `labelComponent` or `dataComponent`, so that custom components will have access to the final values.
+
+- events are bound and partially applied prior to being passed as props to `labelComponent` or `dataComponent`
+
+- it is now possible to specify `angle` and `verticalAnchor` props for` VictoryLabel` via the style object
+
+- event return values are stored differently on state to facilitate interaction between data and labels. **This is a breaking change for events** as event handlers must now return an object with with `data` and/or `labels` keys so that these values may be applied appropriately to data and label elements respectively.
+
+- improved integration tests
+
 ## 2.1.0 (2016-04-15)
 
 - Add support for custom data components
