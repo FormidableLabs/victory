@@ -105,7 +105,7 @@ describe("components/victory-scatter", () => {
 
     it("renders points in the correct positions", () => {
       const props = {
-        data:  [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}],
+        data: [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}],
         padding: 100
       };
       const wrapper = shallow(
@@ -113,20 +113,20 @@ describe("components/victory-scatter", () => {
       );
 
       const viewBoxDimensions = wrapper.prop("viewBox").split(" ");
-      const svgSize = [
-        viewBoxDimensions[2] - viewBoxDimensions[0],
-        viewBoxDimensions[3] - viewBoxDimensions[1]
-      ];
+      const svgDimensions = {
+        width: viewBoxDimensions[2] - viewBoxDimensions[0],
+        height: viewBoxDimensions[3] - viewBoxDimensions[1],
+        padding: props.padding
+      };
+      const domain = {x: [0, 5], y: [0, 5]};
 
       const points = wrapper.find(Point);
       const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
-
-      const coordinates = svgCoordinates.map(coord => {
+      const coordinates = svgCoordinates.map((coord) => {
         return SvgTestHelper.convertSvgCoordinatesToCartesian(
           coord,
-          svgSize,
-          props.padding,
-          {x: [0, 5], y: [0, 5]}
+          svgDimensions,
+          domain
         );
       });
 

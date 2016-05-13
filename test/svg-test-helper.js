@@ -3,6 +3,37 @@ import $ from "cheerio";
 const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 
+const parseSvgPathCommands = (commandStr) => {
+  const matches = commandStr.match(
+    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
+  );
+
+  return matches.map((match) => {
+    const name = match.charAt(0);
+    const args = match.substring(1).split(",").map((arg) => {
+      return parseFloat(arg, 10);
+    });
+
+    return {
+      raw: match,
+      name,
+      args
+    };
+  });
+};
+
+const getPathCommandsFromWrapper = (wrapper) => {
+  const commandStr = $(wrapper.html()).attr("d");
+  return parseSvgPathCommands(commandStr);
+};
+
+const exhibitsShapeSequence = (wrapper, shapeSequence) => {
+  const commands = getPathCommandsFromWrapper(wrapper);
+  return commands.every((command, index) => {
+    return command.name === shapeSequence[index];
+  });
+};
+
 const expectations = {
   /**
    * Assert the wrapper renders a rectangular shape.
@@ -11,7 +42,9 @@ const expectations = {
    * @returns {Boolean} Whether the expectation is met.
    */
   expectIsRectangular(wrapper) {
-    expect(exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)).to.be.true;
+    return expect(
+      exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)
+    ).to.be.true;
   },
 
   /**
@@ -21,7 +54,7 @@ const expectations = {
    * @returns {Boolean} Whether the expectation is met.
    */
   expectIsCircular(wrapper) {
-    expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
+    return expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
   }
 };
 
@@ -53,21 +86,27 @@ const helpers = {
    * Convert the raw svg coordinates to scaled Cartesian coordinates.
    *
    * @param {Array} coords - The x and y coordinates, respectively.
-   * @param {Array} svgSize - The width and height of the svg, respectively.
-   * @param {Number} svgPadding - The space between the edge of the svg and the
-   *   chart area.
+   * @param {Object} svgDimensions - The width, height, and padding of the svg.
+   * @param {Number} svgDimensions.width - The width of the svg.
+   * @param {Number} svgDimensions.height - The height of the svg.
+   * @param {Number} svgDimensions.padding - The space between the edge of the
+   *   svg and the chart area.
    * @param {Object} domain - The x and y domains.
    * @param {Array} domain.x - The lower and upper x bounds, respectively.
    * @param {Array} domain.y - The lower and upper y bounds, respectively.
    * @returns {Array} The Cartesian x and y coordinates, respectively.
    */
-  convertSvgCoordinatesToCartesian(coords, svgSize, svgPadding, domain) {
-    const cartesianX = coords[0] - svgPadding;
-    const cartesianY = svgSize[1] - coords[1] - svgPadding;
+  convertSvgCoordinatesToCartesian(coords, svgDimensions, domain) {
+    const { width, height, padding } = svgDimensions;
 
-    const chartSize = svgSize.map(dimension => dimension - svgPadding * 2);
-    const scaledX = cartesianX / chartSize[0] * (domain.x[1] - domain.x[0]);
-    const scaledY = cartesianY / chartSize[1] * (domain.y[1] - domain.y[0]);
+    const cartesianX = coords[0] - padding;
+    const cartesianY = height - coords[1] - padding;
+
+    const chartWidth = width - padding * 2;
+    const chartHeight = height - padding * 2;
+
+    const scaledX = cartesianX / chartWidth * (domain.x[1] - domain.x[0]);
+    const scaledY = cartesianY / chartHeight * (domain.y[1] - domain.y[0]);
 
     const shiftedX = scaledX + domain.x[0];
     const shiftedY = scaledY + domain.y[0];
@@ -76,35 +115,4 @@ const helpers = {
   }
 };
 
-const SvgTestHelper = Object.assign({}, expectations, helpers);
-
-function exhibitsShapeSequence(wrapper, shapeSequence) {
-  const commands = getPathCommandsFromWrapper(wrapper);
-  return commands.every((command, index) => {
-    return command.name === shapeSequence[index];
-  });
-}
-
-function getPathCommandsFromWrapper(wrapper) {
-  const commandStr = $(wrapper.html()).attr("d");
-  return parseSvgPathCommands(commandStr);
-}
-
-function parseSvgPathCommands(commandStr) {
-  const matches = commandStr.match(
-    /[MmLlHhVvCcSsQqTtAaZz]+[^MmLlHhVvCcSsQqTtAaZz]*/g
-  );
-
-  return matches.map(match => {
-    const name = match.charAt(0);
-    const args = match.substring(1).split(",").map(arg => parseFloat(arg, 10));
-
-    return {
-      raw: match,
-      name,
-      args
-    }
-  });
-}
-
-export default SvgTestHelper;
+export default Object.assign({}, expectations, helpers);
