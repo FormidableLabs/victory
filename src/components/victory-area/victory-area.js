@@ -324,6 +324,7 @@ export default class VictoryArea extends React.Component {
           textAnchor: labelStyle.textAnchor || "start",
           verticalAnchor: labelStyle.verticalAnchor || "middle",
           angle: labelStyle.angle,
+          scale,
           text
         }
       );

@@ -350,6 +350,7 @@ export default class VictoryLine extends React.Component {
             style: labelStyle,
             data,
             text,
+            scale,
             textAnchor: labelStyle.textAnchor || "start",
             verticalAnchor: labelStyle.verticalAnchor || "middle",
             angle: labelStyle.angle

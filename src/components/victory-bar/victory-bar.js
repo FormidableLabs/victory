@@ -390,6 +390,7 @@ export default class VictoryBar extends React.Component {
             y0: position.y0,
             text,
             index,
+            scale,
             datum: dataProps.datum,
             textAnchor: labelStyle.textAnchor || anchors.text,
             verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
