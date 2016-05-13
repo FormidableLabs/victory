@@ -1,13 +1,13 @@
 {
   "name": "victory",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "Data viz for React",
   "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/formidablelabs/victory.git"
   },
-  "engineStrict" : true,
+  "engineStrict": true,
   "engines": {
     "npm": ">=3.0.0"
   },
