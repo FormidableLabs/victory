@@ -54,7 +54,7 @@ describe("components/victory-pie", () => {
 
     it("renders 5 slice labels", () => {
       const wrapper = shallow(
-        <VictoryPie labels={["a", "b", "c", "d", "e"]}/>
+        <VictoryPie/>
       );
 
       const labels = wrapper.find(VictoryLabel);
@@ -266,7 +266,6 @@ describe("components/victory-pie", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryPie
-          labels={["a", "b", "c", "d", "e"]}
           events={{labels: {onClick: clickHandler}}}
         />
       );

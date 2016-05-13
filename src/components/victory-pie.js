@@ -139,7 +139,9 @@ export default class VictoryPie extends React.Component {
      * This prop should be given as an array of values or as a function of data.
      * If given as an array, the number of elements in the array should be equal to
      * the length of the data array. Labels may also be added directly to the data object
-     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * like data={[{x: 1, y: 1, label: "first"}]}. If labels are not provided, they
+     * will be created based on x values. If you don't want to render labels, pass
+     * an empty array or a function that retuns undefined.
      * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
@@ -294,7 +296,7 @@ export default class VictoryPie extends React.Component {
     } else if (Array.isArray(props.labels)) {
       return props.labels[index];
     }
-    return isFunction(props.labels) ? props.labels(datum) : undefined;
+    return isFunction(props.labels) ? props.labels(datum) : datum.xName || datum.x;
   }
 
   getSliceFunction(props) {
@@ -355,7 +357,7 @@ export default class VictoryPie extends React.Component {
             x: position[0],
             y: position[1],
             slice,
-            text,
+            text: `${text}`,
             index,
             datum: dataProps.datum,
             textAnchor: labelStyle.textAnchor || "start",

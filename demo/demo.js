@@ -1,5 +1,5 @@
 /*global window:false*/
-import _ from "lodash";
+import { assign, random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "../src/index";
 import Slice from "../src/components/slice";
@@ -91,11 +91,11 @@ export default class App extends React.Component {
   }
 
   getTransitionData() {
-    const data = _.random(6, 10);
-    return _.map(_.range(data), (datum) => {
+    const data = random(6, 10);
+    return range(data).map((datum) => {
       return {
         x: datum,
-        y: _.random(2, 10),
+        y: random(2, 10),
         label: `#${datum}`
       };
     });
@@ -141,11 +141,17 @@ export default class App extends React.Component {
 
           <VictoryPie
             style={this.state.style}
+            labels={() => "click me!"}
             events={{
               data: {
                 onClick: (evt, props) => {
                   return {
-                    style: _.assign({}, props.style, {opacity: props.style.opacity === 1 ? 0.6 : 1})
+                    data: {
+                      style: assign(
+                        {},
+                        props.style, {opacity: props.style.opacity === 1 ? 0.6 : 1}
+                      )
+                    }
                   };
                 }
               }
@@ -197,7 +203,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            data={_.range(0, 6).map((i) => [i, Math.random()])}
+            data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
             animate={{duration: 2000}}
@@ -206,7 +212,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            data={_.range(0, 6).map((i) => [i, Math.random()])}
+            data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
             style={this.state.style}
