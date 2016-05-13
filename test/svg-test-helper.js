@@ -20,7 +20,7 @@ const helpers = {
     return Math.abs(commands[0].args[1] - commands[1].args[1]);
   },
 
-  getCartesianPointCoordinates(pointWrapper, chartWrapper, domain, range) {
+  getCartesianPointCoordinates(pointWrapper, chartWrapper, domain) {
     const svgPadding = 50;
 
     const svgCoords = this.getSvgPointCoordinates(pointWrapper);
@@ -36,8 +36,7 @@ const helpers = {
     return convertSvgCoordinatesToCartesian(
       chartCoords,
       chartSize,
-      domain,
-      range
+      domain
     );
   },
 
@@ -49,15 +48,15 @@ const helpers = {
 
 const SvgTestHelper = Object.assign({}, expectations, helpers);
 
-function convertSvgCoordinatesToCartesian(coords, svgSize, domain, range) {
+function convertSvgCoordinatesToCartesian(coords, svgSize, domain) {
   const cartesianX = coords[0];
   const cartesianY = svgSize[1] - coords[1];
 
-  const scaledX = cartesianX / svgSize[0] * (domain[1] - domain[0]);
-  const scaledY = cartesianY / svgSize[1] * (range[1] - range[0]);
+  const scaledX = cartesianX / svgSize[0] * (domain.x[1] - domain.x[0]);
+  const scaledY = cartesianY / svgSize[1] * (domain.y[1] - domain.y[0]);
 
-  const shiftedX = scaledX + domain[0];
-  const shiftedY = scaledY + range[0];
+  const shiftedX = scaledX + domain.x[0];
+  const shiftedY = scaledY + domain.y[0];
 
   return [shiftedX, shiftedY];
 }

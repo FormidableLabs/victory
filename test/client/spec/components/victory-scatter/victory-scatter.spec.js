@@ -103,7 +103,7 @@ describe("components/victory-scatter", () => {
       expect(points.length).to.equal(30);
     });
 
-    it.only("renders points in the correct positions", () => {
+    it("renders points in the correct positions", () => {
       const data = [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}];
       const wrapper = shallow(
         <VictoryScatter data={data}/>
@@ -114,8 +114,7 @@ describe("components/victory-scatter", () => {
         return SvgTestHelper.getCartesianPointCoordinates(
           point,
           wrapper,
-          [0, 5],
-          [0, 5]
+          {x: [0, 5], y: [0, 5]}
         );
       });
 
