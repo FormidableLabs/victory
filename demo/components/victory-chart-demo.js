@@ -174,6 +174,8 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
+            <VictoryAxis/>
+            <VictoryAxis dependentAxis crossAxis={false}/>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}
