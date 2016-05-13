@@ -9,7 +9,6 @@ import Domain from "src/helpers/domain";
 import Axis from "src/helpers/axis";
 import Scale from "src/helpers/scale";
 import Wrapper from "src/helpers/wrapper";
-import identity from "lodash/identity";
 
 describe("victory-chart/helpers-methods", () => {
   const getVictoryLine = (props) => React.createElement(VictoryLine, props);
@@ -170,7 +169,9 @@ describe("victory-chart/helpers-methods", () => {
       const props = {tickValues: [1, 2, 3]};
       const victoryAxis = getVictoryAxis(props);
       const formatResult = Helpers.getTickFormat(victoryAxis, "x", {stringMap, scale});
-      expect(formatResult).to.eql(identity);
+      const val = {a: 3};
+      expect(formatResult).to.be.a("function");
+      expect(formatResult(val)).to.equal(val);
     });
 
     it("returns a function from a string map", () => {

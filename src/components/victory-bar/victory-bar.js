@@ -1,6 +1,4 @@
-import omit from "lodash/omit";
-import defaults from "lodash/defaults";
-import assign from "lodash/assign";
+import { assign, defaults, omit } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel

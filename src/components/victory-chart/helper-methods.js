@@ -1,15 +1,12 @@
-import invert from "lodash/invert";
-import sortBy from "lodash/sortBy";
-import values from "lodash/values";
-import identity from "lodash/identity";
-import uniq from "lodash/uniq";
-import flatten from "lodash/flatten";
+import { flatten, invert, sortBy, uniq, values } from "lodash";
 import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
 import { Collection, Log } from "victory-core";
+
+const identity = (x) => x;
 
 export default {
   getChildComponents(props, defaultAxes) {

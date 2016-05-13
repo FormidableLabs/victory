@@ -1,6 +1,4 @@
-import uniq from "lodash/uniq";
-import defaults from "lodash/defaults";
-import assign from "lodash/assign";
+import { assign, defaults, uniq } from "lodash";
 import { Helpers, Collection } from "victory-core";
 import Scale from "./scale";
 import React from "react";

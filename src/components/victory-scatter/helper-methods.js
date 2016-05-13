@@ -1,4 +1,4 @@
-import values from "lodash/values";
+import { values } from "lodash";
 import { Helpers } from "victory-core";
 
 export default {

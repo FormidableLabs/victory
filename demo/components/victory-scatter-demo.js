@@ -1,7 +1,6 @@
 /*global window:false */
 import React from "react";
-import range from "lodash/range";
-import random from "lodash/random";
+import { random, range } from "lodash";
 import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";

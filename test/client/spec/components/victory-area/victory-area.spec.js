@@ -5,7 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import omit from "lodash/omit";
+import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import VictoryArea from "src/components/victory-area/victory-area";
 import { VictoryLabel } from "victory-core";
