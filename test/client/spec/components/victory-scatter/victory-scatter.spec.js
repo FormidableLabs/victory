@@ -109,11 +109,23 @@ describe("components/victory-scatter", () => {
         <VictoryScatter data={data}/>
       );
 
+      const viewBoxDimensions = wrapper.prop("viewBox").split(" ");
+      const svgSize = [
+        viewBoxDimensions[2] - viewBoxDimensions[0],
+        viewBoxDimensions[3] - viewBoxDimensions[1]
+      ];
+
       const points = wrapper.find(Point);
-      const coordinates = points.map(point => {
-        return SvgTestHelper.getCartesianPointCoordinates(
-          point,
-          wrapper,
+      const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
+      const svgPadding = svgCoordinates.reduce((prev, coord) => {
+        return coord[0] < prev ? coord[0] : prev;
+      }, Number.POSITIVE_INFINITY);
+
+      const coordinates = svgCoordinates.map(coord => {
+        return SvgTestHelper.convertSvgCoordinatesToCartesian(
+          coord,
+          svgSize,
+          svgPadding,
           {x: [0, 5], y: [0, 5]}
         );
       });
