@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Ecology from "ecology";
-import random from "lodash/random";
+import { random } from "lodash";
 import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
 import { VictoryLine, VictoryScatter } from "../../src/index";

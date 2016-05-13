@@ -7,7 +7,7 @@
 
 import React from "react";
 import { shallow, mount } from "enzyme";
-import omit from "lodash/omit";
+import { omit } from "lodash";
 import range from "lodash/range";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 import Bar from "src/components/victory-bar/bar";

@@ -1,7 +1,6 @@
 /*global window:false */
 import React from "react";
-import range from "lodash/range";
-import random from "lodash/random";
+import { random, range } from "lodash";
 import {VictoryArea, VictoryStack, VictoryGroup} from "../../src/index";
 
 export default class App extends React.Component {

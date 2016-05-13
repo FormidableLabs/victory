@@ -1,5 +1,4 @@
-import assign from "lodash/assign";
-import uniq from "lodash/uniq";
+import { assign, uniq } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
 import Scale from "../../helpers/scale";
