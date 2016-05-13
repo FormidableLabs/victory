@@ -8,14 +8,14 @@ A flexible charting component for React. VictoryChart composes other victory com
 
 VictoryChart includes:
 
-- [VictoryAxis](http://victory.formidable.com/docs/victory-axis)
-- [VictoryArea](http://victory.formidable.com/docs/victory-area)
-- [VictoryBar](http://victory.formidable.com/docs/victory-bar)
-- [VictoryLine](http://victory.formidable.com/docs/victory-line)
-- [VictoryScatter](http://victory.formidable.com/docs/victory-scatter)
+- [VictoryAxis](http://formidable.com/open-source/victory/docs/victory-axis)
+- [VictoryArea](http://formidable.com/open-source/victory/docs/victory-area)
+- [VictoryBar](http://formidable.com/open-source/victory/docs/victory-bar)
+- [VictoryLine](http://formidable.com/open-source/victory/docs/victory-line)
+- [VictoryScatter](http://formidable.com/open-source/victory/docs/victory-scatter)
 
 ## API Documentation
-Detailed documentation and interactive examples can be found at http://victory.formidable.com/docs/victory-chart/
+Detailed documentation and interactive examples can be found at http://formidable.com/open-source/victory/victory-chart/
 
 ## Development
 
@@ -35,6 +35,10 @@ For more on the development environment, see [DEVELOPMENT](https://github.com/Fo
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
+
+## Caveats
+
+Victory requires npm v3 and Node > 0.10 for development and git installs
 
 ## _IMPORTANT_
 
