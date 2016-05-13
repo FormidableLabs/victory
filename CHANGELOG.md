@@ -1,5 +1,10 @@
 VictoryCore Changelog
 =====================
+## 2.0.1 (2016-05-13)
+
+- Uses `.js` file extension rather than `.jsx`.
+- Updates import syntax for `lodash`
+
 ## 2.0.0 (2016-05-05)
 
 - Changes how events are stored on state to facilitate interactions between elements
