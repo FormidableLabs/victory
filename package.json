@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "7.0.2",
+  "version": "8.0.0",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -13,7 +13,7 @@
     "url": "https://github.com/formidablelabs/victory-chart/issues"
   },
   "homepage": "https://github.com/formidablelabs/victory-chart",
-  "engineStrict" : true,
+  "engineStrict": true,
   "engines": {
     "npm": ">=3.0.0"
   },
