@@ -348,6 +348,7 @@ export default class VictoryScatter extends React.Component {
             y: y - labelStyle.padding,
             text,
             index,
+            scale,
             datum: dataProps.datum,
             textAnchor: labelStyle.textAnchor,
             verticalAnchor: labelStyle.verticalAnchor || "end",
