@@ -117,6 +117,9 @@ describe("components/victory-scatter", () => {
 
       const points = wrapper.find(Point);
       const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
+
+      // The padding between the edge of the svg and the actual chart area can
+      // be determined by the smallest x or y svg coordinate.
       const svgPadding = svgCoordinates.reduce((prev, coord) => {
         return coord[0] < prev ? coord[0] : prev;
       }, Number.POSITIVE_INFINITY);
