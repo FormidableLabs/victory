@@ -104,9 +104,12 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders points in the correct positions", () => {
-      const data = [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}];
+      const props = {
+        data:  [{x: 0, y: 0}, {x: 2, y: 3}, {x: 5, y: 5}],
+        padding: 100
+      };
       const wrapper = shallow(
-        <VictoryScatter data={data}/>
+        <VictoryScatter {...props}/>
       );
 
       const viewBoxDimensions = wrapper.prop("viewBox").split(" ");
@@ -118,17 +121,11 @@ describe("components/victory-scatter", () => {
       const points = wrapper.find(Point);
       const svgCoordinates = points.map(SvgTestHelper.getSvgPointCoordinates);
 
-      // The padding between the edge of the svg and the actual chart area can
-      // be determined by the smallest x or y svg coordinate.
-      const svgPadding = svgCoordinates.reduce((prev, coord) => {
-        return coord[0] < prev ? coord[0] : prev;
-      }, Number.POSITIVE_INFINITY);
-
       const coordinates = svgCoordinates.map(coord => {
         return SvgTestHelper.convertSvgCoordinatesToCartesian(
           coord,
           svgSize,
-          svgPadding,
+          props.padding,
           {x: [0, 5], y: [0, 5]}
         );
       });
