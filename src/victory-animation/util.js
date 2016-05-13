@@ -1,5 +1,5 @@
 import d3Interpolate from "d3-interpolate";
-import isPlainObject from "lodash/isPlainObject";
+import { isPlainObject } from "lodash";
 
 export const isInterpolatable = function (obj) {
   // d3 turns null into 0 and undefined into NaN, which we don't want.

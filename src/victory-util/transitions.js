@@ -1,7 +1,5 @@
 /* eslint-disable func-style */
-import assign from "lodash/assign";
-import defaults from "lodash/defaults";
-import identity from "lodash/identity";
+import { assign, defaults, identity } from "lodash";
 
 function getDatumKey(datum, idx) {
   return (datum.key || idx).toString();

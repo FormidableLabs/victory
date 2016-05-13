@@ -1,5 +1,5 @@
 /* global console */
-import isFunction from "lodash/isFunction";
+import { isFunction } from "lodash";
 import { PropTypes } from "react";
 
 /**
