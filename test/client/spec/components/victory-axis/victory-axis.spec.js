@@ -4,11 +4,14 @@
 /* global sinon */
 /*eslint-disable max-nested-callbacks */
 
+import $ from "cheerio";
 import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
 import AxisLine from "src/components/victory-axis/axis-line";
+import Tick from "src/components/victory-axis/tick";
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {
@@ -30,7 +33,44 @@ describe("components/victory-axis", () => {
         `0 0 ${VictoryAxis.defaultProps.width} ${VictoryAxis.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
+
+    it("renders 6 ticks", () => {
+      const wrapper = shallow(
+        <VictoryAxis/>
+      );
+      const ticks = wrapper.find(Tick);
+      expect(ticks.length).to.equal(6);
+    });
+
+    it("renders a line", () => {
+      const wrapper = shallow(
+        <VictoryAxis/>
+      );
+      const line = wrapper.find(AxisLine);
+      SvgTestHelper.expectIsALine(line);
+    });
   });
+
+  describe("dependentAxis prop", () => {
+    it("renders an independent axis by default", () => {
+      const props = {padding: 50, width: 300};
+      const wrapper = shallow(
+        <VictoryAxis {...props}/>
+      );
+      const line = wrapper.find(AxisLine);
+      expect(SvgTestHelper.isIndependentAxis(line, props)).to.be.true;
+    });
+
+    it("renders a dependent axis if specified", () => {
+      const props = {padding: 50, height: 300};
+      const wrapper = shallow(
+        <VictoryAxis dependentAxis {...props}/>
+      );
+      const line = wrapper.find(AxisLine);
+      expect(SvgTestHelper.isDependentAxis(line, props)).to.be.true;
+    });
+  });
+
 
   describe("event handling", () => {
     it("attaches an event to the axis line", () => {
