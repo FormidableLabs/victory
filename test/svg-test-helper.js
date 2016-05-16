@@ -59,6 +59,13 @@ const expectations = {
     return expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
   },
 
+  /**
+   * Assert the wrapper renders a line svg element.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * node.
+   * @returns {Boolean} Whether the expectation is met.
+   */
   expectIsALine(wrapper) {
     return expect($(wrapper.html()).is("line")).to.be.true;
   }
@@ -122,6 +129,16 @@ const helpers = {
     return [shiftedX, shiftedY];
   },
 
+  /**
+   * Determine if the axis is an indepedent axis.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `line` node.
+   * @param {Object} svgDimensions - The dimensions of the axis.
+   * @param {Number} svgDimensions.width - The width of the line.
+   * @param {Number} svgDimenions.padding - The padding around the line.
+   * @returns {Boolean} Whether the wrapper renders an independent axis.
+  */
   isIndependentAxis(wrapper, svgDimensions) {
     const { width, padding } = svgDimensions;
     const {x1, x2, y1, y2} = $(wrapper.html()).attr();
@@ -132,6 +149,16 @@ const helpers = {
     return isHorizontalLine && isCorrectWidth;
   },
 
+  /**
+   * Determine if the axis is an indepedent axis.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `line` node.
+   * @param {Object} svgDimensions - The dimensions of the axis.
+   * @param {Number} svgDimensions.height - The height of the line.
+   * @param {Number} svgDimenions.padding - The padding around the line.
+   * @returns {Boolean} Whether the wrapper renders a dependent axis.
+  */
   isDependentAxis(wrapper, svgDimensions) {
     const { height, padding } = svgDimensions;
     const {x1, x2, y1, y2} = $(wrapper.html()).attr();
