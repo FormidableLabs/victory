@@ -42,6 +42,14 @@ describe("components/victory-axis", () => {
       expect(ticks.length).to.equal(6);
     });
 
+    it("renders ticks as lines", () => {
+      const wrapper = shallow(
+        <VictoryAxis/>
+      );
+      const ticks = wrapper.find(Tick);
+      ticks.forEach(SvgTestHelper.expectIsALine);
+    });
+
     it("renders a line", () => {
       const wrapper = shallow(
         <VictoryAxis/>
@@ -70,7 +78,6 @@ describe("components/victory-axis", () => {
       expect(SvgTestHelper.isDependentAxis(line, props)).to.be.true;
     });
   });
-
 
   describe("event handling", () => {
     it("attaches an event to the axis line", () => {
