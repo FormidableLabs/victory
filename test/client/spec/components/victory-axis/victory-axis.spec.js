@@ -4,7 +4,6 @@
 /* global sinon */
 /*eslint-disable max-nested-callbacks */
 
-import $ from "cheerio";
 import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
@@ -66,7 +65,7 @@ describe("components/victory-axis", () => {
         <VictoryAxis {...props}/>
       );
       const line = wrapper.find(AxisLine);
-      expect(SvgTestHelper.isIndependentAxis(line, props)).to.be.true;
+      expect(SvgTestHelper.isIndependentAxis(line, props)).to.equal(true);
     });
 
     it("renders a dependent axis if specified", () => {
@@ -75,7 +74,7 @@ describe("components/victory-axis", () => {
         <VictoryAxis dependentAxis {...props}/>
       );
       const line = wrapper.find(AxisLine);
-      expect(SvgTestHelper.isDependentAxis(line, props)).to.be.true;
+      expect(SvgTestHelper.isDependentAxis(line, props)).to.equal(true);
     });
   });
 
