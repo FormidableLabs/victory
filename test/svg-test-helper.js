@@ -38,7 +38,8 @@ const expectations = {
   /**
    * Assert the wrapper renders a rectangular shape.
    *
-   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `path` node.
    * @returns {Boolean} Whether the expectation is met.
    */
   expectIsRectangular(wrapper) {
@@ -50,11 +51,23 @@ const expectations = {
   /**
    * Assert the wrapper renders a circular shape.
    *
-   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `path` node.
    * @returns {Boolean} Whether the expectation is met.
    */
   expectIsCircular(wrapper) {
     return expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
+  },
+
+  /**
+   * Assert the wrapper renders a line svg element.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * node.
+   * @returns {Boolean} Whether the expectation is met.
+   */
+  expectIsALine(wrapper) {
+    return expect($(wrapper.html()).is("line")).to.be.true;
   }
 };
 
@@ -62,7 +75,8 @@ const helpers = {
   /**
    * Retrieve the raw svg height of a bar.
    *
-   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `path` node.
    * @returns {Number} The height of the bar in svg units.
    */
   getBarHeight(wrapper) {
@@ -74,7 +88,8 @@ const helpers = {
   /**
    * Retrieve the raw svg coordinates for the center of a point.
    *
-   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `path` node.
    * @returns {Array} The x and y coordinates, respectively.
    */
   getSvgPointCoordinates(wrapper) {
@@ -112,6 +127,46 @@ const helpers = {
     const shiftedY = scaledY + domain.y[0];
 
     return [shiftedX, shiftedY];
+  },
+
+  /**
+   * Determine if the axis is an indepedent axis.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `line` node.
+   * @param {Object} svgDimensions - The dimensions of the axis.
+   * @param {Number} svgDimensions.width - The width of the line.
+   * @param {Number} svgDimenions.padding - The padding around the line.
+   * @returns {Boolean} Whether the wrapper renders an independent axis.
+  */
+  isHorizontalAxis(wrapper, svgDimensions) {
+    const { width, padding } = svgDimensions;
+    const {x1, x2, y1, y2} = $(wrapper.html()).attr();
+
+    const isHorizontalLine = (x1 !== x2) && (y1 === y2);
+    const isCorrectWidth = (width - padding * 2) === (x2 - x1);
+
+    return isHorizontalLine && isCorrectWidth;
+  },
+
+  /**
+   * Determine if the axis is an indepedent axis.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `line` node.
+   * @param {Object} svgDimensions - The dimensions of the axis.
+   * @param {Number} svgDimensions.height - The height of the line.
+   * @param {Number} svgDimenions.padding - The padding around the line.
+   * @returns {Boolean} Whether the wrapper renders a dependent axis.
+  */
+  isVerticalAxis(wrapper, svgDimensions) {
+    const { height, padding } = svgDimensions;
+    const {x1, x2, y1, y2} = $(wrapper.html()).attr();
+
+    const isVerticalLine = (x1 === x2) && (y1 !== y2);
+    const isCorrectHeight = (height - padding * 2) === (y2 - y1);
+
+    return isVerticalLine && isCorrectHeight;
   }
 };
 
