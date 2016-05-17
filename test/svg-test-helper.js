@@ -36,7 +36,7 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
   });
 };
 
-const getD3Path = (props) => {
+const calculateD3Path = (props) => {
   const {width, height, padding, scale, interpolation, data} = props;
   const scaleType = `scale${scale[0].toUpperCase() + scale.slice(1)}`;
   const curveType =
@@ -122,7 +122,7 @@ const expectations = {
     expect(
       $(wrapper.html()).attr("d")
     ).to.equal(
-      getD3Path(props)
+      calculateD3Path(props)
     );
   }
 };
@@ -186,7 +186,7 @@ const helpers = {
   },
 
   /**
-   * Determine if the axis is an indepedent axis.
+   * Determine if the axis is an horizontal axis.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
    * `line` node.
@@ -206,7 +206,7 @@ const helpers = {
   },
 
   /**
-   * Determine if the axis is an indepedent axis.
+   * Determine if the axis is a vertical axis.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
    * `line` node.
