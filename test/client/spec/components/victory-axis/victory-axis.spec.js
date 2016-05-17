@@ -33,12 +33,13 @@ describe("components/victory-axis", () => {
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
-    it("renders 6 ticks", () => {
+    it("renders the appropriate number of ticks", () => {
+      const tickValues = [1, 2, 3];
       const wrapper = shallow(
-        <VictoryAxis/>
+        <VictoryAxis tickValues={tickValues}/>
       );
       const ticks = wrapper.find(Tick);
-      expect(ticks.length).to.equal(6);
+      expect(ticks.length).to.equal(tickValues.length);
     });
 
     it("renders ticks as lines", () => {
@@ -59,22 +60,22 @@ describe("components/victory-axis", () => {
   });
 
   describe("dependentAxis prop", () => {
-    it("renders an independent axis by default", () => {
+    it("renders a horizontal axis by default", () => {
       const props = {padding: 50, width: 300};
       const wrapper = shallow(
         <VictoryAxis {...props}/>
       );
       const line = wrapper.find(AxisLine);
-      expect(SvgTestHelper.isIndependentAxis(line, props)).to.equal(true);
+      expect(SvgTestHelper.isHorizontalAxis(line, props)).to.equal(true);
     });
 
-    it("renders a dependent axis if specified", () => {
+    it("renders a vertical axis if specified", () => {
       const props = {padding: 50, height: 300};
       const wrapper = shallow(
         <VictoryAxis dependentAxis {...props}/>
       );
       const line = wrapper.find(AxisLine);
-      expect(SvgTestHelper.isDependentAxis(line, props)).to.equal(true);
+      expect(SvgTestHelper.isVerticalAxis(line, props)).to.equal(true);
     });
   });
 

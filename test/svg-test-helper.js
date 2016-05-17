@@ -139,7 +139,7 @@ const helpers = {
    * @param {Number} svgDimenions.padding - The padding around the line.
    * @returns {Boolean} Whether the wrapper renders an independent axis.
   */
-  isIndependentAxis(wrapper, svgDimensions) {
+  isHorizontalAxis(wrapper, svgDimensions) {
     const { width, padding } = svgDimensions;
     const {x1, x2, y1, y2} = $(wrapper.html()).attr();
 
@@ -159,7 +159,7 @@ const helpers = {
    * @param {Number} svgDimenions.padding - The padding around the line.
    * @returns {Boolean} Whether the wrapper renders a dependent axis.
   */
-  isDependentAxis(wrapper, svgDimensions) {
+  isVerticalAxis(wrapper, svgDimensions) {
     const { height, padding } = svgDimensions;
     const {x1, x2, y1, y2} = $(wrapper.html()).attr();
 
