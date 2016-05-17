@@ -66,17 +66,17 @@ const calculateD3Path = (props, pathType) => {
     .range([height - padding, padding]);
 
   switch (pathType) {
-    case "line":
-      return d3Shape.line()
-        .curve(d3Shape[curveType])
-        .x((d) => scaleX(d.x))
-        .y((d) => scaleY(d.y))(data);
-    case "area":
-      return d3Shape.area()
-        .curve(d3Shape[curveType])
-        .x((d) => scaleX(d.x))
-        .y1((d) => scaleY(d.y1))
-        .y0((d) => scaleY(d.y0))(data);
+  case "line":
+    return d3Shape.line()
+      .curve(d3Shape[curveType])
+      .x((d) => scaleX(d.x))
+      .y((d) => scaleY(d.y))(data);
+  case "area":
+    return d3Shape.area()
+      .curve(d3Shape[curveType])
+      .x((d) => scaleX(d.x))
+      .y1((d) => scaleY(d.y1))
+      .y0((d) => scaleY(d.y0))(data);
   }
 };
 
@@ -125,14 +125,14 @@ const expectations = {
    * @param {String} props.scale - The type of scale.
    * @param {String} props.interpolation - The type of curve.
    * @param {Array} props.data - The raw data for the chart.
+   * @param {String} pathType - The type of path d3 should generate (e.g.
+   * "line", "area").
    * @returns {undefined}
    */
-  expectCorrectD3Path(wrapper, props) {
-    expect(
-      $(wrapper.html()).attr("d")
-    ).to.equal(
-      calculateD3Path(props)
-    );
+  expectCorrectD3Path(wrapper, props, pathType) {
+    const d = $(wrapper.html()).attr("d");
+    expect(d).to.not.equal(undefined);
+    expect(d).to.equal(calculateD3Path(props, pathType));
   }
 };
 

@@ -91,7 +91,7 @@ describe("components/victory-line", () => {
         <VictoryLine {...props}/>
       );
       const line = wrapper.find(Line);
-      SvgTestHelper.expectCorrectD3Path(line, props);
+      SvgTestHelper.expectCorrectD3Path(line, props, "line");
     });
   });
 
