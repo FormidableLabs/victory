@@ -90,7 +90,7 @@ describe("components/victory-area", () => {
   });
 
   describe("component rendering with data", () => {
-    it("renders the correct d3 paths", () => {
+    it("renders the correct d3 path", () => {
       const props = {
         width: 400,
         height: 300,
