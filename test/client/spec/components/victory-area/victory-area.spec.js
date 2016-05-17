@@ -7,6 +7,7 @@
 import React from "react";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryArea from "src/components/victory-area/victory-area";
 import { VictoryLabel } from "victory-core";
 import Area from "src/components/victory-area/area";
@@ -85,6 +86,25 @@ describe("components/victory-area", () => {
       const viewBoxValue =
         `0 0 ${VictoryArea.defaultProps.width} ${VictoryArea.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+    });
+  });
+
+  describe("component rendering with data", () => {
+    it("renders the correct d3 paths", () => {
+      const props = {
+        width: 400,
+        height: 300,
+        padding: 50,
+        scale: "linear",
+        interpolation: "linear",
+        data: [{x: 0, y: 0}, {x: 2, y: 3}, {x: 4, y: 1}]
+      };
+      const wrapper = shallow(
+        <VictoryArea {...props}/>
+      );
+
+      const area = wrapper.find(Area);
+      SvgTestHelper.expectCorrectD3Path(area, props);
     });
   });
 
