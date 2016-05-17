@@ -91,19 +91,7 @@ describe("components/victory-line", () => {
         <VictoryLine {...props}/>
       );
       const line = wrapper.find(Line);
-
-      const svgDimensions = {
-        width: props.width,
-        height: props.height,
-        padding: props.padding
-      };
-      const d3Attributes = {
-        scaleType: props.scale,
-        curveType: props.interpolation,
-        data: props.data
-      };
-
-      SvgTestHelper.expectCorrectD3Path(line, svgDimensions, d3Attributes);
+      SvgTestHelper.expectCorrectD3Path(line, props);
     });
   });
 
