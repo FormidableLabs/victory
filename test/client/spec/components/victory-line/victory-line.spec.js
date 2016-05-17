@@ -6,11 +6,9 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import $ from "cheerio";
 import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
-import d3Shape from "d3-shape";
-import d3Scale from "d3-scale";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";
 import { VictoryLabel } from "victory-core";
@@ -80,7 +78,7 @@ describe("components/victory-line", () => {
       expect(lines.length).to.equal(1);
     });
 
-    it("renders a path with the correct d3Shape d attribute", () => {
+    it.only("renders a path with the correct d3Shape d attribute", () => {
       const props = {
         interpolation: "linear",
         scale: "linear",
@@ -92,23 +90,20 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine {...props}/>
       );
-
       const line = wrapper.find(Line);
-      const path = $(line.html()).attr("d");
 
-      const scaleX = d3Scale.scaleLinear()
-        .domain([0, 2])
-        .range([props.padding, props.width - props.padding]);
-      const scaleY = d3Scale.scaleLinear()
-        .domain([0, 2])
-        .range([props.height - props.padding, props.padding]);
+      const svgDimensions = {
+        width: props.width,
+        height: props.height,
+        padding: props.padding
+      };
+      const d3Attributes = {
+        scaleType: "scaleLinear",
+        curveType: "curveLinear",
+        data: props.data
+      };
 
-      const d3Path = d3Shape.line()
-        .curve(d3Shape.curveLinear)
-        .x((d) => scaleX(d.x))
-        .y((d) => scaleY(d.y))(props.data);
-
-      expect(path).to.equal(d3Path);
+      SvgTestHelper.expectCorrectD3Path(line, svgDimensions, d3Attributes);
     });
   });
 

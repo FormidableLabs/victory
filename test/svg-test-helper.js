@@ -1,4 +1,6 @@
 import $ from "cheerio";
+import d3Shape from "d3-shape";
+import d3Scale from "d3-scale";
 
 const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
@@ -34,6 +36,40 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
   });
 };
 
+const getD3Path = (svgDimensions, d3Attributes) => {
+  const {width, height, padding} = svgDimensions;
+  const {scaleType, curveType, data} = d3Attributes;
+
+  const domain = data.reduce((prev, datum) => {
+    if (datum.x < prev.x[0]) {
+      prev.x[0] = datum.x;
+    } else if (datum.x > prev.x[1]) {
+      prev.x[1] = datum.x;
+    }
+
+    if (datum.y < prev.y[0]) {
+      prev.y[0] = datum.y;
+    } else if (datum.y > prev.y[1]) {
+      prev.y[1] = datum.y;
+    }
+
+    return prev;
+  }, {x: [0, 0], y: [0, 0]});
+
+  const scaleX = d3Scale[scaleType]()
+    .domain(domain.x)
+    .range([padding, width - padding]);
+  const scaleY = d3Scale[scaleType]()
+    .domain(domain.y)
+    .range([height - padding, padding]);
+
+  return d3Shape.line()
+    .curve(d3Shape[curveType])
+    .x((d) => scaleX(d.x))
+    .y((d) => scaleY(d.y))(data);
+};
+
+
 const expectations = {
   /**
    * Assert the wrapper renders a rectangular shape.
@@ -42,9 +78,7 @@ const expectations = {
    * @returns {Boolean} Whether the expectation is met.
    */
   expectIsRectangular(wrapper) {
-    return expect(
-      exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)
-    ).to.be.true;
+    expect(exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)).to.equal(true);
   },
 
   /**
@@ -54,7 +88,15 @@ const expectations = {
    * @returns {Boolean} Whether the expectation is met.
    */
   expectIsCircular(wrapper) {
-    return expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.be.true;
+    expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.equal(true);
+  },
+
+  expectCorrectD3Path(wrapper, svgDimensions, d3Attributes) {
+    expect(
+      $(wrapper.html()).attr("d")
+    ).to.equal(
+      getD3Path(svgDimensions, d3Attributes)
+    );
   }
 };
 
