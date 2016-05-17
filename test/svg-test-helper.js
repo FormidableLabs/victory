@@ -1,4 +1,3 @@
-import $ from "cheerio";
 import d3Shape from "d3-shape";
 import d3Scale from "d3-scale";
 
@@ -25,7 +24,7 @@ const parseSvgPathCommands = (commandStr) => {
 };
 
 const getPathCommandsFromWrapper = (wrapper) => {
-  const commandStr = $(wrapper.html()).attr("d");
+  const commandStr = wrapper.render().find("path").attr("d");
   return parseSvgPathCommands(commandStr);
 };
 
@@ -110,7 +109,7 @@ const expectations = {
    * @returns {undefined}
    */
   expectIsALine(wrapper) {
-    expect($(wrapper.html()).is("line")).to.equal(true);
+    expect(wrapper.render().find("line").is("line")).to.equal(true);
   },
 
   /**
@@ -130,9 +129,9 @@ const expectations = {
    * @returns {undefined}
    */
   expectCorrectD3Path(wrapper, props, pathType) {
-    const d = $(wrapper.html()).attr("d");
-    expect(d).to.not.equal(undefined);
-    expect(d).to.equal(calculateD3Path(props, pathType));
+    const path = wrapper.render().find("path").attr("d");
+    expect(path).to.not.equal(undefined);
+    expect(path).to.equal(calculateD3Path(props, pathType));
   }
 };
 
@@ -206,7 +205,7 @@ const helpers = {
   */
   isHorizontalAxis(wrapper, svgDimensions) {
     const { width, padding } = svgDimensions;
-    const {x1, x2, y1, y2} = $(wrapper.html()).attr();
+    const {x1, x2, y1, y2} = wrapper.render().find("line").attr();
 
     const isHorizontalLine = (x1 !== x2) && (y1 === y2);
     const isCorrectWidth = (width - padding * 2) === (x2 - x1);
@@ -226,7 +225,7 @@ const helpers = {
   */
   isVerticalAxis(wrapper, svgDimensions) {
     const { height, padding } = svgDimensions;
-    const {x1, x2, y1, y2} = $(wrapper.html()).attr();
+    const {x1, x2, y1, y2} = wrapper.render().find("line").attr();
 
     const isVerticalLine = (x1 === x2) && (y1 !== y2);
     const isCorrectHeight = (height - padding * 2) === (y2 - y1);
