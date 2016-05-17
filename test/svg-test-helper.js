@@ -39,6 +39,8 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
 const getD3Path = (svgDimensions, d3Attributes) => {
   const {width, height, padding} = svgDimensions;
   const {scaleType, curveType, data} = d3Attributes;
+  const scale = `scale${scaleType[0].toUpperCase() + scaleType.slice(1)}`;
+  const curve = `curve${curveType[0].toUpperCase() + curveType.slice(1)}`;
 
   const domain = data.reduce((prev, datum) => {
     if (datum.x < prev.x[0]) {
@@ -56,26 +58,25 @@ const getD3Path = (svgDimensions, d3Attributes) => {
     return prev;
   }, {x: [0, 0], y: [0, 0]});
 
-  const scaleX = d3Scale[scaleType]()
+  const scaleX = d3Scale[scale]()
     .domain(domain.x)
     .range([padding, width - padding]);
-  const scaleY = d3Scale[scaleType]()
+  const scaleY = d3Scale[scale]()
     .domain(domain.y)
     .range([height - padding, padding]);
 
   return d3Shape.line()
-    .curve(d3Shape[curveType])
+    .curve(d3Shape[curve])
     .x((d) => scaleX(d.x))
     .y((d) => scaleY(d.y))(data);
 };
-
 
 const expectations = {
   /**
    * Assert the wrapper renders a rectangular shape.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper.
-   * @returns {Boolean} Whether the expectation is met.
+   * @returns {undefined}
    */
   expectIsRectangular(wrapper) {
     expect(exhibitsShapeSequence(wrapper, RECTANGULAR_SEQUENCE)).to.equal(true);
@@ -85,12 +86,27 @@ const expectations = {
    * Assert the wrapper renders a circular shape.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper.
-   * @returns {Boolean} Whether the expectation is met.
+   * @returns {undefined}
    */
   expectIsCircular(wrapper) {
     expect(exhibitsShapeSequence(wrapper, CIRCULAR_SEQUENCE)).to.equal(true);
   },
 
+  /**
+   * Assert the wrapper renders the correct path.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
+   * `path` node.
+   * @param {Object} svgDimensions - Dimensions of the svg.
+   * @param {Number} svgDimensions.width - The width of the svg.
+   * @param {Number} svgDimensions.height - The height of the svg.
+   * @param {Number} svgDimensions.padding - The padding of the svg.
+   * @param {Object} d3Attributes - Data passed into d3 to get the path.
+   * @param {String} d3.attributes.scaleType - The type of scale.
+   * @param {String} d3.attributes.curveType - The type of curve.
+   * @param {Array} d3.attributes.data - The raw data for the chart.
+   * @returns {undefined}
+   */
   expectCorrectD3Path(wrapper, svgDimensions, d3Attributes) {
     expect(
       $(wrapper.html()).attr("d")

@@ -98,8 +98,8 @@ describe("components/victory-line", () => {
         padding: props.padding
       };
       const d3Attributes = {
-        scaleType: "scaleLinear",
-        curveType: "curveLinear",
+        scaleType: props.scale,
+        curveType: props.interpolation,
         data: props.data
       };
 
