@@ -71,11 +71,14 @@ const calculateD3Path = (props, pathType) => {
       .x((d) => scaleX(d.x))
       .y((d) => scaleY(d.y))(data);
   case "area":
+    const modifiedData = props.data.map((datum) => {
+      return {x: datum.x, y: datum.y, y1: datum.y, y0: datum.y0};
+    });
     return d3Shape.area()
       .curve(d3Shape[curveType])
       .x((d) => scaleX(d.x))
       .y1((d) => scaleY(d.y1))
-      .y0((d) => scaleY(d.y0))(data);
+      .y0((d) => scaleY(d.y0))(modifiedData);
   }
 };
 

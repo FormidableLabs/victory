@@ -97,14 +97,14 @@ describe("components/victory-area", () => {
         padding: 50,
         scale: "linear",
         interpolation: "linear",
-        data: [{x: 0, y: 0}, {x: 2, y: 3}, {x: 4, y: 1}]
+        data: [{x: 0, y: 0, y0: 0}, {x: 2, y: 3, y0: 0}, {x: 4, y: 1, y0: 0}]
       };
       const wrapper = shallow(
         <VictoryArea {...props}/>
       );
 
       const area = wrapper.find(Area);
-      SvgTestHelper.expectCorrectD3Path(area, props);
+      SvgTestHelper.expectCorrectD3Path(area, props, "area");
     });
   });
 
