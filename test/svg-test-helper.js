@@ -36,7 +36,7 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
   });
 };
 
-const calculateD3Path = (props) => {
+const calculateD3Path = (props, pathType) => {
   const {width, height, padding, scale, interpolation, data} = props;
   const scaleType = `scale${scale[0].toUpperCase() + scale.slice(1)}`;
   const curveType =
@@ -65,10 +65,19 @@ const calculateD3Path = (props) => {
     .domain(domain.y)
     .range([height - padding, padding]);
 
-  return d3Shape.line()
-    .curve(d3Shape[curveType])
-    .x((d) => scaleX(d.x))
-    .y((d) => scaleY(d.y))(data);
+  switch (pathType) {
+    case "line":
+      return d3Shape.line()
+        .curve(d3Shape[curveType])
+        .x((d) => scaleX(d.x))
+        .y((d) => scaleY(d.y))(data);
+    case "area":
+      return d3Shape.area()
+        .curve(d3Shape[curveType])
+        .x((d) => scaleX(d.x))
+        .y1((d) => scaleY(d.y1))
+        .y0((d) => scaleY(d.y0))(data);
+  }
 };
 
 const expectations = {
