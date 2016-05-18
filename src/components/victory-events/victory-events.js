@@ -1,7 +1,7 @@
 import keys from "lodash/keys";
 import assign from "lodash/assign";
 import React, { PropTypes } from "react";
-import { Helpers } from "victory-core";
+import Events from "../../helpers/Events";
 
 export default class VictoryEvents extends React.Component {
   static role = "event-wrapper";
@@ -22,8 +22,8 @@ export default class VictoryEvents extends React.Component {
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    this.getEvents = Events.getEvents.bind(this);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
   getNewChildren(props) {

@@ -10,6 +10,7 @@ import Bar from "./bar";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
+import Events from "../../helpers/events";
 
 const defaultStyles = {
   data: {
@@ -271,8 +272,8 @@ export default class VictoryBar extends React.Component {
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    this.getEvents = Events.getEvents.bind(this);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
   getScale(props) {
@@ -387,7 +388,7 @@ export default class VictoryBar extends React.Component {
         }
       );
       const barComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, datum.eventKey, dataProps)}
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, datum.eventKey, dataProps)}
       ));
       const text = this.getLabel(props, dataProps.datum, index);
       if (text !== null && text !== undefined) {
@@ -418,7 +419,7 @@ export default class VictoryBar extends React.Component {
           }
         );
         const barLabel = React.cloneElement(labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+          events: Events.getPartialEvents(labelEvents, index, labelProps)
         }, labelProps));
         return (
           <g key={`bar-group-${index}`}>
