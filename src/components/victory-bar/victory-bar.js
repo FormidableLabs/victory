@@ -1,7 +1,4 @@
-import omit from "lodash/omit";
-import defaults from "lodash/defaults";
-import isFunction from "lodash/isFunction";
-import assign from "lodash/assign";
+import { assign, defaults,  isFunction, omit } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
@@ -412,6 +409,7 @@ export default class VictoryBar extends React.Component {
             y0: position.y0,
             text,
             index,
+            scale,
             datum: dataProps.datum,
             textAnchor: labelStyle.textAnchor || anchors.text,
             verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,

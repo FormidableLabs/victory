@@ -1,7 +1,6 @@
 /*global window:false */
 import React from "react";
-import range from "lodash/range";
-import random from "lodash/random";
+import { random, range } from "lodash";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
@@ -174,6 +173,8 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
+            <VictoryAxis/>
+            <VictoryAxis dependentAxis crossAxis={false}/>
             <VictoryLine
               style={{data:
                 {stroke: "red", strokeWidth: 4}

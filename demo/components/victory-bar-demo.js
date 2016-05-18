@@ -1,8 +1,7 @@
 /*global window:false*/
 import React from "react";
-import range from "lodash/range";
-import random from "lodash/random";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryEvents} from "../../src/index";
+import { random, range } from "lodash";
 
 export default class App extends React.Component {
   constructor() {

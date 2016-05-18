@@ -1,8 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Ecology from "ecology";
-import range from "lodash/range";
-import random from "lodash/random";
+import { random, range } from "lodash";
 import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
 import {

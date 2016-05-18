@@ -1,6 +1,4 @@
-import sortBy from "lodash/sortBy";
-import defaults from "lodash/defaults";
-import assign from "lodash/assign";
+import { assign, defaults, sortBy } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import Scale from "../../helpers/scale";
@@ -350,6 +348,7 @@ export default class VictoryLine extends React.Component {
             style: labelStyle,
             data,
             text,
+            scale,
             textAnchor: labelStyle.textAnchor || "start",
             verticalAnchor: labelStyle.verticalAnchor || "middle",
             angle: labelStyle.angle

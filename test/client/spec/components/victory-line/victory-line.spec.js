@@ -6,8 +6,9 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import omit from "lodash/omit";
+import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
+import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryLine from "src/components/victory-line/victory-line";
 import Line from "src/components/victory-line/line-segment";
 import { VictoryLabel } from "victory-core";
@@ -38,8 +39,8 @@ describe("components/victory-line", () => {
     });
   });
 
-  describe("rendering with null data", () => {
-    it("renders one dataComponent for the line when there is no null data", () => {
+  describe("rendering with data", () => {
+    it("renders one dataComponent for the line", () => {
       const data = [
         {x: 1, y: 1},
         {x: 2, y: 4},
@@ -60,7 +61,7 @@ describe("components/victory-line", () => {
       expect(lines.length).to.equal(1);
     });
 
-    it("renders one line segment when there is no null data", () => {
+    it("renders one line segment for the line", () => {
       const data = [
         {x: 1, y: 1},
         {x: 2, y: 4},
@@ -77,6 +78,24 @@ describe("components/victory-line", () => {
       expect(lines.length).to.equal(1);
     });
 
+    it("renders the correct d3Shape path", () => {
+      const props = {
+        interpolation: "linear",
+        scale: "linear",
+        padding: 50,
+        width: 400,
+        height: 300,
+        data: [{x: 0, y: 0}, {x: 1, y: 1}, {x: 2, y: 2}]
+      };
+      const wrapper = shallow(
+        <VictoryLine {...props}/>
+      );
+      const line = wrapper.find(Line);
+      SvgTestHelper.expectCorrectD3Path(line, props, "line");
+    });
+  });
+
+  describe("rendering with null data", () => {
     it("renders two line segments when there are two continuous sections of data", () => {
       const data = [
         {x: 1, y: 1},

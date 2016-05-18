@@ -1,5 +1,4 @@
-import flatten from "lodash/flatten";
-import includes from "lodash/includes";
+import { flatten, includes } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
