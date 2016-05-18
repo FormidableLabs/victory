@@ -1,4 +1,3 @@
-import $ from "cheerio";
 import d3Shape from "d3-shape";
 import d3Scale from "d3-scale";
 
@@ -25,7 +24,7 @@ const parseSvgPathCommands = (commandStr) => {
 };
 
 const getPathCommandsFromWrapper = (wrapper) => {
-  const commandStr = $(wrapper.html()).attr("d");
+  const commandStr = wrapper.render().find("path").attr("d");
   return parseSvgPathCommands(commandStr);
 };
 
@@ -36,7 +35,7 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
   });
 };
 
-const getD3Path = (props) => {
+const calculateD3Path = (props, pathType) => {
   const {width, height, padding, scale, interpolation, data} = props;
   const scaleType = `scale${scale[0].toUpperCase() + scale.slice(1)}`;
   const curveType =
@@ -65,10 +64,22 @@ const getD3Path = (props) => {
     .domain(domain.y)
     .range([height - padding, padding]);
 
-  return d3Shape.line()
-    .curve(d3Shape[curveType])
-    .x((d) => scaleX(d.x))
-    .y((d) => scaleY(d.y))(data);
+  switch (pathType) {
+  case "line":
+    return d3Shape.line()
+      .curve(d3Shape[curveType])
+      .x((d) => scaleX(d.x))
+      .y((d) => scaleY(d.y))(data);
+  case "area":
+    const modifiedData = props.data.map((datum) => {
+      return {x: datum.x, y: datum.y, y1: datum.y, y0: datum.y0};
+    });
+    return d3Shape.area()
+      .curve(d3Shape[curveType])
+      .x((d) => scaleX(d.x))
+      .y1((d) => scaleY(d.y1))
+      .y0((d) => scaleY(d.y0))(modifiedData);
+  }
 };
 
 const expectations = {
@@ -101,7 +112,7 @@ const expectations = {
    * @returns {undefined}
    */
   expectIsALine(wrapper) {
-    expect($(wrapper.html()).is("line")).to.equal(true);
+    expect(wrapper.render().find("line").is("line")).to.equal(true);
   },
 
   /**
@@ -116,14 +127,14 @@ const expectations = {
    * @param {String} props.scale - The type of scale.
    * @param {String} props.interpolation - The type of curve.
    * @param {Array} props.data - The raw data for the chart.
+   * @param {String} pathType - The type of path d3 should generate (e.g.
+   * "line", "area").
    * @returns {undefined}
    */
-  expectCorrectD3Path(wrapper, props) {
-    expect(
-      $(wrapper.html()).attr("d")
-    ).to.equal(
-      getD3Path(props)
-    );
+  expectCorrectD3Path(wrapper, props, pathType) {
+    const path = wrapper.render().find("path").attr("d");
+    expect(path).to.not.equal(undefined);
+    expect(path).to.equal(calculateD3Path(props, pathType));
   }
 };
 
@@ -186,7 +197,7 @@ const helpers = {
   },
 
   /**
-   * Determine if the axis is an indepedent axis.
+   * Determine if the axis is an horizontal axis.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
    * `line` node.
@@ -197,7 +208,7 @@ const helpers = {
   */
   isHorizontalAxis(wrapper, svgDimensions) {
     const { width, padding } = svgDimensions;
-    const {x1, x2, y1, y2} = $(wrapper.html()).attr();
+    const {x1, x2, y1, y2} = wrapper.render().find("line").attr();
 
     const isHorizontalLine = (x1 !== x2) && (y1 === y2);
     const isCorrectWidth = (width - padding * 2) === (x2 - x1);
@@ -206,7 +217,7 @@ const helpers = {
   },
 
   /**
-   * Determine if the axis is an indepedent axis.
+   * Determine if the axis is a vertical axis.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper that wraps a single
    * `line` node.
@@ -217,7 +228,7 @@ const helpers = {
   */
   isVerticalAxis(wrapper, svgDimensions) {
     const { height, padding } = svgDimensions;
-    const {x1, x2, y1, y2} = $(wrapper.html()).attr();
+    const {x1, x2, y1, y2} = wrapper.render().find("line").attr();
 
     const isVerticalLine = (x1 === x2) && (y1 !== y2);
     const isCorrectHeight = (height - padding * 2) === (y2 - y1);

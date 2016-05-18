@@ -78,7 +78,7 @@ describe("components/victory-line", () => {
       expect(lines.length).to.equal(1);
     });
 
-    it("renders a path with the correct d3Shape d attribute", () => {
+    it("renders the correct d3Shape path", () => {
       const props = {
         interpolation: "linear",
         scale: "linear",
@@ -91,7 +91,7 @@ describe("components/victory-line", () => {
         <VictoryLine {...props}/>
       );
       const line = wrapper.find(Line);
-      SvgTestHelper.expectCorrectD3Path(line, props);
+      SvgTestHelper.expectCorrectD3Path(line, props, "line");
     });
   });
 
