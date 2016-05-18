@@ -1,4 +1,4 @@
-import partial from "lodash/partial";
+import { merge, partial } from "lodash";
 
 export default {
   getPartialEvents(events, index, childProps) {
