@@ -15,7 +15,7 @@ VictoryChart includes:
 - [VictoryScatter](http://formidable.com/open-source/victory/docs/victory-scatter)
 
 ## API Documentation
-Detailed documentation and interactive examples can be found at http://formidable.com/open-source/victory/victory-chart/
+Detailed documentation and interactive examples can be found at http://formidable.com/open-source/victory/docs/victory-chart
 
 ## Development
 
