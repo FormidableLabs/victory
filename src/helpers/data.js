@@ -48,7 +48,7 @@ export default {
   },
 
   getCategories(props, axis) {
-    if (!props.categories) {
+    if (!props || !props.categories) {
       return undefined;
     }
     return Array.isArray(props.categories) ? props.categories : props.categories[axis];

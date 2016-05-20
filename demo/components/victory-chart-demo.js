@@ -5,6 +5,7 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
+import { VictoryLabel } from "victory-core";
 
 
 const UPDATE_INTERVAL = 3000;
@@ -161,6 +162,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}/>
 
           <VictoryChart style={chartStyle}>
+            <VictoryLabel x={150} y={150}>WOW</VictoryLabel>
             <VictoryScatter/>
           </VictoryChart>
 
@@ -335,16 +337,16 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryStack colorScale={"qualitative"}>
               <VictoryArea
-                data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}]}
               />
               <VictoryArea
-                data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
+                data={[{x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}]}
               />
               <VictoryArea
-                data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
+                data={[{x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}]}
               />
               <VictoryArea
-                data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}]}
               />
             </VictoryStack>
           </VictoryChart>

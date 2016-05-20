@@ -2,6 +2,23 @@
 import React from "react";
 import { random, range } from "lodash";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack} from "../../src/index";
+import {VictoryLabel} from "victory-core";
+
+class CustomLabel extends React.Component {
+  static propTypes = {
+    ...VictoryLabel.propTypes,
+    offset: React.PropTypes.number
+  };
+
+  renderLabel() {
+    const {offset, x} = this.props;
+    return <VictoryLabel {...this.props} x={x + offset}/>
+  }
+
+  render() {
+    return this.renderLabel();
+  }
+}
 
 export default class App extends React.Component {
   constructor() {
@@ -90,6 +107,16 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
+          <VictoryStack colorScale="warm" style={{parent: parentStyle}}>
+            <VictoryBar
+              labelComponent={<CustomLabel offset={25}/>}
+              data={[{x: "a", y: 2, label: "WOW"}, {x: "b", y: 3, label: "COOL"}]}
+            />
+            <VictoryBar
+              data={[{x: "c", y: 2}, {x: "d", y: 3}]}
+            />
+          </VictoryStack>
+
         <VictoryBar
           style={{
             parent: parentStyle,

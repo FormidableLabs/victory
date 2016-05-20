@@ -1,4 +1,4 @@
-import { defaults, flatten, partialRight, uniq } from "lodash";
+import { defaults, flatten, isFunction, partialRight, uniq } from "lodash";
 import React from "react";
 import Data from "./data";
 import Domain from "./domain";
@@ -68,20 +68,31 @@ export default {
   },
 
   getDomainFromChildren(props, axis) {
+    const getChildDomains = (children, axis) => {
+      return children.reduce((memo, child) => {
+        if (child.type && isFunction(child.type.getDomain)) {
+          const childDomain = child.props && child.type.getDomain(child.props, axis);
+          return childDomain ? memo.concat(childDomain) : memo;
+        } else if (child.props && child.props.children) {
+          return memo.concat(getChildDomains(React.Children.toArray(child.props.children), axis));
+        }
+        return memo;
+      }, []);
+    };
+
     const childComponents = React.Children.toArray(props.children);
     let domain;
     if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
       domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
     } else {
-      const childDomains = childComponents.reduce((prev, component) => {
-        const childDomain = component.type.getDomain(component.props, axis);
-        return childDomain ? prev.concat(childDomain) : prev;
-      }, []);
+      const childDomains = getChildDomains(childComponents, axis);
       domain = childDomains.length === 0 ?
         [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
     }
     return Domain.padDomain(domain, props, axis);
   },
+
+
 
   getStackedDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
@@ -99,6 +110,16 @@ export default {
     });
     const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
     return Domain.padDomain(dataDomain, props, axis);
+  },
+
+  getChildData(children) {
+    return children.map((child) => {
+      if (child.type && isFunction(child.type.getData)) {
+        return child.type.getData(child.props);
+      } else if (child.props.children) {
+        return getChildData(React.Children.toArray(child.props.children))
+      }
+    });
   },
 
   getColor(calculatedProps, index) {
