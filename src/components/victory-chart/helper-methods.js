@@ -1,4 +1,4 @@
-import { flatten, invert, sortBy, uniq, values } from "lodash";
+import { flatten, invert, isFunction, sortBy, uniq, values } from "lodash";
 import Axis from "../../helpers/axis";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -121,21 +121,24 @@ export default {
     }
   },
 
-  getStringsFromChildData(child, axis) {
-    if (!child.props.data && !child.type.getData) {
-      return [];
-    }
-    if (child.props.data) {
-      return Data.getStringsFromData(child.props, axis);
-    }
-    const data = flatten(child.type.getData(child.props));
-    const attr = axis === "x" ? "xName" : "yName";
-    return data.reduce((prev, datum) => {
-      return datum[attr] ? prev.concat(datum[attr]) : prev;
-    }, []);
-  },
-
   createStringMap(childComponents, axis) {
+    const getStringsFromChildren = (children, axis) => {
+      return children.reduce((memo, child) => {
+        if (child.props && child.props.data) {
+          return memo.concat(Data.getStringsFromData(child.props, axis));
+        } else if (child.type && isFunction(child.type.getData)) {
+          const data = flatten(child.type.getData(child.props));
+          const attr = axis === "x" ? "xName" : "yName";
+          return memo.concat(data.reduce((prev, datum) => {
+            return datum[attr] ? prev.concat(datum[attr]) : prev;
+          }, []));
+        } else if (child.props && child.props.children) {
+          return memo.concat(getStringsFromChildren(React.Children.toArray(child.props.children), axis));
+        }
+        return memo;
+      }, []);
+    };
+
     const axisComponent = Axis.getAxisComponent(childComponents, axis);
     const tickStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
 
@@ -143,10 +146,7 @@ export default {
       const categoryData = Data.getStringsFromCategories(component.props, axis);
       return categoryData ? prev.concat(categoryData) : prev;
     }, []);
-    const dataStrings = childComponents.reduce((prev, component) => {
-      const stringData = this.getStringsFromChildData(component, axis);
-      return stringData ? prev.concat(stringData) : prev;
-    }, []);
+    const dataStrings = getStringsFromChildren(childComponents, axis);
     const allStrings = uniq(flatten([...tickStrings, ...categoryStrings, ...dataStrings]));
     return allStrings.length === 0 ? null :
       allStrings.reduce((memo, string, index) => {
