@@ -7,12 +7,13 @@ import {VictoryLabel} from "victory-core";
 class CustomLabel extends React.Component {
   static propTypes = {
     ...VictoryLabel.propTypes,
-    offset: React.PropTypes.number
+    offset: React.PropTypes.number,
+    x: React.PropTypes.number
   };
 
   renderLabel() {
     const {offset, x} = this.props;
-    return <VictoryLabel {...this.props} x={x + offset}/>
+    return <VictoryLabel {...this.props} x={x + offset}/>;
   }
 
   render() {

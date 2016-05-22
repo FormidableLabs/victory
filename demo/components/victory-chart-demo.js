@@ -6,9 +6,33 @@ import {
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
 import { VictoryLabel } from "victory-core";
+import { assign } from "lodash";
 
 
 const UPDATE_INTERVAL = 3000;
+
+class Wrapper extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ])
+  };
+
+
+  renderChildren(props) {
+    const children = React.Children.toArray(props.children);
+    return children.map((child, index) => {
+      return React.cloneElement(child, assign({}, props, child.props));
+    });
+  }
+
+  render() {
+    return (
+      <g>{this.renderChildren(this.props)}</g>
+    );
+  }
+}
 
 class App extends React.Component {
   constructor(props) {
@@ -146,6 +170,14 @@ class App extends React.Component {
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
           <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
+          <Wrapper>
+            <VictoryBar
+              data={this.state.barTransitionData}
+            />
+            </Wrapper>
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
             <VictoryBar
               data={this.state.barTransitionData}
             />
@@ -177,12 +209,14 @@ class App extends React.Component {
           <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryAxis/>
             <VictoryAxis dependentAxis crossAxis={false}/>
-            <VictoryLine
-              style={{data:
-                {stroke: "red", strokeWidth: 4}
-              }}
-              y={(data) => Math.sin(2 * Math.PI * data.x)}
-            />
+            <Wrapper>
+              <VictoryLine
+                style={{data:
+                  {stroke: "red", strokeWidth: 4}
+                }}
+                y={(data) => Math.sin(2 * Math.PI * data.x)}
+              />
+            </Wrapper>
             <VictoryLine
               style={{data:
                 {stroke: "blue", strokeWidth: 4}
@@ -259,8 +293,10 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryAxis dependentAxis orientation="right"/>
             <VictoryAxis orientation="top"/>
-            <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
-            <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
+            <Wrapper>
+              <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
+              <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
+            </Wrapper>
           </VictoryChart>
 
           <VictoryChart style={chartStyle} animate={{duration: 2000}}
@@ -337,16 +373,24 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryStack colorScale={"qualitative"}>
               <VictoryArea
-                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}]}
+                data={[
+                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}
+                ]}
               />
               <VictoryArea
-                data={[{x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}]}
+                data={[
+                  {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}
+                ]}
               />
               <VictoryArea
-                data={[{x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}]}
+                data={[
+                  {x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}
+                ]}
               />
               <VictoryArea
-                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}]}
+                data={[
+                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}
+                ]}
               />
             </VictoryStack>
           </VictoryChart>

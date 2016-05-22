@@ -1,17 +1,13 @@
-import { defaults, flatten, isFunction, partialRight, uniq } from "lodash";
+import { defaults, flatten, isFunction, partialRight, uniq, first } from "lodash";
 import React from "react";
 import Data from "./data";
 import Domain from "./domain";
-import { Style, Transitions, Collection } from "victory-core";
+import { Style, Transitions, Helpers, Collection } from "victory-core";
 
 
 export default {
   getData(props) {
-    const childComponents = React.Children.toArray(props.children);
-    return childComponents.map((child) => {
-      const getData = child.type.getData || Data.getData;
-      return getData(child.props);
-    });
+    return this.getDataFromChildren(props);
   },
 
   setAnimationState(nextProps) {
@@ -68,13 +64,13 @@ export default {
   },
 
   getDomainFromChildren(props, axis) {
-    const getChildDomains = (children, axis) => {
+    const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
           const childDomain = child.props && child.type.getDomain(child.props, axis);
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
-          return memo.concat(getChildDomains(React.Children.toArray(child.props.children), axis));
+          return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
         }
         return memo;
       }, []);
@@ -85,14 +81,34 @@ export default {
     if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
       domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
     } else {
-      const childDomains = getChildDomains(childComponents, axis);
+      const childDomains = getChildDomains(childComponents);
       domain = childDomains.length === 0 ?
         [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
     }
     return Domain.padDomain(domain, props, axis);
   },
 
+  getDataFromChildren(props) {
+    const getData = (childProps) => {
+      const data = Data.getData(childProps);
+      return Array.isArray(data) && data.length > 0 ? data : undefined;
+    };
 
+    const getChildData = (children) => {
+      return children.map((child) => {
+        if (child.type && isFunction(child.type.getData)) {
+          const childData = child.props && child.type.getData(child.props);
+          return childData;
+        } else if (child.props && child.props.children) {
+          return getChildData(React.Children.toArray(child.props.children));
+        }
+        return getData(child.props);
+      });
+    };
+
+    return props.children ?
+      getChildData(React.Children.toArray(props.children)) : getData(props);
+  },
 
   getStackedDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
@@ -110,16 +126,6 @@ export default {
     });
     const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
     return Domain.padDomain(dataDomain, props, axis);
-  },
-
-  getChildData(children) {
-    return children.map((child) => {
-      if (child.type && isFunction(child.type.getData)) {
-        return child.type.getData(child.props);
-      } else if (child.props.children) {
-        return getChildData(React.Children.toArray(child.props.children))
-      }
-    });
   },
 
   getColor(calculatedProps, index) {
@@ -155,7 +161,7 @@ export default {
       return categoryData ? prev.concat(categoryData) : prev;
     }, []);
     const dataStrings = childComponents.reduce((prev, component) => {
-      const stringData = Data.getStringsFromData(component.props, axis);
+      const stringData = Helpers.getStringsFromData(component.props, axis);
       return stringData ? prev.concat(stringData) : prev;
     }, []);
     return uniq(flatten([...categoryStrings, ...dataStrings]));

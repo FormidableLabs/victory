@@ -4,7 +4,7 @@ import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Collection, Log } from "victory-core";
+import { Collection, Helpers, Log } from "victory-core";
 
 const identity = (x) => x;
 
@@ -38,13 +38,6 @@ export default {
       );
     }
     return childComponents;
-  },
-
-  getDataComponents(childComponents) {
-    return childComponents.filter((child) => {
-      const role = child.type && child.type.role;
-      return role !== "axis";
-    });
   },
 
   getDomain(props, childComponents, axis) {
@@ -122,10 +115,10 @@ export default {
   },
 
   createStringMap(childComponents, axis) {
-    const getStringsFromChildren = (children, axis) => {
+    const getStringsFromChildren = (children) => {
       return children.reduce((memo, child) => {
         if (child.props && child.props.data) {
-          return memo.concat(Data.getStringsFromData(child.props, axis));
+          return memo.concat(Helpers.getStringsFromData(child.props, axis));
         } else if (child.type && isFunction(child.type.getData)) {
           const data = flatten(child.type.getData(child.props));
           const attr = axis === "x" ? "xName" : "yName";
@@ -133,7 +126,7 @@ export default {
             return datum[attr] ? prev.concat(datum[attr]) : prev;
           }, []));
         } else if (child.props && child.props.children) {
-          return memo.concat(getStringsFromChildren(React.Children.toArray(child.props.children), axis));
+          return memo.concat(getStringsFromChildren(React.Children.toArray(child.props.children)));
         }
         return memo;
       }, []);

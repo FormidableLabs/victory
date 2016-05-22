@@ -2,7 +2,6 @@ import { assign, uniq } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
 import Scale from "../../helpers/scale";
-import Data from "../../helpers/data";
 import Wrapper from "../../helpers/wrapper";
 
 const defaultStyles = {
@@ -205,10 +204,7 @@ export default class VictoryGroup extends React.Component {
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
-    const datasets = childComponents.map((child) => {
-      const getData = child.type.getData || Data.getData;
-      return getData(child.props);
-    });
+    const datasets = Wrapper.getDataFromChildren(props);
     const domain = {
       x: Wrapper.getDomainFromChildren(props, "x", datasets),
       y: Wrapper.getDomainFromChildren(props, "y", datasets)
