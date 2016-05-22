@@ -1,8 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions } from "../victory-util/index";
-import defaults from "lodash/defaults";
-import pick from "lodash/pick";
+import { defaults, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static propTypes = {
@@ -34,12 +33,14 @@ export default class VictoryTransition extends React.Component {
       const oldProps = animate.parentState.nodesWillExit ? props : null;
       return {oldProps};
     } else {
+      const oldChildren = React.Children.toArray(props.children);
+      const nextChildren = React.Children.toArray(nextProps.children);
       const {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter
-      } = Transitions.getInitialTransitionState([props.children], [nextProps.children]);
+      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
