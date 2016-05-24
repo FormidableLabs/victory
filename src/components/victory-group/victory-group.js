@@ -192,7 +192,7 @@ export default class VictoryGroup extends React.Component {
     standalone: true
   };
 
-  static getDomain = Wrapper.getDomainFromChildren.bind(Wrapper);
+  static getDomain = Wrapper.getDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
   componentWillReceiveProps(nextProps) {
@@ -206,8 +206,8 @@ export default class VictoryGroup extends React.Component {
     );
     const datasets = Wrapper.getDataFromChildren(props);
     const domain = {
-      x: Wrapper.getDomainFromChildren(props, "x", datasets),
-      y: Wrapper.getDomainFromChildren(props, "y", datasets)
+      x: Wrapper.getDomain(props, "x", childComponents),
+      y: Wrapper.getDomain(props, "y", childComponents)
     };
     const range = {
       x: Helpers.getRange(props, "x"),

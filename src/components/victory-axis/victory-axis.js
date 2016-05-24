@@ -118,7 +118,13 @@ export default class VictoryAxis extends React.Component {
      * If this value is not given it will be calculated based on the scale or tickValues.
      * @examples [-1, 1]
      */
-    domain: CustomPropTypes.domain,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({
+        x: CustomPropTypes.domain,
+        y: CustomPropTypes.domain
+      })
+    ]),
     /**
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,

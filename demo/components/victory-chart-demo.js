@@ -1,6 +1,6 @@
 /*global window:false */
 import React from "react";
-import { random, range } from "lodash";
+import { random, range, omit } from "lodash";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
@@ -19,17 +19,17 @@ class Wrapper extends React.Component {
     ])
   };
 
-
-  renderChildren(props) {
-    const children = React.Children.toArray(props.children);
-    return children.map((child, index) => {
-      return React.cloneElement(child, assign({}, props, child.props));
+  renderChildren() {
+    const props = omit(this.props, "children");
+    const children = React.Children.toArray(this.props.children);
+    return children.map((child) => {
+      return React.cloneElement(child, assign({}, child.props, props));
     });
   }
 
   render() {
     return (
-      <g>{this.renderChildren(this.props)}</g>
+      <g>{this.renderChildren()}</g>
     );
   }
 }
@@ -194,8 +194,10 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}/>
 
           <VictoryChart style={chartStyle}>
-            <VictoryLabel x={150} y={150}>WOW</VictoryLabel>
-            <VictoryScatter/>
+            <Wrapper>
+              <VictoryLabel text={"WOW"} x={150} y={150}/>
+              <VictoryScatter/>
+            </Wrapper>
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
@@ -208,6 +210,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryAxis/>
+            <VictoryAxis orientation={"top"}/>
             <VictoryAxis dependentAxis crossAxis={false}/>
             <Wrapper>
               <VictoryLine
@@ -304,7 +307,7 @@ class App extends React.Component {
           >
             <VictoryStack>
               {this.state.barData.map((data, index) => {
-                return <VictoryBar data={data} key={index}/>;
+                return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
               })}
             </VictoryStack>
           </VictoryChart>

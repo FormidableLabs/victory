@@ -1,23 +1,27 @@
 /*global window:false*/
 import React from "react";
-import { random, range } from "lodash";
+import { assign, random, range } from "lodash";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack} from "../../src/index";
-import {VictoryLabel} from "victory-core";
 
-class CustomLabel extends React.Component {
+class Wrapper extends React.Component {
   static propTypes = {
-    ...VictoryLabel.propTypes,
-    offset: React.PropTypes.number,
-    x: React.PropTypes.number
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ])
   };
 
-  renderLabel() {
-    const {offset, x} = this.props;
-    return <VictoryLabel {...this.props} x={x + offset}/>;
+  renderChildren(props) {
+    const children = React.Children.toArray(props.children);
+    return children.map((child) => {
+      return React.cloneElement(child, assign({}, child.props, props));
+    });
   }
 
   render() {
-    return this.renderLabel();
+    return (
+      <g>{this.renderChildren(this.props)}</g>
+    );
   }
 }
 
@@ -108,16 +112,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
-          <VictoryStack colorScale="warm" style={{parent: parentStyle}}>
-            <VictoryBar
-              labelComponent={<CustomLabel offset={25}/>}
-              data={[{x: "a", y: 2, label: "WOW"}, {x: "b", y: 3, label: "COOL"}]}
-            />
-            <VictoryBar
-              data={[{x: "c", y: 2}, {x: "d", y: 3}]}
-            />
-          </VictoryStack>
-
         <VictoryBar
           style={{
             parent: parentStyle,
@@ -142,7 +136,7 @@ export default class App extends React.Component {
           colorScale={"warm"}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
           })}
         </VictoryStack>
 
@@ -153,7 +147,7 @@ export default class App extends React.Component {
           colorScale={"qualitative"}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
           })}
         </VictoryGroup>
 
@@ -232,16 +226,18 @@ export default class App extends React.Component {
         </ChartWrap>
 
           <VictoryStack colorScale="warm" style={{parent: parentStyle}}>
-            <VictoryBar
-              data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
-              events={{
-                data: {
-                  onClick: () => {
-                    return {data: {style: {fill: "cyan"}}};
+            <Wrapper>
+              <VictoryBar
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+                events={{
+                  data: {
+                    onClick: () => {
+                      return {data: {style: {fill: "cyan"}}};
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </Wrapper>
             <VictoryBar
               data={[{x: "c", y: 2}, {x: "d", y: 3}, {x: "e", y: 4}]}
               events={{

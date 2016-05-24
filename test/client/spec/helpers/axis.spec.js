@@ -3,24 +3,11 @@
 
 import Axis from "src/helpers/axis";
 import React from "react";
-import { VictoryAxis, VictoryBar, VictoryLine } from "src/index";
+import { VictoryAxis, VictoryBar } from "src/index";
 
 describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
   const getVictoryBar = (props) => React.createElement(VictoryBar, props);
-  const getVictoryLine = (props) => React.createElement(VictoryLine, props);
-
-  describe("getAxisType", () => {
-    it("returns dependent or independent for an axis component", () => {
-      const child = getVictoryAxis({dependentAxis: true});
-      expect(Axis.getAxisType(child)).to.equal("dependent");
-    });
-
-    it("returns undefined for other components", () => {
-      const child = getVictoryLine({});
-      expect(Axis.getAxisType(child)).to.be.undefined;
-    });
-  });
 
   describe("isVertical", () => {
     it("returns true when the orientation is vertical", () => {
@@ -53,8 +40,9 @@ describe("helpers/axis", () => {
     });
 
     it("returns the independent axis when called with 'x'", () => {
+      const props = {};
       const childComponents = [dependentAxis, independentAxis, bar];
-      const componentResult = Axis.getAxisComponent(childComponents, "x");
+      const componentResult = Axis.getAxisComponent(props, "x", childComponents);
       expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props, false)
         .and.returned("y");
       expect(independentAxis.type.getAxis).calledWith(independentAxis.props, false)
@@ -63,8 +51,9 @@ describe("helpers/axis", () => {
     });
 
     it("returns the dependent axis when called with 'x' and flipped data", () => {
+      const props = {};
       const childComponents = [dependentAxis, independentAxis, horizontalBar];
-      const componentResult = Axis.getAxisComponent(childComponents, "x");
+      const componentResult = Axis.getAxisComponent(props, "x", childComponents);
       expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props, true)
         .and.returned("x");
       expect(independentAxis.type.getAxis).calledWith(independentAxis.props, true)

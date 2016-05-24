@@ -282,9 +282,6 @@ export default class VictoryStack extends React.Component {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const childComponents = React.Children.toArray(props.children);
     const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.length > 1) {
-      Log.warn("Only components of the same type can be stacked");
-    }
     if (types.some((type) => type === "group-wrapper")) {
       Log.warn("It is not possible to stack groups.");
     }

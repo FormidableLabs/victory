@@ -1,10 +1,9 @@
-import { flatten, invert, isFunction, sortBy, uniq, values } from "lodash";
+import { invert, sortBy, values } from "lodash";
 import Axis from "../../helpers/axis";
-import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Collection, Helpers, Log } from "victory-core";
+import { Collection, Log } from "victory-core";
 
 const identity = (x) => x;
 
@@ -15,9 +14,7 @@ export default {
       return [defaultAxes.independent, defaultAxes.dependent];
     }
 
-    const axisComponents = childComponents.filter((component) => {
-      return component.type && component.type.role === "axis";
-    });
+    const axisComponents = Axis.findAxisComponents(childComponents);
 
     if (axisComponents.length === 0) {
       return childComponents.concat(defaultAxes.independent, defaultAxes.dependent);
@@ -25,13 +22,11 @@ export default {
     const dependentAxes = axisComponents.filter((component) => component.props.dependentAxis);
     const independentAxes = axisComponents.filter((component) => !component.props.dependentAxis);
     if (dependentAxes.length > 1 || independentAxes.length > 1) {
-      const msg = `Only one VictoryAxis component of each axis type is allowed when` +
+      const msg = `Only one VictoryAxis component of each axis type is allowed when ` +
         `using the VictoryChart wrapper. Only the first axis will be used. Please compose ` +
         `multi-axis charts manually`;
       Log.warn(msg);
-      const dataComponents = childComponents.filter((component) => {
-        return component.type && component.type.role !== "axis";
-      });
+      const dataComponents = this.getDataComponents(childComponents);
 
       return Collection.removeUndefined(
         dataComponents.concat(independentAxes[0], dependentAxes[0])
@@ -40,9 +35,25 @@ export default {
     return childComponents;
   },
 
-  getDomain(props, childComponents, axis) {
-    const domain = Wrapper.getDomainFromChildren(props, axis);
-    const orientations = Axis.getAxisOrientations(childComponents);
+  getDataComponents(childComponents) {
+    const findDataComponents = (children) => {
+      return children.reduce((memo, child) => {
+        if (child.type && child.type.role === "axis") {
+          return memo;
+        } else if (child.props && child.props.children) {
+          return memo.concat(findDataComponents(React.Children.toArray(child.props.children)));
+        }
+        return memo.concat(child);
+      }, []);
+    };
+
+    return findDataComponents(childComponents);
+  },
+
+  getDomain(props, axis, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
+    const domain = Wrapper.getDomain(props, axis, childComponents);
+    const orientations = Axis.getAxisOrientations(props);
     return Domain.orientDomain(domain, orientations, axis);
   },
 
@@ -114,33 +125,8 @@ export default {
     }
   },
 
-  createStringMap(childComponents, axis) {
-    const getStringsFromChildren = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.props && child.props.data) {
-          return memo.concat(Helpers.getStringsFromData(child.props, axis));
-        } else if (child.type && isFunction(child.type.getData)) {
-          const data = flatten(child.type.getData(child.props));
-          const attr = axis === "x" ? "xName" : "yName";
-          return memo.concat(data.reduce((prev, datum) => {
-            return datum[attr] ? prev.concat(datum[attr]) : prev;
-          }, []));
-        } else if (child.props && child.props.children) {
-          return memo.concat(getStringsFromChildren(React.Children.toArray(child.props.children)));
-        }
-        return memo;
-      }, []);
-    };
-
-    const axisComponent = Axis.getAxisComponent(childComponents, axis);
-    const tickStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
-
-    const categoryStrings = childComponents.reduce((prev, component) => {
-      const categoryData = Data.getStringsFromCategories(component.props, axis);
-      return categoryData ? prev.concat(categoryData) : prev;
-    }, []);
-    const dataStrings = getStringsFromChildren(childComponents, axis);
-    const allStrings = uniq(flatten([...tickStrings, ...categoryStrings, ...dataStrings]));
+  createStringMap(props, axis, childComponents) {
+    const allStrings = Wrapper.getStringsFromChildren(props, axis, childComponents);
     return allStrings.length === 0 ? null :
       allStrings.reduce((memo, string, index) => {
         memo[string] = index + 1;

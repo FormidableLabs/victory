@@ -1,22 +1,31 @@
 import { Collection } from "victory-core";
+import React from "react";
 
 export default {
-  getAxisType(component) {
-    if (!component.type || component.type.role !== "axis") {
-      return undefined;
-    }
-    return component.props.dependentAxis ? "dependent" : "independent";
-  },
 
-  getAxisComponent(childComponents, axis) {
+  getAxisComponent(props, axis, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
     const getAxis = (component) => {
       const flipped = childComponents.some((child) => child.props.horizontal);
       return component.type.getAxis(component.props, flipped);
     };
-    const axisComponents = childComponents.filter((component) => {
-      return component.type.role === "axis" && getAxis(component) === axis;
-    });
-    return axisComponents[0];
+    const axisComponents = this.findAxisComponents(childComponents);
+    return axisComponents.filter((component) => getAxis(component) === axis)[0];
+  },
+
+  findAxisComponents(childComponents) {
+    const findAxes = (children) => {
+      return children.reduce((memo, child) => {
+        if (child.type && child.type.role === "axis") {
+          return memo.concat(child);
+        } else if (child.props && child.props.children) {
+          return memo.concat(findAxes(React.Children.toArray(child.props.children)));
+        }
+        return memo;
+      }, []);
+    };
+
+    return findAxes(childComponents);
   },
 
   getOrientation(component, axis) {
@@ -32,10 +41,10 @@ export default {
       typicalOrientations[axis] : flippedOrientations[axis];
   },
 
-  getAxisOrientations(childComponents) {
+  getAxisOrientations(props) {
     return {
-      x: this.getOrientation(this.getAxisComponent(childComponents, "x"), "x"),
-      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y")
+      x: this.getOrientation(this.getAxisComponent(props, "x"), "x"),
+      y: this.getOrientation(this.getAxisComponent(props, "y"), "y")
     };
   },
 

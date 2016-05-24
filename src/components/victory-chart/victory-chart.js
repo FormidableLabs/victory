@@ -187,12 +187,12 @@ export default class VictoryChart extends React.Component {
   getCalculatedProps(props, childComponents) {
     const horizontal = childComponents.some((component) => component.props.horizontal);
     const axisComponents = {
-      x: Axis.getAxisComponent(childComponents, "x"),
-      y: Axis.getAxisComponent(childComponents, "y")
+      x: Axis.getAxisComponent(props, "x", childComponents),
+      y: Axis.getAxisComponent(props, "y", childComponents)
     };
     const domain = {
-      x: ChartHelpers.getDomain(props, childComponents, "x"),
-      y: ChartHelpers.getDomain(props, childComponents, "y")
+      x: ChartHelpers.getDomain(props, "x", childComponents),
+      y: ChartHelpers.getDomain(props, "y", childComponents)
     };
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -212,12 +212,12 @@ export default class VictoryChart extends React.Component {
     };
     // TODO: check
     const categories = {
-      x: Wrapper.getCategories(childComponents, props, "x"),
-      y: Wrapper.getCategories(childComponents, props, "y")
+      x: Wrapper.getCategories(props, "x", childComponents),
+      y: Wrapper.getCategories(props, "y", childComponents)
     };
     const stringMap = {
-      x: ChartHelpers.createStringMap(childComponents, "x"),
-      y: ChartHelpers.createStringMap(childComponents, "y")
+      x: ChartHelpers.createStringMap(props, "x", childComponents),
+      y: ChartHelpers.createStringMap(props, "y", childComponents)
     };
     return {axisComponents, categories, domain, horizontal, scale, stringMap};
   }

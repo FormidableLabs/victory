@@ -1,13 +1,25 @@
-import { defaults, flatten, isFunction, partialRight, uniq, first } from "lodash";
+import { defaults, flatten, isFunction, partialRight, uniq } from "lodash";
 import React from "react";
+import Axis from "./axis";
 import Data from "./data";
 import Domain from "./domain";
 import { Style, Transitions, Helpers, Collection } from "victory-core";
 
 
 export default {
-  getData(props) {
-    return this.getDataFromChildren(props);
+  getData(props, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
+    return this.getDataFromChildren(childComponents);
+  },
+
+  getDomain(props, axis, childComponents) {
+    const propsDomain = Domain.getDomainFromProps(props, axis);
+    if (propsDomain) {
+      return Domain.padDomain(propsDomain, props, axis);
+    }
+    childComponents = childComponents || React.Children.toArray(props.children);
+    const domain = this.getDomainFromChildren(childComponents, axis);
+    return Domain.padDomain(domain, props, axis);
   },
 
   setAnimationState(nextProps) {
@@ -63,7 +75,7 @@ export default {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
-  getDomainFromChildren(props, axis) {
+  getDomainFromChildren(childComponents, axis) {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
@@ -76,19 +88,13 @@ export default {
       }, []);
     };
 
-    const childComponents = React.Children.toArray(props.children);
-    let domain;
-    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
-      domain = Array.isArray(props.domain) ? props.domain : props.domain[axis];
-    } else {
-      const childDomains = getChildDomains(childComponents);
-      domain = childDomains.length === 0 ?
-        [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
-    }
-    return Domain.padDomain(domain, props, axis);
+
+    const childDomains = getChildDomains(childComponents);
+    return childDomains.length === 0 ?
+      [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
   },
 
-  getDataFromChildren(props) {
+  getDataFromChildren(props, childComponents) {
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
@@ -100,14 +106,13 @@ export default {
           const childData = child.props && child.type.getData(child.props);
           return childData;
         } else if (child.props && child.props.children) {
-          return getChildData(React.Children.toArray(child.props.children));
+          return flatten(getChildData(React.Children.toArray(child.props.children)));
         }
         return getData(child.props);
       });
     };
-
-    return props.children ?
-      getChildData(React.Children.toArray(props.children)) : getData(props);
+    childComponents = childComponents || React.Children.toArray(props.children);
+    return getChildData(childComponents);
   },
 
   getStackedDomain(props, axis) {
@@ -118,12 +123,7 @@ export default {
     const ensureZero = (domain) => {
       return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
     };
-    const childComponents = React.Children.toArray(props.children);
-    const getData = (child) => child.type.getData(child.props) || Data.getData(child.props);
-    const datasets = childComponents.map((child) => {
-      return child.props.children ?
-        React.Children.toArray(child.props.children).map((ch) => getData(ch)) : getData(child);
-    });
+    const datasets = this.getDataFromChildren(props);
     const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
     return Domain.padDomain(dataDomain, props, axis);
   },
@@ -154,17 +154,51 @@ export default {
     };
   },
 
-  getStringsFromChildren(props, axis) {
-    const childComponents = React.Children.toArray(props.children);
-    const categoryStrings = childComponents.reduce((prev, component) => {
-      const categoryData = Data.getStringsFromCategories(component.props, axis);
-      return categoryData ? prev.concat(categoryData) : prev;
-    }, []);
-    const dataStrings = childComponents.reduce((prev, component) => {
-      const stringData = Helpers.getStringsFromData(component.props, axis);
-      return stringData ? prev.concat(stringData) : prev;
-    }, []);
-    return uniq(flatten([...categoryStrings, ...dataStrings]));
+  getStringsFromCategories(childComponents, axis) {
+    const stringsFromCategories = (children) => {
+      return children.reduce((memo, child) => {
+        if (child.props && child.props.categories) {
+          return memo.concat(Data.getStringsFromCategories(child.props, axis));
+        } else if (child.props && child.props.children) {
+          return memo.concat(stringsFromCategories(
+            React.Children.toArray(child.props.children)
+          ));
+        }
+        return memo;
+      }, []);
+    };
+
+    return stringsFromCategories(childComponents);
+  },
+
+  getStringsFromData(childComponents, axis) {
+    const stringsFromData = (children) => {
+      return children.reduce((memo, child) => {
+        if (child.props && child.props.data) {
+          return memo.concat(Helpers.getStringsFromData(child.props, axis));
+        } else if (child.type && isFunction(child.type.getData)) {
+          const data = flatten(child.type.getData(child.props));
+          const attr = axis === "x" ? "xName" : "yName";
+          return memo.concat(data.reduce((prev, datum) => {
+            return datum[attr] ? prev.concat(datum[attr]) : prev;
+          }, []));
+        } else if (child.props && child.props.children) {
+          return memo.concat(stringsFromData(React.Children.toArray(child.props.children)));
+        }
+        return memo;
+      }, []);
+    };
+
+    return stringsFromData(childComponents);
+  },
+
+  getStringsFromChildren(props, axis, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
+    const axisComponent = Axis.getAxisComponent(props, axis, childComponents);
+    const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
+    const categoryStrings = this.getStringsFromCategories(childComponents, axis);
+    const dataStrings = this.getStringsFromData(childComponents, axis);
+    return uniq(flatten([...categoryStrings, ...dataStrings, ...axisStrings]));
   },
 
   getCategories(props, axis) {

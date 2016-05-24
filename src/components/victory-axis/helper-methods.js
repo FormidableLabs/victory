@@ -7,11 +7,14 @@ import { Helpers } from "victory-core";
 export default {
   // exposed for use by VictoryChart
   getDomain(props, axis) {
-    if (axis && axis !== this.getAxis(props)) {
+    const inherentAxis = this.getAxis(props);
+    if (axis && axis !== inherentAxis) {
       return undefined;
     }
-    if (props.domain) {
+    if (Array.isArray(props.domain)) {
       return props.domain;
+    } else if (props.domain && props.domain[inherentAxis]) {
+      return props.domain[inherentAxis];
     } else if (props.tickValues) {
       return Domain.getDomainFromTickValues(props);
     }
