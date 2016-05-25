@@ -7,9 +7,9 @@ Victory
 
 Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
-See the docs and examples on the website: http://formidable.com/open-source/victory.
-
-You can also join the Gitter chat room at https://gitter.im/FormidableLabs/victory.
+* See the **docs and examples** on the website: http://formidable.com/open-source/victory.
+* **Experiment** with all Victory components in this [JSBin](http://jsbin.com/qekike/edit) or this [JSFiddle](https://jsfiddle.net/5g20p8vd/6/).
+* For support, join the **Gitter chat room** at https://gitter.im/FormidableLabs/victory.
 
 **Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
 
