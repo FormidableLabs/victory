@@ -1,4 +1,4 @@
-  /* eslint-disable func-style */
+/* eslint-disable func-style */
 import { assign, defaults, identity } from "lodash";
 import React from "react";
 
@@ -92,14 +92,13 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
 
   const getTransitionsFromChildren = (old, next) => {
     return old.map((child, idx) => {
-      if (child.props.children && child.type.role) {
+      if (child.props.children) {
         return getTransitionsFromChildren(
           React.Children.toArray(old[idx].props.children),
           React.Children.toArray(next[idx].props.children)
         );
-      } else if (child.type && child.type.role) {
-        return getTransition(child, next[idx]);
       }
+      return getTransition(child, next[idx]);
     });
   };
 
@@ -231,7 +230,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       defaultTransitions[type] && defaultTransitions[type].duration;
   };
 
-  return function getTransitionProps(child, index) {
+  return function getTransitionProps(child, index) { // eslint-disable-line max-statements
     const data = getChildData(child) || [];
     const animate = defaults({}, props.animate, child.props.animate);
 
