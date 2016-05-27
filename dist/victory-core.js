@@ -6675,7 +6675,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  };
 	
-	  var childrenTransitions = getTransitionsFromChildren(oldChildren, nextChildren);
+	  var childrenTransitions = getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren), _react2.default.Children.toArray(nextChildren));
 	  return {
 	    nodesWillExit: nodesWillExit,
 	    nodesWillEnter: nodesWillEnter,
