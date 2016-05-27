@@ -20,7 +20,7 @@ class Wrapper extends React.Component {
   };
 
   renderChildren() {
-    const props = omit(this.props, ["children", "style"]);
+    const props = omit(this.props, ["children"]);
     const children = React.Children.toArray(this.props.children);
     return children.map((child) => {
       return React.cloneElement(child, assign({}, child.props, props));
