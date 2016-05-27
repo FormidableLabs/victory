@@ -1,7 +1,7 @@
-import keys from "lodash/keys";
-import assign from "lodash/assign";
+import { assign, keys } from "lodash";
 import React, { PropTypes } from "react";
-import Events from "../../helpers/Events";
+import { PropTypes as CustomPropTypes } from "victory-core";
+import Events from "../../helpers/events";
 
 export default class VictoryEvents extends React.Component {
   static role = "event-wrapper";
@@ -16,7 +16,11 @@ export default class VictoryEvents extends React.Component {
       React.PropTypes.node
     ]),
     events: PropTypes.object,
-    eventKey: PropTypes.string
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ])
   };
 
   constructor() {
@@ -28,13 +32,14 @@ export default class VictoryEvents extends React.Component {
 
   getNewChildren(props) {
     const childComponents = React.Children.toArray(props.children);
-    const {events, eventKey} = props
+    const {events, eventKey} = props;
     const boundEvents = keys(events).reduce((memo, key) => {
       memo[key] = this.getEvents(events[key], key);
       return memo;
     }, {});
     return childComponents.map((child, index) => {
-      return React.cloneElement(child, assign({
+      return React.cloneElement(child, assign(
+        {
           key: `events-${index}`,
           sharedEvents: {events: boundEvents, getEventState: this.getEventState},
           eventKey
@@ -45,7 +50,7 @@ export default class VictoryEvents extends React.Component {
   }
 
   render() {
-    return <g>{this.getNewChildren(this.props)}</g>
+    return <g>{this.getNewChildren(this.props)}</g>;
   }
 
 }

@@ -123,8 +123,17 @@ export default class VictoryBar extends React.Component {
       labels: PropTypes.object,
       parent: PropTypes.object
     }),
-    eventKey: PropTypes.string,
-
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * TODO
+     */
     sharedEvents: PropTypes.shape({
       events: PropTypes.object,
       getEventState: PropTypes.func
@@ -431,8 +440,9 @@ export default class VictoryBar extends React.Component {
   }
 
   addEventKeys(props, data) {
+    const eventKeyAccessor = Events.getEventKey(props.eventKey);
     return data.map((datum, index) => {
-      const eventKey = datum.eventKey || datum[props.eventKey] || index;
+      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
       return assign({eventKey}, datum);
     });
   }

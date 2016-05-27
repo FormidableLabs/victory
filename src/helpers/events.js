@@ -1,7 +1,7 @@
-import { merge, partial } from "lodash";
+import { merge, partial, isFunction, property } from "lodash";
 
 export default {
-  getPartialEvents(events, index, childProps) {
+  getPartialEvents(events, eventKey, childProps) {
     return events ?
       Object.keys(events).reduce((memo, eventName) => {
         /* eslint max-params: 0 */
@@ -9,7 +9,7 @@ export default {
           events[eventName],
           partial.placeholder, // evt will still be the first argument for event handlers
           childProps, // event handlers will have access to data component props, including data
-          index, // used in setting a unique state property
+          eventKey, // used in setting a unique state property
           eventName // used in setting a unique state property
         );
         return memo;
@@ -18,13 +18,13 @@ export default {
   },
 
   getEvents(events, namespace) {
-    const onEvent = (evt, childProps, index, eventName) => {
+    const onEvent = (evt, childProps, eventKey, eventName) => {
       if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
         this.setState({
-          [index]: merge(
+          [eventKey]: merge(
             {},
-            this.state[index],
-            this.props.events[namespace][eventName](evt, childProps, index)
+            this.state[eventKey],
+            this.props.events[namespace][eventName](evt, childProps, eventKey)
           )
         });
       }
@@ -37,7 +37,19 @@ export default {
       }, {}) : {};
   },
 
-  getEventState(index, namespace) {
-    return this.state[index] && this.state[index][namespace];
+  getEventState(eventKey, namespace) {
+    return this.state[eventKey] && this.state[eventKey][namespace];
+  },
+
+  getEventKey(key) {
+    // creates a data accessor function
+    // given a property key, path, array index, or null for identity.
+    if (isFunction(key)) {
+      return key;
+    } else if (key === null || typeof key === "undefined") {
+      return () => undefined;
+    }
+    // otherwise, assume it is an array index, property key or path (_.property handles all three)
+    return property(key);
   }
 };
