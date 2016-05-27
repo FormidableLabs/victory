@@ -102,7 +102,10 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     });
   };
 
-  const childrenTransitions = getTransitionsFromChildren(oldChildren, nextChildren);
+  const childrenTransitions = getTransitionsFromChildren(
+    React.Children.toArray(oldChildren),
+    React.Children.toArray(nextChildren)
+  );
   return {
     nodesWillExit,
     nodesWillEnter,

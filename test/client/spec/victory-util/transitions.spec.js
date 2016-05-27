@@ -1,16 +1,15 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import { Transitions } from "src/index";
+import React from "react";
 
 describe("getInitialTransitionState", () => {
   const makeChild = (data) => {
-    return {
-      props: {data}
-    };
+    return React.createElement("div", {data});
   };
 
   it("returns a 'falsey' transition object if children are not given", () => {
-    const result = Transitions.getInitialTransitionState([], []);
+    const result = Transitions.getInitialTransitionState(null, null);
     expect(result).to.eql({
       childrenTransitions: [],
       nodesWillExit: false,
@@ -21,7 +20,7 @@ describe("getInitialTransitionState", () => {
 
   it("it returns childTransitions entering and exiting false for identical data", () => {
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
-    const result = Transitions.getInitialTransitionState([child], [child]);
+    const result = Transitions.getInitialTransitionState(child, child);
     expect(result).to.eql({
       childrenTransitions: [{entering: false, exiting: false}],
       nodesWillExit: false,
@@ -33,7 +32,7 @@ describe("getInitialTransitionState", () => {
   it("it returns childTransitions with exiting data", () => {
     const child1 = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
     const child2 = makeChild([{x: 1, y: 1}]);
-    const result = Transitions.getInitialTransitionState([child1], [child2]);
+    const result = Transitions.getInitialTransitionState(child1, child2);
     expect(result).to.eql({
       childrenTransitions: [{entering: false, exiting: {1: true}}],
       nodesWillExit: true,
@@ -45,7 +44,7 @@ describe("getInitialTransitionState", () => {
   it("it returns childTransitions with entering data", () => {
     const child1 = makeChild([{x: 1, y: 1}]);
     const child2 = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
-    const result = Transitions.getInitialTransitionState([child1], [child2]);
+    const result = Transitions.getInitialTransitionState(child1, child2);
     expect(result).to.eql({
       childrenTransitions: [{entering: {1: true}, exiting: false}],
       nodesWillExit: false,
