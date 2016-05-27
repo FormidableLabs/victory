@@ -1,5 +1,6 @@
 /* eslint-disable func-style */
 import { assign, defaults, identity } from "lodash";
+import React from "react";
 
 function getDatumKey(datum, idx) {
   return (datum.key || idx).toString();
@@ -92,10 +93,12 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
   const getTransitionsFromChildren = (old, next) => {
     return old.map((child, idx) => {
       if (child.props.children) {
-        return getTransitionsFromChildren(old[idx].props.children, next[idx].props.children);
-      } else {
-        return getTransition(child, next[idx]);
+        return getTransitionsFromChildren(
+          React.Children.toArray(old[idx].props.children),
+          React.Children.toArray(next[idx].props.children)
+        );
       }
+      return getTransition(child, next[idx]);
     });
   };
 

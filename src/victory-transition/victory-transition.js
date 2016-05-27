@@ -1,8 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions } from "../victory-util/index";
-import defaults from "lodash/defaults";
-import pick from "lodash/pick";
+import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static propTypes = {
@@ -34,12 +33,14 @@ export default class VictoryTransition extends React.Component {
       const oldProps = animate.parentState.nodesWillExit ? props : null;
       return {oldProps};
     } else {
+      const oldChildren = React.Children.toArray(props.children);
+      const nextChildren = React.Children.toArray(nextProps.children);
       const {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter
-      } = Transitions.getInitialTransitionState([props.children], [nextProps.children]);
+      } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
@@ -50,17 +51,27 @@ export default class VictoryTransition extends React.Component {
     }
   }
 
-  getChildDomain(child) {
-    const getDomain = child.type && child.type.getDomain;
-    if (!getDomain) {
-      return undefined;
+  getDomainFromChildren(props, axis) {
+    const getChildDomains = (children) => {
+      return children.reduce((memo, child) => {
+        if (child.type && isFunction(child.type.getDomain)) {
+          const childDomain = child.props && child.type.getDomain(child.props, axis);
+          return childDomain ? memo.concat(childDomain) : memo;
+        } else if (child.props && child.props.children) {
+          return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
+        }
+        return memo;
+      }, []);
+    };
+
+    const childComponents = React.Children.toArray(props.children);
+    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
+      return Array.isArray(props.domain) ? props.domain : props.domain[axis];
+    } else {
+      const childDomains = getChildDomains(childComponents);
+      return childDomains.length === 0 ?
+        [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
     }
-    return child.type && child.type.role === "axis" ?
-      getDomain(child.props) :
-      {
-        x: getDomain(child.props, "x"),
-        y: getDomain(child.props, "y")
-      };
   }
 
   render() {
@@ -75,8 +86,12 @@ export default class VictoryTransition extends React.Component {
       );
     const child = React.Children.toArray(props.children)[0];
     const transitionProps = getTransitionProps(child);
+    const domain = {
+      x: this.getDomainFromChildren(props, "x"),
+      y: this.getDomainFromChildren(props, "y")
+    };
     const combinedProps = defaults(
-      {domain: this.getChildDomain(child)}, transitionProps, child.props
+      {domain}, transitionProps, child.props
     );
     const propsToAnimate = props.animationWhitelist ?
       pick(combinedProps, props.animationWhitelist) : combinedProps;
