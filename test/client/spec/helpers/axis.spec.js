@@ -3,24 +3,11 @@
 
 import Axis from "src/helpers/axis";
 import React from "react";
-import { VictoryAxis, VictoryBar, VictoryLine } from "src/index";
+import { VictoryAxis, VictoryBar } from "src/index";
 
 describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
   const getVictoryBar = (props) => React.createElement(VictoryBar, props);
-  const getVictoryLine = (props) => React.createElement(VictoryLine, props);
-
-  describe("getAxisType", () => {
-    it("returns dependent or independent for an axis component", () => {
-      const child = getVictoryAxis({dependentAxis: true});
-      expect(Axis.getAxisType(child)).to.equal("dependent");
-    });
-
-    it("returns undefined for other components", () => {
-      const child = getVictoryLine({});
-      expect(Axis.getAxisType(child)).to.be.undefined;
-    });
-  });
 
   describe("isVertical", () => {
     it("returns true when the orientation is vertical", () => {

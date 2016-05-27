@@ -5,8 +5,6 @@ import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
 import { Log } from "victory-core";
 import Data from "src/helpers/data";
-import Domain from "src/helpers/domain";
-import Axis from "src/helpers/axis";
 import Scale from "src/helpers/scale";
 import Wrapper from "src/helpers/wrapper";
 
@@ -87,8 +85,7 @@ describe("victory-chart/helpers-methods", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Wrapper, "getDomainFromChildren");
-      sandbox.spy(Domain, "padDomain");
+      sandbox.spy(Wrapper, "getDomain");
       sandbox.spy(victoryLine.type, "getDomain");
     });
 
@@ -98,19 +95,17 @@ describe("victory-chart/helpers-methods", () => {
 
     it("calculates a domain from props", () => {
       const props = {domain: {x: [1, 2], y: [2, 3]}};
-      const domainResultX = Helpers.getDomain(props, childComponents, "x");
-      expect(Domain.padDomain).calledWith([1, 2], props, "x").and.returned([1, 2]);
+      const domainResultX = Helpers.getDomain(props, "x", childComponents);
+      expect(Wrapper.getDomain).calledWith(props, "x", childComponents).and.returned([1, 2]);
       expect(victoryLine.type.getDomain).notCalled;
       expect(domainResultX).to.eql([1, 2]);
     });
 
     it("calculates a domain from child components", () => {
-      const props = {children: childComponents};
-      const domainResultX = Helpers.getDomain(props, childComponents, "x");
-      expect(Wrapper.getDomainFromChildren).calledWith(props, "x");
+      const props = {};
+      const domainResultX = Helpers.getDomain(props, "x", childComponents);
+      expect(Wrapper.getDomain).calledWith(props, "x", childComponents);
       expect(victoryLine.type.getDomain).calledWith(victoryLine.props);
-      expect(Domain.padDomain).calledWith(victoryLine.props.domain, props, "x")
-        .and.returned(victoryLine.props.domain);
       expect(domainResultX).to.eql(victoryLine.props.domain);
     });
   });
@@ -119,10 +114,10 @@ describe("victory-chart/helpers-methods", () => {
     let sandbox;
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Axis, "getAxisComponent");
       sandbox.spy(Data, "getStringsFromAxes");
-      sandbox.spy(Data, "getStringsFromCategories");
-      sandbox.spy(Helpers, "getStringsFromChildData");
+      sandbox.spy(Wrapper, "getStringsFromCategories");
+      sandbox.spy(Wrapper, "getStringsFromData");
+      sandbox.spy(Wrapper, "getStringsFromChildren");
     });
 
     afterEach(() => {
@@ -130,33 +125,35 @@ describe("victory-chart/helpers-methods", () => {
     });
 
     it("returns a stringMap from axis tickValues", () => {
+      const props = {};
       const axisComponent = getVictoryAxis({tickValues: ["a", "b", "c"]});
       const childComponents = [axisComponent];
-      const stringResult = Helpers.createStringMap(childComponents, "x");
-      expect(Axis.getAxisComponent).calledWith(childComponents, "x")
-        .and.returned(axisComponent);
+      const stringResult = Helpers.createStringMap(props, "x", childComponents);
+      expect(Wrapper.getStringsFromChildren).calledWith(props, "x", childComponents)
+        .and.returned(["a", "b", "c"]);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
         .and.returned(["a", "b", "c"]);
-      expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
-      expect(Helpers.getStringsFromChildData).notCalled;
+      expect(Wrapper.getStringsFromCategories).calledWith(childComponents, "x")
+        .and.returned([]);
+      expect(Wrapper.getStringsFromData).calledWith(childComponents, "x")
+        .and.returned([]);
       expect(stringResult).to.eql({a: 1, b: 2, c: 3});
     });
 
     it("returns a stringMap from axis tickValues, and string data", () => {
-      const axisComponent = getVictoryAxis({tickValues: ["a", "b", "c"]});
-      const lineComponent = getVictoryLine({data: [
-        {x: "b", y: 1}, {x: "c", y: 1}, {x: "d", y: 1}
-      ]});
+      const props = {};
+      const axisComponent = getVictoryAxis({tickValues: ["c", "d"]});
+      const lineComponent = getVictoryLine({data: [{x: "a", y: 1}, {x: "b", y: 1}]});
       const childComponents = [axisComponent, lineComponent];
-      const stringResult = Helpers.createStringMap(childComponents, "x");
-
-      expect(Axis.getAxisComponent).calledWith(childComponents, "x")
-        .and.returned(axisComponent);
+      const stringResult = Helpers.createStringMap(props, "x", childComponents);
+      expect(Wrapper.getStringsFromChildren).calledWith(props, "x", childComponents)
+        .and.returned(["a", "b", "c", "d"]);
       expect(Data.getStringsFromAxes).calledWith(axisComponent.props, "x")
-        .and.returned(["a", "b", "c"]);
-      expect(Data.getStringsFromCategories).calledWith(axisComponent.props, "x").and.returned([]);
-      expect(Data.getStringsFromCategories).calledWith(lineComponent.props, "x").and.returned([]);
-      expect(Helpers.getStringsFromChildData).called;
+        .and.returned(["c", "d"]);
+      expect(Wrapper.getStringsFromCategories).calledWith(childComponents, "x")
+        .and.returned([]);
+      expect(Wrapper.getStringsFromData).calledWith(childComponents, "x")
+        .and.returned(["a", "b"]);
       expect(stringResult).to.eql({a: 1, b: 2, c: 3, d: 4});
     });
   });

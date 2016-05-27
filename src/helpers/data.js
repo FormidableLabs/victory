@@ -1,18 +1,13 @@
-import { assign, defaults, uniq } from "lodash";
+import { assign, uniq } from "lodash";
 import { Helpers, Collection } from "victory-core";
 import Scale from "./scale";
-import React from "react";
 
 export default {
   // String Data
-  createStringMap(props, axis, hasMultipleDatasets = false) {
+  createStringMap(props, axis) {
     const stringsFromAxes = this.getStringsFromAxes(props, axis);
     const stringsFromCategories = this.getStringsFromCategories(props, axis);
-    const stringsFromData = hasMultipleDatasets ?
-      props.data.reduce((prev, dataset) => {
-        return prev.concat(Helpers.getStringsFromData(defaults({}, {data: dataset}, props), axis));
-      }, [])
-      : this.getStringsFromData(props, axis);
+    const stringsFromData = Helpers.getStringsFromData(props, axis);
 
     const allStrings = uniq([...stringsFromAxes, ...stringsFromCategories, ...stringsFromData]);
     return allStrings.length === 0 ? null :
@@ -31,47 +26,17 @@ export default {
   },
 
   getStringsFromCategories(props, axis) {
-    const childComponents = props.children && React.Children.toArray(props.children);
-    if (!props.categories && !props.children) {
+    if (!props.categories) {
       return [];
     }
-
-    const getCategoryStrings = (childProps) => {
-      const categories = this.getCategories(childProps, axis);
-      return categories && categories.filter((val) => typeof val === "string");
-    };
-
-    const categories = props.categories ?
-      getCategoryStrings(props) : childComponents.map((child) => getCategoryStrings(child.props));
-
-    return categories ? Collection.removeUndefined(categories) : [];
+    const categories = this.getCategories(props, axis);
+    const categoryStrings = categories && categories.filter((val) => typeof val === "string");
+    return categoryStrings ? Collection.removeUndefined(categoryStrings) : [];
   },
 
   getCategories(props, axis) {
-    if (!props.categories) {
-      return undefined;
-    }
-    return Array.isArray(props.categories) ? props.categories : props.categories[axis];
-  },
-
-  getStringsFromData(props, axis) {
-    const childComponents = props.children && React.Children.toArray(props.children);
-    if (!props.data && !props.children) {
-      return [];
-    }
-
-    const getStrings = (childProps) => {
-      const accessor = Helpers.createAccessor(
-        typeof childProps[axis] !== "undefined" ? childProps[axis] : axis
-      );
-      return childProps.data ? childProps.data.reduce((prev, curr) => {
-        const datum = accessor(curr);
-        return typeof datum === "string" && prev.indexOf(datum) === -1 ? prev.concat(datum) : prev;
-      }, []) : undefined;
-    };
-
-    return props.data ?
-      getStrings(props) : childComponents.map((child) => getStrings(child.props));
+    return props.categories && !Array.isArray(props.categories) ?
+      props.categories[axis] : props.categories;
   },
 
   // for components that take single datasets
@@ -79,7 +44,7 @@ export default {
     if (props.data) {
       return this.formatData(props.data, props);
     }
-    const data = this.generateData(props);
+    const data = (props.x || props.y) && this.generateData(props);
     return this.formatData(data, props);
   },
 
