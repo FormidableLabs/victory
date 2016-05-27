@@ -6566,12 +6566,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.getInitialTransitionState = getInitialTransitionState;
 	exports.getTransitionPropsFactory = getTransitionPropsFactory;
 	
+	var _react = __webpack_require__(111);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	/* eslint-disable func-style */
+	
 	
 	function getDatumKey(datum, idx) {
 	  return (datum.key || idx).toString();
-	} /* eslint-disable func-style */
-	
+	}
 	
 	function getKeyedData(data) {
 	  return data.reduce(function (keyedData, datum, idx) {
@@ -6663,10 +6669,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var getTransitionsFromChildren = function getTransitionsFromChildren(old, next) {
 	    return old.map(function (child, idx) {
 	      if (child.props.children) {
-	        return getTransitionsFromChildren(old[idx].props.children, next[idx].props.children);
-	      } else {
-	        return getTransition(child, next[idx]);
+	        return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children), _react2.default.Children.toArray(next[idx].props.children));
 	      }
+	      return getTransition(child, next[idx]);
 	    });
 	  };
 	
@@ -6949,6 +6954,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
+	var _pick2 = __webpack_require__(124);
+	
+	var _pick3 = _interopRequireDefault(_pick2);
+	
+	var _isFunction2 = __webpack_require__(53);
+	
+	var _isFunction3 = _interopRequireDefault(_isFunction2);
+	
+	var _defaults2 = __webpack_require__(100);
+	
+	var _defaults3 = _interopRequireDefault(_defaults2);
+	
 	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -6963,15 +6980,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _index = __webpack_require__(119);
 	
-	var _defaults = __webpack_require__(100);
-	
-	var _defaults2 = _interopRequireDefault(_defaults);
-	
-	var _pick = __webpack_require__(124);
-	
-	var _pick2 = _interopRequireDefault(_pick);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
@@ -7004,7 +7015,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var oldProps = animate.parentState.nodesWillExit ? props : null;
 	        return { oldProps: oldProps };
 	      } else {
-	        var _Transitions$getIniti = _index.Transitions.getInitialTransitionState([props.children], [nextProps.children]);
+	        var oldChildren = _react2.default.Children.toArray(props.children);
+	        var nextChildren = _react2.default.Children.toArray(nextProps.children);
+	
+	        var _Transitions$getIniti = _index.Transitions.getInitialTransitionState(oldChildren, nextChildren);
 	
 	        var nodesWillExit = _Transitions$getIniti.nodesWillExit;
 	        var nodesWillEnter = _Transitions$getIniti.nodesWillEnter;
@@ -7021,16 +7035,27 @@ return /******/ (function(modules) { // webpackBootstrap
 	      }
 	    }
 	  }, {
-	    key: "getChildDomain",
-	    value: function getChildDomain(child) {
-	      var getDomain = child.type && child.type.getDomain;
-	      if (!getDomain) {
-	        return undefined;
-	      }
-	      return child.type && child.type.role === "axis" ? getDomain(child.props) : {
-	        x: getDomain(child.props, "x"),
-	        y: getDomain(child.props, "y")
+	    key: "getDomainFromChildren",
+	    value: function getDomainFromChildren(props, axis) {
+	      var getChildDomains = function getChildDomains(children) {
+	        return children.reduce(function (memo, child) {
+	          if (child.type && (0, _isFunction3.default)(child.type.getDomain)) {
+	            var childDomain = child.props && child.type.getDomain(child.props, axis);
+	            return childDomain ? memo.concat(childDomain) : memo;
+	          } else if (child.props && child.props.children) {
+	            return memo.concat(getChildDomains(_react2.default.Children.toArray(child.props.children)));
+	          }
+	          return memo;
+	        }, []);
 	      };
+	
+	      var childComponents = _react2.default.Children.toArray(props.children);
+	      if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
+	        return Array.isArray(props.domain) ? props.domain : props.domain[axis];
+	      } else {
+	        var childDomains = getChildDomains(childComponents);
+	        return childDomains.length === 0 ? [0, 1] : [Math.min.apply(Math, _toConsumableArray(childDomains)), Math.max.apply(Math, _toConsumableArray(childDomains))];
+	      }
 	    }
 	  }, {
 	    key: "render",
@@ -7043,13 +7068,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	      });
 	      var child = _react2.default.Children.toArray(props.children)[0];
 	      var transitionProps = getTransitionProps(child);
-	      var combinedProps = (0, _defaults2.default)({ domain: this.getChildDomain(child) }, transitionProps, child.props);
-	      var propsToAnimate = props.animationWhitelist ? (0, _pick2.default)(combinedProps, props.animationWhitelist) : combinedProps;
+	      var domain = {
+	        x: this.getDomainFromChildren(props, "x"),
+	        y: this.getDomainFromChildren(props, "y")
+	      };
+	      var combinedProps = (0, _defaults3.default)({ domain: domain }, transitionProps, child.props);
+	      var propsToAnimate = props.animationWhitelist ? (0, _pick3.default)(combinedProps, props.animationWhitelist) : combinedProps;
 	      return _react2.default.createElement(
 	        _victoryAnimation2.default,
 	        _extends({}, combinedProps.animate, { data: propsToAnimate }),
 	        function (newProps) {
-	          var component = _react2.default.cloneElement(child, (0, _defaults2.default)({ animate: null }, newProps, combinedProps));
+	          var component = _react2.default.cloneElement(child, (0, _defaults3.default)({ animate: null }, newProps, combinedProps));
 	          return component;
 	        }
 	      );
