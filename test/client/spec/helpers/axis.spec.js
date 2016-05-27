@@ -40,9 +40,8 @@ describe("helpers/axis", () => {
     });
 
     it("returns the independent axis when called with 'x'", () => {
-      const props = {};
       const childComponents = [dependentAxis, independentAxis, bar];
-      const componentResult = Axis.getAxisComponent(props, "x", childComponents);
+      const componentResult = Axis.getAxisComponent(childComponents, "x");
       expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props, false)
         .and.returned("y");
       expect(independentAxis.type.getAxis).calledWith(independentAxis.props, false)
@@ -51,9 +50,8 @@ describe("helpers/axis", () => {
     });
 
     it("returns the dependent axis when called with 'x' and flipped data", () => {
-      const props = {};
       const childComponents = [dependentAxis, independentAxis, horizontalBar];
-      const componentResult = Axis.getAxisComponent(props, "x", childComponents);
+      const componentResult = Axis.getAxisComponent(childComponents, "x");
       expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props, true)
         .and.returned("x");
       expect(independentAxis.type.getAxis).calledWith(independentAxis.props, true)

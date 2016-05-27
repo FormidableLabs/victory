@@ -194,7 +194,7 @@ export default {
 
   getStringsFromChildren(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
-    const axisComponent = Axis.getAxisComponent(props, axis, childComponents);
+    const axisComponent = Axis.getAxisComponent(childComponents, axis);
     const axisStrings = axisComponent ? Data.getStringsFromAxes(axisComponent.props, axis) : [];
     const categoryStrings = this.getStringsFromCategories(childComponents, axis);
     const dataStrings = this.getStringsFromData(childComponents, axis);

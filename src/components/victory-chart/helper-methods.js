@@ -15,8 +15,8 @@ export default {
     }
 
     const axisComponents = {
-      dependent: Axis.getAxisComponentsWithParent(props, "dependent", childComponents),
-      independent: Axis.getAxisComponentsWithParent(props, "independent", childComponents)
+      dependent: Axis.getAxisComponentsWithParent(childComponents, "dependent"),
+      independent: Axis.getAxisComponentsWithParent(childComponents, "independent")
     };
 
     if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
@@ -53,7 +53,7 @@ export default {
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const domain = Wrapper.getDomain(props, axis, childComponents);
-    const orientations = Axis.getAxisOrientations(props);
+    const orientations = Axis.getAxisOrientations(childComponents);
     return Domain.orientDomain(domain, orientations, axis);
   },
 
