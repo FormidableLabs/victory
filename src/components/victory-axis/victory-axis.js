@@ -297,7 +297,7 @@ export default class VictoryAxis extends React.Component {
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
-  static getAxis = AxisHelpers.getAxis.bind(AxisHelpers);
+  static getAxis = Axis.getAxis.bind(Axis);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
   static getStyles = getStyles;
 

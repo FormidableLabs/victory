@@ -20,7 +20,7 @@ class Wrapper extends React.Component {
   };
 
   renderChildren() {
-    const props = omit(this.props, "children");
+    const props = omit(this.props, ["children", "style"]);
     const children = React.Children.toArray(this.props.children);
     return children.map((child) => {
       return React.cloneElement(child, assign({}, child.props, props));
@@ -29,7 +29,10 @@ class Wrapper extends React.Component {
 
   render() {
     return (
-      <g>{this.renderChildren()}</g>
+      <g>
+        <VictoryLabel text={"WRAPPED"} x={50} y={50}/>
+        {this.renderChildren()}
+      </g>
     );
   }
 }
@@ -186,7 +189,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle} animate={{duration: 1000}}>
             <VictoryStack colorScale={"warm"}>
               {this.state.multiBarTransitionData.map((data, index) => {
-                return <VictoryBar key={index} data={data}/>;
+                return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
               })}
             </VictoryStack>
           </VictoryChart>
@@ -209,9 +212,8 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
-            <VictoryAxis/>
-            <VictoryAxis orientation={"top"}/>
-            <VictoryAxis dependentAxis crossAxis={false}/>
+            <Wrapper><VictoryAxis/></Wrapper>
+            <Wrapper><VictoryAxis dependentAxis crossAxis={false}/></Wrapper>
             <Wrapper>
               <VictoryLine
                 style={{data:
@@ -296,10 +298,8 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}>
             <VictoryAxis dependentAxis orientation="right"/>
             <VictoryAxis orientation="top"/>
-            <Wrapper>
               <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
               <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
-            </Wrapper>
           </VictoryChart>
 
           <VictoryChart style={chartStyle} animate={{duration: 2000}}

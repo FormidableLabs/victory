@@ -173,9 +173,9 @@ export default class VictoryChart extends React.Component {
   }
 
   getChildProps(child, props, calculatedProps) {
-    const type = child.type && child.type.role;
-    if (type === "axis") {
-      return this.getAxisProps(child, props, calculatedProps);
+    const axisChild = Axis.findAxisComponents([child]);
+    if (axisChild.length > 0) {
+      return this.getAxisProps(axisChild[0], props, calculatedProps);
     }
     return {
       domain: calculatedProps.domain,
