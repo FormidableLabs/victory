@@ -1,5 +1,10 @@
 VictoryCore Changelog
 =====================
+## 2.1.0 (2016-05-26)
+
+- Upgrades to React 15
+- Alters transitions to support wrapped components
+
 ## 2.0.1 (2016-05-13)
 
 - Uses `.js` file extension rather than `.jsx`.
