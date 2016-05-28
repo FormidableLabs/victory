@@ -7,7 +7,7 @@ import BarDemo from "./components/victory-bar-demo";
 import ChartDemo from "./components/victory-chart-demo";
 import LineDemo from "./components/victory-line-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
-import { Router, Route, Link } from "react-router";
+import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
 
@@ -35,7 +35,7 @@ const App = React.createClass({
 });
 
 ReactDOM.render((
-  <Router>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="axis" component={AxisDemo}/>
       <Route path="area" component={AreaDemo}/>
