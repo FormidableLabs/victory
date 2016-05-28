@@ -1,4 +1,4 @@
-import { merge, partial, isFunction, property } from "lodash";
+import { defaults, merge, partial, isFunction, property } from "lodash";
 
 export default {
   getPartialEvents(events, eventKey, childProps) {
@@ -18,8 +18,31 @@ export default {
   },
 
   getEvents(events, namespace) {
+    const parseEvent = (eventReturn, childProps, eventKey) => {
+      const key = eventReturn.eventKey || eventKey;
+      const target = eventReturn.target || namespace;
+      const propKeys = Object.keys(eventReturn).filter(
+        (prop) => prop !== "target" && prop !== "eventKey"
+      );
+      const mergedProps = propKeys.reduce((memo, propKey) => {
+        memo[propKey] = defaults({}, eventReturn[propKey], childProps[propKey]);
+        return memo;
+      }, {});
+      return {[key]: {[target]: mergedProps}};
+    };
+    const parseEventReturn = (eventReturn, childProps, eventKey) => {
+      return Array.isArray(eventReturn) ?
+        eventReturn.reduce((memo, props) => {
+          memo = merge({}, memo, parseEvent(props, childProps, eventKey));
+          return memo;
+        }, {}) :
+        parseEvent(eventReturn, childProps, eventKey);
+    };
     const onEvent = (evt, childProps, eventKey, eventName) => {
+
       if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
+        const eventReturn = this.props.events[namespace][eventName](evt, childProps, eventKey);
+        console.log(parseEventReturn(eventReturn, childProps, eventKey));
         this.setState({
           [eventKey]: merge(
             {},

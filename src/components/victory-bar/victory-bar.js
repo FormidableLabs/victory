@@ -1,4 +1,4 @@
-import { assign, defaults,  isFunction, omit } from "lodash";
+import { assign, defaults,  isFunction, isEmpty, omit } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
@@ -282,6 +282,26 @@ export default class VictoryBar extends React.Component {
     this.getEventState = Events.getEventState.bind(this);
   }
 
+  componentWillMount() {
+    this.populateState(this.props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.populateState(newProps);
+  }
+
+  populateState(props) {
+    this.style = Helpers.getStyles(
+      props.style,
+      defaultStyles,
+      "auto",
+      "100%"
+    );
+    this.setState({
+      initial: this.calculateState(props, this.style)
+    });
+  }
+
   getScale(props) {
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -367,14 +387,59 @@ export default class VictoryBar extends React.Component {
     return assign({}, sharedEvents[type], ownEvents);
   }
 
-  renderData(props, data, style) {
-    const scale = this.getScale(props);
-    const dataEvents = this.getAllEvents(props, "data")
+  renderData(props) {
+    const dataEvents = this.getAllEvents(props, "data");
     const labelEvents = this.getAllEvents(props, "labels");
-    const { horizontal, labelComponent, sharedEvents} = props;
+    const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    const initialState = this.state.initial;
+    return Object.keys(initialState).map((key) => {
+      const dataProps = defaults(
+        {},
+        this.getEventState(key, "data"),
+        getSharedEventState(key, "data"),
+        initialState[key].data
+      );
+      const barComponent = React.cloneElement(dataComponent, assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
+      ));
+      const labelProps = defaults(
+        {},
+        this.getEventState(key, "labels"),
+        getSharedEventState(key, "labels"),
+        initialState[key].labels
+      );
+      if (labelProps) {
+        const barLabel = React.cloneElement(labelComponent, assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
+        }, labelProps));
+        return (
+          <g key={`bar-group-${key}`}>
+            {barComponent}
+            {barLabel}
+          </g>
+        );
+      }
+      return barComponent;
+    });
+  }
+
+  addEventKeys(props, data) {
+    const eventKeyAccessor = Events.getEventKey(props.eventKey);
     return data.map((datum, index) => {
+      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
+      return assign({eventKey}, datum);
+    });
+  }
+
+  calculateState(props, style) {
+    const data = this.addEventKeys(this.props, Data.getData(this.props));
+    const scale = this.getScale(props);
+    const { horizontal, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const position = this.getBarPosition(props, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
@@ -393,9 +458,7 @@ export default class VictoryBar extends React.Component {
           horizontal
         }
       );
-      const barComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Events.getPartialEvents(dataEvents, datum.eventKey, dataProps)}
-      ));
+
       const text = this.getLabel(props, dataProps.datum, index);
       if (text !== null && text !== undefined) {
         const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
@@ -425,30 +488,20 @@ export default class VictoryBar extends React.Component {
             angle: labelStyle.angle
           }
         );
-        const barLabel = React.cloneElement(labelComponent, assign({
-          events: Events.getPartialEvents(labelEvents, index, labelProps)
-        }, labelProps));
-        return (
-          <g key={`bar-group-${index}`}>
-            {barComponent}
-            {barLabel}
-          </g>
-        );
+        memo[eventKey] = {
+          data: dataProps,
+          labels: labelProps
+        };
+        return memo;
       }
-      return barComponent;
-    });
-  }
-
-  addEventKeys(props, data) {
-    const eventKeyAccessor = Events.getEventKey(props.eventKey);
-    return data.map((datum, index) => {
-      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-      return assign({eventKey}, datum);
-    });
+      memo[eventKey] = {
+        data: dataProps
+      };
+      return memo;
+    }, {});
   }
 
   render() {
-
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -463,17 +516,10 @@ export default class VictoryBar extends React.Component {
       );
     }
 
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
-    const data = this.addEventKeys(this.props, Data.getData(this.props));
-    const group = <g style={style.parent}>{this.renderData(this.props, data, style)}</g>;
+    const group = <g style={this.style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
-        style={style.parent}
+        style={this.style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         {...this.props.events.parent}
       >
