@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import AnimationDemo from "./victory-animation/demo";
 import LabelDemo from "./victory-label/demo";
-import { Router, Route, Link } from "react-router";
+import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
 
@@ -27,7 +27,7 @@ const App = React.createClass({
 });
 
 ReactDOM.render((
-  <Router>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="animation" component={AnimationDemo}/>
       <Route path="label" component={LabelDemo}/>
