@@ -36,19 +36,10 @@
   <!--[if lt IE 8]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
   <![endif]-->
-  <div id="content"></div>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.15/es5-shim.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/es5-shim/4.1.15/es5-sham.min.js"></script>
-  <![endif]-->
-  <script src="assets/main.js"></script>
-  <script>
-    // Sanity-check the component loaded...
-    setTimeout(function () {
-      var content = document.querySelector("#content");
-      content.innerHTML = content.innerHTML ||
-        "If you can see this, something is broken (or JS is not enabled)!";
-    }, 500);
-  </script>
+  <div id="content">
+    <h1>If you can see this, something is broken (or JS is not enabled)!!.</h1>
+  </div>
+  <script type="text/javascript" src="assets/main.js"></script>
 </body>
 </html>
+

@@ -118,7 +118,13 @@ export default class VictoryAxis extends React.Component {
      * If this value is not given it will be calculated based on the scale or tickValues.
      * @examples [-1, 1]
      */
-    domain: CustomPropTypes.domain,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({
+        x: CustomPropTypes.domain,
+        y: CustomPropTypes.domain
+      })
+    ]),
     /**
      * The events prop attaches arbitrary event handlers to data and label elements
      * Event handlers are called with their corresponding events, corresponding component props,
@@ -291,7 +297,7 @@ export default class VictoryAxis extends React.Component {
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
-  static getAxis = AxisHelpers.getAxis.bind(AxisHelpers);
+  static getAxis = Axis.getAxis.bind(Axis);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
   static getStyles = getStyles;
 

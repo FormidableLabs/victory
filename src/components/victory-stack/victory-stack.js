@@ -2,7 +2,6 @@ import { assign, uniq } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
 import Scale from "../../helpers/scale";
-import Data from "../../helpers/data";
 import Wrapper from "../../helpers/wrapper";
 
 const defaultStyles = {
@@ -224,9 +223,7 @@ export default class VictoryStack extends React.Component {
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
-    const datasets = childComponents.map((child) => {
-      return child.type.getData(child.props) || Data.getData(child.props);
-    });
+    const datasets = Wrapper.getDataFromChildren(props);
     const domain = {
       x: Wrapper.getStackedDomain(props, "x", datasets),
       y: Wrapper.getStackedDomain(props, "y", datasets)
@@ -307,9 +304,6 @@ export default class VictoryStack extends React.Component {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const childComponents = React.Children.toArray(props.children);
     const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.length > 1) {
-      Log.warn("Only components of the same type can be stacked");
-    }
     if (types.some((type) => type === "group-wrapper")) {
       Log.warn("It is not possible to stack groups.");
     }

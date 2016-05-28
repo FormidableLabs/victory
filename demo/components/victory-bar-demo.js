@@ -1,7 +1,29 @@
 /*global window:false*/
 import React from "react";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryEvents} from "../../src/index";
-import { random, range } from "lodash";
+import { assign, random, range } from "lodash";
+
+class Wrapper extends React.Component {
+  static propTypes = {
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ])
+  };
+
+  renderChildren(props) {
+    const children = React.Children.toArray(props.children);
+    return children.map((child) => {
+      return React.cloneElement(child, assign({}, child.props, props));
+    });
+  }
+
+  render() {
+    return (
+      <g>{this.renderChildren(this.props)}</g>
+    );
+  }
+}
 
 export default class App extends React.Component {
   constructor() {
@@ -90,7 +112,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
-        {/*}
         <VictoryBar
           style={{
             parent: parentStyle,
@@ -115,7 +136,7 @@ export default class App extends React.Component {
           colorScale={"warm"}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
           })}
         </VictoryStack>
 
@@ -126,7 +147,7 @@ export default class App extends React.Component {
           colorScale={"qualitative"}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
           })}
         </VictoryGroup>
 
@@ -205,16 +226,18 @@ export default class App extends React.Component {
         </ChartWrap>
 
           <VictoryStack colorScale="warm" style={{parent: parentStyle}}>
-            <VictoryBar
-              data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
-              events={{
-                data: {
-                  onClick: () => {
-                    return {data: {style: {fill: "cyan"}}};
+            <Wrapper>
+              <VictoryBar
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+                events={{
+                  data: {
+                    onClick: () => {
+                      return {data: {style: {fill: "cyan"}}};
+                    }
                   }
-                }
-              }}
-            />
+                }}
+              />
+            </Wrapper>
             <VictoryBar
               data={[{x: "c", y: 2}, {x: "d", y: 3}, {x: "e", y: 4}]}
               events={{
@@ -226,14 +249,19 @@ export default class App extends React.Component {
               }}
             />
           </VictoryStack>
-          {*/}
           <svg width={500} height={300} style={{parent: parentStyle}}>
             <VictoryEvents
               events={{
                 data: {
                   onClick: () => {
-                    console.log("SHARED EVENT")
-                    return {data: {style: {fill: "cyan", width: 25}}};
+                    console.log("SHARED EVENT");
+                    return {
+                      target: "data",
+                      eventKey: 1,
+                      mutation: () => {
+                        return {style: {fill: "blue"}};
+                      }
+                    };
                   }
                 }
               }}

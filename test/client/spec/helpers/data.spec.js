@@ -2,6 +2,7 @@
 /* global sinon */
 
 import Data from "src/helpers/data";
+import { Helpers } from "victory-core";
 
 describe("helpers/data", () => {
   describe("createStringMap", () => {
@@ -10,7 +11,7 @@ describe("helpers/data", () => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Data, "getStringsFromAxes");
       sandbox.spy(Data, "getStringsFromCategories");
-      sandbox.spy(Data, "getStringsFromData");
+      sandbox.spy(Helpers, "getStringsFromData");
     });
     afterEach(() => {
       sandbox.restore();
@@ -38,8 +39,8 @@ describe("helpers/data", () => {
     it("returns a string map from strings in data", () => {
       const props = {data};
       const stringMap = Data.createStringMap(props, "x");
-      expect(Data.getStringsFromData).calledWith(props, "x");
-      expect(Data.getStringsFromData).to.have.returned(["one", "red", "cat"]);
+      expect(Helpers.getStringsFromData).calledWith(props, "x");
+      expect(Helpers.getStringsFromData).to.have.returned(["one", "red", "cat"]);
       expect(stringMap).to.eql({ one: 1, red: 2, cat: 3 });
     });
 
@@ -47,47 +48,11 @@ describe("helpers/data", () => {
       const props = {tickValues, data};
       const stringMap = Data.createStringMap(props, "x");
       expect(Data.getStringsFromAxes).to.have.returned(["one", "two", "three"]);
-      expect(Data.getStringsFromData).to.have.returned(["one", "red", "cat"]);
+      expect(Helpers.getStringsFromData).to.have.returned(["one", "red", "cat"]);
       expect(stringMap).to.eql({ one: 1, two: 2, three: 3, red: 4, cat: 5 });
     });
   });
 
-  describe("getStringsFromData", () => {
-    let sandbox;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      sandbox.spy(Data, "getStringsFromData");
-    });
-    afterEach(() => {
-      sandbox.restore();
-    });
-
-    it("returns an array of strings from a data prop", () => {
-      const props = {data: [{x: "one", y: 1}, {x: "red", y: 2}, {x: "cat", y: 3}]};
-      const dataStrings = Data.getStringsFromData(props, "x");
-      expect(dataStrings).to.eql(["one", "red", "cat"]);
-    });
-
-    it("returns an array of strings from array-type data", () => {
-      const props = {data: [["one", 1], ["red", 2], ["cat", 3]], x: 0, y: 1};
-      const dataStrings = Data.getStringsFromData(props, "x");
-      expect(dataStrings).to.eql(["one", "red", "cat"]);
-    });
-
-    it("only returns strings, if data is mixed", () => {
-      const props = {data: [{x: 1, y: 1}, {x: "three", y: 3}]};
-      expect(Data.getStringsFromData(props, "x")).to.eql(["three"]);
-    });
-
-    it("returns an empty array when no strings are present", () => {
-      const props = {data: [{x: 1, y: 1}, {x: 3, y: 3}]};
-      expect(Data.getStringsFromData(props, "x")).to.eql([]);
-    });
-
-    it("returns an empty array when the data prop is undefined", () => {
-      expect(Data.getStringsFromData({}, "x")).to.eql([]);
-    });
-  });
 
   describe("getStringsFromAxes", () => {
     it("returns an array of strings when tickValues is an array", () => {
