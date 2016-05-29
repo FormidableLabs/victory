@@ -112,7 +112,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
-        {/*}
         <VictoryBar
           style={{
             parent: parentStyle,
@@ -131,7 +130,19 @@ export default class App extends React.Component {
           events={{
             data: {
               onClick: () => {
-                return {data: {style: {fill: "blue"}}};
+                return [
+                  {
+                    mutation: (props) => {
+                      return {style: merge({}, props.style, {fill: "orange"})};
+                    }
+                  },
+                  {
+                    target: "labels",
+                    mutation: () => {
+                      return {text: "hi there"};
+                    }
+                  }
+                ];
               }
             }
           }}
@@ -257,15 +268,15 @@ export default class App extends React.Component {
               }}
             />
           </VictoryStack>
-        {*/}
           <svg width={500} height={300} style={{parent: parentStyle}}>
             <VictoryEvents
               events={{
                 data: {
                   onClick: () => {
-                    console.log("WOO")
                     return {
-                      mutation: (props) => merge({}, props, {style: {fill: "cyan"}})
+                      mutation: (props) => {
+                        return {style: merge({}, props.style, {fill: "cyan"})};
+                      }
                     };
                   }
                 }
@@ -283,7 +294,9 @@ export default class App extends React.Component {
                   data: {
                     onClick: () => {
                       return {
-                        mutation: (props) => merge({}, props, {style: {fill: "blue"}})
+                        mutation: (props) => {
+                          return {style: merge({}, props.style, {fill: "blue"})};
+                        }
                       };
                     }
                   }
