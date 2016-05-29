@@ -1,4 +1,4 @@
-import { defaults, merge, partial, isFunction, property } from "lodash";
+import { extend, merge, partial, isFunction, isEmpty, property } from "lodash";
 
 export default {
   getPartialEvents(events, eventKey, childProps) {
@@ -34,14 +34,33 @@ export default {
   ]
   */
 
-  getEvents(events, namespace, baseProps) {
+  getEvents(events, namespace, childType) {
+    const getTargetProps = (childName, key, type) => {
+      if (!childName || !this.baseProps[childName]) {
+        return this.baseProps[key] && this.baseProps[key][type];
+      }
+      return this.baseProps[childName] &&
+        this.baseProps[childName][key] &&
+        this.baseProps[childName][key][type];
+    };
+
     const parseEvent = (eventReturn, eventKey) => {
       const nullFunction = () => null;
       const key = eventReturn.eventKey || eventKey;
-      const target = eventReturn.target || namespace;
+      const type = eventReturn.type || namespace;
+      const childName = eventReturn.childName || childType;
+      const targetProps = getTargetProps(childName, key, type);
       const mutation = eventReturn.mutation || nullFunction;
-      const targetProps = this.baseProps ? this.baseProps[key][target] : baseProps[key][target];
-      return {[key]: {[target]: mutation(targetProps, this.baseProps)}};
+      const mutatedProps = mutation(targetProps, this.baseProps);
+      return childName && this.state.childName ?
+        extend(this.state, {
+          [childName]: extend(this.state[childName], {
+            [key]: extend(this.state[childName][key], {[type]: mutatedProps})
+          })
+        }) :
+        extend(this.state, {
+          [key]: extend(this.state[key], {[type]: mutatedProps})
+        });
     };
 
     const parseEventReturn = (eventReturn, eventKey) => {
@@ -60,15 +79,20 @@ export default {
       }
     };
 
-    return events ?
+    return !isEmpty(events) ?
       Object.keys(this.props.events[namespace]).reduce((memo, event) => {
         memo[event] = onEvent;
         return memo;
       }, {}) : {};
   },
 
-  getEventState(eventKey, namespace) {
-    return this.state[eventKey] && this.state[eventKey][namespace];
+  getEventState(eventKey, namespace, childType) {
+    if (!childType) {
+      return this.state[eventKey] && this.state[eventKey][namespace];
+    }
+    return this.state[childType] &&
+      this.state[childType][eventKey] &&
+      this.state[childType][eventKey][namespace];
   },
 
   getEventKey(key) {

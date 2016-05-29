@@ -1,12 +1,12 @@
-import { assign, defaults,  isFunction, isEmpty, omit } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
 } from "victory-core";
 import Bar from "./bar";
+import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Scale from "../../helpers/scale";
 import Events from "../../helpers/events";
 
 const defaultStyles = {
@@ -274,6 +274,7 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), defaultStyles);
 
   constructor() {
     super();
@@ -283,87 +284,11 @@ export default class VictoryBar extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = this.calculateBaseProps(this.props);
+    this.baseProps = BarHelpers.getBaseProps(this.props, defaultStyles);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = this.calculateBaseProps(newProps);
-  }
-
-  getScale(props) {
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomainWithZero(props, "x"),
-      y: Domain.getDomainWithZero(props, "y")
-    };
-    return {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
-  }
-
-  getBarPosition(props, datum, scale) {
-    const yOffset = datum.yOffset || 0;
-    const xOffset = datum.xOffset || 0;
-    const y0 = yOffset;
-    const y = datum.y + yOffset;
-    const x = datum.x + xOffset;
-    const formatValue = (value, axis) => {
-      return datum[axis] instanceof Date ? new Date(value) : value;
-    };
-    return {
-      x: scale.x(formatValue(x, "x")),
-      y0: scale.y(formatValue(y0, "y")),
-      y: scale.y(formatValue(y, "y"))
-    };
-  }
-
-  getBarStyle(datum, baseStyle) {
-    const styleData = omit(datum, [
-      "xName", "yName", "x", "y", "label"
-    ]);
-    return defaults({}, styleData, baseStyle);
-  }
-
-  getLabelStyle(style, datum) {
-    const labelStyle = defaults({
-      angle: datum.angle,
-      textAnchor: datum.textAnchor,
-      verticalAnchor: datum.verticalAnchor
-    }, style);
-    return Helpers.evaluateStyle(labelStyle, datum);
-  }
-
-  getLabel(props, datum, index) {
-    const propsLabel = Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
-    return datum.label || propsLabel;
-  }
-
-  getLabelAnchors(datum, horizontal) {
-    const sign = datum.y >= 0 ? 1 : -1;
-    if (!horizontal) {
-      return {
-        vertical: sign >= 0 ? "end" : "start",
-        text: "middle"
-      };
-    } else {
-      return {
-        vertical: "middle",
-        text: sign >= 0 ? "start" : "end"
-      };
-    }
-  }
-
-  getlabelPadding(style, horizontal) {
-    const defaultPadding = style.padding || 0;
-    return {
-      x: horizontal ? defaultPadding : 0,
-      y: horizontal ? 0 : defaultPadding
-    };
+    this.baseProps = BarHelpers.getBaseProps(newProps, defaultStyles);
   }
 
   getAllEvents(props, type) {
@@ -374,7 +299,7 @@ export default class VictoryBar extends React.Component {
     }
     const getEvents = sharedEvents.getEvents;
     const events = sharedEvents.events;
-    const boundEvents = getEvents(events[type], type, this.baseProps);
+    const boundEvents = getEvents(events[type], type);
     return assign({}, boundEvents, ownEvents);
   }
 
@@ -415,71 +340,6 @@ export default class VictoryBar extends React.Component {
     });
   }
 
-  addEventKeys(props, data) {
-    const eventKeyAccessor = Events.getEventKey(props.eventKey);
-    return data.map((datum, index) => {
-      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-      return assign({eventKey}, datum);
-    });
-  }
-
-  calculateBaseProps(props) {
-    this.style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = this.addEventKeys(this.props, Data.getData(this.props));
-    const scale = this.getScale(props);
-    const { horizontal } = props;
-    return data.reduce((memo, datum, index) => {
-      const eventKey = datum.eventKey;
-      const position = this.getBarPosition(props, datum, scale);
-      const barStyle = this.getBarStyle(datum, this.style.data);
-      const dataProps = assign(
-        {
-          key: `bar-${index}`,
-          style: Helpers.evaluateStyle(barStyle, datum),
-          index,
-          datum,
-          scale,
-          horizontal
-        },
-        position
-      );
-
-      const text = this.getLabel(props, dataProps.datum, index);
-      if (text !== null && text !== undefined) {
-        const labelStyle = this.getLabelStyle(this.style.labels, dataProps.datum);
-        const padding = this.getlabelPadding(labelStyle, horizontal);
-        const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
-        const labelPosition = {
-          x: horizontal ? position.y : position.x,
-          y: horizontal ? position.x : position.y
-        };
-        const labelProps = {
-          key: `bar-label-${index}`,
-          style: labelStyle,
-          x: labelPosition.x + padding.x,
-          y: labelPosition.y - padding.y,
-          y0: position.y0,
-          text,
-          index,
-          scale,
-          datum: dataProps.datum,
-          textAnchor: labelStyle.textAnchor || anchors.text,
-          verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-          angle: labelStyle.angle
-        };
-        memo[eventKey] = {
-          data: dataProps,
-          labels: labelProps
-        };
-        return memo;
-      }
-      memo[eventKey] = {
-        data: dataProps
-      };
-      return memo;
-    }, {});
-  }
-
   render() {
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
@@ -494,11 +354,11 @@ export default class VictoryBar extends React.Component {
         </VictoryTransition>
       );
     }
-
-    const group = <g style={this.style.parent}>{this.renderData(this.props)}</g>;
+    const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
-        style={this.style.parent}
+        style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         {...this.props.events.parent}
       >

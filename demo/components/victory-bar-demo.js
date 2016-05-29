@@ -112,6 +112,7 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
+        {/*}
         <VictoryBar
           style={{
             parent: parentStyle,
@@ -137,7 +138,7 @@ export default class App extends React.Component {
                     }
                   },
                   {
-                    target: "labels",
+                    type: "labels",
                     mutation: () => {
                       return {text: "hi there"};
                     }
@@ -268,6 +269,7 @@ export default class App extends React.Component {
               }}
             />
           </VictoryStack>
+        {*/}
           <svg width={500} height={300} style={{parent: parentStyle}}>
             <VictoryEvents
               events={{
