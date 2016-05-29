@@ -33,15 +33,15 @@ export default class VictoryEvents extends React.Component {
   getNewChildren(props) {
     const childComponents = React.Children.toArray(props.children);
     const {events, eventKey} = props;
-    const boundEvents = keys(events).reduce((memo, key) => {
-      memo[key] = this.getEvents(events[key], key);
-      return memo;
-    }, {});
     return childComponents.map((child, index) => {
       return React.cloneElement(child, assign(
         {
           key: `events-${index}`,
-          sharedEvents: {events: boundEvents, getEventState: this.getEventState},
+          sharedEvents: {
+            events,
+            getEvents: this.getEvents,
+            getEventState: this.getEventState
+          },
           eventKey
         },
         child.props

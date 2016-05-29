@@ -1,7 +1,7 @@
 /*global window:false*/
 import React from "react";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryEvents} from "../../src/index";
-import { assign, random, range } from "lodash";
+import { assign, random, range, merge } from "lodash";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -112,6 +112,7 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
+        {/*}
         <VictoryBar
           style={{
             parent: parentStyle,
@@ -125,6 +126,13 @@ export default class App extends React.Component {
             },
             onEnter: {
               duration: 500
+            }
+          }}
+          events={{
+            data: {
+              onClick: () => {
+                return {data: {style: {fill: "blue"}}};
+              }
             }
           }}
           data={this.state.barTransitionData}
@@ -249,18 +257,15 @@ export default class App extends React.Component {
               }}
             />
           </VictoryStack>
+        {*/}
           <svg width={500} height={300} style={{parent: parentStyle}}>
             <VictoryEvents
               events={{
                 data: {
                   onClick: () => {
-                    console.log("SHARED EVENT");
+                    console.log("WOO")
                     return {
-                      target: "data",
-                      eventKey: 1,
-                      mutation: () => {
-                        return {style: {fill: "blue"}};
-                      }
+                      mutation: (props) => merge({}, props, {style: {fill: "cyan"}})
                     };
                   }
                 }
@@ -277,8 +282,9 @@ export default class App extends React.Component {
                 events={{
                   data: {
                     onClick: () => {
-                      console.log("SINGLE EVENT ")
-                      return {data: {style: {fill: "blue"}}};
+                      return {
+                        mutation: (props) => merge({}, props, {style: {fill: "blue"}})
+                      };
                     }
                   }
                 }}

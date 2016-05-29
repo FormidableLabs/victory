@@ -283,23 +283,11 @@ export default class VictoryBar extends React.Component {
   }
 
   componentWillMount() {
-    this.populateState(this.props);
+    this.baseProps = this.calculateBaseProps(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.populateState(newProps);
-  }
-
-  populateState(props) {
-    this.style = Helpers.getStyles(
-      props.style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
-    this.setState({
-      initial: this.calculateState(props, this.style)
-    });
+    this.baseProps = this.calculateBaseProps(newProps);
   }
 
   getScale(props) {
@@ -379,12 +367,15 @@ export default class VictoryBar extends React.Component {
   }
 
   getAllEvents(props, type) {
-    const sharedEvents = props.sharedEvents && props.sharedEvents.events;
+    const { sharedEvents } = props;
     const ownEvents = this.getEvents(props.events[type], type);
-    if (!sharedEvents) {
+    if (!props.sharedEvents) {
       return ownEvents;
     }
-    return assign({}, sharedEvents[type], ownEvents);
+    const getEvents = sharedEvents.getEvents;
+    const events = sharedEvents.events;
+    const boundEvents = getEvents(events[type], type, this.baseProps);
+    return assign({}, boundEvents, ownEvents);
   }
 
   renderData(props) {
@@ -393,13 +384,12 @@ export default class VictoryBar extends React.Component {
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
-    const initialState = this.state.initial;
-    return Object.keys(initialState).map((key) => {
+    return Object.keys(this.baseProps).map((key) => {
       const dataProps = defaults(
         {},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
-        initialState[key].data
+        this.baseProps[key].data
       );
       const barComponent = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
@@ -408,7 +398,7 @@ export default class VictoryBar extends React.Component {
         {},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
-        initialState[key].labels
+        this.baseProps[key].labels
       );
       if (labelProps) {
         const barLabel = React.cloneElement(labelComponent, assign({
@@ -433,22 +423,16 @@ export default class VictoryBar extends React.Component {
     });
   }
 
-  calculateState(props, style) {
+  calculateBaseProps(props) {
+    this.style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = this.addEventKeys(this.props, Data.getData(this.props));
     const scale = this.getScale(props);
-    const { horizontal, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
+    const { horizontal } = props;
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const position = this.getBarPosition(props, datum, scale);
-      const barStyle = this.getBarStyle(datum, style.data);
-      const dataProps = defaults(
-        {},
-        this.getEventState(eventKey, "data"),
-        getSharedEventState(eventKey, "data"),
-        props.dataComponent.props,
-        position,
+      const barStyle = this.getBarStyle(datum, this.style.data);
+      const dataProps = assign(
         {
           key: `bar-${index}`,
           style: Helpers.evaluateStyle(barStyle, datum),
@@ -456,38 +440,33 @@ export default class VictoryBar extends React.Component {
           datum,
           scale,
           horizontal
-        }
+        },
+        position
       );
 
       const text = this.getLabel(props, dataProps.datum, index);
       if (text !== null && text !== undefined) {
-        const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
+        const labelStyle = this.getLabelStyle(this.style.labels, dataProps.datum);
         const padding = this.getlabelPadding(labelStyle, horizontal);
         const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
         const labelPosition = {
           x: horizontal ? position.y : position.x,
           y: horizontal ? position.x : position.y
         };
-        const labelProps = defaults(
-          {},
-          this.getEventState(eventKey, "labels"),
-          getSharedEventState(eventKey, "labels"),
-          labelComponent.props,
-          {
-            key: `bar-label-${index}`,
-            style: labelStyle,
-            x: labelPosition.x + padding.x,
-            y: labelPosition.y - padding.y,
-            y0: position.y0,
-            text,
-            index,
-            scale,
-            datum: dataProps.datum,
-            textAnchor: labelStyle.textAnchor || anchors.text,
-            verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-            angle: labelStyle.angle
-          }
-        );
+        const labelProps = {
+          key: `bar-label-${index}`,
+          style: labelStyle,
+          x: labelPosition.x + padding.x,
+          y: labelPosition.y - padding.y,
+          y0: position.y0,
+          text,
+          index,
+          scale,
+          datum: dataProps.datum,
+          textAnchor: labelStyle.textAnchor || anchors.text,
+          verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
+          angle: labelStyle.angle
+        };
         memo[eventKey] = {
           data: dataProps,
           labels: labelProps

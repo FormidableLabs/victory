@@ -17,39 +17,46 @@ export default {
       {};
   },
 
-  getEvents(events, namespace) {
-    const parseEvent = (eventReturn, childProps, eventKey) => {
+  /*
+  [
+    {
+      target: "data",
+      eventKey: 1,
+      mutation: (stateForParticularTarget) => {
+        return whatever
+      }
+    },
+    {
+      target: "labels",
+      eventKey: 2,
+      text: "hello"
+    }
+  ]
+  */
+
+  getEvents(events, namespace, baseProps) {
+    const parseEvent = (eventReturn, eventKey) => {
+      const nullFunction = () => null;
       const key = eventReturn.eventKey || eventKey;
       const target = eventReturn.target || namespace;
-      const propKeys = Object.keys(eventReturn).filter(
-        (prop) => prop !== "target" && prop !== "eventKey"
-      );
-      const mergedProps = propKeys.reduce((memo, propKey) => {
-        memo[propKey] = defaults({}, eventReturn[propKey], childProps[propKey]);
-        return memo;
-      }, {});
-      return {[key]: {[target]: mergedProps}};
+      const mutation = eventReturn.mutation || nullFunction;
+      const targetProps = this.baseProps ? this.baseProps[key][target] : baseProps[key][target];
+      return {[key]: {[target]: mutation(targetProps, this.baseProps)}};
     };
-    const parseEventReturn = (eventReturn, childProps, eventKey) => {
+
+    const parseEventReturn = (eventReturn, eventKey) => {
       return Array.isArray(eventReturn) ?
         eventReturn.reduce((memo, props) => {
-          memo = merge({}, memo, parseEvent(props, childProps, eventKey));
+          memo = merge({}, memo, parseEvent(props, eventKey));
           return memo;
         }, {}) :
-        parseEvent(eventReturn, childProps, eventKey);
+        parseEvent(eventReturn, eventKey);
     };
-    const onEvent = (evt, childProps, eventKey, eventName) => {
 
+    const onEvent = (evt, childProps, eventKey, eventName) => {
       if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
         const eventReturn = this.props.events[namespace][eventName](evt, childProps, eventKey);
-        console.log(parseEventReturn(eventReturn, childProps, eventKey));
-        this.setState({
-          [eventKey]: merge(
-            {},
-            this.state[eventKey],
-            this.props.events[namespace][eventName](evt, childProps, eventKey)
-          )
-        });
+        this.setState(parseEventReturn(eventReturn, eventKey));
       }
     };
 
