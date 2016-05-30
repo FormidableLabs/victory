@@ -274,7 +274,7 @@ export default class VictoryStack extends React.Component {
       categories,
       domain,
       scale,
-      
+
       horizontal
     };
   }

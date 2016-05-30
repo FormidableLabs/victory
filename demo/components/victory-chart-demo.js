@@ -212,16 +212,16 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
-            <Wrapper><VictoryAxis/></Wrapper>
-            <Wrapper><VictoryAxis dependentAxis crossAxis={false}/></Wrapper>
-            <Wrapper>
+            <VictoryAxis/>
+            <VictoryAxis dependentAxis crossAxis={false} offsetX={30}/>
+
               <VictoryLine
                 style={{data:
                   {stroke: "red", strokeWidth: 4}
                 }}
                 y={(data) => Math.sin(2 * Math.PI * data.x)}
               />
-            </Wrapper>
+
             <VictoryLine
               style={{data:
                 {stroke: "blue", strokeWidth: 4}

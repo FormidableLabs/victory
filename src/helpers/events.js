@@ -34,14 +34,16 @@ export default {
   ]
   */
 
-  getEvents(events, namespace, childType) {
+
+  getEvents(events, namespace, childType, baseProps) {
+    baseProps = baseProps || this.baseProps;
     const getTargetProps = (childName, key, type) => {
-      if (!childName || !this.baseProps[childName]) {
-        return this.baseProps[key] && this.baseProps[key][type];
+      if (!childName || !baseProps[childName]) {
+        return baseProps[key] && baseProps[key][type];
       }
-      return this.baseProps[childName] &&
-        this.baseProps[childName][key] &&
-        this.baseProps[childName][key][type];
+      return baseProps[childName] &&
+        baseProps[childName][key] &&
+        baseProps[childName][key][type];
     };
 
     const parseEvent = (eventReturn, eventKey) => {
@@ -51,11 +53,12 @@ export default {
       const childName = eventReturn.childName || childType;
       const targetProps = getTargetProps(childName, key, type);
       const mutation = eventReturn.mutation || nullFunction;
-      const mutatedProps = mutation(targetProps, this.baseProps);
-      return childName && this.state.childName ?
+      const mutatedProps = mutation(targetProps, baseProps);
+      const childState = this.state[childName] || {};
+      return childName ?
         extend(this.state, {
-          [childName]: extend(this.state[childName], {
-            [key]: extend(this.state[childName][key], {[type]: mutatedProps})
+          [childName]: extend(childState, {
+            [key]: extend(childState[key], {[type]: mutatedProps})
           })
         }) :
         extend(this.state, {

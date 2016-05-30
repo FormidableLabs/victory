@@ -39,9 +39,8 @@ export default class VictoryEvents extends React.Component {
   }
 
   setUpChildren(props) {
-    const childComponents = React.Children.toArray(props.children);
-    this.baseProps = this.getBasePropsFromChildren(childComponents);
-    this.newChildren = this.getNewChildren(props, childComponents);
+    this.childComponents = React.Children.toArray(props.children);
+    this.baseProps = this.getBasePropsFromChildren(this.childComponents);
   }
 
   getBasePropsFromChildren(childComponents) {
@@ -75,16 +74,16 @@ export default class VictoryEvents extends React.Component {
     return getBaseProps(childComponents);
   }
 
-  getNewChildren(props, childComponents) {
+  getNewChildren(props) {
     const {events, eventKey} = props;
     const childNames = Object.keys(this.baseProps);
-    return childComponents.map((child, index) => {
+    return this.childComponents.map((child, index) => {
       return React.cloneElement(child, assign(
         {
           key: `events-${index}`,
           sharedEvents: {
             events,
-            getEvents: partialRight(this.getEvents, childNames[index]),
+            getEvents: partialRight(this.getEvents, childNames[index], this.baseProps),
             getEventState: partialRight(this.getEventState, childNames[index])
           },
           eventKey
@@ -95,7 +94,7 @@ export default class VictoryEvents extends React.Component {
   }
 
   render() {
-    return <g>{this.newChildren}</g>;
+    return <g>{this.getNewChildren(this.props)}</g>;
   }
 
 }

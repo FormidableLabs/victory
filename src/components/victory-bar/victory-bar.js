@@ -262,7 +262,6 @@ export default class VictoryBar extends React.Component {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -293,13 +292,14 @@ export default class VictoryBar extends React.Component {
 
   getAllEvents(props, type) {
     const { sharedEvents } = props;
-    const ownEvents = this.getEvents(props.events[type], type);
+    const ownEvents = props.events && props.events[type] &&
+      this.getEvents(props.events[type], type);
     if (!props.sharedEvents) {
       return ownEvents;
     }
     const getEvents = sharedEvents.getEvents;
     const events = sharedEvents.events;
-    const boundEvents = getEvents(events[type], type);
+    const boundEvents = events[type] && getEvents(events[type], type);
     return assign({}, boundEvents, ownEvents);
   }
 
@@ -355,12 +355,13 @@ export default class VictoryBar extends React.Component {
       );
     }
     const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+    const parentEvents = this.props.events && this.props.events.parent;
     const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
+        {...parentEvents}
       >
         {group}
       </svg> :

@@ -112,7 +112,6 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
-        {/*}
         <VictoryBar
           style={{
             parent: parentStyle,
@@ -269,17 +268,19 @@ export default class App extends React.Component {
               }}
             />
           </VictoryStack>
-        {*/}
           <svg width={500} height={300} style={{parent: parentStyle}}>
             <VictoryEvents
               events={{
                 data: {
                   onClick: () => {
-                    return {
-                      mutation: (props) => {
-                        return {style: merge({}, props.style, {fill: "cyan"})};
+                    return [
+                      {
+                        childName: "second-bar",
+                        mutation: (props) => {
+                          return {style: merge({}, props.style, {fill: "cyan"})};
+                        }
                       }
-                    };
+                    ];
                   }
                 }
               }}
@@ -291,6 +292,7 @@ export default class App extends React.Component {
                 data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
               />
               <VictoryBar
+                name={"second-bar"}
                 data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
                 events={{
                   data: {
