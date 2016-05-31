@@ -1,9 +1,8 @@
 import { assign, defaults, omit } from "lodash";
-import { Helpers } from "victory-core";
+import { Helpers, Events } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import Events from "../../helpers/events";
 
 export default {
   getScale(props) {

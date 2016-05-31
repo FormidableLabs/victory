@@ -6,7 +6,6 @@ import VictoryBar from "./components/victory-bar/victory-bar";
 import VictoryScatter from "./components/victory-scatter/victory-scatter";
 import VictoryGroup from "./components/victory-group/victory-group";
 import VictoryStack from "./components/victory-stack/victory-stack";
-import VictoryEvents from "./components/victory-events/victory-events";
 
 export {
   VictoryChart,
@@ -16,6 +15,5 @@ export {
   VictoryBar,
   VictoryScatter,
   VictoryGroup,
-  VictoryStack,
-  VictoryEvents
+  VictoryStack
 };

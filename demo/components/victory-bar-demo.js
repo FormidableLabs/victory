@@ -1,6 +1,7 @@
 /*global window:false*/
 import React from "react";
-import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryEvents} from "../../src/index";
+import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
+import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
 
 class Wrapper extends React.Component {
@@ -150,7 +151,6 @@ export default class App extends React.Component {
           ]}
           data={this.state.barTransitionData}
         />
-
         <VictoryStack
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
@@ -289,7 +289,7 @@ export default class App extends React.Component {
             />
           </VictoryStack>
           <svg width={500} height={300} style={{parent: parentStyle}}>
-            <VictoryEvents
+            <VictorySharedEvents
               events={[
                 {
                   childName: "firstBar",
@@ -315,7 +315,8 @@ export default class App extends React.Component {
                         {
                           childName: "firstBar",
                           mutation: (props) => {
-                            return {style: merge({}, props.style, {fill: "cyan"})};
+                            return props.style.fill === "cyan" ? null :
+                              {style: merge({}, props.style, {fill: "cyan"})};
                           }
                         },
                         {
@@ -347,7 +348,7 @@ export default class App extends React.Component {
                 name={"secondBar"}
                 data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
               />
-          </VictoryEvents>
+          </VictorySharedEvents>
         </svg>
       </div>
     );

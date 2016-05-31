@@ -1,13 +1,12 @@
 import { defaults, isFunction, partialRight, partial } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Events from "../../helpers/events";
 
 const defaultStyles = {
   data: {
