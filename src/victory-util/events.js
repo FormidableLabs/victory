@@ -60,13 +60,15 @@ export default {
 
   getScopedEvents(events, namespace, childType, baseProps) {
     baseProps = baseProps || this.baseProps;
-    const getTargetProps = (childName, key, target) => {
-      if (!childName || !baseProps[childName]) {
-        return baseProps[key] && baseProps[key][target];
+    const getTargetProps = (identifier, type) => {
+      const { childName, target, key } = identifier;
+      const base = type === "props" ? baseProps : this.state;
+      if (!childName || !base[childName]) {
+        return base[key] && base[key][target];
       }
-      return baseProps[childName] &&
-        baseProps[childName][key] &&
-        baseProps[childName][key][target];
+      return base[childName] &&
+        base[childName][key] &&
+        base[childName][key][target];
     };
 
     const parseEvent = (eventReturn, eventKey) => {
@@ -74,9 +76,10 @@ export default {
       const key = eventReturn.eventKey || eventKey;
       const target = eventReturn.target || namespace;
       const childName = eventReturn.childName || childType;
-      const targetProps = getTargetProps(childName, key, target);
+      const targetProps = getTargetProps({childName, key, target}, "props");
+      const targetState = getTargetProps({childName, key, target}, "state");
       const mutation = eventReturn.mutation || nullFunction;
-      const mutatedProps = mutation(targetProps, baseProps);
+      const mutatedProps = mutation(Object.assign({}, targetProps, targetState), baseProps);
       const childState = this.state[childName] || {};
       return childName ?
         extend(this.state, {
@@ -100,7 +103,9 @@ export default {
 
     const onEvent = (evt, childProps, eventKey, eventName) => {
       const eventReturn = events[eventName](evt, childProps, eventKey);
-      this.setState(parseEventReturn(eventReturn, eventKey));
+      if (eventReturn) {
+        this.setState(parseEventReturn(eventReturn, eventKey));
+      }
     };
 
     return !isEmpty(events) ?
@@ -114,7 +119,12 @@ export default {
     const getEventsFromProps = (events) => {
       const getSelectedEvents = () => {
         const findEventsWith = (name, value) => {
-          return value ? events.filter((event) => `${event[name]}` === `${value}`) : events;
+          return events.reduce((memo, event) => {
+            if (event[name] !== undefined) {
+              return `${event[name]}` === `${value}` ? memo.concat(event) : memo;
+            }
+            return memo.concat(event);
+          }, []);
         };
         const keyEvents = findEventsWith("eventKey", eventKey);
         const targetEvents = findEventsWith("target", target);
