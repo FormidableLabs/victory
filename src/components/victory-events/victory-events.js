@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight } from "lodash";
+import { isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes } from "victory-core";
 import Events from "../../helpers/events";
@@ -15,7 +15,16 @@ export default class VictoryEvents extends React.Component {
       React.PropTypes.arrayOf(React.PropTypes.node),
       React.PropTypes.node
     ]),
-    events: PropTypes.object,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.string,
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -26,7 +35,7 @@ export default class VictoryEvents extends React.Component {
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Events.getEvents.bind(this);
+    this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
   }
 
@@ -44,24 +53,13 @@ export default class VictoryEvents extends React.Component {
   }
 
   getBasePropsFromChildren(childComponents) {
-    const childTypes = [];
-    const getChildKey = (child) => {
-      if (child.props.name) {
-        return child.props.name;
-      }
-      const role = child.type && child.type.role;
-      const count = childTypes.filter((type) => type === role).length;
-      return count ? `${role}-${count}` : role;
-    };
-
     const getBaseProps = (children) => {
-      return children.reduce((memo, child) => {
+      return children.reduce((memo, child, index) => {
         if (child.type && isFunction(child.type.getBaseProps)) {
           const baseChildProps = child.props && child.type.getBaseProps(child.props);
           if (baseChildProps) {
-            const childKey = getChildKey(child);
+            const childKey = child.props.name || index;
             memo[childKey] = baseChildProps;
-            childTypes.push(child.type.role);
             return memo;
           }
           return memo;
@@ -78,13 +76,16 @@ export default class VictoryEvents extends React.Component {
     const {events, eventKey} = props;
     const childNames = Object.keys(this.baseProps);
     return this.childComponents.map((child, index) => {
-      return React.cloneElement(child, assign(
+      const childName = childNames[index];
+      const childEvents = Array.isArray(events) &&
+        events.filter((event) => event.childName === childName);
+      return React.cloneElement(child, Object.assign(
         {
           key: `events-${index}`,
           sharedEvents: {
-            events,
-            getEvents: partialRight(this.getEvents, childNames[index], this.baseProps),
-            getEventState: partialRight(this.getEventState, childNames[index])
+            events: childEvents,
+            getEvents: partialRight(this.getScopedEvents, childName, this.baseProps),
+            getEventState: partialRight(this.getEventState, childName)
           },
           eventKey
         },

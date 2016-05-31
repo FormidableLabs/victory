@@ -112,36 +112,30 @@ export default {
       );
 
       const text = this.getLabel(props, dataProps.datum, index);
-      if (text !== null && text !== undefined) {
-        const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
-        const padding = this.getlabelPadding(labelStyle, horizontal);
-        const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
-        const labelPosition = {
-          x: horizontal ? position.y : position.x,
-          y: horizontal ? position.x : position.y
-        };
-        const labelProps = {
-          key: `bar-label-${index}`,
-          style: labelStyle,
-          x: labelPosition.x + padding.x,
-          y: labelPosition.y - padding.y,
-          y0: position.y0,
-          text,
-          index,
-          scale,
-          datum: dataProps.datum,
-          textAnchor: labelStyle.textAnchor || anchors.text,
-          verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-          angle: labelStyle.angle
-        };
-        memo[eventKey] = {
-          data: dataProps,
-          labels: labelProps
-        };
-        return memo;
-      }
+      const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
+      const padding = this.getlabelPadding(labelStyle, horizontal);
+      const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
+      const labelPosition = {
+        x: horizontal ? position.y : position.x,
+        y: horizontal ? position.x : position.y
+      };
+      const labelProps = {
+        key: `bar-label-${index}`,
+        style: labelStyle,
+        x: labelPosition.x + padding.x,
+        y: labelPosition.y - padding.y,
+        y0: position.y0,
+        text,
+        index,
+        scale,
+        datum: dataProps.datum,
+        textAnchor: labelStyle.textAnchor || anchors.text,
+        verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
+        angle: labelStyle.angle
+      };
       memo[eventKey] = {
-        data: dataProps
+        data: dataProps,
+        labels: labelProps
       };
       return memo;
     }, {});

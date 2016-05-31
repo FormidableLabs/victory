@@ -127,25 +127,27 @@ export default class App extends React.Component {
               duration: 500
             }
           }}
-          events={{
-            data: {
-              onClick: () => {
-                return [
-                  {
-                    mutation: (props) => {
-                      return {style: merge({}, props.style, {fill: "orange"})};
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {style: merge({}, props.style, {fill: "orange"})};
+                      }
+                    }, {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "hey"};
+                      }
                     }
-                  },
-                  {
-                    type: "labels",
-                    mutation: () => {
-                      return {text: "hi there"};
-                    }
-                  }
-                ];
+                  ];
+                }
               }
             }
-          }}
+          ]}
           data={this.state.barTransitionData}
         />
 
@@ -248,63 +250,102 @@ export default class App extends React.Component {
             <Wrapper>
               <VictoryBar
                 data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
-                events={{
-                  data: {
-                    onClick: () => {
-                      return {data: {style: {fill: "cyan"}}};
+                events={[
+                  {
+                    target: "data",
+                    eventHandlers: {
+                      onClick: () => {
+                        return [
+                          {
+                            mutation: (props) => {
+                              return {style: merge({}, props.style, {fill: "orange"})};
+                            }
+                          }
+                        ];
+                      }
                     }
                   }
-                }}
+                ]}
               />
             </Wrapper>
             <VictoryBar
               data={[{x: "c", y: 2}, {x: "d", y: 3}, {x: "e", y: 4}]}
-              events={{
-                data: {
-                  onClick: () => {
-                    return {data: {style: {fill: "blue"}}};
+              events={[
+                {
+                  target: "data",
+                  eventHandlers: {
+                    onClick: () => {
+                      return [
+                        {
+                          mutation: (props) => {
+                            return {style: merge({}, props.style, {fill: "blue"})};
+                          }
+                        }
+                      ];
+                    }
                   }
                 }
-              }}
+              ]}
             />
           </VictoryStack>
           <svg width={500} height={300} style={{parent: parentStyle}}>
             <VictoryEvents
-              events={{
-                data: {
-                  onClick: () => {
-                    return [
-                      {
-                        childName: "second-bar",
-                        mutation: (props) => {
-                          return {style: merge({}, props.style, {fill: "cyan"})};
-                        }
-                      }
-                    ];
-                  }
-                }
-              }}
-            >
-              <VictoryBar
-                style={{
-                  data: {width: 25, fill: "gold"}
-                }}
-                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
-              />
-              <VictoryBar
-                name={"second-bar"}
-                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
-                events={{
-                  data: {
+              events={[
+                {
+                  childName: "firstBar",
+                  target: "data",
+                  eventKey: 1,
+                  eventHandlers: {
                     onClick: () => {
                       return {
+                        childName: "secondBar",
                         mutation: (props) => {
                           return {style: merge({}, props.style, {fill: "blue"})};
                         }
                       };
                     }
                   }
+                }, {
+                  childName: "secondBar",
+                  target: "data",
+                  eventKey: 0,
+                  eventHandlers: {
+                    onClick: () => {
+                      return [
+                        {
+                          childName: "firstBar",
+                          mutation: (props) => {
+                            return {style: merge({}, props.style, {fill: "cyan"})};
+                          }
+                        },
+                        {
+                          mutation: (props) => {
+                            return {style: merge({}, props.style, {fill: "orange"})};
+                          }
+                        },
+                        {
+                          target: "labels",
+                          eventKey: 1,
+                          mutation: () => {
+                            return {text: "CLICKED"};
+                          }
+                        }
+                      ];
+                    }
+                  }
+                }
+              ]}
+            >
+              <VictoryBar
+                name="firstBar"
+                style={{
+                  data: {width: 25, fill: "gold"}
                 }}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+              />
+              <VictoryBar
+                name={"secondBar"}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
               />
           </VictoryEvents>
         </svg>

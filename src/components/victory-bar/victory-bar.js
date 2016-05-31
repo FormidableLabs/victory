@@ -1,4 +1,4 @@
-import { assign, defaults, isFunction, partialRight } from "lodash";
+import { defaults, isFunction, partialRight, partial } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
@@ -118,11 +118,15 @@ export default class VictoryBar extends React.Component {
      *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
-    }),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     /**
      * TODO
      */
@@ -135,7 +139,7 @@ export default class VictoryBar extends React.Component {
      * TODO
      */
     sharedEvents: PropTypes.shape({
-      events: PropTypes.object,
+      events: PropTypes.array,
       getEventState: PropTypes.func
     }),
     /**
@@ -278,7 +282,8 @@ export default class VictoryBar extends React.Component {
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Events.getEvents.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
     this.getEventState = Events.getEventState.bind(this);
   }
 
@@ -290,33 +295,19 @@ export default class VictoryBar extends React.Component {
     this.baseProps = BarHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  getAllEvents(props, type) {
-    const { sharedEvents } = props;
-    const ownEvents = props.events && props.events[type] &&
-      this.getEvents(props.events[type], type);
-    if (!props.sharedEvents) {
-      return ownEvents;
-    }
-    const getEvents = sharedEvents.getEvents;
-    const events = sharedEvents.events;
-    const boundEvents = events[type] && getEvents(events[type], type);
-    return assign({}, boundEvents, ownEvents);
-  }
-
   renderData(props) {
-    const dataEvents = this.getAllEvents(props, "data");
-    const labelEvents = this.getAllEvents(props, "labels");
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
     return Object.keys(this.baseProps).map((key) => {
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
         this.baseProps[key].data
       );
-      const barComponent = React.cloneElement(dataComponent, assign(
+      const barComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
@@ -325,8 +316,9 @@ export default class VictoryBar extends React.Component {
         getSharedEventState(key, "labels"),
         this.baseProps[key].labels
       );
-      if (labelProps) {
-        const barLabel = React.cloneElement(labelComponent, assign({
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const barLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
