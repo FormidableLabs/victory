@@ -1,11 +1,11 @@
-import { assign, defaults, sortBy } from "lodash";
+import { defaults, partial, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
-import Scale from "../../helpers/scale";
+import LineHelpers from "./helper-methods";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 
 const defaultStyles = {
@@ -112,10 +112,25 @@ export default class VictoryLine extends React.Component {
      *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.string,
+    /**
+     * TODO
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -263,7 +278,6 @@ export default class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
-    events: {},
     height: 300,
     interpolation: "linear",
     padding: 50,
@@ -279,116 +293,62 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers), defaultStyles);
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getDataSegments(dataset) {
-    const orderedData = sortBy(dataset, "x");
-    const segments = [];
-    let segmentStartIndex = 0;
-    orderedData.forEach((datum, index) => {
-      if (datum.y === null || typeof datum.y === "undefined") {
-        segments.push(orderedData.slice(segmentStartIndex, index));
-        segmentStartIndex = index + 1;
-      }
-    });
-    segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
-    return segments.filter((segment) => {
-      return Array.isArray(segment) && segment.length > 0;
-    });
+  componentWillMount() {
+    this.baseProps = LineHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  getLabelStyle(labelStyle, dataStyle) {
-    // match labels styles to data style by default (fill, opacity, others?)
-    const opacity = dataStyle.opacity;
-    // match label color to data color if it is not given.
-    // use fill instead of stroke for text
-    const fill = dataStyle.stroke;
-    const padding = labelStyle.padding || 0;
-    return defaults({}, labelStyle, {opacity, fill, padding});
+  componentWillReceiveProps(newProps) {
+    this.baseProps = LineHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  renderLine(props, calculatedProps) {
-    const {dataSegments, scale, style} = calculatedProps;
-    const {data, interpolation, dataComponent, events, label, labelComponent} = props;
-    const dataEvents = this.getEvents(events.data, "data");
-    return dataSegments.map((segment, index) => {
+  renderData(props) {
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+        sharedEvents.getEventState : () => undefined;
+    return Object.keys(this.baseProps).map((key) => {
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {},
-        this.getEventState(index, "data"),
-        dataComponent.props,
-        {
-          key: `line-segment-${index}`,
-          data: segment,
-          style: Helpers.evaluateStyle(style.data, segment),
-          interpolation: Helpers.evaluateProp(interpolation, segment),
-          scale
-        }
+        {key: `line-${key}`},
+        this.getEventState(key, "data"),
+        getSharedEventState(key, "data"),
+        this.baseProps[key].data,
+        dataComponent.props
       );
-      const segmentComponent = React.cloneElement(dataComponent, assign({
-        events: Helpers.getPartialEvents(dataEvents, index, dataProps)
-      }, dataProps));
-      const text = Helpers.evaluateProp(label, data);
-      if (index === dataSegments.length - 1 && text !== null && text !== undefined) {
-        const lastPoint = Array.isArray(segment) ? segment[segment.length - 1] : segment;
-        const labelStyle = this.getLabelStyle(style.labels, dataProps.style);
-        const labelEvents = this.getEvents(events.labels, "labels");
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "labels"),
-          labelComponent.props,
-          {
-            x: scale.x.call(this, lastPoint.x) + labelStyle.padding,
-            y: scale.y.call(this, lastPoint.y),
-            style: labelStyle,
-            data,
-            text,
-            scale,
-            textAnchor: labelStyle.textAnchor || "start",
-            verticalAnchor: labelStyle.verticalAnchor || "middle",
-            angle: labelStyle.angle
-          }
+      const lineComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
+      ));
+
+      const labelProps = defaults(
+          {key: `line-label-${key}`},
+          this.getEventState(key, "labels"),
+          getSharedEventState(key, "labels"),
+          this.baseProps[key].labels,
+          labelComponent.props
         );
-        const labelSegmentComponent = React.cloneElement(labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, 0, labelProps)
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const lineLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
-          <g key={`line-label-${index}`}>
-            {segmentComponent}
-            {labelSegmentComponent}
+          <g key={`line-group-${key}`}>
+            {lineComponent}
+            {lineLabel}
           </g>
         );
       }
-      return segmentComponent;
+      return lineComponent;
     });
-  }
-
-  renderData(props, style) {
-    const dataset = Data.getData(props);
-    const dataSegments = this.getDataSegments(dataset);
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
-    };
-    const scale = {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
-    const calculatedProps = {dataset, dataSegments, scale, style};
-    return (
-      <g style={style.parent}>
-        {this.renderLine(props, calculatedProps)}
-      </g>
-    );
   }
 
   render() {
@@ -409,18 +369,19 @@ export default class VictoryLine extends React.Component {
         </VictoryTransition>
       );
     }
+
     const style = Helpers.getStyles(
       this.props.style,
       defaultStyles,
       "auto",
       "100%"
     );
-    const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
+
+    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

@@ -4,7 +4,7 @@
 import AreaHelpers from "src/components/victory-area/helper-methods";
 import Data from "src/helpers/data";
 
-describe("victory-axis/helper-methods", () => {
+describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
     let sandbox;
     beforeEach(() => {

@@ -301,7 +301,7 @@ export default class VictoryBar extends React.Component {
     return Object.keys(this.baseProps).map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {},
+        {key: `bar-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
         this.baseProps[key].data,
@@ -311,7 +311,7 @@ export default class VictoryBar extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {},
+        {key: `bar-label-${key}`},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
         this.baseProps[key].labels,

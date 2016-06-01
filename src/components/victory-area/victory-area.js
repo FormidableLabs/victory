@@ -117,11 +117,7 @@ export default class VictoryArea extends React.Component {
     /**
      * TODO
      */
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
+    eventKey: PropTypes.string,
     /**
      * TODO
      */
@@ -305,7 +301,7 @@ export default class VictoryArea extends React.Component {
   }
 
   renderArea(props) {
-    const key = 0;
+    const key = props.eventKey || 0;
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -334,7 +330,7 @@ export default class VictoryArea extends React.Component {
         events: Events.getPartialEvents(labelEvents, key, labelProps)
       }, labelProps));
       return (
-        <g key={`bar-group-${key}`}>
+        <g key={`area-group-${key}`}>
           {areaComponent}
           {areaLabel}
         </g>

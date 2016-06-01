@@ -26,16 +26,16 @@ export default {
       y: scale.y(lastData.y1),
       y0: scale.y(lastData.y0),
       style: labelStyle,
-      data: dataProps.data,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
       angle: labelStyle.angle,
+      data,
       scale,
       text
     };
-
+    const key = props.eventKey || 0;
     return {
-      0: {
+      [key]: {
         data: dataProps,
         labels: labelProps
       }

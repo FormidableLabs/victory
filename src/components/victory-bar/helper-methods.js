@@ -92,7 +92,6 @@ export default {
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = assign(
         {
-          key: `bar-${index}`,
           style: Helpers.evaluateStyle(barStyle, datum),
           index,
           datum,
@@ -111,7 +110,6 @@ export default {
         y: horizontal ? position.x : position.y
       };
       const labelProps = {
-        key: `bar-label-${index}`,
         style: labelStyle,
         x: labelPosition.x + padding.x,
         y: labelPosition.y - padding.y,
