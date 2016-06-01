@@ -1,13 +1,12 @@
-import last from "lodash/last";
-import { assign, defaults } from "lodash";
+import { isFunction, defaults, partial, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Scale from "../../helpers/scale";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 import Area from "./area";
+import AreaHelpers from "./helper-methods";
 
 const defaultStyles = {
   data: {
@@ -106,10 +105,29 @@ export default class VictoryArea extends React.Component {
      *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * TODO
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -255,7 +273,6 @@ export default class VictoryArea extends React.Component {
   static defaultProps = {
     dataComponent: <Area/>,
     labelComponent: <VictoryLabel/>,
-    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -269,93 +286,61 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), defaultStyles);
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getDataWithBaseline(props, domain) {
-    const data = Data.getData(props);
-    const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
-    return data.map((datum) => {
-      const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
-      const y0 = datum.yOffset || minY;
-      return assign({y0, y1}, datum);
-    });
+  componentWillMount() {
+    this.baseProps = AreaHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  renderArea(props, calculatedProps) {
-    const {scale, style, data} = calculatedProps;
-    const {dataComponent, labelComponent, interpolation, events, label} = props;
-    const dataEvents = this.getEvents(events.data, "data");
+  componentWillReceiveProps(newProps) {
+    this.baseProps = AreaHelpers.getBaseProps(newProps, defaultStyles);
+  }
+
+  renderArea(props) {
+    const key = 0;
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    const dataEvents = this.getEvents(props, "data", key);
     const dataProps = defaults(
       {},
-      this.getEventState(0, "data"),
-      dataComponent.props,
-      {
-        scale,
-        interpolation: Helpers.evaluateProp(interpolation, data),
-        data,
-        style: Helpers.evaluateStyle(style.data, data)
-      }
+      this.getEventState(key, "data"),
+      getSharedEventState(key, "data"),
+      this.baseProps[key].data,
+      dataComponent.props
     );
-    const areaComponent = React.cloneElement(dataComponent, assign(
-      {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, 0, dataProps)}
+    const areaComponent = React.cloneElement(dataComponent, Object.assign(
+      {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
     ));
-    const text = Helpers.evaluateProp(label, dataProps.data);
-    if (text !== null && text !== undefined) {
-      const labelEvents = this.getEvents(events.labels, "labels");
-      const lastData = last(data);
-      const labelStyle = Helpers.evaluateStyle(style.labels, dataProps.data);
-      const labelProps = defaults(
+
+    const labelProps = defaults(
         {},
-        this.getEventState(0, "labels"),
-        labelComponent.props,
-        {
-          x: scale.x(lastData.x) + labelStyle.padding,
-          y: scale.y(lastData.y1),
-          y0: scale.y(lastData.y0),
-          style: labelStyle,
-          data: dataProps.data,
-          textAnchor: labelStyle.textAnchor || "start",
-          verticalAnchor: labelStyle.verticalAnchor || "middle",
-          angle: labelStyle.angle,
-          scale,
-          text
-        }
+        this.getEventState(key, "labels"),
+        getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
       );
-      const areaLabelComponent = React.cloneElement(labelComponent, assign(
-        {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, 0, labelProps)}
-      ));
+    if (labelProps && labelProps.text) {
+      const labelEvents = this.getEvents(props, "labels", key);
+      const areaLabel = React.cloneElement(labelComponent, Object.assign({
+        events: Events.getPartialEvents(labelEvents, key, labelProps)
+      }, labelProps));
       return (
-        <g>
+        <g key={`bar-group-${key}`}>
           {areaComponent}
-          {areaLabelComponent}
+          {areaLabel}
         </g>
       );
     }
     return areaComponent;
-  }
-
-  renderData(props, style) {
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomainWithZero(props, "x"),
-      y: Domain.getDomainWithZero(props, "y")
-    };
-    const scale = {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
-    const data = this.getDataWithBaseline(props, domain);
-    const calculatedProps = { style, data, scale };
-    return this.renderArea(props, calculatedProps);
   }
 
   render() {
@@ -376,12 +361,11 @@ export default class VictoryArea extends React.Component {
       "auto",
       "100%"
     );
-    const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
+    const group = <g style={style.parent}>{this.renderArea(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

@@ -1,6 +1,6 @@
 /*global window:false */
 import React from "react";
-import { random, range } from "lodash";
+import { merge, random, range } from "lodash";
 import {VictoryArea, VictoryStack, VictoryGroup} from "../../src/index";
 
 export default class App extends React.Component {
@@ -175,6 +175,27 @@ export default class App extends React.Component {
             parent: style.parent,
             data: {fill: "gold"}
           }}
+          events={[
+            {
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {style: merge({}, props.style, {fill: "orange"})};
+                      }
+                    }, {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "hey"};
+                      }
+                    }
+                  ];
+                }
+              }
+            }
+          ]}
           data={this.state.arrayData}
           x={0}
           y={1}
