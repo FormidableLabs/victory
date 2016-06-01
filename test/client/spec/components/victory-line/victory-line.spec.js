@@ -237,7 +237,6 @@ describe("components/victory-line", () => {
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
           .to.eql(omit(initialProps, ["events", "key"]));
-        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
 
@@ -257,7 +256,6 @@ describe("components/victory-line", () => {
         node.childAt(0).simulate("click");
         expect(clickHandler).called;
         expect(clickHandler.args[index][1]).to.contain({text: "okay"});
-        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
   });

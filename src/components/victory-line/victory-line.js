@@ -315,30 +315,33 @@ export default class VictoryLine extends React.Component {
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
         sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
-      const dataEvents = this.getEvents(props, "data", key);
+    const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
+    return dataSegments.map((data, key) => {
+      const dataEvents = this.getEvents(props, "data");
       const dataProps = defaults(
         {key: `line-${key}`},
-        this.getEventState(key, "data"),
-        getSharedEventState(key, "data"),
-        this.baseProps[key].data,
+        this.getEventState("all", "data"),
+        getSharedEventState("all", "data"),
+        { data },
+        this.baseProps.all.data,
         dataComponent.props
       );
       const lineComponent = React.cloneElement(dataComponent, Object.assign(
-        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
       const labelProps = defaults(
           {key: `line-label-${key}`},
-          this.getEventState(key, "labels"),
-          getSharedEventState(key, "labels"),
-          this.baseProps[key].labels,
+          this.getEventState("all", "labels"),
+          getSharedEventState("all", "labels"),
+          { data },
+          this.baseProps.all.labels,
           labelComponent.props
         );
       if (labelProps && labelProps.text) {
-        const labelEvents = this.getEvents(props, "labels", key);
+        const labelEvents = this.getEvents(props, "labels");
         const lineLabel = React.cloneElement(labelComponent, Object.assign({
-          events: Events.getPartialEvents(labelEvents, key, labelProps)
+          events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));
         return (
           <g key={`line-group-${key}`}>

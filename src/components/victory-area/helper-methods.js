@@ -33,9 +33,8 @@ export default {
       scale,
       text
     };
-    const key = props.eventKey || 0;
     return {
-      [key]: {
+      "all": {
         data: dataProps,
         labels: labelProps
       }

@@ -1,6 +1,6 @@
 import { defaults } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -70,7 +70,23 @@ export default class VictoryChart extends React.Component {
      * Event handlers on VictoryCharts are called with their corresponding events.
      * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
      */
-    events: PropTypes.object,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
      * This value should be given as a number of pixels
@@ -246,16 +262,24 @@ export default class VictoryChart extends React.Component {
       this.state.oldProps : this.props;
     const style = this.getStyles(props);
     const childComponents = ChartHelpers.getChildComponents(props, defaultAxes);
+    const newChildren = props.events ?
+      (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
+          {this.getNewChildren(props, childComponents, style)}
+        </VictorySharedEvents>
+      ) :
+      this.getNewChildren(props, childComponents, style);
+
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(props, childComponents, style)}
+        {newChildren}
       </g>
     );
+
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${props.width} ${props.height}`}
-        {...props.events}
       >
         {group}
       </svg> :

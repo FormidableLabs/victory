@@ -1,6 +1,6 @@
 import { assign, uniq } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
@@ -91,6 +91,27 @@ export default class VictoryGroup extends React.Component {
         y: CustomPropTypes.nonNegative
       }),
       CustomPropTypes.nonNegative
+    ]),
+    /**
+     * TODO
+     */
+    events: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.string,
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
     ]),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -285,7 +306,7 @@ export default class VictoryGroup extends React.Component {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
       const data = datasets[index].map((datum) => assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
-      return React.cloneElement(child, assign({
+      return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels: this.getLabels(props, datasets, index) || child.props.labels,
@@ -308,9 +329,18 @@ export default class VictoryGroup extends React.Component {
       Log.warn("Only components of the same type can be grouped");
     }
     const calculatedProps = this.getCalculatedProps(props, childComponents, style);
+
+    const newChildren = props.events ?
+      (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
+          {this.getNewChildren(props, childComponents, calculatedProps)}
+        </VictorySharedEvents>
+      ) :
+      this.getNewChildren(props, childComponents, calculatedProps);
+
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(props, childComponents, calculatedProps)}
+        {newChildren}
       </g>
     );
     return this.props.standalone ?

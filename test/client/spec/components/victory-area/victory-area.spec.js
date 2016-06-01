@@ -72,7 +72,6 @@ describe("components/victory-area", () => {
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
           .to.eql(omit(initialProps, ["events", "key"]));
-        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
 
@@ -93,7 +92,6 @@ describe("components/victory-area", () => {
         expect(clickHandler).called;
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.contain({text: "okay"});
-        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
   });

@@ -1,9 +1,8 @@
 /**
  * Client tests
  */
- /* global sinon */
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import VictoryChart from "src/components/victory-chart/victory-chart";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
 
@@ -26,17 +25,6 @@ describe("components/victory-chart", () => {
       const viewBoxValue =
         `0 0 ${VictoryChart.defaultProps.width} ${VictoryChart.defaultProps.height}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
-    });
-  });
-
-  describe("event handling", () => {
-    it("attaches an event to the parent object", () => {
-      const clickHandler = sinon.spy();
-      const wrapper = mount(
-        <VictoryChart events={{onClick: clickHandler}}/>
-      );
-      wrapper.find("svg").simulate("click");
-      expect(clickHandler.called).to.equal(true);
     });
   });
 

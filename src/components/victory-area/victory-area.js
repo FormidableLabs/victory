@@ -301,36 +301,35 @@ export default class VictoryArea extends React.Component {
   }
 
   renderArea(props) {
-    const key = props.eventKey || 0;
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
-    const dataEvents = this.getEvents(props, "data", key);
+    const dataEvents = this.getEvents(props, "data", "all");
     const dataProps = defaults(
       {},
-      this.getEventState(key, "data"),
-      getSharedEventState(key, "data"),
-      this.baseProps[key].data,
+      this.getEventState("all", "data"),
+      getSharedEventState("all", "data"),
+      this.baseProps.all.data,
       dataComponent.props
     );
     const areaComponent = React.cloneElement(dataComponent, Object.assign(
-      {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
+      {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
     ));
 
     const labelProps = defaults(
         {},
-        this.getEventState(key, "labels"),
-        getSharedEventState(key, "labels"),
-        this.baseProps[key].labels,
+        this.getEventState("all", "labels"),
+        getSharedEventState("all", "labels"),
+        this.baseProps.all.labels,
         labelComponent.props
       );
     if (labelProps && labelProps.text) {
-      const labelEvents = this.getEvents(props, "labels", key);
+      const labelEvents = this.getEvents(props, "labels", "all");
       const areaLabel = React.cloneElement(labelComponent, Object.assign({
-        events: Events.getPartialEvents(labelEvents, key, labelProps)
+        events: Events.getPartialEvents(labelEvents, "all", labelProps)
       }, labelProps));
       return (
-        <g key={`area-group-${key}`}>
+        <g>
           {areaComponent}
           {areaLabel}
         </g>
