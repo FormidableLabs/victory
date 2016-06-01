@@ -73,9 +73,15 @@ export default {
 
     const parseEvent = (eventReturn, eventKey) => {
       const nullFunction = () => null;
-      const key = eventReturn.eventKey || eventKey;
-      const target = eventReturn.target || namespace;
       const childName = eventReturn.childName || childType;
+      const getKey = () => {
+        if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
+          return "all";
+        }
+        return eventReturn.eventKey || eventKey;
+      };
+      const key = getKey();
+      const target = eventReturn.target || namespace;
       const targetProps = getTargetProps({childName, key, target}, "props");
       const targetState = getTargetProps({childName, key, target}, "state");
       const mutation = eventReturn.mutation || nullFunction;
@@ -168,5 +174,13 @@ export default {
     }
     // otherwise, assume it is an array index, property key or path (_.property handles all three)
     return property(key);
+  },
+
+  addEventKeys(props, data) {
+    const eventKeyAccessor = this.getEventKey(props.eventKey);
+    return data.map((datum, index) => {
+      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
+      return Object.assign({eventKey}, datum);
+    });
   }
 };
