@@ -128,27 +128,25 @@ export default class App extends React.Component {
               duration: 500
             }
           }}
-          events={[
-            {
-              target: "data",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      mutation: (props) => {
-                        return {style: merge({}, props.style, {fill: "orange"})};
-                      }
-                    }, {
-                      target: "labels",
-                      mutation: () => {
-                        return {text: "hey"};
-                      }
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {style: merge({}, props.style, {fill: "orange"})};
                     }
-                  ];
-                }
+                  }, {
+                    target: "labels",
+                    mutation: () => {
+                      return {text: "hey"};
+                    }
+                  }
+                ];
               }
             }
-          ]}
+          }]}
           data={this.state.barTransitionData}
         />
         <VictoryStack

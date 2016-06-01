@@ -130,7 +130,12 @@ describe("components/victory-scatter", () => {
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
-        <VictoryScatter events={{data: {onClick: clickHandler}}}/>
+        <VictoryScatter
+          events={[{
+            target: "data",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
       );
       const Data = wrapper.find(Point);
       Data.forEach((node, index) => {
@@ -140,19 +145,25 @@ describe("components/victory-scatter", () => {
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
           .to.eql(omit(initialProps, ["events", "key"]));
-        expect(clickHandler.args[index][2]).to.eql(index);
+        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
 
     it("attaches an event to a label", () => {
       const clickHandler = sinon.spy();
       const data = [
-        {x: 0, y: 0, label: "0"},
-        {x: 1, y: 1, label: "1"},
-        {x: 2, y: 2, label: "2"}
+        {eventKey: 0, x: 0, y: 0, label: "0"},
+        {eventKey: 1, x: 1, y: 1, label: "1"},
+        {eventKey: 2, x: 2, y: 2, label: "2"}
       ];
       const wrapper = mount(
-        <VictoryScatter data={data} events={{labels: {onClick: clickHandler}}}/>
+        <VictoryScatter
+          data={data}
+          events={[{
+            target: "labels",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
       );
       const Labels = wrapper.find(VictoryLabel);
       Labels.forEach((node, index) => {
@@ -160,7 +171,7 @@ describe("components/victory-scatter", () => {
         expect(clickHandler).called;
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1].datum).to.eql(data[index]);
-        expect(clickHandler.args[index][2]).to.eql(index);
+        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
   });

@@ -1,11 +1,10 @@
 import React, { PropTypes } from "react";
-import { assign, defaults, pick, omit } from "lodash";
+import { defaults, isFunction, partial, partialRight } from "lodash";
 import Point from "./point";
-import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
@@ -22,7 +21,7 @@ const defaultStyles = {
     fontFamily: "Helvetica",
     fontSize: 10,
     textAnchor: "middle",
-    padding: 5
+    padding: 10
   }
 };
 
@@ -118,10 +117,29 @@ export default class VictoryScatter extends React.Component {
      *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * TODO
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -263,7 +281,6 @@ export default class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
-    events: {},
     height: 300,
     padding: 50,
     samples: 50,
@@ -280,108 +297,63 @@ export default class VictoryScatter extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(
+    ScatterHelpers.getBaseProps.bind(ScatterHelpers), defaultStyles
+  );
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getDataStyles(data, style) {
-    const stylesFromData = omit(data, [
-      "x", "y", "z", "size", "symbol", "name", "label"
-    ]);
-    const baseDataStyle = defaults({}, stylesFromData, style);
-    return Helpers.evaluateStyle(baseDataStyle, data);
+  componentWillMount() {
+    this.baseProps = ScatterHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  getLabelText(props, datum, index) {
-    const propsLabel = Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
-    return datum.label || propsLabel;
+  componentWillReceiveProps(newProps) {
+    this.baseProps = ScatterHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  getLabelStyle(labelStyle, dataProps) {
-    const { datum, size, style } = dataProps;
-    const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25;
-    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
-    return Helpers.evaluateStyle(baseLabelStyle, datum);
-  }
-
-  renderData(props, calculatedProps, style) {
-    const dataEvents = this.getEvents(props.events.data, "data");
-    const labelEvents = this.getEvents(props.events.labels, "labels");
-    const { scale, data } = calculatedProps;
-    return data.map((datum, index) => {
-      const x = scale.x(datum.x);
-      const y = scale.y(datum.y);
-      const size = ScatterHelpers.getSize(datum, props, calculatedProps);
-      const symbol = ScatterHelpers.getSymbol(datum, props);
-      const dataStyle = this.getDataStyles(datum, style.data);
+  renderData(props) {
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    return Object.keys(this.baseProps).map((key) => {
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {},
-        this.getEventState(index, "data"),
-        props.dataComponent.props,
-        {
-          x, y, size, scale, datum, symbol, index, style: dataStyle, key: `point-${index}`
-        }
+        {key: `scatter-${key}`},
+        this.getEventState(key, "data"),
+        getSharedEventState(key, "data"),
+        this.baseProps[key].data,
+        dataComponent.props
       );
-      const pointComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+      const scatterComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
-      const text = this.getLabelText(props, dataProps.datum, index);
-      if (text !== null && text !== undefined) {
-        const labelStyle = this.getLabelStyle(style.labels, dataProps);
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "labels"),
-          props.labelComponent.props,
-          {
-            key: `point-label-${index}`,
-            style: labelStyle,
-            x,
-            y: y - labelStyle.padding,
-            text,
-            index,
-            scale,
-            datum: dataProps.datum,
-            textAnchor: labelStyle.textAnchor,
-            verticalAnchor: labelStyle.verticalAnchor || "end",
-            angle: labelStyle.angle
-          }
-        );
-        const pointLabel = React.cloneElement(props.labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+      const labelProps = defaults(
+        {key: `scatter-label-${key}`},
+        this.getEventState(key, "labels"),
+        getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
+      );
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const scatterLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
-          <g key={`point-group-${index}`}>
-            {pointComponent}
-            {pointLabel}
+          <g key={`scatter-group-${key}`}>
+            {scatterComponent}
+            {scatterLabel}
           </g>
         );
       }
-      return pointComponent;
+      return scatterComponent;
     });
-  }
-
-  getCalculatedProps(props, style) {
-    const data = Data.getData(props);
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
-    };
-    const scale = {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
-    const z = props.bubbleProperty || "z";
-    return {data, scale, style, z};
   }
 
   render() {
@@ -409,13 +381,12 @@ export default class VictoryScatter extends React.Component {
       "auto",
       "100%"
     );
-    const calculatedProps = this.getCalculatedProps(this.props, style);
-    const group = <g style={style.parent}>{this.renderData(this.props, calculatedProps, style)}</g>;
+
+    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

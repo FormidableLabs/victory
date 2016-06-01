@@ -138,27 +138,25 @@ export default class App extends React.Component {
             parent: parentStyle,
             data: {stroke: "red", strokeWidth: 6}
           }}
-          events={[
-            {
-              target: "data",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      mutation: (props) => {
-                        return {style: merge({}, props.style, {stroke: "orange"})};
-                      }
-                    }, {
-                      target: "labels",
-                      mutation: () => {
-                        return {text: "hey"};
-                      }
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {style: merge({}, props.style, {stroke: "orange"})};
                     }
-                  ];
-                }
+                  }, {
+                    target: "labels",
+                    mutation: () => {
+                      return {text: "hey"};
+                    }
+                  }
+                ];
               }
             }
-          ]}
+          }]}
           label={this.state.label}
           data={range(0, 100)}
           x={null}
