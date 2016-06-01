@@ -103,31 +103,61 @@ export default class VictoryBar extends React.Component {
       })
     ]),
     /**
-     * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding component props,
-     * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by index and namespace on the state object of VictoryBar
-     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
-     * applied by index to the appropriate child component. Event props on the
-     * parent namespace are just spread directly on to the top level svg of VictoryBar
-     * if one exists. If VictoryBar is set up to render g elements i.e. when it is
-     * rendered within chart, or when `standalone={false}` parent events will not be applied.
-     *
-     * @examples {data: {
-     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
+     * The event prop take an array of event objects. Event objects are composed of
+     * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, so "data" and "labels" are all valid targets for VictoryBar events.
+     * The eventKey may optionally be used to select a single element by index rather than an entire
+     * set. The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey keys,
+     * and a mutation key whose value is a function. The target and eventKey keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a single bar), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+     *     eventKey: "thisOne",
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              eventKey: "theOtherOne",
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {fill: "orange"})};
+     *              }
+     *            }, {
+     *              eventKey: "theOtherOne",
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels"]),
       eventKey: PropTypes.oneOfType([
-        PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
       eventHandlers: PropTypes.object
     })),
     /**
-     * TODO
+     * The name prop is used to reference a component instance when defining shared events.
+     */
+    name: PropTypes.string,
+    /**
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
      */
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
@@ -135,7 +165,8 @@ export default class VictoryBar extends React.Component {
       PropTypes.string
     ]),
     /**
-     * TODO
+     * This prop is used to coordinate events between VictoryArea and other Victory
+     * Components via VictorySharedEvents. This prop should not be set manually.
      */
     sharedEvents: PropTypes.shape({
       events: PropTypes.array,
