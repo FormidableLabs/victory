@@ -2,7 +2,7 @@
 import React from "react";
 import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
-import { random, range } from "lodash";
+import { merge, random, range } from "lodash";
 
 export default class App extends React.Component {
   constructor() {
@@ -65,6 +65,7 @@ export default class App extends React.Component {
         <h1>VictoryAxis</h1>
         <div>
           <h2>Animating Axis</h2>
+
           <VictoryAxis style={styleOverrides}
             padding={60}
             label={"animation\nwow!"}
@@ -77,22 +78,33 @@ export default class App extends React.Component {
         <div>
           <h2>Time Scale Axis</h2>
           <VictoryAxis
-            padding={{left: 10, right: 80}}
             scale="time"
-            events={{
-              axis: {
-                onClick: () => {
-                  return {
-                    style: {stroke: "red", strokeWidth: 4}
-                  };
-                }
-              }
-            }}
             style={{
               parent: style.parent,
               axis: {strokeWidth: 4},
-              grid: {stroke: "black", strokeWidth: 1}
+              grid: {stroke: "black", strokeWidth: 5}
             }}
+            events={[
+              {
+                target: "grid",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {style: merge({}, props.style, {stroke: "orange"})};
+                        }
+                      }, {
+                        target: "tickLabels",
+                        mutation: () => {
+                          return {text: "hey"};
+                        }
+                      }
+                    ];
+                  }
+                }
+              }
+            ]}
             label={this.state.label}
             tickValues={[
               new Date(1980, 1, 1),
@@ -102,7 +114,9 @@ export default class App extends React.Component {
               new Date(2020, 1, 1)]}
             tickFormat={(x) => x.getFullYear()}
           />
+
         </div>
+
         <div>
         <h2>X-Y Axis</h2>
           <svg style={style} width={500} height={400}>
@@ -110,14 +124,14 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
-              offsetY={200} /* half of the height */
+              offsetY={200}
               standalone={false}
             />
             <VictoryAxis dependentAxis crossAxis
               width={500}
               height={400}
               domain={this.state.domain}
-              offsetX={250} /* half of the width */
+              offsetX={250}
               standalone={false}
             />
           </svg>
@@ -136,7 +150,7 @@ export default class App extends React.Component {
           <VictoryAxis
             style={style}
             label="cool log axis"
-            padding={{top: 10, bottom: 60}}
+            padding={{top: 10, bottom: 60, right: 60}}
             orientation="right"
             scale={"log"}
             domain={[1, 5]}
@@ -177,6 +191,7 @@ export default class App extends React.Component {
               "Mariners\nSEA"
             ]}
           />
+
           <VictoryAxis
             orientation="left"
             style={styleOverrides}
@@ -189,6 +204,7 @@ export default class App extends React.Component {
             ]}
           />
         </div>
+
       </div>
     );
   }

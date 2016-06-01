@@ -172,21 +172,7 @@ export default class App extends React.Component {
           ]}
           symbol={"star"}
           size={8}
-          events={{data: {
-            onMouseOver: () => {
-              return {data: {
-                symbol: "circle",
-                style: {
-                  fill: "gold",
-                  stroke: "orange",
-                  strokeWidth: 3
-                }
-              }};
-            },
-            onMouseOut: () => {
-              return {data: null};
-            }
-          }}}
+
         />
 
         <VictoryScatter

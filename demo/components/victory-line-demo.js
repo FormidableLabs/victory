@@ -138,11 +138,6 @@ export default class App extends React.Component {
             parent: parentStyle,
             data: {stroke: "red", strokeWidth: 6}
           }}
-          events={{data: {
-            onClick: (evt) => {
-              this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
-            }
-          }}}
           label={this.state.label}
           data={range(0, 100)}
           x={null}

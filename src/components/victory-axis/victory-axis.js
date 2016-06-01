@@ -1,7 +1,7 @@
-import { assign, defaults } from "lodash";
+import { defaults, isFunction, partial, partialRight, omit } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 import AxisLine from "./axis-line";
 import GridLine from "./grid";
@@ -42,26 +42,6 @@ const defaultStyles = {
     fontSize: 10,
     padding: 5
   }
-};
-
-const orientationSign = {
-  top: -1,
-  left: -1,
-  right: 1,
-  bottom: 1
-};
-
-const getStyles = (props) => {
-  const style = props.style || {};
-  const parentStyleProps = { height: "auto", width: "100%" };
-  return {
-    parent: defaults(parentStyleProps, style.parent, defaultStyles.parent),
-    axis: defaults({}, style.axis, defaultStyles.axis),
-    axisLabel: defaults({}, style.axisLabel, defaultStyles.axisLabel),
-    grid: defaults({}, style.grid, defaultStyles.grid),
-    ticks: defaults({}, style.ticks, defaultStyles.ticks),
-    tickLabels: defaults({}, style.tickLabels, defaultStyles.tickLabels)
-  };
 };
 
 export default class VictoryAxis extends React.Component {
@@ -141,13 +121,29 @@ export default class VictoryAxis extends React.Component {
      *   return {ticks: {style: {stroke: "green"}}, tickLabels: {style: {stroke: "black"}}
      *}}
      */
-    events: PropTypes.shape({
-      parent: PropTypes.object,
-      axis: PropTypes.object,
-      axisLabel: PropTypes.object,
-      grid: PropTypes.object,
-      ticks: PropTypes.object,
-      tickLabels: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * TODO
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * TODO
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The gridComponent prop takes in an entire component which will be used
@@ -287,7 +283,6 @@ export default class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>,
     tickComponent: <Tick/>,
     gridComponent: <GridLine/>,
-    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -299,201 +294,107 @@ export default class VictoryAxis extends React.Component {
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
   static getAxis = Axis.getAxis.bind(Axis);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = getStyles;
+  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), defaultStyles);
+  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), defaultStyles);
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
     this.getEventState = Helpers.getEventState.bind(this);
   }
 
-
-  getTickProps(props) {
-    const stringTicks = Axis.stringTicks(props);
-    const scale = AxisHelpers.getScale(props);
-    const ticks = AxisHelpers.getTicks(props, scale);
-    return {scale, ticks, stringTicks};
+  componentWillMount() {
+    this.setupEvents(this.props);
   }
 
-  getLayoutProps(props) {
-    const style = getStyles(props);
-    const padding = Helpers.getPadding(props);
-    const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-    const isVertical = Axis.isVertical(props);
-    const labelPadding = AxisHelpers.getLabelPadding(props, style);
-    const offset = AxisHelpers.getOffset(props, style);
-    return {style, padding, orientation, isVertical, labelPadding, offset};
+  componentWillReceiveProps(newProps) {
+    this.setupEvents(newProps);
   }
 
-  renderLine(props, layoutProps) {
-    const {style, padding, isVertical} = layoutProps;
-    const axisEvents = this.getEvents(props.events.axis, "axis");
+  setupEvents(props) {
+    const {sharedEvents} = props;
+    this.baseProps = AxisHelpers.getBaseProps(props, defaultStyles);
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+  }
+
+  renderLine(props) {
+    const key = 0;
+    const axisEvents = this.getEvents(props, "axis", key);
     const axisProps = defaults(
       {},
-      this.getEventState(0, "axis"),
-      props.axisComponent.props,
-      {
-        style: style.axis,
-        x1: isVertical ? null : padding.left,
-        x2: isVertical ? null : props.width - padding.right,
-        y1: isVertical ? padding.top : null,
-        y2: isVertical ? props.height - padding.bottom : null
-      }
+      this.getEventState(key, "axis"),
+      this.getSharedEventState(key, "axis"),
+      this.baseProps[key].axis,
+      props.axisComponent.props
     );
-    return React.cloneElement(props.axisComponent, assign(
-      {}, axisProps, { events: Helpers.getPartialEvents(axisEvents, 0, axisProps) }
+    return React.cloneElement(props.axisComponent, Object.assign(
+      {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
     ));
   }
 
-  getAnchors(orientation, isVertical) {
-    const anchorOrientation = { top: "end", left: "end", right: "start", bottom: "start" };
-    const anchor = anchorOrientation[orientation];
-    return {
-      textAnchor: isVertical ? anchor : "middle",
-      verticalAnchor: isVertical ? "middle" : anchor
-    };
+  renderLabel(props) {
+    const key = 0;
+    const axisLabelEvents = this.getEvents(props, "axisLabel", key);
+    const axisLabelProps = defaults(
+      {},
+      this.getEventState(key, "axisLabel"),
+      this.getSharedEventState(key, "axisLabel"),
+      this.baseProps[key].axisLabel,
+      props.axisLabelComponent.props
+    );
+    return React.cloneElement(props.axisLabelComponent, Object.assign(
+      {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
+    ));
   }
 
-  renderTicks(props, layoutProps, dataProps) {
-    const {style, orientation, isVertical} = layoutProps;
-    const {scale, ticks, stringTicks} = dataProps;
-    const tickFormat = AxisHelpers.getTickFormat(props, dataProps);
-    const tickPosition = AxisHelpers.getTickPosition(style.ticks, orientation, isVertical);
-    const tickEvents = this.getEvents(props.events.ticks, "ticks");
-    const labelEvents = this.getEvents(props.events.tickLabels, "tickLabels");
-
-    return ticks.map((data, index) => {
-      const tick = stringTicks ? props.tickValues[data - 1] : data;
-      const groupPosition = scale(data);
-      const yTransform = isVertical ? groupPosition : 0;
-      const xTransform = isVertical ? 0 : groupPosition;
+  renderGridAndTicks(props) {
+    const { tickComponent, tickLabelComponent, gridComponent } = props;
+    const baseProps = omit(this.baseProps, ["axis", "axisLabel"]);
+    return Object.keys(baseProps).map((key) => {
+      const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
         {},
-        this.getEventState(index, "ticks"),
-        props.tickComponent.props,
-        {
-          key: `tick-${index}`,
-          style: Helpers.evaluateStyle(style.ticks, tick),
-          x1: xTransform,
-          y1: yTransform,
-          x2: xTransform + tickPosition.x2,
-          y2: yTransform + tickPosition.y2,
-          tick
-        }
+        this.getEventState(key, "ticks"),
+        this.getSharedEventState(key, "ticks"),
+        this.baseProps[key].ticks,
+        tickComponent.props
       );
-      const tickComponent = React.cloneElement(props.tickComponent, assign(
-        {}, tickProps, {events: Helpers.getPartialEvents(tickEvents, index, tickProps)}
+      const TickComponent = React.cloneElement(tickComponent, Object.assign(
+        {}, tickProps, {events: Events.getPartialEvents(tickEvents, key, tickProps)}
       ));
-      let labelComponent;
-      const label = tickFormat.call(this, tick, index);
-      if (label !== null && label !== undefined) {
-        const anchors = this.getAnchors(orientation, isVertical);
-        const labelStyle = Helpers.evaluateStyle(style.tickLabels, tick);
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "tickLabels"),
-          props.tickLabelComponent.props,
-          {
-            key: `tick-label-${index}`,
-            style: labelStyle,
-            x: xTransform + tickPosition.x,
-            y: yTransform + tickPosition.y,
-            verticalAnchor: labelStyle.verticalAnchor || anchors.verticalAnchor,
-            textAnchor: labelStyle.textAnchor || anchors.textAnchor,
-            angle: labelStyle.angle,
-            text: label,
-            tick
-          }
-        );
-        labelComponent = React.cloneElement(props.tickLabelComponent, assign(
-          {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, index, labelProps)}
-        ));
-      }
-
+      const gridEvents = this.getEvents(props, "grid", key);
+      const gridProps = defaults(
+        {},
+        this.getEventState(key, "grid"),
+        this.getSharedEventState(key, "grid"),
+        this.baseProps[key].grid,
+        gridComponent.props
+      );
+      const GridComponent = React.cloneElement(gridComponent, Object.assign(
+        {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
+      ));
+      const tickLabelProps = defaults(
+        {},
+        this.getEventState(key, "tickLabels"),
+        this.getSharedEventState(key, "tickLabels"),
+        this.baseProps[key].tickLabels,
+        tickLabelComponent.props
+      );
+      const tickLabelEvents = this.getEvents(props, "tickLabels", key);
+      const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
+        events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
+      }, tickLabelProps));
       return (
-        <g key={`tick-group-${index}`}>
-          {tickComponent}
-          {labelComponent}
+        <g key={`tick-group-${key}`}>
+          {TickComponent}
+          {TickLabel}
+          {GridComponent}
         </g>
       );
     });
-  }
-
-  renderGrid(props, layoutProps, tickProps) {
-    const {scale, ticks, stringTicks} = tickProps;
-    const {style, padding, isVertical, offset, orientation} = layoutProps;
-    const xPadding = orientation === "right" ? padding.right : padding.left;
-    const yPadding = orientation === "top" ? padding.top : padding.bottom;
-    const sign = -orientationSign[orientation];
-    const xOffset = props.crossAxis ? offset.x - xPadding : 0;
-    const yOffset = props.crossAxis ? offset.y - yPadding : 0;
-    const x2 = isVertical ?
-      sign * (props.width - (padding.left + padding.right)) : 0;
-    const y2 = isVertical ?
-      0 : sign * (props.height - (padding.top + padding.bottom));
-    const gridEvents = this.getEvents(props.events.grid, "grid");
-    return ticks.map((data, index) => {
-      const tick = stringTicks ? props.tickValues[data - 1] : data;
-      // determine the position and translation of each gridline
-      const position = scale(data);
-      const xTransform = isVertical ? -xOffset : position;
-      const yTransform = isVertical ? position : yOffset;
-      const gridProps = defaults(
-        {},
-        this.getEventState(index, "grid"),
-        props.gridComponent.props,
-        {
-          key: `grid-${index}`,
-          style: Helpers.evaluateStyle(style.grid, tick),
-          x1: xTransform,
-          y1: yTransform,
-          x2: x2 + xTransform,
-          y2: y2 + yTransform,
-          tick
-        }
-      );
-      const gridComponent = React.cloneElement(props.gridComponent, assign(
-        {}, gridProps, {events: Helpers.getPartialEvents(gridEvents, index, gridProps)}
-      ));
-      return gridComponent;
-    });
-  }
-
-  renderLabel(props, layoutProps) {
-    if (!props.label) {
-      return undefined;
-    }
-    const {style, orientation, padding, labelPadding, isVertical} = layoutProps;
-    const sign = orientationSign[orientation];
-    const hPadding = padding.left + padding.right;
-    const vPadding = padding.top + padding.bottom;
-    const x = isVertical ?
-      -((props.height - vPadding) / 2) - padding.top :
-      ((props.width - hPadding) / 2) + padding.left;
-    const y = sign * labelPadding;
-    const verticalAnchor = sign < 0 ? "end" : "start";
-    const transform = isVertical ? "rotate(-90)" : "";
-    const labelEvents = this.getEvents(props.events.axisLabel, "axisLabel");
-    const labelStyle = style.axisLabel;
-    const labelProps = defaults(
-      {},
-      this.getEventState(0, "axisLabel"),
-      props.axisLabelComponent.props,
-      {
-        verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
-        textAnchor: labelStyle.textAnchor || "middle",
-        angle: labelStyle.angle,
-        style: labelStyle,
-        transform,
-        x,
-        y,
-        text: props.label
-      }
-    );
-    return React.cloneElement(props.axisLabelComponent, assign(
-      {}, labelProps, {events: Helpers.getPartialEvents(labelEvents, 0, labelProps)}
-    ));
   }
 
   render() {
@@ -511,23 +412,20 @@ export default class VictoryAxis extends React.Component {
         </VictoryTransition>
       );
     }
-    const layoutProps = this.getLayoutProps(this.props);
-    const tickProps = this.getTickProps(this.props);
-    const {style} = layoutProps;
-    const transform = AxisHelpers.getTransform(this.props, layoutProps);
+    const style = AxisHelpers.getStyles(this.props, defaultStyles);
+    const calculatedValues = AxisHelpers.getCalculatedValues(this.props, defaultStyles);
+    const transform = AxisHelpers.getTransform(this.props, calculatedValues);
     const group = (
       <g style={style.parent} transform={transform}>
-        {this.renderGrid(this.props, layoutProps, tickProps)}
-        {this.renderLine(this.props, layoutProps)}
-        {this.renderTicks(this.props, layoutProps, tickProps)}
-        {this.renderLabel(this.props, layoutProps)}
+        {this.renderGridAndTicks(this.props)}
+        {this.renderLine(this.props)}
+        {this.renderLabel(this.props)}
       </g>
     );
     return this.props.standalone ? (
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg>

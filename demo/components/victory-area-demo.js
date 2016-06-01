@@ -178,20 +178,7 @@ export default class App extends React.Component {
           data={this.state.arrayData}
           x={0}
           y={1}
-          events={{data: {
-            onMouseOver: () => {
-              return {data: {
-                style: {
-                  fill: "gold",
-                  stroke: "orange",
-                  strokeWidth: 3
-                }
-              }};
-            },
-            onMouseOut: () => {
-              return {data: null};
-            }
-          }}}
+
         />
 
         <VictoryArea

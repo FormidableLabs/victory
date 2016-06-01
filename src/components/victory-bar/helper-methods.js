@@ -81,17 +81,9 @@ export default {
     };
   },
 
-  addEventKeys(props, data) {
-    const eventKeyAccessor = Events.getEventKey(props.eventKey);
-    return data.map((datum, index) => {
-      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-      return assign({eventKey}, datum);
-    });
-  },
-
   getBaseProps(props, defaultStyles) {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = this.addEventKeys(props, Data.getData(props));
+    const data = Events.addEventKeys(props, Data.getData(props));
     const scale = this.getScale(props);
     const { horizontal } = props;
     return data.reduce((memo, datum, index) => {

@@ -259,11 +259,6 @@ class App extends React.Component {
                 data: {stroke: "red", strokeWidth: 5},
                 labels: {fontSize: 12}
               }}
-              events={{data: {
-                onClick: (evt) => {
-                  this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
-                }
-              }}}
               label={this.state.label}
               data={[
                 {x: new Date(1982, 1, 1), y: 125},

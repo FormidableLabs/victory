@@ -118,7 +118,7 @@ export default class VictoryBar extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      target: PropTypes.oneOf(["data", "labels"]),
       eventKey: PropTypes.oneOfType([
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -304,7 +304,8 @@ export default class VictoryBar extends React.Component {
         {},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
-        this.baseProps[key].data
+        this.baseProps[key].data,
+        dataComponent.props
       );
       const barComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
@@ -313,7 +314,8 @@ export default class VictoryBar extends React.Component {
         {},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
-        this.baseProps[key].labels
+        this.baseProps[key].labels,
+        labelComponent.props
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
@@ -346,13 +348,11 @@ export default class VictoryBar extends React.Component {
       );
     }
     const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
-    const parentEvents = this.props.events && this.props.events.parent;
     const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...parentEvents}
       >
         {group}
       </svg> :

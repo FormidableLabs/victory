@@ -83,7 +83,12 @@ describe("components/victory-axis", () => {
     it("attaches an event to the axis line", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
-        <VictoryAxis events={{axis: {onClick: clickHandler}}}/>
+        <VictoryAxis
+          events={[{
+            target: "axis",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
       );
       const Data = wrapper.find(AxisLine);
       Data.forEach((node, index) => {
@@ -93,7 +98,7 @@ describe("components/victory-axis", () => {
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
           .to.eql(omit(initialProps, ["events", "key"]));
-        expect(clickHandler.args[index][2]).to.eql(index);
+        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
   });

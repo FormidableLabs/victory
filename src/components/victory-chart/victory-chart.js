@@ -128,7 +128,6 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    events: {},
     height: 300,
     width: 450,
     padding: 50,
