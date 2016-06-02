@@ -155,7 +155,7 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter.
 
 ```playground
-<svg width={500} height={500}>
+<svg viewBox="0 0 500 300" width="100%">
   <VictoryArea
     width={500}
     height={300}
@@ -229,20 +229,13 @@ Use the `events` prop to attach events to specific elements in VictoryArea. The 
     target: "data",
     eventHandlers: {
       onClick: () => {
-        return [
-          {
-            mutation: (props) => {
-              return  props.style.fill === "orange" ? 
-                {};
-                {style: merge({}, props.style, {fill: "orange"})};
-            }
-          }, {
-            target: "labels",
-            mutation: () => {
-              return {text: "WOW"};
-            }
+        return [{
+          mutation: (props) => {
+            return  props.style.fill === "orange" ? 
+              {} :
+              {style: merge({}, props.style, {fill: "orange"})};
           }
-        ];
+        }];
       }
     }
   }]}

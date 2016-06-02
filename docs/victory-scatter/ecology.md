@@ -170,30 +170,25 @@ Use the `events` prop to attach events to specific elements in VictoryScatter. T
         padding: 12
       }
     }}
-    events={{
-      data: {
-        onClick: (evt, props) => {
-          return props.symbol === "star" ?
-            {
-              data: {
-                symbol: "circle",
-                style: {
-                  fill: "cyan",
-                  stroke: "blue",
-                  strokeWidth: 3
-                }
-              },
-              labels: {
-                style: {
-                  fill: "blue",
-                  fontSize: 18
-                }
-              }
-            } :
-            {data: null, labels: null};
+    events={[{
+      target: "data",
+      eventHandlers: {
+        onClick: () => {
+          return [{
+            mutation: (props) => {
+              return  props.style.stroke === "blue" ? 
+                null : 
+                { style:
+                  merge({}, props.style, {
+                    stroke: "blue", fill: "cyan"
+                  }), 
+                  symbol: "circle"
+                };
+            }
+          }];
         }
       }
-    }}
+    }]}
   />
 ```
 

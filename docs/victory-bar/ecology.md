@@ -216,9 +216,7 @@ Use the `events` prop to attach events to specific elements in VictoryBar. The `
         return [
           {
             mutation: (props) => {
-              return  props.style.fill === "tomato" ? 
-                {};
-                {style: merge({}, props.style, {fill: "orange"})};
+              return {style: merge({}, props.style, {fill: "tomato"})};
             }
           }, {
             target: "labels",

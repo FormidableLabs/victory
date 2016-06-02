@@ -92,7 +92,7 @@ Add labels, style the data, change the interpolation, add a custom domain:
 To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter.
 
 ```playground
-<svg width={500} height={500}>
+<svg viewBox="0 0 500 300" width="100%">s
   <VictoryLine
     width={500}
     height={300}
@@ -196,9 +196,9 @@ Use the `events` prop to attach events to specific elements in VictoryLine. The 
         return [
           {
             mutation: (props) => {
-              return  props.style.fill === "orange" ? 
-                {};
-                {style: merge({}, props.style, {fill: "orange"})};
+              return  props.style.stroke === "orange" ? 
+                null : 
+                {style: merge({}, props.style, {stroke: "orange"})};
             }
           }, {
             target: "labels",
