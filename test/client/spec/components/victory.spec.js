@@ -18,5 +18,6 @@ describe("victory", () => {
     expect(Victory.VictoryScatter).not.to.equal(undefined);
     expect(Victory.VictoryStack).not.to.equal(undefined);
     expect(Victory.VictoryTransition).not.to.equal(undefined);
+    expect(Victory.VictorySharedEvents).not.to.equal(undefined);
   });
 });

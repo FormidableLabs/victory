@@ -27,18 +27,18 @@
   "dependencies": {
     "builder": "~2.9.1",
     "builder-victory-component": "^2.1.4",
-    "victory-chart": "^8.0.0",
-    "victory-core": "^2.0.0",
-    "victory-pie": "^3.0.0"
+    "victory-chart": "^9.0.0",
+    "victory-core": "^3.0.0",
+    "victory-pie": "^4.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^2.1.4",
     "chai": "^3.2.0",
     "lodash": "^3.10.1",
     "mocha": "^2.3.3",
-    "react": "0.14.x",
-    "react-addons-test-utils": "^0.14.0",
-    "react-dom": "0.14.x",
+    "react": "~15.1.0",
+    "react-addons-test-utils": "~15.1.0",
+    "react-dom": "~15.1.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   }

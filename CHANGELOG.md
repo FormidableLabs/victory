@@ -1,5 +1,72 @@
 # Victory Changelog
 
+## 0.8.0 (2016-06-01)
+
+- Upgrades to React 15
+- Supports wrapped components in `VictoryChart`
+- Adds `VictorySharedEvents` wrapper for coordinating events between supported Victory Components. An annotated example of the new events API:
+
+```
+<VictorySharedEvents
+  events={[
+    {
+      childName: "firstBar", // if a child name is not provided, event will be attached to all children. 
+      target: "data", // what type of element to attach to. Matches the style namespaces
+      eventKey: 1, // What event key of element to attach to. Defaults to the index in data. 
+      eventHandlers: {
+        onClick: () => {
+          return {
+            childName: "secondBar", // the child to be modified
+            // props here are the props that define the targeted component i.e. what is passed to an individual bar
+            mutation: (props) => { 
+              return {style: merge({}, props.style, {fill: "blue"})}; // Whatever is returned here will override the existing props
+            }
+          };
+        }
+      }
+    }, {
+      childName: "secondBar",
+      target: "data",
+      eventKey: 0,
+      eventHandlers: {
+        onClick: () => { // event handlers can return an array of mutation objects with different targeted elements
+          return [
+            {
+              childName: "firstBar",
+              mutation: (props) => {
+                return {style: merge({}, props.style, {fill: "cyan"})};
+              }
+            }, {
+              mutation: (props) => { // the default target element is whatever element the handler is attached to
+                return {style: merge({}, props.style, {fill: "orange"})};
+              }
+            }, {
+              target: "labels",
+              eventKey: 1,
+              mutation: () => {
+                return {text: "CLICKED"};
+              }
+            }
+          ];
+        }
+      }
+    }
+  ]}
+>
+  <VictoryBar
+    name="firstBar" // if children don't have name props they can be referenced by index in shared events
+    style={{
+      data: {width: 25, fill: "gold"}
+    }}
+    data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+  />
+  <VictoryBar
+    name="secondBar"
+    data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+  />
+</VictorySharedEvents>
+```
+
 ## 0.7.0 (2016-05-13)
 
  - improves consistency for `labelComponent` and `dataComponent` props. Replaces a custom label components with `VictoryLabel` to make the api more consistent and predictable. **This is a breaking change for custom label components**, as `VictoryLabel` expects a different set of props than the previous label components. See [VictoryLabel](http://formidable.com/open-source/victory/docs/victory-label) for more detail.
