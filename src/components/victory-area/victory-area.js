@@ -1,4 +1,4 @@
-import { isFunction, defaults, partial, partialRight } from "lodash";
+import { isFunction, defaults, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -308,7 +308,7 @@ export default class VictoryArea extends React.Component {
     super();
     this.state = {};
     const getScopedEvents = Events.getScopedEvents.bind(this);
-    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
     this.getEventState = Events.getEventState.bind(this);
   }
 

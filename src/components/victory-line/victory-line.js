@@ -1,4 +1,4 @@
-import { defaults, partial, partialRight, isFunction } from "lodash";
+import { defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
@@ -322,7 +322,7 @@ export default class VictoryLine extends React.Component {
     super();
     this.state = {};
     const getScopedEvents = Events.getScopedEvents.bind(this);
-    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
     this.getEventState = Events.getEventState.bind(this);
   }
 
@@ -340,7 +340,7 @@ export default class VictoryLine extends React.Component {
         sharedEvents.getEventState : () => undefined;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
     return dataSegments.map((data, key) => {
-      const dataEvents = this.getEvents(props, "data");
+      const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
         {key: `line-${key}`},
         this.getEventState("all", "data"),
@@ -362,7 +362,7 @@ export default class VictoryLine extends React.Component {
           labelComponent.props
         );
       if (labelProps && labelProps.text) {
-        const labelEvents = this.getEvents(props, "labels");
+        const labelEvents = this.getEvents(props, "labels", "all");
         const lineLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));

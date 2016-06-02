@@ -194,6 +194,70 @@ Time series data is also supported:
 </VictoryChart>
 ```
 
+## Events
+
+Use the `events` prop to attach events to specific elements children of VictoryChart. The `event` prop take an array of event objects. Event objects are composed of a `childName`, `target`, `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, (i.e. "data" and "labels"). The `childName` will refer to an individual child of VictoryChart, either by its `name` prop, or by index. The `eventKey` may optionally be used to select a single element by index or `eventKey `rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `target` and `eventKey` and `childName` keys, and a mutation key whose value is a function. The `target` and `eventKey` and `childName` keys will default to those corresponding to the element the event handler was attached to. The mutation function will be called with the calculated props for the individual selected element (i.e. a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment.
+
+```playground
+<VictoryChart style={chartStyle} domainPadding={{x: 30, y: 30}}
+  events={[{
+    childName: "bar",
+    target: "data",
+    eventHandlers: {
+      onClick: () => {
+        return [
+          {
+            target: "labels",
+            mutation: () => {
+              return {text: "o shit"};
+            }
+          }, {
+            childName: "line",
+            target: "data",
+            mutation: (props) => {
+              return {style: merge({}, props.style, {stroke: "lime"})};
+            }
+          }, {
+            childName: "line",
+            target: "labels",
+            mutation: (props) => {
+              return {
+                style: merge({}, props.style, {fill: "green"}),
+                text: "waddup"
+              };
+            }
+          }
+        ];
+      }
+    }
+  }]}
+>
+  <VictoryBar name="bar"
+    style={{data: {width: 15, fill: "green"}}}
+    data={[
+      {x: 1, y: 1},
+      {x: 2, y: 2},
+      {x: 3, y: 3},
+      {x: 4, y: 2},
+      {x: 5, y: 1},
+      {x: 6, y: 2},
+      {x: 7, y: 3},
+      {x: 8, y: 2},
+      {x: 9, y: 1},
+      {x: 10, y: 2},
+      {x: 11, y: 3},
+      {x: 12, y: 2},
+      {x: 13, y: 1}
+    ]}
+  />
+  <VictoryLine name="line"
+    y={() => 0.5}
+    style={{data: {stroke: "blue", strokeWidth: 5}}}
+    label="LINE"
+  />
+</VictoryChart>
+```
+
 ### Animating
 
 VictoryChart animates with [VictoryAnimation][] as data changes. Child components stay in sync.

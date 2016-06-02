@@ -207,12 +207,7 @@ To create markers and labels for individual data points along an area, just comp
 
 ### Events
 
-Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
-Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Objects returned from
-event handlers are stored by index and namespace in state, and applied as props to
-appropriate child components. In the case of VictoryArea, the `data` name space applies
-to the rendered area, and the `labels` namespace applies to the series label.
+Use the `events` prop to attach events to specific elements in VictoryArea. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so "data" and "labels" are all valid targets for VictoryArea events. Since VictoryArea only renders a single element, the eventKey property is not used. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single label), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryArea may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
 <VictoryArea
@@ -230,16 +225,27 @@ to the rendered area, and the `labels` namespace applies to the series label.
     {x: 5, y: 2},
     {x: 6, y: 5}
   ]}
-  events={{ data: {
-    onClick: (evt, props) => {
-      return props.style.fill === "gold" ?
-        {
-          data: {style: {fill: "orange"}},
-          labels: {style: {fill: "black"}}
-        } :
-        {data: null, labels: null}
+  events={[{
+    target: "data",
+    eventHandlers: {
+      onClick: () => {
+        return [
+          {
+            mutation: (props) => {
+              return  props.style.fill === "orange" ? 
+                {};
+                {style: merge({}, props.style, {fill: "orange"})};
+            }
+          }, {
+            target: "labels",
+            mutation: () => {
+              return {text: "WOW"};
+            }
+          }
+        ];
+      }
     }
-  }}}
+  }]}
 />
 ```
 

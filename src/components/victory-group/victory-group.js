@@ -1,4 +1,4 @@
-import { assign, uniq } from "lodash";
+import { uniq } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents } from "victory-core";
 import Scale from "../../helpers/scale";
@@ -344,7 +344,7 @@ export default class VictoryGroup extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      const data = datasets[index].map((datum) => assign({}, datum, {xOffset}));
+      const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),

@@ -1,4 +1,4 @@
-import { defaults, isFunction, partial, partialRight, omit } from "lodash";
+import { defaults, isFunction, partialRight, omit } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
@@ -321,7 +321,7 @@ export default class VictoryAxis extends React.Component {
     super();
     this.state = {};
     const getScopedEvents = Events.getScopedEvents.bind(this);
-    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
     this.getEventState = Helpers.getEventState.bind(this);
   }
 
