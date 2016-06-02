@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 4.0.0 (2016-06-01) 
+
+- Upgrades to React 15
+- Updates the events API to support shared events **This is a breaking change for events**
+
 ## 3.0.0 (2016-05-13)
 
  - improves consistency for `labelComponent` and `dataComponent` props. Replaces a custom `SliceLabel` component with `VictoryLabel` to make the api more consistent and predictable. **This is a breaking change for custom label components**, as `VictoryLabel` expects a different set of props than the previous `SliceLabel` component. See [VictoryLabel](http://formidable.com/open-source/victory/docs/victory-label) for more detail.
