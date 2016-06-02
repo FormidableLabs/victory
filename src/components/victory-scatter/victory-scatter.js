@@ -1,11 +1,10 @@
 import React, { PropTypes } from "react";
-import { assign, defaults, pick, omit } from "lodash";
+import { defaults, isFunction, partialRight } from "lodash";
 import Point from "./point";
-import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
@@ -22,7 +21,7 @@ const defaultStyles = {
     fontFamily: "Helvetica",
     fontSize: 10,
     textAnchor: "middle",
-    padding: 5
+    padding: 10
   }
 };
 
@@ -104,24 +103,75 @@ export default class VictoryScatter extends React.Component {
       })
     ]),
     /**
-     * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding component props,
-     * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by index and namespace on the state object of VictoryScatter
-     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
-     * applied by index to the appropriate child component. Event props on the
-     * parent namespace are just spread directly on to the top level svg of VictoryScatter
-     * if one exists. If VictoryScatter is set up to render g elements i.e. when it is
-     * rendered within chart, or when `standalone={false}` parent events will not be applied.
-     *
-     * @examples {data: {
-     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
+     * The event prop take an array of event objects. Event objects are composed of
+     * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, so "data" and "labels" are all valid targets for VictoryScatter
+     * events. The eventKey may optionally be used to select a single element by index rather than
+     * an entire set. The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey keys,
+     * and a mutation key whose value is a function. The target and eventKey keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a single bar), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+     *     eventKey: "thisOne",
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              eventKey: "theOtherOne",
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {fill: "orange"})};
+     *              }
+     *            }, {
+     *              eventKey: "theOtherOne",
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * The name prop is used to reference a component instance when defining shared events.
+     */
+    name: PropTypes.string,
+    /**
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * This prop is used to coordinate events between VictoryArea and other Victory
+     * Components via VictorySharedEvents. This prop should not be set manually.
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -263,7 +313,6 @@ export default class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
-    events: {},
     height: 300,
     padding: 50,
     samples: 50,
@@ -280,108 +329,63 @@ export default class VictoryScatter extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(
+    ScatterHelpers.getBaseProps.bind(ScatterHelpers), defaultStyles
+  );
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getDataStyles(data, style) {
-    const stylesFromData = omit(data, [
-      "x", "y", "z", "size", "symbol", "name", "label"
-    ]);
-    const baseDataStyle = defaults({}, stylesFromData, style);
-    return Helpers.evaluateStyle(baseDataStyle, data);
+  componentWillMount() {
+    this.baseProps = ScatterHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  getLabelText(props, datum, index) {
-    const propsLabel = Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
-    return datum.label || propsLabel;
+  componentWillReceiveProps(newProps) {
+    this.baseProps = ScatterHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  getLabelStyle(labelStyle, dataProps) {
-    const { datum, size, style } = dataProps;
-    const matchedStyle = pick(style, ["opacity", "fill"]);
-    const padding = labelStyle.padding || size * 0.25;
-    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
-    return Helpers.evaluateStyle(baseLabelStyle, datum);
-  }
-
-  renderData(props, calculatedProps, style) {
-    const dataEvents = this.getEvents(props.events.data, "data");
-    const labelEvents = this.getEvents(props.events.labels, "labels");
-    const { scale, data } = calculatedProps;
-    return data.map((datum, index) => {
-      const x = scale.x(datum.x);
-      const y = scale.y(datum.y);
-      const size = ScatterHelpers.getSize(datum, props, calculatedProps);
-      const symbol = ScatterHelpers.getSymbol(datum, props);
-      const dataStyle = this.getDataStyles(datum, style.data);
+  renderData(props) {
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    return Object.keys(this.baseProps).map((key) => {
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {},
-        this.getEventState(index, "data"),
-        props.dataComponent.props,
-        {
-          x, y, size, scale, datum, symbol, index, style: dataStyle, key: `point-${index}`
-        }
+        {key: `scatter-${key}`},
+        this.getEventState(key, "data"),
+        getSharedEventState(key, "data"),
+        this.baseProps[key].data,
+        dataComponent.props
       );
-      const pointComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+      const scatterComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
-      const text = this.getLabelText(props, dataProps.datum, index);
-      if (text !== null && text !== undefined) {
-        const labelStyle = this.getLabelStyle(style.labels, dataProps);
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "labels"),
-          props.labelComponent.props,
-          {
-            key: `point-label-${index}`,
-            style: labelStyle,
-            x,
-            y: y - labelStyle.padding,
-            text,
-            index,
-            scale,
-            datum: dataProps.datum,
-            textAnchor: labelStyle.textAnchor,
-            verticalAnchor: labelStyle.verticalAnchor || "end",
-            angle: labelStyle.angle
-          }
-        );
-        const pointLabel = React.cloneElement(props.labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+      const labelProps = defaults(
+        {key: `scatter-label-${key}`},
+        this.getEventState(key, "labels"),
+        getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
+      );
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const scatterLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
-          <g key={`point-group-${index}`}>
-            {pointComponent}
-            {pointLabel}
+          <g key={`scatter-group-${key}`}>
+            {scatterComponent}
+            {scatterLabel}
           </g>
         );
       }
-      return pointComponent;
+      return scatterComponent;
     });
-  }
-
-  getCalculatedProps(props, style) {
-    const data = Data.getData(props);
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
-    };
-    const scale = {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
-    const z = props.bubbleProperty || "z";
-    return {data, scale, style, z};
   }
 
   render() {
@@ -409,13 +413,12 @@ export default class VictoryScatter extends React.Component {
       "auto",
       "100%"
     );
-    const calculatedProps = this.getCalculatedProps(this.props, style);
-    const group = <g style={style.parent}>{this.renderData(this.props, calculatedProps, style)}</g>;
+
+    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

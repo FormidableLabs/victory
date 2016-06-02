@@ -1,6 +1,6 @@
-import { assign, uniq } from "lodash";
+import { uniq } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
@@ -91,6 +91,67 @@ export default class VictoryGroup extends React.Component {
         y: CustomPropTypes.nonNegative
       }),
       CustomPropTypes.nonNegative
+    ]),
+    /**
+     * The event prop take an array of event objects. Event objects are composed of
+     * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, (i.e. "data" and "labels"). The childName will refer to an
+     * individual child of VictoryGroup, either by its name prop, or by index. The eventKey
+     * may optionally be used to select a single element by index or eventKey rather than
+     * an entire set. The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey and childName keys,
+     * and a mutation key whose value is a function. The target and eventKey and childName keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a single bar), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+           childName: "firstBar",
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              childName: "secondBar",
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {fill: "orange"})};
+     *              }
+     *            }, {
+     *              childName: "secondBar",
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
+     *}}
+     */
+    events: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.string,
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
     ]),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -283,9 +344,9 @@ export default class VictoryGroup extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      const data = datasets[index].map((datum) => assign({}, datum, {xOffset}));
+      const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
-      return React.cloneElement(child, assign({
+      return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels: this.getLabels(props, datasets, index) || child.props.labels,
@@ -308,9 +369,18 @@ export default class VictoryGroup extends React.Component {
       Log.warn("Only components of the same type can be grouped");
     }
     const calculatedProps = this.getCalculatedProps(props, childComponents, style);
+
+    const newChildren = props.events ?
+      (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
+          {this.getNewChildren(props, childComponents, calculatedProps)}
+        </VictorySharedEvents>
+      ) :
+      this.getNewChildren(props, childComponents, calculatedProps);
+
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(props, childComponents, calculatedProps)}
+        {newChildren}
       </g>
     );
     return this.props.standalone ?

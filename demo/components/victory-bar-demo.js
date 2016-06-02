@@ -1,7 +1,8 @@
 /*global window:false*/
 import React from "react";
-import { assign, random, range } from "lodash";
-import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack} from "../../src/index";
+import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
+import { VictorySharedEvents } from "victory-core";
+import { assign, random, range, merge } from "lodash";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -127,9 +128,27 @@ export default class App extends React.Component {
               duration: 500
             }
           }}
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {style: merge({}, props.style, {fill: "orange"})};
+                    }
+                  }, {
+                    target: "labels",
+                    mutation: () => {
+                      return {text: "hey"};
+                    }
+                  }
+                ];
+              }
+            }
+          }]}
           data={this.state.barTransitionData}
         />
-
         <VictoryStack
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
@@ -229,26 +248,106 @@ export default class App extends React.Component {
             <Wrapper>
               <VictoryBar
                 data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
-                events={{
-                  data: {
-                    onClick: () => {
-                      return {data: {style: {fill: "cyan"}}};
+                events={[
+                  {
+                    target: "data",
+                    eventHandlers: {
+                      onClick: () => {
+                        return [
+                          {
+                            mutation: (props) => {
+                              return {style: merge({}, props.style, {fill: "orange"})};
+                            }
+                          }
+                        ];
+                      }
                     }
                   }
-                }}
+                ]}
               />
             </Wrapper>
             <VictoryBar
               data={[{x: "c", y: 2}, {x: "d", y: 3}, {x: "e", y: 4}]}
-              events={{
-                data: {
-                  onClick: () => {
-                    return {data: {style: {fill: "blue"}}};
+              events={[
+                {
+                  target: "data",
+                  eventHandlers: {
+                    onClick: () => {
+                      return [
+                        {
+                          mutation: (props) => {
+                            return {style: merge({}, props.style, {fill: "blue"})};
+                          }
+                        }
+                      ];
+                    }
                   }
                 }
-              }}
+              ]}
             />
           </VictoryStack>
+          <svg width={500} height={300} style={{parent: parentStyle}}>
+            <VictorySharedEvents
+              events={[
+                {
+                  childName: "firstBar",
+                  target: "data",
+                  eventKey: 1,
+                  eventHandlers: {
+                    onClick: () => {
+                      return {
+                        childName: "secondBar",
+                        mutation: (props) => {
+                          return {style: merge({}, props.style, {fill: "blue"})};
+                        }
+                      };
+                    }
+                  }
+                }, {
+                  childName: "secondBar",
+                  target: "data",
+                  eventKey: 0,
+                  eventHandlers: {
+                    onClick: () => {
+                      return [
+                        {
+                          childName: "firstBar",
+                          mutation: (props) => {
+                            return props.style.fill === "cyan" ? null :
+                              {style: merge({}, props.style, {fill: "cyan"})};
+                          }
+                        },
+                        {
+                          mutation: (props) => {
+                            return {style: merge({}, props.style, {fill: "orange"})};
+                          }
+                        },
+                        {
+                          target: "labels",
+                          eventKey: 1,
+                          mutation: () => {
+                            return {text: "CLICKED"};
+                          }
+                        }
+                      ];
+                    }
+                  }
+                }
+              ]}
+            >
+              <VictoryBar
+                name="firstBar"
+                style={{
+                  data: {width: 25, fill: "gold"}
+                }}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+              />
+              <VictoryBar
+                name={"secondBar"}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+              />
+          </VictorySharedEvents>
+        </svg>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import { defaults } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -65,12 +65,66 @@ export default class VictoryChart extends React.Component {
       CustomPropTypes.nonNegative
     ]),
     /**
-     * The events prop attaches arbitrary event handlers to the top level chart svg.
-     * To attach events to individual pieces of data, use the events prop in child componenets.
-     * Event handlers on VictoryCharts are called with their corresponding events.
-     * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+     * The event prop take an array of event objects. Event objects are composed of
+     * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, (i.e. "data" and "labels"). The childName will refer to an
+     * individual child of VictoryChart, either by its name prop, or by index. The eventKey
+     * may optionally be used to select a single element by index or eventKey rather than
+     * an entire set. The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey and childName keys,
+     * and a mutation key whose value is a function. The target and eventKey and childName keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a single bar), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+     *     childName: "firstBar",
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              childName: "secondBar",
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {fill: "orange"})};
+     *              }
+     *            }, {
+     *              childName: "secondBar",
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
+     *}}
      */
-    events: PropTypes.object,
+    events: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.string,
+      target: PropTypes.string,
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
      * This value should be given as a number of pixels
@@ -128,7 +182,6 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    events: {},
     height: 300,
     width: 450,
     padding: 50,
@@ -247,16 +300,24 @@ export default class VictoryChart extends React.Component {
       this.state.oldProps : this.props;
     const style = this.getStyles(props);
     const childComponents = ChartHelpers.getChildComponents(props, defaultAxes);
+    const newChildren = props.events ?
+      (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
+          {this.getNewChildren(props, childComponents, style)}
+        </VictorySharedEvents>
+      ) :
+      this.getNewChildren(props, childComponents, style);
+
     const group = (
       <g style={style.parent}>
-        {this.getNewChildren(props, childComponents, style)}
+        {newChildren}
       </g>
     );
+
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${props.width} ${props.height}`}
-        {...props.events}
       >
         {group}
       </svg> :

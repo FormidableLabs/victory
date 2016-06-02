@@ -141,7 +141,7 @@ describe("victory-axis/helper-methods", () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Axis, "stringTicks");
-      sandbox.spy(scale, "tickFormat");
+      sandbox.stub(scale, "tickFormat");
     });
 
     afterEach(() => {
@@ -180,7 +180,6 @@ describe("victory-axis/helper-methods", () => {
       const tickProps = {scale, ticks};
       const formatResult = AxisHelpers.getTickFormat(props, tickProps);
       expect(Axis.stringTicks).calledWith(props).and.returned(false);
-      expect(scale.tickFormat).calledWith(ticks.length);
       expect(formatResult).to.be.a("function");
     });
   });

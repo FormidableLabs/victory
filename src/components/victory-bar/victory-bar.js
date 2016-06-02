@@ -1,12 +1,12 @@
-import { assign, defaults, omit } from "lodash";
+import { defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 import Bar from "./bar";
+import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Scale from "../../helpers/scale";
 
 const defaultStyles = {
   data: {
@@ -103,24 +103,74 @@ export default class VictoryBar extends React.Component {
       })
     ]),
     /**
-     * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding component props,
-     * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by index and namespace on the state object of VictoryBar
-     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
-     * applied by index to the appropriate child component. Event props on the
-     * parent namespace are just spread directly on to the top level svg of VictoryBar
-     * if one exists. If VictoryBar is set up to render g elements i.e. when it is
-     * rendered within chart, or when `standalone={false}` parent events will not be applied.
-     *
-     * @examples {data: {
-     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
+     * The event prop take an array of event objects. Event objects are composed of
+     * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, so "data" and "labels" are all valid targets for VictoryBar events.
+     * The eventKey may optionally be used to select a single element by index rather than an entire
+     * set. The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey keys,
+     * and a mutation key whose value is a function. The target and eventKey keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a single bar), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+     *     eventKey: "thisOne",
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              eventKey: "theOtherOne",
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {fill: "orange"})};
+     *              }
+     *            }, {
+     *              eventKey: "theOtherOne",
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * The name prop is used to reference a component instance when defining shared events.
+     */
+    name: PropTypes.string,
+    /**
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * This prop is used to coordinate events between VictoryArea and other Victory
+     * Components via VictorySharedEvents. This prop should not be set manually.
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -246,7 +296,6 @@ export default class VictoryBar extends React.Component {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    events: {},
     height: 300,
     padding: 50,
     scale: "linear",
@@ -258,148 +307,54 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), defaultStyles);
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getScale(props) {
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomainWithZero(props, "x"),
-      y: Domain.getDomainWithZero(props, "y")
-    };
-    return {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
+  componentWillMount() {
+    this.baseProps = BarHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  getBarPosition(props, datum, scale) {
-    const yOffset = datum.yOffset || 0;
-    const xOffset = datum.xOffset || 0;
-    const y0 = yOffset;
-    const y = datum.y + yOffset;
-    const x = datum.x + xOffset;
-    const formatValue = (value, axis) => {
-      return datum[axis] instanceof Date ? new Date(value) : value;
-    };
-    return {
-      x: scale.x(formatValue(x, "x")),
-      y0: scale.y(formatValue(y0, "y")),
-      y: scale.y(formatValue(y, "y"))
-    };
+  componentWillReceiveProps(newProps) {
+    this.baseProps = BarHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  getBarStyle(datum, baseStyle) {
-    const styleData = omit(datum, [
-      "xName", "yName", "x", "y", "label"
-    ]);
-    return defaults({}, styleData, baseStyle);
-  }
-
-  getLabelStyle(style, datum) {
-    const labelStyle = defaults({
-      angle: datum.angle,
-      textAnchor: datum.textAnchor,
-      verticalAnchor: datum.verticalAnchor
-    }, style);
-    return Helpers.evaluateStyle(labelStyle, datum);
-  }
-
-  getLabel(props, datum, index) {
-    const propsLabel = Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
-    return datum.label || propsLabel;
-  }
-
-  getLabelAnchors(datum, horizontal) {
-    const sign = datum.y >= 0 ? 1 : -1;
-    if (!horizontal) {
-      return {
-        vertical: sign >= 0 ? "end" : "start",
-        text: "middle"
-      };
-    } else {
-      return {
-        vertical: "middle",
-        text: sign >= 0 ? "start" : "end"
-      };
-    }
-  }
-
-  getlabelPadding(style, horizontal) {
-    const defaultPadding = style.padding || 0;
-    return {
-      x: horizontal ? defaultPadding : 0,
-      y: horizontal ? 0 : defaultPadding
-    };
-  }
-
-  renderData(props, data, style) {
-    const scale = this.getScale(props);
-    const dataEvents = this.getEvents(props.events.data, "data");
-    const labelEvents = this.getEvents(props.events.labels, "labels");
-    const { horizontal, labelComponent } = props;
-    return data.map((datum, index) => {
-      const position = this.getBarPosition(props, datum, scale);
-      const barStyle = this.getBarStyle(datum, style.data);
+  renderData(props) {
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    return Object.keys(this.baseProps).map((key) => {
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {},
-        this.getEventState(index, "data"),
-        props.dataComponent.props,
-        position,
-        {
-          key: `bar-${index}`,
-          style: Helpers.evaluateStyle(barStyle, datum),
-          index,
-          datum,
-          scale,
-          horizontal
-        }
+        {key: `bar-${key}`},
+        this.getEventState(key, "data"),
+        getSharedEventState(key, "data"),
+        this.baseProps[key].data,
+        dataComponent.props
       );
-      const barComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+      const barComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
-      const text = this.getLabel(props, dataProps.datum, index);
-      if (text !== null && text !== undefined) {
-        const labelStyle = this.getLabelStyle(style.labels, dataProps.datum);
-        const padding = this.getlabelPadding(labelStyle, horizontal);
-        const anchors = this.getLabelAnchors(dataProps.datum, horizontal);
-        const labelPosition = {
-          x: horizontal ? position.y : position.x,
-          y: horizontal ? position.x : position.y
-        };
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "labels"),
-          labelComponent.props,
-          {
-            key: `bar-label-${index}`,
-            style: labelStyle,
-            x: labelPosition.x + padding.x,
-            y: labelPosition.y - padding.y,
-            y0: position.y0,
-            text,
-            index,
-            scale,
-            datum: dataProps.datum,
-            textAnchor: labelStyle.textAnchor || anchors.text,
-            verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-            angle: labelStyle.angle
-          }
-        );
-        const barLabel = React.cloneElement(labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+      const labelProps = defaults(
+        {key: `bar-label-${key}`},
+        this.getEventState(key, "labels"),
+        getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
+      );
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const barLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
-          <g key={`bar-group-${index}`}>
+          <g key={`bar-group-${key}`}>
             {barComponent}
             {barLabel}
           </g>
@@ -410,7 +365,6 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
-
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -424,20 +378,12 @@ export default class VictoryBar extends React.Component {
         </VictoryTransition>
       );
     }
-
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
-    const data = Data.getData(this.props);
-    const group = <g style={style.parent}>{this.renderData(this.props, data, style)}</g>;
+    const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

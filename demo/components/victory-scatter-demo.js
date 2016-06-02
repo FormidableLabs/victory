@@ -1,6 +1,6 @@
 /*global window:false */
 import React from "react";
-import { random, range } from "lodash";
+import { merge, random, range } from "lodash";
 import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
@@ -170,23 +170,31 @@ export default class App extends React.Component {
             {x: new Date(2011, 1, 1), y: 270},
             {x: new Date(2015, 1, 1), y: 470}
           ]}
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, {fill: "orange"}),
+                        symbol: "circle"
+                      };
+                    }
+                  }, {
+                    target: "labels",
+                    mutation: () => {
+                      return {text: "hey"};
+                    }
+                  }
+                ];
+              }
+            }
+          }]}
           symbol={"star"}
           size={8}
-          events={{data: {
-            onMouseOver: () => {
-              return {data: {
-                symbol: "circle",
-                style: {
-                  fill: "gold",
-                  stroke: "orange",
-                  strokeWidth: 3
-                }
-              }};
-            },
-            onMouseOut: () => {
-              return {data: null};
-            }
-          }}}
+
         />
 
         <VictoryScatter

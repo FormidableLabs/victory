@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Ecology from "ecology";
-import { random, range } from "lodash";
+import { merge, random, range } from "lodash";
 import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
 import {
@@ -17,7 +17,7 @@ class Docs extends React.Component {
           overview={require("!!raw!./ecology.md")}
           source={docgen.parse(require("!!raw!../../src/components/victory-chart/victory-chart"))}
           scope={{
-            range, random, React, ReactDOM, VictoryScatter, VictoryLine,
+            merge, range, random, React, ReactDOM, VictoryScatter, VictoryLine,
             VictoryAxis, VictoryBar, VictoryChart, VictoryStack
           }}
           playgroundtheme="elegant"

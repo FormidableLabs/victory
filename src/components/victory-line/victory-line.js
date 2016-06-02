@@ -1,11 +1,11 @@
-import { assign, defaults, sortBy } from "lodash";
+import { defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
-import Scale from "../../helpers/scale";
+import LineHelpers from "./helper-methods";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
 } from "victory-core";
 
 const defaultStyles = {
@@ -98,24 +98,62 @@ export default class VictoryLine extends React.Component {
       })
     ]),
     /**
-     * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding component props,
-     * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by index and namespace on the state object of VictoryLine
-     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
-     * applied by index to the appropriate child component. Event props on the
-     * parent namespace are just spread directly on to the top level svg of VictoryLine
-     * if one exists. If VictoryLine is set up to render g elements i.e. when it is
-     * rendered within chart, or when `standalone={false}` parent events will not be applied.
-     *
-     * @examples {data: {
-     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
+     * The event prop take an array of event objects. Event objects are composed of
+     * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, so "data" and "labels" are all valid targets for VictoryLine events.
+     * Since VictoryLine only renders a single element, the eventKey property is not used.
+     * The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey keys,
+     * and a mutation key whose value is a function. The target and eventKey keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a line), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {stroke: "orange"})};
+     *              }
+     *            }, {
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
      *}}
      */
-    events: PropTypes.shape({
-      data: PropTypes.object,
-      labels: PropTypes.object,
-      parent: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * The name prop is used to reference a component instance when defining shared events.
+     */
+    name: PropTypes.string,
+    /**
+     * This prop is used to coordinate events between VictoryArea and other Victory
+     * Components via VictorySharedEvents. This prop should not be set manually.
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height the svg viewBox of the chart container.
@@ -263,7 +301,6 @@ export default class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
-    events: {},
     height: 300,
     interpolation: "linear",
     padding: 50,
@@ -279,116 +316,65 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
+  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers), defaultStyles);
 
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getDataSegments(dataset) {
-    const orderedData = sortBy(dataset, "x");
-    const segments = [];
-    let segmentStartIndex = 0;
-    orderedData.forEach((datum, index) => {
-      if (datum.y === null || typeof datum.y === "undefined") {
-        segments.push(orderedData.slice(segmentStartIndex, index));
-        segmentStartIndex = index + 1;
-      }
-    });
-    segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
-    return segments.filter((segment) => {
-      return Array.isArray(segment) && segment.length > 0;
-    });
+  componentWillMount() {
+    this.baseProps = LineHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  getLabelStyle(labelStyle, dataStyle) {
-    // match labels styles to data style by default (fill, opacity, others?)
-    const opacity = dataStyle.opacity;
-    // match label color to data color if it is not given.
-    // use fill instead of stroke for text
-    const fill = dataStyle.stroke;
-    const padding = labelStyle.padding || 0;
-    return defaults({}, labelStyle, {opacity, fill, padding});
+  componentWillReceiveProps(newProps) {
+    this.baseProps = LineHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  renderLine(props, calculatedProps) {
-    const {dataSegments, scale, style} = calculatedProps;
-    const {data, interpolation, dataComponent, events, label, labelComponent} = props;
-    const dataEvents = this.getEvents(events.data, "data");
-    return dataSegments.map((segment, index) => {
+  renderData(props) {
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+        sharedEvents.getEventState : () => undefined;
+    const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
+    return dataSegments.map((data, key) => {
+      const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
-        {},
-        this.getEventState(index, "data"),
-        dataComponent.props,
-        {
-          key: `line-segment-${index}`,
-          data: segment,
-          style: Helpers.evaluateStyle(style.data, segment),
-          interpolation: Helpers.evaluateProp(interpolation, segment),
-          scale
-        }
+        {key: `line-${key}`},
+        this.getEventState("all", "data"),
+        getSharedEventState("all", "data"),
+        { data },
+        this.baseProps.all.data,
+        dataComponent.props
       );
-      const segmentComponent = React.cloneElement(dataComponent, assign({
-        events: Helpers.getPartialEvents(dataEvents, index, dataProps)
-      }, dataProps));
-      const text = Helpers.evaluateProp(label, data);
-      if (index === dataSegments.length - 1 && text !== null && text !== undefined) {
-        const lastPoint = Array.isArray(segment) ? segment[segment.length - 1] : segment;
-        const labelStyle = this.getLabelStyle(style.labels, dataProps.style);
-        const labelEvents = this.getEvents(events.labels, "labels");
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "labels"),
-          labelComponent.props,
-          {
-            x: scale.x.call(this, lastPoint.x) + labelStyle.padding,
-            y: scale.y.call(this, lastPoint.y),
-            style: labelStyle,
-            data,
-            text,
-            scale,
-            textAnchor: labelStyle.textAnchor || "start",
-            verticalAnchor: labelStyle.verticalAnchor || "middle",
-            angle: labelStyle.angle
-          }
+      const lineComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
+      ));
+
+      const labelProps = defaults(
+          {key: `line-label-${key}`},
+          this.getEventState("all", "labels"),
+          getSharedEventState("all", "labels"),
+          { data },
+          this.baseProps.all.labels,
+          labelComponent.props
         );
-        const labelSegmentComponent = React.cloneElement(labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, 0, labelProps)
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", "all");
+        const lineLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));
         return (
-          <g key={`line-label-${index}`}>
-            {segmentComponent}
-            {labelSegmentComponent}
+          <g key={`line-group-${key}`}>
+            {lineComponent}
+            {lineLabel}
           </g>
         );
       }
-      return segmentComponent;
+      return lineComponent;
     });
-  }
-
-  renderData(props, style) {
-    const dataset = Data.getData(props);
-    const dataSegments = this.getDataSegments(dataset);
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
-    };
-    const scale = {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-    };
-    const calculatedProps = {dataset, dataSegments, scale, style};
-    return (
-      <g style={style.parent}>
-        {this.renderLine(props, calculatedProps)}
-      </g>
-    );
   }
 
   render() {
@@ -409,18 +395,19 @@ export default class VictoryLine extends React.Component {
         </VictoryTransition>
       );
     }
+
     const style = Helpers.getStyles(
       this.props.style,
       defaultStyles,
       "auto",
       "100%"
     );
-    const group = <g style={style.parent}>{this.renderData(this.props, style)}</g>;
+
+    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

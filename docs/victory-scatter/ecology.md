@@ -143,11 +143,7 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Events
 
-Use the `events` prop to attach arbitrary event handlers to data, labels, or the containing svg.
-Event handlers on data and labels components are called with the event object, the props
-corresponding to that component, and the index of that component. Objects returned from
-event handlers are stored by index and namespace in state, and applied as props to
-appropriate child components.
+Use the `events` prop to attach events to specific elements in VictoryScatter. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so "data" and "labels" are all valid targets for VictoryScatter events. The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single point), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryScatter may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
   <VictoryScatter
@@ -174,30 +170,25 @@ appropriate child components.
         padding: 12
       }
     }}
-    events={{
-      data: {
-        onClick: (evt, props) => {
-          return props.symbol === "star" ?
-            {
-              data: {
-                symbol: "circle",
-                style: {
-                  fill: "cyan",
-                  stroke: "blue",
-                  strokeWidth: 3
-                }
-              },
-              labels: {
-                style: {
-                  fill: "blue",
-                  fontSize: 18
-                }
-              }
-            } :
-            {data: null, labels: null};
+    events={[{
+      target: "data",
+      eventHandlers: {
+        onClick: () => {
+          return [{
+            mutation: (props) => {
+              return  props.style.stroke === "blue" ? 
+                null : 
+                { style:
+                  merge({}, props.style, {
+                    stroke: "blue", fill: "cyan"
+                  }), 
+                  symbol: "circle"
+                };
+            }
+          }];
         }
       }
-    }}
+    }]}
   />
 ```
 

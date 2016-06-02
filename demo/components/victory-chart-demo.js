@@ -1,6 +1,6 @@
 /*global window:false */
 import React from "react";
-import { random, range, omit } from "lodash";
+import { merge, random, range, omit } from "lodash";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
@@ -189,7 +189,7 @@ class App extends React.Component {
           <VictoryChart style={chartStyle} animate={{duration: 1000}}>
             <VictoryStack colorScale={"warm"}>
               {this.state.multiBarTransitionData.map((data, index) => {
-                return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
+                return <VictoryBar key={index} data={data}/>;
               })}
             </VictoryStack>
           </VictoryChart>
@@ -212,16 +212,16 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
-            <Wrapper><VictoryAxis/></Wrapper>
-            <Wrapper><VictoryAxis dependentAxis crossAxis={false}/></Wrapper>
-            <Wrapper>
+            <VictoryAxis/>
+            <VictoryAxis dependentAxis crossAxis={false} offsetX={30}/>
+
               <VictoryLine
                 style={{data:
                   {stroke: "red", strokeWidth: 4}
                 }}
                 y={(data) => Math.sin(2 * Math.PI * data.x)}
               />
-            </Wrapper>
+
             <VictoryLine
               style={{data:
                 {stroke: "blue", strokeWidth: 4}
@@ -259,11 +259,6 @@ class App extends React.Component {
                 data: {stroke: "red", strokeWidth: 5},
                 labels: {fontSize: 12}
               }}
-              events={{data: {
-                onClick: (evt) => {
-                  this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
-                }
-              }}}
               label={this.state.label}
               data={[
                 {x: new Date(1982, 1, 1), y: 125},
@@ -311,26 +306,41 @@ class App extends React.Component {
               })}
             </VictoryStack>
           </VictoryChart>
-
-          <VictoryChart style={chartStyle} domainPadding={{x: 30, y: 30}}>
-            <VictoryAxis
-              tickValues={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]}
-              tickFormat={(x) => `${x}\ntick`}
-              style={{
-                axis: {stroke: "black", strokeWidth: 2},
-                ticks: {stroke: "transparent"},
-                tickLabels: {fill: "black"}
-              }}
-            />
-            <VictoryAxis label="y axis" dependentAxis
-              tickValues={[0, 1.5, 3, 4.5]}
-              style={{
-                grid: {strokeWidth: 1},
-                axis: {stroke: "transparent"},
-                ticks: {stroke: "transparent", padding: 15}
-              }}
-            />
-            <VictoryBar style={{data: {width: 15, fill: "orange"}}}
+          <VictoryChart style={chartStyle} domainPadding={{x: 30, y: 30}}
+            events={[{
+              childName: "bar",
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "o shit"};
+                      }
+                    }, {
+                      childName: "line",
+                      target: "data",
+                      mutation: (props) => {
+                        return {style: merge({}, props.style, {stroke: "lime"})};
+                      }
+                    }, {
+                      childName: "line",
+                      target: "labels",
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, {fill: "green"}),
+                          text: "waddup"
+                        };
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          >
+            <VictoryBar name="bar"
+              style={{data: {width: 15, fill: "green"}}}
               data={[
                 {x: 1, y: 1},
                 {x: 2, y: 2},
@@ -347,12 +357,12 @@ class App extends React.Component {
                 {x: 13, y: 1}
               ]}
             />
-            <VictoryLine y={() => 0.5}
-              style={{data: {stroke: "gold", strokeWidth: 3}}}
+            <VictoryLine name="line"
+              y={() => 0.5}
+              style={{data: {stroke: "blue", strokeWidth: 5}}}
               label="LINE"
             />
           </VictoryChart>
-
           <VictoryChart style={chartStyle} domainPadding={{x: 50}} animate={{duration: 2000}}>
             <VictoryGroup offset={15}>
               <VictoryStack colorScale={"red"}>
@@ -372,32 +382,64 @@ class App extends React.Component {
               </VictoryStack>
             </VictoryGroup>
           </VictoryChart>
-
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle}
+            events={[{
+              childName: "area-1",
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      childName: "area-2",
+                      target: "data",
+                      mutation: (props) => {
+                        return {style: merge({}, props.style, {fill: "gold"})};
+                      }
+                    }, {
+                      childName: "area-3",
+                      target: "data",
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, {fill: "orange"})
+                        };
+                      }
+                    }, {
+                      childName: "area-4",
+                      target: "data",
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, {fill: "red"})
+                        };
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          >
             <VictoryStack colorScale={"qualitative"}>
-              <VictoryArea
+              <VictoryArea name="area-1"
                 data={[
                   {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}
                 ]}
               />
-              <VictoryArea
+              <VictoryArea name="area-2"
                 data={[
                   {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}
                 ]}
               />
-              <VictoryArea
+              <VictoryArea name="area-3"
                 data={[
                   {x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}
                 ]}
               />
-              <VictoryArea
+              <VictoryArea name="area-4"
                 data={[
                   {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}
                 ]}
               />
             </VictoryStack>
           </VictoryChart>
-
         </div>
       </div>
     );

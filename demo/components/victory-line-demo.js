@@ -1,6 +1,6 @@
 /*global window:false */
 import React from "react";
-import { random, range } from "lodash";
+import { merge, random, range } from "lodash";
 import {VictoryLine} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";
@@ -138,11 +138,25 @@ export default class App extends React.Component {
             parent: parentStyle,
             data: {stroke: "red", strokeWidth: 6}
           }}
-          events={{data: {
-            onClick: (evt) => {
-              this.setState({label: `x: ${evt.clientX}, y: ${evt.clientY}`});
+          events={[{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {style: merge({}, props.style, {stroke: "orange"})};
+                    }
+                  }, {
+                    target: "labels",
+                    mutation: () => {
+                      return {text: "hey"};
+                    }
+                  }
+                ];
+              }
             }
-          }}}
+          }]}
           label={this.state.label}
           data={range(0, 100)}
           x={null}

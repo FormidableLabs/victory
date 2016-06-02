@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import Ecology from "ecology";
 import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
+import { merge } from "lodash";
 import { VictoryArea, VictoryStack, VictoryGroup, VictoryScatter } from "../../src/index";
 import { VictoryTheme } from "formidable-landers";
 
@@ -13,7 +14,7 @@ class Docs extends React.Component {
         <Ecology
           overview={require("!!raw!./ecology.md")}
           source={docgen.parse(require("!!raw!../../src/components/victory-area/victory-area"))}
-          scope={{React, ReactDOM, VictoryArea, VictoryStack, VictoryGroup, VictoryScatter}}
+          scope={{merge, React, ReactDOM, VictoryArea, VictoryStack, VictoryGroup, VictoryScatter}}
           playgroundtheme="elegant"
         />
         <Style rules={VictoryTheme}/>
