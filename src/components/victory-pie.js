@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight, partial } from "lodash";
+import { defaults, isFunction, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes,
   Events,
@@ -307,7 +307,7 @@ export default class VictoryPie extends React.Component {
     super();
     this.state = {};
     const getScopedEvents = Events.getScopedEvents.bind(this);
-    this.getEvents = partial(Events.getEvents.bind(this), getScopedEvents);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
     this.getEventState = Events.getEventState.bind(this);
   }
 
