@@ -1,5 +1,5 @@
 /*global window:false*/
-import { assign, random, range } from "lodash";
+import { merge, random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "../src/index";
 import Slice from "../src/components/slice";
@@ -142,20 +142,27 @@ export default class App extends React.Component {
           <VictoryPie
             style={this.state.style}
             labels={() => "click me!"}
-            events={{
-              data: {
-                onClick: (evt, props) => {
-                  return {
-                    data: {
-                      style: assign(
-                        {},
-                        props.style, {opacity: props.style.opacity === 1 ? 0.6 : 1}
-                      )
+            events={[{
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, {fill: "orange"})
+                        };
+                      }
+                    }, {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "hey"};
+                      }
                     }
-                  };
+                  ];
                 }
               }
-            }}
+            }]}
           />
 
           <VictoryPie

@@ -1,14 +1,13 @@
 import React, { PropTypes } from "react";
-import d3Shape from "d3-shape";
-import { assign, defaults, isFunction, omit } from "lodash";
+import { defaults, isFunction, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes,
-  Helpers,
-  Style,
+  Events,
   VictoryLabel,
   VictoryTransition
 } from "victory-core";
 import Slice from "./slice";
+import PieHelpers from "./helper-methods";
 
 const defaultStyles = {
   data: {
@@ -88,24 +87,75 @@ export default class VictoryPie extends React.Component {
      */
     endAngle: PropTypes.number,
     /**
-     * The events prop attaches arbitrary event handlers to data and label elements
-     * Event handlers are called with their corresponding events, corresponding component props,
-     * and their index in the data array, and event name. The return value of event handlers
-     * will be stored by index and namespace on the state object of VictoryBar
-     * i.e. `this.state[index].data = {style: {fill: "red"}...}`, and will be
-     * applied by index to the appropriate child component. Event props on the
-     * parent namespace are just spread directly on to the top level svg of VictoryPie
-     * if one exists. If VictoryPie is set up to render g elements i.e. when it is
-     * rendered within chart, or when `standalone={false}` parent events will not be applied.
-     *
-     * @examples {data: {
-     *  onClick: () =>  return {data: {style: {fill: "green"}}, labels: {style: {fill: "black"}}}
+     * The event prop takes an array of event objects. Event objects are composed of
+     * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
+     * for a given component, so "data" and "labels" are all valid targets for VictoryPie
+     * events. The eventKey may optionally be used to select a single element by index rather than
+     * an entire set. The eventHandlers object should be given as an object whose keys are standard
+     * event names (i.e. onClick) and whose values are event callbacks. The return value
+     * of an event handler is used to modify elemnts. The return value should be given
+     * as an object or an array of objects with optional target and eventKey keys,
+     * and a mutation key whose value is a function. The target and eventKey keys
+     * will default to those corresponding to the element the event handler was attached to.
+     * The mutation function will be called with the calculated props for the individual selected
+     * element (i.e. a single bar), and the object returned from the mutation function
+     * will override the props of the selected element via object assignment.
+     * @examples
+     * events={[
+     *   {
+     *     target: "data",
+     *     eventKey: 1,
+     *     eventHandlers: {
+     *       onClick: () => {
+     *         return [
+     *            {
+     *              eventKey: 2,
+     *              mutation: (props) => {
+     *                return {style: merge({}, props.style, {fill: "orange"})};
+     *              }
+     *            }, {
+     *              eventKey: 2,
+     *              target: "labels",
+     *              mutation: () => {
+     *                return {text: "hey"};
+     *              }
+     *            }
+     *          ];
+     *       }
+     *     }
+     *   }
+     * ]}
      *}}
      */
-    events: PropTypes.shape({
-      parent: PropTypes.object,
-      data: PropTypes.object,
-      labels: PropTypes.object
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
+    /**
+     * The name prop is used to reference a component instance when defining shared events.
+     */
+    name: PropTypes.string,
+    /**
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
+     */
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    /**
+     * This prop is used to coordinate events between VictoryArea and other Victory
+     * Components via VictorySharedEvents. This prop should not be set manually.
+     */
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
     }),
     /**
      * The height props specifies the height of the chart container element in pixels
@@ -229,7 +279,6 @@ export default class VictoryPie extends React.Component {
       { x: "E", y: 2 }
     ],
     endAngle: 360,
-    events: {},
     height: 400,
     innerRadius: 0,
     padAngle: 0,
@@ -252,139 +301,61 @@ export default class VictoryPie extends React.Component {
     labelComponent: <VictoryLabel/>
   };
 
+  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
+
   constructor() {
     super();
     this.state = {};
-    this.getEvents = Helpers.getEvents.bind(this);
-    this.getEventState = Helpers.getEventState.bind(this);
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
   }
 
-  getColor(style, colors, index) {
-    if (style && style.data && style.data.fill) {
-      return style.data.fill;
-    }
-    return colors[index % colors.length];
+  componentWillMount() {
+    this.baseProps = PieHelpers.getBaseProps(this.props, defaultStyles);
   }
 
-  getRadius(props, padding) {
-    return Math.min(
-      props.width - padding.left - padding.right,
-      props.height - padding.top - padding.bottom
-    ) / 2;
+  componentWillReceiveProps(newProps) {
+    this.baseProps = PieHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  getLabelPosition(props, style, radius) {
-    // TODO: better label positioning
-    const innerRadius = props.innerRadius ?
-    props.innerRadius + style.labels.padding :
-      style.labels.padding;
-    return d3Shape.arc()
-      .outerRadius(radius)
-      .innerRadius(innerRadius);
-  }
-
-  getLabelText(props, datum, index) {
-    if (datum.label) {
-      return datum.label;
-    } else if (Array.isArray(props.labels)) {
-      return props.labels[index];
-    }
-    return isFunction(props.labels) ? props.labels(datum) : datum.xName || datum.x;
-  }
-
-  getSliceFunction(props) {
-    const degreesToRadians = (degrees) => {
-      return degrees * (Math.PI / 180);
-    };
-
-    return d3Shape.pie()
-      .sort(null)
-      .startAngle(degreesToRadians(props.startAngle))
-      .endAngle(degreesToRadians(props.endAngle))
-      .padAngle(degreesToRadians(props.padAngle))
-      .value((datum) => { return datum.y; });
-  }
-
-  renderData(props, calculatedProps) {
-    const {style, colors, pathFunction, labelPosition, data} = calculatedProps;
-    const dataEvents = this.getEvents(props.events.data, "data");
-    const labelEvents = this.getEvents(props.events.labels, "labels");
-    const layoutFunction = this.getSliceFunction(props);
-    const slices = layoutFunction(data);
-
-    return (slices.map((slice, index) => {
-      const fill = this.getColor(style, colors, index);
-      const datum = slice.data;
-      const dataStyles = omit(slice.data, ["x", "y", "label"]);
-      const sliceStyle = defaults({}, {fill}, style.data, dataStyles);
+  renderData(props) {
+    const { dataComponent, labelComponent, sharedEvents } = props;
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    return Object.keys(this.baseProps).map((key) => {
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {},
-        this.getEventState(index, "data"),
-        props.dataComponent.props,
-        {
-          key: `slice-${index}`,
-          index,
-          slice,
-          pathFunction,
-          style: Helpers.evaluateStyle(sliceStyle, datum),
-          datum
-        }
+        {key: `pie-${key}`},
+        this.getEventState(key, "data"),
+        getSharedEventState(key, "data"),
+        this.baseProps[key].data,
+        dataComponent.props
       );
-      const sliceComponent = React.cloneElement(props.dataComponent, assign(
-        {}, dataProps, {events: Helpers.getPartialEvents(dataEvents, index, dataProps)}
+      const pieComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
-      const text = this.getLabelText(props, datum, index);
-      if (text !== null && text !== undefined) {
-        const position = labelPosition.centroid(slice);
-        const labelStyle = Helpers.evaluateStyle(
-          assign({padding: 0}, style.labels),
-          dataProps.datum
-        );
-        const labelProps = defaults(
-          {},
-          this.getEventState(index, "labels"),
-          props.labelComponent.props,
-          {
-            key: `slice-label-${index}`,
-            style: labelStyle,
-            x: position[0],
-            y: position[1],
-            slice,
-            text: `${text}`,
-            index,
-            datum: dataProps.datum,
-            textAnchor: labelStyle.textAnchor || "start",
-            verticalAnchor: labelStyle.verticalAnchor || "middle",
-            angle: labelStyle.angle
-          }
-        );
-        const sliceLabel = React.cloneElement(props.labelComponent, assign({
-          events: Helpers.getPartialEvents(labelEvents, index, labelProps)
+      const labelProps = defaults(
+        {key: `pie-label-${key}`},
+        this.getEventState(key, "labels"),
+        getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
+      );
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const pieLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
-          <g key={`slice-group-${index}`}>
-            {sliceComponent}
-            {sliceLabel}
+          <g key={`pie-group-${key}`}>
+            {pieComponent}
+            {pieLabel}
           </g>
         );
       }
-      return sliceComponent;
-    }));
-  }
-
-  getCalculatedProps(props) {
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const colors = Array.isArray(props.colorScale) ?
-      props.colorScale : Style.getColorScale(props.colorScale);
-    const padding = Helpers.getPadding(props);
-    const radius = this.getRadius(props, padding);
-    const data = Helpers.getData(props);
-    const labelPosition = this.getLabelPosition(props, style, radius);
-    const pathFunction = d3Shape.arc()
-      .outerRadius(radius)
-      .innerRadius(props.innerRadius);
-    return {style, colors, padding, radius, data, labelPosition, pathFunction};
-
+      return pieComponent;
+    });
   }
 
   render() {
@@ -403,7 +374,7 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const calculatedProps = this.getCalculatedProps(this.props);
+    const calculatedProps = PieHelpers.getCalculatedValues(this.props, defaultStyles);
     const { style, padding, radius } = calculatedProps;
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
@@ -417,7 +388,6 @@ export default class VictoryPie extends React.Component {
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        {...this.props.events.parent}
       >
         {group}
       </svg> :

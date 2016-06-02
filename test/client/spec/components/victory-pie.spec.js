@@ -249,7 +249,12 @@ describe("components/victory-pie", () => {
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
-        <VictoryPie events={{data: {onClick: clickHandler}}}/>
+        <VictoryPie
+          events={[{
+            target: "data",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
       );
       const Slices = wrapper.find(Slice);
       Slices.forEach((node, index) => {
@@ -259,14 +264,17 @@ describe("components/victory-pie", () => {
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
           .to.eql(omit(initialProps, ["events", "key"]));
-        expect(clickHandler.args[index][2]).to.eql(index);
+        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
     it("attaches an event to label", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryPie
-          events={{labels: {onClick: clickHandler}}}
+          events={[{
+            target: "labels",
+            eventHandlers: {onClick: clickHandler}
+          }]}
         />
       );
       const SliceLabels = wrapper.find(VictoryLabel);
@@ -277,7 +285,7 @@ describe("components/victory-pie", () => {
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
           .to.eql(omit(initialProps, ["events", "key"]));
-        expect(clickHandler.args[index][2]).to.eql(index);
+        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
   });
