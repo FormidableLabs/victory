@@ -87,7 +87,7 @@ export default class VictoryPie extends React.Component {
      */
     endAngle: PropTypes.number,
     /**
-     * The event prop take an array of event objects. Event objects are composed of
+     * The event prop takes an array of event objects. Event objects are composed of
      * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
      * for a given component, so "data" and "labels" are all valid targets for VictoryPie
      * events. The eventKey may optionally be used to select a single element by index rather than
