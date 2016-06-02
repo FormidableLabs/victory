@@ -121,7 +121,7 @@ export default {
       }, {}) : {};
   },
 
-  getEvents(getScopedEvents, props, target, eventKey) {
+  getEvents(props, target, eventKey, getScopedEvents) {
     const getEventsFromProps = (events) => {
       const getSelectedEvents = () => {
         const findEventsWith = (name, value) => {

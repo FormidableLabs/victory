@@ -74,7 +74,7 @@ export default class VictorySharedEvents extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
-    ]),
+    ])
   };
 
   constructor() {
