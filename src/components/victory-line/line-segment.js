@@ -26,7 +26,7 @@ export default class LineSegment extends React.Component {
       .y((d) => yScale(d.y));
     const path = lineFunction(data);
     return (
-      <path style={style} d={path} {...events}/>
+      <path style={style} d={path} {...events} vectorEffect="non-scaling-stroke"/>
     );
   }
 }

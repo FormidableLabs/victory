@@ -21,6 +21,7 @@ export default class Tick extends React.Component {
         x2={x2}
         y2={y2}
         style={style}
+        vectorEffect="non-scaling-stroke"
       />
     );
   }
