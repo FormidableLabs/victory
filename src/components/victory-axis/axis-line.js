@@ -15,6 +15,7 @@ export default class AxisLine extends React.Component {
     return (
       <line
         x1={x1} x2={x2} y1={y1} y2={y2} style={style}
+        vectorEffect="non-scaling-stroke"
         {...events}
       />
     );
