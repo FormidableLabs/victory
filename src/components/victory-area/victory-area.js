@@ -283,7 +283,19 @@ export default class VictoryArea extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.arrayOf(PropTypes.func)
-    ])
+    ]),
+    /**
+     * The title prop allows the user to specify a title for their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "Area Chart".
+     */
+     title: PropTypes.string,
+     /**
+     * The desc prop allows the user to specify a description of their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "This is an area chart that displays data."
+     */
+     desc: PropTypes.string
   };
 
   static defaultProps = {
@@ -297,7 +309,9 @@ export default class VictoryArea extends React.Component {
     interpolation: "linear",
     width: 450,
     x: "x",
-    y: "y"
+    y: "y",
+    title: "Area Chart",
+    desc: "This is an area chart that displays data."
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -376,12 +390,16 @@ export default class VictoryArea extends React.Component {
       "auto",
       "100%"
     );
-    const group = <g style={style.parent}>{this.renderArea(this.props)}</g>;
+    const group = <g role="presentation" style={style.parent}>{this.renderArea(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        role="img"
+        aria-labelledby="title desc"
       >
+        <title  id="title">{this.props.title}</title>
+        <desc id="desc">{this.props.desc}</desc>
         {group}
       </svg> :
       group;

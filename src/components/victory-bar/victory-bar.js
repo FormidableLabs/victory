@@ -289,7 +289,19 @@ export default class VictoryBar extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    /**
+     * The title prop allows the user to specify a title for their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "Bar Chart".
+     */
+     title: PropTypes.string,
+     /**
+     * The desc prop allows the user to specify a description of their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "This is a bar chart that displays data."
+     */
+     desc: PropTypes.string
   };
 
   static defaultProps = {
@@ -302,7 +314,9 @@ export default class VictoryBar extends React.Component {
     standalone: true,
     width: 450,
     x: "x",
-    y: "y"
+    y: "y",
+    title: "Bar Chart",
+    desc: "This is a bar chart that displays data."
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -379,12 +393,16 @@ export default class VictoryBar extends React.Component {
       );
     }
     const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
-    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
+    const group = <g style={style.parent} role="presentation">{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        role="img"
+        aria-labelledby="title desc"
       >
+        <title id="title">{this.props.title}</title>
+        <desc id="desc">{this.props.desc}</desc>
         {group}
       </svg> :
       group;

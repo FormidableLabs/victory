@@ -309,7 +309,19 @@ export default class VictoryScatter extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    /**
+     * The title prop allows the user to specify a title for their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "Scatter Chart".
+     */
+     title: PropTypes.string,
+     /**
+     * The desc prop allows the user to specify a description of their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "This is a scatter chart that displays data."
+     */
+     desc: PropTypes.string
   };
 
   static defaultProps = {
@@ -324,7 +336,9 @@ export default class VictoryScatter extends React.Component {
     x: "x",
     y: "y",
     dataComponent: <Point/>,
-    labelComponent: <VictoryLabel/>
+    labelComponent: <VictoryLabel/>,
+    title: "Scatter Chart",
+    desc: "This is a scatter chart that displays data."
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -414,12 +428,16 @@ export default class VictoryScatter extends React.Component {
       "100%"
     );
 
-    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
+    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        role="img"
+        aria-labelledby="title desc"
       >
+        <title id="title">{this.props.title}</title>
+        <desc id="desc">{this.props.desc}</desc>
         {group}
       </svg> :
       group;
