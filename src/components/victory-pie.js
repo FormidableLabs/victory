@@ -267,7 +267,19 @@ export default class VictoryPie extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    /**
+     * The title prop allows the user to specify a title for their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "Pie Chart".
+     */
+     title: PropTypes.string,
+     /**
+     * The desc prop allows the user to specify a description of their chart for accessibility purposes.
+     * This more descriptive this is, the better it is for screen readers.
+     * This prop will default to "This is a pie chart that displays data."
+     */
+     desc: PropTypes.string
   };
 
   static defaultProps = {
@@ -298,7 +310,9 @@ export default class VictoryPie extends React.Component {
     x: "x",
     y: "y",
     dataComponent: <Slice/>,
-    labelComponent: <VictoryLabel/>
+    labelComponent: <VictoryLabel/>,
+    title: "Pie Chart",
+    desc: "This is a pie chart that displays data."
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
@@ -379,7 +393,7 @@ export default class VictoryPie extends React.Component {
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
     const group = (
-      <g style={style.parent} transform={`translate(${xOffset}, ${yOffset})`}>
+      <g role="presentation" style={style.parent} transform={`translate(${xOffset}, ${yOffset})`}>
         {this.renderData(this.props, calculatedProps)}
       </g>
     );
@@ -388,7 +402,11 @@ export default class VictoryPie extends React.Component {
       <svg
         style={style.parent}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        role="img"
+        aria-labelledby="title desc"
       >
+        <title id="title">{this.props.title}</title>
+        <desc id="desc">{this.props.desc}</desc>
         {group}
       </svg> :
       group;
