@@ -1,6 +1,6 @@
 import { uniq } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
@@ -241,7 +241,22 @@ export default class VictoryGroup extends React.Component {
      * The width props specifies the width of the svg viewBox of the chart container
      * This value should be given as a number of pixels
      */
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
+    /**
+     * The containerComponent prop takes an entire component which will be used to surround
+     * a nested chart component unless the standalone prop is set to true.
+     * The container component will be provided the following properties calculated by
+     * the chart component it surrounds: height, width, a child component (the chart itself) and style.
+     * Props that are not provided by the child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryGroup will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
+     */
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -250,7 +265,8 @@ export default class VictoryGroup extends React.Component {
     height: 300,
     width: 450,
     padding: 50,
-    standalone: true
+    standalone: true,
+    containerComponent: <VictoryContainer/>
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -384,9 +400,10 @@ export default class VictoryGroup extends React.Component {
       </g>
     );
     return this.props.standalone ?
-      <svg style={style.parent} viewBox={`0 0 ${props.width} ${props.height}`}>
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({height: this.props.height, width: this.props.width, style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }

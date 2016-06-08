@@ -101,8 +101,6 @@ export default class App extends React.Component {
         <VictoryArea
           style={style} animate={{duration: 1000}}
           data={this.state.areaTransitionData}
-          title="What a great title!"
-          desc="And a descriptive description!"
         />
 
         <VictoryStack

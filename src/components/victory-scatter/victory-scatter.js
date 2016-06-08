@@ -4,7 +4,8 @@ import Point from "./point";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
@@ -311,17 +312,20 @@ export default class VictoryScatter extends React.Component {
       PropTypes.arrayOf(PropTypes.string)
     ]),
     /**
-     * The title prop allows the user to specify a title for their chart for accessibility purposes.
-     * This more descriptive this is, the better it is for screen readers.
-     * This prop will default to "Scatter Chart".
+     * The containerComponent prop takes an entire component which will be used to surround
+     * a nested chart component unless the standalone prop is set to true.
+     * The container component will be provided the following properties calculated by
+     * the chart component it surrounds: height, width, a child component (the chart itself) and style.
+     * Props that are not provided by the child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryChart will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
      */
-     title: PropTypes.string,
-     /**
-     * The desc prop allows the user to specify a description of their chart for accessibility purposes.
-     * This more descriptive this is, the better it is for screen readers.
-     * This prop will default to "This is a scatter chart that displays data."
-     */
-     desc: PropTypes.string
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -337,8 +341,7 @@ export default class VictoryScatter extends React.Component {
     y: "y",
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
-    title: "Scatter Chart",
-    desc: "This is a scatter chart that displays data."
+    containerComponent: <VictoryContainer/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -430,16 +433,10 @@ export default class VictoryScatter extends React.Component {
 
     const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        role="img"
-        aria-labelledby="title desc"
-      >
-        <title id="title">{this.props.title}</title>
-        <desc id="desc">{this.props.desc}</desc>
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({height: this.props.height, width: this.props.width, style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }
