@@ -21,7 +21,7 @@ export default class VictoryContainer extends React.Component {
 	render() {
 		return (
 			<svg
-        style={style.parent}
+        style={this.props.style}
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         role="img"
         aria-labelledby="title desc"
