@@ -140,7 +140,8 @@ export default class App extends React.Component {
               labels: {fontSize: 10, padding: 100, fill: "white"}
             }}
             data={this.state.transitionData}
-            containerComponent={<VictoryContainer title="Animated Pie Chart" desc="This pie chart shows some data, which is described here."/>}
+            containerComponent={<VictoryContainer title="Animated Pie Chart" 
+            desc="This pie chart shows some data, which is described here."/>}
           />
 
           <VictoryPie
