@@ -3,6 +3,9 @@ import { merge, random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "../src/index";
 import Slice from "../src/components/slice";
+import {
+  VictoryContainer
+} from "victory-core";
 
 class BorderLabelSlice extends React.Component {
   static propTypes = {
@@ -137,6 +140,7 @@ export default class App extends React.Component {
               labels: {fontSize: 10, padding: 100, fill: "white"}
             }}
             data={this.state.transitionData}
+            containerComponent={<VictoryContainer title="Animated Pie Chart" desc="This pie chart shows some data, which is described here."/>}
           />
 
           <VictoryPie
