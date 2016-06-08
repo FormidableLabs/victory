@@ -277,7 +277,7 @@ export default class VictoryPie extends React.Component {
      /**
      * The desc prop allows the user to specify a description of their chart for accessibility purposes.
      * This more descriptive this is, the better it is for screen readers.
-     * This prop will default to "This is a pie chart that displays data."
+     * This prop will default to an empty string.
      */
      desc: PropTypes.string
   };
@@ -312,7 +312,7 @@ export default class VictoryPie extends React.Component {
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
     title: "Pie Chart",
-    desc: "This is a pie chart that displays data."
+    desc: ""
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
