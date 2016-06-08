@@ -4,7 +4,8 @@ import {
   PropTypes as CustomPropTypes,
   Events,
   VictoryLabel,
-  VictoryTransition
+  VictoryTransition,
+  VictoryContainer
 } from "victory-core";
 import Slice from "./slice";
 import PieHelpers from "./helper-methods";
@@ -269,17 +270,20 @@ export default class VictoryPie extends React.Component {
       PropTypes.arrayOf(PropTypes.string)
     ]),
     /**
-     * The title prop allows the user to specify a title for their chart for accessibility purposes.
-     * This more descriptive this is, the better it is for screen readers.
-     * This prop will default to "Pie Chart".
+     * The containerComponent prop takes an entire component which will be used to surround
+     * a nested chart component unless the standalone prop is set to true.
+     * The container component will be provided the following properties calculated by
+     * the chart component it surrounds: height, width, a child component (the chart itself) and style.
+     * Props that are not provided by the child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryStack will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
      */
-     title: PropTypes.string,
-     /**
-     * The desc prop allows the user to specify a description of their chart for accessibility purposes.
-     * This more descriptive this is, the better it is for screen readers.
-     * This prop will default to an empty string.
-     */
-     desc: PropTypes.string
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -311,8 +315,7 @@ export default class VictoryPie extends React.Component {
     y: "y",
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
-    title: "Pie Chart",
-    desc: ""
+    containerComponent: <VictoryContainer/>
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
@@ -399,16 +402,10 @@ export default class VictoryPie extends React.Component {
     );
 
     return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        role="img"
-        aria-labelledby="title desc"
-      >
-        <title id="title">{this.props.title}</title>
-        <desc id="desc">{this.props.desc}</desc>
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({height: this.props.height, width: this.props.width, style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }
