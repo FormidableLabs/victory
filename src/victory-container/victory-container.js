@@ -1,0 +1,73 @@
+import React, { PropTypes } from "react";
+
+export default class VictoryContainer extends React.Component {
+  static propTypes = {
+    /**
+     * The style prop specifies styles for your VictoryContainer. Any valid inline style properties
+     * will be applied. Height and width should be specified via the height
+     * and width props, as they are used to calculate the alignment of
+     * components within the container. Styles from the child component will
+     * also be passed, if any exist.
+     * @examples {border: 1px solid red}
+     */
+    style: PropTypes.object,
+    /**
+     * The height props specifies the height the svg viewBox of the container.
+     * This value should be given as a number of pixels. If no height prop
+     * is given, the height prop from the child component passed will be used.
+     */
+    height: PropTypes.number,
+    /**
+     * The width props specifies the width of the svg viewBox of the container
+     * This value should be given as a number of pixels. If no width prop
+     * is given, the width prop from the child component passed will be used.
+     */
+    width: PropTypes.number,
+    /**
+     * VictoryContainer is a wrapper component that controls some props and behaviors of its
+     * children. VictoryContainer works with all Victory components.
+     * If no children are provided, VictoryContainer will render an empty SVG.
+     * Props from children are used to determine default style, height, and width.
+     */
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
+      React.PropTypes.node
+    ]),
+    /**
+     * The title prop specifies the title to be applied to the SVG to assist
+     * accessibility for screen readers. The more descriptive this title is, the more
+     * useful it will be. If no title prop is passed, it will default to Victory Chart.
+     * @example "Popularity of Dog Breeds by Percentage"
+     */
+    title: PropTypes.string,
+    /**
+     * The desc prop specifies the description of the chart/SVG to assist with
+     * accessibility for screen readers. The more info about the chart provided in
+     * the description, the more usable it will be for people using screen readers.
+     * This prop defaults to an empty string.
+     * @example "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
+     * not represented above 5% each."
+     */
+    desc: PropTypes.string
+  }
+
+  static defaultProps = {
+    title: "Victory Chart",
+    desc: ""
+  }
+
+  render() {
+    return (
+      <svg
+        style={this.props.style}
+        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
+        role="img"
+        aria-labelledby="title desc"
+      >
+        <title id="title">{this.props.title}</title>
+        <desc id="desc">{this.props.desc}</desc>
+        {this.props.children}
+      </svg>
+      );
+  }
+}
