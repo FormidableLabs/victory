@@ -297,12 +297,12 @@ export default class VictoryAxis extends React.Component {
      */
     width: CustomPropTypes.nonNegative,
     /**
-     * The containerComponent prop takes an entire component which will be used to surround
-     * a nested chart component unless the standalone prop is set to true.
-     * The container component will be provided the following properties calculated by
-     * the chart component it surrounds: height, width, a child component (the chart itself)
-     * and style. Props that are not provided by the child
-     * chart component include title and desc, both of which
+     * The containerComponent prop takes an entire component which will be used to
+     * create a container element for standalone charts.
+     * The new element created from the passed containerComponent wil be provided with
+     * these props from VictoryAxis: height, width, children
+     * (the chart itself) and style. Props that are not provided by the
+     * child chart component include title and desc, both of which
      * are intended to add accessibility to Victory components. The more descriptive these props
      * are, the more accessible your data will be for people using screen readers.
      * Any of these props may be overridden by passing in props to the supplied component,
