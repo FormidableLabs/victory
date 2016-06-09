@@ -4,7 +4,8 @@ import {
   PropTypes as CustomPropTypes,
   Events,
   VictoryLabel,
-  VictoryTransition
+  VictoryTransition,
+  VictoryContainer
 } from "victory-core";
 import Slice from "./slice";
 import PieHelpers from "./helper-methods";
@@ -267,7 +268,23 @@ export default class VictoryPie extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    /**
+     * The containerComponent prop takes an entire component which will be used to
+     * create a container element for standalone charts.
+     * The new element created from the passed containerComponent wil be provided with
+     * these props from VictoryPie: height, width, children
+     * (the chart itself) and style. Props that are not provided by the
+     * child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryPie will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
+     */
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -298,7 +315,8 @@ export default class VictoryPie extends React.Component {
     x: "x",
     y: "y",
     dataComponent: <Slice/>,
-    labelComponent: <VictoryLabel/>
+    labelComponent: <VictoryLabel/>,
+    containerComponent: <VictoryContainer/>
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
@@ -379,18 +397,19 @@ export default class VictoryPie extends React.Component {
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
     const group = (
-      <g style={style.parent} transform={`translate(${xOffset}, ${yOffset})`}>
+      <g role="presentation" style={style.parent} transform={`translate(${xOffset}, ${yOffset})`}>
         {this.renderData(this.props, calculatedProps)}
       </g>
     );
 
     return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-      >
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({
+          height: this.props.height,
+          width: this.props.width,
+          style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }

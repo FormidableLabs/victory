@@ -18,7 +18,7 @@ class PizzaSlice extends React.Component {
 describe("components/victory-pie", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryPie/>
       );
       const svg = wrapper.find("svg");
@@ -27,7 +27,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryPie/>
       );
       const svg = wrapper.find("svg");
@@ -167,7 +167,7 @@ describe("components/victory-pie", () => {
   describe("the `width` prop", () => {
     it("determines the width of the containing viewBox", () => {
       const width = 200;
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryPie width={width} />
       );
 
@@ -178,7 +178,7 @@ describe("components/victory-pie", () => {
   describe("the `height` prop", () => {
     it("determines the height of the containing viewBox", () => {
       const height = 200;
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryPie height={height} />
       );
 
