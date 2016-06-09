@@ -28,9 +28,10 @@ export default class VictoryContainer extends React.Component {
      * children. VictoryContainer works with VictoryArea, VictoryAxis, VictoryBar, VictoryLine,
      * VictoryScatter, VictoryChart, VictoryGroup, and VictoryStack.
      * If no children are provided, VictoryContainer will render an empty SVG.
-     * Props from children are used to determine defauly style, height, and width.
+     * Props from children are used to determine default style, height, and width.
      */
-    children: React.PropTypes.oneOfType([ React.PropTypes.arrayOf(React.PropTypes.node),
+    children: React.PropTypes.oneOfType([
+      React.PropTypes.arrayOf(React.PropTypes.node),
       React.PropTypes.node
     ]),
     /**
