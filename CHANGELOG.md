@@ -1,6 +1,6 @@
 VictoryCore Changelog
 =====================
-## 2.1.0 (2016-06-09)
+## 3.2.0 (2016-06-09)
 
 - Adds VictoryContainer wrapper for all Victory components via the containerComponent prop. This is added by default
   unless the child component standalone prop is set to true. Helps add roles and optional titles/descriptions to make
