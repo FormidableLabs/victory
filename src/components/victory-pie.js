@@ -274,7 +274,7 @@ export default class VictoryPie extends React.Component {
      * a nested chart component unless the standalone prop is set to true.
      * The container component will be provided the following properties calculated by
      * the chart component it surrounds: height, width, a child component (the chart itself) and
-     * style. Props that are not provided by the child chart component include title and desc, 
+     * style. Props that are not provided by the child chart component include title and desc,
      * both of which are intended to add accessibility to Victory components. The more descriptive
      * these props are, the more accessible your data will be for people using screen readers.
      * Any of these props may be overridden by passing in props to the supplied component,
@@ -405,8 +405,8 @@ export default class VictoryPie extends React.Component {
       React.cloneElement(
         this.props.containerComponent,
         Object.assign({
-          height: this.props.height, 
-          width: this.props.width, 
+          height: this.props.height,
+          width: this.props.width,
           style: style.parent}, this.props.containerComponent.props),
         group) :
       group;
