@@ -18,7 +18,7 @@ const defaultStyles = {
     opacity: 1
   },
   labels: {
-    fontSize: 12,
+    fontSize: 13,
     padding: 4,
     fill: "black"
   }

@@ -13,7 +13,7 @@ const defaultStyles = {
     fill: "#756f6a"
   },
   labels: {
-    fontSize: 12,
+    fontSize: 13,
     padding: 4,
     fill: "black"
   }

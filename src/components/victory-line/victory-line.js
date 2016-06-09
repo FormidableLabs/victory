@@ -18,7 +18,7 @@ const defaultStyles = {
   labels: {
     padding: 5,
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 11,
     strokeWidth: 0,
     stroke: "transparent",
     textAnchor: "start"

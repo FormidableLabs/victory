@@ -19,7 +19,7 @@ const defaultStyles = {
     stroke: "transparent",
     fill: "#756f6a",
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 11,
     textAnchor: "middle",
     padding: 10
   }
