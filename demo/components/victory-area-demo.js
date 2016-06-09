@@ -2,6 +2,7 @@
 import React from "react";
 import { merge, random, range } from "lodash";
 import {VictoryArea, VictoryStack, VictoryGroup} from "../../src/index";
+import { VictoryContainer } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -101,19 +102,36 @@ export default class App extends React.Component {
         <VictoryArea
           style={style} animate={{duration: 1000}}
           data={this.state.areaTransitionData}
+          containerComponent={
+            <VictoryContainer
+              title="Area Chart"
+              desc="This is an animated area chart that displays data."
+            />
+          }
         />
 
         <VictoryStack
           style={style}
           animate={{duration: 1000}}
           colorScale={"warm"}
+          containerComponent={
+            <VictoryContainer
+              desc="This is an animated area chart that displays data in a range of colors."
+            />
+          }
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <VictoryArea key={index} data={data} interpolation={"basis"}/>;
+            return (
+              <VictoryArea
+                key={index}
+                data={data}
+                interpolation={"basis"}
+              />
+            );
           })}
         </VictoryStack>
 
-        <VictoryArea style={style}/>
+        <VictoryArea style={style} />
 
         <VictoryArea
           style={{parent: style.parent, data: this.state.style}}

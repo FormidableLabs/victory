@@ -4,6 +4,7 @@ import { merge, random, range } from "lodash";
 import {VictoryLine} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";
+import { VictoryContainer } from "victory-core";
 
 class PointedLine extends React.Component {
   static propTypes = {
@@ -118,6 +119,12 @@ export default class App extends React.Component {
             style={{parent: parentStyle, data: this.state.style}}
             data={this.state.transitionData}
             animate={{duration: 800}}
+            containerComponent={
+              <VictoryContainer
+                title="Line Chart"
+                desc="This is a line chart for displaying data."
+              />
+            }
           />
 
         <VictoryLine

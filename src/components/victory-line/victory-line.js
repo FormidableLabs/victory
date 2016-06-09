@@ -303,13 +303,14 @@ export default class VictoryLine extends React.Component {
      * The containerComponent prop takes an entire component which will be used to surround
      * a nested chart component unless the standalone prop is set to true.
      * The container component will be provided the following properties calculated by
-     * the chart component it surrounds: height, width, a child component (the chart itself) and style.
-     * Props that are not provided by the child chart component include title and desc, both of which
+     * the chart component it surrounds: height, width, a child component (the chart itself)
+     * and style. Props that are not provided by the child
+     * chart component include title and desc, both of which
      * are intended to add accessibility to Victory components. The more descriptive these props
      * are, the more accessible your data will be for people using screen readers.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
-     * not provided, VictoryChart will use the default VictoryContainer component.
+     * not provided, VictoryLine will use the default VictoryContainer component.
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
@@ -424,7 +425,10 @@ export default class VictoryLine extends React.Component {
     return this.props.standalone ?
       React.cloneElement(
         this.props.containerComponent,
-        Object.assign({height: this.props.height, width: this.props.width, style: style.parent}, this.props.containerComponent.props),
+        Object.assign({
+          height: this.props.height,
+          width: this.props.width,
+          style: style.parent}, this.props.containerComponent.props),
         group) :
       group;
   }

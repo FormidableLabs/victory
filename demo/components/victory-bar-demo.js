@@ -3,6 +3,7 @@ import React from "react";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
+import { VictoryContainer } from "victory-core";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -128,6 +129,12 @@ export default class App extends React.Component {
               duration: 500
             }
           }}
+          containerComponent={
+              <VictoryContainer
+                title="Bar Chart"
+                desc="This is an animated bar chart that displays data with labels."
+              />
+            }
           events={[{
             target: "data",
             eventHandlers: {
