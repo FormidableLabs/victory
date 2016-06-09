@@ -15,7 +15,7 @@ import Tick from "src/components/victory-axis/tick";
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryAxis/>
       );
       const svg = wrapper.find("svg");
@@ -24,7 +24,7 @@ describe("components/victory-axis", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryAxis/>
       );
       const svg = wrapper.find("svg");

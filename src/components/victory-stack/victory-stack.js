@@ -1,6 +1,7 @@
 import { uniq } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents } from "victory-core";
+import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
+  VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
@@ -240,7 +241,23 @@ export default class VictoryStack extends React.Component {
      * The xOffset prop is used for grouping stacks of bars. This prop will be set
      * by the VictoryGroup component wrapper, or can be set manually.
      */
-    xOffset: PropTypes.number
+    xOffset: PropTypes.number,
+    /**
+     * The containerComponent prop takes an entire component which will be used to
+     * create a container element for standalone charts.
+     * The new element created from the passed containerComponent wil be provided with
+     * these props from VictoryStack: height, width, children
+     * (the chart itself) and style. Props that are not provided by the
+     * child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryStack will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
+     */
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -248,7 +265,8 @@ export default class VictoryStack extends React.Component {
     height: 300,
     width: 450,
     padding: 50,
-    standalone: true
+    standalone: true,
+    containerComponent: <VictoryContainer/>
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
@@ -361,9 +379,13 @@ export default class VictoryStack extends React.Component {
       </g>
     );
     return props.standalone ?
-      <svg style={style.parent} viewBox={`0 0 ${props.width} ${props.height}`}>
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({
+          height: this.props.height,
+          width: this.props.width,
+          style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }

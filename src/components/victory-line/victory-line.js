@@ -5,7 +5,8 @@ import LineHelpers from "./helper-methods";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer
 } from "victory-core";
 
 const defaultStyles = {
@@ -297,7 +298,23 @@ export default class VictoryLine extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    /**
+     * The containerComponent prop takes an entire component which will be used to
+     * create a container element for standalone charts.
+     * The new element created from the passed containerComponent wil be provided with
+     * these props from VictoryLine: height, width, children
+     * (the chart itself) and style. Props that are not provided by the
+     * child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryLine will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
+     */
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -311,7 +328,8 @@ export default class VictoryLine extends React.Component {
     x: "x",
     y: "y",
     dataComponent: <LineSegment/>,
-    labelComponent: <VictoryLabel/>
+    labelComponent: <VictoryLabel/>,
+    containerComponent: <VictoryContainer/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -403,14 +421,15 @@ export default class VictoryLine extends React.Component {
       "100%"
     );
 
-    const group = <g style={style.parent}>{this.renderData(this.props)}</g>;
+    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
     return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-      >
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({
+          height: this.props.height,
+          width: this.props.width,
+          style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }

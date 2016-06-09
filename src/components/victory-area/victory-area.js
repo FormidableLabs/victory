@@ -3,7 +3,8 @@ import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer
 } from "victory-core";
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
@@ -191,7 +192,7 @@ export default class VictoryArea extends React.Component {
      * by passing in props to the supplied component, or modified or ignored within
      * the custom component itself. If labelComponent is omitted, a new VictoryLabel
      * will be created with props described above. This labelComponent prop should be used to
-     * provide a series label for VictoryLine. If individual labels are required for each
+     * provide a series label for VictoryArea. If individual labels are required for each
      * data point, they should be created by composing VictoryArea with VictoryScatter
      */
     labelComponent: PropTypes.element,
@@ -283,7 +284,23 @@ export default class VictoryArea extends React.Component {
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.arrayOf(PropTypes.func)
-    ])
+    ]),
+    /**
+     * The containerComponent prop takes an entire component which will be used to
+     * create a container element for standalone charts.
+     * The new element created from the passed containerComponent wil be provided with
+     * these props from VictoryArea: height, width, children
+     * (the chart itself) and style. Props that are not provided by the
+     * child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryArea will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
+     */
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -297,7 +314,8 @@ export default class VictoryArea extends React.Component {
     interpolation: "linear",
     width: 450,
     x: "x",
-    y: "y"
+    y: "y",
+    containerComponent: <VictoryContainer />
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -376,14 +394,15 @@ export default class VictoryArea extends React.Component {
       "auto",
       "100%"
     );
-    const group = <g style={style.parent}>{this.renderArea(this.props)}</g>;
+    const group = <g role="presentation" style={style.parent}>{this.renderArea(this.props)}</g>;
     return this.props.standalone ?
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-      >
-        {group}
-      </svg> :
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({
+          height: this.props.height,
+          width: this.props.width,
+          style: style.parent}, this.props.containerComponent.props),
+        group) :
       group;
   }
 }

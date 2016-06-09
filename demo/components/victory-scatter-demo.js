@@ -5,6 +5,7 @@ import {VictoryScatter} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
+import { VictoryContainer } from "victory-core";
 
 const getData = () => {
   const colors =
@@ -97,6 +98,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="demo">
+      <VictoryContainer />
         <h1>VictoryScatter</h1>
         <VictoryScatter
           style={style}
@@ -106,6 +108,13 @@ export default class App extends React.Component {
           animate={{duration: 2000}}
           data={this.state.data}
           dataComponent={<CatPoint />}
+          containerComponent={
+              <VictoryContainer
+                title="Scatter Chart"
+                desc="This is a scatter chart with cat data points!"
+                style={{border: "1px solid red"}}
+              />
+            }
         />
 
         <VictoryScatter
