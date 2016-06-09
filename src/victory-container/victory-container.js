@@ -25,8 +25,7 @@ export default class VictoryContainer extends React.Component {
     width: PropTypes.number,
     /**
      * VictoryContainer is a wrapper component that controls some props and behaviors of its
-     * children. VictoryContainer works with VictoryArea, VictoryAxis, VictoryBar, VictoryLine,
-     * VictoryScatter, VictoryChart, VictoryGroup, and VictoryStack.
+     * children. VictoryContainer works with all Victory components.
      * If no children are provided, VictoryContainer will render an empty SVG.
      * Props from children are used to determine default style, height, and width.
      */
