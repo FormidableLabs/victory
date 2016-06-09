@@ -98,6 +98,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div className="demo">
+      <VictoryContainer />
         <h1>VictoryScatter</h1>
         <VictoryScatter
           style={style}
@@ -111,6 +112,7 @@ export default class App extends React.Component {
               <VictoryContainer
                 title="Scatter Chart"
                 desc="This is a scatter chart with cat data points!"
+                style={{border: "1px solid red"}}
               />
             }
         />

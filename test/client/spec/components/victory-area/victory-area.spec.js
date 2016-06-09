@@ -15,7 +15,7 @@ import Area from "src/components/victory-area/area";
 describe("components/victory-area", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryArea/>
       );
       const svg = wrapper.find("svg");
@@ -24,7 +24,7 @@ describe("components/victory-area", () => {
     });
 
     it("renders an svg with the correct viewbox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryArea/>
       );
       const svg = wrapper.find("svg");

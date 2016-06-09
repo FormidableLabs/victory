@@ -4,14 +4,14 @@
 /*eslint-disable max-nested-callbacks */
 
 import React from "react";
-import { shallow } from "enzyme";
+import { mount } from "enzyme";
 import VictoryStack from "src/components/victory-stack/victory-stack";
 import VictoryBar from "src/components/victory-bar/victory-bar";
 
 describe("components/victory-stack", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryStack>
           <VictoryBar/>
           <VictoryBar/>
@@ -23,7 +23,7 @@ describe("components/victory-stack", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryStack>
           <VictoryBar/>
           <VictoryBar/>

@@ -20,7 +20,7 @@ class MyLineSegment extends React.Component {
 describe("components/victory-line", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine/>
       );
       const svg = wrapper.find("svg");
@@ -29,7 +29,7 @@ describe("components/victory-line", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine/>
       );
       const svg = wrapper.find("svg");
