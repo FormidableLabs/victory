@@ -189,7 +189,7 @@ export default class VictoryPie extends React.Component {
      * the length of the data array. Labels may also be added directly to the data object
      * like data={[{x: 1, y: 1, label: "first"}]}. If labels are not provided, they
      * will be created based on x values. If you don't want to render labels, pass
-     * an empty array or a function that retuns undefined.
+     * an empty array or a function that returns undefined.
      * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
