@@ -22,7 +22,7 @@ const defaultStyles = {
     strokeWidth: 0,
     stroke: "transparent",
     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-    fontSize: 11,
+    fontSize: 13,
     textAnchor: "middle"
   }
 };
