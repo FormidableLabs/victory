@@ -28,7 +28,8 @@ export default {
    */
   getAxisComponent(childComponents, axis) {
     const matchesAxis = (component) => {
-      const flipped = childComponents.some((child) => child.props.horizontal);
+      // const flipped = childComponents.some((child) => child.props.horizontal);
+      const flipped = false;
       const type = component.type.getAxis(component.props, flipped);
       return type === axis;
     };

@@ -39,13 +39,22 @@ export default {
       props.categories[axis] : props.categories;
   },
 
-  // for components that take single datasets
   getData(props) {
+    let data;
     if (props.data) {
-      return this.formatData(props.data, props);
+      data = this.formatData(props.data, props);
+    } else {
+      const generatedData = (props.x || props.y) && this.generateData(props);
+      data = this.formatData(generatedData, props);
     }
-    const data = (props.x || props.y) && this.generateData(props);
-    return this.formatData(data, props);
+    return data;
+    // return props.horizontal ? this.flipData(data) : data;
+  },
+
+  flipData(data) {
+    return data.map((datum) => {
+      return Object.assign({}, datum, {x: datum.y, y: datum.x});
+    });
   },
 
 
