@@ -1,7 +1,8 @@
 import { defaults, isFunction, partialRight, omit } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer
 } from "victory-core";
 import AxisLine from "./axis-line";
 import GridLine from "./grid";
@@ -19,7 +20,7 @@ const defaultStyles = {
   axisLabel: {
     stroke: "transparent",
     fill: "#756f6a",
-    fontSize: 16,
+    fontSize: 17,
     fontFamily: "Helvetica"
   },
   grid: {
@@ -39,7 +40,7 @@ const defaultStyles = {
     stroke: "transparent",
     fill: "#756f6a",
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 12,
     padding: 5
   }
 };
@@ -294,7 +295,23 @@ export default class VictoryAxis extends React.Component {
      * The width props specifies the width of the svg viewBox of the chart container
      * This value should be given as a number of pixels
      */
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
+    /**
+     * The containerComponent prop takes an entire component which will be used to
+     * create a container element for standalone charts.
+     * The new element created from the passed containerComponent wil be provided with
+     * these props from VictoryAxis: height, width, children
+     * (the chart itself) and style. Props that are not provided by the
+     * child chart component include title and desc, both of which
+     * are intended to add accessibility to Victory components. The more descriptive these props
+     * are, the more accessible your data will be for people using screen readers.
+     * Any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If a dataComponent is
+     * not provided, VictoryAxis will use the default VictoryContainer component.
+     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * popular each dog breed is by percentage in Seattle." />
+     */
+    containerComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -308,7 +325,8 @@ export default class VictoryAxis extends React.Component {
     scale: "linear",
     standalone: true,
     tickCount: 5,
-    width: 450
+    width: 450,
+    containerComponent: <VictoryContainer />
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
@@ -443,12 +461,13 @@ export default class VictoryAxis extends React.Component {
       </g>
     );
     return this.props.standalone ? (
-      <svg
-        style={style.parent}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-      >
-        {group}
-      </svg>
-    ) : group;
+      React.cloneElement(
+        this.props.containerComponent,
+        Object.assign({
+          height: this.props.height,
+          width: this.props.width,
+          style: style.parent}, this.props.containerComponent.props),
+        group)
+      ) : group;
   }
 }

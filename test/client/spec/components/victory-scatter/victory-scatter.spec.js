@@ -20,7 +20,7 @@ class MyPoint extends React.Component {
 describe("components/victory-scatter", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryScatter/>
       );
       const svg = wrapper.find("svg");
@@ -29,7 +29,7 @@ describe("components/victory-scatter", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryScatter/>
       );
       const svg = wrapper.find("svg");

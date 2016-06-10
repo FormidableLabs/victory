@@ -3,6 +3,7 @@ import React from "react";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
+import { VictoryContainer } from "victory-core";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -128,6 +129,12 @@ export default class App extends React.Component {
               duration: 500
             }
           }}
+          containerComponent={
+              <VictoryContainer
+                title="Bar Chart"
+                desc="This is an animated bar chart that displays data with labels."
+              />
+            }
           events={[{
             target: "data",
             eventHandlers: {
@@ -174,15 +181,14 @@ export default class App extends React.Component {
           style={{parent: parentStyle}} offset={18}
           colorScale={"qualitative"}
           animate={{duration: 2000}}
-          labels={["a", "b", "c"]}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <VictoryBar key={index} data={data} labels={["a", "b", "c"]}/>;
           })}
         </VictoryGroup>
 
         <VictoryGroup horizontal style={{parent: parentStyle}} offset={8}
-          colorScale={"cool"} animate={{duration: 2000}}
+          colorScale={"cool"} animate={{duration: 2000}} labels={["a", "b", "c"]}
         >
           {this.getBarData().map((data, index) => {
             return <VictoryBar key={index} data={data}/>;
@@ -220,6 +226,7 @@ export default class App extends React.Component {
 
         <ChartWrap>
           <VictoryBar
+            labels={["a", "b", "c"]}
             data={[[0, 1], [2, 3], [4, 5]]}
             x={0}
             y={1}

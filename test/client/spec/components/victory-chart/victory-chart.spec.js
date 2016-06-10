@@ -2,14 +2,14 @@
  * Client tests
  */
 import React from "react";
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
 import VictoryChart from "src/components/victory-chart/victory-chart";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
 
 describe("components/victory-chart", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryChart/>
       );
       const svg = wrapper.find("svg");
@@ -18,7 +18,7 @@ describe("components/victory-chart", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryChart/>
       );
       const svg = wrapper.find("svg");

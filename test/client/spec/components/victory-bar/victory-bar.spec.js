@@ -16,7 +16,7 @@ import { VictoryLabel } from "victory-core";
 describe("components/victory-bar", () => {
   describe("default component rendering", () => {
     it("renders an svg with the correct width and height", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryBar/>
       );
       const svg = wrapper.find("svg");
@@ -25,7 +25,7 @@ describe("components/victory-bar", () => {
     });
 
     it("renders an svg with the correct viewBox", () => {
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryBar/>
       );
       const svg = wrapper.find("svg");

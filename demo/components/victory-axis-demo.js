@@ -3,6 +3,7 @@ import React from "react";
 import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import { merge, random, range } from "lodash";
+import { VictoryContainer } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -73,6 +74,12 @@ export default class App extends React.Component {
             tickValues={this.state.tickValues}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
             animate={{duration: 2000}}
+            containerComponent={
+              <VictoryContainer
+                title="Axis Example"
+                desc="This is an example of an animating axis."
+              />
+            }
           />
         </div>
         <div>
@@ -84,6 +91,11 @@ export default class App extends React.Component {
               axis: {strokeWidth: 4},
               grid: {stroke: "black", strokeWidth: 5}
             }}
+            containerComponent={
+              <VictoryContainer
+                title="Time Scale Axis Example"
+              />
+            }
             events={[
               {
                 target: "grid",

@@ -5,7 +5,7 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
-import { VictoryLabel } from "victory-core";
+import { VictoryLabel, VictoryContainer } from "victory-core";
 import { assign } from "lodash";
 
 
@@ -197,7 +197,7 @@ class App extends React.Component {
          </VictoryChart>
 
          <VictoryChart style={chartStyle}>
-           <VictoryGroup
+            <VictoryGroup
               offset={20}
               colorScale={"qualitative"}
             >
@@ -226,7 +226,7 @@ class App extends React.Component {
          </VictoryChart>
 
          <VictoryChart style={chartStyle}>
-           <VictoryGroup
+            <VictoryGroup
               horizontal
               offset={20}
               colorScale={"qualitative"}
@@ -256,7 +256,7 @@ class App extends React.Component {
          </VictoryChart>
 
          <VictoryChart style={chartStyle}>
-           <VictoryStack
+            <VictoryStack
               colorScale={"qualitative"}
             >
               <VictoryBar
@@ -284,7 +284,7 @@ class App extends React.Component {
          </VictoryChart>
 
          <VictoryChart style={chartStyle}>
-           <VictoryStack horizontal
+            <VictoryStack horizontal
               colorScale={"qualitative"}
             >
               <VictoryBar
@@ -311,7 +311,7 @@ class App extends React.Component {
             </VictoryStack>
          </VictoryChart>
 
-         <VictoryStack horizontal
+          <VictoryStack horizontal
             style={chartStyle}
             colorScale={"qualitative"}
           >
@@ -366,8 +366,15 @@ class App extends React.Component {
             />
           </VictoryGroup>
 
-        {/*}
-          <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>
+          <VictoryChart
+            style={chartStyle}
+            animate={{ duration: 1500 }}
+            containerComponent={
+              <VictoryContainer
+                desc="This is an example of a bar chart wrapped in Victory Chart."
+              />
+            }
+          >
           <Wrapper>
             <VictoryBar
               data={this.state.barTransitionData}
@@ -635,7 +642,6 @@ class App extends React.Component {
               />
             </VictoryStack>
           </VictoryChart>
-        {*/}
         </div>
       </div>
     );
