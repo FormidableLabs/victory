@@ -226,6 +226,18 @@ export default class App extends React.Component {
             animate={{duration: 2000}}
             colorScale="qualitative"
           />
+
+          <VictoryPie style={this.state.style}
+            data={range(0, 2).map((i) => [i, Math.random()])}
+            x={0}
+            y={1}
+            colorScale={["#FF2800", "#FFF"]}
+            labels={[""]}
+            cornerRadius={20}
+            startAngle={-6}
+            animate={{duration: 2000}}
+            innerRadius={140}
+          />
         </div>
       </div>
     );

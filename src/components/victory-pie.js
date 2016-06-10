@@ -168,6 +168,10 @@ export default class VictoryPie extends React.Component {
      */
     innerRadius: CustomPropTypes.nonNegative,
     /**
+     * Set the cornerRadius for every dataComponent (Slice by default) within VictoryPie
+     */
+    cornerRadius: CustomPropTypes.nonNegative,
+    /**
      * The labelComponent prop takes in an entire label component which will be used
      * to create labels for each slice in the pie chart. The new element created from
      * the passed labelComponent will be supplied with the following properties:
@@ -281,6 +285,7 @@ export default class VictoryPie extends React.Component {
     endAngle: 360,
     height: 400,
     innerRadius: 0,
+    cornerRadius: 0,
     padAngle: 0,
     padding: 30,
     colorScale: [
@@ -364,7 +369,7 @@ export default class VictoryPie extends React.Component {
     // and (2) `animate` set to null so we don't recurse forever.
     if (this.props.animate) {
       const whitelist = [
-        "data", "endAngle", "height", "innerRadius", "padAngle", "padding",
+        "data", "endAngle", "height", "innerRadius", "cornerRadius", "padAngle", "padding",
         "colorScale", "startAngle", "style", "width"
       ];
       return (

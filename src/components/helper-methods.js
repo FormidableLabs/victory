@@ -59,6 +59,7 @@ export default {
     const layoutFunction = this.getSliceFunction(props);
     const slices = layoutFunction(data);
     const pathFunction = d3Shape.arc()
+      .cornerRadius(props.cornerRadius)
       .outerRadius(radius)
       .innerRadius(props.innerRadius);
     return {style, colors, padding, radius, data, slices, labelPosition, pathFunction};
