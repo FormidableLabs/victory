@@ -1,5 +1,11 @@
 VictoryCore Changelog
 =====================
+## 3.2.0 (2016-06-09)
+
+- Adds VictoryContainer wrapper for all Victory components via the containerComponent prop. This is added by default
+  unless the child component standalone prop is set to true. Helps add roles and optional titles/descriptions to make
+  Victory charts more accessible to users using screen readers.
+
 ## 3.0.0 (2016-06-01) 
 
 - Adds `VictorySharedEvents` wrapper for coordinating events between supported Victory Components. An annotated example of the new events API:
