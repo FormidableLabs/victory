@@ -4,6 +4,14 @@ import d3Shape from "d3-shape";
 import { Helpers, Events, Style } from "victory-core";
 
 export default {
+  checkForValidText(text) {
+    if (text === undefined || text === null) {
+      return text;
+    } else {
+      return `${text}`;
+    }
+  },
+
   getBaseProps(props, defaultStyles) {
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { slices, style, pathFunction, colors, labelPosition } = calculatedValues;
@@ -33,7 +41,7 @@ export default {
         x: position[0],
         y: position[1],
         slice,
-        text: `${text}`,
+        text: this.checkForValidText(text),
         index,
         datum: dataProps.datum,
         textAnchor: labelStyle.textAnchor || "start",

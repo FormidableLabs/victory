@@ -240,12 +240,13 @@ export default class App extends React.Component {
             x={0}
             y={1}
             colorScale={["#FF2800", "#FFF"]}
-            labels={[""]}
+            labels={[]}
             cornerRadius={20}
             startAngle={-6}
             animate={{duration: 2000}}
             innerRadius={140}
           />
+
         </div>
       </div>
     );

@@ -60,6 +60,28 @@ describe("components/victory-pie", () => {
       const labels = wrapper.find(VictoryLabel);
       expect(labels).to.have.lengthOf(5);
     });
+
+    it("renders 0 slice labels for empty label array", () => {
+      const wrapper = shallow(
+        <VictoryPie
+          labels={[]}
+        />
+      );
+
+      const labels = wrapper.find(VictoryLabel);
+      expect(labels).to.have.lengthOf(0);
+    });
+
+    it("renders 0 slice labels for label function returning undefined", () => {
+      const wrapper = shallow(
+        <VictoryPie
+          labels={() => {}}
+        />
+      );
+
+      const labels = wrapper.find(VictoryLabel);
+      expect(labels).to.have.lengthOf(0);
+    });
   });
 
   describe("rendering data", () => {
