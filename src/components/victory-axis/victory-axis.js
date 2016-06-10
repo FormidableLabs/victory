@@ -20,7 +20,7 @@ const defaultStyles = {
   axisLabel: {
     stroke: "transparent",
     fill: "#756f6a",
-    fontSize: 16,
+    fontSize: 17,
     fontFamily: "Helvetica"
   },
   grid: {
@@ -40,7 +40,7 @@ const defaultStyles = {
     stroke: "transparent",
     fill: "#756f6a",
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 12,
     padding: 5
   }
 };
