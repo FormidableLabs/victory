@@ -364,10 +364,11 @@ export default class VictoryGroup extends React.Component {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
+      const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
-        labels: this.getLabels(props, datasets, index) || child.props.labels,
+        labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data,

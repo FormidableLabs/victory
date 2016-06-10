@@ -344,10 +344,11 @@ export default class VictoryStack extends React.Component {
     return childComponents.map((child, index) => {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
+      const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
-        labels: this.getLabels(props, datasets, index) || child.props.labels,
+        labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data

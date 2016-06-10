@@ -181,15 +181,14 @@ export default class App extends React.Component {
           style={{parent: parentStyle}} offset={18}
           colorScale={"qualitative"}
           animate={{duration: 2000}}
-          labels={["a", "b", "c"]}
         >
           {this.getBarData().map((data, index) => {
-            return <VictoryBar key={index} data={data}/>;
+            return <VictoryBar key={index} data={data} labels={["a", "b", "c"]}/>;
           })}
         </VictoryGroup>
 
         <VictoryGroup horizontal style={{parent: parentStyle}} offset={8}
-          colorScale={"cool"} animate={{duration: 2000}}
+          colorScale={"cool"} animate={{duration: 2000}} labels={["a", "b", "c"]}
         >
           {this.getBarData().map((data, index) => {
             return <VictoryBar key={index} data={data}/>;
@@ -227,6 +226,7 @@ export default class App extends React.Component {
 
         <ChartWrap>
           <VictoryBar
+            labels={["a", "b", "c"]}
             data={[[0, 1], [2, 3], [4, 5]]}
             x={0}
             y={1}
