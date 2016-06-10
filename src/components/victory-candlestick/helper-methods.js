@@ -1,7 +1,7 @@
 import { pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
-import Domain from "../../helpers/domain";
+// import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 
 export default {
@@ -11,11 +11,17 @@ export default {
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
-      const y = scale.y(datum.y);
+      const y1 = scale.y(datum.high);
+      const y2 = scale.y(datum.low);
+      const candleColor = datum.open > datum.close ?
+            props.candleColors.negative : props.candleColors.positive;
+      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
+      const y = scale.y(Math.max(datum.open, datum.close));
       const size = this.getSize(datum, props, calculatedValues);
       const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
-        x, y, size, scale, datum, index, style: dataStyle
+        x, y, y1, y2, candleColor, candleHeight, size, scale, data, datum,
+        index, style: dataStyle
       };
 
       const text = this.getLabelText(props, datum, index);
@@ -47,20 +53,20 @@ export default {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
     };
-    const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
-    };
+    // const domain = {
+    //   x: Domain.getDomain(props, "x"),
+    //   y: Domain.getDomain(props, "y")
+    // };
     const scale = {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+      x: Scale.getBaseScale(props, "x").domain([50, 400]).range(range.x),
+      y: Scale.getBaseScale(props, "y").domain([0, 100]).range(range.y)
     };
     return {data, scale, style};
   },
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
-      "x", "y", "size", "name", "label"
+      "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
     const baseDataStyle = defaults({}, stylesFromData, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);

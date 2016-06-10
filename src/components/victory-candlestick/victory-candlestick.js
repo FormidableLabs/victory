@@ -20,7 +20,7 @@ const defaultStyles = {
     stroke: "transparent",
     fill: "#756f6a",
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 13,
     textAnchor: "middle",
     padding: 10
   }
@@ -374,7 +374,7 @@ export default class VictoryCandlestick extends React.Component {
     return Object.keys(this.baseProps).map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `scatter-${key}`},
+        {key: `candle-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
         this.baseProps[key].data,

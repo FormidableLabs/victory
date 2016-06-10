@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import VictoryCandlestick from "./victory-candlestick";
 
 
 export default class Candle extends React.Component {
@@ -11,7 +12,7 @@ export default class Candle extends React.Component {
     y: PropTypes.number,
     candleHeight: PropTypes.number,
     scale: PropTypes.object,
-    // style: PropTypes.object,
+    style: PropTypes.object,
     datum: PropTypes.object,
     width: PropTypes.number,
     padding: PropTypes.number,
@@ -19,8 +20,8 @@ export default class Candle extends React.Component {
   }
 
   renderWick() {
-    const width = this.props.width;
-    const padding = this.props.padding;
+    const width = VictoryCandlestick.defaultProps.width;
+    const padding = VictoryCandlestick.defaultProps.padding;
     const dataLength = this.props.data.length;
     const x = this.props.x + 0.25 * (width - 2 * padding) / dataLength;
 
@@ -37,8 +38,8 @@ export default class Candle extends React.Component {
   }
 
   renderCandle() {
-    const width = this.props.width;
-    const padding = this.props.padding;
+    const width = VictoryCandlestick.defaultProps.width;
+    const padding = VictoryCandlestick.defaultProps.padding;
     const dataLength = this.props.data.length;
     const candleWidth = 0.5 * (width - 2 * padding) / dataLength;
 
