@@ -1,4 +1,4 @@
-import { pick, omit, defaults, flatten } from "lodash";
+import { pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 
@@ -11,15 +11,12 @@ export default {
       const x = scale.x(datum.x);
       const y1 = scale.y(datum.high);
       const y2 = scale.y(datum.low);
-      const candleColor = datum.open > datum.close ?
-            props.candleColors.negative : props.candleColors.positive;
       const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
       const y = scale.y(Math.max(datum.open, datum.close));
       const size = this.getSize(datum, props, calculatedValues);
-      const dataStyle = Object.assign(this.getDataStyles(datum, style.data),
-        {stroke: candleColor, fill: candleColor});
+      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, props));
       const dataProps = {
-        x, y, y1, y2, candleColor, candleHeight, size, scale, data, datum,
+        x, y, y1, y2, candleHeight, size, scale, data, datum,
         index, style: dataStyle, padding: props.padding, width: props.width
       };
 
@@ -77,14 +74,13 @@ export default {
 
   getDomain(props, axis) {
     const dataset = this.getData(props);
-    const allData = flatten(dataset).map((datum) => {
-      return datum[axis];
-    });
-    const flattened = flatten(allData);
-    const min = Math.min(...flattened);
-    const max = Math.max(...flattened);
-    // TODO: is this the correct behavior, or should we just error. How do we
-    // handle charts with just one data point?
+    const allData = dataset.reduce((memo, datum) => {
+      return Array.isArray(datum[axis]) ?
+       memo.concat(...datum[axis]) : memo.concat(datum[axis]);
+    },
+    []);
+    const min = Math.min(...allData);
+    const max = Math.max(...allData);
     if (min === max) {
       const adjustedMax = max === 0 ? 1 : max;
       return [0, adjustedMax];
@@ -92,11 +88,14 @@ export default {
     return [min, max];
   },
 
-  getDataStyles(datum, style) {
+  getDataStyles(datum, style, props) {
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
-    const baseDataStyle = defaults({}, stylesFromData, style);
+    const candleColor = datum.open > datum.close ?
+            props.candleColors.negative : props.candleColors.positive;
+    const baseDataStyle = defaults({}, stylesFromData, {stroke: candleColor, fill: candleColor},
+      style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
 
