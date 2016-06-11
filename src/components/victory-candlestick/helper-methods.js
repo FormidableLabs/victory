@@ -1,11 +1,11 @@
-import { pick, omit, defaults } from "lodash";
+import { pick, omit, defaults, flatten } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
-// import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
+import Domain from "../../helpers/domain";
+// import Data from "../../helpers/data";
 
 export default {
-  getBaseProps(props, defaultStyles) {
+  getBaseProps(props, defaultStyles) { // eslint-disable-line max-statements
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { data, style, scale } = calculatedValues;
     return data.reduce((memo, datum, index) => {
@@ -18,10 +18,11 @@ export default {
       const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
       const y = scale.y(Math.max(datum.open, datum.close));
       const size = this.getSize(datum, props, calculatedValues);
-      const dataStyle = this.getDataStyles(datum, style.data);
+      const dataStyle = Object.assign(this.getDataStyles(datum, style.data),
+        {stroke: candleColor, fill: candleColor});
       const dataProps = {
         x, y, y1, y2, candleColor, candleHeight, size, scale, data, datum,
-        index, style: dataStyle
+        index, style: dataStyle, padding: props.padding, width: props.width
       };
 
       const text = this.getLabelText(props, datum, index);
@@ -48,21 +49,68 @@ export default {
 
   getCalculatedValues(props, defaultStyles) {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
+    const data = Events.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
     };
-    // const domain = {
-    //   x: Domain.getDomain(props, "x"),
-    //   y: Domain.getDomain(props, "y")
-    // };
-    const scale = {
-      x: Scale.getBaseScale(props, "x").domain([50, 400]).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain([0, 100]).range(range.y)
+    const domain = {
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
     };
+    const scale = {
+      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
+      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+    };
+    console.log(domain.x);
+    console.log(domain.y);
     return {data, scale, style};
   },
+
+  getData(props) {
+    return props.data.map((datum) => {
+      const x = datum.x;
+      const y = [datum.open, datum.close, datum.high, datum.low];
+      return Object.assign(
+        {},
+        datum,
+        {x, y}
+        );
+    });
+  },
+
+  getDomain(props, axis) {
+    const dataset = this.getData(props);
+    const allData = flatten(dataset).map((datum) => {
+      return datum[axis];
+    });
+    const flattened = flatten(allData);
+    const min = Math.min(...flattened);
+    const max = Math.max(...flattened);
+    // TODO: is this the correct behavior, or should we just error. How do we
+    // handle charts with just one data point?
+    if (min === max) {
+      const adjustedMax = max === 0 ? 1 : max;
+      return [0, adjustedMax];
+    }
+    return [min, max];
+  },
+
+  // getDomainY(props) {
+  //   const dataset = this.getData(props);
+  //   const allData = flatten(dataset).map((datum) => {
+  //     return datum.y;
+  //   });
+  //   const flattened = flatten(allData);
+  //   const min = Math.min(...flattened);
+  //   const max = Math.max(...flattened);
+  //   if (min === max) {
+  //     const adjustedMax = max === 0 ? 1 : max;
+  //     return [0, adjustedMax];
+  //   }
+  //   return [min, max];
+
+  // },
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
@@ -86,14 +134,12 @@ export default {
     return Helpers.evaluateStyle(baseLabelStyle, datum);
   },
 
-  getSize(data, props, calculatedValues) {
+  getSize(data, props) {
     let size;
     if (data.size) {
       size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
     } else if (typeof props.size === "function") {
       size = props.size;
-    } else if (data[calculatedValues.z]) {
-      size = this.getBubbleSize(data, props, calculatedValues);
     } else {
       size = Math.max(props.size, 1);
     }

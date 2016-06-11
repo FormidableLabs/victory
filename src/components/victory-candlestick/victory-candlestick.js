@@ -14,7 +14,7 @@ const defaultStyles = {
     fill: "#756f6a",
     opacity: 1,
     stroke: "transparent",
-    strokeWidth: 0
+    strokeWidth: 1
   },
   labels: {
     stroke: "transparent",
@@ -63,11 +63,7 @@ export default class VictoryCandlestick extends React.Component {
         y: PropTypes.arrayOf(PropTypes.string)
       })
     ]),
-    /**
-     * The bubbleProperty prop indicates which property of the data object should be used
-     * to scale data points in a bubble chart
-     */
-    bubbleProperty: PropTypes.string,
+
     /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
@@ -202,10 +198,6 @@ export default class VictoryCandlestick extends React.Component {
       PropTypes.array
     ]),
     /**
-     * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
-     */
-    maxBubbleSize: CustomPropTypes.nonNegative,
-    /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
      * as a number or as an object with padding specified for top, bottom, left
@@ -266,15 +258,6 @@ export default class VictoryCandlestick extends React.Component {
       labels: PropTypes.object
     }),
     /**
-     * The symbol prop determines which symbol should be drawn to represent data points.
-     */
-    symbol: PropTypes.oneOfType([
-      PropTypes.oneOf([
-        "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"
-      ]),
-      PropTypes.func
-    ]),
-    /**
      * The width props specifies the width of the svg viewBox of the chart container
      * This value should be given as a number of pixels
      */
@@ -326,7 +309,12 @@ export default class VictoryCandlestick extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**/
+    candleColors: PropTypes.shape({
+      positive: PropTypes.string,
+      negative: PropTypes.string
+    })
   };
 
   static defaultProps = {
@@ -342,11 +330,15 @@ export default class VictoryCandlestick extends React.Component {
     y: "y",
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    candleColors: {
+      positive: "green",
+      negative: "red"
+    }
   };
 
-  static getDomain = Domain.getDomain.bind(Domain);
-  static getData = Data.getData.bind(Data);
+  static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
+  static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
   static getBaseProps = partialRight(
     CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), defaultStyles
   );
@@ -374,7 +366,7 @@ export default class VictoryCandlestick extends React.Component {
     return Object.keys(this.baseProps).map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `candle-${key}`},
+        {key: `scatter-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
         this.baseProps[key].data,

@@ -1,7 +1,8 @@
 /*global window:false */
 import React from "react";
 import { random, range } from "lodash";
-import {VictoryCandlestick} from "../../src/index";
+import {VictoryCandlestick
+        } from "../../src/index";
 // import {VictoryLabel} from "victory-core";
 
 const getData = () => {
@@ -54,7 +55,7 @@ export default class App extends React.Component {
 
         <VictoryCandlestick
           style={{parent: style.parent}}
-          candleColors={{positive: "purple", negative: "blue"}}
+          // candleColors={{positive: "purple", negative: "blue"}}
           data={[
             {x: 50, open: 9, close: 30, high: 56, low: 7},
             {x: 100, open: 80, close: 40, high: 100, low: 10},
@@ -67,6 +68,23 @@ export default class App extends React.Component {
           ]}
           size={8}
         />
+        {/*<ChartWrap>
+                  <VictoryCandlestick
+                    style={{parent: style.parent}}
+                    candleColors={{positive: "purple", negative: "blue"}}
+                    data={[
+                      {x: 50, open: 9, close: 30, high: 56, low: 7},
+                      {x: 100, open: 80, close: 40, high: 100, low: 10},
+                      {x: 150, open: 50, close: 80, high: 90, low: 20},
+                      {x: 200, open: 70, close: 22, high: 70, low: 5},
+                      {x: 250, open: 20, close: 35, high: 50, low: 10},
+                      {x: 300, open: 35, close: 30, high: 40, low: 3},
+                      {x: 350, open: 30, close: 90, high: 95, low: 30},
+                      {x: 400, open: 80, close: 81, high: 83, low: 75}
+                    ]}
+                    size={8}
+                  />
+                </ChartWrap>*/}
       </div>
     );
   }
@@ -79,3 +97,27 @@ App.propTypes = {
 App.defaultProps = {
   data: getData()
 };
+
+// class ChartWrap extends React.Component {
+//   static propTypes = {
+//     width: React.PropTypes.number,
+//     height: React.PropTypes.number,
+//     children: React.PropTypes.any
+//   };
+//   static defaultProps = {
+//     width: 350,
+//     height: 250
+//   };
+//   // renders both a standalone chart, and a version wrapped in VictoryChart,
+//   // to test both cases at once
+//   render() {
+//     const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+//     const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
+//     return (
+//       <div>
+//         {React.cloneElement(this.props.children, props)}
+//         <VictoryChart {...props}>{this.props.children}</VictoryChart>
+//       </div>
+//     );
+//   }
+// }

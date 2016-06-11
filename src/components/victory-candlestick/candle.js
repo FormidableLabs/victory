@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-import VictoryCandlestick from "./victory-candlestick";
 
 
 export default class Candle extends React.Component {
@@ -8,7 +7,6 @@ export default class Candle extends React.Component {
     x: PropTypes.number,
     y1: PropTypes.number,
     y2: PropTypes.number,
-    candleColor: PropTypes.string,
     y: PropTypes.number,
     candleHeight: PropTypes.number,
     scale: PropTypes.object,
@@ -20,8 +18,8 @@ export default class Candle extends React.Component {
   }
 
   renderWick() {
-    const width = VictoryCandlestick.defaultProps.width;
-    const padding = VictoryCandlestick.defaultProps.padding;
+    const width = this.props.width;
+    const padding = this.props.padding;
     const dataLength = this.props.data.length;
     const x = this.props.x + 0.25 * (width - 2 * padding) / dataLength;
 
@@ -31,25 +29,22 @@ export default class Candle extends React.Component {
           x2={x}
           y1={this.props.y1}
           y2={this.props.y2}
-          stroke={this.props.candleColor}
-          strokeWidth={1}
+          style={this.props.style}
         />
       );
   }
 
   renderCandle() {
-    const width = VictoryCandlestick.defaultProps.width;
-    const padding = VictoryCandlestick.defaultProps.padding;
+    const width = this.props.width;
+    const padding = this.props.padding;
     const dataLength = this.props.data.length;
     const candleWidth = 0.5 * (width - 2 * padding) / dataLength;
 
     return (
       <rect
-        fill={this.props.candleColor}
         x={this.props.x}
         y={this.props.y}
-        stroke={this.props.candleColor}
-        strokeWidth={1}
+        style={this.props.style}
         width={candleWidth}
         height={this.props.candleHeight}
       />
