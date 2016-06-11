@@ -1,8 +1,6 @@
 import { pick, omit, defaults, flatten } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
-import Domain from "../../helpers/domain";
-// import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, defaultStyles) { // eslint-disable-line max-statements

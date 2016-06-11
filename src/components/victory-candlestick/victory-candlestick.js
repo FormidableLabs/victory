@@ -1,8 +1,6 @@
 import React, { PropTypes } from "react";
 import { defaults, isFunction, partialRight } from "lodash";
 import Candle from "./candle";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
   VictoryContainer
