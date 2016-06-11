@@ -62,8 +62,6 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    console.log(domain.x);
-    console.log(domain.y);
     return {data, scale, style};
   },
 
@@ -95,22 +93,6 @@ export default {
     }
     return [min, max];
   },
-
-  // getDomainY(props) {
-  //   const dataset = this.getData(props);
-  //   const allData = flatten(dataset).map((datum) => {
-  //     return datum.y;
-  //   });
-  //   const flattened = flatten(allData);
-  //   const min = Math.min(...flattened);
-  //   const max = Math.max(...flattened);
-  //   if (min === max) {
-  //     const adjustedMax = max === 0 ? 1 : max;
-  //     return [0, adjustedMax];
-  //   }
-  //   return [min, max];
-
-  // },
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
