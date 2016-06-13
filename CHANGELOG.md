@@ -4,6 +4,10 @@
 
 - Fixes bugs related to horizontal bar charts
 - Fixes bugs related to label transfroms
+- Increases default font sizes for readability
+- Adds basic aria roles
+- Adds support for custom container elements
+- Adds vectorEffect non-scaling-stroke to support responsive charts
 
 ## 9.0.0 (2016-06-01) 
 
