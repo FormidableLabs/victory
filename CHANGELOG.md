@@ -1,5 +1,11 @@
 VictoryCore Changelog
 =====================
+## 4.0.0 (2016-06-12)
+
+- Removes logic related to inverted chart types (i.e. horizontal bars) from the `getRange` method. This is a breaking change for horizontal bars
+
+- Fixes a bug related to VictoryLabel transforms. Transforms provided via styles will now be applied instead of only transforms provided via the `transform` prop
+
 ## 3.2.0 (2016-06-09)
 
 - Adds VictoryContainer wrapper for all Victory components via the containerComponent prop. This is added by default
