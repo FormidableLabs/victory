@@ -172,6 +172,135 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
+          <VictoryChart style={chartStyle}>
+            <VictoryBar
+              horizontal
+              style={{data: {fill: "tomato"}}}
+              data={[
+                {x: 1, y: 1},
+                {x: 2, y: 2},
+                {x: 3, y: 7}
+              ]}
+            />
+         </VictoryChart>
+
+         <VictoryChart style={chartStyle}>
+            <VictoryGroup
+              labels={["a", "b", "c"]}
+              horizontal
+              offset={20}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  {x: 1, y: 1},
+                  {x: 2, y: 2},
+                  {x: 3, y: 5}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 2},
+                  {x: 2, y: 1},
+                  {x: 3, y: 7}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 3},
+                  {x: 2, y: 4},
+                  {x: 3, y: 9}
+                ]}
+              />
+            </VictoryGroup>
+         </VictoryChart>
+
+         <VictoryChart style={chartStyle}>
+            <VictoryGroup
+              offset={20}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  {x: 1, y: 1},
+                  {x: 2, y: 2},
+                  {x: 3, y: 5}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 2},
+                  {x: 2, y: 1},
+                  {x: 3, y: 7}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 3},
+                  {x: 2, y: 4},
+                  {x: 3, y: 9}
+                ]}
+              />
+            </VictoryGroup>
+         </VictoryChart>
+
+
+         <VictoryChart style={chartStyle}>
+            <VictoryStack
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  {x: 1, y: 1},
+                  {x: 2, y: 2},
+                  {x: 3, y: 5}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 2},
+                  {x: 2, y: 1},
+                  {x: 3, y: 7}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 3},
+                  {x: 2, y: 4},
+                  {x: 3, y: 9}
+                ]}
+              />
+            </VictoryStack>
+         </VictoryChart>
+         <VictoryChart style={chartStyle}>
+            <VictoryStack horizontal
+              labels={["a", "b", "c"]}
+              colorScale={"qualitative"}
+            >
+              <VictoryBar
+                data={[
+                  {x: 1, y: 1},
+                  {x: 2, y: 2},
+                  {x: 3, y: 5}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 2},
+                  {x: 2, y: 1},
+                  {x: 3, y: 7}
+                ]}
+              />
+              <VictoryBar
+                data={[
+                  {x: 1, y: 3},
+                  {x: 2, y: 4},
+                  {x: 3, y: 9}
+                ]}
+              />
+            </VictoryStack>
+         </VictoryChart>
+
           <VictoryChart
             style={chartStyle}
             animate={{ duration: 1500 }}

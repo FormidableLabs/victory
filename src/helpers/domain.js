@@ -14,7 +14,7 @@ export default {
       return categoryDomain;
     }
     const dataset = Data.getData(props);
-    return this.getDomainFromData(dataset, axis);
+    return this.getDomainFromData(props, axis, dataset);
   },
 
   getDomainWithZero(props, axis) {
@@ -22,15 +22,17 @@ export default {
     if (propsDomain) {
       return propsDomain;
     }
+    const { horizontal } = props;
     const ensureZero = (domain) => {
-      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+      const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
+      return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
       return ensureZero(categoryDomain);
     }
     const dataset = Data.getData(props);
-    return ensureZero(this.getDomainFromData(dataset, axis));
+    return ensureZero(this.getDomainFromData(props, axis, dataset));
   },
 
   getDomainFromProps(props, axis) {
@@ -41,8 +43,10 @@ export default {
     }
   },
 
-  getDomainFromData(dataset, axis) {
-    const allData = flatten(dataset).map((datum) => datum[axis]);
+  getDomainFromData(props, axis, dataset) {
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = props.horizontal ? otherAxis : axis;
+    const allData = flatten(dataset).map((datum) => datum[currentAxis]);
     const min = Math.min(...allData);
     const max = Math.max(...allData);
     // TODO: is this the correct behavior, or should we just error. How do we
@@ -87,21 +91,22 @@ export default {
   },
 
   getDomainFromGroupedData(props, axis, datasets) {
-    if (axis === "x" && props.categories) {
+    const { horizontal } = props;
+    const dependent = (axis === "x" && !horizontal) || (axis === "y" && horizontal);
+    if (dependent && props.categories) {
       return this.getDomainFromCategories(props, axis);
     }
-    const globalDomain = this.getDomainFromData(datasets, axis);
+    const globalDomain = this.getDomainFromData(props, axis, datasets);
 
     // find the cumulative max for stacked chart types
-    const cumulativeData = axis === "y" ?
-      this.getCumulativeData(datasets, axis) : [];
+    const cumulativeData = !dependent ?
+      this.getCumulativeData(props, axis, datasets) : [];
 
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
         return val > 0 ? memo + val : memo;
       }, 0);
     });
-
     const cumulativeMinArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
         return val < 0 ? memo + val : memo;
@@ -121,15 +126,17 @@ export default {
     return [domainMin, domainMax];
   },
 
-  getCumulativeData(datasets, axis) {
+  getCumulativeData(props, axis, datasets) {
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = props.horizontal ? otherAxis : axis;
     const categories = [];
     const axisValues = [];
     datasets.forEach((dataset) => {
       dataset.forEach((data) => {
         if (data.category !== undefined && !includes(categories, data.category)) {
           categories.push(data.category);
-        } else if (!includes(axisValues, data[axis])) {
-          axisValues.push(data[axis]);
+        } else if (!includes(axisValues, data[currentAxis])) {
+          axisValues.push(data[currentAxis]);
         }
       });
     });
@@ -144,7 +151,7 @@ export default {
 
     const _dataByIndex = () => {
       return axisValues.map((value, index) => {
-        return datasets.map((data) => data[index] && data[index][axis]);
+        return datasets.map((data) => data[index] && data[index][currentAxis]);
       });
     };
 

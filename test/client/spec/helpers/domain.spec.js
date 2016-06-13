@@ -69,7 +69,7 @@ describe("helpers/domain", () => {
       const resultDomain = Domain.getDomain(props, "x");
       const dataset = Data.getData(props);
       expect(Domain.getDomainFromProps).calledWith(props, "x").and.returned(undefined);
-      expect(Domain.getDomainFromData).calledWith(dataset, "x").and.returned([1, 3]);
+      expect(Domain.getDomainFromData).calledWith(props, "x", dataset).and.returned([1, 3]);
       expect(resultDomain).to.eql([1, 3]);
     });
   });
@@ -101,7 +101,7 @@ describe("helpers/domain", () => {
   describe("getDomainFromData", () => {
     it("returns a domain from a dataset", () => {
       const dataset = [{x: 1, y: 3}, {x: 3, y: 5}];
-      const resultDomain = Domain.getDomainFromData(dataset, "x");
+      const resultDomain = Domain.getDomainFromData({}, "x", dataset);
       expect(resultDomain).to.eql([1, 3]);
     });
   });

@@ -18,7 +18,7 @@ export default {
       return Domain.padDomain(propsDomain, props, axis);
     }
     childComponents = childComponents || React.Children.toArray(props.children);
-    const domain = this.getDomainFromChildren(childComponents, axis);
+    const domain = this.getDomainFromChildren(props, axis, childComponents);
     return Domain.padDomain(domain, props, axis);
   },
 
@@ -75,11 +75,16 @@ export default {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
-  getDomainFromChildren(childComponents, axis) {
+  getDomainFromChildren(props, axis, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
+    const horizontalChildren = childComponents.some((child) => child.props.horizontal);
+    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = horizontal ? otherAxis : axis;
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
-          const childDomain = child.props && child.type.getDomain(child.props, axis);
+          const childDomain = child.props && child.type.getDomain(child.props, currentAxis);
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
           return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
@@ -87,7 +92,6 @@ export default {
         return memo;
       }, []);
     };
-
 
     const childDomains = getChildDomains(childComponents);
     return childDomains.length === 0 ?
@@ -120,8 +124,10 @@ export default {
     if (propsDomain) {
       return Domain.padDomain(propsDomain, props, axis);
     }
+    const { horizontal } = props;
     const ensureZero = (domain) => {
-      return axis === "y" ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+      const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
+      return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
     };
     const datasets = this.getDataFromChildren(props);
     const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));

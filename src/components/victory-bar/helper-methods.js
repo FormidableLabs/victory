@@ -6,6 +6,7 @@ import Scale from "../../helpers/scale";
 
 export default {
   getScale(props) {
+    const { horizontal } = props;
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -14,9 +15,11 @@ export default {
       x: Domain.getDomainWithZero(props, "x"),
       y: Domain.getDomainWithZero(props, "y")
     };
+    const xScale = Scale.getBaseScale(props, "x").domain(domain.x).range(range.x);
+    const yScale = Scale.getBaseScale(props, "y").domain(domain.y).range(range.y);
     return {
-      x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-      y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
+      x: horizontal ? yScale : xScale,
+      y: horizontal ? xScale : yScale
     };
   },
 

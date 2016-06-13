@@ -39,15 +39,14 @@ export default {
       props.categories[axis] : props.categories;
   },
 
-  // for components that take single datasets
   getData(props) {
     if (props.data) {
       return this.formatData(props.data, props);
+    } else {
+      const generatedData = (props.x || props.y) && this.generateData(props);
+      return this.formatData(generatedData, props);
     }
-    const data = (props.x || props.y) && this.generateData(props);
-    return this.formatData(data, props);
   },
-
 
   generateData(props) {
     // create an array of values evenly spaced across the x domain that include domain min/max

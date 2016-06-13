@@ -294,9 +294,11 @@ export default class VictoryStack extends React.Component {
       x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
       y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
     };
+    const xScale = baseScale.x.domain(domain.x).range(range.x);
+    const yScale = baseScale.y.domain(domain.y).range(range.y);
     const scale = {
-      x: baseScale.x.domain(domain.x).range(range.x),
-      y: baseScale.y.domain(domain.y).range(range.y)
+      x: horizontal ? yScale : xScale,
+      y: horizontal ? xScale : yScale
     };
     const categories = {
       x: Wrapper.getCategories(props, "x"),
