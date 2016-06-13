@@ -188,7 +188,7 @@ class App extends React.Component {
             <VictoryGroup
               labels={["a", "b", "c"]}
               horizontal
-              offset={5}
+              offset={20}
               colorScale={"qualitative"}
             >
               <VictoryBar
@@ -214,7 +214,6 @@ class App extends React.Component {
               />
             </VictoryGroup>
          </VictoryChart>
-
 
          <VictoryChart style={chartStyle}>
             <VictoryGroup

@@ -192,8 +192,9 @@ export default class VictoryGroup extends React.Component {
     labelComponent: PropTypes.element,
     /**
      * The offset prop derermines the number of pixels each element in a group should
-     * be offset from the others. In the case of groups of bars, this number should
-     * be equal to the width of the bar plus the desired spacing between bars.
+     * be offset from its original position on the independent axis. In the case of
+     * groups of bars, this number should be equal to the width of the bar plus
+     * the desired spacing between bars.
      */
     offset: PropTypes.number,
     /**
@@ -310,20 +311,25 @@ export default class VictoryGroup extends React.Component {
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
-  pixelsToValue(pixels, axis, calculatedProps) {
-    if (pixels === 0) {
+  pixelsToValue(props, axis, calculatedProps) {
+    if (props.offset === 0) {
       return 0;
     }
-    const domain = calculatedProps.domain[axis];
-    const range = calculatedProps.range[axis];
+    const childComponents = React.Children.toArray(props.children);
+    const horizontalChildren = childComponents.some((child) => child.props.horizontal);
+    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = horizontal ? otherAxis : axis;
+    const domain = calculatedProps.domain[currentAxis];
+    const range = calculatedProps.range[currentAxis];
     const domainExtent = Math.max(...domain) - Math.min(...domain);
     const rangeExtent = Math.max(...range) - Math.min(...range);
-    return domainExtent / rangeExtent * pixels;
+    return domainExtent / rangeExtent * props.offset;
   }
 
   getXO(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
     const center = (datasets.length - 1) / 2;
-    const totalWidth = this.pixelsToValue(props.offset, "x", calculatedProps);
+    const totalWidth = this.pixelsToValue(props, "x", calculatedProps);
     return (index - center) * totalWidth;
   }
 
