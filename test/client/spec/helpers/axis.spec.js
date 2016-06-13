@@ -27,7 +27,6 @@ describe("helpers/axis", () => {
     const dependentAxis = getVictoryAxis({dependentAxis: true});
     const independentAxis = getVictoryAxis({dependentAxis: false});
     const bar = getVictoryBar({});
-    const horizontalBar = getVictoryBar({horizontal: true});
 
     let sandbox;
     beforeEach(() => {
@@ -42,21 +41,11 @@ describe("helpers/axis", () => {
     it("returns the independent axis when called with 'x'", () => {
       const childComponents = [dependentAxis, independentAxis, bar];
       const componentResult = Axis.getAxisComponent(childComponents, "x");
-      expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props, false)
+      expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props)
         .and.returned("y");
-      expect(independentAxis.type.getAxis).calledWith(independentAxis.props, false)
+      expect(independentAxis.type.getAxis).calledWith(independentAxis.props)
         .and.returned("x");
       expect(componentResult).to.eql(independentAxis);
-    });
-
-    it("returns the dependent axis when called with 'x' and flipped data", () => {
-      const childComponents = [dependentAxis, independentAxis, horizontalBar];
-      const componentResult = Axis.getAxisComponent(childComponents, "x");
-      expect(dependentAxis.type.getAxis).calledWith(dependentAxis.props, true)
-        .and.returned("x");
-      expect(independentAxis.type.getAxis).calledWith(independentAxis.props, true)
-        .and.returned("y");
-      expect(componentResult).to.eql(dependentAxis);
     });
   });
 });

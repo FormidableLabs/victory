@@ -61,7 +61,7 @@ describe("helpers/wrapper", () => {
     it("calculates a domain from child components", () => {
       const props = {children: childComponents};
       const domainResultX = Wrapper.getDomain(props, "x", childComponents);
-      expect(Wrapper.getDomainFromChildren).calledWith(childComponents, "x");
+      expect(Wrapper.getDomainFromChildren).calledWith(props, "x", childComponents);
       expect(victoryLine.type.getDomain).calledWith(victoryLine.props);
       expect(Domain.padDomain).calledWith(victoryLine.props.domain, props, "x")
         .and.returned(victoryLine.props.domain);
