@@ -314,7 +314,9 @@ export default class VictoryLine extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -334,7 +336,8 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers), defaultStyles);
+  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
+    LineHelpers.getStyleObject.bind(LineHelpers));
 
   constructor() {
     super();
@@ -345,11 +348,13 @@ export default class VictoryLine extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = LineHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = LineHelpers.getBaseProps(this.props,
+      LineHelpers.getStyleObject(this.props, defaultStyles));
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = LineHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = LineHelpers.getBaseProps(newProps,
+      LineHelpers.getStyleObject(this.props, defaultStyles));
   }
 
   renderData(props) {
@@ -416,7 +421,7 @@ export default class VictoryLine extends React.Component {
 
     const style = Helpers.getStyles(
       this.props.style,
-      defaultStyles,
+      LineHelpers.getStyleObject(this.props, defaultStyles),
       "auto",
       "100%"
     );

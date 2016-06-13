@@ -50,6 +50,16 @@ export default {
     return scale;
   },
 
+  getStyleObject(props, defaultStyles) {
+    let styleObject;
+    if (props.theme && props.theme.axis) {
+      styleObject = props.theme.axis;
+    } else {
+      styleObject = defaultStyles;
+    }
+    return styleObject;
+  },
+
   getStyles(props, defaultStyles) {
     const style = props.style || {};
     const parentStyleProps = { height: "auto", width: "100%" };

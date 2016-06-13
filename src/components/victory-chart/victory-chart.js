@@ -195,7 +195,9 @@ export default class VictoryChart extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -307,6 +309,7 @@ export default class VictoryChart extends React.Component {
         ref: index,
         key: index,
         standalone: false,
+        theme: props.theme,
         style
       }, childProps);
       return React.cloneElement(child, newProps);

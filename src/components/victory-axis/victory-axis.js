@@ -311,7 +311,9 @@ export default class VictoryAxis extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -332,8 +334,10 @@ export default class VictoryAxis extends React.Component {
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
   static getAxis = Axis.getAxis.bind(Axis);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), defaultStyles);
-  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), defaultStyles);
+  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers),
+    AxisHelpers.getStyleObject.bind(AxisHelpers));
+  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers),
+    AxisHelpers.getStyleObject.bind(AxisHelpers));
 
   constructor() {
     super();
@@ -353,7 +357,8 @@ export default class VictoryAxis extends React.Component {
 
   setupEvents(props) {
     const {sharedEvents} = props;
-    this.baseProps = AxisHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = AxisHelpers.getBaseProps(props,
+        AxisHelpers.getStyleObject(this.props, defaultStyles));
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -450,8 +455,10 @@ export default class VictoryAxis extends React.Component {
         </VictoryTransition>
       );
     }
-    const style = AxisHelpers.getStyles(this.props, defaultStyles);
-    const calculatedValues = AxisHelpers.getCalculatedValues(this.props, defaultStyles);
+    const style = AxisHelpers.getStyles(this.props,
+        AxisHelpers.getStyleObject(this.props, defaultStyles));
+    const calculatedValues = AxisHelpers.getCalculatedValues(this.props,
+        AxisHelpers.getStyleObject(this.props, defaultStyles));
     const transform = AxisHelpers.getTransform(this.props, calculatedValues);
     const group = (
       <g style={style.parent} transform={transform}>
