@@ -1,5 +1,10 @@
 # VictoryLine Changelog
 
+## 9.1.0 (2016-06-13)
+
+- Fixes bugs related to horizontal bar charts
+- Fixes bugs related to label transfroms
+
 ## 9.0.0 (2016-06-01) 
 
 - Upgrades to React 15
