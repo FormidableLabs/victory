@@ -377,8 +377,8 @@ export default class VictoryScatter extends React.Component {
         {key: `scatter-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
-        this.baseProps[key].data,
-        dataComponent.props
+        dataComponent.props,
+        this.baseProps[key].data
       );
       const scatterComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
@@ -387,8 +387,8 @@ export default class VictoryScatter extends React.Component {
         {key: `scatter-label-${key}`},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
-        this.baseProps[key].labels,
-        labelComponent.props
+        labelComponent.props,
+        this.baseProps[key].labels
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);

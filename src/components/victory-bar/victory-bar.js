@@ -353,8 +353,8 @@ export default class VictoryBar extends React.Component {
         {key: `bar-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
-        this.baseProps[key].data,
-        dataComponent.props
+        dataComponent.props,
+        this.baseProps[key].data
       );
       const barComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
@@ -363,8 +363,8 @@ export default class VictoryBar extends React.Component {
         {key: `bar-label-${key}`},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
-        this.baseProps[key].labels,
-        labelComponent.props
+        labelComponent.props,
+        this.baseProps[key].labels
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
