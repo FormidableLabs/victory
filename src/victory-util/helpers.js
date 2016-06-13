@@ -41,13 +41,10 @@ export default {
 
   getRange(props, axis) {
     // determine how to lay the axis and what direction positive and negative are
-    const {horizontal} = props;
-    const isVertical = (horizontal && axis === "x") || (!horizontal && axis !== "x");
-    const isDependent = (horizontal && !isVertical) || (!horizontal && isVertical);
+    const isVertical = axis !== "x";
     const padding = this.getPadding(props);
     if (isVertical) {
-      const bottomToTop = [props.height - padding.bottom, padding.top];
-      return isDependent ? bottomToTop : bottomToTop.reverse();
+      return [props.height - padding.bottom, padding.top];
     }
     return [padding.left, props.width - padding.right];
   },
