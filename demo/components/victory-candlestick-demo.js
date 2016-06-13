@@ -57,7 +57,7 @@ export default class App extends React.Component {
           // candleColors={{positive: "purple", negative: "blue"}}
           data={[
             {x: 50, open: 9, close: 30, high: 56, low: 7},
-            {x: 100, open: 80, close: 40, high: 100, low: 10},
+            {x: 100, open: 80, close: 40, high: 120, low: 10},
             {x: 150, open: 50, close: 80, high: 90, low: 20},
             {x: 200, open: 70, close: 22, high: 70, low: 5},
             {x: 250, open: 20, close: 35, high: 50, low: 10},
@@ -73,7 +73,7 @@ export default class App extends React.Component {
             candleColors={{positive: "purple", negative: "blue"}}
             data={[
               {x: 50, open: 9, close: 30, high: 56, low: 7},
-              {x: 100, open: 80, close: 40, high: 100, low: 10},
+              {x: 100, open: 80, close: 40, high: 120, low: 10},
               {x: 150, open: 50, close: 80, high: 90, low: 20},
               {x: 200, open: 70, close: 22, high: 70, low: 5},
               {x: 250, open: 20, close: 35, high: 50, low: 10},
