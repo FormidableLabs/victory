@@ -298,14 +298,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        newChildren
 	      );
 	
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        {
-	          style: style.parent,
-	          viewBox: "0 0 " + props.width + " " + props.height
-	        },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -454,13 +450,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * The width props specifies the width of the svg viewBox of the chart container
 	   * This value should be given as a number of pixels
 	   */
-	  width: _victoryCore.PropTypes.nonNegative
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryChart: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryChart will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryChart.defaultProps = {
 	  height: 300,
 	  width: 450,
 	  padding: 50,
-	  standalone: true
+	  standalone: true,
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	exports.default = VictoryChart;
 
@@ -1367,7 +1380,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.VictorySharedEvents = exports.VictoryTransition = exports.VictoryLabel = exports.VictoryAnimation = exports.Transitions = exports.Events = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
+	exports.VictoryContainer = exports.VictorySharedEvents = exports.VictoryTransition = exports.VictoryLabel = exports.VictoryAnimation = exports.Transitions = exports.Events = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
 	var _collection = __webpack_require__(30);
 	
@@ -1441,7 +1454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _victoryTransition = __webpack_require__(153);
+	var _victoryTransition = __webpack_require__(152);
 	
 	Object.defineProperty(exports, "VictoryTransition", {
 	  enumerable: true,
@@ -1450,12 +1463,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	});
 	
-	var _victorySharedEvents = __webpack_require__(159);
+	var _victorySharedEvents = __webpack_require__(158);
 	
 	Object.defineProperty(exports, "VictorySharedEvents", {
 	  enumerable: true,
 	  get: function get() {
 	    return _interopRequireDefault(_victorySharedEvents).default;
+	  }
+	});
+	
+	var _victoryContainer = __webpack_require__(160);
+	
+	Object.defineProperty(exports, "VictoryContainer", {
+	  enumerable: true,
+	  get: function get() {
+	    return _interopRequireDefault(_victoryContainer).default;
 	  }
 	});
 	
@@ -1588,14 +1610,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  },
 	  getRange: function getRange(props, axis) {
 	    // determine how to lay the axis and what direction positive and negative are
-	    var horizontal = props.horizontal;
-	
-	    var isVertical = horizontal && axis === "x" || !horizontal && axis !== "x";
-	    var isDependent = horizontal && !isVertical || !horizontal && isVertical;
+	    var isVertical = axis !== "x";
 	    var padding = this.getPadding(props);
 	    if (isVertical) {
-	      var bottomToTop = [props.height - padding.bottom, padding.top];
-	      return isDependent ? bottomToTop : bottomToTop.reverse();
+	      return [props.height - padding.bottom, padding.top];
 	    }
 	    return [padding.left, props.width - padding.right];
 	  },
@@ -8043,12 +8061,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "getTransform",
 	    value: function getTransform(props) {
-	      var transform = props.transform;
+	      var style = this.getStyles(props);
 	      var datum = props.datum;
 	      var x = props.x;
 	      var y = props.y;
-	      var angle = props.angle;
 	
+	      var angle = props.angle || style.angle;
+	      var transform = props.transfrom || style.transform;
 	      var transformPart = transform && _index.Helpers.evaluateProp(transform, datum);
 	      var rotatePart = angle && { rotate: [angle, x, y] };
 	      return (transformPart || angle) && _index.Style.toTransformString(transformPart, rotatePart);
@@ -8261,10 +8280,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _defaults3 = _interopRequireDefault(_defaults2);
 	
-	var _assign2 = __webpack_require__(152);
-	
-	var _assign3 = _interopRequireDefault(_assign2);
-	
 	exports.getInitialTransitionState = getInitialTransitionState;
 	exports.getTransitionPropsFactory = getTransitionPropsFactory;
 	
@@ -8395,7 +8410,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  var after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : _identity3.default;
 	  return {
 	    data: data.map(function (datum) {
-	      return (0, _assign3.default)({}, datum, after(datum));
+	      return Object.assign({}, datum, after(datum));
 	    })
 	  };
 	}
@@ -8405,7 +8420,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // Whether or not _this_ child has exiting nodes, we want the exit-
 	  // transition for all children to have the same duration, delay, etc.
 	  var onExit = animate && animate.onExit;
-	  animate = (0, _assign3.default)({}, animate, onExit);
+	  animate = Object.assign({}, animate, onExit);
 	
 	  if (exitingNodes) {
 	    (function () {
@@ -8416,7 +8431,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // If nodes need to exit, transform them with the provided onExit.before function.
 	      data = data.map(function (datum, idx) {
 	        var key = (datum.key || idx).toString();
-	        return exitingNodes[key] ? (0, _assign3.default)({}, datum, before(datum)) : datum;
+	        return exitingNodes[key] ? Object.assign({}, datum, before(datum)) : datum;
 	      });
 	    })();
 	  }
@@ -8429,14 +8444,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    (function () {
 	      // Perform a normal animation here, except - when it finishes - trigger
 	      // the transition for entering nodes.
-	      animate = (0, _assign3.default)({}, animate, { onEnd: cb });
+	      animate = Object.assign({}, animate, { onEnd: cb });
 	      var before = animate.onEnter && animate.onEnter.before ? animate.onEnter.before : _identity3.default;
 	      // We want the entering nodes to be included in the transition target
 	      // domain.  However, we may not want these nodes to be displayed initially,
 	      // so perform the `onEnter.before` transformation on each node.
 	      data = data.map(function (datum, idx) {
 	        var key = (datum.key || idx).toString();
-	        return enteringNodes[key] ? (0, _assign3.default)({}, datum, before(datum)) : datum;
+	        return enteringNodes[key] ? Object.assign({}, datum, before(datum)) : datum;
 	      });
 	    })();
 	  }
@@ -8448,7 +8463,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // Whether or not _this_ child has entering nodes, we want the entering-
 	  // transition for all children to have the same duration, delay, etc.
 	  var onEnter = animate && animate.onEnter;
-	  animate = (0, _assign3.default)({}, animate, onEnter);
+	  animate = Object.assign({}, animate, onEnter);
 	
 	  if (enteringNodes) {
 	    (function () {
@@ -8458,7 +8473,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : _identity3.default;
 	      data = data.map(function (datum, idx) {
 	        var key = getDatumKey(datum, idx);
-	        return enteringNodes[key] ? (0, _assign3.default)({}, datum, after(datum)) : datum;
+	        return enteringNodes[key] ? Object.assign({}, datum, after(datum)) : datum;
 	      });
 	    })();
 	  }
@@ -8526,13 +8541,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var exit = transitionDurations.exit || getChildTransitionDuration(child, "onExit");
 	      // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
 	      var animation = exitingNodes ? { duration: exit } : { delay: exit };
-	      return onExit(exitingNodes, data, (0, _assign3.default)({}, animate, animation));
+	      return onExit(exitingNodes, data, Object.assign({}, animate, animation));
 	    } else if (nodesWillEnter) {
 	      var enteringNodes = childTransitions && childTransitions.entering;
 	      var enter = transitionDurations.enter || getChildTransitionDuration(child, "onEnter");
 	      var move = transitionDurations.move || child.props.animate && child.props.animate.duration;
 	      var _animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
-	      return onEnter(enteringNodes, data, (0, _assign3.default)({}, animate, _animation));
+	      return onEnter(enteringNodes, data, Object.assign({}, animate, _animation));
 	    } else if (!state && animate && animate.onExit) {
 	      // This is the initial render, and nodes may enter when props change. Because
 	      // animation interpolation is determined by old- and next- props, data may need
@@ -8580,83 +8595,13 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignValue = __webpack_require__(90),
-	    copyObject = __webpack_require__(89),
-	    createAssigner = __webpack_require__(99),
-	    isArrayLike = __webpack_require__(78),
-	    isPrototype = __webpack_require__(98),
-	    keys = __webpack_require__(125);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/** Built-in value references. */
-	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
-	
-	/** Detect if properties shadowing those on `Object.prototype` are non-enumerable. */
-	var nonEnumShadows = !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf');
-	
-	/**
-	 * Assigns own enumerable string keyed properties of source objects to the
-	 * destination object. Source objects are applied from left to right.
-	 * Subsequent sources overwrite property assignments of previous sources.
-	 *
-	 * **Note:** This method mutates `object` and is loosely based on
-	 * [`Object.assign`](https://mdn.io/Object/assign).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.10.0
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} [sources] The source objects.
-	 * @returns {Object} Returns `object`.
-	 * @see _.assignIn
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.c = 3;
-	 * }
-	 *
-	 * function Bar() {
-	 *   this.e = 5;
-	 * }
-	 *
-	 * Foo.prototype.d = 4;
-	 * Bar.prototype.f = 6;
-	 *
-	 * _.assign({ 'a': 1 }, new Foo, new Bar);
-	 * // => { 'a': 1, 'c': 3, 'e': 5 }
-	 */
-	var assign = createAssigner(function(object, source) {
-	  if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
-	    copyObject(source, keys(source), object);
-	    return;
-	  }
-	  for (var key in source) {
-	    if (hasOwnProperty.call(source, key)) {
-	      assignValue(object, key, source[key]);
-	    }
-	  }
-	});
-	
-	module.exports = assign;
-
-
-/***/ },
-/* 153 */
-/***/ function(module, exports, __webpack_require__) {
-
 	"use strict";
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	var _pick2 = __webpack_require__(154);
+	var _pick2 = __webpack_require__(153);
 	
 	var _pick3 = _interopRequireDefault(_pick2);
 	
@@ -8809,14 +8754,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = VictoryTransition;
 
 /***/ },
-/* 154 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayMap = __webpack_require__(127),
-	    baseFlatten = __webpack_require__(155),
-	    basePick = __webpack_require__(156),
+	    baseFlatten = __webpack_require__(154),
+	    basePick = __webpack_require__(155),
 	    rest = __webpack_require__(60),
-	    toKey = __webpack_require__(158);
+	    toKey = __webpack_require__(157);
 	
 	/**
 	 * Creates an object composed of the picked `object` properties.
@@ -8843,7 +8788,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 155 */
+/* 154 */
 /***/ function(module, exports) {
 
 	/**
@@ -8870,10 +8815,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 156 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayReduce = __webpack_require__(157);
+	var arrayReduce = __webpack_require__(156);
 	
 	/**
 	 * The base implementation of `_.pick` without support for individual
@@ -8898,7 +8843,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 157 */
+/* 156 */
 /***/ function(module, exports) {
 
 	/**
@@ -8930,7 +8875,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 158 */
+/* 157 */
 /***/ function(module, exports) {
 
 	/**
@@ -8957,7 +8902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 159 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -8966,7 +8911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  value: true
 	});
 	
-	var _partialRight2 = __webpack_require__(160);
+	var _partialRight2 = __webpack_require__(159);
 	
 	var _partialRight3 = _interopRequireDefault(_partialRight2);
 	
@@ -9160,7 +9105,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	exports.default = VictorySharedEvents;
 
 /***/ },
-/* 160 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var createWrapper = __webpack_require__(34),
@@ -9213,6 +9158,120 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	module.exports = partialRight;
 
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(28);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var VictoryContainer = function (_React$Component) {
+	  _inherits(VictoryContainer, _React$Component);
+	
+	  function VictoryContainer() {
+	    _classCallCheck(this, VictoryContainer);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryContainer).apply(this, arguments));
+	  }
+	
+	  _createClass(VictoryContainer, [{
+	    key: "render",
+	    value: function render() {
+	      return _react2.default.createElement(
+	        "svg",
+	        {
+	          style: this.props.style,
+	          viewBox: "0 0 " + this.props.width + " " + this.props.height,
+	          role: "img",
+	          "aria-labelledby": "title desc"
+	        },
+	        _react2.default.createElement(
+	          "title",
+	          { id: "title" },
+	          this.props.title
+	        ),
+	        _react2.default.createElement(
+	          "desc",
+	          { id: "desc" },
+	          this.props.desc
+	        ),
+	        this.props.children
+	      );
+	    }
+	  }]);
+	
+	  return VictoryContainer;
+	}(_react2.default.Component);
+	
+	VictoryContainer.propTypes = {
+	  /**
+	   * The style prop specifies styles for your VictoryContainer. Any valid inline style properties
+	   * will be applied. Height and width should be specified via the height
+	   * and width props, as they are used to calculate the alignment of
+	   * components within the container. Styles from the child component will
+	   * also be passed, if any exist.
+	   * @examples {border: 1px solid red}
+	   */
+	  style: _react.PropTypes.object,
+	  /**
+	   * The height props specifies the height the svg viewBox of the container.
+	   * This value should be given as a number of pixels. If no height prop
+	   * is given, the height prop from the child component passed will be used.
+	   */
+	  height: _react.PropTypes.number,
+	  /**
+	   * The width props specifies the width of the svg viewBox of the container
+	   * This value should be given as a number of pixels. If no width prop
+	   * is given, the width prop from the child component passed will be used.
+	   */
+	  width: _react.PropTypes.number,
+	  /**
+	   * VictoryContainer is a wrapper component that controls some props and behaviors of its
+	   * children. VictoryContainer works with all Victory components.
+	   * If no children are provided, VictoryContainer will render an empty SVG.
+	   * Props from children are used to determine default style, height, and width.
+	   */
+	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node), _react2.default.PropTypes.node]),
+	  /**
+	   * The title prop specifies the title to be applied to the SVG to assist
+	   * accessibility for screen readers. The more descriptive this title is, the more
+	   * useful it will be. If no title prop is passed, it will default to Victory Chart.
+	   * @example "Popularity of Dog Breeds by Percentage"
+	   */
+	  title: _react.PropTypes.string,
+	  /**
+	   * The desc prop specifies the description of the chart/SVG to assist with
+	   * accessibility for screen readers. The more info about the chart provided in
+	   * the description, the more usable it will be for people using screen readers.
+	   * This prop defaults to an empty string.
+	   * @example "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
+	   * not represented above 5% each."
+	   */
+	  desc: _react.PropTypes.string
+	};
+	VictoryContainer.defaultProps = {
+	  title: "Victory Chart",
+	  desc: ""
+	};
+	exports.default = VictoryContainer;
 
 /***/ },
 /* 161 */
@@ -9286,7 +9345,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  axisLabel: {
 	    stroke: "transparent",
 	    fill: "#756f6a",
-	    fontSize: 16,
+	    fontSize: 17,
 	    fontFamily: "Helvetica"
 	  },
 	  grid: {
@@ -9306,7 +9365,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    stroke: "transparent",
 	    fill: "#756f6a",
 	    fontFamily: "Helvetica",
-	    fontSize: 10,
+	    fontSize: 12,
 	    padding: 5
 	  }
 	};
@@ -9417,14 +9476,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        this.renderLine(this.props),
 	        this.renderLabel(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        {
-	          style: style.parent,
-	          viewBox: "0 0 " + this.props.width + " " + this.props.height
-	        },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -9667,7 +9722,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * The width props specifies the width of the svg viewBox of the chart container
 	   * This value should be given as a number of pixels
 	   */
-	  width: _victoryCore.PropTypes.nonNegative
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryAxis: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryAxis will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryAxis.defaultProps = {
 	  axisComponent: _react2.default.createElement(_axisLine2.default, null),
@@ -9680,7 +9751,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  scale: "linear",
 	  standalone: true,
 	  tickCount: 5,
-	  width: 450
+	  width: 450,
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryAxis.getDomain = _helperMethods2.default.getDomain.bind(_helperMethods2.default);
 	VictoryAxis.getAxis = _axis2.default.getAxis.bind(_axis2.default);
@@ -11550,7 +11622,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var events = _props.events;
 	
 	      return _react2.default.createElement("line", _extends({
-	        x1: x1, x2: x2, y1: y1, y2: y2, style: style
+	        x1: x1, x2: x2, y1: y1, y2: y2, style: style,
+	        vectorEffect: "non-scaling-stroke"
 	      }, events));
 	    }
 	  }]);
@@ -11619,7 +11692,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        y1: y1,
 	        x2: x2,
 	        y2: y2,
-	        style: style
+	        style: style,
+	        vectorEffect: "non-scaling-stroke"
 	      }));
 	    }
 	  }]);
@@ -11689,7 +11763,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        y1: y1,
 	        x2: x2,
 	        y2: y2,
-	        style: style
+	        style: style,
+	        vectorEffect: "non-scaling-stroke"
 	      }));
 	    }
 	  }]);
@@ -16924,15 +16999,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * @returns {String} the dimension appropriate for the axis given its props
 	   */
 	
-	  getAxis: function getAxis(props, flipped) {
+	  getAxis: function getAxis(props) {
 	    if (props.orientation) {
 	      var vertical = { top: "x", bottom: "x", left: "y", right: "y" };
 	      return vertical[props.orientation];
 	    }
-	    var axisType = props.dependentAxis ? "dependent" : "independent";
-	    var flippedAxis = { dependent: "x", independent: "y" };
-	    var normalAxis = { independent: "x", dependent: "y" };
-	    return flipped ? flippedAxis[axisType] : normalAxis[axisType];
+	    return props.dependentAxis ? "y" : "x";
 	  },
 	
 	
@@ -16944,10 +17016,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   */
 	  getAxisComponent: function getAxisComponent(childComponents, axis) {
 	    var matchesAxis = function matchesAxis(component) {
-	      var flipped = childComponents.some(function (child) {
-	        return child.props.horizontal;
-	      });
-	      var type = component.type.getAxis(component.props, flipped);
+	      var type = component.type.getAxis(component.props);
 	      return type === axis;
 	    };
 	    return this.findAxisComponents(childComponents, matchesAxis)[0];
@@ -17125,22 +17194,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return categoryDomain;
 	    }
 	    var dataset = _data2.default.getData(props);
-	    return this.getDomainFromData(dataset, axis);
+	    return this.getDomainFromData(props, axis, dataset);
 	  },
 	  getDomainWithZero: function getDomainWithZero(props, axis) {
 	    var propsDomain = this.getDomainFromProps(props, axis);
 	    if (propsDomain) {
 	      return propsDomain;
 	    }
+	    var horizontal = props.horizontal;
+	
 	    var ensureZero = function ensureZero(domain) {
-	      return axis === "y" ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
+	      var isDependent = axis === "y" && !horizontal || axis === "x" && horizontal;
+	      return isDependent ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
 	    };
 	    var categoryDomain = this.getDomainFromCategories(props, axis);
 	    if (categoryDomain) {
 	      return ensureZero(categoryDomain);
 	    }
 	    var dataset = _data2.default.getData(props);
-	    return ensureZero(this.getDomainFromData(dataset, axis));
+	    return ensureZero(this.getDomainFromData(props, axis, dataset));
 	  },
 	  getDomainFromProps: function getDomainFromProps(props, axis) {
 	    if (props.domain && props.domain[axis]) {
@@ -17149,9 +17221,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return props.domain;
 	    }
 	  },
-	  getDomainFromData: function getDomainFromData(dataset, axis) {
+	  getDomainFromData: function getDomainFromData(props, axis, dataset) {
+	    var otherAxis = axis === "x" ? "y" : "x";
+	    var currentAxis = props.horizontal ? otherAxis : axis;
 	    var allData = (0, _flatten3.default)(dataset).map(function (datum) {
-	      return datum[axis];
+	      return datum[currentAxis];
 	    });
 	    var min = Math.min.apply(Math, _toConsumableArray(allData));
 	    var max = Math.max.apply(Math, _toConsumableArray(allData));
@@ -17195,20 +17269,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	    return [Math.min.apply(Math, _toConsumableArray(categoryValues)), Math.max.apply(Math, _toConsumableArray(categoryValues))];
 	  },
 	  getDomainFromGroupedData: function getDomainFromGroupedData(props, axis, datasets) {
-	    if (axis === "x" && props.categories) {
+	    var horizontal = props.horizontal;
+	
+	    var dependent = axis === "x" && !horizontal || axis === "y" && horizontal;
+	    if (dependent && props.categories) {
 	      return this.getDomainFromCategories(props, axis);
 	    }
-	    var globalDomain = this.getDomainFromData(datasets, axis);
+	    var globalDomain = this.getDomainFromData(props, axis, datasets);
 	
 	    // find the cumulative max for stacked chart types
-	    var cumulativeData = axis === "y" ? this.getCumulativeData(datasets, axis) : [];
+	    var cumulativeData = !dependent ? this.getCumulativeData(props, axis, datasets) : [];
 	
 	    var cumulativeMaxArray = cumulativeData.map(function (dataset) {
 	      return dataset.reduce(function (memo, val) {
 	        return val > 0 ? memo + val : memo;
 	      }, 0);
 	    });
-	
 	    var cumulativeMinArray = cumulativeData.map(function (dataset) {
 	      return dataset.reduce(function (memo, val) {
 	        return val < 0 ? memo + val : memo;
@@ -17227,15 +17303,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return [domainMin, domainMax];
 	  },
-	  getCumulativeData: function getCumulativeData(datasets, axis) {
+	  getCumulativeData: function getCumulativeData(props, axis, datasets) {
+	    var otherAxis = axis === "x" ? "y" : "x";
+	    var currentAxis = props.horizontal ? otherAxis : axis;
 	    var categories = [];
 	    var axisValues = [];
 	    datasets.forEach(function (dataset) {
 	      dataset.forEach(function (data) {
 	        if (data.category !== undefined && !(0, _includes3.default)(categories, data.category)) {
 	          categories.push(data.category);
-	        } else if (!(0, _includes3.default)(axisValues, data[axis])) {
-	          axisValues.push(data[axis]);
+	        } else if (!(0, _includes3.default)(axisValues, data[currentAxis])) {
+	          axisValues.push(data[currentAxis]);
 	        }
 	      });
 	    });
@@ -17251,7 +17329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _dataByIndex = function _dataByIndex() {
 	      return axisValues.map(function (value, index) {
 	        return datasets.map(function (data) {
-	          return data[index] && data[index][axis];
+	          return data[index] && data[index][currentAxis];
 	        });
 	      });
 	    };
@@ -17354,15 +17432,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  getCategories: function getCategories(props, axis) {
 	    return props.categories && !Array.isArray(props.categories) ? props.categories[axis] : props.categories;
 	  },
-	
-	
-	  // for components that take single datasets
 	  getData: function getData(props) {
 	    if (props.data) {
 	      return this.formatData(props.data, props);
+	    } else {
+	      var generatedData = (props.x || props.y) && this.generateData(props);
+	      return this.formatData(generatedData, props);
 	    }
-	    var data = (props.x || props.y) && this.generateData(props);
-	    return this.formatData(data, props);
 	  },
 	  generateData: function generateData(props) {
 	    // create an array of values evenly spaced across the x domain that include domain min/max
@@ -18450,7 +18526,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return _domain2.default.padDomain(propsDomain, props, axis);
 	    }
 	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    var domain = this.getDomainFromChildren(childComponents, axis);
+	    var domain = this.getDomainFromChildren(props, axis, childComponents);
 	    return _domain2.default.padDomain(domain, props, axis);
 	  },
 	  setAnimationState: function setAnimationState(nextProps) {
@@ -18505,11 +18581,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    return (0, _defaults3.default)({ getTransitions: getTransitions, parentState: parentState }, props.animate, child.props.animate);
 	  },
-	  getDomainFromChildren: function getDomainFromChildren(childComponents, axis) {
+	  getDomainFromChildren: function getDomainFromChildren(props, axis, childComponents) {
+	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
+	    var horizontalChildren = childComponents.some(function (child) {
+	      return child.props.horizontal;
+	    });
+	    var horizontal = props && props.horizontal || horizontalChildren.length > 0;
+	    var otherAxis = axis === "x" ? "y" : "x";
+	    var currentAxis = horizontal ? otherAxis : axis;
 	    var getChildDomains = function getChildDomains(children) {
 	      return children.reduce(function (memo, child) {
 	        if (child.type && (0, _isFunction3.default)(child.type.getDomain)) {
-	          var childDomain = child.props && child.type.getDomain(child.props, axis);
+	          var childDomain = child.props && child.type.getDomain(child.props, currentAxis);
 	          return childDomain ? memo.concat(childDomain) : memo;
 	        } else if (child.props && child.props.children) {
 	          return memo.concat(getChildDomains(_react2.default.Children.toArray(child.props.children)));
@@ -18546,8 +18629,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (propsDomain) {
 	      return _domain2.default.padDomain(propsDomain, props, axis);
 	    }
+	    var horizontal = props.horizontal;
+	
 	    var ensureZero = function ensureZero(domain) {
-	      return axis === "y" ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
+	      var isDependent = axis === "y" && !horizontal || axis === "x" && horizontal;
+	      return isDependent ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
 	    };
 	    var datasets = this.getDataFromChildren(props);
 	    var dataDomain = ensureZero(_domain2.default.getDomainFromGroupedData(props, axis, datasets));
@@ -18713,7 +18799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  labels: {
 	    padding: 5,
 	    fontFamily: "Helvetica",
-	    fontSize: 10,
+	    fontSize: 13,
 	    strokeWidth: 0,
 	    stroke: "transparent",
 	    textAnchor: "start"
@@ -18802,17 +18888,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      var group = _react2.default.createElement(
 	        "g",
-	        { style: style.parent },
+	        { role: "presentation", style: style.parent },
 	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        {
-	          style: style.parent,
-	          viewBox: "0 0 " + this.props.width + " " + this.props.height
-	        },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -19046,7 +19128,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
 	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
 	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryLine: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryLine will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryLine.defaultProps = {
 	  height: 300,
@@ -19059,7 +19157,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  x: "x",
 	  y: "y",
 	  dataComponent: _react2.default.createElement(_lineSegment2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null)
+	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryLine.getDomain = _domain2.default.getDomain.bind(_domain2.default);
 	VictoryLine.getData = _data2.default.getData.bind(_data2.default);
@@ -19132,7 +19231,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return yScale(d.y);
 	      });
 	      var path = lineFunction(data);
-	      return _react2.default.createElement("path", _extends({ style: style, d: path }, events));
+	      return _react2.default.createElement("path", _extends({ style: style, d: path }, events, { vectorEffect: "non-scaling-stroke" }));
 	    }
 	  }]);
 	
@@ -21305,7 +21404,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    fill: "#756f6a"
 	  },
 	  labels: {
-	    fontSize: 12,
+	    fontSize: 13,
 	    padding: 4,
 	    fill: "black"
 	  }
@@ -21380,17 +21479,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var style = _victoryCore.Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
 	      var group = _react2.default.createElement(
 	        "g",
-	        { style: style.parent },
+	        { role: "presentation", style: style.parent },
 	        this.renderArea(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        {
-	          style: style.parent,
-	          viewBox: "0 0 " + this.props.width + " " + this.props.height
-	        },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -21546,7 +21641,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * by passing in props to the supplied component, or modified or ignored within
 	   * the custom component itself. If labelComponent is omitted, a new VictoryLabel
 	   * will be created with props described above. This labelComponent prop should be used to
-	   * provide a series label for VictoryLine. If individual labels are required for each
+	   * provide a series label for VictoryArea. If individual labels are required for each
 	   * data point, they should be created by composing VictoryArea with VictoryScatter
 	   */
 	  labelComponent: _react.PropTypes.element,
@@ -21621,7 +21716,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
 	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
 	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.arrayOf(_react.PropTypes.func)])
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.arrayOf(_react.PropTypes.func)]),
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryArea: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryArea will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryArea.defaultProps = {
 	  dataComponent: _react2.default.createElement(_area2.default, null),
@@ -21634,7 +21745,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  interpolation: "linear",
 	  width: 450,
 	  x: "x",
-	  y: "y"
+	  y: "y",
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryArea.getDomain = _domain2.default.getDomainWithZero.bind(_domain2.default);
 	VictoryArea.getData = _data2.default.getData.bind(_data2.default);
@@ -21992,7 +22104,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    opacity: 1
 	  },
 	  labels: {
-	    fontSize: 12,
+	    fontSize: 13,
 	    padding: 4,
 	    fill: "black"
 	  }
@@ -22074,17 +22186,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var style = _victoryCore.Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
 	      var group = _react2.default.createElement(
 	        "g",
-	        { style: style.parent },
+	        { style: style.parent, role: "presentation" },
 	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        {
-	          style: style.parent,
-	          viewBox: "0 0 " + this.props.width + " " + this.props.height
-	        },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -22320,7 +22428,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
 	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
 	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryBar: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryBar will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryBar.defaultProps = {
 	  data: defaultData,
@@ -22332,7 +22456,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  standalone: true,
 	  width: 450,
 	  x: "x",
-	  y: "y"
+	  y: "y",
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryBar.getDomain = _domain2.default.getDomainWithZero.bind(_domain2.default);
 	VictoryBar.getData = _data2.default.getData.bind(_data2.default);
@@ -22465,6 +22590,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	exports.default = {
 	  getScale: function getScale(props) {
+	    var horizontal = props.horizontal;
+	
 	    var range = {
 	      x: _victoryCore.Helpers.getRange(props, "x"),
 	      y: _victoryCore.Helpers.getRange(props, "y")
@@ -22473,9 +22600,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      x: _domain2.default.getDomainWithZero(props, "x"),
 	      y: _domain2.default.getDomainWithZero(props, "y")
 	    };
+	    var xScale = _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x);
+	    var yScale = _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y);
 	    return {
-	      x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
-	      y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
+	      x: horizontal ? yScale : xScale,
+	      y: horizontal ? xScale : yScale
 	    };
 	  },
 	  getBarPosition: function getBarPosition(props, datum, scale) {
@@ -22645,7 +22774,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    stroke: "transparent",
 	    fill: "#756f6a",
 	    fontFamily: "Helvetica",
-	    fontSize: 10,
+	    fontSize: 13,
 	    textAnchor: "middle",
 	    padding: 10
 	  }
@@ -22730,17 +22859,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      var group = _react2.default.createElement(
 	        "g",
-	        { style: style.parent },
+	        { role: "presentation", style: style.parent },
 	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        {
-	          style: style.parent,
-	          viewBox: "0 0 " + this.props.width + " " + this.props.height
-	        },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -22993,7 +23118,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
 	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
 	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)])
+	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryScatter: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryScatter will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryScatter.defaultProps = {
 	  height: 300,
@@ -23007,7 +23148,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  x: "x",
 	  y: "y",
 	  dataComponent: _react2.default.createElement(_point2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null)
+	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryScatter.getDomain = _domain2.default.getDomain.bind(_domain2.default);
 	VictoryScatter.getData = _data2.default.getData.bind(_data2.default);
@@ -23424,9 +23566,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        x: _scale2.default.getScaleFromProps(props, "x") || _scale2.default.getDefaultScale(),
 	        y: _scale2.default.getScaleFromProps(props, "y") || _scale2.default.getDefaultScale()
 	      };
+	      var xScale = baseScale.x.domain(domain.x).range(range.x);
+	      var yScale = baseScale.y.domain(domain.y).range(range.y);
 	      var scale = {
-	        x: baseScale.x.domain(domain.x).range(range.x),
-	        y: baseScale.y.domain(domain.y).range(range.y)
+	        x: horizontal ? yScale : xScale,
+	        y: horizontal ? xScale : yScale
 	      };
 	      var categories = {
 	        x: _wrapper2.default.getCategories(props, "x"),
@@ -23437,22 +23581,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: "pixelsToValue",
-	    value: function pixelsToValue(pixels, axis, calculatedProps) {
-	      if (pixels === 0) {
+	    value: function pixelsToValue(props, axis, calculatedProps) {
+	      if (props.offset === 0) {
 	        return 0;
 	      }
-	      var domain = calculatedProps.domain[axis];
-	      var range = calculatedProps.range[axis];
+	      var childComponents = _react2.default.Children.toArray(props.children);
+	      var horizontalChildren = childComponents.some(function (child) {
+	        return child.props.horizontal;
+	      });
+	      var horizontal = props && props.horizontal || horizontalChildren.length > 0;
+	      var otherAxis = axis === "x" ? "y" : "x";
+	      var currentAxis = horizontal ? otherAxis : axis;
+	      var domain = calculatedProps.domain[currentAxis];
+	      var range = calculatedProps.range[currentAxis];
 	      var domainExtent = Math.max.apply(Math, _toConsumableArray(domain)) - Math.min.apply(Math, _toConsumableArray(domain));
 	      var rangeExtent = Math.max.apply(Math, _toConsumableArray(range)) - Math.min.apply(Math, _toConsumableArray(range));
-	      return domainExtent / rangeExtent * pixels;
+	      return domainExtent / rangeExtent * props.offset;
 	    }
 	  }, {
 	    key: "getXO",
 	    value: function getXO(props, calculatedProps, datasets, index) {
 	      // eslint-disable-line max-params
 	      var center = (datasets.length - 1) / 2;
-	      var totalWidth = this.pixelsToValue(props.offset, "x", calculatedProps);
+	      var totalWidth = this.pixelsToValue(props, "x", calculatedProps);
 	      return (index - center) * totalWidth;
 	    }
 	  }, {
@@ -23510,10 +23661,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	          return Object.assign({}, datum, { xOffset: xOffset });
 	        });
 	        var style = _wrapper2.default.getChildStyle(child, index, calculatedProps);
+	        var labels = props.labels ? _this2.getLabels(props, datasets, index) : child.props.labels;
 	        return _react2.default.cloneElement(child, Object.assign({
 	          animate: getAnimationProps(props, child, index),
 	          key: index,
-	          labels: _this2.getLabels(props, datasets, index) || child.props.labels,
+	          labels: labels,
 	          labelComponent: props.labelComponent || child.props.labelComponent,
 	          style: style,
 	          data: data,
@@ -23547,11 +23699,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { style: style.parent },
 	        newChildren
 	      );
-	      return this.props.standalone ? _react2.default.createElement(
-	        "svg",
-	        { style: style.parent, viewBox: "0 0 " + props.width + " " + props.height },
-	        group
-	      ) : group;
+	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -23708,8 +23859,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  labelComponent: _react.PropTypes.element,
 	  /**
 	   * The offset prop derermines the number of pixels each element in a group should
-	   * be offset from the others. In the case of groups of bars, this number should
-	   * be equal to the width of the bar plus the desired spacing between bars.
+	   * be offset from its original position on the independent axis. In the case of
+	   * groups of bars, this number should be equal to the width of the bar plus
+	   * the desired spacing between bars.
 	   */
 	  offset: _react.PropTypes.number,
 	  /**
@@ -23752,7 +23904,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * The width props specifies the width of the svg viewBox of the chart container
 	   * This value should be given as a number of pixels
 	   */
-	  width: _victoryCore.PropTypes.nonNegative
+	  width: _victoryCore.PropTypes.nonNegative,
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryGroup: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryGroup will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryGroup.defaultProps = {
 	  scale: "linear",
@@ -23760,7 +23928,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  height: 300,
 	  width: 450,
 	  padding: 50,
-	  standalone: true
+	  standalone: true,
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryGroup.getDomain = _wrapper2.default.getDomain.bind(_wrapper2.default);
 	VictoryGroup.getData = _wrapper2.default.getData.bind(_wrapper2.default);
@@ -23845,9 +24014,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	        x: _scale2.default.getScaleFromProps(props, "x") || _scale2.default.getDefaultScale(),
 	        y: _scale2.default.getScaleFromProps(props, "y") || _scale2.default.getDefaultScale()
 	      };
+	      var xScale = baseScale.x.domain(domain.x).range(range.x);
+	      var yScale = baseScale.y.domain(domain.y).range(range.y);
 	      var scale = {
-	        x: baseScale.x.domain(domain.x).range(range.x),
-	        y: baseScale.y.domain(domain.y).range(range.y)
+	        x: horizontal ? yScale : xScale,
+	        y: horizontal ? xScale : yScale
 	      };
 	      var categories = {
 	        x: _wrapper2.default.getCategories(props, "x"),
@@ -23909,10 +24080,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return childComponents.map(function (child, index) {
 	        var data = _this2.addLayoutData(props, calculatedProps, datasets, index);
 	        var style = _wrapper2.default.getChildStyle(child, index, calculatedProps);
+	        var labels = props.labels ? _this2.getLabels(props, datasets, index) : child.props.labels;
 	        return _react2.default.cloneElement(child, Object.assign({
 	          animate: getAnimationProps(props, child, index),
 	          key: index,
-	          labels: _this2.getLabels(props, datasets, index) || child.props.labels,
+	          labels: labels,
 	          labelComponent: props.labelComponent || child.props.labelComponent,
 	          style: style,
 	          data: data
@@ -23945,11 +24117,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { style: style.parent },
 	        newChildren
 	      );
-	      return props.standalone ? _react2.default.createElement(
-	        "svg",
-	        { style: style.parent, viewBox: "0 0 " + props.width + " " + props.height },
-	        group
-	      ) : group;
+	      return props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
+	        height: this.props.height,
+	        width: this.props.width,
+	        style: style.parent }, this.props.containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -24149,14 +24320,31 @@ return /******/ (function(modules) { // webpackBootstrap
 	   * The xOffset prop is used for grouping stacks of bars. This prop will be set
 	   * by the VictoryGroup component wrapper, or can be set manually.
 	   */
-	  xOffset: _react.PropTypes.number
+	  xOffset: _react.PropTypes.number,
+	  /**
+	   * The containerComponent prop takes an entire component which will be used to
+	   * create a container element for standalone charts.
+	   * The new element created from the passed containerComponent wil be provided with
+	   * these props from VictoryStack: height, width, children
+	   * (the chart itself) and style. Props that are not provided by the
+	   * child chart component include title and desc, both of which
+	   * are intended to add accessibility to Victory components. The more descriptive these props
+	   * are, the more accessible your data will be for people using screen readers.
+	   * Any of these props may be overridden by passing in props to the supplied component,
+	   * or modified or ignored within the custom component itself. If a dataComponent is
+	   * not provided, VictoryStack will use the default VictoryContainer component.
+	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+	   * popular each dog breed is by percentage in Seattle." />
+	   */
+	  containerComponent: _react.PropTypes.element
 	};
 	VictoryStack.defaultProps = {
 	  scale: "linear",
 	  height: 300,
 	  width: 450,
 	  padding: 50,
-	  standalone: true
+	  standalone: true,
+	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
 	};
 	VictoryStack.getDomain = _wrapper2.default.getStackedDomain.bind(_wrapper2.default);
 	VictoryStack.getData = _wrapper2.default.getData.bind(_wrapper2.default);
