@@ -17,12 +17,12 @@ export default {
     return this.getDomainFromData(props, axis, dataset);
   },
 
-  getDomainWithZero(props, axis, horizontal) {
+  getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
       return propsDomain;
     }
-    horizontal = horizontal || props.horizontal;
+    const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
       return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
@@ -100,14 +100,13 @@ export default {
 
     // find the cumulative max for stacked chart types
     const cumulativeData = !dependent ?
-      this.getCumulativeData(datasets, axis) : [];
+      this.getCumulativeData(props, axis, datasets) : [];
 
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
         return val > 0 ? memo + val : memo;
       }, 0);
     });
-
     const cumulativeMinArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
         return val < 0 ? memo + val : memo;
@@ -127,15 +126,17 @@ export default {
     return [domainMin, domainMax];
   },
 
-  getCumulativeData(datasets, axis) {
+  getCumulativeData(props, axis, datasets) {
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = props.horizontal ? otherAxis : axis;
     const categories = [];
     const axisValues = [];
     datasets.forEach((dataset) => {
       dataset.forEach((data) => {
         if (data.category !== undefined && !includes(categories, data.category)) {
           categories.push(data.category);
-        } else if (!includes(axisValues, data[axis])) {
-          axisValues.push(data[axis]);
+        } else if (!includes(axisValues, data[currentAxis])) {
+          axisValues.push(data[currentAxis]);
         }
       });
     });
@@ -150,7 +151,7 @@ export default {
 
     const _dataByIndex = () => {
       return axisValues.map((value, index) => {
-        return datasets.map((data) => data[index] && data[index][axis]);
+        return datasets.map((data) => data[index] && data[index][currentAxis]);
       });
     };
 

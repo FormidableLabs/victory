@@ -9,15 +9,12 @@ export default {
    * @param {Boolean} flipped: true when the axis component is in an atypical orientation
    * @returns {String} the dimension appropriate for the axis given its props
    */
-  getAxis(props, flipped) {
+  getAxis(props) {
     if (props.orientation) {
       const vertical = {top: "x", bottom: "x", left: "y", right: "y"};
       return vertical[props.orientation];
     }
-    const axisType = props.dependentAxis ? "dependent" : "independent";
-    const flippedAxis = { dependent: "x", independent: "y"};
-    const normalAxis = { independent: "x", dependent: "y"};
-    return flipped ? flippedAxis[axisType] : normalAxis[axisType];
+    return props.dependentAxis ? "y" : "x";
   },
 
   /**
@@ -28,9 +25,7 @@ export default {
    */
   getAxisComponent(childComponents, axis) {
     const matchesAxis = (component) => {
-      // const flipped = childComponents.some((child) => child.props.horizontal);
-      const flipped = false;
-      const type = component.type.getAxis(component.props, flipped);
+      const type = component.type.getAxis(component.props);
       return type === axis;
     };
     return this.findAxisComponents(childComponents, matchesAxis)[0];

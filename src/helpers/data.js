@@ -40,23 +40,13 @@ export default {
   },
 
   getData(props) {
-    let data;
     if (props.data) {
-      data = this.formatData(props.data, props);
+      return this.formatData(props.data, props);
     } else {
       const generatedData = (props.x || props.y) && this.generateData(props);
-      data = this.formatData(generatedData, props);
+      return this.formatData(generatedData, props);
     }
-    return data;
-    // return props.horizontal ? this.flipData(data) : data;
   },
-
-  flipData(data) {
-    return data.map((datum) => {
-      return Object.assign({}, datum, {x: datum.y, y: datum.x});
-    });
-  },
-
 
   generateData(props) {
     // create an array of values evenly spaced across the x domain that include domain min/max

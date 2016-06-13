@@ -5,21 +5,6 @@ import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 
 export default {
-  // getScale(props) {
-  //   const range = {
-  //     x: Helpers.getRange(props, "x"),
-  //     y: Helpers.getRange(props, "y")
-  //   };
-  //   const domain = {
-  //     x: Domain.getDomainWithZero(props, "x"),
-  //     y: Domain.getDomainWithZero(props, "y")
-  //   };
-  //   return {
-  //     x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
-  //     y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
-  //   };
-  // },
-
   getScale(props) {
     const { horizontal } = props;
     const range = {

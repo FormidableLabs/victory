@@ -17,6 +17,7 @@ export default {
     if (propsDomain) {
       return Domain.padDomain(propsDomain, props, axis);
     }
+    childComponents = childComponents || React.Children.toArray(props.children);
     const domain = this.getDomainFromChildren(props, axis, childComponents);
     return Domain.padDomain(domain, props, axis);
   },
@@ -76,11 +77,14 @@ export default {
 
   getDomainFromChildren(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
-    const horizontal = props && props.horizontal;
+    const horizontalChildren = childComponents.some((child) => child.props.horizontal);
+    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
+    const otherAxis = axis === "x" ? "y" : "x";
+    const currentAxis = horizontal ? otherAxis : axis;
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
-          const childDomain = child.props && child.type.getDomain(child.props, axis, horizontal);
+          const childDomain = child.props && child.type.getDomain(child.props, currentAxis);
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
           return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
@@ -88,7 +92,6 @@ export default {
         return memo;
       }, []);
     };
-
 
     const childDomains = getChildDomains(childComponents);
     return childDomains.length === 0 ?
@@ -121,7 +124,7 @@ export default {
     if (propsDomain) {
       return Domain.padDomain(propsDomain, props, axis);
     }
-    const horizontal = horizontal || props.horizontal;
+    const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
       return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;

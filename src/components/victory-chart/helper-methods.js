@@ -54,8 +54,7 @@ export default {
     childComponents = childComponents || React.Children.toArray(props.children);
     const domain = Wrapper.getDomain(props, axis, childComponents);
     const orientations = Axis.getAxisOrientations(childComponents);
-    const flipped = childComponents.some((component) => component.props.horizontal);
-    return Domain.orientDomain(domain, orientations, axis, flipped);
+    return Domain.orientDomain(domain, orientations, axis);
   },
 
   getAxisOffset(props, calculatedProps) {
