@@ -214,7 +214,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getStyles(props) {
-    const styleProps = props.style && props.style.parent;
+    const styleProps = (props.style && props.style.parent);
     return {
       parent: defaults({
         height: "auto",

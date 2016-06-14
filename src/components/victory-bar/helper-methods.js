@@ -5,6 +5,17 @@ import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 
 export default {
+  getStyleObject(props, defaultStyles) {
+    let styleObject;
+    if (props.theme && props.theme.bar) {
+      styleObject = props.theme.bar;
+    } else {
+      styleObject = defaultStyles;
+    }
+
+    return styleObject;
+  },
+
   getScale(props) {
     const range = {
       x: Helpers.getRange(props, "x"),

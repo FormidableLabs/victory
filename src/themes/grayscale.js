@@ -16,23 +16,58 @@ export default {
       textAnchor: "start"
     },
     parent: {
-      // parent styles here
+      data: {
+        stroke: "#252525",
+        strokeWidth: 2,
+        fill: "none",
+        opacity: 1
+      },
+      labels: {
+        padding: 5,
+        fontFamily: "Poppins, Helvetica-Neue, sans-serif",
+        letterSpacing: 0.2,
+        fontSize: 10,
+        strokeWidth: 0,
+        stroke: "transparent",
+        textAnchor: "start"
+      }
     }
   },
   bar: {
-    colors: ["#f7f7f7", "#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"],
     data: {
-      // data styles here
+      width: 8,
+      padding: 6,
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#252525",
+      opacity: 1
     },
     labels: {
-      // labels styles here
+      fontSize: 10,
+      padding: 4,
+      fill: "black",
+      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
+      letterSpacing: 0.2
     },
     parent: {
-      // parent styles here
+      data: {
+        width: 8,
+        padding: 6,
+        stroke: "transparent",
+        strokeWidth: 0,
+        fill: "#252525",
+        opacity: 1
+      },
+      labels: {
+        fontSize: 10,
+        padding: 4,
+        fill: "black",
+        fontFamily: "Poppins, Helvetica-Neue, sans-serif",
+        letterSpacing: 0.2
+      }
     }
   },
   scatter: {
-    colors: ["#f7f7f7", "#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"],
     data: {
       // data styles here
     },
@@ -80,7 +115,6 @@ export default {
     }
   },
   area: {
-    colors: ["#f7f7f7", "#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"],
     data: {
       // data styles here
     },
@@ -92,7 +126,6 @@ export default {
     }
   },
   pie: {
-    colors: ["#f7f7f7", "#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"],
     data: {
       // data styles here
     },
@@ -102,5 +135,6 @@ export default {
     parent: {
       // parent styles here
     }
-  }
+  },
+  colorScale: ["#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"]
 };

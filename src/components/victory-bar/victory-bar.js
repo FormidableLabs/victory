@@ -325,7 +325,8 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), defaultStyles);
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers),
+    BarHelpers.getStyleObject.bind(BarHelpers));
 
   constructor() {
     super();
@@ -336,11 +337,13 @@ export default class VictoryBar extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = BarHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = BarHelpers.getBaseProps(this.props,
+      BarHelpers.getStyleObject(this.props, defaultStyles));
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = BarHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = BarHelpers.getBaseProps(newProps,
+      BarHelpers.getStyleObject(this.props, defaultStyles));
   }
 
   renderData(props) {
@@ -396,7 +399,8 @@ export default class VictoryBar extends React.Component {
         </VictoryTransition>
       );
     }
-    const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+    const style = Helpers.getStyles(this.props.style,
+      BarHelpers.getStyleObject(this.props, defaultStyles), "auto", "100%");
     const group = <g style={style.parent} role="presentation">{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       React.cloneElement(

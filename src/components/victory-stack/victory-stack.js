@@ -257,7 +257,9 @@ export default class VictoryStack extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -302,7 +304,7 @@ export default class VictoryStack extends React.Component {
       x: Wrapper.getCategories(props, "x"),
       y: Wrapper.getCategories(props, "y")
     };
-    const colorScale = props.colorScale;
+    const colorScale = props.colorScale || props.theme.colorScale;
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
@@ -329,6 +331,7 @@ export default class VictoryStack extends React.Component {
       width: props.width,
       padding: Helpers.getPadding(props),
       standalone: false,
+      theme: props.theme,
       categories,
       domain,
       scale,

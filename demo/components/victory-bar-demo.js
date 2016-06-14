@@ -4,6 +4,7 @@ import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/i
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
 import { VictoryContainer } from "victory-core";
+import Grayscale from "../../src/themes/grayscale";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -353,8 +354,48 @@ export default class App extends React.Component {
                 name={"secondBar"}
                 data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
               />
-          </VictorySharedEvents>
-        </svg>
+            </VictorySharedEvents>
+          </svg>
+
+              <VictoryStack
+                style={{parent: parentStyle}}
+                animate={{duration: 1000}}
+                theme={Grayscale}
+              >
+                {this.state.multiTransitionData.map((data, index) => {
+                  return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
+                })}
+              </VictoryStack>
+
+              <VictoryGroup
+                style={{parent: parentStyle}} offset={18}
+                theme={Grayscale}
+                animate={{duration: 2000}}
+                labels={["a", "b", "c"]}
+              >
+                {this.getBarData().map((data, index) => {
+                  return <VictoryBar key={index} data={data}/>;
+                })}
+              </VictoryGroup>
+
+              <VictoryBar
+                name="firstBar"
+                style={{
+                  data: {width: 25, fill: "gold"}
+                }}
+                data={[{x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 4}]}
+              />
+
+              <VictoryChart
+                theme={Grayscale}
+              >
+                <VictoryBar
+                  height={250}
+                  data={[["a", 1], ["b", 3], ["c", 5]]}
+                  x={0}
+                  y={1}
+                />
+              </VictoryChart>
       </div>
     );
   }

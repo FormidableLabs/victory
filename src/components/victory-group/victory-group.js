@@ -258,7 +258,9 @@ export default class VictoryGroup extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -340,6 +342,7 @@ export default class VictoryGroup extends React.Component {
       padding: Helpers.getPadding(props),
       labelComponent: props.labelComponent,
       standalone: false,
+      theme: props.theme,
       categories,
       domain,
       scale,
@@ -352,7 +355,7 @@ export default class VictoryGroup extends React.Component {
     if (role !== "group-wrapper" && role !== "stack-wrapper") {
       return undefined;
     }
-    return child.props.colorScale || props.colorScale;
+    return child.props.colorScale || props.colorScale || props.theme.colorScale;
   }
 
   // the old ones were bad
