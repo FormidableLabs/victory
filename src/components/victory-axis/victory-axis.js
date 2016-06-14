@@ -462,11 +462,7 @@ export default class VictoryAxis extends React.Component {
     return standalone ? (
       React.cloneElement(
         containerComponent,
-        Object.assign(
-          {},
-          containerComponent.props,
-          { height, width, style: style.parent }
-        ),
+        Object.assign({ height, width, style: style.parent}, containerComponent.props),
         group)
       ) : group;
   }

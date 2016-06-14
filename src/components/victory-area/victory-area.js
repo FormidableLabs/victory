@@ -338,7 +338,7 @@ export default class VictoryArea extends React.Component {
     this.baseProps = AreaHelpers.getBaseProps(newProps, defaultStyles);
   }
 
-  renderArea(props) {
+  renderData(props) {
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -377,31 +377,31 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    if (this.props.animate) {
+    const { animate, style, width, height, standalone, containerComponent } = this.props;
+
+    if (animate) {
       const whitelist = [
         "data", "domain", "height", "padding", "style", "width"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           <VictoryArea {...this.props}/>
         </VictoryTransition>
       );
     }
 
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%"
+    const baseStyles = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+
+    const group = (
+      <g role="presentation" style={baseStyles.parent}>
+        {this.renderData(this.props)}
+      </g>
     );
-    const group = <g role="presentation" style={style.parent}>{this.renderArea(this.props)}</g>;
-    return this.props.standalone ?
+
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
         group) :
       group;
   }
