@@ -1,5 +1,9 @@
 # VictoryLine Changelog
 
+## 9.1.2 (2016-06-13)
+
+- Pre-calculates and applies VictoryAxis transform to individual elements. This allows custom axis components (_i.e._ `tickLabelComponent`) to be absolutely positioned by overriding position props
+
 ## 9.1.1 (2016-06-13)
 
 - Custom component props get precedence over calculated props
