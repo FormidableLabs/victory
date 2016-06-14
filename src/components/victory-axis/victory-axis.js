@@ -24,7 +24,7 @@ const defaultStyles = {
     fontFamily: "Helvetica"
   },
   grid: {
-    stroke: "none",
+    stroke: "transparent",
     fill: "none",
     strokeLinecap: "round"
   },
@@ -427,9 +427,9 @@ export default class VictoryAxis extends React.Component {
       }, tickLabelProps));
       return (
         <g key={`tick-group-${key}`}>
+          {GridComponent}
           {TickComponent}
           {TickLabel}
-          {GridComponent}
         </g>
       );
     });
