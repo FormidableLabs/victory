@@ -16,21 +16,7 @@ export default {
       textAnchor: "start"
     },
     parent: {
-      data: {
-        stroke: "#252525",
-        strokeWidth: 2,
-        fill: "none",
-        opacity: 1
-      },
-      labels: {
-        padding: 5,
-        fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-        letterSpacing: 0.2,
-        fontSize: 10,
-        strokeWidth: 0,
-        stroke: "transparent",
-        textAnchor: "start"
-      }
+      // parent styles here
     }
   },
   bar: {
@@ -50,29 +36,24 @@ export default {
       letterSpacing: 0.2
     },
     parent: {
-      data: {
-        width: 8,
-        padding: 6,
-        stroke: "transparent",
-        strokeWidth: 0,
-        fill: "#252525",
-        opacity: 1
-      },
-      labels: {
-        fontSize: 10,
-        padding: 4,
-        fill: "#252525",
-        fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-        letterSpacing: 0.2
-      }
+      // parent styles here
     }
   },
   scatter: {
     data: {
-      // data styles here
+      fill: "#252525",
+      opacity: 1,
+      stroke: "transparent",
+      strokeWidth: 0
     },
     labels: {
-      // labels styles here
+      stroke: "transparent",
+      fill: "#252525",
+      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
+      letterSpacing: 0.2,
+      fontSize: 10,
+      textAnchor: "middle",
+      padding: 10
     },
     parent: {
       // parent styles here
