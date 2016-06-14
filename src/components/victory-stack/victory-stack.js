@@ -258,7 +258,14 @@ export default class VictoryStack extends React.Component {
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
-    /***/
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryStack to wrap a chart component, implement the theme directly on
+    * VictoryStack. If you are wrapping VictoryStack in VictoryChart,
+    * please call the theme on the wrapper component instead.
+    * @example theme={Grayscale}
+    */
     theme: PropTypes.object
   };
 

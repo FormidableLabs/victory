@@ -196,7 +196,13 @@ export default class VictoryChart extends React.Component {
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
-    /***/
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryChart, either alone or as a wrapper for other components,
+    * you will only need to implement the theme on VictoryChart itself.
+    * @example theme={Grayscale}
+    */
     theme: PropTypes.object
   };
 

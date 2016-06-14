@@ -259,7 +259,14 @@ export default class VictoryGroup extends React.Component {
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
-    /***/
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryGrou as the outermost wrapper for your chart, implement the theme
+    * directly on VictoyrGroup. If you are wrapping VictoryGroup in VictoryChart,
+    * please call the theme on the wrapper component instead.
+    * @example theme={Grayscale}
+    */
     theme: PropTypes.object
   };
 

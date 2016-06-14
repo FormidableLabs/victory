@@ -1,16 +1,22 @@
+const grayscaleBlack = "#252525";
+const fontStack = "Poppins, Helvetica-Neue, sans-serif";
+const letterSpace = 0.2;
+const labelFontSize = 10;
+const dataTickLabelPadding = 5;
+
 export default {
   line: {
     data: {
-      stroke: "#252525",
+      stroke: grayscaleBlack,
       strokeWidth: 2,
       fill: "none",
       opacity: 1
     },
     labels: {
-      padding: 5,
-      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-      letterSpacing: 0.2,
-      fontSize: 10,
+      padding: dataTickLabelPadding,
+      fontFamily: fontStack,
+      letterSpacing: letterSpace,
+      fontSize: labelFontSize,
       strokeWidth: 0,
       stroke: "transparent",
       textAnchor: "start"
@@ -25,15 +31,15 @@ export default {
       padding: 6,
       stroke: "transparent",
       strokeWidth: 0,
-      fill: "#252525",
+      fill: grayscaleBlack,
       opacity: 1
     },
     labels: {
-      fontSize: 10,
-      padding: 4,
-      fill: "#252525",
-      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-      letterSpacing: 0.2
+      fontSize: labelFontSize,
+      padding: dataTickLabelPadding,
+      fill: grayscaleBlack,
+      fontFamily: fontStack,
+      letterSpacing: letterSpace
     },
     parent: {
       // parent styles here
@@ -41,19 +47,19 @@ export default {
   },
   scatter: {
     data: {
-      fill: "#252525",
+      fill: grayscaleBlack,
       opacity: 1,
       stroke: "transparent",
       strokeWidth: 0
     },
     labels: {
       stroke: "transparent",
-      fill: "#252525",
-      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-      letterSpacing: 0.2,
-      fontSize: 10,
+      fill: grayscaleBlack,
+      fontFamily: fontStack,
+      letterSpacing: letterSpace,
+      fontSize: labelFontSize,
       textAnchor: "middle",
-      padding: 10
+      padding: dataTickLabelPadding
     },
     parent: {
       // parent styles here
@@ -61,18 +67,18 @@ export default {
   },
   axis: {
     axis: {
-      stroke: "#252525",
+      stroke: grayscaleBlack,
       fill: "none",
       strokeWidth: 2,
       strokeLinecap: "round"
     },
     axisLabel: {
       stroke: "transparent",
-      fill: "#252525",
+      fill: grayscaleBlack,
       padding: 40,
-      fontSize: 10,
-      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-      letterSpacing: 0.2
+      fontSize: labelFontSize,
+      fontFamily: fontStack,
+      letterSpacing: letterSpace
     },
     grid: {
       stroke: "#d9d9d9",
@@ -82,30 +88,30 @@ export default {
     ticks: {
       stroke: "none",
       fill: "none",
-      padding: 5,
+      padding: dataTickLabelPadding,
       strokeWidth: 2,
       strokeLinecap: "round",
       size: 4
     },
     tickLabels: {
       stroke: "transparent",
-      fill: "#252525",
-      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-      letterSpacing: 0.2,
-      fontSize: 10,
-      padding: 5
+      fill: grayscaleBlack,
+      fontFamily: fontStack,
+      letterSpacing: letterSpace,
+      fontSize: labelFontSize,
+      padding: dataTickLabelPadding
     }
   },
   area: {
     data: {
-      fill: "#252525"
+      fill: grayscaleBlack
     },
     labels: {
-      fontSize: 10,
-      padding: 4,
-      fill: "#252525",
-      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
-      letterSpacing: 0.2
+      fontSize: labelFontSize,
+      padding: dataTickLabelPadding,
+      fill: grayscaleBlack,
+      fontFamily: fontStack,
+      letterSpacing: letterSpace
     },
     parent: {
       // parent styles here
@@ -122,5 +128,5 @@ export default {
       // parent styles here
     }
   },
-  colorScale: ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9"]
+  colorScale: [grayscaleBlack, "#636363", "#969696", "#bdbdbd", "#d9d9d9"]
 };
