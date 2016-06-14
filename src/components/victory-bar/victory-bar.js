@@ -383,28 +383,31 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryBar` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    const {animate, style, standalone, containerComponent, height, width} = this.props;
+
+    if (animate) {
       const whitelist = [
         "data", "domain", "height", "padding", "style", "width"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           <VictoryBar {...this.props}/>
         </VictoryTransition>
       );
     }
-    const style = Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
-    const group = <g style={style.parent} role="presentation">{this.renderData(this.props)}</g>;
-    return this.props.standalone ?
+
+    const baseStyles = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+
+    const group = (
+      <g role="presentation" style={baseStyles.parent}>
+        {this.renderData(this.props)}
+      </g>
+    );
+
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
         group) :
       group;
   }

@@ -381,13 +381,12 @@ export default class VictoryStack extends React.Component {
         {newChildren}
       </g>
     );
-    return props.standalone ?
+
+    const { standalone, width, height, containerComponent } = this.props;
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: style.parent}, containerComponent.props),
         group) :
       group;
   }
