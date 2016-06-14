@@ -298,10 +298,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        newChildren
 	      );
 	
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	      var _props = this.props;
+	      var standalone = _props.standalone;
+	      var width = _props.width;
+	      var height = _props.height;
+	      var containerComponent = _props.containerComponent;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: style.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -8641,31 +8644,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      if (this.props.animate) {
+	      var _props = this.props;
+	      var animate = _props.animate;
+	      var standalone = _props.standalone;
+	      var containerComponent = _props.containerComponent;
+	      var height = _props.height;
+	      var width = _props.width;
+	
+	      if (animate) {
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
 	        var whitelist = ["style", "domain", "range", "tickCount", "tickValues", "offsetX", "offsetY", "padding", "width", "height"];
 	        return _react2.default.createElement(
 	          _victoryCore.VictoryTransition,
-	          { animate: this.props.animate, animationWhitelist: whitelist },
+	          { animate: animate, animationWhitelist: whitelist },
 	          _react2.default.createElement(VictoryAxis, this.props)
 	        );
 	      }
 	      var style = _helperMethods2.default.getStyles(this.props, defaultStyles);
-	      var calculatedValues = _helperMethods2.default.getCalculatedValues(this.props, defaultStyles);
-	      var transform = _helperMethods2.default.getTransform(this.props, calculatedValues);
 	      var group = _react2.default.createElement(
 	        "g",
-	        { style: style.parent, transform: transform },
+	        { style: style.parent },
 	        this.renderGridAndTicks(this.props),
 	        this.renderLine(this.props),
 	        this.renderLabel(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: style.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -9481,6 +9486,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	
 	var orientationSign = {
 	  top: -1,
 	  left: -1,
@@ -9556,15 +9563,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var anchors = calculatedValues.anchors;
 	
 	
-	    var gridOffset = this.getGridOffset(props, calculatedValues);
+	    var offset = this.getOffset(props, calculatedValues);
+	
+	    var globalTransform = this.getTransform(props, calculatedValues, offset);
+	
+	    var gridOffset = this.getGridOffset(props, calculatedValues, offset);
 	    var gridEdge = this.getGridEdge(props, calculatedValues);
 	
 	    var axisProps = {
 	      style: style.axis,
-	      x1: isVertical ? null : padding.left,
-	      x2: isVertical ? null : props.width - padding.right,
-	      y1: isVertical ? padding.top : null,
-	      y2: isVertical ? props.height - padding.bottom : null
+	      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
+	      x2: isVertical ? globalTransform.x : props.width - padding.right + globalTransform.x,
+	      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
+	      y2: isVertical ? props.height - padding.bottom + globalTransform.y : globalTransform.y
 	    };
 	
 	    var axisLabelProps = this.getAxisLabelProps(props, calculatedValues);
@@ -9575,13 +9586,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var scaledTick = scale(data);
 	      var tickPosition = _this.getTickPosition(tickStyle, orientation, isVertical);
 	      var tickTransform = {
-	        x: isVertical ? 0 : scaledTick,
-	        y: isVertical ? scaledTick : 0
+	        x: isVertical ? globalTransform.x : scaledTick + globalTransform.x,
+	        y: isVertical ? scaledTick + globalTransform.y : globalTransform.y
 	      };
 	
 	      var gridTransform = {
-	        x: isVertical ? -gridOffset.x : scaledTick,
-	        y: isVertical ? scaledTick : gridOffset.y
+	        x: isVertical ? -gridOffset.x + globalTransform.x : scaledTick + globalTransform.x,
+	        y: isVertical ? scaledTick + globalTransform.y : gridOffset.y + globalTransform.y
 	      };
 	
 	      var tickProps = {
@@ -9723,14 +9734,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var isVertical = calculatedValues.isVertical;
 	    var orientation = calculatedValues.orientation;
 	    var labelPadding = calculatedValues.labelPadding;
+	    var stringTicks = calculatedValues.stringTicks;
+	    var ticks = calculatedValues.ticks;
 	
 	    var xPadding = orientation === "right" ? padding.right : padding.left;
 	    var yPadding = orientation === "top" ? padding.top : padding.bottom;
 	    var fontSize = style.axisLabel.fontSize;
 	    var offsetX = props.offsetX !== null && props.offsetX !== undefined ? props.offsetX : xPadding;
 	    var offsetY = props.offsetY !== null && props.offsetY !== undefined ? props.offsetY : yPadding;
-	    // TODO: style.ticks.size need to be evaluated first!!
-	    var totalPadding = fontSize + 2 * style.ticks.size + labelPadding;
+	    var tickSizes = ticks.map(function (data) {
+	      var tick = stringTicks ? props.tickValues[data - 1] : data;
+	      var tickStyle = _victoryCore.Helpers.evaluateStyle(style.ticks, tick);
+	      return tickStyle.size;
+	    });
+	    var totalPadding = fontSize + 2 * Math.max.apply(Math, _toConsumableArray(tickSizes)) + labelPadding;
 	    var minimumPadding = 1.2 * fontSize; // TODO: magic numbers
 	    var x = isVertical ? totalPadding : minimumPadding;
 	    var y = isVertical ? minimumPadding : totalPadding;
@@ -9739,17 +9756,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      y: offsetY !== null && offsetY !== undefined ? offsetY : y
 	    };
 	  },
-	  getTransform: function getTransform(props, calculatedValues) {
+	  getTransform: function getTransform(props, calculatedValues, offset) {
 	    var orientation = calculatedValues.orientation;
 	
-	    var offset = this.getOffset(props, calculatedValues);
-	    var translate = {
-	      top: [0, offset.y],
-	      bottom: [0, props.height - offset.y],
-	      left: [offset.x, 0],
-	      right: [props.width - offset.x, 0]
+	    return {
+	      top: { x: 0, y: offset.y },
+	      bottom: { x: 0, y: props.height - offset.y },
+	      left: { x: offset.x, y: 0 },
+	      right: { x: props.width - offset.x, y: 0 }
 	    }[orientation];
-	    return "translate(" + translate[0] + ", " + translate[1] + ")";
 	  },
 	  getTickPosition: function getTickPosition(style, orientation, isVertical) {
 	    var tickSpacing = style.size + style.padding;
@@ -9771,11 +9786,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var y = isVertical ? 0 : sign * (props.height - (padding.top + padding.bottom));
 	    return { x: x, y: y };
 	  },
-	  getGridOffset: function getGridOffset(props, calculatedValues) {
+	  getGridOffset: function getGridOffset(props, calculatedValues, offset) {
 	    var padding = calculatedValues.padding;
 	    var orientation = calculatedValues.orientation;
 	
-	    var offset = this.getOffset(props, calculatedValues);
 	    var xPadding = orientation === "right" ? padding.right : padding.left;
 	    var yPadding = orientation === "top" ? padding.top : padding.bottom;
 	    return {
@@ -16350,10 +16364,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      // If animating, return a `VictoryAnimation` element that will create
-	      // a new `VictoryLine` with nearly identical props, except (1) tweened
-	      // and (2) `animate` set to null so we don't recurse forever.
-	      if (this.props.animate) {
+	      var _props = this.props;
+	      var animate = _props.animate;
+	      var style = _props.style;
+	      var standalone = _props.standalone;
+	      var width = _props.width;
+	      var height = _props.height;
+	      var containerComponent = _props.containerComponent;
+	
+	
+	      if (animate) {
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
@@ -16361,22 +16381,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var whitelist = ["data", "domain", "height", "padding", "samples", "style", "width", "x", "y"];
 	        return _react2.default.createElement(
 	          _victoryCore.VictoryTransition,
-	          { animate: this.props.animate, animationWhitelist: whitelist },
+	          { animate: animate, animationWhitelist: whitelist },
 	          _react2.default.createElement(VictoryLine, this.props)
 	        );
 	      }
 	
-	      var style = _victoryCore.Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+	      var baseStyles = _victoryCore.Helpers.getStyles(style, defaultStyles, "auto", "100%");
 	
 	      var group = _react2.default.createElement(
 	        "g",
-	        { role: "presentation", style: style.parent },
+	        { role: "presentation", style: baseStyles.parent },
 	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: baseStyles.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -18918,8 +18936,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.baseProps = _helperMethods2.default.getBaseProps(newProps, defaultStyles);
 	    }
 	  }, {
-	    key: "renderArea",
-	    value: function renderArea(props) {
+	    key: "renderData",
+	    value: function renderData(props) {
 	      var dataComponent = props.dataComponent;
 	      var labelComponent = props.labelComponent;
 	      var sharedEvents = props.sharedEvents;
@@ -18949,25 +18967,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      if (this.props.animate) {
+	      var _props = this.props;
+	      var animate = _props.animate;
+	      var style = _props.style;
+	      var width = _props.width;
+	      var height = _props.height;
+	      var standalone = _props.standalone;
+	      var containerComponent = _props.containerComponent;
+	
+	
+	      if (animate) {
 	        var whitelist = ["data", "domain", "height", "padding", "style", "width"];
 	        return _react2.default.createElement(
 	          _victoryCore.VictoryTransition,
-	          { animate: this.props.animate, animationWhitelist: whitelist },
+	          { animate: animate, animationWhitelist: whitelist },
 	          _react2.default.createElement(VictoryArea, this.props)
 	        );
 	      }
 	
-	      var style = _victoryCore.Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+	      var baseStyles = _victoryCore.Helpers.getStyles(style, defaultStyles, "auto", "100%");
+	
 	      var group = _react2.default.createElement(
 	        "g",
-	        { role: "presentation", style: style.parent },
-	        this.renderArea(this.props)
+	        { role: "presentation", style: baseStyles.parent },
+	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: baseStyles.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -19584,27 +19610,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      // If animating, return a `VictoryAnimation` element that will create
-	      // a new `VictoryBar` with nearly identical props, except (1) tweened
-	      // and (2) `animate` set to null so we don't recurse forever.
-	      if (this.props.animate) {
+	      var _props = this.props;
+	      var animate = _props.animate;
+	      var style = _props.style;
+	      var standalone = _props.standalone;
+	      var containerComponent = _props.containerComponent;
+	      var height = _props.height;
+	      var width = _props.width;
+	
+	
+	      if (animate) {
 	        var whitelist = ["data", "domain", "height", "padding", "style", "width"];
 	        return _react2.default.createElement(
 	          _victoryCore.VictoryTransition,
-	          { animate: this.props.animate, animationWhitelist: whitelist },
+	          { animate: animate, animationWhitelist: whitelist },
 	          _react2.default.createElement(VictoryBar, this.props)
 	        );
 	      }
-	      var style = _victoryCore.Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+	
+	      var baseStyles = _victoryCore.Helpers.getStyles(style, defaultStyles, "auto", "100%");
+	
 	      var group = _react2.default.createElement(
 	        "g",
-	        { style: style.parent, role: "presentation" },
+	        { role: "presentation", style: baseStyles.parent },
 	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: baseStyles.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -20252,32 +20284,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: "render",
 	    value: function render() {
-	      // If animating, return a `VictoryAnimation` element that will create
-	      // a new `VictoryScatter` with nearly identical props, except (1) tweened
-	      // and (2) `animate` set to null so we don't recurse forever.
-	      if (this.props.animate) {
+	      var _props = this.props;
+	      var animate = _props.animate;
+	      var style = _props.style;
+	      var standalone = _props.standalone;
+	      var width = _props.width;
+	      var height = _props.height;
+	      var containerComponent = _props.containerComponent;
+	
+	
+	      if (animate) {
 	        // Do less work by having `VictoryAnimation` tween only values that
 	        // make sense to tween. In the future, allow customization of animated
 	        // prop whitelist/blacklist?
 	        var whitelist = ["data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width", "x", "y"];
 	        return _react2.default.createElement(
 	          _victoryCore.VictoryTransition,
-	          { animate: this.props.animate, animationWhitelist: whitelist },
+	          { animate: animate, animationWhitelist: whitelist },
 	          _react2.default.createElement(VictoryScatter, this.props)
 	        );
 	      }
 	
-	      var style = _victoryCore.Helpers.getStyles(this.props.style, defaultStyles, "auto", "100%");
+	      var baseStyles = _victoryCore.Helpers.getStyles(style, defaultStyles, "auto", "100%");
 	
 	      var group = _react2.default.createElement(
 	        "g",
-	        { role: "presentation", style: style.parent },
+	        { role: "presentation", style: baseStyles.parent },
 	        this.renderData(this.props)
 	      );
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: baseStyles.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -21077,10 +21113,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { style: style.parent },
 	        newChildren
 	      );
-	      return this.props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	
+	      var _props = this.props;
+	      var standalone = _props.standalone;
+	      var width = _props.width;
+	      var height = _props.height;
+	      var containerComponent = _props.containerComponent;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: style.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
@@ -21495,10 +21535,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { style: style.parent },
 	        newChildren
 	      );
-	      return props.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: this.props.height,
-	        width: this.props.width,
-	        style: style.parent }, this.props.containerComponent.props), group) : group;
+	
+	      var _props = this.props;
+	      var standalone = _props.standalone;
+	      var width = _props.width;
+	      var height = _props.height;
+	      var containerComponent = _props.containerComponent;
+	
+	      return standalone ? _react2.default.cloneElement(containerComponent, Object.assign({ height: height, width: width, style: style.parent }, containerComponent.props), group) : group;
 	    }
 	  }]);
 	
