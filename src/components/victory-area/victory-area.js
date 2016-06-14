@@ -300,7 +300,9 @@ export default class VictoryArea extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -320,7 +322,8 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), defaultStyles);
+  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers),
+    AreaHelpers.getStyleObject.bind(AreaHelpers));
 
   constructor() {
     super();
@@ -331,11 +334,13 @@ export default class VictoryArea extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = AreaHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = AreaHelpers.getBaseProps(this.props,
+      AreaHelpers.getStyleObject(this.props, defaultStyles));
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = AreaHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = AreaHelpers.getBaseProps(newProps,
+      AreaHelpers.getStyleObject(this.props, defaultStyles));
   }
 
   renderArea(props) {
@@ -390,7 +395,7 @@ export default class VictoryArea extends React.Component {
 
     const style = Helpers.getStyles(
       this.props.style,
-      defaultStyles,
+      AreaHelpers.getStyleObject(this.props, defaultStyles),
       "auto",
       "100%"
     );

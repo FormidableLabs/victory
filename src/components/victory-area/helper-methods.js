@@ -5,6 +5,16 @@ import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 
 export default {
+  getStyleObject(props, defaultStyles) {
+    let styleObject;
+    if (props.theme && props.theme.area) {
+      styleObject = props.theme.area;
+    } else {
+      styleObject = defaultStyles;
+    }
+
+    return styleObject;
+  },
 
   getBaseProps(props, defaultStyles) {
     const {scale, style, data} = this.getCalculatedValues(props, defaultStyles);

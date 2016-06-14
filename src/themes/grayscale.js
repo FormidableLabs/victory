@@ -45,7 +45,7 @@ export default {
     labels: {
       fontSize: 10,
       padding: 4,
-      fill: "black",
+      fill: "#252525",
       fontFamily: "Poppins, Helvetica-Neue, sans-serif",
       letterSpacing: 0.2
     },
@@ -61,7 +61,7 @@ export default {
       labels: {
         fontSize: 10,
         padding: 4,
-        fill: "black",
+        fill: "#252525",
         fontFamily: "Poppins, Helvetica-Neue, sans-serif",
         letterSpacing: 0.2
       }
@@ -116,10 +116,14 @@ export default {
   },
   area: {
     data: {
-      // data styles here
+      fill: "#252525"
     },
     labels: {
-      // labels styles here
+      fontSize: 10,
+      padding: 4,
+      fill: "#252525",
+      fontFamily: "Poppins, Helvetica-Neue, sans-serif",
+      letterSpacing: 0.2
     },
     parent: {
       // parent styles here
@@ -136,5 +140,5 @@ export default {
       // parent styles here
     }
   },
-  colorScale: ["#d9d9d9", "#bdbdbd", "#969696", "#636363", "#252525"]
+  colorScale: ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9"]
 };

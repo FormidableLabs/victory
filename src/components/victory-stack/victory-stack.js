@@ -304,7 +304,7 @@ export default class VictoryStack extends React.Component {
       x: Wrapper.getCategories(props, "x"),
       y: Wrapper.getCategories(props, "y")
     };
-    const colorScale = props.colorScale || props.theme.colorScale;
+    const colorScale = props.theme && !props.colorScale ? props.theme.colorScale : props.colorScale;
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
