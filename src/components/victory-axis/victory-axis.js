@@ -436,7 +436,8 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    if (this.props.animate) {
+    const { animate, standalone, containerComponent, height, width } = this.props;
+    if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -445,28 +446,27 @@ export default class VictoryAxis extends React.Component {
         "offsetX", "offsetY", "padding", "width", "height"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           <VictoryAxis {...this.props}/>
         </VictoryTransition>
       );
     }
     const style = AxisHelpers.getStyles(this.props, defaultStyles);
-    const calculatedValues = AxisHelpers.getCalculatedValues(this.props, defaultStyles);
-    const transform = AxisHelpers.getTransform(this.props, calculatedValues);
     const group = (
-      <g style={style.parent} transform={transform}>
+      <g style={style.parent}>
         {this.renderGridAndTicks(this.props)}
         {this.renderLine(this.props)}
         {this.renderLabel(this.props)}
       </g>
     );
-    return this.props.standalone ? (
+    return standalone ? (
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign(
+          {},
+          containerComponent.props,
+          { height, width, style: style.parent }
+        ),
         group)
       ) : group;
   }
