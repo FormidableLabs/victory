@@ -365,8 +365,8 @@ export default class VictoryAxis extends React.Component {
       {},
       this.getEventState(key, "axis"),
       this.getSharedEventState(key, "axis"),
-      this.baseProps[key].axis,
-      props.axisComponent.props
+      props.axisComponent.props,
+      this.baseProps[key].axis
     );
     return React.cloneElement(props.axisComponent, Object.assign(
       {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
@@ -380,8 +380,8 @@ export default class VictoryAxis extends React.Component {
       {},
       this.getEventState(key, "axisLabel"),
       this.getSharedEventState(key, "axisLabel"),
-      this.baseProps[key].axisLabel,
-      props.axisLabelComponent.props
+      props.axisLabelComponent.props,
+      this.baseProps[key].axisLabel
     );
     return React.cloneElement(props.axisLabelComponent, Object.assign(
       {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
@@ -397,8 +397,8 @@ export default class VictoryAxis extends React.Component {
         {},
         this.getEventState(key, "ticks"),
         this.getSharedEventState(key, "ticks"),
-        this.baseProps[key].ticks,
-        tickComponent.props
+        tickComponent.props,
+        this.baseProps[key].ticks
       );
       const TickComponent = React.cloneElement(tickComponent, Object.assign(
         {}, tickProps, {events: Events.getPartialEvents(tickEvents, key, tickProps)}
@@ -408,8 +408,8 @@ export default class VictoryAxis extends React.Component {
         {},
         this.getEventState(key, "grid"),
         this.getSharedEventState(key, "grid"),
-        this.baseProps[key].grid,
-        gridComponent.props
+        gridComponent.props,
+        this.baseProps[key].grid
       );
       const GridComponent = React.cloneElement(gridComponent, Object.assign(
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
@@ -418,8 +418,8 @@ export default class VictoryAxis extends React.Component {
         {},
         this.getEventState(key, "tickLabels"),
         this.getSharedEventState(key, "tickLabels"),
-        this.baseProps[key].tickLabels,
-        tickLabelComponent.props
+        tickLabelComponent.props,
+        this.baseProps[key].tickLabels
       );
       const tickLabelEvents = this.getEvents(props, "tickLabels", key);
       const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({

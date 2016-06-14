@@ -347,8 +347,8 @@ export default class VictoryArea extends React.Component {
       {},
       this.getEventState("all", "data"),
       getSharedEventState("all", "data"),
-      this.baseProps.all.data,
-      dataComponent.props
+      dataComponent.props,
+      this.baseProps.all.data
     );
     const areaComponent = React.cloneElement(dataComponent, Object.assign(
       {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
@@ -358,8 +358,8 @@ export default class VictoryArea extends React.Component {
         {},
         this.getEventState("all", "labels"),
         getSharedEventState("all", "labels"),
-        this.baseProps.all.labels,
-        labelComponent.props
+        labelComponent.props,
+        this.baseProps.all.labels
       );
     if (labelProps && labelProps.text) {
       const labelEvents = this.getEvents(props, "labels", "all");

@@ -89,6 +89,7 @@ export default class App extends React.Component {
             style={{
               parent: style.parent,
               axis: {strokeWidth: 4},
+              tickLabels: {angle: 45},
               grid: {stroke: "black", strokeWidth: 5}
             }}
             containerComponent={
@@ -118,6 +119,7 @@ export default class App extends React.Component {
               }
             ]}
             label={this.state.label}
+            tickLabelComponent={<VictoryLabel y={-230}/>}
             tickValues={[
               new Date(1980, 1, 1),
               new Date(1990, 1, 1),

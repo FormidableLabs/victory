@@ -364,8 +364,8 @@ export default class VictoryLine extends React.Component {
         this.getEventState("all", "data"),
         getSharedEventState("all", "data"),
         { data },
-        this.baseProps.all.data,
-        dataComponent.props
+        dataComponent.props,
+        this.baseProps.all.data
       );
       const lineComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
@@ -376,8 +376,8 @@ export default class VictoryLine extends React.Component {
           this.getEventState("all", "labels"),
           getSharedEventState("all", "labels"),
           { data },
-          this.baseProps.all.labels,
-          labelComponent.props
+          labelComponent.props,
+          this.baseProps.all.labels
         );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", "all");
