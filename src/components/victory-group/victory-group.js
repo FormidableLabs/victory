@@ -346,7 +346,6 @@ export default class VictoryGroup extends React.Component {
       height: props.height,
       width: props.width,
       padding: Helpers.getPadding(props),
-      labelComponent: props.labelComponent,
       standalone: false,
       categories,
       domain,
@@ -373,6 +372,7 @@ export default class VictoryGroup extends React.Component {
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
+      const labelComponent = props.labelComponent || child.props.labelComponent;
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
