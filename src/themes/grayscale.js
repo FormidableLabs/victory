@@ -1,5 +1,5 @@
 const grayscaleBlack = "#252525";
-const fontStack = "Poppins, Helvetica-Neue, sans-serif";
+const fontStack = "Poppins, 'Century Gothic', 'Trebuchet MS', sans-serif";
 const letterSpace = 0.2;
 const labelFontSize = 10;
 const dataTickLabelPadding = 5;
