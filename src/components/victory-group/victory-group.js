@@ -346,7 +346,6 @@ export default class VictoryGroup extends React.Component {
       height: props.height,
       width: props.width,
       padding: Helpers.getPadding(props),
-      labelComponent: props.labelComponent,
       standalone: false,
       categories,
       domain,
