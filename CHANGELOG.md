@@ -1,5 +1,9 @@
 # VictoryLine Changelog
 
+## 9.1.1 (2016-06-13)
+
+- Custom component props get precedence over calculated props
+
 ## 9.1.0 (2016-06-13)
 
 - Fixes bugs related to horizontal bar charts
