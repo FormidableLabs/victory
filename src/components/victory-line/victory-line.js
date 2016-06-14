@@ -336,8 +336,7 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
-    LineHelpers.getStyleObject.bind(LineHelpers));
+  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers), defaultStyles);
 
   constructor() {
     super();
@@ -348,13 +347,11 @@ export default class VictoryLine extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = LineHelpers.getBaseProps(this.props,
-      LineHelpers.getStyleObject(this.props, defaultStyles));
+    this.baseProps = LineHelpers.getBaseProps(this.props, defaultStyles);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = LineHelpers.getBaseProps(newProps,
-      LineHelpers.getStyleObject(this.props, defaultStyles));
+    this.baseProps = LineHelpers.getBaseProps(newProps, defaultStyles);
   }
 
   renderData(props) {
@@ -419,9 +416,11 @@ export default class VictoryLine extends React.Component {
       );
     }
 
+    const styleObject = this.props.theme && this.props.theme.line ? this.props.theme.line
+    : defaultStyles;
     const style = Helpers.getStyles(
       this.props.style,
-      LineHelpers.getStyleObject(this.props, defaultStyles),
+      styleObject,
       "auto",
       "100%"
     );

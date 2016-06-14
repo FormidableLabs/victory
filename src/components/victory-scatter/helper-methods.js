@@ -6,6 +6,7 @@ import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, defaultStyles) {
+    defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter : defaultStyles;
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { data, style, scale } = calculatedValues;
     return data.reduce((memo, datum, index) => {

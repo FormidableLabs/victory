@@ -5,18 +5,9 @@ import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 
 export default {
-  getStyleObject(props, defaultStyles) {
-    let styleObject;
-    if (props.theme && props.theme.area) {
-      styleObject = props.theme.area;
-    } else {
-      styleObject = defaultStyles;
-    }
-
-    return styleObject;
-  },
 
   getBaseProps(props, defaultStyles) {
+    defaultStyles = props.theme && props.theme.area ? props.theme.area : defaultStyles;
     const {scale, style, data} = this.getCalculatedValues(props, defaultStyles);
     const {interpolation, label} = props;
 

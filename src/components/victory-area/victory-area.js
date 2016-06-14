@@ -322,8 +322,7 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers),
-    AreaHelpers.getStyleObject.bind(AreaHelpers));
+  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), defaultStyles);
 
   constructor() {
     super();
@@ -334,13 +333,11 @@ export default class VictoryArea extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = AreaHelpers.getBaseProps(this.props,
-      AreaHelpers.getStyleObject(this.props, defaultStyles));
+    this.baseProps = AreaHelpers.getBaseProps(this.props, defaultStyles);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = AreaHelpers.getBaseProps(newProps,
-      AreaHelpers.getStyleObject(this.props, defaultStyles));
+    this.baseProps = AreaHelpers.getBaseProps(newProps, defaultStyles);
   }
 
   renderArea(props) {
@@ -393,9 +390,11 @@ export default class VictoryArea extends React.Component {
       );
     }
 
+    const styleObject = this.props.theme && this.props.theme.area ? this.props.theme.area
+    : defaultStyles;
     const style = Helpers.getStyles(
       this.props.style,
-      AreaHelpers.getStyleObject(this.props, defaultStyles),
+      styleObject,
       "auto",
       "100%"
     );

@@ -5,16 +5,6 @@ import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 
 export default {
-  getStyleObject(props, defaultStyles) {
-    let styleObject;
-    if (props.theme && props.theme.bar) {
-      styleObject = props.theme.bar;
-    } else {
-      styleObject = defaultStyles;
-    }
-
-    return styleObject;
-  },
 
   getScale(props) {
     const range = {
@@ -93,6 +83,7 @@ export default {
   },
 
   getBaseProps(props, defaultStyles) {
+    defaultStyles = props.theme && props.theme.bar ? props.theme.bar : defaultStyles;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const scale = this.getScale(props);

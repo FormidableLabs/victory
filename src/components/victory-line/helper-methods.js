@@ -6,18 +6,8 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getStyleObject(props, defaultStyles) {
-    let styleObject;
-    if (props.theme && props.theme.line) {
-      styleObject = props.theme.line;
-    } else {
-      styleObject = defaultStyles;
-    }
-
-    return styleObject;
-  },
-
   getBaseProps(props, defaultStyles) {
+    defaultStyles = props.theme && props.theme.line ? props.theme.line : defaultStyles;
     const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const {interpolation, label} = props;

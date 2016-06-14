@@ -326,7 +326,9 @@ export default class VictoryScatter extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -425,9 +427,11 @@ export default class VictoryScatter extends React.Component {
       );
     }
 
+    const styleObject = this.props.theme && this.props.theme.scatter ? this.props.theme.scatter
+    : defaultStyles;
     const style = Helpers.getStyles(
       this.props.style,
-      defaultStyles,
+      styleObject,
       "auto",
       "100%"
     );

@@ -50,16 +50,6 @@ export default {
     return scale;
   },
 
-  getStyleObject(props, defaultStyles) {
-    let styleObject;
-    if (props.theme && props.theme.axis) {
-      styleObject = props.theme.axis;
-    } else {
-      styleObject = defaultStyles;
-    }
-    return styleObject;
-  },
-
   getStyles(props, defaultStyles) {
     const style = props.style || {};
     const parentStyleProps = { height: "auto", width: "100%" };
@@ -74,6 +64,7 @@ export default {
   },
 
   getBaseProps(props, defaultStyles) {
+    defaultStyles = props.theme && props.theme.axis ? props.theme.axis : defaultStyles;
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const {
       style, padding, orientation, isVertical, scale, ticks, tickFormat,

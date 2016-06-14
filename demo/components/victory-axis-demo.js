@@ -4,6 +4,7 @@ import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import { merge, random, range } from "lodash";
 import { VictoryContainer } from "victory-core";
+import Grayscale from "../../src/themes/grayscale";
 
 export default class App extends React.Component {
   constructor() {
@@ -158,6 +159,7 @@ export default class App extends React.Component {
             scale={"log"}
             domain={[1, 5]}
             offsetX={50}
+            theme={Grayscale}
           />
           <VictoryAxis
             style={style}
@@ -165,6 +167,7 @@ export default class App extends React.Component {
             padding={{top: 10, bottom: 60, right: 60}}
             orientation="right"
             scale={"log"}
+            theme={Grayscale}
             domain={[1, 5]}
           />
         </div>

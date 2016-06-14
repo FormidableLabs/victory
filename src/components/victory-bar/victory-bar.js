@@ -306,7 +306,9 @@ export default class VictoryBar extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /***/
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -325,8 +327,7 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers),
-    BarHelpers.getStyleObject.bind(BarHelpers));
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), defaultStyles);
 
   constructor() {
     super();
@@ -337,13 +338,11 @@ export default class VictoryBar extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = BarHelpers.getBaseProps(this.props,
-      BarHelpers.getStyleObject(this.props, defaultStyles));
+    this.baseProps = BarHelpers.getBaseProps(this.props, defaultStyles);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = BarHelpers.getBaseProps(newProps,
-      BarHelpers.getStyleObject(this.props, defaultStyles));
+    this.baseProps = BarHelpers.getBaseProps(newProps, defaultStyles);
   }
 
   renderData(props) {
@@ -399,8 +398,9 @@ export default class VictoryBar extends React.Component {
         </VictoryTransition>
       );
     }
-    const style = Helpers.getStyles(this.props.style,
-      BarHelpers.getStyleObject(this.props, defaultStyles), "auto", "100%");
+    const styleObject = this.props.theme && this.props.theme.bar ? this.props.theme.bar
+    : defaultStyles;
+    const style = Helpers.getStyles(this.props.style, styleObject, "auto", "100%");
     const group = <g style={style.parent} role="presentation">{this.renderData(this.props)}</g>;
     return this.props.standalone ?
       React.cloneElement(

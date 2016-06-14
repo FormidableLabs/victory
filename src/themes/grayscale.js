@@ -88,6 +88,7 @@ export default {
     axisLabel: {
       stroke: "transparent",
       fill: "#252525",
+      padding: 40,
       fontSize: 10,
       fontFamily: "Poppins, Helvetica-Neue, sans-serif",
       letterSpacing: 0.2
