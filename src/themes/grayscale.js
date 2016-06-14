@@ -3,6 +3,7 @@ const fontStack = "Poppins, 'Century Gothic', 'Trebuchet MS', sans-serif";
 const letterSpace = 0.2;
 const labelFontSize = 10;
 const dataTickLabelPadding = 5;
+const strokeCap = "round";
 
 export default {
   line: {
@@ -70,7 +71,7 @@ export default {
       stroke: grayscaleBlack,
       fill: "none",
       strokeWidth: 2,
-      strokeLinecap: "round"
+      strokeLinecap: strokeCap
     },
     axisLabel: {
       stroke: "transparent",
@@ -83,14 +84,14 @@ export default {
     grid: {
       stroke: "#d9d9d9",
       fill: "none",
-      strokeLinecap: "round"
+      strokeLinecap: strokeCap
     },
     ticks: {
       stroke: "none",
       fill: "none",
       padding: dataTickLabelPadding,
       strokeWidth: 2,
-      strokeLinecap: "round",
+      strokeLinecap: strokeCap,
       size: 4
     },
     tickLabels: {
