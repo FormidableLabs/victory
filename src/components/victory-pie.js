@@ -335,50 +335,87 @@ export default class VictoryPie extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = PieHelpers.getBaseProps(this.props, defaultStyles);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = PieHelpers.getBaseProps(newProps, defaultStyles);
+    this.setupEvents(newProps);
   }
 
-  renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = PieHelpers.getBaseProps(props, defaultStyles);
+    this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
+  }
+
+  renderSlices(props) {
+    return this.dataKeys.map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `pie-${key}`},
         this.getEventState(key, "data"),
-        getSharedEventState(key, "data"),
+        this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
-        dataComponent.props
+        props.dataComponent.props
       );
-      const pieComponent = React.cloneElement(dataComponent, Object.assign(
+      return React.cloneElement(props.dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
+    });
+  }
+
+  renderLabels(props) {
+    return this.dataKeys.reduce((memo, key) => {
       const labelProps = defaults(
         {key: `pie-label-${key}`},
         this.getEventState(key, "labels"),
-        getSharedEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,
-        labelComponent.props
+        props.labelComponent.props
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const pieLabel = React.cloneElement(labelComponent, Object.assign({
+        const labelComponent = React.cloneElement(props.labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return (
-          <g key={`pie-group-${key}`}>
-            {pieComponent}
-            {pieLabel}
-          </g>
-        );
+        return memo.concat(labelComponent);
       }
-      return pieComponent;
-    });
+      return memo;
+    }, []);
+  }
+
+  renderData(props) {
+    const pie = this.renderSlices(props);
+    const pieLabels = this.renderLabels(props);
+    if (pieLabels.length > 0) {
+      return (
+        <g key={`pie-group`}>
+          {pie}
+          {pieLabels}
+        </g>
+      );
+    }
+    return pie;
+  }
+
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
   }
 
   render() {
@@ -407,14 +444,6 @@ export default class VictoryPie extends React.Component {
       </g>
     );
 
-    return this.props.standalone ?
-      React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
-        group) :
-      group;
+    return this.props.standalone ? this.renderContainer(this.props, group) : group;
   }
 }

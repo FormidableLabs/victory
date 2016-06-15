@@ -239,7 +239,7 @@ export default class App extends React.Component {
             data={range(0, 2).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            colorScale={["#FF2800", "#FFF"]}
+            colorScale={["tomato", "orange"]}
             labels={[]}
             cornerRadius={20}
             startAngle={-6}

@@ -15,6 +15,8 @@ export default {
   getBaseProps(props, defaultStyles) {
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { slices, style, pathFunction, colors, labelPosition } = calculatedValues;
+    const { width, height } = props;
+    const parentProps = {slices, pathFunction, width, height, style: style.parent};
     return slices.reduce((memo, slice, index) => {
       const datum = slice.data;
       const eventKey = datum.eventKey;
@@ -53,7 +55,7 @@ export default {
         labels: labelProps
       };
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, defaultStyles) {
