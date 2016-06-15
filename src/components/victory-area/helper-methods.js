@@ -8,7 +8,7 @@ export default {
 
   getBaseProps(props, defaultStyles) {
     const {scale, style, data} = this.getCalculatedValues(props, defaultStyles);
-    const {interpolation, label} = props;
+    const {interpolation, label, width, height} = props;
 
     const dataProps = {
       data,
@@ -33,10 +33,14 @@ export default {
       scale,
       text
     };
+
+    const parentProps = {style: style.parent, width, height, scale, data};
+
     return {
-      "all": {
+      parent: parentProps,
+      all: {
         data: dataProps,
-        labels: labelProps
+        labels: labelProps,
       }
     };
   },

@@ -41,7 +41,7 @@ export default class Bar extends React.Component {
 
   render() {
     // TODO better bar width calculation
-    const barWidth = this.props.style.width || 8;
+    const barWidth = this.props.style && this.props.style.width || 8;
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
     return (

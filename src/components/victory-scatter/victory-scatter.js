@@ -360,23 +360,29 @@ export default class VictoryScatter extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = ScatterHelpers.getBaseProps(this.props, defaultStyles);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = ScatterHelpers.getBaseProps(newProps, defaultStyles);
+    this.setupEvents(newProps);
+  }
+
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = ScatterHelpers.getBaseProps(props, defaultStyles);
+    this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
+    const { dataComponent, labelComponent } = props;
+    return this.dataKeys.map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `scatter-${key}`},
         this.getEventState(key, "data"),
-        getSharedEventState(key, "data"),
+        this.getSharedEventState(key, "data"),
         dataComponent.props,
         this.baseProps[key].data
       );
@@ -386,7 +392,7 @@ export default class VictoryScatter extends React.Component {
       const labelProps = defaults(
         {key: `scatter-label-${key}`},
         this.getEventState(key, "labels"),
-        getSharedEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
         labelComponent.props,
         this.baseProps[key].labels
       );
@@ -407,7 +413,7 @@ export default class VictoryScatter extends React.Component {
   }
 
   render() {
-    const { animate, style, standalone, width, height, containerComponent } = this.props;
+    const { animate, style, standalone, containerComponent } = this.props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -432,11 +438,24 @@ export default class VictoryScatter extends React.Component {
       </g>
     );
 
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
-        group) :
-      group;
+    if (!standalone) {
+      return group;
+    }
+
+    const parentEvents = this.getEvents(this.props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
   }
 }
