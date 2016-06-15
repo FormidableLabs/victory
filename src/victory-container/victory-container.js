@@ -24,6 +24,14 @@ export default class VictoryContainer extends React.Component {
      */
     width: PropTypes.number,
     /**
+     * The events prop attaches arbitrary event handlers to the label component.
+     * Event handlers are currently called with their corresponding events as well
+     * as scale, style, width, height, and data when applicable. Use the invert method
+     * to convert event coordinate information to data. `scale.x.invert(evt.offsetX)`
+     * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+     */
+    events: PropTypes.object,
+    /**
      * VictoryContainer is a wrapper component that controls some props and behaviors of its
      * children. VictoryContainer works with all Victory components.
      * If no children are provided, VictoryContainer will render an empty SVG.
@@ -63,6 +71,7 @@ export default class VictoryContainer extends React.Component {
         viewBox={`0 0 ${this.props.width} ${this.props.height}`}
         role="img"
         aria-labelledby="title desc"
+        {...this.props.events}
       >
         <title id="title">{this.props.title}</title>
         <desc id="desc">{this.props.desc}</desc>

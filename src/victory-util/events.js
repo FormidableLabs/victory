@@ -62,26 +62,24 @@ export default {
     baseProps = baseProps || this.baseProps;
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
-      const base = type === "props" ? baseProps : this.state;
-      if (!childName || !base[childName]) {
-        return base[key] && base[key][target];
-      }
-      return base[childName] &&
-        base[childName][key] &&
-        base[childName][key][target];
+      const baseType = type === "props" ? baseProps : this.state;
+      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
+      return key === "parent" ? base.parent : base[key] && base[key][target];
     };
 
     const parseEvent = (eventReturn, eventKey) => {
       const nullFunction = () => null;
       const childName = eventReturn.childName || childType;
+      const target = eventReturn.target || namespace;
       const getKey = () => {
-        if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
+        if (target === "parent") {
+          return "parent";
+        } else if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
           return "all";
         }
         return eventReturn.eventKey || eventKey;
       };
       const key = getKey();
-      const target = eventReturn.target || namespace;
       const targetProps = getTargetProps({childName, key, target}, "props");
       const targetState = getTargetProps({childName, key, target}, "state");
       const mutation = eventReturn.mutation || nullFunction;
