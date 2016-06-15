@@ -78,11 +78,11 @@ export default {
         } else if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
             Object.keys(baseProps[childName]) : Object.keys(baseProps);
-        } else if (!eventReturn.eventKey && eventKey === "parent") {
+        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
           return baseProps[childName] ?
             Object.keys(baseProps[childName]) : Object.keys(baseProps);
         }
-        return eventReturn.eventKey || eventKey;
+        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
       };
       const mutationKeys = getKeys();
 
