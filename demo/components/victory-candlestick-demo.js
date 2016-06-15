@@ -67,7 +67,9 @@ export default class App extends React.Component {
           ]}
           size={8}
         />
-        <ChartWrap>
+        <VictoryChart
+          scale={{x: "time"}}
+        >
           <VictoryCandlestick
             style={{parent: style.parent}}
             candleColors={{positive: "purple", negative: "blue"}}
@@ -83,7 +85,7 @@ export default class App extends React.Component {
             ]}
             size={8}
           />
-        </ChartWrap>
+        </VictoryChart>
       </div>
     );
   }
@@ -96,27 +98,3 @@ App.propTypes = {
 App.defaultProps = {
   data: getData()
 };
-
-class ChartWrap extends React.Component {
-  static propTypes = {
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    children: React.PropTypes.any
-  };
-  static defaultProps = {
-    width: 350,
-    height: 250
-  };
-  // renders both a standalone chart, and a version wrapped in VictoryChart,
-  // to test both cases at once
-  render() {
-    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
-    const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
-    return (
-      <div>
-        {React.cloneElement(this.props.children, props)}
-        <VictoryChart {...props}>{this.props.children}</VictoryChart>
-      </div>
-    );
-  }
-}
