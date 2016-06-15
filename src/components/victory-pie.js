@@ -350,8 +350,8 @@ export default class VictoryPie extends React.Component {
       sharedEvents.getEventState : () => undefined;
   }
 
-  renderSlices(props) {
-    return this.dataKeys.map((key) => {
+  renderData(props) {
+    const components = this.dataKeys.reduce((memo, key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `pie-${key}`},
@@ -360,14 +360,11 @@ export default class VictoryPie extends React.Component {
         this.baseProps[key].data,
         props.dataComponent.props
       );
-      return React.cloneElement(props.dataComponent, Object.assign(
+      const sliceComponent = React.cloneElement(props.dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
-    });
-  }
+      memo.data = memo.data.concat(sliceComponent);
 
-  renderLabels(props) {
-    return this.dataKeys.reduce((memo, key) => {
       const labelProps = defaults(
         {key: `pie-label-${key}`},
         this.getEventState(key, "labels"),
@@ -380,24 +377,20 @@ export default class VictoryPie extends React.Component {
         const labelComponent = React.cloneElement(props.labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return memo.concat(labelComponent);
+        memo.labels = memo.labels.concat(labelComponent);
       }
       return memo;
-    }, []);
-  }
+    }, {data: [], labels: []});
 
-  renderData(props) {
-    const pie = this.renderSlices(props);
-    const pieLabels = this.renderLabels(props);
-    if (pieLabels.length > 0) {
+    if (components.labels.length > 0) {
       return (
         <g key={`pie-group`}>
-          {pie}
-          {pieLabels}
+          {components.data}
+          {components.labels}
         </g>
       );
     }
-    return pie;
+    return components.data;
   }
 
   renderContainer(props, group) {
