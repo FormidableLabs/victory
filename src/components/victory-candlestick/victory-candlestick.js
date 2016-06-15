@@ -48,21 +48,6 @@ export default class VictoryCandlestick extends React.Component {
      */
     animate: PropTypes.object,
     /**
-     * The categories prop specifies how categorical data for a chart should be ordered.
-     * This prop should be given as an array of string values, or an object with
-     * these arrays of values specified for x and y. If this prop is not set,
-     * categorical data will be plotted in the order it was given in the data array
-     * @examples ["dogs", "cats", "mice"]
-     */
-    categories: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.shape({
-        x: PropTypes.arrayOf(PropTypes.string),
-        y: PropTypes.arrayOf(PropTypes.string)
-      })
-    ]),
-
-    /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
      * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
@@ -308,7 +293,14 @@ export default class VictoryCandlestick extends React.Component {
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
-    /**/
+    /**
+    * Candle colors are significant in candlestick charts - one color signifies the stock
+    * closed at a higher price than it opened, and the other signifies the reverse. The
+    * candleColors prop takes an object with keys positive and negative, which each take
+    * a string that should be a color. Positive is for data points where close is higher
+    * than open, and defaults to green, and negative (close < open) defaults to red.
+    * @example: candleColors={{positive: "purple", negative: "blue"}}
+    */
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
       negative: PropTypes.string

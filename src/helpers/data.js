@@ -74,6 +74,7 @@ export default {
       x: Helpers.createAccessor(props.x),
       y: Helpers.createAccessor(props.y)
     };
+    console.log(this.cleanData(dataset, props));
     return this.cleanData(dataset, props).map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);

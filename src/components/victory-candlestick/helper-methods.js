@@ -1,6 +1,7 @@
 import { pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
+import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, defaultStyles) { // eslint-disable-line max-statements
@@ -73,19 +74,25 @@ export default {
   },
 
   getDomain(props, axis) {
-    const dataset = this.getData(props);
-    const allData = dataset.reduce((memo, datum) => {
-      return Array.isArray(datum[axis]) ?
-       memo.concat(...datum[axis]) : memo.concat(datum[axis]);
-    },
-    []);
-    const min = Math.min(...allData);
-    const max = Math.max(...allData);
-    if (min === max) {
-      const adjustedMax = max === 0 ? 1 : max;
-      return [0, adjustedMax];
+    if (props.domain && props.domain[axis]) {
+      return props.domain[axis];
+    } else if (props.domain && Array.isArray(props.domain)) {
+      return props.domain;
+    } else {
+      const dataset = this.getData(props);
+      const allData = dataset.reduce((memo, datum) => {
+        return Array.isArray(datum[axis]) ?
+         memo.concat(...datum[axis]) : memo.concat(datum[axis]);
+      },
+      []);
+      const min = Math.min(...allData);
+      const max = Math.max(...allData);
+      if (min === max) {
+        const adjustedMax = max === 0 ? 1 : max;
+        return [0, adjustedMax];
+      }
+      return [min, max];
     }
-    return [min, max];
   },
 
   getDataStyles(datum, style, props) {

@@ -21,10 +21,7 @@ export default class Candle extends React.Component {
   }
 
   renderWick() {
-    const width = this.props.width;
-    const padding = this.props.padding.left || this.props.padding;
-    const dataLength = this.props.data.length;
-    const x = this.props.x + 0.25 * (width - 2 * padding) / dataLength;
+    const x = this.props.x;
 
     return (
         <line
@@ -42,10 +39,11 @@ export default class Candle extends React.Component {
     const padding = this.props.padding.left || this.props.padding;
     const dataLength = this.props.data.length;
     const candleWidth = 0.5 * (width - 2 * padding) / dataLength;
+    const candleX = this.props.x - candleWidth / 2;
 
     return (
       <rect
-        x={this.props.x}
+        x={candleX}
         y={this.props.y}
         style={this.props.style}
         width={candleWidth}
