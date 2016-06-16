@@ -85,7 +85,7 @@ export default {
       y2: isVertical ? props.height - padding.bottom + globalTransform.y : globalTransform.y
     };
 
-    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues);
+    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
 
     return ticks.reduce((memo, data, index) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
@@ -162,7 +162,7 @@ export default {
     };
   },
 
-  getAxisLabelProps(props, calculatedValues) {
+  getAxisLabelProps(props, calculatedValues, globalTransform) {
     const {style, orientation, padding, labelPadding, isVertical} = calculatedValues;
     const sign = orientationSign[orientation];
     const hPadding = padding.left + padding.right;
@@ -173,8 +173,8 @@ export default {
     const verticalAnchor = sign < 0 ? "end" : "start";
     const labelStyle = style.axisLabel;
     return {
-      x,
-      y: sign * labelPadding,
+      x: x + globalTransform.x,
+      y: (sign * labelPadding) + globalTransform.y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
       angle: labelStyle.angle,
