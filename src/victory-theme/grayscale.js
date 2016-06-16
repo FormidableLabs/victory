@@ -4,6 +4,14 @@ const letterSpace = 0.2;
 const labelFontSize = 10;
 const dataTickLabelPadding = 5;
 const strokeCap = "round";
+const colors = ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9"];
+const baseLabelStyles = {
+  fontFamily: fontStack,
+  fontSize: labelFontSize,
+  letterSpacing: letterSpace,
+  padding: dataTickLabelPadding,
+  fill: grayscaleBlack
+};
 
 export default {
   line: {
@@ -13,18 +21,13 @@ export default {
       fill: "none",
       opacity: 1
     },
-    labels: {
-      padding: dataTickLabelPadding,
-      fontFamily: fontStack,
-      letterSpacing: letterSpace,
-      fontSize: labelFontSize,
-      strokeWidth: 0,
-      stroke: "transparent",
-      textAnchor: "start"
-    },
-    parent: {
-      // parent styles here
-    }
+    labels: Object.assign(baseLabelStyles,
+      {
+        strokeWidth: 0,
+        stroke: "transparent",
+        textAnchor: "start"
+      }),
+    parent: {}
   },
   bar: {
     data: {
@@ -35,16 +38,8 @@ export default {
       fill: grayscaleBlack,
       opacity: 1
     },
-    labels: {
-      fontSize: labelFontSize,
-      padding: dataTickLabelPadding,
-      fill: grayscaleBlack,
-      fontFamily: fontStack,
-      letterSpacing: letterSpace
-    },
-    parent: {
-      // parent styles here
-    }
+    labels: baseLabelStyles,
+    parent: {}
   },
   scatter: {
     data: {
@@ -53,18 +48,12 @@ export default {
       stroke: "transparent",
       strokeWidth: 0
     },
-    labels: {
-      stroke: "transparent",
-      fill: grayscaleBlack,
-      fontFamily: fontStack,
-      letterSpacing: letterSpace,
-      fontSize: labelFontSize,
-      textAnchor: "middle",
-      padding: dataTickLabelPadding
-    },
-    parent: {
-      // parent styles here
-    }
+    labels: Object.assign(baseLabelStyles,
+      {
+        stroke: "transparent",
+        textAnchor: "middle"
+      }),
+    parent: {}
   },
   axis: {
     axis: {
@@ -73,14 +62,11 @@ export default {
       strokeWidth: 2,
       strokeLinecap: strokeCap
     },
-    axisLabel: {
-      stroke: "transparent",
-      fill: grayscaleBlack,
-      padding: 40,
-      fontSize: labelFontSize,
-      fontFamily: fontStack,
-      letterSpacing: letterSpace
-    },
+    axisLabel: Object.assign(baseLabelStyles,
+      {
+        stroke: "transparent",
+        padding: dataTickLabelPadding * 85
+      }),
     grid: {
       stroke: "#d9d9d9",
       fill: "none",
@@ -94,41 +80,35 @@ export default {
       strokeLinecap: strokeCap,
       size: 4
     },
-    tickLabels: {
-      stroke: "transparent",
-      fill: (tick, index) => index % 2 !== 0 ?
-      "transparent" : grayscaleBlack,
-      fontFamily: fontStack,
-      letterSpacing: letterSpace,
-      fontSize: labelFontSize,
-      padding: dataTickLabelPadding
-    }
+    tickLabels: Object.assign(baseLabelStyles,
+      {
+        stroke: "transparent",
+        fill: (tick, index) => index % 2 !== 0 ?
+        "transparent" : grayscaleBlack
+      })
   },
   area: {
     data: {
       fill: grayscaleBlack
     },
-    labels: {
-      fontSize: labelFontSize,
-      padding: dataTickLabelPadding,
-      fill: grayscaleBlack,
-      fontFamily: fontStack,
-      letterSpacing: letterSpace
-    },
-    parent: {
-      // parent styles here
-    }
+    labels: baseLabelStyles,
+    parent: {}
   },
   pie: {
+    colorScale: ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9", "#f7f7f7"],
     data: {
-      // data styles here
+      padding: dataTickLabelPadding,
+      stroke: "#f7f7f7",
+      strokeWidth: 1
     },
-    labels: {
-      // labels styles here
-    },
-    parent: {
-      // parent styles here
-    }
+    labels: Object.assign(baseLabelStyles,
+      {
+        padding: 200,
+        strokeWidth: 0,
+        stroke: "transparent",
+        textAnchor: "middle"
+      }),
+    parent: {}
   },
-  colorScale: [grayscaleBlack, "#636363", "#969696", "#bdbdbd", "#d9d9d9"]
+  colorScale: colors
 };
