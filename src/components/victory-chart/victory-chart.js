@@ -341,13 +341,11 @@ export default class VictoryChart extends React.Component {
       </g>
     );
 
-    return this.props.standalone ?
+    const { standalone, width, height, containerComponent } = this.props;
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: style.parent}, containerComponent.props),
         group) :
       group;
   }

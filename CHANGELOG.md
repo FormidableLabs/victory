@@ -1,5 +1,28 @@
 # VictoryLine Changelog
 
+## 9.1.3 (2016-06-14)
+
+- Alters the render order for children of `VictoryChart` so that _default_ axes are always rendered before other children. When axes are explicitly defined children of `VictoryChart` will  still be rendered in the order they are defined.
+- Alters the render order of elements within `VictoryAxis` so that grid elements are rendered before ticks and tick labels
+- Fixes a bug in `VictoryGroup` that was causing custom `labelComponents` of its children to be overridden.
+
+## 9.1.2 (2016-06-13)
+
+- Pre-calculates and applies VictoryAxis transform to individual elements. This allows custom axis components (_i.e._ `tickLabelComponent`) to be absolutely positioned by overriding position props
+
+## 9.1.1 (2016-06-13)
+
+- Custom component props get precedence over calculated props
+
+## 9.1.0 (2016-06-13)
+
+- Fixes bugs related to horizontal bar charts
+- Fixes bugs related to label transfroms
+- Increases default font sizes for readability
+- Adds basic aria roles
+- Adds support for custom container elements
+- Adds vectorEffect non-scaling-stroke to support responsive charts
+
 ## 9.0.0 (2016-06-01) 
 
 - Upgrades to React 15

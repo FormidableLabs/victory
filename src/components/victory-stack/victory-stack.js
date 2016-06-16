@@ -303,9 +303,11 @@ export default class VictoryStack extends React.Component {
       x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
       y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
     };
+    const xScale = baseScale.x.domain(domain.x).range(range.x);
+    const yScale = baseScale.y.domain(domain.y).range(range.y);
     const scale = {
-      x: baseScale.x.domain(domain.x).range(range.x),
-      y: baseScale.y.domain(domain.y).range(range.y)
+      x: horizontal ? yScale : xScale,
+      y: horizontal ? xScale : yScale
     };
     const categories = {
       x: Wrapper.getCategories(props, "x"),
@@ -354,10 +356,11 @@ export default class VictoryStack extends React.Component {
     return childComponents.map((child, index) => {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
+      const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
-        labels: this.getLabels(props, datasets, index) || child.props.labels,
+        labels,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data
@@ -388,13 +391,12 @@ export default class VictoryStack extends React.Component {
         {newChildren}
       </g>
     );
-    return props.standalone ?
+
+    const { standalone, width, height, containerComponent } = this.props;
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: style.parent}, containerComponent.props),
         group) :
       group;
   }

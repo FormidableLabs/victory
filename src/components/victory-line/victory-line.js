@@ -19,7 +19,7 @@ const defaultStyles = {
   labels: {
     padding: 5,
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 13,
     strokeWidth: 0,
     stroke: "transparent",
     textAnchor: "start"
@@ -373,8 +373,8 @@ export default class VictoryLine extends React.Component {
         this.getEventState("all", "data"),
         getSharedEventState("all", "data"),
         { data },
-        this.baseProps.all.data,
-        dataComponent.props
+        dataComponent.props,
+        this.baseProps.all.data
       );
       const lineComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
@@ -385,8 +385,8 @@ export default class VictoryLine extends React.Component {
           this.getEventState("all", "labels"),
           getSharedEventState("all", "labels"),
           { data },
-          this.baseProps.all.labels,
-          labelComponent.props
+          labelComponent.props,
+          this.baseProps.all.labels
         );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", "all");
@@ -405,10 +405,9 @@ export default class VictoryLine extends React.Component {
   }
 
   render() {
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryLine` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    const { animate, style, standalone, width, height, containerComponent } = this.props;
+
+    if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -417,7 +416,7 @@ export default class VictoryLine extends React.Component {
         "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           <VictoryLine {...this.props}/>
         </VictoryTransition>
       );
@@ -425,21 +424,19 @@ export default class VictoryLine extends React.Component {
 
     const styleObject = this.props.theme && this.props.theme.line ? this.props.theme.line
     : defaultStyles;
-    const style = Helpers.getStyles(
-      this.props.style,
-      styleObject,
-      "auto",
-      "100%"
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+
+    const group = (
+      <g role="presentation" style={baseStyles.parent}>
+        {this.renderData(this.props)}
+      </g>
     );
 
-    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
-    return this.props.standalone ?
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
         group) :
       group;
   }

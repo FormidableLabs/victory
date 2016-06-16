@@ -20,7 +20,7 @@ const defaultStyles = {
     stroke: "transparent",
     fill: "#756f6a",
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 13,
     textAnchor: "middle",
     padding: 10
   }
@@ -386,8 +386,8 @@ export default class VictoryScatter extends React.Component {
         {key: `scatter-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
-        this.baseProps[key].data,
-        dataComponent.props
+        dataComponent.props,
+        this.baseProps[key].data
       );
       const scatterComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
@@ -396,8 +396,8 @@ export default class VictoryScatter extends React.Component {
         {key: `scatter-label-${key}`},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
-        this.baseProps[key].labels,
-        labelComponent.props
+        labelComponent.props,
+        this.baseProps[key].labels
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
@@ -416,10 +416,9 @@ export default class VictoryScatter extends React.Component {
   }
 
   render() {
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryScatter` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    const { animate, style, standalone, width, height, containerComponent } = this.props;
+
+    if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -428,7 +427,7 @@ export default class VictoryScatter extends React.Component {
         "style", "width", "x", "y"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           <VictoryScatter {...this.props}/>
         </VictoryTransition>
       );
@@ -436,21 +435,19 @@ export default class VictoryScatter extends React.Component {
 
     const styleObject = this.props.theme && this.props.theme.scatter ? this.props.theme.scatter
     : defaultStyles;
-    const style = Helpers.getStyles(
-      this.props.style,
-      styleObject,
-      "auto",
-      "100%"
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+
+    const group = (
+      <g role="presentation" style={baseStyles.parent}>
+        {this.renderData(this.props)}
+      </g>
     );
 
-    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
-    return this.props.standalone ?
+    return standalone ?
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
         group) :
       group;
   }

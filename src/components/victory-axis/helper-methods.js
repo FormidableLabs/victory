@@ -71,15 +71,19 @@ export default {
       stringTicks, anchors
     } = calculatedValues;
 
-    const gridOffset = this.getGridOffset(props, calculatedValues);
+    const offset = this.getOffset(props, calculatedValues);
+
+    const globalTransform = this.getTransform(props, calculatedValues, offset);
+
+    const gridOffset = this.getGridOffset(props, calculatedValues, offset);
     const gridEdge = this.getGridEdge(props, calculatedValues);
 
     const axisProps = {
       style: style.axis,
-      x1: isVertical ? null : padding.left,
-      x2: isVertical ? null : props.width - padding.right,
-      y1: isVertical ? padding.top : null,
-      y2: isVertical ? props.height - padding.bottom : null
+      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
+      x2: isVertical ? globalTransform.x : props.width - padding.right + globalTransform.x,
+      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
+      y2: isVertical ? props.height - padding.bottom + globalTransform.y : globalTransform.y
     };
 
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues);
@@ -90,13 +94,13 @@ export default {
       const scaledTick = scale(data);
       const tickPosition = this.getTickPosition(tickStyle, orientation, isVertical);
       const tickTransform = {
-        x: isVertical ? 0 : scaledTick,
-        y: isVertical ? scaledTick : 0
+        x: isVertical ? globalTransform.x : scaledTick + globalTransform.x,
+        y: isVertical ? scaledTick + globalTransform.y : globalTransform.y
       };
 
       const gridTransform = {
-        x: isVertical ? -gridOffset.x : scaledTick,
-        y: isVertical ? scaledTick : gridOffset.y
+        x: isVertical ? -gridOffset.x + globalTransform.x : scaledTick + globalTransform.x,
+        y: isVertical ? scaledTick + globalTransform.y : gridOffset.y + globalTransform.y
       };
 
       const tickProps = {
@@ -231,7 +235,9 @@ export default {
   },
 
   getOffset(props, calculatedValues) {
-    const { style, padding, isVertical, orientation, labelPadding} = calculatedValues;
+    const {
+      style, padding, isVertical, orientation, labelPadding, stringTicks, ticks
+    } = calculatedValues;
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
     const fontSize = style.axisLabel.fontSize;
@@ -239,8 +245,12 @@ export default {
       ? props.offsetX : xPadding;
     const offsetY = (props.offsetY !== null) && (props.offsetY !== undefined)
       ? props.offsetY : yPadding;
-    // TODO: style.ticks.size need to be evaluated first!!
-    const totalPadding = fontSize + (2 * style.ticks.size) + labelPadding;
+    const tickSizes = ticks.map((data) => {
+      const tick = stringTicks ? props.tickValues[data - 1] : data;
+      const tickStyle = Helpers.evaluateStyle(style.ticks, tick);
+      return tickStyle.size;
+    });
+    const totalPadding = fontSize + (2 * Math.max(...tickSizes)) + labelPadding;
     const minimumPadding = 1.2 * fontSize; // TODO: magic numbers
     const x = isVertical ? totalPadding : minimumPadding;
     const y = isVertical ? minimumPadding : totalPadding;
@@ -250,16 +260,14 @@ export default {
     };
   },
 
-  getTransform(props, calculatedValues) {
+  getTransform(props, calculatedValues, offset) {
     const {orientation} = calculatedValues;
-    const offset = this.getOffset(props, calculatedValues);
-    const translate = {
-      top: [0, offset.y],
-      bottom: [0, props.height - offset.y],
-      left: [offset.x, 0],
-      right: [props.width - offset.x, 0]
+    return {
+      top: {x: 0, y: offset.y},
+      bottom: {x: 0, y: props.height - offset.y},
+      left: {x: offset.x, y: 0},
+      right: {x: props.width - offset.x, y: 0}
     }[orientation];
-    return `translate(${translate[0]}, ${translate[1]})`;
   },
 
   getTickPosition(style, orientation, isVertical) {
@@ -283,9 +291,8 @@ export default {
     return {x, y};
   },
 
-  getGridOffset(props, calculatedValues) {
+  getGridOffset(props, calculatedValues, offset) {
     const {padding, orientation } = calculatedValues;
-    const offset = this.getOffset(props, calculatedValues);
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
     return {

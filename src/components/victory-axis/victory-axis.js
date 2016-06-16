@@ -20,11 +20,11 @@ const defaultStyles = {
   axisLabel: {
     stroke: "transparent",
     fill: "#756f6a",
-    fontSize: 16,
+    fontSize: 17,
     fontFamily: "Helvetica"
   },
   grid: {
-    stroke: "none",
+    stroke: "transparent",
     fill: "none",
     strokeLinecap: "round"
   },
@@ -40,7 +40,7 @@ const defaultStyles = {
     stroke: "transparent",
     fill: "#756f6a",
     fontFamily: "Helvetica",
-    fontSize: 10,
+    fontSize: 12,
     padding: 5
   }
 };
@@ -374,8 +374,8 @@ export default class VictoryAxis extends React.Component {
       {},
       this.getEventState(key, "axis"),
       this.getSharedEventState(key, "axis"),
-      this.baseProps[key].axis,
-      props.axisComponent.props
+      props.axisComponent.props,
+      this.baseProps[key].axis
     );
     return React.cloneElement(props.axisComponent, Object.assign(
       {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
@@ -389,8 +389,8 @@ export default class VictoryAxis extends React.Component {
       {},
       this.getEventState(key, "axisLabel"),
       this.getSharedEventState(key, "axisLabel"),
-      this.baseProps[key].axisLabel,
-      props.axisLabelComponent.props
+      props.axisLabelComponent.props,
+      this.baseProps[key].axisLabel
     );
     return React.cloneElement(props.axisLabelComponent, Object.assign(
       {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
@@ -406,8 +406,8 @@ export default class VictoryAxis extends React.Component {
         {},
         this.getEventState(key, "ticks"),
         this.getSharedEventState(key, "ticks"),
-        this.baseProps[key].ticks,
-        tickComponent.props
+        tickComponent.props,
+        this.baseProps[key].ticks
       );
       const TickComponent = React.cloneElement(tickComponent, Object.assign(
         {}, tickProps, {events: Events.getPartialEvents(tickEvents, key, tickProps)}
@@ -417,8 +417,8 @@ export default class VictoryAxis extends React.Component {
         {},
         this.getEventState(key, "grid"),
         this.getSharedEventState(key, "grid"),
-        this.baseProps[key].grid,
-        gridComponent.props
+        gridComponent.props,
+        this.baseProps[key].grid
       );
       const GridComponent = React.cloneElement(gridComponent, Object.assign(
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
@@ -427,8 +427,8 @@ export default class VictoryAxis extends React.Component {
         {},
         this.getEventState(key, "tickLabels"),
         this.getSharedEventState(key, "tickLabels"),
-        this.baseProps[key].tickLabels,
-        tickLabelComponent.props
+        tickLabelComponent.props,
+        this.baseProps[key].tickLabels
       );
       const tickLabelEvents = this.getEvents(props, "tickLabels", key);
       const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
@@ -436,16 +436,17 @@ export default class VictoryAxis extends React.Component {
       }, tickLabelProps));
       return (
         <g key={`tick-group-${key}`}>
+          {GridComponent}
           {TickComponent}
           {TickLabel}
-          {GridComponent}
         </g>
       );
     });
   }
 
   render() {
-    if (this.props.animate) {
+    const { animate, standalone, containerComponent, height, width } = this.props;
+    if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -454,30 +455,27 @@ export default class VictoryAxis extends React.Component {
         "offsetX", "offsetY", "padding", "width", "height"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           <VictoryAxis {...this.props}/>
         </VictoryTransition>
       );
     }
+
     const styleObject = this.props.theme && this.props.theme.axis ? this.props.theme.axis
     : defaultStyles;
     const style = AxisHelpers.getStyles(this.props, styleObject);
-    const calculatedValues = AxisHelpers.getCalculatedValues(this.props, styleObject);
-    const transform = AxisHelpers.getTransform(this.props, calculatedValues);
+
     const group = (
-      <g style={style.parent} transform={transform}>
+      <g style={style.parent}>
         {this.renderGridAndTicks(this.props)}
         {this.renderLine(this.props)}
         {this.renderLabel(this.props)}
       </g>
     );
-    return this.props.standalone ? (
+    return standalone ? (
       React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+        containerComponent,
+        Object.assign({ height, width, style: style.parent}, containerComponent.props),
         group)
       ) : group;
   }
