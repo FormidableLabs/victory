@@ -215,7 +215,7 @@ export default class App extends React.Component {
 
         <VictoryChart
           theme={Grayscale}
-        > 
+        >
           <VictoryScatter
             style={style}
             data={range(0, 100).map((i) => [i, i * 3287 % 100])}

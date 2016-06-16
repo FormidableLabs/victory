@@ -1,6 +1,6 @@
 /*global window:false*/
 import React from "react";
-import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryAxis} from "../../src/index";
+import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
 import { VictoryContainer, Grayscale } from "victory-core";
