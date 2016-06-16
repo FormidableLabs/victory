@@ -4,7 +4,7 @@ import React from "react";
 import { VictoryPie } from "../src/index";
 import Slice from "../src/components/slice";
 import {
-  VictoryContainer, VictoryThemeGrayscale
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 
 class BorderLabelSlice extends React.Component {
@@ -149,7 +149,7 @@ export default class App extends React.Component {
 
           <VictoryPie
             style={{parent: {maxWidth: "40%"}}}
-            theme={VictoryThemeGrayscale}
+            theme={VictoryTheme.grayscale}
             labels={() => "click me!"}
             events={[{
               target: "data",
@@ -231,7 +231,7 @@ export default class App extends React.Component {
             data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            theme={VictoryThemeGrayscale}
+            theme={VictoryTheme.grayscale}
             style={{parent: {maxWidth: "40%"}}}
             animate={{duration: 2000}}
             // colorScale="qualitative"
