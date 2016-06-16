@@ -199,8 +199,8 @@ export default class App extends React.Component {
               onClick: () => {
                 return [
                   {
+                    target: "data",
                     mutation: (props) => {
-                      console.log(props)
                       return {style: merge({}, props.style, {fill: "orange"})};
                     }
                   }, {

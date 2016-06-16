@@ -70,6 +70,8 @@ export default {
       stringTicks, anchors
     } = calculatedValues;
 
+    const { width, height } = props;
+
     const offset = this.getOffset(props, calculatedValues);
 
     const globalTransform = this.getTransform(props, calculatedValues, offset);
@@ -86,7 +88,7 @@ export default {
     };
 
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues);
-
+    const parentProps = {style: style.parent, ticks, scale, width, height};
     return ticks.reduce((memo, data, index) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
       const tickStyle = Helpers.evaluateStyle(style.ticks, tick);
@@ -141,7 +143,7 @@ export default {
       };
 
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, defaultStyles) {

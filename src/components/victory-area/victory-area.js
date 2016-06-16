@@ -381,8 +381,26 @@ export default class VictoryArea extends React.Component {
     return areaComponent;
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
   render() {
-    const { animate, style, standalone, containerComponent } = this.props;
+    const { animate, style, standalone } = this.props;
 
     if (animate) {
       const whitelist = [
@@ -403,25 +421,6 @@ export default class VictoryArea extends React.Component {
       </g>
     );
 
-    if (!standalone) {
-      return group;
-    }
-
-    const parentEvents = this.getEvents(this.props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      containerComponent.props,
-      this.baseProps.parent
-    );
-
-    return React.cloneElement(
-      containerComponent,
-      Object.assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }

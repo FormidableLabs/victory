@@ -353,7 +353,9 @@ export default class VictoryBar extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent } = props;
-    return this.dataKeys.map((key) => {
+    const barComponents = [];
+    const barLabelComponents = [];
+    this.dataKeys.forEach((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `bar-${key}`},
@@ -362,9 +364,11 @@ export default class VictoryBar extends React.Component {
         dataComponent.props,
         this.baseProps[key].data
       );
-      const barComponent = React.cloneElement(dataComponent, Object.assign(
+
+      barComponents.push(React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      ));
+      )));
+
       const labelProps = defaults(
         {key: `bar-label-${key}`},
         this.getEventState(key, "labels"),
@@ -372,20 +376,24 @@ export default class VictoryBar extends React.Component {
         labelComponent.props,
         this.baseProps[key].labels
       );
+
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const barLabel = React.cloneElement(labelComponent, Object.assign({
+        barLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps));
-        return (
-          <g key={`bar-group-${key}`}>
-            {barComponent}
-            {barLabel}
-          </g>
-        );
+        }, labelProps)));
       }
-      return barComponent;
     });
+
+    if (barLabelComponents.length > 0) {
+      return (
+        <g>
+          {barComponents}
+          {barLabelComponents}
+        </g>
+      );
+    }
+    return barComponents;
   }
 
   renderContainer(props, group) {
@@ -429,6 +437,5 @@ export default class VictoryBar extends React.Component {
     );
 
     return standalone ? this.renderContainer(this.props, group) : group;
-
   }
 }

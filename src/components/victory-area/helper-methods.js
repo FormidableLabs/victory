@@ -34,13 +34,11 @@ export default {
       text
     };
 
-    const parentProps = {style: style.parent, width, height, scale, data};
-
     return {
-      parent: parentProps,
+      parent: {style: style.parent, width, height, scale, data},
       all: {
         data: dataProps,
-        labels: labelProps,
+        labels: labelProps
       }
     };
   },

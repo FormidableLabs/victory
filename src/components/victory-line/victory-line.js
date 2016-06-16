@@ -137,7 +137,7 @@ export default class VictoryLine extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -400,8 +400,26 @@ export default class VictoryLine extends React.Component {
     });
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
   render() {
-    const { animate, style, standalone, containerComponent } = this.props;
+    const { animate, style, standalone } = this.props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -426,24 +444,6 @@ export default class VictoryLine extends React.Component {
       </g>
     );
 
-    if (!standalone) {
-      return group;
-    }
-
-    const parentEvents = this.getEvents(this.props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      containerComponent.props,
-      this.baseProps.parent
-    );
-    return React.cloneElement(
-      containerComponent,
-      Object.assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }

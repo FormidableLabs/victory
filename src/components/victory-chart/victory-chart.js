@@ -1,7 +1,9 @@
-import { defaults } from "lodash";
+import { defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
- VictoryContainer } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
+  VictoryContainer, Events
+} from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -206,6 +208,14 @@ export default class VictoryChart extends React.Component {
     containerComponent: <VictoryContainer />
   };
 
+  constructor() {
+    super();
+    this.state = {};
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
+  }
+
   componentWillReceiveProps(nextProps) {
     const setAnimationState = Wrapper.setAnimationState.bind(this);
     setAnimationState(nextProps);
@@ -256,6 +266,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getCalculatedProps(props, childComponents) {
+    const style = this.getStyles(props);
     const horizontal = childComponents.some((component) => component.props.horizontal);
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
@@ -290,14 +301,14 @@ export default class VictoryChart extends React.Component {
       x: ChartHelpers.createStringMap(props, "x", childComponents),
       y: ChartHelpers.createStringMap(props, "y", childComponents)
     };
-    return {axisComponents, categories, domain, horizontal, scale, stringMap};
+    return {axisComponents, categories, domain, horizontal, scale, stringMap, style};
   }
 
-  getNewChildren(props, childComponents, baseStyle) {
-    const calculatedProps = this.getCalculatedProps(props, childComponents);
+  getNewChildren(props, childComponents, calculatedProps) {
+    const baseStyle = calculatedProps.style.parent;
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
-      const style = defaults({}, child.props.style, {parent: baseStyle.parent});
+      const style = defaults({}, child.props.style, {parent: baseStyle});
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
         animate: getAnimationProps(props, child, index),
@@ -313,31 +324,40 @@ export default class VictoryChart extends React.Component {
     });
   }
 
+  getContainer(props, calculatedProps) {
+    const { width, height, containerComponent } = props;
+    const { scale, style } = calculatedProps;
+    const parentProps = defaults(
+      {},
+      containerComponent.props,
+      {style: style.parent, scale, width, height}
+    );
+    return React.cloneElement(containerComponent, parentProps);
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const style = this.getStyles(props);
     const childComponents = ChartHelpers.getChildComponents(props, defaultAxes);
-    const newChildren = props.events ?
-      (
-        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
-          {this.getNewChildren(props, childComponents, style)}
+    const calculatedProps = this.getCalculatedProps(props, childComponents);
+    const container = props.standalone && this.getContainer(props, calculatedProps);
+    const newChildren = this.getNewChildren(props, childComponents, calculatedProps);
+    if (props.events) {
+      return (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey} container={container}>
+          {newChildren}
         </VictorySharedEvents>
-      ) :
-      this.getNewChildren(props, childComponents, style);
+      );
+    }
 
     const group = (
-      <g style={style.parent}>
+      <g style={calculatedProps.style.parent}>
         {newChildren}
       </g>
     );
+    const result = props.standalone ? React.cloneElement(container, container.props, group) : group;
+    console.log(result)
+    return result
 
-    const { standalone, width, height, containerComponent } = this.props;
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: style.parent}, containerComponent.props),
-        group) :
-      group;
   }
 }

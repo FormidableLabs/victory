@@ -1,7 +1,9 @@
-import { uniq } from "lodash";
+import { uniq, partialRight, defaults, isFunction } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
-  VictoryContainer } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
+  VictoryContainer, Events
+} from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
@@ -272,6 +274,14 @@ export default class VictoryStack extends React.Component {
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
+  constructor() {
+    super();
+    this.state = {};
+    const getScopedEvents = Events.getScopedEvents.bind(this);
+    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
+    this.getEventState = Events.getEventState.bind(this);
+  }
+
   componentWillReceiveProps(nextProps) {
     const setAnimationState = Wrapper.setAnimationState.bind(this);
     setAnimationState(nextProps);
@@ -358,6 +368,29 @@ export default class VictoryStack extends React.Component {
     });
   }
 
+  renderContainer(props, group, calculatedProps) {
+    const { width, height, containerComponent, sharedEvents } = props;
+    const { scale, style } = calculatedProps;
+    const baseParentProps = {style: style.parent, scale, width, height};
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      getSharedEventState("parent", "parent"),
+      containerComponent.props,
+      baseParentProps
+    );
+    return React.cloneElement(
+      containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
@@ -382,12 +415,6 @@ export default class VictoryStack extends React.Component {
       </g>
     );
 
-    const { standalone, width, height, containerComponent } = this.props;
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: style.parent}, containerComponent.props),
-        group) :
-      group;
+    return props.standalone ? this.renderContainer(props, group, calculatedProps) : group;
   }
 }
