@@ -21,7 +21,7 @@ export default {
       fill: "none",
       opacity: 1
     },
-    labels: Object.assign(baseLabelStyles,
+    labels: Object.assign({}, baseLabelStyles,
       {
         strokeWidth: 0,
         stroke: "transparent",
@@ -48,7 +48,7 @@ export default {
       stroke: "transparent",
       strokeWidth: 0
     },
-    labels: Object.assign(baseLabelStyles,
+    labels: Object.assign({}, baseLabelStyles,
       {
         stroke: "transparent",
         textAnchor: "middle"
@@ -62,10 +62,10 @@ export default {
       strokeWidth: 2,
       strokeLinecap: strokeCap
     },
-    axisLabel: Object.assign(baseLabelStyles,
+    axisLabel: Object.assign({}, baseLabelStyles,
       {
         stroke: "transparent",
-        padding: dataTickLabelPadding * 85
+        padding: dataTickLabelPadding * 2
       }),
     grid: {
       stroke: "#d9d9d9",
@@ -80,7 +80,7 @@ export default {
       strokeLinecap: strokeCap,
       size: 4
     },
-    tickLabels: Object.assign(baseLabelStyles,
+    tickLabels: Object.assign({}, baseLabelStyles,
       {
         stroke: "transparent",
         fill: (tick, index) => index % 2 !== 0 ?
@@ -101,7 +101,7 @@ export default {
       stroke: "#f7f7f7",
       strokeWidth: 1
     },
-    labels: Object.assign(baseLabelStyles,
+    labels: Object.assign({}, baseLabelStyles,
       {
         padding: 200,
         strokeWidth: 0,
