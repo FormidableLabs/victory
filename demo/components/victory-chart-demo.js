@@ -5,7 +5,7 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
-import { VictoryLabel, VictoryContainer, Grayscale } from "victory-core";
+import { VictoryLabel, VictoryContainer, VictoryThemeGrayscale } from "victory-core";
 import { assign } from "lodash";
 
 
@@ -520,7 +520,7 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
           <VictoryChart style={chartStyle}
-            theme={Grayscale}
+            theme={VictoryThemeGrayscale}
             events={[{
               childName: "area-1",
               target: "data",

@@ -265,6 +265,7 @@ export default class VictoryStack extends React.Component {
     * VictoryStack. If you are wrapping VictoryStack in VictoryChart,
     * please call the theme on the wrapper component instead.
     * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
     theme: PropTypes.object
   };

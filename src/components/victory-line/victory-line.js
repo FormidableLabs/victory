@@ -322,6 +322,7 @@ export default class VictoryLine extends React.Component {
     * VictoryLine. If you are wrapping VictoryLine in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
     * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
     theme: PropTypes.object
   };

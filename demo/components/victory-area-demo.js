@@ -2,7 +2,7 @@
 import React from "react";
 import { merge, random, range } from "lodash";
 import {VictoryArea, VictoryStack, VictoryGroup, VictoryChart} from "../../src/index";
-import { VictoryContainer, Grayscale } from "victory-core";
+import { VictoryContainer, VictoryThemeGrayscale } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -254,7 +254,7 @@ export default class App extends React.Component {
         </svg>
 
         <VictoryChart
-          theme={Grayscale}
+          theme={VictoryThemeGrayscale}
         >
           <VictoryArea
             style={style} animate={{duration: 1000}}
@@ -271,7 +271,7 @@ export default class App extends React.Component {
         <VictoryStack
           style={style}
           animate={{duration: 1000}}
-          theme={Grayscale}
+          theme={VictoryThemeGrayscale}
           containerComponent={
             <VictoryContainer
               desc="This is an animated area chart that displays data in a range of colors."
@@ -289,7 +289,7 @@ export default class App extends React.Component {
           })}
         </VictoryStack>
 
-        <VictoryStack style={{parent: style.parent}} theme={Grayscale}>
+        <VictoryStack style={{parent: style.parent}} theme={VictoryThemeGrayscale}>
           <VictoryArea label={"one"}
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
