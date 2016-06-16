@@ -3,8 +3,7 @@ import React from "react";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack, VictoryAxis} from "../../src/index";
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
-import { VictoryContainer } from "victory-core";
-import Grayscale from "../../src/themes/grayscale";
+import { VictoryContainer, Grayscale } from "victory-core";
 
 class Wrapper extends React.Component {
   static propTypes = {

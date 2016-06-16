@@ -5,8 +5,7 @@ import {VictoryScatter, VictoryChart} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
-import { VictoryContainer } from "victory-core";
-import Grayscale from "../../src/themes/grayscale";
+import { VictoryContainer, Grayscale } from "victory-core";
 
 const getData = () => {
   const colors =

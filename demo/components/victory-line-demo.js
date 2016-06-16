@@ -4,8 +4,7 @@ import { merge, random, range } from "lodash";
 import {VictoryLine, VictoryChart} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";
-import { VictoryContainer } from "victory-core";
-import Grayscale from "../../src/themes/grayscale";
+import { VictoryContainer, Grayscale } from "victory-core";
 
 class PointedLine extends React.Component {
   static propTypes = {

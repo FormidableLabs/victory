@@ -86,7 +86,7 @@ export default {
 
     return ticks.reduce((memo, data, index) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
-      const tickStyle = Helpers.evaluateStyle(style.ticks, tick);
+      const tickStyle = Helpers.evaluateStyle(style.ticks, tick, index);
       const scaledTick = scale(data);
       const tickPosition = this.getTickPosition(tickStyle, orientation, isVertical);
       const tickTransform = {
@@ -108,7 +108,7 @@ export default {
         tick
       };
       const text = tickFormat(tick, index);
-      const labelStyle = Helpers.evaluateStyle(style.tickLabels, tick);
+      const labelStyle = Helpers.evaluateStyle(style.tickLabels, tick, index);
       const tickLabelProps = {
         style: labelStyle,
         x: tickTransform.x + tickPosition.x,
@@ -125,7 +125,7 @@ export default {
         y1: gridTransform.y,
         x2: gridEdge.x + gridTransform.x,
         y2: gridEdge.y + gridTransform.y,
-        style: Helpers.evaluateStyle(style.grid, tick),
+        style: Helpers.evaluateStyle(style.grid, tick, index),
         tick
       };
 

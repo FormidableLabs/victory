@@ -5,9 +5,8 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
-import { VictoryLabel, VictoryContainer } from "victory-core";
+import { VictoryLabel, VictoryContainer, Grayscale } from "victory-core";
 import { assign } from "lodash";
-import Grayscale from "../../src/themes/grayscale";
 
 
 const UPDATE_INTERVAL = 3000;

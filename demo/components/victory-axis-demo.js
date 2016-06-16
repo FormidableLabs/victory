@@ -3,8 +3,7 @@ import React from "react";
 import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import { merge, random, range } from "lodash";
-import { VictoryContainer } from "victory-core";
-import Grayscale from "../../src/themes/grayscale";
+import { VictoryContainer, Grayscale } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {

@@ -2,8 +2,7 @@
 import React from "react";
 import { merge, random, range } from "lodash";
 import {VictoryArea, VictoryStack, VictoryGroup, VictoryChart} from "../../src/index";
-import { VictoryContainer } from "victory-core";
-import Grayscale from "../../src/themes/grayscale";
+import { VictoryContainer, Grayscale } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
