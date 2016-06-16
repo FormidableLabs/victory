@@ -288,7 +288,14 @@ export default class VictoryPie extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -397,7 +404,9 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const calculatedProps = PieHelpers.getCalculatedValues(this.props, defaultStyles);
+    const styleObject = this.props.theme && this.props.theme.pie ? this.props.theme.pie
+    : defaultStyles;
+    const calculatedProps = PieHelpers.getCalculatedValues(this.props, styleObject);
     const { style, padding, radius } = calculatedProps;
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
