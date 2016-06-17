@@ -4,6 +4,7 @@ import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
   VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
+import Size from "../../helpers/size";
 
 const defaultStyles = {
   data: {
@@ -353,16 +354,6 @@ export default class VictoryStack extends React.Component {
     };
   }
 
-  getWidthHeight(props, defaults) {
-    const width = props.theme && props.theme.props ?
-    props.width || props.theme.props.width || defaults.width :
-    props.width || defaults.width;
-    const height = props.theme && props.theme.props ?
-    props.height || props.theme.props.height || defaults.height :
-    props.height || defaults.height;
-    return { width, height };
-  }
-
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
@@ -384,7 +375,7 @@ export default class VictoryStack extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, this.getWidthHeight(this.props,
+    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       fallbackProps));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;

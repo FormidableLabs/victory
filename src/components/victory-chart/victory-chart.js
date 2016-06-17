@@ -7,6 +7,7 @@ import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
+import Size from "../../helpers/size";
 
 const defaultAxes = {
   independent: <VictoryAxis/>,
@@ -327,7 +328,7 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, ChartHelpers.getWidthHeight(this.props,
+    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;

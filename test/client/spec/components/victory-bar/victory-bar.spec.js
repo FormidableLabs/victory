@@ -30,7 +30,7 @@ describe("components/victory-bar", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryBar.defaultProps.width} ${VictoryBar.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 

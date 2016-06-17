@@ -31,7 +31,7 @@ describe("components/victory-stack", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryStack.defaultProps.width} ${VictoryStack.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

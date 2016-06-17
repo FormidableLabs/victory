@@ -3,6 +3,7 @@ import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
 import { Helpers } from "victory-core";
+import Size from "../../helpers/size";
 
 const orientationSign = {
   top: -1,
@@ -65,7 +66,7 @@ export default {
 
   getBaseProps(props, defaultStyles, defaultWidthHeight) {
     defaultStyles = props.theme && props.theme.axis ? props.theme.axis : defaultStyles;
-    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
+    props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const {
       style, padding, orientation, isVertical, scale, ticks, tickFormat,
@@ -300,15 +301,5 @@ export default {
       x: props.crossAxis ? offset.x - xPadding : 0,
       y: props.crossAxis ? offset.y - yPadding : 0
     };
-  },
-
-  getWidthHeight(props, defaultWidthHeight) {
-    const width = props.theme && props.theme.props ?
-    props.width || props.theme.props.width || defaultWidthHeight.width :
-    props.width || defaultWidthHeight.width;
-    const height = props.theme && props.theme.props ?
-    props.height || props.theme.props.height || defaultWidthHeight.height :
-    props.height || defaultWidthHeight.height;
-    return { width, height };
   }
 };

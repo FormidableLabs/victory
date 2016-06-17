@@ -8,6 +8,7 @@ import {
 } from "victory-core";
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
+import Size from "../../helpers/size";
 
 const defaultStyles = {
   data: {
@@ -393,7 +394,7 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, AreaHelpers.getWidthHeight(this.props,
+    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
     const { animate, style, standalone, width, height, containerComponent } = this.props;
 

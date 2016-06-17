@@ -3,6 +3,7 @@ import { Helpers, Events } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
+import Size from "../../helpers/size";
 
 export default {
 
@@ -87,7 +88,7 @@ export default {
 
   getBaseProps(props, defaultStyles, defaultWidthHeight) {
     defaultStyles = props.theme && props.theme.bar ? props.theme.bar : defaultStyles;
-    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
+    props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const scale = this.getScale(props);
@@ -134,15 +135,5 @@ export default {
       };
       return memo;
     }, {});
-  },
-
-  getWidthHeight(props, defaultWidthHeight) {
-    const width = props.theme && props.theme.props ?
-    props.width || props.theme.props.width || defaultWidthHeight.width :
-    props.width || defaultWidthHeight.width;
-    const height = props.theme && props.theme.props ?
-    props.height || props.theme.props.height || defaultWidthHeight.height :
-    props.height || defaultWidthHeight.height;
-    return { width, height };
   }
 };

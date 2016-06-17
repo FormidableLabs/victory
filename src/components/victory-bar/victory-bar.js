@@ -8,6 +8,7 @@ import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
+import Size from "../../helpers/size";
 
 const defaultStyles = {
   data: {
@@ -399,7 +400,7 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, BarHelpers.getWidthHeight(this.props,
+    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
     const {animate, style, standalone, containerComponent, height, width} = this.props;
 

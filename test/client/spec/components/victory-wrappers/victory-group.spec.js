@@ -31,7 +31,7 @@ describe("components/victory-group", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryGroup.defaultProps.width} ${VictoryGroup.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

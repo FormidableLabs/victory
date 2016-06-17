@@ -4,6 +4,7 @@ import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
   VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
+import Size from "../../helpers/size";
 
 const defaultStyles = {
   data: {
@@ -294,7 +295,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getCalculatedProps(props, childComponents, style) {
-    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
+    props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
@@ -369,16 +370,6 @@ export default class VictoryGroup extends React.Component {
     };
   }
 
-  getWidthHeight(props, defaults) {
-    const width = props.theme && props.theme.props ?
-    props.width || props.theme.props.width || defaults.width :
-    props.width || defaults.width;
-    const height = props.theme && props.theme.props ?
-    props.height || props.theme.props.height || defaults.height :
-    props.height || defaults.height;
-    return { width, height };
-  }
-
   getColorScale(props, child) {
     const role = child.type && child.type.role;
     if (role !== "group-wrapper" && role !== "stack-wrapper") {
@@ -412,7 +403,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, this.getWidthHeight(this.props,
+    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;

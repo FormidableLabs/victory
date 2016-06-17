@@ -9,6 +9,7 @@ import GridLine from "./grid";
 import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
+import Size from "../../helpers/size";
 
 const defaultStyles = {
   axis: {
@@ -46,8 +47,8 @@ const defaultStyles = {
 };
 
 const defaultWidthHeight = {
-    width: 450,
-    height: 300
+  width: 450,
+  height: 300
 };
 
 export default class VictoryAxis extends React.Component {
@@ -451,7 +452,7 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, AxisHelpers.getWidthHeight(this.props,
+    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
     const { animate, standalone, containerComponent, height, width } = this.props;
     if (animate) {
