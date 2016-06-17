@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 4.1.1 (2016-06-16)
+
+- Fixes a bug related to event specificity
+
 ## 4.1.0 (2016-06-16)
 
 - Supports events on parent containers via the `parent` namespace in the event prop
