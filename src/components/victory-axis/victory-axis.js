@@ -45,6 +45,11 @@ const defaultStyles = {
   }
 };
 
+const defaultWidthHeight = {
+    width: 450,
+    height: 300
+};
+
 export default class VictoryAxis extends React.Component {
   static role = "axis";
   static defaultTransitions = {
@@ -330,20 +335,20 @@ export default class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>,
     tickComponent: <Tick/>,
     gridComponent: <GridLine/>,
-    height: 300,
     padding: 50,
     scale: "linear",
     standalone: true,
     tickCount: 5,
-    width: 450,
     containerComponent: <VictoryContainer />
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
   static getAxis = Axis.getAxis.bind(Axis);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), defaultStyles);
-  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), defaultStyles);
+  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers),
+    defaultStyles, defaultWidthHeight);
+  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers),
+    defaultStyles, defaultWidthHeight);
 
   constructor() {
     super();
@@ -363,7 +368,7 @@ export default class VictoryAxis extends React.Component {
 
   setupEvents(props) {
     const {sharedEvents} = props;
-    this.baseProps = AxisHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = AxisHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -446,6 +451,8 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, AxisHelpers.getWidthHeight(this.props,
+      defaultWidthHeight));
     const { animate, standalone, containerComponent, height, width } = this.props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that

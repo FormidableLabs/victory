@@ -20,6 +20,11 @@ const defaultStyles = {
   }
 };
 
+const defaultWidthHeight = {
+  width: 450,
+  height: 300
+};
+
 export default class VictoryArea extends React.Component {
   static role = "area";
 
@@ -316,13 +321,11 @@ export default class VictoryArea extends React.Component {
   static defaultProps = {
     dataComponent: <Area/>,
     labelComponent: <VictoryLabel/>,
-    height: 300,
     padding: 50,
     scale: "linear",
     samples: 50,
     standalone: true,
     interpolation: "linear",
-    width: 450,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer />
@@ -330,7 +333,8 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), defaultStyles);
+  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers),
+    defaultStyles, defaultWidthHeight);
 
   constructor() {
     super();
@@ -341,11 +345,13 @@ export default class VictoryArea extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = AreaHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = AreaHelpers.getBaseProps(this.props,
+      defaultStyles, defaultWidthHeight);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = AreaHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = AreaHelpers.getBaseProps(newProps,
+      defaultStyles, defaultWidthHeight);
   }
 
   renderData(props) {
@@ -387,7 +393,9 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    const { animate, style, width, height, standalone, containerComponent } = this.props;
+    this.props = Object.assign({}, this.props, AreaHelpers.getWidthHeight(this.props,
+      defaultWidthHeight));
+    const { animate, style, standalone, width, height, containerComponent } = this.props;
 
     if (animate) {
       const whitelist = [

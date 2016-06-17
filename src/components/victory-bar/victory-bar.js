@@ -25,6 +25,11 @@ const defaultStyles = {
   }
 };
 
+const defaultWidthHeight = {
+  width: 450,
+  height: 300
+};
+
 const defaultData = [
   {x: 1, y: 1},
   {x: 2, y: 2},
@@ -323,11 +328,9 @@ export default class VictoryBar extends React.Component {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    height: 300,
     padding: 50,
     scale: "linear",
     standalone: true,
-    width: 450,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>
@@ -335,7 +338,8 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), defaultStyles);
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers),
+    defaultStyles, defaultWidthHeight);
 
   constructor() {
     super();
@@ -346,11 +350,13 @@ export default class VictoryBar extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = BarHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = BarHelpers.getBaseProps(this.props,
+      defaultStyles, defaultWidthHeight);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = BarHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = BarHelpers.getBaseProps(newProps,
+      defaultStyles, defaultWidthHeight);
   }
 
   renderData(props) {
@@ -393,6 +399,8 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, BarHelpers.getWidthHeight(this.props,
+      defaultWidthHeight));
     const {animate, style, standalone, containerComponent, height, width} = this.props;
 
     if (animate) {

@@ -12,6 +12,11 @@ const defaultStyles = {
   }
 };
 
+const fallbackProps = {
+  width: 450,
+  height: 300
+};
+
 export default class VictoryStack extends React.Component {
   static role = "stack-wrapper";
 
@@ -272,8 +277,6 @@ export default class VictoryStack extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    height: 300,
-    width: 450,
     padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>
@@ -314,7 +317,8 @@ export default class VictoryStack extends React.Component {
       x: Wrapper.getCategories(props, "x"),
       y: Wrapper.getCategories(props, "y")
     };
-    const colorScale = props.theme && !props.colorScale ? props.theme.colorScale : props.colorScale;
+    const colorScale = props.theme ? props.colorscale || props.theme.props.colorScale
+    : props.colorScale;
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
@@ -349,6 +353,16 @@ export default class VictoryStack extends React.Component {
     };
   }
 
+  getWidthHeight(props, defaults) {
+    const width = props.theme && props.theme.props ?
+    props.width || props.theme.props.width || defaults.width :
+    props.width || defaults.width;
+    const height = props.theme && props.theme.props ?
+    props.height || props.theme.props.height || defaults.height :
+    props.height || defaults.height;
+    return { width, height };
+  }
+
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
@@ -370,6 +384,8 @@ export default class VictoryStack extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, this.getWidthHeight(this.props,
+      fallbackProps));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");

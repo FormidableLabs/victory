@@ -5,8 +5,9 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 
 export default {
-  getBaseProps(props, defaultStyles) {
+  getBaseProps(props, defaultStyles, defaultWidthHeight) {
     defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter : defaultStyles;
+    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { data, style, scale } = calculatedValues;
     return data.reduce((memo, datum, index) => {
@@ -119,5 +120,15 @@ export default {
       size = Math.max(props.size, 1);
     }
     return Helpers.evaluateProp(size, data);
+  },
+
+  getWidthHeight(props, defaultWidthHeight) {
+    const width = props.theme && props.theme.props ?
+    props.width || props.theme.props.width || defaultWidthHeight.width :
+    props.width || defaultWidthHeight.width;
+    const height = props.theme && props.theme.props ?
+    props.height || props.theme.props.height || defaultWidthHeight.height :
+    props.height || defaultWidthHeight.height;
+    return { width, height };
   }
 };

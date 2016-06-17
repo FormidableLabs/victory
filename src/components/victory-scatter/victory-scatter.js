@@ -26,6 +26,11 @@ const defaultStyles = {
   }
 };
 
+const defaultWidthHeight = {
+  width: 450,
+  height: 300
+};
+
 export default class VictoryScatter extends React.Component {
   static role = "scatter";
 
@@ -340,14 +345,12 @@ export default class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
-    height: 300,
     padding: 50,
     samples: 50,
     scale: "linear",
     size: 3,
     standalone: true,
     symbol: "circle",
-    width: 450,
     x: "x",
     y: "y",
     dataComponent: <Point/>,
@@ -358,8 +361,8 @@ export default class VictoryScatter extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(
-    ScatterHelpers.getBaseProps.bind(ScatterHelpers), defaultStyles
-  );
+    ScatterHelpers.getBaseProps.bind(ScatterHelpers), defaultStyles,
+    defaultWidthHeight);
 
   constructor() {
     super();
@@ -370,11 +373,13 @@ export default class VictoryScatter extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = ScatterHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = ScatterHelpers.getBaseProps(this.props,
+      defaultStyles, defaultWidthHeight);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = ScatterHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = ScatterHelpers.getBaseProps(newProps,
+      defaultStyles, defaultWidthHeight);
   }
 
   renderData(props) {
@@ -417,6 +422,8 @@ export default class VictoryScatter extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, ScatterHelpers.getWidthHeight(this.props,
+      defaultWidthHeight));
     const { animate, style, standalone, width, height, containerComponent } = this.props;
 
     if (animate) {

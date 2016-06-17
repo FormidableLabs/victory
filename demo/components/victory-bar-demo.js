@@ -3,7 +3,7 @@ import React from "react";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
-import { VictoryContainer, VictoryThemeGrayscale } from "victory-core";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 class Wrapper extends React.Component {
   static propTypes = {
@@ -359,7 +359,7 @@ export default class App extends React.Component {
               <VictoryStack
                 style={{parent: parentStyle}}
                 animate={{duration: 1000}}
-                theme={VictoryThemeGrayscale}
+                theme={VictoryTheme.grayscale}
               >
                 {this.state.multiTransitionData.map((data, index) => {
                   return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
@@ -368,7 +368,7 @@ export default class App extends React.Component {
 
               <VictoryGroup
                 style={{parent: parentStyle}} offset={18}
-                theme={VictoryThemeGrayscale}
+                theme={VictoryTheme.grayscale}
                 animate={{duration: 2000}}
                 labels={["a", "b", "c"]}
               >
@@ -386,7 +386,7 @@ export default class App extends React.Component {
               />
 
               <VictoryChart
-                theme={VictoryThemeGrayscale}
+                theme={VictoryTheme.grayscale}
               >
                 <VictoryBar
                   height={250}

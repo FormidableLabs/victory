@@ -6,8 +6,9 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getBaseProps(props, defaultStyles) {
+  getBaseProps(props, defaultStyles, defaultWidthHeight) {
     defaultStyles = props.theme && props.theme.line ? props.theme.line : defaultStyles;
+    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
     const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const {interpolation, label} = props;
@@ -83,5 +84,15 @@ export default {
     return segments.filter((segment) => {
       return Array.isArray(segment) && segment.length > 0;
     });
+  },
+
+  getWidthHeight(props, defaultWidthHeight) {
+    const width = props.theme && props.theme.props ?
+    props.width || props.theme.props.width || defaultWidthHeight.width :
+    props.width || defaultWidthHeight.width;
+    const height = props.theme && props.theme.props ?
+    props.height || props.theme.props.height || defaultWidthHeight.height :
+    props.height || defaultWidthHeight.height;
+    return { width, height };
   }
 };

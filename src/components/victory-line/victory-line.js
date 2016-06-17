@@ -26,6 +26,11 @@ const defaultStyles = {
   }
 };
 
+const defaultWidthHeight = {
+  width: 450,
+  height: 300
+};
+
 export default class VictoryLine extends React.Component {
   static role = "line";
 
@@ -328,13 +333,11 @@ export default class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
-    height: 300,
     interpolation: "linear",
     padding: 50,
     samples: 50,
     scale: "linear",
     standalone: true,
-    width: 450,
     x: "x",
     y: "y",
     dataComponent: <LineSegment/>,
@@ -344,7 +347,8 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers), defaultStyles);
+  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
+    defaultStyles, defaultWidthHeight);
 
   constructor() {
     super();
@@ -355,11 +359,13 @@ export default class VictoryLine extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = LineHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = LineHelpers.getBaseProps(this.props,
+      defaultStyles, defaultWidthHeight);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = LineHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = LineHelpers.getBaseProps(newProps,
+      defaultStyles, defaultWidthHeight);
   }
 
   renderData(props) {
@@ -406,6 +412,8 @@ export default class VictoryLine extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, LineHelpers.getWidthHeight(this.props,
+      defaultWidthHeight));
     const { animate, style, standalone, width, height, containerComponent } = this.props;
 
     if (animate) {

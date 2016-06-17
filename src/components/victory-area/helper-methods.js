@@ -6,8 +6,9 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getBaseProps(props, defaultStyles) {
+  getBaseProps(props, defaultStyles, defaultWidthHeight) {
     defaultStyles = props.theme && props.theme.area ? props.theme.area : defaultStyles;
+    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
     const {scale, style, data} = this.getCalculatedValues(props, defaultStyles);
     const {interpolation, label} = props;
 
@@ -68,5 +69,15 @@ export default {
       const y0 = datum.yOffset || minY;
       return Object.assign({y0, y1}, datum);
     });
+  },
+
+  getWidthHeight(props, defaultWidthHeight) {
+    const width = props.theme && props.theme.props ?
+    props.width || props.theme.props.width || defaultWidthHeight.width :
+    props.width || defaultWidthHeight.width;
+    const height = props.theme && props.theme.props ?
+    props.height || props.theme.props.height || defaultWidthHeight.height :
+    props.height || defaultWidthHeight.height;
+    return { width, height };
   }
 };

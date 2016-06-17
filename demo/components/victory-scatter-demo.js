@@ -5,7 +5,7 @@ import {VictoryScatter, VictoryChart} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
-import { VictoryContainer, VictoryThemeGrayscale } from "victory-core";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 const getData = () => {
   const colors =
@@ -214,7 +214,7 @@ export default class App extends React.Component {
         />
 
         <VictoryChart
-          theme={VictoryThemeGrayscale}
+          theme={VictoryTheme.grayscale}
         >
           <VictoryScatter
             style={style}
@@ -226,7 +226,7 @@ export default class App extends React.Component {
 
         <VictoryScatter
           style={style}
-          theme={VictoryThemeGrayscale}
+          theme={VictoryTheme.grayscale}
           data={range(0, 200).map((i) => {
             return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}

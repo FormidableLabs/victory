@@ -13,6 +13,11 @@ const defaultAxes = {
   dependent: <VictoryAxis dependentAxis/>
 };
 
+const defaultWidthHeight = {
+  width: 450,
+  height: 300
+};
+
 export default class VictoryChart extends React.Component {
   static propTypes = {
     /**
@@ -208,8 +213,6 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    height: 300,
-    width: 450,
     padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer />
@@ -315,6 +318,7 @@ export default class VictoryChart extends React.Component {
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,
+        theme: props.theme,
         standalone: false,
         style
       }, childProps);
@@ -323,6 +327,8 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, ChartHelpers.getWidthHeight(this.props,
+      defaultWidthHeight));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const style = this.getStyles(props);

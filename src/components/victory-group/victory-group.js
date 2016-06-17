@@ -12,6 +12,11 @@ const defaultStyles = {
   }
 };
 
+const defaultWidthHeight = {
+  width: 450,
+  height: 300
+};
+
 export default class VictoryGroup extends React.Component {
   static role = "group-wrapper";
 
@@ -275,8 +280,6 @@ export default class VictoryGroup extends React.Component {
   static defaultProps = {
     scale: "linear",
     offset: 0,
-    height: 300,
-    width: 450,
     padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>
@@ -291,6 +294,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getCalculatedProps(props, childComponents, style) {
+    props = Object.assign({}, props, this.getWidthHeight(props, defaultWidthHeight));
     const horizontal = props.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
@@ -365,12 +369,23 @@ export default class VictoryGroup extends React.Component {
     };
   }
 
+  getWidthHeight(props, defaults) {
+    const width = props.theme && props.theme.props ?
+    props.width || props.theme.props.width || defaults.width :
+    props.width || defaults.width;
+    const height = props.theme && props.theme.props ?
+    props.height || props.theme.props.height || defaults.height :
+    props.height || defaults.height;
+    return { width, height };
+  }
+
   getColorScale(props, child) {
     const role = child.type && child.type.role;
     if (role !== "group-wrapper" && role !== "stack-wrapper") {
       return undefined;
     }
-    return child.props.colorScale || props.colorScale || props.theme.colorScale;
+    return props.theme ? child.props.colorScale || props.colorScale || props.theme.props.colorScale
+    : child.props.colorScale || props.colorScale;
   }
 
   // the old ones were bad
@@ -397,6 +412,8 @@ export default class VictoryGroup extends React.Component {
   }
 
   render() {
+    this.props = Object.assign({}, this.props, this.getWidthHeight(this.props,
+      defaultWidthHeight));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
@@ -405,7 +422,8 @@ export default class VictoryGroup extends React.Component {
     if (types.length > 1) {
       Log.warn("Only components of the same type can be grouped");
     }
-    const calculatedProps = this.getCalculatedProps(props, childComponents, style);
+    const calculatedProps = this.getCalculatedProps(props, childComponents, style,
+      defaultWidthHeight);
 
     const newChildren = props.events ?
       (
