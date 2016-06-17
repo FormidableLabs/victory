@@ -1,4 +1,4 @@
-import { uniq, partialRight, defaults, isFunction } from "lodash";
+import { uniq, partialRight, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
@@ -139,7 +139,7 @@ export default class VictoryStack extends React.Component {
      */
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.string,
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -368,27 +368,15 @@ export default class VictoryStack extends React.Component {
     });
   }
 
-  renderContainer(props, group, calculatedProps) {
-    const { width, height, containerComponent, sharedEvents } = props;
+  getContainer(props, calculatedProps) {
+    const { width, height, containerComponent } = props;
     const { scale, style } = calculatedProps;
-    const baseParentProps = {style: style.parent, scale, width, height};
-    const parentEvents = this.getEvents(props, "parent", "parent");
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
     const parentProps = defaults(
       {},
-      this.getEventState("parent", "parent"),
-      getSharedEventState("parent", "parent"),
       containerComponent.props,
-      baseParentProps
+      {style: style.parent, scale, width, height}
     );
-    return React.cloneElement(
-      containerComponent,
-      Object.assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    return React.cloneElement(containerComponent, parentProps);
   }
 
   render() {
@@ -401,20 +389,22 @@ export default class VictoryStack extends React.Component {
       Log.warn("It is not possible to stack groups.");
     }
     const calculatedProps = this.getCalculatedProps(props, childComponents, style);
-    const newChildren = props.events ?
-      (
-        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
-          {this.getNewChildren(props, childComponents, calculatedProps)}
+
+    const container = props.standalone && this.getContainer(props, calculatedProps);
+    const newChildren = this.getNewChildren(props, childComponents, calculatedProps);
+    if (props.events) {
+      return (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey} container={container}>
+          {newChildren}
         </VictorySharedEvents>
-      ) :
-      this.getNewChildren(props, childComponents, calculatedProps);
+      );
+    }
 
     const group = (
       <g style={style.parent}>
         {newChildren}
       </g>
     );
-
-    return props.standalone ? this.renderContainer(props, group, calculatedProps) : group;
+    return props.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

@@ -1,4 +1,4 @@
-import { defaults, partialRight, isFunction } from "lodash";
+import { defaults, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
@@ -355,9 +355,6 @@ export default class VictoryChart extends React.Component {
         {newChildren}
       </g>
     );
-    const result = props.standalone ? React.cloneElement(container, container.props, group) : group;
-    console.log(result)
-    return result
-
+    return props.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

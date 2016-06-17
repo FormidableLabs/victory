@@ -33,7 +33,7 @@ export default {
       text
     };
 
-    const parentProps = { style: style.parent, scale, dataset, width, height};
+    const parentProps = { style: style.parent, scale, data: dataset, width, height};
     return {
       parent: parentProps,
       all: {

@@ -145,7 +145,7 @@ export default class VictoryBar extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
