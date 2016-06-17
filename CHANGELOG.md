@@ -1,4 +1,12 @@
 # VictoryLine Changelog
+## 9.2.0 (2016-06-14)
+
+- Supports events on the parent element via the `parent` namespace in the `events` prop.
+- `parent` events have access to `width`, `height`, `style` and the calculated `scale` (with `domain` and `range` already applied). Where applicable `parent` events also have access to `data`
+- Shared `parent` events are automatically supported in components that use `VictorySharedEvents` by default (_i.e._ VictoryChart, VictoryGroup, VictoryStack)
+- When mutating elements via the return from event handlers, mutation objects may now take arrays for `eventKey` to target several individual elements, or the special value "all" to apply changes to all elements of a particular target type
+- Fixes a bug related to an incorrect default `tickFormat` for dates
+- FIxes a bug related to incorrect axis label placement
 
 ## 9.1.3 (2016-06-14)
 
