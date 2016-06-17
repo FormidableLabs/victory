@@ -212,7 +212,7 @@ export default {
     };
   },
 
-  getTickFormat(props, scale, ticks) {
+  getTickFormat(props, scale) {
     if (props.tickFormat && isFunction(props.tickFormat)) {
       return props.tickFormat;
     } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
@@ -220,7 +220,7 @@ export default {
     } else if (Axis.stringTicks(props)) {
       return (x, index) => props.tickValues[index];
     } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-      return scale.tickFormat(ticks.length);
+      return scale.tickFormat();
     } else {
       return (x) => x;
     }
