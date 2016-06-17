@@ -1,5 +1,5 @@
 # VictoryLine Changelog
-## 9.2.0 (2016-06-14)
+## 9.2.0 (2016-06-17)
 
 - Supports events on the parent element via the `parent` namespace in the `events` prop.
 - `parent` events have access to `width`, `height`, `style` and the calculated `scale` (with `domain` and `range` already applied). Where applicable `parent` events also have access to `data`
