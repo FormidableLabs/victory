@@ -195,11 +195,12 @@ export default class App extends React.Component {
             data: {fill: "gold"}
           }}
           events={[{
-            target: "data",
+            target: "parent",
             eventHandlers: {
               onClick: () => {
                 return [
                   {
+                    target: "data",
                     mutation: (props) => {
                       return {style: merge({}, props.style, {fill: "orange"})};
                     }

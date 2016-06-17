@@ -136,7 +136,7 @@ export default class VictoryArea extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOf(["all"]),
       eventHandlers: PropTypes.object
     })),
@@ -346,24 +346,27 @@ export default class VictoryArea extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = AreaHelpers.getBaseProps(this.props,
-      defaultStyles, defaultWidthHeight);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = AreaHelpers.getBaseProps(newProps,
-      defaultStyles, defaultWidthHeight);
+    this.setupEvents(newProps);
+  }
+
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = AreaHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
+    const { dataComponent, labelComponent } = props;
     const dataEvents = this.getEvents(props, "data", "all");
     const dataProps = defaults(
       {},
       this.getEventState("all", "data"),
-      getSharedEventState("all", "data"),
+      this.getSharedEventState("all", "data"),
       dataComponent.props,
       this.baseProps.all.data
     );
@@ -374,7 +377,7 @@ export default class VictoryArea extends React.Component {
     const labelProps = defaults(
         {},
         this.getEventState("all", "labels"),
-        getSharedEventState("all", "labels"),
+        this.getSharedEventState("all", "labels"),
         labelComponent.props,
         this.baseProps.all.labels
       );
@@ -393,10 +396,28 @@ export default class VictoryArea extends React.Component {
     return areaComponent;
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
   render() {
     this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
-    const { animate, style, standalone, width, height, containerComponent } = this.props;
+    const { animate, style, standalone } = this.props;
 
     if (animate) {
       const whitelist = [
@@ -420,11 +441,6 @@ export default class VictoryArea extends React.Component {
       </g>
     );
 
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
-        group) :
-      group;
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }

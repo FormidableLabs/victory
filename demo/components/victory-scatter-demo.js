@@ -12,7 +12,7 @@ const getData = () => {
     ["violet", "cornflowerblue", "gold", "orange", "turquoise", "tomato", "greenyellow"];
   const symbols = ["circle", "star", "square", "triangleUp", "triangleDown", "diamond", "plus"];
   // symbol: symbols[scaledIndex],
-  return range(100).map((index) => {
+  return range(50).map((index) => {
     const scaledIndex = Math.floor(index % 7);
     return {
       x: random(600),
@@ -52,7 +52,7 @@ class CatPoint extends React.Component {
     const {x, y, symbol} = this.props;
 
     return (
-      <text x={x} y={y}>
+      <text x={x} y={y} fontSize={40}>
         {this.renderSymbol(symbol)}
       </text>
     );
@@ -109,12 +109,12 @@ export default class App extends React.Component {
           data={this.state.data}
           dataComponent={<CatPoint />}
           containerComponent={
-              <VictoryContainer
-                title="Scatter Chart"
-                desc="This is a scatter chart with cat data points!"
-                style={{border: "1px solid red"}}
-              />
-            }
+            <VictoryContainer
+              title="Scatter Chart"
+              desc="This is a scatter chart with cat data points!"
+              style={Object.assign({}, style.parent, {border: "1px solid red"})}
+            />
+          }
         />
 
         <VictoryScatter

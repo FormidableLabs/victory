@@ -73,6 +73,8 @@ export default {
       stringTicks, anchors
     } = calculatedValues;
 
+    const { width, height } = props;
+
     const offset = this.getOffset(props, calculatedValues);
 
     const globalTransform = this.getTransform(props, calculatedValues, offset);
@@ -88,7 +90,8 @@ export default {
       y2: isVertical ? props.height - padding.bottom + globalTransform.y : globalTransform.y
     };
 
-    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues);
+    const parentProps = {style: style.parent, ticks, scale, width, height};
+    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
 
     return ticks.reduce((memo, data, index) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
@@ -144,7 +147,7 @@ export default {
       };
 
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, defaultStyles) {
@@ -165,7 +168,7 @@ export default {
     };
   },
 
-  getAxisLabelProps(props, calculatedValues) {
+  getAxisLabelProps(props, calculatedValues, globalTransform) {
     const {style, orientation, padding, labelPadding, isVertical} = calculatedValues;
     const sign = orientationSign[orientation];
     const hPadding = padding.left + padding.right;
@@ -176,8 +179,8 @@ export default {
     const verticalAnchor = sign < 0 ? "end" : "start";
     const labelStyle = style.axisLabel;
     return {
-      x,
-      y: sign * labelPadding,
+      x: x + globalTransform.x,
+      y: (sign * labelPadding) + globalTransform.y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
       angle: labelStyle.angle,
@@ -212,7 +215,7 @@ export default {
     };
   },
 
-  getTickFormat(props, scale, ticks) {
+  getTickFormat(props, scale) {
     if (props.tickFormat && isFunction(props.tickFormat)) {
       return props.tickFormat;
     } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
@@ -220,7 +223,7 @@ export default {
     } else if (Axis.stringTicks(props)) {
       return (x, index) => props.tickValues[index];
     } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
-      return scale.tickFormat(ticks.length);
+      return scale.tickFormat();
     } else {
       return (x) => x;
     }

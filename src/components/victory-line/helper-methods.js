@@ -12,7 +12,7 @@ export default {
     props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
     const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const {interpolation, label} = props;
+    const {interpolation, label, width, height} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
     const dataProps = {
       scale,
@@ -35,7 +35,10 @@ export default {
       scale,
       text
     };
+
+    const parentProps = { style: style.parent, scale, data: dataset, width, height};
     return {
+      parent: parentProps,
       all: {
         data: dataProps,
         labels: labelProps

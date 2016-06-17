@@ -219,6 +219,24 @@ describe("components/victory-line", () => {
   });
 
   describe("event handling", () => {
+    it("attaches an event to the parent svg", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryLine
+          events={[{
+            target: "parent",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
+      );
+      const svg = wrapper.find("svg");
+      svg.simulate("click");
+      expect(clickHandler).called;
+      // the first argument is the standard evt object
+      expect(clickHandler.args[0][1])
+        .to.include.keys("data", "scale", "width", "height", "style");
+    });
+
     it("attaches an event to data", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(

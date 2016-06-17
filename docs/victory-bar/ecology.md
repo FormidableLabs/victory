@@ -116,7 +116,7 @@ The sensible defaults VictoryBar provides makes it easy to get started, but ever
   padding={75}
   style={{
     data: {width: 30},
-    labels: {fontSize: 14}
+    labels: {fontSize: 24}
   }}
   labels={["one", "two", "three"]}
 >
@@ -147,7 +147,6 @@ The sensible defaults VictoryBar provides makes it easy to get started, but ever
 </VictoryStack>
 ```
 
-*NOTE: horizontal bars are only partially supported in VictoryChart. Check for updates soon!*
 
 data objects can be styled directly for granular control
 
@@ -155,6 +154,9 @@ data objects can be styled directly for granular control
 <VictoryBar
   height={500}
   padding={75}
+  style={{
+    labels: {fontSize: 20}
+  }}
   data={[
     {x: 1, y: 1, fill: "gold", label: "SO"},
     {x: 2, y: 3, fill: "orange"},
@@ -191,13 +193,17 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Events
 
-Use the `events` prop to attach events to specific elements in VictoryBar. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so "data" and "labels" are all valid targets for VictoryBar events. The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryBar may also be used with the `VictorySharedEvents` wrapper.
+Use the `events` prop to attach events to specific elements in VictoryBar. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryBar events. 
+
+
+The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryBar may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
 <VictoryBar
   height={500}
   style={{
-    data: {fill: "orange"},
+    data: {fill: "blue", width: 20},
+    labels: {fontSize: 20}
   }}
   labels={[
     "a", "b", "c", "d", "e"
@@ -205,29 +211,49 @@ Use the `events` prop to attach events to specific elements in VictoryBar. The `
   data={[
     {x: 1, y: 1},
     {x: 2, y: 2},
-    {x: 3, y: 3},
+    {x: 3, y: 3, label: "click me"},
     {x: 4, y: 2},
     {x: 5, y: 1}
   ]}
-  events={[{
-    target: "data",
-    eventHandlers: {
-      onClick: () => {
-        return [
-          {
-            mutation: (props) => {
-              return {style: merge({}, props.style, {fill: "tomato"})};
+  events={[
+    {
+      target: "data",
+      eventKey: 2,
+      eventHandlers: {
+        onClick: (evt) => {
+          evt.stopPropagation();
+          return [
+            {
+              mutation: () => {
+                return {style: {fill: "orange", width: 20}};
+              }
+            },
+            {
+              target: "labels",
+              eventKey: 3,
+              mutation: () => {
+                return {text: "now click me"};
+              }
             }
-          }, {
-            target: "labels",
-            mutation: () => {
-              return {text: "WOW"};
+          ];
+        }
+      }
+    }, {
+      target: "parent",
+      eventHandlers: {
+        onClick: () => {
+          return [
+            {
+              target: "data",
+              mutation: () => {
+                return {style: {fill: "tomato", width: 10}};
+              }
             }
-          }
-        ];
+          ];
+        }
       }
     }
-  }]}
+  ]}
 />
 ```
 

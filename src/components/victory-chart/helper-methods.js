@@ -111,7 +111,9 @@ export default {
   getTickFormat(component, axis, calculatedProps) {
     const tickValues = component.props.tickValues;
     const stringMap = calculatedProps.stringMap[axis];
-    if (tickValues && !Collection.containsStrings(tickValues)) {
+    const useIdentity = tickValues && !Collection.containsStrings(tickValues) &&
+      !Collection.containsDates(tickValues);
+    if (useIdentity) {
       return identity;
     } else if (stringMap !== null) {
       const tickValueArray = sortBy(values(stringMap), (n) => n);

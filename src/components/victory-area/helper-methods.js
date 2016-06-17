@@ -11,7 +11,7 @@ export default {
     defaultStyles = props.theme && props.theme.area ? props.theme.area : defaultStyles;
     props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
     const {scale, style, data} = this.getCalculatedValues(props, defaultStyles);
-    const {interpolation, label} = props;
+    const {interpolation, label, width, height} = props;
 
     const dataProps = {
       data,
@@ -36,8 +36,10 @@ export default {
       scale,
       text
     };
+
     return {
-      "all": {
+      parent: {style: style.parent, width, height, scale, data},
+      all: {
         data: dataProps,
         labels: labelProps
       }

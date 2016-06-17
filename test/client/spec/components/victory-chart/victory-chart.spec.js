@@ -1,6 +1,10 @@
 /**
  * Client tests
  */
+/* global sinon */
+/*eslint-disable max-nested-callbacks */
+/* eslint no-unused-expressions: 0 */
+
 import React from "react";
 import { shallow, mount } from "enzyme";
 import VictoryChart from "src/components/victory-chart/victory-chart";
@@ -57,6 +61,26 @@ describe("components/victory-chart", () => {
       expect(axes.prop("crossAxis")).to.equal(false);
       expect(axes.prop("offsetX")).to.equal(50);
       expect(axes.prop("offsetY")).to.equal(50);
+    });
+  });
+
+  describe("event handling", () => {
+    it("attaches an event to the parent svg", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryChart
+          events={[{
+            target: "parent",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
+      );
+      const svg = wrapper.find("svg");
+      svg.simulate("click");
+      expect(clickHandler).called;
+      // the first argument is the standard evt object
+      expect(clickHandler.args[0][1])
+        .to.include.keys("scale", "width", "height", "style");
     });
   });
 });

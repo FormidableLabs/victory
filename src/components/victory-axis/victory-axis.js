@@ -1,4 +1,4 @@
-import { defaults, isFunction, partialRight, omit } from "lodash";
+import { defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
@@ -153,7 +153,7 @@ export default class VictoryAxis extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels"]),
+      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
       eventKey: PropTypes.oneOfType([
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -370,6 +370,7 @@ export default class VictoryAxis extends React.Component {
   setupEvents(props) {
     const {sharedEvents} = props;
     this.baseProps = AxisHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
+    this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -406,8 +407,7 @@ export default class VictoryAxis extends React.Component {
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
-    const baseProps = omit(this.baseProps, ["axis", "axisLabel"]);
-    return Object.keys(baseProps).map((key) => {
+    return this.dataKeys.map((key) => {
       const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
         {},
@@ -451,10 +451,28 @@ export default class VictoryAxis extends React.Component {
     });
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
   render() {
     this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
       defaultWidthHeight));
-    const { animate, standalone, containerComponent, height, width } = this.props;
+    const { animate, standalone } = this.props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -481,11 +499,7 @@ export default class VictoryAxis extends React.Component {
         {this.renderLabel(this.props)}
       </g>
     );
-    return standalone ? (
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: style.parent}, containerComponent.props),
-        group)
-      ) : group;
+
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }
