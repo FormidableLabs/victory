@@ -9,7 +9,7 @@ import { VictoryLabel, VictoryContainer } from "victory-core";
 import { assign } from "lodash";
 
 
-const UPDATE_INTERVAL = 30000;
+const UPDATE_INTERVAL = 3000;
 
 class Wrapper extends React.Component {
   static propTypes = {

@@ -1,8 +1,7 @@
-import { defaults, partialRight } from "lodash";
+import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
-  VictoryContainer, Events
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -208,13 +207,6 @@ export default class VictoryChart extends React.Component {
     containerComponent: <VictoryContainer />
   };
 
-  constructor() {
-    super();
-    this.state = {};
-    const getScopedEvents = Events.getScopedEvents.bind(this);
-    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
-    this.getEventState = Events.getEventState.bind(this);
-  }
 
   componentWillReceiveProps(nextProps) {
     const setAnimationState = Wrapper.setAnimationState.bind(this);

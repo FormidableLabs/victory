@@ -5,10 +5,6 @@ import {VictoryLabel} from "victory-core";
 import { merge, random, range } from "lodash";
 import { VictoryContainer } from "victory-core";
 
-const formatter = (tick) => {
-  return `${tick}WOW`;
-};
-
 export default class App extends React.Component {
   constructor() {
     super();
@@ -213,7 +209,6 @@ export default class App extends React.Component {
           <VictoryAxis
             orientation="left"
             style={styleOverrides}
-            tickFormat={formatter}
             tickValues={[
               "Mets\nNY",
               "Giants\nSF",

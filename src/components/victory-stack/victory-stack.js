@@ -1,8 +1,7 @@
-import { uniq, partialRight, defaults } from "lodash";
+import { uniq, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
-  VictoryContainer, Events
+  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
@@ -273,14 +272,6 @@ export default class VictoryStack extends React.Component {
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
-
-  constructor() {
-    super();
-    this.state = {};
-    const getScopedEvents = Events.getScopedEvents.bind(this);
-    this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
-    this.getEventState = Events.getEventState.bind(this);
-  }
 
   componentWillReceiveProps(nextProps) {
     const setAnimationState = Wrapper.setAnimationState.bind(this);
