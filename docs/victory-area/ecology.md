@@ -207,16 +207,17 @@ To create markers and labels for individual data points along an area, just comp
 
 ### Events
 
-Use the `events` prop to attach events to specific elements in VictoryArea. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so "data" and "labels" are all valid targets for VictoryArea events. Since VictoryArea only renders a single element, the eventKey property is not used. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single label), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryArea may also be used with the `VictorySharedEvents` wrapper.
+Use the `events` prop to attach events to specific elements in VictoryArea. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryArea events. 
+
+
+Since VictoryArea only renders a single element, the `eventKey` property is not used. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single label), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryArea may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
 <VictoryArea
   height={400}
   style={{
-    data: {fill: "gold"},
-    labels: {fill: "none"}
+    data: {fill: "gold"}
   }}
-  label={"AREA"}
   data={[
     {x: 1, y: 1},
     {x: 2, y: 2},
@@ -259,11 +260,11 @@ class App extends React.Component {
   getData() {
     return [1, 2, 3, 4, 5].map((index) => {
       return [
-        {x: "apples", y: Math.random()},
-        {x: "oranges", y: Math.random()},
-        {x: "bananas", y: Math.random()},
-        {x: "peaches", y: Math.random()},
-        {x: "pears", y: Math.random()}
+        {x: "a", y: Math.random()},
+        {x: "b", y: Math.random()},
+        {x: "c", y: Math.random()},
+        {x: "d", y: Math.random()},
+        {x: "e", y: Math.random()}
       ];
     });
   }
