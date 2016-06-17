@@ -148,7 +148,7 @@ export default {
 
         if (eventKey !== undefined && target !== "parent") {
           return targetEvents.filter((obj) => {
-            return obj.eventKey ? obj.eventKey === eventKey : true;
+            return obj.eventKey ? `${obj.eventKey}` === `${eventKey}` : true;
           });
         }
         return targetEvents;
