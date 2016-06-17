@@ -62,40 +62,54 @@ export default {
     baseProps = baseProps || this.baseProps;
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
-      const base = type === "props" ? baseProps : this.state;
-      if (!childName || !base[childName]) {
-        return base[key] && base[key][target];
-      }
-      return base[childName] &&
-        base[childName][key] &&
-        base[childName][key][target];
+      const baseType = type === "props" ? baseProps : this.state;
+      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
+      return key === "parent" ? base.parent : base[key] && base[key][target];
     };
 
     const parseEvent = (eventReturn, eventKey) => {
       const nullFunction = () => null;
       const childName = eventReturn.childName || childType;
-      const getKey = () => {
+      const target = eventReturn.target || namespace;
+
+      const getKeys = () => {
         if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
           return "all";
+        } else if (eventReturn.eventKey === "all") {
+          return baseProps[childName] ?
+            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
+          return baseProps[childName] ?
+            Object.keys(baseProps[childName]) : Object.keys(baseProps);
         }
-        return eventReturn.eventKey || eventKey;
+        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
       };
-      const key = getKey();
-      const target = eventReturn.target || namespace;
-      const targetProps = getTargetProps({childName, key, target}, "props");
-      const targetState = getTargetProps({childName, key, target}, "state");
-      const mutation = eventReturn.mutation || nullFunction;
-      const mutatedProps = mutation(Object.assign({}, targetProps, targetState), baseProps);
-      const childState = this.state[childName] || {};
-      return childName ?
-        extend(this.state, {
-          [childName]: extend(childState, {
-            [key]: extend(childState[key], {[target]: mutatedProps})
-          })
-        }) :
-        extend(this.state, {
-          [key]: extend(this.state[key], {[target]: mutatedProps})
-        });
+      const mutationKeys = getKeys();
+
+      const getMutationObject = (key) => {
+        const mutationTargetProps = getTargetProps({childName, key, target}, "props");
+        const mutationTargetState = getTargetProps({childName, key, target}, "state");
+        const mutation = eventReturn.mutation || nullFunction;
+        const mutatedProps = mutation(
+          Object.assign({}, mutationTargetProps, mutationTargetState), baseProps
+        );
+        const childState = this.state[childName] || {};
+        return childName ?
+          extend(this.state, {
+            [childName]: extend(childState, {
+              [key]: extend(childState[key], {[target]: mutatedProps})
+            })
+          }) :
+          extend(this.state, {
+            [key]: extend(this.state[key], {[target]: mutatedProps})
+          });
+      };
+      return Array.isArray(mutationKeys) ?
+        mutationKeys.reduce((memo, k) => {
+          return Object.assign(memo, getMutationObject(k));
+        }, {}) :
+        getMutationObject(mutationKeys);
+
     };
 
     const parseEventReturn = (eventReturn, eventKey) => {
