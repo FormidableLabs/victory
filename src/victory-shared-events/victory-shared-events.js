@@ -100,12 +100,12 @@ export default class VictorySharedEvents extends React.Component {
 
   setUpChildren(props) {
     this.childComponents = React.Children.toArray(props.children);
-    const childBaseProps = this.getBasePropsFromChildren(props, this.childComponents);
+    const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
     const parentBaseProps = props.container ? { parent: props.container.props } : {};
     this.baseProps = Object.assign({}, childBaseProps, {parent: parentBaseProps});
   }
 
-  getBasePropsFromChildren(props, childComponents) {
+  getBasePropsFromChildren(childComponents) {
     const getBaseProps = (children) => {
       return children.reduce((memo, child, index) => {
         if (child.type && isFunction(child.type.getBaseProps)) {

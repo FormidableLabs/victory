@@ -24,10 +24,11 @@ export default class VictoryContainer extends React.Component {
      */
     width: PropTypes.number,
     /**
-     * The events prop attaches arbitrary event handlers to the label component.
-     * Event handlers are currently called with their corresponding events as well
-     * as scale, style, width, height, and data when applicable. Use the invert method
-     * to convert event coordinate information to data. `scale.x.invert(evt.offsetX)`
+     * The events prop attaches arbitrary event handlers to the container component.
+     * Event handlers passed from other Victory components are called with their
+     * corresponding events as well as scale, style, width, height, and data when
+     * applicable. Use the invert method to convert event coordinate information to
+     * data. `scale.x.invert(evt.offsetX)`.
      * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
      */
     events: PropTypes.object,
