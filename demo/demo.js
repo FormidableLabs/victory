@@ -163,8 +163,28 @@ export default class App extends React.Component {
                       }
                     }, {
                       target: "labels",
+                      eventKey: [0, 2, 4],
                       mutation: () => {
                         return {text: "hey"};
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          />
+
+          <VictoryPie
+            style={this.state.style}
+            events={[{
+              target: "parent",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "parent click"};
                       }
                     }
                   ];
