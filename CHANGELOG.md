@@ -1,4 +1,14 @@
 # VictoryPie Changelog
+## 4.1.0 (2016-06-17)
+
+- Supports events on the parent element via the `parent` namespace in the `events` prop.
+- `parent` events have access to `width`, `height`, `style` and the calculated `slices` and the calculated `pathFuncton`
+- When mutating elements via the return from event handlers, mutation objects may now take arrays for `eventKey` to target several individual elements, or the special value "all" to apply changes to all elements of a particular target type
+- Supports a custom `containerComponent` prop, which defaults to `VictoryContainer`
+- Adds default aria roles via `VictoryContainer`
+- Adds support for a `cornerRadius` prop. Thanks @judikdavid!
+- Renders all slices _before_ labels so that labels are not overlapped.
+
 
 ## 4.0.0 (2016-06-01) 
 
