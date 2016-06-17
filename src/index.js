@@ -2,7 +2,8 @@ import {
   VictoryAnimation,
   VictoryLabel,
   VictoryTransition,
-  VictorySharedEvents
+  VictorySharedEvents,
+  VictoryContainer
 } from "victory-core";
 
 import {
@@ -31,5 +32,6 @@ export {
   VictoryScatter,
   VictoryStack,
   VictoryTransition,
-  VictorySharedEvents
+  VictorySharedEvents,
+  VictoryContainer
 };

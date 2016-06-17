@@ -2,6 +2,12 @@
   "name": "victory",
   "version": "0.8.0",
   "description": "Data viz for React",
+  "keywords": [
+    "data visualization",
+    "React",
+    "d3",
+    "charting"
+  ],
   "main": "lib/index.js",
   "repository": {
     "type": "git",
@@ -26,13 +32,13 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "^2.1.4",
-    "victory-chart": "^9.0.0",
-    "victory-core": "^3.0.0",
-    "victory-pie": "^4.0.0"
+    "builder-victory-component": "^2.1.8",
+    "victory-chart": "^9.2.0",
+    "victory-core": "^4.1.1",
+    "victory-pie": "^4.1.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.1.4",
+    "builder-victory-component-dev": "^2.1.8",
     "chai": "^3.2.0",
     "lodash": "^3.10.1",
     "mocha": "^2.3.3",
