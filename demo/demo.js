@@ -163,8 +163,28 @@ export default class App extends React.Component {
                       }
                     }, {
                       target: "labels",
+                      eventKey: [0, 2, 4],
                       mutation: () => {
                         return {text: "hey"};
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          />
+
+          <VictoryPie
+            style={this.state.style}
+            events={[{
+              target: "parent",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "parent click"};
                       }
                     }
                   ];
@@ -239,7 +259,7 @@ export default class App extends React.Component {
             data={range(0, 2).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            colorScale={["#FF2800", "#FFF"]}
+            colorScale={["tomato", "orange"]}
             labels={[]}
             cornerRadius={20}
             startAngle={-6}

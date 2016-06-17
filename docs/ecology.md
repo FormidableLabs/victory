@@ -153,7 +153,10 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Events
 
-Use the `events` prop to attach events to specific elements in VictoryPie. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so "data" and "labels" are all valid targets for VictoryPie events. The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryPie may also be used with the `VictorySharedEvents` wrapper.
+Use the `events` prop to attach events to specific elements in VictoryPie. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryPie events. 
+
+
+The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryPie may also be used with the `VictorySharedEvents` wrapper.
 
 ``` playground
   <VictoryPie
@@ -176,8 +179,9 @@ Use the `events` prop to attach events to specific elements in VictoryPie. The `
               }
             }, {
               target: "labels",
+              eventKey: [1, 2, 3],
               mutation: () => {
-                return {text: "hey"};
+                return {text: "KITTEN"};
               }
             }
           ];
