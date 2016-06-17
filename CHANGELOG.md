@@ -1,5 +1,35 @@
 # Victory Changelog
 
+## 0.9.0 (2016-06-17)
+
+*Events enhancements*
+- Supports events on parent containers (_i.e._ top level `<svg>`) via the `parent` namespace in the `events` prop
+- In VictoryChart, `parent` events have access to `width`, `height`, `style` and the calculated `scale` (with `domain` and `range` already applied). Where applicable `parent` events also have access to `data`
+- in VictoryPie `parent` events have access to `width`, `height`, `style` and the calculated `slices` and the calculated `pathFuncton`
+- When mutating elements via the return from event handlers, mutation objects may now take arrays for `eventKey` to target several individual elements, or the special value "all" to apply changes to all elements of a particular target type
+- Associates parent events with child events via a `container` prop on `VictorySharedEvents`. This is useful where shared events are automatic as in `VictoryChart`, `VictoryStack` and `VictoryGroup`
+
+*VictoryContainer*
+- Supports a custom `containerComponent` in all chart types.
+- `containerComponent` defaults to the new `VictoryContainer` which renders an `<svg>` with default `title` and `description` aria roles
+
+*Full support for horizontal bar charts*
+- Fixes bugs related to axis layout of horizontal bar charts
+
+*Misc improvements*
+- Adds `vectorEffect: "non-scaling-stroke"` where applicable for improved readability in responsive charts
+- Increases default `fontSizes` for improved readability
+- Removes parent transform from `VictoryAxis` so that custom elements can be absolutely positioned more easily
+- Alters `VictoryAxis` render order to that grids are rendered _under_ labels
+- Alters the render order of _default_ axes in `VictoryChart` so that default axes will render under data. Explicitly defined axes will still render in whatever order they are defined
+- Adds a `cornerRadius` prop to `VictoryPie` to enable pie slices with rounded corners. Thanks @judikdavid!
+- Renders all pie slices _before_ labels to prevent slices from overlapping labels
+
+*Bug fixes*
+- Fixes a bug related to transforms for `VictoryLabel`
+- Fixes a bug in `VictoryGroup` that was causing custom `labelComponents` in its children to be overridden.
+- Fixes a bug related to incorrect an incorrect default `tickFormat` being applied to dates
+
 ## 0.8.0 (2016-06-01)
 
 - Upgrades to React 15

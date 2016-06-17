@@ -78,11 +78,6 @@ You can read about these Victory components via interactive docs!
 - [VictoryLabel](http://formidable.com/open-source/victory/docs/victory-label)
 - [VictoryAnimation](http://formidable.com/open-source/victory/docs/victory-animation)
 
-
-## Animation
-
-Wrap any Victory component with [VictoryAnimation](http://formidable.com/open-source/victory/docs/victory-animation) and it will transition smoothly between states whenever data changes. VictoryAnimation relies on d3's interpolator, so it knows how to transitions between colors, dates, numbers, strings etc.
-
 ## Contributing
 
 Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
