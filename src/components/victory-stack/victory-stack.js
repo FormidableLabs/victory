@@ -1,7 +1,8 @@
-import { uniq } from "lodash";
+import { uniq, defaults } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
-  VictoryContainer } from "victory-core";
+import {
+  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer
+} from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
@@ -137,7 +138,7 @@ export default class VictoryStack extends React.Component {
      */
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.string,
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -358,6 +359,17 @@ export default class VictoryStack extends React.Component {
     });
   }
 
+  getContainer(props, calculatedProps) {
+    const { width, height, containerComponent } = props;
+    const { scale, style } = calculatedProps;
+    const parentProps = defaults(
+      {},
+      containerComponent.props,
+      {style: style.parent, scale, width, height}
+    );
+    return React.cloneElement(containerComponent, parentProps);
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
@@ -368,26 +380,22 @@ export default class VictoryStack extends React.Component {
       Log.warn("It is not possible to stack groups.");
     }
     const calculatedProps = this.getCalculatedProps(props, childComponents, style);
-    const newChildren = props.events ?
-      (
-        <VictorySharedEvents events={props.events} eventKey={props.eventKey}>
-          {this.getNewChildren(props, childComponents, calculatedProps)}
+
+    const container = props.standalone && this.getContainer(props, calculatedProps);
+    const newChildren = this.getNewChildren(props, childComponents, calculatedProps);
+    if (props.events) {
+      return (
+        <VictorySharedEvents events={props.events} eventKey={props.eventKey} container={container}>
+          {newChildren}
         </VictorySharedEvents>
-      ) :
-      this.getNewChildren(props, childComponents, calculatedProps);
+      );
+    }
 
     const group = (
       <g style={style.parent}>
         {newChildren}
       </g>
     );
-
-    const { standalone, width, height, containerComponent } = this.props;
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: style.parent}, containerComponent.props),
-        group) :
-      group;
+    return props.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

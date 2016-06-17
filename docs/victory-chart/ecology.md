@@ -211,23 +211,21 @@ Use the `events` prop to attach events to specific elements children of VictoryC
         return [
           {
             target: "labels",
+            eventKey: [2, 6, 10],
             mutation: () => {
-              return {text: "o shit"};
+              return {text: "WOW"};
             }
           }, {
             childName: "line",
             target: "data",
             mutation: (props) => {
-              return {style: merge({}, props.style, {stroke: "lime"})};
+              return {style: {stroke: "lime", strokeWidth:  5}};
             }
           }, {
             childName: "line",
             target: "labels",
-            mutation: (props) => {
-              return {
-                style: merge({}, props.style, {fill: "green"}),
-                text: "waddup"
-              };
+            mutation: () => {
+              return {text: "LINE"};
             }
           }
         ];
@@ -236,7 +234,10 @@ Use the `events` prop to attach events to specific elements children of VictoryC
   }]}
 >
   <VictoryBar name="bar"
-    style={{data: {width: 15, fill: "green"}}}
+    style={{
+      data: {width: 15, fill: "green"},
+      labels: {fontSize: 20}
+    }}
     data={[
       {x: 1, y: 1},
       {x: 2, y: 2},
@@ -255,8 +256,10 @@ Use the `events` prop to attach events to specific elements children of VictoryC
   />
   <VictoryLine name="line"
     y={() => 0.5}
-    style={{data: {stroke: "blue", strokeWidth: 5}}}
-    label="LINE"
+    style={{
+      data: {stroke: "blue"},
+      labels: {fontSize: 20}
+    }}
   />
 </VictoryChart>
 ```

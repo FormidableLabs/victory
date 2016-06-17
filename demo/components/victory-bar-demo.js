@@ -355,6 +355,55 @@ export default class App extends React.Component {
               />
           </VictorySharedEvents>
         </svg>
+        <VictoryBar
+          height={500}
+          style={{
+            parent: parentStyle,
+            data: {fill: "blue"}
+          }}
+          labels={[
+            "a", "b", "c", "d", "e"
+          ]}
+          data={[
+            {x: 1, y: 1},
+            {x: 2, y: 2},
+            {x: 3, y: 3, label: "click me"},
+            {x: 4, y: 2},
+            {x: 5, y: 1}
+          ]}
+          events={[
+            {
+              target: "data",
+              eventKey: 2,
+              eventHandlers: {
+                onClick: (evt) => {
+                  evt.stopPropagation();
+                  return [
+                    {
+                      mutation: () => {
+                        return {style: {fill: "orange"}};
+                      }
+                    }
+                  ];
+                }
+              }
+            }, {
+              target: "parent",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      target: "labels",
+                      mutation: () => {
+                        return {text: "o shit"};
+                      }
+                    }
+                  ];
+                }
+              }
+            }
+          ]}
+        />
       </div>
     );
   }

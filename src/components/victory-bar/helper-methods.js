@@ -88,7 +88,9 @@ export default {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const scale = this.getScale(props);
-    const { horizontal } = props;
+    const { horizontal, width, height } = props;
+    const parentProps = {scale, width, height, data, style: style.parent};
+
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const position = this.getBarPosition(props, datum, scale);
@@ -125,11 +127,12 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
         angle: labelStyle.angle
       };
+
       memo[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
       return memo;
-    }, {});
+    }, {parent: parentProps});
   }
 };

@@ -344,8 +344,44 @@ class App extends React.Component {
             <VictoryLine/>
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
-            <VictoryBar/>
+
+          <VictoryChart style={chartStyle}
+            events={[
+              {
+                childName: "bar",
+                target: "data",
+                eventHandlers: {
+                  onClick: (evt) => {
+                    evt.stopPropagation();
+                    return [
+                      {
+                        mutation: () => {
+                          return {style: {fill: "orange"}};
+                        }
+                      }
+                    ];
+                  }
+                }
+              }, {
+                target: "parent",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        childName: "bar",
+                        target: "labels",
+                        mutation: () => {
+                          return {text: "o shit"};
+                        }
+                      }
+                    ];
+                  }
+                }
+              }
+            ]}
+          >
+            <VictoryLabel text="Parent Events" y={50} x={150}/>
+            <VictoryBar name="bar"/>
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>

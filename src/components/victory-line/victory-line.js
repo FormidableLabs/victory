@@ -137,7 +137,7 @@ export default class VictoryLine extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -345,24 +345,29 @@ export default class VictoryLine extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = LineHelpers.getBaseProps(this.props, defaultStyles);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = LineHelpers.getBaseProps(newProps, defaultStyles);
+    this.setupEvents(newProps);
+  }
+
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = LineHelpers.getBaseProps(props, defaultStyles);
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-        sharedEvents.getEventState : () => undefined;
+    const { dataComponent, labelComponent } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
     return dataSegments.map((data, key) => {
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
         {key: `line-${key}`},
         this.getEventState("all", "data"),
-        getSharedEventState("all", "data"),
+        this.getSharedEventState("all", "data"),
         { data },
         dataComponent.props,
         this.baseProps.all.data
@@ -374,7 +379,7 @@ export default class VictoryLine extends React.Component {
       const labelProps = defaults(
           {key: `line-label-${key}`},
           this.getEventState("all", "labels"),
-          getSharedEventState("all", "labels"),
+          this.getSharedEventState("all", "labels"),
           { data },
           labelComponent.props,
           this.baseProps.all.labels
@@ -395,8 +400,26 @@ export default class VictoryLine extends React.Component {
     });
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
   render() {
-    const { animate, style, standalone, width, height, containerComponent } = this.props;
+    const { animate, style, standalone } = this.props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -421,11 +444,6 @@ export default class VictoryLine extends React.Component {
       </g>
     );
 
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
-        group) :
-      group;
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }

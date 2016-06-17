@@ -145,7 +145,7 @@ export default class VictoryScatter extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
@@ -360,54 +360,85 @@ export default class VictoryScatter extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = ScatterHelpers.getBaseProps(this.props, defaultStyles);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = ScatterHelpers.getBaseProps(newProps, defaultStyles);
+    this.setupEvents(newProps);
+  }
+
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = ScatterHelpers.getBaseProps(props, defaultStyles);
+    this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
+    const { dataComponent, labelComponent } = props;
+    const pointComponents = [];
+    const pointLabelComponents = [];
+    this.dataKeys.forEach((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `scatter-${key}`},
         this.getEventState(key, "data"),
-        getSharedEventState(key, "data"),
+        this.getSharedEventState(key, "data"),
         dataComponent.props,
         this.baseProps[key].data
       );
-      const scatterComponent = React.cloneElement(dataComponent, Object.assign(
+
+      pointComponents.push(React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      ));
+      )));
+
       const labelProps = defaults(
         {key: `scatter-label-${key}`},
         this.getEventState(key, "labels"),
-        getSharedEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
         labelComponent.props,
         this.baseProps[key].labels
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const scatterLabel = React.cloneElement(labelComponent, Object.assign({
+        pointLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps));
-        return (
-          <g key={`scatter-group-${key}`}>
-            {scatterComponent}
-            {scatterLabel}
-          </g>
-        );
+        }, labelProps)));
       }
-      return scatterComponent;
     });
+
+    if (pointLabelComponents.length > 0) {
+      return (
+        <g>
+          {pointComponents}
+          {pointLabelComponents}
+        </g>
+      );
+    }
+    return pointComponents;
+  }
+
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
   }
 
   render() {
-    const { animate, style, standalone, width, height, containerComponent } = this.props;
+    const { animate, style, standalone } = this.props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -432,11 +463,6 @@ export default class VictoryScatter extends React.Component {
       </g>
     );
 
-    return standalone ?
-      React.cloneElement(
-        containerComponent,
-        Object.assign({ height, width, style: baseStyles.parent}, containerComponent.props),
-        group) :
-      group;
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }

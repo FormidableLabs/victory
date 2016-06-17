@@ -8,6 +8,8 @@ export default {
   getBaseProps(props, defaultStyles) {
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { data, style, scale } = calculatedValues;
+    const { height, width } = props;
+    const parentProps = {style: style.parent, scale, data, height, width};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
@@ -38,7 +40,7 @@ export default {
         labels: labelProps
       };
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, defaultStyles) {

@@ -3,6 +3,7 @@
  */
 /* global sinon */
 /*eslint-disable max-nested-callbacks */
+/* eslint no-unused-expressions: 0 */
 
 import React from "react";
 import { omit } from "lodash";
@@ -80,6 +81,24 @@ describe("components/victory-axis", () => {
   });
 
   describe("event handling", () => {
+    it("attaches an event to the parent svg", () => {
+      const clickHandler = sinon.spy();
+      const wrapper = mount(
+        <VictoryAxis
+          events={[{
+            target: "parent",
+            eventHandlers: {onClick: clickHandler}
+          }]}
+        />
+      );
+      const svg = wrapper.find("svg");
+      svg.simulate("click");
+      expect(clickHandler).called;
+      // the first argument is the standard evt object
+      expect(clickHandler.args[0][1])
+        .to.include.keys("ticks", "scale", "width", "height", "style");
+    });
+
     it("attaches an event to the axis line", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
