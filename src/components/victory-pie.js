@@ -27,6 +27,16 @@ const defaultStyles = {
   }
 };
 
+const defaultColorScale = [
+  "#75C776",
+  "#39B6C5",
+  "#78CCC4",
+  "#62C3A4",
+  "#64A8D1",
+  "#8C95C8",
+  "#3BAF74"
+];
+
 export default class VictoryPie extends React.Component {
   static defaultTransitions = {
     onExit: {
@@ -312,15 +322,6 @@ export default class VictoryPie extends React.Component {
     cornerRadius: 0,
     padAngle: 0,
     padding: 30,
-    colorScale: [
-      "#75C776",
-      "#39B6C5",
-      "#78CCC4",
-      "#62C3A4",
-      "#64A8D1",
-      "#8C95C8",
-      "#3BAF74"
-    ],
     startAngle: 0,
     standalone: true,
     width: 400,
@@ -331,7 +332,8 @@ export default class VictoryPie extends React.Component {
     containerComponent: <VictoryContainer/>
   };
 
-  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
+  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers),
+    defaultStyles, defaultColorScale);
 
   constructor() {
     super();
@@ -342,11 +344,13 @@ export default class VictoryPie extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = PieHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = PieHelpers.getBaseProps(this.props,
+      defaultStyles, defaultColorScale);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = PieHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = PieHelpers.getBaseProps(newProps,
+      defaultStyles, defaultColorScale);
   }
 
   renderData(props) {
@@ -404,7 +408,7 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const styleObject = this.props.theme && this.props.theme.pie ? this.props.theme.pie
+    const styleObject = this.props.theme && this.props.theme.pie ? this.props.theme.pie.style
     : defaultStyles;
     const calculatedProps = PieHelpers.getCalculatedValues(this.props, styleObject);
     const { style, padding, radius } = calculatedProps;

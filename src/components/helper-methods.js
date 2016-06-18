@@ -12,9 +12,9 @@ export default {
     }
   },
 
-  getBaseProps(props, defaultStyles) {
-    defaultStyles = props.theme && props.theme.pie ? props.theme.pie : defaultStyles;
-    const calculatedValues = this.getCalculatedValues(props, defaultStyles);
+  getBaseProps(props, defaultStyles, defaultColorScale) {
+    defaultStyles = props.theme && props.theme.pie ? props.theme.pie.style : defaultStyles;
+    const calculatedValues = this.getCalculatedValues(props, defaultStyles, defaultColorScale);
     const { slices, style, pathFunction, colors, labelPosition } = calculatedValues;
     return slices.reduce((memo, slice, index) => {
       const datum = slice.data;
@@ -57,10 +57,12 @@ export default {
     }, {});
   },
 
-  getCalculatedValues(props, defaultStyles) {
+  getCalculatedValues(props, defaultStyles, defaultColorScale) {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const colorScale = props.theme && props.theme.pie ? props.theme.pie.colorScale
-    : props.colorScale;
+    const colorScale = props.theme && props.theme.pie ?
+    props.colorScale || props.theme.pie.props.colorScale || defaultColorScale
+    : props.colorScale || defaultColorScale;
+    console.log(colorScale);
     const colors = Array.isArray(colorScale) ?
     colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
