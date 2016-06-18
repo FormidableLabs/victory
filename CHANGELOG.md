@@ -1,5 +1,10 @@
 VictoryCore Changelog
 =====================
+## 4.2.0 (2016-06-18)
+
+- Adds VictoryTheme, which allows users to import themes and custom themes into their VictoryChart and VictoryPie components
+- Adds a minimalist grayscale theme compatible with all VictoryChart components and VictoryPie
+
 ## 4.1.1 (2016-06-16)
 
 - Fixes a bug related to event specificity
