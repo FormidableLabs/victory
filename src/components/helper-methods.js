@@ -64,7 +64,6 @@ export default {
     const colorScale = props.theme && props.theme.pie ?
     props.colorScale || props.theme.pie.props.colorScale || defaultColorScale
     : props.colorScale || defaultColorScale;
-    console.log(colorScale);
     const colors = Array.isArray(colorScale) ?
     colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
