@@ -25,16 +25,16 @@ export default {
     };
   },
 
-  evaluateProp(prop, data) {
-    return isFunction(prop) ? prop(data) : prop;
+  evaluateProp(prop, data, index) {
+    return isFunction(prop) ? prop(data, index) : prop;
   },
 
-  evaluateStyle(style, data) {
+  evaluateStyle(style, data, index) {
     if (!Object.keys(style).some((value) => isFunction(style[value]))) {
       return style;
     }
     return Object.keys(style).reduce((prev, curr) => {
-      prev[curr] = this.evaluateProp(style[curr], data);
+      prev[curr] = this.evaluateProp(style[curr], data, index);
       return prev;
     }, {});
   },
