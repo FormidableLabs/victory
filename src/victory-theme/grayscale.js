@@ -12,6 +12,10 @@ const baseLabelStyles = {
   padding: dataTickLabelPadding,
   fill: grayscaleBlack
 };
+const baseProps = {
+  width: 250,
+  height: 250
+};
 
 export default {
   line: {
@@ -83,7 +87,7 @@ export default {
     tickLabels: Object.assign({}, baseLabelStyles,
       {
         stroke: "transparent",
-        fill: (tick, index) => index % 2 !== 0 ?
+        fill: (tick, index) => typeof tick === "number" && index % 2 !== 0 ?
         "transparent" : grayscaleBlack
       })
   },
@@ -95,20 +99,24 @@ export default {
     parent: {}
   },
   pie: {
-    colorScale: ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9", "#f7f7f7"],
-    data: {
-      padding: dataTickLabelPadding,
-      stroke: "#f7f7f7",
-      strokeWidth: 1
-    },
-    labels: Object.assign({}, baseLabelStyles,
-      {
-        padding: 200,
-        strokeWidth: 0,
-        stroke: "transparent",
-        textAnchor: "middle"
-      }),
-    parent: {}
+    props: Object.assign({}, baseProps,
+      {colorScale: ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9", "#f7f7f7"]}),
+    style: {
+      data: {
+        padding: dataTickLabelPadding,
+        stroke: "#f7f7f7",
+        strokeWidth: 1
+      },
+      labels: Object.assign({}, baseLabelStyles,
+        {
+          padding: 200,
+          strokeWidth: 0,
+          stroke: "transparent",
+          textAnchor: "middle"
+        }),
+      parent: {}
+    }
   },
-  colorScale: colors
+  props: Object.assign({}, baseProps,
+    {colorScale: colors})
 };
