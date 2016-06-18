@@ -1,5 +1,22 @@
 VictoryCore Changelog
 =====================
+## 4.1.1 (2016-06-16)
+
+- Fixes a bug related to event specificity
+
+## 4.1.0 (2016-06-16)
+
+- Supports events on parent containers via the `parent` namespace in the event prop
+- Adds support for an "all" `eventKey` that will apply mutations to all elements of given `childName` and `target`. `parent` events automatically target "all" unless an `eventKey` is given.
+- Adds support for applying mutations to arrays of `eventKeys` _i.e._ `[0, 2, 4]`
+- Associates parent events with child events via a `container` prop on `VictorySharedEvents`. This is useful where shared events are implicit as in `VictoryChart` and `VictoryStack`
+
+## 4.0.0 (2016-06-12)
+
+- Removes logic related to inverted chart types (i.e. horizontal bars) from the `getRange` method. This is a breaking change for horizontal bars
+
+- Fixes a bug related to VictoryLabel transforms. Transforms provided via styles will now be applied instead of only transforms provided via the `transform` prop
+
 ## 3.2.0 (2016-06-09)
 
 - Adds VictoryContainer wrapper for all Victory components via the containerComponent prop. This is added by default

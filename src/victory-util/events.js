@@ -1,4 +1,4 @@
-import { extend, intersection, merge, partial, isFunction, isEmpty, property } from "lodash";
+import { extend, merge, partial, isFunction, isEmpty, property } from "lodash";
 
   /* Example Event Prop
     [
@@ -62,40 +62,54 @@ export default {
     baseProps = baseProps || this.baseProps;
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
-      const base = type === "props" ? baseProps : this.state;
-      if (!childName || !base[childName]) {
-        return base[key] && base[key][target];
-      }
-      return base[childName] &&
-        base[childName][key] &&
-        base[childName][key][target];
+      const baseType = type === "props" ? baseProps : this.state;
+      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
+      return key === "parent" ? base.parent : base[key] && base[key][target];
     };
 
     const parseEvent = (eventReturn, eventKey) => {
       const nullFunction = () => null;
       const childName = eventReturn.childName || childType;
-      const getKey = () => {
+      const target = eventReturn.target || namespace;
+
+      const getKeys = () => {
         if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
           return "all";
+        } else if (eventReturn.eventKey === "all") {
+          return baseProps[childName] ?
+            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
+          return baseProps[childName] ?
+            Object.keys(baseProps[childName]) : Object.keys(baseProps);
         }
-        return eventReturn.eventKey || eventKey;
+        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
       };
-      const key = getKey();
-      const target = eventReturn.target || namespace;
-      const targetProps = getTargetProps({childName, key, target}, "props");
-      const targetState = getTargetProps({childName, key, target}, "state");
-      const mutation = eventReturn.mutation || nullFunction;
-      const mutatedProps = mutation(Object.assign({}, targetProps, targetState), baseProps);
-      const childState = this.state[childName] || {};
-      return childName ?
-        extend(this.state, {
-          [childName]: extend(childState, {
-            [key]: extend(childState[key], {[target]: mutatedProps})
-          })
-        }) :
-        extend(this.state, {
-          [key]: extend(this.state[key], {[target]: mutatedProps})
-        });
+      const mutationKeys = getKeys();
+
+      const getMutationObject = (key) => {
+        const mutationTargetProps = getTargetProps({childName, key, target}, "props");
+        const mutationTargetState = getTargetProps({childName, key, target}, "state");
+        const mutation = eventReturn.mutation || nullFunction;
+        const mutatedProps = mutation(
+          Object.assign({}, mutationTargetProps, mutationTargetState), baseProps
+        );
+        const childState = this.state[childName] || {};
+        return childName ?
+          extend(this.state, {
+            [childName]: extend(childState, {
+              [key]: extend(childState[key], {[target]: mutatedProps})
+            })
+          }) :
+          extend(this.state, {
+            [key]: extend(this.state[key], {[target]: mutatedProps})
+          });
+      };
+      return Array.isArray(mutationKeys) ?
+        mutationKeys.reduce((memo, k) => {
+          return Object.assign(memo, getMutationObject(k));
+        }, {}) :
+        getMutationObject(mutationKeys);
+
     };
 
     const parseEventReturn = (eventReturn, eventKey) => {
@@ -123,22 +137,23 @@ export default {
 
   getEvents(props, target, eventKey, getScopedEvents) {
     const getEventsFromProps = (events) => {
+
       const getSelectedEvents = () => {
-        const findEventsWith = (name, value) => {
-          return events.reduce((memo, event) => {
-            if (event[name] !== undefined) {
-              return `${event[name]}` === `${value}` ? memo.concat(event) : memo;
-            }
-            return memo.concat(event);
-          }, []);
-        };
-        const keyEvents = findEventsWith("eventKey", eventKey);
-        const targetEvents = findEventsWith("target", target);
-        if (keyEvents.length && targetEvents.length) {
-          return intersection([...keyEvents, ...targetEvents]);
+        const targetEvents = events.reduce((memo, event) => {
+          if (event.target !== undefined) {
+            return `${event.target}` === `${target}` ? memo.concat(event) : memo;
+          }
+          return memo.concat(event);
+        }, []);
+
+        if (eventKey !== undefined && target !== "parent") {
+          return targetEvents.filter((obj) => {
+            return obj.eventKey ? `${obj.eventKey}` === `${eventKey}` : true;
+          });
         }
-        return [];
+        return targetEvents;
       };
+
       const selectedEvents = getSelectedEvents();
       return Array.isArray(selectedEvents) && selectedEvents.reduce((memo, event) => {
         return event ? Object.assign(memo, event.eventHandlers) : memo;
