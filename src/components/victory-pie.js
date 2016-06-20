@@ -10,32 +10,60 @@ import {
 import Slice from "./slice";
 import PieHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    padding: 5,
-    stroke: "white",
-    strokeWidth: 1
-  },
-  labels: {
-    padding: 10,
-    fill: "black",
-    strokeWidth: 0,
-    stroke: "transparent",
-    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-    fontSize: 13,
-    textAnchor: "middle"
-  }
-};
+// const defaultStyles = {
+//   data: {
+//     padding: 5,
+//     stroke: "white",
+//     strokeWidth: 1
+//   },
+//   labels: {
+//     padding: 10,
+//     fill: "black",
+//     strokeWidth: 0,
+//     stroke: "transparent",
+//     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+//     fontSize: 13,
+//     textAnchor: "middle"
+//   }
+// };
 
-const defaultColorScale = [
-  "#75C776",
-  "#39B6C5",
-  "#78CCC4",
-  "#62C3A4",
-  "#64A8D1",
-  "#8C95C8",
-  "#3BAF74"
-];
+// const defaultColorScale = [
+//   "#75C776",
+//   "#39B6C5",
+//   "#78CCC4",
+//   "#62C3A4",
+//   "#64A8D1",
+//   "#8C95C8",
+//   "#3BAF74"
+// ];
+
+const fallbackProps = {
+  styles: {
+    data: {
+      padding: 5,
+      stroke: "white",
+      strokeWidth: 1
+    },
+    labels: {
+      padding: 10,
+      fill: "black",
+      strokeWidth: 0,
+      stroke: "transparent",
+      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+      fontSize: 13,
+      textAnchor: "middle"
+    }
+  },
+  colorScale: [
+    "#75C776",
+    "#39B6C5",
+    "#78CCC4",
+    "#62C3A4",
+    "#64A8D1",
+    "#8C95C8",
+    "#3BAF74"
+  ]
+};
 
 export default class VictoryPie extends React.Component {
   static defaultTransitions = {
@@ -332,8 +360,7 @@ export default class VictoryPie extends React.Component {
     containerComponent: <VictoryContainer/>
   };
 
-  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers),
-    defaultStyles, defaultColorScale);
+  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -353,7 +380,7 @@ export default class VictoryPie extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = PieHelpers.getBaseProps(props, defaultStyles, defaultColorScale);
+    this.baseProps = PieHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -436,7 +463,7 @@ export default class VictoryPie extends React.Component {
     }
 
     const styleObject = this.props.theme && this.props.theme.pie ? this.props.theme.pie.style
-    : defaultStyles;
+    : fallbackProps.styles;
     const calculatedProps = PieHelpers.getCalculatedValues(this.props, styleObject);
     const { style, padding, radius } = calculatedProps;
     const xOffset = radius + padding.left;

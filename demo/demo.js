@@ -254,7 +254,6 @@ export default class App extends React.Component {
             theme={VictoryTheme.grayscale}
             style={{parent: {maxWidth: "40%"}}}
             animate={{duration: 2000}}
-            // colorScale="qualitative"
           />
 
           <VictoryPie style={this.state.style}

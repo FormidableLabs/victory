@@ -12,9 +12,11 @@ export default {
     }
   },
 
-  getBaseProps(props, defaultStyles, defaultColorScale) {
-    defaultStyles = props.theme && props.theme.pie ? props.theme.pie.style : defaultStyles;
-    const calculatedValues = this.getCalculatedValues(props, defaultStyles, defaultColorScale);
+  getBaseProps(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.pie ? props.theme.pie.style
+    : fallbackProps.styles;
+    const calculatedValues = this.getCalculatedValues(props, defaultStyles,
+      fallbackProps.colorScale);
     const { slices, style, pathFunction, colors, labelPosition } = calculatedValues;
     const { width, height } = props;
     const parentProps = {slices, pathFunction, width, height, style: style.parent};
@@ -61,9 +63,11 @@ export default {
 
   getCalculatedValues(props, defaultStyles, defaultColorScale) {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const colorScale = props.theme && props.theme.pie ?
+    const propsFallbacks = props.colorScale || defaultColorScale;
+    const theme = props.theme && props.theme.pie;
+    const colorScale = theme ?
     props.colorScale || props.theme.pie.props.colorScale || defaultColorScale
-    : props.colorScale || defaultColorScale;
+    : propsFallbacks;
     const colors = Array.isArray(colorScale) ?
     colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
