@@ -10,33 +10,6 @@ import {
 import Slice from "./slice";
 import PieHelpers from "./helper-methods";
 
-// const defaultStyles = {
-//   data: {
-//     padding: 5,
-//     stroke: "white",
-//     strokeWidth: 1
-//   },
-//   labels: {
-//     padding: 10,
-//     fill: "black",
-//     strokeWidth: 0,
-//     stroke: "transparent",
-//     fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-//     fontSize: 13,
-//     textAnchor: "middle"
-//   }
-// };
-
-// const defaultColorScale = [
-//   "#75C776",
-//   "#39B6C5",
-//   "#78CCC4",
-//   "#62C3A4",
-//   "#64A8D1",
-//   "#8C95C8",
-//   "#3BAF74"
-// ];
-
 const fallbackProps = {
   styles: {
     data: {
