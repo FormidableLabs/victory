@@ -64,7 +64,7 @@ export default {
     : fallbackProps.style;
     const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
     const getColorScale = () => {
-      return theme ? theme.colorScale : fallbackProps.colorScale;
+      return theme ? theme.props.colorScale : fallbackProps.colorScale;
     };
     const colorScale = props.colorScale || getColorScale();
     const colors = Array.isArray(colorScale) ?
