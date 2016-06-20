@@ -11,7 +11,7 @@ import Slice from "./slice";
 import PieHelpers from "./helper-methods";
 
 const fallbackProps = {
-  styles: {
+  style: {
     data: {
       padding: 5,
       stroke: "white",
@@ -435,9 +435,7 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const styleObject = this.props.theme && this.props.theme.pie ? this.props.theme.pie.style
-    : fallbackProps.styles;
-    const calculatedProps = PieHelpers.getCalculatedValues(this.props, styleObject);
+    const calculatedProps = PieHelpers.getCalculatedValues(this.props, fallbackProps);
     const { style, padding, radius } = calculatedProps;
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
