@@ -3,7 +3,7 @@ import { Helpers, Events } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 
 export default {
 
@@ -86,18 +86,19 @@ export default {
     };
   },
 
-  getBaseProps(props, defaultStyles, defaultWidthHeight) {
-    defaultStyles = props.theme && props.theme.bar ? props.theme.bar : defaultStyles;
-    props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
-    const scale = this.getScale(props);
-    const { horizontal, width, height } = props;
+  getBaseProps(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.bar ? props.theme.bar
+    : fallbackProps.style;
+    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
+    const data = Events.addEventKeys(modifiedProps, Data.getData(props));
+    const scale = this.getScale(modifiedProps);
+    const { horizontal, width, height } = modifiedProps;
     const parentProps = {scale, width, height, data, style: style.parent};
 
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
-      const position = this.getBarPosition(props, datum, scale);
+      const position = this.getBarPosition(modifiedProps, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = Object.assign(
         {
@@ -110,7 +111,7 @@ export default {
         position
       );
 
-      const text = this.getLabel(props, datum, index);
+      const text = this.getLabel(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, datum);
       const padding = this.getlabelPadding(labelStyle, horizontal);
       const anchors = this.getLabelAnchors(datum, horizontal);

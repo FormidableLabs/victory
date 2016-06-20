@@ -8,27 +8,28 @@ import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 
-const defaultStyles = {
-  data: {
-    width: 8,
-    padding: 6,
-    stroke: "transparent",
-    strokeWidth: 0,
-    fill: "#756f6a",
-    opacity: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450
   },
-  labels: {
-    fontSize: 13,
-    padding: 4,
-    fill: "black"
+  style: {
+    data: {
+      width: 8,
+      padding: 6,
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#756f6a",
+      opacity: 1
+    },
+    labels: {
+      fontSize: 13,
+      padding: 4,
+      fill: "black"
+    }
   }
-};
-
-const defaultWidthHeight = {
-  width: 450,
-  height: 300
 };
 
 const defaultData = [
@@ -339,8 +340,7 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers),
-    defaultStyles, defaultWidthHeight);
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -360,7 +360,7 @@ export default class VictoryBar extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = BarHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
+    this.baseProps = BarHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -430,9 +430,8 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
-      defaultWidthHeight));
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       const whitelist = [
@@ -440,22 +439,22 @@ export default class VictoryBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryBar {...this.props}/>
+          <VictoryBar {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const styleObject = this.props.theme && this.props.theme.bar ? this.props.theme.bar
-    : defaultStyles;
+    const styleObject = modifiedProps.theme && modifiedProps.theme.bar ? modifiedProps.theme.bar
+    : fallbackProps.style;
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

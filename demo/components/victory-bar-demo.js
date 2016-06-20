@@ -159,7 +159,8 @@ export default class App extends React.Component {
         <VictoryStack
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
-          colorScale={"warm"}
+          // colorScale={"warm"}
+          theme={VictoryTheme.grayscale}
         >
           {this.state.multiTransitionData.map((data, index) => {
             return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
@@ -356,7 +357,6 @@ export default class App extends React.Component {
           </VictorySharedEvents>
         </svg>
         <VictoryBar
-          height={500}
           theme={VictoryTheme.grayscale}
           style={{
             parent: parentStyle,

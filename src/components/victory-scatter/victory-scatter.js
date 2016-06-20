@@ -3,33 +3,34 @@ import { defaults, isFunction, partialRight } from "lodash";
 import Point from "./point";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
   VictoryContainer
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a",
-    opacity: 1,
-    stroke: "transparent",
-    strokeWidth: 0
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
   },
-  labels: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    textAnchor: "middle",
-    padding: 10
+  style: {
+    data: {
+      fill: "#756f6a",
+      opacity: 1,
+      stroke: "transparent",
+      strokeWidth: 0
+    },
+    labels: {
+      stroke: "transparent",
+      fill: "#756f6a",
+      fontFamily: "Helvetica",
+      fontSize: 13,
+      textAnchor: "middle",
+      padding: 10
+    }
   }
-};
-
-const defaultWidthHeight = {
-  width: 450,
-  height: 300
 };
 
 export default class VictoryScatter extends React.Component {
@@ -362,8 +363,7 @@ export default class VictoryScatter extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(
-    ScatterHelpers.getBaseProps.bind(ScatterHelpers), defaultStyles,
-    defaultWidthHeight);
+    ScatterHelpers.getBaseProps.bind(ScatterHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -383,7 +383,7 @@ export default class VictoryScatter extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = ScatterHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
+    this.baseProps = ScatterHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -452,9 +452,8 @@ export default class VictoryScatter extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
-      defaultWidthHeight));
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -466,22 +465,23 @@ export default class VictoryScatter extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryScatter {...this.props}/>
+          <VictoryScatter {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const styleObject = this.props.theme && this.props.theme.scatter ? this.props.theme.scatter
-    : defaultStyles;
+    const styleObject = modifiedProps.theme && modifiedProps.theme.scatter
+    ? modifiedProps.theme.scatter
+    : fallbackProps.style;
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

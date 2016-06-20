@@ -3,28 +3,27 @@ import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 
 export default {
-  getBaseProps(props, defaultStyles, defaultWidthHeight) {
-    defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter : defaultStyles;
-    props = Object.assign({}, props, Size.getWidthHeight(props, defaultWidthHeight));
-    const calculatedValues = this.getCalculatedValues(props, defaultStyles);
+  getBaseProps(props, fallbackProps) {
+    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { height, width } = props;
+    const { height, width } = modifiedProps;
     const parentProps = {style: style.parent, scale, data, height, width};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
-      const size = this.getSize(datum, props, calculatedValues);
-      const symbol = this.getSymbol(datum, props);
+      const size = this.getSize(datum, modifiedProps, calculatedValues);
+      const symbol = this.getSymbol(datum, modifiedProps);
       const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
         x, y, size, scale, datum, symbol, index, style: dataStyle
       };
 
-      const text = this.getLabelText(props, datum, index);
+      const text = this.getLabelText(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
@@ -46,7 +45,9 @@ export default {
     }, {parent: parentProps});
   },
 
-  getCalculatedValues(props, defaultStyles) {
+  getCalculatedValues(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter
+    : fallbackProps.style;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const range = {

@@ -8,22 +8,23 @@ import {
 } from "victory-core";
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a"
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
   },
-  labels: {
-    fontSize: 13,
-    padding: 4,
-    fill: "black"
+  style: {
+    data: {
+      fill: "#756f6a"
+    },
+    labels: {
+      fontSize: 13,
+      padding: 4,
+      fill: "black"
+    }
   }
-};
-
-const defaultWidthHeight = {
-  width: 450,
-  height: 300
 };
 
 export default class VictoryArea extends React.Component {
@@ -334,8 +335,7 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers),
-    defaultStyles, defaultWidthHeight);
+  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -355,7 +355,7 @@ export default class VictoryArea extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = AreaHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
+    this.baseProps = AreaHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -415,9 +415,8 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
-      defaultWidthHeight));
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       const whitelist = [
@@ -425,22 +424,22 @@ export default class VictoryArea extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryArea {...this.props}/>
+          <VictoryArea {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const styleObject = this.props.theme && this.props.theme.area ? this.props.theme.area
-    : defaultStyles;
+    const styleObject = modifiedProps.theme && modifiedProps.theme.area ? modifiedProps.theme.area
+    : fallbackProps.style;
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

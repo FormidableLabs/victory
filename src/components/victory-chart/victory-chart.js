@@ -8,16 +8,18 @@ import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 
 const defaultAxes = {
   independent: <VictoryAxis/>,
   dependent: <VictoryAxis dependentAxis/>
 };
 
-const defaultWidthHeight = {
-  width: 450,
-  height: 300
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
+  }
 };
 
 export default class VictoryChart extends React.Component {
@@ -322,7 +324,7 @@ export default class VictoryChart extends React.Component {
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,
-        theme: props.theme,
+        theme: child.props.theme || props.theme,
         standalone: false,
         style
       }, childProps);
@@ -342,17 +344,19 @@ export default class VictoryChart extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
-      defaultWidthHeight));
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const childComponents = ChartHelpers.getChildComponents(props, defaultAxes);
-    const calculatedProps = this.getCalculatedProps(props, childComponents);
-    const container = props.standalone && this.getContainer(props, calculatedProps);
-    const newChildren = this.getNewChildren(props, childComponents, calculatedProps);
-    if (props.events) {
+    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const childComponents = ChartHelpers.getChildComponents(modifiedProps, defaultAxes);
+    const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
+    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    if (modifiedProps.events) {
       return (
-        <VictorySharedEvents events={props.events} eventKey={props.eventKey} container={container}>
+        <VictorySharedEvents events={modifiedProps.events}
+          eventKey={modifiedProps.eventKey}
+          container={container}
+        >
           {newChildren}
         </VictorySharedEvents>
       );
@@ -363,6 +367,6 @@ export default class VictoryChart extends React.Component {
         {newChildren}
       </g>
     );
-    return props.standalone ? React.cloneElement(container, container.props, group) : group;
+    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

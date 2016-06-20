@@ -4,32 +4,33 @@ import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Size from "../../helpers/size";
+import Props from "../../helpers/props";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
   VictoryContainer
 } from "victory-core";
 
-const defaultStyles = {
-  data: {
-    strokeWidth: 2,
-    fill: "none",
-    stroke: "#756f6a",
-    opacity: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450
   },
-  labels: {
-    padding: 5,
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    strokeWidth: 0,
-    stroke: "transparent",
-    textAnchor: "start"
+  style: {
+    data: {
+      strokeWidth: 2,
+      fill: "none",
+      stroke: "#756f6a",
+      opacity: 1
+    },
+    labels: {
+      padding: 5,
+      fontFamily: "Helvetica",
+      fontSize: 13,
+      strokeWidth: 0,
+      stroke: "transparent",
+      textAnchor: "start"
+    }
   }
-};
-
-const defaultWidthHeight = {
-  width: 450,
-  height: 300
 };
 
 export default class VictoryLine extends React.Component {
@@ -349,7 +350,7 @@ export default class VictoryLine extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
-    defaultStyles, defaultWidthHeight);
+    fallbackProps);
 
   constructor() {
     super();
@@ -369,7 +370,7 @@ export default class VictoryLine extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = LineHelpers.getBaseProps(props, defaultStyles, defaultWidthHeight);
+    this.baseProps = LineHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -434,9 +435,8 @@ export default class VictoryLine extends React.Component {
   }
 
   render() {
-    this.props = Object.assign({}, this.props, Size.getWidthHeight(this.props,
-      defaultWidthHeight));
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -448,22 +448,22 @@ export default class VictoryLine extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryLine {...this.props}/>
+          <VictoryLine {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const styleObject = this.props.theme && this.props.theme.line ? this.props.theme.line
-    : defaultStyles;
+    const styleObject = modifiedProps.theme && modifiedProps.theme.line ? modifiedProps.theme.line
+    : fallbackProps.style;
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }
