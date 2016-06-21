@@ -28,7 +28,7 @@ function getKeyedDataDifference(a, b) {
 
 /**
  * Calculate which data-points exist in oldData and not nextData -
- * these are the `entering` data-points.  Also calculate which
+ * these are the `exiting` data-points.  Also calculate which
  * data-points exist in nextData and not oldData - thses are the
  * `entering` data-points.
  *
