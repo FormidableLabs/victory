@@ -30,7 +30,7 @@ describe("components/victory-axis", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryAxis.defaultProps.width} ${VictoryAxis.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 

@@ -29,7 +29,7 @@ describe("components/victory-area", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryArea.defaultProps.width} ${VictoryArea.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

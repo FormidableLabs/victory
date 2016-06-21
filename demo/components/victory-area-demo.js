@@ -1,8 +1,8 @@
 /*global window:false */
 import React from "react";
 import { merge, random, range } from "lodash";
-import {VictoryArea, VictoryStack, VictoryGroup} from "../../src/index";
-import { VictoryContainer } from "victory-core";
+import {VictoryArea, VictoryStack, VictoryGroup, VictoryChart} from "../../src/index";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -102,6 +102,7 @@ export default class App extends React.Component {
         <VictoryArea
           style={style} animate={{duration: 1000}}
           data={this.state.areaTransitionData}
+          theme={VictoryTheme.grayscale}
           containerComponent={
             <VictoryContainer
               title="Area Chart"
@@ -249,10 +250,62 @@ export default class App extends React.Component {
           ]}
         />
 
-      <svg width={450} height={300} style={style.parent}>
-        <VictoryArea y={(data) => Math.sin(data.x)} style={{data: {opacity: 0.4}}}/>
-        <VictoryArea y={(data) => Math.cos(data.x)} style={{data: {opacity: 0.4}}}/>
-      </svg>
+        <svg width={450} height={300} style={style.parent}>
+          <VictoryArea y={(data) => Math.sin(data.x)} style={{data: {opacity: 0.4}}}/>
+          <VictoryArea y={(data) => Math.cos(data.x)} style={{data: {opacity: 0.4}}}/>
+        </svg>
+
+        <VictoryChart
+          theme={VictoryTheme.grayscale}
+        >
+          <VictoryArea
+            style={style} animate={{duration: 1000}}
+            data={this.state.areaTransitionData}
+            containerComponent={
+              <VictoryContainer
+                title="Area Chart"
+                desc="This is an animated area chart that displays data."
+              />
+            }
+          />
+        </VictoryChart>
+
+        <VictoryStack
+          style={style}
+          animate={{duration: 1000}}
+          theme={VictoryTheme.grayscale}
+          containerComponent={
+            <VictoryContainer
+              desc="This is an animated area chart that displays data in a range of colors."
+            />
+          }
+        >
+          {this.state.multiTransitionData.map((data, index) => {
+            return (
+              <VictoryArea
+                key={index}
+                data={data}
+                interpolation={"basis"}
+              />
+            );
+          })}
+        </VictoryStack>
+
+        <VictoryStack style={{parent: style.parent}} theme={VictoryTheme.grayscale}>
+          <VictoryArea label={"one"}
+            data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
+          />
+          <VictoryArea label={"two"}
+            data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
+          />
+          <VictoryArea label={"three"}
+            data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
+          />
+          <VictoryArea label={"four"}
+            data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
+          />
+        </VictoryStack>
+
       </div>
     );
   }

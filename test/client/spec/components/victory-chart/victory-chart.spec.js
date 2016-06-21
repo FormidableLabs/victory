@@ -27,7 +27,7 @@ describe("components/victory-chart", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryChart.defaultProps.width} ${VictoryChart.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

@@ -9,14 +9,20 @@ import {
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a"
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
   },
-  labels: {
-    fontSize: 13,
-    padding: 4,
-    fill: "black"
+  style: {
+    data: {
+      fill: "#756f6a"
+    },
+    labels: {
+      fontSize: 13,
+      padding: 4,
+      fill: "black"
+    }
   }
 };
 
@@ -300,19 +306,27 @@ export default class VictoryArea extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryArea as a solo component, implement the theme directly on
+    * VictoryArea. If you are wrapping VictoryArea in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
     dataComponent: <Area/>,
     labelComponent: <VictoryLabel/>,
-    height: 300,
     padding: 50,
     scale: "linear",
     samples: 50,
     standalone: true,
     interpolation: "linear",
-    width: 450,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer />
@@ -320,7 +334,7 @@ export default class VictoryArea extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), defaultStyles);
+  static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -340,7 +354,7 @@ export default class VictoryArea extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = AreaHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = AreaHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -400,7 +414,8 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       const whitelist = [
@@ -408,19 +423,22 @@ export default class VictoryArea extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryArea {...this.props}/>
+          <VictoryArea {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const baseStyles = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+    const styleObject = modifiedProps.theme && modifiedProps.theme.area ? modifiedProps.theme.area
+    : fallbackProps.style;
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

@@ -9,20 +9,26 @@ import {
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a",
-    opacity: 1,
-    stroke: "transparent",
-    strokeWidth: 0
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
   },
-  labels: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    textAnchor: "middle",
-    padding: 10
+  style: {
+    data: {
+      fill: "#756f6a",
+      opacity: 1,
+      stroke: "transparent",
+      strokeWidth: 0
+    },
+    labels: {
+      stroke: "transparent",
+      fill: "#756f6a",
+      fontFamily: "Helvetica",
+      fontSize: 13,
+      textAnchor: "middle",
+      padding: 10
+    }
   }
 };
 
@@ -326,18 +332,26 @@ export default class VictoryScatter extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryScatter as a solo component, implement the theme directly on
+    * VictoryScatter. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
-    height: 300,
     padding: 50,
     samples: 50,
     scale: "linear",
     size: 3,
     standalone: true,
     symbol: "circle",
-    width: 450,
     x: "x",
     y: "y",
     dataComponent: <Point/>,
@@ -348,8 +362,7 @@ export default class VictoryScatter extends React.Component {
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(
-    ScatterHelpers.getBaseProps.bind(ScatterHelpers), defaultStyles
-  );
+    ScatterHelpers.getBaseProps.bind(ScatterHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -369,7 +382,7 @@ export default class VictoryScatter extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = ScatterHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = ScatterHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -438,7 +451,8 @@ export default class VictoryScatter extends React.Component {
   }
 
   render() {
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -450,19 +464,23 @@ export default class VictoryScatter extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryScatter {...this.props}/>
+          <VictoryScatter {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const baseStyles = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+    const styleObject = modifiedProps.theme && modifiedProps.theme.scatter
+    ? modifiedProps.theme.scatter
+    : fallbackProps.style;
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

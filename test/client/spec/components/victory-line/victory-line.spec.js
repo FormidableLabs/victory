@@ -34,7 +34,7 @@ describe("components/victory-line", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryLine.defaultProps.width} ${VictoryLine.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
   });

@@ -5,6 +5,7 @@ import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
 
 export default {
+
   getScale(props) {
     const { horizontal } = props;
     const range = {
@@ -84,16 +85,19 @@ export default {
     };
   },
 
-  getBaseProps(props, defaultStyles) {
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
-    const scale = this.getScale(props);
-    const { horizontal, width, height } = props;
+  getBaseProps(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.bar ? props.theme.bar
+    : fallbackProps.style;
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
+    const data = Events.addEventKeys(modifiedProps, Data.getData(props));
+    const scale = this.getScale(modifiedProps);
+    const { horizontal, width, height } = modifiedProps;
     const parentProps = {scale, width, height, data, style: style.parent};
 
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
-      const position = this.getBarPosition(props, datum, scale);
+      const position = this.getBarPosition(modifiedProps, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = Object.assign(
         {
@@ -106,7 +110,7 @@ export default {
         position
       );
 
-      const text = this.getLabel(props, datum, index);
+      const text = this.getLabel(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, datum);
       const padding = this.getlabelPadding(labelStyle, horizontal);
       const anchors = this.getLabelAnchors(datum, horizontal);

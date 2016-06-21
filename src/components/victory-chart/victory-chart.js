@@ -14,6 +14,13 @@ const defaultAxes = {
   dependent: <VictoryAxis dependentAxis/>
 };
 
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
+  }
+};
+
 export default class VictoryChart extends React.Component {
   static propTypes = {
     /**
@@ -196,12 +203,19 @@ export default class VictoryChart extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryChart, either alone or as a wrapper for other components,
+    * you will only need to implement the theme on VictoryChart itself.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
-    height: 300,
-    width: 450,
     padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer />
@@ -309,6 +323,7 @@ export default class VictoryChart extends React.Component {
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,
+        theme: child.props.theme || props.theme,
         standalone: false,
         style
       }, childProps);
@@ -330,13 +345,17 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const childComponents = ChartHelpers.getChildComponents(props, defaultAxes);
-    const calculatedProps = this.getCalculatedProps(props, childComponents);
-    const container = props.standalone && this.getContainer(props, calculatedProps);
-    const newChildren = this.getNewChildren(props, childComponents, calculatedProps);
-    if (props.events) {
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const childComponents = ChartHelpers.getChildComponents(modifiedProps, defaultAxes);
+    const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
+    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    if (modifiedProps.events) {
       return (
-        <VictorySharedEvents events={props.events} eventKey={props.eventKey} container={container}>
+        <VictorySharedEvents events={modifiedProps.events}
+          eventKey={modifiedProps.eventKey}
+          container={container}
+        >
           {newChildren}
         </VictorySharedEvents>
       );
@@ -347,6 +366,6 @@ export default class VictoryChart extends React.Component {
         {newChildren}
       </g>
     );
-    return props.standalone ? React.cloneElement(container, container.props, group) : group;
+    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

@@ -10,38 +10,44 @@ import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
-const defaultStyles = {
-  axis: {
-    stroke: "#756f6a",
-    fill: "none",
-    strokeWidth: 2,
-    strokeLinecap: "round"
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
   },
-  axisLabel: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontSize: 17,
-    fontFamily: "Helvetica"
-  },
-  grid: {
-    stroke: "transparent",
-    fill: "none",
-    strokeLinecap: "round"
-  },
-  ticks: {
-    stroke: "#756f6a",
-    fill: "none",
-    padding: 5,
-    strokeWidth: 2,
-    strokeLinecap: "round",
-    size: 4
-  },
-  tickLabels: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontFamily: "Helvetica",
-    fontSize: 12,
-    padding: 5
+  style: {
+    axis: {
+      stroke: "#756f6a",
+      fill: "none",
+      strokeWidth: 2,
+      strokeLinecap: "round"
+    },
+    axisLabel: {
+      stroke: "transparent",
+      fill: "#756f6a",
+      fontSize: 17,
+      fontFamily: "Helvetica"
+    },
+    grid: {
+      stroke: "transparent",
+      fill: "none",
+      strokeLinecap: "round"
+    },
+    ticks: {
+      stroke: "#756f6a",
+      fill: "none",
+      padding: 5,
+      strokeWidth: 2,
+      strokeLinecap: "round",
+      size: 4
+    },
+    tickLabels: {
+      stroke: "transparent",
+      fill: "#756f6a",
+      fontFamily: "Helvetica",
+      fontSize: 12,
+      padding: 5
+    }
   }
 };
 
@@ -311,7 +317,17 @@ export default class VictoryAxis extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested axis, ticks, axisLabel, grid, and
+    * tickLabels objects. You can create this object yourself, or you can use a theme provided by
+    * Victory. When using VictoryAxis as a solo component, implement the theme directly on
+    * VictoryAxis. If you are wrapping VictoryAxis in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -320,20 +336,18 @@ export default class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>,
     tickComponent: <Tick/>,
     gridComponent: <GridLine/>,
-    height: 300,
     padding: 50,
     scale: "linear",
     standalone: true,
     tickCount: 5,
-    width: 450,
     containerComponent: <VictoryContainer />
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
   static getAxis = Axis.getAxis.bind(Axis);
   static getScale = AxisHelpers.getScale.bind(AxisHelpers);
-  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), defaultStyles);
-  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), defaultStyles);
+  static getStyles = partialRight(AxisHelpers.getStyles.bind(AxisHelpers), fallbackProps.style);
+  static getBaseProps = partialRight(AxisHelpers.getBaseProps.bind(AxisHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -353,7 +367,7 @@ export default class VictoryAxis extends React.Component {
 
   setupEvents(props) {
     const {sharedEvents} = props;
-    this.baseProps = AxisHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = AxisHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -454,7 +468,8 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    const { animate, standalone } = this.props;
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const { animate, standalone } = modifiedProps;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -465,19 +480,23 @@ export default class VictoryAxis extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryAxis {...this.props}/>
+          <VictoryAxis {...modifiedProps}/>
         </VictoryTransition>
       );
     }
-    const style = AxisHelpers.getStyles(this.props, defaultStyles);
+
+    const styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis
+    : fallbackProps.style;
+    const style = AxisHelpers.getStyles(modifiedProps, styleObject);
+
     const group = (
       <g style={style.parent}>
-        {this.renderGridAndTicks(this.props)}
-        {this.renderLine(this.props)}
-        {this.renderLabel(this.props)}
+        {this.renderGridAndTicks(modifiedProps)}
+        {this.renderLine(modifiedProps)}
+        {this.renderLabel(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

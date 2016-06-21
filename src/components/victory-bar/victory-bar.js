@@ -9,19 +9,25 @@ import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 
-const defaultStyles = {
-  data: {
-    width: 8,
-    padding: 6,
-    stroke: "transparent",
-    strokeWidth: 0,
-    fill: "#756f6a",
-    opacity: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450
   },
-  labels: {
-    fontSize: 13,
-    padding: 4,
-    fill: "black"
+  style: {
+    data: {
+      width: 8,
+      padding: 6,
+      stroke: "transparent",
+      strokeWidth: 0,
+      fill: "#756f6a",
+      opacity: 1
+    },
+    labels: {
+      fontSize: 13,
+      padding: 4,
+      fill: "black"
+    }
   }
 };
 
@@ -306,18 +312,26 @@ export default class VictoryBar extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryBar as a solo component, implement the theme directly on
+    * VictoryBar. If you are wrapping VictoryBar in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    height: 300,
     padding: 50,
     scale: "linear",
     standalone: true,
-    width: 450,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>
@@ -325,7 +339,7 @@ export default class VictoryBar extends React.Component {
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), defaultStyles);
+  static getBaseProps = partialRight(BarHelpers.getBaseProps.bind(BarHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -345,7 +359,7 @@ export default class VictoryBar extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = BarHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = BarHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -415,7 +429,8 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       const whitelist = [
@@ -423,19 +438,22 @@ export default class VictoryBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryBar {...this.props}/>
+          <VictoryBar {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const baseStyles = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+    const styleObject = modifiedProps.theme && modifiedProps.theme.bar ? modifiedProps.theme.bar
+    : fallbackProps.style;
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

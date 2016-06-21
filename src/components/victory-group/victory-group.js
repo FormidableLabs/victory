@@ -5,10 +5,16 @@ import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
-const defaultStyles = {
-  data: {
-    width: 8,
-    padding: 6
+const fallbackProps = {
+  props: {
+    width: 450,
+    height: 300
+  },
+  style: {
+    data: {
+      width: 8,
+      padding: 6
+    }
   }
 };
 
@@ -259,14 +265,22 @@ export default class VictoryGroup extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryGrou as the outermost wrapper for your chart, implement the theme
+    * directly on VictoyrGroup. If you are wrapping VictoryGroup in VictoryChart,
+    * please call the theme on the wrapper component instead.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
     scale: "linear",
     offset: 0,
-    height: 300,
-    width: 450,
     padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>
@@ -281,21 +295,22 @@ export default class VictoryGroup extends React.Component {
   }
 
   getCalculatedProps(props, childComponents, style) {
-    const horizontal = props.horizontal || childComponents.every(
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const horizontal = modifiedProps.horizontal || childComponents.every(
       (component) => component.props.horizontal
     );
-    const datasets = Wrapper.getDataFromChildren(props);
+    const datasets = Wrapper.getDataFromChildren(modifiedProps);
     const domain = {
-      x: Wrapper.getDomain(props, "x", childComponents),
-      y: Wrapper.getDomain(props, "y", childComponents)
+      x: Wrapper.getDomain(modifiedProps, "x", childComponents),
+      y: Wrapper.getDomain(modifiedProps, "y", childComponents)
     };
     const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
+      x: Helpers.getRange(modifiedProps, "x"),
+      y: Helpers.getRange(modifiedProps, "y")
     };
     const baseScale = {
-      x: Scale.getScaleFromProps(props, "x") || Scale.getDefaultScale(),
-      y: Scale.getScaleFromProps(props, "y") || Scale.getDefaultScale()
+      x: Scale.getScaleFromProps(modifiedProps, "x") || Scale.getDefaultScale(),
+      y: Scale.getScaleFromProps(modifiedProps, "y") || Scale.getDefaultScale()
     };
     const xScale = baseScale.x.domain(domain.x).range(range.x);
     const yScale = baseScale.y.domain(domain.y).range(range.y);
@@ -304,10 +319,10 @@ export default class VictoryGroup extends React.Component {
       y: horizontal ? xScale : yScale
     };
     const categories = {
-      x: Wrapper.getCategories(props, "x"),
-      y: Wrapper.getCategories(props, "y")
+      x: Wrapper.getCategories(modifiedProps, "x"),
+      y: Wrapper.getCategories(modifiedProps, "y")
     };
-    const colorScale = props.colorScale;
+    const colorScale = modifiedProps.colorScale;
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
@@ -347,6 +362,7 @@ export default class VictoryGroup extends React.Component {
       width: props.width,
       padding: Helpers.getPadding(props),
       standalone: false,
+      theme: props.theme,
       categories,
       domain,
       scale,
@@ -356,10 +372,12 @@ export default class VictoryGroup extends React.Component {
 
   getColorScale(props, child) {
     const role = child.type && child.type.role;
+    const colorScaleOptions = child.props.colorScale || props.colorScale;
     if (role !== "group-wrapper" && role !== "stack-wrapper") {
       return undefined;
     }
-    return child.props.colorScale || props.colorScale;
+    return props.theme ? colorScaleOptions || props.theme.props.colorScale
+    : colorScaleOptions;
   }
 
   // the old ones were bad
@@ -376,6 +394,7 @@ export default class VictoryGroup extends React.Component {
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
+        theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         data,
@@ -399,19 +418,25 @@ export default class VictoryGroup extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const childComponents = React.Children.toArray(props.children);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
+    const childComponents = React.Children.toArray(modifiedProps.children);
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.length > 1) {
       Log.warn("Only components of the same type can be grouped");
     }
-    const calculatedProps = this.getCalculatedProps(props, childComponents, style);
+    const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
+      fallbackProps.props);
 
-    const container = props.standalone && this.getContainer(props, calculatedProps);
-    const newChildren = this.getNewChildren(props, childComponents, calculatedProps);
-    if (props.events) {
+    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    if (modifiedProps.events) {
       return (
-        <VictorySharedEvents events={props.events} eventKey={props.eventKey} container={container}>
+        <VictorySharedEvents
+          events={modifiedProps.events}
+          eventKey={modifiedProps.eventKey}
+          container={container}
+        >
           {newChildren}
         </VictorySharedEvents>
       );
@@ -422,6 +447,6 @@ export default class VictoryGroup extends React.Component {
         {newChildren}
       </g>
     );
-    return props.standalone ? React.cloneElement(container, container.props, group) : group;
+    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

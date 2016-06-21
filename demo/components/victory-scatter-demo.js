@@ -1,11 +1,11 @@
 /*global window:false */
 import React from "react";
 import { merge, random, range } from "lodash";
-import {VictoryScatter} from "../../src/index";
+import {VictoryScatter, VictoryChart} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
-import { VictoryContainer } from "victory-core";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 const getData = () => {
   const colors =
@@ -213,15 +213,20 @@ export default class App extends React.Component {
           y={(d) => d * d * Math.random()}
         />
 
-        <VictoryScatter
-          style={style}
-          data={range(0, 100).map((i) => [i, i * 3287 % 100])}
-          x={0}
-          y={1}
-        />
+        <VictoryChart
+          theme={VictoryTheme.grayscale}
+        >
+          <VictoryScatter
+            style={style}
+            data={range(0, 100).map((i) => [i, i * 3287 % 100])}
+            x={0}
+            y={1}
+          />
+        </VictoryChart>
 
         <VictoryScatter
           style={style}
+          theme={VictoryTheme.grayscale}
           data={range(0, 200).map((i) => {
             return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}

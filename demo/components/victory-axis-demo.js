@@ -3,7 +3,7 @@ import React from "react";
 import {VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import { merge, random, range } from "lodash";
-import { VictoryContainer } from "victory-core";
+import { VictoryContainer, VictoryTheme } from "victory-core";
 
 export default class App extends React.Component {
   constructor() {
@@ -70,8 +70,9 @@ export default class App extends React.Component {
           <VictoryAxis style={styleOverrides}
             padding={60}
             label={"animation\nwow!"}
-            axisLabelComponent={<VictoryLabel angle={25}/>}
+            axisLabelComponent={<VictoryLabel/>}
             tickValues={this.state.tickValues}
+            theme={VictoryTheme.grayscale}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
             animate={{duration: 2000}}
             containerComponent={
@@ -138,6 +139,7 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
+              theme={VictoryTheme.grayscale}
               offsetY={200}
               standalone={false}
             />
@@ -145,6 +147,7 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
+              theme={VictoryTheme.grayscale}
               offsetX={250}
               standalone={false}
             />

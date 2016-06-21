@@ -9,20 +9,26 @@ import {
   VictoryContainer
 } from "victory-core";
 
-const defaultStyles = {
-  data: {
-    strokeWidth: 2,
-    fill: "none",
-    stroke: "#756f6a",
-    opacity: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450
   },
-  labels: {
-    padding: 5,
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    strokeWidth: 0,
-    stroke: "transparent",
-    textAnchor: "start"
+  style: {
+    data: {
+      strokeWidth: 2,
+      fill: "none",
+      stroke: "#756f6a",
+      opacity: 1
+    },
+    labels: {
+      padding: 5,
+      fontFamily: "Helvetica",
+      fontSize: 13,
+      strokeWidth: 0,
+      stroke: "transparent",
+      textAnchor: "start"
+    }
   }
 };
 
@@ -314,17 +320,25 @@ export default class VictoryLine extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryLine as a solo component, implement the theme directly on
+    * VictoryLine. If you are wrapping VictoryLine in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
-    height: 300,
     interpolation: "linear",
     padding: 50,
     samples: 50,
     scale: "linear",
     standalone: true,
-    width: 450,
     x: "x",
     y: "y",
     dataComponent: <LineSegment/>,
@@ -334,7 +348,8 @@ export default class VictoryLine extends React.Component {
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
-  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers), defaultStyles);
+  static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
+    fallbackProps);
 
   constructor() {
     super();
@@ -354,7 +369,7 @@ export default class VictoryLine extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = LineHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = LineHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
@@ -419,7 +434,8 @@ export default class VictoryLine extends React.Component {
   }
 
   render() {
-    const { animate, style, standalone } = this.props;
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -431,19 +447,22 @@ export default class VictoryLine extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryLine {...this.props}/>
+          <VictoryLine {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
-    const baseStyles = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+    const styleObject = modifiedProps.theme && modifiedProps.theme.line ? modifiedProps.theme.line
+    : fallbackProps.style;
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = (
       <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(this.props)}
+        {this.renderData(modifiedProps)}
       </g>
     );
 
-    return standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }
