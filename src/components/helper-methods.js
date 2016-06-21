@@ -12,8 +12,8 @@ export default {
     }
   },
 
-  getBaseProps(props, defaultStyles) {
-    const calculatedValues = this.getCalculatedValues(props, defaultStyles);
+  getBaseProps(props, fallbackProps) {
+    const calculatedValues = this.getCalculatedValues(props, fallbackProps);
     const { slices, style, pathFunction, colors, labelPosition } = calculatedValues;
     const { width, height } = props;
     const parentProps = {slices, pathFunction, width, height, style: style.parent};
@@ -58,10 +58,17 @@ export default {
     }, {parent: parentProps});
   },
 
-  getCalculatedValues(props, defaultStyles) {
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const colors = Array.isArray(props.colorScale) ?
-      props.colorScale : Style.getColorScale(props.colorScale);
+  getCalculatedValues(props, fallbackProps) {
+    const theme = props.theme && props.theme.pie;
+    const styleObject = theme ? props.theme.pie.style
+    : fallbackProps.style;
+    const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
+    const getColorScale = () => {
+      return theme ? theme.props.colorScale : fallbackProps.colorScale;
+    };
+    const colorScale = props.colorScale || getColorScale();
+    const colors = Array.isArray(colorScale) ?
+    colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
     const radius = this.getRadius(props, padding);
     const data = Events.addEventKeys(props, Helpers.getData(props));

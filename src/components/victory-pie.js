@@ -10,21 +10,32 @@ import {
 import Slice from "./slice";
 import PieHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    padding: 5,
-    stroke: "white",
-    strokeWidth: 1
+const fallbackProps = {
+  style: {
+    data: {
+      padding: 5,
+      stroke: "white",
+      strokeWidth: 1
+    },
+    labels: {
+      padding: 10,
+      fill: "black",
+      strokeWidth: 0,
+      stroke: "transparent",
+      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+      fontSize: 13,
+      textAnchor: "middle"
+    }
   },
-  labels: {
-    padding: 10,
-    fill: "black",
-    strokeWidth: 0,
-    stroke: "transparent",
-    fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-    fontSize: 13,
-    textAnchor: "middle"
-  }
+  colorScale: [
+    "#75C776",
+    "#39B6C5",
+    "#78CCC4",
+    "#62C3A4",
+    "#64A8D1",
+    "#8C95C8",
+    "#3BAF74"
+  ]
 };
 
 export default class VictoryPie extends React.Component {
@@ -288,7 +299,14 @@ export default class VictoryPie extends React.Component {
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
-    containerComponent: PropTypes.element
+    containerComponent: PropTypes.element,
+    /**
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * @example theme={Grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
@@ -305,15 +323,6 @@ export default class VictoryPie extends React.Component {
     cornerRadius: 0,
     padAngle: 0,
     padding: 30,
-    colorScale: [
-      "#75C776",
-      "#39B6C5",
-      "#78CCC4",
-      "#62C3A4",
-      "#64A8D1",
-      "#8C95C8",
-      "#3BAF74"
-    ],
     startAngle: 0,
     standalone: true,
     width: 400,
@@ -324,7 +333,7 @@ export default class VictoryPie extends React.Component {
     containerComponent: <VictoryContainer/>
   };
 
-  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), defaultStyles);
+  static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -344,7 +353,7 @@ export default class VictoryPie extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = PieHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = PieHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -426,7 +435,7 @@ export default class VictoryPie extends React.Component {
       );
     }
 
-    const calculatedProps = PieHelpers.getCalculatedValues(this.props, defaultStyles);
+    const calculatedProps = PieHelpers.getCalculatedValues(this.props, fallbackProps);
     const { style, padding, radius } = calculatedProps;
     const xOffset = radius + padding.left;
     const yOffset = radius + padding.top;
