@@ -140,6 +140,13 @@ export default {
       {};
   },
 
+  modifyProps(props, fallbackProps) {
+    const themeCheck = props.theme && props.theme.props;
+
+    return themeCheck ? defaults({}, props, props.theme.props, fallbackProps.props)
+    : defaults({}, props, fallbackProps.props);
+  },
+
   getEvents(events, namespace) {
     const onEvent = (evt, childProps, index, eventName) => {
       if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
