@@ -209,12 +209,12 @@ export default class VictoryLabel extends React.Component {
     return (transformPart || angle) && Style.toTransformString(transformPart, rotatePart);
   }
 
-  renderElements(props, content, lineHeight) {
+  renderElements(props, content) {
     const transform = this.getTransform(props);
     return (
       <text {...props} transform={transform}>
         {content.map((line, i) => {
-          const dy = i ? lineHeight : undefined;
+          const dy = i ? props.lineHeight : undefined;
           return (
             <tspan key={i} x={props.x} dy={dy}>
               {line}
@@ -226,7 +226,6 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    const { x, y, events } = this.props;
     const datum = this.props.datum || this.props.data;
     const lineHeight = this.getHeight(this.props, "lineHeight");
     const textAnchor = this.props.textAnchor ?
@@ -235,7 +234,9 @@ export default class VictoryLabel extends React.Component {
     const style = this.getStyles(this.props);
     const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
     const dy = this.getDy(this.props, content, lineHeight);
-    const labelProps = Object.assign({ x, y, dy, dx, textAnchor, style }, events);
-    return this.renderElements(labelProps, content, lineHeight);
+    const labelProps = Object.assign(
+      {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, this.props.events
+    );
+    return this.renderElements(labelProps, content);
   }
 }
