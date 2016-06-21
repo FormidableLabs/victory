@@ -101,7 +101,6 @@ describe("components/victory-candlestick", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryCandlestick
-          data={dataSet}
           events={[{
             target: "data",
             eventHandlers: {onClick: clickHandler}

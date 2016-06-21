@@ -8,6 +8,7 @@ export default class Candle extends React.Component {
     y1: PropTypes.number,
     y2: PropTypes.number,
     y: PropTypes.number,
+    events: PropTypes.object,
     candleHeight: PropTypes.number,
     scale: PropTypes.object,
     style: PropTypes.object,
@@ -25,6 +26,7 @@ export default class Candle extends React.Component {
 
     return (
         <line
+          {...this.props.events}
           x1={x}
           x2={x}
           y1={this.props.y1}
@@ -43,6 +45,7 @@ export default class Candle extends React.Component {
 
     return (
       <rect
+        {...this.props.events}
         x={candleX}
         y={this.props.y}
         style={this.props.style}
