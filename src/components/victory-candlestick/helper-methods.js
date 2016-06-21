@@ -45,6 +45,7 @@ export default {
   getCalculatedValues(props, defaultStyles) {
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, this.getData(props));
+    // console.log(this.getData({data: [{x: 5, open: 10, close: 20, high: 25, low: 5}]}));
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -61,7 +62,8 @@ export default {
   },
 
   getData(props) {
-    return props.data.map((datum) => {
+    const data = props.data ? props.data : this.generateData(props);
+    return data.map((datum) => {
       const x = datum.x;
       const y = [datum.open, datum.close, datum.high, datum.low];
       return Object.assign(
@@ -70,6 +72,27 @@ export default {
         {x, y}
         );
     });
+  },
+
+  generateData(props) {
+    // create an array of values evenly spaced across the x domain that include domain min/max
+    const domain = props.domain ? (props.domain.x || props.domain) :
+      Scale.getBaseScale(props, "x").domain();
+    const samples = props.samples || 1;
+    const max = Math.max(...domain);
+    const values = Array(...Array(samples)).map((val, index) => {
+      const v = (max / samples) * index + Math.min(...domain);
+      return { x: v, open: v, close: v + 2, low: v - 3, high: v + 5 };
+    });
+    return values[samples - 1].x === max ? values : values.concat([
+      {
+        x: max,
+        open: max,
+        close: max,
+        high: max,
+        low: max
+      }
+    ]);
   },
 
   getDomain(props, axis) {
