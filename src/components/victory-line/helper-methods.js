@@ -3,13 +3,12 @@ import { Helpers } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import Props from "../../helpers/props";
 
 export default {
 
   getBaseProps(props, fallbackProps) {
     const defaultStyles = props.theme && props.theme.line ? props.theme.line : fallbackProps.style;
-    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const {scale, dataSegments, dataset} = this.getCalculatedValues(modifiedProps);
     const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
     const {interpolation, label, width, height} = modifiedProps;

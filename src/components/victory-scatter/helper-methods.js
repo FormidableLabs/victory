@@ -3,11 +3,10 @@ import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Props from "../../helpers/props";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
     const { height, width } = modifiedProps;

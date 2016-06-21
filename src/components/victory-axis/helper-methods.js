@@ -3,7 +3,6 @@ import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
 import { Helpers } from "victory-core";
-import Props from "../../helpers/props";
 
 const orientationSign = {
   top: -1,
@@ -65,7 +64,7 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const {
       style, padding, orientation, isVertical, scale, ticks, tickFormat,

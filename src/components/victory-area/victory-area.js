@@ -8,7 +8,6 @@ import {
 } from "victory-core";
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
-import Props from "../../helpers/props";
 
 const fallbackProps = {
   props: {
@@ -415,7 +414,7 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {

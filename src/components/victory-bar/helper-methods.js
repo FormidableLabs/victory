@@ -3,7 +3,6 @@ import { Helpers, Events } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
-import Props from "../../helpers/props";
 
 export default {
 
@@ -89,7 +88,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     const defaultStyles = props.theme && props.theme.bar ? props.theme.bar
     : fallbackProps.style;
-    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(modifiedProps, Data.getData(props));
     const scale = this.getScale(modifiedProps);

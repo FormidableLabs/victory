@@ -4,7 +4,6 @@ import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import Props from "../../helpers/props";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
   VictoryContainer
@@ -435,7 +434,7 @@ export default class VictoryLine extends React.Component {
   }
 
   render() {
-    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {

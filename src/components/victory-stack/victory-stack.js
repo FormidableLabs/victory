@@ -5,7 +5,6 @@ import {
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
-import Props from "../../helpers/props";
 
 const fallbackProps = {
   props: {
@@ -391,7 +390,7 @@ export default class VictoryStack extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Props.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
     const types = uniq(childComponents.map((child) => child.type.role));

@@ -9,7 +9,6 @@ import GridLine from "./grid";
 import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
-import Props from "../../helpers/props";
 
 const fallbackProps = {
   props: {
@@ -469,7 +468,7 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, standalone } = modifiedProps;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that

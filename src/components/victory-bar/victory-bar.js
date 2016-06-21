@@ -8,7 +8,6 @@ import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import Props from "../../helpers/props";
 
 const fallbackProps = {
   props: {
@@ -430,7 +429,7 @@ export default class VictoryBar extends React.Component {
   }
 
   render() {
-    const modifiedProps = Props.modifyProps(this.props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
