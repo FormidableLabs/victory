@@ -43,15 +43,15 @@ export default class App extends React.Component {
       return [
         {
           x: "rabbits",
-          y: random(1, 5)
+          y: random(-5, 5)
         },
         {
           x: "cats",
-          y: random(1, 10)
+          y: random(-10, 10)
         },
         {
           x: "dogs",
-          y: random(0, 15)
+          y: random(-15, 15)
         }
       ];
     });
@@ -159,7 +159,6 @@ export default class App extends React.Component {
         <VictoryStack
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
-          // colorScale={"warm"}
           theme={VictoryTheme.grayscale}
         >
           {this.state.multiTransitionData.map((data, index) => {
@@ -229,6 +228,15 @@ export default class App extends React.Component {
           <VictoryBar
             labels={["a", "b", "c"]}
             data={[[0, 1], [2, 3], [4, 5]]}
+            x={0}
+            y={1}
+          />
+        </ChartWrap>
+
+        <ChartWrap>
+          <VictoryBar
+            labels={["a", "b", "c"]}
+            data={[[0, -1], [2, -3], [4, -5]]}
             x={0}
             y={1}
           />

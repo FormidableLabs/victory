@@ -111,7 +111,10 @@ export default {
       );
 
       const text = this.getLabel(modifiedProps, datum, index);
-      const labelStyle = this.getLabelStyle(style.labels, datum);
+      const labelPadding = style.labels.padding;
+      const labelStyleObj = datum.y < 0 ? Object.assign({}, style.labels,
+        {padding: labelPadding * -Math.abs(labelPadding / 2.5)}) : style.labels;
+      const labelStyle = this.getLabelStyle(labelStyleObj, datum);
       const padding = this.getlabelPadding(labelStyle, horizontal);
       const anchors = this.getLabelAnchors(datum, horizontal);
       const labelPosition = {
