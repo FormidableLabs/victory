@@ -227,8 +227,8 @@ export default class VictoryCandlestick extends React.Component {
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your VictoryCandlestick. Any valid inline style properties
-     * will be applied. Height, width, and padding should be specified via the height,
+     * The style prop specifies styles for your VictoryCandlestick. Any valid inline style
+     * properties will be applied. Height, width, and padding should be specified via the height,
      * width, and padding props, as they are used to calculate the alignment of
      * components within chart. In addition to normal style properties, angle and verticalAnchor
      * may also be specified via the labels object, and they will be passed as props to
