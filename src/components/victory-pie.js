@@ -443,7 +443,7 @@ export default class VictoryPie extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          <VictoryPie {...this.props}/>
+          { React.createElement(this.constructor, this.props) }
         </VictoryTransition>
       );
     }
