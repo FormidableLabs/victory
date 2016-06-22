@@ -25,7 +25,7 @@ const defaultStyles = {
 };
 
 export default class VictoryCandlestick extends React.Component {
-  static role = "scatter";
+  static role = "candlestick";
 
   static defaultTransitions = {
     onExit: {
@@ -61,10 +61,10 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The dataComponent prop takes an entire component which will be used to create points for
      * each datum in the chart. The new element created from the passed dataComponent will be
-     * provided with the following properties calculated by VictoryScatter: datum, index, scale,
+     * provided with the following properties calculated by VictoryCandlestick: datum, index, scale,
      * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
      * props to the supplied component, or modified or ignored within the custom component itself.
-     * If a dataComponent is not provided, VictoryScatter will use its default Point component.
+     * If a dataComponent is not provided, VictoryCandlestick will use its default Point component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -85,7 +85,7 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The event prop take an array of event objects. Event objects are composed of
      * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-     * for a given component, so "data" and "labels" are all valid targets for VictoryScatter
+     * for a given component, so "data" and "labels" are all valid targets for VictoryCandlestick
      * events. The eventKey may optionally be used to select a single element by index rather than
      * an entire set. The eventHandlers object should be given as an object whose keys are standard
      * event names (i.e. onClick) and whose values are event callbacks. The return value
@@ -160,7 +160,7 @@ export default class VictoryCandlestick extends React.Component {
     height: CustomPropTypes.nonNegative,
     /**
      * The labelComponent prop takes in an entire label component which will be used
-     * to create labels for each point in the scatter. The new element created from
+     * to create labels for each point in the chart. The new element created from
      * the passed labelComponent will be supplied with the following properties:
      * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
      * any of these props may be overridden by passing in props to the supplied component,
@@ -223,11 +223,11 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The standalone prop determines whether the component will render a standalone svg
      * or a <g> tag that will be included in an external svg. Set standalone to false to
-     * compose VictoryScatter with other components within an enclosing <svg> tag.
+     * compose VictoryCandlestick with other components within an enclosing <svg> tag.
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your VictoryScatter. Any valid inline style properties
+     * The style prop specifies styles for your VictoryCandlestick. Any valid inline style properties
      * will be applied. Height, width, and padding should be specified via the height,
      * width, and padding props, as they are used to calculate the alignment of
      * components within chart. In addition to normal style properties, angle and verticalAnchor
@@ -281,14 +281,14 @@ export default class VictoryCandlestick extends React.Component {
      * The containerComponent prop takes an entire component which will be used to
      * create a container element for standalone charts.
      * The new element created from the passed containerComponent wil be provided with
-     * these props from VictoryScatter: height, width, children
+     * these props from VictoryCandlestick: height, width, children
      * (the chart itself) and style. Props that are not provided by the
      * child chart component include title and desc, both of which
      * are intended to add accessibility to Victory components. The more descriptive these props
      * are, the more accessible your data will be for people using screen readers.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
-     * not provided, VictoryScatter will use the default VictoryContainer component.
+     * not provided, VictoryCandlestick will use the default VictoryContainer component.
      * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
@@ -356,17 +356,17 @@ export default class VictoryCandlestick extends React.Component {
     return Object.keys(this.baseProps).map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `scatter-${key}`},
+        {key: `candlestick-${key}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
         this.baseProps[key].data,
         dataComponent.props
       );
-      const scatterComponent = React.cloneElement(dataComponent, Object.assign(
+      const candleComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `scatter-label-${key}`},
+        {key: `candlestick-label-${key}`},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
         this.baseProps[key].labels,
@@ -374,23 +374,23 @@ export default class VictoryCandlestick extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const scatterLabel = React.cloneElement(labelComponent, Object.assign({
+        const candleLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
-          <g key={`scatter-group-${key}`}>
-            {scatterComponent}
-            {scatterLabel}
+          <g key={`candle-group-${key}`}>
+            {candleComponent}
+            {candleLabel}
           </g>
         );
       }
-      return scatterComponent;
+      return candleComponent;
     });
   }
 
   render() {
     // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryScatter` with nearly identical props, except (1) tweened
+    // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
     if (this.props.animate) {
       // Do less work by having `VictoryAnimation` tween only values that

@@ -8,7 +8,7 @@
 /* eslint no-unused-expressions: 0 */
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { range } from "lodash";
+import { range, omit } from "lodash";
 import VictoryCandlestick from "src/components/victory-candlestick/victory-candlestick";
 import Candle from "src/components/victory-candlestick/candle";
 import { VictoryLabel } from "victory-core";
@@ -18,7 +18,8 @@ class MyCandle extends React.Component {
   render() { }
 }
 
-const dataSet = [{x: 5, open: 10, close: 20, high: 25, low: 5}];
+const dataSet = [{x: 5, open: 10, close: 20, high: 25, low: 5},
+{x: 1, open: 80, close: 40, high: 120, low: 10, label: "1"}];
 
 describe("components/victory-candlestick", () => {
   describe("default component rendering", () => {
@@ -111,23 +112,22 @@ describe("components/victory-candlestick", () => {
         />
       );
       const Data = wrapper.find(Candle);
-      Data.forEach((node) => {
-        // const initialProps = Data.at(index).props();
-        console.log(node);
-        node.simulate("click");
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
+        node.find("rect").simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        // expect(omit(clickHandler.args[index][1], ["events", "key"]))
-        //   .to.eql(omit(initialProps, ["events", "key"]));
-        // expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
     it("attaches an event to a label", () => {
       const clickHandler = sinon.spy();
       const data = [
-        {x: 0, y: 0, label: "0"},
-        {x: 1, y: 1, label: "1"},
-        {x: 2, y: 2, label: "2"}
+        {x: 0, open: 9, close: 30, high: 56, low: 7, label: "0"},
+        {x: 1, open: 80, close: 40, high: 120, low: 10, label: "1"},
+        {x: 2, open: 50, close: 80, high: 90, low: 20, label: "2"}
       ];
       const wrapper = mount(
         <VictoryCandlestick

@@ -123,7 +123,7 @@ export default class App extends React.Component {
           data={this.state.data}
         />
 
-        <VictoryCandlestick />
+        <VictoryCandlestick/>
       </div>
     );
   }
