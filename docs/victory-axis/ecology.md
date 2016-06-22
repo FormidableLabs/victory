@@ -170,5 +170,5 @@ ReactDOM.render(<App/>, mountNode);
 ### Props
 
 [React]: https://github.com/facebook/react
-[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
-[VictoryChart]: http://victory.formidable.com/docs/victory-chart
+[VictoryAnimation]: http://formidable.com/open-source/victory/docs/victory-animation
+[VictoryChart]: http://formidable.com/open-source/victory/docs/victory-chart
