@@ -144,7 +144,7 @@ Functional styles allow elements to determine their own styles based on data
 
 ### Events
 
-Use the `events` prop to attach events to specific elements in VictoryScatter. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryScatter events. 
+Use the `events` prop to attach events to specific elements in VictoryScatter. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryScatter events.
 
 
 The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single point), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryScatter may also be used with the `VictorySharedEvents` wrapper.
@@ -180,12 +180,12 @@ The `eventKey` may optionally be used to select a single element by index rather
         onClick: () => {
           return [{
             mutation: (props) => {
-              return  props.style.stroke === "blue" ? 
-                null : 
+              return  props.style.stroke === "blue" ?
+                null :
                 { style:
                   merge({}, props.style, {
                     stroke: "blue", fill: "cyan"
-                  }), 
+                  }),
                   symbol: "circle"
                 };
             }
@@ -298,5 +298,5 @@ ReactDOM.render(<App/>, mountNode);
 
 ### Props
 
-[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
-[VictoryChart]: http://victory.formidable.com/docs/victory-chart
+[VictoryAnimation]: http://formidable.com/open-source/victory/docs/victory-animation
+[VictoryChart]: http://formidable.com/open-source/victory/docs/victory-chart

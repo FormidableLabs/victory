@@ -199,9 +199,9 @@ Time series data is also supported:
 Use the `events` prop to attach events to specific elements children of VictoryChart. The `event` prop take an array of event objects. Event objects are composed of a `childName`, `target`, `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, (i.e. "data" and "labels"). The `childName` will refer to an individual child of VictoryChart, either by its `name` prop, or by index. The `eventKey` may optionally be used to select a single element by index or `eventKey `rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elemnts. The return value should be given as an object or an array of objects with optional `target` and `eventKey` and `childName` keys, and a mutation key whose value is a function. The `target` and `eventKey` and `childName` keys will default to those corresponding to the element the event handler was attached to. The mutation function will be called with the calculated props for the individual selected element (i.e. a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment.
 
 ```playground
-<VictoryChart 
+<VictoryChart
   domainPadding={{x: 30, y: 30}}
-  height={600} 
+  height={600}
   width={600}
   events={[{
     childName: "bar",
@@ -331,8 +331,8 @@ ReactDOM.render(<App/>, mountNode);
 ### Props
 
 [React]: https://github.com/facebook/react
-[VictoryAnimation]: http://victory.formidable.com/docs/victory-animation
-[VictoryAxis]: http://victory.formidable.com/docs/victory-axis
-[VictoryLine]: http://victory.formidable.com/docs/victory-line
-[VictoryScatter]: http://victory.formidable.com/docs/victory-scatter
-[VictoryBar]: http://victory.formidable.com/docs/victory-bar
+[VictoryAnimation]: http://formidable.com/open-source/victory/docs/victory-animation
+[VictoryAxis]: http://formidable.com/open-source/victory/docs/victory-axis
+[VictoryLine]: http://formidable.com/open-source/victory/docs/victory-line
+[VictoryScatter]: http://formidable.com/open-source/victory/docs/victory-scatter
+[VictoryBar]: http://formidable.com/open-source/victory/docs/victory-bar

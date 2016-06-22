@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route } from "react-router";
+import { Router, Route, browserHistory } from "react-router";
 import App from "./app";
 import AreaDocs from "./victory-area/docs";
 import AxisDocs from "./victory-axis/docs";
@@ -12,7 +12,7 @@ import ScatterDocs from "./victory-scatter/docs";
 const content = document.getElementById("content");
 
 ReactDOM.render((
-  <Router>
+  <Router history={browserHistory}>
     <Route path="/" component={App}>
       <Route path="area" component={AreaDocs}/>
       <Route path="axis" component={AxisDocs}/>
