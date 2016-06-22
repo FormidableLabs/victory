@@ -159,7 +159,6 @@ export default class App extends React.Component {
         <VictoryStack
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
-          // colorScale={"warm"}
           theme={VictoryTheme.grayscale}
         >
           {this.state.multiTransitionData.map((data, index) => {
