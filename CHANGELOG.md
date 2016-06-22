@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 4.2.1 (2016-06-22)
+
+- Fixes a bug that prevented axis labels from displaying properly for vertical axes.
+
 ## 4.2.1 (2016-06-21)
 
 - Adds the modifyProps method, which merges component props with theme props and/or fallback props. Helps to further support theme implementation.
