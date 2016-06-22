@@ -6339,7 +6339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var y = props.y;
 	
 	      var angle = props.angle || style.angle;
-	      var transform = props.transfrom || style.transform;
+	      var transform = props.transform || style.transform;
 	      var transformPart = transform && _index.Helpers.evaluateProp(transform, datum);
 	      var rotatePart = angle && { rotate: [angle, x, y] };
 	      return (transformPart || angle) && _index.Style.toTransformString(transformPart, rotatePart);
