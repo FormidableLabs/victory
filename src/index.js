@@ -12,8 +12,4 @@ export { default as VictoryLabel } from "./victory-label/victory-label";
 export { default as VictoryTransition } from "./victory-transition/victory-transition";
 export { default as VictorySharedEvents } from "./victory-shared-events/victory-shared-events";
 export { default as VictoryContainer } from "./victory-container/victory-container";
-export {
-  default as VictoryGroupContainer
-} from "./victory-group-container/victory-group-container";
-
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
