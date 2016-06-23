@@ -72,10 +72,10 @@ export default {
     };
     return data.map((datum) => {
       const x = accessor.x(datum);
-      const { open } = accessor.open(datum);
-      const { close } = accessor.close(datum);
-      const { high } = accessor.high(datum);
-      const { low } = accessor.low(datum);
+      const open = accessor.open(datum);
+      const close = accessor.close(datum);
+      const high = accessor.high(datum);
+      const low = accessor.low(datum);
       const y = [open, close, high, low];
       return Object.assign(
         {},

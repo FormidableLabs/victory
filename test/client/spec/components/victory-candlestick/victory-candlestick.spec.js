@@ -42,18 +42,18 @@ describe("components/victory-candlestick", () => {
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
-    it("renders 51 points", () => {
+    it("renders 8 points", () => {
       const wrapper = shallow(
         <VictoryCandlestick/>
       );
       const points = wrapper.find(Candle);
-      expect(points.length).to.equal(51);
+      expect(points.length).to.equal(8);
     });
   });
 
   describe("rendering data", () => {
     it("renders injected points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({x: i, open: i, close: i, high: i, low: i}));
       const wrapper = shallow(
         <VictoryCandlestick data={data} dataComponent={<MyCandle />} />
       );
@@ -63,7 +63,7 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(10).map((i) => ({x: i, y: i}));
+      const data = range(10).map((i) => ({x: i, open: i, close: i, high: i, low: i}));
       const wrapper = shallow(
         <VictoryCandlestick data={data}/>
       );
@@ -72,18 +72,23 @@ describe("components/victory-candlestick", () => {
     });
 
     it("renders points for array-shaped data", () => {
-      const data = range(20).map((i) => [i, i]);
+      const data = range(20).map((i) => [i, i, i, i, i]);
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x={0} y={1}/>
+        <VictoryCandlestick data={data} x={0} open={1} close={2} high={3} low={4}/>
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(20);
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = range(40).map((i) => ({a: {b: [{x: i, y: i}]}}));
+      const data = range(40).map((i) => ({a: {b: [{x: i, open: i, close: i, high: i, low: i}]}}));
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x="a.b[0].x" y="a.b[0].y"/>
+        <VictoryCandlestick data={data} x="a.b[0].x"
+          open="a.b[0].open"
+          close="a.b[0].close"
+          high="a.b[0].high"
+          low="a.b[0].low"
+        />
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(40);
@@ -92,7 +97,7 @@ describe("components/victory-candlestick", () => {
     it("renders data values with null accessor", () => {
       const data = range(30);
       const wrapper = shallow(
-        <VictoryCandlestick data={data} x={null} y={null}/>
+        <VictoryCandlestick data={data} x={null} open={null} close={null} high={null} low={null}/>
       );
       const points = wrapper.find(Candle);
       expect(points.length).to.equal(30);
