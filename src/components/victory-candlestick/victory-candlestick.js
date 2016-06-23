@@ -378,8 +378,8 @@ export default class VictoryCandlestick extends React.Component {
       negative: PropTypes.string
     }),
     /**
-    * The theme prop takes a style object with nested data, labels, and parent objects.
-    * You can create this object yourself, or you can use a theme provided by Victory.
+    * The theme prop takes a props object, and a style object with nested data, labels, and parent
+    * objects. You can create this object yourself, or you can use a theme provided by Victory.
     * When using VictoryCandlestick as a solo component, implement the theme directly on
     * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
