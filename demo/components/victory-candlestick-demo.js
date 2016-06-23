@@ -116,7 +116,9 @@ export default class App extends React.Component {
           data={this.state.data}
         />
 
-        <VictoryCandlestick/>
+        <VictoryCandlestick
+          size={1}
+        />
       </div>
     );
   }

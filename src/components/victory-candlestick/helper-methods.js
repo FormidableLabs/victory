@@ -62,37 +62,27 @@ export default {
   },
 
   getData(props) {
-    const data = props.data ? props.data : this.generateData(props);
+    const data = props.data;
+    const accessor = {
+      x: Helpers.createAccessor(props.x),
+      open: Helpers.createAccessor(props.open),
+      close: Helpers.createAccessor(props.close),
+      high: Helpers.createAccessor(props.high),
+      low: Helpers.createAccessor(props.low)
+    };
     return data.map((datum) => {
-      const x = datum.x;
-      const y = [datum.open, datum.close, datum.high, datum.low];
+      const x = accessor.x(datum);
+      const { open } = accessor.open(datum);
+      const { close } = accessor.close(datum);
+      const { high } = accessor.high(datum);
+      const { low } = accessor.low(datum);
+      const y = [open, close, high, low];
       return Object.assign(
         {},
         datum,
         {x, y}
         );
     });
-  },
-
-  generateData(props) {
-    // create an array of values evenly spaced across the x domain that include domain min/max
-    const domain = props.domain ? (props.domain.x || props.domain) :
-      Scale.getBaseScale(props, "x").domain();
-    const samples = props.samples || 1;
-    const max = Math.max(...domain);
-    const values = Array(...Array(samples)).map((val, index) => {
-      const v = (max / samples) * index + Math.min(...domain);
-      return { x: v, open: v, close: v + 2, low: v - 3, high: v + 5 };
-    });
-    return values[samples - 1].x === max ? values : values.concat([
-      {
-        x: max,
-        open: max,
-        close: max,
-        high: max,
-        low: max
-      }
-    ]);
   },
 
   getDomain(props, axis) {

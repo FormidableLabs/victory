@@ -24,6 +24,17 @@ const defaultStyles = {
   }
 };
 
+const defaultData = [
+  {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
+  {x: new Date(2016, 6, 2), open: 10, close: 15, high: 20, low: 5},
+  {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
+  {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
+  {x: new Date(2016, 6, 5), open: 25, close: 30, high: 35, low: 20},
+  {x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25},
+  {x: new Date(2016, 6, 7), open: 35, close: 40, high: 45, low: 30},
+  {x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35}
+];
+
 export default class VictoryCandlestick extends React.Component {
   static role = "candlestick";
 
@@ -262,6 +273,73 @@ export default class VictoryCandlestick extends React.Component {
       PropTypes.arrayOf(PropTypes.string)
     ]),
     /**
+     * The open prop specifies how to access the open value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'open', 'open.value.nested.1.thing', 'open[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    open: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The close prop specifies how to access the close value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'close', 'close.value.nested.1.thing', 'close[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    close: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The high prop specifies how to access the high value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'high', 'high.value.nested.1.thing', 'high[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    high: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The low prop specifies how to access the low value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'low', 'low.value.nested.1.thing', 'low[2].also.nested', null, d => Math.sin(d)
+     */
+    low: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
      * The y prop specifies how to access the Y value of each data point.
      * If given as a function, it will be run on each data point, and returned value will be used.
      * If given as an integer, it will be used as an array index for array-type data points.
@@ -312,11 +390,16 @@ export default class VictoryCandlestick extends React.Component {
     padding: 50,
     samples: 50,
     scale: "linear",
+    data: defaultData,
     size: 3,
     standalone: true,
     symbol: "circle",
     width: 450,
     x: "x",
+    open: "open",
+    close: "close",
+    high: "high",
+    low: "low",
     y: "y",
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
