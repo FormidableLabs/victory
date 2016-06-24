@@ -178,19 +178,17 @@ export default {
     const y1 = isVertical ?
       ((props.width - hPadding) / 2) + padding.left :
       ((props.height - vPadding) / 2) - padding.top;
-
     const verticalAnchor = sign < 0 ? "end" : "start";
-    // const transformY = isVertical ? (axisProps.y2 - axisProps.y1) / 2 : axisProps.y1;
-    // const transformX = isVertical ? axisProps.x1 : (axisProps.x2 - axisProps.x1) / 2;
     const labelStyle = style.axisLabel;
-    const x = x1 + globalTransform.x;
-    const y = isVertical ? y1 : (sign * labelPadding) + globalTransform.y;
+    const x = isVertical ? x1 - (globalTransform.x / vPadding) - labelPadding
+    : x1 + globalTransform.x;
+    const y = isVertical ? y1 - ((props.height - (hPadding + padding.top)) / 2) : (sign * labelPadding) + globalTransform.y;
     return {
       x,
       y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
-      angle: isVertical && -90,
+      angle: isVertical ? -90 : 0,
       style: labelStyle,
       text: props.label
     };
