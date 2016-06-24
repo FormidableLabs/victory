@@ -19,7 +19,7 @@ const defaultStyles = {
     fill: "#756f6a",
     fontFamily: "Helvetica",
     fontSize: 13,
-    textAnchor: "middle",
+    textAnchor: "end",
     padding: 10
   }
 };
@@ -61,11 +61,13 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
-     * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-     * but by default, an object with x and y properties is expected.
-     * Other properties may be added to the data point object, such as fill, size, and symbol.
-     * These properties will be interpreted and applied to the individual lines
-     * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
+     * Each data point may be any format you wish (depending on the `x`, `open`, `close`, `high`,
+     * and `low` accessor props), but by default, an object with x, open, close, high, and low
+     * properties is expected. Other properties may be added to the data point object, such as
+     * fill, size, and symbol. These properties will be interpreted and applied to the
+     * individual lines
+     * @examples [{x: 1, open: 2, close: 3, high: 4, low: 1, fill: "red"},
+     * {x: 1, open: 2, close: 3, high: 4, low: 1, label: "foo"}]
      */
 
     data: PropTypes.array,
@@ -148,8 +150,8 @@ export default class VictoryCandlestick extends React.Component {
      */
     name: PropTypes.string,
     /**
-     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-     * assign eventKeys to data
+     * Similar to data accessor props `x`, `open`, `close`, `high` and `low, this prop may
+     * be used to functionally assign eventKeys to data.
      */
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
@@ -184,7 +186,8 @@ export default class VictoryCandlestick extends React.Component {
      * This prop should be given as an array of values or as a function of data.
      * If given as an array, the number of elements in the array should be equal to
      * the length of the data array. Labels may also be added directly to the data object
-     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * like data={[{x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5,
+     * label: "hello"}]}.
      * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
@@ -377,7 +380,6 @@ export default class VictoryCandlestick extends React.Component {
     data: defaultData,
     size: 3,
     standalone: true,
-    symbol: "circle",
     width: 450,
     x: "x",
     open: "open",

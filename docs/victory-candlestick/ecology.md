@@ -33,14 +33,14 @@ assign a property to x, open, close, high, or low, or process data on the fly.
 ```playground
 <VictoryCandlestick
   data={[
-    {date: new Date(2016, 8, 2), opening: 5, close: 10, low: 0, high: 15},
-    {date: new Date(2016, 8, 3), opening: 15, close: 10, low: 5, high: 20},
-    {date: new Date(2016, 8, 4), opening: 15, close: 20, low: 10, high: 25},
-    {date: new Date(2016, 8, 5), opening: 25, close: 20, low: 15, high: 30},
-    {date: new Date(2016, 8, 6), opening: 25, close: 30, low: 20, high: 40}
+    {date: new Date(2016, 8, 2), open: 5, close: 10, low: 0},
+    {date: new Date(2016, 8, 3), open: 15, close: 10, low: 5},
+    {date: new Date(2016, 8, 4), open: 15, close: 20, low: 10},
+    {date: new Date(2016, 8, 5), open: 25, close: 20, low: 15},
+    {date: new Date(2016, 8, 6), open: 25, close: 30, low: 20}
   ]}
   x={"date"}
-  open={"open"}
+  high={(data) => (Math.max(data.open, data.close) + 10)}
 />
 ```
 
@@ -73,23 +73,22 @@ The sensible defaults VictoryBar provides makes it easy to get started, but ever
 ```
 
 
-data objects can be styled directly for granular control
+Data objects can be styled directly for granular control
 
 ```playground
-<VictoryBar
+<VictoryCandlestick
   height={500}
   padding={75}
   style={{
     labels: {fontSize: 20}
   }}
   data={[
-    {x: 1, y: 1, fill: "gold", label: "SO"},
-    {x: 2, y: 3, fill: "orange"},
-    {x: 3, y: 2, fill: "tomato", label: "WOW"},
-    {x: 4, y: 4, fill: "pink"},
-    {x: 5, y: 3, fill: "magenta", label: "SUCH"},
-    {x: 6, y: 5, fill: "purple"},
-    {x: 7, y: 6, fill: "blue", label: "LABEL"}
+    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0, fill: "tomato", label: "OMG"},
+    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, fill: "orange"},
+    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10, fill: "pink", label: "WOW"},
+    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, fill: "blue"},
+    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20, label: "LOL"},
+    {x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25}
   ]}
 />
 ```
@@ -97,95 +96,82 @@ data objects can be styled directly for granular control
 Functional styles allow elements to determine their own styles based on data
 
 ```playground
-<VictoryBar
+<VictoryCandlestick
   height={500}
   padding={75}
   style={{
     data: {
-      fill: (data) => data.y > 2 ?
-        "red" : "blue"
+      strokeWidth: (data) => data.open > data.close ?
+        5 : 1
     }
   }}
   data={[
-    {x: 1, y: 1},
-    {x: 2, y: 2},
-    {x: 3, y: 3},
-    {x: 4, y: 2},
-    {x: 5, y: 1}
+    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
+    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
+    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
+    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
+    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
   ]}
 />
 ```
 
 ### Events
 
-Use the `events` prop to attach events to specific elements in VictoryBar. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryBar events.
+Use the `events` prop to attach events to specific elements in VictoryCandlestick. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryCandlestick events.
 
 
-The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryBar may also be used with the `VictorySharedEvents` wrapper.
+The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryCandlestick may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
-<VictoryBar
+<VictoryCandlestick
   height={500}
-  style={{
-    data: {fill: "blue", width: 20},
-    labels: {fontSize: 20}
-  }}
-  labels={[
-    "a", "b", "c", "d", "e"
-  ]}
+  padding={75}
   data={[
-    {x: 1, y: 1},
-    {x: 2, y: 2},
-    {x: 3, y: 3, label: "click me"},
-    {x: 4, y: 2},
-    {x: 5, y: 1}
+    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
+    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, label: "hello"},
+    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
+    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, label: "there"},
+    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
   ]}
-  events={[
-    {
-      target: "data",
-      eventKey: 2,
-      eventHandlers: {
-        onClick: (evt) => {
-          evt.stopPropagation();
-          return [
-            {
-              mutation: () => {
-                return {style: {fill: "orange", width: 20}};
-              }
-            },
-            {
-              target: "labels",
-              eventKey: 3,
-              mutation: () => {
-                return {text: "now click me"};
-              }
+  events={[{
+    target: "labels",
+    eventHandlers: {
+      onClick: () => {
+        return [
+          {
+            mutation: (props) => {
+              return {
+                style: merge({}, props.style.labels, {fill: "orange"})
+              };
             }
-          ];
-        }
-      }
-    }, {
-      target: "parent",
-      eventHandlers: {
-        onClick: () => {
-          return [
-            {
-              target: "data",
-              mutation: () => {
-                return {style: {fill: "tomato", width: 10}};
-              }
-            }
-          ];
-        }
+          }
+        ];
       }
     }
-  ]}
+  },
+  {
+    target: "data",
+    eventHandlers: {
+      onClick: () => {
+        return [
+          {
+            mutation: (props) => {
+              return {
+                style: merge({}, props.style, {fill: "blue"})
+              };
+            }
+          }
+        ];
+      }
+    }
+  }]}
 />
 ```
 
 ### Animating
 
-VictoryBar animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
-VictoryBar defines a set of default transition behaviors for entering and exiting data nodes.
+VictoryCandlestick animates with [VictoryAnimation][] as data changes when an `animate` prop is provided.
+VictoryCandlestick defines a set of default transition behaviors for entering and exiting data nodes.
 Provide `onExit` and `onEnter` via the animate prop to define custom enter and exit transitions.
 Values returned from `before` and `after` functions will alter the data prop of entering or exiting nodes.
 
@@ -199,11 +185,20 @@ class App extends React.Component {
   }
 
   getData() {
-    const num = random(3, 5);
-    return range(4).map((index) => {
-      return range(num).map((i) => {
-        return {x: i, y: random(2, 10)};
-      })
+    const colors =[
+      "orange", "tomato", "gold", "cyan"
+    ];
+    const samples = random(5, 25);
+    return range(samples).map((i) => {
+      return {
+        x: random(100),
+        open: random(100),
+        close: random(100),
+        high: random(75, 100),
+        low: random(0, 25),
+        size: random(15) + 3,
+        fill: colors[random(0, 3)],
+      };
     });
   }
 
@@ -212,31 +207,25 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 3000);
+    }, 2000);
   }
 
   render() {
     return (
-      <VictoryGroup
+      <VictoryCandlestick
         height={600}
-        offset={15}
-        colorScale={"qualitative"}
+        domain={[0, 100]}
         animate={{
-          duration: 500,
-          onExit: {
-            duration: 1000,
-            before: () => ({y: -1})
-          },
+          duration: 1000,
+          onEnter: {
+            duration: 500,
+            before: () => ({opacity: 0.3}),
+            after: () => ({opacity: 1})
+          }
         }}
-      >
-        {this.state.data.map((data, i) => {
-          return (
-            <VictoryBar
-              data={data} key={i}
-            />
-          );
-        })}
-      </VictoryGroup>
+        data={this.state.data}
+      />
+
     );
   }
 }
