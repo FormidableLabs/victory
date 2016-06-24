@@ -119,7 +119,7 @@ export default class App extends React.Component {
             parent: parentStyle,
             labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
           }}
-          labels={() => "HELLO"}
+          labels={(data) => Math.round(data.y)}
           animate={{
             duration: 500,
             onExit: {

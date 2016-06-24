@@ -89,7 +89,7 @@ export default {
     };
 
     const parentProps = {style: style.parent, ticks, scale, width, height};
-    const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
+    const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform, axisProps);
 
     return ticks.reduce((memo, data, index) => {
       const tick = stringTicks ? modifiedProps.tickValues[data - 1] : data;
@@ -167,24 +167,34 @@ export default {
     };
   },
 
-  getAxisLabelProps(props, calculatedValues, globalTransform) {
+  getAxisLabelProps(props, calculatedValues, globalTransform, axisProps) {
     const {style, orientation, padding, labelPadding, isVertical} = calculatedValues;
     const sign = orientationSign[orientation];
     const hPadding = padding.left + padding.right;
     const vPadding = padding.top + padding.bottom;
-    const x = isVertical ?
-      -((props.height - vPadding) / 2) - padding.top :
+    const x1 = isVertical ?
+      ((props.height - vPadding) / 2) - padding.top :
       ((props.width - hPadding) / 2) + padding.left;
+    const y1 = isVertical ?
+      ((props.width - hPadding) / 2) + padding.left :
+      ((props.height - vPadding) / 2) - padding.top;
+
     const verticalAnchor = sign < 0 ? "end" : "start";
+    // const transformY = isVertical ? (axisProps.y2 - axisProps.y1) / 2 : axisProps.y1;
+    // const transformX = isVertical ? axisProps.x1 : (axisProps.x2 - axisProps.x1) / 2;
     const labelStyle = style.axisLabel;
+    const x = x1 + globalTransform.x;
+    const y = isVertical ? y1 : (sign * labelPadding) + globalTransform.y;
+
+    console.log("y", orientation, y, globalTransform.y, labelPadding)
+    console.log("x", orientation, x, globalTransform.x, x1)
     return {
-      x: x + globalTransform.x,
-      y: (sign * labelPadding) + globalTransform.y,
+      x,
+      y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
       angle: labelStyle.angle,
       style: labelStyle,
-      transform: isVertical ? "rotate(-90)" : "",
       text: props.label
     };
   },
