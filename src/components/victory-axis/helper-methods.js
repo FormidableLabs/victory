@@ -180,15 +180,17 @@ export default {
       ((props.height - vPadding) / 2) - padding.top;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const labelStyle = style.axisLabel;
+    const angle = isVertical ? -90 : 0
     const x = isVertical ? x1 - (globalTransform.x / vPadding) - labelPadding
     : x1 + globalTransform.x;
-    const y = isVertical ? y1 - ((props.height - (hPadding + padding.top)) / 2) : (sign * labelPadding) + globalTransform.y;
+    const y = isVertical ? y1 - ((props.height - (hPadding + padding.top)) / 2)
+    : (sign * labelPadding) + globalTransform.y;
     return {
       x,
       y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
-      angle: isVertical ? -90 : 0,
+      angle: props.angle ? props.angle : angle,
       style: labelStyle,
       text: props.label
     };
