@@ -467,8 +467,9 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   render() {
-    const modifiedProps = this.props.theme ? Helpers.modifyProps(this.props, fallbackProps,
-      this.props.theme.candlestick.props) : Helpers.modifyProps(this.props, fallbackProps);
+    const modifiedProps = this.props.theme && this.props.theme.candlestick
+      ? Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props)
+      : Helpers.modifyProps(this.props, fallbackProps);
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
