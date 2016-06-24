@@ -423,12 +423,11 @@ export default class VictoryPie extends React.Component {
     );
   }
 
-  renderGroup(groupProps, slices) {
-    const {style, xOffset, yOffset} = groupProps;
+  renderGroup(children, style, transform) {
     return React.cloneElement(
       this.props.groupComponent,
-      { role: "presentation", style: style.parent, transform: `translate(${xOffset}, ${yOffset})` },
-      slices
+      { role: "presentation", style, transform},
+      children
     );
   }
 
@@ -450,13 +449,9 @@ export default class VictoryPie extends React.Component {
 
     const calculatedProps = PieHelpers.getCalculatedValues(this.props, fallbackProps);
     const { style, padding, radius } = calculatedProps;
-    const groupProps = {
-      style,
-      xOffset: radius + padding.left,
-      yOffset: radius + padding.top
-    };
-    const slices = this.renderData(this.props, calculatedProps);
-    const group = this.renderGroup(groupProps, slices);
+    const transform = `translate(${radius + padding.left}, ${radius + padding.top})`;
+    const children = this.renderData(this.props, calculatedProps);
+    const group = this.renderGroup(children, style.parent, transform);
     return this.props.standalone ? this.renderContainer(this.props, group) : group;
   }
 }
