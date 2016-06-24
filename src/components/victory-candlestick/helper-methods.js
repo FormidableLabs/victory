@@ -9,10 +9,10 @@ export default {
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
-      const y1 = scale.y(datum.high);
-      const y2 = scale.y(datum.low);
-      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
-      const y = scale.y(Math.max(datum.open, datum.close));
+      const y1 = scale.y(datum.y[2]);
+      const y2 = scale.y(datum.y[3]);
+      const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
+      const y = scale.y(Math.max(datum.y[0], datum.y[1]));
       const size = this.getSize(datum, props, calculatedValues);
       const dataStyle = Object.assign(this.getDataStyles(datum, style.data, props));
       const dataProps = {

@@ -33,14 +33,14 @@ assign a property to x, open, close, high, or low, or process data on the fly.
 ```playground
 <VictoryCandlestick
   data={[
-    {date: new Date(2016, 8, 2), open: 5, close: 10, low: 0},
-    {date: new Date(2016, 8, 3), open: 15, close: 10, low: 5},
-    {date: new Date(2016, 8, 4), open: 15, close: 20, low: 10},
-    {date: new Date(2016, 8, 5), open: 25, close: 20, low: 15},
-    {date: new Date(2016, 8, 6), open: 25, close: 30, low: 20}
+    {date: new Date(2016, 8, 2), opening: 5, close: 10, low: 0, high: 15},
+    {date: new Date(2016, 8, 3), opening: 15, close: 10, low: 5, high: 20},
+    {date: new Date(2016, 8, 4), opening: 15, close: 20, low: 10, high: 25},
+    {date: new Date(2016, 8, 5), opening: 25, close: 20, low: 15, high: 30},
+    {date: new Date(2016, 8, 6), opening: 25, close: 30, low: 20, high: 40}
   ]}
   x={"date"}
-  high={(data) => (Math.max(data.close, data.open) + 10)}
+  open={"open"}
 />
 ```
 
@@ -49,40 +49,27 @@ assign a property to x, open, close, high, or low, or process data on the fly.
 The sensible defaults VictoryBar provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
 
 ```playground
-<VictoryStack horizontal
+<VictoryChart
   height={600}
   padding={75}
   style={{
     data: {width: 30},
     labels: {fontSize: 24}
   }}
-  labels={["one", "two", "three"]}
+  scale={{x: "time"}}
 >
-  <VictoryBar
-    style={{data: {fill: "tomato"}}}
+  <VictoryCandlestick
+    candleColors={{positive: "purple", negative: "blue"}}
     data={[
-      {x: 1, y: 1},
-      {x: 2, y: 2},
-      {x: 3, y: 3}
-    ]}
+    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
+    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
+    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
+    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
+    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+  ]}
   />
-  <VictoryBar
-    style={{data: {fill: "orange"}}}
-    data={[
-      {x: 1, y: 2},
-      {x: 2, y: 1},
-      {x: 3, y: 1}
-    ]}
-  />
-  <VictoryBar
-    style={{data: {fill: "gold"}}}
-    data={[
-      {x: 1, y: 3},
-      {x: 2, y: 4},
-      {x: 3, y: 2}
-    ]}
-  />
-</VictoryStack>
+
+</VictoryChart>
 ```
 
 
