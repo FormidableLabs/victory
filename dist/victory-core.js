@@ -392,6 +392,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      return memo;
 	    }, {}) : {};
 	  },
+	  modifyProps: function modifyProps(props, fallbackProps) {
+	    var themeCheck = props.theme && props.theme.props;
+	
+	    return themeCheck ? (0, _defaults3.default)({}, props, props.theme.props, fallbackProps.props) : (0, _defaults3.default)({}, props, fallbackProps.props);
+	  },
 	  getEvents: function getEvents(events, namespace) {
 	    var _this2 = this;
 	
@@ -6334,7 +6339,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var y = props.y;
 	
 	      var angle = props.angle || style.angle;
-	      var transform = props.transfrom || style.transform;
+	      var transform = props.transform || style.transform;
 	      var transformPart = transform && _index.Helpers.evaluateProp(transform, datum);
 	      var rotatePart = angle && { rotate: [angle, x, y] };
 	      return (transformPart || angle) && _index.Style.toTransformString(transformPart, rotatePart);
@@ -6589,7 +6594,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	/**
 	 * Calculate which data-points exist in oldData and not nextData -
-	 * these are the `entering` data-points.  Also calculate which
+	 * these are the `exiting` data-points.  Also calculate which
 	 * data-points exist in nextData and not oldData - thses are the
 	 * `entering` data-points.
 	 *

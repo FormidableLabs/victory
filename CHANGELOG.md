@@ -1,5 +1,13 @@
 VictoryCore Changelog
 =====================
+## 4.2.1 (2016-06-22)
+
+- Fixes a bug that prevented axis labels from displaying properly for vertical axes.
+
+## 4.2.1 (2016-06-21)
+
+- Adds the modifyProps method, which merges component props with theme props and/or fallback props. Helps to further support theme implementation.
+
 ## 4.2.0 (2016-06-18)
 
 - Adds VictoryTheme, which allows users to import themes and custom themes into their VictoryChart and VictoryPie components
