@@ -386,7 +386,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle} scale={"linear"}>
             <VictoryAxis label={"A LABEL"}/>
-            <VictoryAxis  l abel={"A LABEL"} dependentAxis crossAxis={false} offsetX={30}/>
+            <VictoryAxis label={"A LABEL"} dependentAxis crossAxis={false} offsetX={30}/>
 
               <VictoryLine
                 style={{data:
@@ -404,7 +404,9 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} animate={{duration: 2000}}>
-            <VictoryAxis  label={"A LABEL"} dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
+            <VictoryAxis label={"A LABEL"} dependentAxis
+              orientation="left" style={{grid: {strokeWidth: 1}}}
+            />
             <VictoryLine
               data={this.state.lineData}
               style={{data: this.state.lineStyle}}
