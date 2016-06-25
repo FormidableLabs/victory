@@ -59,6 +59,6 @@ export default class Area extends React.Component {
     const { style, events, groupComponent } = this.props;
     const area = this.renderArea(this.getAreaPath(this.props), style, events);
     const line = this.renderLine(this.getLinePath(this.props), style, events);
-    return React.cloneElement(groupComponent, {}, [area, line]);
+    return React.cloneElement(groupComponent, {}, area, line);
   }
 }

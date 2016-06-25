@@ -413,7 +413,7 @@ export default class VictoryLine extends React.Component {
         }, labelProps));
 
         return React.cloneElement(
-          groupComponent, {key: `line-group-${key}`}, [lineComponent, lineLabel]
+          groupComponent, {key: `line-group-${key}`}, lineComponent, lineLabel
         );
       }
       return lineComponent;

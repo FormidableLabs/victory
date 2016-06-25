@@ -445,7 +445,7 @@ export default class VictoryAxis extends React.Component {
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
       return React.cloneElement(
-        props.groupComponent, {key: `tick-group-${key}`}, [GridComponent, TickComponent, TickLabel]
+        props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
     });
   }
@@ -472,7 +472,7 @@ export default class VictoryAxis extends React.Component {
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children
+      ...children
     );
   }
 

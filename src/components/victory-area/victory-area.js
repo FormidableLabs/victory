@@ -392,7 +392,7 @@ export default class VictoryArea extends React.Component {
       const areaLabel = React.cloneElement(labelComponent, Object.assign({
         events: Events.getPartialEvents(labelEvents, "all", labelProps)
       }, labelProps));
-      return React.cloneElement(groupComponent, {}, [areaComponent, areaLabel]);
+      return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
     }
     return areaComponent;
   }

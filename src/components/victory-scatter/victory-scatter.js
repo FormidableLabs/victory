@@ -430,7 +430,7 @@ export default class VictoryScatter extends React.Component {
 
     if (pointLabelComponents.length > 0) {
       return React.cloneElement(
-        groupComponent, {}, [pointComponents, pointLabelComponents]
+        groupComponent, {}, ...pointComponents, ...pointLabelComponents
       );
     }
     return pointComponents;

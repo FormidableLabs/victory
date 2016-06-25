@@ -456,7 +456,7 @@ export default class VictoryCandlestick extends React.Component {
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return React.cloneElement(
-          groupComponent, {key: `candle-group-${key}`}, [candleComponent, candleLabel]
+          groupComponent, {key: `candle-group-${key}`}, candleComponent, candleLabel
         );
       }
       return candleComponent;

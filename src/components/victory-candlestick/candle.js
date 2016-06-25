@@ -47,7 +47,7 @@ export default class Candle extends React.Component {
     const candleProps = this.getCandleProps(this.props);
     const wickProps = this.getWickProps(this.props);
     return React.cloneElement(
-      this.props.groupComponent, {}, [this.renderWick(wickProps), this.renderCandle(candleProps)]
+      this.props.groupComponent, {}, this.renderWick(wickProps), this.renderCandle(candleProps)
     );
   }
 }
