@@ -39,7 +39,7 @@ export default class Candle extends React.Component {
   }
 
   getWickProps(props) {
-    const {x, y1, y2, style, events} = props
+    const {x, y1, y2, style, events} = props;
     return Object.assign({x1: x, x2: x, y1, y2, style}, events);
   }
 

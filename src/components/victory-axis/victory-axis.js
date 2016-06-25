@@ -335,11 +335,11 @@ export default class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <AxisLine/>,
+    axisComponent: <AxisLine type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <AxisLine/>,
-    gridComponent: <AxisLine/>,
+    tickComponent: <AxisLine type={"tick"}/>,
+    gridComponent: <AxisLine type={"grid"}/>,
     padding: 50,
     scale: "linear",
     standalone: true,
