@@ -383,7 +383,6 @@ export default class VictoryCandlestick extends React.Component {
     data: defaultData,
     size: 3,
     standalone: true,
-    symbol: "circle",
     width: 450,
     x: "x",
     open: "open",
@@ -415,23 +414,29 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = CandlestickHelpers.getBaseProps(this.props, defaultStyles);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = CandlestickHelpers.getBaseProps(newProps, defaultStyles);
+    this.setupEvents(newProps);
+  }
+
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = CandlestickHelpers.getBaseProps(props, defaultStyles);
+    this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
+    const { dataComponent, labelComponent, groupComponent} = props;
+    return this.dataKeys.map((key) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `candlestick-${key}`},
         this.getEventState(key, "data"),
-        getSharedEventState(key, "data"),
+        this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
         dataComponent.props
       );
@@ -441,7 +446,7 @@ export default class VictoryCandlestick extends React.Component {
       const labelProps = defaults(
         {key: `candlestick-label-${key}`},
         this.getEventState(key, "labels"),
-        getSharedEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,
         labelComponent.props
       );
@@ -450,11 +455,8 @@ export default class VictoryCandlestick extends React.Component {
         const candleLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return (
-          <g key={`candle-group-${key}`}>
-            {candleComponent}
-            {candleLabel}
-          </g>
+        return React.cloneElement(
+          groupComponent, {key: `candle-group-${key}`}, [candleComponent, candleLabel]
         );
       }
       return candleComponent;
@@ -507,12 +509,8 @@ export default class VictoryCandlestick extends React.Component {
       );
     }
 
-    const baseStyle = Helpers.getStyles(
-      style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
+    const baseStyle = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+
     const group = this.renderGroup(this.renderData(this.props), baseStyle.parent);
     return standalone ? this.renderContainer(this.props, group) : group;
   }

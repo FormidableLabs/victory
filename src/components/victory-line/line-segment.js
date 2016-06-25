@@ -16,6 +16,10 @@ export default class LineSegment extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
+  renderLine(path, style, events) {
+    return <path style={style} d={path} {...events} vectorEffect="non-scaling-stroke"/>;
+  }
+
   render() {
     const { events, style, interpolation, scale, data } = this.props;
     const xScale = scale.x;
@@ -24,9 +28,6 @@ export default class LineSegment extends React.Component {
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((d) => xScale(d.x))
       .y((d) => yScale(d.y));
-    const path = lineFunction(data);
-    return (
-      <path style={style} d={path} {...events} vectorEffect="non-scaling-stroke"/>
-    );
+    return this.renderLine(lineFunction(data), style, events);
   }
 }

@@ -6,6 +6,8 @@ export default {
   getBaseProps(props, defaultStyles) { // eslint-disable-line max-statements
     const calculatedValues = this.getCalculatedValues(props, defaultStyles);
     const { data, style, scale } = calculatedValues;
+    const { groupComponent, width, height } = props;
+    const parentProps = {scale, width, height, data, style: style.parent};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
@@ -16,7 +18,7 @@ export default {
       const size = this.getSize(datum, props, calculatedValues);
       const dataStyle = Object.assign(this.getDataStyles(datum, style.data, props));
       const dataProps = {
-        x, y, y1, y2, candleHeight, size, scale, data, datum,
+        x, y, y1, y2, candleHeight, size, scale, data, datum, groupComponent,
         index, style: dataStyle, padding: props.padding, width: props.width
       };
 
@@ -39,7 +41,7 @@ export default {
         labels: labelProps
       };
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, defaultStyles) {
