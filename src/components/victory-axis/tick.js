@@ -11,18 +11,12 @@ export default class Tick extends React.Component {
     events: PropTypes.object
   };
 
+  renderTickLine(props, style, events) {
+    return <line {...props} style={style} {...events} vectorEffect="non-scaling-stroke"/>;
+  }
+
   render() {
-    const { x1, y1, x2, y2, style, events} = this.props;
-    return (
-      <line
-        {...events}
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-        style={style}
-        vectorEffect="non-scaling-stroke"
-      />
-    );
+    const { x1, x2, y1, y2, style, events} = this.props;
+    return this.renderTickLine({x1, x2, y1, y2}, style, events);
   }
 }

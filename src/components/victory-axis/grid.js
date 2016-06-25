@@ -11,18 +11,12 @@ export default class GridLine extends React.Component {
     events: PropTypes.object
   };
 
+  renderGridLine(props, style, events) {
+    return <line {...props} style={style} {...events} vectorEffect="non-scaling-stroke"/>;
+  }
+
   render() {
-    const { events, x1, y1, x2, y2, style } = this.props;
-    return (
-      <line
-        {...events}
-        x1={x1}
-        y1={y1}
-        x2={x2}
-        y2={y2}
-        style={style}
-        vectorEffect="non-scaling-stroke"
-      />
-    );
+    const { x1, x2, y1, y2, style, events} = this.props;
+    return this.renderGridLine({x1, x2, y1, y2}, style, events);
   }
 }
