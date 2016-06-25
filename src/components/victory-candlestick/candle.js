@@ -59,7 +59,6 @@ export default class Candle extends React.Component {
     return (
       <g>
         {this.renderWick()}
-
         {this.renderCandle()}
       </g>
     );

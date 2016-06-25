@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "^2.1.8",
+    "builder-victory-component": "git+https://github.com/vakhtang/builder-victory-component#native",
     "d3-scale": "^0.6.0",
     "d3-shape": "^0.6.0",
     "lodash": "^4.12.0",

@@ -366,7 +366,13 @@ export default class VictoryCandlestick extends React.Component {
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
       negative: PropTypes.string
-    })
+    }),
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -387,6 +393,7 @@ export default class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>,
     candleColors: {
       positive: "green",
       negative: "red"
@@ -454,11 +461,38 @@ export default class VictoryCandlestick extends React.Component {
     });
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
+    const { animate, standalone, style } = this.props;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -473,22 +507,13 @@ export default class VictoryCandlestick extends React.Component {
       );
     }
 
-    const style = Helpers.getStyles(
-      this.props.style,
+    const baseStyle = Helpers.getStyles(
+      style,
       defaultStyles,
       "auto",
       "100%"
     );
-
-    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
-    return this.props.standalone ?
-      React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
-        group) :
-      group;
+    const group = this.renderGroup(this.renderData(this.props), baseStyle.parent);
+    return standalone ? this.renderContainer(this.props, group) : group;
   }
 }

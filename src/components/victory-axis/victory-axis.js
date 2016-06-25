@@ -327,7 +327,13 @@ export default class VictoryAxis extends React.Component {
     * @example theme={Grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -340,7 +346,8 @@ export default class VictoryAxis extends React.Component {
     scale: "linear",
     standalone: true,
     tickCount: 5,
-    containerComponent: <VictoryContainer />
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g/>
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
@@ -439,12 +446,8 @@ export default class VictoryAxis extends React.Component {
       const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
-      return (
-        <g key={`tick-group-${key}`}>
-          {GridComponent}
-          {TickComponent}
-          {TickLabel}
-        </g>
+      return React.cloneElement(
+        props.groupComponent, {key: `tick-group-${key}`}, [GridComponent, TickComponent, TickLabel]
       );
     });
   }
@@ -464,6 +467,14 @@ export default class VictoryAxis extends React.Component {
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
+    );
+  }
+
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
     );
   }
 
@@ -488,14 +499,13 @@ export default class VictoryAxis extends React.Component {
     const styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis
     : fallbackProps.style;
     const style = AxisHelpers.getStyles(modifiedProps, styleObject);
+    const children = [
+      this.renderGridAndTicks(modifiedProps),
+      this.renderLine(modifiedProps),
+      this.renderLabel(modifiedProps)
+    ];
 
-    const group = (
-      <g style={style.parent}>
-        {this.renderGridAndTicks(modifiedProps)}
-        {this.renderLine(modifiedProps)}
-        {this.renderLabel(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(children, style.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

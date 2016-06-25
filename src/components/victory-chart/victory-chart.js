@@ -212,13 +212,20 @@ export default class VictoryChart extends React.Component {
     * @example theme={Grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer />
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g/>
   };
 
 
@@ -342,6 +349,14 @@ export default class VictoryChart extends React.Component {
     return React.cloneElement(containerComponent, parentProps);
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
@@ -361,11 +376,7 @@ export default class VictoryChart extends React.Component {
       );
     }
 
-    const group = (
-      <g style={calculatedProps.style.parent}>
-        {newChildren}
-      </g>
-    );
+    const group = this.renderGroup(newChildren, calculatedProps.style.parent);
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

@@ -275,7 +275,13 @@ export default class VictoryGroup extends React.Component {
     * @example theme={Grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -283,7 +289,8 @@ export default class VictoryGroup extends React.Component {
     offset: 0,
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -415,6 +422,14 @@ export default class VictoryGroup extends React.Component {
     return React.cloneElement(containerComponent, parentProps);
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
@@ -441,12 +456,8 @@ export default class VictoryGroup extends React.Component {
         </VictorySharedEvents>
       );
     }
+    const group = this.renderGroup(newChildren, style.parent);
 
-    const group = (
-      <g style={style.parent}>
-        {newChildren}
-      </g>
-    );
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

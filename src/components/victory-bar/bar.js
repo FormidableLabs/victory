@@ -39,18 +39,15 @@ export default class Bar extends React.Component {
       this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
   }
 
+  renderBar(path, style, events) {
+    return <path d={path} style={style} shapeRendering="optimizeSpeed" {...events}/>;
+  }
+
   render() {
     // TODO better bar width calculation
     const barWidth = this.props.style && this.props.style.width || 8;
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
-    return (
-      <path
-        {...this.props.events}
-        d={path}
-        style={this.props.style}
-        shapeRendering="optimizeSpeed"
-      />
-    );
+    return this.renderBar(path, this.props.style, this.props.events);
   }
 }

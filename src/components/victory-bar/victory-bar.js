@@ -322,7 +322,13 @@ export default class VictoryBar extends React.Component {
     * @example theme={Grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -334,7 +340,8 @@ export default class VictoryBar extends React.Component {
     standalone: true,
     x: "x",
     y: "y",
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -366,7 +373,7 @@ export default class VictoryBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
     const barComponents = [];
     const barLabelComponents = [];
     this.dataKeys.forEach((key) => {
@@ -400,11 +407,8 @@ export default class VictoryBar extends React.Component {
     });
 
     if (barLabelComponents.length > 0) {
-      return (
-        <g>
-          {barComponents}
-          {barLabelComponents}
-        </g>
+      return React.cloneElement(
+        groupComponent, {}, [barComponents, barLabelComponents]
       );
     }
     return barComponents;
@@ -428,6 +432,14 @@ export default class VictoryBar extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
@@ -448,11 +460,7 @@ export default class VictoryBar extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = (
-      <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
