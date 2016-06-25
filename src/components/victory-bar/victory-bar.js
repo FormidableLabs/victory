@@ -450,7 +450,7 @@ export default class VictoryBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryBar {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }

@@ -460,7 +460,7 @@ export default class VictoryLine extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryLine {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
