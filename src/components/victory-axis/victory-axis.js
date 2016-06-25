@@ -498,7 +498,7 @@ export default class VictoryAxis extends React.Component {
     : fallbackProps.style;
     const style = AxisHelpers.getStyles(modifiedProps, styleObject);
     const children = [
-      this.renderGridAndTicks(modifiedProps),
+      ...this.renderGridAndTicks(modifiedProps),
       this.renderLine(modifiedProps),
       this.renderLabel(modifiedProps)
     ];
