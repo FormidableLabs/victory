@@ -396,7 +396,7 @@ export default class VictoryScatter extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
     const pointComponents = [];
     const pointLabelComponents = [];
     this.dataKeys.forEach((key) => {
@@ -429,11 +429,8 @@ export default class VictoryScatter extends React.Component {
     });
 
     if (pointLabelComponents.length > 0) {
-      return (
-        <g>
-          {pointComponents}
-          {pointLabelComponents}
-        </g>
+      return React.cloneElement(
+        groupComponent, {}, [pointComponents, pointLabelComponents]
       );
     }
     return pointComponents;

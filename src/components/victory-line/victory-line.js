@@ -382,7 +382,7 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
     return dataSegments.map((data, key) => {
       const dataEvents = this.getEvents(props, "data", "all");
@@ -411,11 +411,9 @@ export default class VictoryLine extends React.Component {
         const lineLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));
-        return (
-          <g key={`line-group-${key}`}>
-            {lineComponent}
-            {lineLabel}
-          </g>
+
+        return React.cloneElement(
+          groupComponent, {key: `line-group-${key}`}, [lineComponent, lineLabel]
         );
       }
       return lineComponent;
