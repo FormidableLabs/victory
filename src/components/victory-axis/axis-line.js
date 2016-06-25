@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 
 export default class AxisLine extends React.Component {
   static propTypes = {
+    tick: PropTypes.any,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,

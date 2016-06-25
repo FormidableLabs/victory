@@ -5,8 +5,6 @@ import {
   VictoryContainer
 } from "victory-core";
 import AxisLine from "./axis-line";
-import GridLine from "./grid";
-import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
@@ -340,8 +338,8 @@ export default class VictoryAxis extends React.Component {
     axisComponent: <AxisLine/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <Tick/>,
-    gridComponent: <GridLine/>,
+    tickComponent: <AxisLine/>,
+    gridComponent: <AxisLine/>,
     padding: 50,
     scale: "linear",
     standalone: true,
