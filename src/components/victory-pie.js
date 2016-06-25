@@ -401,7 +401,7 @@ export default class VictoryPie extends React.Component {
       React.cloneElement(
         props.groupComponent,
         {key: "pie-group"},
-        [...sliceComponents, ...sliceLabelComponents]
+        sliceComponents, sliceLabelComponents
       ) : sliceComponents;
   }
 
