@@ -101,63 +101,63 @@ export default class App extends React.Component {
           }]}
         />
 
-        {/*<VictoryCandlestick
-                  style={{parent: style.parent}}
-                  data={data}
-                  theme={VictoryTheme.grayscale}
-                  size={8}
-                  events={[{
-                    target: "labels",
-                    eventHandlers: {
-                      onClick: () => {
-                        return [
-                          {
-                            mutation: (props) => {
-                              return {
-                                style: merge({}, props.style.labels, {fill: "orange"})
-                              };
-                            }
-                          }
-                        ];
-                      }
-                    }
-                  },
+        <VictoryCandlestick
+          style={{parent: style.parent}}
+          data={data}
+          theme={VictoryTheme.grayscale}
+          size={8}
+          events={[{
+            target: "labels",
+            eventHandlers: {
+              onClick: () => {
+                return [
                   {
-                    target: "data",
-                    eventHandlers: {
-                      onClick: () => {
-                        return [
-                          {
-                            mutation: (props) => {
-                              return {
-                                style: merge({}, props.style, {fill: "blue"})
-                              };
-                            }
-                          }
-                        ];
-                      }
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style.labels, {fill: "orange"})
+                      };
                     }
-                  }]}
-                />
-                <VictoryChart
-                  scale={{x: "time"}}
-                >
-                  <VictoryCandlestick
-                    style={{parent: style.parent}}
-                    candleColors={{positive: "purple", negative: "blue"}}
-                    data={data}
-                    size={8}
-                  />
-                </VictoryChart>
-        
-                <VictoryCandlestick
-                  animate={{duration: 2000}}
-                  data={this.state.data}
-                />
-        
-                <VictoryCandlestick
-                  size={1}
-                />*/}
+                  }
+                ];
+              }
+            }
+          },
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, {fill: "blue"})
+                      };
+                    }
+                  }
+                ];
+              }
+            }
+          }]}
+        />
+        <VictoryChart
+          scale={{x: "time"}}
+        >
+          <VictoryCandlestick
+            style={{parent: style.parent}}
+            candleColors={{positive: "purple", negative: "blue"}}
+            data={data}
+            size={8}
+          />
+        </VictoryChart>
+
+        <VictoryCandlestick
+          animate={{duration: 2000}}
+          data={this.state.data}
+        />
+
+        <VictoryCandlestick
+          size={1}
+        />
 
       </div>
     );
