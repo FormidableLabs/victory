@@ -38,7 +38,7 @@ describe("components/victory-candlestick", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryCandlestick.defaultProps.width} ${VictoryCandlestick.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 

@@ -7,13 +7,16 @@ import {
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a",
-    opacity: 1,
-    stroke: "transparent",
-    strokeWidth: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450,
+    candleColors: {
+      positive: "green",
+      negative: "red"
+    }
   },
+<<<<<<< HEAD
   labels: {
     stroke: "transparent",
     fill: "#756f6a",
@@ -21,6 +24,23 @@ const defaultStyles = {
     fontSize: 13,
     textAnchor: "end",
     padding: 10
+=======
+  style: {
+    data: {
+      fill: "#756f6a",
+      opacity: 1,
+      stroke: "transparent",
+      strokeWidth: 1
+    },
+    labels: {
+      stroke: "transparent",
+      fill: "#756f6a",
+      fontFamily: "Helvetica",
+      fontSize: 13,
+      textAnchor: "start",
+      padding: 10
+    }
+>>>>>>> master
   }
 };
 
@@ -369,18 +389,30 @@ export default class VictoryCandlestick extends React.Component {
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
       negative: PropTypes.string
-    })
+    }),
+    /**
+    * The theme prop takes a props object, and a style object with nested data, labels, and parent
+    * objects. You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryCandlestick as a solo component, implement the theme directly on
+    * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={VictoryTheme.grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
-    height: 300,
     padding: 50,
     samples: 50,
     scale: "linear",
     data: defaultData,
     size: 3,
     standalone: true,
+<<<<<<< HEAD
     width: 450,
+=======
+>>>>>>> master
     x: "x",
     open: "open",
     close: "close",
@@ -388,18 +420,13 @@ export default class VictoryCandlestick extends React.Component {
     low: "low",
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>,
-    candleColors: {
-      positive: "green",
-      negative: "red"
-    }
+    containerComponent: <VictoryContainer/>
   };
 
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
   static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
   static getBaseProps = partialRight(
-    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), defaultStyles
-  );
+    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -410,11 +437,11 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = CandlestickHelpers.getBaseProps(this.props, defaultStyles);
+    this.baseProps = CandlestickHelpers.getBaseProps(this.props, fallbackProps);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = CandlestickHelpers.getBaseProps(newProps, defaultStyles);
+    this.baseProps = CandlestickHelpers.getBaseProps(newProps, fallbackProps);
   }
 
   renderData(props) {
@@ -457,10 +484,13 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   render() {
+    const modifiedProps = this.props.theme && this.props.theme.candlestick
+      ? Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props)
+      : Helpers.modifyProps(this.props, fallbackProps);
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    if (modifiedProps.animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -469,27 +499,27 @@ export default class VictoryCandlestick extends React.Component {
         "style", "width", "x", "y"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          <VictoryCandlestick {...this.props}/>
+        <VictoryTransition animate={modifiedProps.animate} animationWhitelist={whitelist}>
+          <VictoryCandlestick {...modifiedProps}/>
         </VictoryTransition>
       );
     }
 
     const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
+      modifiedProps.style,
+      fallbackProps.style,
       "auto",
       "100%"
     );
 
-    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
-    return this.props.standalone ?
+    const group = <g role="presentation" style={style.parent}>{this.renderData(modifiedProps)}</g>;
+    return modifiedProps.standalone ?
       React.cloneElement(
         this.props.containerComponent,
         Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
+          height: modifiedProps.height,
+          width: modifiedProps.width,
+          style: style.parent}, modifiedProps.containerComponent.props),
         group) :
       group;
   }

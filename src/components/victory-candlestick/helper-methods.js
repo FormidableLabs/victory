@@ -3,8 +3,11 @@ import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 
 export default {
-  getBaseProps(props, defaultStyles) { // eslint-disable-line max-statements
-    const calculatedValues = this.getCalculatedValues(props, defaultStyles);
+  getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
+    const modifiedProps = props.theme && props.theme.candlestick ?
+    Helpers.modifyProps(props, fallbackProps, props.theme.candlestick.props) :
+    Helpers.modifyProps(props, fallbackProps);
+    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
@@ -14,13 +17,13 @@ export default {
       const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
       const y = scale.y(Math.max(datum.y[0], datum.y[1]));
       const size = this.getSize(datum, props, calculatedValues);
-      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, props));
+      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
         x, y, y1, y2, candleHeight, size, scale, data, datum,
-        index, style: dataStyle, padding: props.padding, width: props.width
+        index, style: dataStyle, padding: modifiedProps.padding, width: modifiedProps.width
       };
 
-      const text = this.getLabelText(props, datum, index);
+      const text = this.getLabelText(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
@@ -42,10 +45,9 @@ export default {
     }, {});
   },
 
-  getCalculatedValues(props, defaultStyles) {
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+  getCalculatedValues(props, fallbackProps) {
+    const style = Helpers.getStyles(props.style, fallbackProps.style, "auto", "100%");
     const data = Events.addEventKeys(props, this.getData(props));
-    // console.log(this.getData({data: [{x: 5, open: 10, close: 20, high: 25, low: 5}]}));
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
