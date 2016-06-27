@@ -4,7 +4,7 @@ import Ecology from "ecology";
 import Radium, { Style } from "radium";
 import { merge, random, range } from "lodash";
 import * as docgen from "react-docgen";
-import { VictoryCandlestick, VictoryChart} from "../../src/index";
+import { VictoryCandlestick, VictoryChart, VictoryAxis} from "../../src/index";
 import { VictoryLabel } from "victory-core";
 import { VictoryTheme } from "formidable-landers";
 
@@ -19,7 +19,7 @@ class Docs extends React.Component {
             ))}
           scope={{
             merge, range, random, React, ReactDOM, VictoryLabel,
-            VictoryCandlestick, VictoryChart
+            VictoryCandlestick, VictoryChart, VictoryAxis
           }}
           playgroundtheme="elegant"
         />

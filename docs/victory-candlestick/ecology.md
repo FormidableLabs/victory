@@ -1,7 +1,7 @@
 VictoryCandlestick
 =============
 
-Draw SVG bar charts with [React][]. VictoryCandlestick is a composable component, so it doesn't include axes. Check out [VictoryChart][] for complete candlestick charts and more.
+Draw SVG candlestick charts with [React][]. VictoryCandlestick is a composable component, so it doesn't include axes. Check out [VictoryChart][] for complete candlestick charts and more.
 
 ## Features
 
@@ -46,20 +46,30 @@ assign a property to x, open, close, high, or low, or process data on the fly.
 
 ### Flexible and Configurable
 
-The sensible defaults VictoryBar provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
+The sensible defaults VictoryCandlestick provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
 
 ```playground
 <VictoryChart
   height={600}
   padding={75}
-  style={{
-    data: {width: 30},
-    labels: {fontSize: 24}
-  }}
   scale={{x: "time"}}
 >
+  <VictoryAxis
+    scale="time"
+    tickFormat={(x) => (x.getMonth() + 1 + "/" + x.getDate())}
+  />
+
+  <VictoryAxis
+    dependentAxis
+  />
+
   <VictoryCandlestick
     candleColors={{positive: "purple", negative: "blue"}}
+    style={{
+      data: {width: 30},
+      labels: {fontSize: 24}
+    }}
+    domain={{x: [new Date(2016, 5, 30), new Date(2016, 6, 6)]}}
     data={[
     {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
     {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
@@ -83,10 +93,10 @@ Data objects can be styled directly for granular control
     labels: {fontSize: 20}
   }}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0, fill: "tomato", label: "OMG"},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, fill: "orange"},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10, fill: "pink", label: "WOW"},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, fill: "blue"},
+    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0, opacity: 0.1, label: "OMG"},
+    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, opacity: 0.5},
+    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10, opacity: 0.75, label: "WOW"},
+    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, opacity: 0.2},
     {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20, label: "LOL"},
     {x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25}
   ]}
@@ -120,7 +130,7 @@ Functional styles allow elements to determine their own styles based on data
 Use the `events` prop to attach events to specific elements in VictoryCandlestick. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryCandlestick events.
 
 
-The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single bar), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryCandlestick may also be used with the `VictorySharedEvents` wrapper.
+The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single candlestick), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryCandlestick may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
 <VictoryCandlestick
@@ -185,21 +195,47 @@ class App extends React.Component {
   }
 
   getData() {
-    const colors =[
-      "orange", "tomato", "gold", "cyan"
+    const dataSets = [
+      [
+        {x: 1, open: 5, close: 10, high: 15, low: 0},
+        {x: 2, open: 15, close: 10, high: 20, low: 5},
+        {x: 3, open: 15, close: 20, high: 25, low: 10},
+        {x: 4, open: 20, close: 25, high: 30, low: 15},
+        {x: 5, open: 30, close: 25, high: 35, low: 20}
+      ],
+      [
+        {x: 1, open: 5, close: 10, high: 15, low: 0},
+        {x: 2, open: 15, close: 10, high: 20, low: 5},
+        {x: 3, open: 15, close: 20, high: 25, low: 10},
+        {x: 4, open: 20, close: 25, high: 30, low: 15},
+        {x: 5, open: 30, close: 25, high: 35, low: 20},
+        {x: 6, open: 30, close: 35, high: 40, low: 25}
+      ],
+      [
+        {x: 1, open: 5, close: 10, high: 15, low: 0},
+        {x: 2, open: 15, close: 10, high: 20, low: 5},
+        {x: 3, open: 15, close: 20, high: 25, low: 10},
+        {x: 4, open: 20, close: 25, high: 30, low: 15},
+        {x: 5, open: 30, close: 25, high: 35, low: 20},
+        {x: 6, open: 30, close: 35, high: 40, low: 25},
+        {x: 7, open: 35, close: 40, high: 45, low: 30}
+      ],
+      [
+        {x: 1, open: 5, close: 10, high: 15, low: 0},
+        {x: 2, open: 15, close: 10, high: 20, low: 5},
+        {x: 3, open: 15, close: 20, high: 25, low: 10},
+        {x: 4, open: 20, close: 25, high: 30, low: 15},
+        {x: 5, open: 30, close: 25, high: 35, low: 20},
+        {x: 6, open: 30, close: 35, high: 40, low: 25},
+        {x: 7, open: 35, close: 40, high: 45, low: 30},
+        {x: 8, open: 40, close: 45, high: 50, low: 35}
+      ]
     ];
-    const samples = random(5, 25);
-    return range(samples).map((i) => {
-      return {
-        x: random(100),
-        open: random(100),
-        close: random(100),
-        high: random(75, 100),
-        low: random(0, 25),
-        size: random(15) + 3,
-        fill: colors[random(0, 3)],
-      };
-    });
+  
+    const num = random(0, 3);
+
+    return dataSets[num];
+
   }
 
   componentDidMount() {
@@ -207,14 +243,12 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 2000);
+    }, 1500);
   }
 
   render() {
     return (
       <VictoryCandlestick
-        height={600}
-        domain={[0, 100]}
         animate={{
           duration: 1000,
           onEnter: {

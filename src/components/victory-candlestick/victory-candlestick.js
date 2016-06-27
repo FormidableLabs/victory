@@ -72,7 +72,7 @@ export default class VictoryCandlestick extends React.Component {
      * Each data point may be any format you wish (depending on the `x`, `open`, `close`, `high`,
      * and `low` accessor props), but by default, an object with x, open, close, high, and low
      * properties is expected. Other properties may be added to the data point object, such as
-     * fill, size, and symbol. These properties will be interpreted and applied to the
+     * fill and symbol. These properties will be interpreted and applied to the
      * individual lines
      * @examples [{x: 1, open: 2, close: 3, high: 4, low: 1, fill: "red"},
      * {x: 1, open: 2, close: 3, high: 4, low: 1, label: "foo"}]
@@ -83,9 +83,10 @@ export default class VictoryCandlestick extends React.Component {
      * The dataComponent prop takes an entire component which will be used to create points for
      * each datum in the chart. The new element created from the passed dataComponent will be
      * provided with the following properties calculated by VictoryCandlestick: datum, index, scale,
-     * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
-     * props to the supplied component, or modified or ignored within the custom component itself.
-     * If a dataComponent is not provided, VictoryCandlestick will use its default Point component.
+     * style, events, x, open, close, high, low, and symbol. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within the custom
+     * component itself. If a dataComponent is not provided, VictoryCandlestick will use its
+     * default Candle component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -395,7 +396,6 @@ export default class VictoryCandlestick extends React.Component {
     samples: 50,
     scale: "linear",
     data: defaultData,
-    size: 3,
     standalone: true,
     x: "x",
     open: "open",
