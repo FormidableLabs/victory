@@ -421,7 +421,6 @@ export default class VictoryGroup extends React.Component {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const types = uniq(childComponents.map((child) => child.type.role));
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
 
