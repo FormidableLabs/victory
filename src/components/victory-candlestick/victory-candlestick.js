@@ -16,20 +16,9 @@ const fallbackProps = {
       negative: "red"
     }
   },
-<<<<<<< HEAD
-  labels: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    textAnchor: "end",
-    padding: 10
-=======
   style: {
     data: {
-      fill: "#756f6a",
       opacity: 1,
-      stroke: "transparent",
       strokeWidth: 1
     },
     labels: {
@@ -37,10 +26,9 @@ const fallbackProps = {
       fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 13,
-      textAnchor: "start",
+      textAnchor: "end",
       padding: 10
     }
->>>>>>> master
   }
 };
 
@@ -409,10 +397,6 @@ export default class VictoryCandlestick extends React.Component {
     data: defaultData,
     size: 3,
     standalone: true,
-<<<<<<< HEAD
-    width: 450,
-=======
->>>>>>> master
     x: "x",
     open: "open",
     close: "close",
