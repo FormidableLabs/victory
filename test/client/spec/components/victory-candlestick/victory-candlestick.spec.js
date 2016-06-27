@@ -153,4 +153,24 @@ describe("components/victory-candlestick", () => {
       });
     });
   });
+
+  describe("accessibility", () => {
+    it("adds an area role to each point in the series", () => {
+      const data = [
+        {x: 0, open: 9, close: 30, high: 56, low: 7},
+        {x: 1, open: 80, close: 40, high: 120, low: 10},
+        {x: 2, open: 50, close: 80, high: 90, low: 20}
+      ];
+      const wrapper = mount(
+        <VictoryCandlestick data={data} />
+      );
+
+      wrapper.find("rect").nodes.forEach((r, i) => {
+        const {attributes: attr} = r;
+        const roleValue = attr.getNamedItem("role").value;
+        expect(roleValue).to.be.a("string");
+        expect(roleValue).to.equal(`candlestick-${i}`);
+      });
+    });
+  });
 });
