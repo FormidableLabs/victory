@@ -28,8 +28,8 @@ const fallbackProps = {
       fill: "#756f6a",
       fontFamily: "Helvetica",
       fontSize: 13,
-      textAnchor: "start",
-      padding: 10
+      textAnchor: "end",
+      padding: 5
     }
   }
 };

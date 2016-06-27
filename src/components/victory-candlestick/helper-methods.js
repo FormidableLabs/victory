@@ -27,8 +27,8 @@ export default {
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
-        x,
-        y: y - labelStyle.padding,
+        x: x - labelStyle.padding,
+        y: y - (labelStyle.padding * 2),
         text,
         index,
         scale,
