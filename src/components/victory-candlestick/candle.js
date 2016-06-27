@@ -40,7 +40,7 @@ export default class Candle extends React.Component {
     const width = this.props.width;
     const padding = this.props.padding.left || this.props.padding;
     const dataLength = this.props.data.length;
-    const candleWidth = 0.5 * (width - 2 * padding) / dataLength;
+    const candleWidth = this.props.style.width || 0.5 * (width - 2 * padding) / dataLength;
     const candleX = this.props.x - candleWidth / 2;
 
     return (
