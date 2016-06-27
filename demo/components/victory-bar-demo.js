@@ -116,6 +116,7 @@ export default class App extends React.Component {
         <h1>VictoryBar</h1>
         <VictoryBar
           style={{
+            data: {width: 10},
             parent: parentStyle,
             labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
           }}
