@@ -1,4 +1,3 @@
 {
-  "presets": ["react", "react-native-stage-0"],
-  "plugins": ["lodash"]
+  "extends": "./node_modules/builder-victory-component/config/babel/.babelrc"
 }
