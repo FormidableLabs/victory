@@ -3,6 +3,7 @@ import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
   VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
+import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
@@ -333,8 +334,7 @@ export default class VictoryGroup extends React.Component {
     const childComponents = React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = horizontal ? otherAxis : axis;
+    const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const domain = calculatedProps.domain[currentAxis];
     const range = calculatedProps.range[currentAxis];
     const domainExtent = Math.max(...domain) - Math.min(...domain);

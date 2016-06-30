@@ -83,9 +83,10 @@ export default {
   },
 
   getTicksFromData(calculatedProps, axis) {
-    const stringMap = calculatedProps.stringMap[axis];
+    const currentAxis = Axis.getCurrentAxis(axis, calculatedProps.horizontal);
+    const stringMap = calculatedProps.stringMap[currentAxis];
     // if tickValues are defined for an axis component use them
-    const categoryArray = calculatedProps.categories[axis];
+    const categoryArray = calculatedProps.categories[currentAxis];
     const ticksFromCategories = categoryArray && Collection.containsOnlyStrings(categoryArray) ?
       categoryArray.map((tick) => stringMap[tick]) : categoryArray;
     const ticksFromStringMap = stringMap && values(stringMap);
@@ -99,7 +100,8 @@ export default {
     if (!tickValues) {
       return undefined;
     }
-    const stringMap = calculatedProps.stringMap[axis];
+    const currentAxis = Axis.getCurrentAxis(axis, calculatedProps.horizontal);
+    const stringMap = calculatedProps.stringMap[currentAxis];
     return Collection.containsOnlyStrings(tickValues) && stringMap ?
       tickValues.map((tick) => stringMap[tick]) : tickValues;
   },
@@ -109,8 +111,9 @@ export default {
   },
 
   getTickFormat(component, axis, calculatedProps) {
+    const currentAxis = Axis.getCurrentAxis(axis, calculatedProps.horizontal);
+    const stringMap = calculatedProps.stringMap[currentAxis];
     const tickValues = component.props.tickValues;
-    const stringMap = calculatedProps.stringMap[axis];
     const useIdentity = tickValues && !Collection.containsStrings(tickValues) &&
       !Collection.containsDates(tickValues);
     if (useIdentity) {
@@ -123,7 +126,7 @@ export default {
       const dataTicks = ["", ...dataNames, ""];
       return (x) => dataTicks[x];
     } else {
-      return calculatedProps.scale[axis].tickFormat() || identity;
+      return calculatedProps.scale[currentAxis].tickFormat() || identity;
     }
   },
 

@@ -17,6 +17,11 @@ export default {
     return props.dependentAxis ? "y" : "x";
   },
 
+  getCurrentAxis(axis, horizontal) {
+    const otherAxis = axis === "x" ? "y" : "x";
+    return horizontal ? otherAxis : axis;
+  },
+
   /**
    * Returns a single axis component of the desired axis type (x or y)
    * @param {Array} childComponents: an array of children
