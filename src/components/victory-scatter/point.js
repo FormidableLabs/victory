@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
 import pathHelpers from "./path-helpers";
 
-
 export default class Point extends React.Component {
   static propTypes = {
     index: React.PropTypes.number,
