@@ -431,6 +431,17 @@ export default class App extends React.Component {
             }
           ]}
         />
+
+        <VictoryChart>
+          <VictoryBar horizontal
+            data={[
+              {x: 1, y: "Label 1"},
+              {x: 7, y: "Label 2"},
+              {x: 3, y: "Label 3"},
+              {x: 4, y: "Label 4"}
+            ]}
+          />
+        </VictoryChart>
       </div>
     );
   }

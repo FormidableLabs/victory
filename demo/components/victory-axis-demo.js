@@ -1,9 +1,10 @@
 /*global window:false */
 import React from "react";
-import {VictoryAxis} from "../../src/index";
+import {VictoryAxis, VictoryChart, VictoryLine} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import { merge, random, range } from "lodash";
 import { VictoryContainer, VictoryTheme } from "victory-core";
+import d3Scale from "d3-scale";
 
 export default class App extends React.Component {
   constructor() {
@@ -122,11 +123,11 @@ export default class App extends React.Component {
             label={this.state.label}
             tickLabelComponent={<VictoryLabel y={25}/>}
             tickValues={[
+              new Date(1960, 1, 1),
+              new Date(1970, 1, 1),
               new Date(1980, 1, 1),
               new Date(1990, 1, 1),
-              new Date(2000, 1, 1),
-              new Date(2010, 1, 1),
-              new Date(2020, 1, 1)]}
+              new Date(2000, 1, 1)]}
             tickFormat={(x) => x.getFullYear()}
           />
 
@@ -221,6 +222,28 @@ export default class App extends React.Component {
             ]}
           />
         </div>
+
+        <VictoryChart
+          height={450}
+          scale={{
+            x: "time"
+          }}
+        >
+          <VictoryAxis label="Decades"/>
+          <VictoryAxis dependentAxis crossAxis/>
+          <VictoryLine
+            data={[
+              {x: new Date(1960, 1, 1), y: 125},
+              {x: new Date(1987, 1, 1), y: 257},
+              {x: new Date(1993, 1, 1), y: 345},
+              {x: new Date(1997, 1, 1), y: 515},
+              {x: new Date(2001, 1, 1), y: 132},
+              {x: new Date(2005, 1, 1), y: 305},
+              {x: new Date(2011, 1, 1), y: 270},
+              {x: new Date(2015, 1, 1), y: 470}
+            ]}
+          />
+        </VictoryChart>
 
       </div>
     );
