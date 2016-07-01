@@ -2,7 +2,7 @@
 import React from "react";
 import { random, range, merge } from "lodash";
 import {VictoryCandlestick, VictoryChart} from "../../src/index";
-// import {VictoryLabel} from "victory-core";
+import { VictoryTheme } from "victory-core";
 
 const getData = () => {
   const colors =
@@ -100,6 +100,45 @@ export default class App extends React.Component {
             }
           }]}
         />
+
+        <VictoryCandlestick
+          style={{parent: style.parent}}
+          data={data}
+          theme={VictoryTheme.grayscale}
+          size={8}
+          events={[{
+            target: "labels",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style.labels, {fill: "orange"})
+                      };
+                    }
+                  }
+                ];
+              }
+            }
+          },
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, {fill: "blue"})
+                      };
+                    }
+                  }
+                ];
+              }
+            }
+          }]}
+        />
         <VictoryChart
           scale={{x: "time"}}
         >
@@ -119,6 +158,7 @@ export default class App extends React.Component {
         <VictoryCandlestick
           size={1}
         />
+
       </div>
     );
   }

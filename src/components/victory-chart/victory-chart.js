@@ -209,7 +209,7 @@ export default class VictoryChart extends React.Component {
     * You can create this object yourself, or you can use a theme provided by Victory.
     * When using VictoryChart, either alone or as a wrapper for other components,
     * you will only need to implement the theme on VictoryChart itself.
-    * @example theme={Grayscale}
+    * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
     theme: PropTypes.object,

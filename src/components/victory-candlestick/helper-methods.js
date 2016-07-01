@@ -3,10 +3,13 @@ import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 
 export default {
-  getBaseProps(props, defaultStyles) { // eslint-disable-line max-statements
-    const calculatedValues = this.getCalculatedValues(props, defaultStyles);
+  getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
+    const modifiedProps = props.theme && props.theme.candlestick ?
+    Helpers.modifyProps(props, fallbackProps, props.theme.candlestick.props) :
+    Helpers.modifyProps(props, fallbackProps);
+    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { groupComponent, width, height } = props;
+    const { groupComponent, width, height, padding } = modifiedProps;
     const parentProps = {scale, width, height, data, style: style.parent};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
@@ -15,14 +18,14 @@ export default {
       const y2 = scale.y(datum.low);
       const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
       const y = scale.y(Math.max(datum.open, datum.close));
-      const size = this.getSize(datum, props, calculatedValues);
-      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, props));
+      const size = this.getSize(datum, modifiedProps, calculatedValues);
+      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
         x, y, y1, y2, candleHeight, size, scale, data, datum, groupComponent,
-        index, style: dataStyle, padding: props.padding, width: props.width
+        index, style: dataStyle, padding, width
       };
 
-      const text = this.getLabelText(props, datum, index);
+      const text = this.getLabelText(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
@@ -44,10 +47,9 @@ export default {
     }, {parent: parentProps});
   },
 
-  getCalculatedValues(props, defaultStyles) {
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+  getCalculatedValues(props, fallbackProps) {
+    const style = Helpers.getStyles(props.style, fallbackProps.style, "auto", "100%");
     const data = Events.addEventKeys(props, this.getData(props));
-    // console.log(this.getData({data: [{x: 5, open: 10, close: 20, high: 25, low: 5}]}));
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")

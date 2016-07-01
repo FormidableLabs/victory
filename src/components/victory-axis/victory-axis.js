@@ -322,7 +322,7 @@ export default class VictoryAxis extends React.Component {
     * Victory. When using VictoryAxis as a solo component, implement the theme directly on
     * VictoryAxis. If you are wrapping VictoryAxis in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={Grayscale}
+    * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
     theme: PropTypes.object,
@@ -381,12 +381,13 @@ export default class VictoryAxis extends React.Component {
   renderLine(props) {
     const key = 0;
     const axisEvents = this.getEvents(props, "axis", key);
+    const baseProps = this.baseProps[key];
     const axisProps = defaults(
       {},
       this.getEventState(key, "axis"),
       this.getSharedEventState(key, "axis"),
       props.axisComponent.props,
-      this.baseProps[key].axis
+      baseProps ? baseProps.axis : null
     );
     return React.cloneElement(props.axisComponent, Object.assign(
       {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
@@ -396,12 +397,13 @@ export default class VictoryAxis extends React.Component {
   renderLabel(props) {
     const key = 0;
     const axisLabelEvents = this.getEvents(props, "axisLabel", key);
+    const baseProps = this.baseProps[key];
     const axisLabelProps = defaults(
       {},
       this.getEventState(key, "axisLabel"),
       this.getSharedEventState(key, "axisLabel"),
       props.axisLabelComponent.props,
-      this.baseProps[key].axisLabel
+      baseProps ? baseProps.axisLabel : null
     );
     return React.cloneElement(props.axisLabelComponent, Object.assign(
       {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}

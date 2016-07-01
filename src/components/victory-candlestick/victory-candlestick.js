@@ -7,20 +7,30 @@ import {
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a",
-    opacity: 1,
-    stroke: "transparent",
-    strokeWidth: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450,
+    candleColors: {
+      positive: "green",
+      negative: "red"
+    }
   },
-  labels: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    textAnchor: "middle",
-    padding: 10
+  style: {
+    data: {
+      fill: "#756f6a",
+      opacity: 1,
+      stroke: "transparent",
+      strokeWidth: 1
+    },
+    labels: {
+      stroke: "transparent",
+      fill: "#756f6a",
+      fontFamily: "Helvetica",
+      fontSize: 13,
+      textAnchor: "start",
+      padding: 10
+    }
   }
 };
 
@@ -372,18 +382,26 @@ export default class VictoryCandlestick extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+    * The theme prop takes a props object, and a style object with nested data, labels, and parent
+    * objects. You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryCandlestick as a solo component, implement the theme directly on
+    * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={VictoryTheme.grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
-    height: 300,
     padding: 50,
     samples: 50,
     scale: "linear",
     data: defaultData,
     size: 3,
     standalone: true,
-    width: 450,
     x: "x",
     open: "open",
     close: "close",
@@ -402,8 +420,7 @@ export default class VictoryCandlestick extends React.Component {
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
   static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
   static getBaseProps = partialRight(
-    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), defaultStyles
-  );
+    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -423,7 +440,7 @@ export default class VictoryCandlestick extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
-    this.baseProps = CandlestickHelpers.getBaseProps(props, defaultStyles);
+    this.baseProps = CandlestickHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -490,7 +507,11 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   render() {
-    const { animate, standalone, style } = this.props;
+    const modifiedProps = this.props.theme && this.props.theme.candlestick
+      ? Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props)
+      : Helpers.modifyProps(this.props, fallbackProps);
+
+    const { animate, standalone, style } = modifiedProps;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -504,14 +525,14 @@ export default class VictoryCandlestick extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, this.props)}
+          {React.createElement(this.constructor, ...modifiedProps)}
         </VictoryTransition>
       );
     }
 
-    const baseStyle = Helpers.getStyles(style, defaultStyles, "auto", "100%");
+    const baseStyle = Helpers.getStyles(style, fallbackProps.style, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(this.props), baseStyle.parent);
-    return standalone ? this.renderContainer(this.props, group) : group;
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }
