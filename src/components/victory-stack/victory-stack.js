@@ -1,4 +1,4 @@
-import { uniq, defaults } from "lodash";
+import { assign, uniq, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer
@@ -326,7 +326,7 @@ export default class VictoryStack extends React.Component {
 
   addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
     return datasets[index].map((datum) => {
-      return Object.assign(datum, {
+      return assign(datum, {
         yOffset: Wrapper.getY0(datum, index, calculatedProps),
         xOffset: props.xOffset
       });
@@ -364,7 +364,7 @@ export default class VictoryStack extends React.Component {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      return React.cloneElement(child, Object.assign({
+      return React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,

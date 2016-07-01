@@ -21,36 +21,34 @@ export default class Candle extends React.Component {
     data: PropTypes.array
   }
 
-  renderWick() {
-    const x = this.props.x;
-
+  renderWick(props) {
+    const {x, y1, y2, style, events} = props;
     return (
         <line
-          {...this.props.events}
+          {...events}
           x1={x}
           x2={x}
-          y1={this.props.y1}
-          y2={this.props.y2}
-          style={this.props.style}
+          y1={y1}
+          y2={y2}
+          style={style}
         />
       );
   }
 
-  renderCandle() {
-    const width = this.props.width;
-    const padding = this.props.padding.left || this.props.padding;
-    const dataLength = this.props.data.length;
-    const candleWidth = 0.5 * (width - 2 * padding) / dataLength;
-    const candleX = this.props.x - candleWidth / 2;
+  renderCandle(props) {
+    const {x, y, width, data, style, events, candleHeight} = props;
+    const padding = props.padding.left || props.padding;
+    const candleWidth = 0.5 * (width - 2 * padding) / data.length;
+    const candleX = x - candleWidth / 2;
 
     return (
       <rect
-        {...this.props.events}
+        {...events}
         x={candleX}
-        y={this.props.y}
-        style={this.props.style}
+        y={y}
+        style={style}
         width={candleWidth}
-        height={this.props.candleHeight}
+        height={candleHeight}
       />
     );
   }
@@ -58,9 +56,8 @@ export default class Candle extends React.Component {
   render() {
     return (
       <g>
-        {this.renderWick()}
-
-        {this.renderCandle()}
+        {this.renderWick(this.props)}
+        {this.renderCandle(this.props)}
       </g>
     );
   }

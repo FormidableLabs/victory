@@ -1,4 +1,4 @@
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
@@ -384,7 +384,7 @@ export default class VictoryAxis extends React.Component {
       props.axisComponent.props,
       baseProps ? baseProps.axis : null
     );
-    return React.cloneElement(props.axisComponent, Object.assign(
+    return React.cloneElement(props.axisComponent, assign(
       {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
     ));
   }
@@ -400,7 +400,7 @@ export default class VictoryAxis extends React.Component {
       props.axisLabelComponent.props,
       baseProps ? baseProps.axisLabel : null
     );
-    return React.cloneElement(props.axisLabelComponent, Object.assign(
+    return React.cloneElement(props.axisLabelComponent, assign(
       {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
     ));
   }
@@ -416,7 +416,7 @@ export default class VictoryAxis extends React.Component {
         tickComponent.props,
         this.baseProps[key].ticks
       );
-      const TickComponent = React.cloneElement(tickComponent, Object.assign(
+      const TickComponent = React.cloneElement(tickComponent, assign(
         {}, tickProps, {events: Events.getPartialEvents(tickEvents, key, tickProps)}
       ));
       const gridEvents = this.getEvents(props, "grid", key);
@@ -427,7 +427,7 @@ export default class VictoryAxis extends React.Component {
         gridComponent.props,
         this.baseProps[key].grid
       );
-      const GridComponent = React.cloneElement(gridComponent, Object.assign(
+      const GridComponent = React.cloneElement(gridComponent, assign(
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
       ));
       const tickLabelProps = defaults(
@@ -438,7 +438,7 @@ export default class VictoryAxis extends React.Component {
         this.baseProps[key].tickLabels
       );
       const tickLabelEvents = this.getEvents(props, "tickLabels", key);
-      const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
+      const TickLabel = React.cloneElement(tickLabelComponent, assign({
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
       return (
@@ -462,7 +462,7 @@ export default class VictoryAxis extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

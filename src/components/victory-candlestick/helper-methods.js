@@ -1,4 +1,4 @@
-import { pick, omit, defaults } from "lodash";
+import { assign, pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 
@@ -17,7 +17,7 @@ export default {
       const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
       const y = scale.y(Math.max(datum.open, datum.close));
       const size = this.getSize(datum, modifiedProps, calculatedValues);
-      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
+      const dataStyle = assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
         x, y, y1, y2, candleHeight, size, scale, data, datum,
         index, style: dataStyle, padding: modifiedProps.padding, width: modifiedProps.width
@@ -79,7 +79,7 @@ export default {
       const high = accessor.high(datum);
       const low = accessor.low(datum);
       const y = [open, close, high, low];
-      return Object.assign(
+      return assign(
         {},
         datum,
         {x, y}

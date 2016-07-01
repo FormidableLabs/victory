@@ -1,4 +1,4 @@
-import { defaults, omit } from "lodash";
+import { assign, defaults, omit } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -99,7 +99,7 @@ export default {
       const eventKey = datum.eventKey;
       const position = this.getBarPosition(modifiedProps, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
-      const dataProps = Object.assign(
+      const dataProps = assign(
         {
           style: Helpers.evaluateStyle(barStyle, datum),
           index,
@@ -112,7 +112,7 @@ export default {
 
       const text = this.getLabel(modifiedProps, datum, index);
       const labelPadding = style.labels.padding;
-      const labelStyleObj = datum.y < 0 ? Object.assign({}, style.labels,
+      const labelStyleObj = datum.y < 0 ? assign({}, style.labels,
         {padding: labelPadding * -Math.abs(labelPadding / 2.5)}) : style.labels;
       const labelStyle = this.getLabelStyle(labelStyleObj, datum);
       const padding = this.getlabelPadding(labelStyle, horizontal);

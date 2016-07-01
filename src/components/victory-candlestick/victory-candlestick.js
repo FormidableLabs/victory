@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import Candle from "./candle";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
@@ -440,7 +440,7 @@ export default class VictoryCandlestick extends React.Component {
         this.baseProps[key].data,
         dataComponent.props
       );
-      const candleComponent = React.cloneElement(dataComponent, Object.assign(
+      const candleComponent = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
@@ -452,7 +452,7 @@ export default class VictoryCandlestick extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const candleLabel = React.cloneElement(labelComponent, Object.assign({
+        const candleLabel = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
         return (
@@ -499,7 +499,7 @@ export default class VictoryCandlestick extends React.Component {
     return modifiedProps.standalone ?
       React.cloneElement(
         this.props.containerComponent,
-        Object.assign({
+        assign({
           height: modifiedProps.height,
           width: modifiedProps.width,
           style: style.parent}, modifiedProps.containerComponent.props),

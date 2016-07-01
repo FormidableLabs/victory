@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import Point from "./point";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
@@ -402,7 +402,7 @@ export default class VictoryScatter extends React.Component {
         this.baseProps[key].data
       );
 
-      pointComponents.push(React.cloneElement(dataComponent, Object.assign(
+      pointComponents.push(React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       )));
 
@@ -415,7 +415,7 @@ export default class VictoryScatter extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        pointLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
+        pointLabelComponents.push(React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps)));
       }
@@ -443,7 +443,7 @@ export default class VictoryScatter extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

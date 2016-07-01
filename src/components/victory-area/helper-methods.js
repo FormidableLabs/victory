@@ -1,4 +1,4 @@
-import { last } from "lodash";
+import { assign, last } from "lodash";
 import { Helpers } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -70,7 +70,7 @@ export default {
     return data.map((datum) => {
       const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
       const y0 = datum.yOffset || minY;
-      return Object.assign({y0, y1}, datum);
+      return assign({y0, y1}, datum);
     });
   }
 };

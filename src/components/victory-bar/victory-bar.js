@@ -1,4 +1,4 @@
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
@@ -379,7 +379,7 @@ export default class VictoryBar extends React.Component {
         this.baseProps[key].data
       );
 
-      barComponents.push(React.cloneElement(dataComponent, Object.assign(
+      barComponents.push(React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       )));
 
@@ -393,7 +393,7 @@ export default class VictoryBar extends React.Component {
 
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        barLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
+        barLabelComponents.push(React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps)));
       }
@@ -421,7 +421,7 @@ export default class VictoryBar extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

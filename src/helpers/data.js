@@ -1,4 +1,4 @@
-import { uniq } from "lodash";
+import { assign, uniq } from "lodash";
 import { Helpers, Collection } from "victory-core";
 import Scale from "./scale";
 
@@ -76,7 +76,7 @@ export default {
     return this.cleanData(dataset, props).map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
-      return Object.assign(
+      return assign(
           {},
           datum,
           { x, y },
