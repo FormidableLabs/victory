@@ -306,7 +306,13 @@ export default class VictoryPie extends React.Component {
     * @example theme={Grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -330,7 +336,8 @@ export default class VictoryPie extends React.Component {
     y: "y",
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
@@ -390,15 +397,12 @@ export default class VictoryPie extends React.Component {
       }
     });
 
-    if (sliceLabelComponents.length > 0) {
-      return (
-        <g key={`pie-group`}>
-          {sliceComponents}
-          {sliceLabelComponents}
-        </g>
-      );
-    }
-    return sliceComponents;
+    return sliceLabelComponents.length > 0 ?
+      React.cloneElement(
+        props.groupComponent,
+        {key: "pie-group"},
+        sliceComponents, sliceLabelComponents
+      ) : sliceComponents;
   }
 
   renderContainer(props, group) {
@@ -419,6 +423,15 @@ export default class VictoryPie extends React.Component {
     );
   }
 
+  renderGroup(children, style, offset) {
+    const { x, y } = offset;
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style, transform: `translate(${x}, ${y})`},
+      children
+    );
+  }
+
   render() {
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
@@ -430,21 +443,16 @@ export default class VictoryPie extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          <VictoryPie {...this.props}/>
+          { React.createElement(this.constructor, this.props) }
         </VictoryTransition>
       );
     }
 
     const calculatedProps = PieHelpers.getCalculatedValues(this.props, fallbackProps);
     const { style, padding, radius } = calculatedProps;
-    const xOffset = radius + padding.left;
-    const yOffset = radius + padding.top;
-    const group = (
-      <g role="presentation" style={style.parent} transform={`translate(${xOffset}, ${yOffset})`}>
-        {this.renderData(this.props, calculatedProps)}
-      </g>
-    );
-
+    const offset = { x: radius + padding.left, y: radius + padding.top };
+    const children = this.renderData(this.props, calculatedProps);
+    const group = this.renderGroup(children, style.parent, offset);
     return this.props.standalone ? this.renderContainer(this.props, group) : group;
   }
 }
