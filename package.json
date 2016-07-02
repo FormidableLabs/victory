@@ -27,7 +27,7 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "git+https://github.com/FormidableLabs/builder-victory-component.git#es2015-preset",
+    "builder-victory-component": "^2.3.0",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-timer": "^0.0.6",
@@ -35,7 +35,7 @@
     "reduce-css-calc": "^1.2.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.2.0",
+    "builder-victory-component-dev": "^2.3.0",
     "chai": "^3.2.0",
     "ecology": "^1.3.0",
     "enzyme": "^2.3.0",
