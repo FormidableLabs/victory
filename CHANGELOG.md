@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 4.3.0 (2016-7-02)
+
+- Supports Victory Native
+
 ## 4.2.1 (2016-06-22)
 
 - Fixes a bug that prevented axis labels from displaying properly for vertical axes.
