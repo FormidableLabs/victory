@@ -31,7 +31,7 @@
     "d3-scale": "^0.6.0",
     "d3-shape": "^0.6.0",
     "lodash": "^4.12.0",
-    "victory-core": "git+https://github.com/FormidableLabs/victory-core.git#native"
+    "victory-core": "4.3.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^2.3.0",
