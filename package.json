@@ -27,15 +27,15 @@
     "storybook": "start-storybook -p 3001"
   },
   "dependencies": {
-    "builder-victory-component": "git+https://github.com/FormidableLabs/builder-victory-component#native",
+    "builder-victory-component": "^2.3.0",
     "builder": "~2.9.1",
     "d3-shape": "^0.6.0",
     "lodash": "^4.12.0",
-    "victory-core": "git+https://github.com/FormidableLabs/victory-core.git#native"
+    "victory-core": "^4.3.0"
   },
   "devDependencies": {
     "@kadira/storybook": "^1.25.0",
-    "builder-victory-component-dev": "^2.1.8",
+    "builder-victory-component-dev": "^2.3.0",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
     "ecology": "^1.3.0",
