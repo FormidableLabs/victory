@@ -9,11 +9,6 @@ import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
-const defaultAxes = {
-  independent: <VictoryAxis/>,
-  dependent: <VictoryAxis dependentAxis/>
-};
-
 const fallbackProps = {
   props: {
     width: 450,
@@ -228,6 +223,10 @@ export default class VictoryChart extends React.Component {
     groupComponent: <g/>
   };
 
+  static defaultAxes = {
+    independent: <VictoryAxis/>,
+    dependent: <VictoryAxis dependentAxis/>
+  };
 
   componentWillReceiveProps(nextProps) {
     const setAnimationState = Wrapper.setAnimationState.bind(this);
@@ -360,6 +359,7 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
+    const { defaultAxes } = VictoryChart;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const childComponents = ChartHelpers.getChildComponents(modifiedProps, defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
