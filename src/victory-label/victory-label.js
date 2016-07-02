@@ -209,36 +209,34 @@ export default class VictoryLabel extends React.Component {
     return (transformPart || angle) && Style.toTransformString(transformPart, rotatePart);
   }
 
-  render() {
-    const datum = this.props.datum || this.props.data;
-    const lineHeight = this.getHeight(this.props, "lineHeight");
-    const transform = this.getTransform(this.props);
-
-    const textAnchor = this.props.textAnchor ?
-      Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
-    const content = this.getContent(this.props);
-    const style = this.getStyles(this.props);
-    const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
-    const dy = this.getDy(this.props, content, lineHeight);
+  renderElements(props, content) {
+    const transform = this.getTransform(props);
     return (
-      <text
-        x={this.props.x}
-        y={this.props.y}
-        dy={dy}
-        dx={dx}
-        textAnchor={textAnchor}
-        transform={transform}
-        style={style}
-        {...this.props.events}
-      >
+      <text {...props} transform={transform}>
         {content.map((line, i) => {
+          const dy = i ? props.lineHeight : undefined;
           return (
-            <tspan key={i} x={this.props.x} dy={i ? lineHeight : undefined}>
+            <tspan key={i} x={props.x} dy={dy}>
               {line}
             </tspan>
           );
         })}
       </text>
     );
+  }
+
+  render() {
+    const datum = this.props.datum || this.props.data;
+    const lineHeight = this.getHeight(this.props, "lineHeight");
+    const textAnchor = this.props.textAnchor ?
+      Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
+    const content = this.getContent(this.props);
+    const style = this.getStyles(this.props);
+    const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
+    const dy = this.getDy(this.props, content, lineHeight);
+    const labelProps = Object.assign(
+      {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, this.props.events
+    );
+    return this.renderElements(labelProps, content);
   }
 }
