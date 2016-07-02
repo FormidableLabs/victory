@@ -377,10 +377,12 @@ export default class VictoryLine extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
+
     return dataSegments.map((data, key) => {
+      const role = `${VictoryLine.role}-${key}`;
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
-        {key: `line-${key}`},
+        {index: key, key: role, role},
         this.getEventState("all", "data"),
         this.getSharedEventState("all", "data"),
         { data },
@@ -392,7 +394,7 @@ export default class VictoryLine extends React.Component {
       ));
 
       const labelProps = defaults(
-          {key: `line-label-${key}`},
+          {key: `${role}-label-${key}`},
           this.getEventState("all", "labels"),
           this.getSharedEventState("all", "labels"),
           { data },
