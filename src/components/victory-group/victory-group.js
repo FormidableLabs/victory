@@ -1,6 +1,6 @@
-import { uniq, defaults } from "lodash";
+import { defaults } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
+import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
   VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
@@ -421,10 +421,6 @@ export default class VictoryGroup extends React.Component {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.length > 1) {
-      Log.warn("Only components of the same type can be grouped");
-    }
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
 
