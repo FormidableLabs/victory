@@ -1,4 +1,10 @@
 # VictoryPie Changelog
+
+## 4.2.0 (2016-07-02)
+
+- Adds support for themes
+- Adds support for Victory Native
+
 ## 4.1.0 (2016-06-17)
 
 - Supports events on the parent element via the `parent` namespace in the `events` prop.
