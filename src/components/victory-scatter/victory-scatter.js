@@ -397,12 +397,13 @@ export default class VictoryScatter extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
+    const { role } = VictoryScatter;
     const pointComponents = [];
     const pointLabelComponents = [];
-    this.dataKeys.forEach((key) => {
+    this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `scatter-${key}`},
+        {index, key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -414,7 +415,7 @@ export default class VictoryScatter extends React.Component {
       )));
 
       const labelProps = defaults(
-        {key: `scatter-label-${key}`},
+        {key: `scatter-label-${key}`, index},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         labelComponent.props,

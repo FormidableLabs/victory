@@ -3,12 +3,13 @@ import React, { PropTypes } from "react";
 export default class Bar extends React.Component {
 
   static propTypes = {
-    index: PropTypes.number,
+    datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
+    index: PropTypes.number,
+    role: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object,
-    datum: PropTypes.object,
     x: React.PropTypes.number,
     y: React.PropTypes.number,
     y0: React.PropTypes.number
@@ -40,14 +41,18 @@ export default class Bar extends React.Component {
   }
 
   renderBar(path, style, events) {
-    return <path d={path} style={style} shapeRendering="optimizeSpeed" {...events}/>;
+    const { role } = this.props;
+    return (
+      <path d={path} style={style} role={role} shapeRendering="optimizeSpeed" {...events}/>
+    );
   }
 
   render() {
     // TODO better bar width calculation
-    const barWidth = this.props.style && this.props.style.width || 8;
+    const { events, style } = this.props;
+    const barWidth = style && style.width || 8;
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
-    return this.renderBar(path, this.props.style, this.props.events);
+    return this.renderBar(path, style, events);
   }
 }

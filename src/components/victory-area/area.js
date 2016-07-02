@@ -5,11 +5,12 @@ import d3Shape from "d3-shape";
 export default class Area extends React.Component {
   static propTypes = {
     data: PropTypes.array,
-    interpolation: PropTypes.string,
-    scale: PropTypes.object,
-    style: PropTypes.object,
     events: PropTypes.object,
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    interpolation: PropTypes.string,
+    role: PropTypes.string,
+    scale: PropTypes.object,
+    style: PropTypes.object
   };
 
   toNewName(interpolation) {
@@ -42,16 +43,18 @@ export default class Area extends React.Component {
   renderArea(path, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
-    return <path key="area" style={areaStyle} d={path} {...events}/>;
+    const { role } = this.props;
+    return <path key="area" style={areaStyle} role={role} d={path} {...events}/>;
   }
 
   renderLine(path, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
+    const { role } = this.props;
     const lineStyle = assign({}, style, {fill: "none"});
     return (
-      <path key="area-stroke" style={lineStyle} d={path} {...events}/>
+      <path key="area-stroke" style={lineStyle} role={role} d={path} {...events}/>
     );
   }
 

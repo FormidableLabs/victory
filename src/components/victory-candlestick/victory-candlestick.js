@@ -448,10 +448,11 @@ export default class VictoryCandlestick extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
-    return this.dataKeys.map((key) => {
+    const { role } = VictoryCandlestick;
+    return this.dataKeys.map((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `candlestick-${key}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
@@ -461,7 +462,7 @@ export default class VictoryCandlestick extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `candlestick-label-${key}`},
+        {key: `${role}-label-${key}`},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,

@@ -368,9 +368,10 @@ export default class VictoryArea extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
+    const { role } = VictoryArea;
     const dataEvents = this.getEvents(props, "data", "all");
     const dataProps = defaults(
-      {},
+      {role},
       this.getEventState("all", "data"),
       this.getSharedEventState("all", "data"),
       dataComponent.props,

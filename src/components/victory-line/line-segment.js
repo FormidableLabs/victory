@@ -5,7 +5,9 @@ export default class LineSegment extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     events: PropTypes.object,
+    index: PropTypes.number,
     interpolation: PropTypes.string,
+    role: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object
   };
@@ -17,11 +19,14 @@ export default class LineSegment extends React.Component {
   }
 
   renderLine(path, style, events) {
-    return <path style={style} d={path} {...events} vectorEffect="non-scaling-stroke"/>;
+    const { role } = this.props;
+    return (
+      <path style={style} d={path} role={role} {...events} vectorEffect="non-scaling-stroke"/>
+    );
   }
 
   render() {
-    const { events, style, interpolation, scale, data } = this.props;
+    const { data, events, interpolation, scale, style } = this.props;
     const xScale = scale.x;
     const yScale = scale.y;
     const lineFunction = d3Shape.line()
