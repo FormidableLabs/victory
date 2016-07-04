@@ -6,6 +6,7 @@ import * as docgen from "react-docgen";
 import { merge, random, range } from "lodash";
 import { VictoryTheme } from "formidable-landers";
 import { VictoryPie } from "../src/index";
+import { VictoryTheme, appendLinkIcon } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -16,6 +17,7 @@ class Docs extends React.Component {
           source={docgen.parse(require("!!raw!../src/components/victory-pie"))}
           scope={{merge, random, range, React, ReactDOM, VictoryPie}}
           playgroundtheme="elegant"
+          customRenderers={appendLinkIcon}
         />
         <Style rules={VictoryTheme}/>
       </StyleRoot>
