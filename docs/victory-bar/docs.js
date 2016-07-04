@@ -6,7 +6,7 @@ import { merge, random, range } from "lodash";
 import * as docgen from "react-docgen";
 import { VictoryBar, VictoryGroup, VictoryStack} from "../../src/index";
 import { VictoryLabel } from "victory-core";
-import { VictoryTheme } from "formidable-landers";
+import { VictoryTheme, appendLinkIcon } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -20,6 +20,7 @@ class Docs extends React.Component {
             VictoryBar, VictoryGroup, VictoryStack
           }}
           playgroundtheme="elegant"
+          customRenderers={appendLinkIcon}
         />
         <Style rules={VictoryTheme}/>
       </div>
