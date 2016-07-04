@@ -219,13 +219,12 @@ export default class VictoryChart extends React.Component {
   static defaultProps = {
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer />,
-    groupComponent: <g/>
-  };
-
-  static defaultAxes = {
-    independent: <VictoryAxis/>,
-    dependent: <VictoryAxis dependentAxis/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>,
+    defaultAxes: {
+      independent: <VictoryAxis/>,
+      dependent: <VictoryAxis dependentAxis/>
+    }
   };
 
   componentWillReceiveProps(nextProps) {
@@ -359,9 +358,8 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const { defaultAxes } = VictoryChart;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const childComponents = ChartHelpers.getChildComponents(modifiedProps, defaultAxes);
+    const childComponents = ChartHelpers.getChildComponents(modifiedProps, props.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
