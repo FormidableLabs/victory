@@ -12,14 +12,13 @@ export default {
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
-      const y1 = scale.y(datum.high);
-      const y2 = scale.y(datum.low);
-      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
-      const y = scale.y(Math.max(datum.open, datum.close));
-      const size = this.getSize(datum, modifiedProps, calculatedValues);
+      const y1 = scale.y(datum.y[2]);
+      const y2 = scale.y(datum.y[3]);
+      const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
+      const y = scale.y(Math.max(datum.y[0], datum.y[1]));
       const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
-        x, y, y1, y2, candleHeight, size, scale, data, datum,
+        x, y, y1, y2, candleHeight, scale, data, datum,
         index, style: dataStyle, padding: modifiedProps.padding, width: modifiedProps.width
       };
 
@@ -132,17 +131,5 @@ export default {
     const padding = labelStyle.padding || size * 0.25;
     const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
     return Helpers.evaluateStyle(baseLabelStyle, datum);
-  },
-
-  getSize(data, props) {
-    let size;
-    if (data.size) {
-      size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
-    } else if (typeof props.size === "function") {
-      size = props.size;
-    } else {
-      size = Math.max(props.size, 1);
-    }
-    return Helpers.evaluateProp(size, data);
   }
 };
