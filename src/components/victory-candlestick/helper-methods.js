@@ -28,7 +28,7 @@ export default {
       const labelProps = {
         style: labelStyle,
         x: x - labelStyle.padding,
-        y: y - (labelStyle.padding * 2),
+        y: y - labelStyle.padding,
         text,
         index,
         scale,
