@@ -4,7 +4,6 @@ import Ecology from "ecology";
 import Radium, { Style, StyleRoot } from "radium";
 import * as docgen from "react-docgen";
 import { merge, random, range } from "lodash";
-import { VictoryTheme } from "formidable-landers";
 import { VictoryPie } from "../src/index";
 import { VictoryTheme, appendLinkIcon } from "formidable-landers";
 
