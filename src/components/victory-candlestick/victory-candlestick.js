@@ -69,11 +69,13 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
-     * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-     * but by default, an object with x and y properties is expected.
-     * Other properties may be added to the data point object, such as fill, size, and symbol.
-     * These properties will be interpreted and applied to the individual lines
-     * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
+     * Each data point may be any format you wish (depending on the `x`, `open`, `close`, `high`,
+     * and `low` accessor props), but by default, an object with x, open, close, high, and low
+     * properties is expected. Other properties may be added to the data point object, such as
+     * fill and symbol. These properties will be interpreted and applied to the
+     * individual lines
+     * @examples [{x: 1, open: 2, close: 3, high: 4, low: 1, fill: "red"},
+     * {x: 1, open: 2, close: 3, high: 4, low: 1, label: "foo"}]
      */
 
     data: PropTypes.array,
@@ -81,9 +83,10 @@ export default class VictoryCandlestick extends React.Component {
      * The dataComponent prop takes an entire component which will be used to create points for
      * each datum in the chart. The new element created from the passed dataComponent will be
      * provided with the following properties calculated by VictoryCandlestick: datum, index, scale,
-     * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
-     * props to the supplied component, or modified or ignored within the custom component itself.
-     * If a dataComponent is not provided, VictoryCandlestick will use its default Point component.
+     * style, events, x, open, close, high, low, and symbol. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within the custom
+     * component itself. If a dataComponent is not provided, VictoryCandlestick will use its
+     * default Candle component.
      */
     dataComponent: PropTypes.element,
     /**
@@ -156,8 +159,8 @@ export default class VictoryCandlestick extends React.Component {
      */
     name: PropTypes.string,
     /**
-     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-     * assign eventKeys to data
+     * Similar to data accessor props `x`, `open`, `close`, `high` and `low, this prop may
+     * be used to functionally assign eventKeys to data.
      */
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
@@ -192,7 +195,8 @@ export default class VictoryCandlestick extends React.Component {
      * This prop should be given as an array of values or as a function of data.
      * If given as an array, the number of elements in the array should be equal to
      * the length of the data array. Labels may also be added directly to the data object
-     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * like data={[{x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5,
+     * label: "hello"}]}.
      * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
@@ -392,7 +396,6 @@ export default class VictoryCandlestick extends React.Component {
     samples: 50,
     scale: "linear",
     data: defaultData,
-    size: 3,
     standalone: true,
     x: "x",
     open: "open",
@@ -426,13 +429,14 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   renderData(props) {
+    const {role} = VictoryCandlestick;
     const { dataComponent, labelComponent, sharedEvents } = props;
     const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
+    return Object.keys(this.baseProps).map((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `candlestick-${key}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         getSharedEventState(key, "data"),
         this.baseProps[key].data,
@@ -442,7 +446,7 @@ export default class VictoryCandlestick extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `candlestick-label-${key}`},
+        {key: `${role}-label-${key}`},
         this.getEventState(key, "labels"),
         getSharedEventState(key, "labels"),
         this.baseProps[key].labels,

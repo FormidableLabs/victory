@@ -4,9 +4,9 @@ import Ecology from "ecology";
 import Radium, { Style } from "radium";
 import { merge, random, range } from "lodash";
 import * as docgen from "react-docgen";
-import { VictoryBar, VictoryGroup, VictoryStack} from "../../src/index";
+import { VictoryCandlestick, VictoryChart, VictoryAxis} from "../../src/index";
 import { VictoryLabel } from "victory-core";
-import { VictoryTheme, appendLinkIcon } from "formidable-landers";
+import { VictoryTheme } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -14,13 +14,14 @@ class Docs extends React.Component {
       <div>
         <Ecology
           overview={require("!!raw!./ecology.md")}
-          source={docgen.parse(require("!!raw!../../src/components/victory-bar/victory-bar"))}
+          source={docgen.parse(require(
+            "!!raw!../../src/components/victory-candlestick/victory-candlestick"
+            ))}
           scope={{
             merge, range, random, React, ReactDOM, VictoryLabel,
-            VictoryBar, VictoryGroup, VictoryStack
+            VictoryCandlestick, VictoryChart, VictoryAxis
           }}
           playgroundtheme="elegant"
-          customRenderers={appendLinkIcon}
         />
         <Style rules={VictoryTheme}/>
       </div>

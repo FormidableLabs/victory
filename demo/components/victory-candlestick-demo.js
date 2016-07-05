@@ -64,7 +64,7 @@ export default class App extends React.Component {
         <h1>Victory Candlestick</h1>
 
         <VictoryCandlestick
-          style={{parent: style.parent}}
+          style={{data: {width: 10}, parent: style.parent}}
           data={data}
           size={8}
           events={[{
@@ -153,6 +153,7 @@ export default class App extends React.Component {
         <VictoryCandlestick
           animate={{duration: 2000}}
           data={this.state.data}
+          style={{data: {width: 50}}}
         />
 
         <VictoryCandlestick

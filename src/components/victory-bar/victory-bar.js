@@ -16,7 +16,6 @@ const fallbackProps = {
   },
   style: {
     data: {
-      width: 8,
       padding: 6,
       stroke: "transparent",
       strokeWidth: 0,
@@ -366,13 +365,15 @@ export default class VictoryBar extends React.Component {
   }
 
   renderData(props) {
+    const { role } = VictoryBar;
     const { dataComponent, labelComponent } = props;
     const barComponents = [];
     const barLabelComponents = [];
-    this.dataKeys.forEach((key) => {
+
+    this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `bar-${key}`},
+        {index, key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -384,7 +385,7 @@ export default class VictoryBar extends React.Component {
       )));
 
       const labelProps = defaults(
-        {key: `bar-label-${key}`},
+        {key: `${role}-label-${key}`},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         labelComponent.props,
