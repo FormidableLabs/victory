@@ -195,47 +195,16 @@ class App extends React.Component {
   }
 
   getData() {
-    const dataSets = [
-      [
-        {x: 1, open: 5, close: 10, high: 15, low: 0},
-        {x: 2, open: 15, close: 10, high: 20, low: 5},
-        {x: 3, open: 15, close: 20, high: 25, low: 10},
-        {x: 4, open: 20, close: 25, high: 30, low: 15},
-        {x: 5, open: 30, close: 25, high: 35, low: 20}
-      ],
-      [
-        {x: 1, open: 5, close: 10, high: 15, low: 0},
-        {x: 2, open: 15, close: 10, high: 20, low: 5},
-        {x: 3, open: 15, close: 20, high: 25, low: 10},
-        {x: 4, open: 20, close: 25, high: 30, low: 15},
-        {x: 5, open: 30, close: 25, high: 35, low: 20},
-        {x: 6, open: 30, close: 35, high: 40, low: 25}
-      ],
-      [
-        {x: 1, open: 5, close: 10, high: 15, low: 0},
-        {x: 2, open: 15, close: 10, high: 20, low: 5},
-        {x: 3, open: 15, close: 20, high: 25, low: 10},
-        {x: 4, open: 20, close: 25, high: 30, low: 15},
-        {x: 5, open: 30, close: 25, high: 35, low: 20},
-        {x: 6, open: 30, close: 35, high: 40, low: 25},
-        {x: 7, open: 35, close: 40, high: 45, low: 30}
-      ],
-      [
-        {x: 1, open: 5, close: 10, high: 15, low: 0},
-        {x: 2, open: 15, close: 10, high: 20, low: 5},
-        {x: 3, open: 15, close: 20, high: 25, low: 10},
-        {x: 4, open: 20, close: 25, high: 30, low: 15},
-        {x: 5, open: 30, close: 25, high: 35, low: 20},
-        {x: 6, open: 30, close: 35, high: 40, low: 25},
-        {x: 7, open: 35, close: 40, high: 45, low: 30},
-        {x: 8, open: 40, close: 45, high: 50, low: 35}
-      ]
-    ];
-  
-    const num = random(0, 3);
-
-    return dataSets[num];
-
+    const n = random(4, 10)
+    return range(n).map((i) => {
+      return {
+        x: i,
+        open: random(10, 20),
+        close: random(10, 20),
+        high: random(20, 30),
+        low: random(0, 10)
+      };
+    });
   }
 
   componentDidMount() {
