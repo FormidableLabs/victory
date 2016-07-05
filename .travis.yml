@@ -1,7 +1,8 @@
 language: node_js
 
 node_js:
-  - "0.12"
+  # - "0.12" TODO: fails with babel-presets-react-native
+  # https://github.com/FormidableLabs/victory/issues/291
   - "4.2"
   - "5.0"
 

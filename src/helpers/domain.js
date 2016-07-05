@@ -44,8 +44,7 @@ export default {
   },
 
   getDomainFromData(props, axis, dataset) {
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = props.horizontal ? otherAxis : axis;
+    const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const allData = flatten(dataset).map((datum) => datum[currentAxis]);
     const min = Math.min(...allData);
     const max = Math.max(...allData);
@@ -127,8 +126,7 @@ export default {
   },
 
   getCumulativeData(props, axis, datasets) {
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = props.horizontal ? otherAxis : axis;
+    const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const categories = [];
     const axisValues = [];
     datasets.forEach((dataset) => {
