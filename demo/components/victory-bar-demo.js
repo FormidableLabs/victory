@@ -435,11 +435,13 @@ export default class App extends React.Component {
         <VictoryChart>
           <VictoryBar horizontal
             data={[
-              {x: 1, y: "Label 1"},
-              {x: 7, y: "Label 2"},
-              {x: 3, y: "Label 3"},
-              {x: 4, y: "Label 4"}
+              {x: 21, y: "Label 1"},
+              {x: 28, y: "Label 2"},
+              {x: 35, y: "Label 3"},
+              {x: 40, y: "Label 4"}
             ]}
+            x={"y"}
+            y={"x"}
           />
         </VictoryChart>
       </div>
