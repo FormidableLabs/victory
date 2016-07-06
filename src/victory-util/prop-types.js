@@ -138,6 +138,22 @@ export default {
   }),
 
   /**
+   * Check that the value is greater than zero.
+   */
+  greaterThanZero: makeChainable((props, propName, componentName) => {
+    const error = PropTypes.number(props, propName, componentName);
+    if (error) {
+      return error;
+    }
+    const value = props[propName];
+    if (value < 1) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be greater than zero.`
+      );
+    }
+  }),
+
+  /**
    * Check that the value is an Array of two unique values.
    */
   domain: makeChainable((props, propName, componentName) => {
