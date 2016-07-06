@@ -1,11 +1,11 @@
 import React, { PropTypes } from "react";
 import { isArray } from "lodash";
+import Borders from "./helpers/borders";
+import Cross from "./helpers/cross";
 
 export default class ErrorBar extends React.Component {
   constructor(props) {
     super(props);
-
-    this.renderBorder = this.renderBorder.bind(this);
   }
 
   static propTypes = {
@@ -27,99 +27,43 @@ export default class ErrorBar extends React.Component {
     borderWidth: PropTypes.number
   };
 
-  renderBorder() {
-    const {
-      x,
-      y,
-      errorX,
-      errorY,
-      borderWidth
-    } = this.props;
-
-    return (
-      <g>
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x + (isArray(errorX) ? errorX[1] : errorX)}
-          x2={x + (isArray(errorX) ? errorX[1] : errorX)}
-          y1={y - borderWidth}
-          y2={y + borderWidth}
-        />
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x - (isArray(errorX) ? errorX[1] : errorX)}
-          x2={x - (isArray(errorX) ? errorX[1] : errorX)}
-          y1={y - borderWidth}
-          y2={y + borderWidth}
-        />
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x - borderWidth}
-          x2={x + borderWidth}
-          y1={y - (isArray(errorY) ? errorY[1] : errorY)}
-          y2={y - (isArray(errorY) ? errorY[1] : errorY)}
-        />
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x - borderWidth}
-          x2={x + borderWidth}
-          y1={y + (isArray(errorY) ? errorY[1] : errorY)}
-          y2={y + (isArray(errorY) ? errorY[1] : errorY)}
-        />
-      </g>
-    );
-  }
-
   render() {
     const {
       x,
       y,
       errorX,
-      errorY
+      errorY,
+      scale
     } = this.props;
+
+    const rangeX = scale.x.range();
+    const rangeY = scale.y.range();
+    const positiveErrorX = x + (isArray(errorX) ? errorX[0] : errorX);
+    const negativeErrorX = x - (isArray(errorX) ? errorX[1] : errorX);
+    const positiveErrorY = y + (isArray(errorY) ? errorY[1] : errorY);
+    const negativeErrorY = y - (isArray(errorY) ? errorY[0] : errorY);
+    const errorTop = positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY;
+    const errorBottom = negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY;
+    const errorRight = positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX;
+    const errorLeft = negativeErrorX <= rangeX[0] ? rangeX[0] : negativeErrorX;
 
     return (
       <g>
-        {this.renderBorder()}
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x}
-          x2={x}
-          y1={y}
-          y2={y + (isArray(errorY) ? errorY[0] : errorY)}
-          shapeRendering="optimizeSpeed"
+        <Borders {...this.props}
+          rangeX={rangeX}
+          rangeY={rangeY}
+          errorTop={errorTop}
+          errorBottom={errorBottom}
+          errorRight={errorRight}
+          errorLeft={errorLeft}
         />
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x}
-          x2={x}
-          y1={y}
-          y2={y - (isArray(errorY) ? errorY[1] : errorY)}
-          shapeRendering="optimizeSpeed"
-        />
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x}
-          x2={x - (isArray(errorX) ? errorX[0] : errorX)}
-          y1={y}
-          y2={y}
-          shapeRendering="optimizeSpeed"
-        />
-        <line
-          {...this.props.events}
-          style={this.props.style}
-          x1={x}
-          x2={x + (isArray(errorX) ? errorX[1] : errorX)}
-          y1={y}
-          y2={y}
-          shapeRendering="optimizeSpeed"
+        <Cross {...this.props}
+          rangeX={rangeX}
+          rangeY={rangeY}
+          errorTop={errorTop}
+          errorBottom={errorBottom}
+          errorRight={errorRight}
+          errorLeft={errorLeft}
         />
       </g>
     );

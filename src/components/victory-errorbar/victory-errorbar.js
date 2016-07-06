@@ -281,7 +281,11 @@ export default class VictoryErrorBar extends React.Component {
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
     theme: PropTypes.object,
-
+    /**
+     * The borderWidth prop sets the border width of the error bars. `borderWidth` will set
+     * both x, y error bar width.
+     * @type {number}
+     */
     borderWidth: PropTypes.number
   };
 
