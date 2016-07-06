@@ -47,8 +47,9 @@ describe("components/victory-errorbar", () => {
       expect(errorbars.length).to.equal(4);
     });
   });
-  describe("rendering data", () => {
-    it("renders injected errors for {x, y} with x, y symmetric error", () => {
+
+  describe("symmetric error, rendering data", () => {
+    it("renders injected errors for {x, y}", () => {
       const data = range(10).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2}));
       const wrapper = shallow(
         <VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />
@@ -58,7 +59,7 @@ describe("components/victory-errorbar", () => {
       expect(errors.length).to.equal(10);
     });
 
-    it("renders errors for {x, y} with x, y symmetric error", () => {
+    it("renders errors for {x, y}", () => {
       const data = range(10).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2}));
       const wrapper = shallow(
         <VictoryErrorBar data={data}/>
@@ -75,6 +76,61 @@ describe("components/victory-errorbar", () => {
             {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
             {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
             {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+          ]}
+          {...svgDimensions}
+        />
+      );
+      expect(wrapper.find("line")).to.have.length(24);
+    });
+
+    it("renders errors with error bars, check helper component render amount", () => {
+      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const wrapper = mount(
+        <VictoryErrorBar
+          data={[
+            {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
+            {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
+            {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+          ]}
+          {...svgDimensions}
+        />
+      );
+      const Data = wrapper.find(ErrorBar);
+      Data.forEach((node) => {
+        expect(node.find(Borders)).to.have.length(1);
+        expect(node.find(Cross)).to.have.length(1);
+      });
+    });
+  });
+
+  describe("asymmetric error, rendering data", () => {
+    it("renders injected errors for {x, y}", () => {
+      const data = range(10).map((i) => ({x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 0.5]}));
+      const wrapper = shallow(
+        <VictoryErrorBar data={data} dataComponent={<MyErrorBar />} />
+      );
+
+      const errors = wrapper.find(MyErrorBar);
+      expect(errors.length).to.equal(10);
+    });
+
+    it("renders errors for {x, y}", () => {
+      const data = range(10).map((i) => ({x: i, y: i, errorX: [0.1, 0.2], errorY: [0.2, 1]}));
+      const wrapper = shallow(
+        <VictoryErrorBar data={data}/>
+      );
+      const errors = wrapper.find(ErrorBar);
+      expect(errors.length).to.equal(10);
+    });
+
+    it("renders errors with error bars, check total svg lines", () => {
+      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const wrapper = render(
+        <VictoryErrorBar
+          data={[
+            {x: 0, y: 0, errorX: [0.1, 0.5], errorY: [0.2, 0.3]},
+            {x: 2, y: 3, errorX: [0.1, 0.5], errorY: [0.2, 0.4]},
+            {x: 5, y: 5, errorX: [0.1, 0.5], errorY: [0.2, 0.1]}
           ]}
           {...svgDimensions}
         />
