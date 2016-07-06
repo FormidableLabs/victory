@@ -3,11 +3,11 @@ import { PropTypes as CustomPropTypes, Helpers, Style } from "../victory-util/in
 import merge from "lodash/merge";
 
 const defaultStyles = {
-  stroke: "transparent",
-  fill: "#756f6a",
-  fontSize: 16,
-  fontFamily: "Helvetica",
-  backgroundColor: "#ccc"
+  backgroundColor: "#d9d9d9",
+  fill: "#252525",
+  fontSize: 14,
+  fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+  stroke: "transparent"
 };
 
 export default class VictoryLabel extends React.Component {
