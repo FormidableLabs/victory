@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import { merge, random, range } from "lodash";
-import { VictoryErrorBar, VictoryScatter, VictoryChart } from "../../src/index";
+import { VictoryErrorBar, VictoryScatter, VictoryLine, VictoryChart } from "../../src/index";
 import ErrorBar from "../../src/components/victory-errorbar/errorbar";
 import { VictoryContainer, VictoryTheme } from "victory-core";
 
@@ -10,8 +10,8 @@ const getData = () => {
     return {
       x: random(600),
       y: random(600),
-      errorX: random(10, true),
-      errorY: random(20, true)
+      errorX: [random(10, true), random(30, true)],
+      errorY: [random(20, true), random(10, true)]
     };
   });
 };
@@ -58,6 +58,13 @@ export default class App extends React.Component {
         <VictoryChart>
           <VictoryErrorBar data={basicData}/>
           <VictoryScatter data={basicData}/>
+        </VictoryChart>
+
+        <VictoryChart>
+          <VictoryErrorBar data={basicData}/>
+          <VictoryLine
+            data={basicData}
+          />
         </VictoryChart>
 
         <VictoryErrorBar

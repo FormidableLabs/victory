@@ -5,12 +5,13 @@
 /* global sinon */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { shallow, mount } from "enzyme";
+import { shallow, mount, render } from "enzyme";
 import { omit, range } from "lodash";
-import SvgTestHelper from "../../../../svg-test-helper";
+// import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryErrorBar from "src/components/victory-errorbar/victory-errorbar";
 import ErrorBar from "src/components/victory-errorbar/errorbar";
-import { VictoryLabel } from "victory-core";
+import Borders from "src/components/victory-errorbar/helpers/borders";
+import Cross from "src/components/victory-errorbar/helpers/cross";
 
 class MyErrorBar extends React.Component {
 
@@ -38,12 +39,12 @@ describe("components/victory-errorbar", () => {
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
-    it("renders 51 errors", () => {
+    it("renders 4 errors", () => {
       const wrapper = shallow(
         <VictoryErrorBar/>
       );
       const errorbars = wrapper.find(ErrorBar);
-      expect(errorbars.length).to.equal(51);
+      expect(errorbars.length).to.equal(4);
     });
   });
   describe("rendering data", () => {
@@ -57,7 +58,7 @@ describe("components/victory-errorbar", () => {
       expect(errors.length).to.equal(10);
     });
 
-    it("renders errors for {x, y} with x, y symmetric error (default)", () => {
+    it("renders errors for {x, y} with x, y symmetric error", () => {
       const data = range(10).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2}));
       const wrapper = shallow(
         <VictoryErrorBar data={data}/>
@@ -66,9 +67,9 @@ describe("components/victory-errorbar", () => {
       expect(errors.length).to.equal(10);
     });
 
-    it("renders errors in the correct positions", () => {
+    it("renders errors with error bars, check total svg lines", () => {
       const svgDimensions = {width: 350, height: 200, padding: 75};
-      const wrapper = shallow(
+      const wrapper = render(
         <VictoryErrorBar
           data={[
             {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
@@ -78,19 +79,26 @@ describe("components/victory-errorbar", () => {
           {...svgDimensions}
         />
       );
-      const domain = {x: [0, 5], y: [0, 5]};
+      expect(wrapper.find("line")).to.have.length(24);
+    });
 
-      const errors = wrapper.find(ErrorBar);
-      const svgCoordinates = errors.map(SvgTestHelper.getSvgPointCoordinates);
-      const coordinates = svgCoordinates.map((coord) => {
-        return SvgTestHelper.convertSvgCoordinatesToCartesian(
-          coord,
-          svgDimensions,
-          domain
-        );
+    it("renders errors with error bars, check helper component render amount", () => {
+      const svgDimensions = {width: 350, height: 200, padding: 75};
+      const wrapper = mount(
+        <VictoryErrorBar
+          data={[
+            {x: 0, y: 0, errorX: 0.1, errorY: 0.2},
+            {x: 2, y: 3, errorX: 0.1, errorY: 0.2},
+            {x: 5, y: 5, errorX: 0.1, errorY: 0.2}
+          ]}
+          {...svgDimensions}
+        />
+      );
+      const Data = wrapper.find(ErrorBar);
+      Data.forEach((node) => {
+        expect(node.find(Borders)).to.have.length(1);
+        expect(node.find(Cross)).to.have.length(1);
       });
-
-      expect(coordinates).to.eql([[0, 0], [2, 3], [5, 5]]);
     });
   });
 
@@ -113,7 +121,7 @@ describe("components/victory-errorbar", () => {
         .to.include.keys("data", "scale", "width", "height", "style");
     });
 
-    it("attaches an event to data", () => {
+    it("attaches an event to data, click border lines", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
         <VictoryErrorBar
@@ -126,7 +134,8 @@ describe("components/victory-errorbar", () => {
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
-        node.simulate("click");
+        // click the border line
+        node.find(Borders).find("line").first().simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
         expect(omit(clickHandler.args[index][1], ["events", "key"]))
@@ -135,28 +144,25 @@ describe("components/victory-errorbar", () => {
       });
     });
 
-    it("attaches an event to a label", () => {
+    it("attaches an event to data, click cross lines", () => {
       const clickHandler = sinon.spy();
-      const data = [
-        {eventKey: 0, x: 0, y: 0, label: "0"},
-        {eventKey: 1, x: 1, y: 1, label: "1"},
-        {eventKey: 2, x: 2, y: 2, label: "2"}
-      ];
       const wrapper = mount(
         <VictoryErrorBar
-          data={data}
           events={[{
-            target: "labels",
+            target: "data",
             eventHandlers: {onClick: clickHandler}
           }]}
         />
       );
-      const Labels = wrapper.find(VictoryLabel);
-      Labels.forEach((node, index) => {
-        node.childAt(0).simulate("click");
-        expect(clickHandler).called;
+      const Data = wrapper.find(ErrorBar);
+      Data.forEach((node, index) => {
+        const initialProps = Data.at(index).props();
+        // click the cross line
+        node.find(Cross).find("line").first().simulate("click");
+        expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(clickHandler.args[index][1].datum).to.eql(data[index]);
+        expect(omit(clickHandler.args[index][1], ["events", "key"]))
+          .to.eql(omit(initialProps, ["events", "key"]));
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
