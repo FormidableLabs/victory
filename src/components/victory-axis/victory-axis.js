@@ -17,36 +17,39 @@ const fallbackProps = {
   },
   style: {
     axis: {
-      stroke: "#756f6a",
       fill: "none",
-      strokeWidth: 2,
+      stroke: "#252525",
+      strokeWidth: 1,
       strokeLinecap: "round"
     },
     axisLabel: {
-      stroke: "transparent",
-      fill: "#756f6a",
-      fontSize: 17,
-      fontFamily: "Helvetica"
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent"
     },
     grid: {
-      stroke: "transparent",
       fill: "none",
+      stroke: "transparent",
       strokeLinecap: "round"
     },
     ticks: {
-      stroke: "#756f6a",
       fill: "none",
-      padding: 5,
-      strokeWidth: 2,
-      strokeLinecap: "round",
-      size: 4
+      padding: 10,
+      size: 1,
+      stroke: "none",
+      strokeWidth: 1,
+      strokeLinecap: "round"
     },
     tickLabels: {
-      stroke: "transparent",
-      fill: "#756f6a",
-      fontFamily: "Helvetica",
-      fontSize: 12,
-      padding: 5
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent"
     }
   }
 };

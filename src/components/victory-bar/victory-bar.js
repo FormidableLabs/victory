@@ -16,16 +16,19 @@ const fallbackProps = {
   },
   style: {
     data: {
-      padding: 6,
+      fill: "#242424",
+      opacity: 1,
+      padding: 10,
       stroke: "transparent",
       strokeWidth: 0,
-      fill: "#756f6a",
-      opacity: 1
+      width: 8
     },
     labels: {
-      fontSize: 13,
-      padding: 4,
-      fill: "black"
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10
     }
   }
 };

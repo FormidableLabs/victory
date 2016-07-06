@@ -16,15 +16,17 @@ const fallbackProps = {
   },
   style: {
     data: {
-      strokeWidth: 2,
       fill: "none",
-      stroke: "#756f6a",
-      opacity: 1
+      opacity: 1,
+      strokeWidth: 2,
+      stroke: "#252525"
     },
     labels: {
-      padding: 5,
-      fontFamily: "Helvetica",
-      fontSize: 13,
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
       strokeWidth: 0,
       stroke: "transparent",
       textAnchor: "start"
