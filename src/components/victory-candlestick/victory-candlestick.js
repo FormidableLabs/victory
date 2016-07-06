@@ -27,7 +27,7 @@ const fallbackProps = {
       fontFamily: "Helvetica",
       fontSize: 13,
       textAnchor: "end",
-      padding: 10
+      padding: 5
     }
   }
 };

@@ -26,7 +26,7 @@ export default {
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
-        x,
+        x: x - labelStyle.padding,
         y: y - labelStyle.padding,
         text,
         index,
@@ -112,9 +112,14 @@ export default {
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
+    const fillCheck = datum.fill || style.fill;
+    const strokeCheck = datum.stroke || style.stroke;
+    const strokeColor = fillCheck && !strokeCheck ? fillCheck
+    : strokeCheck;
     const candleColor = datum.open > datum.close ?
             props.candleColors.negative : props.candleColors.positive;
-    const baseDataStyle = defaults({}, stylesFromData, {stroke: candleColor, fill: candleColor},
+    const baseDataStyle = defaults({}, stylesFromData,
+      {stroke: strokeColor || candleColor, fill: candleColor},
       style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
