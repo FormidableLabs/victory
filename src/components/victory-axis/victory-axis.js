@@ -268,10 +268,12 @@ export default class VictoryAxis extends React.Component {
     tickComponent: PropTypes.element,
     /**
      * The tickCount prop specifies approximately how many ticks should be drawn on the axis if
-     * tickValues are not explicitly provided. This values is calculated by d3 scale and
-     * prioritizes returning "nice" values and evenly spaced ticks over an exact numnber of ticks
+     * tickValues are not explicitly provided. This value is calculated by d3 scale and
+     * prioritizes returning "nice" values and evenly spaced ticks over an exact number of ticks.
+     * If you need an exact number of ticks, please specify them via the tickValues prop.
+     * This prop must have a value greater than zero.
      */
-    tickCount: CustomPropTypes.nonNegative,
+    tickCount: CustomPropTypes.greaterThanZero,
     /**
      * The tickLabelComponent prop takes in an entire component which will be used
      * to create the tick labels. The new element created from the passed tickLabelComponent
