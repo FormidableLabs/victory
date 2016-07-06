@@ -16,7 +16,6 @@ const fallbackProps = {
   },
   style: {
     data: {
-      width: 8,
       padding: 6,
       stroke: "transparent",
       strokeWidth: 0,

@@ -7,7 +7,7 @@ import * as docgen from "react-docgen";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack
 } from "../../src/index";
-import {VictoryTheme} from "formidable-landers";
+import { VictoryTheme, appendLinkIcon } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -21,6 +21,7 @@ class Docs extends React.Component {
             VictoryAxis, VictoryBar, VictoryChart, VictoryStack
           }}
           playgroundtheme="elegant"
+          customRenderers={appendLinkIcon}
         />
         <Style rules={VictoryTheme}/>
       </div>

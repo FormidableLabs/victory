@@ -6,7 +6,7 @@ import ReactDOM from "react-dom";
 import symbolData from "./symbol-data";
 import * as docgen from "react-docgen";
 import { VictoryScatter } from "../../src/index";
-import { VictoryTheme } from "formidable-landers";
+import { VictoryTheme, appendLinkIcon } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -21,6 +21,7 @@ class Docs extends React.Component {
           source={victoryScatterSource}
           scope={{merge, range, random, React, ReactDOM, symbolData, VictoryScatter}}
           playgroundtheme="elegant"
+          customRenderers={appendLinkIcon}
         />
         <Style rules={VictoryTheme}/>
       </div>

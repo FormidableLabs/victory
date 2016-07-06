@@ -17,6 +17,7 @@ const App = React.createClass({
           <li><Link to="/chart">Victory Chart Docs</Link></li>
           <li><Link to="/line">Victory Line Docs</Link></li>
           <li><Link to="/scatter">Victory Scatter Docs</Link></li>
+          <li><Link to="/candlestick">Victory Candlestick Docs</Link></li>
         </ul>
         {this.props.children}
       </StyleRoot>
