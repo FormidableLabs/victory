@@ -230,13 +230,14 @@ export default class App extends React.Component {
 
         <VictoryChart
           theme={VictoryTheme.grayscale}
+          domainPadding={-10}
         >
           <VictoryLine
             style={{parent: parentStyle}}
-            data={this.state.arrayData}
+            data={this.state.data}
             label="Hello"
-            x={0}
-            y={1}
+            x={"x"}
+            y={(d) => (d.y + 15)}
           />
       </VictoryChart>
       </div>
