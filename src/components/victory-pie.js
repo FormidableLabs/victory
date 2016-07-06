@@ -13,31 +13,28 @@ import PieHelpers from "./helper-methods";
 const fallbackProps = {
   style: {
     data: {
-      padding: 10,
-      stroke: "transparent",
-      strokeWidth: 0
+      padding: 5,
+      stroke: "white",
+      strokeWidth: 1
     },
     labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
       padding: 10,
-      stroke: "transparent",
+      fill: "black",
       strokeWidth: 0,
+      stroke: "transparent",
+      fontFamily: "'Helvetica Neue', Helvetica, Arial, sans-serif",
+      fontSize: 13,
       textAnchor: "middle"
     }
   },
   colorScale: [
-    "#ffffff",
-    "#f0f0f0",
-    "#d9d9d9",
-    "#bdbdbd",
-    "#969696",
-    "#737373",
-    "#525252",
-    "#252525",
-    "#000000"
+    "#75C776",
+    "#39B6C5",
+    "#78CCC4",
+    "#62C3A4",
+    "#64A8D1",
+    "#8C95C8",
+    "#3BAF74"
   ]
 };
 
