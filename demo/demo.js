@@ -161,7 +161,7 @@ export default class App extends React.Component {
               parent: { ...parentStyle, padding: "1% 3%" },
               labels: { padding: 230 }
             }}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             labels={() => "click me!"}
             events={[{
               target: "data",
@@ -171,14 +171,14 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "orange"})
+                          style: merge({}, props.style, {fill: "#F50057"})
                         };
                       }
                     }, {
                       target: "labels",
                       eventKey: [0, 2, 4],
                       mutation: () => {
-                        return {text: "hey"};
+                        return {text: "Nice."};
                       }
                     }
                   ];
@@ -188,7 +188,8 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={this.state.style}
+            style={{parent: parentStyle}}
+            theme={VictoryTheme.material}
             events={[{
               target: "parent",
               eventHandlers: {
@@ -269,7 +270,7 @@ export default class App extends React.Component {
             data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             style={{parent: {maxWidth: "40%"}}}
             animate={{duration: 2000}}
           />
