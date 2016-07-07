@@ -5,7 +5,7 @@ import Radium, { Style } from "radium";
 import * as docgen from "react-docgen";
 import { merge } from "lodash";
 import { VictoryArea, VictoryStack, VictoryGroup, VictoryScatter } from "../../src/index";
-import { VictoryTheme, appendLinkIcon } from "formidable-landers";
+import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -18,7 +18,7 @@ class Docs extends React.Component {
           playgroundtheme="elegant"
           customRenderers={appendLinkIcon}
         />
-        <Style rules={VictoryTheme}/>
+        <Style rules={merge(ecologyPlaygroundLoading, VictoryTheme)}/>
       </div>
     );
   }

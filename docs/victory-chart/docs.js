@@ -7,7 +7,7 @@ import * as docgen from "react-docgen";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack
 } from "../../src/index";
-import { VictoryTheme, appendLinkIcon } from "formidable-landers";
+import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -21,7 +21,7 @@ class Docs extends React.Component {
             VictoryAxis, VictoryBar, VictoryChart, VictoryStack
           }}
           playgroundtheme="elegant"
-          customRenderers={appendLinkIcon}
+          customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
         />
         <Style rules={VictoryTheme}/>
       </div>
