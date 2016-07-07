@@ -54,465 +54,399 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _victoryChart=__webpack_require__(1);Object.defineProperty(exports,"VictoryChart",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryChart).default;}});var _victoryLine=__webpack_require__(209);Object.defineProperty(exports,"VictoryLine",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryLine).
+	default;}});var _victoryAxis=__webpack_require__(133);Object.defineProperty(exports,"VictoryAxis",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryAxis).
+	default;}});var _victoryArea=__webpack_require__(215);Object.defineProperty(exports,"VictoryArea",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryArea).
+	default;}});var _victoryBar=__webpack_require__(218);Object.defineProperty(exports,"VictoryBar",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryBar).
+	default;}});var _victoryScatter=__webpack_require__(228);Object.defineProperty(exports,"VictoryScatter",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryScatter).
+	default;}});var _victoryGroup=__webpack_require__(232);Object.defineProperty(exports,"VictoryGroup",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryGroup).
+	default;}});var _victoryStack=__webpack_require__(233);Object.defineProperty(exports,"VictoryStack",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryStack).
+	default;}});var _victoryCandlestick=__webpack_require__(234);Object.defineProperty(exports,"VictoryCandlestick",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryCandlestick).
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.VictoryCandlestick = exports.VictoryStack = exports.VictoryGroup = exports.VictoryScatter = exports.VictoryBar = exports.VictoryArea = exports.VictoryAxis = exports.VictoryLine = exports.VictoryChart = undefined;
-	
-	var _victoryChart = __webpack_require__(1);
-	
-	var _victoryChart2 = _interopRequireDefault(_victoryChart);
-	
-	var _victoryLine = __webpack_require__(296);
-	
-	var _victoryLine2 = _interopRequireDefault(_victoryLine);
-	
-	var _victoryAxis = __webpack_require__(159);
-	
-	var _victoryAxis2 = _interopRequireDefault(_victoryAxis);
-	
-	var _victoryArea = __webpack_require__(302);
-	
-	var _victoryArea2 = _interopRequireDefault(_victoryArea);
-	
-	var _victoryBar = __webpack_require__(306);
-	
-	var _victoryBar2 = _interopRequireDefault(_victoryBar);
-	
-	var _victoryScatter = __webpack_require__(318);
-	
-	var _victoryScatter2 = _interopRequireDefault(_victoryScatter);
-	
-	var _victoryGroup = __webpack_require__(323);
-	
-	var _victoryGroup2 = _interopRequireDefault(_victoryGroup);
-	
-	var _victoryStack = __webpack_require__(324);
-	
-	var _victoryStack2 = _interopRequireDefault(_victoryStack);
-	
-	var _victoryCandlestick = __webpack_require__(325);
-	
-	var _victoryCandlestick2 = _interopRequireDefault(_victoryCandlestick);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.VictoryChart = _victoryChart2.default;
-	exports.VictoryLine = _victoryLine2.default;
-	exports.VictoryAxis = _victoryAxis2.default;
-	exports.VictoryArea = _victoryArea2.default;
-	exports.VictoryBar = _victoryBar2.default;
-	exports.VictoryScatter = _victoryScatter2.default;
-	exports.VictoryGroup = _victoryGroup2.default;
-	exports.VictoryStack = _victoryStack2.default;
-	exports.VictoryCandlestick = _victoryCandlestick2.default;
+	default;}});function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 
 /***/ },
 /* 1 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-chart/victory-chart.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryCore=__webpack_require__(29);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
-	var _defaults2 = __webpack_require__(2);
+	var _victoryAxis=__webpack_require__(133);var _victoryAxis2=_interopRequireDefault(_victoryAxis);
+	var _helperMethods=__webpack_require__(170);var _helperMethods2=_interopRequireDefault(_helperMethods);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);
+	var _wrapper=__webpack_require__(208);var _wrapper2=_interopRequireDefault(_wrapper);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300}};var
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
+	VictoryChart=function(_React$Component){_inherits(VictoryChart,_React$Component);function VictoryChart(){_classCallCheck(this,VictoryChart);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryChart).apply(this,arguments));}_createClass(VictoryChart,[{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	var _victoryAxis = __webpack_require__(159);
 	
-	var _victoryAxis2 = _interopRequireDefault(_victoryAxis);
 	
-	var _helperMethods = __webpack_require__(234);
 	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
 	
-	var _axis = __webpack_require__(226);
 	
-	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _scale = __webpack_require__(215);
 	
-	var _scale2 = _interopRequireDefault(_scale);
 	
-	var _wrapper = __webpack_require__(295);
 	
-	var _wrapper2 = _interopRequireDefault(_wrapper);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var defaultAxes = {
-	  independent: _react2.default.createElement(_victoryAxis2.default, null),
-	  dependent: _react2.default.createElement(_victoryAxis2.default, { dependentAxis: true })
-	};
 	
-	var fallbackProps = {
-	  props: {
-	    width: 450,
-	    height: 300
-	  }
-	};
 	
-	var VictoryChart = function (_React$Component) {
-	  _inherits(VictoryChart, _React$Component);
 	
-	  function VictoryChart() {
-	    _classCallCheck(this, VictoryChart);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryChart).apply(this, arguments));
-	  }
 	
-	  _createClass(VictoryChart, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      var setAnimationState = _wrapper2.default.setAnimationState.bind(this);
-	      setAnimationState(nextProps);
-	    }
-	  }, {
-	    key: "getStyles",
-	    value: function getStyles(props) {
-	      var styleProps = props.style && props.style.parent;
-	      return {
-	        parent: (0, _defaults3.default)({
-	          height: "auto",
-	          width: "100%"
-	        }, styleProps) };
-	    }
-	  }, {
-	    key: "getAxisProps",
-	    value: function getAxisProps(child, props, calculatedProps) {
-	      var domain = calculatedProps.domain;
-	      var scale = calculatedProps.scale;
 	
-	      var axis = child.type.getAxis(child.props);
-	      var axisOffset = _helperMethods2.default.getAxisOffset(props, calculatedProps);
-	      var tickValues = _helperMethods2.default.getTicks(calculatedProps, axis, child);
-	      var tickFormat = child.props.tickFormat || _helperMethods2.default.getTickFormat(child, axis, calculatedProps);
-	      var offsetY = axis === "y" ? undefined : axisOffset.y;
-	      var offsetX = axis === "x" ? undefined : axisOffset.x;
-	      var crossAxis = child.props.crossAxis === false ? false : true;
-	      return {
-	        domain: domain[axis],
-	        scale: scale[axis],
-	        tickValues: tickValues,
-	        tickFormat: tickFormat,
-	        offsetY: child.props.offsetY || offsetY,
-	        offsetX: child.props.offsetX || offsetX,
-	        crossAxis: crossAxis
-	      };
-	    }
-	  }, {
-	    key: "getChildProps",
-	    value: function getChildProps(child, props, calculatedProps) {
-	      var axisChild = _axis2.default.findAxisComponents([child]);
-	      if (axisChild.length > 0) {
-	        return this.getAxisProps(axisChild[0], props, calculatedProps);
-	      }
-	      return {
-	        domain: calculatedProps.domain,
-	        scale: calculatedProps.scale,
-	        categories: calculatedProps.categories
-	      };
-	    }
-	  }, {
-	    key: "getCalculatedProps",
-	    value: function getCalculatedProps(props, childComponents) {
-	      var style = this.getStyles(props);
-	      var horizontal = childComponents.some(function (component) {
-	        return component.props.horizontal;
-	      });
-	      var axisComponents = {
-	        x: _axis2.default.getAxisComponent(childComponents, "x"),
-	        y: _axis2.default.getAxisComponent(childComponents, "y")
-	      };
-	      var domain = {
-	        x: _helperMethods2.default.getDomain(props, "x", childComponents),
-	        y: _helperMethods2.default.getDomain(props, "y", childComponents)
-	      };
-	      var range = {
-	        x: _victoryCore.Helpers.getRange(props, "x"),
-	        y: _victoryCore.Helpers.getRange(props, "y")
-	      };
-	      var baseScale = {
-	        x: _scale2.default.getScaleFromProps(props, "x") || axisComponents.x && axisComponents.x.type.getScale(axisComponents.x.props) || _scale2.default.getDefaultScale(),
-	        y: _scale2.default.getScaleFromProps(props, "y") || axisComponents.y && axisComponents.y.type.getScale(axisComponents.y.props) || _scale2.default.getDefaultScale()
-	      };
-	      var scale = {
-	        x: baseScale.x.domain(domain.x).range(range.x),
-	        y: baseScale.y.domain(domain.y).range(range.y)
-	      };
-	      // TODO: check
-	      var categories = {
-	        x: _wrapper2.default.getCategories(props, "x", childComponents),
-	        y: _wrapper2.default.getCategories(props, "y", childComponents)
-	      };
-	      var stringMap = {
-	        x: _helperMethods2.default.createStringMap(props, "x", childComponents),
-	        y: _helperMethods2.default.createStringMap(props, "y", childComponents)
-	      };
-	      return { axisComponents: axisComponents, categories: categories, domain: domain, horizontal: horizontal, scale: scale, stringMap: stringMap, style: style };
-	    }
-	  }, {
-	    key: "getNewChildren",
-	    value: function getNewChildren(props, childComponents, calculatedProps) {
-	      var _this2 = this;
 	
-	      var baseStyle = calculatedProps.style.parent;
-	      var getAnimationProps = _wrapper2.default.getAnimationProps.bind(this);
-	      return childComponents.map(function (child, index) {
-	        var style = (0, _defaults3.default)({}, child.props.style, { parent: baseStyle });
-	        var childProps = _this2.getChildProps(child, props, calculatedProps);
-	        var newProps = (0, _defaults3.default)({
-	          animate: getAnimationProps(props, child, index),
-	          height: props.height,
-	          width: props.width,
-	          padding: _victoryCore.Helpers.getPadding(props),
-	          ref: index,
-	          key: index,
-	          theme: child.props.theme || props.theme,
-	          standalone: false,
-	          style: style
-	        }, childProps);
-	        return _react2.default.cloneElement(child, newProps);
-	      });
-	    }
-	  }, {
-	    key: "getContainer",
-	    value: function getContainer(props, calculatedProps) {
-	      var width = props.width;
-	      var height = props.height;
-	      var containerComponent = props.containerComponent;
-	      var scale = calculatedProps.scale;
-	      var style = calculatedProps.style;
 	
-	      var parentProps = (0, _defaults3.default)({}, containerComponent.props, { style: style.parent, scale: scale, width: width, height: height });
-	      return _react2.default.cloneElement(containerComponent, parentProps);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var props = this.state && this.state.nodesWillExit ? this.state.oldProps : this.props;
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	      var childComponents = _helperMethods2.default.getChildComponents(modifiedProps, defaultAxes);
-	      var calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
-	      var container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
-	      var newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-	      if (modifiedProps.events) {
-	        return _react2.default.createElement(
-	          _victoryCore.VictorySharedEvents,
-	          { events: modifiedProps.events,
-	            eventKey: modifiedProps.eventKey,
-	            container: container
-	          },
-	          newChildren
-	        );
-	      }
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { style: calculatedProps.style.parent },
-	        newChildren
-	      );
-	      return modifiedProps.standalone ? _react2.default.cloneElement(container, container.props, group) : group;
-	    }
-	  }]);
 	
-	  return VictoryChart;
-	}(_react2.default.Component);
 	
-	VictoryChart.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. If this prop is
-	   * given, all children defined in chart will pass the options specified in this prop to
-	   * VictoryTransition and VictoryAnimation. Child animation props will be added for any
-	   * values not provided via the animation prop for VictoryChart. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively. VictoryChart will coodrinate transitions between all
-	   * of its child components so that animation stays in sync
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * VictoryChart is a wrapper component that controls the layout and animation behaviors of its
-	   * children. VictoryChart works with VictoryArea, VictoryAxis, VictoryBar, VictoryLine, and
-	   * VictoryScatter. Wrapper components like VictoryGroup and VictoryStack may also be
-	   * wrapped with VictoryChart. If not children are provided, VictoryChart will render a
-	   * set of empty axes.
-	   */
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node), _react2.default.PropTypes.node]),
-	  /**
-	   * The domain prop describes the range of values your chart will include. This prop can be
-	   * given as a array of the minimum and maximum expected values for your chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The domainPadding prop specifies a number of pixels of padding to add to the
-	   * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
-	   * from the origin to prevent crowding. This prop should be given as an object with
-	   * numbers specified for x and y.
-	   */
-	  domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.nonNegative,
-	    y: _victoryCore.PropTypes.nonNegative
-	  }), _victoryCore.PropTypes.nonNegative]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, (i.e. "data" and "labels"). The childName will refer to an
-	   * individual child of VictoryChart, either by its name prop, or by index. The eventKey
-	   * may optionally be used to select a single element by index or eventKey rather than
-	   * an entire set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey and childName keys,
-	   * and a mutation key whose value is a function. The target and eventKey and childName keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     childName: "firstBar",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              childName: "secondBar",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              childName: "secondBar",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    childName: _react.PropTypes.string,
-	    target: _react.PropTypes.string,
-	    eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a string or a function, or as an object that specifies separate scales for x and y.
-	   * Supported string scales are "linear", "time", "log" and "sqrt"
-	   * @examples d3.time.scale(), {x: "linear", y: "log" }
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryChart with other components within an enclosing <svg> tag. Victory
-	   * Component are responsive by default. If you need to create a fixed-size chart, set
-	   * standalone to false, and wrap VictoryChart in a custom <svg>
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your chart. Any valid inline style properties
-	   * will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart.
-	   * @examples {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
-	   */
-	  style: _react.PropTypes.object,
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryChart: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryChart will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryChart, either alone or as a wrapper for other components,
-	  * you will only need to implement the theme on VictoryChart itself.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryChart.defaultProps = {
-	  padding: 50,
-	  standalone: true,
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	exports.default = VictoryChart;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	nextProps){
+	var setAnimationState=_wrapper2.default.setAnimationState.bind(this);
+	setAnimationState(nextProps);}},{key:"getStyles",value:function getStyles(
+	
+	
+	props){
+	var styleProps=props.style&&props.style.parent;
+	return{
+	parent:(0,_defaults3.default)({
+	height:"auto",
+	width:"100%"},
+	
+	styleProps)};}},{key:"getAxisProps",value:function getAxisProps(
+	
+	
+	
+	child,props,calculatedProps){var
+	domain=calculatedProps.domain;var scale=calculatedProps.scale;
+	var axis=child.type.getAxis(child.props);
+	var axisOffset=_helperMethods2.default.getAxisOffset(props,calculatedProps);
+	var tickValues=_helperMethods2.default.getTicks(calculatedProps,axis,child);
+	var tickFormat=
+	child.props.tickFormat||_helperMethods2.default.getTickFormat(child,axis,calculatedProps);
+	var offsetY=axis==="y"?undefined:axisOffset.y;
+	var offsetX=axis==="x"?undefined:axisOffset.x;
+	var crossAxis=child.props.crossAxis===false?false:true;
+	return{
+	domain:domain[axis],
+	scale:scale[axis],
+	tickValues:tickValues,
+	tickFormat:tickFormat,
+	offsetY:child.props.offsetY||offsetY,
+	offsetX:child.props.offsetX||offsetX,
+	crossAxis:crossAxis};}},{key:"getChildProps",value:function getChildProps(
+	
+	
+	
+	child,props,calculatedProps){
+	var axisChild=_axis2.default.findAxisComponents([child]);
+	if(axisChild.length>0){
+	return this.getAxisProps(axisChild[0],props,calculatedProps);}
+	
+	return{
+	domain:calculatedProps.domain,
+	scale:calculatedProps.scale,
+	categories:calculatedProps.categories};}},{key:"getCalculatedProps",value:function getCalculatedProps(
+	
+	
+	
+	props,childComponents){
+	var style=this.getStyles(props);
+	var horizontal=childComponents.some(function(component){return component.props.horizontal;});
+	var axisComponents={
+	x:_axis2.default.getAxisComponent(childComponents,"x"),
+	y:_axis2.default.getAxisComponent(childComponents,"y")};
+	
+	var domain={
+	x:_helperMethods2.default.getDomain(props,"x",childComponents),
+	y:_helperMethods2.default.getDomain(props,"y",childComponents)};
+	
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
+	
+	var baseScale={
+	x:_scale2.default.getScaleFromProps(props,"x")||
+	axisComponents.x&&axisComponents.x.type.getScale(axisComponents.x.props)||
+	_scale2.default.getDefaultScale(),
+	y:_scale2.default.getScaleFromProps(props,"y")||
+	axisComponents.y&&axisComponents.y.type.getScale(axisComponents.y.props)||
+	_scale2.default.getDefaultScale()};
+	
+	var scale={
+	x:baseScale.x.domain(domain.x).range(range.x),
+	y:baseScale.y.domain(domain.y).range(range.y)};
+	
+	
+	var categories={
+	x:_wrapper2.default.getCategories(props,"x",childComponents),
+	y:_wrapper2.default.getCategories(props,"y",childComponents)};
+	
+	var stringMap={
+	x:_helperMethods2.default.createStringMap(props,"x",childComponents),
+	y:_helperMethods2.default.createStringMap(props,"y",childComponents)};
+	
+	return{axisComponents:axisComponents,categories:categories,domain:domain,horizontal:horizontal,scale:scale,stringMap:stringMap,style:style};}},{key:"getNewChildren",value:function getNewChildren(
+	
+	
+	props,childComponents,calculatedProps){var _this2=this;
+	var baseStyle=calculatedProps.style.parent;
+	var getAnimationProps=_wrapper2.default.getAnimationProps.bind(this);
+	return childComponents.map(function(child,index){
+	var style=(0,_defaults3.default)({},child.props.style,{parent:baseStyle});
+	var childProps=_this2.getChildProps(child,props,calculatedProps);
+	var newProps=(0,_defaults3.default)({
+	animate:getAnimationProps(props,child,index),
+	height:props.height,
+	width:props.width,
+	padding:_victoryCore.Helpers.getPadding(props),
+	ref:index,
+	key:index,
+	theme:child.props.theme||props.theme,
+	standalone:false,
+	style:style},
+	childProps);
+	return _react2.default.cloneElement(child,newProps);});}},{key:"getContainer",value:function getContainer(
+	
+	
+	
+	props,calculatedProps){var
+	width=props.width;var height=props.height;var containerComponent=props.containerComponent;var
+	scale=calculatedProps.scale;var style=calculatedProps.style;
+	var parentProps=(0,_defaults3.default)(
+	{},
+	containerComponent.props,
+	{style:style.parent,scale:scale,width:width,height:height});
+	
+	return _react2.default.cloneElement(containerComponent,parentProps);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var props=this.state&&this.state.nodesWillExit?
+	this.state.oldProps:this.props;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var childComponents=_helperMethods2.default.getChildComponents(modifiedProps,props.defaultAxes);
+	var calculatedProps=this.getCalculatedProps(modifiedProps,childComponents);
+	var container=modifiedProps.standalone&&this.getContainer(modifiedProps,calculatedProps);
+	var newChildren=this.getNewChildren(modifiedProps,childComponents,calculatedProps);
+	if(modifiedProps.events){
+	return(
+	_react2.default.createElement(_victoryCore.VictorySharedEvents,{events:modifiedProps.events,
+	eventKey:modifiedProps.eventKey,
+	container:container,__source:{fileName:_jsxFileName,lineNumber:368}},
+	
+	newChildren));}
+	
+	
+	
+	
+	var group=this.renderGroup(newChildren,calculatedProps.style.parent);
+	return modifiedProps.standalone?_react2.default.cloneElement(container,container.props,group):group;}}]);return VictoryChart;}(_react2.default.Component);VictoryChart.propTypes={animate:_react.PropTypes.object,children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_victoryCore.PropTypes.nonNegative,y:_victoryCore.PropTypes.nonNegative}),_victoryCore.PropTypes.nonNegative]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.string,target:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),height:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.object,width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryChart.defaultProps={padding:50,standalone:true,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:222}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:223}}),defaultAxes:{independent:_react2.default.createElement(_victoryAxis2.default,{__source:{fileName:_jsxFileName,lineNumber:225}}),dependent:_react2.default.createElement(_victoryAxis2.default,{dependentAxis:true,__source:{fileName:_jsxFileName,lineNumber:226}})}};exports.default=VictoryChart;
 
 /***/ },
 /* 2 */
@@ -1412,368 +1346,226 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 29 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.VictoryTheme=exports.VictoryContainer=exports.VictorySharedEvents=exports.VictoryTransition=exports.VictoryLabel=exports.VictoryAnimation=exports.Transitions=exports.Events=exports.PropTypes=exports.Style=exports.Log=exports.Helpers=exports.Collection=undefined;var _collection=__webpack_require__(30);Object.defineProperty(exports,"Collection",{enumerable:true,get:function get(){return _interopRequireDefault(_collection).default;}});var _helpers=__webpack_require__(31);Object.defineProperty(exports,"Helpers",{enumerable:true,get:function get(){return _interopRequireDefault(_helpers).
+	default;}});var _log=__webpack_require__(87);Object.defineProperty(exports,"Log",{enumerable:true,get:function get(){return _interopRequireDefault(_log).
+	default;}});var _style=__webpack_require__(89);Object.defineProperty(exports,"Style",{enumerable:true,get:function get(){return _interopRequireDefault(_style).
+	default;}});var _propTypes=__webpack_require__(94);Object.defineProperty(exports,"PropTypes",{enumerable:true,get:function get(){return _interopRequireDefault(_propTypes).
+	default;}});var _events=__webpack_require__(95);Object.defineProperty(exports,"Events",{enumerable:true,get:function get(){return _interopRequireDefault(_events).
+	default;}});var _victoryAnimation=__webpack_require__(111);Object.defineProperty(exports,"VictoryAnimation",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryAnimation).
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.VictoryTheme = exports.VictoryContainer = exports.VictorySharedEvents = exports.VictoryTransition = exports.VictoryLabel = exports.VictoryAnimation = exports.Transitions = exports.Events = exports.PropTypes = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
-	var _collection = __webpack_require__(30);
 	
-	Object.defineProperty(exports, "Collection", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_collection).default;
-	  }
-	});
-	
-	var _helpers = __webpack_require__(31);
-	
-	Object.defineProperty(exports, "Helpers", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_helpers).default;
-	  }
-	});
-	
-	var _log = __webpack_require__(113);
-	
-	Object.defineProperty(exports, "Log", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_log).default;
-	  }
-	});
-	
-	var _style = __webpack_require__(115);
-	
-	Object.defineProperty(exports, "Style", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_style).default;
-	  }
-	});
-	
-	var _propTypes = __webpack_require__(120);
-	
-	Object.defineProperty(exports, "PropTypes", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_propTypes).default;
-	  }
-	});
-	
-	var _events = __webpack_require__(121);
-	
-	Object.defineProperty(exports, "Events", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_events).default;
-	  }
-	});
-	
-	var _victoryAnimation = __webpack_require__(137);
-	
-	Object.defineProperty(exports, "VictoryAnimation", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_victoryAnimation).default;
-	  }
-	});
-	
-	var _victoryLabel = __webpack_require__(143);
-	
-	Object.defineProperty(exports, "VictoryLabel", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_victoryLabel).default;
-	  }
-	});
-	
-	var _victoryTransition = __webpack_require__(148);
-	
-	Object.defineProperty(exports, "VictoryTransition", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_victoryTransition).default;
-	  }
-	});
-	
-	var _victorySharedEvents = __webpack_require__(154);
-	
-	Object.defineProperty(exports, "VictorySharedEvents", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_victorySharedEvents).default;
-	  }
-	});
-	
-	var _victoryContainer = __webpack_require__(156);
-	
-	Object.defineProperty(exports, "VictoryContainer", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_victoryContainer).default;
-	  }
-	});
-	
-	var _victoryTheme = __webpack_require__(157);
-	
-	Object.defineProperty(exports, "VictoryTheme", {
-	  enumerable: true,
-	  get: function get() {
-	    return _interopRequireDefault(_victoryTheme).default;
-	  }
-	});
-	
-	var _transitions = __webpack_require__(145);
-	
-	var Transitions = _interopRequireWildcard(_transitions);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.Transitions = Transitions;
+	default;}});var _victoryLabel=__webpack_require__(117);Object.defineProperty(exports,"VictoryLabel",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryLabel).
+	default;}});var _victoryTransition=__webpack_require__(122);Object.defineProperty(exports,"VictoryTransition",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTransition).
+	default;}});var _victorySharedEvents=__webpack_require__(128);Object.defineProperty(exports,"VictorySharedEvents",{enumerable:true,get:function get(){return _interopRequireDefault(_victorySharedEvents).
+	default;}});var _victoryContainer=__webpack_require__(130);Object.defineProperty(exports,"VictoryContainer",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryContainer).
+	default;}});var _victoryTheme=__webpack_require__(131);Object.defineProperty(exports,"VictoryTheme",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTheme).
+	default;}});var _transitions=__webpack_require__(119);var Transitions=_interopRequireWildcard(_transitions);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.Transitions=Transitions;
 
 /***/ },
 /* 30 */
 /***/ function(module, exports) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.default={
+	isNonEmptyArray:function isNonEmptyArray(collection){
+	return Array.isArray(collection)&&collection.length>0;},
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.default = {
-	  isNonEmptyArray: function isNonEmptyArray(collection) {
-	    return Array.isArray(collection) && collection.length > 0;
-	  },
-	  containsStrings: function containsStrings(collection) {
-	    return Array.isArray(collection) && collection.some(function (value) {
-	      return typeof value === "string";
-	    });
-	  },
-	  containsDates: function containsDates(collection) {
-	    return Array.isArray(collection) && collection.some(function (value) {
-	      return value instanceof Date;
-	    });
-	  },
-	  containsOnlyStrings: function containsOnlyStrings(collection) {
-	    return this.isNonEmptyArray(collection) && collection.every(function (value) {
-	      return typeof value === "string";
-	    });
-	  },
-	  isArrayOfArrays: function isArrayOfArrays(collection) {
-	    return this.isNonEmptyArray(collection) && collection.every(Array.isArray);
-	  },
-	  removeUndefined: function removeUndefined(arr) {
-	    return arr.filter(function (el) {
-	      return el !== undefined;
-	    });
-	  }
-	};
+	
+	containsStrings:function containsStrings(collection){
+	return Array.isArray(collection)&&collection.some(function(value){return typeof value==="string";});},
+	
+	
+	containsDates:function containsDates(collection){
+	return Array.isArray(collection)&&collection.some(function(value){return value instanceof Date;});},
+	
+	
+	containsOnlyStrings:function containsOnlyStrings(collection){
+	return this.isNonEmptyArray(collection)&&
+	collection.every(function(value){return typeof value==="string";});},
+	
+	
+	isArrayOfArrays:function isArrayOfArrays(collection){
+	return this.isNonEmptyArray(collection)&&collection.every(Array.isArray);},
+	
+	
+	removeUndefined:function removeUndefined(arr){
+	return arr.filter(function(el){return el!==undefined;});}};
 
 /***/ },
 /* 31 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _property2=__webpack_require__(32);var _property3=_interopRequireDefault(_property2);var _partial2=__webpack_require__(43);var _partial3=_interopRequireDefault(_partial2);var _merge2=__webpack_require__(65);var _merge3=_interopRequireDefault(_merge2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _typeof=typeof Symbol==="function"&&typeof(typeof Symbol==="function"?Symbol.iterator:"@@iterator")==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol?"symbol":typeof obj;};function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _defineProperty(obj,key,value){if(key in obj){Object.defineProperty(obj,key,{value:value,enumerable:true,configurable:true,writable:true});}else{obj[key]=value;}return obj;}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _property2 = __webpack_require__(32);
-	
-	var _property3 = _interopRequireDefault(_property2);
-	
-	var _partial2 = __webpack_require__(45);
-	
-	var _partial3 = _interopRequireDefault(_partial2);
-	
-	var _merge2 = __webpack_require__(73);
-	
-	var _merge3 = _interopRequireDefault(_merge2);
-	
-	var _isFunction2 = __webpack_require__(91);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _defaults2 = __webpack_require__(110);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-	
-	exports.default = {
-	  getPadding: function getPadding(props) {
-	    var padding = typeof props.padding === "number" ? props.padding : 0;
-	    var paddingObj = _typeof(props.padding) === "object" ? props.padding : {};
-	    return {
-	      top: paddingObj.top || padding,
-	      bottom: paddingObj.bottom || padding,
-	      left: paddingObj.left || padding,
-	      right: paddingObj.right || padding
-	    };
-	  },
-	  getStyles: function getStyles(style, defaultStyles, height, width) {
-	    // eslint-disable-line max-params
-	    if (!style) {
-	      return (0, _defaults3.default)({ parent: { height: height, width: width } }, defaultStyles);
-	    }
-	
-	    var data = style.data;
-	    var labels = style.labels;
-	    var parent = style.parent;
-	
-	    return {
-	      parent: (0, _defaults3.default)({ height: height, width: width }, parent, defaultStyles.parent),
-	      labels: (0, _defaults3.default)({}, labels, defaultStyles.labels),
-	      data: (0, _defaults3.default)({}, data, defaultStyles.data)
-	    };
-	  },
-	  evaluateProp: function evaluateProp(prop, data, index) {
-	    return (0, _isFunction3.default)(prop) ? prop(data, index) : prop;
-	  },
-	  evaluateStyle: function evaluateStyle(style, data, index) {
-	    var _this = this;
-	
-	    if (!Object.keys(style).some(function (value) {
-	      return (0, _isFunction3.default)(style[value]);
-	    })) {
-	      return style;
-	    }
-	    return Object.keys(style).reduce(function (prev, curr) {
-	      prev[curr] = _this.evaluateProp(style[curr], data, index);
-	      return prev;
-	    }, {});
-	  },
-	  getRange: function getRange(props, axis) {
-	    // determine how to lay the axis and what direction positive and negative are
-	    var isVertical = axis !== "x";
-	    var padding = this.getPadding(props);
-	    if (isVertical) {
-	      return [props.height - padding.bottom, padding.top];
-	    }
-	    return [padding.left, props.width - padding.right];
-	  },
+	{
+	getPadding:function getPadding(props){
+	var padding=typeof props.padding==="number"?props.padding:0;
+	var paddingObj=_typeof(props.padding)==="object"?props.padding:{};
+	return{
+	top:paddingObj.top||padding,
+	bottom:paddingObj.bottom||padding,
+	left:paddingObj.left||padding,
+	right:paddingObj.right||padding};},
 	
 	
-	  // for components that take single datasets
-	  getData: function getData(props) {
-	    if (props.data) {
-	      return this.formatData(props.data, props);
-	    }
-	  },
-	  formatData: function formatData(dataset, props, stringMap) {
-	    if (!dataset) {
-	      return [];
-	    }
-	    stringMap = stringMap || {
-	      x: this.createStringMap(props, "x"),
-	      y: this.createStringMap(props, "y")
-	    };
-	    var accessor = {
-	      x: this.createAccessor(props.x),
-	      y: this.createAccessor(props.y)
-	    };
 	
-	    return dataset.map(function (datum) {
-	      var x = accessor.x(datum);
-	      var y = accessor.y(datum);
-	      var xName = typeof x === "string" ? { xName: x } : undefined;
-	      var yName = typeof y === "string" ? { yName: y } : undefined;
-	      return (0, _defaults3.default)({
-	        // map string data to numeric values, and add names
-	        x: typeof x === "string" ? stringMap.x[x] : x,
-	        y: typeof y === "string" ? stringMap.y[y] : y
-	      }, xName, yName, datum);
-	    });
-	  },
-	  createStringMap: function createStringMap(props, axis) {
-	    var stringsFromData = this.getStringsFromData(props, axis);
-	    if (stringsFromData.length) {
-	      return stringsFromData.reduce(function (acc, string, index) {
-	        acc[string] = index + 1;
-	        return acc;
-	      }, {});
-	    }
-	    return null;
-	  },
-	  getStringsFromData: function getStringsFromData(props, axis) {
-	    if (!props.data) {
-	      return [];
-	    }
-	    var key = typeof props[axis] === "undefined" ? axis : props[axis];
-	    var accessor = this.createAccessor(key);
-	    var dataStrings = props.data.map(function (datum) {
-	      return accessor(datum);
-	    }).filter(function (datum) {
-	      return typeof datum === "string";
-	    });
-	    // return a unique set of strings
-	    return dataStrings.reduce(function (prev, curr) {
-	      if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
-	        prev.push(curr);
-	      }
-	      return prev;
-	    }, []);
-	  },
-	  createAccessor: function createAccessor(key) {
-	    // creates a data accessor function
-	    // given a property key, path, array index, or null for identity.
-	    if ((0, _isFunction3.default)(key)) {
-	      return key;
-	    } else if (key === null || typeof key === "undefined") {
-	      // null/undefined means "return the data item itself"
-	      return function (x) {
-	        return x;
-	      };
-	    }
-	    // otherwise, assume it is an array index, property key or path (_.property handles all three)
-	    return (0, _property3.default)(key);
-	  },
-	  getPartialEvents: function getPartialEvents(events, index, childProps) {
-	    return events ? Object.keys(events).reduce(function (memo, eventName) {
-	      /* eslint max-params: 0 */
-	      memo[eventName] = (0, _partial3.default)(events[eventName], _partial3.default.placeholder, // evt will still be the first argument for event handlers
-	      childProps, // event handlers will have access to data component props, including data
-	      index, // used in setting a unique state property
-	      eventName // used in setting a unique state property
-	      );
-	      return memo;
-	    }, {}) : {};
-	  },
-	  modifyProps: function modifyProps(props, fallbackProps, themeProps) {
-	    var themeCheck = props.theme && props.theme.props;
-	    var themePropsObject = themeCheck && !themeProps ? props.theme.props : themeProps;
+	getStyles:function getStyles(style,defaultStyles,height,width){// eslint-disable-line max-params
+	if(!style){
+	return(0,_defaults3.default)({parent:{height:height,width:width}},defaultStyles);}var
 	
-	    return themeCheck ? (0, _defaults3.default)({}, props, themePropsObject, fallbackProps.props) : (0, _defaults3.default)({}, props, fallbackProps.props);
-	  },
-	  getEvents: function getEvents(events, namespace) {
-	    var _this2 = this;
 	
-	    var onEvent = function onEvent(evt, childProps, index, eventName) {
-	      if (_this2.props.events[namespace] && _this2.props.events[namespace][eventName]) {
-	        _this2.setState(_defineProperty({}, index, (0, _merge3.default)({}, _this2.state[index], _this2.props.events[namespace][eventName](evt, childProps, index))));
-	      }
-	    };
+	data=style.data;var labels=style.labels;var parent=style.parent;
+	return{
+	parent:(0,_defaults3.default)({height:height,width:width},parent,defaultStyles.parent),
+	labels:(0,_defaults3.default)({},labels,defaultStyles.labels),
+	data:(0,_defaults3.default)({},data,defaultStyles.data)};},
 	
-	    return events ? Object.keys(this.props.events[namespace]).reduce(function (memo, event) {
-	      memo[event] = onEvent;
-	      return memo;
-	    }, {}) : {};
-	  },
-	  getEventState: function getEventState(index, namespace) {
-	    return this.state[index] && this.state[index][namespace];
-	  }
-	};
+	
+	
+	evaluateProp:function evaluateProp(prop,data,index){
+	return(0,_isFunction3.default)(prop)?prop(data,index):prop;},
+	
+	
+	evaluateStyle:function evaluateStyle(style,data,index){var _this=this;
+	if(!Object.keys(style).some(function(value){return(0,_isFunction3.default)(style[value]);})){
+	return style;}
+	
+	return Object.keys(style).reduce(function(prev,curr){
+	prev[curr]=_this.evaluateProp(style[curr],data,index);
+	return prev;},
+	{});},
+	
+	
+	getRange:function getRange(props,axis){
+	// determine how to lay the axis and what direction positive and negative are
+	var isVertical=axis!=="x";
+	var padding=this.getPadding(props);
+	if(isVertical){
+	return[props.height-padding.bottom,padding.top];}
+	
+	return[padding.left,props.width-padding.right];},
+	
+	
+	// for components that take single datasets
+	getData:function getData(props){
+	if(props.data){
+	return this.formatData(props.data,props);}},
+	
+	
+	
+	formatData:function formatData(dataset,props,stringMap){
+	if(!dataset){
+	return[];}
+	
+	stringMap=stringMap||{
+	x:this.createStringMap(props,"x"),
+	y:this.createStringMap(props,"y")};
+	
+	var accessor={
+	x:this.createAccessor(props.x),
+	y:this.createAccessor(props.y)};
+	
+	
+	return dataset.map(function(datum){
+	var x=accessor.x(datum);
+	var y=accessor.y(datum);
+	var xName=typeof x==="string"?{xName:x}:undefined;
+	var yName=typeof y==="string"?{yName:y}:undefined;
+	return(0,_defaults3.default)({
+	// map string data to numeric values, and add names
+	x:typeof x==="string"?stringMap.x[x]:x,
+	y:typeof y==="string"?stringMap.y[y]:y},
+	xName,yName,datum);});},
+	
+	
+	
+	createStringMap:function createStringMap(props,axis){
+	var stringsFromData=this.getStringsFromData(props,axis);
+	if(stringsFromData.length){
+	return stringsFromData.reduce(function(acc,string,index){
+	acc[string]=index+1;
+	return acc;},
+	{});}
+	
+	return null;},
+	
+	
+	getStringsFromData:function getStringsFromData(props,axis){
+	if(!props.data){
+	return[];}
+	
+	var key=typeof props[axis]==="undefined"?axis:props[axis];
+	var accessor=this.createAccessor(key);
+	var dataStrings=props.data.
+	map(function(datum){return accessor(datum);}).
+	filter(function(datum){return typeof datum==="string";});
+	// return a unique set of strings
+	return dataStrings.reduce(function(prev,curr){
+	if(typeof curr!=="undefined"&&curr!==null&&prev.indexOf(curr)===-1){
+	prev.push(curr);}
+	
+	return prev;},
+	[]);},
+	
+	
+	createAccessor:function createAccessor(key){
+	// creates a data accessor function
+	// given a property key, path, array index, or null for identity.
+	if((0,_isFunction3.default)(key)){
+	return key;}else
+	if(key===null||typeof key==="undefined"){
+	// null/undefined means "return the data item itself"
+	return function(x){return x;};}
+	
+	// otherwise, assume it is an array index, property key or path (_.property handles all three)
+	return(0,_property3.default)(key);},
+	
+	
+	getPartialEvents:function getPartialEvents(events,index,childProps){
+	return events?
+	Object.keys(events).reduce(function(memo,eventName){
+	/* eslint max-params: 0 */
+	memo[eventName]=(0,_partial3.default)(
+	events[eventName],
+	_partial3.default.placeholder,// evt will still be the first argument for event handlers
+	childProps,// event handlers will have access to data component props, including data
+	index,// used in setting a unique state property
+	eventName// used in setting a unique state property
+	);
+	return memo;},
+	{}):
+	{};},
+	
+	
+	modifyProps:function modifyProps(props,fallbackProps){
+	var themeCheck=props.theme&&props.theme.props;
+	
+	return themeCheck?(0,_defaults3.default)({},props,props.theme.props,fallbackProps.props):
+	(0,_defaults3.default)({},props,fallbackProps.props);},
+	
+	
+	getEvents:function getEvents(events,namespace){var _this2=this;
+	var onEvent=function onEvent(evt,childProps,index,eventName){
+	if(_this2.props.events[namespace]&&_this2.props.events[namespace][eventName]){
+	_this2.setState(_defineProperty({},
+	index,(0,_merge3.default)(
+	{},
+	_this2.state[index],
+	_this2.props.events[namespace][eventName](evt,childProps,index))));}};
+	
+	
+	
+	
+	
+	return events?
+	Object.keys(this.props.events[namespace]).reduce(function(memo,event){
+	memo[event]=onEvent;
+	return memo;},
+	{}):{};},
+	
+	
+	getEventState:function getEventState(index,namespace){
+	return this.state[index]&&this.state[index][namespace];}};
 
 /***/ },
 /* 32 */
@@ -1781,8 +1573,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var baseProperty = __webpack_require__(33),
 	    basePropertyDeep = __webpack_require__(34),
-	    isKey = __webpack_require__(41),
-	    toKey = __webpack_require__(44);
+	    isKey = __webpack_require__(40),
+	    toKey = __webpack_require__(42);
 	
 	/**
 	 * Creates a function that returns the value at `path` of a given object.
@@ -1860,8 +1652,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports, __webpack_require__) {
 
 	var castPath = __webpack_require__(36),
-	    isKey = __webpack_require__(41),
-	    toKey = __webpack_require__(44);
+	    isKey = __webpack_require__(40),
+	    toKey = __webpack_require__(42);
 	
 	/**
 	 * The base implementation of `_.get` without support for default values.
@@ -1890,8 +1682,8 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 36 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(37),
-	    stringToPath = __webpack_require__(38);
+	var isArray = __webpack_require__(22),
+	    stringToPath = __webpack_require__(37);
 	
 	/**
 	 * Casts `value` to a path array if it's not one.
@@ -1909,44 +1701,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 37 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is classified as an `Array` object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @type {Function}
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isArray([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isArray(document.body.children);
-	 * // => false
-	 *
-	 * _.isArray('abc');
-	 * // => false
-	 *
-	 * _.isArray(_.noop);
-	 * // => false
-	 */
-	var isArray = Array.isArray;
-	
-	module.exports = isArray;
-
-
-/***/ },
-/* 38 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var memoize = __webpack_require__(39),
-	    toString = __webpack_require__(40);
+	var memoize = __webpack_require__(38),
+	    toString = __webpack_require__(39);
 	
 	/** Used to match property names within property paths. */
 	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(\.|\[\])(?:\4|$))/g;
@@ -1970,6 +1728,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	
 	module.exports = stringToPath;
+
+
+/***/ },
+/* 38 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns the first argument given to it.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value Any value.
+	 * @returns {*} Returns `value`.
+	 * @example
+	 *
+	 * var object = { 'user': 'fred' };
+	 *
+	 * console.log(_.identity(object) === object);
+	 * // => true
+	 */
+	function identity(value) {
+	  return value;
+	}
+	
+	module.exports = identity;
 
 
 /***/ },
@@ -2001,37 +1786,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 40 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArray = __webpack_require__(37),
-	    isSymbol = __webpack_require__(42);
+	var isArray = __webpack_require__(22),
+	    isSymbol = __webpack_require__(41);
 	
 	/** Used to match property names within property paths. */
 	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
@@ -2062,10 +1820,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 42 */
+/* 41 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObjectLike = __webpack_require__(43);
+	var isObjectLike = __webpack_require__(25);
 	
 	/** `Object#toString` result references. */
 	var symbolTag = '[object Symbol]';
@@ -2107,42 +1865,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 43 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is object-like. A value is object-like if it's not `null`
-	 * and has a `typeof` result of "object".
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is object-like, else `false`.
-	 * @example
-	 *
-	 * _.isObjectLike({});
-	 * // => true
-	 *
-	 * _.isObjectLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObjectLike(_.noop);
-	 * // => false
-	 *
-	 * _.isObjectLike(null);
-	 * // => false
-	 */
-	function isObjectLike(value) {
-	  return !!value && typeof value == 'object';
-	}
-	
-	module.exports = isObjectLike;
-
-
-/***/ },
-/* 44 */
+/* 42 */
 /***/ function(module, exports) {
 
 	/**
@@ -2169,13 +1892,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 45 */
+/* 43 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createWrapper = __webpack_require__(46),
-	    getHolder = __webpack_require__(63),
-	    replaceHolders = __webpack_require__(67),
-	    rest = __webpack_require__(72);
+	var createWrapper = __webpack_require__(44),
+	    getHolder = __webpack_require__(58),
+	    replaceHolders = __webpack_require__(61),
+	    rest = __webpack_require__(11);
 	
 	/** Used to compose bitmasks for wrapper metadata. */
 	var PARTIAL_FLAG = 32;
@@ -2225,18 +1948,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 46 */
+/* 44 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseSetData = __webpack_require__(47),
-	    createBaseWrapper = __webpack_require__(48),
-	    createCurryWrapper = __webpack_require__(54),
-	    createHybridWrapper = __webpack_require__(56),
-	    createPartialWrapper = __webpack_require__(68),
-	    getData = __webpack_require__(69),
-	    mergeData = __webpack_require__(70),
-	    setData = __webpack_require__(62),
-	    toInteger = __webpack_require__(71);
+	var baseSetData = __webpack_require__(45),
+	    createBaseWrapper = __webpack_require__(46),
+	    createCurryWrapper = __webpack_require__(50),
+	    createHybridWrapper = __webpack_require__(51),
+	    createPartialWrapper = __webpack_require__(62),
+	    getData = __webpack_require__(63),
+	    mergeData = __webpack_require__(64),
+	    setData = __webpack_require__(57),
+	    toInteger = __webpack_require__(12);
 	
 	/** Used as the `TypeError` message for "Functions" methods. */
 	var FUNC_ERROR_TEXT = 'Expected a function';
@@ -2337,7 +2060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 47 */
+/* 45 */
 /***/ function(module, exports) {
 
 	/**
@@ -2364,11 +2087,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 48 */
+/* 46 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createCtorWrapper = __webpack_require__(49),
-	    root = __webpack_require__(52);
+	var createCtorWrapper = __webpack_require__(47),
+	    root = __webpack_require__(16);
 	
 	/** Used to compose bitmasks for wrapper metadata. */
 	var BIND_FLAG = 1;
@@ -2399,11 +2122,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 49 */
+/* 47 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCreate = __webpack_require__(50),
-	    isObject = __webpack_require__(51);
+	var baseCreate = __webpack_require__(48),
+	    isObject = __webpack_require__(49);
 	
 	/**
 	 * Creates a function that produces an instance of `Ctor` regardless of
@@ -2442,10 +2165,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 50 */
+/* 48 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(51);
+	var isObject = __webpack_require__(49);
 	
 	/** Built-in value references. */
 	var objectCreate = Object.create;
@@ -2466,7 +2189,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 51 */
+/* 49 */
 /***/ function(module, exports) {
 
 	/**
@@ -2503,56 +2226,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 52 */
+/* 50 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(global) {var checkGlobal = __webpack_require__(53);
-	
-	/** Detect free variable `global` from Node.js. */
-	var freeGlobal = checkGlobal(typeof global == 'object' && global);
-	
-	/** Detect free variable `self`. */
-	var freeSelf = checkGlobal(typeof self == 'object' && self);
-	
-	/** Detect `this` as the global object. */
-	var thisGlobal = checkGlobal(typeof this == 'object' && this);
-	
-	/** Used as a reference to the global object. */
-	var root = freeGlobal || freeSelf || thisGlobal || Function('return this')();
-	
-	module.exports = root;
-	
-	/* WEBPACK VAR INJECTION */}.call(exports, (function() { return this; }())))
-
-/***/ },
-/* 53 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is a global object.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @returns {null|Object} Returns `value` if it's a global object, else `null`.
-	 */
-	function checkGlobal(value) {
-	  return (value && value.Object === Object) ? value : null;
-	}
-	
-	module.exports = checkGlobal;
-
-
-/***/ },
-/* 54 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var apply = __webpack_require__(55),
-	    createCtorWrapper = __webpack_require__(49),
-	    createHybridWrapper = __webpack_require__(56),
-	    createRecurryWrapper = __webpack_require__(60),
-	    getHolder = __webpack_require__(63),
-	    replaceHolders = __webpack_require__(67),
-	    root = __webpack_require__(52);
+	var apply = __webpack_require__(3),
+	    createCtorWrapper = __webpack_require__(47),
+	    createHybridWrapper = __webpack_require__(51),
+	    createRecurryWrapper = __webpack_require__(55),
+	    getHolder = __webpack_require__(58),
+	    replaceHolders = __webpack_require__(61),
+	    root = __webpack_require__(16);
 	
 	/**
 	 * Creates a function that wraps `func` to enable currying.
@@ -2596,46 +2279,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 55 */
-/***/ function(module, exports) {
-
-	/**
-	 * A faster alternative to `Function#apply`, this function invokes `func`
-	 * with the `this` binding of `thisArg` and the arguments of `args`.
-	 *
-	 * @private
-	 * @param {Function} func The function to invoke.
-	 * @param {*} thisArg The `this` binding of `func`.
-	 * @param {Array} args The arguments to invoke `func` with.
-	 * @returns {*} Returns the result of `func`.
-	 */
-	function apply(func, thisArg, args) {
-	  var length = args.length;
-	  switch (length) {
-	    case 0: return func.call(thisArg);
-	    case 1: return func.call(thisArg, args[0]);
-	    case 2: return func.call(thisArg, args[0], args[1]);
-	    case 3: return func.call(thisArg, args[0], args[1], args[2]);
-	  }
-	  return func.apply(thisArg, args);
-	}
-	
-	module.exports = apply;
-
-
-/***/ },
-/* 56 */
+/* 51 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var composeArgs = __webpack_require__(57),
-	    composeArgsRight = __webpack_require__(58),
-	    countHolders = __webpack_require__(59),
-	    createCtorWrapper = __webpack_require__(49),
-	    createRecurryWrapper = __webpack_require__(60),
-	    getHolder = __webpack_require__(63),
-	    reorder = __webpack_require__(64),
-	    replaceHolders = __webpack_require__(67),
-	    root = __webpack_require__(52);
+	var composeArgs = __webpack_require__(52),
+	    composeArgsRight = __webpack_require__(53),
+	    countHolders = __webpack_require__(54),
+	    createCtorWrapper = __webpack_require__(47),
+	    createRecurryWrapper = __webpack_require__(55),
+	    getHolder = __webpack_require__(58),
+	    reorder = __webpack_require__(59),
+	    replaceHolders = __webpack_require__(61),
+	    root = __webpack_require__(16);
 	
 	/** Used to compose bitmasks for wrapper metadata. */
 	var BIND_FLAG = 1,
@@ -2723,7 +2378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 57 */
+/* 52 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -2768,7 +2423,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 58 */
+/* 53 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -2815,7 +2470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 59 */
+/* 54 */
 /***/ function(module, exports) {
 
 	/**
@@ -2842,11 +2497,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 60 */
+/* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isLaziable = __webpack_require__(61),
-	    setData = __webpack_require__(62);
+	var isLaziable = __webpack_require__(56),
+	    setData = __webpack_require__(57);
 	
 	/** Used to compose bitmasks for wrapper metadata. */
 	var BIND_FLAG = 1,
@@ -2904,7 +2559,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 61 */
+/* 56 */
 /***/ function(module, exports) {
 
 	/**
@@ -2928,7 +2583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 62 */
+/* 57 */
 /***/ function(module, exports) {
 
 	/**
@@ -2955,7 +2610,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 63 */
+/* 58 */
 /***/ function(module, exports) {
 
 	/**
@@ -2974,11 +2629,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 64 */
+/* 59 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var copyArray = __webpack_require__(65),
-	    isIndex = __webpack_require__(66);
+	var copyArray = __webpack_require__(60),
+	    isIndex = __webpack_require__(26);
 	
 	/* Built-in method references for those with the same name as other `lodash` methods. */
 	var nativeMin = Math.min;
@@ -3009,7 +2664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 65 */
+/* 60 */
 /***/ function(module, exports) {
 
 	/**
@@ -3035,35 +2690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 66 */
-/***/ function(module, exports) {
-
-	/** Used as references for various `Number` constants. */
-	var MAX_SAFE_INTEGER = 9007199254740991;
-	
-	/** Used to detect unsigned integer values. */
-	var reIsUint = /^(?:0|[1-9]\d*)$/;
-	
-	/**
-	 * Checks if `value` is a valid array-like index.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @param {number} [length=MAX_SAFE_INTEGER] The upper bounds of a valid index.
-	 * @returns {boolean} Returns `true` if `value` is a valid index, else `false`.
-	 */
-	function isIndex(value, length) {
-	  length = length == null ? MAX_SAFE_INTEGER : length;
-	  return !!length &&
-	    (typeof value == 'number' || reIsUint.test(value)) &&
-	    (value > -1 && value % 1 == 0 && value < length);
-	}
-	
-	module.exports = isIndex;
-
-
-/***/ },
-/* 67 */
+/* 61 */
 /***/ function(module, exports) {
 
 	/** Used as the internal argument placeholder. */
@@ -3098,12 +2725,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 68 */
+/* 62 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(55),
-	    createCtorWrapper = __webpack_require__(49),
-	    root = __webpack_require__(52);
+	var apply = __webpack_require__(3),
+	    createCtorWrapper = __webpack_require__(47),
+	    root = __webpack_require__(16);
 	
 	/** Used to compose bitmasks for wrapper metadata. */
 	var BIND_FLAG = 1;
@@ -3148,7 +2775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 69 */
+/* 63 */
 /***/ function(module, exports) {
 
 	/**
@@ -3171,7 +2798,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 70 */
+/* 64 */
 /***/ function(module, exports) {
 
 	/**
@@ -3198,108 +2825,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 71 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 72 */
+/* 65 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(55),
-	    toInteger = __webpack_require__(71);
-	
-	/** Used as the `TypeError` message for "Functions" methods. */
-	var FUNC_ERROR_TEXT = 'Expected a function';
-	
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeMax = Math.max;
-	
-	/**
-	 * Creates a function that invokes `func` with the `this` binding of the
-	 * created function and arguments from `start` and beyond provided as
-	 * an array.
-	 *
-	 * **Note:** This method is based on the
-	 * [rest parameter](https://mdn.io/rest_parameters).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Function
-	 * @param {Function} func The function to apply a rest parameter to.
-	 * @param {number} [start=func.length-1] The start position of the rest parameter.
-	 * @returns {Function} Returns the new function.
-	 * @example
-	 *
-	 * var say = _.rest(function(what, names) {
-	 *   return what + ' ' + _.initial(names).join(', ') +
-	 *     (_.size(names) > 1 ? ', & ' : '') + _.last(names);
-	 * });
-	 *
-	 * say('hello', 'fred', 'barney', 'pebbles');
-	 * // => 'hello fred, barney, & pebbles'
-	 */
-	function rest(func, start) {
-	  if (typeof func != 'function') {
-	    throw new TypeError(FUNC_ERROR_TEXT);
-	  }
-	  start = nativeMax(start === undefined ? (func.length - 1) : toInteger(start), 0);
-	  return function() {
-	    var args = arguments,
-	        index = -1,
-	        length = nativeMax(args.length - start, 0),
-	        array = Array(length);
-	
-	    while (++index < length) {
-	      array[index] = args[start + index];
-	    }
-	    switch (start) {
-	      case 0: return func.call(this, array);
-	      case 1: return func.call(this, args[0], array);
-	      case 2: return func.call(this, args[0], args[1], array);
-	    }
-	    var otherArgs = Array(start + 1);
-	    index = -1;
-	    while (++index < start) {
-	      otherArgs[index] = args[index];
-	    }
-	    otherArgs[start] = array;
-	    return apply(func, this, otherArgs);
-	  };
-	}
-	
-	module.exports = rest;
-
-
-/***/ },
-/* 73 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseMerge = __webpack_require__(74),
-	    createAssigner = __webpack_require__(108);
+	var baseMerge = __webpack_require__(66),
+	    createAssigner = __webpack_require__(9);
 	
 	/**
 	 * This method is like `_.assign` except that it recursively merges own and
@@ -3340,17 +2870,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 74 */
+/* 66 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Stack = __webpack_require__(75),
-	    arrayEach = __webpack_require__(83),
-	    assignMergeValue = __webpack_require__(84),
-	    baseMergeDeep = __webpack_require__(85),
-	    isArray = __webpack_require__(37),
-	    isObject = __webpack_require__(51),
-	    isTypedArray = __webpack_require__(96),
-	    keysIn = __webpack_require__(100);
+	var Stack = __webpack_require__(67),
+	    arrayEach = __webpack_require__(74),
+	    assignMergeValue = __webpack_require__(75),
+	    baseMergeDeep = __webpack_require__(76),
+	    isArray = __webpack_require__(22),
+	    isObject = __webpack_require__(49),
+	    isTypedArray = __webpack_require__(85),
+	    keysIn = __webpack_require__(13);
 	
 	/**
 	 * The base implementation of `_.merge` without support for multiple sources.
@@ -3396,14 +2926,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 75 */
+/* 67 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var listCacheClear = __webpack_require__(76),
-	    listCacheDelete = __webpack_require__(77),
-	    listCacheGet = __webpack_require__(80),
-	    listCacheHas = __webpack_require__(81),
-	    listCacheSet = __webpack_require__(82);
+	var listCacheClear = __webpack_require__(68),
+	    listCacheDelete = __webpack_require__(69),
+	    listCacheGet = __webpack_require__(71),
+	    listCacheHas = __webpack_require__(72),
+	    listCacheSet = __webpack_require__(73);
 	
 	/**
 	 * Creates an list cache object.
@@ -3434,7 +2964,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 76 */
+/* 68 */
 /***/ function(module, exports) {
 
 	/**
@@ -3452,10 +2982,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 77 */
+/* 69 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(78);
+	var assocIndexOf = __webpack_require__(70);
 	
 	/** Used for built-in method references. */
 	var arrayProto = Array.prototype;
@@ -3492,10 +3022,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 78 */
+/* 70 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var eq = __webpack_require__(79);
+	var eq = __webpack_require__(5);
 	
 	/**
 	 * Gets the index at which the `key` is found in `array` of key-value pairs.
@@ -3519,53 +3049,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 79 */
-/***/ function(module, exports) {
-
-	/**
-	 * Performs a
-	 * [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
-	 * comparison between two values to determine if they are equivalent.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to compare.
-	 * @param {*} other The other value to compare.
-	 * @returns {boolean} Returns `true` if the values are equivalent, else `false`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 * var other = { 'user': 'fred' };
-	 *
-	 * _.eq(object, object);
-	 * // => true
-	 *
-	 * _.eq(object, other);
-	 * // => false
-	 *
-	 * _.eq('a', 'a');
-	 * // => true
-	 *
-	 * _.eq('a', Object('a'));
-	 * // => false
-	 *
-	 * _.eq(NaN, NaN);
-	 * // => true
-	 */
-	function eq(value, other) {
-	  return value === other || (value !== value && other !== other);
-	}
-	
-	module.exports = eq;
-
-
-/***/ },
-/* 80 */
+/* 71 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(78);
+	var assocIndexOf = __webpack_require__(70);
 	
 	/**
 	 * Gets the list cache value for `key`.
@@ -3587,10 +3074,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 81 */
+/* 72 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(78);
+	var assocIndexOf = __webpack_require__(70);
 	
 	/**
 	 * Checks if a list cache value for `key` exists.
@@ -3609,10 +3096,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 82 */
+/* 73 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assocIndexOf = __webpack_require__(78);
+	var assocIndexOf = __webpack_require__(70);
 	
 	/**
 	 * Sets the list cache `key` to `value`.
@@ -3640,7 +3127,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 83 */
+/* 74 */
 /***/ function(module, exports) {
 
 	/**
@@ -3668,10 +3155,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 84 */
+/* 75 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var eq = __webpack_require__(79);
+	var eq = __webpack_require__(5);
 	
 	/**
 	 * This function is like `assignValue` except that it doesn't assign
@@ -3693,20 +3180,20 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 85 */
+/* 76 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignMergeValue = __webpack_require__(84),
-	    baseClone = __webpack_require__(86),
-	    copyArray = __webpack_require__(65),
-	    isArguments = __webpack_require__(87),
-	    isArray = __webpack_require__(37),
-	    isArrayLikeObject = __webpack_require__(88),
-	    isFunction = __webpack_require__(91),
-	    isObject = __webpack_require__(51),
-	    isPlainObject = __webpack_require__(93),
-	    isTypedArray = __webpack_require__(96),
-	    toPlainObject = __webpack_require__(97);
+	var assignMergeValue = __webpack_require__(75),
+	    baseClone = __webpack_require__(77),
+	    copyArray = __webpack_require__(60),
+	    isArguments = __webpack_require__(21),
+	    isArray = __webpack_require__(22),
+	    isArrayLikeObject = __webpack_require__(78),
+	    isFunction = __webpack_require__(81),
+	    isObject = __webpack_require__(49),
+	    isPlainObject = __webpack_require__(82),
+	    isTypedArray = __webpack_require__(85),
+	    toPlainObject = __webpack_require__(86);
 	
 	/**
 	 * A specialized version of `baseMerge` for arrays and objects which performs
@@ -3782,7 +3269,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 86 */
+/* 77 */
 /***/ function(module, exports) {
 
 	/**
@@ -3809,35 +3296,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 87 */
-/***/ function(module, exports) {
-
-	/**
-	 * A method that returns `false`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.13.0
-	 * @category Util
-	 * @returns {boolean} Returns `false`.
-	 * @example
-	 *
-	 * _.times(2, _.stubFalse);
-	 * // => [false, false]
-	 */
-	function stubFalse() {
-	  return false;
-	}
-	
-	module.exports = stubFalse;
-
-
-/***/ },
-/* 88 */
+/* 78 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(89),
-	    isObjectLike = __webpack_require__(43);
+	var isArrayLike = __webpack_require__(79),
+	    isObjectLike = __webpack_require__(25);
 	
 	/**
 	 * This method is like `_.isArrayLike` except that it also checks if `value`
@@ -3872,12 +3335,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 89 */
+/* 79 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getLength = __webpack_require__(90),
-	    isFunction = __webpack_require__(91),
-	    isLength = __webpack_require__(92);
+	var getLength = __webpack_require__(80),
+	    isFunction = __webpack_require__(81),
+	    isLength = __webpack_require__(23);
 	
 	/**
 	 * Checks if `value` is array-like. A value is considered array-like if it's
@@ -3912,7 +3375,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 90 */
+/* 80 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseProperty = __webpack_require__(33);
@@ -3934,10 +3397,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 91 */
+/* 81 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(51);
+	var isObject = __webpack_require__(49);
 	
 	/** `Object#toString` result references. */
 	var funcTag = '[object Function]',
@@ -3983,54 +3446,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 92 */
-/***/ function(module, exports) {
-
-	/** Used as references for various `Number` constants. */
-	var MAX_SAFE_INTEGER = 9007199254740991;
-	
-	/**
-	 * Checks if `value` is a valid array-like length.
-	 *
-	 * **Note:** This function is loosely based on
-	 * [`ToLength`](http://ecma-international.org/ecma-262/6.0/#sec-tolength).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is a valid length,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isLength(3);
-	 * // => true
-	 *
-	 * _.isLength(Number.MIN_VALUE);
-	 * // => false
-	 *
-	 * _.isLength(Infinity);
-	 * // => false
-	 *
-	 * _.isLength('3');
-	 * // => false
-	 */
-	function isLength(value) {
-	  return typeof value == 'number' &&
-	    value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER;
-	}
-	
-	module.exports = isLength;
-
-
-/***/ },
-/* 93 */
+/* 82 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(94),
-	    isHostObject = __webpack_require__(95),
-	    isObjectLike = __webpack_require__(43);
+	var getPrototype = __webpack_require__(83),
+	    isHostObject = __webpack_require__(84),
+	    isObjectLike = __webpack_require__(25);
 	
 	/** `Object#toString` result references. */
 	var objectTag = '[object Object]';
@@ -4101,7 +3522,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 94 */
+/* 83 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -4122,7 +3543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 95 */
+/* 84 */
 /***/ function(module, exports) {
 
 	/**
@@ -4146,11 +3567,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 96 */
+/* 85 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isLength = __webpack_require__(92),
-	    isObjectLike = __webpack_require__(43);
+	var isLength = __webpack_require__(23),
+	    isObjectLike = __webpack_require__(25);
 	
 	/** `Object#toString` result references. */
 	var argsTag = '[object Arguments]',
@@ -4232,11 +3653,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 97 */
+/* 86 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var copyObject = __webpack_require__(98),
-	    keysIn = __webpack_require__(100);
+	var copyObject = __webpack_require__(7),
+	    keysIn = __webpack_require__(13);
 	
 	/**
 	 * Converts `value` to a plain object flattening inherited enumerable string
@@ -4270,553 +3691,52 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 98 */
+/* 87 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignValue = __webpack_require__(99);
-	
-	/**
-	 * Copies properties of `source` to `object`.
-	 *
-	 * @private
-	 * @param {Object} source The object to copy properties from.
-	 * @param {Array} props The property identifiers to copy.
-	 * @param {Object} [object={}] The object to copy properties to.
-	 * @param {Function} [customizer] The function to customize copied values.
-	 * @returns {Object} Returns `object`.
-	 */
-	function copyObject(source, props, object, customizer) {
-	  object || (object = {});
-	
-	  var index = -1,
-	      length = props.length;
-	
-	  while (++index < length) {
-	    var key = props[index];
-	
-	    var newValue = customizer
-	      ? customizer(object[key], source[key], key, object, source)
-	      : source[key];
-	
-	    assignValue(object, key, newValue);
-	  }
-	  return object;
-	}
-	
-	module.exports = copyObject;
-
-
-/***/ },
-/* 99 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var eq = __webpack_require__(79);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Assigns `value` to `key` of `object` if the existing value is not equivalent
-	 * using [`SameValueZero`](http://ecma-international.org/ecma-262/6.0/#sec-samevaluezero)
-	 * for equality comparisons.
-	 *
-	 * @private
-	 * @param {Object} object The object to modify.
-	 * @param {string} key The key of the property to assign.
-	 * @param {*} value The value to assign.
-	 */
-	function assignValue(object, key, value) {
-	  var objValue = object[key];
-	  if (!(hasOwnProperty.call(object, key) && eq(objValue, value)) ||
-	      (value === undefined && !(key in object))) {
-	    object[key] = value;
-	  }
-	}
-	
-	module.exports = assignValue;
-
-
-/***/ },
-/* 100 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseKeysIn = __webpack_require__(101),
-	    indexKeys = __webpack_require__(104),
-	    isIndex = __webpack_require__(66),
-	    isPrototype = __webpack_require__(107);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Creates an array of the own and inherited enumerable property names of `object`.
-	 *
-	 * **Note:** Non-object values are coerced to objects.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 3.0.0
-	 * @category Object
-	 * @param {Object} object The object to query.
-	 * @returns {Array} Returns the array of property names.
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.a = 1;
-	 *   this.b = 2;
-	 * }
-	 *
-	 * Foo.prototype.c = 3;
-	 *
-	 * _.keysIn(new Foo);
-	 * // => ['a', 'b', 'c'] (iteration order is not guaranteed)
-	 */
-	function keysIn(object) {
-	  var index = -1,
-	      isProto = isPrototype(object),
-	      props = baseKeysIn(object),
-	      propsLength = props.length,
-	      indexes = indexKeys(object),
-	      skipIndexes = !!indexes,
-	      result = indexes || [],
-	      length = result.length;
-	
-	  while (++index < propsLength) {
-	    var key = props[index];
-	    if (!(skipIndexes && (key == 'length' || isIndex(key, length))) &&
-	        !(key == 'constructor' && (isProto || !hasOwnProperty.call(object, key)))) {
-	      result.push(key);
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = keysIn;
-
-
-/***/ },
-/* 101 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var Reflect = __webpack_require__(102),
-	    iteratorToArray = __webpack_require__(103);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Built-in value references. */
-	var enumerate = Reflect ? Reflect.enumerate : undefined,
-	    propertyIsEnumerable = objectProto.propertyIsEnumerable;
-	
-	/**
-	 * The base implementation of `_.keysIn` which doesn't skip the constructor
-	 * property of prototypes or treat sparse arrays as dense.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @returns {Array} Returns the array of property names.
-	 */
-	function baseKeysIn(object) {
-	  object = object == null ? object : Object(object);
-	
-	  var result = [];
-	  for (var key in object) {
-	    result.push(key);
-	  }
-	  return result;
-	}
-	
-	// Fallback for IE < 9 with es6-shim.
-	if (enumerate && !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf')) {
-	  baseKeysIn = function(object) {
-	    return iteratorToArray(enumerate(object));
-	  };
-	}
-	
-	module.exports = baseKeysIn;
-
-
-/***/ },
-/* 102 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var root = __webpack_require__(52);
-	
-	/** Built-in value references. */
-	var Reflect = root.Reflect;
-	
-	module.exports = Reflect;
-
-
-/***/ },
-/* 103 */
-/***/ function(module, exports) {
-
-	/**
-	 * Converts `iterator` to an array.
-	 *
-	 * @private
-	 * @param {Object} iterator The iterator to convert.
-	 * @returns {Array} Returns the converted array.
-	 */
-	function iteratorToArray(iterator) {
-	  var data,
-	      result = [];
-	
-	  while (!(data = iterator.next()).done) {
-	    result.push(data.value);
-	  }
-	  return result;
-	}
-	
-	module.exports = iteratorToArray;
-
-
-/***/ },
-/* 104 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseTimes = __webpack_require__(105),
-	    isArguments = __webpack_require__(87),
-	    isArray = __webpack_require__(37),
-	    isLength = __webpack_require__(92),
-	    isString = __webpack_require__(106);
-	
-	/**
-	 * Creates an array of index keys for `object` values of arrays,
-	 * `arguments` objects, and strings, otherwise `null` is returned.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @returns {Array|null} Returns index keys, else `null`.
-	 */
-	function indexKeys(object) {
-	  var length = object ? object.length : undefined;
-	  if (isLength(length) &&
-	      (isArray(object) || isString(object) || isArguments(object))) {
-	    return baseTimes(length, String);
-	  }
-	  return null;
-	}
-	
-	module.exports = indexKeys;
-
-
-/***/ },
-/* 105 */
-/***/ function(module, exports) {
-
-	/**
-	 * The base implementation of `_.times` without support for iteratee shorthands
-	 * or max array length checks.
-	 *
-	 * @private
-	 * @param {number} n The number of times to invoke `iteratee`.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Array} Returns the array of results.
-	 */
-	function baseTimes(n, iteratee) {
-	  var index = -1,
-	      result = Array(n);
-	
-	  while (++index < n) {
-	    result[index] = iteratee(index);
-	  }
-	  return result;
-	}
-	
-	module.exports = baseTimes;
-
-
-/***/ },
-/* 106 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isArray = __webpack_require__(37),
-	    isObjectLike = __webpack_require__(43);
-	
-	/** `Object#toString` result references. */
-	var stringTag = '[object String]';
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is classified as a `String` primitive or object.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isString('abc');
-	 * // => true
-	 *
-	 * _.isString(1);
-	 * // => false
-	 */
-	function isString(value) {
-	  return typeof value == 'string' ||
-	    (!isArray(value) && isObjectLike(value) && objectToString.call(value) == stringTag);
-	}
-	
-	module.exports = isString;
-
-
-/***/ },
-/* 107 */
-/***/ function(module, exports) {
-
-	/**
-	 * A method that returns `false`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.13.0
-	 * @category Util
-	 * @returns {boolean} Returns `false`.
-	 * @example
-	 *
-	 * _.times(2, _.stubFalse);
-	 * // => [false, false]
-	 */
-	function stubFalse() {
-	  return false;
-	}
-	
-	module.exports = stubFalse;
-
-
-/***/ },
-/* 108 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isIterateeCall = __webpack_require__(109),
-	    rest = __webpack_require__(72);
-	
-	/**
-	 * Creates a function like `_.assign`.
-	 *
-	 * @private
-	 * @param {Function} assigner The function to assign values.
-	 * @returns {Function} Returns the new assigner function.
-	 */
-	function createAssigner(assigner) {
-	  return rest(function(object, sources) {
-	    var index = -1,
-	        length = sources.length,
-	        customizer = length > 1 ? sources[length - 1] : undefined,
-	        guard = length > 2 ? sources[2] : undefined;
-	
-	    customizer = (assigner.length > 3 && typeof customizer == 'function')
-	      ? (length--, customizer)
-	      : undefined;
-	
-	    if (guard && isIterateeCall(sources[0], sources[1], guard)) {
-	      customizer = length < 3 ? undefined : customizer;
-	      length = 1;
-	    }
-	    object = Object(object);
-	    while (++index < length) {
-	      var source = sources[index];
-	      if (source) {
-	        assigner(object, source, index, customizer);
-	      }
-	    }
-	    return object;
-	  });
-	}
-	
-	module.exports = createAssigner;
-
-
-/***/ },
-/* 109 */
-/***/ function(module, exports) {
-
-	/**
-	 * A method that returns `false`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.13.0
-	 * @category Util
-	 * @returns {boolean} Returns `false`.
-	 * @example
-	 *
-	 * _.times(2, _.stubFalse);
-	 * // => [false, false]
-	 */
-	function stubFalse() {
-	  return false;
-	}
-	
-	module.exports = stubFalse;
-
-
-/***/ },
-/* 110 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var apply = __webpack_require__(55),
-	    assignInDefaults = __webpack_require__(111),
-	    assignInWith = __webpack_require__(112),
-	    rest = __webpack_require__(72);
-	
-	/**
-	 * Assigns own and inherited enumerable string keyed properties of source
-	 * objects to the destination object for all destination properties that
-	 * resolve to `undefined`. Source objects are applied from left to right.
-	 * Once a property is set, additional values of the same property are ignored.
-	 *
-	 * **Note:** This method mutates `object`.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} [sources] The source objects.
-	 * @returns {Object} Returns `object`.
-	 * @see _.defaultsDeep
-	 * @example
-	 *
-	 * _.defaults({ 'user': 'barney' }, { 'age': 36 }, { 'user': 'fred' });
-	 * // => { 'user': 'barney', 'age': 36 }
-	 */
-	var defaults = rest(function(args) {
-	  args.push(undefined, assignInDefaults);
-	  return apply(assignInWith, undefined, args);
-	});
-	
-	module.exports = defaults;
-
-
-/***/ },
-/* 111 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var eq = __webpack_require__(79);
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
-	
-	/**
-	 * Used by `_.defaults` to customize its `_.assignIn` use.
-	 *
-	 * @private
-	 * @param {*} objValue The destination value.
-	 * @param {*} srcValue The source value.
-	 * @param {string} key The key of the property to assign.
-	 * @param {Object} object The parent object of `objValue`.
-	 * @returns {*} Returns the value to assign.
-	 */
-	function assignInDefaults(objValue, srcValue, key, object) {
-	  if (objValue === undefined ||
-	      (eq(objValue, objectProto[key]) && !hasOwnProperty.call(object, key))) {
-	    return srcValue;
-	  }
-	  return objValue;
-	}
-	
-	module.exports = assignInDefaults;
-
-
-/***/ },
-/* 112 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var copyObject = __webpack_require__(98),
-	    createAssigner = __webpack_require__(108),
-	    keysIn = __webpack_require__(100);
-	
-	/**
-	 * This method is like `_.assignIn` except that it accepts `customizer`
-	 * which is invoked to produce the assigned values. If `customizer` returns
-	 * `undefined`, assignment is handled by the method instead. The `customizer`
-	 * is invoked with five arguments: (objValue, srcValue, key, object, source).
-	 *
-	 * **Note:** This method mutates `object`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @alias extendWith
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} sources The source objects.
-	 * @param {Function} [customizer] The function to customize assigned values.
-	 * @returns {Object} Returns `object`.
-	 * @see _.assignWith
-	 * @example
-	 *
-	 * function customizer(objValue, srcValue) {
-	 *   return _.isUndefined(objValue) ? srcValue : objValue;
-	 * }
-	 *
-	 * var defaults = _.partialRight(_.assignInWith, customizer);
-	 *
-	 * defaults({ 'a': 1 }, { 'b': 2 }, { 'a': 3 });
-	 * // => { 'a': 1, 'b': 2 }
-	 */
-	var assignInWith = createAssigner(function(object, source, srcIndex, customizer) {
-	  copyObject(source, keysIn(source), object, customizer);
-	});
-	
-	module.exports = assignInWith;
-
-
-/***/ },
-/* 113 */
-/***/ function(module, exports, __webpack_require__) {
-
-	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	/* global console */
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";Object.defineProperty(exports,"__esModule",{value:true});/* global console */
 	/* eslint-disable no-console */
 	
 	// TODO: Use "warning" npm module like React is switching to.
-	exports.default = {
-	  warn: function warn(message) {
-	    if (process.env.NODE_ENV !== "production") {
-	      if (console && console.warn) {
-	        console.warn(message);
-	      }
-	    }
-	  }
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(114)))
+	exports.default={
+	warn:function warn(message){
+	if(process.env.NODE_ENV!=="production"){
+	if(console&&console.warn){
+	console.warn(message);}}}};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(88)))
 
 /***/ },
-/* 114 */
+/* 88 */
 /***/ function(module, exports) {
 
 	// shim for using process in browser
 	
 	var process = module.exports = {};
+	
+	// cached from whatever global is present so that test runners that stub it
+	// don't break things.  But we need to wrap it in a try catch in case it is
+	// wrapped in strict mode code which doesn't define any globals.  It's inside a
+	// function because try/catches deoptimize in certain engines.
+	
+	var cachedSetTimeout;
+	var cachedClearTimeout;
+	
+	(function () {
+	  try {
+	    cachedSetTimeout = setTimeout;
+	  } catch (e) {
+	    cachedSetTimeout = function () {
+	      throw new Error('setTimeout is not defined');
+	    }
+	  }
+	  try {
+	    cachedClearTimeout = clearTimeout;
+	  } catch (e) {
+	    cachedClearTimeout = function () {
+	      throw new Error('clearTimeout is not defined');
+	    }
+	  }
+	} ())
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -4841,7 +3761,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = setTimeout(cleanUpNextTick);
+	    var timeout = cachedSetTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -4858,7 +3778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    clearTimeout(timeout);
+	    cachedClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -4870,7 +3790,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        setTimeout(drainQueue, 0);
+	        cachedSetTimeout(drainQueue, 0);
 	    }
 	};
 	
@@ -4911,20 +3831,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 115 */
+/* 89 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _reduceCssCalc = __webpack_require__(116);
-	
-	var _reduceCssCalc2 = _interopRequireDefault(_reduceCssCalc);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _reduceCssCalc=__webpack_require__(90);var _reduceCssCalc2=_interopRequireDefault(_reduceCssCalc);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
 	/**
 	 * Given an object with CSS/SVG transform definitions, return the string value
@@ -4935,70 +3845,68 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Object} obj An object of transform definitions.
 	 * @returns {String} The generated transform string.
 	 */
-	var toTransformString = function toTransformString(obj) {
-	  for (var _len = arguments.length, more = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-	    more[_key - 1] = arguments[_key];
-	  }
+	var toTransformString=function toTransformString(obj){for(var _len=arguments.length,more=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){more[_key-1]=arguments[_key];}
+	if(more.length>0){
+	return more.reduce(function(memo,currentObj){
+	return[memo,toTransformString(currentObj)].join(" ");},
+	toTransformString(obj));}else
+	{
+	if(!obj||typeof obj==="string"){
+	return obj;}
 	
-	  if (more.length > 0) {
-	    return more.reduce(function (memo, currentObj) {
-	      return [memo, toTransformString(currentObj)].join(" ");
-	    }, toTransformString(obj));
-	  } else {
-	    if (!obj || typeof obj === "string") {
-	      return obj;
-	    }
-	    var transforms = [];
-	    for (var key in obj) {
-	      if (obj.hasOwnProperty(key)) {
-	        var value = obj[key];
-	        transforms.push(key + "(" + value + ")");
-	      }
-	    }
-	    return transforms.join(" ");
-	  }
-	};
-	
-	exports.default = {
-	
-	  toTransformString: toTransformString,
-	
-	  calc: function calc(expr, precision) {
-	    return (0, _reduceCssCalc2.default)("calc(" + expr + ")", precision);
-	  },
+	var transforms=[];
+	for(var key in obj){
+	if(obj.hasOwnProperty(key)){
+	var value=obj[key];
+	transforms.push(key+"("+value+")");}}
 	
 	
-	  /**
+	return transforms.join(" ");}};exports.default=
+	
+	
+	
+	{
+	
+	toTransformString:toTransformString,
+	
+	calc:function calc(expr,precision){
+	return(0,_reduceCssCalc2.default)("calc("+expr+")",precision);},
+	
+	
+	/**
 	   * Given the name of a color scale, getColorScale will return an array
 	   * of 5 hex string values in that color scale. If no 'name' parameter
 	   * is given, it will return the Victory default grayscale.
 	   * @param {String} name The name of the color scale to return (optional).
 	   * @returns {Array} An array of 5 hex string values composing a color scale.
 	   */
-	  getColorScale: function getColorScale(name) {
-	    var scales = {
-	      greyscale: ["#7d7d7d", "#5e5e5e", "#969696", "#bdbdbd", "#000000"],
-	      qualitative: ["#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49", "#4F7DA1", "#55DBC1", "#EFDA97", "#E2A37F", "#DF948A"],
-	      heatmap: ["#428517", "#77D200", "#D6D305", "#EC8E19", "#C92B05"],
-	      warm: ["#940031", "#C43343", "#DC5429", "#FF821D", "#FFAF55"],
-	      cool: ["#2746B9", "#0B69D4", "#2794DB", "#31BB76", "#60E83B"],
-	      red: ["#611310", "#7D1D1D", "#B02928", "#B02928", "#D86B67"],
-	      blue: ["#002C61", "#004B8F", "#006BC9", "#3795E5", "#65B4F4"],
-	      green: ["#354722", "#466631", "#649146", "#8AB25C", "#A9C97E"]
-	    };
-	    return name ? scales[name] : scales.greyscale;
-	  }
-	};
+	getColorScale:function getColorScale(name){
+	var scales={
+	greyscale:[
+	"#7d7d7d","#5e5e5e","#969696","#bdbdbd","#000000"],
+	
+	qualitative:[
+	"#334D5C","#45B29D","#EFC94C","#E27A3F","#DF5A49",
+	"#4F7DA1","#55DBC1","#EFDA97","#E2A37F","#DF948A"],
+	
+	heatmap:["#428517","#77D200","#D6D305","#EC8E19","#C92B05"],
+	warm:["#940031","#C43343","#DC5429","#FF821D","#FFAF55"],
+	cool:["#2746B9","#0B69D4","#2794DB","#31BB76","#60E83B"],
+	red:["#611310","#7D1D1D","#B02928","#B02928","#D86B67"],
+	blue:["#002C61","#004B8F","#006BC9","#3795E5","#65B4F4"],
+	green:["#354722","#466631","#649146","#8AB25C","#A9C97E"]};
+	
+	return name?scales[name]:scales.greyscale;}};
 
 /***/ },
-/* 116 */
+/* 90 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/**
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(117)
-	var reduceFunctionCall = __webpack_require__(118)
+	var balanced = __webpack_require__(91)
+	var reduceFunctionCall = __webpack_require__(92)
 	
 	/**
 	 * Constantes
@@ -5154,7 +4062,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 117 */
+/* 91 */
 /***/ function(module, exports) {
 
 	module.exports = function(a, b, str) {
@@ -5184,13 +4092,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 118 */
+/* 92 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
 	 * Module dependencies
 	 */
-	var balanced = __webpack_require__(119)
+	var balanced = __webpack_require__(93)
 	
 	/**
 	 * Expose `reduceFunctionCall`
@@ -5264,7 +4172,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 119 */
+/* 93 */
 /***/ function(module, exports) {
 
 	module.exports = function(a, b, str) {
@@ -5294,22 +4202,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 120 */
+/* 94 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(process) {"use strict";
+	/* WEBPACK VAR INJECTION */(function(process) {"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _isFunction2 = __webpack_require__(91);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _react = __webpack_require__(28);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _react=__webpack_require__(28);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
 	/**
 	 * Return a new validator based on `validator` but with the option to chain
@@ -5317,31 +4215,28 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * does it internally, but they don't expose their helper for us to use.
 	 * @param {Function} validator Validation function.
 	 * @returns {Function} Validator with `isRequired` option.
-	 */
-	/* global console */
-	var makeChainable = function makeChainable(validator) {
-	  /* eslint-disable max-params */
-	  var _chainable = function _chainable(isRequired, props, propName, componentName) {
-	    var value = props[propName];
-	    if (typeof value === "undefined" || value === null) {
-	      if (isRequired) {
-	        return new Error("Required `" + propName + "` was not specified in `" + componentName + "`.");
-	      }
-	      return null;
-	    }
-	    return validator(props, propName, componentName);
-	  };
-	  var chainable = _chainable.bind(null, false);
-	  chainable.isRequired = _chainable.bind(null, true);
-	  return chainable;
-	};
+	 *//* global console */
+	var makeChainable=function makeChainable(validator){
+	/* eslint-disable max-params */
+	var _chainable=function _chainable(isRequired,props,propName,componentName){
+	var value=props[propName];
+	if(typeof value==="undefined"||value===null){
+	if(isRequired){
+	return new Error("Required `"+
+	propName+"` was not specified in `"+componentName+"`.");}
 	
-	var nullConstructor = function nullConstructor() {
-	  return null;
-	};
-	var undefinedConstructor = function undefinedConstructor() {
-	  return undefined;
-	};
+	
+	return null;}
+	
+	return validator(props,propName,componentName);};
+	
+	var chainable=_chainable.bind(null,false);
+	chainable.isRequired=_chainable.bind(null,true);
+	return chainable;};
+	
+	
+	var nullConstructor=function nullConstructor(){return null;};
+	var undefinedConstructor=function undefinedConstructor(){return undefined;};
 	
 	/**
 	 * Get the constructor of `value`. If `value` is null or undefined, return the
@@ -5349,15 +4244,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {*} value Instance to return the constructor of.
 	 * @returns {Function} Constructor of `value`.
 	 */
-	var getConstructor = function getConstructor(value) {
-	  if (typeof value === "undefined") {
-	    return undefinedConstructor;
-	  } else if (value === null) {
-	    return nullConstructor;
-	  } else {
-	    return value.constructor;
-	  }
-	};
+	var getConstructor=function getConstructor(value){
+	if(typeof value==="undefined"){
+	return undefinedConstructor;}else
+	if(value===null){
+	return nullConstructor;}else
+	{
+	return value.constructor;}};
+	
+	
 	
 	/**
 	 * Get the name of the constructor used to create `value`, using
@@ -5366,382 +4261,381 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {*} value Instance to return the constructor name of.
 	 * @returns {String} Name of the constructor.
 	 */
-	var getConstructorName = function getConstructorName(value) {
-	  if (typeof value === "undefined") {
-	    return "undefined";
-	  } else if (value === null) {
-	    return "null";
-	  }
-	  return Object.prototype.toString.call(value).slice(8, -1);
-	};
+	var getConstructorName=function getConstructorName(value){
+	if(typeof value==="undefined"){
+	return"undefined";}else
+	if(value===null){
+	return"null";}
 	
-	exports.default = {
-	  /**
+	return Object.prototype.toString.call(value).slice(8,-1);};exports.default=
+	
+	
+	{
+	/**
 	   * Return a new validator based on `propType` but which logs a `console.error`
 	   * with `explanation` if used.
 	   * @param {Function} propType The old, deprecated propType.
 	   * @param {String} explanation The message to provide the user of the deprecated propType.
 	   * @returns {Function} Validator which logs usage of this propType
 	   */
-	
-	  deprecated: function deprecated(propType, explanation) {
-	    return function (props, propName, componentName) {
-	      if (process.env.NODE_ENV !== "production") {
-	        /* eslint-disable no-console */
-	        if (typeof console !== "undefined" && console.error) {
-	          if (props[propName] !== null) {
-	            console.error(false, "\"" + propName + "\" property of \"" + componentName + "\" has been deprecated " + explanation);
-	          }
-	        }
-	        /* eslint-enable no-console */
-	      }
-	      return propType(props, propName, componentName);
-	    };
-	  },
+	deprecated:function deprecated(propType,explanation){
+	return function(props,propName,componentName){
+	if(process.env.NODE_ENV!=="production"){
+	/* eslint-disable no-console */
+	if(typeof console!=="undefined"&&console.error){
+	if(props[propName]!==null){
+	console.error(false,"\""+
+	propName+"\" property of \""+componentName+"\" has been deprecated "+explanation);}}
 	
 	
-	  /**
+	/* eslint-enable no-console */}
+	
+	return propType(props,propName,componentName);};},
+	
+	
+	
+	/**
 	   * Return a new validator which returns true
 	   * if and only if all validators passed as arguments return true.
 	   * Like React.propTypes.oneOfType, except "all" instead of "any"
 	   * @param {Array} validators Validation functions.
 	   * @returns {Function} Combined validator function
 	   */
-	  allOfType: function allOfType(validators) {
-	    return makeChainable(function (props, propName, componentName) {
-	      var error = validators.reduce(function (result, validator) {
-	        return result || validator(props, propName, componentName);
-	      }, undefined);
-	      if (error) {
-	        return error;
-	      }
-	    });
-	  },
+	allOfType:function allOfType(validators){
+	return makeChainable(function(props,propName,componentName){
+	var error=validators.reduce(function(result,validator){
+	return result||validator(props,propName,componentName);},
+	undefined);
+	if(error){
+	return error;}});},
 	
 	
-	  /**
+	
+	
+	/**
 	   * Check that the value is a non-negative number.
 	   */
-	  nonNegative: makeChainable(function (props, propName, componentName) {
-	    var error = _react.PropTypes.number(props, propName, componentName);
-	    if (error) {
-	      return error;
-	    }
-	    var value = props[propName];
-	    if (value < 0) {
-	      return new Error("`" + propName + "` in `" + componentName + "` must be non-negative.");
-	    }
-	  }),
+	nonNegative:makeChainable(function(props,propName,componentName){
+	var error=_react.PropTypes.number(props,propName,componentName);
+	if(error){
+	return error;}
 	
-	  /**
+	var value=props[propName];
+	if(value<0){
+	return new Error("`"+
+	propName+"` in `"+componentName+"` must be non-negative.");}}),
+	
+	
+	
+	
+	/**
 	   * Check that the value is an integer.
 	   */
-	  integer: makeChainable(function (props, propName, componentName) {
-	    var error = _react.PropTypes.number(props, propName, componentName);
-	    if (error) {
-	      return error;
-	    }
-	    var value = props[propName];
-	    if (value % 1 !== 0) {
-	      return new Error("`" + propName + "` in `" + componentName + "` must be an integer.");
-	    }
-	  }),
+	integer:makeChainable(function(props,propName,componentName){
+	var error=_react.PropTypes.number(props,propName,componentName);
+	if(error){
+	return error;}
 	
-	  /**
+	var value=props[propName];
+	if(value%1!==0){
+	return new Error("`"+
+	propName+"` in `"+componentName+"` must be an integer.");}}),
+	
+	
+	
+	
+	/**
 	   * Check that the value is an Array of two unique values.
 	   */
-	  domain: makeChainable(function (props, propName, componentName) {
-	    var error = _react.PropTypes.array(props, propName, componentName);
-	    if (error) {
-	      return error;
-	    }
-	    var value = props[propName];
-	    if (value.length !== 2 || value[1] === value[0]) {
-	      return new Error("`" + propName + "` in `" + componentName + "` must be an array of two unique numeric values.");
-	    }
-	  }),
+	domain:makeChainable(function(props,propName,componentName){
+	var error=_react.PropTypes.array(props,propName,componentName);
+	if(error){
+	return error;}
 	
-	  /**
+	var value=props[propName];
+	if(value.length!==2||value[1]===value[0]){
+	return new Error("`"+
+	propName+"` in `"+componentName+"` must be an array of two unique numeric values.");}}),
+	
+	
+	
+	
+	/**
 	   * Check that the value looks like a d3 `scale` function.
 	   */
-	  scale: makeChainable(function (props, propName, componentName) {
-	    var supportedScaleStrings = ["linear", "time", "log", "sqrt"];
-	    var validScale = function validScale(scl) {
-	      if ((0, _isFunction3.default)(scl)) {
-	        return (0, _isFunction3.default)(scl.copy) && (0, _isFunction3.default)(scl.domain) && (0, _isFunction3.default)(scl.range);
-	      } else if (typeof scl === "string") {
-	        return supportedScaleStrings.indexOf(scl) !== -1;
-	      }
-	      return false;
-	    };
+	scale:makeChainable(function(props,propName,componentName){
+	var supportedScaleStrings=["linear","time","log","sqrt"];
+	var validScale=function validScale(scl){
+	if((0,_isFunction3.default)(scl)){
+	return(0,_isFunction3.default)(scl.copy)&&(0,_isFunction3.default)(scl.domain)&&(0,_isFunction3.default)(scl.range);}else
+	if(typeof scl==="string"){
+	return supportedScaleStrings.indexOf(scl)!==-1;}
 	
-	    var value = props[propName];
-	    if (!validScale(value)) {
-	      return new Error("`" + propName + "` in `" + componentName + "` must be a d3 scale.");
-	    }
-	  }),
+	return false;};
 	
-	  /**
+	
+	var value=props[propName];
+	if(!validScale(value)){
+	return new Error("`"+
+	propName+"` in `"+componentName+"` must be a d3 scale.");}}),
+	
+	
+	
+	
+	/**
 	   * Check that an array contains items of the same type.
 	   */
-	  homogeneousArray: makeChainable(function (props, propName, componentName) {
-	    var error = _react.PropTypes.array(props, propName, componentName);
-	    if (error) {
-	      return error;
-	    }
-	    var value = props[propName];
-	    if (value.length > 1) {
-	      var _constructor = getConstructor(value[0]);
-	      for (var i = 1; i < value.length; i++) {
-	        var otherConstructor = getConstructor(value[i]);
-	        if (_constructor !== otherConstructor) {
-	          var constructorName = getConstructorName(value[0]);
-	          var otherConstructorName = getConstructorName(value[i]);
-	          return new Error("Expected `" + propName + "` in `" + componentName + "` to be a " + ("homogeneous array, but found types `" + constructorName + "` and ") + ("`" + otherConstructorName + "`."));
-	        }
-	      }
-	    }
-	  }),
+	homogeneousArray:makeChainable(function(props,propName,componentName){
+	var error=_react.PropTypes.array(props,propName,componentName);
+	if(error){
+	return error;}
 	
-	  /**
+	var value=props[propName];
+	if(value.length>1){
+	var _constructor=getConstructor(value[0]);
+	for(var i=1;i<value.length;i++){
+	var otherConstructor=getConstructor(value[i]);
+	if(_constructor!==otherConstructor){
+	var constructorName=getConstructorName(value[0]);
+	var otherConstructorName=getConstructorName(value[i]);
+	return new Error(
+	"Expected `"+propName+"` in `"+componentName+"` to be a "+("homogeneous array, but found types `"+
+	constructorName+"` and ")+("`"+
+	otherConstructorName+"`."));}}}}),
+	
+	
+	
+	
+	
+	
+	/**
 	   * Check that array prop length matches props.data.length
 	   */
-	  matchDataLength: makeChainable(function (props, propName) {
-	    if (props[propName] && Array.isArray(props[propName]) && props[propName].length !== props.data.length) {
-	      return new Error("Length of data and " + propName + " arrays must match.");
-	    }
-	  })
-	};
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(114)))
+	matchDataLength:makeChainable(function(props,propName){
+	if(
+	props[propName]&&
+	Array.isArray(props[propName])&&
+	props[propName].length!==props.data.length)
+	{
+	return new Error("Length of data and "+propName+" arrays must match.");}})};
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(88)))
 
 /***/ },
-/* 121 */
+/* 95 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _property2 = __webpack_require__(32);
-	
-	var _property3 = _interopRequireDefault(_property2);
-	
-	var _isEmpty2 = __webpack_require__(122);
-	
-	var _isEmpty3 = _interopRequireDefault(_isEmpty2);
-	
-	var _isFunction2 = __webpack_require__(91);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _partial2 = __webpack_require__(45);
-	
-	var _partial3 = _interopRequireDefault(_partial2);
-	
-	var _merge2 = __webpack_require__(73);
-	
-	var _merge3 = _interopRequireDefault(_merge2);
-	
-	var _extend7 = __webpack_require__(135);
-	
-	var _extend8 = _interopRequireDefault(_extend7);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _property2=__webpack_require__(32);var _property3=_interopRequireDefault(_property2);var _isEmpty2=__webpack_require__(96);var _isEmpty3=_interopRequireDefault(_isEmpty2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _partial2=__webpack_require__(43);var _partial3=_interopRequireDefault(_partial2);var _merge2=__webpack_require__(65);var _merge3=_interopRequireDefault(_merge2);var _extend7=__webpack_require__(109);var _extend8=_interopRequireDefault(_extend7);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _defineProperty(obj,key,value){if(key in obj){Object.defineProperty(obj,key,{value:value,enumerable:true,configurable:true,writable:true});}else{obj[key]=value;}return obj;}
 	
 	/* Example Event Prop
+	    [
+	      {
+	        childName: "firstBar",
+	        target: "data",
+	        eventKey: 1,
+	        eventKey: "thisOne",
+	        eventHandlers: {
+	          onClick: () => {},
+	          ...
+	        }
+	      },
+	      {
+	        target: "labels",
+	        eventHandlers: {
+	          onClick: () => {}
+	        }
+	      }
+	    ]
+	
+	
+	  */
+	
+	/* Example Event handler return
 	  [
 	    {
-	      childName: "firstBar",
+	      childName: "fistBar",
 	      target: "data",
 	      eventKey: 1,
-	      eventKey: "thisOne",
-	      eventHandlers: {
-	        onClick: () => {},
-	        ...
+	      mutation: (propsForTarget) => {
+	        return {style: merge({}, propsForTarget.style, {fill: "red"})}
 	      }
 	    },
 	    {
 	      target: "labels",
-	      eventHandlers: {
-	        onClick: () => {}
-	      }
+	      eventKey: 2,
+	      mutation: () => { return {text: "hello"}; }
 	    }
 	  ]
-	  */
+	  */exports.default=
 	
-	/* Example Event handler return
-	[
-	  {
-	    childName: "fistBar",
-	    target: "data",
-	    eventKey: 1,
-	    mutation: (propsForTarget) => {
-	      return {style: merge({}, propsForTarget.style, {fill: "red"})}
-	    }
-	  },
-	  {
-	    target: "labels",
-	    eventKey: 2,
-	    mutation: () => { return {text: "hello"}; }
-	  }
-	]
-	*/
+	{
+	getPartialEvents:function getPartialEvents(events,eventKey,childProps){
+	return events?
+	Object.keys(events).reduce(function(memo,eventName){
+	/* eslint max-params: 0 */
+	memo[eventName]=(0,_partial3.default)(
+	events[eventName],
+	_partial3.default.placeholder,// evt will still be the first argument for event handlers
+	childProps,// event handlers will have access to data component props, including data
+	eventKey,// used in setting a unique state property
+	eventName// used in setting a unique state property
+	);
+	return memo;},
+	{}):
+	{};},
 	
-	exports.default = {
-	  getPartialEvents: function getPartialEvents(events, eventKey, childProps) {
-	    return events ? Object.keys(events).reduce(function (memo, eventName) {
-	      /* eslint max-params: 0 */
-	      memo[eventName] = (0, _partial3.default)(events[eventName], _partial3.default.placeholder, // evt will still be the first argument for event handlers
-	      childProps, // event handlers will have access to data component props, including data
-	      eventKey, // used in setting a unique state property
-	      eventName // used in setting a unique state property
-	      );
-	      return memo;
-	    }, {}) : {};
-	  },
-	  getScopedEvents: function getScopedEvents(events, namespace, childType, baseProps) {
-	    var _this = this;
 	
-	    baseProps = baseProps || this.baseProps;
-	    var getTargetProps = function getTargetProps(identifier, type) {
-	      var childName = identifier.childName;
-	      var target = identifier.target;
-	      var key = identifier.key;
+	getScopedEvents:function getScopedEvents(events,namespace,childType,baseProps){var _this=this;
+	baseProps=baseProps||this.baseProps;
+	var getTargetProps=function getTargetProps(identifier,type){var
+	childName=identifier.childName;var target=identifier.target;var key=identifier.key;
+	var baseType=type==="props"?baseProps:_this.state;
+	var base=!childName||!baseType[childName]?baseType:baseType[childName];
+	return key==="parent"?base.parent:base[key]&&base[key][target];};
 	
-	      var baseType = type === "props" ? baseProps : _this.state;
-	      var base = !childName || !baseType[childName] ? baseType : baseType[childName];
-	      return key === "parent" ? base.parent : base[key] && base[key][target];
-	    };
 	
-	    var parseEvent = function parseEvent(eventReturn, eventKey) {
-	      var nullFunction = function nullFunction() {
-	        return null;
-	      };
-	      var childName = eventReturn.childName || childType;
-	      var target = eventReturn.target || namespace;
+	var parseEvent=function parseEvent(eventReturn,eventKey){
+	var nullFunction=function nullFunction(){return null;};
+	var childName=eventReturn.childName||childType;
+	var target=eventReturn.target||namespace;
 	
-	      var getKeys = function getKeys() {
-	        if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
-	          return "all";
-	        } else if (eventReturn.eventKey === "all") {
-	          return baseProps[childName] ? Object.keys(baseProps[childName]) : Object.keys(baseProps);
-	        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
-	          return baseProps[childName] ? Object.keys(baseProps[childName]) : Object.keys(baseProps);
-	        }
-	        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
-	      };
-	      var mutationKeys = getKeys();
+	var getKeys=function getKeys(){
+	if(baseProps.all||baseProps[childName]&&baseProps[childName].all){
+	return"all";}else
+	if(eventReturn.eventKey==="all"){
+	return baseProps[childName]?
+	Object.keys(baseProps[childName]):Object.keys(baseProps);}else
+	if(eventReturn.eventKey===undefined&&eventKey==="parent"){
+	return baseProps[childName]?
+	Object.keys(baseProps[childName]):Object.keys(baseProps);}
 	
-	      var getMutationObject = function getMutationObject(key) {
-	        var mutationTargetProps = getTargetProps({ childName: childName, key: key, target: target }, "props");
-	        var mutationTargetState = getTargetProps({ childName: childName, key: key, target: target }, "state");
-	        var mutation = eventReturn.mutation || nullFunction;
-	        var mutatedProps = mutation(Object.assign({}, mutationTargetProps, mutationTargetState), baseProps);
-	        var childState = _this.state[childName] || {};
-	        return childName ? (0, _extend8.default)(_this.state, _defineProperty({}, childName, (0, _extend8.default)(childState, _defineProperty({}, key, (0, _extend8.default)(childState[key], _defineProperty({}, target, mutatedProps)))))) : (0, _extend8.default)(_this.state, _defineProperty({}, key, (0, _extend8.default)(_this.state[key], _defineProperty({}, target, mutatedProps))));
-	      };
-	      return Array.isArray(mutationKeys) ? mutationKeys.reduce(function (memo, k) {
-	        return Object.assign(memo, getMutationObject(k));
-	      }, {}) : getMutationObject(mutationKeys);
-	    };
+	return eventReturn.eventKey!==undefined?eventReturn.eventKey:eventKey;};
 	
-	    var parseEventReturn = function parseEventReturn(eventReturn, eventKey) {
-	      return Array.isArray(eventReturn) ? eventReturn.reduce(function (memo, props) {
-	        memo = (0, _merge3.default)({}, memo, parseEvent(props, eventKey));
-	        return memo;
-	      }, {}) : parseEvent(eventReturn, eventKey);
-	    };
+	var mutationKeys=getKeys();
 	
-	    var onEvent = function onEvent(evt, childProps, eventKey, eventName) {
-	      var eventReturn = events[eventName](evt, childProps, eventKey);
-	      if (eventReturn) {
-	        _this.setState(parseEventReturn(eventReturn, eventKey));
-	      }
-	    };
+	var getMutationObject=function getMutationObject(key){
+	var mutationTargetProps=getTargetProps({childName:childName,key:key,target:target},"props");
+	var mutationTargetState=getTargetProps({childName:childName,key:key,target:target},"state");
+	var mutation=eventReturn.mutation||nullFunction;
+	var mutatedProps=mutation(
+	_extends({},mutationTargetProps,mutationTargetState),baseProps);
 	
-	    return !(0, _isEmpty3.default)(events) ? Object.keys(events).reduce(function (memo, event) {
-	      memo[event] = onEvent;
-	      return memo;
-	    }, {}) : {};
-	  },
-	  getEvents: function getEvents(props, target, eventKey, getScopedEvents) {
-	    var getEventsFromProps = function getEventsFromProps(events) {
+	var childState=_this.state[childName]||{};
+	return childName?
+	(0,_extend8.default)(_this.state,_defineProperty({},
+	childName,(0,_extend8.default)(childState,_defineProperty({},
+	key,(0,_extend8.default)(childState[key],_defineProperty({},target,mutatedProps)))))):
 	
-	      var getSelectedEvents = function getSelectedEvents() {
-	        var targetEvents = events.reduce(function (memo, event) {
-	          if (event.target !== undefined) {
-	            return "" + event.target === "" + target ? memo.concat(event) : memo;
-	          }
-	          return memo.concat(event);
-	        }, []);
 	
-	        if (eventKey !== undefined && target !== "parent") {
-	          return targetEvents.filter(function (obj) {
-	            return obj.eventKey ? "" + obj.eventKey === "" + eventKey : true;
-	          });
-	        }
-	        return targetEvents;
-	      };
+	(0,_extend8.default)(_this.state,_defineProperty({},
+	key,(0,_extend8.default)(_this.state[key],_defineProperty({},target,mutatedProps))));};
 	
-	      var selectedEvents = getSelectedEvents();
-	      return Array.isArray(selectedEvents) && selectedEvents.reduce(function (memo, event) {
-	        return event ? Object.assign(memo, event.eventHandlers) : memo;
-	      }, {});
-	    };
 	
-	    var ownEvents = props.events && getScopedEvents(getEventsFromProps(props.events), target);
-	    if (!props.sharedEvents) {
-	      return ownEvents;
-	    }
-	    var getSharedEvents = props.sharedEvents.getEvents;
-	    var sharedEvents = props.sharedEvents.events && getSharedEvents(getEventsFromProps(props.sharedEvents.events), target);
-	    return Object.assign({}, sharedEvents, ownEvents);
-	  },
-	  getEventState: function getEventState(eventKey, namespace, childType) {
-	    if (!childType) {
-	      return this.state[eventKey] && this.state[eventKey][namespace];
-	    }
-	    return this.state[childType] && this.state[childType][eventKey] && this.state[childType][eventKey][namespace];
-	  },
-	  getEventKey: function getEventKey(key) {
-	    // creates a data accessor function
-	    // given a property key, path, array index, or null for identity.
-	    if ((0, _isFunction3.default)(key)) {
-	      return key;
-	    } else if (key === null || typeof key === "undefined") {
-	      return function () {
-	        return undefined;
-	      };
-	    }
-	    // otherwise, assume it is an array index, property key or path (_.property handles all three)
-	    return (0, _property3.default)(key);
-	  },
-	  addEventKeys: function addEventKeys(props, data) {
-	    var eventKeyAccessor = this.getEventKey(props.eventKey);
-	    return data.map(function (datum, index) {
-	      var eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-	      return Object.assign({ eventKey: eventKey }, datum);
-	    });
-	  }
-	};
+	return Array.isArray(mutationKeys)?
+	mutationKeys.reduce(function(memo,k){
+	return _extends(memo,getMutationObject(k));},
+	{}):
+	getMutationObject(mutationKeys);};
+	
+	
+	
+	var parseEventReturn=function parseEventReturn(eventReturn,eventKey){
+	return Array.isArray(eventReturn)?
+	eventReturn.reduce(function(memo,props){
+	memo=(0,_merge3.default)({},memo,parseEvent(props,eventKey));
+	return memo;},
+	{}):
+	parseEvent(eventReturn,eventKey);};
+	
+	
+	var onEvent=function onEvent(evt,childProps,eventKey,eventName){
+	var eventReturn=events[eventName](evt,childProps,eventKey);
+	if(eventReturn){
+	_this.setState(parseEventReturn(eventReturn,eventKey));}};
+	
+	
+	
+	return!(0,_isEmpty3.default)(events)?
+	Object.keys(events).reduce(function(memo,event){
+	memo[event]=onEvent;
+	return memo;},
+	{}):{};},
+	
+	
+	getEvents:function getEvents(props,target,eventKey,getScopedEvents){
+	var getEventsFromProps=function getEventsFromProps(events){
+	
+	var getSelectedEvents=function getSelectedEvents(){
+	var targetEvents=events.reduce(function(memo,event){
+	if(event.target!==undefined){
+	return""+event.target===""+target?memo.concat(event):memo;}
+	
+	return memo.concat(event);},
+	[]);
+	
+	if(eventKey!==undefined&&target!=="parent"){
+	return targetEvents.filter(function(obj){
+	return obj.eventKey?""+obj.eventKey===""+eventKey:true;});}
+	
+	
+	return targetEvents;};
+	
+	
+	var selectedEvents=getSelectedEvents();
+	return Array.isArray(selectedEvents)&&selectedEvents.reduce(function(memo,event){
+	return event?_extends(memo,event.eventHandlers):memo;},
+	{});};
+	
+	
+	var ownEvents=props.events&&getScopedEvents(getEventsFromProps(props.events),target);
+	if(!props.sharedEvents){
+	return ownEvents;}
+	
+	var getSharedEvents=props.sharedEvents.getEvents;
+	var sharedEvents=props.sharedEvents.events&&
+	getSharedEvents(getEventsFromProps(props.sharedEvents.events),target);
+	return _extends({},sharedEvents,ownEvents);},
+	
+	
+	getEventState:function getEventState(eventKey,namespace,childType){
+	if(!childType){
+	return this.state[eventKey]&&this.state[eventKey][namespace];}
+	
+	return this.state[childType]&&
+	this.state[childType][eventKey]&&
+	this.state[childType][eventKey][namespace];},
+	
+	
+	getEventKey:function getEventKey(key){
+	// creates a data accessor function
+	// given a property key, path, array index, or null for identity.
+	if((0,_isFunction3.default)(key)){
+	return key;}else
+	if(key===null||typeof key==="undefined"){
+	return function(){return undefined;};}
+	
+	// otherwise, assume it is an array index, property key or path (_.property handles all three)
+	return(0,_property3.default)(key);},
+	
+	
+	addEventKeys:function addEventKeys(props,data){
+	var eventKeyAccessor=this.getEventKey(props.eventKey);
+	return data.map(function(datum,index){
+	var eventKey=datum.eventKey||eventKeyAccessor(datum)||index;
+	return _extends({eventKey:eventKey},datum);});}};
 
 /***/ },
-/* 122 */
+/* 96 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getTag = __webpack_require__(123),
-	    isArguments = __webpack_require__(87),
-	    isArray = __webpack_require__(37),
-	    isArrayLike = __webpack_require__(89),
-	    isBuffer = __webpack_require__(131),
-	    isFunction = __webpack_require__(91),
-	    isObjectLike = __webpack_require__(43),
-	    isString = __webpack_require__(106),
-	    keys = __webpack_require__(134);
+	var getTag = __webpack_require__(97),
+	    isArguments = __webpack_require__(21),
+	    isArray = __webpack_require__(22),
+	    isArrayLike = __webpack_require__(79),
+	    isBuffer = __webpack_require__(105),
+	    isFunction = __webpack_require__(81),
+	    isObjectLike = __webpack_require__(25),
+	    isString = __webpack_require__(24),
+	    keys = __webpack_require__(108);
 	
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -5816,15 +4710,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 123 */
+/* 97 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(124),
-	    Map = __webpack_require__(126),
-	    Promise = __webpack_require__(127),
-	    Set = __webpack_require__(128),
-	    WeakMap = __webpack_require__(129),
-	    toSource = __webpack_require__(130);
+	var DataView = __webpack_require__(98),
+	    Map = __webpack_require__(100),
+	    Promise = __webpack_require__(101),
+	    Set = __webpack_require__(102),
+	    WeakMap = __webpack_require__(103),
+	    toSource = __webpack_require__(104);
 	
 	/** `Object#toString` result references. */
 	var mapTag = '[object Map]',
@@ -5892,11 +4786,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 124 */
+/* 98 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(125),
-	    root = __webpack_require__(52);
+	var getNative = __webpack_require__(99),
+	    root = __webpack_require__(16);
 	
 	/* Built-in method references that are verified to be native. */
 	var DataView = getNative(root, 'DataView');
@@ -5905,7 +4799,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 125 */
+/* 99 */
 /***/ function(module, exports) {
 
 	/**
@@ -5924,11 +4818,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 126 */
+/* 100 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(125),
-	    root = __webpack_require__(52);
+	var getNative = __webpack_require__(99),
+	    root = __webpack_require__(16);
 	
 	/* Built-in method references that are verified to be native. */
 	var Map = getNative(root, 'Map');
@@ -5937,11 +4831,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 127 */
+/* 101 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(125),
-	    root = __webpack_require__(52);
+	var getNative = __webpack_require__(99),
+	    root = __webpack_require__(16);
 	
 	/* Built-in method references that are verified to be native. */
 	var Promise = getNative(root, 'Promise');
@@ -5950,11 +4844,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 128 */
+/* 102 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(125),
-	    root = __webpack_require__(52);
+	var getNative = __webpack_require__(99),
+	    root = __webpack_require__(16);
 	
 	/* Built-in method references that are verified to be native. */
 	var Set = getNative(root, 'Set');
@@ -5963,11 +4857,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 129 */
+/* 103 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getNative = __webpack_require__(125),
-	    root = __webpack_require__(52);
+	var getNative = __webpack_require__(99),
+	    root = __webpack_require__(16);
 	
 	/* Built-in method references that are verified to be native. */
 	var WeakMap = getNative(root, 'WeakMap');
@@ -5976,7 +4870,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 130 */
+/* 104 */
 /***/ function(module, exports) {
 
 	/** Used to resolve the decompiled source of functions. */
@@ -6005,11 +4899,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 131 */
+/* 105 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(52),
-	    stubFalse = __webpack_require__(133);
+	/* WEBPACK VAR INJECTION */(function(module) {var root = __webpack_require__(16),
+	    stubFalse = __webpack_require__(107);
 	
 	/** Detect free variable `exports`. */
 	var freeExports = typeof exports == 'object' && exports;
@@ -6046,10 +4940,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	module.exports = isBuffer;
 	
-	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(132)(module)))
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(106)(module)))
 
 /***/ },
-/* 132 */
+/* 106 */
 /***/ function(module, exports) {
 
 	module.exports = function(module) {
@@ -6065,7 +4959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 133 */
+/* 107 */
 /***/ function(module, exports) {
 
 	/**
@@ -6089,7 +4983,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 134 */
+/* 108 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -6111,22 +5005,22 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 135 */
+/* 109 */
 /***/ function(module, exports, __webpack_require__) {
 
-	module.exports = __webpack_require__(136);
+	module.exports = __webpack_require__(110);
 
 
 /***/ },
-/* 136 */
+/* 110 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignValue = __webpack_require__(99),
-	    copyObject = __webpack_require__(98),
-	    createAssigner = __webpack_require__(108),
-	    isArrayLike = __webpack_require__(89),
-	    isPrototype = __webpack_require__(107),
-	    keysIn = __webpack_require__(100);
+	var assignValue = __webpack_require__(8),
+	    copyObject = __webpack_require__(7),
+	    createAssigner = __webpack_require__(9),
+	    isArrayLike = __webpack_require__(79),
+	    isPrototype = __webpack_require__(27),
+	    keysIn = __webpack_require__(13);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -6182,206 +5076,184 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 137 */
+/* 111 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _d3Ease=__webpack_require__(112);var _d3Ease2=_interopRequireDefault(_d3Ease);
+	var _d3Interpolate=__webpack_require__(113);var _d3Interpolate2=_interopRequireDefault(_d3Interpolate);
+	var _d3Timer=__webpack_require__(115);
+	var _util=__webpack_require__(116);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	(0,_util.addVictoryInterpolator)();var
 	
-	var _react = __webpack_require__(28);
+	VictoryAnimation=function(_React$Component){_inherits(VictoryAnimation,_React$Component);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Ease = __webpack_require__(138);
 	
-	var _d3Ease2 = _interopRequireDefault(_d3Ease);
 	
-	var _d3Interpolate = __webpack_require__(139);
 	
-	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
 	
-	var _d3Timer = __webpack_require__(141);
 	
-	var _util = __webpack_require__(142);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	(0, _util.addVictoryInterpolator)();
 	
-	var VictoryAnimation = function (_React$Component) {
-	  _inherits(VictoryAnimation, _React$Component);
 	
-	  function VictoryAnimation(props) {
-	    _classCallCheck(this, VictoryAnimation);
 	
-	    /* defaults */
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryAnimation).call(this, props));
 	
-	    _this.state = Array.isArray(_this.props.data) ? _this.props.data[0] : _this.props.data;
-	    _this.interpolator = null;
-	    _this.queue = Array.isArray(_this.props.data) ? _this.props.data.slice(1) : [];
-	    /* build easing function */
-	    _this.ease = _d3Ease2.default[_this.props.easing];
-	    /*
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryAnimation(props){_classCallCheck(this,VictoryAnimation);
+	
+	/* defaults */var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryAnimation).call(this,props));
+	_this.state=Array.isArray(_this.props.data)?
+	_this.props.data[0]:_this.props.data;
+	_this.interpolator=null;
+	_this.queue=Array.isArray(_this.props.data)?
+	_this.props.data.slice(1):[];
+	/* build easing function */
+	_this.ease=_d3Ease2.default[_this.props.easing];
+	/*
 	      unlike React.createClass({}), there is no autobinding of this in ES6 classes
 	      so we bind functionToBeRunEachFrame to current instance of victory animation class
 	    */
-	    _this.functionToBeRunEachFrame = _this.functionToBeRunEachFrame.bind(_this);
-	    return _this;
-	  }
+	_this.functionToBeRunEachFrame=_this.functionToBeRunEachFrame.bind(_this);return _this;}_createClass(VictoryAnimation,[{key:"componentDidMount",value:function componentDidMount()
 	
-	  _createClass(VictoryAnimation, [{
-	    key: "componentDidMount",
-	    value: function componentDidMount() {
-	      // Length check prevents us from triggering `onEnd` in `traverseQueue`.
-	      if (this.queue.length) {
-	        this.traverseQueue();
-	      }
-	    }
-	    /* lifecycle */
+	{
+	// Length check prevents us from triggering `onEnd` in `traverseQueue`.
+	if(this.queue.length){
+	this.traverseQueue();}}
 	
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      /* cancel existing loop if it exists */
-	      if (this.timer) {
-	        this.timer.stop();
-	      }
-	      /* If an object was supplied */
-	      if (!Array.isArray(nextProps.data)) {
-	        // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
-	        // but let's reuse the same array.
-	        this.queue.length = 0;
-	        this.queue.push(nextProps.data);
-	        /* If an array was supplied */
-	      } else {
-	          var _queue;
 	
-	          /* Extend the tween queue */
-	          (_queue = this.queue).push.apply(_queue, _toConsumableArray(nextProps.data));
-	        }
-	      /* Start traversing the tween queue */
-	      this.traverseQueue();
-	    }
-	  }, {
-	    key: "componentWillUnmount",
-	    value: function componentWillUnmount() {
-	      if (this.timer) {
-	        this.timer.stop();
-	      }
-	    }
-	    /* Traverse the tween queue */
+	/* lifecycle */},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	nextProps){
+	/* cancel existing loop if it exists */
+	if(this.timer){
+	this.timer.stop();}
 	
-	  }, {
-	    key: "traverseQueue",
-	    value: function traverseQueue() {
-	      if (this.queue.length) {
-	        /* Get the next index */
-	        var data = this.queue[0];
-	        /* compare cached version to next props */
-	        this.interpolator = _d3Interpolate2.default.value(this.state, data);
-	        /* reset step to zero */
-	        this.timer = (0, _d3Timer.timer)(this.functionToBeRunEachFrame, this.props.delay);
-	      } else if (this.props.onEnd) {
-	        this.props.onEnd();
-	      }
-	    }
-	    /* every frame we... */
+	/* If an object was supplied */
+	if(!Array.isArray(nextProps.data)){
+	// Replace the tween queue. Could set `this.queue = [nextProps.data]`,
+	// but let's reuse the same array.
+	this.queue.length=0;
+	this.queue.push(nextProps.data);
+	/* If an array was supplied */}else
+	{var _queue;
+	/* Extend the tween queue */
+	(_queue=this.queue).push.apply(_queue,_toConsumableArray(nextProps.data));}
 	
-	  }, {
-	    key: "functionToBeRunEachFrame",
-	    value: function functionToBeRunEachFrame(elapsed) {
-	      /*
-	        step can generate imprecise values, sometimes greater than 1
-	        if this happens set the state to 1 and return, cancelling the timer
-	      */
-	      var step = elapsed / this.props.duration;
+	/* Start traversing the tween queue */
+	this.traverseQueue();}},{key:"componentWillUnmount",value:function componentWillUnmount()
 	
-	      if (step >= 1) {
-	        this.setState(this.interpolator(1));
-	        this.timer.stop();
-	        this.queue.shift();
-	        this.traverseQueue(); // Will take care of calling `onEnd`.
-	        return;
-	      }
-	      /*
-	        if we're not at the end of the timer, set the state by passing
-	        current step value that's transformed by the ease function to the
-	        interpolator, which is cached for performance whenever props are received
-	      */
-	      this.setState(this.interpolator(this.ease(step)));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return this.props.children(this.state);
-	    }
-	  }]);
+	{
+	if(this.timer){
+	this.timer.stop();}}
 	
-	  return VictoryAnimation;
-	}(_react2.default.Component);
 	
-	VictoryAnimation.propTypes = {
-	  /**
-	   * The child of should be a function that takes an object of tweened values
-	   * and returns a component to render.
-	   */
-	  children: _react2.default.PropTypes.func,
-	  /**
-	   * The number of milliseconds the animation should take to complete.
-	   */
-	  duration: _react2.default.PropTypes.number,
-	  /**
-	   * The easing prop specifies an easing function name to use for tweening.
-	   */
-	  easing: _react2.default.PropTypes.oneOf(["back", "backIn", "backOut", "backInOut", "bounce", "bounceIn", "bounceOut", "bounceInOut", "circle", "circleIn", "circleOut", "circleInOut", "linear", "linearIn", "linearOut", "linearInOut", "cubic", "cubicIn", "cubicOut", "cubicInOut", "elastic", "elasticIn", "elasticOut", "elasticInOut", "exp", "expIn", "expOut", "expInOut", "poly", "polyIn", "polyOut", "polyInOut", "quad", "quadIn", "quadOut", "quadInOut", "sin", "sinIn", "sinOut", "sinInOut"]),
-	  /**
-	   * The delay prop specifies a delay in milliseconds before the animation
-	   * begins. If multiple values are in the animation queue, it is the delay
-	   * between each animation.
-	   */
-	  delay: _react2.default.PropTypes.number,
-	  /**
-	   * The onEnd prop specifies a function to run when the animation ends. If
-	   * multiple animations are in the queue, it is called after the last
-	   * animation.
-	   */
-	  onEnd: _react2.default.PropTypes.func,
-	  /**
-	   * The data prop specifies the latest set of values to tween to. When this
-	   * prop changes, VictoryAnimation will begin animating from the current
-	   * value to the new value.
-	   */
-	  data: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object, _react2.default.PropTypes.array])
-	};
-	VictoryAnimation.defaultProps = {
-	  /* length of animation */
-	  duration: 1000,
-	  /* easing modifies step each frame */
-	  easing: "quadInOut",
-	  /* delay between transitions */
-	  delay: 0,
-	  /* we got nothin' */
-	  data: {}
-	};
-	exports.default = VictoryAnimation;
+	/* Traverse the tween queue */},{key:"traverseQueue",value:function traverseQueue()
+	{
+	if(this.queue.length){
+	/* Get the next index */
+	var data=this.queue[0];
+	/* compare cached version to next props */
+	this.interpolator=_d3Interpolate2.default.value(this.state,data);
+	/* reset step to zero */
+	this.timer=(0,_d3Timer.timer)(this.functionToBeRunEachFrame,this.props.delay);}else
+	if(this.props.onEnd){
+	this.props.onEnd();}}
+	
+	
+	/* every frame we... */},{key:"functionToBeRunEachFrame",value:function functionToBeRunEachFrame(
+	elapsed){
+	/*
+	      step can generate imprecise values, sometimes greater than 1
+	      if this happens set the state to 1 and return, cancelling the timer
+	    */
+	var step=elapsed/this.props.duration;
+	
+	if(step>=1){
+	this.setState(this.interpolator(1));
+	this.timer.stop();
+	this.queue.shift();
+	this.traverseQueue();// Will take care of calling `onEnd`.
+	return;}
+	
+	/*
+	      if we're not at the end of the timer, set the state by passing
+	      current step value that's transformed by the ease function to the
+	      interpolator, which is cached for performance whenever props are received
+	    */
+	this.setState(this.interpolator(this.ease(step)));}},{key:"render",value:function render()
+	
+	{
+	return this.props.children(this.state);}}]);return VictoryAnimation;}(_react2.default.Component);VictoryAnimation.propTypes={/**
+	     * The child of should be a function that takes an object of tweened values
+	     * and returns a component to render.
+	     */children:_react2.default.PropTypes.func,/**
+	     * The number of milliseconds the animation should take to complete.
+	     */duration:_react2.default.PropTypes.number,/**
+	     * The easing prop specifies an easing function name to use for tweening.
+	     */easing:_react2.default.PropTypes.oneOf(["back","backIn","backOut","backInOut","bounce","bounceIn","bounceOut","bounceInOut","circle","circleIn","circleOut","circleInOut","linear","linearIn","linearOut","linearInOut","cubic","cubicIn","cubicOut","cubicInOut","elastic","elasticIn","elasticOut","elasticInOut","exp","expIn","expOut","expInOut","poly","polyIn","polyOut","polyInOut","quad","quadIn","quadOut","quadInOut","sin","sinIn","sinOut","sinInOut"]),/**
+	     * The delay prop specifies a delay in milliseconds before the animation
+	     * begins. If multiple values are in the animation queue, it is the delay
+	     * between each animation.
+	     */delay:_react2.default.PropTypes.number,/**
+	     * The onEnd prop specifies a function to run when the animation ends. If
+	     * multiple animations are in the queue, it is called after the last
+	     * animation.
+	     */onEnd:_react2.default.PropTypes.func,/**
+	     * The data prop specifies the latest set of values to tween to. When this
+	     * prop changes, VictoryAnimation will begin animating from the current
+	     * value to the new value.
+	     */data:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object,_react2.default.PropTypes.array])};VictoryAnimation.defaultProps={/* length of animation */duration:1000,/* easing modifies step each frame */easing:"quadInOut",/* delay between transitions */delay:0,/* we got nothin' */data:{}};exports.default=VictoryAnimation;
 
 /***/ },
-/* 138 */
+/* 112 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -6611,11 +5483,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 139 */
+/* 113 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(140)) :
+	   true ? factory(exports, __webpack_require__(114)) :
 	  typeof define === 'function' && define.amd ? define('d3-interpolate', ['exports', 'd3-color'], factory) :
 	  factory((global.d3_interpolate = {}),global.d3_color);
 	}(this, function (exports,d3Color) { 'use strict';
@@ -7098,7 +5970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 140 */
+/* 114 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -7618,7 +6490,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 141 */
+/* 115 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -7724,66 +6596,50 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 142 */
+/* 116 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.addVictoryInterpolator=exports.victoryInterpolator=exports.interpolateArray=exports.interpolateFunction=exports.interpolateImmediate=exports.isInterpolatable=undefined;var _isPlainObject2=__webpack_require__(82);var _isPlainObject3=_interopRequireDefault(_isPlainObject2);var _typeof=typeof Symbol==="function"&&typeof(typeof Symbol==="function"?Symbol.iterator:"@@iterator")==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol?"symbol":typeof obj;};var _d3Interpolate=__webpack_require__(113);var _d3Interpolate2=_interopRequireDefault(_d3Interpolate);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.addVictoryInterpolator = exports.victoryInterpolator = exports.interpolateArray = exports.interpolateFunction = exports.interpolateImmediate = exports.isInterpolatable = undefined;
 	
-	var _isPlainObject2 = __webpack_require__(93);
+	var isInterpolatable=exports.isInterpolatable=function isInterpolatable(obj){
+	// d3 turns null into 0 and undefined into NaN, which we don't want.
+	if(obj!==null){
+	switch(typeof obj==="undefined"?"undefined":_typeof(obj)){
+	case"undefined":
+	return false;
+	case"number":
+	// The standard `isNaN` is fine in this case since we already know the
+	// type is number.
+	return!isNaN(obj)&&obj!==Number.POSITIVE_INFINITY&&obj!==Number.NEGATIVE_INFINITY;
+	case"string":
+	// d3 might not *actually* be able to interpolate the string, but it
+	// won't cause any issues to let it try.
+	return true;
+	case"boolean":
+	// d3 turns Booleans into integers, which we don't want. Sure, we could
+	// interpolate from 0 -> 1, but we'd be sending a non-Boolean to
+	// something expecting a Boolean.
+	return false;
+	case"object":
+	// Don't try to interpolate class instances (except Date or Array).
+	return obj instanceof Date||Array.isArray(obj)||(0,_isPlainObject3.default)(obj);
+	case"function":
+	// Careful! There may be extra properties on function objects that the
+	// component expects to access - for instance, it may be a `d3.scale()`
+	// function, which has its own methods attached. We don't know if the
+	// component is only going to call the function (in which case it's
+	// safely interpolatable) or if it's going to access special properties
+	// (in which case our function generated from `interpolateFunction` will
+	// most likely cause an error. We could check for enumerable properties
+	// on the function object here to see if it's a "plain" function, but
+	// let's just require that components prevent such function props from
+	// being animated in the first place.
+	return true;}}
 	
-	var _isPlainObject3 = _interopRequireDefault(_isPlainObject2);
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+	return false;};
 	
-	var _d3Interpolate = __webpack_require__(139);
-	
-	var _d3Interpolate2 = _interopRequireDefault(_d3Interpolate);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var isInterpolatable = exports.isInterpolatable = function isInterpolatable(obj) {
-	  // d3 turns null into 0 and undefined into NaN, which we don't want.
-	  if (obj !== null) {
-	    switch (typeof obj === "undefined" ? "undefined" : _typeof(obj)) {
-	      case "undefined":
-	        return false;
-	      case "number":
-	        // The standard `isNaN` is fine in this case since we already know the
-	        // type is number.
-	        return !isNaN(obj) && obj !== Number.POSITIVE_INFINITY && obj !== Number.NEGATIVE_INFINITY;
-	      case "string":
-	        // d3 might not *actually* be able to interpolate the string, but it
-	        // won't cause any issues to let it try.
-	        return true;
-	      case "boolean":
-	        // d3 turns Booleans into integers, which we don't want. Sure, we could
-	        // interpolate from 0 -> 1, but we'd be sending a non-Boolean to
-	        // something expecting a Boolean.
-	        return false;
-	      case "object":
-	        // Don't try to interpolate class instances (except Date or Array).
-	        return obj instanceof Date || Array.isArray(obj) || (0, _isPlainObject3.default)(obj);
-	      case "function":
-	        // Careful! There may be extra properties on function objects that the
-	        // component expects to access - for instance, it may be a `d3.scale()`
-	        // function, which has its own methods attached. We don't know if the
-	        // component is only going to call the function (in which case it's
-	        // safely interpolatable) or if it's going to access special properties
-	        // (in which case our function generated from `interpolateFunction` will
-	        // most likely cause an error. We could check for enumerable properties
-	        // on the function object here to see if it's a "plain" function, but
-	        // let's just require that components prevent such function props from
-	        // being animated in the first place.
-	        return true;
-	    }
-	  }
-	  return false;
-	};
 	
 	/**
 	 * Interpolate immediately to the end value at the given step `when`.
@@ -7800,13 +6656,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {Number} when - Step value (0 to 1) at which to jump to `b`.
 	 * @returns {Function} An interpolation function.
 	 */
-	var interpolateImmediate = exports.interpolateImmediate = function interpolateImmediate(a, b) {
-	  var when = arguments.length <= 2 || arguments[2] === undefined ? 0 : arguments[2];
+	var interpolateImmediate=exports.interpolateImmediate=function interpolateImmediate(a,b){var when=arguments.length<=2||arguments[2]===undefined?0:arguments[2];
+	return function(t){
+	return t<when?a:b;};};
 	
-	  return function (t) {
-	    return t < when ? a : b;
-	  };
-	};
+	
 	
 	/**
 	 * Interpolate to or from a function. The interpolated value will be a function
@@ -7820,19 +6674,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {any} b - End value.
 	 * @returns {Function} An interpolation function.
 	 */
-	var interpolateFunction = exports.interpolateFunction = function interpolateFunction(a, b) {
-	  return function (t) {
-	    if (t >= 1) {
-	      return b;
-	    }
-	    return function () {
-	      /* eslint-disable no-invalid-this */
-	      var aval = typeof a === "function" ? a.apply(this, arguments) : a;
-	      var bval = typeof b === "function" ? b.apply(this, arguments) : b;
-	      return _d3Interpolate2.default.value(aval, bval)(t);
-	    };
-	  };
-	};
+	var interpolateFunction=exports.interpolateFunction=function interpolateFunction(a,b){
+	return function(t){
+	if(t>=1){
+	return b;}
+	
+	return function(){
+	/* eslint-disable no-invalid-this */
+	var aval=typeof a==="function"?a.apply(this,arguments):a;
+	var bval=typeof b==="function"?b.apply(this,arguments):b;
+	return _d3Interpolate2.default.value(aval,bval)(t);};};};
+	
+	
+	
 	
 	/**
 	 * This function is adapted from https://github.com/d3-interpolate/master/src/array.js
@@ -7844,28 +6698,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {any} b - End value.
 	 * @returns {Function} An interpolation function.
 	 */
-	var interpolateArray = exports.interpolateArray = function interpolateArray(a, b) {
-	  var x = [];
-	  var c = [];
-	  var na = a ? a.length : 0;
-	  var nb = b ? b.length : 0;
-	  var n0 = Math.min(na, nb);
-	  var i = void 0;
+	var interpolateArray=exports.interpolateArray=function interpolateArray(a,b){
+	var x=[];
+	var c=[];
+	var na=a?a.length:0;
+	var nb=b?b.length:0;
+	var n0=Math.min(na,nb);
+	var i=void 0;
 	
-	  for (i = 0; i < n0; ++i) {
-	    x.push(_d3Interpolate2.default.value(a[i], b[i]));
-	  }
-	  for (i = 0; i < nb; ++i) {
-	    c[i] = b[i];
-	  }
+	for(i=0;i<n0;++i){x.push(_d3Interpolate2.default.value(a[i],b[i]));}
+	for(i=0;i<nb;++i){c[i]=b[i];}
 	
-	  return function (t) {
-	    for (i = 0; i < n0; ++i) {
-	      c[i] = x[i](t);
-	    }
-	    return c;
-	  };
-	};
+	return function(t){
+	for(i=0;i<n0;++i){c[i]=x[i](t);}
+	return c;};};
+	
+	
+	
 	
 	/**
 	 * By default, the list of interpolators used by `d3.interpolate` has a few
@@ -7890,384 +6739,563 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @param {any} b - End value.
 	 * @returns {Function|undefined} An interpolation function, if necessary.
 	 */
-	var victoryInterpolator = exports.victoryInterpolator = function victoryInterpolator(a, b) {
-	  // If the values are strictly equal, or either value is not interpolatable,
-	  // just use either the start value `a` or end value `b` at every step, as
-	  // there is no reasonable in-between value.
-	  if (a === b || !isInterpolatable(a) || !isInterpolatable(b)) {
-	    return interpolateImmediate(a, b);
-	  }
-	  if (typeof a === "function" || typeof b === "function") {
-	    return interpolateFunction(a, b);
-	  }
-	  if (Array.isArray(a) && Array.isArray(b)) {
-	    return interpolateArray(a, b);
-	  }
-	};
+	var victoryInterpolator=exports.victoryInterpolator=function victoryInterpolator(a,b){
+	// If the values are strictly equal, or either value is not interpolatable,
+	// just use either the start value `a` or end value `b` at every step, as
+	// there is no reasonable in-between value.
+	if(a===b||!isInterpolatable(a)||!isInterpolatable(b)){
+	return interpolateImmediate(a,b);}
 	
-	var interpolatorAdded = false;
+	if(typeof a==="function"||typeof b==="function"){
+	return interpolateFunction(a,b);}
 	
-	var addVictoryInterpolator = exports.addVictoryInterpolator = function addVictoryInterpolator() {
-	  if (!interpolatorAdded) {
-	    _d3Interpolate2.default.values.push(victoryInterpolator);
-	    interpolatorAdded = true;
-	  }
-	};
+	if(Array.isArray(a)&&Array.isArray(b)){
+	return interpolateArray(a,b);}};
+	
+	
+	
+	var interpolatorAdded=false;
+	
+	var addVictoryInterpolator=exports.addVictoryInterpolator=function addVictoryInterpolator(){
+	if(!interpolatorAdded){
+	_d3Interpolate2.default.values.push(victoryInterpolator);
+	interpolatorAdded=true;}};
 
 /***/ },
-/* 143 */
+/* 117 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="src/victory-label/victory-label.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _index=__webpack_require__(118);
+	var _merge=__webpack_require__(65);var _merge2=_interopRequireDefault(_merge);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var defaultStyles={
+	stroke:"transparent",
+	fill:"#756f6a",
+	fontSize:16,
+	fontFamily:"Helvetica",
+	backgroundColor:"#ccc"};var
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	VictoryLabel=function(_React$Component){_inherits(VictoryLabel,_React$Component);function VictoryLabel(){_classCallCheck(this,VictoryLabel);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryLabel).apply(this,arguments));}_createClass(VictoryLabel,[{key:"getStyles",value:function getStyles(
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _index = __webpack_require__(144);
 	
-	var _merge = __webpack_require__(73);
 	
-	var _merge2 = _interopRequireDefault(_merge);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var defaultStyles = {
-	  stroke: "transparent",
-	  fill: "#756f6a",
-	  fontSize: 16,
-	  fontFamily: "Helvetica",
-	  backgroundColor: "#ccc"
-	};
 	
-	var VictoryLabel = function (_React$Component) {
-	  _inherits(VictoryLabel, _React$Component);
 	
-	  function VictoryLabel() {
-	    _classCallCheck(this, VictoryLabel);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryLabel).apply(this, arguments));
-	  }
 	
-	  _createClass(VictoryLabel, [{
-	    key: "getStyles",
-	    value: function getStyles(props) {
-	      var style = props.style ? (0, _merge2.default)({}, defaultStyles, props.style) : defaultStyles;
-	      var datum = props.datum || props.data;
-	      return _index.Helpers.evaluateStyle(style, datum);
-	    }
-	  }, {
-	    key: "getHeight",
-	    value: function getHeight(props, type) {
-	      var datum = props.datum || props.data;
-	      var height = _index.Helpers.evaluateProp(props[type], datum);
-	      return typeof height === "number" ? height + "em" : height;
-	    }
-	  }, {
-	    key: "getContent",
-	    value: function getContent(props) {
-	      var text = props.text || props.children;
-	      if (text) {
-	        var datum = props.datum || props.data;
-	        var child = _index.Helpers.evaluateProp(text, datum);
-	        return ("" + child).split("\n");
-	      }
-	      return [""];
-	    }
-	  }, {
-	    key: "getDy",
-	    value: function getDy(props, content, lineHeight) {
-	      var datum = props.datum || props.data;
-	      var dy = props.dy ? _index.Helpers.evaluateProp(props.dy, datum) : 0;
-	      var length = content.length;
-	      var capHeight = this.getHeight(props, "capHeight");
-	      var verticalAnchor = props.verticalAnchor ? _index.Helpers.evaluateProp(props.verticalAnchor, datum) : "middle";
-	      switch (verticalAnchor) {
-	        case "end":
-	          return _index.Style.calc(dy + " +  " + capHeight + " / 2 + (0.5 - " + length + ") * " + lineHeight);
-	        case "middle":
-	          return _index.Style.calc(dy + " + " + capHeight + " / 2 + (0.5 - " + length + " / 2) * " + lineHeight);
-	        default:
-	          return _index.Style.calc(dy + " + " + capHeight + " / 2 + " + lineHeight + " / 2");
-	      }
-	    }
-	  }, {
-	    key: "getTransform",
-	    value: function getTransform(props) {
-	      var style = this.getStyles(props);
-	      var datum = props.datum;
-	      var x = props.x;
-	      var y = props.y;
 	
-	      var angle = props.angle || style.angle;
-	      var transform = props.transform || style.transform;
-	      var transformPart = transform && _index.Helpers.evaluateProp(transform, datum);
-	      var rotatePart = angle && { rotate: [angle, x, y] };
-	      return (transformPart || angle) && _index.Style.toTransformString(transformPart, rotatePart);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this2 = this;
 	
-	      var datum = this.props.datum || this.props.data;
-	      var lineHeight = this.getHeight(this.props, "lineHeight");
-	      var transform = this.getTransform(this.props);
 	
-	      var textAnchor = this.props.textAnchor ? _index.Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
-	      var content = this.getContent(this.props);
-	      var style = this.getStyles(this.props);
-	      var dx = this.props.dx ? _index.Helpers.evaluateProp(this.props.dx, datum) : 0;
-	      var dy = this.getDy(this.props, content, lineHeight);
-	      return _react2.default.createElement(
-	        "text",
-	        _extends({
-	          x: this.props.x,
-	          y: this.props.y,
-	          dy: dy,
-	          dx: dx,
-	          textAnchor: textAnchor,
-	          transform: transform,
-	          style: style
-	        }, this.props.events),
-	        content.map(function (line, i) {
-	          return _react2.default.createElement(
-	            "tspan",
-	            { key: i, x: _this2.props.x, dy: i ? lineHeight : undefined },
-	            line
-	          );
-	        })
-	      );
-	    }
-	  }]);
 	
-	  return VictoryLabel;
-	}(_react2.default.Component);
 	
-	VictoryLabel.propTypes = {
-	  /**
-	   * Specifies the angle to rotate the text by.
-	   */
-	  angle: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number]),
-	  /**
-	   * The capHeight prop defines a text metric for the font being used: the
-	   * expected height of capital letters. This is necessary because of SVG,
-	   * which (a) positions the *bottom* of the text at `y`, and (b) has no
-	   * notion of line height. The value should ideally use the same units as
-	   * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
-	   * is assumed to be ems.
-	   */
-	  capHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _index.PropTypes.nonNegative, _react.PropTypes.func]),
-	  /**
-	   * Victory components can pass a datum prop to their label component. This can
-	   * be used to calculate functional styles, and determine child text
-	   */
-	  datum: _react.PropTypes.object,
-	  /**
-	   * Labels that apply to an entire data series will recieve the entire series
-	   * as `data` instead of an individual datum prop.
-	   */
-	  data: _react.PropTypes.array,
-	  /**
-	   * The events prop attaches arbitrary event handlers to the label component.
-	   * Event handlers are currently only called with their corresponding events.
-	   * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
-	   */
-	  events: _react.PropTypes.object,
-	  /**
-	   * all Victory components will pass a text prop to their label component.
-	   * This defines the content of the label when child nodes are absent. It
-	   * will be ignored if children are provided.
-	   */
-	  text: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
-	  /**
-	   * The children of this component define the content of the label. This
-	   * makes using the component similar to normal HTML spans or labels.
-	   * strings, numbers, and functions of data / value are supported.
-	   */
-	  children: _react.PropTypes.oneOfType([// TODO: Expand child support in future release
-	  _react.PropTypes.string, _react.PropTypes.number, _react.PropTypes.func]),
-	  /**
-	   * The lineHeight prop defines how much space a single line of text should
-	   * take up. Note that SVG has no notion of line-height, so the positioning
-	   * may differ slightly from what you would expect with CSS, but the result
-	   * is similar: a roughly equal amount of extra space is distributed above
-	   * and below the line of text. The value should ideally use the same units
-	   * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
-	   * is assumed to be ems.
-	   */
-	  lineHeight: _react.PropTypes.oneOfType([_react.PropTypes.string, _index.PropTypes.nonNegative, _react.PropTypes.func]),
-	  /**
-	   * The style prop applies CSS properties to the rendered `<text>` element.
-	   */
-	  style: _react.PropTypes.object,
-	  /**
-	   * The textAnchor prop defines how the text is horizontally positioned
-	   * relative to the given `x` and `y` coordinates.
-	   */
-	  textAnchor: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start", "middle", "end", "inherit"]), _react.PropTypes.func]),
-	  /**
-	   * The verticalAnchor prop defines how the text is vertically positioned
-	   * relative to the given `x` and `y` coordinates.
-	   */
-	  verticalAnchor: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start", "middle", "end"]), _react.PropTypes.func]),
-	  /**
-	   * The transform prop applies a transform to the rendered `<text>` element.
-	   * In addition to being a string, it can be an object containing transform
-	   * definitions for easier authoring.
-	   */
-	  transform: _react.PropTypes.oneOfType([_react.PropTypes.string, _react.PropTypes.object, _react.PropTypes.func]),
-	  /**
-	   * The x prop defines the x coordinate to use as a basis for horizontal
-	   * positioning.
-	   */
-	  x: _react.PropTypes.number,
-	  /**
-	   * The y prop defines the y coordinate to use as a basis for vertical
-	   * positioning.
-	   */
-	  y: _react.PropTypes.number,
-	  /**
-	   * The dx prop defines a horizontal shift from the `x` coordinate.
-	   */
-	  dx: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.func]),
-	  /**
-	   * The dy prop defines a vertical shift from the `y` coordinate. Since this
-	   * component already accounts for `capHeight`, `lineHeight`, and
-	   * `verticalAnchor`, this will usually not be necessary.
-	   */
-	  dy: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.string, _react.PropTypes.func])
-	};
-	VictoryLabel.defaultProps = {
-	  capHeight: "0.71em", // Magic number from d3.
-	  lineHeight: 1
-	};
-	exports.default = VictoryLabel;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props){
+	var style=props.style?(0,_merge2.default)({},defaultStyles,props.style):defaultStyles;
+	var datum=props.datum||props.data;
+	return _index.Helpers.evaluateStyle(style,datum);}},{key:"getHeight",value:function getHeight(
+	
+	
+	props,type){
+	var datum=props.datum||props.data;
+	var height=_index.Helpers.evaluateProp(props[type],datum);
+	return typeof height==="number"?height+"em":height;}},{key:"getContent",value:function getContent(
+	
+	
+	props){
+	var text=props.text||props.children;
+	if(text){
+	var datum=props.datum||props.data;
+	var child=_index.Helpers.evaluateProp(text,datum);
+	return(""+child).split("\n");}
+	
+	return[""];}},{key:"getDy",value:function getDy(
+	
+	
+	props,content,lineHeight){
+	var datum=props.datum||props.data;
+	var dy=props.dy?_index.Helpers.evaluateProp(props.dy,datum):0;
+	var length=content.length;
+	var capHeight=this.getHeight(props,"capHeight");
+	var verticalAnchor=props.verticalAnchor?
+	_index.Helpers.evaluateProp(props.verticalAnchor,datum):"middle";
+	switch(verticalAnchor){
+	case"end":
+	return _index.Style.calc(
+	dy+" +  "+capHeight+" / 2 + (0.5 - "+length+") * "+lineHeight);
+	
+	case"middle":
+	return _index.Style.calc(
+	dy+" + "+capHeight+" / 2 + (0.5 - "+length+" / 2) * "+lineHeight);
+	
+	default:
+	return _index.Style.calc(dy+" + "+capHeight+" / 2 + "+lineHeight+" / 2");}}},{key:"getTransform",value:function getTransform(
+	
+	
+	
+	props){
+	var style=this.getStyles(props);var
+	datum=props.datum;var x=props.x;var y=props.y;
+	var angle=props.angle||style.angle;
+	var transform=props.transform||style.transform;
+	var transformPart=transform&&_index.Helpers.evaluateProp(transform,datum);
+	var rotatePart=angle&&{rotate:[angle,x,y]};
+	return(transformPart||angle)&&_index.Style.toTransformString(transformPart,rotatePart);}},{key:"renderElements",value:function renderElements(
+	
+	
+	props,content){
+	var transform=this.getTransform(props);
+	return(
+	_react2.default.createElement("text",_extends({},props,{transform:transform,__source:{fileName:_jsxFileName,lineNumber:215}}),
+	content.map(function(line,i){
+	var dy=i?props.lineHeight:undefined;
+	return(
+	_react2.default.createElement("tspan",{key:i,x:props.x,dy:dy,__source:{fileName:_jsxFileName,lineNumber:219}},
+	line));})));}},{key:"render",value:function render()
+	
+	
+	
+	
+	
+	
+	
+	{
+	var datum=this.props.datum||this.props.data;
+	var lineHeight=this.getHeight(this.props,"lineHeight");
+	var textAnchor=this.props.textAnchor?
+	_index.Helpers.evaluateProp(this.props.textAnchor,datum):"start";
+	var content=this.getContent(this.props);
+	var style=this.getStyles(this.props);
+	var dx=this.props.dx?_index.Helpers.evaluateProp(this.props.dx,datum):0;
+	var dy=this.getDy(this.props,content,lineHeight);
+	var labelProps=_extends(
+	{},this.props,{dy:dy,dx:dx,datum:datum,lineHeight:lineHeight,textAnchor:textAnchor,style:style},this.props.events);
+	
+	return this.renderElements(labelProps,content);}}]);return VictoryLabel;}(_react2.default.Component);VictoryLabel.propTypes={/**
+	     * Specifies the angle to rotate the text by.
+	     */angle:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number]),/**
+	     * The capHeight prop defines a text metric for the font being used: the
+	     * expected height of capital letters. This is necessary because of SVG,
+	     * which (a) positions the *bottom* of the text at `y`, and (b) has no
+	     * notion of line height. The value should ideally use the same units as
+	     * `lineHeight` and `dy`, preferably ems. If given a unitless number, it
+	     * is assumed to be ems.
+	     */capHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
+	     * Victory components can pass a datum prop to their label component. This can
+	     * be used to calculate functional styles, and determine child text
+	     */datum:_react.PropTypes.object,/**
+	     * Labels that apply to an entire data series will recieve the entire series
+	     * as `data` instead of an individual datum prop.
+	     */data:_react.PropTypes.array,/**
+	     * The events prop attaches arbitrary event handlers to the label component.
+	     * Event handlers are currently only called with their corresponding events.
+	     * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+	     */events:_react.PropTypes.object,/**
+	     * all Victory components will pass a text prop to their label component.
+	     * This defines the content of the label when child nodes are absent. It
+	     * will be ignored if children are provided.
+	     */text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),/**
+	     * The children of this component define the content of the label. This
+	     * makes using the component similar to normal HTML spans or labels.
+	     * strings, numbers, and functions of data / value are supported.
+	     */children:_react.PropTypes.oneOfType([// TODO: Expand child support in future release
+	_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),/**
+	     * The lineHeight prop defines how much space a single line of text should
+	     * take up. Note that SVG has no notion of line-height, so the positioning
+	     * may differ slightly from what you would expect with CSS, but the result
+	     * is similar: a roughly equal amount of extra space is distributed above
+	     * and below the line of text. The value should ideally use the same units
+	     * as `capHeight` and `dy`, preferably ems. If given a unitless number, it
+	     * is assumed to be ems.
+	     */lineHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
+	     * The style prop applies CSS properties to the rendered `<text>` element.
+	     */style:_react.PropTypes.object,/**
+	     * The textAnchor prop defines how the text is horizontally positioned
+	     * relative to the given `x` and `y` coordinates.
+	     */textAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end","inherit"]),_react.PropTypes.func]),/**
+	     * The verticalAnchor prop defines how the text is vertically positioned
+	     * relative to the given `x` and `y` coordinates.
+	     */verticalAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end"]),_react.PropTypes.func]),/**
+	     * The transform prop applies a transform to the rendered `<text>` element.
+	     * In addition to being a string, it can be an object containing transform
+	     * definitions for easier authoring.
+	     */transform:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.object,_react.PropTypes.func]),/**
+	     * The x prop defines the x coordinate to use as a basis for horizontal
+	     * positioning.
+	     */x:_react.PropTypes.number,/**
+	     * The y prop defines the y coordinate to use as a basis for vertical
+	     * positioning.
+	     */y:_react.PropTypes.number,/**
+	     * The dx prop defines a horizontal shift from the `x` coordinate.
+	     */dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func]),/**
+	     * The dy prop defines a vertical shift from the `y` coordinate. Since this
+	     * component already accounts for `capHeight`, `lineHeight`, and
+	     * `verticalAnchor`, this will usually not be necessary.
+	     */dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func])};VictoryLabel.defaultProps={capHeight:"0.71em",// Magic number from d3.
+	lineHeight:1};exports.default=VictoryLabel;
 
 /***/ },
-/* 144 */
+/* 118 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});exports.Events=exports.PropTypes=exports.Transitions=exports.Style=exports.Log=exports.Helpers=exports.Collection=undefined;var _collection=__webpack_require__(30);var _collection2=_interopRequireDefault(_collection);
+	var _helpers=__webpack_require__(31);var _helpers2=_interopRequireDefault(_helpers);
+	var _log=__webpack_require__(87);var _log2=_interopRequireDefault(_log);
+	var _style=__webpack_require__(89);var _style2=_interopRequireDefault(_style);
+	var _propTypes=__webpack_require__(94);var _propTypes2=_interopRequireDefault(_propTypes);
+	var _events=__webpack_require__(95);var _events2=_interopRequireDefault(_events);
+	var _transitions=__webpack_require__(119);var Transitions=_interopRequireWildcard(_transitions);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	exports.Events = exports.PropTypes = exports.Transitions = exports.Style = exports.Log = exports.Helpers = exports.Collection = undefined;
 	
-	var _collection = __webpack_require__(30);
-	
-	var _collection2 = _interopRequireDefault(_collection);
-	
-	var _helpers = __webpack_require__(31);
-	
-	var _helpers2 = _interopRequireDefault(_helpers);
-	
-	var _log = __webpack_require__(113);
-	
-	var _log2 = _interopRequireDefault(_log);
-	
-	var _style = __webpack_require__(115);
-	
-	var _style2 = _interopRequireDefault(_style);
-	
-	var _propTypes = __webpack_require__(120);
-	
-	var _propTypes2 = _interopRequireDefault(_propTypes);
-	
-	var _events = __webpack_require__(121);
-	
-	var _events2 = _interopRequireDefault(_events);
-	
-	var _transitions = __webpack_require__(145);
-	
-	var Transitions = _interopRequireWildcard(_transitions);
-	
-	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.Collection = _collection2.default;
-	exports.Helpers = _helpers2.default;
-	exports.Log = _log2.default;
-	exports.Style = _style2.default;
-	exports.Transitions = Transitions;
-	exports.PropTypes = _propTypes2.default;
-	exports.Events = _events2.default;
+	Collection=_collection2.default;exports.
+	Helpers=_helpers2.default;exports.
+	Log=_log2.default;exports.
+	Style=_style2.default;exports.
+	Transitions=Transitions;exports.
+	PropTypes=_propTypes2.default;exports.
+	Events=_events2.default;
 
 /***/ },
-/* 145 */
+/* 119 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _identity2 = __webpack_require__(146);
-	
-	var _identity3 = _interopRequireDefault(_identity2);
-	
-	var _defaults2 = __webpack_require__(110);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _assign2 = __webpack_require__(147);
-	
-	var _assign3 = _interopRequireDefault(_assign2);
-	
-	exports.getInitialTransitionState = getInitialTransitionState;
-	exports.getTransitionPropsFactory = getTransitionPropsFactory;
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	/* eslint-disable func-style */
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _identity2=__webpack_require__(120);var _identity3=_interopRequireDefault(_identity2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(121);var _assign3=_interopRequireDefault(_assign2);exports.
 	
 	
-	function getDatumKey(datum, idx) {
-	  return (datum.key || idx).toString();
-	}
 	
-	function getKeyedData(data) {
-	  return data.reduce(function (keyedData, datum, idx) {
-	    var key = getDatumKey(datum, idx);
-	    keyedData[key] = datum;
-	    return keyedData;
-	  }, {});
-	}
 	
-	function getKeyedDataDifference(a, b) {
-	  var hasDifference = false;
-	  var difference = Object.keys(a).reduce(function (_difference, key) {
-	    if (!(key in b)) {
-	      hasDifference = true;
-	      _difference[key] = true;
-	    }
-	    return _difference;
-	  }, {});
-	  return hasDifference && difference;
-	}
 	
-	/**
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	getInitialTransitionState=getInitialTransitionState;exports.
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	getTransitionPropsFactory=getTransitionPropsFactory;var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}/* eslint-disable func-style */function getDatumKey(datum,idx){return(datum.key||idx).toString();}function getKeyedData(data){return data.reduce(function(keyedData,datum,idx){var key=getDatumKey(datum,idx);keyedData[key]=datum;return keyedData;},{});}function getKeyedDataDifference(a,b){var hasDifference=false;var difference=Object.keys(a).reduce(function(_difference,key){if(!(key in b)){hasDifference=true;_difference[key]=true;}return _difference;},{});return hasDifference&&difference;}/**
 	 * Calculate which data-points exist in oldData and not nextData -
 	 * these are the `exiting` data-points.  Also calculate which
 	 * data-points exist in nextData and not oldData - thses are the
@@ -8279,25 +7307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * @return {Object}          Object with `entering` and `exiting` properties.
 	 *                           entering[datum.key] will be true if the data is
 	 *                           entering, and similarly for `exiting`.
-	 */
-	function getNodeTransitions(oldData, nextData) {
-	  var oldDataKeyed = oldData && getKeyedData(oldData);
-	  var nextDataKeyed = nextData && getKeyedData(nextData);
-	
-	  return {
-	    entering: oldDataKeyed && getKeyedDataDifference(nextDataKeyed, oldDataKeyed),
-	    exiting: nextDataKeyed && getKeyedDataDifference(oldDataKeyed, nextDataKeyed)
-	  };
-	}
-	
-	function getChildData(child) {
-	  if (child.type && child.type.getData) {
-	    return child.type.getData(child.props);
-	  }
-	  return child.props && child.props.data || false;
-	}
-	
-	/**
+	 */function getNodeTransitions(oldData,nextData){var oldDataKeyed=oldData&&getKeyedData(oldData);var nextDataKeyed=nextData&&getKeyedData(nextData);return{entering:oldDataKeyed&&getKeyedDataDifference(nextDataKeyed,oldDataKeyed),exiting:nextDataKeyed&&getKeyedDataDifference(oldDataKeyed,nextDataKeyed)};}function getChildData(child){if(child.type&&child.type.getData){return child.type.getData(child.props);}return child.props&&child.props.data||false;}/**
 	 * If a parent component has animation enabled, calculate the transitions
 	 * for any data of any child component that supports data transitions
 	 * Data transitions are defined as any two datasets where data nodes exist
@@ -8312,126 +7322,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *                                    - nodesWillEnter
 	 *                                    - childrenTransitions
 	 *                                    - nodesShouldEnter
-	 */
-	function getInitialTransitionState(oldChildren, nextChildren) {
-	  var nodesWillExit = false;
-	  var nodesWillEnter = false;
-	
-	  var getTransition = function getTransition(oldChild, newChild) {
-	    if (!newChild || oldChild.type !== newChild.type) {
-	      return {};
-	    }
-	
-	    var _ref = getNodeTransitions(getChildData(oldChild), getChildData(newChild)) || {};
-	
-	    var entering = _ref.entering;
-	    var exiting = _ref.exiting;
-	
-	
-	    nodesWillExit = nodesWillExit || !!exiting;
-	    nodesWillEnter = nodesWillEnter || !!entering;
-	
-	    return { entering: entering || false, exiting: exiting || false };
-	  };
-	
-	  var getTransitionsFromChildren = function getTransitionsFromChildren(old, next) {
-	    return old.map(function (child, idx) {
-	      if (child.props.children) {
-	        return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children), _react2.default.Children.toArray(next[idx].props.children));
-	      }
-	      return getTransition(child, next[idx]);
-	    });
-	  };
-	
-	  var childrenTransitions = getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren), _react2.default.Children.toArray(nextChildren));
-	  return {
-	    nodesWillExit: nodesWillExit,
-	    nodesWillEnter: nodesWillEnter,
-	    childrenTransitions: childrenTransitions,
-	    // TODO: This may need to be refactored for the following situation.
-	    //       The component receives new props, and the data provided
-	    //       is a perfect match for the previous data and domain except
-	    //       for new nodes. In this case, we wouldn't want a delay before
-	    //       the new nodes appear.
-	    nodesShouldEnter: false
-	  };
-	}
-	
-	function getInitialChildProps(animate, data) {
-	  var after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : _identity3.default;
-	  return {
-	    data: data.map(function (datum) {
-	      return (0, _assign3.default)({}, datum, after(datum));
-	    })
-	  };
-	}
-	
-	function getChildPropsOnExit(animate, data, exitingNodes, cb) {
-	  // eslint-disable-line max-params
-	  // Whether or not _this_ child has exiting nodes, we want the exit-
-	  // transition for all children to have the same duration, delay, etc.
-	  var onExit = animate && animate.onExit;
-	  animate = (0, _assign3.default)({}, animate, onExit);
-	
-	  if (exitingNodes) {
-	    (function () {
-	      // After the exit transition occurs, trigger the animations for
-	      // nodes that are neither exiting or entering.
-	      animate.onEnd = cb;
-	      var before = animate.onExit && animate.onExit.before ? animate.onExit.before : _identity3.default;
-	      // If nodes need to exit, transform them with the provided onExit.before function.
-	      data = data.map(function (datum, idx) {
-	        var key = (datum.key || idx).toString();
-	        return exitingNodes[key] ? (0, _assign3.default)({}, datum, before(datum)) : datum;
-	      });
-	    })();
-	  }
-	  return { animate: animate, data: data };
-	}
-	
-	function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) {
-	  // eslint-disable-line max-params,max-len
-	  if (enteringNodes) {
-	    (function () {
-	      // Perform a normal animation here, except - when it finishes - trigger
-	      // the transition for entering nodes.
-	      animate = (0, _assign3.default)({}, animate, { onEnd: cb });
-	      var before = animate.onEnter && animate.onEnter.before ? animate.onEnter.before : _identity3.default;
-	      // We want the entering nodes to be included in the transition target
-	      // domain.  However, we may not want these nodes to be displayed initially,
-	      // so perform the `onEnter.before` transformation on each node.
-	      data = data.map(function (datum, idx) {
-	        var key = (datum.key || idx).toString();
-	        return enteringNodes[key] ? (0, _assign3.default)({}, datum, before(datum)) : datum;
-	      });
-	    })();
-	  }
-	
-	  return { animate: animate, data: data };
-	}
-	
-	function getChildPropsOnEnter(animate, data, enteringNodes) {
-	  // Whether or not _this_ child has entering nodes, we want the entering-
-	  // transition for all children to have the same duration, delay, etc.
-	  var onEnter = animate && animate.onEnter;
-	  animate = (0, _assign3.default)({}, animate, onEnter);
-	
-	  if (enteringNodes) {
-	    (function () {
-	      // Old nodes have been transitioned to their new values, and the
-	      // domain should encompass the nodes that will now enter. So perform
-	      // the `onEnter.after` transformation on each node.
-	      var after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : _identity3.default;
-	      data = data.map(function (datum, idx) {
-	        var key = getDatumKey(datum, idx);
-	        return enteringNodes[key] ? (0, _assign3.default)({}, datum, after(datum)) : datum;
-	      });
-	    })();
-	  }
-	  return { animate: animate, data: data };
-	}
-	
-	/**
+	 */function getInitialTransitionState(oldChildren,nextChildren){var nodesWillExit=false;var nodesWillEnter=false;var getTransition=function getTransition(oldChild,newChild){if(!newChild||oldChild.type!==newChild.type){return{};}var _ref=getNodeTransitions(getChildData(oldChild),getChildData(newChild))||{};var entering=_ref.entering;var exiting=_ref.exiting;nodesWillExit=nodesWillExit||!!exiting;nodesWillEnter=nodesWillEnter||!!entering;return{entering:entering||false,exiting:exiting||false};};var getTransitionsFromChildren=function getTransitionsFromChildren(old,next){return old.map(function(child,idx){if(child.props.children){return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children),_react2.default.Children.toArray(next[idx].props.children));}return getTransition(child,next[idx]);});};var childrenTransitions=getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren),_react2.default.Children.toArray(nextChildren));return{nodesWillExit:nodesWillExit,nodesWillEnter:nodesWillEnter,childrenTransitions:childrenTransitions,// TODO: This may need to be refactored for the following situation.
+	//       The component receives new props, and the data provided
+	//       is a perfect match for the previous data and domain except
+	//       for new nodes. In this case, we wouldn't want a delay before
+	//       the new nodes appear.
+	nodesShouldEnter:false};}function getInitialChildProps(animate,data){var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;return{data:data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));})};}function getChildPropsOnExit(animate,data,exitingNodes,cb){// eslint-disable-line max-params
+	// Whether or not _this_ child has exiting nodes, we want the exit-
+	// transition for all children to have the same duration, delay, etc.
+	var onExit=animate&&animate.onExit;animate=(0,_assign3.default)({},animate,onExit);if(exitingNodes){(function(){// After the exit transition occurs, trigger the animations for
+	// nodes that are neither exiting or entering.
+	animate.onEnd=cb;var before=animate.onExit&&animate.onExit.before?animate.onExit.before:_identity3.default;// If nodes need to exit, transform them with the provided onExit.before function.
+	data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return exitingNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});})();}return{animate:animate,data:data};}function getChildPropsBeforeEnter(animate,data,enteringNodes,cb){// eslint-disable-line max-params,max-len
+	if(enteringNodes){(function(){// Perform a normal animation here, except - when it finishes - trigger
+	// the transition for entering nodes.
+	animate=(0,_assign3.default)({},animate,{onEnd:cb});var before=animate.onEnter&&animate.onEnter.before?animate.onEnter.before:_identity3.default;// We want the entering nodes to be included in the transition target
+	// domain.  However, we may not want these nodes to be displayed initially,
+	// so perform the `onEnter.before` transformation on each node.
+	data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return enteringNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});})();}return{animate:animate,data:data};}function getChildPropsOnEnter(animate,data,enteringNodes){// Whether or not _this_ child has entering nodes, we want the entering-
+	// transition for all children to have the same duration, delay, etc.
+	var onEnter=animate&&animate.onEnter;animate=(0,_assign3.default)({},animate,onEnter);if(enteringNodes){(function(){// Old nodes have been transitioned to their new values, and the
+	// domain should encompass the nodes that will now enter. So perform
+	// the `onEnter.after` transformation on each node.
+	var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;data=data.map(function(datum,idx){var key=getDatumKey(datum,idx);return enteringNodes[key]?(0,_assign3.default)({},datum,after(datum)):datum;});})();}return{animate:animate,data:data};}/**
 	 * getTransitionPropsFactory - putting the Java in JavaScript.  This will return a
 	 * function that returns prop transformations for a child, given that child's props
 	 * and its index in the parent's children array.
@@ -8448,75 +7361,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	 *                                 the parent component with the provided object.
 	 *
 	 * @return {Function}              Child-prop transformation function.
-	 */
-	function getTransitionPropsFactory(props, state, setState) {
-	  var nodesWillExit = state && state.nodesWillExit;
-	  var nodesWillEnter = state && state.nodesWillEnter;
-	  var nodesShouldEnter = state && state.nodesShouldEnter;
-	  var childrenTransitions = state && state.childrenTransitions || [];
-	  var transitionDurations = {
-	    enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
-	    exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
-	    move: props.animate && props.animate.duration
-	  };
-	
-	  var onExit = function onExit(nodes, data, animate) {
-	    return getChildPropsOnExit(animate, data, nodes, function () {
-	      setState({ nodesWillExit: false });
-	    });
-	  };
-	
-	  var onEnter = function onEnter(nodes, data, animate) {
-	    return nodesShouldEnter ? getChildPropsOnEnter(animate, data, nodes) : getChildPropsBeforeEnter(animate, data, nodes, function () {
-	      setState({ nodesShouldEnter: true });
-	    });
-	  };
-	
-	  var getChildTransitionDuration = function getChildTransitionDuration(child, type) {
-	    var animate = child.props.animate;
-	    var defaultTransitions = child.type && child.type.defaultTransitions;
-	    return animate[type] && animate[type].duration || defaultTransitions[type] && defaultTransitions[type].duration;
-	  };
-	
-	  return function getTransitionProps(child, index) {
-	    // eslint-disable-line max-statements
-	    var data = getChildData(child) || [];
-	    var animate = (0, _defaults3.default)({}, props.animate, child.props.animate);
-	
-	    animate.onExit = (0, _defaults3.default)({}, animate.onExit, child.type.defaultTransitions && child.type.defaultTransitions.onExit);
-	    animate.onEnter = (0, _defaults3.default)({}, animate.onEnter, child.type.defaultTransitions && child.type.defaultTransitions.onEnter);
-	
-	    var childTransitions = childrenTransitions[index] || childrenTransitions[0];
-	    if (nodesWillExit) {
-	      var exitingNodes = childTransitions && childTransitions.exiting;
-	      var exit = transitionDurations.exit || getChildTransitionDuration(child, "onExit");
-	      // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
-	      var animation = exitingNodes ? { duration: exit } : { delay: exit };
-	      return onExit(exitingNodes, data, (0, _assign3.default)({}, animate, animation));
-	    } else if (nodesWillEnter) {
-	      var enteringNodes = childTransitions && childTransitions.entering;
-	      var enter = transitionDurations.enter || getChildTransitionDuration(child, "onEnter");
-	      var move = transitionDurations.move || child.props.animate && child.props.animate.duration;
-	      var _animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
-	      return onEnter(enteringNodes, data, (0, _assign3.default)({}, animate, _animation));
-	    } else if (!state && animate && animate.onExit) {
-	      // This is the initial render, and nodes may enter when props change. Because
-	      // animation interpolation is determined by old- and next- props, data may need
-	      // to be augmented with certain properties.
-	      //
-	      // For example, it may be desired that exiting nodes go from `opacity: 1` to
-	      // `opacity: 0`. Without setting this on a per-datum basis, the interpolation
-	      // might go from `opacity: undefined` to `opacity: 0`, which would result in
-	      // interpolated `opacity: NaN` values.
-	      //
-	      return getInitialChildProps(animate, data);
-	    }
-	    return { animate: animate, data: data };
-	  };
-	}
+	 */function getTransitionPropsFactory(props,state,setState){var nodesWillExit=state&&state.nodesWillExit;var nodesWillEnter=state&&state.nodesWillEnter;var nodesShouldEnter=state&&state.nodesShouldEnter;var childrenTransitions=state&&state.childrenTransitions||[];var transitionDurations={enter:props.animate&&props.animate.onEnter&&props.animate.onEnter.duration,exit:props.animate&&props.animate.onExit&&props.animate.onExit.duration,move:props.animate&&props.animate.duration};var onExit=function onExit(nodes,data,animate){return getChildPropsOnExit(animate,data,nodes,function(){setState({nodesWillExit:false});});};var onEnter=function onEnter(nodes,data,animate){return nodesShouldEnter?getChildPropsOnEnter(animate,data,nodes):getChildPropsBeforeEnter(animate,data,nodes,function(){setState({nodesShouldEnter:true});});};var getChildTransitionDuration=function getChildTransitionDuration(child,type){var animate=child.props.animate;var defaultTransitions=child.type&&child.type.defaultTransitions;return animate[type]&&animate[type].duration||defaultTransitions[type]&&defaultTransitions[type].duration;};return function getTransitionProps(child,index){// eslint-disable-line max-statements
+	var data=getChildData(child)||[];var animate=(0,_defaults3.default)({},props.animate,child.props.animate);animate.onExit=(0,_defaults3.default)({},animate.onExit,child.type.defaultTransitions&&child.type.defaultTransitions.onExit);animate.onEnter=(0,_defaults3.default)({},animate.onEnter,child.type.defaultTransitions&&child.type.defaultTransitions.onEnter);var childTransitions=childrenTransitions[index]||childrenTransitions[0];if(nodesWillExit){var exitingNodes=childTransitions&&childTransitions.exiting;var exit=transitionDurations.exit||getChildTransitionDuration(child,"onExit");// if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
+	var animation=exitingNodes?{duration:exit}:{delay:exit};return onExit(exitingNodes,data,(0,_assign3.default)({},animate,animation));}else if(nodesWillEnter){var enteringNodes=childTransitions&&childTransitions.entering;var enter=transitionDurations.enter||getChildTransitionDuration(child,"onEnter");var move=transitionDurations.move||child.props.animate&&child.props.animate.duration;var _animation={duration:nodesShouldEnter&&enteringNodes?enter:move};return onEnter(enteringNodes,data,(0,_assign3.default)({},animate,_animation));}else if(!state&&animate&&animate.onExit){// This is the initial render, and nodes may enter when props change. Because
+	// animation interpolation is determined by old- and next- props, data may need
+	// to be augmented with certain properties.
+	//
+	// For example, it may be desired that exiting nodes go from `opacity: 1` to
+	// `opacity: 0`. Without setting this on a per-datum basis, the interpolation
+	// might go from `opacity: undefined` to `opacity: 0`, which would result in
+	// interpolated `opacity: NaN` values.
+	//
+	return getInitialChildProps(animate,data);}return{animate:animate,data:data};};}
 
 /***/ },
-/* 146 */
+/* 120 */
 /***/ function(module, exports) {
 
 	/**
@@ -8543,15 +7402,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 147 */
+/* 121 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignValue = __webpack_require__(99),
-	    copyObject = __webpack_require__(98),
-	    createAssigner = __webpack_require__(108),
-	    isArrayLike = __webpack_require__(89),
-	    isPrototype = __webpack_require__(107),
-	    keys = __webpack_require__(134);
+	var assignValue = __webpack_require__(8),
+	    copyObject = __webpack_require__(7),
+	    createAssigner = __webpack_require__(9),
+	    isArrayLike = __webpack_require__(79),
+	    isPrototype = __webpack_require__(27),
+	    keys = __webpack_require__(108);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -8613,176 +7472,130 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 148 */
+/* 122 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _pick2=__webpack_require__(123);var _pick3=_interopRequireDefault(_pick2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="src/victory-transition/victory-transition.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryAnimation=__webpack_require__(111);var _victoryAnimation2=_interopRequireDefault(_victoryAnimation);
+	var _index=__webpack_require__(118);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
-	var _pick2 = __webpack_require__(149);
+	VictoryTransition=function(_React$Component){_inherits(VictoryTransition,_React$Component);function VictoryTransition(){_classCallCheck(this,VictoryTransition);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryTransition).apply(this,arguments));}_createClass(VictoryTransition,[{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
 	
-	var _pick3 = _interopRequireDefault(_pick2);
 	
-	var _isFunction2 = __webpack_require__(91);
 	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
 	
-	var _defaults2 = __webpack_require__(110);
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _victoryAnimation = __webpack_require__(137);
 	
-	var _victoryAnimation2 = _interopRequireDefault(_victoryAnimation);
 	
-	var _index = __webpack_require__(144);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	nextProps){
+	this.setState(this.getTransitionState(this.props,nextProps));}},{key:"getTransitionState",value:function getTransitionState(
 	
-	var VictoryTransition = function (_React$Component) {
-	  _inherits(VictoryTransition, _React$Component);
 	
-	  function VictoryTransition() {
-	    _classCallCheck(this, VictoryTransition);
+	props,nextProps){var
+	animate=props.animate;
+	if(!animate){
+	return{};}else
+	if(animate.parentState){
+	var oldProps=animate.parentState.nodesWillExit?props:null;
+	return{oldProps:oldProps};}else
+	{
+	var oldChildren=_react2.default.Children.toArray(props.children);
+	var nextChildren=_react2.default.Children.toArray(nextProps.children);var _Transitions$getIniti=
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryTransition).apply(this, arguments));
-	  }
 	
-	  _createClass(VictoryTransition, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      this.setState(this.getTransitionState(this.props, nextProps));
-	    }
-	  }, {
-	    key: "getTransitionState",
-	    value: function getTransitionState(props, nextProps) {
-	      var animate = props.animate;
 	
-	      if (!animate) {
-	        return {};
-	      } else if (animate.parentState) {
-	        var oldProps = animate.parentState.nodesWillExit ? props : null;
-	        return { oldProps: oldProps };
-	      } else {
-	        var oldChildren = _react2.default.Children.toArray(props.children);
-	        var nextChildren = _react2.default.Children.toArray(nextProps.children);
 	
-	        var _Transitions$getIniti = _index.Transitions.getInitialTransitionState(oldChildren, nextChildren);
 	
-	        var nodesWillExit = _Transitions$getIniti.nodesWillExit;
-	        var nodesWillEnter = _Transitions$getIniti.nodesWillEnter;
-	        var childrenTransitions = _Transitions$getIniti.childrenTransitions;
-	        var nodesShouldEnter = _Transitions$getIniti.nodesShouldEnter;
+	_index.Transitions.getInitialTransitionState(oldChildren,nextChildren);var nodesWillExit=_Transitions$getIniti.nodesWillExit;var nodesWillEnter=_Transitions$getIniti.nodesWillEnter;var childrenTransitions=_Transitions$getIniti.childrenTransitions;var nodesShouldEnter=_Transitions$getIniti.nodesShouldEnter;
+	return{
+	nodesWillExit:nodesWillExit,
+	nodesWillEnter:nodesWillEnter,
+	childrenTransitions:childrenTransitions,
+	nodesShouldEnter:nodesShouldEnter,
+	oldProps:nodesWillExit?props:null};}}},{key:"getDomainFromChildren",value:function getDomainFromChildren(
 	
-	        return {
-	          nodesWillExit: nodesWillExit,
-	          nodesWillEnter: nodesWillEnter,
-	          childrenTransitions: childrenTransitions,
-	          nodesShouldEnter: nodesShouldEnter,
-	          oldProps: nodesWillExit ? props : null
-	        };
-	      }
-	    }
-	  }, {
-	    key: "getDomainFromChildren",
-	    value: function getDomainFromChildren(props, axis) {
-	      var getChildDomains = function getChildDomains(children) {
-	        return children.reduce(function (memo, child) {
-	          if (child.type && (0, _isFunction3.default)(child.type.getDomain)) {
-	            var childDomain = child.props && child.type.getDomain(child.props, axis);
-	            return childDomain ? memo.concat(childDomain) : memo;
-	          } else if (child.props && child.props.children) {
-	            return memo.concat(getChildDomains(_react2.default.Children.toArray(child.props.children)));
-	          }
-	          return memo;
-	        }, []);
-	      };
 	
-	      var childComponents = _react2.default.Children.toArray(props.children);
-	      if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
-	        return Array.isArray(props.domain) ? props.domain : props.domain[axis];
-	      } else {
-	        var childDomains = getChildDomains(childComponents);
-	        return childDomains.length === 0 ? [0, 1] : [Math.min.apply(Math, _toConsumableArray(childDomains)), Math.max.apply(Math, _toConsumableArray(childDomains))];
-	      }
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _this2 = this;
 	
-	      var props = this.state && this.state.nodesWillExit ? this.state.oldProps : this.props;
-	      var getTransitionProps = this.props.animate && this.props.animate.getTransitions ? this.props.animate.getTransitions : _index.Transitions.getTransitionPropsFactory(props, this.state, function (newState) {
-	        return _this2.setState(newState);
-	      });
-	      var child = _react2.default.Children.toArray(props.children)[0];
-	      var transitionProps = getTransitionProps(child);
-	      var domain = {
-	        x: this.getDomainFromChildren(props, "x"),
-	        y: this.getDomainFromChildren(props, "y")
-	      };
-	      var combinedProps = (0, _defaults3.default)({ domain: domain }, transitionProps, child.props);
-	      var propsToAnimate = props.animationWhitelist ? (0, _pick3.default)(combinedProps, props.animationWhitelist) : combinedProps;
-	      return _react2.default.createElement(
-	        _victoryAnimation2.default,
-	        _extends({}, combinedProps.animate, { data: propsToAnimate }),
-	        function (newProps) {
-	          var component = _react2.default.cloneElement(child, (0, _defaults3.default)({ animate: null }, newProps, combinedProps));
-	          return component;
-	        }
-	      );
-	    }
-	  }]);
 	
-	  return VictoryTransition;
-	}(_react2.default.Component);
+	props,axis){
+	var getChildDomains=function getChildDomains(children){
+	return children.reduce(function(memo,child){
+	if(child.type&&(0,_isFunction3.default)(child.type.getDomain)){
+	var childDomain=child.props&&child.type.getDomain(child.props,axis);
+	return childDomain?memo.concat(childDomain):memo;}else
+	if(child.props&&child.props.children){
+	return memo.concat(getChildDomains(_react2.default.Children.toArray(child.props.children)));}
 	
-	VictoryTransition.propTypes = {
-	  /**
-	   * The animate prop specifies an animation config for the transition.
-	   * This prop should be given as an object.
-	   */
-	  animate: _react2.default.PropTypes.object,
-	  /**
-	   * VictoryTransition animates a single child component
-	   */
-	  children: _react2.default.PropTypes.node,
-	  /**
-	   * This prop specifies which of the child's props are safe to interpolate.
-	   * This props should be given as an array.
-	   */
-	  animationWhitelist: _react2.default.PropTypes.array
-	};
-	exports.default = VictoryTransition;
+	return memo;},
+	[]);};
+	
+	
+	var childComponents=_react2.default.Children.toArray(props.children);
+	if(props.domain&&(Array.isArray(props.domain)||props.domain[axis])){
+	return Array.isArray(props.domain)?props.domain:props.domain[axis];}else
+	{
+	var childDomains=getChildDomains(childComponents);
+	return childDomains.length===0?
+	[0,1]:[Math.min.apply(Math,_toConsumableArray(childDomains)),Math.max.apply(Math,_toConsumableArray(childDomains))];}}},{key:"render",value:function render()
+	
+	
+	
+	{var _this2=this;
+	var props=this.state&&this.state.nodesWillExit?
+	this.state.oldProps:this.props;
+	var getTransitionProps=this.props.animate&&this.props.animate.getTransitions?
+	this.props.animate.getTransitions:
+	_index.Transitions.getTransitionPropsFactory(
+	props,
+	this.state,
+	function(newState){return _this2.setState(newState);});
+	
+	var child=_react2.default.Children.toArray(props.children)[0];
+	var transitionProps=getTransitionProps(child);
+	var domain={
+	x:this.getDomainFromChildren(props,"x"),
+	y:this.getDomainFromChildren(props,"y")};
+	
+	var combinedProps=(0,_defaults3.default)(
+	{domain:domain},transitionProps,child.props);
+	
+	var propsToAnimate=props.animationWhitelist?
+	(0,_pick3.default)(combinedProps,props.animationWhitelist):combinedProps;
+	return(
+	_react2.default.createElement(_victoryAnimation2.default,_extends({},combinedProps.animate,{data:propsToAnimate,__source:{fileName:_jsxFileName,lineNumber:99}}),
+	function(newProps){
+	var component=_react2.default.cloneElement(
+	child,(0,_defaults3.default)({animate:null},newProps,combinedProps));
+	return component;}));}}]);return VictoryTransition;}(_react2.default.Component);VictoryTransition.propTypes={/**
+	     * The animate prop specifies an animation config for the transition.
+	     * This prop should be given as an object.
+	     */animate:_react2.default.PropTypes.object,/**
+	     * VictoryTransition animates a single child component
+	     */children:_react2.default.PropTypes.node,/**
+	     * This prop specifies which of the child's props are safe to interpolate.
+	     * This props should be given as an array.
+	     */animationWhitelist:_react2.default.PropTypes.array};exports.default=VictoryTransition;
 
 /***/ },
-/* 149 */
+/* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayMap = __webpack_require__(150),
-	    baseFlatten = __webpack_require__(151),
-	    basePick = __webpack_require__(152),
-	    rest = __webpack_require__(72),
-	    toKey = __webpack_require__(44);
+	var arrayMap = __webpack_require__(124),
+	    baseFlatten = __webpack_require__(125),
+	    basePick = __webpack_require__(126),
+	    rest = __webpack_require__(11),
+	    toKey = __webpack_require__(42);
 	
 	/**
 	 * Creates an object composed of the picked `object` properties.
@@ -8809,7 +7622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 150 */
+/* 124 */
 /***/ function(module, exports) {
 
 	/**
@@ -8836,7 +7649,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 151 */
+/* 125 */
 /***/ function(module, exports) {
 
 	/**
@@ -8863,10 +7676,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 152 */
+/* 126 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayReduce = __webpack_require__(153);
+	var arrayReduce = __webpack_require__(127);
 	
 	/**
 	 * The base implementation of `_.pick` without support for individual
@@ -8891,7 +7704,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 153 */
+/* 127 */
 /***/ function(module, exports) {
 
 	/**
@@ -8923,1093 +7736,258 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 154 */
+/* 128 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _jsxFileName="src/victory-shared-events/victory-shared-events.js";var _typeof=typeof Symbol==="function"&&typeof(typeof Symbol==="function"?Symbol.iterator:"@@iterator")==="symbol"?function(obj){return typeof obj;}:function(obj){return obj&&typeof Symbol==="function"&&obj.constructor===Symbol?"symbol":typeof obj;};var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _index=__webpack_require__(118);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	VictorySharedEvents=function(_React$Component){_inherits(VictorySharedEvents,_React$Component);
 	
-	var _defaults2 = __webpack_require__(110);
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
 	
-	var _partialRight2 = __webpack_require__(155);
 	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
 	
-	var _isFunction2 = __webpack_require__(91);
 	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _index = __webpack_require__(144);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var VictorySharedEvents = function (_React$Component) {
-	  _inherits(VictorySharedEvents, _React$Component);
 	
-	  function VictorySharedEvents() {
-	    _classCallCheck(this, VictorySharedEvents);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictorySharedEvents).call(this));
 	
-	    _this.state = {};
-	    _this.getScopedEvents = _index.Events.getScopedEvents.bind(_this);
-	    _this.getEventState = _index.Events.getEventState.bind(_this);
-	    return _this;
-	  }
 	
-	  _createClass(VictorySharedEvents, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.setUpChildren(this.props);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.setUpChildren(newProps);
-	    }
-	  }, {
-	    key: "setUpChildren",
-	    value: function setUpChildren(props) {
-	      this.childComponents = _react2.default.Children.toArray(props.children);
-	      var childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-	      var parentBaseProps = props.container ? { parent: props.container.props } : {};
-	      this.baseProps = Object.assign({}, childBaseProps, { parent: parentBaseProps });
-	    }
-	  }, {
-	    key: "getBasePropsFromChildren",
-	    value: function getBasePropsFromChildren(childComponents) {
-	      var getBaseProps = function getBaseProps(children) {
-	        return children.reduce(function (memo, child, index) {
-	          if (child.type && (0, _isFunction3.default)(child.type.getBaseProps)) {
-	            var baseChildProps = child.props && child.type.getBaseProps(child.props);
-	            if (baseChildProps) {
-	              var childKey = child.props.name || index;
-	              memo[childKey] = baseChildProps;
-	              return memo;
-	            }
-	            return memo;
-	          } else if (child.props && child.props.children) {
-	            return getBaseProps(_react2.default.Children.toArray(child.props.children));
-	          }
-	          return memo;
-	        }, {});
-	      };
-	      return getBaseProps(childComponents);
-	    }
-	  }, {
-	    key: "getNewChildren",
-	    value: function getNewChildren(props) {
-	      var _this2 = this;
 	
-	      var events = props.events;
-	      var eventKey = props.eventKey;
 	
-	      var childNames = Object.keys(this.baseProps);
 	
-	      var alterChildren = function alterChildren(children) {
-	        return children.reduce(function (memo, child) {
-	          if (child.type && (0, _isFunction3.default)(child.type.getBaseProps)) {
-	            var _ret = function () {
-	              var name = child.props.name || childNames.shift();
-	              var childEvents = Array.isArray(events) && events.filter(function (event) {
-	                return event.childName === name;
-	              });
-	              var sharedEvents = {
-	                events: childEvents,
-	                getEvents: (0, _partialRight3.default)(_this2.getScopedEvents, name, _this2.baseProps),
-	                getEventState: (0, _partialRight3.default)(_this2.getEventState, name)
-	              };
-	              return {
-	                v: memo.concat(_react2.default.cloneElement(child, Object.assign({ key: "events-" + name, sharedEvents: sharedEvents, eventKey: eventKey }, child.props)))
-	              };
-	            }();
 	
-	            if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-	          } else if (child.props.children) {
-	            return memo.concat(_react2.default.cloneElement(child, child.props, alterChildren(_react2.default.Children.toArray(child.props.children))));
-	          } else {
-	            return memo.concat(child);
-	          }
-	        }, []);
-	      };
 	
-	      return alterChildren(this.childComponents);
-	    }
-	  }, {
-	    key: "getContainer",
-	    value: function getContainer(props, children) {
-	      var parents = Array.isArray(props.events) && props.events.filter(function (event) {
-	        return event.target === "parent";
-	      });
-	      var sharedEvents = parents.length > 0 ? {
-	        events: parents,
-	        getEvents: (0, _partialRight3.default)(this.getScopedEvents, null, this.baseProps),
-	        getEventState: (0, _partialRight3.default)(this.getEventState, null)
-	      } : null;
-	      var boundGetEvents = _index.Events.getEvents.bind(this);
-	      var parentEvents = boundGetEvents({ sharedEvents: sharedEvents }, "parent");
-	      var parentProps = (0, _defaults3.default)({}, this.getEventState("parent", "parent"), props.container.props, this.baseProps.parent);
-	      return _react2.default.cloneElement(props.container, Object.assign({}, parentProps, { events: _index.Events.getPartialEvents(parentEvents, "parent", parentProps) }), children);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var children = this.getNewChildren(this.props);
-	      return this.props.container ? this.getContainer(this.props, children) : _react2.default.createElement(
-	        "g",
-	        null,
-	        children
-	      );
-	    }
-	  }]);
 	
-	  return VictorySharedEvents;
-	}(_react2.default.Component);
 	
-	VictorySharedEvents.role = "shared-event-wrapper";
-	VictorySharedEvents.propTypes = {
-	  /**
-	   * VictoryEvents is a wrapper component that coordinates events between child components,
-	   */
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node), _react2.default.PropTypes.node]),
-	  /**
-	   * The container prop specifies a container for the children to be rendered into.
-	   * If no container is provided, a <g> tag will be used. Shared parent events will only
-	   * be attached when a container prop is provided.
-	   */
-	  container: _react2.default.PropTypes.node,
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, (i.e. "data" and "labels"). The childName will refer to an
-	   * individual child, either by its name prop, or by index. Only Victory components
-	   * that actually render data should be targeted for use with shared events. The eventKey
-	   * may optionally be used to select a single element by index or eventKey rather than
-	   * an entire set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey and childName keys,
-	   * and a mutation key whose value is a function. The target and eventKey and childName keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     childName: "firstBar",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              childName: "secondBar",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              childName: "secondBar",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    childName: _react.PropTypes.string,
-	    target: _react.PropTypes.string,
-	    eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _index.PropTypes.allOfType([_index.PropTypes.integer, _index.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _index.PropTypes.allOfType([_index.PropTypes.integer, _index.PropTypes.nonNegative]), _react.PropTypes.string])
-	};
-	exports.default = VictorySharedEvents;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictorySharedEvents(){_classCallCheck(this,VictorySharedEvents);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictorySharedEvents).call(this));
+	
+	_this.state={};
+	_this.getScopedEvents=_index.Events.getScopedEvents.bind(_this);
+	_this.getEventState=_index.Events.getEventState.bind(_this);return _this;}_createClass(VictorySharedEvents,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setUpChildren(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setUpChildren(newProps);}},{key:"setUpChildren",value:function setUpChildren(
+	
+	
+	props){
+	this.childComponents=_react2.default.Children.toArray(props.children);
+	var childBaseProps=this.getBasePropsFromChildren(this.childComponents);
+	var parentBaseProps=props.container?{parent:props.container.props}:{};
+	this.baseProps=_extends({},childBaseProps,{parent:parentBaseProps});}},{key:"getBasePropsFromChildren",value:function getBasePropsFromChildren(
+	
+	
+	childComponents){
+	var getBaseProps=function getBaseProps(children){
+	return children.reduce(function(memo,child,index){
+	if(child.type&&(0,_isFunction3.default)(child.type.getBaseProps)){
+	var baseChildProps=child.props&&child.type.getBaseProps(child.props);
+	if(baseChildProps){
+	var childKey=child.props.name||index;
+	memo[childKey]=baseChildProps;
+	return memo;}
+	
+	return memo;}else
+	if(child.props&&child.props.children){
+	return getBaseProps(_react2.default.Children.toArray(child.props.children));}
+	
+	return memo;},
+	{});};
+	
+	return getBaseProps(childComponents);}},{key:"getNewChildren",value:function getNewChildren(
+	
+	
+	props){var _this2=this;var
+	events=props.events;var eventKey=props.eventKey;
+	var childNames=Object.keys(this.baseProps);
+	
+	var alterChildren=function alterChildren(children){
+	return children.reduce(function(memo,child){
+	if(child.type&&(0,_isFunction3.default)(child.type.getBaseProps)){var _ret=function(){
+	var name=child.props.name||childNames.shift();
+	var childEvents=Array.isArray(events)&&
+	events.filter(function(event){return event.childName===name;});
+	var sharedEvents={
+	events:childEvents,
+	getEvents:(0,_partialRight3.default)(_this2.getScopedEvents,name,_this2.baseProps),
+	getEventState:(0,_partialRight3.default)(_this2.getEventState,name)};
+	
+	return{v:memo.concat(_react2.default.cloneElement(child,_extends(
+	{key:"events-"+name,sharedEvents:sharedEvents,eventKey:eventKey},
+	child.props)))};}();if((typeof _ret==="undefined"?"undefined":_typeof(_ret))==="object")return _ret.v;}else
+	
+	if(child.props.children){
+	return memo.concat(_react2.default.cloneElement(
+	child,
+	child.props,
+	alterChildren(_react2.default.Children.toArray(child.props.children))));}else
+	
+	{
+	return memo.concat(child);}},
+	
+	[]);};
+	
+	
+	return alterChildren(this.childComponents);}},{key:"getContainer",value:function getContainer(
+	
+	
+	props,children){
+	var parents=Array.isArray(props.events)&&
+	props.events.filter(function(event){return event.target==="parent";});
+	var sharedEvents=parents.length>0?
+	{
+	events:parents,
+	getEvents:(0,_partialRight3.default)(this.getScopedEvents,null,this.baseProps),
+	getEventState:(0,_partialRight3.default)(this.getEventState,null)}:
+	null;
+	var boundGetEvents=_index.Events.getEvents.bind(this);
+	var parentEvents=boundGetEvents({sharedEvents:sharedEvents},"parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	props.container.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.container,
+	_extends(
+	{},parentProps,{events:_index.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var children=this.getNewChildren(this.props);
+	return this.props.container?this.getContainer(this.props,children):_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:190}},children);}}]);return VictorySharedEvents;}(_react2.default.Component);VictorySharedEvents.role="shared-event-wrapper";VictorySharedEvents.propTypes={/**
+	     * VictoryEvents is a wrapper component that coordinates events between child components,
+	     */children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),/**
+	     * The container prop specifies a container for the children to be rendered into.
+	     * If no container is provided, a <g> tag will be used. Shared parent events will only
+	     * be attached when a container prop is provided.
+	     */container:_react2.default.PropTypes.node,/**
+	     * The event prop take an array of event objects. Event objects are composed of
+	     * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
+	     * for a given component, (i.e. "data" and "labels"). The childName will refer to an
+	     * individual child, either by its name prop, or by index. Only Victory components
+	     * that actually render data should be targeted for use with shared events. The eventKey
+	     * may optionally be used to select a single element by index or eventKey rather than
+	     * an entire set. The eventHandlers object should be given as an object whose keys are standard
+	     * event names (i.e. onClick) and whose values are event callbacks. The return value
+	     * of an event handler is used to modify elemnts. The return value should be given
+	     * as an object or an array of objects with optional target and eventKey and childName keys,
+	     * and a mutation key whose value is a function. The target and eventKey and childName keys
+	     * will default to those corresponding to the element the event handler was attached to.
+	     * The mutation function will be called with the calculated props for the individual selected
+	     * element (i.e. a single bar), and the object returned from the mutation function
+	     * will override the props of the selected element via object assignment.
+	     * @examples
+	     * events={[
+	     *   {
+	     *     target: "data",
+	     *     childName: "firstBar",
+	     *     eventHandlers: {
+	     *       onClick: () => {
+	     *         return [
+	     *            {
+	     *              childName: "secondBar",
+	     *              mutation: (props) => {
+	     *                return {style: merge({}, props.style, {fill: "orange"})};
+	     *              }
+	     *            }, {
+	     *              childName: "secondBar",
+	     *              target: "labels",
+	     *              mutation: () => {
+	     *                return {text: "hey"};
+	     *              }
+	     *            }
+	     *          ];
+	     *       }
+	     *     }
+	     *   }
+	     * ]}
+	     *}}
+	     */events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.string,target:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_index.PropTypes.allOfType([_index.PropTypes.integer,_index.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),/**
+	     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+	     * assign eventKeys to data
+	     */eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_index.PropTypes.allOfType([_index.PropTypes.integer,_index.PropTypes.nonNegative]),_react.PropTypes.string])};exports.default=VictorySharedEvents;
 
 /***/ },
-/* 155 */
+/* 129 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createWrapper = __webpack_require__(46),
-	    getHolder = __webpack_require__(63),
-	    replaceHolders = __webpack_require__(67),
-	    rest = __webpack_require__(72);
-	
-	/** Used to compose bitmasks for wrapper metadata. */
-	var PARTIAL_RIGHT_FLAG = 64;
-	
-	/**
-	 * This method is like `_.partial` except that partially applied arguments
-	 * are appended to the arguments it receives.
-	 *
-	 * The `_.partialRight.placeholder` value, which defaults to `_` in monolithic
-	 * builds, may be used as a placeholder for partially applied arguments.
-	 *
-	 * **Note:** This method doesn't set the "length" property of partially
-	 * applied functions.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 1.0.0
-	 * @category Function
-	 * @param {Function} func The function to partially apply arguments to.
-	 * @param {...*} [partials] The arguments to be partially applied.
-	 * @returns {Function} Returns the new partially applied function.
-	 * @example
-	 *
-	 * var greet = function(greeting, name) {
-	 *   return greeting + ' ' + name;
-	 * };
-	 *
-	 * var greetFred = _.partialRight(greet, 'fred');
-	 * greetFred('hi');
-	 * // => 'hi fred'
-	 *
-	 * // Partially applied with placeholders.
-	 * var sayHelloTo = _.partialRight(greet, 'hello', _);
-	 * sayHelloTo('fred');
-	 * // => 'hello fred'
-	 */
-	var partialRight = rest(function(func, partials) {
-	  var holders = replaceHolders(partials, getHolder(partialRight));
-	  return createWrapper(func, PARTIAL_RIGHT_FLAG, undefined, partials, holders);
-	});
-	
-	// Assign default placeholders.
-	partialRight.placeholder = {};
-	
-	module.exports = partialRight;
-
-
-/***/ },
-/* 156 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var VictoryContainer = function (_React$Component) {
-	  _inherits(VictoryContainer, _React$Component);
-	
-	  function VictoryContainer() {
-	    _classCallCheck(this, VictoryContainer);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryContainer).apply(this, arguments));
-	  }
-	
-	  _createClass(VictoryContainer, [{
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "svg",
-	        _extends({
-	          style: this.props.style,
-	          viewBox: "0 0 " + this.props.width + " " + this.props.height,
-	          role: "img",
-	          "aria-labelledby": "title desc"
-	        }, this.props.events),
-	        _react2.default.createElement(
-	          "title",
-	          { id: "title" },
-	          this.props.title
-	        ),
-	        _react2.default.createElement(
-	          "desc",
-	          { id: "desc" },
-	          this.props.desc
-	        ),
-	        this.props.children
-	      );
-	    }
-	  }]);
-	
-	  return VictoryContainer;
-	}(_react2.default.Component);
-	
-	VictoryContainer.propTypes = {
-	  /**
-	   * The style prop specifies styles for your VictoryContainer. Any valid inline style properties
-	   * will be applied. Height and width should be specified via the height
-	   * and width props, as they are used to calculate the alignment of
-	   * components within the container. Styles from the child component will
-	   * also be passed, if any exist.
-	   * @examples {border: 1px solid red}
-	   */
-	  style: _react.PropTypes.object,
-	  /**
-	   * The height props specifies the height the svg viewBox of the container.
-	   * This value should be given as a number of pixels. If no height prop
-	   * is given, the height prop from the child component passed will be used.
-	   */
-	  height: _react.PropTypes.number,
-	  /**
-	   * The width props specifies the width of the svg viewBox of the container
-	   * This value should be given as a number of pixels. If no width prop
-	   * is given, the width prop from the child component passed will be used.
-	   */
-	  width: _react.PropTypes.number,
-	  /**
-	   * The events prop attaches arbitrary event handlers to the container component.
-	   * Event handlers passed from other Victory components are called with their
-	   * corresponding events as well as scale, style, width, height, and data when
-	   * applicable. Use the invert method to convert event coordinate information to
-	   * data. `scale.x.invert(evt.offsetX)`.
-	   * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
-	   */
-	  events: _react.PropTypes.object,
-	  /**
-	   * VictoryContainer is a wrapper component that controls some props and behaviors of its
-	   * children. VictoryContainer works with all Victory components.
-	   * If no children are provided, VictoryContainer will render an empty SVG.
-	   * Props from children are used to determine default style, height, and width.
-	   */
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node), _react2.default.PropTypes.node]),
-	  /**
-	   * The title prop specifies the title to be applied to the SVG to assist
-	   * accessibility for screen readers. The more descriptive this title is, the more
-	   * useful it will be. If no title prop is passed, it will default to Victory Chart.
-	   * @example "Popularity of Dog Breeds by Percentage"
-	   */
-	  title: _react.PropTypes.string,
-	  /**
-	   * The desc prop specifies the description of the chart/SVG to assist with
-	   * accessibility for screen readers. The more info about the chart provided in
-	   * the description, the more usable it will be for people using screen readers.
-	   * This prop defaults to an empty string.
-	   * @example "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
-	   * not represented above 5% each."
-	   */
-	  desc: _react.PropTypes.string
-	};
-	VictoryContainer.defaultProps = {
-	  title: "Victory Chart",
-	  desc: ""
-	};
-	exports.default = VictoryContainer;
-
-/***/ },
-/* 157 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _grayscale = __webpack_require__(158);
-	
-	var _grayscale2 = _interopRequireDefault(_grayscale);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	  grayscale: _grayscale2.default
-	};
-
-/***/ },
-/* 158 */
-/***/ function(module, exports) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	var grayscaleBlack = "#252525";
-	var fontStack = "Poppins, 'Century Gothic', 'Trebuchet MS', sans-serif";
-	var letterSpace = 0.2;
-	var labelFontSize = 10;
-	var dataTickLabelPadding = 5;
-	var strokeCap = "round";
-	var colors = ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9"];
-	var baseLabelStyles = {
-	  fontFamily: fontStack,
-	  fontSize: labelFontSize,
-	  letterSpacing: letterSpace,
-	  padding: dataTickLabelPadding,
-	  fill: grayscaleBlack
-	};
-	var baseProps = {
-	  width: 250,
-	  height: 250
-	};
-	
-	exports.default = {
-	  line: {
-	    data: {
-	      stroke: grayscaleBlack,
-	      strokeWidth: 2,
-	      fill: "none",
-	      opacity: 1
-	    },
-	    labels: Object.assign({}, baseLabelStyles, {
-	      strokeWidth: 0,
-	      stroke: "transparent",
-	      textAnchor: "start"
-	    }),
-	    parent: {}
-	  },
-	  candlestick: {
-	    props: Object.assign({}, baseProps, { candleColors: { positive: "#252525", negative: "#d9d9d9" } }),
-	    data: {
-	      fill: "grayscaleBlack",
-	      opacity: 1,
-	      stroke: "transparent",
-	      strokeWidth: 1
-	    },
-	    labels: baseLabelStyles,
-	    parent: {}
-	  },
-	  bar: {
-	    data: {
-	      width: 8,
-	      padding: 6,
-	      stroke: "transparent",
-	      strokeWidth: 0,
-	      fill: grayscaleBlack,
-	      opacity: 1
-	    },
-	    labels: baseLabelStyles,
-	    parent: {}
-	  },
-	  scatter: {
-	    data: {
-	      fill: grayscaleBlack,
-	      opacity: 1,
-	      stroke: "transparent",
-	      strokeWidth: 0
-	    },
-	    labels: Object.assign({}, baseLabelStyles, {
-	      stroke: "transparent",
-	      textAnchor: "middle"
-	    }),
-	    parent: {}
-	  },
-	  axis: {
-	    axis: {
-	      stroke: grayscaleBlack,
-	      fill: "none",
-	      strokeWidth: 2,
-	      strokeLinecap: strokeCap
-	    },
-	    axisLabel: Object.assign({}, baseLabelStyles, {
-	      stroke: "transparent",
-	      padding: dataTickLabelPadding * 2
-	    }),
-	    grid: {
-	      stroke: "#d9d9d9",
-	      fill: "none",
-	      strokeLinecap: strokeCap
-	    },
-	    ticks: {
-	      stroke: "none",
-	      fill: "none",
-	      padding: dataTickLabelPadding,
-	      strokeWidth: 2,
-	      strokeLinecap: strokeCap,
-	      size: 4
-	    },
-	    tickLabels: Object.assign({}, baseLabelStyles, {
-	      stroke: "transparent",
-	      fill: function fill(tick, index) {
-	        return typeof tick === "number" && index % 2 !== 0 ? "transparent" : grayscaleBlack;
-	      }
-	    })
-	  },
-	  area: {
-	    data: {
-	      fill: grayscaleBlack
-	    },
-	    labels: baseLabelStyles,
-	    parent: {}
-	  },
-	  pie: {
-	    props: Object.assign({}, baseProps, { colorScale: ["#252525", "#636363", "#969696", "#bdbdbd", "#d9d9d9", "#f7f7f7"] }),
-	    style: {
-	      data: {
-	        padding: dataTickLabelPadding,
-	        stroke: "#f7f7f7",
-	        strokeWidth: 1
-	      },
-	      labels: Object.assign({}, baseLabelStyles, {
-	        padding: 200,
-	        strokeWidth: 0,
-	        stroke: "transparent",
-	        textAnchor: "middle"
-	      }),
-	      parent: {}
-	    }
-	  },
-	  props: Object.assign({}, baseProps, { colorScale: colors })
-	};
-
-/***/ },
-/* 159 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _partialRight2 = __webpack_require__(160);
-	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _axisLine = __webpack_require__(183);
-	
-	var _axisLine2 = _interopRequireDefault(_axisLine);
-	
-	var _grid = __webpack_require__(184);
-	
-	var _grid2 = _interopRequireDefault(_grid);
-	
-	var _tick = __webpack_require__(185);
-	
-	var _tick2 = _interopRequireDefault(_tick);
-	
-	var _helperMethods = __webpack_require__(186);
-	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
-	
-	var _axis = __webpack_require__(226);
-	
-	var _axis2 = _interopRequireDefault(_axis);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var fallbackProps = {
-	  props: {
-	    width: 450,
-	    height: 300
-	  },
-	  style: {
-	    axis: {
-	      stroke: "#756f6a",
-	      fill: "none",
-	      strokeWidth: 2,
-	      strokeLinecap: "round"
-	    },
-	    axisLabel: {
-	      stroke: "transparent",
-	      fill: "#756f6a",
-	      fontSize: 17,
-	      fontFamily: "Helvetica"
-	    },
-	    grid: {
-	      stroke: "transparent",
-	      fill: "none",
-	      strokeLinecap: "round"
-	    },
-	    ticks: {
-	      stroke: "#756f6a",
-	      fill: "none",
-	      padding: 5,
-	      strokeWidth: 2,
-	      strokeLinecap: "round",
-	      size: 4
-	    },
-	    tickLabels: {
-	      stroke: "transparent",
-	      fill: "#756f6a",
-	      fontFamily: "Helvetica",
-	      fontSize: 12,
-	      padding: 5
-	    }
-	  }
-	};
-	
-	var VictoryAxis = function (_React$Component) {
-	  _inherits(VictoryAxis, _React$Component);
-	
-	  function VictoryAxis() {
-	    _classCallCheck(this, VictoryAxis);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryAxis).call(this));
-	
-	    _this.state = {};
-	    var getScopedEvents = _victoryCore.Events.getScopedEvents.bind(_this);
-	    _this.getEvents = (0, _partialRight3.default)(_victoryCore.Events.getEvents.bind(_this), getScopedEvents);
-	    _this.getEventState = _victoryCore.Helpers.getEventState.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(VictoryAxis, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.setupEvents(this.props);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.setupEvents(newProps);
-	    }
-	  }, {
-	    key: "setupEvents",
-	    value: function setupEvents(props) {
-	      var sharedEvents = props.sharedEvents;
-	
-	      this.baseProps = _helperMethods2.default.getBaseProps(props, fallbackProps);
-	      this.dataKeys = Object.keys(this.baseProps).filter(function (key) {
-	        return key !== "parent";
-	      });
-	      this.getSharedEventState = sharedEvents && (0, _isFunction3.default)(sharedEvents.getEventState) ? sharedEvents.getEventState : function () {
-	        return undefined;
-	      };
-	    }
-	  }, {
-	    key: "renderLine",
-	    value: function renderLine(props) {
-	      var key = 0;
-	      var axisEvents = this.getEvents(props, "axis", key);
-	      var baseProps = this.baseProps[key];
-	      var axisProps = (0, _defaults3.default)({}, this.getEventState(key, "axis"), this.getSharedEventState(key, "axis"), props.axisComponent.props, baseProps ? baseProps.axis : null);
-	      return _react2.default.cloneElement(props.axisComponent, Object.assign({}, axisProps, { events: _victoryCore.Events.getPartialEvents(axisEvents, key, axisProps) }));
-	    }
-	  }, {
-	    key: "renderLabel",
-	    value: function renderLabel(props) {
-	      var key = 0;
-	      var axisLabelEvents = this.getEvents(props, "axisLabel", key);
-	      var baseProps = this.baseProps[key];
-	      var axisLabelProps = (0, _defaults3.default)({}, this.getEventState(key, "axisLabel"), this.getSharedEventState(key, "axisLabel"), props.axisLabelComponent.props, baseProps ? baseProps.axisLabel : null);
-	      return _react2.default.cloneElement(props.axisLabelComponent, Object.assign({}, axisLabelProps, { events: _victoryCore.Events.getPartialEvents(axisLabelEvents, key, axisLabelProps) }));
-	    }
-	  }, {
-	    key: "renderGridAndTicks",
-	    value: function renderGridAndTicks(props) {
-	      var _this2 = this;
-	
-	      var tickComponent = props.tickComponent;
-	      var tickLabelComponent = props.tickLabelComponent;
-	      var gridComponent = props.gridComponent;
-	
-	      return this.dataKeys.map(function (key) {
-	        var tickEvents = _this2.getEvents(props, "ticks", key);
-	        var tickProps = (0, _defaults3.default)({}, _this2.getEventState(key, "ticks"), _this2.getSharedEventState(key, "ticks"), tickComponent.props, _this2.baseProps[key].ticks);
-	        var TickComponent = _react2.default.cloneElement(tickComponent, Object.assign({}, tickProps, { events: _victoryCore.Events.getPartialEvents(tickEvents, key, tickProps) }));
-	        var gridEvents = _this2.getEvents(props, "grid", key);
-	        var gridProps = (0, _defaults3.default)({}, _this2.getEventState(key, "grid"), _this2.getSharedEventState(key, "grid"), gridComponent.props, _this2.baseProps[key].grid);
-	        var GridComponent = _react2.default.cloneElement(gridComponent, Object.assign({}, gridProps, { events: _victoryCore.Events.getPartialEvents(gridEvents, key, gridProps) }));
-	        var tickLabelProps = (0, _defaults3.default)({}, _this2.getEventState(key, "tickLabels"), _this2.getSharedEventState(key, "tickLabels"), tickLabelComponent.props, _this2.baseProps[key].tickLabels);
-	        var tickLabelEvents = _this2.getEvents(props, "tickLabels", key);
-	        var TickLabel = _react2.default.cloneElement(tickLabelComponent, Object.assign({
-	          events: _victoryCore.Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
-	        }, tickLabelProps));
-	        return _react2.default.createElement(
-	          "g",
-	          { key: "tick-group-" + key },
-	          GridComponent,
-	          TickComponent,
-	          TickLabel
-	        );
-	      });
-	    }
-	  }, {
-	    key: "renderContainer",
-	    value: function renderContainer(props, group) {
-	      var parentEvents = this.getEvents(props, "parent", "parent");
-	      var parentProps = (0, _defaults3.default)({}, this.getEventState("parent", "parent"), this.getSharedEventState("parent", "parent"), props.containerComponent.props, this.baseProps.parent);
-	      return _react2.default.cloneElement(props.containerComponent, Object.assign({}, parentProps, { events: _victoryCore.Events.getPartialEvents(parentEvents, "parent", parentProps) }), group);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(this.props, fallbackProps);
-	      var animate = modifiedProps.animate;
-	      var standalone = modifiedProps.standalone;
-	
-	      if (animate) {
-	        // Do less work by having `VictoryAnimation` tween only values that
-	        // make sense to tween. In the future, allow customization of animated
-	        // prop whitelist/blacklist?
-	        var whitelist = ["style", "domain", "range", "tickCount", "tickValues", "offsetX", "offsetY", "padding", "width", "height"];
-	        return _react2.default.createElement(
-	          _victoryCore.VictoryTransition,
-	          { animate: animate, animationWhitelist: whitelist },
-	          _react2.default.createElement(VictoryAxis, modifiedProps)
-	        );
-	      }
-	
-	      var styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis : fallbackProps.style;
-	      var style = _helperMethods2.default.getStyles(modifiedProps, styleObject);
-	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { style: style.parent },
-	        this.renderGridAndTicks(modifiedProps),
-	        this.renderLine(modifiedProps),
-	        this.renderLabel(modifiedProps)
-	      );
-	
-	      return standalone ? this.renderContainer(modifiedProps, group) : group;
-	    }
-	  }]);
-	
-	  return VictoryAxis;
-	}(_react2.default.Component);
-	
-	VictoryAxis.role = "axis";
-	VictoryAxis.defaultTransitions = {
-	  onExit: {
-	    duration: 500
-	  },
-	  onEnter: {
-	    duration: 500
-	  }
-	};
-	VictoryAxis.propTypes = {
-	  /**
-	   * The animate prop specifies props for victory-animation to use. It this prop is
-	   * not given, the axis will not tween between changing data / style props.
-	   * Large datasets might animate slowly due to the inherent limits of svg rendering.
-	   * @examples {duration: 500, onEnd: () => alert("done!")}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The axisComponent prop takes in an entire component which will be used
-	   * to create the axis line. The new element created from the passed axisComponent
-	   * will be supplied with the following properties: x1, y1, x2, y2, style and events.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If an axisComponent
-	   * is not supplied, VictoryAxis will render its default AxisLine component.
-	   */
-	  axisComponent: _react.PropTypes.element,
-	  /**
-	   * The axisLabelComponent prop takes in an entire component which will be used
-	   * to create the axis label. The new element created from the passed axisLabelComponent
-	   * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
-	   * angle, transform, style and events. Any of these props may be overridden by
-	   * passing in props to the supplied component, or modified or ignored within
-	   * the custom component itself. If an axisLabelComponent is not supplied, a new
-	   * VictoryLabel will be created with props described above
-	   */
-	  axisLabelComponent: _react.PropTypes.element,
-	  /**
-	   * This prop specifies whether a given axis is intended to cross another axis.
-	   */
-	  crossAxis: _react.PropTypes.bool,
-	  /**
-	   * The dependentAxis prop specifies whether the axis corresponds to the
-	   * dependent variable (usually y). This prop is useful when composing axis
-	   * with other components to form a chart.
-	   */
-	  dependentAxis: _react.PropTypes.bool,
-	  /**
-	   * The domain prop describes the range of values your axis will include. This prop should be
-	   * given as a array of the minimum and maximum expected values for your axis.
-	   * If this value is not given it will be calculated based on the scale or tickValues.
-	   * @examples [-1, 1]
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, so "axis", "axisLabel", "ticks", "tickLabels", and "grid" are
-	   * all valid targets for VictoryAxis events. The eventKey may optionally be used to select a
-	   * single element by index rather than an entire set. The eventHandlers object
-	   * should be given as an object whose keys are standard event names (i.e. onClick)
-	   * and whose values are event callbacks. The return value of an event handler
-	   * be used to modify other elemnts. The return value should be given as an object or
-	   * an array of objects with optional target and eventKey keys, and a mutation
-	   * key whose value is a function. The target and eventKey keys will default to those
-	   * corresponding to the element the event handler was attached to. The mutation
-	   * function will be called with the calculated props for the individual selected
-	   * element (i.e. a single tick), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "grid",
-	   *     eventKey: 2,
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *           {
-	   *             mutation: (props) => {
-	   *               return {style: merge({}, props.style, {stroke: "orange"})};
-	   *             }
-	   *           }, {
-	   *             target: "tickLabels",
-	   *             mutation: () => {
-	   *               return {text: "hey"};
-	   *             }
-	   *           }
-	   *         ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    target: _react.PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
-	    eventKey: _react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * The name prop is used to reference a component instance when defining shared events.
-	   */
-	  name: _react.PropTypes.string,
-	  /**
-	   * This prop is used to coordinate events between VictoryAxis and other Victory
-	   * Components via VictorySharedEvents. This prop should not be set manually.
-	   */
-	  sharedEvents: _react.PropTypes.shape({
-	    events: _react.PropTypes.array,
-	    getEventState: _react.PropTypes.func
-	  }),
-	  /**
-	   * The gridComponent prop takes in an entire component which will be used
-	   * to create grid lines. The new element created from the passed gridComponent
-	   * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a gridComponent
-	   * is not supplied, VictoryAxis will render its default GridLine component.
-	   */
-	  gridComponent: _react.PropTypes.element,
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The label prop defines the label that will appear along the axis. This
-	   * prop should be given as a value or an entire, HTML-complete label
-	   * component. If a label component is given, it will be cloned. The new
-	   * element's properties x, y, textAnchor, verticalAnchor, and transform
-	   * will have defaults provided by the axis; styles filled out with
-	   * defaults provided by the axis, and overrides from the label component.
-	   * If a value is given, a new VictoryLabel will be created with props and
-	   * styles from the axis.
-	   */
-	  label: _react.PropTypes.any,
-	  /**
-	   * This value describes how far from the "edge" of its permitted area each axis
-	   * will be set back in the x-direction.  If this prop is not given,
-	   * the offset is calculated based on font size, axis orientation, and label padding.
-	   */
-	  offsetX: _react.PropTypes.number,
-	  /**
-	   * This value describes how far from the "edge" of its permitted area each axis
-	   * will be set back in the y-direction.  If this prop is not given,
-	   * the offset is calculated based on font size, axis orientation, and label padding.
-	   */
-	  offsetY: _react.PropTypes.number,
-	  /**
-	   * The orientation prop specifies the position and orientation of your axis.
-	   */
-	  orientation: _react.PropTypes.oneOf(["top", "bottom", "left", "right"]),
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The scale prop determines which scales your axis should use. This prop can be
-	   * given as a `d3-scale@0.3.0` function or as a string corresponding to a supported d3-string
-	   * function.
-	   * @examples d3Scale.time(), "linear", "time", "log", "sqrt"
-	   */
-	  scale: _victoryCore.PropTypes.scale,
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryAxis with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your VictoryAxis. Any valid inline style properties
-	   * will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart.
-	   * @examples {axis: {stroke: "#756f6a"}, grid: {stroke: "grey"}, ticks: {stroke: "grey"},
-	   * tickLabels: {fontSize: 10, padding: 5}, axisLabel: {fontSize: 16, padding: 20}}
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    axis: _react.PropTypes.object,
-	    axisLabel: _react.PropTypes.object,
-	    grid: _react.PropTypes.object,
-	    ticks: _react.PropTypes.object,
-	    tickLabels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The tickComponent prop takes in an entire component which will be used
-	   * to create tick lines. The new element created from the passed tickComponent
-	   * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a tickComponent
-	   * is not supplied, VictoryAxis will render its default Tick component.
-	   */
-	  tickComponent: _react.PropTypes.element,
-	  /**
-	   * The tickCount prop specifies approximately how many ticks should be drawn on the axis if
-	   * tickValues are not explicitly provided. This values is calculated by d3 scale and
-	   * prioritizes returning "nice" values and evenly spaced ticks over an exact numnber of ticks
-	   */
-	  tickCount: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The tickLabelComponent prop takes in an entire component which will be used
-	   * to create the tick labels. The new element created from the passed tickLabelComponent
-	   * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
-	   * angle, tick, style and events. Any of these props may be overridden by
-	   * passing in props to the supplied component, or modified or ignored within
-	   * the custom component itself. If an tickLabelComponent is not supplied, a new
-	   * VictoryLabel will be created with props described above
-	   */
-	  tickLabelComponent: _react.PropTypes.element,
-	  /**
-	   * The tickFormat prop specifies how tick values should be expressed visually.
-	   * tickFormat can be given as a function to be applied to every tickValue, or as
-	   * an array of display values for each tickValue.
-	   * @examples d3.time.format("%Y"), (x) => x.toPrecision(2), ["first", "second", "third"]
-	   */
-	  tickFormat: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.homogeneousArray]),
-	  /**
-	   * The tickValues prop explicitly specifies which tick values to draw on the axis.
-	   * @examples ["apples", "bananas", "oranges"], [2, 4, 6, 8]
-	   */
-	  tickValues: _victoryCore.PropTypes.homogeneousArray,
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryAxis: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryAxis will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested axis, ticks, axisLabel, grid, and
-	  * tickLabels objects. You can create this object yourself, or you can use a theme provided by
-	  * Victory. When using VictoryAxis as a solo component, implement the theme directly on
-	  * VictoryAxis. If you are wrapping VictoryAxis in VictoryChart, VictoryStack, or
-	  * VictoryGroup, please call the theme on the outermost wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryAxis.defaultProps = {
-	  axisComponent: _react2.default.createElement(_axisLine2.default, null),
-	  axisLabelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  tickLabelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  tickComponent: _react2.default.createElement(_tick2.default, null),
-	  gridComponent: _react2.default.createElement(_grid2.default, null),
-	  padding: 50,
-	  scale: "linear",
-	  standalone: true,
-	  tickCount: 5,
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryAxis.getDomain = _helperMethods2.default.getDomain.bind(_helperMethods2.default);
-	VictoryAxis.getAxis = _axis2.default.getAxis.bind(_axis2.default);
-	VictoryAxis.getScale = _helperMethods2.default.getScale.bind(_helperMethods2.default);
-	VictoryAxis.getStyles = (0, _partialRight3.default)(_helperMethods2.default.getStyles.bind(_helperMethods2.default), fallbackProps.style);
-	VictoryAxis.getBaseProps = (0, _partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default), fallbackProps);
-	exports.default = VictoryAxis;
-
-/***/ },
-/* 160 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var createWrapper = __webpack_require__(161),
-	    getHolder = __webpack_require__(175),
-	    replaceHolders = __webpack_require__(178),
+	var createWrapper = __webpack_require__(44),
+	    getHolder = __webpack_require__(58),
+	    replaceHolders = __webpack_require__(61),
 	    rest = __webpack_require__(11);
 	
 	/** Used to compose bitmasks for wrapper metadata. */
@@ -10059,1509 +8037,1118 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 161 */
+/* 130 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseSetData = __webpack_require__(162),
-	    createBaseWrapper = __webpack_require__(163),
-	    createCurryWrapper = __webpack_require__(167),
-	    createHybridWrapper = __webpack_require__(168),
-	    createPartialWrapper = __webpack_require__(179),
-	    getData = __webpack_require__(180),
-	    mergeData = __webpack_require__(181),
-	    setData = __webpack_require__(174),
-	    toInteger = __webpack_require__(12);
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="src/victory-container/victory-container.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	/** Used as the `TypeError` message for "Functions" methods. */
-	var FUNC_ERROR_TEXT = 'Expected a function';
+	VictoryContainer=function(_React$Component){_inherits(VictoryContainer,_React$Component);function VictoryContainer(){_classCallCheck(this,VictoryContainer);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryContainer).apply(this,arguments));}_createClass(VictoryContainer,[{key:"render",value:function render()
 	
-	/** Used to compose bitmasks for wrapper metadata. */
-	var BIND_FLAG = 1,
-	    BIND_KEY_FLAG = 2,
-	    CURRY_FLAG = 8,
-	    CURRY_RIGHT_FLAG = 16,
-	    PARTIAL_FLAG = 32,
-	    PARTIAL_RIGHT_FLAG = 64;
 	
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeMax = Math.max;
 	
-	/**
-	 * Creates a function that either curries or invokes `func` with optional
-	 * `this` binding and partially applied arguments.
-	 *
-	 * @private
-	 * @param {Function|string} func The function or method name to wrap.
-	 * @param {number} bitmask The bitmask of wrapper flags.
-	 *  The bitmask may be composed of the following flags:
-	 *     1 - `_.bind`
-	 *     2 - `_.bindKey`
-	 *     4 - `_.curry` or `_.curryRight` of a bound function
-	 *     8 - `_.curry`
-	 *    16 - `_.curryRight`
-	 *    32 - `_.partial`
-	 *    64 - `_.partialRight`
-	 *   128 - `_.rearg`
-	 *   256 - `_.ary`
-	 *   512 - `_.flip`
-	 * @param {*} [thisArg] The `this` binding of `func`.
-	 * @param {Array} [partials] The arguments to be partially applied.
-	 * @param {Array} [holders] The `partials` placeholder indexes.
-	 * @param {Array} [argPos] The argument positions of the new function.
-	 * @param {number} [ary] The arity cap of `func`.
-	 * @param {number} [arity] The arity of `func`.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createWrapper(func, bitmask, thisArg, partials, holders, argPos, ary, arity) {
-	  var isBindKey = bitmask & BIND_KEY_FLAG;
-	  if (!isBindKey && typeof func != 'function') {
-	    throw new TypeError(FUNC_ERROR_TEXT);
-	  }
-	  var length = partials ? partials.length : 0;
-	  if (!length) {
-	    bitmask &= ~(PARTIAL_FLAG | PARTIAL_RIGHT_FLAG);
-	    partials = holders = undefined;
-	  }
-	  ary = ary === undefined ? ary : nativeMax(toInteger(ary), 0);
-	  arity = arity === undefined ? arity : toInteger(arity);
-	  length -= holders ? holders.length : 0;
 	
-	  if (bitmask & PARTIAL_RIGHT_FLAG) {
-	    var partialsRight = partials,
-	        holdersRight = holders;
 	
-	    partials = holders = undefined;
-	  }
-	  var data = isBindKey ? undefined : getData(func);
 	
-	  var newData = [
-	    func, bitmask, thisArg, partials, holders, partialsRight, holdersRight,
-	    argPos, ary, arity
-	  ];
 	
-	  if (data) {
-	    mergeData(newData, data);
-	  }
-	  func = newData[0];
-	  bitmask = newData[1];
-	  thisArg = newData[2];
-	  partials = newData[3];
-	  holders = newData[4];
-	  arity = newData[9] = newData[9] == null
-	    ? (isBindKey ? 0 : func.length)
-	    : nativeMax(newData[9] - length, 0);
 	
-	  if (!arity && bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG)) {
-	    bitmask &= ~(CURRY_FLAG | CURRY_RIGHT_FLAG);
-	  }
-	  if (!bitmask || bitmask == BIND_FLAG) {
-	    var result = createBaseWrapper(func, bitmask, thisArg);
-	  } else if (bitmask == CURRY_FLAG || bitmask == CURRY_RIGHT_FLAG) {
-	    result = createCurryWrapper(func, bitmask, arity);
-	  } else if ((bitmask == PARTIAL_FLAG || bitmask == (BIND_FLAG | PARTIAL_FLAG)) && !holders.length) {
-	    result = createPartialWrapper(func, bitmask, thisArg, partials);
-	  } else {
-	    result = createHybridWrapper.apply(undefined, newData);
-	  }
-	  var setter = data ? baseSetData : setData;
-	  return setter(result, newData);
-	}
 	
-	module.exports = createWrapper;
-
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	{
+	return(
+	_react2.default.createElement("svg",_extends({
+	style:this.props.style,
+	viewBox:"0 0 "+this.props.width+" "+this.props.height,
+	role:"img",
+	"aria-labelledby":"title desc"},
+	this.props.events,{__source:{fileName:_jsxFileName,lineNumber:70}}),
+	
+	_react2.default.createElement("title",{id:"title",__source:{fileName:_jsxFileName,lineNumber:77}},this.props.title),
+	_react2.default.createElement("desc",{id:"desc",__source:{fileName:_jsxFileName,lineNumber:78}},this.props.desc),
+	this.props.children));}}]);return VictoryContainer;}(_react2.default.Component);VictoryContainer.propTypes={/**
+	     * The style prop specifies styles for your VictoryContainer. Any valid inline style properties
+	     * will be applied. Height and width should be specified via the height
+	     * and width props, as they are used to calculate the alignment of
+	     * components within the container. Styles from the child component will
+	     * also be passed, if any exist.
+	     * @examples {border: 1px solid red}
+	     */style:_react.PropTypes.object,/**
+	     * The height props specifies the height the svg viewBox of the container.
+	     * This value should be given as a number of pixels. If no height prop
+	     * is given, the height prop from the child component passed will be used.
+	     */height:_react.PropTypes.number,/**
+	     * The width props specifies the width of the svg viewBox of the container
+	     * This value should be given as a number of pixels. If no width prop
+	     * is given, the width prop from the child component passed will be used.
+	     */width:_react.PropTypes.number,/**
+	     * The events prop attaches arbitrary event handlers to the container component.
+	     * Event handlers passed from other Victory components are called with their
+	     * corresponding events as well as scale, style, width, height, and data when
+	     * applicable. Use the invert method to convert event coordinate information to
+	     * data. `scale.x.invert(evt.offsetX)`.
+	     * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
+	     */events:_react.PropTypes.object,/**
+	     * VictoryContainer is a wrapper component that controls some props and behaviors of its
+	     * children. VictoryContainer works with all Victory components.
+	     * If no children are provided, VictoryContainer will render an empty SVG.
+	     * Props from children are used to determine default style, height, and width.
+	     */children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),/**
+	     * The title prop specifies the title to be applied to the SVG to assist
+	     * accessibility for screen readers. The more descriptive this title is, the more
+	     * useful it will be. If no title prop is passed, it will default to Victory Chart.
+	     * @example "Popularity of Dog Breeds by Percentage"
+	     */title:_react.PropTypes.string,/**
+	     * The desc prop specifies the description of the chart/SVG to assist with
+	     * accessibility for screen readers. The more info about the chart provided in
+	     * the description, the more usable it will be for people using screen readers.
+	     * This prop defaults to an empty string.
+	     * @example "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
+	     * not represented above 5% each."
+	     */desc:_react.PropTypes.string};VictoryContainer.defaultProps={title:"Victory Chart",desc:""};exports.default=VictoryContainer;
 
 /***/ },
-/* 162 */
+/* 131 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _grayscale=__webpack_require__(132);var _grayscale2=_interopRequireDefault(_grayscale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
+	
+	{
+	grayscale:_grayscale2.default};
+
+/***/ },
+/* 132 */
 /***/ function(module, exports) {
 
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
+	"use strict";Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var grayscaleBlack="#252525";
+	var fontStack="Poppins, 'Century Gothic', 'Trebuchet MS', sans-serif";
+	var letterSpace=0.2;
+	var labelFontSize=10;
+	var dataTickLabelPadding=5;
+	var strokeCap="round";
+	var colors=["#252525","#636363","#969696","#bdbdbd","#d9d9d9"];
+	var baseLabelStyles={
+	fontFamily:fontStack,
+	fontSize:labelFontSize,
+	letterSpacing:letterSpace,
+	padding:dataTickLabelPadding,
+	fill:grayscaleBlack};
 	
-	module.exports = identity;
-
+	var baseProps={
+	width:250,
+	height:250};exports.default=
+	
+	
+	{
+	line:{
+	data:{
+	stroke:grayscaleBlack,
+	strokeWidth:2,
+	fill:"none",
+	opacity:1},
+	
+	labels:_extends({},baseLabelStyles,
+	{
+	strokeWidth:0,
+	stroke:"transparent",
+	textAnchor:"start"}),
+	
+	parent:{}},
+	
+	bar:{
+	data:{
+	width:8,
+	padding:6,
+	stroke:"transparent",
+	strokeWidth:0,
+	fill:grayscaleBlack,
+	opacity:1},
+	
+	labels:baseLabelStyles,
+	parent:{}},
+	
+	scatter:{
+	data:{
+	fill:grayscaleBlack,
+	opacity:1,
+	stroke:"transparent",
+	strokeWidth:0},
+	
+	labels:_extends({},baseLabelStyles,
+	{
+	stroke:"transparent",
+	textAnchor:"middle"}),
+	
+	parent:{}},
+	
+	axis:{
+	axis:{
+	stroke:grayscaleBlack,
+	fill:"none",
+	strokeWidth:2,
+	strokeLinecap:strokeCap},
+	
+	axisLabel:_extends({},baseLabelStyles,
+	{
+	stroke:"transparent",
+	padding:dataTickLabelPadding*2}),
+	
+	grid:{
+	stroke:"#d9d9d9",
+	fill:"none",
+	strokeLinecap:strokeCap},
+	
+	ticks:{
+	stroke:"none",
+	fill:"none",
+	padding:dataTickLabelPadding,
+	strokeWidth:2,
+	strokeLinecap:strokeCap,
+	size:4},
+	
+	tickLabels:_extends({},baseLabelStyles,
+	{
+	stroke:"transparent",
+	fill:function fill(tick,index){return typeof tick==="number"&&index%2!==0?
+	"transparent":grayscaleBlack;}})},
+	
+	
+	area:{
+	data:{
+	fill:grayscaleBlack},
+	
+	labels:baseLabelStyles,
+	parent:{}},
+	
+	pie:{
+	props:_extends({},baseProps,
+	{colorScale:["#252525","#636363","#969696","#bdbdbd","#d9d9d9","#f7f7f7"]}),
+	style:{
+	data:{
+	padding:dataTickLabelPadding,
+	stroke:"#f7f7f7",
+	strokeWidth:1},
+	
+	labels:_extends({},baseLabelStyles,
+	{
+	padding:200,
+	strokeWidth:0,
+	stroke:"transparent",
+	textAnchor:"middle"}),
+	
+	parent:{}}},
+	
+	
+	props:_extends({},baseProps,
+	{colorScale:colors})};
 
 /***/ },
-/* 163 */
+/* 133 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createCtorWrapper = __webpack_require__(164),
-	    root = __webpack_require__(16);
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-axis/victory-axis.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryCore=__webpack_require__(29);
 	
-	/** Used to compose bitmasks for wrapper metadata. */
-	var BIND_FLAG = 1;
 	
-	/**
-	 * Creates a function that wraps `func` to invoke it with the optional `this`
-	 * binding of `thisArg`.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-	 *  for more details.
-	 * @param {*} [thisArg] The `this` binding of `func`.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createBaseWrapper(func, bitmask, thisArg) {
-	  var isBind = bitmask & BIND_FLAG,
-	      Ctor = createCtorWrapper(func);
 	
-	  function wrapper() {
-	    var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
-	    return fn.apply(isBind ? thisArg : this, arguments);
-	  }
-	  return wrapper;
-	}
+	var _axisLine=__webpack_require__(134);var _axisLine2=_interopRequireDefault(_axisLine);
+	var _helperMethods=__webpack_require__(135);var _helperMethods2=_interopRequireDefault(_helperMethods);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	module.exports = createBaseWrapper;
-
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300},
+	
+	style:{
+	axis:{
+	stroke:"#756f6a",
+	fill:"none",
+	strokeWidth:2,
+	strokeLinecap:"round"},
+	
+	axisLabel:{
+	stroke:"transparent",
+	fill:"#756f6a",
+	fontSize:17,
+	fontFamily:"Helvetica"},
+	
+	grid:{
+	stroke:"transparent",
+	fill:"none",
+	strokeLinecap:"round"},
+	
+	ticks:{
+	stroke:"#756f6a",
+	fill:"none",
+	padding:5,
+	strokeWidth:2,
+	strokeLinecap:"round",
+	size:4},
+	
+	tickLabels:{
+	stroke:"transparent",
+	fill:"#756f6a",
+	fontFamily:"Helvetica",
+	fontSize:12,
+	padding:5}}};var
+	
+	
+	
+	
+	VictoryAxis=function(_React$Component){_inherits(VictoryAxis,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryAxis(){_classCallCheck(this,VictoryAxis);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryAxis).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Helpers.getEventState.bind(_this);return _this;}_createClass(VictoryAxis,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.dataKeys=Object.keys(this.baseProps).filter(function(key){return key!=="parent";});
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderLine",value:function renderLine(
+	
+	
+	props){
+	var key=0;
+	var axisEvents=this.getEvents(props,"axis",key);
+	var baseProps=this.baseProps[key];
+	var axisProps=(0,_defaults3.default)(
+	{},
+	this.getEventState(key,"axis"),
+	this.getSharedEventState(key,"axis"),
+	props.axisComponent.props,
+	baseProps?baseProps.axis:null);
+	
+	return _react2.default.cloneElement(props.axisComponent,_extends(
+	{},axisProps,{events:_victoryCore.Events.getPartialEvents(axisEvents,key,axisProps)}));}},{key:"renderLabel",value:function renderLabel(
+	
+	
+	
+	props){
+	var key=0;
+	var axisLabelEvents=this.getEvents(props,"axisLabel",key);
+	var baseProps=this.baseProps[key];
+	var axisLabelProps=(0,_defaults3.default)(
+	{},
+	this.getEventState(key,"axisLabel"),
+	this.getSharedEventState(key,"axisLabel"),
+	props.axisLabelComponent.props,
+	baseProps?baseProps.axisLabel:null);
+	
+	return _react2.default.cloneElement(props.axisLabelComponent,_extends(
+	{},axisLabelProps,{events:_victoryCore.Events.getPartialEvents(axisLabelEvents,key,axisLabelProps)}));}},{key:"renderGridAndTicks",value:function renderGridAndTicks(
+	
+	
+	
+	props){var _this2=this;var
+	tickComponent=props.tickComponent;var tickLabelComponent=props.tickLabelComponent;var gridComponent=props.gridComponent;
+	return this.dataKeys.map(function(key){
+	var tickEvents=_this2.getEvents(props,"ticks",key);
+	var tickProps=(0,_defaults3.default)(
+	{},
+	_this2.getEventState(key,"ticks"),
+	_this2.getSharedEventState(key,"ticks"),
+	tickComponent.props,
+	_this2.baseProps[key].ticks);
+	
+	var TickComponent=_react2.default.cloneElement(tickComponent,_extends(
+	{},tickProps,{events:_victoryCore.Events.getPartialEvents(tickEvents,key,tickProps)}));
+	
+	var gridEvents=_this2.getEvents(props,"grid",key);
+	var gridProps=(0,_defaults3.default)(
+	{},
+	_this2.getEventState(key,"grid"),
+	_this2.getSharedEventState(key,"grid"),
+	gridComponent.props,
+	_this2.baseProps[key].grid);
+	
+	var GridComponent=_react2.default.cloneElement(gridComponent,_extends(
+	{},gridProps,{events:_victoryCore.Events.getPartialEvents(gridEvents,key,gridProps)}));
+	
+	var tickLabelProps=(0,_defaults3.default)(
+	{},
+	_this2.getEventState(key,"tickLabels"),
+	_this2.getSharedEventState(key,"tickLabels"),
+	tickLabelComponent.props,
+	_this2.baseProps[key].tickLabels);
+	
+	var tickLabelEvents=_this2.getEvents(props,"tickLabels",key);
+	var TickLabel=_react2.default.cloneElement(tickLabelComponent,_extends({
+	events:_victoryCore.Events.getPartialEvents(tickLabelEvents,key,tickLabelProps)},
+	tickLabelProps));
+	return _react2.default.cloneElement(
+	props.groupComponent,{key:"tick-group-"+key},GridComponent,TickComponent,TickLabel);});}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	
+	children,style){
+	return _react2.default.cloneElement.apply(_react2.default,[
+	this.props.groupComponent,
+	{role:"presentation",style:style}].concat(_toConsumableArray(
+	children)));}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	animate=modifiedProps.animate;var standalone=modifiedProps.standalone;
+	if(animate){
+	
+	
+	
+	var whitelist=[
+	"style","domain","range","tickCount","tickValues",
+	"offsetX","offsetY","padding","width","height"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:493}},
+	_react2.default.createElement(this.constructor,modifiedProps)));}
+	
+	
+	
+	
+	var styleObject=modifiedProps.theme&&modifiedProps.theme.axis?modifiedProps.theme.axis:
+	fallbackProps.style;
+	var style=_helperMethods2.default.getStyles(modifiedProps,styleObject);
+	var children=[].concat(_toConsumableArray(
+	this.renderGridAndTicks(modifiedProps)),[
+	this.renderLine(modifiedProps),
+	this.renderLabel(modifiedProps)]);
+	
+	
+	var group=this.renderGroup(children,style.parent);
+	
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryAxis;}(_react2.default.Component);VictoryAxis.role="axis";VictoryAxis.defaultTransitions={onExit:{duration:500},onEnter:{duration:500}};VictoryAxis.propTypes={animate:_react.PropTypes.object,axisComponent:_react.PropTypes.element,axisLabelComponent:_react.PropTypes.element,crossAxis:_react.PropTypes.bool,dependentAxis:_react.PropTypes.bool,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["axis","axisLabel","grid","ticks","tickLabels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),gridComponent:_react.PropTypes.element,height:_victoryCore.PropTypes.nonNegative,label:_react.PropTypes.any,offsetX:_react.PropTypes.number,offsetY:_react.PropTypes.number,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_victoryCore.PropTypes.scale,standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,axis:_react.PropTypes.object,axisLabel:_react.PropTypes.object,grid:_react.PropTypes.object,ticks:_react.PropTypes.object,tickLabels:_react.PropTypes.object}),tickComponent:_react.PropTypes.element,tickCount:_victoryCore.PropTypes.nonNegative,tickLabelComponent:_react.PropTypes.element,tickFormat:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.homogeneousArray]),tickValues:_victoryCore.PropTypes.homogeneousArray,width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryAxis.defaultProps={axisComponent:_react2.default.createElement(_axisLine2.default,{type:"axis",__source:{fileName:_jsxFileName,lineNumber:338}}),axisLabelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:339}}),tickLabelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:340}}),tickComponent:_react2.default.createElement(_axisLine2.default,{type:"tick",__source:{fileName:_jsxFileName,lineNumber:341}}),gridComponent:_react2.default.createElement(_axisLine2.default,{type:"grid",__source:{fileName:_jsxFileName,lineNumber:342}}),padding:50,scale:"linear",standalone:true,tickCount:5,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:347}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:348}})};VictoryAxis.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryAxis.getAxis=_axis2.default.getAxis.bind(_axis2.default);VictoryAxis.getScale=_helperMethods2.default.getScale.bind(_helperMethods2.default);VictoryAxis.getStyles=(0,_partialRight3.default)(_helperMethods2.default.getStyles.bind(_helperMethods2.default),fallbackProps.style);VictoryAxis.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryAxis;
 
 /***/ },
-/* 164 */
+/* 134 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseCreate = __webpack_require__(165),
-	    isObject = __webpack_require__(166);
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-axis/axis-line.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	/**
-	 * Creates a function that produces an instance of `Ctor` regardless of
-	 * whether it was invoked as part of a `new` expression or by `call` or `apply`.
-	 *
-	 * @private
-	 * @param {Function} Ctor The constructor to wrap.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createCtorWrapper(Ctor) {
-	  return function() {
-	    // Use a `switch` statement to work with class constructors. See
-	    // http://ecma-international.org/ecma-262/6.0/#sec-ecmascript-function-objects-call-thisargument-argumentslist
-	    // for more details.
-	    var args = arguments;
-	    switch (args.length) {
-	      case 0: return new Ctor;
-	      case 1: return new Ctor(args[0]);
-	      case 2: return new Ctor(args[0], args[1]);
-	      case 3: return new Ctor(args[0], args[1], args[2]);
-	      case 4: return new Ctor(args[0], args[1], args[2], args[3]);
-	      case 5: return new Ctor(args[0], args[1], args[2], args[3], args[4]);
-	      case 6: return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5]);
-	      case 7: return new Ctor(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
-	    }
-	    var thisBinding = baseCreate(Ctor.prototype),
-	        result = Ctor.apply(thisBinding, args);
+	AxisLine=function(_React$Component){_inherits(AxisLine,_React$Component);function AxisLine(){_classCallCheck(this,AxisLine);return _possibleConstructorReturn(this,Object.getPrototypeOf(AxisLine).apply(this,arguments));}_createClass(AxisLine,[{key:"renderAxisLine",value:function renderAxisLine(
 	
-	    // Mimic the constructor's `return` behavior.
-	    // See https://es5.github.io/#x13.2.2 for more details.
-	    return isObject(result) ? result : thisBinding;
-	  };
-	}
 	
-	module.exports = createCtorWrapper;
-
+	
+	
+	
+	
+	
+	
+	
+	
+	props,style,events){
+	return _react2.default.createElement("line",_extends({},props,{style:style},events,{vectorEffect:"non-scaling-stroke",__source:{fileName:_jsxFileName,lineNumber:15}}));}},{key:"render",value:function render()
+	
+	
+	{var _props=
+	this.props;var x1=_props.x1;var x2=_props.x2;var y1=_props.y1;var y2=_props.y2;var style=_props.style;var events=_props.events;
+	return this.renderAxisLine({x1:x1,x2:x2,y1:y1,y2:y2},style,events);}}]);return AxisLine;}(_react2.default.Component);AxisLine.propTypes={tick:_react.PropTypes.any,x1:_react.PropTypes.number,x2:_react.PropTypes.number,y1:_react.PropTypes.number,y2:_react.PropTypes.number,style:_react.PropTypes.object,events:_react.PropTypes.object};exports.default=AxisLine;
 
 /***/ },
-/* 165 */
+/* 135 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(166);
+	Object.defineProperty(exports,"__esModule",{value:true});var _without2=__webpack_require__(136);var _without3=_interopRequireDefault(_without2);var _range2=__webpack_require__(148);var _range3=_interopRequireDefault(_range2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _includes2=__webpack_require__(152);var _includes3=_interopRequireDefault(_includes2);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _victoryCore=__webpack_require__(29);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}
 	
-	/** Built-in value references. */
-	var objectCreate = Object.create;
+	var orientationSign={
+	top:-1,
+	left:-1,
+	right:1,
+	bottom:1};exports.default=
 	
-	/**
-	 * The base implementation of `_.create` without support for assigning
-	 * properties to the created object.
-	 *
-	 * @private
-	 * @param {Object} prototype The object to inherit from.
-	 * @returns {Object} Returns the new object.
-	 */
-	function baseCreate(proto) {
-	  return isObject(proto) ? objectCreate(proto) : {};
-	}
 	
-	module.exports = baseCreate;
-
+	{
+	
+	getDomain:function getDomain(props,axis){
+	var inherentAxis=this.getAxis(props);
+	if(axis&&axis!==inherentAxis){
+	return undefined;}
+	
+	if(Array.isArray(props.domain)){
+	return props.domain;}else
+	if(props.domain&&props.domain[inherentAxis]){
+	return props.domain[inherentAxis];}else
+	if(props.tickValues){
+	return _domain2.default.getDomainFromTickValues(props);}
+	
+	return undefined;},
+	
+	
+	
+	getAxis:function getAxis(props,flipped){
+	if(props.orientation){
+	var vertical={top:"x",bottom:"x",left:"y",right:"y"};
+	return vertical[props.orientation];}
+	
+	var axisType=props.dependentAxis?"dependent":"independent";
+	var flippedAxis={dependent:"x",independent:"y"};
+	var normalAxis={independent:"x",dependent:"y"};
+	return flipped?flippedAxis[axisType]:normalAxis[axisType];},
+	
+	
+	
+	getScale:function getScale(props){
+	var axis=this.getAxis(props);
+	var scale=_scale2.default.getBaseScale(props,axis);
+	var domain=this.getDomain(props)||scale.domain();
+	scale.range(_victoryCore.Helpers.getRange(props,axis));
+	scale.domain(domain);
+	return scale;},
+	
+	
+	getStyles:function getStyles(props,styleObject){
+	var style=props.style||{};
+	var parentStyleProps={height:"auto",width:"100%"};
+	return{
+	parent:(0,_defaults3.default)(parentStyleProps,style.parent,styleObject.parent),
+	axis:(0,_defaults3.default)({},style.axis,styleObject.axis),
+	axisLabel:(0,_defaults3.default)({},style.axisLabel,styleObject.axisLabel),
+	grid:(0,_defaults3.default)({},style.grid,styleObject.grid),
+	ticks:(0,_defaults3.default)({},style.ticks,styleObject.ticks),
+	tickLabels:(0,_defaults3.default)({},style.tickLabels,styleObject.tickLabels)};},
+	
+	
+	
+	getBaseProps:function getBaseProps(props,fallbackProps){var _this=this;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var calculatedValues=this.getCalculatedValues(modifiedProps,fallbackProps);var
+	
+	style=
+	
+	calculatedValues.style;var padding=calculatedValues.padding;var orientation=calculatedValues.orientation;var isVertical=calculatedValues.isVertical;var scale=calculatedValues.scale;var ticks=calculatedValues.ticks;var tickFormat=calculatedValues.tickFormat;var stringTicks=calculatedValues.stringTicks;var anchors=calculatedValues.anchors;var
+	
+	width=modifiedProps.width;var height=modifiedProps.height;
+	
+	var offset=this.getOffset(modifiedProps,calculatedValues);
+	
+	var globalTransform=this.getTransform(modifiedProps,calculatedValues,offset);
+	
+	var gridOffset=this.getGridOffset(modifiedProps,calculatedValues,offset);
+	var gridEdge=this.getGridEdge(modifiedProps,calculatedValues);
+	
+	var axisProps={
+	style:style.axis,
+	x1:isVertical?globalTransform.x:padding.left+globalTransform.x,
+	x2:isVertical?globalTransform.x:modifiedProps.width-padding.right+globalTransform.x,
+	y1:isVertical?padding.top+globalTransform.y:globalTransform.y,
+	y2:isVertical?modifiedProps.height-padding.bottom+globalTransform.y:globalTransform.y};
+	
+	
+	var parentProps={style:style.parent,ticks:ticks,scale:scale,width:width,height:height};
+	var axisLabelProps=this.getAxisLabelProps(modifiedProps,calculatedValues,globalTransform);
+	
+	return ticks.reduce(function(memo,data,index){
+	var tick=stringTicks?modifiedProps.tickValues[data-1]:data;
+	var tickStyle=_victoryCore.Helpers.evaluateStyle(style.ticks,tick,index);
+	var scaledTick=scale(data);
+	var tickPosition=_this.getTickPosition(tickStyle,orientation,isVertical);
+	var tickTransform={
+	x:isVertical?globalTransform.x:scaledTick+globalTransform.x,
+	y:isVertical?scaledTick+globalTransform.y:globalTransform.y};
+	
+	
+	var gridTransform={
+	x:isVertical?-gridOffset.x+globalTransform.x:scaledTick+globalTransform.x,
+	y:isVertical?scaledTick+globalTransform.y:gridOffset.y+globalTransform.y};
+	
+	
+	var tickProps={
+	x1:tickTransform.x,
+	y1:tickTransform.y,
+	x2:tickTransform.x+tickPosition.x2,
+	y2:tickTransform.y+tickPosition.y2,
+	style:tickStyle,
+	tick:tick};
+	
+	var text=tickFormat(tick,index);
+	var labelStyle=_victoryCore.Helpers.evaluateStyle(style.tickLabels,tick,index);
+	var tickLabelProps={
+	style:labelStyle,
+	x:tickTransform.x+tickPosition.x,
+	y:tickTransform.y+tickPosition.y,
+	verticalAnchor:labelStyle.verticalAnchor||anchors.verticalAnchor,
+	textAnchor:labelStyle.textAnchor||anchors.textAnchor,
+	angle:labelStyle.angle,
+	text:text,
+	tick:tick};
+	
+	
+	var gridProps={
+	x1:gridTransform.x,
+	y1:gridTransform.y,
+	x2:gridEdge.x+gridTransform.x,
+	y2:gridEdge.y+gridTransform.y,
+	style:_victoryCore.Helpers.evaluateStyle(style.grid,tick,index),
+	tick:tick};
+	
+	
+	memo[index]={
+	axis:axisProps,
+	axisLabel:axisLabelProps,
+	ticks:tickProps,
+	tickLabels:tickLabelProps,
+	grid:gridProps};
+	
+	
+	return memo;},
+	{parent:parentProps});},
+	
+	
+	getCalculatedValues:function getCalculatedValues(props,fallbackProps){
+	var defaultStyles=props.theme&&props.theme.axis?props.theme.axis:fallbackProps.style;
+	var style=this.getStyles(props,defaultStyles);
+	var padding=_victoryCore.Helpers.getPadding(props);
+	var orientation=props.orientation||(props.dependentAxis?"left":"bottom");
+	var isVertical=_axis2.default.isVertical(props);
+	var labelPadding=this.getLabelPadding(props,style);
+	var stringTicks=_axis2.default.stringTicks(props);
+	var scale=this.getScale(props);
+	var ticks=this.getTicks(props,scale);
+	var tickFormat=this.getTickFormat(props,scale,ticks);
+	var anchors=this.getAnchors(orientation,isVertical);
+	
+	return{
+	style:style,padding:padding,orientation:orientation,isVertical:isVertical,labelPadding:labelPadding,stringTicks:stringTicks,
+	anchors:anchors,scale:scale,ticks:ticks,tickFormat:tickFormat};},
+	
+	
+	
+	getAxisLabelProps:function getAxisLabelProps(props,calculatedValues,globalTransform){var
+	style=calculatedValues.style;var orientation=calculatedValues.orientation;var padding=calculatedValues.padding;var labelPadding=calculatedValues.labelPadding;var isVertical=calculatedValues.isVertical;
+	var sign=orientationSign[orientation];
+	var hPadding=padding.left+padding.right;
+	var vPadding=padding.top+padding.bottom;
+	var x=isVertical?
+	-((props.height-vPadding)/2)-padding.top:
+	(props.width-hPadding)/2+padding.left;
+	var verticalAnchor=sign<0?"end":"start";
+	var labelStyle=style.axisLabel;
+	return{
+	x:x+globalTransform.x,
+	y:sign*labelPadding+globalTransform.y,
+	verticalAnchor:labelStyle.verticalAnchor||verticalAnchor,
+	textAnchor:labelStyle.textAnchor||"middle",
+	angle:labelStyle.angle,
+	style:labelStyle,
+	transform:isVertical?"rotate(-90)":"",
+	text:props.label};},
+	
+	
+	
+	getTicks:function getTicks(props,scale){
+	if(props.tickValues){
+	if(_axis2.default.stringTicks(props)){
+	return(0,_range3.default)(1,props.tickValues.length+1);}
+	
+	return props.tickValues;}else
+	if(scale.ticks&&(0,_isFunction3.default)(scale.ticks)){
+	var ticks=scale.ticks(props.tickCount);
+	if(props.crossAxis){
+	return(0,_includes3.default)(ticks,0)?(0,_without3.default)(ticks,0):ticks;}
+	
+	return ticks;}
+	
+	return scale.domain();},
+	
+	
+	getAnchors:function getAnchors(orientation,isVertical){
+	var anchorOrientation={top:"end",left:"end",right:"start",bottom:"start"};
+	var anchor=anchorOrientation[orientation];
+	return{
+	textAnchor:isVertical?anchor:"middle",
+	verticalAnchor:isVertical?"middle":anchor};},
+	
+	
+	
+	getTickFormat:function getTickFormat(props,scale){
+	if(props.tickFormat&&(0,_isFunction3.default)(props.tickFormat)){
+	return props.tickFormat;}else
+	if(props.tickFormat&&Array.isArray(props.tickFormat)){
+	return function(x,index){return props.tickFormat[index];};}else
+	if(_axis2.default.stringTicks(props)){
+	return function(x,index){return props.tickValues[index];};}else
+	if(scale.tickFormat&&(0,_isFunction3.default)(scale.tickFormat)){
+	return scale.tickFormat();}else
+	{
+	return function(x){return x;};}},
+	
+	
+	
+	getLabelPadding:function getLabelPadding(props,style){
+	var labelStyle=style.axisLabel;
+	if(typeof labelStyle.padding!=="undefined"&&labelStyle.padding!==null){
+	return labelStyle.padding;}
+	
+	var isVertical=_axis2.default.isVertical(props);
+	
+	return props.label?labelStyle.fontSize*(isVertical?2.3:1.6):0;},
+	
+	
+	getOffset:function getOffset(props,calculatedValues){var
+	
+	style=
+	calculatedValues.style;var padding=calculatedValues.padding;var isVertical=calculatedValues.isVertical;var orientation=calculatedValues.orientation;var labelPadding=calculatedValues.labelPadding;var stringTicks=calculatedValues.stringTicks;var ticks=calculatedValues.ticks;
+	var xPadding=orientation==="right"?padding.right:padding.left;
+	var yPadding=orientation==="top"?padding.top:padding.bottom;
+	var fontSize=style.axisLabel.fontSize;
+	var offsetX=props.offsetX!==null&&props.offsetX!==undefined?
+	props.offsetX:xPadding;
+	var offsetY=props.offsetY!==null&&props.offsetY!==undefined?
+	props.offsetY:yPadding;
+	var tickSizes=ticks.map(function(data){
+	var tick=stringTicks?props.tickValues[data-1]:data;
+	var tickStyle=_victoryCore.Helpers.evaluateStyle(style.ticks,tick);
+	return tickStyle.size;});
+	
+	var totalPadding=fontSize+2*Math.max.apply(Math,_toConsumableArray(tickSizes))+labelPadding;
+	var minimumPadding=1.2*fontSize;
+	var x=isVertical?totalPadding:minimumPadding;
+	var y=isVertical?minimumPadding:totalPadding;
+	return{
+	x:offsetX!==null&&offsetX!==undefined?offsetX:x,
+	y:offsetY!==null&&offsetY!==undefined?offsetY:y};},
+	
+	
+	
+	getTransform:function getTransform(props,calculatedValues,offset){var
+	orientation=calculatedValues.orientation;
+	return{
+	top:{x:0,y:offset.y},
+	bottom:{x:0,y:props.height-offset.y},
+	left:{x:offset.x,y:0},
+	right:{x:props.width-offset.x,y:0}}[
+	orientation];},
+	
+	
+	getTickPosition:function getTickPosition(style,orientation,isVertical){
+	var tickSpacing=style.size+style.padding;
+	var sign=orientationSign[orientation];
+	return{
+	x:isVertical?sign*tickSpacing:0,
+	x2:isVertical?sign*style.size:0,
+	y:isVertical?0:sign*tickSpacing,
+	y2:isVertical?0:sign*style.size};},
+	
+	
+	
+	getGridEdge:function getGridEdge(props,calculatedValues){var
+	orientation=calculatedValues.orientation;var padding=calculatedValues.padding;var isVertical=calculatedValues.isVertical;
+	var sign=-orientationSign[orientation];
+	var x=isVertical?
+	sign*(props.width-(padding.left+padding.right)):0;
+	var y=isVertical?
+	0:sign*(props.height-(padding.top+padding.bottom));
+	return{x:x,y:y};},
+	
+	
+	getGridOffset:function getGridOffset(props,calculatedValues,offset){var
+	padding=calculatedValues.padding;var orientation=calculatedValues.orientation;
+	var xPadding=orientation==="right"?padding.right:padding.left;
+	var yPadding=orientation==="top"?padding.top:padding.bottom;
+	return{
+	x:props.crossAxis?offset.x-xPadding:0,
+	y:props.crossAxis?offset.y-yPadding:0};}};
 
 /***/ },
-/* 166 */
-/***/ function(module, exports) {
-
-	/**
-	 * Checks if `value` is the
-	 * [language type](http://www.ecma-international.org/ecma-262/6.0/#sec-ecmascript-language-types)
-	 * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is an object, else `false`.
-	 * @example
-	 *
-	 * _.isObject({});
-	 * // => true
-	 *
-	 * _.isObject([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isObject(_.noop);
-	 * // => true
-	 *
-	 * _.isObject(null);
-	 * // => false
-	 */
-	function isObject(value) {
-	  var type = typeof value;
-	  return !!value && (type == 'object' || type == 'function');
-	}
-	
-	module.exports = isObject;
-
-
-/***/ },
-/* 167 */
+/* 136 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var apply = __webpack_require__(3),
-	    createCtorWrapper = __webpack_require__(164),
-	    createHybridWrapper = __webpack_require__(168),
-	    createRecurryWrapper = __webpack_require__(172),
-	    getHolder = __webpack_require__(175),
-	    replaceHolders = __webpack_require__(178),
-	    root = __webpack_require__(16);
-	
-	/**
-	 * Creates a function that wraps `func` to enable currying.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-	 *  for more details.
-	 * @param {number} arity The arity of `func`.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createCurryWrapper(func, bitmask, arity) {
-	  var Ctor = createCtorWrapper(func);
-	
-	  function wrapper() {
-	    var length = arguments.length,
-	        args = Array(length),
-	        index = length,
-	        placeholder = getHolder(wrapper);
-	
-	    while (index--) {
-	      args[index] = arguments[index];
-	    }
-	    var holders = (length < 3 && args[0] !== placeholder && args[length - 1] !== placeholder)
-	      ? []
-	      : replaceHolders(args, placeholder);
-	
-	    length -= holders.length;
-	    if (length < arity) {
-	      return createRecurryWrapper(
-	        func, bitmask, createHybridWrapper, wrapper.placeholder, undefined,
-	        args, holders, undefined, undefined, arity - length);
-	    }
-	    var fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
-	    return apply(fn, this, args);
-	  }
-	  return wrapper;
-	}
-	
-	module.exports = createCurryWrapper;
-
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var composeArgs = __webpack_require__(169),
-	    composeArgsRight = __webpack_require__(170),
-	    countHolders = __webpack_require__(171),
-	    createCtorWrapper = __webpack_require__(164),
-	    createRecurryWrapper = __webpack_require__(172),
-	    getHolder = __webpack_require__(175),
-	    reorder = __webpack_require__(176),
-	    replaceHolders = __webpack_require__(178),
-	    root = __webpack_require__(16);
-	
-	/** Used to compose bitmasks for wrapper metadata. */
-	var BIND_FLAG = 1,
-	    BIND_KEY_FLAG = 2,
-	    CURRY_FLAG = 8,
-	    CURRY_RIGHT_FLAG = 16,
-	    ARY_FLAG = 128,
-	    FLIP_FLAG = 512;
-	
-	/**
-	 * Creates a function that wraps `func` to invoke it with optional `this`
-	 * binding of `thisArg`, partial application, and currying.
-	 *
-	 * @private
-	 * @param {Function|string} func The function or method name to wrap.
-	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-	 *  for more details.
-	 * @param {*} [thisArg] The `this` binding of `func`.
-	 * @param {Array} [partials] The arguments to prepend to those provided to
-	 *  the new function.
-	 * @param {Array} [holders] The `partials` placeholder indexes.
-	 * @param {Array} [partialsRight] The arguments to append to those provided
-	 *  to the new function.
-	 * @param {Array} [holdersRight] The `partialsRight` placeholder indexes.
-	 * @param {Array} [argPos] The argument positions of the new function.
-	 * @param {number} [ary] The arity cap of `func`.
-	 * @param {number} [arity] The arity of `func`.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createHybridWrapper(func, bitmask, thisArg, partials, holders, partialsRight, holdersRight, argPos, ary, arity) {
-	  var isAry = bitmask & ARY_FLAG,
-	      isBind = bitmask & BIND_FLAG,
-	      isBindKey = bitmask & BIND_KEY_FLAG,
-	      isCurried = bitmask & (CURRY_FLAG | CURRY_RIGHT_FLAG),
-	      isFlip = bitmask & FLIP_FLAG,
-	      Ctor = isBindKey ? undefined : createCtorWrapper(func);
-	
-	  function wrapper() {
-	    var length = arguments.length,
-	        args = Array(length),
-	        index = length;
-	
-	    while (index--) {
-	      args[index] = arguments[index];
-	    }
-	    if (isCurried) {
-	      var placeholder = getHolder(wrapper),
-	          holdersCount = countHolders(args, placeholder);
-	    }
-	    if (partials) {
-	      args = composeArgs(args, partials, holders, isCurried);
-	    }
-	    if (partialsRight) {
-	      args = composeArgsRight(args, partialsRight, holdersRight, isCurried);
-	    }
-	    length -= holdersCount;
-	    if (isCurried && length < arity) {
-	      var newHolders = replaceHolders(args, placeholder);
-	      return createRecurryWrapper(
-	        func, bitmask, createHybridWrapper, wrapper.placeholder, thisArg,
-	        args, newHolders, argPos, ary, arity - length
-	      );
-	    }
-	    var thisBinding = isBind ? thisArg : this,
-	        fn = isBindKey ? thisBinding[func] : func;
-	
-	    length = args.length;
-	    if (argPos) {
-	      args = reorder(args, argPos);
-	    } else if (isFlip && length > 1) {
-	      args.reverse();
-	    }
-	    if (isAry && ary < length) {
-	      args.length = ary;
-	    }
-	    if (this && this !== root && this instanceof wrapper) {
-	      fn = Ctor || createCtorWrapper(fn);
-	    }
-	    return fn.apply(thisBinding, args);
-	  }
-	  return wrapper;
-	}
-	
-	module.exports = createHybridWrapper;
-
-
-/***/ },
-/* 169 */
-/***/ function(module, exports) {
-
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeMax = Math.max;
-	
-	/**
-	 * Creates an array that is the composition of partially applied arguments,
-	 * placeholders, and provided arguments into a single array of arguments.
-	 *
-	 * @private
-	 * @param {Array} args The provided arguments.
-	 * @param {Array} partials The arguments to prepend to those provided.
-	 * @param {Array} holders The `partials` placeholder indexes.
-	 * @params {boolean} [isCurried] Specify composing for a curried function.
-	 * @returns {Array} Returns the new array of composed arguments.
-	 */
-	function composeArgs(args, partials, holders, isCurried) {
-	  var argsIndex = -1,
-	      argsLength = args.length,
-	      holdersLength = holders.length,
-	      leftIndex = -1,
-	      leftLength = partials.length,
-	      rangeLength = nativeMax(argsLength - holdersLength, 0),
-	      result = Array(leftLength + rangeLength),
-	      isUncurried = !isCurried;
-	
-	  while (++leftIndex < leftLength) {
-	    result[leftIndex] = partials[leftIndex];
-	  }
-	  while (++argsIndex < holdersLength) {
-	    if (isUncurried || argsIndex < argsLength) {
-	      result[holders[argsIndex]] = args[argsIndex];
-	    }
-	  }
-	  while (rangeLength--) {
-	    result[leftIndex++] = args[argsIndex++];
-	  }
-	  return result;
-	}
-	
-	module.exports = composeArgs;
-
-
-/***/ },
-/* 170 */
-/***/ function(module, exports) {
-
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeMax = Math.max;
-	
-	/**
-	 * This function is like `composeArgs` except that the arguments composition
-	 * is tailored for `_.partialRight`.
-	 *
-	 * @private
-	 * @param {Array} args The provided arguments.
-	 * @param {Array} partials The arguments to append to those provided.
-	 * @param {Array} holders The `partials` placeholder indexes.
-	 * @params {boolean} [isCurried] Specify composing for a curried function.
-	 * @returns {Array} Returns the new array of composed arguments.
-	 */
-	function composeArgsRight(args, partials, holders, isCurried) {
-	  var argsIndex = -1,
-	      argsLength = args.length,
-	      holdersIndex = -1,
-	      holdersLength = holders.length,
-	      rightIndex = -1,
-	      rightLength = partials.length,
-	      rangeLength = nativeMax(argsLength - holdersLength, 0),
-	      result = Array(rangeLength + rightLength),
-	      isUncurried = !isCurried;
-	
-	  while (++argsIndex < rangeLength) {
-	    result[argsIndex] = args[argsIndex];
-	  }
-	  var offset = argsIndex;
-	  while (++rightIndex < rightLength) {
-	    result[offset + rightIndex] = partials[rightIndex];
-	  }
-	  while (++holdersIndex < holdersLength) {
-	    if (isUncurried || argsIndex < argsLength) {
-	      result[offset + holders[holdersIndex]] = args[argsIndex++];
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = composeArgsRight;
-
-
-/***/ },
-/* 171 */
-/***/ function(module, exports) {
-
-	/**
-	 * Gets the number of `placeholder` occurrences in `array`.
-	 *
-	 * @private
-	 * @param {Array} array The array to inspect.
-	 * @param {*} placeholder The placeholder to search for.
-	 * @returns {number} Returns the placeholder count.
-	 */
-	function countHolders(array, placeholder) {
-	  var length = array.length,
-	      result = 0;
-	
-	  while (length--) {
-	    if (array[length] === placeholder) {
-	      result++;
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = countHolders;
-
-
-/***/ },
-/* 172 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isLaziable = __webpack_require__(173),
-	    setData = __webpack_require__(174);
-	
-	/** Used to compose bitmasks for wrapper metadata. */
-	var BIND_FLAG = 1,
-	    BIND_KEY_FLAG = 2,
-	    CURRY_BOUND_FLAG = 4,
-	    CURRY_FLAG = 8,
-	    PARTIAL_FLAG = 32,
-	    PARTIAL_RIGHT_FLAG = 64;
-	
-	/**
-	 * Creates a function that wraps `func` to continue currying.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-	 *  for more details.
-	 * @param {Function} wrapFunc The function to create the `func` wrapper.
-	 * @param {*} placeholder The placeholder value.
-	 * @param {*} [thisArg] The `this` binding of `func`.
-	 * @param {Array} [partials] The arguments to prepend to those provided to
-	 *  the new function.
-	 * @param {Array} [holders] The `partials` placeholder indexes.
-	 * @param {Array} [argPos] The argument positions of the new function.
-	 * @param {number} [ary] The arity cap of `func`.
-	 * @param {number} [arity] The arity of `func`.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createRecurryWrapper(func, bitmask, wrapFunc, placeholder, thisArg, partials, holders, argPos, ary, arity) {
-	  var isCurry = bitmask & CURRY_FLAG,
-	      newHolders = isCurry ? holders : undefined,
-	      newHoldersRight = isCurry ? undefined : holders,
-	      newPartials = isCurry ? partials : undefined,
-	      newPartialsRight = isCurry ? undefined : partials;
-	
-	  bitmask |= (isCurry ? PARTIAL_FLAG : PARTIAL_RIGHT_FLAG);
-	  bitmask &= ~(isCurry ? PARTIAL_RIGHT_FLAG : PARTIAL_FLAG);
-	
-	  if (!(bitmask & CURRY_BOUND_FLAG)) {
-	    bitmask &= ~(BIND_FLAG | BIND_KEY_FLAG);
-	  }
-	  var newData = [
-	    func, bitmask, thisArg, newPartials, newHolders, newPartialsRight,
-	    newHoldersRight, argPos, ary, arity
-	  ];
-	
-	  var result = wrapFunc.apply(undefined, newData);
-	  if (isLaziable(func)) {
-	    setData(result, newData);
-	  }
-	  result.placeholder = placeholder;
-	  return result;
-	}
-	
-	module.exports = createRecurryWrapper;
-
-
-/***/ },
-/* 173 */
-/***/ function(module, exports) {
-
-	/**
-	 * A method that returns `false`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.13.0
-	 * @category Util
-	 * @returns {boolean} Returns `false`.
-	 * @example
-	 *
-	 * _.times(2, _.stubFalse);
-	 * // => [false, false]
-	 */
-	function stubFalse() {
-	  return false;
-	}
-	
-	module.exports = stubFalse;
-
-
-/***/ },
-/* 174 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 175 */
-/***/ function(module, exports) {
-
-	/**
-	 * Gets the argument placeholder value for `func`.
-	 *
-	 * @private
-	 * @param {Function} func The function to inspect.
-	 * @returns {*} Returns the placeholder value.
-	 */
-	function getHolder(func) {
-	  var object = func;
-	  return object.placeholder;
-	}
-	
-	module.exports = getHolder;
-
-
-/***/ },
-/* 176 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var copyArray = __webpack_require__(177),
-	    isIndex = __webpack_require__(26);
-	
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeMin = Math.min;
-	
-	/**
-	 * Reorder `array` according to the specified indexes where the element at
-	 * the first index is assigned as the first element, the element at
-	 * the second index is assigned as the second element, and so on.
-	 *
-	 * @private
-	 * @param {Array} array The array to reorder.
-	 * @param {Array} indexes The arranged array indexes.
-	 * @returns {Array} Returns `array`.
-	 */
-	function reorder(array, indexes) {
-	  var arrLength = array.length,
-	      length = nativeMin(indexes.length, arrLength),
-	      oldArray = copyArray(array);
-	
-	  while (length--) {
-	    var index = indexes[length];
-	    array[length] = isIndex(index, arrLength) ? oldArray[index] : undefined;
-	  }
-	  return array;
-	}
-	
-	module.exports = reorder;
-
-
-/***/ },
-/* 177 */
-/***/ function(module, exports) {
-
-	/**
-	 * Copies the values of `source` to `array`.
-	 *
-	 * @private
-	 * @param {Array} source The array to copy values from.
-	 * @param {Array} [array=[]] The array to copy values to.
-	 * @returns {Array} Returns `array`.
-	 */
-	function copyArray(source, array) {
-	  var index = -1,
-	      length = source.length;
-	
-	  array || (array = Array(length));
-	  while (++index < length) {
-	    array[index] = source[index];
-	  }
-	  return array;
-	}
-	
-	module.exports = copyArray;
-
-
-/***/ },
-/* 178 */
-/***/ function(module, exports) {
-
-	/** Used as the internal argument placeholder. */
-	var PLACEHOLDER = '__lodash_placeholder__';
-	
-	/**
-	 * Replaces all `placeholder` elements in `array` with an internal placeholder
-	 * and returns an array of their indexes.
-	 *
-	 * @private
-	 * @param {Array} array The array to modify.
-	 * @param {*} placeholder The placeholder to replace.
-	 * @returns {Array} Returns the new array of placeholder indexes.
-	 */
-	function replaceHolders(array, placeholder) {
-	  var index = -1,
-	      length = array.length,
-	      resIndex = 0,
-	      result = [];
-	
-	  while (++index < length) {
-	    var value = array[index];
-	    if (value === placeholder || value === PLACEHOLDER) {
-	      array[index] = PLACEHOLDER;
-	      result[resIndex++] = index;
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = replaceHolders;
-
-
-/***/ },
-/* 179 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var apply = __webpack_require__(3),
-	    createCtorWrapper = __webpack_require__(164),
-	    root = __webpack_require__(16);
-	
-	/** Used to compose bitmasks for wrapper metadata. */
-	var BIND_FLAG = 1;
-	
-	/**
-	 * Creates a function that wraps `func` to invoke it with the `this` binding
-	 * of `thisArg` and `partials` prepended to the arguments it receives.
-	 *
-	 * @private
-	 * @param {Function} func The function to wrap.
-	 * @param {number} bitmask The bitmask of wrapper flags. See `createWrapper`
-	 *  for more details.
-	 * @param {*} thisArg The `this` binding of `func`.
-	 * @param {Array} partials The arguments to prepend to those provided to
-	 *  the new function.
-	 * @returns {Function} Returns the new wrapped function.
-	 */
-	function createPartialWrapper(func, bitmask, thisArg, partials) {
-	  var isBind = bitmask & BIND_FLAG,
-	      Ctor = createCtorWrapper(func);
-	
-	  function wrapper() {
-	    var argsIndex = -1,
-	        argsLength = arguments.length,
-	        leftIndex = -1,
-	        leftLength = partials.length,
-	        args = Array(leftLength + argsLength),
-	        fn = (this && this !== root && this instanceof wrapper) ? Ctor : func;
-	
-	    while (++leftIndex < leftLength) {
-	      args[leftIndex] = partials[leftIndex];
-	    }
-	    while (argsLength--) {
-	      args[leftIndex++] = arguments[++argsIndex];
-	    }
-	    return apply(fn, isBind ? thisArg : this, args);
-	  }
-	  return wrapper;
-	}
-	
-	module.exports = createPartialWrapper;
-
-
-/***/ },
-/* 180 */
-/***/ function(module, exports) {
-
-	/**
-	 * A method that returns `undefined`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 2.3.0
-	 * @category Util
-	 * @example
-	 *
-	 * _.times(2, _.noop);
-	 * // => [undefined, undefined]
-	 */
-	function noop() {
-	  // No operation performed.
-	}
-	
-	module.exports = noop;
-
-
-/***/ },
-/* 181 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 182 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isObject = __webpack_require__(166);
-	
-	/** `Object#toString` result references. */
-	var funcTag = '[object Function]',
-	    genTag = '[object GeneratorFunction]';
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is classified as a `Function` object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.1.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isFunction(_);
-	 * // => true
-	 *
-	 * _.isFunction(/abc/);
-	 * // => false
-	 */
-	function isFunction(value) {
-	  // The use of `Object#toString` avoids issues with the `typeof` operator
-	  // in Safari 8 which returns 'object' for typed array and weak map constructors,
-	  // and PhantomJS 1.9 which returns 'function' for `NodeList` instances.
-	  var tag = isObject(value) ? objectToString.call(value) : '';
-	  return tag == funcTag || tag == genTag;
-	}
-	
-	module.exports = isFunction;
-
-
-/***/ },
-/* 183 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var AxisLine = function (_React$Component) {
-	  _inherits(AxisLine, _React$Component);
-	
-	  function AxisLine() {
-	    _classCallCheck(this, AxisLine);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(AxisLine).apply(this, arguments));
-	  }
-	
-	  _createClass(AxisLine, [{
-	    key: "render",
-	    value: function render() {
-	      var _props = this.props;
-	      var x1 = _props.x1;
-	      var x2 = _props.x2;
-	      var y1 = _props.y1;
-	      var y2 = _props.y2;
-	      var style = _props.style;
-	      var events = _props.events;
-	
-	      return _react2.default.createElement("line", _extends({
-	        x1: x1, x2: x2, y1: y1, y2: y2, style: style,
-	        vectorEffect: "non-scaling-stroke"
-	      }, events));
-	    }
-	  }]);
-	
-	  return AxisLine;
-	}(_react2.default.Component);
-	
-	AxisLine.propTypes = {
-	  x1: _react.PropTypes.number,
-	  x2: _react.PropTypes.number,
-	  y1: _react.PropTypes.number,
-	  y2: _react.PropTypes.number,
-	  style: _react.PropTypes.object,
-	  events: _react.PropTypes.object
-	};
-	exports.default = AxisLine;
-
-/***/ },
-/* 184 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var GridLine = function (_React$Component) {
-	  _inherits(GridLine, _React$Component);
-	
-	  function GridLine() {
-	    _classCallCheck(this, GridLine);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(GridLine).apply(this, arguments));
-	  }
-	
-	  _createClass(GridLine, [{
-	    key: "render",
-	    value: function render() {
-	      var _props = this.props;
-	      var events = _props.events;
-	      var x1 = _props.x1;
-	      var y1 = _props.y1;
-	      var x2 = _props.x2;
-	      var y2 = _props.y2;
-	      var style = _props.style;
-	
-	      return _react2.default.createElement("line", _extends({}, events, {
-	        x1: x1,
-	        y1: y1,
-	        x2: x2,
-	        y2: y2,
-	        style: style,
-	        vectorEffect: "non-scaling-stroke"
-	      }));
-	    }
-	  }]);
-	
-	  return GridLine;
-	}(_react2.default.Component);
-	
-	GridLine.propTypes = {
-	  tick: _react.PropTypes.any,
-	  x1: _react.PropTypes.number,
-	  y1: _react.PropTypes.number,
-	  x2: _react.PropTypes.number,
-	  y2: _react.PropTypes.number,
-	  style: _react.PropTypes.object,
-	  events: _react.PropTypes.object
-	};
-	exports.default = GridLine;
-
-/***/ },
-/* 185 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Tick = function (_React$Component) {
-	  _inherits(Tick, _React$Component);
-	
-	  function Tick() {
-	    _classCallCheck(this, Tick);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Tick).apply(this, arguments));
-	  }
-	
-	  _createClass(Tick, [{
-	    key: "render",
-	    value: function render() {
-	      var _props = this.props;
-	      var x1 = _props.x1;
-	      var y1 = _props.y1;
-	      var x2 = _props.x2;
-	      var y2 = _props.y2;
-	      var style = _props.style;
-	      var events = _props.events;
-	
-	      return _react2.default.createElement("line", _extends({}, events, {
-	        x1: x1,
-	        y1: y1,
-	        x2: x2,
-	        y2: y2,
-	        style: style,
-	        vectorEffect: "non-scaling-stroke"
-	      }));
-	    }
-	  }]);
-	
-	  return Tick;
-	}(_react2.default.Component);
-	
-	Tick.propTypes = {
-	  x1: _react.PropTypes.number,
-	  y1: _react.PropTypes.number,
-	  x2: _react.PropTypes.number,
-	  y2: _react.PropTypes.number,
-	  tick: _react.PropTypes.any,
-	  style: _react.PropTypes.object,
-	  events: _react.PropTypes.object
-	};
-	exports.default = Tick;
-
-/***/ },
-/* 186 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _without2 = __webpack_require__(187);
-	
-	var _without3 = _interopRequireDefault(_without2);
-	
-	var _range2 = __webpack_require__(210);
-	
-	var _range3 = _interopRequireDefault(_range2);
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _includes2 = __webpack_require__(214);
-	
-	var _includes3 = _interopRequireDefault(_includes2);
-	
-	var _scale = __webpack_require__(215);
-	
-	var _scale2 = _interopRequireDefault(_scale);
-	
-	var _axis = __webpack_require__(226);
-	
-	var _axis2 = _interopRequireDefault(_axis);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	var orientationSign = {
-	  top: -1,
-	  left: -1,
-	  right: 1,
-	  bottom: 1
-	};
-	
-	exports.default = {
-	  // exposed for use by VictoryChart
-	
-	  getDomain: function getDomain(props, axis) {
-	    var inherentAxis = this.getAxis(props);
-	    if (axis && axis !== inherentAxis) {
-	      return undefined;
-	    }
-	    if (Array.isArray(props.domain)) {
-	      return props.domain;
-	    } else if (props.domain && props.domain[inherentAxis]) {
-	      return props.domain[inherentAxis];
-	    } else if (props.tickValues) {
-	      return _domain2.default.getDomainFromTickValues(props);
-	    }
-	    return undefined;
-	  },
-	
-	
-	  // exposed for use by VictoryChart
-	  getAxis: function getAxis(props, flipped) {
-	    if (props.orientation) {
-	      var vertical = { top: "x", bottom: "x", left: "y", right: "y" };
-	      return vertical[props.orientation];
-	    }
-	    var axisType = props.dependentAxis ? "dependent" : "independent";
-	    var flippedAxis = { dependent: "x", independent: "y" };
-	    var normalAxis = { independent: "x", dependent: "y" };
-	    return flipped ? flippedAxis[axisType] : normalAxis[axisType];
-	  },
-	
-	
-	  // exposed for use by VictoryChart
-	  getScale: function getScale(props) {
-	    var axis = this.getAxis(props);
-	    var scale = _scale2.default.getBaseScale(props, axis);
-	    var domain = this.getDomain(props) || scale.domain();
-	    scale.range(_victoryCore.Helpers.getRange(props, axis));
-	    scale.domain(domain);
-	    return scale;
-	  },
-	  getStyles: function getStyles(props, styleObject) {
-	    var style = props.style || {};
-	    var parentStyleProps = { height: "auto", width: "100%" };
-	    return {
-	      parent: (0, _defaults3.default)(parentStyleProps, style.parent, styleObject.parent),
-	      axis: (0, _defaults3.default)({}, style.axis, styleObject.axis),
-	      axisLabel: (0, _defaults3.default)({}, style.axisLabel, styleObject.axisLabel),
-	      grid: (0, _defaults3.default)({}, style.grid, styleObject.grid),
-	      ticks: (0, _defaults3.default)({}, style.ticks, styleObject.ticks),
-	      tickLabels: (0, _defaults3.default)({}, style.tickLabels, styleObject.tickLabels)
-	    };
-	  },
-	  getBaseProps: function getBaseProps(props, fallbackProps) {
-	    var _this = this;
-	
-	    var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	    var calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
-	    var style = calculatedValues.style;
-	    var padding = calculatedValues.padding;
-	    var orientation = calculatedValues.orientation;
-	    var isVertical = calculatedValues.isVertical;
-	    var scale = calculatedValues.scale;
-	    var ticks = calculatedValues.ticks;
-	    var tickFormat = calculatedValues.tickFormat;
-	    var stringTicks = calculatedValues.stringTicks;
-	    var anchors = calculatedValues.anchors;
-	    var width = modifiedProps.width;
-	    var height = modifiedProps.height;
-	
-	
-	    var offset = this.getOffset(modifiedProps, calculatedValues);
-	
-	    var globalTransform = this.getTransform(modifiedProps, calculatedValues, offset);
-	
-	    var gridOffset = this.getGridOffset(modifiedProps, calculatedValues, offset);
-	    var gridEdge = this.getGridEdge(modifiedProps, calculatedValues);
-	
-	    var axisProps = {
-	      style: style.axis,
-	      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
-	      x2: isVertical ? globalTransform.x : modifiedProps.width - padding.right + globalTransform.x,
-	      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
-	      y2: isVertical ? modifiedProps.height - padding.bottom + globalTransform.y : globalTransform.y
-	    };
-	
-	    var parentProps = { style: style.parent, ticks: ticks, scale: scale, width: width, height: height };
-	    var axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
-	
-	    return ticks.reduce(function (memo, data, index) {
-	      var tick = stringTicks ? modifiedProps.tickValues[data - 1] : data;
-	      var tickStyle = _victoryCore.Helpers.evaluateStyle(style.ticks, tick, index);
-	      var scaledTick = scale(data);
-	      var tickPosition = _this.getTickPosition(tickStyle, orientation, isVertical);
-	      var tickTransform = {
-	        x: isVertical ? globalTransform.x : scaledTick + globalTransform.x,
-	        y: isVertical ? scaledTick + globalTransform.y : globalTransform.y
-	      };
-	
-	      var gridTransform = {
-	        x: isVertical ? -gridOffset.x + globalTransform.x : scaledTick + globalTransform.x,
-	        y: isVertical ? scaledTick + globalTransform.y : gridOffset.y + globalTransform.y
-	      };
-	
-	      var tickProps = {
-	        x1: tickTransform.x,
-	        y1: tickTransform.y,
-	        x2: tickTransform.x + tickPosition.x2,
-	        y2: tickTransform.y + tickPosition.y2,
-	        style: tickStyle,
-	        tick: tick
-	      };
-	      var text = tickFormat(tick, index);
-	      var labelStyle = _victoryCore.Helpers.evaluateStyle(style.tickLabels, tick, index);
-	      var tickLabelProps = {
-	        style: labelStyle,
-	        x: tickTransform.x + tickPosition.x,
-	        y: tickTransform.y + tickPosition.y,
-	        verticalAnchor: labelStyle.verticalAnchor || anchors.verticalAnchor,
-	        textAnchor: labelStyle.textAnchor || anchors.textAnchor,
-	        angle: labelStyle.angle,
-	        text: text,
-	        tick: tick
-	      };
-	
-	      var gridProps = {
-	        x1: gridTransform.x,
-	        y1: gridTransform.y,
-	        x2: gridEdge.x + gridTransform.x,
-	        y2: gridEdge.y + gridTransform.y,
-	        style: _victoryCore.Helpers.evaluateStyle(style.grid, tick, index),
-	        tick: tick
-	      };
-	
-	      memo[index] = {
-	        axis: axisProps,
-	        axisLabel: axisLabelProps,
-	        ticks: tickProps,
-	        tickLabels: tickLabelProps,
-	        grid: gridProps
-	      };
-	
-	      return memo;
-	    }, { parent: parentProps });
-	  },
-	  getCalculatedValues: function getCalculatedValues(props, fallbackProps) {
-	    var defaultStyles = props.theme && props.theme.axis ? props.theme.axis : fallbackProps.style;
-	    var style = this.getStyles(props, defaultStyles);
-	    var padding = _victoryCore.Helpers.getPadding(props);
-	    var orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-	    var isVertical = _axis2.default.isVertical(props);
-	    var labelPadding = this.getLabelPadding(props, style);
-	    var stringTicks = _axis2.default.stringTicks(props);
-	    var scale = this.getScale(props);
-	    var ticks = this.getTicks(props, scale);
-	    var tickFormat = this.getTickFormat(props, scale, ticks);
-	    var anchors = this.getAnchors(orientation, isVertical);
-	
-	    return {
-	      style: style, padding: padding, orientation: orientation, isVertical: isVertical, labelPadding: labelPadding, stringTicks: stringTicks,
-	      anchors: anchors, scale: scale, ticks: ticks, tickFormat: tickFormat
-	    };
-	  },
-	  getAxisLabelProps: function getAxisLabelProps(props, calculatedValues, globalTransform) {
-	    var style = calculatedValues.style;
-	    var orientation = calculatedValues.orientation;
-	    var padding = calculatedValues.padding;
-	    var labelPadding = calculatedValues.labelPadding;
-	    var isVertical = calculatedValues.isVertical;
-	
-	    var sign = orientationSign[orientation];
-	    var hPadding = padding.left + padding.right;
-	    var vPadding = padding.top + padding.bottom;
-	    var x = isVertical ? -((props.height - vPadding) / 2) - padding.top : (props.width - hPadding) / 2 + padding.left;
-	    var verticalAnchor = sign < 0 ? "end" : "start";
-	    var labelStyle = style.axisLabel;
-	    return {
-	      x: x + globalTransform.x,
-	      y: sign * labelPadding + globalTransform.y,
-	      verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
-	      textAnchor: labelStyle.textAnchor || "middle",
-	      angle: labelStyle.angle,
-	      style: labelStyle,
-	      transform: isVertical ? "rotate(-90)" : "",
-	      text: props.label
-	    };
-	  },
-	  getTicks: function getTicks(props, scale) {
-	    if (props.tickValues) {
-	      if (_axis2.default.stringTicks(props)) {
-	        return (0, _range3.default)(1, props.tickValues.length + 1);
-	      }
-	      return props.tickValues;
-	    } else if (scale.ticks && (0, _isFunction3.default)(scale.ticks)) {
-	      var ticks = scale.ticks(props.tickCount);
-	      if (props.crossAxis) {
-	        return (0, _includes3.default)(ticks, 0) ? (0, _without3.default)(ticks, 0) : ticks;
-	      }
-	      return ticks;
-	    }
-	    return scale.domain();
-	  },
-	  getAnchors: function getAnchors(orientation, isVertical) {
-	    var anchorOrientation = { top: "end", left: "end", right: "start", bottom: "start" };
-	    var anchor = anchorOrientation[orientation];
-	    return {
-	      textAnchor: isVertical ? anchor : "middle",
-	      verticalAnchor: isVertical ? "middle" : anchor
-	    };
-	  },
-	  getTickFormat: function getTickFormat(props, scale) {
-	    if (props.tickFormat && (0, _isFunction3.default)(props.tickFormat)) {
-	      return props.tickFormat;
-	    } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
-	      return function (x, index) {
-	        return props.tickFormat[index];
-	      };
-	    } else if (_axis2.default.stringTicks(props)) {
-	      return function (x, index) {
-	        return props.tickValues[index];
-	      };
-	    } else if (scale.tickFormat && (0, _isFunction3.default)(scale.tickFormat)) {
-	      return scale.tickFormat();
-	    } else {
-	      return function (x) {
-	        return x;
-	      };
-	    }
-	  },
-	  getLabelPadding: function getLabelPadding(props, style) {
-	    var labelStyle = style.axisLabel;
-	    if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
-	      return labelStyle.padding;
-	    }
-	    var isVertical = _axis2.default.isVertical(props);
-	    // TODO: magic numbers
-	    return props.label ? labelStyle.fontSize * (isVertical ? 2.3 : 1.6) : 0;
-	  },
-	  getOffset: function getOffset(props, calculatedValues) {
-	    var style = calculatedValues.style;
-	    var padding = calculatedValues.padding;
-	    var isVertical = calculatedValues.isVertical;
-	    var orientation = calculatedValues.orientation;
-	    var labelPadding = calculatedValues.labelPadding;
-	    var stringTicks = calculatedValues.stringTicks;
-	    var ticks = calculatedValues.ticks;
-	
-	    var xPadding = orientation === "right" ? padding.right : padding.left;
-	    var yPadding = orientation === "top" ? padding.top : padding.bottom;
-	    var fontSize = style.axisLabel.fontSize;
-	    var offsetX = props.offsetX !== null && props.offsetX !== undefined ? props.offsetX : xPadding;
-	    var offsetY = props.offsetY !== null && props.offsetY !== undefined ? props.offsetY : yPadding;
-	    var tickSizes = ticks.map(function (data) {
-	      var tick = stringTicks ? props.tickValues[data - 1] : data;
-	      var tickStyle = _victoryCore.Helpers.evaluateStyle(style.ticks, tick);
-	      return tickStyle.size;
-	    });
-	    var totalPadding = fontSize + 2 * Math.max.apply(Math, _toConsumableArray(tickSizes)) + labelPadding;
-	    var minimumPadding = 1.2 * fontSize; // TODO: magic numbers
-	    var x = isVertical ? totalPadding : minimumPadding;
-	    var y = isVertical ? minimumPadding : totalPadding;
-	    return {
-	      x: offsetX !== null && offsetX !== undefined ? offsetX : x,
-	      y: offsetY !== null && offsetY !== undefined ? offsetY : y
-	    };
-	  },
-	  getTransform: function getTransform(props, calculatedValues, offset) {
-	    var orientation = calculatedValues.orientation;
-	
-	    return {
-	      top: { x: 0, y: offset.y },
-	      bottom: { x: 0, y: props.height - offset.y },
-	      left: { x: offset.x, y: 0 },
-	      right: { x: props.width - offset.x, y: 0 }
-	    }[orientation];
-	  },
-	  getTickPosition: function getTickPosition(style, orientation, isVertical) {
-	    var tickSpacing = style.size + style.padding;
-	    var sign = orientationSign[orientation];
-	    return {
-	      x: isVertical ? sign * tickSpacing : 0,
-	      x2: isVertical ? sign * style.size : 0,
-	      y: isVertical ? 0 : sign * tickSpacing,
-	      y2: isVertical ? 0 : sign * style.size
-	    };
-	  },
-	  getGridEdge: function getGridEdge(props, calculatedValues) {
-	    var orientation = calculatedValues.orientation;
-	    var padding = calculatedValues.padding;
-	    var isVertical = calculatedValues.isVertical;
-	
-	    var sign = -orientationSign[orientation];
-	    var x = isVertical ? sign * (props.width - (padding.left + padding.right)) : 0;
-	    var y = isVertical ? 0 : sign * (props.height - (padding.top + padding.bottom));
-	    return { x: x, y: y };
-	  },
-	  getGridOffset: function getGridOffset(props, calculatedValues, offset) {
-	    var padding = calculatedValues.padding;
-	    var orientation = calculatedValues.orientation;
-	
-	    var xPadding = orientation === "right" ? padding.right : padding.left;
-	    var yPadding = orientation === "top" ? padding.top : padding.bottom;
-	    return {
-	      x: props.crossAxis ? offset.x - xPadding : 0,
-	      y: props.crossAxis ? offset.y - yPadding : 0
-	    };
-	  }
-	};
-
-/***/ },
-/* 187 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseDifference = __webpack_require__(188),
-	    isArrayLikeObject = __webpack_require__(206),
+	var baseDifference = __webpack_require__(137),
+	    isArrayLikeObject = __webpack_require__(78),
 	    rest = __webpack_require__(11);
 	
 	/**
@@ -11592,15 +9179,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 188 */
+/* 137 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SetCache = __webpack_require__(189),
-	    arrayIncludes = __webpack_require__(199),
-	    arrayIncludesWith = __webpack_require__(202),
-	    arrayMap = __webpack_require__(203),
-	    baseUnary = __webpack_require__(204),
-	    cacheHas = __webpack_require__(205);
+	var SetCache = __webpack_require__(138),
+	    arrayIncludes = __webpack_require__(142),
+	    arrayIncludesWith = __webpack_require__(145),
+	    arrayMap = __webpack_require__(124),
+	    baseUnary = __webpack_require__(146),
+	    cacheHas = __webpack_require__(147);
 	
 	/** Used as the size to enable large array optimizations. */
 	var LARGE_ARRAY_SIZE = 200;
@@ -11665,12 +9252,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 189 */
+/* 138 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var MapCache = __webpack_require__(190),
-	    setCacheAdd = __webpack_require__(197),
-	    setCacheHas = __webpack_require__(198);
+	var MapCache = __webpack_require__(139),
+	    setCacheAdd = __webpack_require__(140),
+	    setCacheHas = __webpack_require__(141);
 	
 	/**
 	 *
@@ -11698,14 +9285,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 190 */
+/* 139 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var listCacheClear = __webpack_require__(191),
-	    listCacheDelete = __webpack_require__(192),
-	    listCacheGet = __webpack_require__(194),
-	    listCacheHas = __webpack_require__(195),
-	    listCacheSet = __webpack_require__(196);
+	var listCacheClear = __webpack_require__(68),
+	    listCacheDelete = __webpack_require__(69),
+	    listCacheGet = __webpack_require__(71),
+	    listCacheHas = __webpack_require__(72),
+	    listCacheSet = __webpack_require__(73);
 	
 	/**
 	 * Creates an list cache object.
@@ -11736,170 +9323,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 191 */
-/***/ function(module, exports) {
-
-	/**
-	 * Removes all key-value entries from the list cache.
-	 *
-	 * @private
-	 * @name clear
-	 * @memberOf ListCache
-	 */
-	function listCacheClear() {
-	  this.__data__ = [];
-	}
-	
-	module.exports = listCacheClear;
-
-
-/***/ },
-/* 192 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var assocIndexOf = __webpack_require__(193);
-	
-	/** Used for built-in method references. */
-	var arrayProto = Array.prototype;
-	
-	/** Built-in value references. */
-	var splice = arrayProto.splice;
-	
-	/**
-	 * Removes `key` and its value from the list cache.
-	 *
-	 * @private
-	 * @name delete
-	 * @memberOf ListCache
-	 * @param {string} key The key of the value to remove.
-	 * @returns {boolean} Returns `true` if the entry was removed, else `false`.
-	 */
-	function listCacheDelete(key) {
-	  var data = this.__data__,
-	      index = assocIndexOf(data, key);
-	
-	  if (index < 0) {
-	    return false;
-	  }
-	  var lastIndex = data.length - 1;
-	  if (index == lastIndex) {
-	    data.pop();
-	  } else {
-	    splice.call(data, index, 1);
-	  }
-	  return true;
-	}
-	
-	module.exports = listCacheDelete;
-
-
-/***/ },
-/* 193 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var eq = __webpack_require__(5);
-	
-	/**
-	 * Gets the index at which the `key` is found in `array` of key-value pairs.
-	 *
-	 * @private
-	 * @param {Array} array The array to search.
-	 * @param {*} key The key to search for.
-	 * @returns {number} Returns the index of the matched value, else `-1`.
-	 */
-	function assocIndexOf(array, key) {
-	  var length = array.length;
-	  while (length--) {
-	    if (eq(array[length][0], key)) {
-	      return length;
-	    }
-	  }
-	  return -1;
-	}
-	
-	module.exports = assocIndexOf;
-
-
-/***/ },
-/* 194 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var assocIndexOf = __webpack_require__(193);
-	
-	/**
-	 * Gets the list cache value for `key`.
-	 *
-	 * @private
-	 * @name get
-	 * @memberOf ListCache
-	 * @param {string} key The key of the value to get.
-	 * @returns {*} Returns the entry value.
-	 */
-	function listCacheGet(key) {
-	  var data = this.__data__,
-	      index = assocIndexOf(data, key);
-	
-	  return index < 0 ? undefined : data[index][1];
-	}
-	
-	module.exports = listCacheGet;
-
-
-/***/ },
-/* 195 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var assocIndexOf = __webpack_require__(193);
-	
-	/**
-	 * Checks if a list cache value for `key` exists.
-	 *
-	 * @private
-	 * @name has
-	 * @memberOf ListCache
-	 * @param {string} key The key of the entry to check.
-	 * @returns {boolean} Returns `true` if an entry for `key` exists, else `false`.
-	 */
-	function listCacheHas(key) {
-	  return assocIndexOf(this.__data__, key) > -1;
-	}
-	
-	module.exports = listCacheHas;
-
-
-/***/ },
-/* 196 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var assocIndexOf = __webpack_require__(193);
-	
-	/**
-	 * Sets the list cache `key` to `value`.
-	 *
-	 * @private
-	 * @name set
-	 * @memberOf ListCache
-	 * @param {string} key The key of the value to set.
-	 * @param {*} value The value to set.
-	 * @returns {Object} Returns the list cache instance.
-	 */
-	function listCacheSet(key, value) {
-	  var data = this.__data__,
-	      index = assocIndexOf(data, key);
-	
-	  if (index < 0) {
-	    data.push([key, value]);
-	  } else {
-	    data[index][1] = value;
-	  }
-	  return this;
-	}
-	
-	module.exports = listCacheSet;
-
-
-/***/ },
-/* 197 */
+/* 140 */
 /***/ function(module, exports) {
 
 	/** Used to stand-in for `undefined` hash values. */
@@ -11924,7 +9348,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 198 */
+/* 141 */
 /***/ function(module, exports) {
 
 	/**
@@ -11944,10 +9368,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 199 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIndexOf = __webpack_require__(200);
+	var baseIndexOf = __webpack_require__(143);
 	
 	/**
 	 * A specialized version of `_.includes` for arrays without support for
@@ -11967,10 +9391,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 200 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var indexOfNaN = __webpack_require__(201);
+	var indexOfNaN = __webpack_require__(144);
 	
 	/**
 	 * The base implementation of `_.indexOf` without `fromIndex` bounds checks.
@@ -12000,7 +9424,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 201 */
+/* 144 */
 /***/ function(module, exports) {
 
 	/**
@@ -12029,7 +9453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 202 */
+/* 145 */
 /***/ function(module, exports) {
 
 	/**
@@ -12057,34 +9481,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 203 */
-/***/ function(module, exports) {
-
-	/**
-	 * A specialized version of `_.map` for arrays without support for iteratee
-	 * shorthands.
-	 *
-	 * @private
-	 * @param {Array} [array] The array to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @returns {Array} Returns the new mapped array.
-	 */
-	function arrayMap(array, iteratee) {
-	  var index = -1,
-	      length = array ? array.length : 0,
-	      result = Array(length);
-	
-	  while (++index < length) {
-	    result[index] = iteratee(array[index], index, array);
-	  }
-	  return result;
-	}
-	
-	module.exports = arrayMap;
-
-
-/***/ },
-/* 204 */
+/* 146 */
 /***/ function(module, exports) {
 
 	/**
@@ -12104,7 +9501,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 205 */
+/* 147 */
 /***/ function(module, exports) {
 
 	/**
@@ -12123,131 +9520,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 206 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isArrayLike = __webpack_require__(207),
-	    isObjectLike = __webpack_require__(25);
-	
-	/**
-	 * This method is like `_.isArrayLike` except that it also checks if `value`
-	 * is an object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is an array-like object,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isArrayLikeObject([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isArrayLikeObject(document.body.children);
-	 * // => true
-	 *
-	 * _.isArrayLikeObject('abc');
-	 * // => false
-	 *
-	 * _.isArrayLikeObject(_.noop);
-	 * // => false
-	 */
-	function isArrayLikeObject(value) {
-	  return isObjectLike(value) && isArrayLike(value);
-	}
-	
-	module.exports = isArrayLikeObject;
-
-
-/***/ },
-/* 207 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getLength = __webpack_require__(208),
-	    isFunction = __webpack_require__(182),
-	    isLength = __webpack_require__(23);
-	
-	/**
-	 * Checks if `value` is array-like. A value is considered array-like if it's
-	 * not a function and has a `value.length` that's an integer greater than or
-	 * equal to `0` and less than or equal to `Number.MAX_SAFE_INTEGER`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is array-like, else `false`.
-	 * @example
-	 *
-	 * _.isArrayLike([1, 2, 3]);
-	 * // => true
-	 *
-	 * _.isArrayLike(document.body.children);
-	 * // => true
-	 *
-	 * _.isArrayLike('abc');
-	 * // => true
-	 *
-	 * _.isArrayLike(_.noop);
-	 * // => false
-	 */
-	function isArrayLike(value) {
-	  return value != null && isLength(getLength(value)) && !isFunction(value);
-	}
-	
-	module.exports = isArrayLike;
-
-
-/***/ },
-/* 208 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseProperty = __webpack_require__(209);
-	
-	/**
-	 * Gets the "length" property value of `object`.
-	 *
-	 * **Note:** This function is used to avoid a
-	 * [JIT bug](https://bugs.webkit.org/show_bug.cgi?id=142792) that affects
-	 * Safari on at least iOS 8.1-8.3 ARM64.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @returns {*} Returns the "length" value.
-	 */
-	var getLength = baseProperty('length');
-	
-	module.exports = getLength;
-
-
-/***/ },
-/* 209 */
-/***/ function(module, exports) {
-
-	/**
-	 * The base implementation of `_.property` without support for deep paths.
-	 *
-	 * @private
-	 * @param {string} key The key of the property to get.
-	 * @returns {Function} Returns the new accessor function.
-	 */
-	function baseProperty(key) {
-	  return function(object) {
-	    return object == null ? undefined : object[key];
-	  };
-	}
-	
-	module.exports = baseProperty;
-
-
-/***/ },
-/* 210 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var createRange = __webpack_require__(211);
+	var createRange = __webpack_require__(149);
 	
 	/**
 	 * Creates an array of numbers (positive and/or negative) progressing from
@@ -12296,12 +9572,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 211 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseRange = __webpack_require__(212),
+	var baseRange = __webpack_require__(150),
 	    isIterateeCall = __webpack_require__(10),
-	    toNumber = __webpack_require__(213);
+	    toNumber = __webpack_require__(151);
 	
 	/**
 	 * Creates a `_.range` or `_.rangeRight` function.
@@ -12333,7 +9609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 212 */
+/* 150 */
 /***/ function(module, exports) {
 
 	/* Built-in method references for those with the same name as other `lodash` methods. */
@@ -12367,7 +9643,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 213 */
+/* 151 */
 /***/ function(module, exports) {
 
 	/**
@@ -12394,10 +9670,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 214 */
+/* 152 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIndexOf = __webpack_require__(200);
+	var baseIndexOf = __webpack_require__(143);
 	
 	/**
 	 * A specialized version of `_.includes` for arrays without support for
@@ -12417,116 +9693,104 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 215 */
+/* 153 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _includes2=__webpack_require__(152);var _includes3=_interopRequireDefault(_includes2);var _flatten2=__webpack_require__(154);var _flatten3=_interopRequireDefault(_flatten2);
+	var _victoryCore=__webpack_require__(29);
+	var _d3Scale=__webpack_require__(155);var _d3Scale2=_interopRequireDefault(_d3Scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var supportedScaleStrings=["linear","time","log","sqrt"];exports.default=
 	
-	var _isFunction2 = __webpack_require__(182);
+	{
 	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
+	getDefaultScale:function getDefaultScale(){
+	return _d3Scale2.default.scaleLinear();},
 	
-	var _includes2 = __webpack_require__(214);
 	
-	var _includes3 = _interopRequireDefault(_includes2);
+	toNewName:function toNewName(scale){
 	
-	var _flatten2 = __webpack_require__(216);
+	var capitalize=function capitalize(s){return s&&s[0].toUpperCase()+s.slice(1);};
+	return"scale"+capitalize(scale);},
 	
-	var _flatten3 = _interopRequireDefault(_flatten2);
 	
-	var _victoryCore = __webpack_require__(29);
+	validScale:function validScale(scale){
+	if(typeof scale==="function"){
+	return(0,_isFunction3.default)(scale.copy)&&(0,_isFunction3.default)(scale.domain)&&(0,_isFunction3.default)(scale.range);}else
+	if(typeof scale==="string"){
+	return(0,_includes3.default)(supportedScaleStrings,scale);}
 	
-	var _d3Scale = __webpack_require__(218);
+	return false;},
 	
-	var _d3Scale2 = _interopRequireDefault(_d3Scale);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	isScaleDefined:function isScaleDefined(props,axis){
+	if(!props.scale){
+	return false;}else
+	if(props.scale.x||props.scale.y){
+	return props.scale[axis]?true:false;}
 	
-	var supportedScaleStrings = ["linear", "time", "log", "sqrt"];
+	return true;},
 	
-	exports.default = {
-	  getDefaultScale: function getDefaultScale() {
-	    return _d3Scale2.default.scaleLinear();
-	  },
-	  toNewName: function toNewName(scale) {
-	    // d3 scale changed the naming scheme for scale from "linear" -> "scaleLinear" etc.
-	    var capitalize = function capitalize(s) {
-	      return s && s[0].toUpperCase() + s.slice(1);
-	    };
-	    return "scale" + capitalize(scale);
-	  },
-	  validScale: function validScale(scale) {
-	    if (typeof scale === "function") {
-	      return (0, _isFunction3.default)(scale.copy) && (0, _isFunction3.default)(scale.domain) && (0, _isFunction3.default)(scale.range);
-	    } else if (typeof scale === "string") {
-	      return (0, _includes3.default)(supportedScaleStrings, scale);
-	    }
-	    return false;
-	  },
-	  isScaleDefined: function isScaleDefined(props, axis) {
-	    if (!props.scale) {
-	      return false;
-	    } else if (props.scale.x || props.scale.y) {
-	      return props.scale[axis] ? true : false;
-	    }
-	    return true;
-	  },
-	  getScaleFromProps: function getScaleFromProps(props, axis) {
-	    if (!this.isScaleDefined(props, axis)) {
-	      return undefined;
-	    }
-	    var scale = props.scale[axis] || props.scale;
-	    if (this.validScale(scale)) {
-	      return (0, _isFunction3.default)(scale) ? scale : _d3Scale2.default[this.toNewName(scale)]();
-	    }
-	  },
-	  getScaleTypeFromData: function getScaleTypeFromData(props, axis) {
-	    if (!props.data) {
-	      return "linear";
-	    }
-	    var accessor = _victoryCore.Helpers.createAccessor(props[axis]);
-	    var allData = (0, _flatten3.default)(props.data);
-	    var axisData = allData.map(accessor);
-	    return _victoryCore.Collection.containsDates(axisData) ? "time" : "linear";
-	  },
-	  getBaseScale: function getBaseScale(props, axis) {
-	    var scale = this.getScaleFromProps(props, axis);
-	    if (scale) {
-	      return scale;
-	    }
-	    var dataScale = this.getScaleTypeFromData(props, axis);
-	    return _d3Scale2.default[this.toNewName(dataScale)]();
-	  },
-	  getScaleType: function getScaleType(props, axis) {
-	    var scale = this.getScaleFromProps(props, axis);
-	    // if the scale was not given in props, it will be set to linear or time depending on data
-	    if (!scale) {
-	      return this.getScaleTypeFromData(props, axis);
-	    } else if (typeof scale === "string") {
-	      return (0, _includes3.default)(supportedScaleStrings, scale) ? scale : "invalid";
-	    } else if (!this.validScale(scale)) {
-	      return "invalid";
-	    }
-	    var duckTypes = [{ name: "log", method: "base" }, { name: "ordinal", method: "unknown" }, { name: "pow-sqrt", method: "exponent" }, { name: "quantile", method: "quantiles" }, { name: "quantize-threshold", method: "invertExtent" }];
-	    var scaleType = duckTypes.filter(function (type) {
-	      return scale[type.method] !== undefined;
-	    })[0];
-	    if (scaleType) {
-	      return scaleType.name;
-	    }
-	    return this.getScaleTypeFromData(props, axis);
-	  }
-	};
+	
+	getScaleFromProps:function getScaleFromProps(props,axis){
+	if(!this.isScaleDefined(props,axis)){
+	return undefined;}
+	
+	var scale=props.scale[axis]||props.scale;
+	if(this.validScale(scale)){
+	return(0,_isFunction3.default)(scale)?scale:_d3Scale2.default[this.toNewName(scale)]();}},
+	
+	
+	
+	getScaleTypeFromData:function getScaleTypeFromData(props,axis){
+	if(!props.data){
+	return"linear";}
+	
+	var accessor=_victoryCore.Helpers.createAccessor(props[axis]);
+	var allData=(0,_flatten3.default)(props.data);
+	var axisData=allData.map(accessor);
+	return _victoryCore.Collection.containsDates(axisData)?"time":"linear";},
+	
+	
+	getBaseScale:function getBaseScale(props,axis){
+	var scale=this.getScaleFromProps(props,axis);
+	if(scale){
+	return scale;}
+	
+	var dataScale=this.getScaleTypeFromData(props,axis);
+	return _d3Scale2.default[this.toNewName(dataScale)]();},
+	
+	
+	getScaleType:function getScaleType(props,axis){
+	var scale=this.getScaleFromProps(props,axis);
+	
+	if(!scale){
+	return this.getScaleTypeFromData(props,axis);}else
+	if(typeof scale==="string"){
+	return(0,_includes3.default)(supportedScaleStrings,scale)?scale:"invalid";}else
+	if(!this.validScale(scale)){
+	return"invalid";}
+	
+	var duckTypes=[
+	{name:"log",method:"base"},
+	{name:"ordinal",method:"unknown"},
+	{name:"pow-sqrt",method:"exponent"},
+	{name:"quantile",method:"quantiles"},
+	{name:"quantize-threshold",method:"invertExtent"}];
+	
+	var scaleType=duckTypes.filter(function(type){
+	return scale[type.method]!==undefined;})[
+	0];
+	if(scaleType){
+	return scaleType.name;}
+	
+	return this.getScaleTypeFromData(props,axis);}};
 
 /***/ },
-/* 216 */
+/* 154 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFlatten = __webpack_require__(217);
+	var baseFlatten = __webpack_require__(125);
 	
 	/**
 	 * Flattens `array` a single level deep.
@@ -12551,38 +9815,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 217 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 218 */
+/* 155 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(219), __webpack_require__(220), __webpack_require__(221), __webpack_require__(223), __webpack_require__(224), __webpack_require__(225), __webpack_require__(222)) :
+	   true ? factory(exports, __webpack_require__(156), __webpack_require__(157), __webpack_require__(158), __webpack_require__(160), __webpack_require__(161), __webpack_require__(162), __webpack_require__(159)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-array', 'd3-collection', 'd3-interpolate', 'd3-format', 'd3-time', 'd3-time-format', 'd3-color'], factory) :
 	  (factory((global.d3_scale = global.d3_scale || {}),global.d3_array,global.d3_collection,global.d3_interpolate,global.d3_format,global.d3_time,global.d3_time_format,global.d3_color));
 	}(this, function (exports,d3Array,d3Collection,d3Interpolate,d3Format,d3Time,d3TimeFormat,d3Color) { 'use strict';
@@ -13512,7 +10749,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 219 */
+/* 156 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -13986,7 +11223,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 220 */
+/* 157 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -14215,11 +11452,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 221 */
+/* 158 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(222)) :
+	   true ? factory(exports, __webpack_require__(159)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-color'], factory) :
 	  (factory((global.d3_interpolate = global.d3_interpolate || {}),global.d3_color));
 	}(this, function (exports,d3Color) { 'use strict';
@@ -14730,7 +11967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 222 */
+/* 159 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -15252,7 +12489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 223 */
+/* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -15759,7 +12996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 224 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -16113,11 +13350,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 225 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(224)) :
+	   true ? factory(exports, __webpack_require__(161)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-time'], factory) :
 	  (factory((global.d3_time_format = global.d3_time_format || {}),global.d3_time));
 	}(this, function (exports,d3Time) { 'use strict';
@@ -16951,539 +14188,464 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 226 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _identity2=__webpack_require__(120);var _identity3=_interopRequireDefault(_identity2);var _victoryCore=__webpack_require__(29);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
 	
-	var _identity2 = __webpack_require__(227);
-	
-	var _identity3 = _interopRequireDefault(_identity2);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	  /**
-	   * Returns the axis (x or y) of a particular axis component
-	   * @param {Object} props: the props object.
-	   * @param {Boolean} flipped: true when the axis component is in an atypical orientation
-	   * @returns {String} the dimension appropriate for the axis given its props
-	   */
-	
-	  getAxis: function getAxis(props) {
-	    if (props.orientation) {
-	      var vertical = { top: "x", bottom: "x", left: "y", right: "y" };
-	      return vertical[props.orientation];
-	    }
-	    return props.dependentAxis ? "y" : "x";
-	  },
-	  getCurrentAxis: function getCurrentAxis(axis, horizontal) {
-	    var otherAxis = axis === "x" ? "y" : "x";
-	    return horizontal ? otherAxis : axis;
-	  },
+	{
 	
 	
-	  /**
-	   * Returns a single axis component of the desired axis type (x or y)
-	   * @param {Array} childComponents: an array of children
-	   * @param {String} axis: desired axis either "x" or "y".
-	   * @returns {ReactComponent} an axis component of the desired axis or undefined
-	   */
-	  getAxisComponent: function getAxisComponent(childComponents, axis) {
-	    var matchesAxis = function matchesAxis(component) {
-	      var type = component.type.getAxis(component.props);
-	      return type === axis;
-	    };
-	    return this.findAxisComponents(childComponents, matchesAxis)[0];
-	  },
 	
 	
-	  /**
-	   * Returns all axis components that pass a given predicate
-	   * @param {Array} childComponents: an array of children
-	   * @param {Function} predicate: a predicate function that will be called with each
-	   * @returns {Array} all axis components that pass the given predicate or []
-	   */
-	  findAxisComponents: function findAxisComponents(childComponents, predicate) {
-	    predicate = predicate || _identity3.default;
-	    var findAxes = function findAxes(children) {
-	      return children.reduce(function (memo, child) {
-	        if (child.type && child.type.role === "axis" && predicate(child)) {
-	          return memo.concat(child);
-	        } else if (child.props && child.props.children) {
-	          return memo.concat(findAxes(_react2.default.Children.toArray(child.props.children)));
-	        }
-	        return memo;
-	      }, []);
-	    };
-	
-	    return findAxes(childComponents);
-	  },
 	
 	
-	  /**
-	   * Returns all axis components of the desired axis type (x or y) along with any
-	   * parent components excluding VictoryChart
-	   * @param {Array} childComponents: an optional array of children.
-	   * @param {String} type: desired axis either "dependent" or "independent".
-	   * @returns {ReactComponent} an axis component of the desired type or undefined
-	   */
-	  getAxisComponentsWithParent: function getAxisComponentsWithParent(childComponents, type) {
-	    var matchesType = function matchesType(child) {
-	      return type === "dependent" ? child.props.dependentAxis : !child.props.dependentAxis;
-	    };
+	getAxis:function getAxis(props){
+	if(props.orientation){
+	var vertical={top:"x",bottom:"x",left:"y",right:"y"};
+	return vertical[props.orientation];}
 	
-	    var findAxisComponents = function findAxisComponents(children) {
-	      return children.reduce(function (memo, child) {
-	        if (child.type && child.type.role === "axis" && matchesType(child)) {
-	          return memo.concat(child);
-	        } else if (child.props && child.props.children) {
-	          var childAxis = findAxisComponents(_react2.default.Children.toArray(child.props.children));
-	          return childAxis.length > 0 ? memo.concat(child) : memo;
-	        }
-	        return memo;
-	      }, []);
-	    };
-	
-	    return findAxisComponents(childComponents);
-	  },
+	return props.dependentAxis?"y":"x";},
 	
 	
-	  /**
-	   * @param {ReactComponent} component: a victory axis component.
-	   * @param {String} axis: desired axis either "x" or "y".
-	   * @returns {String} the orientation of the axis ("top", "bottom", "left", or "right")
-	   */
-	  getOrientation: function getOrientation(component, axis) {
-	    var typicalOrientations = { x: "bottom", y: "left" };
-	    var flippedOrientations = { x: "left", y: "bottom" };
-	    if (!component) {
-	      return typicalOrientations[axis];
-	    } else if (component.props && component.props.orientation) {
-	      return component.props.orientation;
-	    }
-	    var dependent = component.props.dependentAxis;
-	    return dependent && axis === "y" || !dependent && axis === "x" ? typicalOrientations[axis] : flippedOrientations[axis];
-	  },
+	getCurrentAxis:function getCurrentAxis(axis,horizontal){
+	var otherAxis=axis==="x"?"y":"x";
+	return horizontal?otherAxis:axis;},
 	
 	
-	  /**
-	   * @param {Array} childComponents: an array of children
-	   * @returns {Object} an object with orientations specified for x and y
-	   */
-	  getAxisOrientations: function getAxisOrientations(childComponents) {
-	    return {
-	      x: this.getOrientation(this.getAxisComponent(childComponents, "x"), "x"),
-	      y: this.getOrientation(this.getAxisComponent(childComponents, "y"), "y")
-	    };
-	  },
 	
 	
-	  /**
-	   * @param {Object} props: axis component props
-	   * @returns {Boolean} true when the axis is vertical
-	   */
-	  isVertical: function isVertical(props) {
-	    var orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-	    var vertical = { top: false, bottom: false, left: true, right: true };
-	    return vertical[orientation];
-	  },
 	
 	
-	  /**
-	   * @param {Object} props: axis component props
-	   * @returns {Boolean} true when tickValues contain strings
-	   */
-	  stringTicks: function stringTicks(props) {
-	    return props.tickValues !== undefined && _victoryCore.Collection.containsStrings(props.tickValues);
-	  }
-	};
+	
+	
+	getAxisComponent:function getAxisComponent(childComponents,axis){
+	var matchesAxis=function matchesAxis(component){
+	var type=component.type.getAxis(component.props);
+	return type===axis;};
+	
+	return this.findAxisComponents(childComponents,matchesAxis)[0];},
+	
+	
+	
+	
+	
+	
+	
+	
+	findAxisComponents:function findAxisComponents(childComponents,predicate){
+	predicate=predicate||_identity3.default;
+	var findAxes=function findAxes(children){
+	return children.reduce(function(memo,child){
+	if(child.type&&child.type.role==="axis"&&predicate(child)){
+	return memo.concat(child);}else
+	if(child.props&&child.props.children){
+	return memo.concat(findAxes(_react2.default.Children.toArray(child.props.children)));}
+	
+	return memo;},
+	[]);};
+	
+	
+	return findAxes(childComponents);},
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	getAxisComponentsWithParent:function getAxisComponentsWithParent(childComponents,type){
+	var matchesType=function matchesType(child){
+	return type==="dependent"?child.props.dependentAxis:!child.props.dependentAxis;};
+	
+	
+	var findAxisComponents=function findAxisComponents(children){
+	return children.reduce(function(memo,child){
+	if(child.type&&child.type.role==="axis"&&matchesType(child)){
+	return memo.concat(child);}else
+	if(child.props&&child.props.children){
+	var childAxis=findAxisComponents(_react2.default.Children.toArray(child.props.children));
+	return childAxis.length>0?memo.concat(child):memo;}
+	
+	return memo;},
+	[]);};
+	
+	
+	return findAxisComponents(childComponents);},
+	
+	
+	
+	
+	
+	
+	
+	getOrientation:function getOrientation(component,axis){
+	var typicalOrientations={x:"bottom",y:"left"};
+	var flippedOrientations={x:"left",y:"bottom"};
+	if(!component){
+	return typicalOrientations[axis];}else
+	if(component.props&&component.props.orientation){
+	return component.props.orientation;}
+	
+	var dependent=component.props.dependentAxis;
+	return dependent&&axis==="y"||!dependent&&axis==="x"?
+	typicalOrientations[axis]:flippedOrientations[axis];},
+	
+	
+	
+	
+	
+	
+	getAxisOrientations:function getAxisOrientations(childComponents){
+	return{
+	x:this.getOrientation(this.getAxisComponent(childComponents,"x"),"x"),
+	y:this.getOrientation(this.getAxisComponent(childComponents,"y"),"y")};},
+	
+	
+	
+	
+	
+	
+	
+	isVertical:function isVertical(props){
+	var orientation=props.orientation||(props.dependentAxis?"left":"bottom");
+	var vertical={top:false,bottom:false,left:true,right:true};
+	return vertical[orientation];},
+	
+	
+	
+	
+	
+	
+	stringTicks:function stringTicks(props){
+	return props.tickValues!==undefined&&_victoryCore.Collection.containsStrings(props.tickValues);}};
 
 /***/ },
-/* 227 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 228 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _includes2=__webpack_require__(152);var _includes3=_interopRequireDefault(_includes2);var _flatten2=__webpack_require__(154);var _flatten3=_interopRequireDefault(_flatten2);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _victoryCore=__webpack_require__(29);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
+	getDomain:function getDomain(props,axis){
+	var propsDomain=this.getDomainFromProps(props,axis);
+	if(propsDomain){
+	return propsDomain;}
 	
-	var _includes2 = __webpack_require__(214);
+	var categoryDomain=this.getDomainFromCategories(props,axis);
+	if(categoryDomain){
+	return categoryDomain;}
 	
-	var _includes3 = _interopRequireDefault(_includes2);
+	var dataset=_data2.default.getData(props);
+	return this.getDomainFromData(props,axis,dataset);},
 	
-	var _flatten2 = __webpack_require__(216);
 	
-	var _flatten3 = _interopRequireDefault(_flatten2);
+	getDomainWithZero:function getDomainWithZero(props,axis){
+	var propsDomain=this.getDomainFromProps(props,axis);
+	if(propsDomain){
+	return propsDomain;}var
 	
-	var _data = __webpack_require__(229);
+	horizontal=props.horizontal;
+	var ensureZero=function ensureZero(domain){
+	var isDependent=axis==="y"&&!horizontal||axis==="x"&&horizontal;
+	return isDependent?[Math.min.apply(Math,_toConsumableArray(domain).concat([0])),Math.max.apply(Math,_toConsumableArray(domain).concat([0]))]:domain;};
 	
-	var _data2 = _interopRequireDefault(_data);
+	var categoryDomain=this.getDomainFromCategories(props,axis);
+	if(categoryDomain){
+	return ensureZero(categoryDomain);}
 	
-	var _axis = __webpack_require__(226);
+	var dataset=_data2.default.getData(props);
+	return ensureZero(this.getDomainFromData(props,axis,dataset));},
 	
-	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _victoryCore = __webpack_require__(29);
+	getDomainFromProps:function getDomainFromProps(props,axis){
+	if(props.domain&&props.domain[axis]){
+	return props.domain[axis];}else
+	if(props.domain&&Array.isArray(props.domain)){
+	return props.domain;}},
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	exports.default = {
-	  getDomain: function getDomain(props, axis) {
-	    var propsDomain = this.getDomainFromProps(props, axis);
-	    if (propsDomain) {
-	      return propsDomain;
-	    }
-	    var categoryDomain = this.getDomainFromCategories(props, axis);
-	    if (categoryDomain) {
-	      return categoryDomain;
-	    }
-	    var dataset = _data2.default.getData(props);
-	    return this.getDomainFromData(props, axis, dataset);
-	  },
-	  getDomainWithZero: function getDomainWithZero(props, axis) {
-	    var propsDomain = this.getDomainFromProps(props, axis);
-	    if (propsDomain) {
-	      return propsDomain;
-	    }
-	    var horizontal = props.horizontal;
+	getDomainFromData:function getDomainFromData(props,axis,dataset){
+	var currentAxis=_axis2.default.getCurrentAxis(axis,props.horizontal);
+	var allData=(0,_flatten3.default)(dataset).map(function(datum){return datum[currentAxis];});
+	var min=Math.min.apply(Math,_toConsumableArray(allData));
+	var max=Math.max.apply(Math,_toConsumableArray(allData));
 	
-	    var ensureZero = function ensureZero(domain) {
-	      var isDependent = axis === "y" && !horizontal || axis === "x" && horizontal;
-	      return isDependent ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
-	    };
-	    var categoryDomain = this.getDomainFromCategories(props, axis);
-	    if (categoryDomain) {
-	      return ensureZero(categoryDomain);
-	    }
-	    var dataset = _data2.default.getData(props);
-	    return ensureZero(this.getDomainFromData(props, axis, dataset));
-	  },
-	  getDomainFromProps: function getDomainFromProps(props, axis) {
-	    if (props.domain && props.domain[axis]) {
-	      return props.domain[axis];
-	    } else if (props.domain && Array.isArray(props.domain)) {
-	      return props.domain;
-	    }
-	  },
-	  getDomainFromData: function getDomainFromData(props, axis, dataset) {
-	    var currentAxis = _axis2.default.getCurrentAxis(axis, props.horizontal);
-	    var allData = (0, _flatten3.default)(dataset).map(function (datum) {
-	      return datum[currentAxis];
-	    });
-	    var min = Math.min.apply(Math, _toConsumableArray(allData));
-	    var max = Math.max.apply(Math, _toConsumableArray(allData));
-	    // TODO: is this the correct behavior, or should we just error. How do we
-	    // handle charts with just one data point?
-	    if (min === max) {
-	      var adjustedMax = max === 0 ? 1 : max;
-	      return [0, adjustedMax];
-	    }
-	    return [min, max];
-	  },
-	  getDomainFromTickValues: function getDomainFromTickValues(props) {
-	    var domain = void 0;
-	    if (_axis2.default.stringTicks(props)) {
-	      domain = [1, props.tickValues.length];
-	    } else {
-	      // coerce ticks to numbers
-	      var ticks = props.tickValues.map(function (value) {
-	        return +value;
-	      });
-	      domain = [Math.min.apply(Math, _toConsumableArray(ticks)), Math.max.apply(Math, _toConsumableArray(ticks))];
-	    }
-	    if (_axis2.default.isVertical(props)) {
-	      domain.reverse();
-	    }
-	    return domain;
-	  },
-	  getDomainFromCategories: function getDomainFromCategories(props, axis) {
-	    var categories = _data2.default.getCategories(props, axis);
-	    if (!categories) {
-	      return undefined;
-	    }
-	    var stringArray = _victoryCore.Collection.containsStrings(categories) ? _data2.default.getStringsFromCategories(props, axis) : [];
-	    var stringMap = stringArray.length === 0 ? null : stringArray.reduce(function (memo, string, index) {
-	      memo[string] = index + 1;
-	      return memo;
-	    }, {});
-	    var categoryValues = stringMap ? categories.map(function (value) {
-	      return stringMap[value];
-	    }) : categories;
-	    return [Math.min.apply(Math, _toConsumableArray(categoryValues)), Math.max.apply(Math, _toConsumableArray(categoryValues))];
-	  },
-	  getDomainFromGroupedData: function getDomainFromGroupedData(props, axis, datasets) {
-	    var horizontal = props.horizontal;
 	
-	    var dependent = axis === "x" && !horizontal || axis === "y" && horizontal;
-	    if (dependent && props.categories) {
-	      return this.getDomainFromCategories(props, axis);
-	    }
-	    var globalDomain = this.getDomainFromData(props, axis, datasets);
+	if(min===max){
+	var adjustedMax=max===0?1:max;
+	return[0,adjustedMax];}
 	
-	    // find the cumulative max for stacked chart types
-	    var cumulativeData = !dependent ? this.getCumulativeData(props, axis, datasets) : [];
+	return[min,max];},
 	
-	    var cumulativeMaxArray = cumulativeData.map(function (dataset) {
-	      return dataset.reduce(function (memo, val) {
-	        return val > 0 ? memo + val : memo;
-	      }, 0);
-	    });
-	    var cumulativeMinArray = cumulativeData.map(function (dataset) {
-	      return dataset.reduce(function (memo, val) {
-	        return val < 0 ? memo + val : memo;
-	      }, 0);
-	    });
 	
-	    var cumulativeMin = Math.min.apply(Math, _toConsumableArray(cumulativeMinArray));
-	    // use greatest min / max
-	    var domainMin = cumulativeMin < 0 ? cumulativeMin : Math.min.apply(Math, _toConsumableArray(globalDomain));
-	    var domainMax = Math.max.apply(Math, _toConsumableArray(globalDomain).concat(_toConsumableArray(cumulativeMaxArray)));
-	    // TODO: is this the correct behavior, or should we just error. How do we
-	    // handle charts with just one data point?
-	    if (domainMin === domainMax) {
-	      var adjustedMax = domainMax === 0 ? 1 : domainMax;
-	      return [0, adjustedMax];
-	    }
-	    return [domainMin, domainMax];
-	  },
-	  getCumulativeData: function getCumulativeData(props, axis, datasets) {
-	    var currentAxis = _axis2.default.getCurrentAxis(axis, props.horizontal);
-	    var categories = [];
-	    var axisValues = [];
-	    datasets.forEach(function (dataset) {
-	      dataset.forEach(function (data) {
-	        if (data.category !== undefined && !(0, _includes3.default)(categories, data.category)) {
-	          categories.push(data.category);
-	        } else if (!(0, _includes3.default)(axisValues, data[currentAxis])) {
-	          axisValues.push(data[currentAxis]);
-	        }
-	      });
-	    });
+	getDomainFromTickValues:function getDomainFromTickValues(props){
+	var domain=void 0;
+	if(_axis2.default.stringTicks(props)){
+	domain=[1,props.tickValues.length];}else
+	{
 	
-	    var _dataByCategory = function _dataByCategory() {
-	      return categories.map(function (value) {
-	        return datasets.reduce(function (prev, data) {
-	          return data.category === value ? prev.concat(data[axis]) : prev;
-	        }, []);
-	      });
-	    };
+	var ticks=props.tickValues.map(function(value){return+value;});
+	domain=[Math.min.apply(Math,_toConsumableArray(ticks)),Math.max.apply(Math,_toConsumableArray(ticks))];}
 	
-	    var _dataByIndex = function _dataByIndex() {
-	      return axisValues.map(function (value, index) {
-	        return datasets.map(function (data) {
-	          return data[index] && data[index][currentAxis];
-	        });
-	      });
-	    };
+	if(_axis2.default.isVertical(props)){
+	domain.reverse();}
 	
-	    return categories.length === 0 ? _dataByIndex() : _dataByCategory();
-	  },
-	  padDomain: function padDomain(domain, props, axis) {
-	    if (!props.domainPadding) {
-	      return domain;
-	    }
-	    var domainPadding = typeof props.domainPadding === "number" ? props.domainPadding : props.domainPadding[axis];
+	return domain;},
 	
-	    if (!domainPadding) {
-	      return domain;
-	    }
-	    var domainMin = Math.min.apply(Math, _toConsumableArray(domain));
-	    var domainMax = Math.max.apply(Math, _toConsumableArray(domain));
-	    var range = _victoryCore.Helpers.getRange(props, axis);
-	    var rangeExtent = Math.abs(Math.max.apply(Math, _toConsumableArray(range)) - Math.min.apply(Math, _toConsumableArray(range)));
-	    var padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
-	    // don't make the axes cross if they aren't already
-	    var adjustedMin = domainMin >= 0 && domainMin - padding <= 0 ? 0 : domainMin.valueOf() - padding;
-	    var adjustedMax = domainMax <= 0 && domainMax + padding >= 0 ? 0 : domainMax.valueOf() + padding;
-	    return domainMin instanceof Date || domainMax instanceof Date ? [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
-	  },
-	  orientDomain: function orientDomain(domain, orientations, axis) {
-	    // If the other axis is in a reversed orientation, the domain of this axis
-	    // needs to be reversed
-	    var otherAxis = axis === "x" ? "y" : "x";
-	    var defaultOrientation = function defaultOrientation(ax) {
-	      return ax === "x" ? "bottom" : "left";
-	    };
-	    var flippedAxis = orientations.x === "left" || orientations.x === "right";
-	    var standardOrientation = flippedAxis ? orientations[otherAxis] === defaultOrientation(axis) : orientations[otherAxis] === defaultOrientation(otherAxis);
-	    if (flippedAxis) {
-	      return standardOrientation ? domain.concat().reverse() : domain;
-	    } else {
-	      return standardOrientation ? domain : domain.concat().reverse();
-	    }
-	  }
-	};
+	
+	getDomainFromCategories:function getDomainFromCategories(props,axis){
+	var categories=_data2.default.getCategories(props,axis);
+	if(!categories){
+	return undefined;}
+	
+	var stringArray=_victoryCore.Collection.containsStrings(categories)?
+	_data2.default.getStringsFromCategories(props,axis):[];
+	var stringMap=stringArray.length===0?null:
+	stringArray.reduce(function(memo,string,index){
+	memo[string]=index+1;
+	return memo;},
+	{});
+	var categoryValues=stringMap?
+	categories.map(function(value){return stringMap[value];}):categories;
+	return[Math.min.apply(Math,_toConsumableArray(categoryValues)),Math.max.apply(Math,_toConsumableArray(categoryValues))];},
+	
+	
+	getDomainFromGroupedData:function getDomainFromGroupedData(props,axis,datasets){var
+	horizontal=props.horizontal;
+	var dependent=axis==="x"&&!horizontal||axis==="y"&&horizontal;
+	if(dependent&&props.categories){
+	return this.getDomainFromCategories(props,axis);}
+	
+	var globalDomain=this.getDomainFromData(props,axis,datasets);
+	
+	
+	var cumulativeData=!dependent?
+	this.getCumulativeData(props,axis,datasets):[];
+	
+	var cumulativeMaxArray=cumulativeData.map(function(dataset){
+	return dataset.reduce(function(memo,val){
+	return val>0?memo+val:memo;},
+	0);});
+	
+	var cumulativeMinArray=cumulativeData.map(function(dataset){
+	return dataset.reduce(function(memo,val){
+	return val<0?memo+val:memo;},
+	0);});
+	
+	
+	var cumulativeMin=Math.min.apply(Math,_toConsumableArray(cumulativeMinArray));
+	
+	var domainMin=cumulativeMin<0?cumulativeMin:Math.min.apply(Math,_toConsumableArray(globalDomain));
+	var domainMax=Math.max.apply(Math,_toConsumableArray(globalDomain).concat(_toConsumableArray(cumulativeMaxArray)));
+	
+	
+	if(domainMin===domainMax){
+	var adjustedMax=domainMax===0?1:domainMax;
+	return[0,adjustedMax];}
+	
+	return[domainMin,domainMax];},
+	
+	
+	getCumulativeData:function getCumulativeData(props,axis,datasets){
+	var currentAxis=_axis2.default.getCurrentAxis(axis,props.horizontal);
+	var categories=[];
+	var axisValues=[];
+	datasets.forEach(function(dataset){
+	dataset.forEach(function(data){
+	if(data.category!==undefined&&!(0,_includes3.default)(categories,data.category)){
+	categories.push(data.category);}else
+	if(!(0,_includes3.default)(axisValues,data[currentAxis])){
+	axisValues.push(data[currentAxis]);}});});
+	
+	
+	
+	
+	var _dataByCategory=function _dataByCategory(){
+	return categories.map(function(value){
+	return datasets.reduce(function(prev,data){
+	return data.category===value?prev.concat(data[axis]):prev;},
+	[]);});};
+	
+	
+	
+	var _dataByIndex=function _dataByIndex(){
+	return axisValues.map(function(value,index){
+	return datasets.map(function(data){return data[index]&&data[index][currentAxis];});});};
+	
+	
+	
+	return categories.length===0?_dataByIndex():_dataByCategory();},
+	
+	
+	padDomain:function padDomain(domain,props,axis){
+	if(!props.domainPadding){
+	return domain;}
+	
+	var domainPadding=typeof props.domainPadding==="number"?
+	props.domainPadding:props.domainPadding[axis];
+	
+	if(!domainPadding){
+	return domain;}
+	
+	var domainMin=Math.min.apply(Math,_toConsumableArray(domain));
+	var domainMax=Math.max.apply(Math,_toConsumableArray(domain));
+	var range=_victoryCore.Helpers.getRange(props,axis);
+	var rangeExtent=Math.abs(Math.max.apply(Math,_toConsumableArray(range))-Math.min.apply(Math,_toConsumableArray(range)));
+	var padding=Math.abs(domainMax-domainMin)*domainPadding/rangeExtent;
+	
+	var adjustedMin=domainMin>=0&&domainMin-padding<=0?
+	0:domainMin.valueOf()-padding;
+	var adjustedMax=domainMax<=0&&domainMax+padding>=0?
+	0:domainMax.valueOf()+padding;
+	return domainMin instanceof Date||domainMax instanceof Date?
+	[new Date(adjustedMin),new Date(adjustedMax)]:[adjustedMin,adjustedMax];},
+	
+	
+	orientDomain:function orientDomain(domain,orientations,axis){
+	
+	
+	var otherAxis=axis==="x"?"y":"x";
+	var defaultOrientation=function defaultOrientation(ax){return ax==="x"?"bottom":"left";};
+	var flippedAxis=orientations.x==="left"||orientations.x==="right";
+	var standardOrientation=flippedAxis?
+	orientations[otherAxis]===defaultOrientation(axis):
+	orientations[otherAxis]===defaultOrientation(otherAxis);
+	if(flippedAxis){
+	return standardOrientation?
+	domain.concat().reverse():domain;}else
+	{
+	return standardOrientation?
+	domain:domain.concat().reverse();}}};
 
 /***/ },
-/* 229 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _uniq2=__webpack_require__(166);var _uniq3=_interopRequireDefault(_uniq2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+	var _victoryCore=__webpack_require__(29);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
 	
-	var _uniq2 = __webpack_require__(230);
+	createStringMap:function createStringMap(props,axis){
+	var stringsFromAxes=this.getStringsFromAxes(props,axis);
+	var stringsFromCategories=this.getStringsFromCategories(props,axis);
+	var stringsFromData=_victoryCore.Helpers.getStringsFromData(props,axis);
 	
-	var _uniq3 = _interopRequireDefault(_uniq2);
+	var allStrings=(0,_uniq3.default)([].concat(_toConsumableArray(stringsFromAxes),_toConsumableArray(stringsFromCategories),_toConsumableArray(stringsFromData)));
+	return allStrings.length===0?null:
+	allStrings.reduce(function(memo,string,index){
+	memo[string]=index+1;
+	return memo;},
+	{});},
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	var _scale = __webpack_require__(215);
+	getStringsFromAxes:function getStringsFromAxes(props,axis){
+	if(!props.tickValues||!Array.isArray(props.tickValues)&&!props.tickValues[axis]){
+	return[];}
 	
-	var _scale2 = _interopRequireDefault(_scale);
+	var tickValueArray=props.tickValues[axis]||props.tickValues;
+	return tickValueArray.filter(function(val){return typeof val==="string";});},
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+	getStringsFromCategories:function getStringsFromCategories(props,axis){
+	if(!props.categories){
+	return[];}
 	
-	exports.default = {
-	  // String Data
+	var categories=this.getCategories(props,axis);
+	var categoryStrings=categories&&categories.filter(function(val){return typeof val==="string";});
+	return categoryStrings?_victoryCore.Collection.removeUndefined(categoryStrings):[];},
 	
-	  createStringMap: function createStringMap(props, axis) {
-	    var stringsFromAxes = this.getStringsFromAxes(props, axis);
-	    var stringsFromCategories = this.getStringsFromCategories(props, axis);
-	    var stringsFromData = _victoryCore.Helpers.getStringsFromData(props, axis);
 	
-	    var allStrings = (0, _uniq3.default)([].concat(_toConsumableArray(stringsFromAxes), _toConsumableArray(stringsFromCategories), _toConsumableArray(stringsFromData)));
-	    return allStrings.length === 0 ? null : allStrings.reduce(function (memo, string, index) {
-	      memo[string] = index + 1;
-	      return memo;
-	    }, {});
-	  },
-	  getStringsFromAxes: function getStringsFromAxes(props, axis) {
-	    if (!props.tickValues || !Array.isArray(props.tickValues) && !props.tickValues[axis]) {
-	      return [];
-	    }
-	    var tickValueArray = props.tickValues[axis] || props.tickValues;
-	    return tickValueArray.filter(function (val) {
-	      return typeof val === "string";
-	    });
-	  },
-	  getStringsFromCategories: function getStringsFromCategories(props, axis) {
-	    if (!props.categories) {
-	      return [];
-	    }
-	    var categories = this.getCategories(props, axis);
-	    var categoryStrings = categories && categories.filter(function (val) {
-	      return typeof val === "string";
-	    });
-	    return categoryStrings ? _victoryCore.Collection.removeUndefined(categoryStrings) : [];
-	  },
-	  getCategories: function getCategories(props, axis) {
-	    return props.categories && !Array.isArray(props.categories) ? props.categories[axis] : props.categories;
-	  },
-	  getData: function getData(props) {
-	    if (props.data) {
-	      return this.formatData(props.data, props);
-	    } else {
-	      var generatedData = (props.x || props.y) && this.generateData(props);
-	      return this.formatData(generatedData, props);
-	    }
-	  },
-	  generateData: function generateData(props) {
-	    // create an array of values evenly spaced across the x domain that include domain min/max
-	    var domain = props.domain ? props.domain.x || props.domain : _scale2.default.getBaseScale(props, "x").domain();
-	    var samples = props.samples || 1;
-	    var max = Math.max.apply(Math, _toConsumableArray(domain));
-	    var values = Array.apply(undefined, _toConsumableArray(Array(samples))).map(function (val, index) {
-	      var v = max / samples * index + Math.min.apply(Math, _toConsumableArray(domain));
-	      return { x: v, y: v };
-	    });
-	    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
-	  },
-	  formatData: function formatData(dataset, props, stringMap) {
-	    if (!dataset) {
-	      return [];
-	    }
-	    stringMap = stringMap || {
-	      x: this.createStringMap(props, "x"),
-	      y: this.createStringMap(props, "y")
-	    };
-	    var accessor = {
-	      x: _victoryCore.Helpers.createAccessor(props.x),
-	      y: _victoryCore.Helpers.createAccessor(props.y)
-	    };
-	    return this.cleanData(dataset, props).map(function (datum) {
-	      var x = accessor.x(datum);
-	      var y = accessor.y(datum);
-	      return Object.assign({}, datum, { x: x, y: y },
-	      // map string data to numeric values, and add names
-	      typeof x === "string" ? { x: stringMap.x[x], xName: x } : {}, typeof y === "string" ? { y: stringMap.y[y], yName: y } : {});
-	    });
-	  },
-	  cleanData: function cleanData(dataset, props) {
-	    // Some scale types break when certain data is supplies. This method will
-	    // remove data points that break scales. So far this method only removes
-	    // zeroes for log scales
-	    // TODO other cases?
-	    var scaleType = {
-	      x: _scale2.default.getScaleType(props, "x"),
-	      y: _scale2.default.getScaleType(props, "y")
-	    };
-	    var accessor = {
-	      x: _victoryCore.Helpers.createAccessor(props.x),
-	      y: _victoryCore.Helpers.createAccessor(props.y)
-	    };
-	    if (scaleType.x !== "log" && scaleType.y !== "log") {
-	      return dataset;
-	    }
-	    var rules = function rules(datum, axis) {
-	      return scaleType[axis] === "log" ? accessor[axis](datum) !== 0 : true;
-	    };
-	    return dataset.filter(function (datum) {
-	      return rules(datum, "x") && rules(datum, "y");
-	    });
-	  }
-	};
+	getCategories:function getCategories(props,axis){
+	return props.categories&&!Array.isArray(props.categories)?
+	props.categories[axis]:props.categories;},
+	
+	
+	getData:function getData(props){
+	if(props.data){
+	return this.formatData(props.data,props);}else
+	{
+	var generatedData=(props.x||props.y)&&this.generateData(props);
+	return this.formatData(generatedData,props);}},
+	
+	
+	
+	generateData:function generateData(props){
+	
+	var domain=props.domain?props.domain.x||props.domain:
+	_scale2.default.getBaseScale(props,"x").domain();
+	var samples=props.samples||1;
+	var max=Math.max.apply(Math,_toConsumableArray(domain));
+	var values=Array.apply(undefined,_toConsumableArray(Array(samples))).map(function(val,index){
+	var v=max/samples*index+Math.min.apply(Math,_toConsumableArray(domain));
+	return{x:v,y:v};});
+	
+	return values[samples-1].x===max?values:values.concat([{x:max,y:max}]);},
+	
+	
+	formatData:function formatData(dataset,props,stringMap){
+	if(!dataset){
+	return[];}
+	
+	stringMap=stringMap||{
+	x:this.createStringMap(props,"x"),
+	y:this.createStringMap(props,"y")};
+	
+	var accessor={
+	x:_victoryCore.Helpers.createAccessor(props.x),
+	y:_victoryCore.Helpers.createAccessor(props.y)};
+	
+	return this.cleanData(dataset,props).map(function(datum){
+	var x=accessor.x(datum);
+	var y=accessor.y(datum);
+	return _extends(
+	{},
+	datum,
+	{x:x,y:y},
+	
+	typeof x==="string"?{x:stringMap.x[x],xName:x}:{},
+	typeof y==="string"?{y:stringMap.y[y],yName:y}:{});});},
+	
+	
+	
+	
+	cleanData:function cleanData(dataset,props){
+	
+	
+	
+	
+	var scaleType={
+	x:_scale2.default.getScaleType(props,"x"),
+	y:_scale2.default.getScaleType(props,"y")};
+	
+	var accessor={
+	x:_victoryCore.Helpers.createAccessor(props.x),
+	y:_victoryCore.Helpers.createAccessor(props.y)};
+	
+	if(scaleType.x!=="log"&&scaleType.y!=="log"){
+	return dataset;}
+	
+	var rules=function rules(datum,axis){
+	return scaleType[axis]==="log"?accessor[axis](datum)!==0:true;};
+	
+	return dataset.filter(function(datum){
+	return rules(datum,"x")&&rules(datum,"y");});}};
 
 /***/ },
-/* 230 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseUniq = __webpack_require__(231);
+	var baseUniq = __webpack_require__(167);
 	
 	/**
 	 * Creates a duplicate-free version of an array, using
@@ -17512,15 +14674,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 231 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SetCache = __webpack_require__(189),
-	    arrayIncludes = __webpack_require__(199),
-	    arrayIncludesWith = __webpack_require__(202),
-	    cacheHas = __webpack_require__(205),
-	    createSet = __webpack_require__(232),
-	    setToArray = __webpack_require__(233);
+	var SetCache = __webpack_require__(138),
+	    arrayIncludes = __webpack_require__(142),
+	    arrayIncludesWith = __webpack_require__(145),
+	    cacheHas = __webpack_require__(147),
+	    createSet = __webpack_require__(168),
+	    setToArray = __webpack_require__(169);
 	
 	/** Used as the size to enable large array optimizations. */
 	var LARGE_ARRAY_SIZE = 200;
@@ -17590,7 +14752,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 232 */
+/* 168 */
 /***/ function(module, exports) {
 
 	/**
@@ -17613,7 +14775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 233 */
+/* 169 */
 /***/ function(module, exports) {
 
 	/**
@@ -17637,196 +14799,155 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 234 */
+/* 170 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _values2=__webpack_require__(171);var _values3=_interopRequireDefault(_values2);var _sortBy2=__webpack_require__(173);var _sortBy3=_interopRequireDefault(_sortBy2);var _invert2=__webpack_require__(201);var _invert3=_interopRequireDefault(_invert2);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _wrapper=__webpack_require__(208);var _wrapper2=_interopRequireDefault(_wrapper);
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryCore=__webpack_require__(29);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var identity=function identity(x){return x;};exports.default=
 	
-	var _values2 = __webpack_require__(235);
+	{
+	getChildComponents:function getChildComponents(props,defaultAxes){
+	var childComponents=_react2.default.Children.toArray(props.children);
+	if(childComponents.length===0){
+	return[defaultAxes.independent,defaultAxes.dependent];}
 	
-	var _values3 = _interopRequireDefault(_values2);
 	
-	var _sortBy2 = __webpack_require__(238);
+	var axisComponents={
+	dependent:_axis2.default.getAxisComponentsWithParent(childComponents,"dependent"),
+	independent:_axis2.default.getAxisComponentsWithParent(childComponents,"independent")};
 	
-	var _sortBy3 = _interopRequireDefault(_sortBy2);
 	
-	var _invert2 = __webpack_require__(288);
+	if(axisComponents.dependent.length===0&&axisComponents.independent.length===0){
+	return[defaultAxes.independent,defaultAxes.dependent].concat(childComponents);}
 	
-	var _invert3 = _interopRequireDefault(_invert2);
+	if(axisComponents.dependent.length>1||axisComponents.independent.length>1){
+	var msg="Only one VictoryAxis component of each axis type is allowed when "+"using the VictoryChart wrapper. Only the first axis will be used. Please compose "+"multi-axis charts manually";
 	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 	
-	var _axis = __webpack_require__(226);
+	_victoryCore.Log.warn(msg);
+	var dataComponents=this.getDataComponents(childComponents);
+	return _victoryCore.Collection.removeUndefined(
+	[axisComponents.dependent[0],axisComponents.independent[0]].concat(dataComponents));}
 	
-	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _domain = __webpack_require__(228);
+	return childComponents;},
 	
-	var _domain2 = _interopRequireDefault(_domain);
 	
-	var _wrapper = __webpack_require__(295);
+	getDataComponents:function getDataComponents(childComponents){
+	var findDataComponents=function findDataComponents(children){
+	return children.reduce(function(memo,child){
+	if(child.type&&child.type.role==="axis"){
+	return memo;}else
+	if(child.props&&child.props.children){
+	return memo.concat(findDataComponents(_react2.default.Children.toArray(child.props.children)));}
 	
-	var _wrapper2 = _interopRequireDefault(_wrapper);
+	return memo.concat(child);},
+	[]);};
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
+	return findDataComponents(childComponents);},
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	getDomain:function getDomain(props,axis,childComponents){
+	childComponents=childComponents||_react2.default.Children.toArray(props.children);
+	var domain=_wrapper2.default.getDomain(props,axis,childComponents);
+	var orientations=_axis2.default.getAxisOrientations(childComponents);
+	return _domain2.default.orientDomain(domain,orientations,axis);},
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	var identity = function identity(x) {
-	  return x;
-	};
+	getAxisOffset:function getAxisOffset(props,calculatedProps){var
+	axisComponents=calculatedProps.axisComponents;var domain=calculatedProps.domain;var scale=calculatedProps.scale;
 	
-	exports.default = {
-	  getChildComponents: function getChildComponents(props, defaultAxes) {
-	    var childComponents = _react2.default.Children.toArray(props.children);
-	    if (childComponents.length === 0) {
-	      return [defaultAxes.independent, defaultAxes.dependent];
-	    }
+	var origin={
+	x:Math.max(Math.min.apply(Math,_toConsumableArray(domain.x)),0),
+	y:Math.max(Math.min.apply(Math,_toConsumableArray(domain.y)),0)};
 	
-	    var axisComponents = {
-	      dependent: _axis2.default.getAxisComponentsWithParent(childComponents, "dependent"),
-	      independent: _axis2.default.getAxisComponentsWithParent(childComponents, "independent")
-	    };
+	var axisOrientations={
+	x:_axis2.default.getOrientation(axisComponents.x,"x"),
+	y:_axis2.default.getOrientation(axisComponents.y,"y")};
 	
-	    if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
-	      return [defaultAxes.independent, defaultAxes.dependent].concat(childComponents);
-	    }
-	    if (axisComponents.dependent.length > 1 || axisComponents.independent.length > 1) {
-	      var msg = "Only one VictoryAxis component of each axis type is allowed when " + "using the VictoryChart wrapper. Only the first axis will be used. Please compose " + "multi-axis charts manually";
-	      _victoryCore.Log.warn(msg);
-	      var dataComponents = this.getDataComponents(childComponents);
-	      return _victoryCore.Collection.removeUndefined([axisComponents.dependent[0], axisComponents.independent[0]].concat(dataComponents));
-	    }
-	    return childComponents;
-	  },
-	  getDataComponents: function getDataComponents(childComponents) {
-	    var findDataComponents = function findDataComponents(children) {
-	      return children.reduce(function (memo, child) {
-	        if (child.type && child.type.role === "axis") {
-	          return memo;
-	        } else if (child.props && child.props.children) {
-	          return memo.concat(findDataComponents(_react2.default.Children.toArray(child.props.children)));
-	        }
-	        return memo.concat(child);
-	      }, []);
-	    };
+	var orientationOffset={
+	x:axisOrientations.y==="left"?0:props.width,
+	y:axisOrientations.x==="bottom"?props.height:0};
 	
-	    return findDataComponents(childComponents);
-	  },
-	  getDomain: function getDomain(props, axis, childComponents) {
-	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    var domain = _wrapper2.default.getDomain(props, axis, childComponents);
-	    var orientations = _axis2.default.getAxisOrientations(childComponents);
-	    return _domain2.default.orientDomain(domain, orientations, axis);
-	  },
-	  getAxisOffset: function getAxisOffset(props, calculatedProps) {
-	    var axisComponents = calculatedProps.axisComponents;
-	    var domain = calculatedProps.domain;
-	    var scale = calculatedProps.scale;
-	    // make the axes line up, and cross when appropriate
+	var calculatedOffset={
+	x:Math.abs(orientationOffset.x-scale.x.call(null,origin.x)),
+	y:Math.abs(orientationOffset.y-scale.y.call(null,origin.y))};
 	
-	    var origin = {
-	      x: Math.max(Math.min.apply(Math, _toConsumableArray(domain.x)), 0),
-	      y: Math.max(Math.min.apply(Math, _toConsumableArray(domain.y)), 0)
-	    };
-	    var axisOrientations = {
-	      x: _axis2.default.getOrientation(axisComponents.x, "x"),
-	      y: _axis2.default.getOrientation(axisComponents.y, "y")
-	    };
-	    var orientationOffset = {
-	      x: axisOrientations.y === "left" ? 0 : props.width,
-	      y: axisOrientations.x === "bottom" ? props.height : 0
-	    };
-	    var calculatedOffset = {
-	      x: Math.abs(orientationOffset.x - scale.x.call(null, origin.x)),
-	      y: Math.abs(orientationOffset.y - scale.y.call(null, origin.y))
-	    };
-	    return {
-	      x: axisComponents.x && axisComponents.x.offsetX || calculatedOffset.x,
-	      y: axisComponents.y && axisComponents.y.offsetY || calculatedOffset.y
-	    };
-	  },
-	  getTicksFromData: function getTicksFromData(calculatedProps, axis) {
-	    var currentAxis = _axis2.default.getCurrentAxis(axis, calculatedProps.horizontal);
-	    var stringMap = calculatedProps.stringMap[currentAxis];
-	    // if tickValues are defined for an axis component use them
-	    var categoryArray = calculatedProps.categories[currentAxis];
-	    var ticksFromCategories = categoryArray && _victoryCore.Collection.containsOnlyStrings(categoryArray) ? categoryArray.map(function (tick) {
-	      return stringMap[tick];
-	    }) : categoryArray;
-	    var ticksFromStringMap = stringMap && (0, _values3.default)(stringMap);
-	    // when ticks is undefined, axis will determine it's own ticks
-	    return ticksFromCategories && ticksFromCategories.length !== 0 ? ticksFromCategories : ticksFromStringMap;
-	  },
-	  getTicksFromAxis: function getTicksFromAxis(calculatedProps, axis, component) {
-	    var tickValues = component.props.tickValues;
-	    if (!tickValues) {
-	      return undefined;
-	    }
-	    var currentAxis = _axis2.default.getCurrentAxis(axis, calculatedProps.horizontal);
-	    var stringMap = calculatedProps.stringMap[currentAxis];
-	    return _victoryCore.Collection.containsOnlyStrings(tickValues) && stringMap ? tickValues.map(function (tick) {
-	      return stringMap[tick];
-	    }) : tickValues;
-	  },
-	  getTicks: function getTicks() {
-	    return this.getTicksFromAxis.apply(this, arguments) || this.getTicksFromData.apply(this, arguments);
-	  },
-	  getTickFormat: function getTickFormat(component, axis, calculatedProps) {
-	    var currentAxis = _axis2.default.getCurrentAxis(axis, calculatedProps.horizontal);
-	    var stringMap = calculatedProps.stringMap[currentAxis];
-	    var tickValues = component.props.tickValues;
-	    var useIdentity = tickValues && !_victoryCore.Collection.containsStrings(tickValues) && !_victoryCore.Collection.containsDates(tickValues);
-	    if (useIdentity) {
-	      return identity;
-	    } else if (stringMap !== null) {
-	      var _ret = function () {
-	        var tickValueArray = (0, _sortBy3.default)((0, _values3.default)(stringMap), function (n) {
-	          return n;
-	        });
-	        var invertedStringMap = (0, _invert3.default)(stringMap);
-	        var dataNames = tickValueArray.map(function (tick) {
-	          return invertedStringMap[tick];
-	        });
-	        // string ticks should have one tick of padding at the beginning
-	        var dataTicks = [""].concat(_toConsumableArray(dataNames), [""]);
-	        return {
-	          v: function v(x) {
-	            return dataTicks[x];
-	          }
-	        };
-	      }();
+	return{
+	x:axisComponents.x&&axisComponents.x.offsetX||calculatedOffset.x,
+	y:axisComponents.y&&axisComponents.y.offsetY||calculatedOffset.y};},
 	
-	      if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-	    } else {
-	      return calculatedProps.scale[currentAxis].tickFormat() || identity;
-	    }
-	  },
-	  createStringMap: function createStringMap(props, axis, childComponents) {
-	    var allStrings = _wrapper2.default.getStringsFromChildren(props, axis, childComponents);
-	    return allStrings.length === 0 ? null : allStrings.reduce(function (memo, string, index) {
-	      memo[string] = index + 1;
-	      return memo;
-	    }, {});
-	  }
-	};
+	
+	
+	getTicksFromData:function getTicksFromData(calculatedProps,axis){
+	var currentAxis=_axis2.default.getCurrentAxis(axis,calculatedProps.horizontal);
+	var stringMap=calculatedProps.stringMap[currentAxis];
+	
+	var categoryArray=calculatedProps.categories[currentAxis];
+	var ticksFromCategories=categoryArray&&_victoryCore.Collection.containsOnlyStrings(categoryArray)?
+	categoryArray.map(function(tick){return stringMap[tick];}):categoryArray;
+	var ticksFromStringMap=stringMap&&(0,_values3.default)(stringMap);
+	
+	return ticksFromCategories&&ticksFromCategories.length!==0?
+	ticksFromCategories:ticksFromStringMap;},
+	
+	
+	getTicksFromAxis:function getTicksFromAxis(calculatedProps,axis,component){
+	var tickValues=component.props.tickValues;
+	if(!tickValues){
+	return undefined;}
+	
+	var currentAxis=_axis2.default.getCurrentAxis(axis,calculatedProps.horizontal);
+	var stringMap=calculatedProps.stringMap[currentAxis];
+	return _victoryCore.Collection.containsOnlyStrings(tickValues)&&stringMap?
+	tickValues.map(function(tick){return stringMap[tick];}):tickValues;},
+	
+	
+	getTicks:function getTicks(){
+	return this.getTicksFromAxis.apply(this,arguments)||this.getTicksFromData.apply(this,arguments);},
+	
+	
+	getTickFormat:function getTickFormat(component,axis,calculatedProps){
+	var currentAxis=_axis2.default.getCurrentAxis(axis,calculatedProps.horizontal);
+	var stringMap=calculatedProps.stringMap[currentAxis];
+	var tickValues=component.props.tickValues;
+	var useIdentity=tickValues&&!_victoryCore.Collection.containsStrings(tickValues)&&
+	!_victoryCore.Collection.containsDates(tickValues);
+	if(useIdentity){
+	return identity;}else
+	if(stringMap!==null){var _ret=function(){
+	var tickValueArray=(0,_sortBy3.default)((0,_values3.default)(stringMap),function(n){return n;});
+	var invertedStringMap=(0,_invert3.default)(stringMap);
+	var dataNames=tickValueArray.map(function(tick){return invertedStringMap[tick];});
+	
+	var dataTicks=[""].concat(_toConsumableArray(dataNames),[""]);
+	return{v:function v(x){return dataTicks[x];}};}();if(typeof _ret==="object")return _ret.v;}else
+	{
+	return calculatedProps.scale[currentAxis].tickFormat()||identity;}},
+	
+	
+	
+	createStringMap:function createStringMap(props,axis,childComponents){
+	var allStrings=_wrapper2.default.getStringsFromChildren(props,axis,childComponents);
+	return allStrings.length===0?null:
+	allStrings.reduce(function(memo,string,index){
+	memo[string]=index+1;
+	return memo;},
+	{});}};
 
 /***/ },
-/* 235 */
+/* 171 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseValues = __webpack_require__(236),
-	    keys = __webpack_require__(237);
+	var baseValues = __webpack_require__(172),
+	    keys = __webpack_require__(108);
 	
 	/**
 	 * Creates an array of the own enumerable string keyed property values of `object`.
@@ -17862,10 +14983,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 236 */
+/* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayMap = __webpack_require__(203);
+	var arrayMap = __webpack_require__(124);
 	
 	/**
 	 * The base implementation of `_.values` and `_.valuesIn` which creates an
@@ -17887,35 +15008,13 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 237 */
-/***/ function(module, exports) {
-
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeKeys = Object.keys;
-	
-	/**
-	 * The base implementation of `_.keys` which doesn't skip the constructor
-	 * property of prototypes or treat sparse arrays as dense.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @returns {Array} Returns the array of property names.
-	 */
-	function baseKeys(object) {
-	  return nativeKeys(Object(object));
-	}
-	
-	module.exports = baseKeys;
-
-
-/***/ },
-/* 238 */
+/* 173 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFlatten = __webpack_require__(217),
-	    baseOrderBy = __webpack_require__(239),
+	var baseFlatten = __webpack_require__(125),
+	    baseOrderBy = __webpack_require__(174),
 	    isArray = __webpack_require__(22),
-	    isFlattenableIteratee = __webpack_require__(287),
+	    isFlattenableIteratee = __webpack_require__(200),
 	    isIterateeCall = __webpack_require__(10),
 	    rest = __webpack_require__(11);
 	
@@ -17974,16 +15073,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 239 */
+/* 174 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayMap = __webpack_require__(203),
-	    baseIteratee = __webpack_require__(240),
-	    baseMap = __webpack_require__(283),
-	    baseSortBy = __webpack_require__(284),
-	    baseUnary = __webpack_require__(204),
-	    compareMultiple = __webpack_require__(285),
-	    identity = __webpack_require__(227);
+	var arrayMap = __webpack_require__(124),
+	    baseIteratee = __webpack_require__(175),
+	    baseMap = __webpack_require__(196),
+	    baseSortBy = __webpack_require__(197),
+	    baseUnary = __webpack_require__(146),
+	    compareMultiple = __webpack_require__(198),
+	    identity = __webpack_require__(120);
 	
 	/**
 	 * The base implementation of `_.orderBy` without param guards.
@@ -18014,14 +15113,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 240 */
+/* 175 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseMatches = __webpack_require__(241),
-	    baseMatchesProperty = __webpack_require__(268),
-	    identity = __webpack_require__(227),
+	var baseMatches = __webpack_require__(176),
+	    baseMatchesProperty = __webpack_require__(191),
+	    identity = __webpack_require__(120),
 	    isArray = __webpack_require__(22),
-	    property = __webpack_require__(281);
+	    property = __webpack_require__(32);
 	
 	/**
 	 * The base implementation of `_.iteratee`.
@@ -18051,12 +15150,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 241 */
+/* 176 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsMatch = __webpack_require__(242),
-	    getMatchData = __webpack_require__(265),
-	    matchesStrictComparable = __webpack_require__(267);
+	var baseIsMatch = __webpack_require__(177),
+	    getMatchData = __webpack_require__(188),
+	    matchesStrictComparable = __webpack_require__(190);
 	
 	/**
 	 * The base implementation of `_.matches` which doesn't clone `source`.
@@ -18079,11 +15178,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 242 */
+/* 177 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Stack = __webpack_require__(243),
-	    baseIsEqual = __webpack_require__(244);
+	var Stack = __webpack_require__(67),
+	    baseIsEqual = __webpack_require__(178);
 	
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -18147,49 +15246,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 243 */
+/* 178 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var listCacheClear = __webpack_require__(191),
-	    listCacheDelete = __webpack_require__(192),
-	    listCacheGet = __webpack_require__(194),
-	    listCacheHas = __webpack_require__(195),
-	    listCacheSet = __webpack_require__(196);
-	
-	/**
-	 * Creates an list cache object.
-	 *
-	 * @private
-	 * @constructor
-	 * @param {Array} [entries] The key-value pairs to cache.
-	 */
-	function ListCache(entries) {
-	  var index = -1,
-	      length = entries ? entries.length : 0;
-	
-	  this.clear();
-	  while (++index < length) {
-	    var entry = entries[index];
-	    this.set(entry[0], entry[1]);
-	  }
-	}
-	
-	// Add methods to `ListCache`.
-	ListCache.prototype.clear = listCacheClear;
-	ListCache.prototype['delete'] = listCacheDelete;
-	ListCache.prototype.get = listCacheGet;
-	ListCache.prototype.has = listCacheHas;
-	ListCache.prototype.set = listCacheSet;
-	
-	module.exports = ListCache;
-
-
-/***/ },
-/* 244 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseIsEqualDeep = __webpack_require__(245),
-	    isObject = __webpack_require__(166),
+	var baseIsEqualDeep = __webpack_require__(179),
+	    isObject = __webpack_require__(49),
 	    isObjectLike = __webpack_require__(25);
 	
 	/**
@@ -18221,17 +15282,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 245 */
+/* 179 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Stack = __webpack_require__(243),
-	    equalArrays = __webpack_require__(246),
-	    equalByTag = __webpack_require__(248),
-	    equalObjects = __webpack_require__(252),
-	    getTag = __webpack_require__(255),
+	var Stack = __webpack_require__(67),
+	    equalArrays = __webpack_require__(180),
+	    equalByTag = __webpack_require__(182),
+	    equalObjects = __webpack_require__(186),
+	    getTag = __webpack_require__(97),
 	    isArray = __webpack_require__(22),
-	    isHostObject = __webpack_require__(263),
-	    isTypedArray = __webpack_require__(264);
+	    isHostObject = __webpack_require__(84),
+	    isTypedArray = __webpack_require__(85);
 	
 	/** Used to compose bitmasks for comparison styles. */
 	var PARTIAL_COMPARE_FLAG = 2;
@@ -18309,11 +15370,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 246 */
+/* 180 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var SetCache = __webpack_require__(189),
-	    arraySome = __webpack_require__(247);
+	var SetCache = __webpack_require__(138),
+	    arraySome = __webpack_require__(181);
 	
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -18396,7 +15457,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 247 */
+/* 181 */
 /***/ function(module, exports) {
 
 	/**
@@ -18425,14 +15486,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 248 */
+/* 182 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var Symbol = __webpack_require__(249),
-	    Uint8Array = __webpack_require__(250),
-	    equalArrays = __webpack_require__(246),
-	    mapToArray = __webpack_require__(251),
-	    setToArray = __webpack_require__(233);
+	var Symbol = __webpack_require__(183),
+	    Uint8Array = __webpack_require__(184),
+	    equalArrays = __webpack_require__(180),
+	    mapToArray = __webpack_require__(185),
+	    setToArray = __webpack_require__(169);
 	
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -18545,7 +15606,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 249 */
+/* 183 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(16);
@@ -18557,7 +15618,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 250 */
+/* 184 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var root = __webpack_require__(16);
@@ -18569,7 +15630,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 251 */
+/* 185 */
 /***/ function(module, exports) {
 
 	/**
@@ -18593,11 +15654,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 252 */
+/* 186 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseHas = __webpack_require__(253),
-	    keys = __webpack_require__(237);
+	var baseHas = __webpack_require__(187),
+	    keys = __webpack_require__(108);
 	
 	/** Used to compose bitmasks for comparison styles. */
 	var PARTIAL_COMPARE_FLAG = 2;
@@ -18682,10 +15743,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 253 */
+/* 187 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var getPrototype = __webpack_require__(254);
+	var getPrototype = __webpack_require__(83);
 	
 	/** Used for built-in method references. */
 	var objectProto = Object.prototype;
@@ -18714,331 +15775,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 254 */
-/***/ function(module, exports) {
-
-	/* Built-in method references for those with the same name as other `lodash` methods. */
-	var nativeGetPrototype = Object.getPrototypeOf;
-	
-	/**
-	 * Gets the `[[Prototype]]` of `value`.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {null|Object} Returns the `[[Prototype]]`.
-	 */
-	function getPrototype(value) {
-	  return nativeGetPrototype(Object(value));
-	}
-	
-	module.exports = getPrototype;
-
-
-/***/ },
-/* 255 */
+/* 188 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var DataView = __webpack_require__(256),
-	    Map = __webpack_require__(258),
-	    Promise = __webpack_require__(259),
-	    Set = __webpack_require__(260),
-	    WeakMap = __webpack_require__(261),
-	    toSource = __webpack_require__(262);
-	
-	/** `Object#toString` result references. */
-	var mapTag = '[object Map]',
-	    objectTag = '[object Object]',
-	    promiseTag = '[object Promise]',
-	    setTag = '[object Set]',
-	    weakMapTag = '[object WeakMap]';
-	
-	var dataViewTag = '[object DataView]';
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-	
-	/** Used to detect maps, sets, and weakmaps. */
-	var dataViewCtorString = toSource(DataView),
-	    mapCtorString = toSource(Map),
-	    promiseCtorString = toSource(Promise),
-	    setCtorString = toSource(Set),
-	    weakMapCtorString = toSource(WeakMap);
-	
-	/**
-	 * Gets the `toStringTag` of `value`.
-	 *
-	 * @private
-	 * @param {*} value The value to query.
-	 * @returns {string} Returns the `toStringTag`.
-	 */
-	function getTag(value) {
-	  return objectToString.call(value);
-	}
-	
-	// Fallback for data views, maps, sets, and weak maps in IE 11,
-	// for data views in Edge, and promises in Node.js.
-	if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
-	    (Map && getTag(new Map) != mapTag) ||
-	    (Promise && getTag(Promise.resolve()) != promiseTag) ||
-	    (Set && getTag(new Set) != setTag) ||
-	    (WeakMap && getTag(new WeakMap) != weakMapTag)) {
-	  getTag = function(value) {
-	    var result = objectToString.call(value),
-	        Ctor = result == objectTag ? value.constructor : undefined,
-	        ctorString = Ctor ? toSource(Ctor) : undefined;
-	
-	    if (ctorString) {
-	      switch (ctorString) {
-	        case dataViewCtorString: return dataViewTag;
-	        case mapCtorString: return mapTag;
-	        case promiseCtorString: return promiseTag;
-	        case setCtorString: return setTag;
-	        case weakMapCtorString: return weakMapTag;
-	      }
-	    }
-	    return result;
-	  };
-	}
-	
-	module.exports = getTag;
-
-
-/***/ },
-/* 256 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getNative = __webpack_require__(257),
-	    root = __webpack_require__(16);
-	
-	/* Built-in method references that are verified to be native. */
-	var DataView = getNative(root, 'DataView');
-	
-	module.exports = DataView;
-
-
-/***/ },
-/* 257 */
-/***/ function(module, exports) {
-
-	/**
-	 * Gets the value at `key` of `object`.
-	 *
-	 * @private
-	 * @param {Object} [object] The object to query.
-	 * @param {string} key The key of the property to get.
-	 * @returns {*} Returns the property value.
-	 */
-	function getValue(object, key) {
-	  return object == null ? undefined : object[key];
-	}
-	
-	module.exports = getValue;
-
-
-/***/ },
-/* 258 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getNative = __webpack_require__(257),
-	    root = __webpack_require__(16);
-	
-	/* Built-in method references that are verified to be native. */
-	var Map = getNative(root, 'Map');
-	
-	module.exports = Map;
-
-
-/***/ },
-/* 259 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getNative = __webpack_require__(257),
-	    root = __webpack_require__(16);
-	
-	/* Built-in method references that are verified to be native. */
-	var Promise = getNative(root, 'Promise');
-	
-	module.exports = Promise;
-
-
-/***/ },
-/* 260 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getNative = __webpack_require__(257),
-	    root = __webpack_require__(16);
-	
-	/* Built-in method references that are verified to be native. */
-	var Set = getNative(root, 'Set');
-	
-	module.exports = Set;
-
-
-/***/ },
-/* 261 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var getNative = __webpack_require__(257),
-	    root = __webpack_require__(16);
-	
-	/* Built-in method references that are verified to be native. */
-	var WeakMap = getNative(root, 'WeakMap');
-	
-	module.exports = WeakMap;
-
-
-/***/ },
-/* 262 */
-/***/ function(module, exports) {
-
-	/** Used to resolve the decompiled source of functions. */
-	var funcToString = Function.prototype.toString;
-	
-	/**
-	 * Converts `func` to its source code.
-	 *
-	 * @private
-	 * @param {Function} func The function to process.
-	 * @returns {string} Returns the source code.
-	 */
-	function toSource(func) {
-	  if (func != null) {
-	    try {
-	      return funcToString.call(func);
-	    } catch (e) {}
-	    try {
-	      return (func + '');
-	    } catch (e) {}
-	  }
-	  return '';
-	}
-	
-	module.exports = toSource;
-
-
-/***/ },
-/* 263 */
-/***/ function(module, exports) {
-
-	/**
-	 * A method that returns `false`.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.13.0
-	 * @category Util
-	 * @returns {boolean} Returns `false`.
-	 * @example
-	 *
-	 * _.times(2, _.stubFalse);
-	 * // => [false, false]
-	 */
-	function stubFalse() {
-	  return false;
-	}
-	
-	module.exports = stubFalse;
-
-
-/***/ },
-/* 264 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isLength = __webpack_require__(23),
-	    isObjectLike = __webpack_require__(25);
-	
-	/** `Object#toString` result references. */
-	var argsTag = '[object Arguments]',
-	    arrayTag = '[object Array]',
-	    boolTag = '[object Boolean]',
-	    dateTag = '[object Date]',
-	    errorTag = '[object Error]',
-	    funcTag = '[object Function]',
-	    mapTag = '[object Map]',
-	    numberTag = '[object Number]',
-	    objectTag = '[object Object]',
-	    regexpTag = '[object RegExp]',
-	    setTag = '[object Set]',
-	    stringTag = '[object String]',
-	    weakMapTag = '[object WeakMap]';
-	
-	var arrayBufferTag = '[object ArrayBuffer]',
-	    dataViewTag = '[object DataView]',
-	    float32Tag = '[object Float32Array]',
-	    float64Tag = '[object Float64Array]',
-	    int8Tag = '[object Int8Array]',
-	    int16Tag = '[object Int16Array]',
-	    int32Tag = '[object Int32Array]',
-	    uint8Tag = '[object Uint8Array]',
-	    uint8ClampedTag = '[object Uint8ClampedArray]',
-	    uint16Tag = '[object Uint16Array]',
-	    uint32Tag = '[object Uint32Array]';
-	
-	/** Used to identify `toStringTag` values of typed arrays. */
-	var typedArrayTags = {};
-	typedArrayTags[float32Tag] = typedArrayTags[float64Tag] =
-	typedArrayTags[int8Tag] = typedArrayTags[int16Tag] =
-	typedArrayTags[int32Tag] = typedArrayTags[uint8Tag] =
-	typedArrayTags[uint8ClampedTag] = typedArrayTags[uint16Tag] =
-	typedArrayTags[uint32Tag] = true;
-	typedArrayTags[argsTag] = typedArrayTags[arrayTag] =
-	typedArrayTags[arrayBufferTag] = typedArrayTags[boolTag] =
-	typedArrayTags[dataViewTag] = typedArrayTags[dateTag] =
-	typedArrayTags[errorTag] = typedArrayTags[funcTag] =
-	typedArrayTags[mapTag] = typedArrayTags[numberTag] =
-	typedArrayTags[objectTag] = typedArrayTags[regexpTag] =
-	typedArrayTags[setTag] = typedArrayTags[stringTag] =
-	typedArrayTags[weakMapTag] = false;
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is classified as a typed array.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 3.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isTypedArray(new Uint8Array);
-	 * // => true
-	 *
-	 * _.isTypedArray([]);
-	 * // => false
-	 */
-	function isTypedArray(value) {
-	  return isObjectLike(value) &&
-	    isLength(value.length) && !!typedArrayTags[objectToString.call(value)];
-	}
-	
-	module.exports = isTypedArray;
-
-
-/***/ },
-/* 265 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isStrictComparable = __webpack_require__(266),
-	    keys = __webpack_require__(237);
+	var isStrictComparable = __webpack_require__(189),
+	    keys = __webpack_require__(108);
 	
 	/**
 	 * Gets the property names, values, and compare flags of `object`.
@@ -19064,10 +15805,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 266 */
+/* 189 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isObject = __webpack_require__(166);
+	var isObject = __webpack_require__(49);
 	
 	/**
 	 * Checks if `value` is suitable for strict equality comparisons, i.e. `===`.
@@ -19085,7 +15826,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 267 */
+/* 190 */
 /***/ function(module, exports) {
 
 	/**
@@ -19111,16 +15852,16 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 268 */
+/* 191 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseIsEqual = __webpack_require__(244),
-	    get = __webpack_require__(269),
-	    hasIn = __webpack_require__(278),
-	    isKey = __webpack_require__(275),
-	    isStrictComparable = __webpack_require__(266),
-	    matchesStrictComparable = __webpack_require__(267),
-	    toKey = __webpack_require__(277);
+	var baseIsEqual = __webpack_require__(178),
+	    get = __webpack_require__(192),
+	    hasIn = __webpack_require__(193),
+	    isKey = __webpack_require__(40),
+	    isStrictComparable = __webpack_require__(189),
+	    matchesStrictComparable = __webpack_require__(190),
+	    toKey = __webpack_require__(42);
 	
 	/** Used to compose bitmasks for comparison styles. */
 	var UNORDERED_COMPARE_FLAG = 1,
@@ -19150,10 +15891,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 269 */
+/* 192 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseGet = __webpack_require__(270);
+	var baseGet = __webpack_require__(35);
 	
 	/**
 	 * Gets the value at `path` of `object`. If the resolved value is
@@ -19189,255 +15930,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 270 */
+/* 193 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var castPath = __webpack_require__(271),
-	    isKey = __webpack_require__(275),
-	    toKey = __webpack_require__(277);
-	
-	/**
-	 * The base implementation of `_.get` without support for default values.
-	 *
-	 * @private
-	 * @param {Object} object The object to query.
-	 * @param {Array|string} path The path of the property to get.
-	 * @returns {*} Returns the resolved value.
-	 */
-	function baseGet(object, path) {
-	  path = isKey(path, object) ? [path] : castPath(path);
-	
-	  var index = 0,
-	      length = path.length;
-	
-	  while (object != null && index < length) {
-	    object = object[toKey(path[index++])];
-	  }
-	  return (index && index == length) ? object : undefined;
-	}
-	
-	module.exports = baseGet;
-
-
-/***/ },
-/* 271 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isArray = __webpack_require__(22),
-	    stringToPath = __webpack_require__(272);
-	
-	/**
-	 * Casts `value` to a path array if it's not one.
-	 *
-	 * @private
-	 * @param {*} value The value to inspect.
-	 * @returns {Array} Returns the cast property path array.
-	 */
-	function castPath(value) {
-	  return isArray(value) ? value : stringToPath(value);
-	}
-	
-	module.exports = castPath;
-
-
-/***/ },
-/* 272 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var memoize = __webpack_require__(273),
-	    toString = __webpack_require__(274);
-	
-	/** Used to match property names within property paths. */
-	var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]|(?=(\.|\[\])(?:\4|$))/g;
-	
-	/** Used to match backslashes in property paths. */
-	var reEscapeChar = /\\(\\)?/g;
-	
-	/**
-	 * Converts `string` to a property path array.
-	 *
-	 * @private
-	 * @param {string} string The string to convert.
-	 * @returns {Array} Returns the property path array.
-	 */
-	var stringToPath = memoize(function(string) {
-	  var result = [];
-	  toString(string).replace(rePropName, function(match, number, quote, string) {
-	    result.push(quote ? string.replace(reEscapeChar, '$1') : (number || match));
-	  });
-	  return result;
-	});
-	
-	module.exports = stringToPath;
-
-
-/***/ },
-/* 273 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 274 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 275 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isArray = __webpack_require__(22),
-	    isSymbol = __webpack_require__(276);
-	
-	/** Used to match property names within property paths. */
-	var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/,
-	    reIsPlainProp = /^\w*$/;
-	
-	/**
-	 * Checks if `value` is a property name and not a property path.
-	 *
-	 * @private
-	 * @param {*} value The value to check.
-	 * @param {Object} [object] The object to query keys on.
-	 * @returns {boolean} Returns `true` if `value` is a property name, else `false`.
-	 */
-	function isKey(value, object) {
-	  if (isArray(value)) {
-	    return false;
-	  }
-	  var type = typeof value;
-	  if (type == 'number' || type == 'symbol' || type == 'boolean' ||
-	      value == null || isSymbol(value)) {
-	    return true;
-	  }
-	  return reIsPlainProp.test(value) || !reIsDeepProp.test(value) ||
-	    (object != null && value in Object(object));
-	}
-	
-	module.exports = isKey;
-
-
-/***/ },
-/* 276 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var isObjectLike = __webpack_require__(25);
-	
-	/** `Object#toString` result references. */
-	var symbolTag = '[object Symbol]';
-	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
-	
-	/**
-	 * Used to resolve the
-	 * [`toStringTag`](http://ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring)
-	 * of values.
-	 */
-	var objectToString = objectProto.toString;
-	
-	/**
-	 * Checks if `value` is classified as a `Symbol` primitive or object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 4.0.0
-	 * @category Lang
-	 * @param {*} value The value to check.
-	 * @returns {boolean} Returns `true` if `value` is correctly classified,
-	 *  else `false`.
-	 * @example
-	 *
-	 * _.isSymbol(Symbol.iterator);
-	 * // => true
-	 *
-	 * _.isSymbol('abc');
-	 * // => false
-	 */
-	function isSymbol(value) {
-	  return typeof value == 'symbol' ||
-	    (isObjectLike(value) && objectToString.call(value) == symbolTag);
-	}
-	
-	module.exports = isSymbol;
-
-
-/***/ },
-/* 277 */
-/***/ function(module, exports) {
-
-	/**
-	 * This method returns the first argument given to it.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Util
-	 * @param {*} value Any value.
-	 * @returns {*} Returns `value`.
-	 * @example
-	 *
-	 * var object = { 'user': 'fred' };
-	 *
-	 * console.log(_.identity(object) === object);
-	 * // => true
-	 */
-	function identity(value) {
-	  return value;
-	}
-	
-	module.exports = identity;
-
-
-/***/ },
-/* 278 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseHasIn = __webpack_require__(279),
-	    hasPath = __webpack_require__(280);
+	var baseHasIn = __webpack_require__(194),
+	    hasPath = __webpack_require__(195);
 	
 	/**
 	 * Checks if `path` is a direct or inherited property of `object`.
@@ -19473,7 +15970,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 279 */
+/* 194 */
 /***/ function(module, exports) {
 
 	/**
@@ -19492,17 +15989,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 280 */
+/* 195 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var castPath = __webpack_require__(271),
+	var castPath = __webpack_require__(36),
 	    isArguments = __webpack_require__(21),
 	    isArray = __webpack_require__(22),
 	    isIndex = __webpack_require__(26),
-	    isKey = __webpack_require__(275),
+	    isKey = __webpack_require__(40),
 	    isLength = __webpack_require__(23),
 	    isString = __webpack_require__(24),
-	    toKey = __webpack_require__(277);
+	    toKey = __webpack_require__(42);
 	
 	/**
 	 * Checks if `path` exists on `object`.
@@ -19539,67 +16036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 281 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseProperty = __webpack_require__(209),
-	    basePropertyDeep = __webpack_require__(282),
-	    isKey = __webpack_require__(275),
-	    toKey = __webpack_require__(277);
-	
-	/**
-	 * Creates a function that returns the value at `path` of a given object.
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 2.4.0
-	 * @category Util
-	 * @param {Array|string} path The path of the property to get.
-	 * @returns {Function} Returns the new accessor function.
-	 * @example
-	 *
-	 * var objects = [
-	 *   { 'a': { 'b': 2 } },
-	 *   { 'a': { 'b': 1 } }
-	 * ];
-	 *
-	 * _.map(objects, _.property('a.b'));
-	 * // => [2, 1]
-	 *
-	 * _.map(_.sortBy(objects, _.property(['a', 'b'])), 'a.b');
-	 * // => [1, 2]
-	 */
-	function property(path) {
-	  return isKey(path) ? baseProperty(toKey(path)) : basePropertyDeep(path);
-	}
-	
-	module.exports = property;
-
-
-/***/ },
-/* 282 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseGet = __webpack_require__(270);
-	
-	/**
-	 * A specialized version of `baseProperty` which supports deep paths.
-	 *
-	 * @private
-	 * @param {Array|string} path The path of the property to get.
-	 * @returns {Function} Returns the new accessor function.
-	 */
-	function basePropertyDeep(path) {
-	  return function(object) {
-	    return baseGet(object, path);
-	  };
-	}
-	
-	module.exports = basePropertyDeep;
-
-
-/***/ },
-/* 283 */
+/* 196 */
 /***/ function(module, exports) {
 
 	/**
@@ -19626,7 +16063,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 284 */
+/* 197 */
 /***/ function(module, exports) {
 
 	/**
@@ -19653,10 +16090,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 285 */
+/* 198 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var compareAscending = __webpack_require__(286);
+	var compareAscending = __webpack_require__(199);
 	
 	/**
 	 * Used by `_.orderBy` to compare multiple properties of a value to another
@@ -19703,10 +16140,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 286 */
+/* 199 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var isSymbol = __webpack_require__(276);
+	var isSymbol = __webpack_require__(41);
 	
 	/**
 	 * Compares values to sort them in ascending order.
@@ -19750,11 +16187,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 287 */
+/* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var isArray = __webpack_require__(22),
-	    isFunction = __webpack_require__(182);
+	    isFunction = __webpack_require__(81);
 	
 	/**
 	 * Checks if `value` is a flattenable array and not a `_.matchesProperty`
@@ -19772,12 +16209,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 288 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var constant = __webpack_require__(289),
-	    createInverter = __webpack_require__(290),
-	    identity = __webpack_require__(227);
+	var constant = __webpack_require__(202),
+	    createInverter = __webpack_require__(203),
+	    identity = __webpack_require__(120);
 	
 	/**
 	 * Creates an object composed of the inverted keys and values of `object`.
@@ -19805,7 +16242,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 289 */
+/* 202 */
 /***/ function(module, exports) {
 
 	/**
@@ -19837,10 +16274,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 290 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseInverter = __webpack_require__(291);
+	var baseInverter = __webpack_require__(204);
 	
 	/**
 	 * Creates a function like `_.invertBy`.
@@ -19860,10 +16297,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 291 */
+/* 204 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseForOwn = __webpack_require__(292);
+	var baseForOwn = __webpack_require__(205);
 	
 	/**
 	 * The base implementation of `_.invert` and `_.invertBy` which inverts
@@ -19887,11 +16324,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 292 */
+/* 205 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var baseFor = __webpack_require__(293),
-	    keys = __webpack_require__(237);
+	var baseFor = __webpack_require__(206),
+	    keys = __webpack_require__(108);
 	
 	/**
 	 * The base implementation of `_.forOwn` without support for iteratee shorthands.
@@ -19909,10 +16346,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 293 */
+/* 206 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var createBaseFor = __webpack_require__(294);
+	var createBaseFor = __webpack_require__(207);
 	
 	/**
 	 * The base implementation of `baseForOwn` which iterates over `object`
@@ -19931,7 +16368,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 294 */
+/* 207 */
 /***/ function(module, exports) {
 
 	/**
@@ -19962,826 +16399,769 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 295 */
+/* 208 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _uniq2 = __webpack_require__(230);
-	
-	var _uniq3 = _interopRequireDefault(_uniq2);
-	
-	var _partialRight2 = __webpack_require__(160);
-	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _flatten2 = __webpack_require__(216);
-	
-	var _flatten3 = _interopRequireDefault(_flatten2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _axis = __webpack_require__(226);
-	
-	var _axis2 = _interopRequireDefault(_axis);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	exports.default = {
-	  getData: function getData(props, childComponents) {
-	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    return this.getDataFromChildren(childComponents);
-	  },
-	  getDomain: function getDomain(props, axis, childComponents) {
-	    var propsDomain = _domain2.default.getDomainFromProps(props, axis);
-	    if (propsDomain) {
-	      return _domain2.default.padDomain(propsDomain, props, axis);
-	    }
-	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    var domain = this.getDomainFromChildren(props, axis, childComponents);
-	    return _domain2.default.padDomain(domain, props, axis);
-	  },
-	  setAnimationState: function setAnimationState(nextProps) {
-	    if (!this.props.animate) {
-	      return;
-	    }
-	    if (this.props.animate.parentState) {
-	      var nodesWillExit = this.props.animate.parentState.nodesWillExit;
-	      var oldProps = nodesWillExit ? this.props : null;
-	      this.setState((0, _defaults3.default)({ oldProps: oldProps }, this.props.animate.parentState));
-	    } else {
-	      var oldChildren = _react2.default.Children.toArray(this.props.children);
-	      var nextChildren = _react2.default.Children.toArray(nextProps.children);
-	
-	      var _Transitions$getIniti = _victoryCore.Transitions.getInitialTransitionState(oldChildren, nextChildren);
-	
-	      var _nodesWillExit = _Transitions$getIniti.nodesWillExit;
-	      var nodesWillEnter = _Transitions$getIniti.nodesWillEnter;
-	      var childrenTransitions = _Transitions$getIniti.childrenTransitions;
-	      var nodesShouldEnter = _Transitions$getIniti.nodesShouldEnter;
+	Object.defineProperty(exports,"__esModule",{value:true});var _uniq2=__webpack_require__(166);var _uniq3=_interopRequireDefault(_uniq2);var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _flatten2=__webpack_require__(154);var _flatten3=_interopRequireDefault(_flatten2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _victoryCore=__webpack_require__(29);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
 	
-	      this.setState({
-	        nodesWillExit: _nodesWillExit,
-	        nodesWillEnter: nodesWillEnter,
-	        childrenTransitions: childrenTransitions,
-	        nodesShouldEnter: nodesShouldEnter,
-	        oldProps: _nodesWillExit ? this.props : null
-	      });
-	    }
-	  },
-	  getAnimationProps: function getAnimationProps(props, child, index) {
-	    var _this = this;
+	{
+	getData:function getData(props,childComponents){
+	childComponents=childComponents||_react2.default.Children.toArray(props.children);
+	return this.getDataFromChildren(childComponents);},
 	
-	    if (!props.animate) {
-	      return child.props.animate;
-	    }
-	    var getFilteredState = function getFilteredState() {
-	      var childrenTransitions = _this.state && _this.state.childrenTransitions;
-	      childrenTransitions = _victoryCore.Collection.isArrayOfArrays(childrenTransitions) ? childrenTransitions[index] : childrenTransitions;
-	      return (0, _defaults3.default)({ childrenTransitions: childrenTransitions }, _this.state);
-	    };
 	
-	    var getTransitions = props.animate && props.animate.getTransitions;
-	    var state = getFilteredState();
-	    var parentState = props.animate && props.animate.parentState || state;
-	    if (!getTransitions) {
-	      var getTransitionProps = _victoryCore.Transitions.getTransitionPropsFactory(props, state, function (newState) {
-	        return _this.setState(newState);
-	      });
-	      getTransitions = (0, _partialRight3.default)(getTransitionProps, index);
-	    }
-	    return (0, _defaults3.default)({ getTransitions: getTransitions, parentState: parentState }, props.animate, child.props.animate);
-	  },
-	  getDomainFromChildren: function getDomainFromChildren(props, axis, childComponents) {
-	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    var horizontalChildren = childComponents.some(function (child) {
-	      return child.props.horizontal;
-	    });
-	    var horizontal = props && props.horizontal || horizontalChildren.length > 0;
-	    var currentAxis = _axis2.default.getCurrentAxis(axis, horizontal);
-	    var getChildDomains = function getChildDomains(children) {
-	      return children.reduce(function (memo, child) {
-	        if (child.type && (0, _isFunction3.default)(child.type.getDomain)) {
-	          var childDomain = child.props && child.type.getDomain(child.props, currentAxis);
-	          return childDomain ? memo.concat(childDomain) : memo;
-	        } else if (child.props && child.props.children) {
-	          return memo.concat(getChildDomains(_react2.default.Children.toArray(child.props.children)));
-	        }
-	        return memo;
-	      }, []);
-	    };
+	getDomain:function getDomain(props,axis,childComponents){
+	var propsDomain=_domain2.default.getDomainFromProps(props,axis);
+	if(propsDomain){
+	return _domain2.default.padDomain(propsDomain,props,axis);}
 	
-	    var childDomains = getChildDomains(childComponents);
-	    return childDomains.length === 0 ? [0, 1] : [Math.min.apply(Math, _toConsumableArray(childDomains)), Math.max.apply(Math, _toConsumableArray(childDomains))];
-	  },
-	  getDataFromChildren: function getDataFromChildren(props, childComponents) {
-	    var getData = function getData(childProps) {
-	      var data = _data2.default.getData(childProps);
-	      return Array.isArray(data) && data.length > 0 ? data : undefined;
-	    };
+	childComponents=childComponents||_react2.default.Children.toArray(props.children);
+	var domain=this.getDomainFromChildren(props,axis,childComponents);
+	return _domain2.default.padDomain(domain,props,axis);},
 	
-	    var getChildData = function getChildData(children) {
-	      return children.map(function (child) {
-	        if (child.type && (0, _isFunction3.default)(child.type.getData)) {
-	          var childData = child.props && child.type.getData(child.props);
-	          return childData;
-	        } else if (child.props && child.props.children) {
-	          return (0, _flatten3.default)(getChildData(_react2.default.Children.toArray(child.props.children)));
-	        }
-	        return getData(child.props);
-	      });
-	    };
-	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    return getChildData(childComponents);
-	  },
-	  getStackedDomain: function getStackedDomain(props, axis) {
-	    var propsDomain = _domain2.default.getDomainFromProps(props, axis);
-	    if (propsDomain) {
-	      return _domain2.default.padDomain(propsDomain, props, axis);
-	    }
-	    var horizontal = props.horizontal;
 	
-	    var ensureZero = function ensureZero(domain) {
-	      var isDependent = axis === "y" && !horizontal || axis === "x" && horizontal;
-	      return isDependent ? [Math.min.apply(Math, _toConsumableArray(domain).concat([0])), Math.max.apply(Math, _toConsumableArray(domain).concat([0]))] : domain;
-	    };
-	    var datasets = this.getDataFromChildren(props);
-	    var dataDomain = ensureZero(_domain2.default.getDomainFromGroupedData(props, axis, datasets));
-	    return _domain2.default.padDomain(dataDomain, props, axis);
-	  },
-	  getColor: function getColor(calculatedProps, index) {
-	    // check for styles first
-	    var style = calculatedProps.style;
-	    var colorScale = calculatedProps.colorScale;
+	setAnimationState:function setAnimationState(nextProps){
+	if(!this.props.animate){
+	return;}
 	
-	    if (style && style.data && style.data.fill) {
-	      return style.data.fill;
-	    }
-	    var colors = Array.isArray(colorScale) ? colorScale : _victoryCore.Style.getColorScale(colorScale);
-	    return colors[index % colors.length];
-	  },
-	  getChildStyle: function getChildStyle(child, index, calculatedProps) {
-	    var style = calculatedProps.style;
+	if(this.props.animate.parentState){
+	var nodesWillExit=this.props.animate.parentState.nodesWillExit;
+	var oldProps=nodesWillExit?this.props:null;
+	this.setState((0,_defaults3.default)({oldProps:oldProps},this.props.animate.parentState));}else
+	{
+	var oldChildren=_react2.default.Children.toArray(this.props.children);
+	var nextChildren=_react2.default.Children.toArray(nextProps.children);var _Transitions$getIniti=
 	
-	    var role = child.type && child.type.role;
-	    var defaultFill = role === "group-wrapper" || role === "stack-wrapper" ? undefined : this.getColor(calculatedProps, index);
-	    var childStyle = child.props.style || {};
-	    var dataStyle = (0, _defaults3.default)({}, childStyle.data, style.data, { fill: defaultFill });
-	    var labelsStyle = (0, _defaults3.default)({}, childStyle.labels, style.labels);
-	    return {
-	      parent: style.parent,
-	      data: dataStyle,
-	      labels: labelsStyle
-	    };
-	  },
-	  getStringsFromCategories: function getStringsFromCategories(childComponents, axis) {
-	    var stringsFromCategories = function stringsFromCategories(children) {
-	      return children.reduce(function (memo, child) {
-	        if (child.props && child.props.categories) {
-	          return memo.concat(_data2.default.getStringsFromCategories(child.props, axis));
-	        } else if (child.props && child.props.children) {
-	          return memo.concat(stringsFromCategories(_react2.default.Children.toArray(child.props.children)));
-	        }
-	        return memo;
-	      }, []);
-	    };
 	
-	    return stringsFromCategories(childComponents);
-	  },
-	  getStringsFromData: function getStringsFromData(childComponents, axis) {
-	    var stringsFromData = function stringsFromData(children) {
-	      return children.reduce(function (memo, child) {
-	        if (child.props && child.props.data) {
-	          return memo.concat(_victoryCore.Helpers.getStringsFromData(child.props, axis));
-	        } else if (child.type && (0, _isFunction3.default)(child.type.getData)) {
-	          var _ret = function () {
-	            var data = (0, _flatten3.default)(child.type.getData(child.props));
-	            var attr = axis === "x" ? "xName" : "yName";
-	            return {
-	              v: memo.concat(data.reduce(function (prev, datum) {
-	                return datum[attr] ? prev.concat(datum[attr]) : prev;
-	              }, []))
-	            };
-	          }();
 	
-	          if ((typeof _ret === "undefined" ? "undefined" : _typeof(_ret)) === "object") return _ret.v;
-	        } else if (child.props && child.props.children) {
-	          return memo.concat(stringsFromData(_react2.default.Children.toArray(child.props.children)));
-	        }
-	        return memo;
-	      }, []);
-	    };
 	
-	    return stringsFromData(childComponents);
-	  },
-	  getStringsFromChildren: function getStringsFromChildren(props, axis, childComponents) {
-	    childComponents = childComponents || _react2.default.Children.toArray(props.children);
-	    var axisComponent = _axis2.default.getAxisComponent(childComponents, axis);
-	    var axisStrings = axisComponent ? _data2.default.getStringsFromAxes(axisComponent.props, axis) : [];
-	    var categoryStrings = this.getStringsFromCategories(childComponents, axis);
-	    var dataStrings = this.getStringsFromData(childComponents, axis);
-	    return (0, _uniq3.default)((0, _flatten3.default)([].concat(_toConsumableArray(categoryStrings), _toConsumableArray(dataStrings), _toConsumableArray(axisStrings))));
-	  },
-	  getCategories: function getCategories(props, axis) {
-	    var categories = _data2.default.getCategories(props, axis) || this.getStringsFromChildren(props, axis);
-	    return categories.length > 0 ? categories : undefined;
-	  },
-	  getY0: function getY0(datum, index, calculatedProps) {
-	    var datasets = calculatedProps.datasets;
 	
-	    var y = datum.y;
-	    var previousDataSets = datasets.slice(0, index);
-	    var previousPoints = previousDataSets.reduce(function (prev, dataset) {
-	      return prev.concat(dataset.filter(function (previousDatum) {
-	        return datum.x instanceof Date ? previousDatum.x.getTime() === datum.x.getTime() : previousDatum.x === datum.x;
-	      }).map(function (previousDatum) {
-	        return previousDatum.y || 0;
-	      }));
-	    }, []);
-	    return previousPoints.reduce(function (memo, value) {
-	      var sameSign = y < 0 && value < 0 || y >= 0 && value >= 0;
-	      return sameSign ? memo + value : memo;
-	    }, 0);
-	  }
-	};
+	_victoryCore.Transitions.getInitialTransitionState(oldChildren,nextChildren);var _nodesWillExit=_Transitions$getIniti.nodesWillExit;var nodesWillEnter=_Transitions$getIniti.nodesWillEnter;var childrenTransitions=_Transitions$getIniti.childrenTransitions;var nodesShouldEnter=_Transitions$getIniti.nodesShouldEnter;
+	
+	this.setState({
+	nodesWillExit:_nodesWillExit,
+	nodesWillEnter:nodesWillEnter,
+	childrenTransitions:childrenTransitions,
+	nodesShouldEnter:nodesShouldEnter,
+	oldProps:_nodesWillExit?this.props:null});}},
+	
+	
+	
+	
+	getAnimationProps:function getAnimationProps(props,child,index){var _this=this;
+	if(!props.animate){
+	return child.props.animate;}
+	
+	var getFilteredState=function getFilteredState(){
+	var childrenTransitions=_this.state&&_this.state.childrenTransitions;
+	childrenTransitions=_victoryCore.Collection.isArrayOfArrays(childrenTransitions)?
+	childrenTransitions[index]:childrenTransitions;
+	return(0,_defaults3.default)({childrenTransitions:childrenTransitions},_this.state);};
+	
+	
+	var getTransitions=props.animate&&props.animate.getTransitions;
+	var state=getFilteredState();
+	var parentState=props.animate&&props.animate.parentState||state;
+	if(!getTransitions){
+	var getTransitionProps=_victoryCore.Transitions.getTransitionPropsFactory(
+	props,
+	state,
+	function(newState){return _this.setState(newState);});
+	
+	getTransitions=(0,_partialRight3.default)(getTransitionProps,index);}
+	
+	return(0,_defaults3.default)({getTransitions:getTransitions,parentState:parentState},props.animate,child.props.animate);},
+	
+	
+	getDomainFromChildren:function getDomainFromChildren(props,axis,childComponents){
+	childComponents=childComponents||_react2.default.Children.toArray(props.children);
+	var horizontalChildren=childComponents.some(function(child){return child.props.horizontal;});
+	var horizontal=props&&props.horizontal||horizontalChildren.length>0;
+	var currentAxis=_axis2.default.getCurrentAxis(axis,horizontal);
+	var getChildDomains=function getChildDomains(children){
+	return children.reduce(function(memo,child){
+	if(child.type&&(0,_isFunction3.default)(child.type.getDomain)){
+	var childDomain=child.props&&child.type.getDomain(child.props,currentAxis);
+	return childDomain?memo.concat(childDomain):memo;}else
+	if(child.props&&child.props.children){
+	return memo.concat(getChildDomains(_react2.default.Children.toArray(child.props.children)));}
+	
+	return memo;},
+	[]);};
+	
+	
+	var childDomains=getChildDomains(childComponents);
+	return childDomains.length===0?
+	[0,1]:[Math.min.apply(Math,_toConsumableArray(childDomains)),Math.max.apply(Math,_toConsumableArray(childDomains))];},
+	
+	
+	getDataFromChildren:function getDataFromChildren(props,childComponents){
+	var getData=function getData(childProps){
+	var data=_data2.default.getData(childProps);
+	return Array.isArray(data)&&data.length>0?data:undefined;};
+	
+	
+	var getChildData=function getChildData(children){
+	return children.map(function(child){
+	if(child.type&&(0,_isFunction3.default)(child.type.getData)){
+	var childData=child.props&&child.type.getData(child.props);
+	return childData;}else
+	if(child.props&&child.props.children){
+	return(0,_flatten3.default)(getChildData(_react2.default.Children.toArray(child.props.children)));}
+	
+	return getData(child.props);});};
+	
+	
+	childComponents=childComponents||_react2.default.Children.toArray(props.children);
+	return getChildData(childComponents);},
+	
+	
+	getStackedDomain:function getStackedDomain(props,axis){
+	var propsDomain=_domain2.default.getDomainFromProps(props,axis);
+	if(propsDomain){
+	return _domain2.default.padDomain(propsDomain,props,axis);}var
+	
+	horizontal=props.horizontal;
+	var ensureZero=function ensureZero(domain){
+	var isDependent=axis==="y"&&!horizontal||axis==="x"&&horizontal;
+	return isDependent?[Math.min.apply(Math,_toConsumableArray(domain).concat([0])),Math.max.apply(Math,_toConsumableArray(domain).concat([0]))]:domain;};
+	
+	var datasets=this.getDataFromChildren(props);
+	var dataDomain=ensureZero(_domain2.default.getDomainFromGroupedData(props,axis,datasets));
+	return _domain2.default.padDomain(dataDomain,props,axis);},
+	
+	
+	getColor:function getColor(calculatedProps,index){var
+	
+	style=calculatedProps.style;var colorScale=calculatedProps.colorScale;
+	if(style&&style.data&&style.data.fill){
+	return style.data.fill;}
+	
+	var colors=Array.isArray(colorScale)?
+	colorScale:_victoryCore.Style.getColorScale(colorScale);
+	return colors[index%colors.length];},
+	
+	
+	getChildStyle:function getChildStyle(child,index,calculatedProps){var
+	style=calculatedProps.style;
+	var role=child.type&&child.type.role;
+	var defaultFill=role==="group-wrapper"||role==="stack-wrapper"?
+	undefined:this.getColor(calculatedProps,index);
+	var childStyle=child.props.style||{};
+	var dataStyle=(0,_defaults3.default)({},childStyle.data,style.data,{fill:defaultFill});
+	var labelsStyle=(0,_defaults3.default)({},childStyle.labels,style.labels);
+	return{
+	parent:style.parent,
+	data:dataStyle,
+	labels:labelsStyle};},
+	
+	
+	
+	getStringsFromCategories:function getStringsFromCategories(childComponents,axis){
+	var stringsFromCategories=function stringsFromCategories(children){
+	return children.reduce(function(memo,child){
+	if(child.props&&child.props.categories){
+	return memo.concat(_data2.default.getStringsFromCategories(child.props,axis));}else
+	if(child.props&&child.props.children){
+	return memo.concat(stringsFromCategories(
+	_react2.default.Children.toArray(child.props.children)));}
+	
+	
+	return memo;},
+	[]);};
+	
+	
+	return stringsFromCategories(childComponents);},
+	
+	
+	getStringsFromData:function getStringsFromData(childComponents,axis){
+	var stringsFromData=function stringsFromData(children){
+	return children.reduce(function(memo,child){
+	if(child.props&&child.props.data){
+	return memo.concat(_victoryCore.Helpers.getStringsFromData(child.props,axis));}else
+	if(child.type&&(0,_isFunction3.default)(child.type.getData)){var _ret=function(){
+	var data=(0,_flatten3.default)(child.type.getData(child.props));
+	var attr=axis==="x"?"xName":"yName";
+	return{v:memo.concat(data.reduce(function(prev,datum){
+	return datum[attr]?prev.concat(datum[attr]):prev;},
+	[]))};}();if(typeof _ret==="object")return _ret.v;}else
+	if(child.props&&child.props.children){
+	return memo.concat(stringsFromData(_react2.default.Children.toArray(child.props.children)));}
+	
+	return memo;},
+	[]);};
+	
+	
+	return stringsFromData(childComponents);},
+	
+	
+	getStringsFromChildren:function getStringsFromChildren(props,axis,childComponents){
+	childComponents=childComponents||_react2.default.Children.toArray(props.children);
+	var axisComponent=_axis2.default.getAxisComponent(childComponents,axis);
+	var axisStrings=axisComponent?_data2.default.getStringsFromAxes(axisComponent.props,axis):[];
+	var categoryStrings=this.getStringsFromCategories(childComponents,axis);
+	var dataStrings=this.getStringsFromData(childComponents,axis);
+	return(0,_uniq3.default)((0,_flatten3.default)([].concat(_toConsumableArray(categoryStrings),_toConsumableArray(dataStrings),_toConsumableArray(axisStrings))));},
+	
+	
+	getCategories:function getCategories(props,axis){
+	var categories=_data2.default.getCategories(props,axis)||
+	this.getStringsFromChildren(props,axis);
+	return categories.length>0?categories:undefined;},
+	
+	
+	getY0:function getY0(datum,index,calculatedProps){var
+	datasets=calculatedProps.datasets;
+	var y=datum.y;
+	var previousDataSets=datasets.slice(0,index);
+	var previousPoints=previousDataSets.reduce(function(prev,dataset){
+	return prev.concat(dataset.
+	filter(function(previousDatum){return datum.x instanceof Date?
+	previousDatum.x.getTime()===datum.x.getTime():
+	previousDatum.x===datum.x;}).
+	map(function(previousDatum){return previousDatum.y||0;}));},
+	
+	[]);
+	return previousPoints.reduce(function(memo,value){
+	var sameSign=y<0&&value<0||y>=0&&value>=0;
+	return sameSign?memo+value:memo;},
+	0);}};
 
 /***/ },
-/* 296 */
+/* 209 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _partialRight2 = __webpack_require__(160);
-	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _lineSegment = __webpack_require__(297);
-	
-	var _lineSegment2 = _interopRequireDefault(_lineSegment);
-	
-	var _helperMethods = __webpack_require__(300);
-	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var fallbackProps = {
-	  props: {
-	    height: 300,
-	    width: 450
-	  },
-	  style: {
-	    data: {
-	      strokeWidth: 2,
-	      fill: "none",
-	      stroke: "#756f6a",
-	      opacity: 1
-	    },
-	    labels: {
-	      padding: 5,
-	      fontFamily: "Helvetica",
-	      fontSize: 13,
-	      strokeWidth: 0,
-	      stroke: "transparent",
-	      textAnchor: "start"
-	    }
-	  }
-	};
-	
-	var VictoryLine = function (_React$Component) {
-	  _inherits(VictoryLine, _React$Component);
-	
-	  function VictoryLine() {
-	    _classCallCheck(this, VictoryLine);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryLine).call(this));
-	
-	    _this.state = {};
-	    var getScopedEvents = _victoryCore.Events.getScopedEvents.bind(_this);
-	    _this.getEvents = (0, _partialRight3.default)(_victoryCore.Events.getEvents.bind(_this), getScopedEvents);
-	    _this.getEventState = _victoryCore.Events.getEventState.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(VictoryLine, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.setupEvents(this.props);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.setupEvents(newProps);
-	    }
-	  }, {
-	    key: "setupEvents",
-	    value: function setupEvents(props) {
-	      var sharedEvents = props.sharedEvents;
-	
-	      this.baseProps = _helperMethods2.default.getBaseProps(props, fallbackProps);
-	      this.getSharedEventState = sharedEvents && (0, _isFunction3.default)(sharedEvents.getEventState) ? sharedEvents.getEventState : function () {
-	        return undefined;
-	      };
-	    }
-	  }, {
-	    key: "renderData",
-	    value: function renderData(props) {
-	      var _this2 = this;
-	
-	      var dataComponent = props.dataComponent;
-	      var labelComponent = props.labelComponent;
-	
-	      var dataSegments = _helperMethods2.default.getDataSegments(_data2.default.getData(props));
-	      return dataSegments.map(function (data, key) {
-	        var dataEvents = _this2.getEvents(props, "data", "all");
-	        var dataProps = (0, _defaults3.default)({ key: "line-" + key }, _this2.getEventState("all", "data"), _this2.getSharedEventState("all", "data"), { data: data }, dataComponent.props, _this2.baseProps.all.data);
-	        var lineComponent = _react2.default.cloneElement(dataComponent, Object.assign({}, dataProps, { events: _victoryCore.Events.getPartialEvents(dataEvents, "all", dataProps) }));
-	
-	        var labelProps = (0, _defaults3.default)({ key: "line-label-" + key }, _this2.getEventState("all", "labels"), _this2.getSharedEventState("all", "labels"), { data: data }, labelComponent.props, _this2.baseProps.all.labels);
-	        if (labelProps && labelProps.text) {
-	          var labelEvents = _this2.getEvents(props, "labels", "all");
-	          var lineLabel = _react2.default.cloneElement(labelComponent, Object.assign({
-	            events: _victoryCore.Events.getPartialEvents(labelEvents, "all", labelProps)
-	          }, labelProps));
-	          return _react2.default.createElement(
-	            "g",
-	            { key: "line-group-" + key },
-	            lineComponent,
-	            lineLabel
-	          );
-	        }
-	        return lineComponent;
-	      });
-	    }
-	  }, {
-	    key: "renderContainer",
-	    value: function renderContainer(props, group) {
-	      var parentEvents = this.getEvents(props, "parent", "parent");
-	      var parentProps = (0, _defaults3.default)({}, this.getEventState("parent", "parent"), this.getSharedEventState("parent", "parent"), props.containerComponent.props, this.baseProps.parent);
-	      return _react2.default.cloneElement(props.containerComponent, Object.assign({}, parentProps, { events: _victoryCore.Events.getPartialEvents(parentEvents, "parent", parentProps) }), group);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(this.props, fallbackProps);
-	      var animate = modifiedProps.animate;
-	      var style = modifiedProps.style;
-	      var standalone = modifiedProps.standalone;
+	Object.defineProperty(exports,"__esModule",{value:true});var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-line/victory-line.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _lineSegment=__webpack_require__(210);var _lineSegment2=_interopRequireDefault(_lineSegment);
+	var _helperMethods=__webpack_require__(213);var _helperMethods2=_interopRequireDefault(_helperMethods);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _victoryCore=__webpack_require__(29);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
 	
-	      if (animate) {
-	        // Do less work by having `VictoryAnimation` tween only values that
-	        // make sense to tween. In the future, allow customization of animated
-	        // prop whitelist/blacklist?
-	        // TODO: extract into helper
-	        var whitelist = ["data", "domain", "height", "padding", "samples", "style", "width", "x", "y"];
-	        return _react2.default.createElement(
-	          _victoryCore.VictoryTransition,
-	          { animate: animate, animationWhitelist: whitelist },
-	          _react2.default.createElement(VictoryLine, modifiedProps)
-	        );
-	      }
 	
-	      var styleObject = modifiedProps.theme && modifiedProps.theme.line ? modifiedProps.theme.line : fallbackProps.style;
 	
-	      var baseStyles = _victoryCore.Helpers.getStyles(style, styleObject, "auto", "100%");
+	var fallbackProps={
+	props:{
+	height:300,
+	width:450},
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { role: "presentation", style: baseStyles.parent },
-	        this.renderData(modifiedProps)
-	      );
+	style:{
+	data:{
+	strokeWidth:2,
+	fill:"none",
+	stroke:"#756f6a",
+	opacity:1},
 	
-	      return standalone ? this.renderContainer(modifiedProps, group) : group;
-	    }
-	  }]);
+	labels:{
+	padding:5,
+	fontFamily:"Helvetica",
+	fontSize:13,
+	strokeWidth:0,
+	stroke:"transparent",
+	textAnchor:"start"}}};var
 	
-	  return VictoryLine;
-	}(_react2.default.Component);
 	
-	VictoryLine.role = "line";
-	VictoryLine.defaultTransitions = {
-	  onExit: {
-	    duration: 500,
-	    before: function before() {
-	      return { y: null };
-	    }
-	  },
-	  onEnter: {
-	    duration: 500,
-	    before: function before() {
-	      return { y: null };
-	    },
-	    after: function after(datum) {
-	      return { y: datum.y };
-	    }
-	  }
-	};
-	VictoryLine.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively.
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The categories prop specifies how categorical data for a chart should be ordered.
-	   * This prop should be given as an array of string values, or an object with
-	   * these arrays of values specified for x and y. If this prop is not set,
-	   * categorical data will be plotted in the order it was given in the data array
-	   * @examples ["dogs", "cats", "mice"]
-	   */
-	  categories: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.shape({
-	    x: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    y: _react.PropTypes.arrayOf(_react.PropTypes.string)
-	  })]),
-	  /**
-	   * The data prop specifies the data to be plotted.
-	   * Data should be in the form of an array of data points.
-	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	   * but by default, an object with x and y properties is expected.
-	   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
-	   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
-	   */
 	
-	  data: _react.PropTypes.array,
-	  /**
-	   * The dataComponent prop takes an entire component which will be used to create line segments
-	   * for each continuous set of data. (i.e. null data will result in multiple line segments)
-	   * The new element created from the passed dataComponent will be provided with the following
-	   * properties calculated by VictoryLine: data, index, scale, interpolation, and events.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is not
-	   * provided, VictoryLine will use its default LineSegment component.
-	   */
-	  dataComponent: _react.PropTypes.element,
-	  /**
-	   * The domain prop describes the range of values your chart will include. This prop can be
-	   * given as a array of the minimum and maximum expected values for your chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, so "data" and "labels" are all valid targets for VictoryLine events.
-	   * Since VictoryLine only renders a single element, the eventKey property is not used.
-	   * The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey keys,
-	   * and a mutation key whose value is a function. The target and eventKey keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a line), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {stroke: "orange"})};
-	   *              }
-	   *            }, {
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    target: _react.PropTypes.oneOf(["data", "labels", "parent"]),
-	    eventKey: _react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * The name prop is used to reference a component instance when defining shared events.
-	   */
-	  name: _react.PropTypes.string,
-	  /**
-	   * This prop is used to coordinate events between VictoryArea and other Victory
-	   * Components via VictorySharedEvents. This prop should not be set manually.
-	   */
-	  sharedEvents: _react.PropTypes.shape({
-	    events: _react.PropTypes.array,
-	    getEventState: _react.PropTypes.func
-	  }),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The interpolation prop determines how data points should be connected
-	   * when plotting a line
-	   */
-	  interpolation: _react.PropTypes.oneOf(["basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen", "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX", "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"]),
-	  /**
-	   * The label prop defines the label that will appear at the end of the line.
-	   * This prop should be given a string or as a function of data. If individual
-	   * labels are required for each data point, they should be created by composing
-	   * VictoryLine with VictoryScatter
-	   * @examples: "Series 1", (data) => `${data.length} points`
-	   */
-	  label: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.string]),
-	  /**
-	   * The labelComponent prop takes in an entire label component which will be used
-	   * to create a label for the line. The new element created from the passed labelComponent
-	   * will be supplied with the following properties: x, y, index, data, verticalAnchor,
-	   * textAnchor, angle, style, text, and events. any of these props may be overridden
-	   * by passing in props to the supplied component, or modified or ignored within
-	   * the custom component itself. If labelComponent is omitted, a new VictoryLabel
-	   * will be created with props described above. This labelComponent prop should be used to
-	   * provide a series label for VictoryLine. If individual labels are required for each
-	   * data point, they should be created by composing VictoryLine with VictoryScatter
-	   */
-	  labelComponent: _react.PropTypes.any,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The samples prop specifies how many individual points to plot when plotting
-	   * y as a function of x. Samples is ignored if x props are provided instead.
-	   */
-	  samples: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	   * as a d3 scale function, or as an object with scales specified for x and y
-	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryLine with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your VictoryLine. Any valid inline style properties
-	   * will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart. in addition to normal style properties, angle and verticalAnchor
-	   * may also be specified via the labels object, and they will be passed as props to
-	   * VictoryLabel, or any custom labelComponent.
-	   * @examples {data: {stroke: "red"}, labels: {fontSize: 12}}
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The x prop specifies how to access the X value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	   */
-	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The y prop specifies how to access the Y value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryLine: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryLine will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryLine as a solo component, implement the theme directly on
-	  * VictoryLine. If you are wrapping VictoryLine in VictoryChart, VictoryStack, or
-	  * VictoryGroup, please call the theme on the outermost wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryLine.defaultProps = {
-	  interpolation: "linear",
-	  padding: 50,
-	  samples: 50,
-	  scale: "linear",
-	  standalone: true,
-	  x: "x",
-	  y: "y",
-	  dataComponent: _react2.default.createElement(_lineSegment2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryLine.getDomain = _domain2.default.getDomain.bind(_domain2.default);
-	VictoryLine.getData = _data2.default.getData.bind(_data2.default);
-	VictoryLine.getBaseProps = (0, _partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default), fallbackProps);
-	exports.default = VictoryLine;
+	
+	VictoryLine=function(_React$Component){_inherits(VictoryLine,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryLine(){_classCallCheck(this,VictoryLine);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryLine).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryLine,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
+	
+	
+	props){var _this2=this;var
+	dataComponent=props.dataComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;
+	var dataSegments=_helperMethods2.default.getDataSegments(_data2.default.getData(props));
+	
+	return dataSegments.map(function(data,key){
+	var role=VictoryLine.role+"-"+key;
+	var dataEvents=_this2.getEvents(props,"data","all");
+	var dataProps=(0,_defaults3.default)(
+	{index:key,key:role,role:role},
+	_this2.getEventState("all","data"),
+	_this2.getSharedEventState("all","data"),
+	{data:data},
+	dataComponent.props,
+	_this2.baseProps.all.data);
+	
+	var lineComponent=_react2.default.cloneElement(dataComponent,_extends(
+	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,"all",dataProps)}));
+	
+	
+	var labelProps=(0,_defaults3.default)(
+	{key:role+"-label-"+key},
+	_this2.getEventState("all","labels"),
+	_this2.getSharedEventState("all","labels"),
+	{data:data},
+	labelComponent.props,
+	_this2.baseProps.all.labels);
+	
+	if(labelProps&&labelProps.text){
+	var labelEvents=_this2.getEvents(props,"labels","all");
+	var lineLabel=_react2.default.cloneElement(labelComponent,_extends({
+	events:_victoryCore.Events.getPartialEvents(labelEvents,"all",labelProps)},
+	labelProps));
+	
+	return _react2.default.cloneElement(
+	groupComponent,{key:"line-group-"+key},lineComponent,lineLabel);}
+	
+	
+	return lineComponent;});}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	animate=modifiedProps.animate;var style=modifiedProps.style;var standalone=modifiedProps.standalone;
+	
+	if(animate){
+	
+	
+	
+	
+	var whitelist=[
+	"data","domain","height","padding","samples","style","width","x","y"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:464}},
+	_react2.default.createElement(this.constructor,modifiedProps)));}
+	
+	
+	
+	
+	var styleObject=modifiedProps.theme&&modifiedProps.theme.line?modifiedProps.theme.line:
+	fallbackProps.style;
+	
+	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
+	
+	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
+	
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryLine;}(_react2.default.Component);VictoryLine.role="line";VictoryLine.defaultTransitions={onExit:{duration:500,before:function before(){return{y:null};}},onEnter:{duration:500,before:function before(){return{y:null};},after:function after(datum){return{y:datum.y};}}};VictoryLine.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","basisClosed","basisOpen","bundle","cardinal","cardinalClosed","cardinalOpen","catmullRom","catmullRomClosed","catmullRomOpen","linear","linearClosed","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.string]),labelComponent:_react.PropTypes.any,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryLine.defaultProps={interpolation:"linear",padding:50,samples:50,scale:"linear",standalone:true,x:"x",y:"y",dataComponent:_react2.default.createElement(_lineSegment2.default,{__source:{fileName:_jsxFileName,lineNumber:350}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:351}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:352}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:353}})};VictoryLine.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryLine.getData=_data2.default.getData.bind(_data2.default);VictoryLine.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryLine;
 
 /***/ },
-/* 297 */
+/* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-line/line-segment.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _d3Shape=__webpack_require__(211);var _d3Shape2=_interopRequireDefault(_d3Shape);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	LineSegment=function(_React$Component){_inherits(LineSegment,_React$Component);function LineSegment(){_classCallCheck(this,LineSegment);return _possibleConstructorReturn(this,Object.getPrototypeOf(LineSegment).apply(this,arguments));}_createClass(LineSegment,[{key:"toNewName",value:function toNewName(
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Shape = __webpack_require__(298);
 	
-	var _d3Shape2 = _interopRequireDefault(_d3Shape);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	interpolation){
 	
-	var LineSegment = function (_React$Component) {
-	  _inherits(LineSegment, _React$Component);
+	var capitalize=function capitalize(s){return s&&s[0].toUpperCase()+s.slice(1);};
+	return"curve"+capitalize(interpolation);}},{key:"renderLine",value:function renderLine(
 	
-	  function LineSegment() {
-	    _classCallCheck(this, LineSegment);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(LineSegment).apply(this, arguments));
-	  }
+	path,style,events){var
+	role=this.props.role;
+	return(
+	_react2.default.createElement("path",_extends({style:style,d:path,role:role},events,{vectorEffect:"non-scaling-stroke",__source:{fileName:_jsxFileName,lineNumber:24}})));}},{key:"render",value:function render()
 	
-	  _createClass(LineSegment, [{
-	    key: "toNewName",
-	    value: function toNewName(interpolation) {
-	      // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
-	      var capitalize = function capitalize(s) {
-	        return s && s[0].toUpperCase() + s.slice(1);
-	      };
-	      return "curve" + capitalize(interpolation);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _props = this.props;
-	      var events = _props.events;
-	      var style = _props.style;
-	      var interpolation = _props.interpolation;
-	      var scale = _props.scale;
-	      var data = _props.data;
 	
-	      var xScale = scale.x;
-	      var yScale = scale.y;
-	      var lineFunction = _d3Shape2.default.line().curve(_d3Shape2.default[this.toNewName(interpolation)]).x(function (d) {
-	        return xScale(d.x);
-	      }).y(function (d) {
-	        return yScale(d.y);
-	      });
-	      var path = lineFunction(data);
-	      return _react2.default.createElement("path", _extends({ style: style, d: path }, events, { vectorEffect: "non-scaling-stroke" }));
-	    }
-	  }]);
 	
-	  return LineSegment;
-	}(_react2.default.Component);
-	
-	LineSegment.propTypes = {
-	  data: _react.PropTypes.array,
-	  events: _react.PropTypes.object,
-	  interpolation: _react.PropTypes.string,
-	  scale: _react.PropTypes.object,
-	  style: _react.PropTypes.object
-	};
-	exports.default = LineSegment;
+	{var _props=
+	this.props;var data=_props.data;var events=_props.events;var interpolation=_props.interpolation;var scale=_props.scale;var style=_props.style;
+	var xScale=scale.x;
+	var yScale=scale.y;
+	var lineFunction=_d3Shape2.default.line().
+	curve(_d3Shape2.default[this.toNewName(interpolation)]).
+	x(function(d){return xScale(d.x);}).
+	y(function(d){return yScale(d.y);});
+	return this.renderLine(lineFunction(data),style,events);}}]);return LineSegment;}(_react2.default.Component);LineSegment.propTypes={data:_react.PropTypes.array,events:_react.PropTypes.object,index:_react.PropTypes.number,interpolation:_react.PropTypes.string,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object};exports.default=LineSegment;
 
 /***/ },
-/* 298 */
+/* 211 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(299)) :
+	   true ? factory(exports, __webpack_require__(212)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-path'], factory) :
 	  (factory((global.d3_shape = global.d3_shape || {}),global.d3_path));
 	}(this, function (exports,d3Path) { 'use strict';
@@ -22567,7 +18947,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 299 */
+/* 212 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -22727,137 +19107,100 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 300 */
+/* 213 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _last2=__webpack_require__(214);var _last3=_interopRequireDefault(_last2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _sortBy2=__webpack_require__(173);var _sortBy3=_interopRequireDefault(_sortBy2);
+	var _victoryCore=__webpack_require__(29);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
 	
-	var _last2 = __webpack_require__(301);
+	getBaseProps:function getBaseProps(props,fallbackProps){
+	var defaultStyles=props.theme&&props.theme.line?props.theme.line:fallbackProps.style;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);var _getCalculatedValues=
+	this.getCalculatedValues(modifiedProps);var scale=_getCalculatedValues.scale;var dataSegments=_getCalculatedValues.dataSegments;var dataset=_getCalculatedValues.dataset;
+	var style=_victoryCore.Helpers.getStyles(modifiedProps.style,defaultStyles,"auto","100%");var
+	interpolation=modifiedProps.interpolation;var label=modifiedProps.label;var width=modifiedProps.width;var height=modifiedProps.height;
+	var dataStyle=_victoryCore.Helpers.evaluateStyle(style.data,dataset);
+	var dataProps={
+	scale:scale,
+	interpolation:_victoryCore.Helpers.evaluateProp(interpolation,dataset),
+	style:dataStyle};
 	
-	var _last3 = _interopRequireDefault(_last2);
 	
-	var _defaults2 = __webpack_require__(2);
+	var text=_victoryCore.Helpers.evaluateProp(label,dataset);
+	var lastData=(0,_last3.default)((0,_last3.default)(dataSegments));
+	var baseLabelStyle=_victoryCore.Helpers.evaluateStyle(style.labels,dataset);
+	var labelStyle=this.getLabelStyle(baseLabelStyle,dataStyle);
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
+	var labelProps={
+	x:scale.x(lastData.x)+labelStyle.padding,
+	y:scale.y(lastData.y),
+	style:labelStyle,
+	textAnchor:labelStyle.textAnchor||"start",
+	verticalAnchor:labelStyle.verticalAnchor||"middle",
+	angle:labelStyle.angle,
+	scale:scale,
+	text:text};
 	
-	var _sortBy2 = __webpack_require__(238);
 	
-	var _sortBy3 = _interopRequireDefault(_sortBy2);
+	var parentProps={style:style.parent,scale:scale,data:dataset,width:width,height:height};
+	return{
+	parent:parentProps,
+	all:{
+	data:dataProps,
+	labels:labelProps}};},
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	var _data = __webpack_require__(229);
 	
-	var _data2 = _interopRequireDefault(_data);
 	
-	var _domain = __webpack_require__(228);
+	getCalculatedValues:function getCalculatedValues(props){
+	var dataset=_data2.default.getData(props);
+	var dataSegments=this.getDataSegments(dataset);
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
 	
-	var _domain2 = _interopRequireDefault(_domain);
+	var domain={
+	x:_domain2.default.getDomain(props,"x"),
+	y:_domain2.default.getDomain(props,"y")};
 	
-	var _scale = __webpack_require__(215);
+	var scale={
+	x:_scale2.default.getBaseScale(props,"x").domain(domain.x).range(range.x),
+	y:_scale2.default.getBaseScale(props,"y").domain(domain.y).range(range.y)};
 	
-	var _scale2 = _interopRequireDefault(_scale);
+	return{dataset:dataset,dataSegments:dataSegments,scale:scale};},
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = {
-	  getBaseProps: function getBaseProps(props, fallbackProps) {
-	    var defaultStyles = props.theme && props.theme.line ? props.theme.line : fallbackProps.style;
-	    var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
+	getLabelStyle:function getLabelStyle(labelStyle,dataStyle){
 	
-	    var _getCalculatedValues = this.getCalculatedValues(modifiedProps);
+	var opacity=dataStyle.opacity;
 	
-	    var scale = _getCalculatedValues.scale;
-	    var dataSegments = _getCalculatedValues.dataSegments;
-	    var dataset = _getCalculatedValues.dataset;
 	
-	    var style = _victoryCore.Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-	    var interpolation = modifiedProps.interpolation;
-	    var label = modifiedProps.label;
-	    var width = modifiedProps.width;
-	    var height = modifiedProps.height;
+	var fill=dataStyle.stroke;
+	var padding=labelStyle.padding||0;
+	return(0,_defaults3.default)({},labelStyle,{opacity:opacity,fill:fill,padding:padding});},
 	
-	    var dataStyle = _victoryCore.Helpers.evaluateStyle(style.data, dataset);
-	    var dataProps = {
-	      scale: scale,
-	      interpolation: _victoryCore.Helpers.evaluateProp(interpolation, dataset),
-	      style: dataStyle
-	    };
 	
-	    var text = _victoryCore.Helpers.evaluateProp(label, dataset);
-	    var lastData = (0, _last3.default)((0, _last3.default)(dataSegments));
-	    var baseLabelStyle = _victoryCore.Helpers.evaluateStyle(style.labels, dataset);
-	    var labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
+	getDataSegments:function getDataSegments(dataset){
+	var orderedData=(0,_sortBy3.default)(dataset,"x");
+	var segments=[];
+	var segmentStartIndex=0;
+	orderedData.forEach(function(datum,index){
+	if(datum.y===null||typeof datum.y==="undefined"){
+	segments.push(orderedData.slice(segmentStartIndex,index));
+	segmentStartIndex=index+1;}});
 	
-	    var labelProps = {
-	      x: scale.x(lastData.x) + labelStyle.padding,
-	      y: scale.y(lastData.y),
-	      style: labelStyle,
-	      textAnchor: labelStyle.textAnchor || "start",
-	      verticalAnchor: labelStyle.verticalAnchor || "middle",
-	      angle: labelStyle.angle,
-	      scale: scale,
-	      text: text
-	    };
 	
-	    var parentProps = { style: style.parent, scale: scale, data: dataset, width: width, height: height };
-	    return {
-	      parent: parentProps,
-	      all: {
-	        data: dataProps,
-	        labels: labelProps
-	      }
-	    };
-	  },
-	  getCalculatedValues: function getCalculatedValues(props) {
-	    var dataset = _data2.default.getData(props);
-	    var dataSegments = this.getDataSegments(dataset);
-	    var range = {
-	      x: _victoryCore.Helpers.getRange(props, "x"),
-	      y: _victoryCore.Helpers.getRange(props, "y")
-	    };
-	    var domain = {
-	      x: _domain2.default.getDomain(props, "x"),
-	      y: _domain2.default.getDomain(props, "y")
-	    };
-	    var scale = {
-	      x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
-	      y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
-	    };
-	    return { dataset: dataset, dataSegments: dataSegments, scale: scale };
-	  },
-	  getLabelStyle: function getLabelStyle(labelStyle, dataStyle) {
-	    // match labels styles to data style by default (fill, opacity, others?)
-	    var opacity = dataStyle.opacity;
-	    // match label color to data color if it is not given.
-	    // use fill instead of stroke for text
-	    var fill = dataStyle.stroke;
-	    var padding = labelStyle.padding || 0;
-	    return (0, _defaults3.default)({}, labelStyle, { opacity: opacity, fill: fill, padding: padding });
-	  },
-	  getDataSegments: function getDataSegments(dataset) {
-	    var orderedData = (0, _sortBy3.default)(dataset, "x");
-	    var segments = [];
-	    var segmentStartIndex = 0;
-	    orderedData.forEach(function (datum, index) {
-	      if (datum.y === null || typeof datum.y === "undefined") {
-	        segments.push(orderedData.slice(segmentStartIndex, index));
-	        segmentStartIndex = index + 1;
-	      }
-	    });
-	    segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
-	    return segments.filter(function (segment) {
-	      return Array.isArray(segment) && segment.length > 0;
-	    });
-	  }
-	};
+	segments.push(orderedData.slice(segmentStartIndex,orderedData.length));
+	return segments.filter(function(segment){
+	return Array.isArray(segment)&&segment.length>0;});}};
 
 /***/ },
-/* 301 */
+/* 214 */
 /***/ function(module, exports) {
 
 	/**
@@ -22883,1473 +19226,1312 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 302 */
+/* 215 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _partialRight2 = __webpack_require__(160);
-	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _area = __webpack_require__(303);
-	
-	var _area2 = _interopRequireDefault(_area);
-	
-	var _helperMethods = __webpack_require__(305);
-	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var fallbackProps = {
-	  props: {
-	    width: 450,
-	    height: 300
-	  },
-	  style: {
-	    data: {
-	      fill: "#756f6a"
-	    },
-	    labels: {
-	      fontSize: 13,
-	      padding: 4,
-	      fill: "black"
-	    }
-	  }
-	};
-	
-	var VictoryArea = function (_React$Component) {
-	  _inherits(VictoryArea, _React$Component);
-	
-	  function VictoryArea() {
-	    _classCallCheck(this, VictoryArea);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryArea).call(this));
-	
-	    _this.state = {};
-	    var getScopedEvents = _victoryCore.Events.getScopedEvents.bind(_this);
-	    _this.getEvents = (0, _partialRight3.default)(_victoryCore.Events.getEvents.bind(_this), getScopedEvents);
-	    _this.getEventState = _victoryCore.Events.getEventState.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(VictoryArea, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.setupEvents(this.props);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.setupEvents(newProps);
-	    }
-	  }, {
-	    key: "setupEvents",
-	    value: function setupEvents(props) {
-	      var sharedEvents = props.sharedEvents;
-	
-	      this.baseProps = _helperMethods2.default.getBaseProps(props, fallbackProps);
-	      this.getSharedEventState = sharedEvents && (0, _isFunction3.default)(sharedEvents.getEventState) ? sharedEvents.getEventState : function () {
-	        return undefined;
-	      };
-	    }
-	  }, {
-	    key: "renderData",
-	    value: function renderData(props) {
-	      var dataComponent = props.dataComponent;
-	      var labelComponent = props.labelComponent;
-	
-	      var dataEvents = this.getEvents(props, "data", "all");
-	      var dataProps = (0, _defaults3.default)({}, this.getEventState("all", "data"), this.getSharedEventState("all", "data"), dataComponent.props, this.baseProps.all.data);
-	      var areaComponent = _react2.default.cloneElement(dataComponent, Object.assign({}, dataProps, { events: _victoryCore.Events.getPartialEvents(dataEvents, "all", dataProps) }));
-	
-	      var labelProps = (0, _defaults3.default)({}, this.getEventState("all", "labels"), this.getSharedEventState("all", "labels"), labelComponent.props, this.baseProps.all.labels);
-	      if (labelProps && labelProps.text) {
-	        var labelEvents = this.getEvents(props, "labels", "all");
-	        var areaLabel = _react2.default.cloneElement(labelComponent, Object.assign({
-	          events: _victoryCore.Events.getPartialEvents(labelEvents, "all", labelProps)
-	        }, labelProps));
-	        return _react2.default.createElement(
-	          "g",
-	          null,
-	          areaComponent,
-	          areaLabel
-	        );
-	      }
-	      return areaComponent;
-	    }
-	  }, {
-	    key: "renderContainer",
-	    value: function renderContainer(props, group) {
-	      var parentEvents = this.getEvents(props, "parent", "parent");
-	      var parentProps = (0, _defaults3.default)({}, this.getEventState("parent", "parent"), this.getSharedEventState("parent", "parent"), props.containerComponent.props, this.baseProps.parent);
-	      return _react2.default.cloneElement(props.containerComponent, Object.assign({}, parentProps, { events: _victoryCore.Events.getPartialEvents(parentEvents, "parent", parentProps) }), group);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(this.props, fallbackProps);
-	      var animate = modifiedProps.animate;
-	      var style = modifiedProps.style;
-	      var standalone = modifiedProps.standalone;
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-area/victory-area.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _victoryCore=__webpack_require__(29);
 	
 	
-	      if (animate) {
-	        var whitelist = ["data", "domain", "height", "padding", "style", "width"];
-	        return _react2.default.createElement(
-	          _victoryCore.VictoryTransition,
-	          { animate: animate, animationWhitelist: whitelist },
-	          _react2.default.createElement(VictoryArea, modifiedProps)
-	        );
-	      }
 	
-	      var styleObject = modifiedProps.theme && modifiedProps.theme.area ? modifiedProps.theme.area : fallbackProps.style;
+	var _area=__webpack_require__(216);var _area2=_interopRequireDefault(_area);
+	var _helperMethods=__webpack_require__(217);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	      var baseStyles = _victoryCore.Helpers.getStyles(style, styleObject, "auto", "100%");
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300},
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { role: "presentation", style: baseStyles.parent },
-	        this.renderData(modifiedProps)
-	      );
+	style:{
+	data:{
+	fill:"#756f6a"},
 	
-	      return standalone ? this.renderContainer(modifiedProps, group) : group;
-	    }
-	  }]);
+	labels:{
+	fontSize:13,
+	padding:4,
+	fill:"black"}}};var
 	
-	  return VictoryArea;
-	}(_react2.default.Component);
 	
-	VictoryArea.role = "area";
-	VictoryArea.defaultTransitions = {
-	  onExit: {
-	    duration: 500,
-	    before: function before() {
-	      return { y: 0, yOffset: 0 };
-	    }
-	  },
-	  onEnter: {
-	    duration: 500,
-	    before: function before() {
-	      return { y: 0, yOffset: 0, xOffset: 0 };
-	    },
-	    after: function after(datum) {
-	      return { y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset };
-	    }
-	  }
-	};
-	VictoryArea.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively.
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The categories prop specifies how categorical data for a chart should be ordered.
-	   * This prop should be given as an array of string values, or an object with
-	   * these arrays of values specified for x and y. If this prop is not set,
-	   * categorical data will be plotted in the order it was given in the data array
-	   * @examples ["dogs", "cats", "mice"]
-	   */
-	  categories: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.shape({
-	    x: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    y: _react.PropTypes.arrayOf(_react.PropTypes.string)
-	  })]),
-	  /**
-	   * The data prop specifies the data to be plotted. Data should be in the form of an array
-	   * of data points, or an array of arrays of data points for multiple datasets.
-	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	   * but by default, an object with x and y properties is expected.
-	   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
-	   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
-	   */
-	  data: _react.PropTypes.array,
-	  /**
-	   * The dataComponent prop takes an entire component which will be used to create an area.
-	   * The new element created from the passed dataComponent will be provided with the
-	   * following properties calculated by VictoryArea: a scale, style, events, interpolation,
-	   * and an array of modified data objects (including x, y, and calculated y0 and y1).
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryArea will use its default Area component.
-	   */
-	  dataComponent: _react.PropTypes.element,
-	  /**
-	   * The domain prop describes the range of values your bar chart will cover. This prop can be
-	   * given as a array of the minimum and maximum expected values for your bar chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, so "data" and "labels" are all valid targets for VictoryArea events.
-	   * Since VictoryArea only renders a single element, the eventKey property is not used.
-	   * The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey keys,
-	   * and a mutation key whose value is a function. The target and eventKey keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. an area), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    target: _react.PropTypes.oneOf(["data", "labels", "parent"]),
-	    eventKey: _react.PropTypes.oneOf(["all"]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * The name prop is used to reference a component instance when defining shared events.
-	   */
-	  name: _react.PropTypes.string,
-	  /**
-	   * This prop is used to coordinate events between VictoryArea and other Victory
-	   * Components via VictorySharedEvents. This prop should not be set manually.
-	   */
-	  sharedEvents: _react.PropTypes.shape({
-	    events: _react.PropTypes.array,
-	    getEventState: _react.PropTypes.func
-	  }),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The interpolation prop determines how data points should be connected
-	   * when plotting a line
-	   */
-	  interpolation: _react.PropTypes.oneOf(["basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen", "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX", "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"]),
-	  /**
-	   * The label prop defines the label that will appear at the edge of the area.
-	   * This prop should be given a string or as a function of data. If individual
-	   * labels are required for each data point, they should be created by composing
-	   * VictoryArea with VictoryScatter
-	   * @examples: "Series 1", (data) => `${data.length} points`
-	   */
-	  label: _react.PropTypes.string,
-	  /**
-	   * The labelComponent prop takes in an entire label component which will be used
-	   * to create a label for the area. The new element created from the passed labelComponent
-	   * will be supplied with the following properties: x, y, index, data, verticalAnchor,
-	   * textAnchor, angle, style, text, and events. any of these props may be overridden
-	   * by passing in props to the supplied component, or modified or ignored within
-	   * the custom component itself. If labelComponent is omitted, a new VictoryLabel
-	   * will be created with props described above. This labelComponent prop should be used to
-	   * provide a series label for VictoryArea. If individual labels are required for each
-	   * data point, they should be created by composing VictoryArea with VictoryScatter
-	   */
-	  labelComponent: _react.PropTypes.element,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The samples prop specifies how many individual points to plot when plotting
-	   * y as a function of x. Samples is ignored if x props are provided instead.
-	   */
-	  samples: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	   * as a d3 scale function, or as an object with scales specified for x and y
-	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryBar with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your VictoryArea. Any valid inline style properties
-	   * will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart.
-	   * @examples {data: {fill: "red"}, labels: {fontSize: 12}}
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The x prop specifies how to access the X value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	   */
-	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The y prop specifies how to access the Y value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.arrayOf(_react.PropTypes.func)]),
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryArea: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryArea will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryArea as a solo component, implement the theme directly on
-	  * VictoryArea. If you are wrapping VictoryArea in VictoryChart, VictoryStack, or
-	  * VictoryGroup, please call the theme on the outermost wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryArea.defaultProps = {
-	  dataComponent: _react2.default.createElement(_area2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  padding: 50,
-	  scale: "linear",
-	  samples: 50,
-	  standalone: true,
-	  interpolation: "linear",
-	  x: "x",
-	  y: "y",
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryArea.getDomain = _domain2.default.getDomainWithZero.bind(_domain2.default);
-	VictoryArea.getData = _data2.default.getData.bind(_data2.default);
-	VictoryArea.getBaseProps = (0, _partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default), fallbackProps);
-	exports.default = VictoryArea;
+	
+	
+	VictoryArea=function(_React$Component){_inherits(VictoryArea,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryArea(){_classCallCheck(this,VictoryArea);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryArea).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryArea,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
+	
+	
+	props){var
+	dataComponent=props.dataComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;var
+	role=VictoryArea.role;
+	var dataEvents=this.getEvents(props,"data","all");
+	var dataProps=(0,_defaults3.default)(
+	{role:role},
+	this.getEventState("all","data"),
+	this.getSharedEventState("all","data"),
+	dataComponent.props,
+	this.baseProps.all.data);
+	
+	var areaComponent=_react2.default.cloneElement(dataComponent,_extends(
+	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,"all",dataProps)}));
+	
+	
+	var labelProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("all","labels"),
+	this.getSharedEventState("all","labels"),
+	labelComponent.props,
+	this.baseProps.all.labels);
+	
+	if(labelProps&&labelProps.text){
+	var labelEvents=this.getEvents(props,"labels","all");
+	var areaLabel=_react2.default.cloneElement(labelComponent,_extends({
+	events:_victoryCore.Events.getPartialEvents(labelEvents,"all",labelProps)},
+	labelProps));
+	return _react2.default.cloneElement(groupComponent,{},areaComponent,areaLabel);}
+	
+	return areaComponent;}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	animate=modifiedProps.animate;var style=modifiedProps.style;var standalone=modifiedProps.standalone;
+	
+	if(animate){
+	var whitelist=[
+	"data","domain","height","padding","style","width"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:436}},
+	_react2.default.createElement(this.constructor,modifiedProps)));}
+	
+	
+	
+	
+	var styleObject=modifiedProps.theme&&modifiedProps.theme.area?modifiedProps.theme.area:
+	fallbackProps.style;
+	
+	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
+	
+	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
+	
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryArea;}(_react2.default.Component);VictoryArea.role="area";VictoryArea.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,yOffset:0};}},onEnter:{duration:500,before:function before(){return{y:0,yOffset:0,xOffset:0};},after:function after(datum){return{y:datum.y,yOffset:datum.yOffset,xOffset:datum.xOffset};}}};VictoryArea.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOf(["all"]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","basisClosed","basisOpen","bundle","cardinal","cardinalClosed","cardinalOpen","catmullRom","catmullRomClosed","catmullRomOpen","linear","linearClosed","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.string,labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.arrayOf(_react.PropTypes.func)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryArea.defaultProps={dataComponent:_react2.default.createElement(_area2.default,{__source:{fileName:_jsxFileName,lineNumber:329}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:330}}),padding:50,scale:"linear",samples:50,standalone:true,interpolation:"linear",x:"x",y:"y",containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:338}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:339}})};VictoryArea.getDomain=_domain2.default.getDomainWithZero.bind(_domain2.default);VictoryArea.getData=_data2.default.getData.bind(_data2.default);VictoryArea.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryArea;
 
 /***/ },
-/* 303 */
+/* 216 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(121);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-area/area.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var _d3Shape=__webpack_require__(211);var _d3Shape2=_interopRequireDefault(_d3Shape);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	var _assign2 = __webpack_require__(304);
+	Area=function(_React$Component){_inherits(Area,_React$Component);function Area(){_classCallCheck(this,Area);return _possibleConstructorReturn(this,Object.getPrototypeOf(Area).apply(this,arguments));}_createClass(Area,[{key:"toNewName",value:function toNewName(
 	
-	var _assign3 = _interopRequireDefault(_assign2);
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _d3Shape = __webpack_require__(298);
 	
-	var _d3Shape2 = _interopRequireDefault(_d3Shape);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	interpolation){
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var capitalize=function capitalize(s){return s&&s[0].toUpperCase()+s.slice(1);};
+	return"curve"+capitalize(interpolation);}},{key:"getAreaPath",value:function getAreaPath(
 	
-	var Area = function (_React$Component) {
-	  _inherits(Area, _React$Component);
 	
-	  function Area() {
-	    _classCallCheck(this, Area);
+	props){
+	var xScale=props.scale.x;
+	var yScale=props.scale.y;
+	var areaFunction=_d3Shape2.default.area().
+	curve(_d3Shape2.default[this.toNewName(props.interpolation)]).
+	x(function(data){return xScale(data.x);}).
+	y1(function(data){return yScale(data.y1);}).
+	y0(function(data){return yScale(data.y0);});
+	return areaFunction(props.data);}},{key:"getLinePath",value:function getLinePath(
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Area).apply(this, arguments));
-	  }
 	
-	  _createClass(Area, [{
-	    key: "toNewName",
-	    value: function toNewName(interpolation) {
-	      // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
-	      var capitalize = function capitalize(s) {
-	        return s && s[0].toUpperCase() + s.slice(1);
-	      };
-	      return "curve" + capitalize(interpolation);
-	    }
-	  }, {
-	    key: "renderArea",
-	    value: function renderArea(style, interpolation, events) {
-	      var xScale = this.props.scale.x;
-	      var yScale = this.props.scale.y;
-	      var areaStroke = style.stroke ? "none" : style.fill;
-	      var areaStyle = (0, _assign3.default)({}, style, { stroke: areaStroke });
-	      var areaFunction = _d3Shape2.default.area().curve(_d3Shape2.default[this.toNewName(interpolation)]).x(function (data) {
-	        return xScale(data.x);
-	      }).y1(function (data) {
-	        return yScale(data.y1);
-	      }).y0(function (data) {
-	        return yScale(data.y0);
-	      });
-	      var path = areaFunction(this.props.data);
+	props){
+	var xScale=props.scale.x;
+	var yScale=props.scale.y;
+	var lineFunction=_d3Shape2.default.line().
+	curve(_d3Shape2.default[this.toNewName(props.interpolation)]).
+	x(function(data){return xScale(data.x);}).
+	y(function(data){return yScale(data.y1);});
+	return lineFunction(props.data);}},{key:"renderArea",value:function renderArea(
 	
-	      return _react2.default.createElement("path", _extends({ style: areaStyle, d: path }, events));
-	    }
-	  }, {
-	    key: "renderLine",
-	    value: function renderLine(style, interpolation, events) {
-	      if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
-	        return undefined;
-	      }
-	      var lineStyle = (0, _assign3.default)({}, style, { fill: "none" });
-	      var xScale = this.props.scale.x;
-	      var yScale = this.props.scale.y;
-	      var lineFunction = _d3Shape2.default.line().curve(_d3Shape2.default[this.toNewName(interpolation)]).x(function (data) {
-	        return xScale(data.x);
-	      }).y(function (data) {
-	        return yScale(data.y1);
-	      });
-	      var path = lineFunction(this.props.data);
-	      return _react2.default.createElement("path", _extends({ style: lineStyle, d: path }, events));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _props = this.props;
-	      var style = _props.style;
-	      var interpolation = _props.interpolation;
-	      var events = _props.events;
 	
-	      return _react2.default.createElement(
-	        "g",
-	        null,
-	        this.renderArea(style, interpolation, events),
-	        this.renderLine(style, interpolation, events)
-	      );
-	    }
-	  }]);
+	path,style,events){
+	var areaStroke=style.stroke?"none":style.fill;
+	var areaStyle=(0,_assign3.default)({},style,{stroke:areaStroke});var
+	role=this.props.role;
+	return _react2.default.createElement("path",_extends({key:"area",style:areaStyle,role:role,d:path},events,{__source:{fileName:_jsxFileName,lineNumber:47}}));}},{key:"renderLine",value:function renderLine(
 	
-	  return Area;
-	}(_react2.default.Component);
 	
-	Area.propTypes = {
-	  data: _react.PropTypes.array,
-	  interpolation: _react.PropTypes.string,
-	  scale: _react.PropTypes.object,
-	  style: _react.PropTypes.object,
-	  events: _react.PropTypes.object
-	};
-	exports.default = Area;
+	path,style,events){
+	if(!style.stroke||style.stroke==="none"||style.stroke==="transparent"){
+	return undefined;}var
+	
+	role=this.props.role;
+	var lineStyle=(0,_assign3.default)({},style,{fill:"none"});
+	return(
+	_react2.default.createElement("path",_extends({key:"area-stroke",style:lineStyle,role:role,d:path},events,{__source:{fileName:_jsxFileName,lineNumber:57}})));}},{key:"render",value:function render()
+	
+	
+	
+	{var _props=
+	this.props;var style=_props.style;var events=_props.events;var groupComponent=_props.groupComponent;
+	var area=this.renderArea(this.getAreaPath(this.props),style,events);
+	var line=this.renderLine(this.getLinePath(this.props),style,events);
+	return _react2.default.cloneElement(groupComponent,{},area,line);}}]);return Area;}(_react2.default.Component);Area.propTypes={data:_react.PropTypes.array,events:_react.PropTypes.object,groupComponent:_react.PropTypes.element,interpolation:_react.PropTypes.string,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object};exports.default=Area;
 
 /***/ },
-/* 304 */
+/* 217 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var assignValue = __webpack_require__(8),
-	    copyObject = __webpack_require__(7),
-	    createAssigner = __webpack_require__(9),
-	    isArrayLike = __webpack_require__(207),
-	    isPrototype = __webpack_require__(27),
-	    keys = __webpack_require__(237);
+	Object.defineProperty(exports,"__esModule",{value:true});var _last2=__webpack_require__(214);var _last3=_interopRequireDefault(_last2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+	var _victoryCore=__webpack_require__(29);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
-	/** Used for built-in method references. */
-	var objectProto = Object.prototype;
+	{
 	
-	/** Used to check objects for own properties. */
-	var hasOwnProperty = objectProto.hasOwnProperty;
+	getBaseProps:function getBaseProps(props,fallbackProps){
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);var _getCalculatedValues=
+	this.getCalculatedValues(modifiedProps,fallbackProps);var scale=_getCalculatedValues.scale;var style=_getCalculatedValues.style;var data=_getCalculatedValues.data;var
+	interpolation=modifiedProps.interpolation;var label=modifiedProps.label;var width=modifiedProps.width;var height=modifiedProps.height;var groupComponent=modifiedProps.groupComponent;
 	
-	/** Built-in value references. */
-	var propertyIsEnumerable = objectProto.propertyIsEnumerable;
+	var dataProps={
+	groupComponent:groupComponent,
+	key:"area",
+	data:data,
+	scale:scale,
+	interpolation:_victoryCore.Helpers.evaluateProp(interpolation,data),
+	style:_victoryCore.Helpers.evaluateStyle(style.data,data)};
 	
-	/** Detect if properties shadowing those on `Object.prototype` are non-enumerable. */
-	var nonEnumShadows = !propertyIsEnumerable.call({ 'valueOf': 1 }, 'valueOf');
 	
-	/**
-	 * Assigns own enumerable string keyed properties of source objects to the
-	 * destination object. Source objects are applied from left to right.
-	 * Subsequent sources overwrite property assignments of previous sources.
-	 *
-	 * **Note:** This method mutates `object` and is loosely based on
-	 * [`Object.assign`](https://mdn.io/Object/assign).
-	 *
-	 * @static
-	 * @memberOf _
-	 * @since 0.10.0
-	 * @category Object
-	 * @param {Object} object The destination object.
-	 * @param {...Object} [sources] The source objects.
-	 * @returns {Object} Returns `object`.
-	 * @see _.assignIn
-	 * @example
-	 *
-	 * function Foo() {
-	 *   this.c = 3;
-	 * }
-	 *
-	 * function Bar() {
-	 *   this.e = 5;
-	 * }
-	 *
-	 * Foo.prototype.d = 4;
-	 * Bar.prototype.f = 6;
-	 *
-	 * _.assign({ 'a': 1 }, new Foo, new Bar);
-	 * // => { 'a': 1, 'c': 3, 'e': 5 }
-	 */
-	var assign = createAssigner(function(object, source) {
-	  if (nonEnumShadows || isPrototype(source) || isArrayLike(source)) {
-	    copyObject(source, keys(source), object);
-	    return;
-	  }
-	  for (var key in source) {
-	    if (hasOwnProperty.call(source, key)) {
-	      assignValue(object, key, source[key]);
-	    }
-	  }
-	});
+	var text=_victoryCore.Helpers.evaluateProp(label,data);
+	var lastData=(0,_last3.default)(data);
+	var labelStyle=_victoryCore.Helpers.evaluateStyle(style.labels,data);
 	
-	module.exports = assign;
-
+	var labelProps={
+	key:"area-label",
+	x:scale.x(lastData.x)+labelStyle.padding,
+	y:scale.y(lastData.y1),
+	y0:scale.y(lastData.y0),
+	style:labelStyle,
+	textAnchor:labelStyle.textAnchor||"start",
+	verticalAnchor:labelStyle.verticalAnchor||"middle",
+	angle:labelStyle.angle,
+	data:data,
+	scale:scale,
+	text:text};
+	
+	
+	return{
+	parent:{style:style.parent,width:width,height:height,scale:scale,data:data},
+	all:{
+	data:dataProps,
+	labels:labelProps}};},
+	
+	
+	
+	
+	getCalculatedValues:function getCalculatedValues(props,fallbackProps){
+	var defaultStyles=props.theme&&props.theme.area?props.theme.area:
+	fallbackProps.style;
+	var style=_victoryCore.Helpers.getStyles(props.style,defaultStyles,"auto","100%");
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
+	
+	var domain={
+	x:_domain2.default.getDomainWithZero(props,"x"),
+	y:_domain2.default.getDomainWithZero(props,"y")};
+	
+	var scale={
+	x:_scale2.default.getBaseScale(props,"x").domain(domain.x).range(range.x),
+	y:_scale2.default.getBaseScale(props,"y").domain(domain.y).range(range.y)};
+	
+	var data=this.getDataWithBaseline(props,domain);
+	return{style:style,data:data,scale:scale};},
+	
+	
+	getDataWithBaseline:function getDataWithBaseline(props,domain){
+	var data=_data2.default.getData(props);
+	var minY=Math.min.apply(Math,_toConsumableArray(domain.y))>0?Math.min.apply(Math,_toConsumableArray(domain.y)):0;
+	return data.map(function(datum){
+	var y1=datum.yOffset?datum.yOffset+datum.y:datum.y;
+	var y0=datum.yOffset||minY;
+	return _extends({y0:y0,y1:y1},datum);});}};
 
 /***/ },
-/* 305 */
+/* 218 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _last2 = __webpack_require__(301);
-	
-	var _last3 = _interopRequireDefault(_last2);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _scale = __webpack_require__(215);
-	
-	var _scale2 = _interopRequireDefault(_scale);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	exports.default = {
-	  getBaseProps: function getBaseProps(props, fallbackProps) {
-	    var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	
-	    var _getCalculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
-	
-	    var scale = _getCalculatedValues.scale;
-	    var style = _getCalculatedValues.style;
-	    var data = _getCalculatedValues.data;
-	    var interpolation = modifiedProps.interpolation;
-	    var label = modifiedProps.label;
-	    var width = modifiedProps.width;
-	    var height = modifiedProps.height;
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-bar/victory-bar.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryCore=__webpack_require__(29);
 	
 	
-	    var dataProps = {
-	      data: data,
-	      scale: scale,
-	      interpolation: _victoryCore.Helpers.evaluateProp(interpolation, data),
-	      style: _victoryCore.Helpers.evaluateStyle(style.data, data)
-	    };
 	
-	    var text = _victoryCore.Helpers.evaluateProp(label, data);
-	    var lastData = (0, _last3.default)(data);
-	    var labelStyle = _victoryCore.Helpers.evaluateStyle(style.labels, data);
+	var _bar=__webpack_require__(219);var _bar2=_interopRequireDefault(_bar);
+	var _helperMethods=__webpack_require__(220);var _helperMethods2=_interopRequireDefault(_helperMethods);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	    var labelProps = {
-	      x: scale.x(lastData.x) + labelStyle.padding,
-	      y: scale.y(lastData.y1),
-	      y0: scale.y(lastData.y0),
-	      style: labelStyle,
-	      textAnchor: labelStyle.textAnchor || "start",
-	      verticalAnchor: labelStyle.verticalAnchor || "middle",
-	      angle: labelStyle.angle,
-	      data: data,
-	      scale: scale,
-	      text: text
-	    };
+	var fallbackProps={
+	props:{
+	height:300,
+	width:450},
 	
-	    return {
-	      parent: { style: style.parent, width: width, height: height, scale: scale, data: data },
-	      all: {
-	        data: dataProps,
-	        labels: labelProps
-	      }
-	    };
-	  },
-	  getCalculatedValues: function getCalculatedValues(props, fallbackProps) {
-	    var defaultStyles = props.theme && props.theme.area ? props.theme.area : fallbackProps.style;
-	    var style = _victoryCore.Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-	    var range = {
-	      x: _victoryCore.Helpers.getRange(props, "x"),
-	      y: _victoryCore.Helpers.getRange(props, "y")
-	    };
-	    var domain = {
-	      x: _domain2.default.getDomainWithZero(props, "x"),
-	      y: _domain2.default.getDomainWithZero(props, "y")
-	    };
-	    var scale = {
-	      x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
-	      y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
-	    };
-	    var data = this.getDataWithBaseline(props, domain);
-	    return { style: style, data: data, scale: scale };
-	  },
-	  getDataWithBaseline: function getDataWithBaseline(props, domain) {
-	    var data = _data2.default.getData(props);
-	    var minY = Math.min.apply(Math, _toConsumableArray(domain.y)) > 0 ? Math.min.apply(Math, _toConsumableArray(domain.y)) : 0;
-	    return data.map(function (datum) {
-	      var y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
-	      var y0 = datum.yOffset || minY;
-	      return Object.assign({ y0: y0, y1: y1 }, datum);
-	    });
-	  }
-	};
+	style:{
+	data:{
+	padding:6,
+	stroke:"transparent",
+	strokeWidth:0,
+	fill:"#756f6a",
+	opacity:1},
+	
+	labels:{
+	fontSize:13,
+	padding:4,
+	fill:"black"}}};
+	
+	
+	
+	
+	var defaultData=[
+	{x:1,y:1},
+	{x:2,y:2},
+	{x:3,y:3},
+	{x:4,y:4}];var
+	
+	
+	VictoryBar=function(_React$Component){_inherits(VictoryBar,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryBar(){_classCallCheck(this,VictoryBar);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryBar).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryBar,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.dataKeys=Object.keys(this.baseProps).filter(function(key){return key!=="parent";});
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
+	
+	
+	props){var _this2=this;var
+	dataComponent=props.dataComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;var
+	role=VictoryBar.role;
+	var barComponents=[];
+	var barLabelComponents=[];
+	
+	this.dataKeys.forEach(function(key,index){
+	var dataEvents=_this2.getEvents(props,"data",key);
+	var dataProps=(0,_defaults3.default)(
+	{index:index,key:role+"-"+key,role:role+"-"+index},
+	_this2.getEventState(key,"data"),
+	_this2.getSharedEventState(key,"data"),
+	dataComponent.props,
+	_this2.baseProps[key].data);
+	
+	
+	barComponents.push(_react2.default.cloneElement(dataComponent,_extends(
+	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,key,dataProps)})));
+	
+	
+	var labelProps=(0,_defaults3.default)(
+	{key:role+"-label-"+key},
+	_this2.getEventState(key,"labels"),
+	_this2.getSharedEventState(key,"labels"),
+	labelComponent.props,
+	_this2.baseProps[key].labels);
+	
+	
+	if(labelProps&&labelProps.text){
+	var labelEvents=_this2.getEvents(props,"labels",key);
+	barLabelComponents.push(_react2.default.cloneElement(labelComponent,_extends({
+	events:_victoryCore.Events.getPartialEvents(labelEvents,key,labelProps)},
+	labelProps)));}});
+	
+	
+	
+	if(barLabelComponents.length>0){
+	return _react2.default.cloneElement.apply(_react2.default,[
+	groupComponent,{}].concat(barComponents,barLabelComponents));}
+	
+	
+	return barComponents;}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	animate=modifiedProps.animate;var style=modifiedProps.style;var standalone=modifiedProps.standalone;
+	
+	if(animate){
+	var whitelist=[
+	"data","domain","height","padding","style","width"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:453}},
+	_react2.default.createElement(this.constructor,modifiedProps)));}
+	
+	
+	
+	
+	var styleObject=modifiedProps.theme&&modifiedProps.theme.bar?modifiedProps.theme.bar:
+	fallbackProps.style;
+	
+	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
+	
+	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
+	
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryBar;}(_react2.default.Component);VictoryBar.role="bar";VictoryBar.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,yOffset:0};}},onEnter:{duration:500,before:function before(){return{y:0,yOffset:0};},after:function after(datum){return{y:datum.y,yOffset:datum.yOffset};}}};VictoryBar.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryBar.defaultProps={data:defaultData,dataComponent:_react2.default.createElement(_bar2.default,{__source:{fileName:_jsxFileName,lineNumber:335}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:336}}),padding:50,scale:"linear",standalone:true,x:"x",y:"y",containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:342}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:343}})};VictoryBar.getDomain=_domain2.default.getDomainWithZero.bind(_domain2.default);VictoryBar.getData=_data2.default.getData.bind(_data2.default);VictoryBar.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryBar;
 
 /***/ },
-/* 306 */
+/* 219 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-bar/bar.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _partialRight2 = __webpack_require__(160);
-	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _bar = __webpack_require__(307);
-	
-	var _bar2 = _interopRequireDefault(_bar);
-	
-	var _helperMethods = __webpack_require__(308);
-	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var fallbackProps = {
-	  props: {
-	    height: 300,
-	    width: 450
-	  },
-	  style: {
-	    data: {
-	      width: 8,
-	      padding: 6,
-	      stroke: "transparent",
-	      strokeWidth: 0,
-	      fill: "#756f6a",
-	      opacity: 1
-	    },
-	    labels: {
-	      fontSize: 13,
-	      padding: 4,
-	      fill: "black"
-	    }
-	  }
-	};
-	
-	var defaultData = [{ x: 1, y: 1 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 4, y: 4 }];
-	
-	var VictoryBar = function (_React$Component) {
-	  _inherits(VictoryBar, _React$Component);
-	
-	  function VictoryBar() {
-	    _classCallCheck(this, VictoryBar);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryBar).call(this));
-	
-	    _this.state = {};
-	    var getScopedEvents = _victoryCore.Events.getScopedEvents.bind(_this);
-	    _this.getEvents = (0, _partialRight3.default)(_victoryCore.Events.getEvents.bind(_this), getScopedEvents);
-	    _this.getEventState = _victoryCore.Events.getEventState.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(VictoryBar, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.setupEvents(this.props);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.setupEvents(newProps);
-	    }
-	  }, {
-	    key: "setupEvents",
-	    value: function setupEvents(props) {
-	      var sharedEvents = props.sharedEvents;
-	
-	      this.baseProps = _helperMethods2.default.getBaseProps(props, fallbackProps);
-	      this.dataKeys = Object.keys(this.baseProps).filter(function (key) {
-	        return key !== "parent";
-	      });
-	      this.getSharedEventState = sharedEvents && (0, _isFunction3.default)(sharedEvents.getEventState) ? sharedEvents.getEventState : function () {
-	        return undefined;
-	      };
-	    }
-	  }, {
-	    key: "renderData",
-	    value: function renderData(props) {
-	      var _this2 = this;
-	
-	      var dataComponent = props.dataComponent;
-	      var labelComponent = props.labelComponent;
-	
-	      var barComponents = [];
-	      var barLabelComponents = [];
-	      this.dataKeys.forEach(function (key) {
-	        var dataEvents = _this2.getEvents(props, "data", key);
-	        var dataProps = (0, _defaults3.default)({ key: "bar-" + key }, _this2.getEventState(key, "data"), _this2.getSharedEventState(key, "data"), dataComponent.props, _this2.baseProps[key].data);
-	
-	        barComponents.push(_react2.default.cloneElement(dataComponent, Object.assign({}, dataProps, { events: _victoryCore.Events.getPartialEvents(dataEvents, key, dataProps) })));
-	
-	        var labelProps = (0, _defaults3.default)({ key: "bar-label-" + key }, _this2.getEventState(key, "labels"), _this2.getSharedEventState(key, "labels"), labelComponent.props, _this2.baseProps[key].labels);
-	
-	        if (labelProps && labelProps.text) {
-	          var labelEvents = _this2.getEvents(props, "labels", key);
-	          barLabelComponents.push(_react2.default.cloneElement(labelComponent, Object.assign({
-	            events: _victoryCore.Events.getPartialEvents(labelEvents, key, labelProps)
-	          }, labelProps)));
-	        }
-	      });
-	
-	      if (barLabelComponents.length > 0) {
-	        return _react2.default.createElement(
-	          "g",
-	          null,
-	          barComponents,
-	          barLabelComponents
-	        );
-	      }
-	      return barComponents;
-	    }
-	  }, {
-	    key: "renderContainer",
-	    value: function renderContainer(props, group) {
-	      var parentEvents = this.getEvents(props, "parent", "parent");
-	      var parentProps = (0, _defaults3.default)({}, this.getEventState("parent", "parent"), this.getSharedEventState("parent", "parent"), props.containerComponent.props, this.baseProps.parent);
-	      return _react2.default.cloneElement(props.containerComponent, Object.assign({}, parentProps, { events: _victoryCore.Events.getPartialEvents(parentEvents, "parent", parentProps) }), group);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(this.props, fallbackProps);
-	      var animate = modifiedProps.animate;
-	      var style = modifiedProps.style;
-	      var standalone = modifiedProps.standalone;
+	Bar=function(_React$Component){_inherits(Bar,_React$Component);function Bar(){_classCallCheck(this,Bar);return _possibleConstructorReturn(this,Object.getPrototypeOf(Bar).apply(this,arguments));}_createClass(Bar,[{key:"getVerticalBarPath",value:function getVerticalBarPath(
 	
 	
-	      if (animate) {
-	        var whitelist = ["data", "domain", "height", "padding", "style", "width"];
-	        return _react2.default.createElement(
-	          _victoryCore.VictoryTransition,
-	          { animate: animate, animationWhitelist: whitelist },
-	          _react2.default.createElement(VictoryBar, modifiedProps)
-	        );
-	      }
 	
-	      var styleObject = modifiedProps.theme && modifiedProps.theme.bar ? modifiedProps.theme.bar : fallbackProps.style;
 	
-	      var baseStyles = _victoryCore.Helpers.getStyles(style, styleObject, "auto", "100%");
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { role: "presentation", style: baseStyles.parent },
-	        this.renderData(modifiedProps)
-	      );
 	
-	      return standalone ? this.renderContainer(modifiedProps, group) : group;
-	    }
-	  }]);
 	
-	  return VictoryBar;
-	}(_react2.default.Component);
 	
-	VictoryBar.role = "bar";
-	VictoryBar.defaultTransitions = {
-	  onExit: {
-	    duration: 500,
-	    before: function before() {
-	      return { y: 0, yOffset: 0 };
-	    }
-	  },
-	  onEnter: {
-	    duration: 500,
-	    before: function before() {
-	      return { y: 0, yOffset: 0 };
-	    },
-	    after: function after(datum) {
-	      return { y: datum.y, yOffset: datum.yOffset };
-	    }
-	  }
-	};
-	VictoryBar.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively.
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The categories prop specifies how categorical data for a chart should be ordered.
-	   * This prop should be given as an array of string values, or an object with
-	   * these arrays of values specified for x and y. If this prop is not set,
-	   * categorical data will be plotted in the order it was given in the data array
-	   * @examples ["dogs", "cats", "mice"]
-	   */
-	  categories: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.shape({
-	    x: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    y: _react.PropTypes.arrayOf(_react.PropTypes.string)
-	  })]),
-	  /**
-	   * The data prop specifies the data to be plotted. Data should be in the form of an array
-	   * of data points. Each data point may be any format you wish
-	   * (depending on the `x` and `y` accessor props), but by default, an object
-	   * with x and y properties is expected.
-	   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
-	   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
-	   */
-	  data: _react.PropTypes.array,
-	  /**
-	   * The dataComponent prop takes an entire component which will be used to create bars for
-	   * each datum in the chart. The new element created from the passed dataComponent will be
-	   * provided with the following properties calculated by VictoryBar: datum, index, scale,
-	   * style, events, horizontal (boolean), x, y, and y0. Any of these props may be overridden
-	   * by passing in props to the supplied component, or modified or ignored within the custom
-	   * component itself. If a dataComponent is not provided, VictoryBar will use its default
-	   * Bar component.
-	   */
-	  dataComponent: _react.PropTypes.element,
-	  /**
-	   * The domain prop describes the range of values your bar chart will cover. This prop can be
-	   * given as a array of the minimum and maximum expected values for your bar chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, so "data" and "labels" are all valid targets for VictoryBar events.
-	   * The eventKey may optionally be used to select a single element by index rather than an entire
-	   * set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey keys,
-	   * and a mutation key whose value is a function. The target and eventKey keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     eventKey: "thisOne",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              eventKey: "theOtherOne",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              eventKey: "theOtherOne",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    target: _react.PropTypes.oneOf(["data", "labels", "parent"]),
-	    eventKey: _react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * The name prop is used to reference a component instance when defining shared events.
-	   */
-	  name: _react.PropTypes.string,
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	  /**
-	   * This prop is used to coordinate events between VictoryArea and other Victory
-	   * Components via VictorySharedEvents. This prop should not be set manually.
-	   */
-	  sharedEvents: _react.PropTypes.shape({
-	    events: _react.PropTypes.array,
-	    getEventState: _react.PropTypes.func
-	  }),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The horizontal prop determines whether the bars will be laid vertically or
-	   * horizontally. The bars will be vertical if this prop is false or unspecified,
-	   * or horizontal if the prop is set to true.
-	   */
-	  horizontal: _react.PropTypes.bool,
-	  /**
-	   * The labels prop defines labels that will appear above each bar in your bar chart.
-	   * This prop should be given as an array of values or as a function of data.
-	   * If given as an array, the number of elements in the array should be equal to
-	   * the length of the data array. Labels may also be added directly to the data object
-	   * like data={[{x: 1, y: 1, label: "first"}]}.
-	   * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
-	   */
-	  labels: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.array]),
-	  /**
-	   * The labelComponent prop takes in an entire label component which will be used
-	   * to create labels for each bar in the bar chart. The new element created from
-	   * the passed labelComponent will be supplied with the following properties:
-	   * x, y, y0, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If labelComponent is omitted,
-	   * a new VictoryLabel will be created with props described above.
-	   */
-	  labelComponent: _react.PropTypes.element,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	   * as a d3 scale function, or as an object with scales specified for x and y
-	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryBar with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your VictoryBar. Any valid inline style properties
-	   * will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart. In addition to normal style properties, angle and verticalAnchor
-	   * may also be specified via the labels object, and they will be passed as props to
-	   * VictoryLabel, or any custom labelComponent.
-	   * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The x prop specifies how to access the X value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	   */
-	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The y prop specifies how to access the Y value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryBar: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryBar will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryBar as a solo component, implement the theme directly on
-	  * VictoryBar. If you are wrapping VictoryBar in VictoryChart, VictoryStack, or
-	  * VictoryGroup, please call the theme on the outermost wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryBar.defaultProps = {
-	  data: defaultData,
-	  dataComponent: _react2.default.createElement(_bar2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  padding: 50,
-	  scale: "linear",
-	  standalone: true,
-	  x: "x",
-	  y: "y",
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryBar.getDomain = _domain2.default.getDomainWithZero.bind(_domain2.default);
-	VictoryBar.getData = _data2.default.getData.bind(_data2.default);
-	VictoryBar.getBaseProps = (0, _partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default), fallbackProps);
-	exports.default = VictoryBar;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props,width){var
+	x=props.x;var y0=props.y0;var y=props.y;
+	var size=width/2;
+	return"M "+(x-size)+", "+y0+"\n      L "+(
+	x-size)+", "+y+"\n      L "+(
+	x+size)+", "+y+"\n      L "+(
+	x+size)+", "+y0+"\n      L "+(
+	x-size)+", "+y0;}},{key:"getHorizontalBarPath",value:function getHorizontalBarPath(
+	
+	
+	props,width){var
+	x=props.x;var y0=props.y0;var y=props.y;
+	var size=width/2;
+	return"M "+y0+", "+(x-size)+"\n      L "+
+	y0+", "+(x+size)+"\n      L "+
+	y+", "+(x+size)+"\n      L "+
+	y+", "+(x-size)+"\n      L "+
+	y0+", "+(x-size);}},{key:"getBarPath",value:function getBarPath(
+	
+	
+	props,width){
+	return this.props.horizontal?
+	this.getHorizontalBarPath(props,width):this.getVerticalBarPath(props,width);}},{key:"renderBar",value:function renderBar(
+	
+	
+	path,style,events){var
+	role=this.props.role;
+	return(
+	_react2.default.createElement("path",_extends({d:path,style:style,role:role,shapeRendering:"optimizeSpeed"},events,{__source:{fileName:_jsxFileName,lineNumber:52}})));}},{key:"render",value:function render()
+	
+	
+	
+	{var _props=
+	
+	this.props;var data=_props.data;var events=_props.events;var style=_props.style;var width=_props.width;
+	var padding=this.props.padding.left||this.props.padding;
+	var barWidth=style&&style.width||
+	0.3*(width-2*padding)/data.length;
+	var path=typeof this.props.x==="number"?
+	this.getBarPath(this.props,barWidth):undefined;
+	return this.renderBar(path,style,events);}}]);return Bar;}(_react2.default.Component);Bar.propTypes={datum:_react.PropTypes.object,events:_react.PropTypes.object,horizontal:_react.PropTypes.bool,index:_react.PropTypes.number,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react2.default.PropTypes.number,y:_react2.default.PropTypes.number,y0:_react2.default.PropTypes.number,width:_react.PropTypes.number,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.object]),data:_react.PropTypes.array};exports.default=Bar;
 
 /***/ },
-/* 307 */
+/* 220 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _omit2=__webpack_require__(221);var _omit3=_interopRequireDefault(_omit2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+	var _victoryCore=__webpack_require__(29);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	getScale:function getScale(props){var
+	horizontal=props.horizontal;
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var domain={
+	x:_domain2.default.getDomainWithZero(props,"x"),
+	y:_domain2.default.getDomainWithZero(props,"y")};
 	
-	var _react = __webpack_require__(28);
+	var xScale=_scale2.default.getBaseScale(props,"x").domain(domain.x).range(range.x);
+	var yScale=_scale2.default.getBaseScale(props,"y").domain(domain.y).range(range.y);
+	return{
+	x:horizontal?yScale:xScale,
+	y:horizontal?xScale:yScale};},
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	getBarPosition:function getBarPosition(props,datum,scale){
+	var yOffset=datum.yOffset||0;
+	var xOffset=datum.xOffset||0;
+	var y0=yOffset;
+	var y=datum.y+yOffset;
+	var x=datum.x+xOffset;
+	var formatValue=function formatValue(value,axis){
+	return datum[axis]instanceof Date?new Date(value):value;};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	return{
+	x:scale.x(formatValue(x,"x")),
+	y0:scale.y(formatValue(y0,"y")),
+	y:scale.y(formatValue(y,"y"))};},
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Bar = function (_React$Component) {
-	  _inherits(Bar, _React$Component);
 	
-	  function Bar() {
-	    _classCallCheck(this, Bar);
+	getBarStyle:function getBarStyle(datum,baseStyle){
+	var styleData=(0,_omit3.default)(datum,[
+	"xName","yName","x","y","label"]);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Bar).apply(this, arguments));
-	  }
+	return(0,_defaults3.default)({},styleData,baseStyle);},
 	
-	  _createClass(Bar, [{
-	    key: "getVerticalBarPath",
-	    value: function getVerticalBarPath(props, width) {
-	      var x = props.x;
-	      var y0 = props.y0;
-	      var y = props.y;
 	
-	      var size = width / 2;
-	      return "M " + (x - size) + ", " + y0 + "\n      L " + (x - size) + ", " + y + "\n      L " + (x + size) + ", " + y + "\n      L " + (x + size) + ", " + y0 + "\n      L " + (x - size) + ", " + y0;
-	    }
-	  }, {
-	    key: "getHorizontalBarPath",
-	    value: function getHorizontalBarPath(props, width) {
-	      var x = props.x;
-	      var y0 = props.y0;
-	      var y = props.y;
+	getLabelStyle:function getLabelStyle(style,datum){
+	var labelStyle=(0,_defaults3.default)({
+	angle:datum.angle,
+	textAnchor:datum.textAnchor,
+	verticalAnchor:datum.verticalAnchor},
+	style);
+	return _victoryCore.Helpers.evaluateStyle(labelStyle,datum);},
 	
-	      var size = width / 2;
-	      return "M " + y0 + ", " + (x - size) + "\n      L " + y0 + ", " + (x + size) + "\n      L " + y + ", " + (x + size) + "\n      L " + y + ", " + (x - size) + "\n      L " + y0 + ", " + (x - size);
-	    }
-	  }, {
-	    key: "getBarPath",
-	    value: function getBarPath(props, width) {
-	      return this.props.horizontal ? this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      // TODO better bar width calculation
-	      var barWidth = this.props.style && this.props.style.width || 8;
-	      var path = typeof this.props.x === "number" ? this.getBarPath(this.props, barWidth) : undefined;
-	      return _react2.default.createElement("path", _extends({}, this.props.events, {
-	        d: path,
-	        style: this.props.style,
-	        shapeRendering: "optimizeSpeed"
-	      }));
-	    }
-	  }]);
 	
-	  return Bar;
-	}(_react2.default.Component);
+	getLabel:function getLabel(props,datum,index){
+	var propsLabel=Array.isArray(props.labels)?
+	props.labels[index]:_victoryCore.Helpers.evaluateProp(props.labels,datum);
+	return datum.label||propsLabel;},
 	
-	Bar.propTypes = {
-	  index: _react.PropTypes.number,
-	  events: _react.PropTypes.object,
-	  horizontal: _react.PropTypes.bool,
-	  scale: _react.PropTypes.object,
-	  style: _react.PropTypes.object,
-	  datum: _react.PropTypes.object,
-	  x: _react2.default.PropTypes.number,
-	  y: _react2.default.PropTypes.number,
-	  y0: _react2.default.PropTypes.number
-	};
-	exports.default = Bar;
+	
+	getLabelAnchors:function getLabelAnchors(datum,horizontal){
+	var sign=datum.y>=0?1:-1;
+	if(!horizontal){
+	return{
+	vertical:sign>=0?"end":"start",
+	text:"middle"};}else
+	
+	{
+	return{
+	vertical:"middle",
+	text:sign>=0?"start":"end"};}},
+	
+	
+	
+	
+	getlabelPadding:function getlabelPadding(style,horizontal){
+	var defaultPadding=style.padding||0;
+	return{
+	x:horizontal?defaultPadding:0,
+	y:horizontal?0:defaultPadding};},
+	
+	
+	
+	getBaseProps:function getBaseProps(props,fallbackProps){var _this=this;
+	var defaultStyles=props.theme&&props.theme.bar?props.theme.bar:
+	fallbackProps.style;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var style=_victoryCore.Helpers.getStyles(modifiedProps.style,defaultStyles,"auto","100%");
+	var data=_victoryCore.Events.addEventKeys(modifiedProps,_data2.default.getData(modifiedProps));
+	var scale=this.getScale(modifiedProps);var
+	horizontal=modifiedProps.horizontal;var width=modifiedProps.width;var height=modifiedProps.height;
+	var parentProps={scale:scale,width:width,height:height,data:data,style:style.parent};
+	
+	return data.reduce(function(memo,datum,index){
+	var eventKey=datum.eventKey;
+	var position=_this.getBarPosition(modifiedProps,datum,scale);
+	var barStyle=_this.getBarStyle(datum,style.data);
+	var dataProps=_extends(
+	{
+	style:_victoryCore.Helpers.evaluateStyle(barStyle,datum),
+	index:index,
+	datum:datum,
+	scale:scale,
+	horizontal:horizontal,
+	padding:modifiedProps.padding,
+	width:modifiedProps.width,
+	data:data},
+	
+	position);
+	
+	
+	var text=_this.getLabel(modifiedProps,datum,index);
+	var labelPadding=style.labels.padding;
+	var labelStyleObj=datum.y<0?_extends({},style.labels,
+	{padding:labelPadding*-Math.abs(labelPadding/2.5)}):style.labels;
+	var labelStyle=_this.getLabelStyle(labelStyleObj,datum);
+	var padding=_this.getlabelPadding(labelStyle,horizontal);
+	var anchors=_this.getLabelAnchors(datum,horizontal);
+	var labelPosition={
+	x:horizontal?position.y:position.x,
+	y:horizontal?position.x:position.y};
+	
+	var labelProps={
+	style:labelStyle,
+	x:labelPosition.x+padding.x,
+	y:labelPosition.y-padding.y,
+	y0:position.y0,
+	text:text,
+	index:index,
+	scale:scale,
+	datum:dataProps.datum,
+	textAnchor:labelStyle.textAnchor||anchors.text,
+	verticalAnchor:labelStyle.verticalAnchor||anchors.vertical,
+	angle:labelStyle.angle};
+	
+	
+	memo[eventKey]={
+	data:dataProps,
+	labels:labelProps};
+	
+	return memo;},
+	{parent:parentProps});}};
 
 /***/ },
-/* 308 */
+/* 221 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _omit2 = __webpack_require__(309);
-	
-	var _omit3 = _interopRequireDefault(_omit2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _scale = __webpack_require__(215);
-	
-	var _scale2 = _interopRequireDefault(_scale);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	exports.default = {
-	  getScale: function getScale(props) {
-	    var horizontal = props.horizontal;
-	
-	    var range = {
-	      x: _victoryCore.Helpers.getRange(props, "x"),
-	      y: _victoryCore.Helpers.getRange(props, "y")
-	    };
-	    var domain = {
-	      x: _domain2.default.getDomainWithZero(props, "x"),
-	      y: _domain2.default.getDomainWithZero(props, "y")
-	    };
-	    var xScale = _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x);
-	    var yScale = _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y);
-	    return {
-	      x: horizontal ? yScale : xScale,
-	      y: horizontal ? xScale : yScale
-	    };
-	  },
-	  getBarPosition: function getBarPosition(props, datum, scale) {
-	    var yOffset = datum.yOffset || 0;
-	    var xOffset = datum.xOffset || 0;
-	    var y0 = yOffset;
-	    var y = datum.y + yOffset;
-	    var x = datum.x + xOffset;
-	    var formatValue = function formatValue(value, axis) {
-	      return datum[axis] instanceof Date ? new Date(value) : value;
-	    };
-	    return {
-	      x: scale.x(formatValue(x, "x")),
-	      y0: scale.y(formatValue(y0, "y")),
-	      y: scale.y(formatValue(y, "y"))
-	    };
-	  },
-	  getBarStyle: function getBarStyle(datum, baseStyle) {
-	    var styleData = (0, _omit3.default)(datum, ["xName", "yName", "x", "y", "label"]);
-	    return (0, _defaults3.default)({}, styleData, baseStyle);
-	  },
-	  getLabelStyle: function getLabelStyle(style, datum) {
-	    var labelStyle = (0, _defaults3.default)({
-	      angle: datum.angle,
-	      textAnchor: datum.textAnchor,
-	      verticalAnchor: datum.verticalAnchor
-	    }, style);
-	    return _victoryCore.Helpers.evaluateStyle(labelStyle, datum);
-	  },
-	  getLabel: function getLabel(props, datum, index) {
-	    var propsLabel = Array.isArray(props.labels) ? props.labels[index] : _victoryCore.Helpers.evaluateProp(props.labels, datum);
-	    return datum.label || propsLabel;
-	  },
-	  getLabelAnchors: function getLabelAnchors(datum, horizontal) {
-	    var sign = datum.y >= 0 ? 1 : -1;
-	    if (!horizontal) {
-	      return {
-	        vertical: sign >= 0 ? "end" : "start",
-	        text: "middle"
-	      };
-	    } else {
-	      return {
-	        vertical: "middle",
-	        text: sign >= 0 ? "start" : "end"
-	      };
-	    }
-	  },
-	  getlabelPadding: function getlabelPadding(style, horizontal) {
-	    var defaultPadding = style.padding || 0;
-	    return {
-	      x: horizontal ? defaultPadding : 0,
-	      y: horizontal ? 0 : defaultPadding
-	    };
-	  },
-	  getBaseProps: function getBaseProps(props, fallbackProps) {
-	    var _this = this;
-	
-	    var defaultStyles = props.theme && props.theme.bar ? props.theme.bar : fallbackProps.style;
-	    var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	    var style = _victoryCore.Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-	    var data = _victoryCore.Events.addEventKeys(modifiedProps, _data2.default.getData(props));
-	    var scale = this.getScale(modifiedProps);
-	    var horizontal = modifiedProps.horizontal;
-	    var width = modifiedProps.width;
-	    var height = modifiedProps.height;
-	
-	    var parentProps = { scale: scale, width: width, height: height, data: data, style: style.parent };
-	
-	    return data.reduce(function (memo, datum, index) {
-	      var eventKey = datum.eventKey;
-	      var position = _this.getBarPosition(modifiedProps, datum, scale);
-	      var barStyle = _this.getBarStyle(datum, style.data);
-	      var dataProps = Object.assign({
-	        style: _victoryCore.Helpers.evaluateStyle(barStyle, datum),
-	        index: index,
-	        datum: datum,
-	        scale: scale,
-	        horizontal: horizontal
-	      }, position);
-	
-	      var text = _this.getLabel(modifiedProps, datum, index);
-	      var labelPadding = style.labels.padding;
-	      var labelStyleObj = datum.y < 0 ? Object.assign({}, style.labels, { padding: labelPadding * -Math.abs(labelPadding / 2.5) }) : style.labels;
-	      var labelStyle = _this.getLabelStyle(labelStyleObj, datum);
-	      var padding = _this.getlabelPadding(labelStyle, horizontal);
-	      var anchors = _this.getLabelAnchors(datum, horizontal);
-	      var labelPosition = {
-	        x: horizontal ? position.y : position.x,
-	        y: horizontal ? position.x : position.y
-	      };
-	      var labelProps = {
-	        style: labelStyle,
-	        x: labelPosition.x + padding.x,
-	        y: labelPosition.y - padding.y,
-	        y0: position.y0,
-	        text: text,
-	        index: index,
-	        scale: scale,
-	        datum: dataProps.datum,
-	        textAnchor: labelStyle.textAnchor || anchors.text,
-	        verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-	        angle: labelStyle.angle
-	      };
-	
-	      memo[eventKey] = {
-	        data: dataProps,
-	        labels: labelProps
-	      };
-	      return memo;
-	    }, { parent: parentProps });
-	  }
-	};
-
-/***/ },
-/* 309 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var arrayMap = __webpack_require__(203),
-	    baseDifference = __webpack_require__(188),
-	    baseFlatten = __webpack_require__(217),
-	    basePick = __webpack_require__(310),
-	    getAllKeysIn = __webpack_require__(312),
+	var arrayMap = __webpack_require__(124),
+	    baseDifference = __webpack_require__(137),
+	    baseFlatten = __webpack_require__(125),
+	    basePick = __webpack_require__(126),
+	    getAllKeysIn = __webpack_require__(222),
 	    rest = __webpack_require__(11),
-	    toKey = __webpack_require__(277);
+	    toKey = __webpack_require__(42);
 	
 	/**
 	 * The opposite of `_.pick`; this method creates an object composed of the
@@ -24382,71 +20564,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 310 */
+/* 222 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayReduce = __webpack_require__(311);
-	
-	/**
-	 * The base implementation of `_.pick` without support for individual
-	 * property identifiers.
-	 *
-	 * @private
-	 * @param {Object} object The source object.
-	 * @param {string[]} props The property identifiers to pick.
-	 * @returns {Object} Returns the new object.
-	 */
-	function basePick(object, props) {
-	  object = Object(object);
-	  return arrayReduce(props, function(result, key) {
-	    if (key in object) {
-	      result[key] = object[key];
-	    }
-	    return result;
-	  }, {});
-	}
-	
-	module.exports = basePick;
-
-
-/***/ },
-/* 311 */
-/***/ function(module, exports) {
-
-	/**
-	 * A specialized version of `_.reduce` for arrays without support for
-	 * iteratee shorthands.
-	 *
-	 * @private
-	 * @param {Array} [array] The array to iterate over.
-	 * @param {Function} iteratee The function invoked per iteration.
-	 * @param {*} [accumulator] The initial value.
-	 * @param {boolean} [initAccum] Specify using the first element of `array` as
-	 *  the initial value.
-	 * @returns {*} Returns the accumulated value.
-	 */
-	function arrayReduce(array, iteratee, accumulator, initAccum) {
-	  var index = -1,
-	      length = array ? array.length : 0;
-	
-	  if (initAccum && length) {
-	    accumulator = array[++index];
-	  }
-	  while (++index < length) {
-	    accumulator = iteratee(accumulator, array[index], index, array);
-	  }
-	  return accumulator;
-	}
-	
-	module.exports = arrayReduce;
-
-
-/***/ },
-/* 312 */
-/***/ function(module, exports, __webpack_require__) {
-
-	var baseGetAllKeys = __webpack_require__(313),
-	    getSymbolsIn = __webpack_require__(315),
+	var baseGetAllKeys = __webpack_require__(223),
+	    getSymbolsIn = __webpack_require__(225),
 	    keysIn = __webpack_require__(13);
 	
 	/**
@@ -24465,10 +20587,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 313 */
+/* 223 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayPush = __webpack_require__(314),
+	var arrayPush = __webpack_require__(224),
 	    isArray = __webpack_require__(22);
 	
 	/**
@@ -24491,7 +20613,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 314 */
+/* 224 */
 /***/ function(module, exports) {
 
 	/**
@@ -24517,12 +20639,12 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 315 */
+/* 225 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayPush = __webpack_require__(314),
-	    getPrototype = __webpack_require__(254),
-	    getSymbols = __webpack_require__(316);
+	var arrayPush = __webpack_require__(224),
+	    getPrototype = __webpack_require__(83),
+	    getSymbols = __webpack_require__(226);
 	
 	/** Built-in value references. */
 	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
@@ -24548,10 +20670,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 316 */
+/* 226 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var stubArray = __webpack_require__(317);
+	var stubArray = __webpack_require__(227);
 	
 	/** Built-in value references. */
 	var getOwnPropertySymbols = Object.getOwnPropertySymbols;
@@ -24578,7 +20700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 317 */
+/* 227 */
 /***/ function(module, exports) {
 
 	/**
@@ -24607,2521 +20729,2404 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 318 */
+/* 228 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-scatter/victory-scatter.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _partialRight2 = __webpack_require__(160);
-	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
-	
-	var _isFunction2 = __webpack_require__(182);
-	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
-	
-	var _defaults2 = __webpack_require__(2);
-	
-	var _defaults3 = _interopRequireDefault(_defaults2);
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(28);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _point = __webpack_require__(319);
-	
-	var _point2 = _interopRequireDefault(_point);
-	
-	var _domain = __webpack_require__(228);
-	
-	var _domain2 = _interopRequireDefault(_domain);
-	
-	var _data = __webpack_require__(229);
-	
-	var _data2 = _interopRequireDefault(_data);
-	
-	var _victoryCore = __webpack_require__(29);
-	
-	var _helperMethods = __webpack_require__(321);
-	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var fallbackProps = {
-	  props: {
-	    width: 450,
-	    height: 300
-	  },
-	  style: {
-	    data: {
-	      fill: "#756f6a",
-	      opacity: 1,
-	      stroke: "transparent",
-	      strokeWidth: 0
-	    },
-	    labels: {
-	      stroke: "transparent",
-	      fill: "#756f6a",
-	      fontFamily: "Helvetica",
-	      fontSize: 13,
-	      textAnchor: "middle",
-	      padding: 10
-	    }
-	  }
-	};
-	
-	var VictoryScatter = function (_React$Component) {
-	  _inherits(VictoryScatter, _React$Component);
-	
-	  function VictoryScatter() {
-	    _classCallCheck(this, VictoryScatter);
-	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryScatter).call(this));
-	
-	    _this.state = {};
-	    var getScopedEvents = _victoryCore.Events.getScopedEvents.bind(_this);
-	    _this.getEvents = (0, _partialRight3.default)(_victoryCore.Events.getEvents.bind(_this), getScopedEvents);
-	    _this.getEventState = _victoryCore.Events.getEventState.bind(_this);
-	    return _this;
-	  }
-	
-	  _createClass(VictoryScatter, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.setupEvents(this.props);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.setupEvents(newProps);
-	    }
-	  }, {
-	    key: "setupEvents",
-	    value: function setupEvents(props) {
-	      var sharedEvents = props.sharedEvents;
-	
-	      this.baseProps = _helperMethods2.default.getBaseProps(props, fallbackProps);
-	      this.dataKeys = Object.keys(this.baseProps).filter(function (key) {
-	        return key !== "parent";
-	      });
-	      this.getSharedEventState = sharedEvents && (0, _isFunction3.default)(sharedEvents.getEventState) ? sharedEvents.getEventState : function () {
-	        return undefined;
-	      };
-	    }
-	  }, {
-	    key: "renderData",
-	    value: function renderData(props) {
-	      var _this2 = this;
-	
-	      var dataComponent = props.dataComponent;
-	      var labelComponent = props.labelComponent;
-	
-	      var pointComponents = [];
-	      var pointLabelComponents = [];
-	      this.dataKeys.forEach(function (key) {
-	        var dataEvents = _this2.getEvents(props, "data", key);
-	        var dataProps = (0, _defaults3.default)({ key: "scatter-" + key }, _this2.getEventState(key, "data"), _this2.getSharedEventState(key, "data"), dataComponent.props, _this2.baseProps[key].data);
-	
-	        pointComponents.push(_react2.default.cloneElement(dataComponent, Object.assign({}, dataProps, { events: _victoryCore.Events.getPartialEvents(dataEvents, key, dataProps) })));
-	
-	        var labelProps = (0, _defaults3.default)({ key: "scatter-label-" + key }, _this2.getEventState(key, "labels"), _this2.getSharedEventState(key, "labels"), labelComponent.props, _this2.baseProps[key].labels);
-	        if (labelProps && labelProps.text) {
-	          var labelEvents = _this2.getEvents(props, "labels", key);
-	          pointLabelComponents.push(_react2.default.cloneElement(labelComponent, Object.assign({
-	            events: _victoryCore.Events.getPartialEvents(labelEvents, key, labelProps)
-	          }, labelProps)));
-	        }
-	      });
-	
-	      if (pointLabelComponents.length > 0) {
-	        return _react2.default.createElement(
-	          "g",
-	          null,
-	          pointComponents,
-	          pointLabelComponents
-	        );
-	      }
-	      return pointComponents;
-	    }
-	  }, {
-	    key: "renderContainer",
-	    value: function renderContainer(props, group) {
-	      var parentEvents = this.getEvents(props, "parent", "parent");
-	      var parentProps = (0, _defaults3.default)({}, this.getEventState("parent", "parent"), this.getSharedEventState("parent", "parent"), props.containerComponent.props, this.baseProps.parent);
-	      return _react2.default.cloneElement(props.containerComponent, Object.assign({}, parentProps, { events: _victoryCore.Events.getPartialEvents(parentEvents, "parent", parentProps) }), group);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(this.props, fallbackProps);
-	      var animate = modifiedProps.animate;
-	      var style = modifiedProps.style;
-	      var standalone = modifiedProps.standalone;
+	var _point=__webpack_require__(229);var _point2=_interopRequireDefault(_point);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
+	var _victoryCore=__webpack_require__(29);
 	
 	
-	      if (animate) {
-	        // Do less work by having `VictoryAnimation` tween only values that
-	        // make sense to tween. In the future, allow customization of animated
-	        // prop whitelist/blacklist?
-	        var whitelist = ["data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width", "x", "y"];
-	        return _react2.default.createElement(
-	          _victoryCore.VictoryTransition,
-	          { animate: animate, animationWhitelist: whitelist },
-	          _react2.default.createElement(VictoryScatter, modifiedProps)
-	        );
-	      }
 	
-	      var styleObject = modifiedProps.theme && modifiedProps.theme.scatter ? modifiedProps.theme.scatter : fallbackProps.style;
+	var _helperMethods=__webpack_require__(231);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	      var baseStyles = _victoryCore.Helpers.getStyles(style, styleObject, "auto", "100%");
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300},
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { role: "presentation", style: baseStyles.parent },
-	        this.renderData(modifiedProps)
-	      );
+	style:{
+	data:{
+	fill:"#756f6a",
+	opacity:1,
+	stroke:"transparent",
+	strokeWidth:0},
 	
-	      return standalone ? this.renderContainer(modifiedProps, group) : group;
-	    }
-	  }]);
+	labels:{
+	stroke:"transparent",
+	fill:"#756f6a",
+	fontFamily:"Helvetica",
+	fontSize:13,
+	textAnchor:"middle",
+	padding:10}}};var
 	
-	  return VictoryScatter;
-	}(_react2.default.Component);
 	
-	VictoryScatter.role = "scatter";
-	VictoryScatter.defaultTransitions = {
-	  onExit: {
-	    duration: 600,
-	    before: function before() {
-	      return { opacity: 0 };
-	    }
-	  },
-	  onEnter: {
-	    duration: 600,
-	    before: function before() {
-	      return { opacity: 0 };
-	    },
-	    after: function after(datum) {
-	      return { opacity: datum.opacity || 1 };
-	    }
-	  }
-	};
-	VictoryScatter.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively.
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The categories prop specifies how categorical data for a chart should be ordered.
-	   * This prop should be given as an array of string values, or an object with
-	   * these arrays of values specified for x and y. If this prop is not set,
-	   * categorical data will be plotted in the order it was given in the data array
-	   * @examples ["dogs", "cats", "mice"]
-	   */
-	  categories: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.shape({
-	    x: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    y: _react.PropTypes.arrayOf(_react.PropTypes.string)
-	  })]),
-	  /**
-	   * The bubbleProperty prop indicates which property of the data object should be used
-	   * to scale data points in a bubble chart
-	   */
-	  bubbleProperty: _react.PropTypes.string,
-	  /**
-	   * The data prop specifies the data to be plotted.
-	   * Data should be in the form of an array of data points.
-	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	   * but by default, an object with x and y properties is expected.
-	   * Other properties may be added to the data point object, such as fill, size, and symbol.
-	   * These properties will be interpreted and applied to the individual lines
-	   * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
-	   */
 	
-	  data: _react.PropTypes.array,
-	  /**
-	   * The dataComponent prop takes an entire component which will be used to create points for
-	   * each datum in the chart. The new element created from the passed dataComponent will be
-	   * provided with the following properties calculated by VictoryScatter: datum, index, scale,
-	   * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
-	   * props to the supplied component, or modified or ignored within the custom component itself.
-	   * If a dataComponent is not provided, VictoryScatter will use its default Point component.
-	   */
-	  dataComponent: _react.PropTypes.element,
-	  /**
-	   * The domain prop describes the range of values your chart will include. This prop can be
-	   * given as a array of the minimum and maximum expected values for your chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, so "data" and "labels" are all valid targets for VictoryScatter
-	   * events. The eventKey may optionally be used to select a single element by index rather than
-	   * an entire set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey keys,
-	   * and a mutation key whose value is a function. The target and eventKey keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     eventKey: "thisOne",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              eventKey: "theOtherOne",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              eventKey: "theOtherOne",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    target: _react.PropTypes.oneOf(["data", "labels", "parent"]),
-	    eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * The name prop is used to reference a component instance when defining shared events.
-	   */
-	  name: _react.PropTypes.string,
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	  /**
-	   * This prop is used to coordinate events between VictoryArea and other Victory
-	   * Components via VictorySharedEvents. This prop should not be set manually.
-	   */
-	  sharedEvents: _react.PropTypes.shape({
-	    events: _react.PropTypes.array,
-	    getEventState: _react.PropTypes.func
-	  }),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The labelComponent prop takes in an entire label component which will be used
-	   * to create labels for each point in the scatter. The new element created from
-	   * the passed labelComponent will be supplied with the following properties:
-	   * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
-	   * any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If labelComponent is omitted,
-	   * a new VictoryLabel will be created with props described above.
-	   */
-	  labelComponent: _react.PropTypes.element,
-	  /**
-	   * The labels prop defines labels that will appear with each point in your chart.
-	   * This prop should be given as an array of values or as a function of data.
-	   * If given as an array, the number of elements in the array should be equal to
-	   * the length of the data array. Labels may also be added directly to the data object
-	   * like data={[{x: 1, y: 1, label: "first"}]}.
-	   * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
-	   */
-	  labels: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.array]),
-	  /**
-	   * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
-	   */
-	  maxBubbleSize: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The samples prop specifies how many individual points to plot when plotting
-	   * y as a function of x. Samples is ignored if x props are provided instead.
-	   */
-	  samples: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	   * as a d3 scale function, or as an object with scales specified for x and y
-	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The size prop determines how to scale each data point
-	   */
-	  size: _react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative, _react.PropTypes.func]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryScatter with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your VictoryScatter. Any valid inline style properties
-	   * will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart. In addition to normal style properties, angle and verticalAnchor
-	   * may also be specified via the labels object, and they will be passed as props to
-	   * VictoryLabel, or any custom labelComponent.
-	   * @examples {data: {fill: "red"}, labels: {fontSize: 12}}
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The symbol prop determines which symbol should be drawn to represent data points.
-	   */
-	  symbol: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]), _react.PropTypes.func]),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The x prop specifies how to access the X value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	   */
-	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The y prop specifies how to access the Y value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
-	   */
-	  y: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryScatter: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryScatter will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryScatter as a solo component, implement the theme directly on
-	  * VictoryScatter. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
-	  * VictoryGroup, please call the theme on the outermost wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryScatter.defaultProps = {
-	  padding: 50,
-	  samples: 50,
-	  scale: "linear",
-	  size: 3,
-	  standalone: true,
-	  symbol: "circle",
-	  x: "x",
-	  y: "y",
-	  dataComponent: _react2.default.createElement(_point2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryScatter.getDomain = _domain2.default.getDomain.bind(_domain2.default);
-	VictoryScatter.getData = _data2.default.getData.bind(_data2.default);
-	VictoryScatter.getBaseProps = (0, _partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default), fallbackProps);
-	exports.default = VictoryScatter;
+	
+	VictoryScatter=function(_React$Component){_inherits(VictoryScatter,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryScatter(){_classCallCheck(this,VictoryScatter);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryScatter).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryScatter,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.dataKeys=Object.keys(this.baseProps).filter(function(key){return key!=="parent";});
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
+	
+	
+	props){var _this2=this;var
+	dataComponent=props.dataComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;var
+	role=VictoryScatter.role;
+	var pointComponents=[];
+	var pointLabelComponents=[];
+	this.dataKeys.forEach(function(key,index){
+	var dataEvents=_this2.getEvents(props,"data",key);
+	var dataProps=(0,_defaults3.default)(
+	{index:index,key:role+"-"+key,role:role+"-"+index},
+	_this2.getEventState(key,"data"),
+	_this2.getSharedEventState(key,"data"),
+	dataComponent.props,
+	_this2.baseProps[key].data);
+	
+	
+	pointComponents.push(_react2.default.cloneElement(dataComponent,_extends(
+	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,key,dataProps)})));
+	
+	
+	var labelProps=(0,_defaults3.default)(
+	{key:"scatter-label-"+key,index:index},
+	_this2.getEventState(key,"labels"),
+	_this2.getSharedEventState(key,"labels"),
+	labelComponent.props,
+	_this2.baseProps[key].labels);
+	
+	if(labelProps&&labelProps.text){
+	var labelEvents=_this2.getEvents(props,"labels",key);
+	pointLabelComponents.push(_react2.default.cloneElement(labelComponent,_extends({
+	events:_victoryCore.Events.getPartialEvents(labelEvents,key,labelProps)},
+	labelProps)));}});
+	
+	
+	
+	if(pointLabelComponents.length>0){
+	return _react2.default.cloneElement.apply(_react2.default,[
+	groupComponent,{}].concat(pointComponents,pointLabelComponents));}
+	
+	
+	return pointComponents;}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	animate=modifiedProps.animate;var style=modifiedProps.style;var standalone=modifiedProps.standalone;
+	
+	if(animate){
+	
+	
+	
+	var whitelist=[
+	"data","domain","height","maxBubbleSize","padding","samples","size",
+	"style","width","x","y"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:479}},
+	_react2.default.createElement(this.constructor,modifiedProps)));}
+	
+	
+	
+	
+	var styleObject=modifiedProps.theme&&modifiedProps.theme.scatter?
+	modifiedProps.theme.scatter:
+	fallbackProps.style;
+	
+	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
+	
+	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
+	
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryScatter;}(_react2.default.Component);VictoryScatter.role="scatter";VictoryScatter.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryScatter.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),bubbleProperty:_react.PropTypes.string,data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,labelComponent:_react.PropTypes.element,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),maxBubbleSize:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),size:_react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative,_react.PropTypes.func]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),symbol:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle","diamond","plus","square","star","triangleDown","triangleUp"]),_react.PropTypes.func]),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryScatter.defaultProps={padding:50,samples:50,scale:"linear",size:3,standalone:true,symbol:"circle",x:"x",y:"y",dataComponent:_react2.default.createElement(_point2.default,{__source:{fileName:_jsxFileName,lineNumber:363}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:364}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:365}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:366}})};VictoryScatter.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryScatter.getData=_data2.default.getData.bind(_data2.default);VictoryScatter.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryScatter;
 
 /***/ },
-/* 319 */
+/* 229 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-scatter/point.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _pathHelpers=__webpack_require__(230);var _pathHelpers2=_interopRequireDefault(_pathHelpers);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	Point=function(_React$Component){_inherits(Point,_React$Component);function Point(){_classCallCheck(this,Point);return _possibleConstructorReturn(this,Object.getPrototypeOf(Point).apply(this,arguments));}_createClass(Point,[{key:"getPath",value:function getPath(
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _pathHelpers = __webpack_require__(320);
 	
-	var _pathHelpers2 = _interopRequireDefault(_pathHelpers);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var Point = function (_React$Component) {
-	  _inherits(Point, _React$Component);
 	
-	  function Point() {
-	    _classCallCheck(this, Point);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Point).apply(this, arguments));
-	  }
 	
-	  _createClass(Point, [{
-	    key: "getPath",
-	    value: function getPath(props) {
-	      var pathFunctions = {
-	        circle: _pathHelpers2.default.circle,
-	        square: _pathHelpers2.default.square,
-	        diamond: _pathHelpers2.default.diamond,
-	        triangleDown: _pathHelpers2.default.triangleDown,
-	        triangleUp: _pathHelpers2.default.triangleUp,
-	        plus: _pathHelpers2.default.plus,
-	        star: _pathHelpers2.default.star
-	      };
-	      return pathFunctions[props.symbol].call(null, props.x, props.y, props.size);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement("path", _extends({}, this.props.events, {
-	        style: this.props.style,
-	        d: this.getPath(this.props),
-	        shapeRendering: "optimizeSpeed"
-	      }));
-	    }
-	  }]);
 	
-	  return Point;
-	}(_react2.default.Component);
 	
-	Point.propTypes = {
-	  index: _react2.default.PropTypes.number,
-	  datum: _react.PropTypes.object,
-	  events: _react.PropTypes.object,
-	  symbol: _react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"]), _react.PropTypes.func]),
-	  size: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.func]),
-	  scale: _react.PropTypes.object,
-	  style: _react.PropTypes.object,
-	  x: _react2.default.PropTypes.number,
-	  y: _react2.default.PropTypes.number
-	};
-	exports.default = Point;
+	
+	
+	
+	
+	
+	
+	props){
+	var pathFunctions={
+	circle:_pathHelpers2.default.circle,
+	square:_pathHelpers2.default.square,
+	diamond:_pathHelpers2.default.diamond,
+	triangleDown:_pathHelpers2.default.triangleDown,
+	triangleUp:_pathHelpers2.default.triangleUp,
+	plus:_pathHelpers2.default.plus,
+	star:_pathHelpers2.default.star};
+	
+	return pathFunctions[props.symbol].call(null,props.x,props.y,props.size);}},{key:"renderPoint",value:function renderPoint(
+	
+	
+	path,style,events){var
+	role=this.props.role;
+	return(
+	_react2.default.createElement("path",_extends({},events,{d:path,role:role,shapeRendering:"optimizeSpeed",style:style,__source:{fileName:_jsxFileName,lineNumber:43}})));}},{key:"render",value:function render()
+	
+	
+	
+	{
+	return this.renderPoint(this.getPath(this.props),this.props.style,this.props.events);}}]);return Point;}(_react2.default.Component);Point.propTypes={datum:_react.PropTypes.object,events:_react.PropTypes.object,index:_react.PropTypes.number,role:_react.PropTypes.string,size:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),symbol:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle","diamond","plus","square","star","triangleDown","triangleUp"]),_react.PropTypes.func]),scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number};exports.default=Point;
 
 /***/ },
-/* 320 */
+/* 230 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _range2=__webpack_require__(148);var _range3=_interopRequireDefault(_range2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
+	circle:function circle(x,y,size){
+	return"M "+x+", "+y+" m "+-size+", 0\n      a "+
+	size+", "+size+" 0 1,0 "+size*2+",0\n      a "+
+	size+", "+size+" 0 1,0 "+-size*2+",0";},
 	
-	var _range2 = __webpack_require__(210);
 	
-	var _range3 = _interopRequireDefault(_range2);
+	square:function square(x,y,size){
+	var baseSize=0.87*size;
+	return"M "+(x-baseSize)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize)+", "+(y-baseSize)+"\n      L "+(
+	x-baseSize)+", "+(y-baseSize)+"\n      z";},
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	exports.default = {
-	  circle: function circle(x, y, size) {
-	    return "M " + x + ", " + y + " m " + -size + ", 0\n      a " + size + ", " + size + " 0 1,0 " + size * 2 + ",0\n      a " + size + ", " + size + " 0 1,0 " + -size * 2 + ",0";
-	  },
-	  square: function square(x, y, size) {
-	    var baseSize = 0.87 * size;
-	    return "M " + (x - baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y + baseSize) + "\n      L " + (x + baseSize) + ", " + (y - baseSize) + "\n      L " + (x - baseSize) + ", " + (y - baseSize) + "\n      z";
-	  },
-	  diamond: function diamond(x, y, size) {
-	    var baseSize = 0.87 * size;
-	    var length = Math.sqrt(2 * (baseSize * baseSize));
-	    return "M " + x + ", " + (y + length) + "\n      L " + (x + length) + ", " + y + "\n      L " + x + ", " + (y - length) + "\n      L " + (x - length) + ", " + y + "\n      z";
-	  },
-	  triangleDown: function triangleDown(x, y, size) {
-	    var height = size / 2 * Math.sqrt(3);
-	    return "M " + (x - size) + ", " + (y - size) + "\n      L " + (x + size) + ", " + (y - size) + "\n      L " + x + ", " + (y + height) + "\n      z";
-	  },
-	  triangleUp: function triangleUp(x, y, size) {
-	    var height = size / 2 * Math.sqrt(3);
-	    return "M " + (x - size) + ", " + (y + size) + "\n      L " + (x + size) + ", " + (y + size) + "\n      L " + x + ", " + (y - height) + "\n      z";
-	  },
-	  plus: function plus(x, y, size) {
-	    var baseSize = 1.1 * size;
-	    return "M " + (x - baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize) + "\n      L " + (x + baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x + baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x + baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize) + "\n      L " + (x - baseSize / 2.5) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y - baseSize / 2.5) + "\n      L " + (x - baseSize) + ", " + (y + baseSize / 2.5) + "\n      L " + (x - baseSize / 2.5) + ", " + (y + baseSize / 2.5) + "\n      z";
-	  },
-	  star: function star(x, y, size) {
-	    var baseSize = 1.35 * size;
-	    var angle = Math.PI / 5;
-	    var starCoords = (0, _range3.default)(10).map(function (index) {
-	      var length = index % 2 === 0 ? baseSize : baseSize / 2;
-	      return length * Math.sin(angle * (index + 1)) + x + ",\n        " + (length * Math.cos(angle * (index + 1)) + y);
-	    });
-	    return "M " + starCoords.join("L") + " z";
-	  }
-	};
+	
+	diamond:function diamond(x,y,size){
+	var baseSize=0.87*size;
+	var length=Math.sqrt(2*(baseSize*baseSize));
+	return"M "+x+", "+(y+length)+"\n      L "+(
+	x+length)+", "+y+"\n      L "+
+	x+", "+(y-length)+"\n      L "+(
+	x-length)+", "+y+"\n      z";},
+	
+	
+	
+	triangleDown:function triangleDown(x,y,size){
+	var height=size/2*Math.sqrt(3);
+	return"M "+(x-size)+", "+(y-size)+"\n      L "+(
+	x+size)+", "+(y-size)+"\n      L "+
+	x+", "+(y+height)+"\n      z";},
+	
+	
+	
+	triangleUp:function triangleUp(x,y,size){
+	var height=size/2*Math.sqrt(3);
+	return"M "+(x-size)+", "+(y+size)+"\n      L "+(
+	x+size)+", "+(y+size)+"\n      L "+
+	x+", "+(y-height)+"\n      z";},
+	
+	
+	
+	plus:function plus(x,y,size){
+	var baseSize=1.1*size;
+	return"M "+(x-baseSize/2.5)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y+baseSize/2.5)+"\n      L "+(
+	x+baseSize)+", "+(y+baseSize/2.5)+"\n      L "+(
+	x+baseSize)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y-baseSize)+"\n      L "+(
+	x-baseSize/2.5)+", "+(y-baseSize)+"\n      L "+(
+	x-baseSize/2.5)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x-baseSize)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x-baseSize)+", "+(y+baseSize/2.5)+"\n      L "+(
+	x-baseSize/2.5)+", "+(y+baseSize/2.5)+"\n      z";},
+	
+	
+	
+	star:function star(x,y,size){
+	var baseSize=1.35*size;
+	var angle=Math.PI/5;
+	var starCoords=(0,_range3.default)(10).map(function(index){
+	var length=index%2===0?baseSize:baseSize/2;
+	return length*Math.sin(angle*(index+1))+x+",\n        "+(
+	length*Math.cos(angle*(index+1))+y);});
+	
+	return"M "+starCoords.join("L")+" z";}};
 
 /***/ },
-/* 321 */
+/* 231 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _omit2=__webpack_require__(221);var _omit3=_interopRequireDefault(_omit2);var _pick2=__webpack_require__(123);var _pick3=_interopRequireDefault(_pick2);var _values2=__webpack_require__(171);var _values3=_interopRequireDefault(_values2);
+	var _victoryCore=__webpack_require__(29);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
+	getBaseProps:function getBaseProps(props,fallbackProps){var _this=this;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var calculatedValues=this.getCalculatedValues(modifiedProps,fallbackProps);var
+	data=calculatedValues.data;var style=calculatedValues.style;var scale=calculatedValues.scale;var
+	height=modifiedProps.height;var width=modifiedProps.width;
+	var parentProps={style:style.parent,scale:scale,data:data,height:height,width:width};
+	return data.reduce(function(memo,datum,index){
+	var eventKey=datum.eventKey;
+	var x=scale.x(datum.x);
+	var y=scale.y(datum.y);
+	var size=_this.getSize(datum,modifiedProps,calculatedValues);
+	var symbol=_this.getSymbol(datum,modifiedProps);
+	var dataStyle=_this.getDataStyles(datum,style.data);
+	var dataProps={
+	x:x,y:y,size:size,scale:scale,datum:datum,symbol:symbol,index:index,style:dataStyle};
 	
-	var _defaults2 = __webpack_require__(2);
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
+	var text=_this.getLabelText(modifiedProps,datum,index);
+	var labelStyle=_this.getLabelStyle(style.labels,dataProps);
+	var labelProps={
+	style:labelStyle,
+	x:x,
+	y:y-labelStyle.padding,
+	text:text,
+	index:index,
+	scale:scale,
+	datum:dataProps.datum,
+	textAnchor:labelStyle.textAnchor,
+	verticalAnchor:labelStyle.verticalAnchor||"end",
+	angle:labelStyle.angle};
 	
-	var _omit2 = __webpack_require__(309);
+	memo[eventKey]={
+	data:dataProps,
+	labels:labelProps};
 	
-	var _omit3 = _interopRequireDefault(_omit2);
+	return memo;},
+	{parent:parentProps});},
 	
-	var _pick2 = __webpack_require__(322);
 	
-	var _pick3 = _interopRequireDefault(_pick2);
+	getCalculatedValues:function getCalculatedValues(props,fallbackProps){
+	var defaultStyles=props.theme&&props.theme.scatter?props.theme.scatter:
+	fallbackProps.style;
+	var style=_victoryCore.Helpers.getStyles(props.style,defaultStyles,"auto","100%");
+	var data=_victoryCore.Events.addEventKeys(props,_data2.default.getData(props));
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
 	
-	var _values2 = __webpack_require__(235);
+	var domain={
+	x:_domain2.default.getDomain(props,"x"),
+	y:_domain2.default.getDomain(props,"y")};
 	
-	var _values3 = _interopRequireDefault(_values2);
+	var scale={
+	x:_scale2.default.getBaseScale(props,"x").domain(domain.x).range(range.x),
+	y:_scale2.default.getBaseScale(props,"y").domain(domain.y).range(range.y)};
 	
-	var _victoryCore = __webpack_require__(29);
+	var z=props.bubbleProperty||"z";
+	return{data:data,scale:scale,style:style,z:z};},
 	
-	var _scale = __webpack_require__(215);
 	
-	var _scale2 = _interopRequireDefault(_scale);
+	getDataStyles:function getDataStyles(datum,style){
+	var stylesFromData=(0,_omit3.default)(datum,[
+	"x","y","z","size","symbol","name","label"]);
 	
-	var _domain = __webpack_require__(228);
+	var baseDataStyle=(0,_defaults3.default)({},stylesFromData,style);
+	return _victoryCore.Helpers.evaluateStyle(baseDataStyle,datum);},
 	
-	var _domain2 = _interopRequireDefault(_domain);
 	
-	var _data = __webpack_require__(229);
+	getLabelText:function getLabelText(props,datum,index){
+	var propsLabel=Array.isArray(props.labels)?
+	props.labels[index]:_victoryCore.Helpers.evaluateProp(props.labels,datum);
+	return datum.label||propsLabel;},
 	
-	var _data2 = _interopRequireDefault(_data);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	getLabelStyle:function getLabelStyle(labelStyle,dataProps){var
+	datum=dataProps.datum;var size=dataProps.size;var style=dataProps.style;
+	var matchedStyle=(0,_pick3.default)(style,["opacity","fill"]);
+	var padding=labelStyle.padding||size*0.25;
+	var baseLabelStyle=(0,_defaults3.default)({},labelStyle,matchedStyle,{padding:padding});
+	return _victoryCore.Helpers.evaluateStyle(baseLabelStyle,datum);},
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	exports.default = {
-	  getBaseProps: function getBaseProps(props, fallbackProps) {
-	    var _this = this;
+	getSymbol:function getSymbol(data,props){
+	if(props.bubbleProperty){
+	return"circle";}
 	
-	    var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	    var calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
-	    var data = calculatedValues.data;
-	    var style = calculatedValues.style;
-	    var scale = calculatedValues.scale;
-	    var height = modifiedProps.height;
-	    var width = modifiedProps.width;
+	var symbol=data.symbol||props.symbol;
+	return _victoryCore.Helpers.evaluateProp(symbol,data);},
 	
-	    var parentProps = { style: style.parent, scale: scale, data: data, height: height, width: width };
-	    return data.reduce(function (memo, datum, index) {
-	      var eventKey = datum.eventKey;
-	      var x = scale.x(datum.x);
-	      var y = scale.y(datum.y);
-	      var size = _this.getSize(datum, modifiedProps, calculatedValues);
-	      var symbol = _this.getSymbol(datum, modifiedProps);
-	      var dataStyle = _this.getDataStyles(datum, style.data);
-	      var dataProps = {
-	        x: x, y: y, size: size, scale: scale, datum: datum, symbol: symbol, index: index, style: dataStyle
-	      };
 	
-	      var text = _this.getLabelText(modifiedProps, datum, index);
-	      var labelStyle = _this.getLabelStyle(style.labels, dataProps);
-	      var labelProps = {
-	        style: labelStyle,
-	        x: x,
-	        y: y - labelStyle.padding,
-	        text: text,
-	        index: index,
-	        scale: scale,
-	        datum: dataProps.datum,
-	        textAnchor: labelStyle.textAnchor,
-	        verticalAnchor: labelStyle.verticalAnchor || "end",
-	        angle: labelStyle.angle
-	      };
-	      memo[eventKey] = {
-	        data: dataProps,
-	        labels: labelProps
-	      };
-	      return memo;
-	    }, { parent: parentProps });
-	  },
-	  getCalculatedValues: function getCalculatedValues(props, fallbackProps) {
-	    var defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter : fallbackProps.style;
-	    var style = _victoryCore.Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-	    var data = _victoryCore.Events.addEventKeys(props, _data2.default.getData(props));
-	    var range = {
-	      x: _victoryCore.Helpers.getRange(props, "x"),
-	      y: _victoryCore.Helpers.getRange(props, "y")
-	    };
-	    var domain = {
-	      x: _domain2.default.getDomain(props, "x"),
-	      y: _domain2.default.getDomain(props, "y")
-	    };
-	    var scale = {
-	      x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
-	      y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
-	    };
-	    var z = props.bubbleProperty || "z";
-	    return { data: data, scale: scale, style: style, z: z };
-	  },
-	  getDataStyles: function getDataStyles(datum, style) {
-	    var stylesFromData = (0, _omit3.default)(datum, ["x", "y", "z", "size", "symbol", "name", "label"]);
-	    var baseDataStyle = (0, _defaults3.default)({}, stylesFromData, style);
-	    return _victoryCore.Helpers.evaluateStyle(baseDataStyle, datum);
-	  },
-	  getLabelText: function getLabelText(props, datum, index) {
-	    var propsLabel = Array.isArray(props.labels) ? props.labels[index] : _victoryCore.Helpers.evaluateProp(props.labels, datum);
-	    return datum.label || propsLabel;
-	  },
-	  getLabelStyle: function getLabelStyle(labelStyle, dataProps) {
-	    var datum = dataProps.datum;
-	    var size = dataProps.size;
-	    var style = dataProps.style;
+	getBubbleSize:function getBubbleSize(datum,props,calculatedValues){var
+	data=calculatedValues.data;var z=calculatedValues.z;
+	var getMaxRadius=function getMaxRadius(){
+	var minPadding=Math.min.apply(Math,_toConsumableArray((0,_values3.default)(_victoryCore.Helpers.getPadding(props))));
+	return Math.max(minPadding,5);};
 	
-	    var matchedStyle = (0, _pick3.default)(style, ["opacity", "fill"]);
-	    var padding = labelStyle.padding || size * 0.25;
-	    var baseLabelStyle = (0, _defaults3.default)({}, labelStyle, matchedStyle, { padding: padding });
-	    return _victoryCore.Helpers.evaluateStyle(baseLabelStyle, datum);
-	  },
-	  getSymbol: function getSymbol(data, props) {
-	    if (props.bubbleProperty) {
-	      return "circle";
-	    }
-	    var symbol = data.symbol || props.symbol;
-	    return _victoryCore.Helpers.evaluateProp(symbol, data);
-	  },
-	  getBubbleSize: function getBubbleSize(datum, props, calculatedValues) {
-	    var data = calculatedValues.data;
-	    var z = calculatedValues.z;
+	var zData=data.map(function(point){return point.z;});
+	var zMin=Math.min.apply(Math,_toConsumableArray(zData));
+	var zMax=Math.max.apply(Math,_toConsumableArray(zData));
+	var maxRadius=props.maxBubbleSize||getMaxRadius();
+	var maxArea=Math.PI*Math.pow(maxRadius,2);
+	var area=(datum[z]-zMin)/(zMax-zMin)*maxArea;
+	var radius=Math.sqrt(area/Math.PI);
+	return Math.max(radius,1);},
 	
-	    var getMaxRadius = function getMaxRadius() {
-	      var minPadding = Math.min.apply(Math, _toConsumableArray((0, _values3.default)(_victoryCore.Helpers.getPadding(props))));
-	      return Math.max(minPadding, 5);
-	    };
-	    var zData = data.map(function (point) {
-	      return point.z;
-	    });
-	    var zMin = Math.min.apply(Math, _toConsumableArray(zData));
-	    var zMax = Math.max.apply(Math, _toConsumableArray(zData));
-	    var maxRadius = props.maxBubbleSize || getMaxRadius();
-	    var maxArea = Math.PI * Math.pow(maxRadius, 2);
-	    var area = (datum[z] - zMin) / (zMax - zMin) * maxArea;
-	    var radius = Math.sqrt(area / Math.PI);
-	    return Math.max(radius, 1);
-	  },
-	  getSize: function getSize(data, props, calculatedValues) {
-	    var size = void 0;
-	    if (data.size) {
-	      size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
-	    } else if (typeof props.size === "function") {
-	      size = props.size;
-	    } else if (data[calculatedValues.z]) {
-	      size = this.getBubbleSize(data, props, calculatedValues);
-	    } else {
-	      size = Math.max(props.size, 1);
-	    }
-	    return _victoryCore.Helpers.evaluateProp(size, data);
-	  }
-	};
+	
+	getSize:function getSize(data,props,calculatedValues){
+	var size=void 0;
+	if(data.size){
+	size=typeof data.size==="function"?data.size:Math.max(data.size,1);}else
+	if(typeof props.size==="function"){
+	size=props.size;}else
+	if(data[calculatedValues.z]){
+	size=this.getBubbleSize(data,props,calculatedValues);}else
+	{
+	size=Math.max(props.size,1);}
+	
+	return _victoryCore.Helpers.evaluateProp(size,data);}};
 
 /***/ },
-/* 322 */
+/* 232 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var arrayMap = __webpack_require__(203),
-	    baseFlatten = __webpack_require__(217),
-	    basePick = __webpack_require__(310),
-	    rest = __webpack_require__(11),
-	    toKey = __webpack_require__(277);
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-group/victory-group.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryCore=__webpack_require__(29);
 	
-	/**
-	 * Creates an object composed of the picked `object` properties.
-	 *
-	 * @static
-	 * @since 0.1.0
-	 * @memberOf _
-	 * @category Object
-	 * @param {Object} object The source object.
-	 * @param {...(string|string[])} [props] The property identifiers to pick.
-	 * @returns {Object} Returns the new object.
-	 * @example
-	 *
-	 * var object = { 'a': 1, 'b': '2', 'c': 3 };
-	 *
-	 * _.pick(object, ['a', 'c']);
-	 * // => { 'a': 1, 'c': 3 }
-	 */
-	var pick = rest(function(object, props) {
-	  return object == null ? {} : basePick(object, arrayMap(baseFlatten(props, 1), toKey));
-	});
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _wrapper=__webpack_require__(208);var _wrapper2=_interopRequireDefault(_wrapper);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	module.exports = pick;
-
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300},
+	
+	style:{
+	data:{
+	width:8,
+	padding:6}}};var
+	
+	
+	
+	
+	VictoryGroup=function(_React$Component){_inherits(VictoryGroup,_React$Component);function VictoryGroup(){_classCallCheck(this,VictoryGroup);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryGroup).apply(this,arguments));}_createClass(VictoryGroup,[{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	nextProps){
+	var setAnimationState=_wrapper2.default.setAnimationState.bind(this);
+	setAnimationState(nextProps);}},{key:"getCalculatedProps",value:function getCalculatedProps(
+	
+	
+	props,childComponents,style){
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var horizontal=modifiedProps.horizontal||childComponents.every(
+	function(component){return component.props.horizontal;});
+	
+	var datasets=_wrapper2.default.getDataFromChildren(modifiedProps);
+	var domain={
+	x:_wrapper2.default.getDomain(modifiedProps,"x",childComponents),
+	y:_wrapper2.default.getDomain(modifiedProps,"y",childComponents)};
+	
+	var range={
+	x:_victoryCore.Helpers.getRange(modifiedProps,"x"),
+	y:_victoryCore.Helpers.getRange(modifiedProps,"y")};
+	
+	var baseScale={
+	x:_scale2.default.getScaleFromProps(modifiedProps,"x")||_scale2.default.getDefaultScale(),
+	y:_scale2.default.getScaleFromProps(modifiedProps,"y")||_scale2.default.getDefaultScale()};
+	
+	var xScale=baseScale.x.domain(domain.x).range(range.x);
+	var yScale=baseScale.y.domain(domain.y).range(range.y);
+	var scale={
+	x:horizontal?yScale:xScale,
+	y:horizontal?xScale:yScale};
+	
+	var categories={
+	x:_wrapper2.default.getCategories(modifiedProps,"x"),
+	y:_wrapper2.default.getCategories(modifiedProps,"y")};
+	
+	var colorScale=modifiedProps.colorScale;
+	return{datasets:datasets,categories:categories,range:range,domain:domain,horizontal:horizontal,scale:scale,style:style,colorScale:colorScale};}},{key:"pixelsToValue",value:function pixelsToValue(
+	
+	
+	props,axis,calculatedProps){
+	if(props.offset===0){
+	return 0;}
+	
+	var childComponents=_react2.default.Children.toArray(props.children);
+	var horizontalChildren=childComponents.some(function(child){return child.props.horizontal;});
+	var horizontal=props&&props.horizontal||horizontalChildren.length>0;
+	var currentAxis=_axis2.default.getCurrentAxis(axis,horizontal);
+	var domain=calculatedProps.domain[currentAxis];
+	var range=calculatedProps.range[currentAxis];
+	var domainExtent=Math.max.apply(Math,_toConsumableArray(domain))-Math.min.apply(Math,_toConsumableArray(domain));
+	var rangeExtent=Math.max.apply(Math,_toConsumableArray(range))-Math.min.apply(Math,_toConsumableArray(range));
+	return domainExtent/rangeExtent*props.offset;}},{key:"getXO",value:function getXO(
+	
+	
+	props,calculatedProps,datasets,index){
+	var center=(datasets.length-1)/2;
+	var totalWidth=this.pixelsToValue(props,"x",calculatedProps);
+	return(index-center)*totalWidth;}},{key:"getLabels",value:function getLabels(
+	
+	
+	props,datasets,index){
+	if(!props.labels){
+	return undefined;}
+	
+	return Math.floor(datasets.length/2)===index?props.labels:undefined;}},{key:"getChildProps",value:function getChildProps(
+	
+	
+	props,calculatedProps){var
+	categories=calculatedProps.categories;var domain=calculatedProps.domain;var scale=calculatedProps.scale;var horizontal=calculatedProps.horizontal;
+	return{
+	height:props.height,
+	width:props.width,
+	padding:_victoryCore.Helpers.getPadding(props),
+	standalone:false,
+	theme:props.theme,
+	categories:categories,
+	domain:domain,
+	scale:scale,
+	horizontal:horizontal};}},{key:"getColorScale",value:function getColorScale(
+	
+	
+	
+	props,child){
+	var role=child.type&&child.type.role;
+	var colorScaleOptions=child.props.colorScale||props.colorScale;
+	if(role!=="group-wrapper"&&role!=="stack-wrapper"){
+	return undefined;}
+	
+	return props.theme?colorScaleOptions||props.theme.props.colorScale:
+	colorScaleOptions;}},{key:"getNewChildren",value:function getNewChildren(
+	
+	
+	
+	props,childComponents,calculatedProps){var _this2=this;var
+	datasets=calculatedProps.datasets;
+	var childProps=this.getChildProps(props,calculatedProps);
+	var getAnimationProps=_wrapper2.default.getAnimationProps.bind(this);
+	return childComponents.map(function(child,index){
+	var xOffset=_this2.getXO(props,calculatedProps,datasets,index);
+	var data=datasets[index].map(function(datum){return _extends({},datum,{xOffset:xOffset});});
+	var style=_wrapper2.default.getChildStyle(child,index,calculatedProps);
+	var labels=props.labels?_this2.getLabels(props,datasets,index):child.props.labels;
+	return _react2.default.cloneElement(child,_extends({
+	animate:getAnimationProps(props,child,index),
+	key:index,
+	labels:labels,
+	theme:child.props.theme||props.theme,
+	labelComponent:props.labelComponent||child.props.labelComponent,
+	style:style,
+	data:data,
+	xOffset:child.type.role==="stack-wrapper"?xOffset:undefined,
+	colorScale:_this2.getColorScale(props,child)},
+	childProps));});}},{key:"getContainer",value:function getContainer(
+	
+	
+	
+	props,calculatedProps){var
+	width=props.width;var height=props.height;var containerComponent=props.containerComponent;var
+	scale=calculatedProps.scale;var style=calculatedProps.style;
+	var parentProps=(0,_defaults3.default)(
+	{},
+	containerComponent.props,
+	{style:style.parent,scale:scale,width:width,height:height});
+	
+	return _react2.default.cloneElement(containerComponent,parentProps);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var props=this.state&&this.state.nodesWillExit?
+	this.state.oldProps:this.props;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var style=_victoryCore.Helpers.getStyles(modifiedProps.style,fallbackProps.style,"auto","100%");
+	var childComponents=_react2.default.Children.toArray(modifiedProps.children);
+	var calculatedProps=this.getCalculatedProps(modifiedProps,childComponents,style,
+	fallbackProps.props);
+	
+	var container=modifiedProps.standalone&&this.getContainer(modifiedProps,calculatedProps);
+	var newChildren=this.getNewChildren(modifiedProps,childComponents,calculatedProps);
+	if(modifiedProps.events){
+	return(
+	_react2.default.createElement(_victoryCore.VictorySharedEvents,{
+	events:modifiedProps.events,
+	eventKey:modifiedProps.eventKey,
+	container:container,__source:{fileName:_jsxFileName,lineNumber:446}},
+	
+	newChildren));}
+	
+	
+	
+	var group=this.renderGroup(newChildren,style.parent);
+	
+	return modifiedProps.standalone?_react2.default.cloneElement(container,container.props,group):group;}}]);return VictoryGroup;}(_react2.default.Component);VictoryGroup.role="group-wrapper";VictoryGroup.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),colorScale:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.oneOf(["greyscale","qualitative","heatmap","warm","cool","red","green","blue"])]),domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_victoryCore.PropTypes.nonNegative,y:_victoryCore.PropTypes.nonNegative}),_victoryCore.PropTypes.nonNegative]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.string,target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),height:_victoryCore.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),labelComponent:_react.PropTypes.element,offset:_react.PropTypes.number,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryGroup.defaultProps={scale:"linear",offset:0,padding:50,standalone:true,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:293}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:294}})};VictoryGroup.getDomain=_wrapper2.default.getDomain.bind(_wrapper2.default);VictoryGroup.getData=_wrapper2.default.getData.bind(_wrapper2.default);exports.default=VictoryGroup;
 
 /***/ },
-/* 323 */
+/* 233 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _uniq2=__webpack_require__(166);var _uniq3=_interopRequireDefault(_uniq2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-stack/victory-stack.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	var _victoryCore=__webpack_require__(29);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
-	var _defaults2 = __webpack_require__(2);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);
+	var _wrapper=__webpack_require__(208);var _wrapper2=_interopRequireDefault(_wrapper);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300},
 	
-	var _uniq2 = __webpack_require__(230);
+	style:{
+	data:{
+	width:8,
+	padding:6}}};var
 	
-	var _uniq3 = _interopRequireDefault(_uniq2);
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
+	VictoryStack=function(_React$Component){_inherits(VictoryStack,_React$Component);function VictoryStack(){_classCallCheck(this,VictoryStack);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryStack).apply(this,arguments));}_createClass(VictoryStack,[{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	var _scale = __webpack_require__(215);
 	
-	var _scale2 = _interopRequireDefault(_scale);
 	
-	var _axis = __webpack_require__(226);
 	
-	var _axis2 = _interopRequireDefault(_axis);
 	
-	var _wrapper = __webpack_require__(295);
 	
-	var _wrapper2 = _interopRequireDefault(_wrapper);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var fallbackProps = {
-	  props: {
-	    width: 450,
-	    height: 300
-	  },
-	  style: {
-	    data: {
-	      width: 8,
-	      padding: 6
-	    }
-	  }
-	};
 	
-	var VictoryGroup = function (_React$Component) {
-	  _inherits(VictoryGroup, _React$Component);
 	
-	  function VictoryGroup() {
-	    _classCallCheck(this, VictoryGroup);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryGroup).apply(this, arguments));
-	  }
 	
-	  _createClass(VictoryGroup, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      var setAnimationState = _wrapper2.default.setAnimationState.bind(this);
-	      setAnimationState(nextProps);
-	    }
-	  }, {
-	    key: "getCalculatedProps",
-	    value: function getCalculatedProps(props, childComponents, style) {
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	      var horizontal = modifiedProps.horizontal || childComponents.every(function (component) {
-	        return component.props.horizontal;
-	      });
-	      var datasets = _wrapper2.default.getDataFromChildren(modifiedProps);
-	      var domain = {
-	        x: _wrapper2.default.getDomain(modifiedProps, "x", childComponents),
-	        y: _wrapper2.default.getDomain(modifiedProps, "y", childComponents)
-	      };
-	      var range = {
-	        x: _victoryCore.Helpers.getRange(modifiedProps, "x"),
-	        y: _victoryCore.Helpers.getRange(modifiedProps, "y")
-	      };
-	      var baseScale = {
-	        x: _scale2.default.getScaleFromProps(modifiedProps, "x") || _scale2.default.getDefaultScale(),
-	        y: _scale2.default.getScaleFromProps(modifiedProps, "y") || _scale2.default.getDefaultScale()
-	      };
-	      var xScale = baseScale.x.domain(domain.x).range(range.x);
-	      var yScale = baseScale.y.domain(domain.y).range(range.y);
-	      var scale = {
-	        x: horizontal ? yScale : xScale,
-	        y: horizontal ? xScale : yScale
-	      };
-	      var categories = {
-	        x: _wrapper2.default.getCategories(modifiedProps, "x"),
-	        y: _wrapper2.default.getCategories(modifiedProps, "y")
-	      };
-	      var colorScale = modifiedProps.colorScale;
-	      return { datasets: datasets, categories: categories, range: range, domain: domain, horizontal: horizontal, scale: scale, style: style, colorScale: colorScale };
-	    }
-	  }, {
-	    key: "pixelsToValue",
-	    value: function pixelsToValue(props, axis, calculatedProps) {
-	      if (props.offset === 0) {
-	        return 0;
-	      }
-	      var childComponents = _react2.default.Children.toArray(props.children);
-	      var horizontalChildren = childComponents.some(function (child) {
-	        return child.props.horizontal;
-	      });
-	      var horizontal = props && props.horizontal || horizontalChildren.length > 0;
-	      var currentAxis = _axis2.default.getCurrentAxis(axis, horizontal);
-	      var domain = calculatedProps.domain[currentAxis];
-	      var range = calculatedProps.range[currentAxis];
-	      var domainExtent = Math.max.apply(Math, _toConsumableArray(domain)) - Math.min.apply(Math, _toConsumableArray(domain));
-	      var rangeExtent = Math.max.apply(Math, _toConsumableArray(range)) - Math.min.apply(Math, _toConsumableArray(range));
-	      return domainExtent / rangeExtent * props.offset;
-	    }
-	  }, {
-	    key: "getXO",
-	    value: function getXO(props, calculatedProps, datasets, index) {
-	      // eslint-disable-line max-params
-	      var center = (datasets.length - 1) / 2;
-	      var totalWidth = this.pixelsToValue(props, "x", calculatedProps);
-	      return (index - center) * totalWidth;
-	    }
-	  }, {
-	    key: "getLabels",
-	    value: function getLabels(props, datasets, index) {
-	      if (!props.labels) {
-	        return undefined;
-	      }
-	      return Math.floor(datasets.length / 2) === index ? props.labels : undefined;
-	    }
-	  }, {
-	    key: "getChildProps",
-	    value: function getChildProps(props, calculatedProps) {
-	      var categories = calculatedProps.categories;
-	      var domain = calculatedProps.domain;
-	      var scale = calculatedProps.scale;
-	      var horizontal = calculatedProps.horizontal;
 	
-	      return {
-	        height: props.height,
-	        width: props.width,
-	        padding: _victoryCore.Helpers.getPadding(props),
-	        standalone: false,
-	        theme: props.theme,
-	        categories: categories,
-	        domain: domain,
-	        scale: scale,
-	        horizontal: horizontal
-	      };
-	    }
-	  }, {
-	    key: "getColorScale",
-	    value: function getColorScale(props, child) {
-	      var role = child.type && child.type.role;
-	      var colorScaleOptions = child.props.colorScale || props.colorScale;
-	      if (role !== "group-wrapper" && role !== "stack-wrapper") {
-	        return undefined;
-	      }
-	      return props.theme ? colorScaleOptions || props.theme.props.colorScale : colorScaleOptions;
-	    }
 	
-	    // the old ones were bad
 	
-	  }, {
-	    key: "getNewChildren",
-	    value: function getNewChildren(props, childComponents, calculatedProps) {
-	      var _this2 = this;
 	
-	      var datasets = calculatedProps.datasets;
 	
-	      var childProps = this.getChildProps(props, calculatedProps);
-	      var getAnimationProps = _wrapper2.default.getAnimationProps.bind(this);
-	      return childComponents.map(function (child, index) {
-	        var xOffset = _this2.getXO(props, calculatedProps, datasets, index);
-	        var data = datasets[index].map(function (datum) {
-	          return Object.assign({}, datum, { xOffset: xOffset });
-	        });
-	        var style = _wrapper2.default.getChildStyle(child, index, calculatedProps);
-	        var labels = props.labels ? _this2.getLabels(props, datasets, index) : child.props.labels;
-	        return _react2.default.cloneElement(child, Object.assign({
-	          animate: getAnimationProps(props, child, index),
-	          key: index,
-	          labels: labels,
-	          theme: child.props.theme || props.theme,
-	          labelComponent: props.labelComponent || child.props.labelComponent,
-	          style: style,
-	          data: data,
-	          xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
-	          colorScale: _this2.getColorScale(props, child)
-	        }, childProps));
-	      });
-	    }
-	  }, {
-	    key: "getContainer",
-	    value: function getContainer(props, calculatedProps) {
-	      var width = props.width;
-	      var height = props.height;
-	      var containerComponent = props.containerComponent;
-	      var scale = calculatedProps.scale;
-	      var style = calculatedProps.style;
 	
-	      var parentProps = (0, _defaults3.default)({}, containerComponent.props, { style: style.parent, scale: scale, width: width, height: height });
-	      return _react2.default.cloneElement(containerComponent, parentProps);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var props = this.state && this.state.nodesWillExit ? this.state.oldProps : this.props;
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	      var style = _victoryCore.Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
-	      var childComponents = _react2.default.Children.toArray(modifiedProps.children);
-	      var types = (0, _uniq3.default)(childComponents.map(function (child) {
-	        return child.type.role;
-	      }));
-	      if (types.length > 1) {
-	        _victoryCore.Log.warn("Only components of the same type can be grouped");
-	      }
-	      var calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style, fallbackProps.props);
 	
-	      var container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
-	      var newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-	      if (modifiedProps.events) {
-	        return _react2.default.createElement(
-	          _victoryCore.VictorySharedEvents,
-	          {
-	            events: modifiedProps.events,
-	            eventKey: modifiedProps.eventKey,
-	            container: container
-	          },
-	          newChildren
-	        );
-	      }
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { style: style.parent },
-	        newChildren
-	      );
-	      return modifiedProps.standalone ? _react2.default.cloneElement(container, container.props, group) : group;
-	    }
-	  }]);
 	
-	  return VictoryGroup;
-	}(_react2.default.Component);
 	
-	VictoryGroup.role = "group-wrapper";
-	VictoryGroup.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. If this prop is
-	   * given, all children of VictoryGroup will pass the options specified in this prop to
-	   * VictoryTransition and VictoryAnimation. Child animation props will be added for any
-	   * values not provided via the animation prop for VictoryGroup. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively. VictoryGroup will coodrinate transitions between all
-	   * of its child components so that animation stays in sync
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The categories prop specifies how categorical data for a chart should be ordered.
-	   * This prop should be given as an array of string values, or an object with
-	   * these values for x and y. When categories are not given as an object
-	   * When this prop is set on a wrapper component, it will dictate the categories of
-	   * its the children. If this prop is not set, any categories on child component
-	   * or catigorical data, will be merged to create a shared set of categories.
-	   * @examples ["dogs", "cats", "mice"]
-	   */
-	  categories: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.shape({
-	    x: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    y: _react.PropTypes.arrayOf(_react.PropTypes.string)
-	  })]),
-	  /**
-	   * VictoryGroup is a wrapper component that controls the layout and animation behaviors of its
-	   * children. VictoryGroup creates a grouped layout for  VictoryArea, or VictoryBar components.
-	   * VictoryGroup  can also group components wrapped in VictoryStack
-	   */
-	  children: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node), _react2.default.PropTypes.node]),
-	  /**
-	   * The colorScale prop is an optional prop that defines the color scale the chart's bars
-	   * will be created on. This prop should be given as an array of CSS colors, or as a string
-	   * corresponding to one of the built in color scales. VictoryBar will automatically assign
-	   * values from this color scale to the bars unless colors are explicitly provided in the
-	   * `dataAttributes` prop.
-	   */
-	  colorScale: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.oneOf(["greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"])]),
-	  /**
-	   * The domain prop describes the range of values your chart will include. This prop can be
-	   * given as a array of the minimum and maximum expected values for your chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The domainPadding prop specifies a number of pixels of padding to add to the
-	   * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
-	   * from the origin to prevent crowding. This prop should be given as an object with
-	   * numbers specified for x and y.
-	   */
-	  domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.nonNegative,
-	    y: _victoryCore.PropTypes.nonNegative
-	  }), _victoryCore.PropTypes.nonNegative]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, (i.e. "data" and "labels"). The childName will refer to an
-	   * individual child of VictoryGroup, either by its name prop, or by index. The eventKey
-	   * may optionally be used to select a single element by index or eventKey rather than
-	   * an entire set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey and childName keys,
-	   * and a mutation key whose value is a function. The target and eventKey and childName keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	         childName: "firstBar",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              childName: "secondBar",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              childName: "secondBar",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    childName: _react.PropTypes.string,
-	    target: _react.PropTypes.oneOf(["data", "labels", "parent"]),
-	    eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The horizontal prop determines whether the bars will be laid vertically or
-	   * horizontally. The bars will be vertical if this prop is false or unspecified,
-	   * or horizontal if the prop is set to true.
-	   */
-	  horizontal: _react.PropTypes.bool,
-	  /**
-	   * The labels prop defines labels that will appear above group of data.
-	   * This prop should be given as an array of values or as a function of data.
-	   * If given as an array, the number of elements in the array should be equal to
-	   * the length of the data array. Group labels will appear above the center
-	   * series of the group, and will override the labels prop of child components.
-	   * To use group labels with individual data labels, individual labels should be
-	   * added directly to data.
-	   * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
-	   */
-	  labels: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.array]),
-	  /**
-	   * The labelComponent prop takes in an entire, HTML-complete label
-	   * component which will be used to create labels for each group of data in the
-	   * chart. The new element created from the passed labelComponent will have
-	   * property data provided by the bar's datum; properties x, y, textAnchor,
-	   * and verticalAnchor preserved or default values provided by the data component; and
-	   * styles filled out with defaults provided by the component, and overrides from
-	   * the datum. If labelComponent is omitted, a new VictoryLabel will be
-	   * created with props and styles from the bar.
-	   */
-	  labelComponent: _react.PropTypes.element,
-	  /**
-	   * The offset prop derermines the number of pixels each element in a group should
-	   * be offset from its original position on the independent axis. In the case of
-	   * groups of bars, this number should be equal to the width of the bar plus
-	   * the desired spacing between bars.
-	   */
-	  offset: _react.PropTypes.number,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a function, or as an object that specifies separate functions for x and y.
-	   * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryChart with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your grouped chart. These styles will be
-	   * applied to all grouped children
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryGroup: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryGroup will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryGrou as the outermost wrapper for your chart, implement the theme
-	  * directly on VictoyrGroup. If you are wrapping VictoryGroup in VictoryChart,
-	  * please call the theme on the wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryGroup.defaultProps = {
-	  scale: "linear",
-	  offset: 0,
-	  padding: 50,
-	  standalone: true,
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryGroup.getDomain = _wrapper2.default.getDomain.bind(_wrapper2.default);
-	VictoryGroup.getData = _wrapper2.default.getData.bind(_wrapper2.default);
-	exports.default = VictoryGroup;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	nextProps){
+	var setAnimationState=_wrapper2.default.setAnimationState.bind(this);
+	setAnimationState(nextProps);}},{key:"getCalculatedProps",value:function getCalculatedProps(
+	
+	
+	props,childComponents,style){
+	var horizontal=props.horizontal||childComponents.every(
+	function(component){return component.props.horizontal;});
+	
+	var datasets=_wrapper2.default.getDataFromChildren(props);
+	var domain={
+	x:_wrapper2.default.getStackedDomain(props,"x",datasets),
+	y:_wrapper2.default.getStackedDomain(props,"y",datasets)};
+	
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
+	
+	var baseScale={
+	x:_scale2.default.getScaleFromProps(props,"x")||_scale2.default.getDefaultScale(),
+	y:_scale2.default.getScaleFromProps(props,"y")||_scale2.default.getDefaultScale()};
+	
+	var xScale=baseScale.x.domain(domain.x).range(range.x);
+	var yScale=baseScale.y.domain(domain.y).range(range.y);
+	var scale={
+	x:horizontal?yScale:xScale,
+	y:horizontal?xScale:yScale};
+	
+	var categories={
+	x:_wrapper2.default.getCategories(props,"x"),
+	y:_wrapper2.default.getCategories(props,"y")};
+	
+	var colorScale=props.theme?props.colorscale||props.theme.props.colorScale:
+	props.colorScale;
+	return{datasets:datasets,categories:categories,range:range,domain:domain,horizontal:horizontal,scale:scale,style:style,colorScale:colorScale};}},{key:"addLayoutData",value:function addLayoutData(
+	
+	
+	props,calculatedProps,datasets,index){
+	return datasets[index].map(function(datum){
+	return _extends(datum,{
+	yOffset:_wrapper2.default.getY0(datum,index,calculatedProps),
+	xOffset:props.xOffset});});}},{key:"getLabels",value:function getLabels(
+	
+	
+	
+	
+	props,datasets,index){
+	if(!props.labels){
+	return undefined;}
+	
+	return datasets.length===index+1?props.labels:undefined;}},{key:"getChildProps",value:function getChildProps(
+	
+	
+	props,calculatedProps){var
+	categories=calculatedProps.categories;var domain=calculatedProps.domain;var scale=calculatedProps.scale;var horizontal=calculatedProps.horizontal;
+	return{
+	height:props.height,
+	width:props.width,
+	padding:_victoryCore.Helpers.getPadding(props),
+	standalone:false,
+	theme:props.theme,
+	categories:categories,
+	domain:domain,
+	scale:scale,
+	horizontal:horizontal};}},{key:"getNewChildren",value:function getNewChildren(
+	
+	
+	
+	
+	props,childComponents,calculatedProps){var _this2=this;var
+	datasets=calculatedProps.datasets;
+	var childProps=this.getChildProps(props,calculatedProps);
+	var getAnimationProps=_wrapper2.default.getAnimationProps.bind(this);
+	return childComponents.map(function(child,index){
+	var data=_this2.addLayoutData(props,calculatedProps,datasets,index);
+	var style=_wrapper2.default.getChildStyle(child,index,calculatedProps);
+	var labels=props.labels?_this2.getLabels(props,datasets,index):child.props.labels;
+	return _react2.default.cloneElement(child,_extends({
+	animate:getAnimationProps(props,child,index),
+	key:index,
+	labels:labels,
+	theme:child.props.theme||props.theme,
+	labelComponent:props.labelComponent||child.props.labelComponent,
+	style:style,
+	data:data},
+	childProps));});}},{key:"getContainer",value:function getContainer(
+	
+	
+	
+	props,calculatedProps){var
+	width=props.width;var height=props.height;var containerComponent=props.containerComponent;var
+	scale=calculatedProps.scale;var style=calculatedProps.style;
+	var parentProps=(0,_defaults3.default)(
+	{},
+	containerComponent.props,
+	{style:style.parent,scale:scale,width:width,height:height});
+	
+	return _react2.default.cloneElement(containerComponent,parentProps);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var props=this.state&&this.state.nodesWillExit?
+	this.state.oldProps:this.props;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var style=_victoryCore.Helpers.getStyles(modifiedProps.style,fallbackProps.style,"auto","100%");
+	var childComponents=_react2.default.Children.toArray(modifiedProps.children);
+	var types=(0,_uniq3.default)(childComponents.map(function(child){return child.type.role;}));
+	if(types.some(function(type){return type==="group-wrapper";})){
+	_victoryCore.Log.warn("It is not possible to stack groups.");}
+	
+	var calculatedProps=this.getCalculatedProps(modifiedProps,childComponents,style);
+	
+	var container=modifiedProps.standalone&&this.getContainer(modifiedProps,calculatedProps);
+	var newChildren=this.getNewChildren(modifiedProps,childComponents,calculatedProps);
+	if(modifiedProps.events){
+	return(
+	_react2.default.createElement(_victoryCore.VictorySharedEvents,{
+	events:modifiedProps.events,
+	eventKey:modifiedProps.eventKey,
+	container:container,__source:{fileName:_jsxFileName,lineNumber:421}},
+	
+	newChildren));}
+	
+	
+	
+	var group=this.renderGroup(newChildren,style.parent);
+	
+	return modifiedProps.standalone?_react2.default.cloneElement(container,container.props,group):group;}}]);return VictoryStack;}(_react2.default.Component);VictoryStack.role="stack-wrapper";VictoryStack.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),children:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.node),_react.PropTypes.node]),colorScale:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.oneOf(["greyscale","qualitative","heatmap","warm","cool","red","green","blue"])]),domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_victoryCore.PropTypes.nonNegative,y:_victoryCore.PropTypes.nonNegative}),_victoryCore.PropTypes.nonNegative]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.string,target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),height:_victoryCore.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,xOffset:_react.PropTypes.number,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryStack.defaultProps={scale:"linear",padding:50,standalone:true,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:290}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:291}})};VictoryStack.getDomain=_wrapper2.default.getStackedDomain.bind(_wrapper2.default);VictoryStack.getData=_wrapper2.default.getData.bind(_wrapper2.default);exports.default=VictoryStack;
 
 /***/ },
-/* 324 */
+/* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-candlestick/victory-candlestick.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	var _candle=__webpack_require__(235);var _candle2=_interopRequireDefault(_candle);
+	var _victoryCore=__webpack_require__(29);
 	
-	var _defaults2 = __webpack_require__(2);
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
 	
-	var _uniq2 = __webpack_require__(230);
+	var _helperMethods=__webpack_require__(236);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
-	var _uniq3 = _interopRequireDefault(_uniq2);
+	var fallbackProps={
+	props:{
+	height:300,
+	width:450,
+	candleColors:{
+	positive:"green",
+	negative:"red"}},
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
+	style:{
+	data:{
+	opacity:1,
+	strokeWidth:1},
 	
-	var _react2 = _interopRequireDefault(_react);
+	labels:{
+	stroke:"transparent",
+	fill:"#756f6a",
+	fontFamily:"Helvetica",
+	fontSize:13,
+	textAnchor:"end",
+	padding:5}}};
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	var _scale = __webpack_require__(215);
 	
-	var _scale2 = _interopRequireDefault(_scale);
 	
-	var _wrapper = __webpack_require__(295);
+	var defaultData=[
+	{x:new Date(2016,6,1),open:5,close:10,high:15,low:0},
+	{x:new Date(2016,6,2),open:10,close:15,high:20,low:5},
+	{x:new Date(2016,6,3),open:15,close:20,high:25,low:10},
+	{x:new Date(2016,6,4),open:20,close:25,high:30,low:15},
+	{x:new Date(2016,6,5),open:25,close:30,high:35,low:20},
+	{x:new Date(2016,6,6),open:30,close:35,high:40,low:25},
+	{x:new Date(2016,6,7),open:35,close:40,high:45,low:30},
+	{x:new Date(2016,6,8),open:40,close:45,high:50,low:35}];var
 	
-	var _wrapper2 = _interopRequireDefault(_wrapper);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	VictoryCandlestick=function(_React$Component){_inherits(VictoryCandlestick,_React$Component);
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var fallbackProps = {
-	  props: {
-	    width: 450,
-	    height: 300
-	  },
-	  style: {
-	    data: {
-	      width: 8,
-	      padding: 6
-	    }
-	  }
-	};
 	
-	var VictoryStack = function (_React$Component) {
-	  _inherits(VictoryStack, _React$Component);
 	
-	  function VictoryStack() {
-	    _classCallCheck(this, VictoryStack);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryStack).apply(this, arguments));
-	  }
 	
-	  _createClass(VictoryStack, [{
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(nextProps) {
-	      var setAnimationState = _wrapper2.default.setAnimationState.bind(this);
-	      setAnimationState(nextProps);
-	    }
-	  }, {
-	    key: "getCalculatedProps",
-	    value: function getCalculatedProps(props, childComponents, style) {
-	      var horizontal = props.horizontal || childComponents.every(function (component) {
-	        return component.props.horizontal;
-	      });
-	      var datasets = _wrapper2.default.getDataFromChildren(props);
-	      var domain = {
-	        x: _wrapper2.default.getStackedDomain(props, "x", datasets),
-	        y: _wrapper2.default.getStackedDomain(props, "y", datasets)
-	      };
-	      var range = {
-	        x: _victoryCore.Helpers.getRange(props, "x"),
-	        y: _victoryCore.Helpers.getRange(props, "y")
-	      };
-	      var baseScale = {
-	        x: _scale2.default.getScaleFromProps(props, "x") || _scale2.default.getDefaultScale(),
-	        y: _scale2.default.getScaleFromProps(props, "y") || _scale2.default.getDefaultScale()
-	      };
-	      var xScale = baseScale.x.domain(domain.x).range(range.x);
-	      var yScale = baseScale.y.domain(domain.y).range(range.y);
-	      var scale = {
-	        x: horizontal ? yScale : xScale,
-	        y: horizontal ? xScale : yScale
-	      };
-	      var categories = {
-	        x: _wrapper2.default.getCategories(props, "x"),
-	        y: _wrapper2.default.getCategories(props, "y")
-	      };
-	      var colorScale = props.theme ? props.colorscale || props.theme.props.colorScale : props.colorScale;
-	      return { datasets: datasets, categories: categories, range: range, domain: domain, horizontal: horizontal, scale: scale, style: style, colorScale: colorScale };
-	    }
-	  }, {
-	    key: "addLayoutData",
-	    value: function addLayoutData(props, calculatedProps, datasets, index) {
-	      // eslint-disable-line max-params
-	      return datasets[index].map(function (datum) {
-	        return Object.assign(datum, {
-	          yOffset: _wrapper2.default.getY0(datum, index, calculatedProps),
-	          xOffset: props.xOffset
-	        });
-	      });
-	    }
-	  }, {
-	    key: "getLabels",
-	    value: function getLabels(props, datasets, index) {
-	      if (!props.labels) {
-	        return undefined;
-	      }
-	      return datasets.length === index + 1 ? props.labels : undefined;
-	    }
-	  }, {
-	    key: "getChildProps",
-	    value: function getChildProps(props, calculatedProps) {
-	      var categories = calculatedProps.categories;
-	      var domain = calculatedProps.domain;
-	      var scale = calculatedProps.scale;
-	      var horizontal = calculatedProps.horizontal;
 	
-	      return {
-	        height: props.height,
-	        width: props.width,
-	        padding: _victoryCore.Helpers.getPadding(props),
-	        standalone: false,
-	        theme: props.theme,
-	        categories: categories,
-	        domain: domain,
-	        scale: scale,
-	        horizontal: horizontal
-	      };
-	    }
 	
-	    // the old ones were bad
 	
-	  }, {
-	    key: "getNewChildren",
-	    value: function getNewChildren(props, childComponents, calculatedProps) {
-	      var _this2 = this;
 	
-	      var datasets = calculatedProps.datasets;
 	
-	      var childProps = this.getChildProps(props, calculatedProps);
-	      var getAnimationProps = _wrapper2.default.getAnimationProps.bind(this);
-	      return childComponents.map(function (child, index) {
-	        var data = _this2.addLayoutData(props, calculatedProps, datasets, index);
-	        var style = _wrapper2.default.getChildStyle(child, index, calculatedProps);
-	        var labels = props.labels ? _this2.getLabels(props, datasets, index) : child.props.labels;
-	        return _react2.default.cloneElement(child, Object.assign({
-	          animate: getAnimationProps(props, child, index),
-	          key: index,
-	          labels: labels,
-	          theme: child.props.theme || props.theme,
-	          labelComponent: props.labelComponent || child.props.labelComponent,
-	          style: style,
-	          data: data
-	        }, childProps));
-	      });
-	    }
-	  }, {
-	    key: "getContainer",
-	    value: function getContainer(props, calculatedProps) {
-	      var width = props.width;
-	      var height = props.height;
-	      var containerComponent = props.containerComponent;
-	      var scale = calculatedProps.scale;
-	      var style = calculatedProps.style;
 	
-	      var parentProps = (0, _defaults3.default)({}, containerComponent.props, { style: style.parent, scale: scale, width: width, height: height });
-	      return _react2.default.cloneElement(containerComponent, parentProps);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var props = this.state && this.state.nodesWillExit ? this.state.oldProps : this.props;
-	      var modifiedProps = _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	      var style = _victoryCore.Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
-	      var childComponents = _react2.default.Children.toArray(modifiedProps.children);
-	      var types = (0, _uniq3.default)(childComponents.map(function (child) {
-	        return child.type.role;
-	      }));
-	      if (types.some(function (type) {
-	        return type === "group-wrapper";
-	      })) {
-	        _victoryCore.Log.warn("It is not possible to stack groups.");
-	      }
-	      var calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style);
 	
-	      var container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
-	      var newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-	      if (modifiedProps.events) {
-	        return _react2.default.createElement(
-	          _victoryCore.VictorySharedEvents,
-	          {
-	            events: modifiedProps.events,
-	            eventKey: modifiedProps.eventKey,
-	            container: container
-	          },
-	          newChildren
-	        );
-	      }
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { style: style.parent },
-	        newChildren
-	      );
-	      return modifiedProps.standalone ? _react2.default.cloneElement(container, container.props, group) : group;
-	    }
-	  }]);
 	
-	  return VictoryStack;
-	}(_react2.default.Component);
 	
-	VictoryStack.role = "stack-wrapper";
-	VictoryStack.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. If this prop is
-	   * given, all children of VictoryStack will pass the options specified in this prop to
-	   * VictoryTransition and VictoryAnimation. Child animation props will be added for any
-	   * values not provided via the animation prop for VictoryStack. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively. VictoryStack will coodrinate transitions between all
-	   * of its child components so that animation stays in sync
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The categories prop specifies how categorical data for a chart should be ordered.
-	   * This prop should be given as an array of string values, or an object with
-	   * these values for x and y. When categories are not given as an object
-	   * When this prop is set on a wrapper component, it will dictate the categories of
-	   * its the children. If this prop is not set, any categories on child component
-	   * or catigorical data, will be merged to create a shared set of categories.
-	   * @examples ["dogs", "cats", "mice"]
-	   */
-	  categories: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.shape({
-	    x: _react.PropTypes.arrayOf(_react.PropTypes.string),
-	    y: _react.PropTypes.arrayOf(_react.PropTypes.string)
-	  })]),
-	  /**
-	   * VictoryStack is a wrapper component that controls the layout and animation behaviors of its
-	   * children. VictoryStack creates a stacked layout for  VictoryArea, or VictoryBar components.
-	   */
-	  children: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.node), _react.PropTypes.node]),
-	  /**
-	   * The colorScale prop is an optional prop that defines the color scale the chart's bars
-	   * will be created on. This prop should be given as an array of CSS colors, or as a string
-	   * corresponding to one of the built in color scales. VictoryBar will automatically assign
-	   * values from this color scale to the bars unless colors are explicitly provided in the
-	   * `dataAttributes` prop.
-	   */
 	
-	  colorScale: _react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string), _react.PropTypes.oneOf(["greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"])]),
-	  /**
-	   * The domain prop describes the range of values your chart will include. This prop can be
-	   * given as a array of the minimum and maximum expected values for your chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples: [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The domainPadding prop specifies a number of pixels of padding to add to the
-	   * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
-	   * from the origin to prevent crowding. This prop should be given as an object with
-	   * numbers specified for x and y.
-	   */
-	  domainPadding: _react.PropTypes.oneOfType([_react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.nonNegative,
-	    y: _victoryCore.PropTypes.nonNegative
-	  }), _victoryCore.PropTypes.nonNegative]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, (i.e. "data" and "labels"). The childName will refer to an
-	   * individual child of VictoryStack, either by its name prop, or by index. The eventKey
-	   * may optionally be used to select a single element by index or eventKey rather than
-	   * an entire set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey and childName keys,
-	   * and a mutation key whose value is a function. The target and eventKey and childName keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     childName: "firstBar",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              childName: "secondBar",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              childName: "secondBar",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    childName: _react.PropTypes.string,
-	    target: _react.PropTypes.oneOf(["data", "labels", "parent"]),
-	    eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The horizontal prop determines whether the bars will be laid vertically or
-	   * horizontally. The bars will be vertical if this prop is false or unspecified,
-	   * or horizontal if the prop is set to true.
-	   */
-	  horizontal: _react.PropTypes.bool,
-	  /**
-	   * The labels prop defines labels that will appear above stack of data.
-	   * This prop should be given as an array of values or as a function of data.
-	   * If given as an array, the number of elements in the array should be equal to
-	   * the length of the data array. Stack labels will appear above the last
-	   * series of the stack, and will override the labels prop of child components.
-	   * To use group labels with individual data labels, individual labels should be
-	   * added directly to data.
-	   * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
-	   */
-	  labels: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.array]),
-	  /**
-	   * The labelComponent prop takes in an entire, HTML-complete label
-	   * component which will be used to create labels for each stack of data in the
-	   * chart. The new element created from the passed labelComponent will have
-	   * property data provided by the bar's datum; properties x, y, textAnchor,
-	   * and verticalAnchor preserved or default values provided by the data component; and
-	   * styles filled out with defaults provided by the component, and overrides from
-	   * the datum. If labelComponent is omitted, a new VictoryLabel will be
-	   * created with props and styles from the bar.
-	   */
-	  labelComponent: _react.PropTypes.element,
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a function, or as an object that specifies separate functions for x and y.
-	   * @examples d3.time.scale(), {x: d3.scale.linear(), y: d3.scale.log()}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryChart with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your grouped chart. These styles will be
-	   * applied to all grouped children
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The xOffset prop is used for grouping stacks of bars. This prop will be set
-	   * by the VictoryGroup component wrapper, or can be set manually.
-	   */
-	  xOffset: _react.PropTypes.number,
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryStack: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryStack will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * The theme prop takes a style object with nested data, labels, and parent objects.
-	  * You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryStack to wrap a chart component, implement the theme directly on
-	  * VictoryStack. If you are wrapping VictoryStack in VictoryChart,
-	  * please call the theme on the wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryStack.defaultProps = {
-	  scale: "linear",
-	  padding: 50,
-	  standalone: true,
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryStack.getDomain = _wrapper2.default.getStackedDomain.bind(_wrapper2.default);
-	VictoryStack.getData = _wrapper2.default.getData.bind(_wrapper2.default);
-	exports.default = VictoryStack;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryCandlestick(){_classCallCheck(this,VictoryCandlestick);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryCandlestick).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryCandlestick,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.dataKeys=Object.keys(this.baseProps).filter(function(key){return key!=="parent";});
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
+	
+	
+	props){var _this2=this;var
+	dataComponent=props.dataComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;var
+	role=VictoryCandlestick.role;
+	return this.dataKeys.map(function(key,index){
+	var dataEvents=_this2.getEvents(props,"data",key);
+	var dataProps=(0,_defaults3.default)(
+	{key:role+"-"+key,role:role+"-"+index},
+	_this2.getEventState(key,"data"),
+	_this2.getSharedEventState(key,"data"),
+	_this2.baseProps[key].data,
+	dataComponent.props);
+	
+	var candleComponent=_react2.default.cloneElement(dataComponent,_extends(
+	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,key,dataProps)}));
+	
+	var labelProps=(0,_defaults3.default)(
+	{key:role+"-label-"+key},
+	_this2.getEventState(key,"labels"),
+	_this2.getSharedEventState(key,"labels"),
+	_this2.baseProps[key].labels,
+	labelComponent.props);
+	
+	if(labelProps&&labelProps.text){
+	var labelEvents=_this2.getEvents(props,"labels",key);
+	var candleLabel=_react2.default.cloneElement(labelComponent,_extends({
+	events:_victoryCore.Events.getPartialEvents(labelEvents,key,labelProps)},
+	labelProps));
+	return _react2.default.cloneElement(
+	groupComponent,{key:"candle-group-"+key},candleComponent,candleLabel);}
+	
+	
+	return candleComponent;});}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=this.props.theme&&this.props.theme.candlestick?
+	_victoryCore.Helpers.modifyProps(this.props,fallbackProps,this.props.theme.candlestick.props):
+	_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	
+	animate=modifiedProps.animate;var standalone=modifiedProps.standalone;var style=modifiedProps.style;
+	
+	
+	
+	if(animate){
+	
+	
+	
+	var whitelist=[
+	"data","domain","height","maxBubbleSize","padding","samples","size",
+	"style","width","x","y"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:this.props.animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:529}},
+	_react2.default.createElement.apply(_react2.default,[this.constructor].concat(_toConsumableArray(modifiedProps)))));}
+	
+	
+	
+	
+	var baseStyle=_victoryCore.Helpers.getStyles(style,fallbackProps.style,"auto","100%");
+	
+	var group=this.renderGroup(this.renderData(modifiedProps),baseStyle.parent);
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryCandlestick;}(_react2.default.Component);VictoryCandlestick.role="candlestick";VictoryCandlestick.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryCandlestick.propTypes={animate:_react.PropTypes.object,data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,labelComponent:_react.PropTypes.element,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),size:_react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative,_react.PropTypes.func]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),open:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),close:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),high:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),low:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,candleColors:_react.PropTypes.shape({positive:_react.PropTypes.string,negative:_react.PropTypes.string}),groupComponent:_react.PropTypes.element,theme:_react.PropTypes.object};VictoryCandlestick.defaultProps={padding:50,samples:50,scale:"linear",data:defaultData,standalone:true,x:"x",open:"open",close:"close",high:"high",low:"low",dataComponent:_react2.default.createElement(_candle2.default,{__source:{fileName:_jsxFileName,lineNumber:411}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:412}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:413}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:414}}),candleColors:{positive:"green",negative:"red"}};VictoryCandlestick.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryCandlestick.getData=_helperMethods2.default.getData.bind(_helperMethods2.default);VictoryCandlestick.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryCandlestick;
 
 /***/ },
-/* 325 */
+/* 235 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(121);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-candlestick/candle.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
 	
-	var _partialRight2 = __webpack_require__(160);
 	
-	var _partialRight3 = _interopRequireDefault(_partialRight2);
+	Candle=function(_React$Component){_inherits(Candle,_React$Component);function Candle(){_classCallCheck(this,Candle);return _possibleConstructorReturn(this,Object.getPrototypeOf(Candle).apply(this,arguments));}_createClass(Candle,[{key:"renderWick",value:function renderWick(
 	
-	var _isFunction2 = __webpack_require__(182);
 	
-	var _isFunction3 = _interopRequireDefault(_isFunction2);
 	
-	var _defaults2 = __webpack_require__(2);
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
-	var _react = __webpack_require__(28);
 	
-	var _react2 = _interopRequireDefault(_react);
 	
-	var _candle = __webpack_require__(326);
 	
-	var _candle2 = _interopRequireDefault(_candle);
 	
-	var _victoryCore = __webpack_require__(29);
 	
-	var _helperMethods = __webpack_require__(327);
 	
-	var _helperMethods2 = _interopRequireDefault(_helperMethods);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var fallbackProps = {
-	  props: {
-	    height: 300,
-	    width: 450,
-	    candleColors: {
-	      positive: "green",
-	      negative: "red"
-	    }
-	  },
-	  style: {
-	    data: {
-	      fill: "#756f6a",
-	      opacity: 1,
-	      stroke: "transparent",
-	      strokeWidth: 1
-	    },
-	    labels: {
-	      stroke: "transparent",
-	      fill: "#756f6a",
-	      fontFamily: "Helvetica",
-	      fontSize: 13,
-	      textAnchor: "start",
-	      padding: 10
-	    }
-	  }
-	};
 	
-	var defaultData = [{ x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0 }, { x: new Date(2016, 6, 2), open: 10, close: 15, high: 20, low: 5 }, { x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10 }, { x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15 }, { x: new Date(2016, 6, 5), open: 25, close: 30, high: 35, low: 20 }, { x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25 }, { x: new Date(2016, 6, 7), open: 35, close: 40, high: 45, low: 30 }, { x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35 }];
 	
-	var VictoryCandlestick = function (_React$Component) {
-	  _inherits(VictoryCandlestick, _React$Component);
 	
-	  function VictoryCandlestick() {
-	    _classCallCheck(this, VictoryCandlestick);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(VictoryCandlestick).call(this));
+	wickProps){
+	return _react2.default.createElement("line",_extends({},wickProps,{__source:{fileName:_jsxFileName,lineNumber:28}}));}},{key:"renderCandle",value:function renderCandle(
 	
-	    _this.state = {};
-	    var getScopedEvents = _victoryCore.Events.getScopedEvents.bind(_this);
-	    _this.getEvents = (0, _partialRight3.default)(_victoryCore.Events.getEvents.bind(_this), getScopedEvents);
-	    _this.getEventState = _victoryCore.Events.getEventState.bind(_this);
-	    return _this;
-	  }
 	
-	  _createClass(VictoryCandlestick, [{
-	    key: "componentWillMount",
-	    value: function componentWillMount() {
-	      this.baseProps = _helperMethods2.default.getBaseProps(this.props, fallbackProps);
-	    }
-	  }, {
-	    key: "componentWillReceiveProps",
-	    value: function componentWillReceiveProps(newProps) {
-	      this.baseProps = _helperMethods2.default.getBaseProps(newProps, fallbackProps);
-	    }
-	  }, {
-	    key: "renderData",
-	    value: function renderData(props) {
-	      var _this2 = this;
+	candleProps){
+	return _react2.default.createElement("rect",_extends({},candleProps,{__source:{fileName:_jsxFileName,lineNumber:32}}));}},{key:"getCandleProps",value:function getCandleProps(
 	
-	      var dataComponent = props.dataComponent;
-	      var labelComponent = props.labelComponent;
-	      var sharedEvents = props.sharedEvents;
 	
-	      var getSharedEventState = sharedEvents && (0, _isFunction3.default)(sharedEvents.getEventState) ? sharedEvents.getEventState : function () {
-	        return undefined;
-	      };
-	      return Object.keys(this.baseProps).map(function (key) {
-	        var dataEvents = _this2.getEvents(props, "data", key);
-	        var dataProps = (0, _defaults3.default)({ key: "candlestick-" + key }, _this2.getEventState(key, "data"), getSharedEventState(key, "data"), _this2.baseProps[key].data, dataComponent.props);
-	        var candleComponent = _react2.default.cloneElement(dataComponent, Object.assign({}, dataProps, { events: _victoryCore.Events.getPartialEvents(dataEvents, key, dataProps) }));
-	        var labelProps = (0, _defaults3.default)({ key: "candlestick-label-" + key }, _this2.getEventState(key, "labels"), getSharedEventState(key, "labels"), _this2.baseProps[key].labels, labelComponent.props);
-	        if (labelProps && labelProps.text) {
-	          var labelEvents = _this2.getEvents(props, "labels", key);
-	          var candleLabel = _react2.default.cloneElement(labelComponent, Object.assign({
-	            events: _victoryCore.Events.getPartialEvents(labelEvents, key, labelProps)
-	          }, labelProps));
-	          return _react2.default.createElement(
-	            "g",
-	            { key: "candle-group-" + key },
-	            candleComponent,
-	            candleLabel
-	          );
-	        }
-	        return candleComponent;
-	      });
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var modifiedProps = this.props.theme && this.props.theme.candlestick ? _victoryCore.Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props) : _victoryCore.Helpers.modifyProps(this.props, fallbackProps);
-	      // If animating, return a `VictoryAnimation` element that will create
-	      // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
-	      // and (2) `animate` set to null so we don't recurse forever.
-	      if (modifiedProps.animate) {
-	        // Do less work by having `VictoryAnimation` tween only values that
-	        // make sense to tween. In the future, allow customization of animated
-	        // prop whitelist/blacklist?
-	        var whitelist = ["data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width", "x", "y"];
-	        return _react2.default.createElement(
-	          _victoryCore.VictoryTransition,
-	          { animate: modifiedProps.animate, animationWhitelist: whitelist },
-	          _react2.default.createElement(VictoryCandlestick, modifiedProps)
-	        );
-	      }
+	props){var
+	width=props.width;var candleHeight=props.candleHeight;var x=props.x;var y=props.y;var data=props.data;var style=props.style;var events=props.events;var role=props.role;
+	var padding=props.padding.left||props.padding;
+	var candleWidth=style.width||0.5*(width-2*padding)/data.length;
+	var candleX=x-candleWidth/2;
+	return(0,_assign3.default)({x:candleX,y:y,style:style,role:role,width:candleWidth,height:candleHeight},events);}},{key:"getWickProps",value:function getWickProps(
 	
-	      var style = _victoryCore.Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
 	
-	      var group = _react2.default.createElement(
-	        "g",
-	        { role: "presentation", style: style.parent },
-	        this.renderData(modifiedProps)
-	      );
-	      return modifiedProps.standalone ? _react2.default.cloneElement(this.props.containerComponent, Object.assign({
-	        height: modifiedProps.height,
-	        width: modifiedProps.width,
-	        style: style.parent }, modifiedProps.containerComponent.props), group) : group;
-	    }
-	  }]);
+	props){var
+	x=props.x;var y1=props.y1;var y2=props.y2;var style=props.style;var events=props.events;var role=props.role;
+	return(0,_assign3.default)({x1:x,x2:x,y1:y1,y2:y2,style:style,role:role},events);}},{key:"render",value:function render()
 	
-	  return VictoryCandlestick;
-	}(_react2.default.Component);
 	
-	VictoryCandlestick.role = "candlestick";
-	VictoryCandlestick.defaultTransitions = {
-	  onExit: {
-	    duration: 600,
-	    before: function before() {
-	      return { opacity: 0 };
-	    }
-	  },
-	  onEnter: {
-	    duration: 600,
-	    before: function before() {
-	      return { opacity: 0 };
-	    },
-	    after: function after(datum) {
-	      return { opacity: datum.opacity || 1 };
-	    }
-	  }
-	};
-	VictoryCandlestick.propTypes = {
-	  /**
-	   * The animate prop specifies props for VictoryAnimation to use. The animate prop should
-	   * also be used to specify enter and exit transition configurations with the `onExit`
-	   * and `onEnter` namespaces respectively.
-	   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
-	   */
-	  animate: _react.PropTypes.object,
-	  /**
-	   * The data prop specifies the data to be plotted.
-	   * Data should be in the form of an array of data points.
-	   * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-	   * but by default, an object with x and y properties is expected.
-	   * Other properties may be added to the data point object, such as fill, size, and symbol.
-	   * These properties will be interpreted and applied to the individual lines
-	   * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
-	   */
-	
-	  data: _react.PropTypes.array,
-	  /**
-	   * The dataComponent prop takes an entire component which will be used to create points for
-	   * each datum in the chart. The new element created from the passed dataComponent will be
-	   * provided with the following properties calculated by VictoryCandlestick: datum, index, scale,
-	   * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
-	   * props to the supplied component, or modified or ignored within the custom component itself.
-	   * If a dataComponent is not provided, VictoryCandlestick will use its default Point component.
-	   */
-	  dataComponent: _react.PropTypes.element,
-	  /**
-	   * The domain prop describes the range of values your chart will include. This prop can be
-	   * given as a array of the minimum and maximum expected values for your chart,
-	   * or as an object that specifies separate arrays for x and y.
-	   * If this prop is not provided, a domain will be calculated from data, or other
-	   * available information.
-	   * @examples [-1, 1], {x: [0, 100], y: [0, 1]}
-	   */
-	  domain: _react.PropTypes.oneOfType([_victoryCore.PropTypes.domain, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.domain,
-	    y: _victoryCore.PropTypes.domain
-	  })]),
-	  /**
-	   * The event prop take an array of event objects. Event objects are composed of
-	   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-	   * for a given component, so "data" and "labels" are all valid targets for VictoryCandlestick
-	   * events. The eventKey may optionally be used to select a single element by index rather than
-	   * an entire set. The eventHandlers object should be given as an object whose keys are standard
-	   * event names (i.e. onClick) and whose values are event callbacks. The return value
-	   * of an event handler is used to modify elemnts. The return value should be given
-	   * as an object or an array of objects with optional target and eventKey keys,
-	   * and a mutation key whose value is a function. The target and eventKey keys
-	   * will default to those corresponding to the element the event handler was attached to.
-	   * The mutation function will be called with the calculated props for the individual selected
-	   * element (i.e. a single bar), and the object returned from the mutation function
-	   * will override the props of the selected element via object assignment.
-	   * @examples
-	   * events={[
-	   *   {
-	   *     target: "data",
-	   *     eventKey: "thisOne",
-	   *     eventHandlers: {
-	   *       onClick: () => {
-	   *         return [
-	   *            {
-	   *              eventKey: "theOtherOne",
-	   *              mutation: (props) => {
-	   *                return {style: merge({}, props.style, {fill: "orange"})};
-	   *              }
-	   *            }, {
-	   *              eventKey: "theOtherOne",
-	   *              target: "labels",
-	   *              mutation: () => {
-	   *                return {text: "hey"};
-	   *              }
-	   *            }
-	   *          ];
-	   *       }
-	   *     }
-	   *   }
-	   * ]}
-	   *}}
-	   */
-	  events: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	    target: _react.PropTypes.oneOf(["data", "labels"]),
-	    eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	    eventHandlers: _react.PropTypes.object
-	  })),
-	  /**
-	   * The name prop is used to reference a component instance when defining shared events.
-	   */
-	  name: _react.PropTypes.string,
-	  /**
-	   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-	   * assign eventKeys to data
-	   */
-	  eventKey: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string]),
-	  /**
-	   * This prop is used to coordinate events between VictoryArea and other Victory
-	   * Components via VictorySharedEvents. This prop should not be set manually.
-	   */
-	  sharedEvents: _react.PropTypes.shape({
-	    events: _react.PropTypes.array,
-	    getEventState: _react.PropTypes.func
-	  }),
-	  /**
-	   * The height props specifies the height the svg viewBox of the chart container.
-	   * This value should be given as a number of pixels
-	   */
-	  height: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The labelComponent prop takes in an entire label component which will be used
-	   * to create labels for each point in the chart. The new element created from
-	   * the passed labelComponent will be supplied with the following properties:
-	   * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
-	   * any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If labelComponent is omitted,
-	   * a new VictoryLabel will be created with props described above.
-	   */
-	  labelComponent: _react.PropTypes.element,
-	  /**
-	   * The labels prop defines labels that will appear with each point in your chart.
-	   * This prop should be given as an array of values or as a function of data.
-	   * If given as an array, the number of elements in the array should be equal to
-	   * the length of the data array. Labels may also be added directly to the data object
-	   * like data={[{x: 1, y: 1, label: "first"}]}.
-	   * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
-	   */
-	  labels: _react.PropTypes.oneOfType([_react.PropTypes.func, _react.PropTypes.array]),
-	  /**
-	   * The padding props specifies the amount of padding in number of pixels between
-	   * the edge of the chart and any rendered child components. This prop can be given
-	   * as a number or as an object with padding specified for top, bottom, left
-	   * and right.
-	   */
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.shape({
-	    top: _react.PropTypes.number,
-	    bottom: _react.PropTypes.number,
-	    left: _react.PropTypes.number,
-	    right: _react.PropTypes.number
-	  })]),
-	  /**
-	   * The samples prop specifies how many individual points to plot when plotting
-	   * y as a function of x. Samples is ignored if x props are provided instead.
-	   */
-	  samples: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The scale prop determines which scales your chart should use. This prop can be
-	   * given as a string specifying a supported scale ("linear", "time", "log", "sqrt"),
-	   * as a d3 scale function, or as an object with scales specified for x and y
-	   * @exampes d3Scale.time(), {x: "linear", y: "log"}
-	   */
-	  scale: _react.PropTypes.oneOfType([_victoryCore.PropTypes.scale, _react.PropTypes.shape({
-	    x: _victoryCore.PropTypes.scale,
-	    y: _victoryCore.PropTypes.scale
-	  })]),
-	  /**
-	   * The size prop determines how to scale each data point
-	   */
-	  size: _react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative, _react.PropTypes.func]),
-	  /**
-	   * The standalone prop determines whether the component will render a standalone svg
-	   * or a <g> tag that will be included in an external svg. Set standalone to false to
-	   * compose VictoryCandlestick with other components within an enclosing <svg> tag.
-	   */
-	  standalone: _react.PropTypes.bool,
-	  /**
-	   * The style prop specifies styles for your VictoryCandlestick. Any valid inline style
-	   * properties will be applied. Height, width, and padding should be specified via the height,
-	   * width, and padding props, as they are used to calculate the alignment of
-	   * components within chart. In addition to normal style properties, angle and verticalAnchor
-	   * may also be specified via the labels object, and they will be passed as props to
-	   * VictoryLabel, or any custom labelComponent.
-	   * @examples {data: {fill: "red"}, labels: {fontSize: 12}}
-	   */
-	  style: _react.PropTypes.shape({
-	    parent: _react.PropTypes.object,
-	    data: _react.PropTypes.object,
-	    labels: _react.PropTypes.object
-	  }),
-	  /**
-	   * The width props specifies the width of the svg viewBox of the chart container
-	   * This value should be given as a number of pixels
-	   */
-	  width: _victoryCore.PropTypes.nonNegative,
-	  /**
-	   * The x prop specifies how to access the X value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-	   */
-	  x: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The open prop specifies how to access the open value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'open', 'open.value.nested.1.thing', 'open[2].also.nested', null,
-	   * d => Math.sin(d)
-	   */
-	  open: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The close prop specifies how to access the close value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'close', 'close.value.nested.1.thing', 'close[2].also.nested', null,
-	   * d => Math.sin(d)
-	   */
-	  close: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The high prop specifies how to access the high value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'high', 'high.value.nested.1.thing', 'high[2].also.nested', null,
-	   * d => Math.sin(d)
-	   */
-	  high: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The low prop specifies how to access the low value of each data point.
-	   * If given as a function, it will be run on each data point, and returned value will be used.
-	   * If given as an integer, it will be used as an array index for array-type data points.
-	   * If given as a string, it will be used as a property key for object-type data points.
-	   * If given as an array of strings, or a string containing dots or brackets,
-	   * it will be used as a nested object property path (for details see Lodash docs for _.get).
-	   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-	   * @examples 0, 'low', 'low.value.nested.1.thing', 'low[2].also.nested', null, d => Math.sin(d)
-	   */
-	  low: _react.PropTypes.oneOfType([_react.PropTypes.func, _victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer, _victoryCore.PropTypes.nonNegative]), _react.PropTypes.string, _react.PropTypes.arrayOf(_react.PropTypes.string)]),
-	  /**
-	   * The containerComponent prop takes an entire component which will be used to
-	   * create a container element for standalone charts.
-	   * The new element created from the passed containerComponent wil be provided with
-	   * these props from VictoryCandlestick: height, width, children
-	   * (the chart itself) and style. Props that are not provided by the
-	   * child chart component include title and desc, both of which
-	   * are intended to add accessibility to Victory components. The more descriptive these props
-	   * are, the more accessible your data will be for people using screen readers.
-	   * Any of these props may be overridden by passing in props to the supplied component,
-	   * or modified or ignored within the custom component itself. If a dataComponent is
-	   * not provided, VictoryCandlestick will use the default VictoryContainer component.
-	   * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
-	   * popular each dog breed is by percentage in Seattle." />
-	   */
-	  containerComponent: _react.PropTypes.element,
-	  /**
-	  * Candle colors are significant in candlestick charts - one color signifies the stock
-	  * closed at a higher price than it opened, and the other signifies the reverse. The
-	  * candleColors prop takes an object with keys positive and negative, which each take
-	  * a string that should be a color. Positive is for data points where close is higher
-	  * than open, and defaults to green, and negative (close < open) defaults to red.
-	  * @example: candleColors={{positive: "purple", negative: "blue"}}
-	  */
-	  candleColors: _react.PropTypes.shape({
-	    positive: _react.PropTypes.string,
-	    negative: _react.PropTypes.string
-	  }),
-	  /**
-	  * The theme prop takes a props object, and a style object with nested data, labels, and parent
-	  * objects. You can create this object yourself, or you can use a theme provided by Victory.
-	  * When using VictoryCandlestick as a solo component, implement the theme directly on
-	  * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
-	  * VictoryGroup, please call the theme on the outermost wrapper component instead.
-	  * @example theme={VictoryTheme.grayscale}
-	  * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
-	  */
-	  theme: _react.PropTypes.object
-	};
-	VictoryCandlestick.defaultProps = {
-	  padding: 50,
-	  samples: 50,
-	  scale: "linear",
-	  data: defaultData,
-	  size: 3,
-	  standalone: true,
-	  x: "x",
-	  open: "open",
-	  close: "close",
-	  high: "high",
-	  low: "low",
-	  dataComponent: _react2.default.createElement(_candle2.default, null),
-	  labelComponent: _react2.default.createElement(_victoryCore.VictoryLabel, null),
-	  containerComponent: _react2.default.createElement(_victoryCore.VictoryContainer, null)
-	};
-	VictoryCandlestick.getDomain = _helperMethods2.default.getDomain.bind(_helperMethods2.default);
-	VictoryCandlestick.getData = _helperMethods2.default.getData.bind(_helperMethods2.default);
-	VictoryCandlestick.getBaseProps = (0, _partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default), fallbackProps);
-	exports.default = VictoryCandlestick;
+	{
+	var candleProps=this.getCandleProps(this.props);
+	var wickProps=this.getWickProps(this.props);
+	return _react2.default.cloneElement(
+	this.props.groupComponent,{},this.renderWick(wickProps),this.renderCandle(candleProps));}}]);return Candle;}(_react2.default.Component);Candle.propTypes={index:_react2.default.PropTypes.number,x:_react.PropTypes.number,y1:_react.PropTypes.number,y2:_react.PropTypes.number,y:_react.PropTypes.number,events:_react.PropTypes.object,candleHeight:_react.PropTypes.number,scale:_react.PropTypes.object,style:_react.PropTypes.object,datum:_react.PropTypes.object,width:_react.PropTypes.number,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.object]),data:_react.PropTypes.array,groupComponent:_react.PropTypes.element,role:_react.PropTypes.string};exports.default=Candle;
 
 /***/ },
-/* 326 */
+/* 236 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _omit2=__webpack_require__(221);var _omit3=_interopRequireDefault(_omit2);var _pick2=__webpack_require__(123);var _pick3=_interopRequireDefault(_pick2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+	var _victoryCore=__webpack_require__(29);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	{
+	getBaseProps:function getBaseProps(props,fallbackProps){var _this=this;
+	var modifiedProps=props.theme&&props.theme.candlestick?
+	_victoryCore.Helpers.modifyProps(props,fallbackProps,props.theme.candlestick.props):
+	_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var calculatedValues=this.getCalculatedValues(modifiedProps,fallbackProps);var
+	data=calculatedValues.data;var style=calculatedValues.style;var scale=calculatedValues.scale;var
+	groupComponent=modifiedProps.groupComponent;var width=modifiedProps.width;var height=modifiedProps.height;var padding=modifiedProps.padding;
+	var parentProps={scale:scale,width:width,height:height,data:data,style:style.parent};
+	return data.reduce(function(memo,datum,index){
+	var eventKey=datum.eventKey;
+	var x=scale.x(datum.x);
+	var y1=scale.y(datum.y[2]);
+	var y2=scale.y(datum.y[3]);
+	var candleHeight=Math.abs(scale.y(datum.y[0])-scale.y(datum.y[1]));
+	var y=scale.y(Math.max(datum.y[0],datum.y[1]));
+	var dataStyle=_extends(_this.getDataStyles(datum,style.data,modifiedProps));
+	var dataProps={
+	x:x,y:y,y1:y1,y2:y2,candleHeight:candleHeight,scale:scale,data:data,datum:datum,groupComponent:groupComponent,
+	index:index,style:dataStyle,padding:padding,width:width};
 	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	var text=_this.getLabelText(modifiedProps,datum,index);
+	var labelStyle=_this.getLabelStyle(style.labels,dataProps);
+	var labelProps={
+	style:labelStyle,
+	x:x-labelStyle.padding,
+	y:y-labelStyle.padding,
+	text:text,
+	index:index,
+	scale:scale,
+	datum:dataProps.datum,
+	textAnchor:labelStyle.textAnchor,
+	verticalAnchor:labelStyle.verticalAnchor||"end",
+	angle:labelStyle.angle};
 	
-	var _react = __webpack_require__(28);
+	memo[eventKey]={
+	data:dataProps,
+	labels:labelProps};
 	
-	var _react2 = _interopRequireDefault(_react);
+	return memo;},
+	{parent:parentProps});},
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	getCalculatedValues:function getCalculatedValues(props,fallbackProps){
+	var style=_victoryCore.Helpers.getStyles(props.style,fallbackProps.style,"auto","100%");
+	var data=_victoryCore.Events.addEventKeys(props,this.getData(props));
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
 	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	var domain={
+	x:this.getDomain(props,"x"),
+	y:this.getDomain(props,"y")};
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	var scale={
+	x:_scale2.default.getBaseScale(props,"x").domain(domain.x).range(range.x),
+	y:_scale2.default.getBaseScale(props,"y").domain(domain.y).range(range.y)};
 	
-	var Candle = function (_React$Component) {
-	  _inherits(Candle, _React$Component);
+	return{data:data,scale:scale,style:style};},
 	
-	  function Candle() {
-	    _classCallCheck(this, Candle);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Candle).apply(this, arguments));
-	  }
+	getData:function getData(props){
+	var data=props.data;
+	var accessor={
+	x:_victoryCore.Helpers.createAccessor(props.x),
+	open:_victoryCore.Helpers.createAccessor(props.open),
+	close:_victoryCore.Helpers.createAccessor(props.close),
+	high:_victoryCore.Helpers.createAccessor(props.high),
+	low:_victoryCore.Helpers.createAccessor(props.low)};
 	
-	  _createClass(Candle, [{
-	    key: "renderWick",
-	    value: function renderWick() {
-	      var x = this.props.x;
+	return data.map(function(datum){
+	var x=accessor.x(datum);
+	var open=accessor.open(datum);
+	var close=accessor.close(datum);
+	var high=accessor.high(datum);
+	var low=accessor.low(datum);
+	var y=[open,close,high,low];
+	return _extends(
+	{},
+	datum,
+	{x:x,y:y});});},
 	
-	      return _react2.default.createElement("line", _extends({}, this.props.events, {
-	        x1: x,
-	        x2: x,
-	        y1: this.props.y1,
-	        y2: this.props.y2,
-	        style: this.props.style
-	      }));
-	    }
-	  }, {
-	    key: "renderCandle",
-	    value: function renderCandle() {
-	      var width = this.props.width;
-	      var padding = this.props.padding.left || this.props.padding;
-	      var dataLength = this.props.data.length;
-	      var candleWidth = 0.5 * (width - 2 * padding) / dataLength;
-	      var candleX = this.props.x - candleWidth / 2;
 	
-	      return _react2.default.createElement("rect", _extends({}, this.props.events, {
-	        x: candleX,
-	        y: this.props.y,
-	        style: this.props.style,
-	        width: candleWidth,
-	        height: this.props.candleHeight
-	      }));
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      return _react2.default.createElement(
-	        "g",
-	        null,
-	        this.renderWick(),
-	        this.renderCandle()
-	      );
-	    }
-	  }]);
 	
-	  return Candle;
-	}(_react2.default.Component);
 	
-	Candle.propTypes = {
-	  index: _react2.default.PropTypes.number,
-	  x: _react.PropTypes.number,
-	  y1: _react.PropTypes.number,
-	  y2: _react.PropTypes.number,
-	  y: _react.PropTypes.number,
-	  events: _react.PropTypes.object,
-	  candleHeight: _react.PropTypes.number,
-	  scale: _react.PropTypes.object,
-	  style: _react.PropTypes.object,
-	  datum: _react.PropTypes.object,
-	  width: _react.PropTypes.number,
-	  padding: _react.PropTypes.oneOfType([_react.PropTypes.number, _react.PropTypes.object]),
-	  data: _react.PropTypes.array
-	};
-	exports.default = Candle;
-
-/***/ },
-/* 327 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
+	getDomain:function getDomain(props,axis){
+	if(props.domain&&props.domain[axis]){
+	return props.domain[axis];}else
+	if(props.domain&&Array.isArray(props.domain)){
+	return props.domain;}else
+	{
+	var dataset=this.getData(props);
+	var allData=dataset.reduce(function(memo,datum){
+	return Array.isArray(datum[axis])?
+	memo.concat.apply(memo,_toConsumableArray(datum[axis])):memo.concat(datum[axis]);},
 	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
+	[]);
+	var min=Math.min.apply(Math,_toConsumableArray(allData));
+	var max=Math.max.apply(Math,_toConsumableArray(allData));
+	if(min===max){
+	var adjustedMax=max===0?1:max;
+	return[0,adjustedMax];}
 	
-	var _defaults2 = __webpack_require__(2);
+	return[min,max];}},
 	
-	var _defaults3 = _interopRequireDefault(_defaults2);
 	
-	var _omit2 = __webpack_require__(309);
 	
-	var _omit3 = _interopRequireDefault(_omit2);
+	getDataStyles:function getDataStyles(datum,style,props){
+	var stylesFromData=(0,_omit3.default)(datum,[
+	"x","y","size","name","label","open","close","high","low"]);
 	
-	var _pick2 = __webpack_require__(322);
+	var fillCheck=datum.fill||style.fill;
+	var strokeCheck=datum.stroke||style.stroke;
+	var strokeColor=fillCheck&&!strokeCheck?fillCheck:
+	strokeCheck;
+	var candleColor=datum.open>datum.close?
+	props.candleColors.negative:props.candleColors.positive;
+	var baseDataStyle=(0,_defaults3.default)({},stylesFromData,
+	{stroke:strokeColor||candleColor,fill:candleColor},
+	style);
+	return _victoryCore.Helpers.evaluateStyle(baseDataStyle,datum);},
 	
-	var _pick3 = _interopRequireDefault(_pick2);
 	
-	var _victoryCore = __webpack_require__(29);
+	getLabelText:function getLabelText(props,datum,index){
+	var propsLabel=Array.isArray(props.labels)?
+	props.labels[index]:_victoryCore.Helpers.evaluateProp(props.labels,datum);
+	return datum.label||propsLabel;},
 	
-	var _scale = __webpack_require__(215);
 	
-	var _scale2 = _interopRequireDefault(_scale);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-	
-	exports.default = {
-	  getBaseProps: function getBaseProps(props, fallbackProps) {
-	    var _this = this;
-	
-	    // eslint-disable-line max-statements
-	    var modifiedProps = props.theme && props.theme.candlestick ? _victoryCore.Helpers.modifyProps(props, fallbackProps, props.theme.candlestick.props) : _victoryCore.Helpers.modifyProps(props, fallbackProps);
-	    var calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
-	    var data = calculatedValues.data;
-	    var style = calculatedValues.style;
-	    var scale = calculatedValues.scale;
-	
-	    return data.reduce(function (memo, datum, index) {
-	      var eventKey = datum.eventKey;
-	      var x = scale.x(datum.x);
-	      var y1 = scale.y(datum.high);
-	      var y2 = scale.y(datum.low);
-	      var candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
-	      var y = scale.y(Math.max(datum.open, datum.close));
-	      var size = _this.getSize(datum, modifiedProps, calculatedValues);
-	      var dataStyle = Object.assign(_this.getDataStyles(datum, style.data, modifiedProps));
-	      var dataProps = {
-	        x: x, y: y, y1: y1, y2: y2, candleHeight: candleHeight, size: size, scale: scale, data: data, datum: datum,
-	        index: index, style: dataStyle, padding: modifiedProps.padding, width: modifiedProps.width
-	      };
-	
-	      var text = _this.getLabelText(modifiedProps, datum, index);
-	      var labelStyle = _this.getLabelStyle(style.labels, dataProps);
-	      var labelProps = {
-	        style: labelStyle,
-	        x: x,
-	        y: y - labelStyle.padding,
-	        text: text,
-	        index: index,
-	        scale: scale,
-	        datum: dataProps.datum,
-	        textAnchor: labelStyle.textAnchor,
-	        verticalAnchor: labelStyle.verticalAnchor || "end",
-	        angle: labelStyle.angle
-	      };
-	      memo[eventKey] = {
-	        data: dataProps,
-	        labels: labelProps
-	      };
-	      return memo;
-	    }, {});
-	  },
-	  getCalculatedValues: function getCalculatedValues(props, fallbackProps) {
-	    var style = _victoryCore.Helpers.getStyles(props.style, fallbackProps.style, "auto", "100%");
-	    var data = _victoryCore.Events.addEventKeys(props, this.getData(props));
-	    var range = {
-	      x: _victoryCore.Helpers.getRange(props, "x"),
-	      y: _victoryCore.Helpers.getRange(props, "y")
-	    };
-	    var domain = {
-	      x: this.getDomain(props, "x"),
-	      y: this.getDomain(props, "y")
-	    };
-	    var scale = {
-	      x: _scale2.default.getBaseScale(props, "x").domain(domain.x).range(range.x),
-	      y: _scale2.default.getBaseScale(props, "y").domain(domain.y).range(range.y)
-	    };
-	    return { data: data, scale: scale, style: style };
-	  },
-	  getData: function getData(props) {
-	    var data = props.data;
-	    var accessor = {
-	      x: _victoryCore.Helpers.createAccessor(props.x),
-	      open: _victoryCore.Helpers.createAccessor(props.open),
-	      close: _victoryCore.Helpers.createAccessor(props.close),
-	      high: _victoryCore.Helpers.createAccessor(props.high),
-	      low: _victoryCore.Helpers.createAccessor(props.low)
-	    };
-	    return data.map(function (datum) {
-	      var x = accessor.x(datum);
-	      var open = accessor.open(datum);
-	      var close = accessor.close(datum);
-	      var high = accessor.high(datum);
-	      var low = accessor.low(datum);
-	      var y = [open, close, high, low];
-	      return Object.assign({}, datum, { x: x, y: y });
-	    });
-	  },
-	  getDomain: function getDomain(props, axis) {
-	    if (props.domain && props.domain[axis]) {
-	      return props.domain[axis];
-	    } else if (props.domain && Array.isArray(props.domain)) {
-	      return props.domain;
-	    } else {
-	      var dataset = this.getData(props);
-	      var allData = dataset.reduce(function (memo, datum) {
-	        return Array.isArray(datum[axis]) ? memo.concat.apply(memo, _toConsumableArray(datum[axis])) : memo.concat(datum[axis]);
-	      }, []);
-	      var min = Math.min.apply(Math, _toConsumableArray(allData));
-	      var max = Math.max.apply(Math, _toConsumableArray(allData));
-	      if (min === max) {
-	        var adjustedMax = max === 0 ? 1 : max;
-	        return [0, adjustedMax];
-	      }
-	      return [min, max];
-	    }
-	  },
-	  getDataStyles: function getDataStyles(datum, style, props) {
-	    var stylesFromData = (0, _omit3.default)(datum, ["x", "y", "size", "name", "label", "open", "close", "high", "low"]);
-	    var candleColor = datum.open > datum.close ? props.candleColors.negative : props.candleColors.positive;
-	    var baseDataStyle = (0, _defaults3.default)({}, stylesFromData, { stroke: candleColor, fill: candleColor }, style);
-	    return _victoryCore.Helpers.evaluateStyle(baseDataStyle, datum);
-	  },
-	  getLabelText: function getLabelText(props, datum, index) {
-	    var propsLabel = Array.isArray(props.labels) ? props.labels[index] : _victoryCore.Helpers.evaluateProp(props.labels, datum);
-	    return datum.label || propsLabel;
-	  },
-	  getLabelStyle: function getLabelStyle(labelStyle, dataProps) {
-	    var datum = dataProps.datum;
-	    var size = dataProps.size;
-	    var style = dataProps.style;
-	
-	    var matchedStyle = (0, _pick3.default)(style, ["opacity", "fill"]);
-	    var padding = labelStyle.padding || size * 0.25;
-	    var baseLabelStyle = (0, _defaults3.default)({}, labelStyle, matchedStyle, { padding: padding });
-	    return _victoryCore.Helpers.evaluateStyle(baseLabelStyle, datum);
-	  },
-	  getSize: function getSize(data, props) {
-	    var size = void 0;
-	    if (data.size) {
-	      size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
-	    } else if (typeof props.size === "function") {
-	      size = props.size;
-	    } else {
-	      size = Math.max(props.size, 1);
-	    }
-	    return _victoryCore.Helpers.evaluateProp(size, data);
-	  }
-	};
+	getLabelStyle:function getLabelStyle(labelStyle,dataProps){var
+	datum=dataProps.datum;var size=dataProps.size;var style=dataProps.style;
+	var matchedStyle=(0,_pick3.default)(style,["opacity","fill"]);
+	var padding=labelStyle.padding||size*0.25;
+	var baseLabelStyle=(0,_defaults3.default)({},labelStyle,matchedStyle,{padding:padding});
+	return _victoryCore.Helpers.evaluateStyle(baseLabelStyle,datum);}};
 
 /***/ }
 /******/ ])
