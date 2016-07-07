@@ -22,7 +22,11 @@ const getData = () => {
 };
 
 const style = {
-  parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
+  parent: {
+    border: "1px solid #ccc",
+    margin: "2%",
+    maxWidth: "40%"
+  }
 };
 
 const data = [
@@ -104,7 +108,7 @@ export default class App extends React.Component {
         <VictoryCandlestick
           style={{parent: style.parent}}
           data={data}
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
           size={8}
           events={[{
             target: "labels",
@@ -139,12 +143,15 @@ export default class App extends React.Component {
             }
           }]}
         />
+
         <VictoryChart
           scale={{x: "time"}}
+          style={{
+            parent: style.parent
+          }}
         >
           <VictoryCandlestick
-            style={{parent: style.parent}}
-            candleColors={{positive: "purple", negative: "blue"}}
+            candleColors={{positive: "#8BC34A", negative: "#C62828"}}
             data={data}
             size={8}
           />
@@ -153,7 +160,10 @@ export default class App extends React.Component {
         <VictoryCandlestick
           animate={{duration: 2000}}
           data={this.state.data}
-          style={{data: {width: 50}}}
+          style={{
+            data: { width: 50 },
+            parent: style.parent
+          }}
         />
 
         <VictoryCandlestick
