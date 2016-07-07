@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 
 export default class AxisLine extends React.Component {
   static propTypes = {
+    tick: PropTypes.any,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
@@ -10,14 +11,12 @@ export default class AxisLine extends React.Component {
     events: PropTypes.object
   };
 
+  renderAxisLine(props, style, events) {
+    return <line {...props} style={style} {...events} vectorEffect="non-scaling-stroke"/>;
+  }
+
   render() {
     const { x1, x2, y1, y2, style, events} = this.props;
-    return (
-      <line
-        x1={x1} x2={x2} y1={y1} y2={y2} style={style}
-        vectorEffect="non-scaling-stroke"
-        {...events}
-      />
-    );
+    return this.renderAxisLine({x1, x2, y1, y2}, style, events);
   }
 }

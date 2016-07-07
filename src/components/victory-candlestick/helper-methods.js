@@ -9,6 +9,8 @@ export default {
     Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
+    const { groupComponent, width, height, padding } = modifiedProps;
+    const parentProps = {scale, width, height, data, style: style.parent};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
@@ -18,8 +20,8 @@ export default {
       const y = scale.y(Math.max(datum.y[0], datum.y[1]));
       const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
-        x, y, y1, y2, candleHeight, scale, data, datum,
-        index, style: dataStyle, padding: modifiedProps.padding, width: modifiedProps.width
+        x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
+        index, style: dataStyle, padding, width
       };
 
       const text = this.getLabelText(modifiedProps, datum, index);
@@ -41,7 +43,7 @@ export default {
         labels: labelProps
       };
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, fallbackProps) {

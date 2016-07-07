@@ -316,7 +316,13 @@ export default class VictoryArea extends React.Component {
     * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -329,7 +335,8 @@ export default class VictoryArea extends React.Component {
     interpolation: "linear",
     x: "x",
     y: "y",
-    containerComponent: <VictoryContainer />
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g/>
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -360,8 +367,8 @@ export default class VictoryArea extends React.Component {
   }
 
   renderData(props) {
+    const { dataComponent, labelComponent, groupComponent } = props;
     const { role } = VictoryArea;
-    const { dataComponent, labelComponent } = props;
     const dataEvents = this.getEvents(props, "data", "all");
     const dataProps = defaults(
       {role},
@@ -386,12 +393,7 @@ export default class VictoryArea extends React.Component {
       const areaLabel = React.cloneElement(labelComponent, Object.assign({
         events: Events.getPartialEvents(labelEvents, "all", labelProps)
       }, labelProps));
-      return (
-        <g>
-          {areaComponent}
-          {areaLabel}
-        </g>
-      );
+      return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
     }
     return areaComponent;
   }
@@ -414,6 +416,14 @@ export default class VictoryArea extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
@@ -424,7 +434,7 @@ export default class VictoryArea extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryArea {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -434,11 +444,7 @@ export default class VictoryArea extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = (
-      <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
