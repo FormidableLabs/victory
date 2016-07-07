@@ -5,7 +5,7 @@ import Radium, { Style, StyleRoot } from "radium";
 import * as docgen from "react-docgen";
 import { merge, random, range } from "lodash";
 import { VictoryPie } from "../src/index";
-import { VictoryTheme, appendLinkIcon } from "formidable-landers";
+import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -16,7 +16,7 @@ class Docs extends React.Component {
           source={docgen.parse(require("!!raw!../src/components/victory-pie"))}
           scope={{merge, random, range, React, ReactDOM, VictoryPie}}
           playgroundtheme="elegant"
-          customRenderers={appendLinkIcon}
+          customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
         />
         <Style rules={VictoryTheme}/>
       </StyleRoot>
