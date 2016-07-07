@@ -16,9 +16,7 @@ const colors = [
   cyan900
 ];
 const blueGrey50 = "#ECEFF1";
-// const blueGrey100 = "#CFD8DC";
 const blueGrey300 = "#90A4AE";
-// const blueGrey400 = "#78909C";
 const blueGrey700 = "#455A64";
 const grey900 = "#212121";
 // *
@@ -139,26 +137,19 @@ export default {
   pie: {
     props: Object.assign({}, baseProps,
       {
-        colorScale: [
-          "#252525",
-          "#636363",
-          "#969696",
-          "#bdbdbd",
-          "#d9d9d9",
-          "#f7f7f7"
-        ]
+        colorScale: colors
       }),
     style: {
       data: {
         padding,
-        stroke: "#f7f7f7",
+        stroke: blueGrey50,
         strokeWidth: 1
       },
       labels: Object.assign({}, baseLabelStyles,
         {
           padding: 200,
-          strokeWidth: 0,
           stroke: "transparent",
+          strokeWidth: 0,
           textAnchor: "middle"
         }),
       parent: {}
