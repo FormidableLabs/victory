@@ -16,9 +16,9 @@ class Docs extends React.Component {
           source={docgen.parse(require("!!raw!../../src/components/victory-area/victory-area"))}
           scope={{merge, React, ReactDOM, VictoryArea, VictoryStack, VictoryGroup, VictoryScatter}}
           playgroundtheme="elegant"
-          customRenderers={appendLinkIcon}
+          customRenderers={merge(ecologyPlaygroundLoading, appendLinkIcon)}
         />
-        <Style rules={merge(ecologyPlaygroundLoading, VictoryTheme)}/>
+        <Style rules={VictoryTheme}/>
       </div>
     );
   }
