@@ -6,22 +6,22 @@ import ErrorBar from "../../src/components/victory-errorbar/errorbar";
 import { VictoryContainer, VictoryTheme } from "victory-core";
 
 const getData = () => {
-  return range(10).map(() => {
+  return range(4).map(() => {
     return {
-      x: random(600),
-      y: random(600),
-      errorX: [random(10, true), random(30, true)],
-      errorY: [random(20, true), random(10, true)]
+      x: random(6),
+      y: random(6),
+      errorX: [random(1, true), random(3, true)],
+      errorY: [random(2, true), random(2, true)]
     };
   });
 };
 
 const basicData = [
-  {x: 1, y: 1, errorX: [1, 0.5], errorY: 1},
-  {x: 2, y: 2, errorX: [1, 3], errorY: 1},
-  {x: 3, y: 3, errorX: [1, 3], errorY: [2, 3]},
-  {x: 4, y: 2, errorX: [1, 0.5], errorY: 1},
-  {x: 5, y: 1, errorX: [1, 0.5], errorY: 2}
+  {x: 1, y: 1, errorX: [1, 0.5], errorY: .1},
+  {x: 2, y: 2, errorX: [1, 3], errorY: .1},
+  {x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3]},
+  {x: 4, y: 2, errorX: [1, 0.5], errorY: .1},
+  {x: 5, y: 1, errorX: [1, 0.5], errorY: .2}
 ];
 
 const style = {
@@ -56,7 +56,9 @@ export default class App extends React.Component {
         <h1>VictoryErrorBar</h1>
 
         <VictoryChart>
-          <VictoryErrorBar data={basicData}/>
+          <VictoryErrorBar
+            data={basicData}
+          />
           <VictoryScatter data={basicData}/>
         </VictoryChart>
 
@@ -71,7 +73,7 @@ export default class App extends React.Component {
           style={style}
           width={500}
           height={500}
-          domain={[0, 600]}
+          domain={[0, 6]}
           animate={{duration: 2000}}
           data={this.state.data}
           dataComponent={<ErrorBar />}
@@ -88,7 +90,7 @@ export default class App extends React.Component {
           style={style}
           width={500}
           height={500}
-          domain={[0, 600]}
+          domain={[0, 6]}
           animate={{duration: 2000}}
           borderWidth={30}
           data={this.state.data}

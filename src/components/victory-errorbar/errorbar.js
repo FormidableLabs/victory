@@ -37,10 +37,10 @@ export default class ErrorBar extends React.Component {
 
     const rangeX = scale.x.range();
     const rangeY = scale.y.range();
-    const positiveErrorX = x + (isArray(errorX) ? errorX[0] : errorX);
-    const negativeErrorX = x - (isArray(errorX) ? errorX[1] : errorX);
-    const positiveErrorY = y + (isArray(errorY) ? errorY[1] : errorY);
-    const negativeErrorY = y - (isArray(errorY) ? errorY[0] : errorY);
+    const positiveErrorX = errorX[0];
+    const negativeErrorX = errorX[1];
+    const positiveErrorY = errorY[1];
+    const negativeErrorY = errorY[0];
     const errorTop = positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY;
     const errorBottom = negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY;
     const errorRight = positiveErrorX >= rangeX[1] ? rangeX[1] : positiveErrorX;

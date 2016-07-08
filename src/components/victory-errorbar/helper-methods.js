@@ -25,11 +25,14 @@ export default {
        */
       if (isArray(datum.errorX)) {
         errorX = [
-          scale.x(datum.errorX[0]),
-          scale.x(datum.errorX[1])
+          scale.x(datum.errorX[0] + datum.x),
+          scale.x(datum.x - datum.errorX[1])
         ];
       } else {
-        errorX = scale.x(datum.errorX);
+        errorX = [
+          scale.x(datum.errorX + datum.x),
+          scale.x(datum.x - datum.errorX)
+        ];
       }
 
       /**
@@ -40,11 +43,14 @@ export default {
        */
       if (isArray(datum.errorY)) {
         errorY = [
-          scale.x(datum.errorY[0]),
-          scale.x(datum.errorY[1])
+          scale.y(datum.errorY[0] + datum.y),
+          scale.y(datum.y - datum.errorY[1])
         ];
       } else {
-        errorY = scale.x(datum.errorY);
+        errorY = [
+          scale.y(datum.errorY + datum.y),
+          scale.y(datum.y - datum.errorY)
+        ];
       }
 
       const dataStyle = this.getDataStyles(datum, style.data);
@@ -60,11 +66,63 @@ export default {
     }, {parent: parentProps});
   },
 
+  getErrorData(props) {
+    if (props.data) {
+      return this.formatErrorData(props.data, props);
+    } else {
+      const generatedData = (props.errorX || props.errorY) && this.generateData(props);
+      return this.formatErrorData(generatedData, props);
+    }
+  },
+
+  formatErrorData(dataset, props) {
+    if (!dataset) {
+      return [];
+    }
+    const accessor = {
+      errorX: Helpers.createAccessor(props.errorX),
+      errorY: Helpers.createAccessor(props.errorY)
+    };
+    return dataset.map((datum) => {
+      let errorX = accessor.errorX(datum.errorX);
+      let errorY = accessor.errorY(datum.errorY);
+      // check if the value is negative, if it is set to 0
+      if (!isArray(errorX) && errorX < 0) {
+        errorX = 0;
+      } else if (isArray(errorX)) {
+        errorX.map((err) => {
+          if (err < 0) {
+            return 0;
+          }
+          return err;
+        });
+      }
+
+      if (!isArray(errorY) && errorY < 0) {
+        errorY = 0;
+      } else if (isArray(errorY)) {
+        errorY.map((err) => {
+          if (err < 0) {
+            return 0;
+          }
+          return err;
+        });
+      }
+
+      return Object.assign(
+          {},
+          datum,
+          { errorX, errorY }
+        );
+    });
+  },
+
   getCalculatedValues(props, fallbackProps) {
     const defaultStyles = props.theme && props.theme.errorbar ? props.theme.errorbar
     : fallbackProps.style;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
+    const assignData = Object.assign(Data.getData(props), this.getErrorData(props));
+    const data = Events.addEventKeys(props, assignData);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -77,6 +135,7 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+
     return {data, scale, style};
   },
 
