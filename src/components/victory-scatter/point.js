@@ -3,23 +3,24 @@ import pathHelpers from "./path-helpers";
 
 export default class Point extends React.Component {
   static propTypes = {
-    index: React.PropTypes.number,
     datum: PropTypes.object,
     events: PropTypes.object,
+    index: PropTypes.number,
+    role: PropTypes.string,
+    size: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func
+    ]),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
         "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"
       ]),
       PropTypes.func
     ]),
-    size: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.func
-    ]),
     scale: PropTypes.object,
     style: PropTypes.object,
-    x: React.PropTypes.number,
-    y: React.PropTypes.number
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   getPath(props) {
@@ -36,12 +37,15 @@ export default class Point extends React.Component {
   }
 
   render() {
+    const {events, role, style} = this.props;
+
     return (
       <path
-        {...this.props.events}
-        style={this.props.style}
+        {...events}
         d={this.getPath(this.props)}
+        role={role}
         shapeRendering="optimizeSpeed"
+        style={style}
       />
     );
   }

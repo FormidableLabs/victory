@@ -5,10 +5,11 @@ import * as d3Shape from "d3-shape";
 export default class Area extends React.Component {
   static propTypes = {
     data: PropTypes.array,
+    events: PropTypes.object,
     interpolation: PropTypes.string,
+    role: PropTypes.string,
     scale: PropTypes.object,
-    style: PropTypes.object,
-    events: PropTypes.object
+    style: PropTypes.object
   };
 
   toNewName(interpolation) {
@@ -17,7 +18,7 @@ export default class Area extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
-  renderArea(style, interpolation, events) {
+  renderArea({ style, interpolation, events, role }) {
     const xScale = this.props.scale.x;
     const yScale = this.props.scale.y;
     const areaStroke = style.stroke ? "none" : style.fill;
@@ -29,7 +30,7 @@ export default class Area extends React.Component {
       .y0((data) => yScale(data.y0));
     const path = areaFunction(this.props.data);
 
-    return <path style={areaStyle} d={path} {...events}/>;
+    return <path role={role} style={areaStyle} d={path} {...events}/>;
   }
 
   renderLine(style, interpolation, events) {
@@ -50,10 +51,10 @@ export default class Area extends React.Component {
   }
 
   render() {
-    const { style, interpolation, events } = this.props;
+    const { events, interpolation, role, style } = this.props;
     return (
       <g>
-        {this.renderArea(style, interpolation, events)}
+        {this.renderArea({style, interpolation, events, role})}
         {this.renderLine(style, interpolation, events)}
       </g>
     );
