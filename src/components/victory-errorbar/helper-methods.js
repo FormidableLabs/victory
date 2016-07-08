@@ -1,6 +1,7 @@
-import { omit, defaults, isArray } from "lodash";
+import { omit, defaults, isArray, flatten } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
+import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 
@@ -117,6 +118,54 @@ export default {
     });
   },
 
+  getDomain(props, axis) {
+    const propsDomain = Domain.getDomainFromProps(props, axis);
+    if (propsDomain) {
+      return propsDomain;
+    }
+    const categoryDomain = Domain.getDomainFromCategories(props, axis);
+    if (categoryDomain) {
+      return categoryDomain;
+    }
+    const dataset = this.getErrorData(props);
+    console.log(dataset)
+    return this.getDomainFromData(props, axis, dataset);
+  },
+
+  getDomainFromData(props, axis, dataset) {
+    const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
+    let error;
+    if (currentAxis === "x") {
+      error = "errorX";
+    } else if (currentAxis === "y") {
+      error = "errorY";
+    }
+    const axisData = flatten(dataset).map((datum) => datum[currentAxis]);
+    const errorData = flatten(flatten(dataset).map((datum) => {
+      let errorMax;
+      let errorMin;
+      if (isArray(datum[error])) {
+        errorMax = datum[error][0] + datum[currentAxis];
+        errorMin = datum[currentAxis] - datum[error][1];
+      } else {
+        errorMax = datum[error] + datum[currentAxis];
+        errorMin = datum[currentAxis] - datum[error];
+      }
+      return [errorMax, errorMin];
+    }));
+
+    const allData = axisData.concat(errorData);
+    const min = Math.min(...allData);
+    const max = Math.max(...allData);
+    // TODO: is this the correct behavior, or should we just error. How do we
+    // handle charts with just one data point?
+    if (min === max) {
+      const adjustedMax = max === 0 ? 1 : max;
+      return [0, adjustedMax];
+    }
+    return [min, max];
+  },
+
   getCalculatedValues(props, fallbackProps) {
     const defaultStyles = props.theme && props.theme.errorbar ? props.theme.errorbar
     : fallbackProps.style;
@@ -128,8 +177,8 @@ export default {
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
+      x: this.getDomain(props, "x"),
+      y: this.getDomain(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),

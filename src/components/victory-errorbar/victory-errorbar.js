@@ -302,7 +302,7 @@ export default class VictoryErrorBar extends React.Component {
     containerComponent: <VictoryContainer/>
   };
 
-  static getDomain = Domain.getDomain.bind(Domain);
+  static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(
     ErrorBarHelpers.getBaseProps.bind(ErrorBarHelpers), fallbackProps);
