@@ -1,5 +1,5 @@
-import grayscaleTheme from "./grayscale";
+import materialTheme from "./material";
 
 export default {
-  grayscale: grayscaleTheme
+  material: materialTheme
 };
