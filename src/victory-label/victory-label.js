@@ -212,7 +212,11 @@ export default class VictoryLabel extends React.Component {
   renderElements(props, content) {
     const transform = this.getTransform(props);
     return (
-      <text {...props} transform={transform}>
+      <text dx={props.dx} dy={props.dy} x={props.x} y={props.y}
+        transform={transform}
+        textAnchor={props.textAnchor}
+        style={props.style}
+      >
         {content.map((line, i) => {
           const dy = i ? props.lineHeight : undefined;
           return (
