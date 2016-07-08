@@ -113,4 +113,19 @@ describe("components/victory-area", () => {
       });
     });
   });
+
+  describe("accessibility", () => {
+    it("adds an area role to the path area", () => {
+      const wrapper = mount(<VictoryArea />);
+      wrapper.find("path").nodes.forEach((p) => {
+        const {attributes: attr} = p;
+        const role = attr.getNamedItem("role");
+        if (role) {
+          const roleValue = role.value;
+          expect(roleValue).to.be.a("string");
+          expect(roleValue).to.equal("area");
+        }
+      });
+    });
+  });
 });

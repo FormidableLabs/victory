@@ -5,10 +5,12 @@ import d3Shape from "d3-shape";
 export default class Area extends React.Component {
   static propTypes = {
     data: PropTypes.array,
+    events: PropTypes.object,
+    groupComponent: PropTypes.element,
     interpolation: PropTypes.string,
+    role: PropTypes.string,
     scale: PropTypes.object,
-    style: PropTypes.object,
-    events: PropTypes.object
+    style: PropTypes.object
   };
 
   toNewName(interpolation) {
@@ -17,45 +19,49 @@ export default class Area extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
-  renderArea(style, interpolation, events) {
-    const xScale = this.props.scale.x;
-    const yScale = this.props.scale.y;
-    const areaStroke = style.stroke ? "none" : style.fill;
-    const areaStyle = assign({}, style, {stroke: areaStroke});
+  getAreaPath(props) {
+    const xScale = props.scale.x;
+    const yScale = props.scale.y;
     const areaFunction = d3Shape.area()
-      .curve(d3Shape[this.toNewName(interpolation)])
+      .curve(d3Shape[this.toNewName(props.interpolation)])
       .x((data) => xScale(data.x))
       .y1((data) => yScale(data.y1))
       .y0((data) => yScale(data.y0));
-    const path = areaFunction(this.props.data);
-
-    return <path style={areaStyle} d={path} {...events}/>;
+    return areaFunction(props.data);
   }
 
-  renderLine(style, interpolation, events) {
+  getLinePath(props) {
+    const xScale = props.scale.x;
+    const yScale = props.scale.y;
+    const lineFunction = d3Shape.line()
+      .curve(d3Shape[this.toNewName(props.interpolation)])
+      .x((data) => xScale(data.x))
+      .y((data) => yScale(data.y1));
+    return lineFunction(props.data);
+  }
+
+  renderArea(path, style, events) {
+    const areaStroke = style.stroke ? "none" : style.fill;
+    const areaStyle = assign({}, style, {stroke: areaStroke});
+    const { role } = this.props;
+    return <path key="area" style={areaStyle} role={role} d={path} {...events}/>;
+  }
+
+  renderLine(path, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
+    const { role } = this.props;
     const lineStyle = assign({}, style, {fill: "none"});
-    const xScale = this.props.scale.x;
-    const yScale = this.props.scale.y;
-    const lineFunction = d3Shape.line()
-      .curve(d3Shape[this.toNewName(interpolation)])
-      .x((data) => xScale(data.x))
-      .y((data) => yScale(data.y1));
-    const path = lineFunction(this.props.data);
     return (
-      <path style={lineStyle} d={path} {...events}/>
+      <path key="area-stroke" style={lineStyle} role={role} d={path} {...events}/>
     );
   }
 
   render() {
-    const { style, interpolation, events } = this.props;
-    return (
-      <g>
-        {this.renderArea(style, interpolation, events)}
-        {this.renderLine(style, interpolation, events)}
-      </g>
-    );
+    const { style, events, groupComponent } = this.props;
+    const area = this.renderArea(this.getAreaPath(this.props), style, events);
+    const line = this.renderLine(this.getLinePath(this.props), style, events);
+    return React.cloneElement(groupComponent, {}, area, line);
   }
 }

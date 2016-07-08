@@ -193,4 +193,19 @@ describe("components/victory-scatter", () => {
       });
     });
   });
+
+
+  describe("accessibility", () => {
+    it("adds an area role to each point in the series", () => {
+      const data = range(20).map((y, x) => ({x, y}));
+      const wrapper = mount(<VictoryScatter data={data} />);
+
+      wrapper.find("path").nodes.forEach((p, i) => {
+        const {attributes: attr} = p;
+        const roleValue = attr.getNamedItem("role").value;
+        expect(roleValue).to.be.a("string");
+        expect(roleValue).to.equal(`scatter-${i}`);
+      });
+    });
+  });
 });

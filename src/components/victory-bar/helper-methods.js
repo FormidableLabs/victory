@@ -90,7 +90,7 @@ export default {
     : fallbackProps.style;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(modifiedProps, Data.getData(props));
+    const data = Events.addEventKeys(modifiedProps, Data.getData(modifiedProps));
     const scale = this.getScale(modifiedProps);
     const { horizontal, width, height } = modifiedProps;
     const parentProps = {scale, width, height, data, style: style.parent};
@@ -105,7 +105,10 @@ export default {
           index,
           datum,
           scale,
-          horizontal
+          horizontal,
+          padding: modifiedProps.padding,
+          width: modifiedProps.width,
+          data
         },
         position
       );

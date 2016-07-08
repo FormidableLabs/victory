@@ -9,9 +9,11 @@ export default {
   getBaseProps(props, fallbackProps) {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const {scale, style, data} = this.getCalculatedValues(modifiedProps, fallbackProps);
-    const {interpolation, label, width, height} = modifiedProps;
+    const {interpolation, label, width, height, groupComponent} = modifiedProps;
 
     const dataProps = {
+      groupComponent,
+      key: "area",
       data,
       scale,
       interpolation: Helpers.evaluateProp(interpolation, data),
@@ -23,6 +25,7 @@ export default {
     const labelStyle = Helpers.evaluateStyle(style.labels, data);
 
     const labelProps = {
+      key: "area-label",
       x: scale.x(lastData.x) + labelStyle.padding,
       y: scale.y(lastData.y1),
       y0: scale.y(lastData.y0),

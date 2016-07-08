@@ -79,8 +79,7 @@ export default {
     childComponents = childComponents || React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = horizontal ? otherAxis : axis;
+    const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {

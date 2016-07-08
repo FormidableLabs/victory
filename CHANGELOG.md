@@ -1,4 +1,13 @@
 # VictoryLine Changelog
+## 10.0.0 (2016-07-07)
+
+- Adds support for Victory Native 
+  - Adds `containerComponent` and `groupComponent` props to all components
+
+## 9.2.1 (2016-06-30)
+
+- Changes helper methods to make horizontal bar chart behavior more intuitive
+
 ## 9.2.0 (2016-06-17)
 
 - Supports events on the parent element via the `parent` namespace in the `events` prop.

@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 
 
 export default class Candle extends React.Component {
@@ -18,47 +19,37 @@ export default class Candle extends React.Component {
       PropTypes.number,
       PropTypes.object
     ]),
-    data: PropTypes.array
+    data: PropTypes.array,
+    groupComponent: PropTypes.element,
+    role: PropTypes.string
   }
 
-  renderWick(props) {
-    const {x, y1, y2, style, events} = props;
-    return (
-        <line
-          {...events}
-          x1={x}
-          x2={x}
-          y1={y1}
-          y2={y2}
-          style={style}
-        />
-      );
+  renderWick(wickProps) {
+    return <line {...wickProps}/>;
   }
 
-  renderCandle(props) {
-    const {x, y, width, data, style, events, candleHeight} = props;
+  renderCandle(candleProps) {
+    return <rect {...candleProps}/>;
+  }
+
+  getCandleProps(props) {
+    const { width, candleHeight, x, y, data, style, events, role} = props;
     const padding = props.padding.left || props.padding;
-    const candleWidth = 0.5 * (width - 2 * padding) / data.length;
+    const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
     const candleX = x - candleWidth / 2;
+    return assign({x: candleX, y, style, role, width: candleWidth, height: candleHeight}, events);
+  }
 
-    return (
-      <rect
-        {...events}
-        x={candleX}
-        y={y}
-        style={style}
-        width={candleWidth}
-        height={candleHeight}
-      />
-    );
+  getWickProps(props) {
+    const {x, y1, y2, style, events, role} = props;
+    return assign({x1: x, x2: x, y1, y2, style, role}, events);
   }
 
   render() {
-    return (
-      <g>
-        {this.renderWick(this.props)}
-        {this.renderCandle(this.props)}
-      </g>
+    const candleProps = this.getCandleProps(this.props);
+    const wickProps = this.getWickProps(this.props);
+    return React.cloneElement(
+      this.props.groupComponent, {}, this.renderWick(wickProps), this.renderCandle(candleProps)
     );
   }
 }
