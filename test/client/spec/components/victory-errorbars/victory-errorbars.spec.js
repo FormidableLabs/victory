@@ -97,19 +97,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX);
+        const errorX = xScale(data[i].x + data[i].errorX);
         const xScaleMax = xScale.range()[1];
-        const positiveErrorX = xScale(data[i].x) + errorX >= xScaleMax
-          ? xScaleMax : (xScale(data[i].x) + errorX);
+        const positiveErrorX = errorX >= xScaleMax
+          ? xScaleMax : errorX;
 
         // right border
         expect(node.find("line").at(0).props().x1)
@@ -139,19 +139,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX);
+        const errorX = xScale(data[i].x - data[i].errorX);
         const xScaleMin = xScale.range()[0];
-        const negativeErrorX = xScale(data[i].x) - errorX <= xScaleMin
-          ? xScaleMin : (xScale(data[i].x) - errorX);
+        const negativeErrorX = errorX <= xScaleMin
+          ? xScaleMin : errorX;
 
         // left border
         expect(node.find("line").at(1).props().x1)
@@ -181,19 +181,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY);
+        const errorY = yScale(data[i].y + data[i].errorY);
         const yScaleMin = yScale.range()[1];
-        const negativeErrorY = yScale(data[i].y) - errorY <= yScaleMin
-          ? yScaleMin : (yScale(data[i].y) - errorY);
+        const negativeErrorY = errorY <= yScaleMin
+          ? yScaleMin : errorY;
 
         // bottom border
         expect(node.find("line").at(2).props().x1)
@@ -223,21 +223,21 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY);
+        const errorY = yScale(data[i].y - data[i].errorY);
         const yScaleMax = yScale.range()[0];
-        const positiveErrorY = yScale(data[i].y) + errorY >= yScaleMax
-          ? yScaleMax : (yScale(data[i].y) + errorY);
+        const positiveErrorY = errorY >= yScaleMax
+          ? yScaleMax : errorY;
 
-        // bottom border
+        // top border
         expect(node.find("line").at(3).props().x1)
           .to.equal(xScale(data[i].x) - borderWidth);
         expect(node.find("line").at(3).props().x2)
@@ -264,19 +264,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY);
+        const errorY = yScale(data[i].y - data[i].errorY);
         const yScaleMax = yScale.range()[0];
-        const positiveErrorY = yScale(data[i].y) + errorY >= yScaleMax
-          ? yScaleMax : (yScale(data[i].y) + errorY);
+        const positiveErrorY = errorY >= yScaleMax
+          ? yScaleMax : errorY;
 
         expect(node.find("line").at(4).props().x1)
           .to.equal(xScale(data[i].x));
@@ -304,19 +304,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY);
+        const errorY = yScale(data[i].y + data[i].errorY);
         const yScaleMin = yScale.range()[1];
-        const negativeErrorY = yScale(data[i].y) - errorY <= yScaleMin
-          ? yScaleMin : (yScale(data[i].y) - errorY);
+        const negativeErrorY = errorY <= yScaleMin
+          ? yScaleMin : errorY;
 
         expect(node.find("line").at(5).props().x1)
           .to.equal(xScale(data[i].x));
@@ -344,19 +344,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX);
+        const errorX = xScale(data[i].x - data[i].errorX);
         const xScaleMin = xScale.range()[0];
-        const negativeErrorX = xScale(data[i].x) - errorX <= xScaleMin
-          ? xScaleMin : (xScale(data[i].x) - errorX);
+        const negativeErrorX = errorX <= xScaleMin
+          ? xScaleMin : errorX;
 
         expect(node.find("line").at(6).props().x1)
           .to.equal(xScale(data[i].x));
@@ -384,19 +384,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.1, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.2, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX);
+        const errorX = xScale(data[i].errorX + data[i].x);
         const xScaleMax = xScale.range()[1];
-        const positiveErrorX = xScale(data[i].x) + errorX >= xScaleMax
-          ? xScaleMax : (xScale(data[i].x) + errorX);
+        const positiveErrorX = errorX >= xScaleMax
+          ? xScaleMax : errorX;
 
         expect(node.find("line").at(7).props().x1)
           .to.equal(xScale(data[i].x));
@@ -461,19 +461,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX[0]);
+        const errorX = xScale(data[i].x + data[i].errorX[0]);
         const xScaleMax = xScale.range()[1];
-        const positiveErrorX = xScale(data[i].x) + errorX >= xScaleMax
-          ? xScaleMax : (xScale(data[i].x) + errorX);
+        const positiveErrorX = errorX >= xScaleMax
+          ? xScaleMax : errorX;
 
         // right border
         expect(node.find("line").at(0).props().x1)
@@ -503,19 +503,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX[1]);
+        const errorX = xScale(data[i].x - data[i].errorX[1]);
         const xScaleMin = xScale.range()[0];
-        const negativeErrorX = xScale(data[i].x) - errorX <= xScaleMin
-          ? xScaleMin : (xScale(data[i].x) - errorX);
+        const negativeErrorX = errorX <= xScaleMin
+          ? xScaleMin : errorX;
 
         // left border
         expect(node.find("line").at(1).props().x1)
@@ -545,19 +545,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY[0]);
+        const errorY = yScale(data[i].y + data[i].errorY[0]);
         const yScaleMin = yScale.range()[1];
-        const negativeErrorY = yScale(data[i].y) - errorY <= yScaleMin
-          ? yScaleMin : (yScale(data[i].y) - errorY);
+        const negativeErrorY = errorY <= yScaleMin
+          ? yScaleMin : errorY;
 
         // bottom border
         expect(node.find("line").at(2).props().x1)
@@ -587,21 +587,21 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY[1]);
+        const errorY = yScale(data[i].y - data[i].errorY[1]);
         const yScaleMax = yScale.range()[0];
-        const positiveErrorY = yScale(data[i].y) + errorY >= yScaleMax
-          ? yScaleMax : (yScale(data[i].y) + errorY);
+        const positiveErrorY = errorY >= yScaleMax
+          ? yScaleMax : errorY;
 
-        // bottom border
+        // top border
         expect(node.find("line").at(3).props().x1)
           .to.equal(xScale(data[i].x) - borderWidth);
         expect(node.find("line").at(3).props().x2)
@@ -628,19 +628,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY[1]);
+        const errorY = yScale(data[i].y - data[i].errorY[1]);
         const yScaleMax = yScale.range()[0];
-        const positiveErrorY = yScale(data[i].y) + errorY >= yScaleMax
-          ? yScaleMax : (yScale(data[i].y) + errorY);
+        const positiveErrorY = errorY >= yScaleMax
+          ? yScaleMax : errorY;
 
         expect(node.find("line").at(4).props().x1)
           .to.equal(xScale(data[i].x));
@@ -668,19 +668,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorY = yScale(data[i].errorY[0]);
+        const errorY = yScale(data[i].y + data[i].errorY[0]);
         const yScaleMin = yScale.range()[1];
-        const negativeErrorY = yScale(data[i].y) - errorY <= yScaleMin
-          ? yScaleMin : (yScale(data[i].y) - errorY);
+        const negativeErrorY = errorY <= yScaleMin
+          ? yScaleMin : errorY;
 
         expect(node.find("line").at(5).props().x1)
           .to.equal(xScale(data[i].x));
@@ -708,19 +708,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX[1]);
+        const errorX = xScale(data[i].x - data[i].errorX[1]);
         const xScaleMin = xScale.range()[0];
-        const negativeErrorX = xScale(data[i].x) - errorX <= xScaleMin
-          ? xScaleMin : (xScale(data[i].x) - errorX);
+        const negativeErrorX = errorX <= xScaleMin
+          ? xScaleMin : errorX;
 
         expect(node.find("line").at(6).props().x1)
           .to.equal(xScale(data[i].x));
@@ -748,19 +748,19 @@ describe("components/victory-errorbar", () => {
       );
 
       const xScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.3, 5.1])
         .range([svgDimensions.padding, svgDimensions.width - svgDimensions.padding]);
 
       const yScale = d3Scale.scaleLinear()
-        .domain([0, 5])
+        .domain([-0.5, 5.2])
         .range([svgDimensions.height - svgDimensions.padding, svgDimensions.padding]);
 
       const Data = wrapper.find(ErrorBar);
       Data.forEach((node, i) => {
-        const errorX = xScale(data[i].errorX[0]);
+        const errorX = xScale(data[i].x + data[i].errorX[0]);
         const xScaleMax = xScale.range()[1];
-        const positiveErrorX = xScale(data[i].x) + errorX >= xScaleMax
-          ? xScaleMax : (xScale(data[i].x) + errorX);
+        const positiveErrorX = errorX >= xScaleMax
+          ? xScaleMax : errorX;
 
         expect(node.find("line").at(7).props().x1)
           .to.equal(xScale(data[i].x));
