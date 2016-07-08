@@ -1,5 +1,4 @@
 import React, { PropTypes } from "react";
-import { isArray } from "lodash";
 
 export default class ErrorBar extends React.Component {
   constructor(props) {

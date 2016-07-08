@@ -128,7 +128,6 @@ export default {
       return categoryDomain;
     }
     const dataset = this.getErrorData(props);
-    console.log(dataset)
     return this.getDomainFromData(props, axis, dataset);
   },
 

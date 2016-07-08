@@ -5,7 +5,6 @@ import {
 } from "victory-core";
 import { defaults, isFunction, partialRight } from "lodash";
 import ErrorBar from "./errorbar";
-import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import ErrorBarHelpers from "./helper-methods";
 
