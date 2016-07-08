@@ -1,7 +1,5 @@
 import React, { PropTypes } from "react";
 import { isArray } from "lodash";
-import Borders from "./helpers/borders";
-import Cross from "./helpers/cross";
 
 export default class ErrorBar extends React.Component {
   constructor(props) {
@@ -33,7 +31,8 @@ export default class ErrorBar extends React.Component {
       y,
       errorX,
       errorY,
-      scale
+      scale,
+      borderWidth
     } = this.props;
 
     const rangeX = scale.x.range();
@@ -49,21 +48,81 @@ export default class ErrorBar extends React.Component {
 
     return (
       <g>
-        <Borders {...this.props}
-          rangeX={rangeX}
-          rangeY={rangeY}
-          errorTop={errorTop}
-          errorBottom={errorBottom}
-          errorRight={errorRight}
-          errorLeft={errorLeft}
+        <line
+          ref="borderRight"
+          {...this.props.events}
+          style={this.props.style}
+          x1={errorRight}
+          x2={errorRight}
+          y1={y - borderWidth}
+          y2={y + borderWidth}
         />
-        <Cross {...this.props}
-          rangeX={rangeX}
-          rangeY={rangeY}
-          errorTop={errorTop}
-          errorBottom={errorBottom}
-          errorRight={errorRight}
-          errorLeft={errorLeft}
+        <line
+          ref="borderLeft"
+          {...this.props.events}
+          style={this.props.style}
+          x1={errorLeft}
+          x2={errorLeft}
+          y1={y - borderWidth}
+          y2={y + borderWidth}
+        />
+        <line
+          ref="borderBottom"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x - borderWidth}
+          x2={x + borderWidth}
+          y1={errorBottom}
+          y2={errorBottom}
+        />
+        <line
+          ref="borderTop"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x - borderWidth}
+          x2={x + borderWidth}
+          y1={errorTop}
+          y2={errorTop}
+        />
+        <line
+          ref="crossTop"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={x}
+          y1={y}
+          y2={errorTop}
+          shapeRendering="optimizeSpeed"
+        />
+        <line
+          ref="crossBottom"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={x}
+          y1={y}
+          y2={errorBottom}
+          shapeRendering="optimizeSpeed"
+        />
+        <line
+          ref="crossLeft"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={errorLeft}
+          y1={y}
+          y2={y}
+          shapeRendering="optimizeSpeed"
+        />
+        <line
+          ref="crossRight"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={errorRight}
+          y1={y}
+          y2={y}
+          shapeRendering="optimizeSpeed"
         />
       </g>
     );
