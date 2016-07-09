@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { assign } from "lodash";
-import d3Shape from "d3-shape";
+import * as d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
   static propTypes = {

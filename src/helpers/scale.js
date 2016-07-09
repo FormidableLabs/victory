@@ -1,6 +1,6 @@
 import { flatten, includes, isFunction } from "lodash";
 import { Collection, Helpers } from "victory-core";
-import d3Scale from "d3-scale";
+import * as d3Scale from "d3-scale";
 
 const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
 
@@ -39,6 +39,7 @@ export default {
       return undefined;
     }
     const scale = props.scale[axis] || props.scale;
+
     if (this.validScale(scale)) {
       return isFunction(scale) ? scale : d3Scale[this.toNewName(scale)]();
     }
