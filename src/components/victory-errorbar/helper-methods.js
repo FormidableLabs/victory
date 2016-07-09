@@ -10,7 +10,7 @@ export default {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { height, width } = modifiedProps;
+    const { groupComponent, height, width } = modifiedProps;
     const parentProps = {style: style.parent, scale, data, height, width};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
@@ -56,7 +56,7 @@ export default {
 
       const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
-        x, y, scale, datum, index, style: dataStyle, errorX, errorY,
+        x, y, scale, datum, index, style: dataStyle, errorX, errorY, groupComponent,
         borderWidth: modifiedProps.borderWidth
       };
 

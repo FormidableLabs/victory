@@ -21,7 +21,8 @@ export default class ErrorBar extends React.Component {
       PropTypes.number,
       PropTypes.array
     ]),
-    borderWidth: PropTypes.number
+    borderWidth: PropTypes.number,
+    groupComponent: PropTypes.element
   };
 
   render() {
