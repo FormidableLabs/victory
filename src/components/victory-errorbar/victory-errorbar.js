@@ -281,6 +281,12 @@ export default class VictoryErrorBar extends React.Component {
     */
     theme: PropTypes.object,
     /**
+    * The groupComponent prop takes an entire component which will be used to
+    * create group elements for use within container elements. This prop defaults
+    * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+    */
+    groupComponent: PropTypes.element,
+    /**
      * The borderWidth prop sets the border width of the error bars. `borderWidth` will set
      * both x, y error bar width.
      * @type {number}
@@ -298,7 +304,8 @@ export default class VictoryErrorBar extends React.Component {
     borderWidth: 10,
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
@@ -331,7 +338,7 @@ export default class VictoryErrorBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent } = props;
+    const { dataComponent, groupComponent } = props;
     const errorBarComponents = [];
     this.dataKeys.forEach((key) => {
       const dataEvents = this.getEvents(props, "data", key);
@@ -348,7 +355,15 @@ export default class VictoryErrorBar extends React.Component {
       )));
     });
 
-    return errorBarComponents;
+    return React.cloneElement(groupComponent, {}, errorBarComponents);
+  }
+
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
   }
 
   renderContainer(props, group) {
@@ -382,7 +397,7 @@ export default class VictoryErrorBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryErrorBar {...modifiedProps}/>
+          {React.createElement(this.constructor, ...modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -393,11 +408,7 @@ export default class VictoryErrorBar extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = (
-      <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
