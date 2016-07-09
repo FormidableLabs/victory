@@ -25,14 +25,100 @@ export default class ErrorBar extends React.Component {
     groupComponent: PropTypes.element
   };
 
-  render() {
+  renderErrorBar(error) {
     const {
       x,
       y,
+      borderWidth
+    } = this.props;
+
+    return (
+      <g>
+        <line
+          ref="borderRight"
+          {...this.props.events}
+          style={this.props.style}
+          x1={error.errorRight}
+          x2={error.errorRight}
+          y1={y - borderWidth}
+          y2={y + borderWidth}
+        />
+        <line
+          ref="borderLeft"
+          {...this.props.events}
+          style={this.props.style}
+          x1={error.errorLeft}
+          x2={error.errorLeft}
+          y1={y - borderWidth}
+          y2={y + borderWidth}
+        />
+        <line
+          ref="borderBottom"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x - borderWidth}
+          x2={x + borderWidth}
+          y1={error.errorBottom}
+          y2={error.errorBottom}
+        />
+        <line
+          ref="borderTop"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x - borderWidth}
+          x2={x + borderWidth}
+          y1={error.errorTop}
+          y2={error.errorTop}
+        />
+        <line
+          ref="crossTop"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={x}
+          y1={y}
+          y2={error.errorTop}
+          shapeRendering="optimizeSpeed"
+        />
+        <line
+          ref="crossBottom"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={x}
+          y1={y}
+          y2={error.errorBottom}
+          shapeRendering="optimizeSpeed"
+        />
+        <line
+          ref="crossLeft"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={error.errorLeft}
+          y1={y}
+          y2={y}
+          shapeRendering="optimizeSpeed"
+        />,
+        <line
+          ref="crossRight"
+          {...this.props.events}
+          style={this.props.style}
+          x1={x}
+          x2={error.errorRight}
+          y1={y}
+          y2={y}
+          shapeRendering="optimizeSpeed"
+        />
+      </g>
+    );
+  }
+
+  render() {
+    const {
       errorX,
       errorY,
-      scale,
-      borderWidth
+      scale
     } = this.props;
 
     const rangeX = scale.x.range();
@@ -49,82 +135,7 @@ export default class ErrorBar extends React.Component {
     return React.cloneElement(
       this.props.groupComponent,
       {},
-      <line
-        ref="borderRight"
-        {...this.props.events}
-        style={this.props.style}
-        x1={errorRight}
-        x2={errorRight}
-        y1={y - borderWidth}
-        y2={y + borderWidth}
-      />,
-      <line
-        ref="borderLeft"
-        {...this.props.events}
-        style={this.props.style}
-        x1={errorLeft}
-        x2={errorLeft}
-        y1={y - borderWidth}
-        y2={y + borderWidth}
-      />,
-      <line
-        ref="borderBottom"
-        {...this.props.events}
-        style={this.props.style}
-        x1={x - borderWidth}
-        x2={x + borderWidth}
-        y1={errorBottom}
-        y2={errorBottom}
-      />,
-      <line
-        ref="borderTop"
-        {...this.props.events}
-        style={this.props.style}
-        x1={x - borderWidth}
-        x2={x + borderWidth}
-        y1={errorTop}
-        y2={errorTop}
-      />,
-      <line
-        ref="crossTop"
-        {...this.props.events}
-        style={this.props.style}
-        x1={x}
-        x2={x}
-        y1={y}
-        y2={errorTop}
-        shapeRendering="optimizeSpeed"
-      />,
-      <line
-        ref="crossBottom"
-        {...this.props.events}
-        style={this.props.style}
-        x1={x}
-        x2={x}
-        y1={y}
-        y2={errorBottom}
-        shapeRendering="optimizeSpeed"
-      />,
-      <line
-        ref="crossLeft"
-        {...this.props.events}
-        style={this.props.style}
-        x1={x}
-        x2={errorLeft}
-        y1={y}
-        y2={y}
-        shapeRendering="optimizeSpeed"
-      />,
-      <line
-        ref="crossRight"
-        {...this.props.events}
-        style={this.props.style}
-        x1={x}
-        x2={errorRight}
-        y1={y}
-        y2={y}
-        shapeRendering="optimizeSpeed"
-      />
+      this.renderErrorBar({errorTop, errorBottom, errorRight, errorLeft})
     );
   }
 }
