@@ -1,4 +1,4 @@
-/**
+  /**
  * Client tests
  */
 /* global sinon */
@@ -10,8 +10,6 @@ import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryAxis from "src/components/victory-axis/victory-axis";
-import AxisLine from "src/components/victory-axis/axis-line";
-import Tick from "src/components/victory-axis/tick";
 
 describe("components/victory-axis", () => {
   describe("default component rendering", () => {
@@ -39,7 +37,7 @@ describe("components/victory-axis", () => {
       const wrapper = shallow(
         <VictoryAxis tickValues={tickValues}/>
       );
-      const ticks = wrapper.find(Tick);
+      const ticks = wrapper.find("[type=\"tick\"]");
       expect(ticks.length).to.equal(tickValues.length);
     });
 
@@ -47,7 +45,7 @@ describe("components/victory-axis", () => {
       const wrapper = shallow(
         <VictoryAxis/>
       );
-      const ticks = wrapper.find(Tick);
+      const ticks = wrapper.find("[type=\"axis\"]");
       ticks.forEach(SvgTestHelper.expectIsALine);
     });
 
@@ -55,7 +53,7 @@ describe("components/victory-axis", () => {
       const wrapper = shallow(
         <VictoryAxis/>
       );
-      const line = wrapper.find(AxisLine);
+      const line = wrapper.find("[type=\"axis\"]");
       SvgTestHelper.expectIsALine(line);
     });
   });
@@ -66,7 +64,7 @@ describe("components/victory-axis", () => {
       const wrapper = shallow(
         <VictoryAxis {...props}/>
       );
-      const line = wrapper.find(AxisLine);
+      const line = wrapper.find("[type=\"axis\"]");
       expect(SvgTestHelper.isHorizontalAxis(line, props)).to.equal(true);
     });
 
@@ -75,7 +73,7 @@ describe("components/victory-axis", () => {
       const wrapper = shallow(
         <VictoryAxis dependentAxis {...props}/>
       );
-      const line = wrapper.find(AxisLine);
+      const line = wrapper.find("[type=\"axis\"]");
       expect(SvgTestHelper.isVerticalAxis(line, props)).to.equal(true);
     });
   });
@@ -109,7 +107,7 @@ describe("components/victory-axis", () => {
           }]}
         />
       );
-      const Data = wrapper.find(AxisLine);
+      const Data = wrapper.find("[type=\"axis\"]");
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         node.simulate("click");

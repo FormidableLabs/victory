@@ -9,25 +9,26 @@ export default {
     Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
+    const { groupComponent, width, height, padding } = modifiedProps;
+    const parentProps = {scale, width, height, data, style: style.parent};
     return data.reduce((memo, datum, index) => {
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
-      const y1 = scale.y(datum.high);
-      const y2 = scale.y(datum.low);
-      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
-      const y = scale.y(Math.max(datum.open, datum.close));
-      const size = this.getSize(datum, modifiedProps, calculatedValues);
+      const y1 = scale.y(datum.y[2]);
+      const y2 = scale.y(datum.y[3]);
+      const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
+      const y = scale.y(Math.max(datum.y[0], datum.y[1]));
       const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
-        x, y, y1, y2, candleHeight, size, scale, data, datum,
-        index, style: dataStyle, padding: modifiedProps.padding, width: modifiedProps.width
+        x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
+        index, style: dataStyle, padding, width
       };
 
       const text = this.getLabelText(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
-        x,
+        x: x - labelStyle.padding,
         y: y - labelStyle.padding,
         text,
         index,
@@ -42,7 +43,7 @@ export default {
         labels: labelProps
       };
       return memo;
-    }, {});
+    }, {parent: parentProps});
   },
 
   getCalculatedValues(props, fallbackProps) {
@@ -113,9 +114,14 @@ export default {
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
+    const fillCheck = datum.fill || style.fill;
+    const strokeCheck = datum.stroke || style.stroke;
+    const strokeColor = fillCheck && !strokeCheck ? fillCheck
+    : strokeCheck;
     const candleColor = datum.open > datum.close ?
             props.candleColors.negative : props.candleColors.positive;
-    const baseDataStyle = defaults({}, stylesFromData, {stroke: candleColor, fill: candleColor},
+    const baseDataStyle = defaults({}, stylesFromData,
+      {stroke: strokeColor || candleColor, fill: candleColor},
       style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
@@ -132,17 +138,5 @@ export default {
     const padding = labelStyle.padding || size * 0.25;
     const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
     return Helpers.evaluateStyle(baseLabelStyle, datum);
-  },
-
-  getSize(data, props) {
-    let size;
-    if (data.size) {
-      size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
-    } else if (typeof props.size === "function") {
-      size = props.size;
-    } else {
-      size = Math.max(props.size, 1);
-    }
-    return Helpers.evaluateProp(size, data);
   }
 };
