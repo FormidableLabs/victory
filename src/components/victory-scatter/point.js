@@ -37,17 +37,14 @@ export default class Point extends React.Component {
     return pathFunctions[props.symbol].call(null, props.x, props.y, props.size);
   }
 
-  render() {
-    const {events, role, style} = this.props;
-
+  renderPoint(path, style, events) {
+    const { role } = this.props;
     return (
-      <path
-        {...events}
-        d={this.getPath(this.props)}
-        role={role}
-        shapeRendering="optimizeSpeed"
-        style={style}
-      />
+      <path {...events} d={path} role={role} shapeRendering="optimizeSpeed" style={style}/>
     );
+  }
+
+  render() {
+    return this.renderPoint(this.getPath(this.props), this.props.style, this.props.events);
   }
 }

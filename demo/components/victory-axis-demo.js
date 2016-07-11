@@ -49,6 +49,9 @@ export default class App extends React.Component {
       axis: {
         stroke: "black"
       },
+      axisLabel: {
+        padding: 20
+      },
       grid: {
         strokeWidth: 2,
         stroke: (tick) => tick === "Mariners\nSEA" ? "red" : "grey"
