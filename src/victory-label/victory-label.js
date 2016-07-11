@@ -216,6 +216,7 @@ export default class VictoryLabel extends React.Component {
         transform={transform}
         textAnchor={props.textAnchor}
         style={props.style}
+        {...props.events}
       >
         {content.map((line, i) => {
           const dy = i ? props.lineHeight : undefined;
