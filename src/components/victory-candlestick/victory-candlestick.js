@@ -19,7 +19,6 @@ const fallbackProps = {
   style: {
     data: {
       opacity: 1,
-      stroke: "#252525",
       strokeWidth: 1
     },
     labels: {

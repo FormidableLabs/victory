@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import { merge, random, range } from "lodash";
-import {VictoryScatter, VictoryChart} from "../../src/index";
+import {VictoryScatter, VictoryChart, VictoryAxis, VictoryLine} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
