@@ -5,8 +5,6 @@ import {
   VictoryContainer
 } from "victory-core";
 import AxisLine from "./axis-line";
-import GridLine from "./grid";
-import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
@@ -329,20 +327,27 @@ export default class VictoryAxis extends React.Component {
     * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
-    axisComponent: <AxisLine/>,
+    axisComponent: <AxisLine type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <Tick/>,
-    gridComponent: <GridLine/>,
+    tickComponent: <AxisLine type={"tick"}/>,
+    gridComponent: <AxisLine type={"grid"}/>,
     padding: 50,
     scale: "linear",
     standalone: true,
     tickCount: 5,
-    containerComponent: <VictoryContainer />
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g/>
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
@@ -443,12 +448,8 @@ export default class VictoryAxis extends React.Component {
       const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
-      return (
-        <g key={`tick-group-${key}`}>
-          {GridComponent}
-          {TickComponent}
-          {TickLabel}
-        </g>
+      return React.cloneElement(
+        props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
     });
   }
@@ -471,6 +472,14 @@ export default class VictoryAxis extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      ...children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, standalone } = modifiedProps;
@@ -484,7 +493,7 @@ export default class VictoryAxis extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryAxis {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -492,14 +501,13 @@ export default class VictoryAxis extends React.Component {
     const styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis
     : fallbackProps.style;
     const style = AxisHelpers.getStyles(modifiedProps, styleObject);
+    const children = [
+      ...this.renderGridAndTicks(modifiedProps),
+      this.renderLine(modifiedProps),
+      this.renderLabel(modifiedProps)
+    ];
 
-    const group = (
-      <g style={style.parent}>
-        {this.renderGridAndTicks(modifiedProps)}
-        {this.renderLine(modifiedProps)}
-        {this.renderLabel(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(children, style.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
