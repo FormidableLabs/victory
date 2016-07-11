@@ -103,6 +103,26 @@ Data objects can be styled directly for granular control
 />
 ```
 
+Candlestick wicks can be changed to whatever color you'd like, but to ensure that wicks match up with candle body, set the stroke property to "transparent" or "none".
+
+```playground
+<VictoryCandlestick
+  height={500}
+  padding={75}
+  style={{
+    data: {fill: "blue", stroke: "none"},
+    labels: {fontSize: 20}
+  }}
+  data={[
+    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
+    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
+    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
+    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
+    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+  ]}
+/>
+```
+
 Functional styles allow elements to determine their own styles based on data
 
 ```playground

@@ -153,6 +153,7 @@ export default class App extends React.Component {
           <VictoryCandlestick
             candleColors={{positive: "#8BC34A", negative: "#C62828"}}
             data={data}
+            style={{data: {stroke: "none"}}}
             size={8}
           />
         </VictoryChart>
@@ -161,7 +162,7 @@ export default class App extends React.Component {
           animate={{duration: 2000}}
           data={this.state.data}
           style={{
-            data: { width: 50 },
+            data: { width: 50, stroke: "transparent" },
             parent: style.parent
           }}
         />
