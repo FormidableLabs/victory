@@ -584,7 +584,7 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
           <VictoryChart style={chartStyle}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             events={[{
               childName: "area-1",
               target: "data",
