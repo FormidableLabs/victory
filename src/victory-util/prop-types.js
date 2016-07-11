@@ -146,7 +146,7 @@ export default {
       return error;
     }
     const value = props[propName];
-    if (value < 1) {
+    if (value <= 0) {
       return new Error(
         `\`${propName}\` in \`${componentName}\` must be greater than zero.`
       );

@@ -172,7 +172,7 @@ describe("prop-types", () => {
     });
 
     it("does not return an error for numbers greater than zero", () => {
-      let result = validate(3);
+      let result = validate(0.1);
       expect(result).not.to.be.an.instanceOf(Error);
       result = validate(5);
       expect(result).not.to.be.an.instanceOf(Error);
