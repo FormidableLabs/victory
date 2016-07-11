@@ -271,7 +271,9 @@ export default class VictoryAxis extends React.Component {
      * If you need an exact number of ticks, please specify them via the tickValues prop.
      * This prop must have a value greater than zero.
      */
-    tickCount: CustomPropTypes.greaterThanZero,
+    tickCount: CustomPropTypes.allOfType([
+      CustomPropTypes.integer, CustomPropTypes.greaterThanZero
+    ]),
     /**
      * The tickLabelComponent prop takes in an entire component which will be used
      * to create the tick labels. The new element created from the passed tickLabelComponent
