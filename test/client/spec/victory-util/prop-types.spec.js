@@ -142,6 +142,45 @@ describe("prop-types", () => {
     });
   });
 
+  describe("greaterThanZero", () => {
+    const validate = function (prop) {
+      return CustomPropTypes.greaterThanZero({testProp: prop}, "testProp", "TestComponent");
+    };
+
+    it("returns an error for non numeric values", () => {
+      const result = validate("a");
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).contain(
+          "`string` supplied to `TestComponent`, expected `number`."
+      );
+    });
+
+    it("returns an error for zero", () => {
+      const result = validate(0);
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).to.contain(
+          "`testProp` in `TestComponent` must be greater than zero."
+      );
+    });
+
+    it("returns an error for negative numbers", () => {
+      const result = validate(-3);
+      expect(result).to.be.an.instanceOf(Error);
+      expect(result.message).to.contain(
+          "`testProp` in `TestComponent` must be greater than zero."
+      );
+    });
+
+    it("does not return an error for numbers greater than zero", () => {
+      let result = validate(0.1);
+      expect(result).not.to.be.an.instanceOf(Error);
+      result = validate(5);
+      expect(result).not.to.be.an.instanceOf(Error);
+      result = validate(1);
+      expect(result).not.to.be.an.instanceOf(Error);
+    });
+  });
+
   describe("domain", () => {
     const validate = function (prop) {
       return CustomPropTypes.domain({testProp: prop}, "testProp", "TestComponent");

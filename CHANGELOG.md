@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 4.4.0 (2016-7-11)
+
+- Adding a new propType to validate numbers greater than zero
+
 ## 4.3.0 (2016-7-02)
 
 - Supports Victory Native
