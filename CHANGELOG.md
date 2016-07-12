@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 4.4.1 (2016-7-12)
+
+- Adjusting the props passed to the text element of VictoryLabel to eliminate error messages
+
 ## 4.4.0 (2016-7-11)
 
 - Adding a new propType to validate numbers greater than zero
