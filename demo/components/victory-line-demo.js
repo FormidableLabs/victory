@@ -225,12 +225,12 @@ export default class App extends React.Component {
           label="Hello"
           x={0}
           y={1}
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
         />
 
         <VictoryChart
-          theme={VictoryTheme.grayscale}
-          domainPadding={-10}
+          style={{parent: parentStyle}}
+          theme={VictoryTheme.material}
         >
           <VictoryLine
             style={{parent: parentStyle}}
