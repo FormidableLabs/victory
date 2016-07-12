@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Style } from "../victory-util/index";
-import merge from "lodash/merge";
+import {merge, pick} from "lodash";
 
 const defaultStyles = {
   backgroundColor: "#d9d9d9",
@@ -211,8 +211,12 @@ export default class VictoryLabel extends React.Component {
 
   renderElements(props, content) {
     const transform = this.getTransform(props);
+    const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);
     return (
-      <text {...props} transform={transform}>
+      <text {...textProps}
+        transform={transform}
+        {...props.events}
+      >
         {content.map((line, i) => {
           const dy = i ? props.lineHeight : undefined;
           return (
