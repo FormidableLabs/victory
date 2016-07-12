@@ -110,7 +110,11 @@ export default {
     }
   },
 
-  getDataStyles(datum, style, props) { // eslint-disable-line complexity
+  isTransparent(attr) {
+    return attr === "none" || attr === "transparent";
+  },
+
+  getDataStyles(datum, style, props) {
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
@@ -118,9 +122,8 @@ export default {
     const strokeCheck = datum.stroke || style.stroke;
     const candleColor = datum.open > datum.close ?
             props.candleColors.negative : props.candleColors.positive;
-    const transparentCheck = datum.stroke === "transparent"
-    || datum.stroke === "none" || style.stroke === "transparent"
-    || style.stroke === "none";
+    const transparentCheck = this.isTransparent(datum.stroke) ||
+    this.isTransparent(style.stroke);
     const strokeColor = fillCheck || transparentCheck ? fillCheck || candleColor
     : strokeCheck;
     const baseDataStyle = defaults({}, stylesFromData,
