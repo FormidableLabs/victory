@@ -212,7 +212,6 @@ export default class VictoryLabel extends React.Component {
   renderElements(props, content) {
     const transform = this.getTransform(props);
     const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);
-    console.log(textProps);
     return (
       <text {...textProps}
         transform={transform}
