@@ -50,7 +50,6 @@ class BorderLabelSlice extends React.Component {
 }
 
 export default class App extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -68,16 +67,10 @@ export default class App extends React.Component {
       sliceWidth: 60,
       style: {
         parent: {
+          backgroundColor: "#f7f7f7",
           border: "1px solid #ccc",
           margin: "2%",
           maxWidth: "40%"
-        },
-        data: {
-          strokeWidth: 2
-        },
-        labels: {
-          fill: "white",
-          padding: 10
         }
       }
     };
@@ -94,11 +87,11 @@ export default class App extends React.Component {
   }
 
   getTransitionData() {
-    const data = random(6, 10);
+    const data = random(6, 9);
     return range(data).map((datum) => {
       return {
         x: datum,
-        y: random(2, 10),
+        y: random(2, 9),
         label: `#${datum}`
       };
     });
@@ -129,6 +122,14 @@ export default class App extends React.Component {
       alignItems: "center",
       justifyContent: "center"
     };
+
+    const parentStyle = {
+      backgroundColor: "#f7f7f7",
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
+
     return (
       <div>
         <h1>VictoryPie Demo</h1>
@@ -136,8 +137,16 @@ export default class App extends React.Component {
         <div style={containerStyle}>
           <VictoryPie animate={{duration: 1000}}
             style={{
-              parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
-              labels: {fontSize: 10, padding: 100, fill: "white"}
+              parent: parentStyle,
+              labels: {
+                fontSize: 10,
+                padding: 100,
+                paintOrder: "stroke",
+                stroke: "#ffffff",
+                strokeWidth: 3,
+                strokeLinecap: "butt",
+                strokeLinejoin: "miter"
+              }
             }}
             data={this.state.transitionData}
             containerComponent={
@@ -148,8 +157,11 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={{parent: {maxWidth: "40%"}}}
-            theme={VictoryTheme.grayscale}
+            style={{
+              parent: { ...parentStyle, padding: "1% 3%" },
+              labels: { padding: 230 }
+            }}
+            theme={VictoryTheme.material}
             labels={() => "click me!"}
             events={[{
               target: "data",
@@ -159,14 +171,14 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "orange"})
+                          style: merge({}, props.style, {fill: "#F50057"})
                         };
                       }
                     }, {
                       target: "labels",
                       eventKey: [0, 2, 4],
                       mutation: () => {
-                        return {text: "hey"};
+                        return {text: "Nice."};
                       }
                     }
                   ];
@@ -176,7 +188,8 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={this.state.style}
+            style={{parent: parentStyle}}
+            theme={VictoryTheme.material}
             events={[{
               target: "parent",
               eventHandlers: {
@@ -196,17 +209,23 @@ export default class App extends React.Component {
 
           <VictoryPie
             style={{
-              parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
+              parent: parentStyle,
               labels: {fontSize: 20, padding: 100, fill: "white"}
             }}
             colorScale="greyscale"
           />
 
-          <VictoryPie style={this.state.style} innerRadius={140} />
+          <VictoryPie
+            style={{
+              ...this.state.style,
+              labels: { padding: 60 }
+            }}
+            innerRadius={140}
+          />
 
           <VictoryPie
             style={{
-              parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
+              parent: parentStyle,
               data: {stroke: "transparent", opacity: 0.4}
             }}
           />
@@ -223,7 +242,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={this.state.style}
+            style={{...this.state.style, labels: {padding: 110}}}
             data={this.state.data}
             innerRadius={100}
             animate={{duration: 2000}}
@@ -231,7 +250,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={this.state.style}
+            style={{...this.state.style, labels: {padding: 60}}}
             endAngle={90}
             innerRadius={140}
             padAngle={5}
@@ -243,7 +262,7 @@ export default class App extends React.Component {
             x={0}
             y={1}
             animate={{duration: 2000}}
-            style={this.state.style}
+            style={{...this.state.style, data: {stroke: "#252525", strokeWidth: 2}}}
             colorScale="warm"
           />
 
@@ -251,7 +270,7 @@ export default class App extends React.Component {
             data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             style={{parent: {maxWidth: "40%"}}}
             animate={{duration: 2000}}
           />
