@@ -93,10 +93,11 @@ export default {
     const data = Events.addEventKeys(modifiedProps, Data.getData(modifiedProps));
     const scale = this.getScale(modifiedProps);
     const { horizontal, width, height } = modifiedProps;
-    const parentProps = {scale, width, height, data, style: style.parent};
-
-    return data.reduce((memo, datum, index) => {
-      const eventKey = datum.eventKey;
+    const childProps = {parent: {scale, width, height, data, style: style.parent}};
+    for (let index = 0, len = data.length; index < len; index++) {
+    // return data.reduce((memo, datum, index) => {
+      const datum = data[index];
+      const eventKey = datum.eventKey || index;
       const position = this.getBarPosition(modifiedProps, datum, scale);
       const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = assign(
@@ -138,11 +139,11 @@ export default {
         angle: labelStyle.angle
       };
 
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   }
 };

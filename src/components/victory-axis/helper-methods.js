@@ -90,8 +90,9 @@ export default {
 
     const parentProps = {style: style.parent, ticks, scale, width, height};
     const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
-
-    return ticks.reduce((memo, data, index) => {
+    const childProps = {parent: parentProps};
+    for (let index = 0, len = ticks.length; index < len; index++) {
+      const data = ticks[index];
       const tick = stringTicks ? modifiedProps.tickValues[data - 1] : data;
       const tickStyle = Helpers.evaluateStyle(style.ticks, tick, index);
       const scaledTick = scale(data);
@@ -135,17 +136,15 @@ export default {
         style: Helpers.evaluateStyle(style.grid, tick, index),
         tick
       };
-
-      memo[index] = {
+      childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
         ticks: tickProps,
         tickLabels: tickLabelProps,
         grid: gridProps
       };
-
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
   getCalculatedValues(props, fallbackProps) {

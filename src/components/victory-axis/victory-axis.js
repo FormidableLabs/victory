@@ -412,7 +412,9 @@ export default class VictoryAxis extends React.Component {
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
-    return this.dataKeys.map((key) => {
+    const gridAndTickComponents = [];
+    for (let i = 0, len = this.dataKeys.length; i < len; i++) {
+      const key = this.dataKeys[i];
       const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
         {},
@@ -446,10 +448,12 @@ export default class VictoryAxis extends React.Component {
       const TickLabel = React.cloneElement(tickLabelComponent, assign({
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
-      return React.cloneElement(
+
+      gridAndTickComponents[i] = React.cloneElement(
         props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
-    });
+    }
+    return gridAndTickComponents;
   }
 
   renderContainer(props, group) {

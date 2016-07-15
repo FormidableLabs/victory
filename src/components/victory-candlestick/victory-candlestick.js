@@ -450,7 +450,9 @@ export default class VictoryCandlestick extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryCandlestick;
-    return this.dataKeys.map((key, index) => {
+    const components = [];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `${role}-${key}`, role: `${role}-${index}`},
@@ -474,12 +476,13 @@ export default class VictoryCandlestick extends React.Component {
         const candleLabel = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return React.cloneElement(
+        components[index] = React.cloneElement(
           groupComponent, {key: `candle-group-${key}`}, candleComponent, candleLabel
         );
       }
-      return candleComponent;
-    });
+      components[index] = candleComponent;
+    }
+    return components;
   }
 
   renderContainer(props, group) {

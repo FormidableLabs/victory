@@ -10,9 +10,10 @@ export default {
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
     const { groupComponent, width, height, padding } = modifiedProps;
-    const parentProps = {scale, width, height, data, style: style.parent};
-    return data.reduce((memo, datum, index) => {
-      const eventKey = datum.eventKey;
+    const childProps = {parent: {scale, width, height, data, style: style.parent}};
+    for (let index = 0, len = data.length; index < len; index++) {
+      const datum = data[index];
+      const eventKey = datum.eventKey || index;
       const x = scale.x(datum.x);
       const y1 = scale.y(datum.y[2]);
       const y2 = scale.y(datum.y[3]);
@@ -38,12 +39,12 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || "end",
         angle: labelStyle.angle
       };
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
   getCalculatedValues(props, fallbackProps) {

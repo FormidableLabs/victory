@@ -376,8 +376,8 @@ export default class VictoryBar extends React.Component {
     const { role } = VictoryBar;
     const barComponents = [];
     const barLabelComponents = [];
-
-    this.dataKeys.forEach((key, index) => {
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {index, key: `${role}-${key}`, role: `${role}-${index}`},
@@ -387,9 +387,9 @@ export default class VictoryBar extends React.Component {
         this.baseProps[key].data
       );
 
-      barComponents.push(React.cloneElement(dataComponent, assign(
+      barComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      ));
 
       const labelProps = defaults(
         {key: `${role}-label-${key}`},
@@ -401,11 +401,11 @@ export default class VictoryBar extends React.Component {
 
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        barLabelComponents.push(React.cloneElement(labelComponent, assign({
+        barLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps)));
+        }, labelProps));
       }
-    });
+    }
 
     if (barLabelComponents.length > 0) {
       return React.cloneElement(
