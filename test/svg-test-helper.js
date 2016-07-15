@@ -1,5 +1,5 @@
-import d3Shape from "d3-shape";
-import d3Scale from "d3-scale";
+import * as d3Shape from "d3-shape";
+import * as d3Scale from "d3-scale";
 
 const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];

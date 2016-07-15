@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import d3Shape from "d3-shape";
+import * as d3Shape from "d3-shape";
 
 export default class LineSegment extends React.Component {
   static propTypes = {

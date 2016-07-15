@@ -471,6 +471,7 @@ export default class VictoryCandlestick extends React.Component {
         this.baseProps[key].labels,
         labelComponent.props
       );
+
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
         const candleLabel = React.cloneElement(labelComponent, Object.assign({
