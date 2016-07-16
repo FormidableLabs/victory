@@ -1,4 +1,12 @@
 # VictoryLine Changelog
+## 10.1.0 (2016-07-15)
+
+- Adds VictoryErrorBar
+- Changes default styles to the greyscale theme
+- Auto-width enhancement for VictoryBar
+- Aria roles for all rendered elements
+- Supports negative domain padding
+
 ## 10.0.0 (2016-07-07)
 
 - Adds support for Victory Native 

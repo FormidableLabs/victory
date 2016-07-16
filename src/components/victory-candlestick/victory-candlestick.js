@@ -12,22 +12,24 @@ const fallbackProps = {
     height: 300,
     width: 450,
     candleColors: {
-      positive: "green",
-      negative: "red"
+      positive: "#ffffff",
+      negative: "#252525"
     }
   },
   style: {
     data: {
       opacity: 1,
-      strokeWidth: 1
+      strokeWidth: 1,
+      stroke: "#252525"
     },
     labels: {
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
       stroke: "transparent",
-      fill: "#756f6a",
-      fontFamily: "Helvetica",
-      fontSize: 13,
-      textAnchor: "end",
-      padding: 5
+      textAnchor: "end"
     }
   }
 };
@@ -372,7 +374,7 @@ export default class VictoryCandlestick extends React.Component {
     * closed at a higher price than it opened, and the other signifies the reverse. The
     * candleColors prop takes an object with keys positive and negative, which each take
     * a string that should be a color. Positive is for data points where close is higher
-    * than open, and defaults to green, and negative (close < open) defaults to red.
+    * than open, and defaults to white, and negative (close < open) defaults to black.
     * @example: candleColors={{positive: "purple", negative: "blue"}}
     */
     candleColors: PropTypes.shape({
@@ -471,6 +473,7 @@ export default class VictoryCandlestick extends React.Component {
         this.baseProps[key].labels,
         labelComponent.props
       );
+
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
         const candleLabel = React.cloneElement(labelComponent, assign({

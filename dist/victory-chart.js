@@ -61,7 +61,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	default;}});var _victoryScatter=__webpack_require__(228);Object.defineProperty(exports,"VictoryScatter",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryScatter).
 	default;}});var _victoryGroup=__webpack_require__(232);Object.defineProperty(exports,"VictoryGroup",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryGroup).
 	default;}});var _victoryStack=__webpack_require__(233);Object.defineProperty(exports,"VictoryStack",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryStack).
-	default;}});var _victoryCandlestick=__webpack_require__(234);Object.defineProperty(exports,"VictoryCandlestick",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryCandlestick).
+	default;}});var _victoryErrorbar=__webpack_require__(234);Object.defineProperty(exports,"VictoryErrorBar",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryErrorbar).
+	default;}});var _victoryCandlestick=__webpack_require__(237);Object.defineProperty(exports,"VictoryCandlestick",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryCandlestick).
 	
 	default;}});function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 
@@ -446,7 +447,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	var group=this.renderGroup(newChildren,calculatedProps.style.parent);
-	return modifiedProps.standalone?_react2.default.cloneElement(container,container.props,group):group;}}]);return VictoryChart;}(_react2.default.Component);VictoryChart.propTypes={animate:_react.PropTypes.object,children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_victoryCore.PropTypes.nonNegative,y:_victoryCore.PropTypes.nonNegative}),_victoryCore.PropTypes.nonNegative]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.string,target:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),height:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.object,width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryChart.defaultProps={padding:50,standalone:true,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:222}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:223}}),defaultAxes:{independent:_react2.default.createElement(_victoryAxis2.default,{__source:{fileName:_jsxFileName,lineNumber:225}}),dependent:_react2.default.createElement(_victoryAxis2.default,{dependentAxis:true,__source:{fileName:_jsxFileName,lineNumber:226}})}};exports.default=VictoryChart;
+	return modifiedProps.standalone?_react2.default.cloneElement(container,container.props,group):group;}}]);return VictoryChart;}(_react2.default.Component);VictoryChart.propTypes={animate:_react.PropTypes.object,children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_react.PropTypes.number,y:_react.PropTypes.number}),_react.PropTypes.number]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.string,target:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),height:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.object,width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryChart.defaultProps={padding:50,standalone:true,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:222}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:223}}),defaultAxes:{independent:_react2.default.createElement(_victoryAxis2.default,{__source:{fileName:_jsxFileName,lineNumber:225}}),dependent:_react2.default.createElement(_victoryAxis2.default,{dependentAxis:true,__source:{fileName:_jsxFileName,lineNumber:226}})}};exports.default=VictoryChart;
 
 /***/ },
 /* 2 */
@@ -8315,41 +8316,48 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	style:{
 	axis:{
-	stroke:"#756f6a",
 	fill:"none",
-	strokeWidth:2,
+	stroke:"#252525",
+	strokeWidth:1,
 	strokeLinecap:"round"},
 	
 	axisLabel:{
-	stroke:"transparent",
-	fill:"#756f6a",
-	fontSize:17,
-	fontFamily:"Helvetica"},
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10,
+	stroke:"transparent"},
 	
 	grid:{
-	stroke:"transparent",
 	fill:"none",
+	stroke:"transparent",
 	strokeLinecap:"round"},
 	
 	ticks:{
-	stroke:"#756f6a",
 	fill:"none",
-	padding:5,
-	strokeWidth:2,
-	strokeLinecap:"round",
-	size:4},
+	padding:10,
+	size:1,
+	stroke:"none",
+	strokeWidth:1,
+	strokeLinecap:"round"},
 	
 	tickLabels:{
-	stroke:"transparent",
-	fill:"#756f6a",
-	fontFamily:"Helvetica",
-	fontSize:12,
-	padding:5}}};var
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10,
+	stroke:"transparent"}}};var
 	
 	
 	
 	
 	VictoryAxis=function(_React$Component){_inherits(VictoryAxis,_React$Component);
+	
+	
+	
+	
 	
 	
 	
@@ -8790,7 +8798,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"offsetX","offsetY","padding","width","height"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:493}},
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:500}},
 	_react2.default.createElement(this.constructor,modifiedProps)));}
 	
 	
@@ -8807,7 +8815,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var group=this.renderGroup(children,style.parent);
 	
-	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryAxis;}(_react2.default.Component);VictoryAxis.role="axis";VictoryAxis.defaultTransitions={onExit:{duration:500},onEnter:{duration:500}};VictoryAxis.propTypes={animate:_react.PropTypes.object,axisComponent:_react.PropTypes.element,axisLabelComponent:_react.PropTypes.element,crossAxis:_react.PropTypes.bool,dependentAxis:_react.PropTypes.bool,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["axis","axisLabel","grid","ticks","tickLabels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),gridComponent:_react.PropTypes.element,height:_victoryCore.PropTypes.nonNegative,label:_react.PropTypes.any,offsetX:_react.PropTypes.number,offsetY:_react.PropTypes.number,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_victoryCore.PropTypes.scale,standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,axis:_react.PropTypes.object,axisLabel:_react.PropTypes.object,grid:_react.PropTypes.object,ticks:_react.PropTypes.object,tickLabels:_react.PropTypes.object}),tickComponent:_react.PropTypes.element,tickCount:_victoryCore.PropTypes.nonNegative,tickLabelComponent:_react.PropTypes.element,tickFormat:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.homogeneousArray]),tickValues:_victoryCore.PropTypes.homogeneousArray,width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryAxis.defaultProps={axisComponent:_react2.default.createElement(_axisLine2.default,{type:"axis",__source:{fileName:_jsxFileName,lineNumber:338}}),axisLabelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:339}}),tickLabelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:340}}),tickComponent:_react2.default.createElement(_axisLine2.default,{type:"tick",__source:{fileName:_jsxFileName,lineNumber:341}}),gridComponent:_react2.default.createElement(_axisLine2.default,{type:"grid",__source:{fileName:_jsxFileName,lineNumber:342}}),padding:50,scale:"linear",standalone:true,tickCount:5,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:347}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:348}})};VictoryAxis.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryAxis.getAxis=_axis2.default.getAxis.bind(_axis2.default);VictoryAxis.getScale=_helperMethods2.default.getScale.bind(_helperMethods2.default);VictoryAxis.getStyles=(0,_partialRight3.default)(_helperMethods2.default.getStyles.bind(_helperMethods2.default),fallbackProps.style);VictoryAxis.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryAxis;
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryAxis;}(_react2.default.Component);VictoryAxis.role="axis";VictoryAxis.defaultTransitions={onExit:{duration:500},onEnter:{duration:500}};VictoryAxis.propTypes={animate:_react.PropTypes.object,axisComponent:_react.PropTypes.element,axisLabelComponent:_react.PropTypes.element,crossAxis:_react.PropTypes.bool,dependentAxis:_react.PropTypes.bool,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["axis","axisLabel","grid","ticks","tickLabels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),gridComponent:_react.PropTypes.element,height:_victoryCore.PropTypes.nonNegative,label:_react.PropTypes.any,offsetX:_react.PropTypes.number,offsetY:_react.PropTypes.number,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_victoryCore.PropTypes.scale,standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,axis:_react.PropTypes.object,axisLabel:_react.PropTypes.object,grid:_react.PropTypes.object,ticks:_react.PropTypes.object,tickLabels:_react.PropTypes.object}),tickComponent:_react.PropTypes.element,tickCount:_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.greaterThanZero]),tickLabelComponent:_react.PropTypes.element,tickFormat:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.homogeneousArray]),tickValues:_victoryCore.PropTypes.homogeneousArray,width:_victoryCore.PropTypes.nonNegative,containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryAxis.defaultProps={axisComponent:_react2.default.createElement(_axisLine2.default,{type:"axis",__source:{fileName:_jsxFileName,lineNumber:345}}),axisLabelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:346}}),tickLabelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:347}}),tickComponent:_react2.default.createElement(_axisLine2.default,{type:"tick",__source:{fileName:_jsxFileName,lineNumber:348}}),gridComponent:_react2.default.createElement(_axisLine2.default,{type:"grid",__source:{fileName:_jsxFileName,lineNumber:349}}),padding:50,scale:"linear",standalone:true,tickCount:5,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:354}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:355}})};VictoryAxis.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryAxis.getAxis=_axis2.default.getAxis.bind(_axis2.default);VictoryAxis.getScale=_helperMethods2.default.getScale.bind(_helperMethods2.default);VictoryAxis.getStyles=(0,_partialRight3.default)(_helperMethods2.default.getStyles.bind(_helperMethods2.default),fallbackProps.style);VictoryAxis.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryAxis;
 
 /***/ },
 /* 134 */
@@ -9698,14 +9706,14 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _includes2=__webpack_require__(152);var _includes3=_interopRequireDefault(_includes2);var _flatten2=__webpack_require__(154);var _flatten3=_interopRequireDefault(_flatten2);
 	var _victoryCore=__webpack_require__(29);
-	var _d3Scale=__webpack_require__(155);var _d3Scale2=_interopRequireDefault(_d3Scale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+	var _d3Scale=__webpack_require__(155);var d3Scale=_interopRequireWildcard(_d3Scale);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
 	var supportedScaleStrings=["linear","time","log","sqrt"];exports.default=
 	
 	{
 	
 	getDefaultScale:function getDefaultScale(){
-	return _d3Scale2.default.scaleLinear();},
+	return d3Scale.scaleLinear();},
 	
 	
 	toNewName:function toNewName(scale){
@@ -9737,8 +9745,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	return undefined;}
 	
 	var scale=props.scale[axis]||props.scale;
+	
 	if(this.validScale(scale)){
-	return(0,_isFunction3.default)(scale)?scale:_d3Scale2.default[this.toNewName(scale)]();}},
+	return(0,_isFunction3.default)(scale)?scale:d3Scale[this.toNewName(scale)]();}},
 	
 	
 	
@@ -9758,7 +9767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return scale;}
 	
 	var dataScale=this.getScaleTypeFromData(props,axis);
-	return _d3Scale2.default[this.toNewName(dataScale)]();},
+	return d3Scale[this.toNewName(dataScale)]();},
 	
 	
 	getScaleType:function getScaleType(props,axis){
@@ -16655,15 +16664,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	style:{
 	data:{
-	strokeWidth:2,
 	fill:"none",
-	stroke:"#756f6a",
-	opacity:1},
+	opacity:1,
+	strokeWidth:2,
+	stroke:"#252525"},
 	
 	labels:{
-	padding:5,
-	fontFamily:"Helvetica",
-	fontSize:13,
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10,
 	strokeWidth:0,
 	stroke:"transparent",
 	textAnchor:"start"}}};var
@@ -17100,7 +17111,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"data","domain","height","padding","samples","style","width","x","y"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:464}},
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:466}},
 	_react2.default.createElement(this.constructor,modifiedProps)));}
 	
 	
@@ -17113,14 +17124,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
 	
-	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryLine;}(_react2.default.Component);VictoryLine.role="line";VictoryLine.defaultTransitions={onExit:{duration:500,before:function before(){return{y:null};}},onEnter:{duration:500,before:function before(){return{y:null};},after:function after(datum){return{y:datum.y};}}};VictoryLine.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","basisClosed","basisOpen","bundle","cardinal","cardinalClosed","cardinalOpen","catmullRom","catmullRomClosed","catmullRomOpen","linear","linearClosed","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.string]),labelComponent:_react.PropTypes.any,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryLine.defaultProps={interpolation:"linear",padding:50,samples:50,scale:"linear",standalone:true,x:"x",y:"y",dataComponent:_react2.default.createElement(_lineSegment2.default,{__source:{fileName:_jsxFileName,lineNumber:350}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:351}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:352}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:353}})};VictoryLine.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryLine.getData=_data2.default.getData.bind(_data2.default);VictoryLine.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryLine;
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryLine;}(_react2.default.Component);VictoryLine.role="line";VictoryLine.defaultTransitions={onExit:{duration:500,before:function before(){return{y:null};}},onEnter:{duration:500,before:function before(){return{y:null};},after:function after(datum){return{y:datum.y};}}};VictoryLine.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","basisClosed","basisOpen","bundle","cardinal","cardinalClosed","cardinalOpen","catmullRom","catmullRomClosed","catmullRomOpen","linear","linearClosed","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.string]),labelComponent:_react.PropTypes.any,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryLine.defaultProps={interpolation:"linear",padding:50,samples:50,scale:"linear",standalone:true,x:"x",y:"y",dataComponent:_react2.default.createElement(_lineSegment2.default,{__source:{fileName:_jsxFileName,lineNumber:352}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:353}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:354}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:355}})};VictoryLine.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryLine.getData=_data2.default.getData.bind(_data2.default);VictoryLine.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryLine;
 
 /***/ },
 /* 210 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-line/line-segment.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
-	var _d3Shape=__webpack_require__(211);var _d3Shape2=_interopRequireDefault(_d3Shape);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	var _d3Shape=__webpack_require__(211);var d3Shape=_interopRequireWildcard(_d3Shape);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
 	LineSegment=function(_React$Component){_inherits(LineSegment,_React$Component);function LineSegment(){_classCallCheck(this,LineSegment);return _possibleConstructorReturn(this,Object.getPrototypeOf(LineSegment).apply(this,arguments));}_createClass(LineSegment,[{key:"toNewName",value:function toNewName(
 	
@@ -17150,8 +17161,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	this.props;var data=_props.data;var events=_props.events;var interpolation=_props.interpolation;var scale=_props.scale;var style=_props.style;
 	var xScale=scale.x;
 	var yScale=scale.y;
-	var lineFunction=_d3Shape2.default.line().
-	curve(_d3Shape2.default[this.toNewName(interpolation)]).
+	var lineFunction=d3Shape.line().
+	curve(d3Shape[this.toNewName(interpolation)]).
 	x(function(d){return xScale(d.x);}).
 	y(function(d){return yScale(d.y);});
 	return this.renderLine(lineFunction(data),style,events);}}]);return LineSegment;}(_react2.default.Component);LineSegment.propTypes={data:_react.PropTypes.array,events:_react.PropTypes.object,index:_react.PropTypes.number,interpolation:_react.PropTypes.string,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object};exports.default=LineSegment;
@@ -19247,12 +19258,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	style:{
 	data:{
-	fill:"#756f6a"},
+	fill:"#252525"},
 	
 	labels:{
-	fontSize:13,
-	padding:4,
-	fill:"black"}}};var
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10}}};var
 	
 	
 	
@@ -19664,7 +19677,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"data","domain","height","padding","style","width"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:436}},
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:438}},
 	_react2.default.createElement(this.constructor,modifiedProps)));}
 	
 	
@@ -19677,7 +19690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
 	
-	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryArea;}(_react2.default.Component);VictoryArea.role="area";VictoryArea.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,yOffset:0};}},onEnter:{duration:500,before:function before(){return{y:0,yOffset:0,xOffset:0};},after:function after(datum){return{y:datum.y,yOffset:datum.yOffset,xOffset:datum.xOffset};}}};VictoryArea.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOf(["all"]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","basisClosed","basisOpen","bundle","cardinal","cardinalClosed","cardinalOpen","catmullRom","catmullRomClosed","catmullRomOpen","linear","linearClosed","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.string,labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.arrayOf(_react.PropTypes.func)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryArea.defaultProps={dataComponent:_react2.default.createElement(_area2.default,{__source:{fileName:_jsxFileName,lineNumber:329}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:330}}),padding:50,scale:"linear",samples:50,standalone:true,interpolation:"linear",x:"x",y:"y",containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:338}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:339}})};VictoryArea.getDomain=_domain2.default.getDomainWithZero.bind(_domain2.default);VictoryArea.getData=_data2.default.getData.bind(_data2.default);VictoryArea.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryArea;
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryArea;}(_react2.default.Component);VictoryArea.role="area";VictoryArea.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,yOffset:0};}},onEnter:{duration:500,before:function before(){return{y:0,yOffset:0,xOffset:0};},after:function after(datum){return{y:datum.y,yOffset:datum.yOffset,xOffset:datum.xOffset};}}};VictoryArea.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOf(["all"]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","basisClosed","basisOpen","bundle","cardinal","cardinalClosed","cardinalOpen","catmullRom","catmullRomClosed","catmullRomOpen","linear","linearClosed","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.string,labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.arrayOf(_react.PropTypes.func)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryArea.defaultProps={dataComponent:_react2.default.createElement(_area2.default,{__source:{fileName:_jsxFileName,lineNumber:331}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:332}}),padding:50,scale:"linear",samples:50,standalone:true,interpolation:"linear",x:"x",y:"y",containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:340}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:341}})};VictoryArea.getDomain=_domain2.default.getDomainWithZero.bind(_domain2.default);VictoryArea.getData=_data2.default.getData.bind(_data2.default);VictoryArea.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryArea;
 
 /***/ },
 /* 216 */
@@ -19685,7 +19698,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(121);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-area/area.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
 	
-	var _d3Shape=__webpack_require__(211);var _d3Shape2=_interopRequireDefault(_d3Shape);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	var _d3Shape=__webpack_require__(211);var d3Shape=_interopRequireWildcard(_d3Shape);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
 	Area=function(_React$Component){_inherits(Area,_React$Component);function Area(){_classCallCheck(this,Area);return _possibleConstructorReturn(this,Object.getPrototypeOf(Area).apply(this,arguments));}_createClass(Area,[{key:"toNewName",value:function toNewName(
 	
@@ -19707,8 +19720,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	props){
 	var xScale=props.scale.x;
 	var yScale=props.scale.y;
-	var areaFunction=_d3Shape2.default.area().
-	curve(_d3Shape2.default[this.toNewName(props.interpolation)]).
+	var areaFunction=d3Shape.area().
+	curve(d3Shape[this.toNewName(props.interpolation)]).
 	x(function(data){return xScale(data.x);}).
 	y1(function(data){return yScale(data.y1);}).
 	y0(function(data){return yScale(data.y0);});
@@ -19718,8 +19731,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	props){
 	var xScale=props.scale.x;
 	var yScale=props.scale.y;
-	var lineFunction=_d3Shape2.default.line().
-	curve(_d3Shape2.default[this.toNewName(props.interpolation)]).
+	var lineFunction=d3Shape.line().
+	curve(d3Shape[this.toNewName(props.interpolation)]).
 	x(function(data){return xScale(data.x);}).
 	y(function(data){return yScale(data.y1);});
 	return lineFunction(props.data);}},{key:"renderArea",value:function renderArea(
@@ -19852,16 +19865,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	style:{
 	data:{
-	padding:6,
+	fill:"#242424",
+	opacity:1,
+	padding:10,
 	stroke:"transparent",
 	strokeWidth:0,
-	fill:"#756f6a",
-	opacity:1},
+	width:8},
 	
 	labels:{
-	fontSize:13,
-	padding:4,
-	fill:"black"}}};
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10}}};
 	
 	
 	
@@ -20286,7 +20302,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"data","domain","height","padding","style","width"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:453}},
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:456}},
 	_react2.default.createElement(this.constructor,modifiedProps)));}
 	
 	
@@ -20299,7 +20315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
 	
-	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryBar;}(_react2.default.Component);VictoryBar.role="bar";VictoryBar.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,yOffset:0};}},onEnter:{duration:500,before:function before(){return{y:0,yOffset:0};},after:function after(datum){return{y:datum.y,yOffset:datum.yOffset};}}};VictoryBar.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryBar.defaultProps={data:defaultData,dataComponent:_react2.default.createElement(_bar2.default,{__source:{fileName:_jsxFileName,lineNumber:335}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:336}}),padding:50,scale:"linear",standalone:true,x:"x",y:"y",containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:342}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:343}})};VictoryBar.getDomain=_domain2.default.getDomainWithZero.bind(_domain2.default);VictoryBar.getData=_data2.default.getData.bind(_data2.default);VictoryBar.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryBar;
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryBar;}(_react2.default.Component);VictoryBar.role="bar";VictoryBar.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,yOffset:0};}},onEnter:{duration:500,before:function before(){return{y:0,yOffset:0};},after:function after(datum){return{y:datum.y,yOffset:datum.yOffset};}}};VictoryBar.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),labelComponent:_react.PropTypes.element,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryBar.defaultProps={data:defaultData,dataComponent:_react2.default.createElement(_bar2.default,{__source:{fileName:_jsxFileName,lineNumber:338}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:339}}),padding:50,scale:"linear",standalone:true,x:"x",y:"y",containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:345}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:346}})};VictoryBar.getDomain=_domain2.default.getDomainWithZero.bind(_domain2.default);VictoryBar.getData=_data2.default.getData.bind(_data2.default);VictoryBar.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryBar;
 
 /***/ },
 /* 219 */
@@ -20750,18 +20766,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	style:{
 	data:{
-	fill:"#756f6a",
+	fill:"#242424",
 	opacity:1,
 	stroke:"transparent",
 	strokeWidth:0},
 	
 	labels:{
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10,
 	stroke:"transparent",
-	fill:"#756f6a",
-	fontFamily:"Helvetica",
-	fontSize:13,
-	textAnchor:"middle",
-	padding:10}}};var
+	textAnchor:"middle"}}};var
 	
 	
 	
@@ -21210,7 +21227,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"style","width","x","y"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:479}},
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:480}},
 	_react2.default.createElement(this.constructor,modifiedProps)));}
 	
 	
@@ -21224,7 +21241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
 	
-	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryScatter;}(_react2.default.Component);VictoryScatter.role="scatter";VictoryScatter.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryScatter.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),bubbleProperty:_react.PropTypes.string,data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,labelComponent:_react.PropTypes.element,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),maxBubbleSize:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),size:_react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative,_react.PropTypes.func]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),symbol:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle","diamond","plus","square","star","triangleDown","triangleUp"]),_react.PropTypes.func]),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryScatter.defaultProps={padding:50,samples:50,scale:"linear",size:3,standalone:true,symbol:"circle",x:"x",y:"y",dataComponent:_react2.default.createElement(_point2.default,{__source:{fileName:_jsxFileName,lineNumber:363}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:364}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:365}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:366}})};VictoryScatter.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryScatter.getData=_data2.default.getData.bind(_data2.default);VictoryScatter.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryScatter;
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryScatter;}(_react2.default.Component);VictoryScatter.role="scatter";VictoryScatter.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryScatter.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),bubbleProperty:_react.PropTypes.string,data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,labelComponent:_react.PropTypes.element,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),maxBubbleSize:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),size:_react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative,_react.PropTypes.func]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),symbol:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle","diamond","plus","square","star","triangleDown","triangleUp"]),_react.PropTypes.func]),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element};VictoryScatter.defaultProps={padding:50,samples:50,scale:"linear",size:3,standalone:true,symbol:"circle",x:"x",y:"y",dataComponent:_react2.default.createElement(_point2.default,{__source:{fileName:_jsxFileName,lineNumber:364}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:365}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:366}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:367}})};VictoryScatter.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryScatter.getData=_data2.default.getData.bind(_data2.default);VictoryScatter.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryScatter;
 
 /***/ },
 /* 229 */
@@ -21232,7 +21249,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-scatter/point.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
 	var _pathHelpers=__webpack_require__(230);var _pathHelpers2=_interopRequireDefault(_pathHelpers);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
-	
 	
 	Point=function(_React$Component){_inherits(Point,_React$Component);function Point(){_classCallCheck(this,Point);return _possibleConstructorReturn(this,Object.getPrototypeOf(Point).apply(this,arguments));}_createClass(Point,[{key:"getPath",value:function getPath(
 	
@@ -21272,7 +21288,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	path,style,events){var
 	role=this.props.role;
 	return(
-	_react2.default.createElement("path",_extends({},events,{d:path,role:role,shapeRendering:"optimizeSpeed",style:style,__source:{fileName:_jsxFileName,lineNumber:43}})));}},{key:"render",value:function render()
+	_react2.default.createElement("path",_extends({},events,{d:path,role:role,shapeRendering:"optimizeSpeed",style:style,__source:{fileName:_jsxFileName,lineNumber:42}})));}},{key:"render",value:function render()
 	
 	
 	
@@ -22387,36 +22403,798 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 234 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-candlestick/victory-candlestick.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
-	
-	var _candle=__webpack_require__(235);var _candle2=_interopRequireDefault(_candle);
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-errorbar/victory-errorbar.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
 	var _victoryCore=__webpack_require__(29);
 	
 	
 	
+	
+	var _errorbar=__webpack_require__(235);var _errorbar2=_interopRequireDefault(_errorbar);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);
 	var _helperMethods=__webpack_require__(236);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+	
+	var fallbackProps={
+	props:{
+	width:450,
+	height:300},
+	
+	style:{
+	data:{
+	opacity:1,
+	stroke:"#CCC",
+	strokeWidth:1}}};
+	
+	
+	
+	
+	var defaultData=[
+	{x:1,y:1,errorX:0.1,errorY:0.1},
+	{x:2,y:2,errorX:0.2,errorY:0.2},
+	{x:3,y:3,errorX:0.3,errorY:0.3},
+	{x:4,y:4,errorX:0.4,errorY:0.4}];var
+	
+	
+	VictoryErrorBar=function(_React$Component){_inherits(VictoryErrorBar,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryErrorBar(){_classCallCheck(this,VictoryErrorBar);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryErrorBar).call(this));
+	
+	_this.state={};
+	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
+	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryErrorBar,[{key:"componentWillMount",value:function componentWillMount()
+	
+	
+	{
+	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	
+	
+	newProps){
+	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
+	
+	
+	props){var
+	sharedEvents=props.sharedEvents;
+	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
+	this.dataKeys=Object.keys(this.baseProps).filter(function(key){return key!=="parent";});
+	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
+	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
+	
+	
+	props){var _this2=this;var
+	dataComponent=props.dataComponent;var groupComponent=props.groupComponent;
+	var errorBarComponents=[];
+	this.dataKeys.forEach(function(key){
+	var dataEvents=_this2.getEvents(props,"data",key);
+	var dataProps=(0,_defaults3.default)(
+	{key:"error-bar-"+key},
+	_this2.getEventState(key,"data"),
+	_this2.getSharedEventState(key,"data"),
+	dataComponent.props,
+	_this2.baseProps[key].data);
+	
+	
+	errorBarComponents.push(_react2.default.cloneElement(dataComponent,_extends(
+	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,key,dataProps)})));});
+	
+	
+	
+	return _react2.default.cloneElement(groupComponent,{},errorBarComponents);}},{key:"renderGroup",value:function renderGroup(
+	
+	
+	children,style){
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{role:"presentation",style:style},
+	children);}},{key:"renderContainer",value:function renderContainer(
+	
+	
+	
+	props,group){
+	var parentEvents=this.getEvents(props,"parent","parent");
+	var parentProps=(0,_defaults3.default)(
+	{},
+	this.getEventState("parent","parent"),
+	this.getSharedEventState("parent","parent"),
+	props.containerComponent.props,
+	this.baseProps.parent);
+	
+	return _react2.default.cloneElement(
+	props.containerComponent,
+	_extends(
+	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
+	
+	group);}},{key:"render",value:function render()
+	
+	
+	
+	{
+	var modifiedProps=_victoryCore.Helpers.modifyProps(this.props,fallbackProps);var
+	animate=modifiedProps.animate;var style=modifiedProps.style;var standalone=modifiedProps.standalone;
+	
+	if(animate){
+	
+	
+	
+	var whitelist=[
+	"data","borderWidth"];
+	
+	return(
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:399}},
+	_react2.default.createElement.apply(_react2.default,[this.constructor].concat(_toConsumableArray(modifiedProps)))));}
+	
+	
+	
+	
+	var styleObject=modifiedProps.theme&&modifiedProps.theme.errorBar?
+	modifiedProps.theme.errorBar:
+	fallbackProps.style;
+	
+	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
+	
+	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
+	
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryErrorBar;}(_react2.default.Component);VictoryErrorBar.role="errorBar";VictoryErrorBar.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryErrorBar.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","parent"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,theme:_react.PropTypes.object,groupComponent:_react.PropTypes.element,borderWidth:_react.PropTypes.number};VictoryErrorBar.defaultProps={data:defaultData,padding:50,scale:"linear",standalone:true,x:"x",y:"y",borderWidth:10,dataComponent:_react2.default.createElement(_errorbar2.default,{__source:{fileName:_jsxFileName,lineNumber:305}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:306}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:307}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:308}})};VictoryErrorBar.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryErrorBar.getData=_data2.default.getData.bind(_data2.default);VictoryErrorBar.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryErrorBar;
+
+/***/ },
+/* 235 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-errorbar/errorbar.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	ErrorBar=function(_React$Component){_inherits(ErrorBar,_React$Component);
+	function ErrorBar(props){_classCallCheck(this,ErrorBar);return _possibleConstructorReturn(this,Object.getPrototypeOf(ErrorBar).call(this,
+	props));}_createClass(ErrorBar,[{key:"renderErrorBar",value:function renderErrorBar(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	error){var _props=
+	
+	
+	
+	
+	
+	this.props;var x=_props.x;var y=_props.y;var borderWidth=_props.borderWidth;var groupComponent=_props.groupComponent;
+	
+	return _react2.default.cloneElement(groupComponent,{},
+	_react2.default.createElement("line",_extends({
+	ref:"borderRight"},
+	this.props.events,{
+	style:this.props.style,
+	x1:error.errorRight,
+	x2:error.errorRight,
+	y1:y-borderWidth,
+	y2:y+borderWidth,__source:{fileName:_jsxFileName,lineNumber:37}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"borderLeft"},
+	this.props.events,{
+	style:this.props.style,
+	x1:error.errorLeft,
+	x2:error.errorLeft,
+	y1:y-borderWidth,
+	y2:y+borderWidth,__source:{fileName:_jsxFileName,lineNumber:46}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"borderBottom"},
+	this.props.events,{
+	style:this.props.style,
+	x1:x-borderWidth,
+	x2:x+borderWidth,
+	y1:error.errorBottom,
+	y2:error.errorBottom,__source:{fileName:_jsxFileName,lineNumber:55}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"borderTop"},
+	this.props.events,{
+	style:this.props.style,
+	x1:x-borderWidth,
+	x2:x+borderWidth,
+	y1:error.errorTop,
+	y2:error.errorTop,__source:{fileName:_jsxFileName,lineNumber:64}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"crossTop"},
+	this.props.events,{
+	style:this.props.style,
+	x1:x,
+	x2:x,
+	y1:y,
+	y2:error.errorTop,
+	shapeRendering:"optimizeSpeed",__source:{fileName:_jsxFileName,lineNumber:73}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"crossBottom"},
+	this.props.events,{
+	style:this.props.style,
+	x1:x,
+	x2:x,
+	y1:y,
+	y2:error.errorBottom,
+	shapeRendering:"optimizeSpeed",__source:{fileName:_jsxFileName,lineNumber:83}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"crossLeft"},
+	this.props.events,{
+	style:this.props.style,
+	x1:x,
+	x2:error.errorLeft,
+	y1:y,
+	y2:y,
+	shapeRendering:"optimizeSpeed",__source:{fileName:_jsxFileName,lineNumber:93}})),
+	
+	_react2.default.createElement("line",_extends({
+	ref:"crossRight"},
+	this.props.events,{
+	style:this.props.style,
+	x1:x,
+	x2:error.errorRight,
+	y1:y,
+	y2:y,
+	shapeRendering:"optimizeSpeed",__source:{fileName:_jsxFileName,lineNumber:103}})));}},{key:"render",value:function render()
+	
+	
+	
+	
+	{var _props2=
+	
+	
+	
+	
+	this.props;var errorX=_props2.errorX;var errorY=_props2.errorY;var scale=_props2.scale;
+	
+	var rangeX=scale.x.range();
+	var rangeY=scale.y.range();
+	var positiveErrorX=errorX[0];
+	var negativeErrorX=errorX[1];
+	var positiveErrorY=errorY[1];
+	var negativeErrorY=errorY[0];
+	var errorTop=positiveErrorY>=rangeY[0]?rangeY[0]:positiveErrorY;
+	var errorBottom=negativeErrorY<=rangeY[1]?rangeY[1]:negativeErrorY;
+	var errorRight=positiveErrorX>=rangeX[1]?rangeX[1]:positiveErrorX;
+	var errorLeft=negativeErrorX<=rangeX[0]?rangeX[0]:negativeErrorX;
+	
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{},
+	this.renderErrorBar({errorTop:errorTop,errorBottom:errorBottom,errorRight:errorRight,errorLeft:errorLeft}));}}]);return ErrorBar;}(_react2.default.Component);ErrorBar.propTypes={index:_react2.default.PropTypes.number,datum:_react.PropTypes.object,events:_react.PropTypes.object,scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,errorX:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array]),errorY:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array]),borderWidth:_react.PropTypes.number,groupComponent:_react.PropTypes.element};exports.default=ErrorBar;
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _flatten2=__webpack_require__(154);var _flatten3=_interopRequireDefault(_flatten2);var _isArray2=__webpack_require__(22);var _isArray3=_interopRequireDefault(_isArray2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _omit2=__webpack_require__(221);var _omit3=_interopRequireDefault(_omit2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
+	var _victoryCore=__webpack_require__(29);
+	var _scale=__webpack_require__(153);var _scale2=_interopRequireDefault(_scale);
+	var _axis=__webpack_require__(163);var _axis2=_interopRequireDefault(_axis);
+	var _domain=__webpack_require__(164);var _domain2=_interopRequireDefault(_domain);
+	var _data=__webpack_require__(165);var _data2=_interopRequireDefault(_data);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
+	
+	{
+	getBaseProps:function getBaseProps(props,fallbackProps){var _this=this;
+	var modifiedProps=_victoryCore.Helpers.modifyProps(props,fallbackProps);
+	var calculatedValues=this.getCalculatedValues(modifiedProps,fallbackProps);var
+	data=calculatedValues.data;var style=calculatedValues.style;var scale=calculatedValues.scale;var
+	groupComponent=modifiedProps.groupComponent;var height=modifiedProps.height;var width=modifiedProps.width;
+	var parentProps={style:style.parent,scale:scale,data:data,height:height,width:width};
+	return data.reduce(function(memo,datum,index){
+	var eventKey=datum.eventKey;
+	var x=scale.x(datum.x);
+	var y=scale.y(datum.y);
+	var errorX=void 0;
+	var errorY=void 0;
+	
+	
+	
+	
+	
+	
+	if((0,_isArray3.default)(datum.errorX)){
+	errorX=[
+	scale.x(datum.errorX[0]+datum.x),
+	scale.x(datum.x-datum.errorX[1])];}else
+	
+	{
+	errorX=[
+	scale.x(datum.errorX+datum.x),
+	scale.x(datum.x-datum.errorX)];}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	if((0,_isArray3.default)(datum.errorY)){
+	errorY=[
+	scale.y(datum.errorY[0]+datum.y),
+	scale.y(datum.y-datum.errorY[1])];}else
+	
+	{
+	errorY=[
+	scale.y(datum.errorY+datum.y),
+	scale.y(datum.y-datum.errorY)];}
+	
+	
+	
+	var dataStyle=_this.getDataStyles(datum,style.data);
+	var dataProps={
+	x:x,y:y,scale:scale,datum:datum,index:index,style:dataStyle,errorX:errorX,errorY:errorY,groupComponent:groupComponent,
+	borderWidth:modifiedProps.borderWidth};
+	
+	
+	memo[eventKey]={
+	data:dataProps};
+	
+	return memo;},
+	{parent:parentProps});},
+	
+	
+	getErrorData:function getErrorData(props){
+	if(props.data){
+	return this.formatErrorData(props.data,props);}else
+	{
+	var generatedData=(props.errorX||props.errorY)&&this.generateData(props);
+	return this.formatErrorData(generatedData,props);}},
+	
+	
+	
+	formatErrorData:function formatErrorData(dataset,props){
+	if(!dataset){
+	return[];}
+	
+	var accessor={
+	errorX:_victoryCore.Helpers.createAccessor(props.errorX),
+	errorY:_victoryCore.Helpers.createAccessor(props.errorY)};
+	
+	return dataset.map(function(datum){
+	var errorX=accessor.errorX(datum.errorX);
+	var errorY=accessor.errorY(datum.errorY);
+	
+	if(!(0,_isArray3.default)(errorX)&&errorX<0){
+	errorX=0;}else
+	if((0,_isArray3.default)(errorX)){
+	errorX.map(function(err){
+	if(err<0){
+	return 0;}
+	
+	return err;});}
+	
+	
+	
+	if(!(0,_isArray3.default)(errorY)&&errorY<0){
+	errorY=0;}else
+	if((0,_isArray3.default)(errorY)){
+	errorY.map(function(err){
+	if(err<0){
+	return 0;}
+	
+	return err;});}
+	
+	
+	
+	return _extends(
+	{},
+	datum,
+	{errorX:errorX,errorY:errorY});});},
+	
+	
+	
+	
+	getDomain:function getDomain(props,axis){
+	var propsDomain=_domain2.default.getDomainFromProps(props,axis);
+	if(propsDomain){
+	return propsDomain;}
+	
+	var categoryDomain=_domain2.default.getDomainFromCategories(props,axis);
+	if(categoryDomain){
+	return categoryDomain;}
+	
+	var dataset=this.getErrorData(props);
+	return this.getDomainFromData(props,axis,dataset);},
+	
+	
+	getDomainFromData:function getDomainFromData(props,axis,dataset){
+	var currentAxis=_axis2.default.getCurrentAxis(axis,props.horizontal);
+	var error=void 0;
+	if(currentAxis==="x"){
+	error="errorX";}else
+	if(currentAxis==="y"){
+	error="errorY";}
+	
+	var axisData=(0,_flatten3.default)(dataset).map(function(datum){return datum[currentAxis];});
+	var errorData=(0,_flatten3.default)((0,_flatten3.default)(dataset).map(function(datum){
+	var errorMax=void 0;
+	var errorMin=void 0;
+	if((0,_isArray3.default)(datum[error])){
+	errorMax=datum[error][0]+datum[currentAxis];
+	errorMin=datum[currentAxis]-datum[error][1];}else
+	{
+	errorMax=datum[error]+datum[currentAxis];
+	errorMin=datum[currentAxis]-datum[error];}
+	
+	return[errorMax,errorMin];}));
+	
+	
+	var allData=axisData.concat(errorData);
+	var min=Math.min.apply(Math,_toConsumableArray(allData));
+	var max=Math.max.apply(Math,_toConsumableArray(allData));
+	
+	
+	if(min===max){
+	var adjustedMax=max===0?1:max;
+	return[0,adjustedMax];}
+	
+	return[min,max];},
+	
+	
+	getCalculatedValues:function getCalculatedValues(props,fallbackProps){
+	var defaultStyles=props.theme&&props.theme.errorbar?props.theme.errorbar:
+	fallbackProps.style;
+	var style=_victoryCore.Helpers.getStyles(props.style,defaultStyles,"auto","100%");
+	var assignData=_extends(_data2.default.getData(props),this.getErrorData(props));
+	var data=_victoryCore.Events.addEventKeys(props,assignData);
+	var range={
+	x:_victoryCore.Helpers.getRange(props,"x"),
+	y:_victoryCore.Helpers.getRange(props,"y")};
+	
+	var domain={
+	x:this.getDomain(props,"x"),
+	y:this.getDomain(props,"y")};
+	
+	var scale={
+	x:_scale2.default.getBaseScale(props,"x").domain(domain.x).range(range.x),
+	y:_scale2.default.getBaseScale(props,"y").domain(domain.y).range(range.y)};
+	
+	
+	return{data:data,scale:scale,style:style};},
+	
+	
+	getDataStyles:function getDataStyles(datum,style){
+	var stylesFromData=(0,_omit3.default)(datum,[
+	"x","y","name"]);
+	
+	var baseDataStyle=(0,_defaults3.default)({},stylesFromData,style);
+	return _victoryCore.Helpers.evaluateStyle(baseDataStyle,datum);}};
+
+/***/ },
+/* 237 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(129);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(81);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-candlestick/victory-candlestick.js";var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);
+	
+	var _candle=__webpack_require__(238);var _candle2=_interopRequireDefault(_candle);
+	var _victoryCore=__webpack_require__(29);
+	
+	
+	
+	var _helperMethods=__webpack_require__(239);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
 	var fallbackProps={
 	props:{
 	height:300,
 	width:450,
 	candleColors:{
-	positive:"green",
-	negative:"red"}},
+	positive:"#ffffff",
+	negative:"#252525"}},
 	
 	
 	style:{
 	data:{
 	opacity:1,
-	strokeWidth:1},
+	strokeWidth:1,
+	stroke:"#252525"},
 	
 	labels:{
+	fill:"#252525",
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	fontSize:14,
+	letterSpacing:"0.04em",
+	padding:10,
 	stroke:"transparent",
-	fill:"#756f6a",
-	fontFamily:"Helvetica",
-	fontSize:13,
-	textAnchor:"end",
-	padding:5}}};
+	textAnchor:"end"}}};
 	
 	
 	
@@ -22858,6 +23636,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	_this2.baseProps[key].labels,
 	labelComponent.props);
 	
+	
 	if(labelProps&&labelProps.text){
 	var labelEvents=_this2.getEvents(props,"labels",key);
 	var candleLabel=_react2.default.cloneElement(labelComponent,_extends({
@@ -22915,7 +23694,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	"style","width","x","y"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:this.props.animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:529}},
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:this.props.animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:532}},
 	_react2.default.createElement.apply(_react2.default,[this.constructor].concat(_toConsumableArray(modifiedProps)))));}
 	
 	
@@ -22924,10 +23703,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	var baseStyle=_victoryCore.Helpers.getStyles(style,fallbackProps.style,"auto","100%");
 	
 	var group=this.renderGroup(this.renderData(modifiedProps),baseStyle.parent);
-	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryCandlestick;}(_react2.default.Component);VictoryCandlestick.role="candlestick";VictoryCandlestick.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryCandlestick.propTypes={animate:_react.PropTypes.object,data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,labelComponent:_react.PropTypes.element,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),size:_react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative,_react.PropTypes.func]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),open:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),close:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),high:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),low:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,candleColors:_react.PropTypes.shape({positive:_react.PropTypes.string,negative:_react.PropTypes.string}),groupComponent:_react.PropTypes.element,theme:_react.PropTypes.object};VictoryCandlestick.defaultProps={padding:50,samples:50,scale:"linear",data:defaultData,standalone:true,x:"x",open:"open",close:"close",high:"high",low:"low",dataComponent:_react2.default.createElement(_candle2.default,{__source:{fileName:_jsxFileName,lineNumber:411}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:412}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:413}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:414}}),candleColors:{positive:"green",negative:"red"}};VictoryCandlestick.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryCandlestick.getData=_helperMethods2.default.getData.bind(_helperMethods2.default);VictoryCandlestick.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryCandlestick;
+	return standalone?this.renderContainer(modifiedProps,group):group;}}]);return VictoryCandlestick;}(_react2.default.Component);VictoryCandlestick.role="candlestick";VictoryCandlestick.defaultTransitions={onExit:{duration:600,before:function before(){return{opacity:0};}},onEnter:{duration:600,before:function before(){return{opacity:0};},after:function after(datum){return{opacity:datum.opacity||1};}}};VictoryCandlestick.propTypes={animate:_react.PropTypes.object,data:_react.PropTypes.array,dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels"]),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),name:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),height:_victoryCore.PropTypes.nonNegative,labelComponent:_react.PropTypes.element,labels:_react.PropTypes.oneOfType([_react.PropTypes.func,_react.PropTypes.array]),padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),size:_react.PropTypes.oneOfType([_victoryCore.PropTypes.nonNegative,_react.PropTypes.func]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),open:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),close:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),high:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),low:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),containerComponent:_react.PropTypes.element,candleColors:_react.PropTypes.shape({positive:_react.PropTypes.string,negative:_react.PropTypes.string}),groupComponent:_react.PropTypes.element,theme:_react.PropTypes.object};VictoryCandlestick.defaultProps={padding:50,samples:50,scale:"linear",data:defaultData,standalone:true,x:"x",open:"open",close:"close",high:"high",low:"low",dataComponent:_react2.default.createElement(_candle2.default,{__source:{fileName:_jsxFileName,lineNumber:413}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:414}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:415}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:416}}),candleColors:{positive:"green",negative:"red"}};VictoryCandlestick.getDomain=_helperMethods2.default.getDomain.bind(_helperMethods2.default);VictoryCandlestick.getData=_helperMethods2.default.getData.bind(_helperMethods2.default);VictoryCandlestick.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryCandlestick;
 
 /***/ },
-/* 235 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(121);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="/Users/boygirl/formidable/v/victory-chart/src/components/victory-candlestick/candle.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(28);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
@@ -22984,7 +23763,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	this.props.groupComponent,{},this.renderWick(wickProps),this.renderCandle(candleProps));}}]);return Candle;}(_react2.default.Component);Candle.propTypes={index:_react2.default.PropTypes.number,x:_react.PropTypes.number,y1:_react.PropTypes.number,y2:_react.PropTypes.number,y:_react.PropTypes.number,events:_react.PropTypes.object,candleHeight:_react.PropTypes.number,scale:_react.PropTypes.object,style:_react.PropTypes.object,datum:_react.PropTypes.object,width:_react.PropTypes.number,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.object]),data:_react.PropTypes.array,groupComponent:_react.PropTypes.element,role:_react.PropTypes.string};exports.default=Candle;
 
 /***/ },
-/* 236 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _omit2=__webpack_require__(221);var _omit3=_interopRequireDefault(_omit2);var _pick2=__webpack_require__(123);var _pick3=_interopRequireDefault(_pick2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};
@@ -23099,18 +23878,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
+	isTransparent:function isTransparent(attr){
+	return attr==="none"||attr==="transparent";},
+	
+	
 	getDataStyles:function getDataStyles(datum,style,props){
 	var stylesFromData=(0,_omit3.default)(datum,[
 	"x","y","size","name","label","open","close","high","low"]);
 	
 	var fillCheck=datum.fill||style.fill;
 	var strokeCheck=datum.stroke||style.stroke;
-	var strokeColor=fillCheck&&!strokeCheck?fillCheck:
-	strokeCheck;
 	var candleColor=datum.open>datum.close?
 	props.candleColors.negative:props.candleColors.positive;
+	var transparentCheck=this.isTransparent(datum.stroke)||
+	this.isTransparent(style.stroke);
+	var strokeColor=fillCheck||transparentCheck?fillCheck||candleColor:
+	strokeCheck;
 	var baseDataStyle=(0,_defaults3.default)({},stylesFromData,
-	{stroke:strokeColor||candleColor,fill:candleColor},
+	{stroke:strokeColor||candleColor,fill:fillCheck||candleColor},
 	style);
 	return _victoryCore.Helpers.evaluateStyle(baseDataStyle,datum);},
 	

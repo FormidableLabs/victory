@@ -15,36 +15,39 @@ const fallbackProps = {
   },
   style: {
     axis: {
-      stroke: "#756f6a",
       fill: "none",
-      strokeWidth: 2,
+      stroke: "#252525",
+      strokeWidth: 1,
       strokeLinecap: "round"
     },
     axisLabel: {
-      stroke: "transparent",
-      fill: "#756f6a",
-      fontSize: 17,
-      fontFamily: "Helvetica"
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent"
     },
     grid: {
-      stroke: "transparent",
       fill: "none",
+      stroke: "transparent",
       strokeLinecap: "round"
     },
     ticks: {
-      stroke: "#756f6a",
       fill: "none",
-      padding: 5,
-      strokeWidth: 2,
-      strokeLinecap: "round",
-      size: 4
+      padding: 10,
+      size: 1,
+      stroke: "none",
+      strokeWidth: 1,
+      strokeLinecap: "round"
     },
     tickLabels: {
-      stroke: "transparent",
-      fill: "#756f6a",
-      fontFamily: "Helvetica",
-      fontSize: 12,
-      padding: 5
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent"
     }
   }
 };
@@ -266,10 +269,14 @@ export default class VictoryAxis extends React.Component {
     tickComponent: PropTypes.element,
     /**
      * The tickCount prop specifies approximately how many ticks should be drawn on the axis if
-     * tickValues are not explicitly provided. This values is calculated by d3 scale and
-     * prioritizes returning "nice" values and evenly spaced ticks over an exact numnber of ticks
+     * tickValues are not explicitly provided. This value is calculated by d3 scale and
+     * prioritizes returning "nice" values and evenly spaced ticks over an exact number of ticks.
+     * If you need an exact number of ticks, please specify them via the tickValues prop.
+     * This prop must have a value greater than zero.
      */
-    tickCount: CustomPropTypes.nonNegative,
+    tickCount: CustomPropTypes.allOfType([
+      CustomPropTypes.integer, CustomPropTypes.greaterThanZero
+    ]),
     /**
      * The tickLabelComponent prop takes in an entire component which will be used
      * to create the tick labels. The new element created from the passed tickLabelComponent

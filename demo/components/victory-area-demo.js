@@ -18,7 +18,7 @@ export default class App extends React.Component {
 
   getMultiTransitionData() {
     const areas = random(8, 10);
-    return range(5).map(() => {
+    return range(8).map(() => {
       return range(areas).map((area) => {
         return {x: area, y: random(2, 10)};
       });
@@ -102,7 +102,7 @@ export default class App extends React.Component {
         <VictoryArea
           style={style} animate={{duration: 1000}}
           data={this.state.areaTransitionData}
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
           containerComponent={
             <VictoryContainer
               title="Area Chart"
@@ -250,13 +250,26 @@ export default class App extends React.Component {
           ]}
         />
 
-        <svg width={450} height={300} style={style.parent}>
-          <VictoryArea y={(data) => Math.sin(data.x)} style={{data: {opacity: 0.4}}}/>
-          <VictoryArea y={(data) => Math.cos(data.x)} style={{data: {opacity: 0.4}}}/>
+        <svg
+          width={450}
+          height={300}
+          style={style.parent}
+        >
+          <VictoryArea
+            y={(data) => Math.sin(data.x)}
+            standalone={false}
+            style={{data: {opacity: 0.4}}}
+          />
+          <VictoryArea
+            y={(data) => Math.cos(data.x)}
+            standalone={false}
+            style={{data: {opacity: 0.4}}}
+          />
         </svg>
 
         <VictoryChart
-          theme={VictoryTheme.grayscale}
+          style={style}
+          theme={VictoryTheme.material}
         >
           <VictoryArea
             style={style} animate={{duration: 1000}}
@@ -273,7 +286,7 @@ export default class App extends React.Component {
         <VictoryStack
           style={style}
           animate={{duration: 1000}}
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
           containerComponent={
             <VictoryContainer
               desc="This is an animated area chart that displays data in a range of colors."
@@ -291,7 +304,7 @@ export default class App extends React.Component {
           })}
         </VictoryStack>
 
-        <VictoryStack style={{parent: style.parent}} theme={VictoryTheme.grayscale}>
+        <VictoryStack style={{parent: style.parent}} theme={VictoryTheme.material}>
           <VictoryArea label={"one"}
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />

@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
-import {VictoryAxis} from "../../src/index";
-import {VictoryLabel} from "victory-core";
+import { VictoryAxis } from "../../src/index";
+import { VictoryLabel } from "victory-core";
 import { merge, random, range } from "lodash";
 import { VictoryContainer, VictoryTheme } from "victory-core";
 
@@ -70,12 +70,16 @@ export default class App extends React.Component {
         <div>
           <h2>Animating Axis</h2>
 
-          <VictoryAxis style={styleOverrides}
+          <VictoryAxis
+            style={{
+              parent: styleOverrides.parent,
+              grid: { stroke: "#CFD8DC" }
+            }}
             padding={60}
             label={"animation\nwow!"}
             axisLabelComponent={<VictoryLabel/>}
             tickValues={this.state.tickValues}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
             animate={{duration: 2000}}
             containerComponent={
@@ -92,9 +96,9 @@ export default class App extends React.Component {
             scale="time"
             style={{
               parent: style.parent,
-              axis: {strokeWidth: 4},
-              tickLabels: {angle: 45},
-              grid: {stroke: "black", strokeWidth: 5}
+              axis: { strokeWidth: 3 },
+              tickLabels: { angle: 45},
+              grid: { stroke: "#F4511E", strokeWidth: 2 }
             }}
             containerComponent={
               <VictoryContainer
@@ -142,7 +146,7 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
-              theme={VictoryTheme.grayscale}
+              theme={VictoryTheme.material}
               offsetY={200}
               standalone={false}
             />
@@ -150,7 +154,7 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
-              theme={VictoryTheme.grayscale}
+              theme={VictoryTheme.material}
               offsetX={250}
               standalone={false}
             />

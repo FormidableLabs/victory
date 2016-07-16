@@ -16,12 +16,14 @@ const fallbackProps = {
   },
   style: {
     data: {
-      fill: "#756f6a"
+      fill: "#252525"
     },
     labels: {
-      fontSize: 13,
-      padding: 4,
-      fill: "black"
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10
     }
   }
 };

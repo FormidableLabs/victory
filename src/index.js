@@ -6,6 +6,7 @@ export { default as VictoryBar } from "./components/victory-bar/victory-bar";
 export { default as VictoryScatter } from "./components/victory-scatter/victory-scatter";
 export { default as VictoryGroup } from "./components/victory-group/victory-group";
 export { default as VictoryStack } from "./components/victory-stack/victory-stack";
+export { default as VictoryErrorBar } from "./components/victory-errorbar/victory-errorbar";
 export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";

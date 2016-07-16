@@ -109,7 +109,11 @@ export default class App extends React.Component {
   }
 
   render() {
-    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
 
     return (
       <div className="demo">
@@ -127,10 +131,46 @@ export default class App extends React.Component {
         </ChartWrap>
 
         <ChartWrap>
-          <VictoryBar horizontal
-            data={[ {x: 1, y: 20}, {x: 7, y: 40}, {x: 3, y: 60}, {x: 4, y: 80} ]}
+          <VictoryBar
+            horizontal
+            data={[
+              {x: 1, y: 20},
+              {x: 7, y: 40},
+              {x: 3, y: 60},
+              {x: 4, y: 80}
+            ]}
           />
         </ChartWrap>
+
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
+          <VictoryBar
+            horizontal
+            data={[
+              {x: 1, y: "Alpha"},
+              {x: 7, y: "Beta"},
+              {x: 3, y: "Charlie"},
+              {x: 4, y: "Delta"}
+            ]}
+          />
+        </VictoryChart>
+
+        <VictoryChart
+          style={{ parent: parentStyle }}
+          theme={VictoryTheme.material}
+        >
+          <VictoryBar
+            horizontal
+            data={[
+              {x: 2, y: "Echo"},
+              {x: 6, y: "Foxtrot"},
+              {x: 3, y: "Golf"},
+              {x: 4, y: "Hotel"}
+            ]}
+          />
+        </VictoryChart>
 
         <VictoryBar
           style={{
@@ -176,12 +216,17 @@ export default class App extends React.Component {
           data={this.state.barTransitionData}
         />
         <VictoryStack
-          style={{parent: parentStyle}}
           animate={{duration: 1000}}
-          theme={VictoryTheme.grayscale}
+          labels={["uno", "dos", "tres", "cuatro", "cinco"]}
+          style={{parent: parentStyle}}
+          theme={VictoryTheme.material}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
+            return (
+              <Wrapper key={index}>
+                <VictoryBar data={data} />
+              </Wrapper>
+            );
           })}
         </VictoryStack>
 
@@ -384,7 +429,7 @@ export default class App extends React.Component {
           </VictorySharedEvents>
         </svg>
         <VictoryBar
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
           style={{
             parent: parentStyle,
             data: {fill: "blue"}
@@ -450,7 +495,11 @@ class ChartWrap extends React.Component {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
-    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const parentStyle = {
+      border: "1px solid #ccc",
+      margin: "2%",
+      maxWidth: "40%"
+    };
     const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
     return (
       <div>
