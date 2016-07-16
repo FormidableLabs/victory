@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "10.0.0",
+  "version": "10.1.0",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -27,10 +27,9 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "^2.1.8",
+    "builder-victory-component": "^2.3.0",
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.0.0",
-    "builder-victory-component": "^2.3.0",
     "lodash": "^4.12.0",
     "victory-core": "4.3.0"
   },
