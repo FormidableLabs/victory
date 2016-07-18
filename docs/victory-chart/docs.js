@@ -8,6 +8,8 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack
 } from "../../src/index";
 import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
+import DataSource from "../data-source-dropdown";
+import dataset from "./dataset";
 
 class Docs extends React.Component {
   render() {
@@ -18,7 +20,7 @@ class Docs extends React.Component {
           source={docgen.parse(require("!!raw!../../src/components/victory-chart/victory-chart"))}
           scope={{
             merge, range, random, React, ReactDOM, VictoryScatter, VictoryLine,
-            VictoryAxis, VictoryBar, VictoryChart, VictoryStack
+            VictoryAxis, VictoryBar, VictoryChart, VictoryStack, DataSource, dataset
           }}
           playgroundtheme="elegant"
           customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
