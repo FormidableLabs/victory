@@ -12,7 +12,7 @@ export default {
     const { data, style, scale } = calculatedValues;
     const { groupComponent, height, width } = modifiedProps;
     const parentProps = {style: style.parent, scale, data, height, width};
-    return data.reduce((memo, datum, index) => {
+    return data.reduce((memo, datum, index) => { // eslint-disable-line max-statements
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);

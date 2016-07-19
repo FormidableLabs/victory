@@ -446,30 +446,29 @@ export default class VictoryErrorBar extends React.Component {
 
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
 
+    const { animate, standalone, style } = modifiedProps;
+    // If animating, return a `VictoryAnimation` element that will create
+    // a new `VictoryErrorBar` with nearly identical props, except (1) tweened
+    // and (2) `animate` set to null so we don't recurse forever.
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "borderWidth"
+        "data", "domain", "height", "padding", "samples",
+        "style", "width", "x", "y", "errorX", "errorY"
       ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
           {React.createElement(this.constructor, ...modifiedProps)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.errorBar
-    ? modifiedProps.theme.errorBar
-    : fallbackProps.style;
+    const baseStyle = Helpers.getStyles(style, fallbackProps.style, "auto", "100%");
 
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
-
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

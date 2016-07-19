@@ -75,39 +75,19 @@ The sensible defaults VictoryErrorBar provides makes it easy to get started, but
 Data objects can be styled directly for granular control
 
 ```playground
-<VictoryCandlestick
+<VictoryErrorBar
   height={500}
   padding={75}
   style={{
     labels: {fontSize: 20}
   }}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0, opacity: 0.1, label: "OMG"},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, opacity: 0.5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10, opacity: 0.75, label: "WOW"},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, opacity: 0.2},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20, label: "LOL"},
-    {x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25}
-  ]}
-/>
-```
-
-Candlestick wicks can be changed to whatever color you'd like, but to ensure that wicks match up with candle body, set the stroke property to "transparent" or "none".
-
-```playground
-<VictoryCandlestick
-  height={500}
-  padding={75}
-  style={{
-    data: {fill: "blue", stroke: "none"},
-    labels: {fontSize: 20}
-  }}
-  data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 1, y: 5, errorY: 0.1, errorX: [1, 2], label: "HI", stroke: "green"},
+    {x: 2, y: 15, errorY: 0.1, errorX: [2, 0], opacity: 0.5, stroke: "yellow"},
+    {x: 3, y: 10, errorY: 0.2, errorX: [2, 1], opacity: 0.75, label: "HELLO", stroke: "salmon"},
+    {x: 4, y: 20, errorY: 0.25, errorX: [3, 2], stroke: "pink"},
+    {x: 5, y: 30, errorY: 0.25, errorX: [2, 1], label: "HEY", stroke: "purple"},
+    {x: 6, y: 35, errorY: 0.35, errorX: [0, 3], stroke: "blue"}
   ]}
 />
 ```
@@ -115,21 +95,22 @@ Candlestick wicks can be changed to whatever color you'd like, but to ensure tha
 Functional styles allow elements to determine their own styles based on data
 
 ```playground
-<VictoryCandlestick
+<VictoryErrorBar
   height={500}
   padding={75}
   style={{
     data: {
-      strokeWidth: (data) => data.open > data.close ?
-        5 : 1
+      strokeWidth: (data) => data.errorX ?
+        5 : 1,
+        stroke: (data) => data.y > 3 ? "pink" : "purple"
     }
   }}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 2, y: 2},
+    {x: 4, y: 4, errorY: 0.5, errorX: 1.2},
+    {x: 6, y: 1, errorY: 1.1},
+    {x: 8, y: 3, errorY: 0.25, errorX: 0.9},
+    {x: 10, y: 6, errorY: 0.3}
   ]}
 />
 ```
@@ -142,15 +123,16 @@ Use the `events` prop to attach events to specific elements in VictoryCandlestic
 The `eventKey` may optionally be used to select a single element by index rather than an entire set. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single candlestick), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryCandlestick may also be used with the `VictorySharedEvents` wrapper.
 
 ```playground
-<VictoryCandlestick
+<VictoryErrorBar
   height={500}
   padding={75}
+  style={{labels: {padding: 40}, data: {stroke: "orange"}}}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, label: "hello"},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, label: "there"},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 1, y: 1, errorX: [1, 0.5], errorY: .1, label: "click me"},
+    {x: 2, y: 2, errorX: [1, 3], errorY: .1},
+    {x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3]},
+    {x: 4, y: 2, errorX: [1, 0.5], errorY: .1, label: "click me too"},
+    {x: 5, y: 1, errorX: [1, 0.5], errorY: .2}
   ]}
   events={[{
     target: "labels",
@@ -158,27 +140,12 @@ The `eventKey` may optionally be used to select a single element by index rather
       onClick: () => {
         return [
           {
+            target: "data",
             mutation: (props) => {
               return {
-                style: merge({}, props.style.labels, {fill: "orange"})
+                style: merge({}, props.style, {stroke: "blue", strokeWidth: 2})
               };
-            }
-          }
-        ];
-      }
-    }
-  },
-  {
-    target: "data",
-    eventHandlers: {
-      onClick: () => {
-        return [
-          {
-            mutation: (props) => {
-              return {
-                style: merge({}, props.style, {fill: "blue"})
-              };
-            }
+            }  
           }
         ];
       }
@@ -204,14 +171,13 @@ class App extends React.Component {
   }
 
   getData() {
-    const n = random(4, 10)
+    const n = random(1, 30)
     return range(n).map((i) => {
       return {
         x: i,
-        open: random(10, 20),
-        close: random(10, 20),
-        high: random(20, 30),
-        low: random(0, 10)
+        y: random(1, 10),
+        errorX: random(0, 2),
+        errorY: random(0, 1)
       };
     });
   }
@@ -226,7 +192,7 @@ class App extends React.Component {
 
   render() {
     return (
-      <VictoryCandlestick
+      <VictoryErrorBar
         animate={{
           duration: 1000,
           onEnter: {
