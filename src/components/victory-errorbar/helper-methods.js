@@ -92,7 +92,7 @@ export default {
       let errorX = accessor.errorX(datum);
       let errorY = accessor.errorY(datum);
       // check if the value is negative, if it is set to 0
-      if (!isArray(errorX) && errorX < 0) {
+      if (!isArray(errorX) && errorX < 0 || !errorX) {
         errorX = 0;
       } else if (isArray(errorX)) {
         errorX.map((err) => {
@@ -103,7 +103,7 @@ export default {
         });
       }
 
-      if (!isArray(errorY) && errorY < 0) {
+      if (!isArray(errorY) && errorY < 0 || !errorY) {
         errorY = 0;
       } else if (isArray(errorY)) {
         errorY.map((err) => {

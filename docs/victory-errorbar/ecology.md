@@ -31,16 +31,16 @@ VictoryErrorBar comes with data accessor props to make passing in data much more
 assign a property to x, y, errorX, or errorY, or process data on the fly.
 
 ```playground
-<VictoryCandlestick
+<VictoryErrorBar
   data={[
-    {date: new Date(2016, 8, 2), open: 5, close: 10, low: 0},
-    {date: new Date(2016, 8, 3), open: 15, close: 10, low: 5},
-    {date: new Date(2016, 8, 4), open: 15, close: 20, low: 10},
-    {date: new Date(2016, 8, 5), open: 25, close: 20, low: 15},
-    {date: new Date(2016, 8, 6), open: 25, close: 30, low: 20}
+    {num: 1, y: 1, dif: 4},
+    {num: 2, y: 2, dif: 1},
+    {num: 3, y: 3, dif: 2},
+    {num: 4, y: 2, dif: .5},
+    {num: 5, y: 1, dif: 3}
   ]}
-  x={"date"}
-  high={(data) => (Math.max(data.open, data.close) + 10)}
+  x={"num"}
+  errorY={(d) => (d.dif / 4)}
 />
 ```
 
