@@ -1,4 +1,4 @@
-import { omit, defaults, isArray, flatten } from "lodash";
+import { omit, defaults, isArray, flatten, pick } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
@@ -60,8 +60,24 @@ export default {
         borderWidth: modifiedProps.borderWidth
       };
 
+      const text = this.getLabelText(modifiedProps, datum, index);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const labelProps = {
+        style: labelStyle,
+        x: x - labelStyle.padding,
+        y: y - labelStyle.padding,
+        text,
+        index,
+        scale,
+        datum: dataProps.datum,
+        textAnchor: labelStyle.textAnchor,
+        verticalAnchor: labelStyle.verticalAnchor || "end",
+        angle: labelStyle.angle
+      };
+
       memo[eventKey] = {
-        data: dataProps
+        data: dataProps,
+        labels: labelProps
       };
       return memo;
     }, {parent: parentProps});
@@ -197,5 +213,19 @@ export default {
     ]);
     const baseDataStyle = defaults({}, stylesFromData, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
+  },
+
+  getLabelText(props, datum, index) {
+    const propsLabel = Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
+    return datum.label || propsLabel;
+  },
+
+  getLabelStyle(labelStyle, dataProps) {
+    const { datum, size, style } = dataProps;
+    const matchedStyle = pick(style, ["opacity", "fill"]);
+    const padding = labelStyle.padding || size * 0.25;
+    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
+    return Helpers.evaluateStyle(baseLabelStyle, datum);
   }
 };

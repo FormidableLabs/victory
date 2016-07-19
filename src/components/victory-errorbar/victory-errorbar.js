@@ -18,6 +18,15 @@ const fallbackProps = {
       opacity: 1,
       stroke: "#CCC",
       strokeWidth: 1
+    },
+    labels: {
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent",
+      textAnchor: "start"
     }
   }
 };
@@ -374,24 +383,39 @@ export default class VictoryErrorBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, groupComponent } = props;
-    const errorBarComponents = [];
-    this.dataKeys.forEach((key) => {
+    const { dataComponent, labelComponent, groupComponent} = props;
+    const { role } = VictoryErrorBar;
+    return this.dataKeys.map((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `error-bar-${key}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
-        dataComponent.props,
-        this.baseProps[key].data
+        this.baseProps[key].data,
+        dataComponent.props
+      );
+      const errorBarComponent = React.cloneElement(dataComponent, Object.assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
+      ));
+      const labelProps = defaults(
+        {key: `${role}-label-${key}`},
+        this.getEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
       );
 
-      errorBarComponents.push(React.cloneElement(dataComponent, Object.assign(
-        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const errorLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
+        }, labelProps));
+        return React.cloneElement(
+          groupComponent, {key: `error-group-${key}`}, errorBarComponent, errorLabel
+        );
+      }
+      return errorBarComponent;
     });
-
-    return React.cloneElement(groupComponent, {}, errorBarComponents);
   }
 
   renderGroup(children, style) {

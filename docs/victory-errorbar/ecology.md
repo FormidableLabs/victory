@@ -46,37 +46,26 @@ assign a property to x, y, errorX, or errorY, or process data on the fly.
 
 ### Flexible and Configurable
 
-The sensible defaults VictoryCandlestick provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
+The sensible defaults VictoryErrorBar provides makes it easy to get started, but everything can be overridden, and configured to suit your needs:
 
 ```playground
 <VictoryChart
   height={600}
   padding={75}
-  scale={{x: "time"}}
+  domainPadding={20}
 >
-  <VictoryAxis
-    scale="time"
-    tickFormat={(x) => (x.getMonth() + 1 + "/" + x.getDate())}
-  />
-
-  <VictoryAxis
-    dependentAxis
-  />
-
-  <VictoryCandlestick
-    candleColors={{positive: "purple", negative: "blue"}}
+  <VictoryErrorBar
     style={{
-      data: {width: 30},
-      labels: {fontSize: 24}
+      data: {width: 30, stroke: "blue"},
+      labels: {fontSize: 24, padding: 40}
     }}
-    domain={{x: [new Date(2016, 5, 30), new Date(2016, 6, 6)]}}
     data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
-  ]}
+      {x: 1, y: 1, errorY: .1, label: "first"},
+      {x: 2, y: 2, errorY: .1},
+      {x: 3, y: 3, errorY: [.2, .3], label: "third"},
+      {x: 4, y: 4, errorY: .1},
+      {x: 5, y: 5, errorY: .2, label: "fifth"}
+    ]}
   />
 
 </VictoryChart>
