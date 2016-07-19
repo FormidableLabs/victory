@@ -1,4 +1,4 @@
-import { includes, defaults, isFunction, range, without } from "lodash";
+import { includes, defaults, isFunction, range, without, assign } from "lodash";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -63,87 +63,121 @@ export default {
     };
   },
 
+  getTickProps(layout, style, tick) {
+    const { position, transform } = layout;
+    return {
+      x1: transform.x,
+      y1: transform.y,
+      x2: transform.x + position.x2,
+      y2: transform.y + position.y2,
+      style,
+      tick
+    };
+  },
+
+  getTickLabelProps(layout, style, tick, text) { // eslint-disable-line max-params
+    const { position, transform } = layout;
+    return {
+      style,
+      x: transform.x + position.x,
+      y: transform.y + position.y,
+      verticalAnchor: style.verticalAnchor,
+      textAnchor: style.textAnchor,
+      angle: style.angle,
+      text,
+      tick
+    };
+  },
+
+  getGridProps(layout, style, tick) {
+    const {edge, transform} = layout;
+    return {
+      x1: transform.x,
+      y1: transform.y,
+      x2: edge.x + transform.x,
+      y2: edge.y + transform.y,
+      style,
+      tick
+    };
+  },
+
+  getAxisProps(modifiedProps, calculatedValues, globalTransform) {
+    const { style, padding, isVertical } = calculatedValues;
+    const { width, height } = modifiedProps;
+    return {
+      style: style.axis,
+      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
+      x2: isVertical ? globalTransform.x : width - padding.right + globalTransform.x,
+      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
+      y2: isVertical ? height - padding.bottom + globalTransform.y : globalTransform.y
+    };
+  },
+
+  getLayoutProps(modifiedProps, calculatedValues) {
+    const offset = this.getOffset(modifiedProps, calculatedValues);
+    return {
+      globalTransform: this.getTransform(modifiedProps, calculatedValues, offset),
+      gridOffset: this.getGridOffset(modifiedProps, calculatedValues, offset),
+      gridEdge: this.getGridEdge(modifiedProps, calculatedValues)
+    };
+  },
+
+  getEvaluatedStyles(style, tick, index) {
+    return {
+      tickStyle: Helpers.evaluateStyle(style.ticks, tick, index),
+      labelStyle: Helpers.evaluateStyle(style.tickLabels, tick, index),
+      gridStyle: Helpers.evaluateStyle(style.grid, tick, index)
+    };
+  },
+
   getBaseProps(props, fallbackProps) {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const {
-      style, padding, orientation, isVertical, scale, ticks, tickFormat,
+      style, orientation, isVertical, scale, ticks, tickFormat,
       stringTicks, anchors
     } = calculatedValues;
 
-    const { width, height } = modifiedProps;
+    const {
+      globalTransform, gridOffset, gridEdge
+    } = this.getLayoutProps(modifiedProps, calculatedValues);
 
-    const offset = this.getOffset(modifiedProps, calculatedValues);
-
-    const globalTransform = this.getTransform(modifiedProps, calculatedValues, offset);
-
-    const gridOffset = this.getGridOffset(modifiedProps, calculatedValues, offset);
-    const gridEdge = this.getGridEdge(modifiedProps, calculatedValues);
-
-    const axisProps = {
-      style: style.axis,
-      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
-      x2: isVertical ? globalTransform.x : modifiedProps.width - padding.right + globalTransform.x,
-      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
-      y2: isVertical ? modifiedProps.height - padding.bottom + globalTransform.y : globalTransform.y
-    };
-
-    const parentProps = {style: style.parent, ticks, scale, width, height};
+    const axisProps = this.getAxisProps(modifiedProps, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
-    const childProps = {parent: parentProps};
+
+    const childProps = [];
     for (let index = 0, len = ticks.length; index < len; index++) {
-      const data = ticks[index];
-      const tick = stringTicks ? modifiedProps.tickValues[data - 1] : data;
-      const tickStyle = Helpers.evaluateStyle(style.ticks, tick, index);
-      const scaledTick = scale(data);
-      const tickPosition = this.getTickPosition(tickStyle, orientation, isVertical);
-      const tickTransform = {
-        x: isVertical ? globalTransform.x : scaledTick + globalTransform.x,
-        y: isVertical ? scaledTick + globalTransform.y : globalTransform.y
+      const tick = stringTicks ? modifiedProps.tickValues[(ticks[index]) - 1] : ticks[index];
+
+      const styles = this.getEvaluatedStyles(style, tick, index);
+      const tickLayout = {
+        position: this.getTickPosition(styles.tickStyle, orientation, isVertical),
+        transform: this.getTickTransform(scale(ticks[index]), globalTransform, isVertical)
       };
 
-      const gridTransform = {
-        x: isVertical ? -gridOffset.x + globalTransform.x : scaledTick + globalTransform.x,
-        y: isVertical ? scaledTick + globalTransform.y : gridOffset.y + globalTransform.y
+      const gridLayout = {
+        edge: gridEdge,
+        transform: {
+          x: isVertical ?
+            -gridOffset.x + globalTransform.x : scale(ticks[index]) + globalTransform.x,
+          y: isVertical ?
+            scale(ticks[index]) + globalTransform.y : gridOffset.y + globalTransform.y
+        }
       };
 
-      const tickProps = {
-        x1: tickTransform.x,
-        y1: tickTransform.y,
-        x2: tickTransform.x + tickPosition.x2,
-        y2: tickTransform.y + tickPosition.y2,
-        style: tickStyle,
-        tick
-      };
-      const text = tickFormat(tick, index);
-      const labelStyle = Helpers.evaluateStyle(style.tickLabels, tick, index);
-      const tickLabelProps = {
-        style: labelStyle,
-        x: tickTransform.x + tickPosition.x,
-        y: tickTransform.y + tickPosition.y,
-        verticalAnchor: labelStyle.verticalAnchor || anchors.verticalAnchor,
-        textAnchor: labelStyle.textAnchor || anchors.textAnchor,
-        angle: labelStyle.angle,
-        text,
-        tick
-      };
-
-      const gridProps = {
-        x1: gridTransform.x,
-        y1: gridTransform.y,
-        x2: gridEdge.x + gridTransform.x,
-        y2: gridEdge.y + gridTransform.y,
-        style: Helpers.evaluateStyle(style.grid, tick, index),
-        tick
-      };
       childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
-        ticks: tickProps,
-        tickLabels: tickLabelProps,
-        grid: gridProps
+        ticks: this.getTickProps(tickLayout, style.tickStyle, tick),
+        tickLabels: this.getTickLabelProps(
+          tickLayout, assign({}, anchors, styles.tickLabels), tick, tickFormat(tick, index)
+        ),
+        grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
       };
     }
+    childProps.parent = {
+      style: style.parent, ticks, scale, width: modifiedProps.width, height: modifiedProps.height
+    };
     return childProps;
   },
 
@@ -281,6 +315,13 @@ export default {
       x2: isVertical ? sign * style.size : 0,
       y: isVertical ? 0 : sign * tickSpacing,
       y2: isVertical ? 0 : sign * style.size
+    };
+  },
+
+  getTickTransform(tick, globalTransform, isVertical) {
+    return {
+      x: isVertical ? globalTransform.x : tick + globalTransform.x,
+      y: isVertical ? tick + globalTransform.y : globalTransform.y
     };
   },
 
