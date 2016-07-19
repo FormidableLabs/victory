@@ -85,8 +85,8 @@ export default {
       errorY: Helpers.createAccessor(props.errorY)
     };
     return dataset.map((datum) => {
-      let errorX = accessor.errorX(datum.errorX);
-      let errorY = accessor.errorY(datum.errorY);
+      let errorX = accessor.errorX(datum);
+      let errorY = accessor.errorY(datum);
       // check if the value is negative, if it is set to 0
       if (!isArray(errorX) && errorX < 0) {
         errorX = 0;

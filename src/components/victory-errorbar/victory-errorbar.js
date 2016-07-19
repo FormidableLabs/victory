@@ -255,6 +255,40 @@ export default class VictoryErrorBar extends React.Component {
       PropTypes.arrayOf(PropTypes.string)
     ]),
     /**
+     * The errorX prop specifies how to access the errorX value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'errorX', 'errorX.value.nested.1.thing', 'errorX[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    errorX: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The errorY prop specifies how to access the errorY value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'errorY', 'errorY.value.nested.1.thing', 'errorY[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    errorY: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
      * The containerComponent prop takes an entire component which will be used to
      * create a container element for standalone charts.
      * The new element created from the passed containerComponent wil be provided with
@@ -301,6 +335,8 @@ export default class VictoryErrorBar extends React.Component {
     standalone: true,
     x: "x",
     y: "y",
+    errorX: "errorX",
+    errorY: "errorY",
     borderWidth: 10,
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
