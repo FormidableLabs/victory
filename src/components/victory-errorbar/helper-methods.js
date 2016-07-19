@@ -81,10 +81,14 @@ export default {
       return [];
     }
     const accessor = {
+      x: Helpers.createAccessor(props.x),
+      y: Helpers.createAccessor(props.y),
       errorX: Helpers.createAccessor(props.errorX),
       errorY: Helpers.createAccessor(props.errorY)
     };
     return dataset.map((datum) => {
+      const x = accessor.x(datum);
+      const y = accessor.y(datum);
       let errorX = accessor.errorX(datum);
       let errorY = accessor.errorY(datum);
       // check if the value is negative, if it is set to 0
@@ -113,7 +117,7 @@ export default {
       return Object.assign(
           {},
           datum,
-          { errorX, errorY }
+          { x, y, errorX, errorY }
         );
     });
   },

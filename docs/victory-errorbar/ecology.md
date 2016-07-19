@@ -27,8 +27,8 @@ To display your own data, just pass in an array of data objects, or an array of 
 />
 ```
 
-VictoryCandlestick comes with data accessor props to make passing in data much more flexible.
-assign a property to x, open, close, high, or low, or process data on the fly.
+VictoryErrorBar comes with data accessor props to make passing in data much more flexible.
+assign a property to x, y, errorX, or errorY, or process data on the fly.
 
 ```playground
 <VictoryCandlestick
