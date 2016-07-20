@@ -19,11 +19,11 @@ export default {
       return undefined;
     }
     if (Array.isArray(props.domain)) {
-      return props.domain;
+      return Domain.padDomain(props.domain, props, axis);
     } else if (props.domain && props.domain[inherentAxis]) {
-      return props.domain[inherentAxis];
+      return Domain.padDomain(props.domain[inherentAxis], props, axis);
     } else if (props.tickValues) {
-      return Domain.getDomainFromTickValues(props);
+      return Domain.padDomain(Domain.getDomainFromTickValues(props), props, axis);
     }
     return undefined;
   },

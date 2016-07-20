@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import { merge, random, range } from "lodash";
-import {VictoryLine, VictoryChart, VictoryAxis} from "../../src/index";
+import {VictoryLine, VictoryChart} from "../../src/index";
 import LineSegment from "../../src/components/victory-line/line-segment";
 import Point from "../../src/components/victory-scatter/point";
 import { VictoryContainer, VictoryTheme } from "victory-core";

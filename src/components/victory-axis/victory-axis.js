@@ -101,6 +101,19 @@ export default class VictoryAxis extends React.Component {
      */
     dependentAxis: PropTypes.bool,
     /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
+    /**
      * The domain prop describes the range of values your axis will include. This prop should be
      * given as a array of the minimum and maximum expected values for your axis.
      * If this value is not given it will be calculated based on the scale or tickValues.

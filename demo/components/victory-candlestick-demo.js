@@ -66,11 +66,13 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>Victory Candlestick</h1>
-        <svg>
+        <svg height={500} width={500}>
         <VictoryCandlestick
           style={{data: {width: 10}, parent: style.parent}}
           data={data}
           size={8}
+          standalone={false}
+          domainPadding={100}
           events={[{
             target: "labels",
             eventHandlers: {
@@ -104,7 +106,10 @@ export default class App extends React.Component {
             }
           }]}
         />
-        <VictoryAxis/>
+        <VictoryAxis
+          standalone={false}
+          domainPadding={20}
+        />
         </svg>
 
         <VictoryCandlestick

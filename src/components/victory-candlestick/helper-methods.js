@@ -89,11 +89,12 @@ export default {
     });
   },
 
-  getDomainFromData(props, axis) {
+  getDomain(props, axis) {
+    let domain;
     if (props.domain && props.domain[axis]) {
-      return props.domain[axis];
+      domain = props.domain[axis];
     } else if (props.domain && Array.isArray(props.domain)) {
-      return props.domain;
+      domain = props.domain;
     } else {
       const dataset = this.getData(props);
       const allData = dataset.reduce((memo, datum) => {
@@ -107,12 +108,9 @@ export default {
         const adjustedMax = max === 0 ? 1 : max;
         return [0, adjustedMax];
       }
-      return [min, max];
+      domain = [min, max];
     }
-  },
-
-  getDomain(props, axis) {
-    return Domain.padDomain(this.getDomainFromData(props, axis), props, axis);
+    return Domain.padDomain(domain, props, axis);
   },
 
   isTransparent(attr) {
