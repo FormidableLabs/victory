@@ -32,7 +32,7 @@ In the example above, VictoryChart was given a [VictoryLine][] component as a ch
 
 ### Domain and Scale
 
-TODO.
+In this example, VictoryChart was provided [VictoryScatter][] as a child with an array of `{x, y}` data points. Toggling between the positive and negative set of values shows how how the component is able to calculate domain and scale on its own.
 
 ```playground_norender
 class App extends React.Component {
@@ -40,7 +40,7 @@ class App extends React.Component {
     return (
       <VictoryChart>
         <VictoryScatter
-          data={this.context.dataSet}
+          data={this.context.dataset}
         />
       </VictoryChart>
     );
@@ -48,7 +48,7 @@ class App extends React.Component {
 }
 
 App.contextTypes = {
-  dataSet: React.PropTypes.array
+  dataset: React.PropTypes.array
 };
 
 ReactDOM.render(<DatasetDropdown dataset={dataset}><App/></DatasetDropdown>, mountNode);
