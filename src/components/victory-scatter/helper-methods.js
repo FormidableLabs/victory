@@ -11,7 +11,9 @@ export default {
     const { data, style, scale } = calculatedValues;
     const { height, width } = modifiedProps;
     const parentProps = {style: style.parent, scale, data, height, width};
-    return data.reduce((memo, datum, index) => {
+    const childProps = [];
+    for (let index = 0, len = data.length; index < len; index++) {
+      const datum = data[index]
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
@@ -36,12 +38,13 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || "end",
         angle: labelStyle.angle
       };
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    childProps.parent = parentProps;
+    return childProps;
   },
 
   getCalculatedValues(props, fallbackProps) {
