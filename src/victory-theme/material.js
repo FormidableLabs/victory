@@ -119,7 +119,7 @@ export default {
         }
       })
   },
-  errorBar: {
+  errorbar: {
     data: {
       fill: "none",
       opacity: 1,
