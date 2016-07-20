@@ -177,11 +177,17 @@ class App extends React.Component {
         x: i,
         y: random(1, 10),
         errorX: random(0, 2),
-        errorY: random(0, 1)
+        errorY: random(0, 1),
+        stroke: this.getColors()
       };
     });
   }
-
+  
+  getColors(){
+    const colors = ["salmon", "pink", "lime", "aqua", "fuchsia"];
+    return colors[random(0, 4)];
+  }
+  
   componentDidMount() {
     setInterval(() => {
       this.setState({
