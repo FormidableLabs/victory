@@ -398,7 +398,7 @@ export default class VictoryErrorBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, ...modifiedProps)}
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
