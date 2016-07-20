@@ -9,6 +9,7 @@ import ChartDocs from "./victory-chart/docs";
 import LineDocs from "./victory-line/docs";
 import ScatterDocs from "./victory-scatter/docs";
 import CandlestickDocs from "./victory-candlestick/docs";
+import ErrorBarDocs from "./victory-errorbar/docs";
 
 const content = document.getElementById("content");
 
@@ -22,6 +23,7 @@ ReactDOM.render((
       <Route path="line" component={LineDocs}/>
       <Route path="scatter" component={ScatterDocs}/>
       <Route path="candlestick" component={CandlestickDocs}/>
+      <Route path="errorbar" component={ErrorBarDocs}/>
     </Route>
   </Router>
 ), content);
