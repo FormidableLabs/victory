@@ -340,10 +340,10 @@ export default class VictoryErrorBar extends React.Component {
   renderData(props) {
     const { dataComponent, groupComponent } = props;
     const errorBarComponents = [];
-    this.dataKeys.forEach((key) => {
+    this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `error-bar-${key}`},
+        {key: `error-bar-${key}`, index},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -355,7 +355,9 @@ export default class VictoryErrorBar extends React.Component {
       )));
     });
 
-    return React.cloneElement(groupComponent, {}, errorBarComponents);
+    return React.cloneElement(
+      groupComponent, {}, ...errorBarComponents
+    );
   }
 
   renderGroup(children, style) {
@@ -387,17 +389,16 @@ export default class VictoryErrorBar extends React.Component {
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
-
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "borderWidth"
+        "data", "domain", "height", "width", "x", "y", "errorX", "errorY", "style", "borderWidth"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, ...modifiedProps)}
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
