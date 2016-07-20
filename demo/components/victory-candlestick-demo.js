@@ -1,8 +1,8 @@
 /*global window:false */
 import React from "react";
 import { random, range, merge } from "lodash";
-import {VictoryCandlestick, VictoryChart} from "../../src/index";
-// import {VictoryLabel} from "victory-core";
+import {VictoryCandlestick, VictoryChart, VictoryAxis} from "../../src/index";
+import { VictoryTheme } from "victory-core";
 
 const getData = () => {
   const colors =
@@ -22,7 +22,11 @@ const getData = () => {
 };
 
 const style = {
-  parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
+  parent: {
+    border: "1px solid #ccc",
+    margin: "2%",
+    maxWidth: "40%"
+  }
 };
 
 const data = [
@@ -62,10 +66,56 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>Victory Candlestick</h1>
+        <svg height={500} width={500}>
+        <VictoryCandlestick
+          style={{data: {width: 10}, parent: style.parent}}
+          data={data}
+          size={8}
+          standalone={false}
+          domainPadding={100}
+          events={[{
+            target: "labels",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style.labels, {fill: "orange"})
+                      };
+                    }
+                  }
+                ];
+              }
+            }
+          },
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [
+                  {
+                    mutation: (props) => {
+                      return {
+                        style: merge({}, props.style, {fill: "blue"})
+                      };
+                    }
+                  }
+                ];
+              }
+            }
+          }]}
+        />
+        <VictoryAxis
+          standalone={false}
+          domainPadding={20}
+        />
+        </svg>
 
         <VictoryCandlestick
           style={{parent: style.parent}}
           data={data}
+          theme={VictoryTheme.material}
           size={8}
           events={[{
             target: "labels",
@@ -100,13 +150,17 @@ export default class App extends React.Component {
             }
           }]}
         />
+
         <VictoryChart
           scale={{x: "time"}}
+          style={{
+            parent: style.parent
+          }}
         >
           <VictoryCandlestick
-            style={{parent: style.parent}}
-            candleColors={{positive: "purple", negative: "blue"}}
+            candleColors={{positive: "#8BC34A", negative: "#C62828"}}
             data={data}
+            style={{data: {stroke: "none"}}}
             size={8}
           />
         </VictoryChart>
@@ -114,11 +168,16 @@ export default class App extends React.Component {
         <VictoryCandlestick
           animate={{duration: 2000}}
           data={this.state.data}
+          style={{
+            data: { width: 50, stroke: "transparent" },
+            parent: style.parent
+          }}
         />
 
         <VictoryCandlestick
           size={1}
         />
+
       </div>
     );
   }

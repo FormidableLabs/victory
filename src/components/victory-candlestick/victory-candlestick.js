@@ -7,20 +7,30 @@ import {
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
-const defaultStyles = {
-  data: {
-    fill: "#756f6a",
-    opacity: 1,
-    stroke: "transparent",
-    strokeWidth: 1
+const fallbackProps = {
+  props: {
+    height: 300,
+    width: 450,
+    candleColors: {
+      positive: "#ffffff",
+      negative: "#252525"
+    }
   },
-  labels: {
-    stroke: "transparent",
-    fill: "#756f6a",
-    fontFamily: "Helvetica",
-    fontSize: 13,
-    textAnchor: "middle",
-    padding: 10
+  style: {
+    data: {
+      opacity: 1,
+      strokeWidth: 1,
+      stroke: "#252525"
+    },
+    labels: {
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent",
+      textAnchor: "end"
+    }
   }
 };
 
@@ -61,11 +71,13 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
-     * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
-     * but by default, an object with x and y properties is expected.
-     * Other properties may be added to the data point object, such as fill, size, and symbol.
-     * These properties will be interpreted and applied to the individual lines
-     * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
+     * Each data point may be any format you wish (depending on the `x`, `open`, `close`, `high`,
+     * and `low` accessor props), but by default, an object with x, open, close, high, and low
+     * properties is expected. Other properties may be added to the data point object, such as
+     * fill and symbol. These properties will be interpreted and applied to the
+     * individual lines
+     * @examples [{x: 1, open: 2, close: 3, high: 4, low: 1, fill: "red"},
+     * {x: 1, open: 2, close: 3, high: 4, low: 1, label: "foo"}]
      */
 
     data: PropTypes.array,
@@ -73,11 +85,25 @@ export default class VictoryCandlestick extends React.Component {
      * The dataComponent prop takes an entire component which will be used to create points for
      * each datum in the chart. The new element created from the passed dataComponent will be
      * provided with the following properties calculated by VictoryCandlestick: datum, index, scale,
-     * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
-     * props to the supplied component, or modified or ignored within the custom component itself.
-     * If a dataComponent is not provided, VictoryCandlestick will use its default Point component.
+     * style, events, x, open, close, high, low, and symbol. Any of these props may be overridden by
+     * passing in props to the supplied component, or modified or ignored within the custom
+     * component itself. If a dataComponent is not provided, VictoryCandlestick will use its
+     * default Candle component.
      */
     dataComponent: PropTypes.element,
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -148,8 +174,8 @@ export default class VictoryCandlestick extends React.Component {
      */
     name: PropTypes.string,
     /**
-     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-     * assign eventKeys to data
+     * Similar to data accessor props `x`, `open`, `close`, `high` and `low, this prop may
+     * be used to functionally assign eventKeys to data.
      */
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
@@ -184,7 +210,8 @@ export default class VictoryCandlestick extends React.Component {
      * This prop should be given as an array of values or as a function of data.
      * If given as an array, the number of elements in the array should be equal to
      * the length of the data array. Labels may also be added directly to the data object
-     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * like data={[{x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5,
+     * label: "hello"}]}.
      * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
@@ -360,25 +387,37 @@ export default class VictoryCandlestick extends React.Component {
     * closed at a higher price than it opened, and the other signifies the reverse. The
     * candleColors prop takes an object with keys positive and negative, which each take
     * a string that should be a color. Positive is for data points where close is higher
-    * than open, and defaults to green, and negative (close < open) defaults to red.
+    * than open, and defaults to white, and negative (close < open) defaults to black.
     * @example: candleColors={{positive: "purple", negative: "blue"}}
     */
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
       negative: PropTypes.string
-    })
+    }),
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element,
+    /**
+    * The theme prop takes a props object, and a style object with nested data, labels, and parent
+    * objects. You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryCandlestick as a solo component, implement the theme directly on
+    * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @example theme={VictoryTheme.grayscale}
+    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    */
+    theme: PropTypes.object
   };
 
   static defaultProps = {
-    height: 300,
     padding: 50,
     samples: 50,
     scale: "linear",
     data: defaultData,
-    size: 3,
     standalone: true,
-    symbol: "circle",
-    width: 450,
     x: "x",
     open: "open",
     close: "close",
@@ -387,6 +426,7 @@ export default class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>,
     candleColors: {
       positive: "green",
       negative: "red"
@@ -396,8 +436,7 @@ export default class VictoryCandlestick extends React.Component {
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
   static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
   static getBaseProps = partialRight(
-    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), defaultStyles
-  );
+    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -408,23 +447,30 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   componentWillMount() {
-    this.baseProps = CandlestickHelpers.getBaseProps(this.props, defaultStyles);
+    this.setupEvents(this.props);
   }
 
   componentWillReceiveProps(newProps) {
-    this.baseProps = CandlestickHelpers.getBaseProps(newProps, defaultStyles);
+    this.setupEvents(newProps);
+  }
+
+  setupEvents(props) {
+    const { sharedEvents } = props;
+    this.baseProps = CandlestickHelpers.getBaseProps(props, fallbackProps);
+    this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
+    this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
+      sharedEvents.getEventState : () => undefined;
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, sharedEvents } = props;
-    const getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
-      sharedEvents.getEventState : () => undefined;
-    return Object.keys(this.baseProps).map((key) => {
+    const { dataComponent, labelComponent, groupComponent} = props;
+    const { role } = VictoryCandlestick;
+    return this.dataKeys.map((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `candlestick-${key}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
-        getSharedEventState(key, "data"),
+        this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
         dataComponent.props
       );
@@ -432,33 +478,62 @@ export default class VictoryCandlestick extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `candlestick-label-${key}`},
+        {key: `${role}-label-${key}`},
         this.getEventState(key, "labels"),
-        getSharedEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,
         labelComponent.props
       );
+
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
         const candleLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return (
-          <g key={`candle-group-${key}`}>
-            {candleComponent}
-            {candleLabel}
-          </g>
+        return React.cloneElement(
+          groupComponent, {key: `candle-group-${key}`}, candleComponent, candleLabel
         );
       }
       return candleComponent;
     });
   }
 
+  renderContainer(props, group) {
+    const parentEvents = this.getEvents(props, "parent", "parent");
+    const parentProps = defaults(
+      {},
+      this.getEventState("parent", "parent"),
+      this.getSharedEventState("parent", "parent"),
+      props.containerComponent.props,
+      this.baseProps.parent
+    );
+    return React.cloneElement(
+      props.containerComponent,
+      Object.assign(
+        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
+      ),
+      group
+    );
+  }
+
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
+    const modifiedProps = this.props.theme && this.props.theme.candlestick
+      ? Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props)
+      : Helpers.modifyProps(this.props, fallbackProps);
+
+    const { animate, standalone, style } = modifiedProps;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
@@ -468,27 +543,14 @@ export default class VictoryCandlestick extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          <VictoryCandlestick {...this.props}/>
+          {React.createElement(this.constructor, ...modifiedProps)}
         </VictoryTransition>
       );
     }
 
-    const style = Helpers.getStyles(
-      this.props.style,
-      defaultStyles,
-      "auto",
-      "100%"
-    );
+    const baseStyle = Helpers.getStyles(style, fallbackProps.style, "auto", "100%");
 
-    const group = <g role="presentation" style={style.parent}>{this.renderData(this.props)}</g>;
-    return this.props.standalone ?
-      React.cloneElement(
-        this.props.containerComponent,
-        Object.assign({
-          height: this.props.height,
-          width: this.props.width,
-          style: style.parent}, this.props.containerComponent.props),
-        group) :
-      group;
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

@@ -168,10 +168,38 @@ class App extends React.Component {
       justifyContent: "center"
     };
     const chartStyle = {parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}};
+    const axisStyle = {
+      grid: {stroke: "grey", strokeWidth: 1},
+      axis: {stroke: "transparent"},
+      ticks: {stroke: "transparent"},
+      tickLabels: {fill: "none"}
+    };
     return (
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
+          <VictoryChart style={chartStyle}>
+            <VictoryAxis
+              dependentAxis
+              style={axisStyle}
+              tickCount={0}
+            />
+          <VictoryAxis style={axisStyle} tickCount={6} />
+            <VictoryBar
+              data={[
+                {x: 1, y: 1},
+                {x: 2, y: 2},
+                {x: 3, y: 3},
+                {x: 4, y: 4},
+                {x: 5, y: 5},
+                {x: 6, y: 4},
+                {x: 7, y: 3},
+                {x: 8, y: 2},
+                {x: 9, y: 1}
+              ]}
+            />
+          </VictoryChart>
+
           <VictoryChart style={chartStyle}>
             <VictoryBar
               horizontal
@@ -559,7 +587,7 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
           <VictoryChart style={chartStyle}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             events={[{
               childName: "area-1",
               target: "data",

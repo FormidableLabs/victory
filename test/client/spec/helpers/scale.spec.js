@@ -2,7 +2,7 @@
 /* global sinon */
 
 import Scale from "src/helpers/scale";
-import d3Scale from "d3-scale";
+import * as d3Scale from "d3-scale";
 
 describe("helpers/scale", () => {
   describe("getBaseScale", () => {

@@ -1,11 +1,13 @@
 import React, { PropTypes } from "react";
-import d3Shape from "d3-shape";
+import * as d3Shape from "d3-shape";
 
 export default class LineSegment extends React.Component {
   static propTypes = {
     data: PropTypes.array,
     events: PropTypes.object,
+    index: PropTypes.number,
     interpolation: PropTypes.string,
+    role: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object
   };
@@ -16,17 +18,21 @@ export default class LineSegment extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
+  renderLine(path, style, events) {
+    const { role } = this.props;
+    return (
+      <path style={style} d={path} role={role} {...events} vectorEffect="non-scaling-stroke"/>
+    );
+  }
+
   render() {
-    const { events, style, interpolation, scale, data } = this.props;
+    const { data, events, interpolation, scale, style } = this.props;
     const xScale = scale.x;
     const yScale = scale.y;
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((d) => xScale(d.x))
       .y((d) => yScale(d.y));
-    const path = lineFunction(data);
-    return (
-      <path style={style} d={path} {...events} vectorEffect="non-scaling-stroke"/>
-    );
+    return this.renderLine(lineFunction(data), style, events);
   }
 }

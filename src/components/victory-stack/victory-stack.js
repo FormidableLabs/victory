@@ -271,17 +271,24 @@ export default class VictoryStack extends React.Component {
     * When using VictoryStack to wrap a chart component, implement the theme directly on
     * VictoryStack. If you are wrapping VictoryStack in VictoryChart,
     * please call the theme on the wrapper component instead.
-    * @example theme={Grayscale}
+    * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
     scale: "linear",
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
@@ -387,6 +394,14 @@ export default class VictoryStack extends React.Component {
     return React.cloneElement(containerComponent, parentProps);
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
@@ -412,12 +427,8 @@ export default class VictoryStack extends React.Component {
         </VictorySharedEvents>
       );
     }
+    const group = this.renderGroup(newChildren, style.parent);
 
-    const group = (
-      <g style={style.parent}>
-        {newChildren}
-      </g>
-    );
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

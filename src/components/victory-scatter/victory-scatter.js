@@ -16,18 +16,19 @@ const fallbackProps = {
   },
   style: {
     data: {
-      fill: "#756f6a",
+      fill: "#242424",
       opacity: 1,
       stroke: "transparent",
       strokeWidth: 0
     },
     labels: {
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
       stroke: "transparent",
-      fill: "#756f6a",
-      fontFamily: "Helvetica",
-      fontSize: 13,
-      textAnchor: "middle",
-      padding: 10
+      textAnchor: "middle"
     }
   }
 };
@@ -85,6 +86,19 @@ export default class VictoryScatter extends React.Component {
      */
 
     data: PropTypes.array,
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
     /**
      * The dataComponent prop takes an entire component which will be used to create points for
      * each datum in the chart. The new element created from the passed dataComponent will be
@@ -339,10 +353,16 @@ export default class VictoryScatter extends React.Component {
     * When using VictoryScatter as a solo component, implement the theme directly on
     * VictoryScatter. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={Grayscale}
+    * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -356,7 +376,8 @@ export default class VictoryScatter extends React.Component {
     y: "y",
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -389,13 +410,14 @@ export default class VictoryScatter extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
+    const { role } = VictoryScatter;
     const pointComponents = [];
     const pointLabelComponents = [];
-    this.dataKeys.forEach((key) => {
+    this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `scatter-${key}`},
+        {index, key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -407,7 +429,7 @@ export default class VictoryScatter extends React.Component {
       )));
 
       const labelProps = defaults(
-        {key: `scatter-label-${key}`},
+        {key: `scatter-label-${key}`, index},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         labelComponent.props,
@@ -422,11 +444,8 @@ export default class VictoryScatter extends React.Component {
     });
 
     if (pointLabelComponents.length > 0) {
-      return (
-        <g>
-          {pointComponents}
-          {pointLabelComponents}
-        </g>
+      return React.cloneElement(
+        groupComponent, {}, ...pointComponents, ...pointLabelComponents
       );
     }
     return pointComponents;
@@ -450,6 +469,14 @@ export default class VictoryScatter extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
@@ -464,7 +491,7 @@ export default class VictoryScatter extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryScatter {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -475,11 +502,7 @@ export default class VictoryScatter extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = (
-      <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

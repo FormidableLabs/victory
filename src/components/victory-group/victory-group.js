@@ -1,8 +1,9 @@
-import { uniq, defaults } from "lodash";
+import { defaults } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents,
+import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
   VictoryContainer } from "victory-core";
 import Scale from "../../helpers/scale";
+import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
@@ -272,10 +273,16 @@ export default class VictoryGroup extends React.Component {
     * When using VictoryGrou as the outermost wrapper for your chart, implement the theme
     * directly on VictoyrGroup. If you are wrapping VictoryGroup in VictoryChart,
     * please call the theme on the wrapper component instead.
-    * @example theme={Grayscale}
+    * @example theme={VictoryTheme.grayscale}
     * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -283,7 +290,8 @@ export default class VictoryGroup extends React.Component {
     offset: 0,
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -333,8 +341,7 @@ export default class VictoryGroup extends React.Component {
     const childComponents = React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-    const otherAxis = axis === "x" ? "y" : "x";
-    const currentAxis = horizontal ? otherAxis : axis;
+    const currentAxis = Axis.getCurrentAxis(axis, horizontal);
     const domain = calculatedProps.domain[currentAxis];
     const range = calculatedProps.range[currentAxis];
     const domainExtent = Math.max(...domain) - Math.min(...domain);
@@ -415,16 +422,20 @@ export default class VictoryGroup extends React.Component {
     return React.cloneElement(containerComponent, parentProps);
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.length > 1) {
-      Log.warn("Only components of the same type can be grouped");
-    }
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
 
@@ -441,12 +452,8 @@ export default class VictoryGroup extends React.Component {
         </VictorySharedEvents>
       );
     }
+    const group = this.renderGroup(newChildren, style.parent);
 
-    const group = (
-      <g style={style.parent}>
-        {newChildren}
-      </g>
-    );
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

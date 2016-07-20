@@ -38,7 +38,7 @@ describe("components/victory-candlestick", () => {
       );
       const svg = wrapper.find("svg");
       const viewBoxValue =
-        `0 0 ${VictoryCandlestick.defaultProps.width} ${VictoryCandlestick.defaultProps.height}`;
+        `0 0 ${450} ${300}`;
       expect(svg.prop("viewBox")).to.equal(viewBoxValue);
     });
 
@@ -150,6 +150,26 @@ describe("components/victory-candlestick", () => {
         // the first argument is the standard evt object
         expect(clickHandler.args[index][1]).to.contain({text: `${index}`});
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
+      });
+    });
+  });
+
+  describe("accessibility", () => {
+    it("adds an area role to each point in the series", () => {
+      const data = [
+        {x: 0, open: 9, close: 30, high: 56, low: 7},
+        {x: 1, open: 80, close: 40, high: 120, low: 10},
+        {x: 2, open: 50, close: 80, high: 90, low: 20}
+      ];
+      const wrapper = mount(
+        <VictoryCandlestick data={data} />
+      );
+
+      wrapper.find("rect").nodes.forEach((r, i) => {
+        const {attributes: attr} = r;
+        const roleValue = attr.getNamedItem("role").value;
+        expect(roleValue).to.be.a("string");
+        expect(roleValue).to.equal(`candlestick-${i}`);
       });
     });
   });

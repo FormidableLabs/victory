@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 
 
 export default class Candle extends React.Component {
@@ -18,50 +19,37 @@ export default class Candle extends React.Component {
       PropTypes.number,
       PropTypes.object
     ]),
-    data: PropTypes.array
+    data: PropTypes.array,
+    groupComponent: PropTypes.element,
+    role: PropTypes.string
   }
 
-  renderWick() {
-    const x = this.props.x;
-
-    return (
-        <line
-          {...this.props.events}
-          x1={x}
-          x2={x}
-          y1={this.props.y1}
-          y2={this.props.y2}
-          style={this.props.style}
-        />
-      );
+  renderWick(wickProps) {
+    return <line {...wickProps}/>;
   }
 
-  renderCandle() {
-    const width = this.props.width;
-    const padding = this.props.padding.left || this.props.padding;
-    const dataLength = this.props.data.length;
-    const candleWidth = 0.5 * (width - 2 * padding) / dataLength;
-    const candleX = this.props.x - candleWidth / 2;
+  renderCandle(candleProps) {
+    return <rect {...candleProps}/>;
+  }
 
-    return (
-      <rect
-        {...this.props.events}
-        x={candleX}
-        y={this.props.y}
-        style={this.props.style}
-        width={candleWidth}
-        height={this.props.candleHeight}
-      />
-    );
+  getCandleProps(props) {
+    const { width, candleHeight, x, y, data, style, events, role} = props;
+    const padding = props.padding.left || props.padding;
+    const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
+    const candleX = x - candleWidth / 2;
+    return assign({x: candleX, y, style, role, width: candleWidth, height: candleHeight}, events);
+  }
+
+  getWickProps(props) {
+    const {x, y1, y2, style, events, role} = props;
+    return assign({x1: x, x2: x, y1, y2, style, role}, events);
   }
 
   render() {
-    return (
-      <g>
-        {this.renderWick()}
-
-        {this.renderCandle()}
-      </g>
+    const candleProps = this.getCandleProps(this.props);
+    const wickProps = this.getWickProps(this.props);
+    return React.cloneElement(
+      this.props.groupComponent, {}, this.renderWick(wickProps), this.renderCandle(candleProps)
     );
   }
 }
