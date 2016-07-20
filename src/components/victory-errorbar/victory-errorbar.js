@@ -94,6 +94,19 @@ export default class VictoryErrorBar extends React.Component {
      */
     dataComponent: PropTypes.element,
     /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
+    /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
      * or as an object that specifies separate arrays for x and y.
@@ -404,7 +417,6 @@ export default class VictoryErrorBar extends React.Component {
         this.baseProps[key].labels,
         labelComponent.props
       );
-
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
         const errorLabel = React.cloneElement(labelComponent, Object.assign({
@@ -446,11 +458,7 @@ export default class VictoryErrorBar extends React.Component {
 
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-
-    const { animate, standalone, style } = modifiedProps;
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryErrorBar` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
+    const { animate, style, standalone } = modifiedProps;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated

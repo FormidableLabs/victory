@@ -103,6 +103,7 @@ export default class App extends React.Component {
           style={style} animate={{duration: 1000}}
           data={this.state.areaTransitionData}
           theme={VictoryTheme.material}
+          domainPadding={100}
           containerComponent={
             <VictoryContainer
               title="Area Chart"

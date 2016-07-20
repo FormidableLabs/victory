@@ -72,6 +72,19 @@ export default class VictoryLine extends React.Component {
       })
     ]),
     /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
+    /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
      * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
