@@ -119,6 +119,21 @@ export default {
         }
       })
   },
+  errorbar: {
+    data: {
+      fill: "none",
+      opacity: 1,
+      stroke: blueGrey700,
+      strokeWidth: 2
+    },
+    labels: Object.assign({}, baseLabelStyles,
+      {
+        stroke: "transparent",
+        strokeWidth: 0,
+        textAnchor: "start"
+      }),
+    parent: {}
+  },
   line: {
     data: {
       fill: "none",
