@@ -178,6 +178,7 @@ export default class App extends React.Component {
             parent: parentStyle,
             labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
           }}
+          domainPadding={100}
           labels={() => "HELLO"}
           animate={{
             duration: 500,
