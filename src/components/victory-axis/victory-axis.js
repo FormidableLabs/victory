@@ -25,7 +25,7 @@ const fallbackProps = {
       fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
       fontSize: 14,
       letterSpacing: "0.04em",
-      padding: 10,
+      padding: 25,
       stroke: "transparent"
     },
     grid: {

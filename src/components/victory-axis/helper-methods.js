@@ -72,7 +72,6 @@ export default {
     } = calculatedValues;
 
     const { width, height } = modifiedProps;
-
     const offset = this.getOffset(modifiedProps, calculatedValues);
 
     const globalTransform = this.getTransform(modifiedProps, calculatedValues, offset);
@@ -172,25 +171,20 @@ export default {
     const sign = orientationSign[orientation];
     const hPadding = padding.left + padding.right;
     const vPadding = padding.top + padding.bottom;
-    const x1 = isVertical ?
-      ((props.height - vPadding) / 2) - padding.top :
-      ((props.width - hPadding) / 2) + padding.left;
-    const y1 = isVertical ?
-      ((props.width - hPadding) / 2) + padding.left :
-      ((props.height - vPadding) / 2) - padding.top;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const labelStyle = style.axisLabel;
     const angle = isVertical ? -90 : 0;
-    const x = isVertical ? x1 - (globalTransform.x / vPadding) - labelPadding
-    : x1 + globalTransform.x;
-    const y = isVertical ? y1 - ((props.height - (hPadding + padding.top)) / 2)
-    : (sign * labelPadding) + globalTransform.y;
+    const x = isVertical ? globalTransform.x + (sign * labelPadding) :
+      ((props.width - hPadding) / 2) + padding.left + globalTransform.x;
+    const y = isVertical ?
+      ((props.height - vPadding) / 2) + padding.bottom + globalTransform.y :
+      (sign * labelPadding) + globalTransform.y;
     return {
       x,
       y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
-      angle: props.angle ? props.angle : angle,
+      angle: labelStyle.angle || angle,
       style: labelStyle,
       text: props.label
     };
