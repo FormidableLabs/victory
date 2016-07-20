@@ -4,7 +4,6 @@ export default class DatasetDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedDataset: 0 };
-    this.onDatasetSelect = this.onDatasetSelect.bind(this);
   }
 
   getChildContext() {
