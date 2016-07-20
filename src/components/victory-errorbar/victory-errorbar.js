@@ -15,9 +15,10 @@ const fallbackProps = {
   },
   style: {
     data: {
+      fill: "none",
       opacity: 1,
-      stroke: "#CCC",
-      strokeWidth: 1
+      strokeWidth: 2,
+      stroke: "#252525"
     },
     labels: {
       fill: "#252525",
@@ -474,7 +475,11 @@ export default class VictoryErrorBar extends React.Component {
       );
     }
 
-    const baseStyle = Helpers.getStyles(style, fallbackProps.style, "auto", "100%");
+    const styleObject = modifiedProps.theme && modifiedProps.theme.errorbar
+    ? modifiedProps.theme.errorbar
+    : fallbackProps.style;
+
+    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
     return standalone ? this.renderContainer(modifiedProps, group) : group;

@@ -144,7 +144,7 @@ export default class App extends React.Component {
         />
 
         <VictoryChart
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
         >
           <VictoryErrorBar
             style={style}
