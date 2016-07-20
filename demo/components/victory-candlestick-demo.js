@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import { random, range, merge } from "lodash";
-import {VictoryCandlestick, VictoryChart} from "../../src/index";
+import {VictoryCandlestick, VictoryChart, VictoryAxis} from "../../src/index";
 import { VictoryTheme } from "victory-core";
 
 const getData = () => {
@@ -66,11 +66,13 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>Victory Candlestick</h1>
-
+        <svg height={500} width={500}>
         <VictoryCandlestick
           style={{data: {width: 10}, parent: style.parent}}
           data={data}
           size={8}
+          standalone={false}
+          domainPadding={100}
           events={[{
             target: "labels",
             eventHandlers: {
@@ -104,6 +106,11 @@ export default class App extends React.Component {
             }
           }]}
         />
+        <VictoryAxis
+          standalone={false}
+          domainPadding={20}
+        />
+        </svg>
 
         <VictoryCandlestick
           style={{parent: style.parent}}

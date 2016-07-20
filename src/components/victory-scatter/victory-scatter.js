@@ -87,6 +87,19 @@ export default class VictoryScatter extends React.Component {
 
     data: PropTypes.array,
     /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
+    /**
      * The dataComponent prop takes an entire component which will be used to create points for
      * each datum in the chart. The new element created from the passed dataComponent will be
      * provided with the following properties calculated by VictoryScatter: datum, index, scale,

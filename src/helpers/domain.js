@@ -7,32 +7,36 @@ export default {
   getDomain(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return this.padDomain(propsDomain, props, axis);
     }
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return categoryDomain;
+      return this.padDomain(categoryDomain, props, axis);
     }
     const dataset = Data.getData(props);
-    return this.getDomainFromData(props, axis, dataset);
+    const domain = this.getDomainFromData(props, axis, dataset);
+    return this.padDomain(domain, props, axis);
   },
 
   getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return this.padDomain(propsDomain, props, axis);
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+      const zeroDomain = isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)]
+      : domain;
+      return this.padDomain(zeroDomain, props, axis);
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return ensureZero(categoryDomain);
+      return this.padDomain(ensureZero(categoryDomain), props, axis);
     }
     const dataset = Data.getData(props);
-    return ensureZero(this.getDomainFromData(props, axis, dataset));
+    const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
+    return this.padDomain(domain, props, axis);
   },
 
   getDomainFromProps(props, axis) {

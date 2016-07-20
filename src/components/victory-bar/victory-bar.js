@@ -97,6 +97,19 @@ export default class VictoryBar extends React.Component {
      */
     dataComponent: PropTypes.element,
     /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
+    /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
      * or as an object that specifies separate arrays for x and y.
