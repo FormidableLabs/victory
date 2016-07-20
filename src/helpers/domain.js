@@ -7,14 +7,15 @@ export default {
   getDomain(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return this.padDomain(propsDomain, props, axis);
     }
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return categoryDomain;
+      return this.padDomain(categoryDomain, props, axis);
     }
     const dataset = Data.getData(props);
-    return this.getDomainFromData(props, axis, dataset);
+    const domain = this.getDomainFromData(props, axis, dataset);
+    return this.padDomain(domain, props, axis);
   },
 
   getDomainWithZero(props, axis) {
