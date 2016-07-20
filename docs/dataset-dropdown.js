@@ -4,17 +4,19 @@ export default class DatasetDropdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = { selectedDataset: 0 };
+    this.onDatasetSelect = this.onDatasetSelect.bind(this);
   }
 
   getChildContext() {
     const { dataset } = this.props;
+    const { selectedDataset } = this.state;
     return {
-      datum: dataset[this.state ? this.state.selectedDataset : 0].data
+      dataset: dataset[this.state ? selectedDataset : 0].data
     };
   }
 
-  onDataSetChanged(selectedIndex) {
-    this.setState({ selectedDataSet: selectedIndex });
+  onDatasetSelect(selectedIndex) {
+    this.setState({ selectedDataset: selectedIndex });
   }
 
   render() {
@@ -33,11 +35,11 @@ export default class DatasetDropdown extends React.Component {
 }
 
 DatasetDropdown.childContextTypes = {
-  datum: React.PropTypes.array
+  dataset: React.PropTypes.array
 };
 
 DatasetDropdown.propTypes = {
-  dataset: React.Proptypes.arrayOf(React.PropTypes.shape({
+  dataset: React.PropTypes.arrayOf(React.PropTypes.shape({
     id: React.PropTypes.any,
     label: React.PropTypes.string,
     data: React.PropTypes.array

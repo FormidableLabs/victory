@@ -51,7 +51,7 @@ App.contextTypes = {
   dataSet: React.PropTypes.array
 };
 
-ReactDOM.render(<DataSource dataset={dataset}><App/></DataSource>, mountNode);
+ReactDOM.render(<DatasetDropdown dataset={dataset}><App/></DatasetDropdown>, mountNode);
 ```
 
 ### Declarative Composition
