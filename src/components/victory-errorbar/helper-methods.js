@@ -121,14 +121,15 @@ export default {
   getDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return Domain.padDomain(propsDomain, props, axis);
     }
     const categoryDomain = Domain.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return categoryDomain;
+      return Domain.padDomain(categoryDomain, props, axis);
     }
     const dataset = this.getErrorData(props);
-    return this.getDomainFromData(props, axis, dataset);
+    const domain = this.getDomainFromData(props, axis, dataset);
+    return Domain.padDomain(domain, props, axis);
   },
 
   getDomainFromData(props, axis, dataset) {
