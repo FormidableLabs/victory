@@ -1,6 +1,7 @@
 import { pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
+import Domain from "../../helpers/domain";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
@@ -88,7 +89,7 @@ export default {
     });
   },
 
-  getDomain(props, axis) {
+  getDomainFromData(props, axis) {
     if (props.domain && props.domain[axis]) {
       return props.domain[axis];
     } else if (props.domain && Array.isArray(props.domain)) {
@@ -108,6 +109,10 @@ export default {
       }
       return [min, max];
     }
+  },
+
+  getDomain(props, axis) {
+    return Domain.padDomain(this.getDomainFromData(props, axis), props, axis);
   },
 
   isTransparent(attr) {
