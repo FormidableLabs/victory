@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import { random, range, merge } from "lodash";
-import {VictoryCandlestick, VictoryChart} from "../../src/index";
+import {VictoryCandlestick, VictoryChart, VictoryAxis} from "../../src/index";
 import { VictoryTheme } from "victory-core";
 
 const getData = () => {
@@ -66,7 +66,7 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>Victory Candlestick</h1>
-
+        <svg>
         <VictoryCandlestick
           style={{data: {width: 10}, parent: style.parent}}
           data={data}
@@ -104,6 +104,8 @@ export default class App extends React.Component {
             }
           }]}
         />
+        <VictoryAxis/>
+        </svg>
 
         <VictoryCandlestick
           style={{parent: style.parent}}
