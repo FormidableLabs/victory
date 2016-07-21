@@ -426,11 +426,7 @@ export default class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    candleColors: {
-      positive: "green",
-      negative: "red"
-    }
+    groupComponent: <g/>
   };
 
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
