@@ -22,11 +22,16 @@ export default class DatasetDropdown extends React.Component {
     const { dataset } = this.props;
     return (
       <div>
-        <select onChange={(e) => {this.onDatasetSelect(e.target.selectedIndex);}}>
-          {dataset.map((option) => (
-            <option key={option.id}>{option.label}</option>
-          ))}
-        </select>
+        <div className="playgroundDatasetSelectWrapper">
+          <span className="playgroundDatasetSelectLabel">Dataset:</span>
+          <select
+            className="playgroundDatasetSelect"
+            onChange={(e) => {this.onDatasetSelect(e.target.selectedIndex);}}>
+            {dataset.map((option) => (
+              <option key={option.id}>{option.label}</option>
+            ))}
+          </select>
+        </div>
         {this.props.children}
       </div>
     );
