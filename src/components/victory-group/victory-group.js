@@ -400,7 +400,6 @@ export default class VictoryGroup extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      console.log(props.offset);
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
