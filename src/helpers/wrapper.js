@@ -83,13 +83,7 @@ export default {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
-          console.log(child.type.role);
           const childDomain = child.props && child.type.getDomain(child.props, currentAxis);
-          if (child.type.role === "grouped-wrapper") {
-            const padding = 100;
-            const domain = [childDomain[0] - padding, childDomain[1] + padding];
-            return childDomain ? memo.concat(domain) : memo;
-          }
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
           return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));

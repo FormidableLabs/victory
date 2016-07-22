@@ -95,10 +95,16 @@ export default class VictoryGroup extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -392,6 +398,7 @@ export default class VictoryGroup extends React.Component {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
+    const noOfChildren = childComponents.length;
     return childComponents.map((child, index) => {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
@@ -404,6 +411,7 @@ export default class VictoryGroup extends React.Component {
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
+        domainPadding: {x: (props.width / noOfChildren) / 2},
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
