@@ -40,12 +40,12 @@ export default class VictoryLine extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: () => ({ y: null })
+      before: (datum) => ({ y: datum.y })
     },
     onEnter: {
       duration: 500,
       before: () => ({ y: null }),
-      after: (datum) => ({ y: datum.y})
+      after: (datum) => ({ y: datum.y })
     }
   };
 

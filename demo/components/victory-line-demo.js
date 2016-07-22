@@ -115,17 +115,17 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryLine</h1>
 
-          <VictoryLine
-            style={{parent: parentStyle, data: this.state.style}}
-            data={this.state.transitionData}
-            animate={{duration: 800}}
-            containerComponent={
-              <VictoryContainer
-                title="Line Chart"
-                desc="This is a line chart for displaying data."
-              />
-            }
-          />
+        <VictoryLine
+          style={{parent: parentStyle, data: this.state.style}}
+          data={this.state.transitionData}
+          animate={{duration: 800}}
+          containerComponent={
+            <VictoryContainer
+              title="Line Chart"
+              desc="This is a line chart for displaying data."
+            />
+          }
+        />
 
         <VictoryLine
           style={{parent: parentStyle, data: this.state.style}}
@@ -235,13 +235,17 @@ export default class App extends React.Component {
           theme={VictoryTheme.material}
         >
           <VictoryLine
-            style={{parent: parentStyle}}
-            data={this.state.data}
-            label="Hello"
-            x={"x"}
-            y={(d) => (d.y + 15)}
+            style={{parent: parentStyle, data: this.state.style}}
+            data={this.state.transitionData}
+            animate={{duration: 1500}}
+            containerComponent={
+              <VictoryContainer
+                title="Line Chart"
+                desc="This is a line chart for displaying data."
+              />
+            }
           />
-      </VictoryChart>
+        </VictoryChart>
       </div>
     );
   }
