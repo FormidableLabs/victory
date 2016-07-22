@@ -63,8 +63,14 @@ export default class VictoryChart extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -330,9 +336,17 @@ export default class VictoryChart extends React.Component {
         key: index,
         theme: child.props.theme || props.theme,
         standalone: false,
+        domainPadding: child.props.domainPadding || props.domainPadding,
         style
       }, childProps);
       return React.cloneElement(child, newProps);
+    });
+  }
+
+  isPaddedDomain(props) {
+    const children = ChartHelpers.getChildComponents(props, props.defaultAxes);
+    return children.forEach((child) => {
+      return child.type && child.type.role === "group-wrapper" ? true : false;
     });
   }
 
@@ -358,8 +372,11 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const childComponents = ChartHelpers.getChildComponents(modifiedProps, props.defaultAxes);
+    const modifiedProps = this.isPaddedDomain
+    ? Object.assign({}, Helpers.modifyProps(props, fallbackProps), {domainPadding: {x: 100}})
+    : Helpers.modifyProps(props, fallbackProps);
+    const childComponents = ChartHelpers.getChildComponents(modifiedProps,
+      modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);

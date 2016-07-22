@@ -164,6 +164,7 @@ export default {
     if (!props.domainPadding) {
       return domain;
     }
+
     const domainPadding = typeof props.domainPadding === "number" ?
       props.domainPadding : props.domainPadding[axis];
 
