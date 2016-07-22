@@ -29,7 +29,7 @@ function getKeyedDataDifference(a, b) {
 /**
  * Calculate which data-points exist in oldData and not nextData -
  * these are the `exiting` data-points.  Also calculate which
- * data-points exist in nextData and not oldData - thses are the
+ * data-points exist in nextData and not oldData - these are the
  * `entering` data-points.
  *
  * @param  {Array} oldData   this.props.data Array
@@ -98,6 +98,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
           React.Children.toArray(next[idx].props.children)
         );
       }
+      // get Transition entering and exiting nodes
       return getTransition(child, next[idx]);
     });
   };
