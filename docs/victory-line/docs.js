@@ -5,7 +5,7 @@ import { merge, random } from "lodash";
 import Radium from "radium";
 import * as docgen from "react-docgen";
 import { VictoryLine, VictoryScatter } from "../../src/index";
-import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
+import { appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
