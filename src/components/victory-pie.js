@@ -299,15 +299,14 @@ export default class VictoryPie extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryPie will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
     /**
     * The theme prop takes a style object with nested data, labels, and parent objects.
     * You can create this object yourself, or you can use a theme provided by Victory.
-    * @example theme={Grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={Grayscale}
     */
     theme: PropTypes.object,
     /**
