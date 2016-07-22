@@ -343,13 +343,6 @@ export default class VictoryChart extends React.Component {
     });
   }
 
-  isPaddedDomain(props) {
-    const children = ChartHelpers.getChildComponents(props, props.defaultAxes);
-    return children.forEach((child) => {
-      return child.type && child.type.role === "group-wrapper" ? true : false;
-    });
-  }
-
   getContainer(props, calculatedProps) {
     const { width, height, containerComponent } = props;
     const { scale, style } = calculatedProps;
@@ -372,9 +365,7 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = this.isPaddedDomain
-    ? Object.assign({}, Helpers.modifyProps(props, fallbackProps), {domainPadding: {x: 100}})
-    : Helpers.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
