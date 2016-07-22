@@ -95,10 +95,16 @@ export default class VictoryStack extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of

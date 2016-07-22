@@ -398,9 +398,9 @@ export default class VictoryGroup extends React.Component {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    const noOfChildren = childComponents.length;
     return childComponents.map((child, index) => {
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
+      console.log(props.offset);
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
@@ -411,7 +411,7 @@ export default class VictoryGroup extends React.Component {
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
-        domainPadding: {x: (props.width / noOfChildren) / 2},
+        domainPadding: {x: (props.offset * childComponents.length) / 2},
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
