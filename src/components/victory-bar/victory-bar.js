@@ -324,7 +324,7 @@ export default class VictoryBar extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryBar will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -334,8 +334,7 @@ export default class VictoryBar extends React.Component {
     * When using VictoryBar as a solo component, implement the theme directly on
     * VictoryBar. If you are wrapping VictoryBar in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
