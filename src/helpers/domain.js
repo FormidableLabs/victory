@@ -162,50 +162,52 @@ export default {
     return categories.length === 0 ? _dataByIndex() : _dataByCategory();
   },
 
+  getDomainPadding(props, axis) {
+    let paddingLeft;
+    let paddingRight;
+    let domainPadding;
+
+    if (typeof props.domainPadding !== "number"
+      && props.domainPadding[axis]
+      && typeof props.domainPadding[axis] !== "number") {
+      paddingLeft = props.domainPadding[axis][0];
+      paddingRight = props.domainPadding[axis][1];
+    } else {
+      domainPadding = typeof props.domainPadding === "number" ?
+      props.domainPadding : props.domainPadding[axis];
+      paddingLeft = domainPadding;
+      paddingRight = domainPadding;
+    }
+
+    return {
+      left: paddingLeft,
+      right: paddingRight
+    };
+  },
+
   padDomain(domain, props, axis) { // eslint-disable-line max-statements
     if (!props.domainPadding) {
       return domain;
     }
 
-    let adjustedMax;
-    let adjustedMin;
     const domainMin = Math.min(...domain);
     const domainMax = Math.max(...domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
+    const padding = this.getDomainPadding(props, axis);
 
-    if (typeof props.domainPadding !== "number"
-      && props.domainPadding[axis]
-      && typeof props.domainPadding[axis] !== "number") {
-      const paddingLeft = props.domainPadding[axis][0];
-      const paddingRight = props.domainPadding[axis][1];
-
-      if (!paddingLeft && !paddingRight) {
-        return domain;
-      }
-
-      const padLeft = Math.abs(domainMax - domainMin) * paddingLeft / rangeExtent;
-      const padRight = Math.abs(domainMax - domainMin) * paddingRight / rangeExtent;
-      // don't make the axes cross if they aren't already
-      adjustedMin = (domainMin >= 0 && (domainMin - padLeft) <= 0) ?
-        0 : domainMin.valueOf() - padLeft;
-      adjustedMax = (domainMax <= 0 && (domainMax + padRight) >= 0) ?
-        0 : domainMax.valueOf() + padRight;
-    } else {
-      const domainPadding = typeof props.domainPadding === "number" ?
-      props.domainPadding : props.domainPadding[axis];
-
-      if (!domainPadding) {
-        return domain;
-      }
-
-      const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
-      // don't make the axes cross if they aren't already
-      adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ?
-        0 : domainMin.valueOf() - padding;
-      adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
-        0 : domainMax.valueOf() + padding;
+    if (!padding || (!padding.left && !padding.right)) {
+      return domain;
     }
+
+    const paddingLeft = Math.abs(domainMax - domainMin) * padding.left / rangeExtent;
+    const paddingRight = Math.abs(domainMax - domainMin) * padding.right / rangeExtent;
+    // don't make the axes cross if they aren't already
+    const adjustedMin = (domainMin >= 0 && (domainMin - paddingLeft) <= 0) ?
+      0 : domainMin.valueOf() - paddingLeft;
+
+    const adjustedMax = (domainMax <= 0 && (domainMax + paddingRight) >= 0) ?
+      0 : domainMax.valueOf() + paddingRight;
 
     return domainMin instanceof Date || domainMax instanceof Date ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
