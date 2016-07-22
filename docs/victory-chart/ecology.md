@@ -30,6 +30,30 @@ VictoryChart was designed to build charts from minimal information. Pass in only
 
 In the example above, VictoryChart was given a [VictoryLine][] component as a child. In addition, it also created a set of VictoryAxis components with the correct domain for the data being plotted by [VictoryLine][], created tick values based on that data, aligned all of its child components into a correct chart, and applied a set of default styles.
 
+### Domain and Scale
+
+In this example, VictoryChart was provided [VictoryScatter][] as a child with an array of `{x, y}` data points. Toggling between the positive and negative set of values shows how how the component is able to calculate domain and scale on its own.
+
+```playground_norender
+class App extends React.Component {
+  render() {
+    return (
+      <VictoryChart>
+        <VictoryScatter
+          data={this.context.dataset}
+        />
+      </VictoryChart>
+    );
+  }
+}
+
+App.contextTypes = {
+  dataset: React.PropTypes.array
+};
+
+ReactDOM.render(<DatasetDropdown dataset={dataset}><App/></DatasetDropdown>, mountNode);
+```
+
 ### Declarative Composition
 
 VictoryCharts are composed of other Victory components. Compose several components of the same type...
