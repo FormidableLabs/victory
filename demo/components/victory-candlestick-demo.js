@@ -72,7 +72,6 @@ export default class App extends React.Component {
           data={data}
           size={8}
           standalone={false}
-          domainPadding={{x: [50, 100]}}
           events={[{
             target: "labels",
             eventHandlers: {
