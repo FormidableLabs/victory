@@ -375,6 +375,7 @@ export default class VictoryStack extends React.Component {
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
+        domainPadding: child.props.domainPadding || props.domainPadding,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,

@@ -1,9 +1,7 @@
-import { flatten, includes } from "lodash";
+import { flatten, includes, isPlainObject } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
-
-/* eslint-disable complexity */
 
 export default {
   getDomain(props, axis) {
@@ -163,30 +161,22 @@ export default {
   },
 
   getDomainPadding(props, axis) {
-    let paddingLeft;
-    let paddingRight;
-    let domainPadding;
-
-    if (typeof props.domainPadding !== "number"
-      && props.domainPadding[axis]
-      && typeof props.domainPadding[axis] !== "number") {
-      paddingLeft = props.domainPadding[axis][0];
-      paddingRight = props.domainPadding[axis][1];
-    } else {
-      domainPadding = typeof props.domainPadding === "number" ?
-      props.domainPadding : props.domainPadding[axis];
-      paddingLeft = domainPadding;
-      paddingRight = domainPadding;
-    }
-
-    return {
-      left: paddingLeft,
-      right: paddingRight
+    const formatPadding = (padding) => {
+      return Array.isArray(padding) ?
+        {left: padding[0], right: padding[1]} : {left: padding, right: padding};
     };
+
+    return isPlainObject(props.domainPadding) ?
+      formatPadding(props.domainPadding[axis]) : formatPadding(props.domainPadding);
   },
 
-  padDomain(domain, props, axis) { // eslint-disable-line max-statements
+  padDomain(domain, props, axis) {
     if (!props.domainPadding) {
+      return domain;
+    }
+
+    const padding = this.getDomainPadding(props, axis);
+    if (!padding.left && !padding.right) {
       return domain;
     }
 
@@ -194,11 +184,6 @@ export default {
     const domainMax = Math.max(...domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
-    const padding = this.getDomainPadding(props, axis);
-
-    if (!padding || (!padding.left && !padding.right)) {
-      return domain;
-    }
 
     const paddingLeft = Math.abs(domainMax - domainMin) * padding.left / rangeExtent;
     const paddingRight = Math.abs(domainMax - domainMin) * padding.right / rangeExtent;

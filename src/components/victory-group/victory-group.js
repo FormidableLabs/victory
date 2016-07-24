@@ -403,6 +403,7 @@ export default class VictoryGroup extends React.Component {
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
+        domainPadding: child.props.domainPadding || props.domainPadding,
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,

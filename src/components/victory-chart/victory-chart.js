@@ -261,6 +261,7 @@ export default class VictoryChart extends React.Component {
     const crossAxis = child.props.crossAxis === false ? false : true;
     return {
       domain: domain[axis],
+      domainPadding: child.props.domainPadding || props.domainPadding,
       scale: scale[axis],
       tickValues,
       tickFormat,
@@ -277,6 +278,7 @@ export default class VictoryChart extends React.Component {
     }
     return {
       domain: calculatedProps.domain,
+      domainPadding: child.props.domainPadding || props.domainPadding,
       scale: calculatedProps.scale,
       categories: calculatedProps.categories
     };
