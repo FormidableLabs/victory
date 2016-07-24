@@ -413,8 +413,8 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} scale={"linear"}>
-            <VictoryAxis/>
-            <VictoryAxis dependentAxis crossAxis={false} offsetX={30}/>
+            <VictoryAxis label={"A LABEL"}/>
+            <VictoryAxis label={"A LABEL"} dependentAxis crossAxis={false} offsetX={30}/>
 
               <VictoryLine
                 style={{data:
@@ -432,7 +432,9 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle} animate={{duration: 2000}}>
-            <VictoryAxis dependentAxis orientation="left" style={{grid: {strokeWidth: 1}}}/>
+            <VictoryAxis label={"A LABEL"} dependentAxis
+              orientation="left" style={{grid: {strokeWidth: 1}}}
+            />
             <VictoryLine
               data={this.state.lineData}
               style={{data: this.state.lineStyle}}
@@ -446,6 +448,7 @@ class App extends React.Component {
           >
             <VictoryAxis
               orientation="bottom"
+              label={"A LABEL"}
               tickValues={[
                 new Date(1980, 1, 1),
                 new Date(1990, 1, 1),
@@ -492,8 +495,8 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryChart style={chartStyle}>
-            <VictoryAxis dependentAxis orientation="right"/>
-            <VictoryAxis orientation="top"/>
+            <VictoryAxis label={"A LABEL"} dependentAxis orientation="right"/>
+            <VictoryAxis label={"A LABEL"} orientation="top"/>
               <VictoryLine y={(d) => 0.5 * d.x + 0.5} style={{data: {stroke: "red"}}}/>
               <VictoryScatter y={(d) => d.x * d.x} style={{data: {stroke: "red"}}}/>
           </VictoryChart>

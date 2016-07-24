@@ -25,7 +25,7 @@ const fallbackProps = {
       fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
       fontSize: 14,
       letterSpacing: "0.04em",
-      padding: 10,
+      padding: 25,
       stroke: "transparent"
     },
     grid: {
@@ -100,6 +100,19 @@ export default class VictoryAxis extends React.Component {
      * with other components to form a chart.
      */
     dependentAxis: PropTypes.bool,
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
     /**
      * The domain prop describes the range of values your axis will include. This prop should be
      * given as a array of the minimum and maximum expected values for your axis.
@@ -420,11 +433,11 @@ export default class VictoryAxis extends React.Component {
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
     const gridAndTickComponents = [];
-    for (let i = 0, len = this.dataKeys.length; i < len; i++) {
-      const key = this.dataKeys[i];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "ticks"),
         this.getSharedEventState(key, "ticks"),
         tickComponent.props,
@@ -435,7 +448,7 @@ export default class VictoryAxis extends React.Component {
       ));
       const gridEvents = this.getEvents(props, "grid", key);
       const gridProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "grid"),
         this.getSharedEventState(key, "grid"),
         gridComponent.props,
@@ -445,7 +458,7 @@ export default class VictoryAxis extends React.Component {
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
       ));
       const tickLabelProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "tickLabels"),
         this.getSharedEventState(key, "tickLabels"),
         tickLabelComponent.props,
@@ -456,7 +469,7 @@ export default class VictoryAxis extends React.Component {
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
 
-      gridAndTickComponents[i] = React.cloneElement(
+      gridAndTickComponents[index] = React.cloneElement(
         props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
     }

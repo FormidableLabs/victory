@@ -1,6 +1,7 @@
 import { assign, pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
+import Domain from "../../helpers/domain";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
@@ -90,10 +91,11 @@ export default {
   },
 
   getDomain(props, axis) {
+    let domain;
     if (props.domain && props.domain[axis]) {
-      return props.domain[axis];
+      domain = props.domain[axis];
     } else if (props.domain && Array.isArray(props.domain)) {
-      return props.domain;
+      domain = props.domain;
     } else {
       const dataset = this.getData(props);
       const allData = dataset.reduce((memo, datum) => {
@@ -107,8 +109,9 @@ export default {
         const adjustedMax = max === 0 ? 1 : max;
         return [0, adjustedMax];
       }
-      return [min, max];
+      domain = [min, max];
     }
+    return Domain.padDomain(domain, props, axis);
   },
 
   isTransparent(attr) {

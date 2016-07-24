@@ -1,4 +1,4 @@
-import { omit, defaults, isArray, flatten } from "lodash";
+import { omit, defaults, isArray, flatten, pick } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
@@ -12,7 +12,7 @@ export default {
     const { data, style, scale } = calculatedValues;
     const { groupComponent, height, width } = modifiedProps;
     const parentProps = {style: style.parent, scale, data, height, width};
-    return data.reduce((memo, datum, index) => {
+    return data.reduce((memo, datum, index) => { // eslint-disable-line max-statements
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
@@ -60,8 +60,24 @@ export default {
         borderWidth: modifiedProps.borderWidth
       };
 
+      const text = this.getLabelText(modifiedProps, datum, index);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const labelProps = {
+        style: labelStyle,
+        x: x - labelStyle.padding,
+        y: y - labelStyle.padding,
+        text,
+        index,
+        scale,
+        datum: dataProps.datum,
+        textAnchor: labelStyle.textAnchor,
+        verticalAnchor: labelStyle.verticalAnchor || "end",
+        angle: labelStyle.angle
+      };
+
       memo[eventKey] = {
-        data: dataProps
+        data: dataProps,
+        labels: labelProps
       };
       return memo;
     }, {parent: parentProps});
@@ -81,14 +97,18 @@ export default {
       return [];
     }
     const accessor = {
+      x: Helpers.createAccessor(props.x),
+      y: Helpers.createAccessor(props.y),
       errorX: Helpers.createAccessor(props.errorX),
       errorY: Helpers.createAccessor(props.errorY)
     };
     return dataset.map((datum) => {
-      let errorX = accessor.errorX(datum.errorX);
-      let errorY = accessor.errorY(datum.errorY);
+      const x = accessor.x(datum);
+      const y = accessor.y(datum);
+      let errorX = accessor.errorX(datum);
+      let errorY = accessor.errorY(datum);
       // check if the value is negative, if it is set to 0
-      if (!isArray(errorX) && errorX < 0) {
+      if (!isArray(errorX) && errorX < 0 || !errorX) {
         errorX = 0;
       } else if (isArray(errorX)) {
         errorX.map((err) => {
@@ -99,7 +119,7 @@ export default {
         });
       }
 
-      if (!isArray(errorY) && errorY < 0) {
+      if (!isArray(errorY) && errorY < 0 || !errorY) {
         errorY = 0;
       } else if (isArray(errorY)) {
         errorY.map((err) => {
@@ -113,7 +133,7 @@ export default {
       return Object.assign(
           {},
           datum,
-          { errorX, errorY }
+          { x, y, errorX, errorY }
         );
     });
   },
@@ -121,14 +141,15 @@ export default {
   getDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return Domain.padDomain(propsDomain, props, axis);
     }
     const categoryDomain = Domain.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return categoryDomain;
+      return Domain.padDomain(categoryDomain, props, axis);
     }
     const dataset = this.getErrorData(props);
-    return this.getDomainFromData(props, axis, dataset);
+    const domain = this.getDomainFromData(props, axis, dataset);
+    return Domain.padDomain(domain, props, axis);
   },
 
   getDomainFromData(props, axis, dataset) {
@@ -193,5 +214,19 @@ export default {
     ]);
     const baseDataStyle = defaults({}, stylesFromData, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
+  },
+
+  getLabelText(props, datum, index) {
+    const propsLabel = Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
+    return datum.label || propsLabel;
+  },
+
+  getLabelStyle(labelStyle, dataProps) {
+    const { datum, size, style } = dataProps;
+    const matchedStyle = pick(style, ["opacity", "fill"]);
+    const padding = labelStyle.padding || size * 0.25;
+    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
+    return Helpers.evaluateStyle(baseLabelStyle, datum);
   }
 };

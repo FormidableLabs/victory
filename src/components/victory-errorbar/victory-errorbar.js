@@ -15,9 +15,19 @@ const fallbackProps = {
   },
   style: {
     data: {
+      fill: "none",
       opacity: 1,
-      stroke: "#CCC",
-      strokeWidth: 1
+      strokeWidth: 2,
+      stroke: "#252525"
+    },
+    labels: {
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent",
+      textAnchor: "start"
     }
   }
 };
@@ -84,6 +94,19 @@ export default class VictoryErrorBar extends React.Component {
      * If a dataComponent is not provided, VictoryErrorBar will use its default ErrorBar component.
      */
     dataComponent: PropTypes.element,
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -255,6 +278,40 @@ export default class VictoryErrorBar extends React.Component {
       PropTypes.arrayOf(PropTypes.string)
     ]),
     /**
+     * The errorX prop specifies how to access the errorX value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'errorX', 'errorX.value.nested.1.thing', 'errorX[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    errorX: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The errorY prop specifies how to access the errorY value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'errorY', 'errorY.value.nested.1.thing', 'errorY[2].also.nested', null,
+     * d => Math.sin(d)
+     */
+    errorY: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
      * The containerComponent prop takes an entire component which will be used to
      * create a container element for standalone charts.
      * The new element created from the passed containerComponent wil be provided with
@@ -301,6 +358,8 @@ export default class VictoryErrorBar extends React.Component {
     standalone: true,
     x: "x",
     y: "y",
+    errorX: "errorX",
+    errorY: "errorY",
     borderWidth: 10,
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
@@ -338,24 +397,38 @@ export default class VictoryErrorBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, groupComponent } = props;
-    const errorBarComponents = [];
-    this.dataKeys.forEach((key) => {
+    const { dataComponent, labelComponent, groupComponent} = props;
+    const { role } = VictoryErrorBar;
+    return this.dataKeys.map((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `error-bar-${key}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`, index},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
-        dataComponent.props,
-        this.baseProps[key].data
+        this.baseProps[key].data,
+        dataComponent.props
       );
-
-      errorBarComponents.push(React.cloneElement(dataComponent, Object.assign(
+      const errorBarComponent = React.cloneElement(dataComponent, Object.assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      ));
+      const labelProps = defaults(
+        {key: `${role}-label-${key}`, index},
+        this.getEventState(key, "labels"),
+        this.getSharedEventState(key, "labels"),
+        this.baseProps[key].labels,
+        labelComponent.props
+      );
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", key);
+        const errorLabel = React.cloneElement(labelComponent, Object.assign({
+          events: Events.getPartialEvents(labelEvents, key, labelProps)
+        }, labelProps));
+        return React.cloneElement(
+          groupComponent, {key: `error-group-${key}`}, errorBarComponent, errorLabel
+        );
+      }
+      return errorBarComponent;
     });
-
-    return React.cloneElement(groupComponent, {}, errorBarComponents);
   }
 
   renderGroup(children, style) {
@@ -387,29 +460,28 @@ export default class VictoryErrorBar extends React.Component {
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
-
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "borderWidth"
+        "data", "domain", "height", "padding", "samples",
+        "style", "width", "x", "y", "errorX", "errorY", "borderWidth"
       ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, ...modifiedProps)}
+        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.errorBar
-    ? modifiedProps.theme.errorBar
+    const styleObject = modifiedProps.theme && modifiedProps.theme.errorbar
+    ? modifiedProps.theme.errorbar
     : fallbackProps.style;
 
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
-
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

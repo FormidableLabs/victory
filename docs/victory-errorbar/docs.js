@@ -1,15 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Ecology from "ecology";
-import { merge, random, range } from "lodash";
 import Radium, { Style } from "radium";
+import { merge, random, range } from "lodash";
 import * as docgen from "react-docgen";
-import {
-  VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryScatter, VictoryStack
-} from "../../src/index";
+import { VictoryErrorBar, VictoryChart, VictoryAxis} from "../../src/index";
+import { VictoryLabel } from "victory-core";
 import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
-import DatasetDropdown from "../dataset-dropdown";
-import dataset from "./dataset";
 
 class Docs extends React.Component {
   render() {
@@ -17,10 +14,12 @@ class Docs extends React.Component {
       <div>
         <Ecology
           overview={require("!!raw!./ecology.md")}
-          source={docgen.parse(require("!!raw!../../src/components/victory-chart/victory-chart"))}
+          source={docgen.parse(require(
+            "!!raw!../../src/components/victory-errorbar/victory-errorbar"
+            ))}
           scope={{
-            merge, range, random, React, ReactDOM, VictoryScatter, VictoryLine,
-            VictoryAxis, VictoryBar, VictoryChart, VictoryStack, DatasetDropdown, dataset
+            merge, range, random, React, ReactDOM, VictoryLabel,
+            VictoryErrorBar, VictoryChart, VictoryAxis
           }}
           playgroundtheme="elegant"
           customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}

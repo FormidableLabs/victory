@@ -92,6 +92,19 @@ export default class VictoryCandlestick extends React.Component {
      */
     dataComponent: PropTypes.element,
     /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.number,
+        y: PropTypes.number
+      }),
+      PropTypes.number
+    ]),
+    /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
      * or as an object that specifies separate arrays for x and y.
@@ -457,7 +470,7 @@ export default class VictoryCandlestick extends React.Component {
       const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `${role}-${key}`, role: `${role}-${index}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`, index},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
@@ -467,7 +480,7 @@ export default class VictoryCandlestick extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `${role}-label-${key}`},
+        {key: `${role}-label-${key}`, index},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,

@@ -211,6 +211,7 @@ export default class App extends React.Component {
           data={range(0, 50)}
           x={null}
           y={(d) => d * d * Math.random()}
+          domainPadding={200}
         />
 
         <VictoryChart
