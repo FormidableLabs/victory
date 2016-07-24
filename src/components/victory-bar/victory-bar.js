@@ -408,7 +408,7 @@ export default class VictoryBar extends React.Component {
       )));
 
       const labelProps = defaults(
-        {key: `${role}-label-${key}`},
+        {index, key: `${role}-label-${key}`},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         labelComponent.props,
