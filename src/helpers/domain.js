@@ -1,6 +1,7 @@
 import { flatten, includes, isPlainObject } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
+import Scale from "./scale";
 import { Helpers, Collection } from "victory-core";
 
 export default {
@@ -15,7 +16,30 @@ export default {
     }
     const dataset = Data.getData(props);
     const domain = this.getDomainFromData(props, axis, dataset);
-    return this.padDomain(domain, props, axis);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props);
+  },
+
+  cleanDomain(domain, props) {
+    // Some scale types break when certain data is supplies. This method will
+    // remove data points that break scales. So far this method only removes
+    // zeroes for log scales
+    // TODO other cases?
+    const scaleType = {
+      x: Scale.getScaleType(props, "x"),
+      y: Scale.getScaleType(props, "y")
+    };
+
+    if (scaleType.x !== "log" && scaleType.y !== "log") {
+      return domain;
+    }
+
+    const rules = (dom, axis) => {
+      const domainOne = dom[0] === 0 ? 1 / Number.MAX_SAFE_INTEGER : dom[0];
+      const domainTwo = dom[1] === 0 ? -Math.abs(1 / Number.MAX_SAFE_INTEGER) : dom[1];
+      return scaleType[axis] === "log" ? [domainOne, domainTwo] : dom;
+    };
+
+    return rules(domain, "x") && rules(domain, "y");
   },
 
   getDomainWithZero(props, axis) {

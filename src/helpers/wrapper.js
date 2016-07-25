@@ -18,7 +18,7 @@ export default {
       return propsDomain;
     }
     childComponents = childComponents || React.Children.toArray(props.children);
-    return this.getDomainFromChildren(props, axis, childComponents);
+    return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents), props);
   },
 
   setAnimationState(nextProps) {

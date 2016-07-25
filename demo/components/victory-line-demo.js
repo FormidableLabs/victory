@@ -215,10 +215,13 @@ export default class App extends React.Component {
           ]}
         />
 
+        <VictoryChart
+          scale={{x: "linear", y: "log"}}
+        >
         <VictoryLine
           style={{parent: parentStyle}}
-          scale={{x: "linear", y: "log"}}
         />
+        </VictoryChart>
 
         <VictoryLine
           style={{parent: parentStyle}}
