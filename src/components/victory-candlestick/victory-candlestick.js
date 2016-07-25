@@ -384,7 +384,7 @@ export default class VictoryCandlestick extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryCandlestick will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -394,7 +394,7 @@ export default class VictoryCandlestick extends React.Component {
     * candleColors prop takes an object with keys positive and negative, which each take
     * a string that should be a color. Positive is for data points where close is higher
     * than open, and defaults to white, and negative (close < open) defaults to black.
-    * @example: candleColors={{positive: "purple", negative: "blue"}}
+    * @examples candleColors={{positive: "purple", negative: "blue"}}
     */
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
@@ -412,8 +412,7 @@ export default class VictoryCandlestick extends React.Component {
     * When using VictoryCandlestick as a solo component, implement the theme directly on
     * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object
   };
@@ -470,7 +469,7 @@ export default class VictoryCandlestick extends React.Component {
     return this.dataKeys.map((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `${role}-${key}`, role: `${role}-${index}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`, index},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
@@ -480,7 +479,7 @@ export default class VictoryCandlestick extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `${role}-label-${key}`},
+        {key: `${role}-label-${key}`, index},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,

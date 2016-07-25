@@ -178,7 +178,7 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} domainPadding={{x: [0, 20]}}>
             <VictoryAxis
               dependentAxis
               style={axisStyle}
@@ -199,7 +199,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} domainPadding={{y: [0, 20]}}>
             <VictoryBar
               horizontal
               style={{data: {fill: "tomato"}}}

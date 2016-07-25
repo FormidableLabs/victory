@@ -154,6 +154,7 @@ export default class App extends React.Component {
           style={{
             parent: style.parent
           }}
+          domainPadding={{x: [20, 50]}}
         >
           <VictoryCandlestick
             candleColors={{positive: "#8BC34A", negative: "#C62828"}}

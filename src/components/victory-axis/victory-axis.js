@@ -108,8 +108,14 @@ export default class VictoryAxis extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -332,7 +338,7 @@ export default class VictoryAxis extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryAxis will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -342,8 +348,7 @@ export default class VictoryAxis extends React.Component {
     * Victory. When using VictoryAxis as a solo component, implement the theme directly on
     * VictoryAxis. If you are wrapping VictoryAxis in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -432,10 +437,10 @@ export default class VictoryAxis extends React.Component {
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
-    return this.dataKeys.map((key) => {
+    return this.dataKeys.map((key, index) => {
       const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "ticks"),
         this.getSharedEventState(key, "ticks"),
         tickComponent.props,
@@ -446,7 +451,7 @@ export default class VictoryAxis extends React.Component {
       ));
       const gridEvents = this.getEvents(props, "grid", key);
       const gridProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "grid"),
         this.getSharedEventState(key, "grid"),
         gridComponent.props,
@@ -456,7 +461,7 @@ export default class VictoryAxis extends React.Component {
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
       ));
       const tickLabelProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "tickLabels"),
         this.getSharedEventState(key, "tickLabels"),
         tickLabelComponent.props,
