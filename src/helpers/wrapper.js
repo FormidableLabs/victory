@@ -15,11 +15,10 @@ export default {
   getDomain(props, axis, childComponents) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return Domain.padDomain(propsDomain, props, axis);
+      return propsDomain;
     }
     childComponents = childComponents || React.Children.toArray(props.children);
-    const domain = this.getDomainFromChildren(props, axis, childComponents);
-    return Domain.padDomain(domain, props, axis);
+    return this.getDomainFromChildren(props, axis, childComponents);
   },
 
   setAnimationState(nextProps) {

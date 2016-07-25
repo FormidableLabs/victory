@@ -225,7 +225,7 @@ export default class App extends React.Component {
           data={this.state.arrayData}
           label="Hello"
           x={0}
-          domainPadding={20}
+          domainPadding={{x: [0, 100]}}
           y={1}
           theme={VictoryTheme.material}
         />

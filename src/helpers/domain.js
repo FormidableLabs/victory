@@ -1,4 +1,4 @@
-import { flatten, includes } from "lodash";
+import { flatten, includes, isPlainObject } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
@@ -160,26 +160,40 @@ export default {
     return categories.length === 0 ? _dataByIndex() : _dataByCategory();
   },
 
+  getDomainPadding(props, axis) {
+    const formatPadding = (padding) => {
+      return Array.isArray(padding) ?
+        {left: padding[0], right: padding[1]} : {left: padding, right: padding};
+    };
+
+    return isPlainObject(props.domainPadding) ?
+      formatPadding(props.domainPadding[axis]) : formatPadding(props.domainPadding);
+  },
+
   padDomain(domain, props, axis) {
     if (!props.domainPadding) {
       return domain;
     }
-    const domainPadding = typeof props.domainPadding === "number" ?
-      props.domainPadding : props.domainPadding[axis];
 
-    if (!domainPadding) {
+    const padding = this.getDomainPadding(props, axis);
+    if (!padding.left && !padding.right) {
       return domain;
     }
+
     const domainMin = Math.min(...domain);
     const domainMax = Math.max(...domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
-    const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
+
+    const paddingLeft = Math.abs(domainMax - domainMin) * padding.left / rangeExtent;
+    const paddingRight = Math.abs(domainMax - domainMin) * padding.right / rangeExtent;
     // don't make the axes cross if they aren't already
-    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ?
-      0 : domainMin.valueOf() - padding;
-    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
-      0 : domainMax.valueOf() + padding;
+    const adjustedMin = (domainMin >= 0 && (domainMin - paddingLeft) <= 0) ?
+      0 : domainMin.valueOf() - paddingLeft;
+
+    const adjustedMax = (domainMax <= 0 && (domainMax + paddingRight) >= 0) ?
+      0 : domainMax.valueOf() + paddingRight;
+
     return domainMin instanceof Date || domainMax instanceof Date ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   },
