@@ -201,7 +201,7 @@ export default class VictoryChart extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryChart will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -210,8 +210,7 @@ export default class VictoryChart extends React.Component {
     * You can create this object yourself, or you can use a theme provided by Victory.
     * When using VictoryChart, either alone or as a wrapper for other components,
     * you will only need to implement the theme on VictoryChart itself.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
