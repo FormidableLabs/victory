@@ -95,7 +95,6 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const {style, data, scale } = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { horizontal, width, height, padding } = modifiedProps;
