@@ -44,11 +44,11 @@ export default {
     const styleData = omit(datum, [
       "xName", "yName", "x", "y", "label"
     ]);
-    return defaults({}, styleData, baseStyle);
+    return Helpers.evaluateStyle(defaults({}, styleData, baseStyle), datum);
   },
 
   getLabelStyle(style, datum) {
-    const labelStyle = defaults({
+    const labelStyle = defaults({}, {
       angle: datum.angle,
       textAnchor: datum.textAnchor,
       verticalAnchor: datum.verticalAnchor
@@ -85,52 +85,48 @@ export default {
     };
   },
 
-  getBaseProps(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.bar ? props.theme.bar
+  getCalculatedValues(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter
     : fallbackProps.style;
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const data = Events.addEventKeys(props, Data.getData(props));
+    const scale = this.getScale(props);
+    return { style, data, scale };
+  },
+
+  getBaseProps(props, fallbackProps) {
+
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(modifiedProps, Data.getData(modifiedProps));
-    const scale = this.getScale(modifiedProps);
-    const { horizontal, width, height } = modifiedProps;
-    const childProps = {parent: {scale, width, height, data, style: style.parent}};
+    const {style, data, scale } = this.getCalculatedValues(modifiedProps, fallbackProps);
+    const { horizontal, width, height, padding } = modifiedProps;
+    const childProps = {parent: { scale, width, height, data, style: style.parent }};
     for (let index = 0, len = data.length; index < len; index++) {
-    // return data.reduce((memo, datum, index) => {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
       const position = this.getBarPosition(modifiedProps, datum, scale);
-      const barStyle = this.getBarStyle(datum, style.data);
       const dataProps = assign(
         {
-          style: Helpers.evaluateStyle(barStyle, datum),
+          style: this.getBarStyle(datum, style.data),
           index,
           datum,
           scale,
           horizontal,
-          padding: modifiedProps.padding,
-          width: modifiedProps.width,
+          padding,
+          width,
           data
         },
         position
       );
 
-      const text = this.getLabel(modifiedProps, datum, index);
-      const labelPadding = style.labels.padding;
-      const labelStyleObj = datum.y < 0 ? assign({}, style.labels,
-        {padding: labelPadding * -Math.abs(labelPadding / 2.5)}) : style.labels;
-      const labelStyle = this.getLabelStyle(labelStyleObj, datum);
-      const padding = this.getlabelPadding(labelStyle, horizontal);
+      const labelStyle = this.getLabelStyle(style.labels, datum);
+      const labelPadding = this.getlabelPadding(labelStyle, horizontal);
       const anchors = this.getLabelAnchors(datum, horizontal);
-      const labelPosition = {
-        x: horizontal ? position.y : position.x,
-        y: horizontal ? position.x : position.y
-      };
       const labelProps = {
         style: labelStyle,
-        x: labelPosition.x + padding.x,
-        y: labelPosition.y - padding.y,
+        x: horizontal ? position.y + labelPadding.x : position.x + labelPadding.x,
+        y: horizontal ? position.x - labelPadding.y : position.y - labelPadding.y,
         y0: position.y0,
-        text,
+        text: this.getLabel(modifiedProps, datum, index),
         index,
         scale,
         datum: dataProps.datum,

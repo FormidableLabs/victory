@@ -9,19 +9,19 @@ export default {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { height, width } = modifiedProps;
-    const parentProps = {style: style.parent, scale, data, height, width};
-    const childProps = [];
+    const childProps = { parent: {
+      style: style.parent, scale, data, height: modifiedProps.height, width: modifiedProps.width
+    }};
     for (let index = 0, len = data.length; index < len; index++) {
-      const datum = data[index]
+      const datum = data[index];
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
-      const size = this.getSize(datum, modifiedProps, calculatedValues);
-      const symbol = this.getSymbol(datum, modifiedProps);
-      const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
-        x, y, size, scale, datum, symbol, index, style: dataStyle
+        x, y, datum, index, scale,
+        size: this.getSize(datum, modifiedProps, calculatedValues),
+        symbol: this.getSymbol(datum, modifiedProps),
+        style: this.getDataStyles(datum, style.data)
       };
 
       const text = this.getLabelText(modifiedProps, datum, index);
@@ -43,7 +43,6 @@ export default {
         labels: labelProps
       };
     }
-    childProps.parent = parentProps;
     return childProps;
   },
 

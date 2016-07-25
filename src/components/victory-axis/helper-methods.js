@@ -146,7 +146,9 @@ export default {
     const axisProps = this.getAxisProps(modifiedProps, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
 
-    const childProps = [];
+    const childProps = { parent: {
+      style: style.parent, ticks, scale, width: modifiedProps.width, height: modifiedProps.height
+    }};
     for (let index = 0, len = ticks.length; index < len; index++) {
       const tick = stringTicks ? modifiedProps.tickValues[(ticks[index]) - 1] : ticks[index];
 
@@ -176,9 +178,6 @@ export default {
         grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
       };
     }
-    childProps.parent = {
-      style: style.parent, ticks, scale, width: modifiedProps.width, height: modifiedProps.height
-    };
     return childProps;
   },
 

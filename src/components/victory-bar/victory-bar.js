@@ -428,13 +428,9 @@ export default class VictoryBar extends React.Component {
         }, labelProps));
       }
     }
-
-    if (barLabelComponents.length > 0) {
-      return React.cloneElement(
-        groupComponent, {}, ...barComponents, ...barLabelComponents
-      );
-    }
-    return barComponents;
+    return barLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...barComponents, ...barLabelComponents) :
+      barComponents;
   }
 
   renderContainer(props, group) {

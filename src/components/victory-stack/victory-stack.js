@@ -367,11 +367,13 @@ export default class VictoryStack extends React.Component {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return childComponents.map((child, index) => {
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      return React.cloneElement(child, assign({
+      newChildren[index] = React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
@@ -381,7 +383,8 @@ export default class VictoryStack extends React.Component {
         style,
         data
       }, childProps));
-    });
+    }
+    return newChildren;
   }
 
   getContainer(props, calculatedProps) {
