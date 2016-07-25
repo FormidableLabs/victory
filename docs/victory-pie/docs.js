@@ -10,15 +10,13 @@ import { appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
 class Docs extends React.Component {
   render() {
     return (
-      <div>
-        <Ecology
-          overview={require("!!raw!./ecology.md")}
-          source={docgen.parse(require("!!raw!../../src/components/victory-pie"))}
-          scope={{merge, random, range, React, ReactDOM, VictoryPie}}
-          playgroundtheme="elegant"
-          customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
-        />
-      </div>
+      <Ecology
+        overview={require("!!raw!./ecology.md")}
+        source={docgen.parse(require("!!raw!../../src/components/victory-pie"))}
+        scope={{merge, random, range, React, ReactDOM, VictoryPie}}
+        playgroundtheme="elegant"
+        customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
+      />
     );
   }
 }
