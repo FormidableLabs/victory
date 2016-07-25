@@ -19,27 +19,26 @@ export default {
     return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
 
-  cleanDomain(domain, props) {
+  cleanDomain(domain, props, axis) {
     // Some scale types break when certain data is supplies. This method will
     // remove data points that break scales. So far this method only removes
     // zeroes for log scales
     // TODO other cases?
-    const scaleType = {
-      x: Scale.getScaleType(props, "x"),
-      y: Scale.getScaleType(props, "y")
-    };
+    const scaleType = Scale.getScaleType(props, axis);
 
-    if (scaleType.x !== "log" && scaleType.y !== "log") {
+    if (scaleType !== "log") {
       return domain;
     }
 
-    const rules = (dom, ax) => {
-      const domainOne = dom[0] === 0 ? 1 / Number.MAX_SAFE_INTEGER : dom[0];
-      const domainTwo = dom[1] === 0 ? 1 / Number.MAX_SAFE_INTEGER : dom[1];
-      return scaleType[ax] === "log" ? [domainOne, domainTwo] : dom;
+    const rules = (dom) => {
+      const almostZero = dom[0] < 0 || dom[1] < 0 ? -1 / Number.MAX_SAFE_INTEGER
+      : 1 / Number.MAX_SAFE_INTEGER;
+      const domainOne = dom[0] === 0 ? almostZero : dom[0];
+      const domainTwo = dom[1] === 0 ? almostZero : dom[1];
+      return [domainOne, domainTwo];
     };
 
-    return rules(domain, "x") && rules(domain, "y");
+    return rules(domain);
   },
 
   getDomainWithZero(props, axis) {

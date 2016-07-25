@@ -27,7 +27,7 @@ export default {
       domain = Domain.getDomainFromTickValues(props);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
-    return domain ? Domain.cleanDomain(paddedDomain, props) : undefined;
+    return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
   // exposed for use by VictoryChart
