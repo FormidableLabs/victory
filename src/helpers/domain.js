@@ -44,7 +44,7 @@ export default {
   getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return this.padDomain(propsDomain, props, axis);
+      return this.cleanDomain(this.padDomain(propsDomain, props, axis), props, axis);
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
@@ -55,11 +55,11 @@ export default {
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return this.padDomain(ensureZero(categoryDomain), props, axis);
+      return this.cleanDomain(this.padDomain(ensureZero(categoryDomain), props, axis), props, axis);
     }
     const dataset = Data.getData(props);
     const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
-    return this.cleanDomain(this.padDomain(domain, props, axis), props);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
 
   getDomainFromProps(props, axis) {

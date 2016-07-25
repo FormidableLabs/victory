@@ -270,7 +270,7 @@ export default class App extends React.Component {
         <VictoryChart
           style={style}
           theme={VictoryTheme.material}
-          scale={{x: "linear", y: "log"}}
+          scale={{x: "log", y: "linear"}}
         >
           <VictoryArea
             style={style} animate={{duration: 1000}}
