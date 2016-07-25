@@ -24,6 +24,8 @@ class Docs extends React.Component {
           }}
           playgroundtheme="elegant"
           customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
+          exportGist
+          copyToClipboard
         />
         <Style rules={VictoryTheme}/>
       </div>

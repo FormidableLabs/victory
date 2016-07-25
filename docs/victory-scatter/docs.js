@@ -22,6 +22,8 @@ class Docs extends React.Component {
           scope={{merge, range, random, React, ReactDOM, symbolData, VictoryScatter}}
           playgroundtheme="elegant"
           customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
+          exportGist
+          copyToClipboard
         />
         <Style rules={VictoryTheme}/>
       </div>

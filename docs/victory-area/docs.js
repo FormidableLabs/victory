@@ -17,6 +17,8 @@ class Docs extends React.Component {
           scope={{merge, React, ReactDOM, VictoryArea, VictoryStack, VictoryGroup, VictoryScatter}}
           playgroundtheme="elegant"
           customRenderers={merge(ecologyPlaygroundLoading, appendLinkIcon)}
+          exportGist
+          copyToClipboard
         />
         <Style rules={VictoryTheme}/>
       </div>

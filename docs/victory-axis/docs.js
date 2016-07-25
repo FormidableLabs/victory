@@ -17,6 +17,8 @@ class Docs extends React.Component {
           scope={{range, random, React, ReactDOM, VictoryAxis}}
           playgroundtheme="elegant"
           customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
+          exportGist
+          copyToClipboard
         />
         <Style rules={VictoryTheme}/>
       </div>
