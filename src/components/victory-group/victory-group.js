@@ -408,15 +408,20 @@ export default class VictoryGroup extends React.Component {
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: child.props.domainPadding
-        || props.domainPadding
-        || {x: (props.offset * childComponents.length) / 2},
+        domainPadding: this.getDomainPadding(props, childComponents, child),
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
       }, childProps));
     });
+  }
+
+  getDomainPadding(props, childComponents, child) {
+    const basePadding = props && props.horizontal || child.props && child.props.horizontal
+    ? {y: (props.offset * childComponents.length) / 2}
+    : {x: (props.offset * childComponents.length) / 2};
+    return child.props.domainPadding || props.domainPadding || basePadding;
   }
 
   getContainer(props, calculatedProps) {
