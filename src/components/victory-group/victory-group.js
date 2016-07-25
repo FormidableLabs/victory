@@ -408,9 +408,10 @@ export default class VictoryGroup extends React.Component {
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: child.props.domainPadding || props.domainPadding,
+        domainPadding: child.props.domainPadding
+        || props.domainPadding
+        || {x: (props.offset * childComponents.length) / 2},
         style,
-        domainPadding: {x: (props.offset * childComponents.length) / 2},
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
