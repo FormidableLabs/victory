@@ -432,6 +432,7 @@ export default class App extends React.Component {
           </VictorySharedEvents>
         </svg>
         <VictoryBar
+          scale={{x: "linear", y: "log"}}
           theme={VictoryTheme.material}
           style={{
             parent: parentStyle,

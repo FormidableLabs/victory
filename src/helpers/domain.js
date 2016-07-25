@@ -60,7 +60,7 @@ export default {
     }
     const dataset = Data.getData(props);
     const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
-    return this.padDomain(domain, props, axis);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props);
   },
 
   getDomainFromProps(props, axis) {
