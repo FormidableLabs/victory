@@ -16,7 +16,7 @@ export default {
     }
     const dataset = Data.getData(props);
     const domain = this.getDomainFromData(props, axis, dataset);
-    return this.cleanDomain(this.padDomain(domain, props, axis), props);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
 
   cleanDomain(domain, props) {
@@ -33,10 +33,10 @@ export default {
       return domain;
     }
 
-    const rules = (dom, axis) => {
+    const rules = (dom, ax) => {
       const domainOne = dom[0] === 0 ? 1 / Number.MAX_SAFE_INTEGER : dom[0];
-      const domainTwo = dom[1] === 0 ? -Math.abs(1 / Number.MAX_SAFE_INTEGER) : dom[1];
-      return scaleType[axis] === "log" ? [domainOne, domainTwo] : dom;
+      const domainTwo = dom[1] === 0 ? 1 / Number.MAX_SAFE_INTEGER : dom[1];
+      return scaleType[ax] === "log" ? [domainOne, domainTwo] : dom;
     };
 
     return rules(domain, "x") && rules(domain, "y");
