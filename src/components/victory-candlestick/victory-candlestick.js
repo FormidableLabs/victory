@@ -99,8 +99,14 @@ export default class VictoryCandlestick extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -426,11 +432,7 @@ export default class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    candleColors: {
-      positive: "green",
-      negative: "red"
-    }
+    groupComponent: <g/>
   };
 
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);

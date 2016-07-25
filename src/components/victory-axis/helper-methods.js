@@ -18,14 +18,15 @@ export default {
     if (axis && axis !== inherentAxis) {
       return undefined;
     }
+    let domain;
     if (Array.isArray(props.domain)) {
-      return Domain.padDomain(props.domain, props, axis);
+      domain = props.domain;
     } else if (props.domain && props.domain[inherentAxis]) {
-      return Domain.padDomain(props.domain[inherentAxis], props, axis);
+      domain = props.domain[inherentAxis];
     } else if (props.tickValues) {
-      return Domain.padDomain(Domain.getDomainFromTickValues(props), props, axis);
+      domain = Domain.getDomainFromTickValues(props);
     }
-    return undefined;
+    return domain ? Domain.padDomain(domain, props, inherentAxis) : undefined;
   },
 
   // exposed for use by VictoryChart
