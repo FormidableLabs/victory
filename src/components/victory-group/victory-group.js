@@ -408,7 +408,7 @@ export default class VictoryGroup extends React.Component {
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: this.getDomainPadding(props, childComponents, child),
+        domainPadding: this.getPadding(props, childComponents, child, calculatedProps),
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
@@ -417,9 +417,9 @@ export default class VictoryGroup extends React.Component {
     });
   }
 
-  getDomainPadding(props, childComponents, child) {
-    const basePadding = props && props.horizontal || child.props && child.props.horizontal
-    ? {y: (props.offset * childComponents.length) / 2}
+  getPadding(props, childComponents, child, calculatedProps) { // eslint-disable-line max-params
+    const { horizontal } = calculatedProps;
+    const basePadding = horizontal ? {y: (props.offset * childComponents.length) / 2}
     : {x: (props.offset * childComponents.length) / 2};
     return child.props.domainPadding || props.domainPadding || basePadding;
   }
