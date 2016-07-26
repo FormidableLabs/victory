@@ -25,14 +25,14 @@ export default {
   },
 
   getMaxValue(arr, ...values) {
-    const array = values ? arr.concat(values) : arr;
+    const array = arr.concat(values);
     return this.containsDates(array) ?
     new Date(Math.max(...array)) :
     Math.max(...array);
   },
 
   getMinValue(arr, ...values) {
-    const array = values ? arr.concat(values) : arr;
+    const array = arr.concat(values);
     return this.containsDates(array) ?
     new Date(Math.min(...array)) :
     Math.min(...array);
