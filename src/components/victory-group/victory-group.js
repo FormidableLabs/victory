@@ -95,10 +95,16 @@ export default class VictoryGroup extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -263,7 +269,7 @@ export default class VictoryGroup extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryGroup will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -273,8 +279,7 @@ export default class VictoryGroup extends React.Component {
     * When using VictoryGrou as the outermost wrapper for your chart, implement the theme
     * directly on VictoyrGroup. If you are wrapping VictoryGroup in VictoryChart,
     * please call the theme on the wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -393,7 +398,7 @@ export default class VictoryGroup extends React.Component {
 
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets } = calculatedProps;
+    const { datasets, horizontal } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const newChildren = [];
@@ -403,13 +408,18 @@ export default class VictoryGroup extends React.Component {
       const data = this.addOffset(datasets[index], xOffset);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
+      const defaultDomainPadding = horizontal ?
+        {y: (props.offset * childComponents.length) / 2} :
+        {x: (props.offset * childComponents.length) / 2};
+      const domainPadding = child.props.domainPadding ||
+        props.domainPadding || defaultDomainPadding;
       newChildren[index] = React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: child.props.domainPadding || props.domainPadding,
+        domainPadding,
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
