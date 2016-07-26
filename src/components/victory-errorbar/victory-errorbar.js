@@ -3,7 +3,7 @@ import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
   VictoryContainer
 } from "victory-core";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import ErrorBar from "./errorbar";
 import Data from "../../helpers/data";
 import ErrorBarHelpers from "./helper-methods";
@@ -404,7 +404,10 @@ export default class VictoryErrorBar extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryErrorBar;
-    return this.dataKeys.map((key, index) => {
+    const errorBarComponents = [];
+    const errorBarLabelComponents = [];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `${role}-${key}`, role: `${role}-${index}`, index},
@@ -413,7 +416,7 @@ export default class VictoryErrorBar extends React.Component {
         this.baseProps[key].data,
         dataComponent.props
       );
-      const errorBarComponent = React.cloneElement(dataComponent, Object.assign(
+      errorBarComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
@@ -425,15 +428,15 @@ export default class VictoryErrorBar extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const errorLabel = React.cloneElement(labelComponent, Object.assign({
+        errorBarLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return React.cloneElement(
-          groupComponent, {key: `error-group-${key}`}, errorBarComponent, errorLabel
-        );
+
       }
-      return errorBarComponent;
-    });
+    }
+     return errorBarLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...errorBarComponents, ...errorBarLabelComponents) :
+      errorBarComponents;
   }
 
   renderGroup(children, style) {

@@ -77,11 +77,15 @@ export default {
     }
   },
 
-  getlabelPadding(style, horizontal) {
+  getlabelPadding(style, datum, horizontal) {
     const defaultPadding = style.padding || 0;
+    const sign = {
+      x: datum.x < 0 ? -1 : 1,
+      y: datum.y < 0 ? 1 : -1
+    };
     return {
-      x: horizontal ? defaultPadding : 0,
-      y: horizontal ? 0 : defaultPadding
+      x: horizontal ? sign.x * defaultPadding : 0,
+      y: horizontal ? 0 : sign.y * defaultPadding
     };
   },
 
@@ -118,12 +122,12 @@ export default {
       );
 
       const labelStyle = this.getLabelStyle(style.labels, datum);
-      const labelPadding = this.getlabelPadding(labelStyle, horizontal);
+      const labelPadding = this.getlabelPadding(labelStyle, datum, horizontal);
       const anchors = this.getLabelAnchors(datum, horizontal);
       const labelProps = {
         style: labelStyle,
         x: horizontal ? position.y + labelPadding.x : position.x + labelPadding.x,
-        y: horizontal ? position.x - labelPadding.y : position.y - labelPadding.y,
+        y: horizontal ? position.x + labelPadding.y: position.y + labelPadding.y,
         y0: position.y0,
         text: this.getLabel(modifiedProps, datum, index),
         index,
