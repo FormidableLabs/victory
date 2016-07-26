@@ -18,14 +18,15 @@ export default {
     if (axis && axis !== inherentAxis) {
       return undefined;
     }
+    let domain;
     if (Array.isArray(props.domain)) {
-      return props.domain;
+      domain = props.domain;
     } else if (props.domain && props.domain[inherentAxis]) {
-      return props.domain[inherentAxis];
+      domain = props.domain[inherentAxis];
     } else if (props.tickValues) {
-      return Domain.getDomainFromTickValues(props);
+      domain = Domain.getDomainFromTickValues(props);
     }
-    return undefined;
+    return domain ? Domain.padDomain(domain, props, inherentAxis) : undefined;
   },
 
   // exposed for use by VictoryChart
@@ -72,7 +73,6 @@ export default {
     } = calculatedValues;
 
     const { width, height } = modifiedProps;
-
     const offset = this.getOffset(modifiedProps, calculatedValues);
 
     const globalTransform = this.getTransform(modifiedProps, calculatedValues, offset);
@@ -172,19 +172,21 @@ export default {
     const sign = orientationSign[orientation];
     const hPadding = padding.left + padding.right;
     const vPadding = padding.top + padding.bottom;
-    const x = isVertical ?
-      -((props.height - vPadding) / 2) - padding.top :
-      ((props.width - hPadding) / 2) + padding.left;
     const verticalAnchor = sign < 0 ? "end" : "start";
     const labelStyle = style.axisLabel;
+    const angle = isVertical ? -90 : 0;
+    const x = isVertical ? globalTransform.x + (sign * labelPadding) :
+      ((props.width - hPadding) / 2) + padding.left + globalTransform.x;
+    const y = isVertical ?
+      ((props.height - vPadding) / 2) + padding.bottom + globalTransform.y :
+      (sign * labelPadding) + globalTransform.y;
     return {
-      x: x + globalTransform.x,
-      y: (sign * labelPadding) + globalTransform.y,
+      x,
+      y,
       verticalAnchor: labelStyle.verticalAnchor || verticalAnchor,
       textAnchor: labelStyle.textAnchor || "middle",
-      angle: labelStyle.angle,
+      angle: labelStyle.angle || angle,
       style: labelStyle,
-      transform: isVertical ? "rotate(-90)" : "",
       text: props.label
     };
   },

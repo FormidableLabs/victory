@@ -5,8 +5,6 @@ import {
   VictoryContainer
 } from "victory-core";
 import AxisLine from "./axis-line";
-import GridLine from "./grid";
-import Tick from "./tick";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
@@ -17,36 +15,39 @@ const fallbackProps = {
   },
   style: {
     axis: {
-      stroke: "#756f6a",
       fill: "none",
-      strokeWidth: 2,
+      stroke: "#252525",
+      strokeWidth: 1,
       strokeLinecap: "round"
     },
     axisLabel: {
-      stroke: "transparent",
-      fill: "#756f6a",
-      fontSize: 17,
-      fontFamily: "Helvetica"
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 25,
+      stroke: "transparent"
     },
     grid: {
-      stroke: "transparent",
       fill: "none",
+      stroke: "transparent",
       strokeLinecap: "round"
     },
     ticks: {
-      stroke: "#756f6a",
       fill: "none",
-      padding: 5,
-      strokeWidth: 2,
-      strokeLinecap: "round",
-      size: 4
+      padding: 10,
+      size: 1,
+      stroke: "none",
+      strokeWidth: 1,
+      strokeLinecap: "round"
     },
     tickLabels: {
-      stroke: "transparent",
-      fill: "#756f6a",
-      fontFamily: "Helvetica",
-      fontSize: 12,
-      padding: 5
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
+      stroke: "transparent"
     }
   }
 };
@@ -99,6 +100,25 @@ export default class VictoryAxis extends React.Component {
      * with other components to form a chart.
      */
     dependentAxis: PropTypes.bool,
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
+      }),
+      PropTypes.number
+    ]),
     /**
      * The domain prop describes the range of values your axis will include. This prop should be
      * given as a array of the minimum and maximum expected values for your axis.
@@ -268,10 +288,14 @@ export default class VictoryAxis extends React.Component {
     tickComponent: PropTypes.element,
     /**
      * The tickCount prop specifies approximately how many ticks should be drawn on the axis if
-     * tickValues are not explicitly provided. This values is calculated by d3 scale and
-     * prioritizes returning "nice" values and evenly spaced ticks over an exact numnber of ticks
+     * tickValues are not explicitly provided. This value is calculated by d3 scale and
+     * prioritizes returning "nice" values and evenly spaced ticks over an exact number of ticks.
+     * If you need an exact number of ticks, please specify them via the tickValues prop.
+     * This prop must have a value greater than zero.
      */
-    tickCount: CustomPropTypes.nonNegative,
+    tickCount: CustomPropTypes.allOfType([
+      CustomPropTypes.integer, CustomPropTypes.greaterThanZero
+    ]),
     /**
      * The tickLabelComponent prop takes in an entire component which will be used
      * to create the tick labels. The new element created from the passed tickLabelComponent
@@ -314,7 +338,7 @@ export default class VictoryAxis extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryAxis will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -324,23 +348,29 @@ export default class VictoryAxis extends React.Component {
     * Victory. When using VictoryAxis as a solo component, implement the theme directly on
     * VictoryAxis. If you are wrapping VictoryAxis in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
-    axisComponent: <AxisLine/>,
+    axisComponent: <AxisLine type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <Tick/>,
-    gridComponent: <GridLine/>,
+    tickComponent: <AxisLine type={"tick"}/>,
+    gridComponent: <AxisLine type={"grid"}/>,
     padding: 50,
     scale: "linear",
     standalone: true,
     tickCount: 5,
-    containerComponent: <VictoryContainer />
+    containerComponent: <VictoryContainer />,
+    groupComponent: <g/>
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
@@ -407,10 +437,10 @@ export default class VictoryAxis extends React.Component {
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
-    return this.dataKeys.map((key) => {
+    return this.dataKeys.map((key, index) => {
       const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "ticks"),
         this.getSharedEventState(key, "ticks"),
         tickComponent.props,
@@ -421,7 +451,7 @@ export default class VictoryAxis extends React.Component {
       ));
       const gridEvents = this.getEvents(props, "grid", key);
       const gridProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "grid"),
         this.getSharedEventState(key, "grid"),
         gridComponent.props,
@@ -431,7 +461,7 @@ export default class VictoryAxis extends React.Component {
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
       ));
       const tickLabelProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "tickLabels"),
         this.getSharedEventState(key, "tickLabels"),
         tickLabelComponent.props,
@@ -441,12 +471,8 @@ export default class VictoryAxis extends React.Component {
       const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
-      return (
-        <g key={`tick-group-${key}`}>
-          {GridComponent}
-          {TickComponent}
-          {TickLabel}
-        </g>
+      return React.cloneElement(
+        props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
     });
   }
@@ -469,6 +495,14 @@ export default class VictoryAxis extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      ...children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, standalone } = modifiedProps;
@@ -482,7 +516,7 @@ export default class VictoryAxis extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryAxis {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -490,14 +524,13 @@ export default class VictoryAxis extends React.Component {
     const styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis
     : fallbackProps.style;
     const style = AxisHelpers.getStyles(modifiedProps, styleObject);
+    const children = [
+      ...this.renderGridAndTicks(modifiedProps),
+      this.renderLine(modifiedProps),
+      this.renderLabel(modifiedProps)
+    ];
 
-    const group = (
-      <g style={style.parent}>
-        {this.renderGridAndTicks(modifiedProps)}
-        {this.renderLine(modifiedProps)}
-        {this.renderLabel(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(children, style.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

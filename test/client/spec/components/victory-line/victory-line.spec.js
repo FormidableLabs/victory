@@ -277,4 +277,41 @@ describe("components/victory-line", () => {
       });
     });
   });
+
+  describe("accessibility", () => {
+
+    it("adds an area role to a line segment", () => {
+      const wrapper = mount(<VictoryLine />);
+      const p = wrapper.find("path").node;
+
+      const {attributes: attr} = p;
+      const roleValue = attr.getNamedItem("role").value;
+      expect(roleValue).to.be.a("string");
+      expect(roleValue).to.equal(`line-0`);
+    });
+
+    it("adds an area role to each line segment", () => {
+      const data = [
+        {x: 1, y: 1},
+        {x: 2, y: 3},
+        {x: 3, y: 5},
+        {x: 4, y: 2},
+        {x: 5, y: null},
+        {x: 6, y: null},
+        {x: 7, y: 6},
+        {x: 8, y: 7},
+        {x: 9, y: 8},
+        {x: 10, y: 12}
+      ];
+      const wrapper = mount(<VictoryLine data={data} />);
+
+      wrapper.find("path").nodes.forEach((p, i) => {
+        const {attributes: attr} = p;
+        const roleValue = attr.getNamedItem("role").value;
+        expect(roleValue).to.be.a("string");
+        expect(roleValue).to.equal(`line-${i}`);
+      });
+    });
+
+  });
 });

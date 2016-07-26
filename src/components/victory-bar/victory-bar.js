@@ -16,17 +16,19 @@ const fallbackProps = {
   },
   style: {
     data: {
-      width: 8,
-      padding: 6,
+      fill: "#242424",
+      opacity: 1,
+      padding: 10,
       stroke: "transparent",
       strokeWidth: 0,
-      fill: "#756f6a",
-      opacity: 1
+      width: 8
     },
     labels: {
-      fontSize: 13,
-      padding: 4,
-      fill: "black"
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10
     }
   }
 };
@@ -94,6 +96,25 @@ export default class VictoryBar extends React.Component {
      * Bar component.
      */
     dataComponent: PropTypes.element,
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
+      }),
+      PropTypes.number
+    ]),
     /**
      * The domain prop describes the range of values your bar chart will cover. This prop can be
      * given as a array of the minimum and maximum expected values for your bar chart,
@@ -309,7 +330,7 @@ export default class VictoryBar extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryBar will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -319,10 +340,15 @@ export default class VictoryBar extends React.Component {
     * When using VictoryBar as a solo component, implement the theme directly on
     * VictoryBar. If you are wrapping VictoryBar in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -334,7 +360,8 @@ export default class VictoryBar extends React.Component {
     standalone: true,
     x: "x",
     y: "y",
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -366,13 +393,15 @@ export default class VictoryBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
+    const { role } = VictoryBar;
     const barComponents = [];
     const barLabelComponents = [];
-    this.dataKeys.forEach((key) => {
+
+    this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `bar-${key}`},
+        {index, key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -384,7 +413,7 @@ export default class VictoryBar extends React.Component {
       )));
 
       const labelProps = defaults(
-        {key: `bar-label-${key}`},
+        {index, key: `${role}-label-${key}`},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         labelComponent.props,
@@ -400,11 +429,8 @@ export default class VictoryBar extends React.Component {
     });
 
     if (barLabelComponents.length > 0) {
-      return (
-        <g>
-          {barComponents}
-          {barLabelComponents}
-        </g>
+      return React.cloneElement(
+        groupComponent, {}, ...barComponents, ...barLabelComponents
       );
     }
     return barComponents;
@@ -428,6 +454,14 @@ export default class VictoryBar extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
@@ -438,7 +472,7 @@ export default class VictoryBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryBar {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -448,11 +482,7 @@ export default class VictoryBar extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = (
-      <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

@@ -1,4 +1,4 @@
-import { flatten, includes } from "lodash";
+import { flatten, includes, isPlainObject } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
 import { Helpers, Collection } from "victory-core";
@@ -7,20 +7,21 @@ export default {
   getDomain(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return this.padDomain(propsDomain, props, axis);
     }
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return categoryDomain;
+      return this.padDomain(categoryDomain, props, axis);
     }
     const dataset = Data.getData(props);
-    return this.getDomainFromData(props, axis, dataset);
+    const domain = this.getDomainFromData(props, axis, dataset);
+    return this.padDomain(domain, props, axis);
   },
 
   getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return propsDomain;
+      return this.padDomain(propsDomain, props, axis);
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
@@ -31,14 +32,16 @@ export default {
       const max = Collection.containsDates(domain) ?
         Helpers.retainDate(Math.max(...domain, 0)) :
         Math.max(...domain, 0);
-      return isDependent ? [min, max] : domain;
+      const zeroDomain = isDependent ? [min, max] : domain;
+      return this.padDomain(zeroDomain, props, axis);
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return ensureZero(categoryDomain);
+      return this.padDomain(ensureZero(categoryDomain), props, axis);
     }
     const dataset = Data.getData(props);
-    return ensureZero(this.getDomainFromData(props, axis, dataset));
+    const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
+    return this.padDomain(domain, props, axis);
   },
 
   getDomainFromProps(props, axis) {
@@ -166,16 +169,26 @@ export default {
     return categories.length === 0 ? _dataByIndex() : _dataByCategory();
   },
 
+  getDomainPadding(props, axis) {
+    const formatPadding = (padding) => {
+      return Array.isArray(padding) ?
+        {left: padding[0], right: padding[1]} : {left: padding, right: padding};
+    };
+
+    return isPlainObject(props.domainPadding) ?
+      formatPadding(props.domainPadding[axis]) : formatPadding(props.domainPadding);
+  },
+
   padDomain(domain, props, axis) {
     if (!props.domainPadding) {
       return domain;
     }
-    const domainPadding = typeof props.domainPadding === "number" ?
-      props.domainPadding : props.domainPadding[axis];
 
-    if (!domainPadding) {
+    const padding = this.getDomainPadding(props, axis);
+    if (!padding.left && !padding.right) {
       return domain;
     }
+
     const domainMin = Collection.containsDates(domain) ?
     Helpers.retainDate(Math.min(...domain)) :
     Math.min(...domain);
@@ -184,12 +197,16 @@ export default {
     Math.max(...domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
-    const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
+
+    const paddingLeft = Math.abs(domainMax - domainMin) * padding.left / rangeExtent;
+    const paddingRight = Math.abs(domainMax - domainMin) * padding.right / rangeExtent;
     // don't make the axes cross if they aren't already
-    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ?
-      0 : domainMin.valueOf() - padding;
-    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
-      0 : domainMax.valueOf() + padding;
+    const adjustedMin = (domainMin >= 0 && (domainMin - paddingLeft) <= 0) ?
+      0 : domainMin.valueOf() - paddingLeft;
+
+    const adjustedMax = (domainMax <= 0 && (domainMax + paddingRight) >= 0) ?
+      0 : domainMax.valueOf() + paddingRight;
+
     return domainMin instanceof Date || domainMax instanceof Date ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   },

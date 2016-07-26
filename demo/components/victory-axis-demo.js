@@ -1,10 +1,9 @@
 /*global window:false */
 import React from "react";
-import {VictoryAxis, VictoryChart, VictoryLine} from "../../src/index";
-import {VictoryLabel} from "victory-core";
+import { VictoryAxis } from "../../src/index";
+import { VictoryLabel } from "victory-core";
 import { merge, random, range } from "lodash";
 import { VictoryContainer, VictoryTheme } from "victory-core";
-import d3Scale from "d3-scale";
 
 export default class App extends React.Component {
   constructor() {
@@ -42,13 +41,18 @@ export default class App extends React.Component {
 
   render() {
     const style = {
-      parent: {margin: "2%", maxWidth: "40%"}
+      parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
     };
 
     const styleOverrides = {
-      parent: {margin: "2%", maxWidth: "40%"},
+      parent: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"},
       axis: {
         stroke: "black"
+      },
+      axisLabel: {
+        padding: 60,
+        fontWeight: "bold",
+        fontSize: 16
       },
       grid: {
         strokeWidth: 2,
@@ -66,14 +70,18 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryAxis</h1>
         <div>
-          <h2>Animating Axis</h2>
+        <h2>Animating Axis</h2>
 
-          <VictoryAxis style={styleOverrides}
+          <VictoryAxis
+            style={{
+              parent: styleOverrides.parent,
+              grid: { stroke: "#CFD8DC" }
+            }}
             padding={60}
             label={"animation\nwow!"}
             axisLabelComponent={<VictoryLabel/>}
             tickValues={this.state.tickValues}
-            theme={VictoryTheme.grayscale}
+            theme={VictoryTheme.material}
             tickFormat={["first", "second", "third", "fourth", "fifth"]}
             animate={{duration: 2000}}
             containerComponent={
@@ -90,9 +98,9 @@ export default class App extends React.Component {
             scale="time"
             style={{
               parent: style.parent,
-              axis: {strokeWidth: 4},
-              tickLabels: {angle: 45},
-              grid: {stroke: "black", strokeWidth: 5}
+              axis: { strokeWidth: 3 },
+              tickLabels: { angle: 45},
+              grid: { stroke: "#F4511E", strokeWidth: 2 }
             }}
             containerComponent={
               <VictoryContainer
@@ -120,7 +128,7 @@ export default class App extends React.Component {
                 }
               }
             ]}
-            label={this.state.label}
+            label={"Decades"}
             tickLabelComponent={<VictoryLabel y={25}/>}
             tickValues={[
               new Date(1960, 1, 1),
@@ -140,7 +148,7 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
-              theme={VictoryTheme.grayscale}
+              theme={VictoryTheme.material}
               offsetY={200}
               standalone={false}
             />
@@ -148,27 +156,33 @@ export default class App extends React.Component {
               width={500}
               height={400}
               domain={this.state.domain}
-              theme={VictoryTheme.grayscale}
+              theme={VictoryTheme.material}
               offsetX={250}
               standalone={false}
             />
           </svg>
         </div>
         <div>
+
         <h2>Log Scale Axis</h2>
           <VictoryAxis
-            style={style}
+            style={{
+              parent: style.parent,
+              axisLabel: { padding: 45}
+            }}
             label="cool log axis"
-            padding={{top: 10, bottom: 60}}
+            padding={{top: 30, bottom: 30, left: 80, right: 30}}
             orientation="left"
             scale={"log"}
             domain={[1, 5]}
-            offsetX={50}
           />
           <VictoryAxis
-            style={style}
+            style={{
+              parent: style.parent,
+              axisLabel: { padding: 45}
+            }}
             label="cool log axis"
-            padding={{top: 10, bottom: 60, right: 60}}
+            padding={{top: 40, bottom: 40, right: 80}}
             orientation="right"
             scale={"log"}
             domain={[1, 5]}
@@ -177,6 +191,8 @@ export default class App extends React.Component {
         <div>
           <h2>Ordinal Scales</h2>
           <VictoryAxis
+            label="TEAMS"
+            padding={{top: 90, bottom: 40, left: 40, right: 40}}
             orientation="top"
             style={styleOverrides}
             tickValues={[
@@ -188,6 +204,8 @@ export default class App extends React.Component {
             ]}
           />
           <VictoryAxis
+            label="TEAMS"
+            padding={{top: 40, bottom: 40, left: 40, right: 90}}
             orientation="right"
             style={styleOverrides}
             tickValues={[
@@ -199,7 +217,9 @@ export default class App extends React.Component {
             ]}
           />
           <VictoryAxis
+            label="TEAMS"
             orientation="bottom"
+            padding={{top: 40, bottom: 90, left: 40, right: 40}}
             style={styleOverrides}
             tickValues={[
               "Mets\nNY",
@@ -211,6 +231,8 @@ export default class App extends React.Component {
           />
 
           <VictoryAxis
+            label="TEAMS"
+            padding={{top: 40, bottom: 40, left: 90, right: 40}}
             orientation="left"
             style={styleOverrides}
             tickValues={[
@@ -222,28 +244,6 @@ export default class App extends React.Component {
             ]}
           />
         </div>
-
-        <VictoryChart
-          height={450}
-          scale={{
-            x: "time"
-          }}
-        >
-          <VictoryAxis label="Decades"/>
-          <VictoryAxis dependentAxis crossAxis/>
-          <VictoryLine
-            data={[
-              {x: new Date(1960, 1, 1), y: 125},
-              {x: new Date(1987, 1, 1), y: 257},
-              {x: new Date(1993, 1, 1), y: 345},
-              {x: new Date(1997, 1, 1), y: 515},
-              {x: new Date(2001, 1, 1), y: 132},
-              {x: new Date(2005, 1, 1), y: 305},
-              {x: new Date(2011, 1, 1), y: 270},
-              {x: new Date(2015, 1, 1), y: 470}
-            ]}
-          />
-        </VictoryChart>
 
       </div>
     );

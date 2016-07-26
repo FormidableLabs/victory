@@ -95,10 +95,16 @@ export default class VictoryStack extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -261,7 +267,7 @@ export default class VictoryStack extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryStack will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -271,17 +277,23 @@ export default class VictoryStack extends React.Component {
     * When using VictoryStack to wrap a chart component, implement the theme directly on
     * VictoryStack. If you are wrapping VictoryStack in VictoryChart,
     * please call the theme on the wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
     scale: "linear",
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
@@ -368,6 +380,7 @@ export default class VictoryStack extends React.Component {
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
+        domainPadding: child.props.domainPadding || props.domainPadding,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
@@ -385,6 +398,14 @@ export default class VictoryStack extends React.Component {
       {style: style.parent, scale, width, height}
     );
     return React.cloneElement(containerComponent, parentProps);
+  }
+
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
   }
 
   render() {
@@ -412,12 +433,8 @@ export default class VictoryStack extends React.Component {
         </VictorySharedEvents>
       );
     }
+    const group = this.renderGroup(newChildren, style.parent);
 
-    const group = (
-      <g style={style.parent}>
-        {newChildren}
-      </g>
-    );
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

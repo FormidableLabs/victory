@@ -192,8 +192,9 @@ export default class App extends React.Component {
           })}
         </VictoryStack>
 
+        <VictoryChart>
         <VictoryGroup
-          offset={15}
+          offset={10}
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
           colorScale={"qualitative"}
@@ -202,6 +203,7 @@ export default class App extends React.Component {
             return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
           })}
         </VictoryGroup>
+        </VictoryChart>
 
         <VictoryGroup
           style={{parent: parentStyle}} offset={18}

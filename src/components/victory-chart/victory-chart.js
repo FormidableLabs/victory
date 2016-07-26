@@ -9,11 +9,6 @@ import Axis from "../../helpers/axis";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
-const defaultAxes = {
-  independent: <VictoryAxis/>,
-  dependent: <VictoryAxis dependentAxis/>
-};
-
 const fallbackProps = {
   props: {
     width: 450,
@@ -68,10 +63,16 @@ export default class VictoryChart extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -200,7 +201,7 @@ export default class VictoryChart extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryChart will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -209,18 +210,27 @@ export default class VictoryChart extends React.Component {
     * You can create this object yourself, or you can use a theme provided by Victory.
     * When using VictoryChart, either alone or as a wrapper for other components,
     * you will only need to implement the theme on VictoryChart itself.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
     padding: 50,
     standalone: true,
-    containerComponent: <VictoryContainer />
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>,
+    defaultAxes: {
+      independent: <VictoryAxis/>,
+      dependent: <VictoryAxis dependentAxis/>
+    }
   };
-
 
   componentWillReceiveProps(nextProps) {
     const setAnimationState = Wrapper.setAnimationState.bind(this);
@@ -250,6 +260,7 @@ export default class VictoryChart extends React.Component {
     const crossAxis = child.props.crossAxis === false ? false : true;
     return {
       domain: domain[axis],
+      domainPadding: child.props.domainPadding || props.domainPadding,
       scale: scale[axis],
       tickValues,
       tickFormat,
@@ -266,6 +277,7 @@ export default class VictoryChart extends React.Component {
     }
     return {
       domain: calculatedProps.domain,
+      domainPadding: child.props.domainPadding || props.domainPadding,
       scale: calculatedProps.scale,
       categories: calculatedProps.categories
     };
@@ -325,6 +337,7 @@ export default class VictoryChart extends React.Component {
         key: index,
         theme: child.props.theme || props.theme,
         standalone: false,
+        domainPadding: child.props.domainPadding || props.domainPadding,
         style
       }, childProps);
       return React.cloneElement(child, newProps);
@@ -342,11 +355,20 @@ export default class VictoryChart extends React.Component {
     return React.cloneElement(containerComponent, parentProps);
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const childComponents = ChartHelpers.getChildComponents(modifiedProps, defaultAxes);
+    const childComponents = ChartHelpers.getChildComponents(modifiedProps,
+      modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
@@ -361,11 +383,7 @@ export default class VictoryChart extends React.Component {
       );
     }
 
-    const group = (
-      <g style={calculatedProps.style.parent}>
-        {newChildren}
-      </g>
-    );
+    const group = this.renderGroup(newChildren, calculatedProps.style.parent);
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

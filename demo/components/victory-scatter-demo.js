@@ -211,10 +211,12 @@ export default class App extends React.Component {
           data={range(0, 50)}
           x={null}
           y={(d) => d * d * Math.random()}
+          domainPadding={200}
         />
 
         <VictoryChart
-          theme={VictoryTheme.grayscale}
+          style={style}
+          theme={VictoryTheme.material}
         >
           <VictoryScatter
             style={style}
@@ -226,7 +228,7 @@ export default class App extends React.Component {
 
         <VictoryScatter
           style={style}
-          theme={VictoryTheme.grayscale}
+          theme={VictoryTheme.material}
           data={range(0, 200).map((i) => {
             return {a: {b: [{y: i * Math.sin(i * 0.3)}], x: Math.cos(i * 0.3)}};
           })}

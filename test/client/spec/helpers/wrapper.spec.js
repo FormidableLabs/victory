@@ -4,7 +4,6 @@
 import Wrapper from "src/helpers/wrapper";
 import React from "react";
 import { VictoryAxis, VictoryLine } from "src/index";
-import Domain from "src/helpers/domain";
 
 
 describe("helpers/wrapper", () => {
@@ -42,7 +41,6 @@ describe("helpers/wrapper", () => {
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
       sandbox.spy(Wrapper, "getDomainFromChildren");
-      sandbox.spy(Domain, "padDomain");
       sandbox.spy(victoryLine.type, "getDomain");
     });
 
@@ -53,7 +51,6 @@ describe("helpers/wrapper", () => {
     it("calculates a domain from props", () => {
       const props = {domain: {x: [1, 2], y: [2, 3]}};
       const domainResultX = Wrapper.getDomain(props, "x", childComponents);
-      expect(Domain.padDomain).calledWith([1, 2], props, "x").and.returned([1, 2]);
       expect(victoryLine.type.getDomain).notCalled;
       expect(domainResultX).to.eql([1, 2]);
     });
@@ -63,8 +60,6 @@ describe("helpers/wrapper", () => {
       const domainResultX = Wrapper.getDomain(props, "x", childComponents);
       expect(Wrapper.getDomainFromChildren).calledWith(props, "x", childComponents);
       expect(victoryLine.type.getDomain).calledWith(victoryLine.props);
-      expect(Domain.padDomain).calledWith(victoryLine.props.domain, props, "x")
-        .and.returned(victoryLine.props.domain);
       expect(domainResultX).to.eql(victoryLine.props.domain);
     });
   });

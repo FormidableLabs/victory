@@ -16,15 +16,17 @@ const fallbackProps = {
   },
   style: {
     data: {
-      strokeWidth: 2,
       fill: "none",
-      stroke: "#756f6a",
-      opacity: 1
+      opacity: 1,
+      strokeWidth: 2,
+      stroke: "#252525"
     },
     labels: {
-      padding: 5,
-      fontFamily: "Helvetica",
-      fontSize: 13,
+      fill: "#252525",
+      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+      fontSize: 14,
+      letterSpacing: "0.04em",
+      padding: 10,
       strokeWidth: 0,
       stroke: "transparent",
       textAnchor: "start"
@@ -68,6 +70,25 @@ export default class VictoryLine extends React.Component {
         x: PropTypes.arrayOf(PropTypes.string),
         y: PropTypes.arrayOf(PropTypes.string)
       })
+    ]),
+    /**
+     * The domainPadding prop specifies a number of pixels of padding to add to the
+     * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
+     * from the origin to prevent crowding. This prop should be given as an object with
+     * numbers specified for x and y.
+     */
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
+      }),
+      PropTypes.number
     ]),
     /**
      * The data prop specifies the data to be plotted.
@@ -317,7 +338,7 @@ export default class VictoryLine extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryLine will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -327,10 +348,15 @@ export default class VictoryLine extends React.Component {
     * When using VictoryLine as a solo component, implement the theme directly on
     * VictoryLine. If you are wrapping VictoryLine in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
-    theme: PropTypes.object
+    theme: PropTypes.object,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     */
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -343,7 +369,8 @@ export default class VictoryLine extends React.Component {
     y: "y",
     dataComponent: <LineSegment/>,
     labelComponent: <VictoryLabel/>,
-    containerComponent: <VictoryContainer/>
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -375,12 +402,14 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
+
     return dataSegments.map((data, key) => {
+      const role = `${VictoryLine.role}-${key}`;
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
-        {key: `line-${key}`},
+        {index: key, key: role, role},
         this.getEventState("all", "data"),
         this.getSharedEventState("all", "data"),
         { data },
@@ -392,7 +421,7 @@ export default class VictoryLine extends React.Component {
       ));
 
       const labelProps = defaults(
-          {key: `line-label-${key}`},
+          {key: `${role}-label-${key}`},
           this.getEventState("all", "labels"),
           this.getSharedEventState("all", "labels"),
           { data },
@@ -404,11 +433,9 @@ export default class VictoryLine extends React.Component {
         const lineLabel = React.cloneElement(labelComponent, Object.assign({
           events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));
-        return (
-          <g key={`line-group-${key}`}>
-            {lineComponent}
-            {lineLabel}
-          </g>
+
+        return React.cloneElement(
+          groupComponent, {key: `line-group-${key}`}, lineComponent, lineLabel
         );
       }
       return lineComponent;
@@ -433,6 +460,14 @@ export default class VictoryLine extends React.Component {
     );
   }
 
+  renderGroup(children, style) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation", style},
+      children
+    );
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
@@ -447,7 +482,7 @@ export default class VictoryLine extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          <VictoryLine {...modifiedProps}/>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
@@ -457,11 +492,7 @@ export default class VictoryLine extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = (
-      <g role="presentation" style={baseStyles.parent}>
-        {this.renderData(modifiedProps)}
-      </g>
-    );
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
