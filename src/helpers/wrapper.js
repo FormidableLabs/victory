@@ -93,8 +93,14 @@ export default {
     };
 
     const childDomains = getChildDomains(childComponents);
+    const min = Collection.containsDates(childDomains) ?
+      Helpers.retainDate(Math.min(...childDomains)) :
+      Math.min(...childDomains);
+    const max = Collection.containsDates(childDomains) ?
+      Helpers.retainDate(Math.max(...childDomains)) :
+      Math.max(...childDomains);
     return childDomains.length === 0 ?
-      [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
+      [0, 1] : [min, max];
   },
 
   getDataFromChildren(props, childComponents) {

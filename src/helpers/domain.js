@@ -25,7 +25,13 @@ export default {
     const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+      const min = Collection.containsDates(domain) ?
+        Helpers.retainDate(Math.min(...domain, 0)) :
+        Math.min(...domain, 0);
+      const max = Collection.containsDates(domain) ?
+        Helpers.retainDate(Math.max(...domain, 0)) :
+        Math.max(...domain, 0);
+      return isDependent ? [min, max] : domain;
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
@@ -46,9 +52,12 @@ export default {
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const allData = flatten(dataset).map((datum) => datum[currentAxis]);
-
-    const min = Math.min(...allData);
-    const max = Math.max(...allData);
+    const min = Collection.containsDates(allData) ?
+    Helpers.retainDate(Math.min(...allData)) :
+    Math.min(...allData);
+    const max = Collection.containsDates(allData) ?
+    Helpers.retainDate(Math.max(...allData)) :
+    Math.max(...allData);
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
     if (min === max) {
@@ -167,8 +176,12 @@ export default {
     if (!domainPadding) {
       return domain;
     }
-    const domainMin = Math.min(...domain);
-    const domainMax = Math.max(...domain);
+    const domainMin = Collection.containsDates(domain) ?
+    Helpers.retainDate(Math.min(...domain)) :
+    Math.min(...domain);
+    const domainMax = Collection.containsDates(domain) ?
+    Helpers.retainDate(Math.max(...domain)) :
+    Math.max(...domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
     const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
