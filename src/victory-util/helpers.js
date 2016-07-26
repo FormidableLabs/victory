@@ -170,5 +170,9 @@ export default {
 
   getEventState(index, namespace) {
     return this.state[index] && this.state[index][namespace];
+  },
+
+  retainDate(value) {
+    return new Date(value);
   }
 };
