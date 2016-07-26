@@ -27,6 +27,7 @@ export default {
       domain = Domain.getDomainFromTickValues(props);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
+    console.log("DOMAIN", Domain.cleanDomain(paddedDomain, props, inherentAxis), axis);
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
@@ -45,6 +46,7 @@ export default {
   // exposed for use by VictoryChart
   getScale(props) {
     const axis = this.getAxis(props);
+    console.log("PROPS", props);
     const scale = Scale.getBaseScale(props, axis);
     const domain = this.getDomain(props) || scale.domain();
     scale.range(Helpers.getRange(props, axis));
