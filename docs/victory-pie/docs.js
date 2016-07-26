@@ -16,6 +16,8 @@ class Docs extends React.Component {
         scope={{merge, random, range, React, ReactDOM, VictoryPie}}
         playgroundtheme="elegant"
         customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
+        exportGist
+        copyToClipboard
       />
     );
   }
