@@ -394,7 +394,7 @@ export default class VictoryGroup extends React.Component {
 
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets } = calculatedProps;
+    const { datasets, horizontal } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
@@ -402,7 +402,9 @@ export default class VictoryGroup extends React.Component {
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      const defaultDomainPadding = this.getDomainPadding(props, childComponents, calculatedProps);
+      const defaultDomainPadding = horizontal ?
+        {y: (props.offset * childComponents.length) / 2} :
+        {x: (props.offset * childComponents.length) / 2};
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
@@ -417,12 +419,6 @@ export default class VictoryGroup extends React.Component {
         colorScale: this.getColorScale(props, child)
       }, childProps));
     });
-  }
-
-  getDomainPadding(props, childComponents, calculatedProps) {
-    const { horizontal } = calculatedProps;
-    return horizontal ? {y: (props.offset * childComponents.length) / 2}
-    : {x: (props.offset * childComponents.length) / 2};
   }
 
   getContainer(props, calculatedProps) {
