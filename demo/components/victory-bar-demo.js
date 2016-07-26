@@ -109,11 +109,7 @@ export default class App extends React.Component {
   }
 
   render() {
-    const parentStyle = {
-      border: "1px solid #ccc",
-      margin: "2%",
-      maxWidth: "40%"
-    };
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
 
     return (
       <div className="demo">
@@ -163,20 +159,13 @@ export default class App extends React.Component {
         </ChartWrap>
 
         <ChartWrap>
-          <VictoryBar
-            horizontal
-            data={[
-              {x: 1, y: 20},
-              {x: 7, y: 40},
-              {x: 3, y: 60},
-              {x: 4, y: 80}
-            ]}
+          <VictoryBar horizontal
+            data={[ {x: 1, y: 20}, {x: 7, y: 40}, {x: 3, y: 60}, {x: 4, y: 80} ]}
           />
         </ChartWrap>
 
         <VictoryChart
-          style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
+          domainPadding={{x: 20}}
         >
           <VictoryBar
             horizontal
@@ -207,7 +196,6 @@ export default class App extends React.Component {
 
         <VictoryBar
           style={{
-            data: {width: 10},
             parent: parentStyle,
             labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
           }}
@@ -249,17 +237,12 @@ export default class App extends React.Component {
           data={this.state.barTransitionData}
         />
         <VictoryStack
-          animate={{duration: 1000}}
-          labels={["uno", "dos", "tres", "cuatro", "cinco"]}
           style={{parent: parentStyle}}
-          theme={VictoryTheme.material}
+          animate={{duration: 1000}}
+          theme={VictoryTheme.grayscale}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <Wrapper key={index}>
-                <VictoryBar data={data} />
-              </Wrapper>
-            );
+            return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
           })}
         </VictoryStack>
 
@@ -463,7 +446,7 @@ export default class App extends React.Component {
           </VictorySharedEvents>
         </svg>
         <VictoryBar
-          theme={VictoryTheme.material}
+          theme={VictoryTheme.grayscale}
           style={{
             parent: parentStyle,
             data: {fill: "blue"}
@@ -511,6 +494,19 @@ export default class App extends React.Component {
             }
           ]}
         />
+
+        <VictoryChart>
+          <VictoryBar horizontal
+            data={[
+              {x: 21, y: "Label 1"},
+              {x: 28, y: "Label 2"},
+              {x: 35, y: "Label 3"},
+              {x: 40, y: "Label 4"}
+            ]}
+            x={"y"}
+            y={"x"}
+          />
+        </VictoryChart>
       </div>
     );
   }
@@ -529,11 +525,7 @@ class ChartWrap extends React.Component {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
-    const parentStyle = {
-      border: "1px solid #ccc",
-      margin: "2%",
-      maxWidth: "40%"
-    };
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
     const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
     return (
       <div>

@@ -95,10 +95,16 @@ export default class VictoryGroup extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -388,7 +394,7 @@ export default class VictoryGroup extends React.Component {
 
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets } = calculatedProps;
+    const { datasets, horizontal } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     return childComponents.map((child, index) => {
@@ -396,13 +402,17 @@ export default class VictoryGroup extends React.Component {
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
+      const defaultDomainPadding = horizontal ?
+        {y: (props.offset * childComponents.length) / 2} :
+        {x: (props.offset * childComponents.length) / 2};
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: child.props.domainPadding || props.domainPadding,
+        domainPadding: child.props.domainPadding || props.domainPadding
+        || defaultDomainPadding,
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,

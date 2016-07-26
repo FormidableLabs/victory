@@ -182,7 +182,6 @@ class App extends React.Component {
             <VictoryAxis
               dependentAxis
               style={axisStyle}
-              tickCount={0}
             />
           <VictoryAxis style={axisStyle} tickCount={6} />
             <VictoryBar
