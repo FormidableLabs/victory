@@ -98,6 +98,19 @@ export default class App extends React.Component {
 
     return (
       <div className="demo">
+        <VictoryChart style={style} scale={{y: "log"}}>
+          <VictoryArea
+            style={{data: {fill: "cyan", stroke: "cyan"}}}
+            data={[{x: 1, y: 0.2}, {x: 2, y: 3}, {x: 3, y: 50}, {x: 4, y: 400}, {x: 5, y: 70}]}
+          />
+        </VictoryChart>
+
+        <VictoryChart style={style} scale={{x: "log"}}>
+          <VictoryArea
+            style={{data: {fill: "cyan", stroke: "cyan"}}}
+            data={[{x: 1, y: 0.2}, {x: 2, y: 3}, {x: 3, y: 50}, {x: 4, y: 400}, {x: 5, y: 70}]}
+          />
+        </VictoryChart>
 
         <VictoryArea
           style={style} animate={{duration: 1000}}
@@ -270,7 +283,6 @@ export default class App extends React.Component {
         <VictoryChart
           style={style}
           theme={VictoryTheme.material}
-          scale={{x: "log", y: "linear"}}
         >
           <VictoryArea
             style={style} animate={{duration: 1000}}
@@ -319,7 +331,6 @@ export default class App extends React.Component {
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
         </VictoryStack>
-
       </div>
     );
   }

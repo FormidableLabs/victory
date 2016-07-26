@@ -1,4 +1,4 @@
-import { defaults, omit, isFinite } from "lodash";
+import { defaults, omit } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -16,7 +16,6 @@ export default {
       x: Domain.getDomainWithZero(props, "x"),
       y: Domain.getDomainWithZero(props, "y")
     };
-    console.log(domain);
     const xScale = Scale.getBaseScale(props, "x").domain(domain.x).range(range.x);
     const yScale = Scale.getBaseScale(props, "y").domain(domain.y).range(range.y);
     return {
@@ -26,9 +25,12 @@ export default {
   },
 
   getBarPosition(props, datum, scale) {
+    const currentAxis = props.horizontal ? "x" : "y";
+    const defaultMin = Scale.getScaleType(props, currentAxis) === "log" ?
+      1 / Number.MAX_SAFE_INTEGER : 0;
     const yOffset = datum.yOffset || 0;
     const xOffset = datum.xOffset || 0;
-    const y0 = yOffset;
+    const y0 = yOffset || defaultMin;
     const y = datum.y + yOffset;
     const x = datum.x + xOffset;
     const formatValue = (value, axis) => {
@@ -36,7 +38,7 @@ export default {
     };
     return {
       x: scale.x(formatValue(x, "x")),
-      y0: isFinite(scale.y(formatValue(y0, "y"))) ? scale.y(formatValue(y0, "y")) : 0,
+      y0: scale.y(formatValue(y0, "y")),
       y: scale.y(formatValue(y, "y"))
     };
   },
