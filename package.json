@@ -36,8 +36,8 @@
   "devDependencies": {
     "builder-victory-component-dev": "^2.3.0",
     "chai": "^3.2.0",
-    "ecology": "^1.5.1",
-    "formidable-landers":"^3.3.2",
+    "ecology": "^1.6.0",
+    "formidable-landers":"^3.3.3",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
     "radium": "^0.16.2",
