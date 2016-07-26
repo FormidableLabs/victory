@@ -1,7 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { Router, Route, browserHistory } from "react-router";
 
-import Docs from "./docs";
+import App from "./app";
+import Docs from "./victory-pie/docs";
 
 const content = document.getElementById("content");
-ReactDOM.render(<Docs/>, content);
+ReactDOM.render((
+  <Router history={browserHistory}>
+    <Route path="/" component={App}>
+      <Route path="pie" component={Docs} />
+    </Route>
+  </Router>
+), content);
