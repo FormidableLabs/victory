@@ -402,13 +402,15 @@ export default class VictoryGroup extends React.Component {
       const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
+      const defaultDomainPadding = this.getDomainPadding(props, childComponents, calculatedProps);
       return React.cloneElement(child, Object.assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: this.getPadding(props, childComponents, child, calculatedProps),
+        domainPadding: child.props.domainPadding || props.domainPadding
+        || defaultDomainPadding,
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
@@ -417,11 +419,10 @@ export default class VictoryGroup extends React.Component {
     });
   }
 
-  getPadding(props, childComponents, child, calculatedProps) { // eslint-disable-line max-params
+  getDomainPadding(props, childComponents, calculatedProps) {
     const { horizontal } = calculatedProps;
-    const basePadding = horizontal ? {y: (props.offset * childComponents.length) / 2}
+    return horizontal ? {y: (props.offset * childComponents.length) / 2}
     : {x: (props.offset * childComponents.length) / 2};
-    return child.props.domainPadding || props.domainPadding || basePadding;
   }
 
   getContainer(props, calculatedProps) {
