@@ -92,12 +92,8 @@ export default {
     };
 
     const childDomains = getChildDomains(childComponents);
-    const min = Collection.containsDates(childDomains) ?
-      Helpers.retainDate(Math.min(...childDomains)) :
-      Math.min(...childDomains);
-    const max = Collection.containsDates(childDomains) ?
-      Helpers.retainDate(Math.max(...childDomains)) :
-      Math.max(...childDomains);
+    const min = Collection.getMinValue(childDomains);
+    const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
       [0, 1] : [min, max];
   },

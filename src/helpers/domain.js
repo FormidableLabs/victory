@@ -26,12 +26,8 @@ export default {
     const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      const min = Collection.containsDates(domain) ?
-        Helpers.retainDate(Math.min(...domain, 0)) :
-        Math.min(...domain, 0);
-      const max = Collection.containsDates(domain) ?
-        Helpers.retainDate(Math.max(...domain, 0)) :
-        Math.max(...domain, 0);
+      const min = Collection.getMinValue(domain, 0);
+      const max = Collection.getMaxValue(domain, 0);
       const zeroDomain = isDependent ? [min, max] : domain;
       return this.padDomain(zeroDomain, props, axis);
     };
@@ -55,12 +51,8 @@ export default {
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const allData = flatten(dataset).map((datum) => datum[currentAxis]);
-    const min = Collection.containsDates(allData) ?
-    Helpers.retainDate(Math.min(...allData)) :
-    Math.min(...allData);
-    const max = Collection.containsDates(allData) ?
-    Helpers.retainDate(Math.max(...allData)) :
-    Math.max(...allData);
+    const min = Collection.getMinValue(allData);
+    const max = Collection.getMaxValue(allData);
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
     if (min === max) {
@@ -189,12 +181,8 @@ export default {
       return domain;
     }
 
-    const domainMin = Collection.containsDates(domain) ?
-    Helpers.retainDate(Math.min(...domain)) :
-    Math.min(...domain);
-    const domainMax = Collection.containsDates(domain) ?
-    Helpers.retainDate(Math.max(...domain)) :
-    Math.max(...domain);
+    const domainMin = Collection.getMinValue(domain);
+    const domainMax = Collection.getMaxValue(domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
 
