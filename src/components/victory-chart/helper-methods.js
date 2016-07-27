@@ -61,8 +61,10 @@ export default {
     const {axisComponents, domain, scale} = calculatedProps;
     // make the axes line up, and cross when appropriate
     const origin = {
-      x: Math.max(Math.min(...domain.x), 0),
-      y: Math.max(Math.min(...domain.y), 0)
+      x: Collection.containsDates(domain.x) ? Math.min(...domain.x)
+      : Math.max(Math.min(...domain.x), 0),
+      y: Collection.containsDates(domain.y) ? Math.min(...domain.y)
+      : Math.max(Math.min(...domain.y), 0)
     };
     const axisOrientations = {
       x: Axis.getOrientation(axisComponents.x, "x"),
