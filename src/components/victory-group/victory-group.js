@@ -1,4 +1,4 @@
-import { defaults } from "lodash";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
   VictoryContainer } from "victory-core";
@@ -392,33 +392,41 @@ export default class VictoryGroup extends React.Component {
     : colorScaleOptions;
   }
 
+  addOffset(dataset, xOffset) {
+    return dataset.map((datum) => assign({}, datum, {xOffset}));
+  }
+
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets, horizontal } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return childComponents.map((child, index) => {
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
+      const data = this.addOffset(datasets[index], xOffset);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       const defaultDomainPadding = horizontal ?
         {y: (props.offset * childComponents.length) / 2} :
         {x: (props.offset * childComponents.length) / 2};
-      return React.cloneElement(child, Object.assign({
+      const domainPadding = child.props.domainPadding ||
+        props.domainPadding || defaultDomainPadding;
+      newChildren[index] = React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding: child.props.domainPadding || props.domainPadding
-        || defaultDomainPadding,
+        domainPadding,
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
       }, childProps));
-    });
+    }
+    return newChildren;
   }
 
   getContainer(props, calculatedProps) {

@@ -1,4 +1,4 @@
-import { defaults, partialRight, isFunction } from "lodash";
+import { assign, defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
@@ -404,24 +404,27 @@ export default class VictoryLine extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
-
-    return dataSegments.map((data, key) => {
-      const role = `${VictoryLine.role}-${key}`;
+    const lineComponents = [];
+    const lineLabelComponents = [];
+    for (let index = 0, len = dataSegments.length; index < len; index++) {
+    // return dataSegments.map((data, key) => {
+      const data = dataSegments[index];
+      const role = `${VictoryLine.role}-${index}`;
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
-        {index: key, key: role, role},
+        {index, key: role, role},
         this.getEventState("all", "data"),
         this.getSharedEventState("all", "data"),
         { data },
         dataComponent.props,
         this.baseProps.all.data
       );
-      const lineComponent = React.cloneElement(dataComponent, Object.assign(
+      lineComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
       const labelProps = defaults(
-          {key: `${role}-label-${key}`},
+          {index, key: `${role}-label-${index}`},
           this.getEventState("all", "labels"),
           this.getSharedEventState("all", "labels"),
           { data },
@@ -430,16 +433,14 @@ export default class VictoryLine extends React.Component {
         );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", "all");
-        const lineLabel = React.cloneElement(labelComponent, Object.assign({
+        lineLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));
-
-        return React.cloneElement(
-          groupComponent, {key: `line-group-${key}`}, lineComponent, lineLabel
-        );
       }
-      return lineComponent;
-    });
+    }
+    return lineLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...lineComponents, ...lineLabelComponents) :
+      lineComponents;
   }
 
   renderContainer(props, group) {
@@ -453,7 +454,7 @@ export default class VictoryLine extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

@@ -1,4 +1,4 @@
-import { isFunction, defaults, partialRight } from "lodash";
+import { assign, isFunction, defaults, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -397,7 +397,7 @@ export default class VictoryArea extends React.Component {
       dataComponent.props,
       this.baseProps.all.data
     );
-    const areaComponent = React.cloneElement(dataComponent, Object.assign(
+    const areaComponent = React.cloneElement(dataComponent, assign(
       {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
     ));
 
@@ -410,7 +410,7 @@ export default class VictoryArea extends React.Component {
       );
     if (labelProps && labelProps.text) {
       const labelEvents = this.getEvents(props, "labels", "all");
-      const areaLabel = React.cloneElement(labelComponent, Object.assign({
+      const areaLabel = React.cloneElement(labelComponent, assign({
         events: Events.getPartialEvents(labelEvents, "all", labelProps)
       }, labelProps));
       return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
@@ -429,7 +429,7 @@ export default class VictoryArea extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

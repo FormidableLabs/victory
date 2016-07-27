@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import Candle from "./candle";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
@@ -466,7 +466,9 @@ export default class VictoryCandlestick extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryCandlestick;
-    return this.dataKeys.map((key, index) => {
+    const components = [];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `${role}-${key}`, role: `${role}-${index}`, index},
@@ -475,7 +477,7 @@ export default class VictoryCandlestick extends React.Component {
         this.baseProps[key].data,
         dataComponent.props
       );
-      const candleComponent = React.cloneElement(dataComponent, Object.assign(
+      const candleComponent = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
@@ -488,15 +490,16 @@ export default class VictoryCandlestick extends React.Component {
 
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const candleLabel = React.cloneElement(labelComponent, Object.assign({
+        const candleLabel = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return React.cloneElement(
+        components[index] = React.cloneElement(
           groupComponent, {key: `candle-group-${key}`}, candleComponent, candleLabel
         );
       }
-      return candleComponent;
-    });
+      components[index] = candleComponent;
+    }
+    return components;
   }
 
   renderContainer(props, group) {
@@ -510,7 +513,7 @@ export default class VictoryCandlestick extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

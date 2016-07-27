@@ -1,4 +1,4 @@
-import { pick, omit, defaults } from "lodash";
+import { assign, pick, omit, defaults } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
@@ -11,15 +11,16 @@ export default {
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
     const { groupComponent, width, height, padding } = modifiedProps;
-    const parentProps = {scale, width, height, data, style: style.parent};
-    return data.reduce((memo, datum, index) => {
-      const eventKey = datum.eventKey;
+    const childProps = {parent: {scale, width, height, data, style: style.parent}};
+    for (let index = 0, len = data.length; index < len; index++) {
+      const datum = data[index];
+      const eventKey = datum.eventKey || index;
       const x = scale.x(datum.x);
       const y1 = scale.y(datum.y[2]);
       const y2 = scale.y(datum.y[3]);
       const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
       const y = scale.y(Math.max(datum.y[0], datum.y[1]));
-      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
+      const dataStyle = assign(this.getDataStyles(datum, style.data, modifiedProps));
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
         index, style: dataStyle, padding, width
@@ -39,12 +40,12 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || "end",
         angle: labelStyle.angle
       };
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
   getCalculatedValues(props, fallbackProps) {
@@ -81,7 +82,7 @@ export default {
       const high = accessor.high(datum);
       const low = accessor.low(datum);
       const y = [open, close, high, low];
-      return Object.assign(
+      return assign(
         {},
         datum,
         {x, y}

@@ -1,4 +1,4 @@
-import { omit, defaults, isArray, flatten, pick } from "lodash";
+import { assign, omit, defaults, isArray, flatten, pick } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
@@ -10,63 +10,27 @@ export default {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { groupComponent, height, width } = modifiedProps;
-    const parentProps = {style: style.parent, scale, data, height, width};
-    return data.reduce((memo, datum, index) => { // eslint-disable-line max-statements
-      const eventKey = datum.eventKey;
+    const { groupComponent, height, width, borderWidth } = modifiedProps;
+    const childProps = { parent: {style: style.parent, scale, data, height, width} };
+    for (let index = 0, len = data.length; index < len; index++) {
+      const datum = data[index];
+      const eventKey = datum.eventKey || index;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
-      let errorX;
-      let errorY;
-      /**
-       * check if it is asymmetric error or symmetric error, asymmetric error should be an array
-       * and the first value is the positive error, the second is the negative error
-       * @param  {Boolean} isArray(errorX)
-       * @return {String or Array}
-       */
-      if (isArray(datum.errorX)) {
-        errorX = [
-          scale.x(datum.errorX[0] + datum.x),
-          scale.x(datum.x - datum.errorX[1])
-        ];
-      } else {
-        errorX = [
-          scale.x(datum.errorX + datum.x),
-          scale.x(datum.x - datum.errorX)
-        ];
-      }
 
-      /**
-       * check if it is asymmetric error or symmetric error, asymmetric error should be an array
-       * and the first value is the positive error, the second is the negative error
-       * @param  {Boolean} isArray(errorY)
-       * @return {String or Array}
-       */
-      if (isArray(datum.errorY)) {
-        errorY = [
-          scale.y(datum.errorY[0] + datum.y),
-          scale.y(datum.y - datum.errorY[1])
-        ];
-      } else {
-        errorY = [
-          scale.y(datum.errorY + datum.y),
-          scale.y(datum.y - datum.errorY)
-        ];
-      }
-
-      const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
-        x, y, scale, datum, index, style: dataStyle, errorX, errorY, groupComponent,
-        borderWidth: modifiedProps.borderWidth
+        x, y, scale, datum, index, groupComponent, borderWidth,
+        style: this.getDataStyles(datum, style.data),
+        errorX: this.getErrors(datum, scale, "x"),
+        errorY: this.getErrors(datum, scale, "y")
       };
 
-      const text = this.getLabelText(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
         x: x - labelStyle.padding,
         y: y - labelStyle.padding,
-        text,
+        text: this.getLabelText(modifiedProps, datum, index),
         index,
         scale,
         datum: dataProps.datum,
@@ -75,12 +39,12 @@ export default {
         angle: labelStyle.angle
       };
 
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
   getErrorData(props) {
@@ -90,6 +54,21 @@ export default {
       const generatedData = (props.errorX || props.errorY) && this.generateData(props);
       return this.formatErrorData(generatedData, props);
     }
+  },
+
+  getErrors(datum, scale, axis) {
+    /**
+     * check if it is asymmetric error or symmetric error, asymmetric error should be an array
+     * and the first value is the positive error, the second is the negative error
+     * @param  {Boolean} isArray(errorX)
+     * @return {String or Array}
+     */
+
+    const errorNames = {x: "errorX", y: "errorY"};
+    const errors = datum[errorNames[axis]];
+    return isArray(errors) ?
+      [ scale[axis](errors[0] + datum[axis]), scale[axis](datum[axis] - errors[1]) ] :
+      [ scale[axis](errors + datum[axis]), scale[axis](datum[axis] - errors) ];
   },
 
   formatErrorData(dataset, props) {
@@ -102,39 +81,20 @@ export default {
       errorX: Helpers.createAccessor(props.errorX),
       errorY: Helpers.createAccessor(props.errorY)
     };
+
+    const replaceNegatives = (errors) => {
+      // check if the value is negative, if it is set to 0
+      const replaceNeg = (val) => !val || val < 0 ? 0 : val;
+      return isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
+    };
+
     return dataset.map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
-      let errorX = accessor.errorX(datum);
-      let errorY = accessor.errorY(datum);
-      // check if the value is negative, if it is set to 0
-      if (!isArray(errorX) && errorX < 0 || !errorX) {
-        errorX = 0;
-      } else if (isArray(errorX)) {
-        errorX.map((err) => {
-          if (err < 0) {
-            return 0;
-          }
-          return err;
-        });
-      }
+      const errorX = replaceNegatives(accessor.errorX(datum));
+      const errorY = replaceNegatives(accessor.errorY(datum));
 
-      if (!isArray(errorY) && errorY < 0 || !errorY) {
-        errorY = 0;
-      } else if (isArray(errorY)) {
-        errorY.map((err) => {
-          if (err < 0) {
-            return 0;
-          }
-          return err;
-        });
-      }
-
-      return Object.assign(
-          {},
-          datum,
-          { x, y, errorX, errorY }
-        );
+      return assign({}, datum, { x, y, errorX, errorY });
     });
   },
 

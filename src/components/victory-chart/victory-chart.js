@@ -325,7 +325,9 @@ export default class VictoryChart extends React.Component {
   getNewChildren(props, childComponents, calculatedProps) {
     const baseStyle = calculatedProps.style.parent;
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return childComponents.map((child, index) => {
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
       const style = defaults({}, child.props.style, {parent: baseStyle});
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
@@ -340,8 +342,9 @@ export default class VictoryChart extends React.Component {
         domainPadding: child.props.domainPadding || props.domainPadding,
         style
       }, childProps);
-      return React.cloneElement(child, newProps);
-    });
+      newChildren[index] = React.cloneElement(child, newProps);
+    }
+    return newChildren;
   }
 
   getContainer(props, calculatedProps) {
