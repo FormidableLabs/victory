@@ -94,8 +94,10 @@ export default {
     };
 
     const childDomains = getChildDomains(childComponents);
+    const min = Collection.getMinValue(childDomains);
+    const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
-      [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
+      [0, 1] : [min, max];
   },
 
   getDataFromChildren(props, childComponents) {
