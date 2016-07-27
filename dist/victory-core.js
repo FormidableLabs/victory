@@ -74,7 +74,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 1 */
 /***/ function(module, exports) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});exports.default={
+	Object.defineProperty(exports,"__esModule",{value:true});function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else {return Array.from(arr);}}exports.default={
 	isNonEmptyArray:function isNonEmptyArray(collection){
 	return Array.isArray(collection)&&collection.length>0;},
 	
@@ -97,7 +97,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	removeUndefined:function removeUndefined(arr){
-	return arr.filter(function(el){return el!==undefined;});}};
+	return arr.filter(function(el){return el!==undefined;});},
+	
+	
+	getMaxValue:function getMaxValue(arr){for(var _len=arguments.length,values=Array(_len>1?_len-1:0),_key=1;_key<_len;_key++){values[_key-1]=arguments[_key];}
+	var array=arr.concat(values);
+	return this.containsDates(array)?
+	new Date(Math.max.apply(Math,_toConsumableArray(array))):
+	Math.max.apply(Math,_toConsumableArray(array));},
+	
+	
+	getMinValue:function getMinValue(arr){for(var _len2=arguments.length,values=Array(_len2>1?_len2-1:0),_key2=1;_key2<_len2;_key2++){values[_key2-1]=arguments[_key2];}
+	var array=arr.concat(values);
+	return this.containsDates(array)?
+	new Date(Math.min.apply(Math,_toConsumableArray(array))):
+	Math.min.apply(Math,_toConsumableArray(array));}};
 
 /***/ },
 /* 2 */
@@ -7704,6 +7718,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	negative:blueGrey700}})},
 	
 	
+	
+	errorbar:{
+	data:{
+	fill:"none",
+	opacity:1,
+	stroke:blueGrey700,
+	strokeWidth:2},
+	
+	labels:_extends({},baseLabelStyles,
+	{
+	stroke:"transparent",
+	strokeWidth:0,
+	textAnchor:"start"}),
+	
+	parent:{}},
 	
 	line:{
 	data:{
