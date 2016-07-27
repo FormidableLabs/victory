@@ -115,4 +115,40 @@ describe("collections", () => {
       expect(Collection.removeUndefined(testArray)).to.eql(expectedArray);
     });
   });
+
+  describe("getMaxValue", () => {
+
+    it("returns a date if array contains dates", () => {
+      const array = [new Date(2016, 3, 6), new Date(2017, 5, 3), 10];
+      expect(Collection.getMaxValue(array)).to.eql(new Date(2017, 5, 3));
+    });
+
+    it("returns a number if array does not contain dates", () => {
+      const array = [3, 8, 10];
+      expect(Collection.getMaxValue(array)).to.eql(10);
+    });
+
+    it("allows values to be concated and returns the appropriate number", () => {
+      const array = [3, 8, 10];
+      expect(Collection.getMaxValue(array, 1, 20)).to.eql(20);
+    });
+  });
+
+  describe("getMinValue", () => {
+
+    it("returns a date if array contains dates", () => {
+      const array = [new Date(2016, 3, 6), new Date(2017, 5, 3), new Date(2015, 11, 4)];
+      expect(Collection.getMinValue(array)).to.eql(new Date(2015, 11, 4));
+    });
+
+    it("returns a number if array does not contain dates", () => {
+      const array = [3, 8, 10];
+      expect(Collection.getMinValue(array)).to.eql(3);
+    });
+
+    it("allows values to be concated and returns the appropriate number", () => {
+      const array = [3, 8, 10];
+      expect(Collection.getMinValue(array, 1, 20)).to.eql(1);
+    });
+  });
 });
