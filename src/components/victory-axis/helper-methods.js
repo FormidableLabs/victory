@@ -27,8 +27,8 @@ export default {
       domain = Domain.getDomainFromTickValues(props);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
-    console.log("DOMAIN", Domain.cleanDomain(paddedDomain, props, inherentAxis), axis);
-    console.log("SCALE", props.scale, axis);
+    console.log("DOMAIN", Domain.cleanDomain(paddedDomain, props, inherentAxis), inherentAxis);
+    console.log("SCALE", Scale.getScaleType(props, inherentAxis));
     return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
