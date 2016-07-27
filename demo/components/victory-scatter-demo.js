@@ -1,7 +1,7 @@
 /*global window:false */
 import React from "react";
 import { merge, random, range } from "lodash";
-import {VictoryScatter, VictoryChart} from "../../src/index";
+import {VictoryScatter, VictoryChart, VictoryAxis} from "../../src/index";
 import {VictoryLabel} from "victory-core";
 import bubbleData from "./bubble-data.js";
 import symbolData from "./symbol-data.js";
@@ -235,6 +235,15 @@ export default class App extends React.Component {
           x="a.x"
           y="a.b[0]y"
         />
+
+        <VictoryChart>
+          <VictoryScatter
+            style={style}
+            theme={VictoryTheme.material}
+            data={[{x: 3, y: 4}]}
+          />
+        </VictoryChart>
+
       </div>
     );
   }

@@ -454,6 +454,12 @@ export default class App extends React.Component {
             y={"x"}
           />
         </VictoryChart>
+
+        <VictoryChart>
+          <VictoryBar
+            data={[]}
+          />
+        </VictoryChart>
       </div>
     );
   }

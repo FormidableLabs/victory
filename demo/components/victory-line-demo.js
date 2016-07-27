@@ -242,6 +242,17 @@ export default class App extends React.Component {
             y={(d) => (d.y + 15)}
           />
       </VictoryChart>
+
+      <VictoryChart
+        style={{parent: parentStyle}}
+        theme={VictoryTheme.material}
+      >
+          <VictoryLine
+            style={{parent: parentStyle}}
+            data={[]}
+            label="Hello"
+          />
+      </VictoryChart>
       </div>
     );
   }

@@ -40,7 +40,7 @@ export default {
   },
 
   getData(props) {
-    if (props.data) {
+    if (props.data && props.data.length > 0) {
       return this.formatData(props.data, props);
     } else {
       const generatedData = (props.x || props.y) && this.generateData(props);

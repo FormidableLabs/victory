@@ -320,6 +320,16 @@ export default class App extends React.Component {
           />
         </VictoryStack>
 
+        <VictoryChart
+          style={style}
+          theme={VictoryTheme.material}
+        >
+          <VictoryArea
+            style={style}
+            data={[]}
+          />
+        </VictoryChart>
+
       </div>
     );
   }
