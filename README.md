@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/FormidableLabs/victory.png?label=ready&title=Ready)](https://waffle.io/FormidableLabs/victory)
 [![Travis Status][trav_img]][trav_site]
 ![](https://badge-size.herokuapp.com/FormidableLabs/victory/master/dist/victory.min.js?compression=gzip)
 [![Join the chat at https://gitter.im/FormidableLabs/victory](https://badges.gitter.im/FormidableLabs/victory.svg)](https://gitter.im/FormidableLabs/victory?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
