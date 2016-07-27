@@ -86,7 +86,7 @@ export default {
       // check if the value is negative, if it is set to 0
       const replaceNeg = (val) => !val || val < 0 ? 0 : val;
       return isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
-    }
+    };
 
     return dataset.map((datum) => {
       const x = accessor.x(datum);
