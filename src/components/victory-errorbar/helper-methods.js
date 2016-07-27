@@ -149,7 +149,7 @@ export default {
     }
     const dataset = this.getErrorData(props);
     const domain = this.getDomainFromData(props, axis, dataset);
-    return Domain.padDomain(domain, props, axis);
+    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },
 
   getDomainFromData(props, axis, dataset) {

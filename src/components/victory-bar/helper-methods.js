@@ -25,9 +25,12 @@ export default {
   },
 
   getBarPosition(props, datum, scale) {
+    const currentAxis = props.horizontal ? "x" : "y";
+    const defaultMin = Scale.getScaleType(props, currentAxis) === "log" ?
+      1 / Number.MAX_SAFE_INTEGER : 0;
     const yOffset = datum.yOffset || 0;
     const xOffset = datum.xOffset || 0;
-    const y0 = yOffset;
+    const y0 = yOffset || defaultMin;
     const y = datum.y + yOffset;
     const x = datum.x + xOffset;
     const formatValue = (value, axis) => {

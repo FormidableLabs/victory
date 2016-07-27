@@ -249,7 +249,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const {domain, scale} = calculatedProps;
+    const { domain, scale } = calculatedProps;
     const axis = child.type.getAxis(child.props);
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
     const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
