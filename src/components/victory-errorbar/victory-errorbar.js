@@ -434,7 +434,8 @@ export default class VictoryErrorBar extends React.Component {
 
       }
     }
-     return errorBarLabelComponents.length > 0 ?
+
+    return errorBarLabelComponents.length > 0 ?
       React.cloneElement(groupComponent, {}, ...errorBarComponents, ...errorBarLabelComponents) :
       errorBarComponents;
   }

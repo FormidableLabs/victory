@@ -1,4 +1,4 @@
-import { omit, defaults, isArray, flatten, pick } from "lodash";
+import { assign, omit, defaults, isArray, flatten, pick } from "lodash";
 import { Helpers, Events } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
@@ -10,30 +10,27 @@ export default {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { groupComponent, height, width } = modifiedProps;
+    const { groupComponent, height, width, borderWidth } = modifiedProps;
     const childProps = { parent: {style: style.parent, scale, data, height, width} };
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
-      const eventKey = datum.eventKey;
+      const eventKey = datum.eventKey || index;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
 
-      const errorX = this.getErrors(datum, scale, "x");
-      const errorY = this.getErrors(datum, scale, "y");
-
-      const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
-        x, y, scale, datum, index, style: dataStyle, errorX, errorY, groupComponent,
-        borderWidth: modifiedProps.borderWidth
+        x, y, scale, datum, index, groupComponent, borderWidth,
+        style: this.getDataStyles(datum, style.data),
+        errorX: this.getErrors(datum, scale, "x"),
+        errorY: this.getErrors(datum, scale, "y")
       };
 
-      const text = this.getLabelText(modifiedProps, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
         x: x - labelStyle.padding,
         y: y - labelStyle.padding,
-        text,
+        text: this.getLabelText(modifiedProps, datum, index),
         index,
         scale,
         datum: dataProps.datum,
@@ -84,39 +81,20 @@ export default {
       errorX: Helpers.createAccessor(props.errorX),
       errorY: Helpers.createAccessor(props.errorY)
     };
+
+    const replaceNegatives = (errors) => {
+      // check if the value is negative, if it is set to 0
+      const replaceNeg = (val) => !val || val < 0 ? 0 : val;
+      return isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
+    }
+
     return dataset.map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
-      let errorX = accessor.errorX(datum);
-      let errorY = accessor.errorY(datum);
-      // check if the value is negative, if it is set to 0
-      if (!isArray(errorX) && errorX < 0 || !errorX) {
-        errorX = 0;
-      } else if (isArray(errorX)) {
-        errorX.map((err) => {
-          if (err < 0) {
-            return 0;
-          }
-          return err;
-        });
-      }
+      const errorX = replaceNegatives(accessor.errorX(datum));
+      const errorY = replaceNegatives(accessor.errorY(datum));
 
-      if (!isArray(errorY) && errorY < 0 || !errorY) {
-        errorY = 0;
-      } else if (isArray(errorY)) {
-        errorY.map((err) => {
-          if (err < 0) {
-            return 0;
-          }
-          return err;
-        });
-      }
-
-      return Object.assign(
-          {},
-          datum,
-          { x, y, errorX, errorY }
-        );
+      return assign({}, datum, { x, y, errorX, errorY });
     });
   },
 

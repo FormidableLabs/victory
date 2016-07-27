@@ -79,13 +79,10 @@ export default {
 
   getlabelPadding(style, datum, horizontal) {
     const defaultPadding = style.padding || 0;
-    const sign = {
-      x: datum.x < 0 ? -1 : 1,
-      y: datum.y < 0 ? 1 : -1
-    };
+    const sign = datum.y < 0 ? -1 : 1;
     return {
-      x: horizontal ? sign.x * defaultPadding : 0,
-      y: horizontal ? 0 : sign.y * defaultPadding
+      x: horizontal ? sign * defaultPadding : 0,
+      y: horizontal ? 0 : sign * defaultPadding
     };
   },
 
@@ -127,7 +124,7 @@ export default {
       const labelProps = {
         style: labelStyle,
         x: horizontal ? position.y + labelPadding.x : position.x + labelPadding.x,
-        y: horizontal ? position.x + labelPadding.y: position.y + labelPadding.y,
+        y: horizontal ? position.x + labelPadding.y : position.y - labelPadding.y,
         y0: position.y0,
         text: this.getLabel(modifiedProps, datum, index),
         index,
