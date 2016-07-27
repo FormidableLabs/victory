@@ -18,7 +18,9 @@ export default {
       return propsDomain;
     }
     childComponents = childComponents || React.Children.toArray(props.children);
-    return this.getDomainFromChildren(props, axis, childComponents);
+    return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
+      props,
+      axis);
   },
 
   setAnimationState(nextProps) {
@@ -92,8 +94,10 @@ export default {
     };
 
     const childDomains = getChildDomains(childComponents);
+    const min = Collection.getMinValue(childDomains);
+    const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
-      [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
+      [0, 1] : [min, max];
   },
 
   getDataFromChildren(props, childComponents) {

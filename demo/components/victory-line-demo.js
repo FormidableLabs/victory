@@ -115,17 +115,17 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryLine</h1>
 
-          <VictoryLine
-            style={{parent: parentStyle, data: this.state.style}}
-            data={this.state.transitionData}
-            animate={{duration: 800}}
-            containerComponent={
-              <VictoryContainer
-                title="Line Chart"
-                desc="This is a line chart for displaying data."
-              />
-            }
-          />
+        <VictoryLine
+          style={{parent: parentStyle, data: this.state.style}}
+          data={this.state.transitionData}
+          animate={{duration: 800}}
+          containerComponent={
+            <VictoryContainer
+              title="Line Chart"
+              desc="This is a line chart for displaying data."
+            />
+          }
+        />
 
         <VictoryLine
           style={{parent: parentStyle, data: this.state.style}}
@@ -198,6 +198,71 @@ export default class App extends React.Component {
             {x: new Date(2015, 1, 1), y: 470}
           ]}
         />
+
+        <VictoryLine
+          style={{parent: parentStyle}}
+          data={[
+            {x: 1, y: 1},
+            {x: 2, y: 3},
+            {x: 3, y: 5},
+            {x: 4, y: 2},
+            {x: 5, y: null},
+            {x: 6, y: null},
+            {x: 7, y: 6},
+            {x: 8, y: 7},
+            {x: 9, y: 8},
+            {x: 10, y: 12}
+          ]}
+        />
+
+        <VictoryChart
+          scale={{x: "linear", y: "log"}}
+        >
+        <VictoryLine
+          style={{parent: parentStyle}}
+        />
+        </VictoryChart>
+
+        <VictoryLine
+          style={{parent: parentStyle}}
+          data={this.state.arrayData}
+          label="Hello"
+          x={0}
+          y={1}
+          theme={VictoryTheme.grayscale}
+        />
+
+        <VictoryChart
+          theme={VictoryTheme.grayscale}
+        >
+          <VictoryLine
+            style={{parent: parentStyle}}
+            data={this.state.arrayData}
+            label="Hello"
+            x={0}
+            y={1}
+          />
+      </VictoryChart>
+
+      <VictoryChart
+        height={450}
+        scale={{
+          x: "time"
+        }}
+      >
+        <VictoryLine
+          data={[
+            {x: new Date(1960, 1, 1), y: 125},
+            {x: new Date(1987, 1, 1), y: 257},
+            {x: new Date(1993, 1, 1), y: 345},
+            {x: new Date(1997, 1, 1), y: 515},
+            {x: new Date(2001, 1, 1), y: 132},
+            {x: new Date(2005, 1, 1), y: 305},
+            {x: new Date(2011, 1, 1), y: 270},
+            {x: new Date(2015, 1, 1), y: 470}
+          ]}
+        />
+      </VictoryChart>
 
         <VictoryLine
           style={{parent: parentStyle}}

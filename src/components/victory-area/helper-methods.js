@@ -69,7 +69,9 @@ export default {
 
   getDataWithBaseline(props, domain) {
     const data = Data.getData(props);
-    const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
+    const defaultMin = Scale.getScaleType(props, "y") === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+
+    const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : defaultMin;
     return data.map((datum) => {
       const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
       const y0 = datum.yOffset || minY;

@@ -111,7 +111,7 @@ export default {
       }
       domain = [min, max];
     }
-    return Domain.padDomain(domain, props, axis);
+    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },
 
   isTransparent(attr) {
