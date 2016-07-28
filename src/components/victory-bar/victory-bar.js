@@ -1,4 +1,4 @@
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
@@ -397,8 +397,8 @@ export default class VictoryBar extends React.Component {
     const { role } = VictoryBar;
     const barComponents = [];
     const barLabelComponents = [];
-
-    this.dataKeys.forEach((key, index) => {
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {index, key: `${role}-${key}`, role: `${role}-${index}`},
@@ -408,9 +408,9 @@ export default class VictoryBar extends React.Component {
         this.baseProps[key].data
       );
 
-      barComponents.push(React.cloneElement(dataComponent, Object.assign(
+      barComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      ));
 
       const labelProps = defaults(
         {index, key: `${role}-label-${key}`},
@@ -422,18 +422,14 @@ export default class VictoryBar extends React.Component {
 
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        barLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
+        barLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps)));
+        }, labelProps));
       }
-    });
-
-    if (barLabelComponents.length > 0) {
-      return React.cloneElement(
-        groupComponent, {}, ...barComponents, ...barLabelComponents
-      );
     }
-    return barComponents;
+    return barLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...barComponents, ...barLabelComponents) :
+      barComponents;
   }
 
   renderContainer(props, group) {
@@ -447,7 +443,7 @@ export default class VictoryBar extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

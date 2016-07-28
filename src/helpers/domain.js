@@ -1,6 +1,7 @@
 import { flatten, includes, isPlainObject } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
+import Scale from "./scale";
 import { Helpers, Collection } from "victory-core";
 
 export default {
@@ -15,28 +16,51 @@ export default {
     }
     const dataset = Data.getData(props);
     const domain = this.getDomainFromData(props, axis, dataset);
-    return this.padDomain(domain, props, axis);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
+  },
+
+  cleanDomain(domain, props, axis) {
+    // Some scale types break when certain data is supplies. This method will
+    // remove data points that break scales. So far this method only removes
+    // zeroes for log scales
+    // TODO other cases?
+    const scaleType = Scale.getScaleType(props, axis);
+
+    if (scaleType !== "log") {
+      return domain;
+    }
+
+    const rules = (dom) => {
+      const almostZero = dom[0] < 0 || dom[1] < 0 ? -1 / Number.MAX_SAFE_INTEGER
+      : 1 / Number.MAX_SAFE_INTEGER;
+      const domainOne = dom[0] === 0 ? almostZero : dom[0];
+      const domainTwo = dom[1] === 0 ? almostZero : dom[1];
+      return [domainOne, domainTwo];
+    };
+
+    return rules(domain);
   },
 
   getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return this.padDomain(propsDomain, props, axis);
+      return this.cleanDomain(this.padDomain(propsDomain, props, axis), props, axis);
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      const zeroDomain = isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)]
-      : domain;
+      const min = Collection.getMinValue(domain, 0);
+      const max = Collection.getMaxValue(domain, 0);
+      const zeroDomain = isDependent ? [min, max] : domain;
       return this.padDomain(zeroDomain, props, axis);
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return this.padDomain(ensureZero(categoryDomain), props, axis);
+      return this.cleanDomain(this.padDomain(ensureZero(categoryDomain), props, axis), props, axis);
     }
     const dataset = Data.getData(props);
     const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
-    return this.padDomain(domain, props, axis);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
 
   getDomainFromProps(props, axis) {
@@ -50,8 +74,8 @@ export default {
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const allData = flatten(dataset).map((datum) => datum[currentAxis]);
-    const min = Math.min(...allData);
-    const max = Math.max(...allData);
+    const min = Collection.getMinValue(allData);
+    const max = Collection.getMaxValue(allData);
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
     if (min === max) {
@@ -180,8 +204,8 @@ export default {
       return domain;
     }
 
-    const domainMin = Math.min(...domain);
-    const domainMax = Math.max(...domain);
+    const domainMin = Collection.getMinValue(domain);
+    const domainMax = Collection.getMaxValue(domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
 

@@ -83,13 +83,16 @@ export default {
     const orderedData = sortBy(dataset, "x");
     const segments = [];
     let segmentStartIndex = 0;
-    orderedData.forEach((datum, index) => {
+    let segmentIndex = 0;
+    for (let index = 0, len = orderedData.length; index < len; index++) {
+      const datum = orderedData[index];
       if (datum.y === null || typeof datum.y === "undefined") {
-        segments.push(orderedData.slice(segmentStartIndex, index));
+        segments[segmentIndex] = orderedData.slice(segmentStartIndex, index);
+        segmentIndex++;
         segmentStartIndex = index + 1;
       }
-    });
-    segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
+    }
+    segments[segmentIndex] = orderedData.slice(segmentStartIndex, orderedData.length);
     return segments.filter((segment) => {
       return Array.isArray(segment) && segment.length > 0;
     });

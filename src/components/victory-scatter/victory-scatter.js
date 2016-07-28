@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import Point from "./point";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
@@ -419,7 +419,9 @@ export default class VictoryScatter extends React.Component {
     const { role } = VictoryScatter;
     const pointComponents = [];
     const pointLabelComponents = [];
-    this.dataKeys.forEach((key, index) => {
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
+    // this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {index, key: `${role}-${key}`, role: `${role}-${index}`},
@@ -429,9 +431,9 @@ export default class VictoryScatter extends React.Component {
         this.baseProps[key].data
       );
 
-      pointComponents.push(React.cloneElement(dataComponent, Object.assign(
+      pointComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      ));
 
       const labelProps = defaults(
         {key: `scatter-label-${key}`, index},
@@ -442,18 +444,15 @@ export default class VictoryScatter extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        pointLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
+        pointLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps)));
+        }, labelProps));
       }
-    });
-
-    if (pointLabelComponents.length > 0) {
-      return React.cloneElement(
-        groupComponent, {}, ...pointComponents, ...pointLabelComponents
-      );
     }
-    return pointComponents;
+
+    return pointLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...pointComponents, ...pointLabelComponents) :
+      pointComponents;
   }
 
   renderContainer(props, group) {
@@ -467,7 +466,7 @@ export default class VictoryScatter extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
