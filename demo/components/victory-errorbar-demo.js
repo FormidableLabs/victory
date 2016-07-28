@@ -157,7 +157,7 @@ export default class App extends React.Component {
         >
           <VictoryErrorBar
             style={style}
-            data={[{x: 1, y: 2, errorX: .5, errorY: .25}]}
+            data={[]}
           />
         </VictoryChart>
       </div>

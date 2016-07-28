@@ -314,8 +314,7 @@ export default class App extends React.Component {
       >
           <VictoryLine
             style={{parent: parentStyle}}
-            data={[{x: 2, y: 3}]}
-            label="Hello"
+            data={[]}
           />
       </VictoryChart>
       </div>

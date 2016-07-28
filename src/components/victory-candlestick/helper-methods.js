@@ -1,5 +1,5 @@
 import { assign, pick, omit, defaults } from "lodash";
-import { Helpers, Events } from "victory-core";
+import { Helpers, Events, Log } from "victory-core";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 
@@ -72,7 +72,8 @@ export default {
     if (props.data && props.data.length > 0) {
       data = props.data;
     } else {
-      data = this.generateData(props);
+      Log.warn("This is an empty dataset.");
+      data = [];
     }
 
     const accessor = {
@@ -97,19 +98,6 @@ export default {
     });
   },
 
-  generateData(props) {
-    // create an array of values evenly spaced across the x domain that include domain min/max
-    const domain = props.domain ? (props.domain.x || props.domain) :
-      Scale.getBaseScale(props, "x").domain();
-    const samples = 8;
-    const max = Math.max(...domain);
-    const values = Array(...Array(samples)).map((val, index) => {
-      const v = (max / samples) * index + Math.min(...domain);
-      return { x: v, open: v, close: v + 2, high: v + 3, low: v - 1};
-    });
-    return values;
-  },
-
   getDomain(props, axis) {
     let domain;
     if (props.domain && props.domain[axis]) {
@@ -123,6 +111,11 @@ export default {
          memo.concat(...datum[axis]) : memo.concat(datum[axis]);
       },
       []);
+
+      if (allData.length < 1) {
+        return Scale.getBaseScale(props, axis).domain();
+      }
+
       const min = Math.min(...allData);
       const max = Math.max(...allData);
       if (min === max) {

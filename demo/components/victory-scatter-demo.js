@@ -240,7 +240,7 @@ export default class App extends React.Component {
           <VictoryScatter
             style={style}
             theme={VictoryTheme.material}
-            data={[{x: 3, y: 4}]}
+            data={[]}
           />
         </VictoryChart>
 

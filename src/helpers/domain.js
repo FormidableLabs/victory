@@ -74,6 +74,11 @@ export default {
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const allData = flatten(dataset).map((datum) => datum[currentAxis]);
+
+    if (allData.length < 1) {
+      return Scale.getBaseScale(props, axis).domain();
+    }
+
     const min = Collection.getMinValue(allData);
     const max = Collection.getMaxValue(allData);
     // TODO: is this the correct behavior, or should we just error. How do we

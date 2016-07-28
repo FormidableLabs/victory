@@ -1,5 +1,5 @@
 import { assign, omit, defaults, isArray, flatten, pick } from "lodash";
-import { Helpers, Events } from "victory-core";
+import { Helpers, Events, Log } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -48,25 +48,17 @@ export default {
   },
 
   getErrorData(props) {
-    if (props.data && props.data.length > 0) {
+    if (props.data) {
+      if (props.data.length < 1) {
+        Log.warn("This is an empty dataset.");
+        return [];
+      }
+
       return this.formatErrorData(props.data, props);
     } else {
       const generatedData = (props.errorX || props.errorY) && this.generateData(props);
       return this.formatErrorData(generatedData, props);
     }
-  },
-
-  generateData(props) {
-    // create an array of values evenly spaced across the x domain that include domain min/max
-    const domain = props.domain ? (props.domain.x || props.domain) :
-      Scale.getBaseScale(props, "x").domain();
-    const samples = 8;
-    const max = Math.max(...domain);
-    const values = Array(...Array(samples)).map((val, index) => {
-      const v = (max / samples) * index + Math.min(...domain);
-      return { x: v, y: v, errorX: v / 2, errorY: v / 4 };
-    });
-    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
   },
 
   getErrors(datum, scale, axis) {
@@ -121,6 +113,11 @@ export default {
       return Domain.padDomain(categoryDomain, props, axis);
     }
     const dataset = this.getErrorData(props);
+
+    if (dataset.length < 1) {
+      return Scale.getBaseScale(props, axis).domain();
+    }
+
     const domain = this.getDomainFromData(props, axis, dataset);
     return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },

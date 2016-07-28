@@ -25,8 +25,8 @@ export default {
     const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
 
     const labelProps = {
-      x: scale.x(lastData.x) + labelStyle.padding,
-      y: scale.y(lastData.y),
+      x: lastData ? scale.x(lastData.x) + labelStyle.padding : 0,
+      y: lastData ? scale.y(lastData.y) : 0,
       style: labelStyle,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
@@ -50,7 +50,7 @@ export default {
 
     if (Data.getData(props).length < 2) {
       Log.warn("VictoryLine needs at least two data points to render properly.");
-      dataset = Data.generateData(props);
+      dataset = [];
     }
 
     const dataSegments = this.getDataSegments(dataset);
