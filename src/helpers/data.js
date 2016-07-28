@@ -52,7 +52,7 @@ export default {
     // create an array of values evenly spaced across the x domain that include domain min/max
     const domain = props.domain ? (props.domain.x || props.domain) :
       Scale.getBaseScale(props, "x").domain();
-    const samples = props.samples || 2;
+    const samples = props.samples || 1;
     const max = Math.max(...domain);
     const values = Array(...Array(samples)).map((val, index) => {
       const v = (max / samples) * index + Math.min(...domain);
