@@ -457,7 +457,7 @@ export default class App extends React.Component {
 
         <VictoryChart>
           <VictoryBar
-            data={[]}
+            data={[{x: 1, y: 3}]}
           />
         </VictoryChart>
       </div>

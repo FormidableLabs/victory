@@ -249,7 +249,7 @@ export default class App extends React.Component {
       >
           <VictoryLine
             style={{parent: parentStyle}}
-            data={[]}
+            data={[{x: 2, y: 3}]}
             label="Hello"
           />
       </VictoryChart>

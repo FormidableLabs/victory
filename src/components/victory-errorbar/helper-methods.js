@@ -84,12 +84,25 @@ export default {
   },
 
   getErrorData(props) {
-    if (props.data) {
+    if (props.data && props.data.length > 0) {
       return this.formatErrorData(props.data, props);
     } else {
       const generatedData = (props.errorX || props.errorY) && this.generateData(props);
       return this.formatErrorData(generatedData, props);
     }
+  },
+
+  generateData(props) {
+    // create an array of values evenly spaced across the x domain that include domain min/max
+    const domain = props.domain ? (props.domain.x || props.domain) :
+      Scale.getBaseScale(props, "x").domain();
+    const samples = 8;
+    const max = Math.max(...domain);
+    const values = Array(...Array(samples)).map((val, index) => {
+      const v = (max / samples) * index + Math.min(...domain);
+      return { x: v, y: v, errorX: v / 2, errorY: v / 4 };
+    });
+    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
   },
 
   formatErrorData(dataset, props) {

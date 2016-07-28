@@ -151,6 +151,15 @@ export default class App extends React.Component {
             data={this.state.data}
           />
         </VictoryChart>
+
+        <VictoryChart
+          theme={VictoryTheme.material}
+        >
+          <VictoryErrorBar
+            style={style}
+            data={[{x: 1, y: 2, errorX: .5, errorY: .25}]}
+          />
+        </VictoryChart>
       </div>
     );
   }

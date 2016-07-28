@@ -1,5 +1,5 @@
 import { sortBy, defaults, last } from "lodash";
-import { Helpers } from "victory-core";
+import { Helpers, Log } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
@@ -46,7 +46,13 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const dataset = Data.getData(props);
+    let dataset = Data.getData(props);
+
+    if (Data.getData(props).length < 2) {
+      Log.warn("VictoryLine needs at least two data points to render properly.");
+      dataset = Data.generateData(props);
+    }
+
     const dataSegments = this.getDataSegments(dataset);
     const range = {
       x: Helpers.getRange(props, "x"),

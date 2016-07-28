@@ -66,7 +66,14 @@ export default {
   },
 
   getData(props) {
-    const data = props.data;
+    let data;
+
+    if (props.data && props.data.length > 0) {
+      data = props.data;
+    } else {
+      data = this.generateData(props);
+    }
+
     const accessor = {
       x: Helpers.createAccessor(props.x),
       open: Helpers.createAccessor(props.open),
@@ -89,6 +96,19 @@ export default {
     });
   },
 
+  generateData(props) {
+    // create an array of values evenly spaced across the x domain that include domain min/max
+    const domain = props.domain ? (props.domain.x || props.domain) :
+      Scale.getBaseScale(props, "x").domain();
+    const samples = 8;
+    const max = Math.max(...domain);
+    const values = Array(...Array(samples)).map((val, index) => {
+      const v = (max / samples) * index + Math.min(...domain);
+      return { x: v, open: v, close: v + 2, high: v + 3, low: v - 1};
+    });
+    return values;
+  },
+
   getDomain(props, axis) {
     let domain;
     if (props.domain && props.domain[axis]) {
@@ -105,7 +125,7 @@ export default {
       const min = Math.min(...allData);
       const max = Math.max(...allData);
       if (min === max) {
-        const adjustedMax = max === 0 ? 1 : max;
+        const adjustedMax = max === 0 ? 1 : max + max;
         return [0, adjustedMax];
       }
       domain = [min, max];

@@ -1,5 +1,5 @@
 import { last } from "lodash";
-import { Helpers } from "victory-core";
+import { Helpers, Log } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
@@ -68,7 +68,13 @@ export default {
   },
 
   getDataWithBaseline(props, domain) {
-    const data = Data.getData(props);
+    let data = Data.getData(props);
+
+    if (data.length < 2) {
+      Log.warn("Area requires at least two data points.");
+      data = Data.generateData(props);
+    }
+
     const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : 0;
     return data.map((datum) => {
       const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
