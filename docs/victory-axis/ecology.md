@@ -26,11 +26,11 @@ Axes are meant to be composable.
 ```playground
 <svg width={450} height={450}>
   <VictoryAxis
-    padding={75}
+    padding={85}
     label="x-axis"
     standalone={false}/>
   <VictoryAxis dependentAxis
-    padding={75}
+    padding={85}
     label="y-axis"
     standalone={false}/>
 </svg>
