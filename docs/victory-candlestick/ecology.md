@@ -50,7 +50,7 @@ The sensible defaults VictoryCandlestick provides makes it easy to get started, 
 
 ```playground
 <VictoryChart
-  height={600}
+  height={500}
   padding={75}
   scale={{x: "time"}}
 >

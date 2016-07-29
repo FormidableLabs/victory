@@ -50,7 +50,7 @@ The sensible defaults VictoryErrorBar provides makes it easy to get started, but
 
 ```playground
 <VictoryChart
-  height={600}
+  height={500}
   padding={75}
   domainPadding={20}
 >
@@ -182,12 +182,12 @@ class App extends React.Component {
       };
     });
   }
-  
+
   getColors(){
     const colors = ["salmon", "pink", "lime", "aqua", "fuchsia"];
     return colors[random(0, 4)];
   }
-  
+
   componentDidMount() {
     setInterval(() => {
       this.setState({
