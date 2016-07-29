@@ -12,22 +12,28 @@ export default {
     }
   },
 
+  getSliceStyle(datum, index, calculatedValues) {
+    const { style, colors } = calculatedValues;
+    const fill = this.getColor(style, colors, index);
+    const dataStyles = omit(datum, ["x", "y", "label"]);
+    const sliceStyle = defaults({}, {fill}, style.data, dataStyles);
+    return Helpers.evaluateStyle(sliceStyle, datum);
+  },
+
   getBaseProps(props, fallbackProps) {
     const calculatedValues = this.getCalculatedValues(props, fallbackProps);
-    const { slices, style, pathFunction, colors, labelPosition } = calculatedValues;
+    const { slices, style, pathFunction, labelPosition } = calculatedValues;
     const { width, height } = props;
-    const parentProps = {slices, pathFunction, width, height, style: style.parent};
-    return slices.reduce((memo, slice, index) => {
+    const childProps = { parent: {slices, pathFunction, width, height, style: style.parent} };
+    for (let index = 0, len = slices.length; index < len; index++) {
+      const slice = slices[index];
       const datum = slice.data;
-      const eventKey = datum.eventKey;
-      const fill = this.getColor(style, colors, index);
-      const dataStyles = omit(slice.data, ["x", "y", "label"]);
-      const sliceStyle = defaults({}, {fill}, style.data, dataStyles);
+      const eventKey = datum.eventKey || index;
       const dataProps = {
         index,
         slice,
         pathFunction,
-        style: Helpers.evaluateStyle(sliceStyle, datum),
+        style: this.getSliceStyle(datum, index, calculatedValues),
         datum
       };
 
@@ -50,12 +56,12 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || "middle",
         angle: labelStyle.angle
       };
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
   getCalculatedValues(props, fallbackProps) {
