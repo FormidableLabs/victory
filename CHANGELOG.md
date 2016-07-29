@@ -1,5 +1,40 @@
 # Victory Changelog
 
+## 0.10.0 (2016-07-29)
+
+**Breaking Changes**
+- Default styles and some default props have changed across all components in this release. 
+
+*VictoryTheme*
+- All Victory components support a `theme` prop that can be used to define styles and props across different component types. 
+- `victory-core` includes the [material theme](https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/material.js)
+
+*VictoryCandlestick*
+- The new `VictoryCandlestick` component may be used standalone or in conjunction with `VictoryChart`. It has an idential API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryCandlestick` expects `data` in the form `[{x: value, high: NUMBER, low: NUMBER, open: NUMBER, close: NUMBER}...]`, and includes data sccessor props `x`, `high`, `low`, `open`, and `close`.
+
+*VictoryErrorBar*
+- The new `VictoryErrorBar` component may be used standalone or in conjunction with `VictoryChart`. It has an idential API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryErrorBar` expects `data` in the form `[{x: value, y: value, errorX: ERR, errorY: ERR}...]`, Where `ERR` is a number or a two value array for asymmetric errors. `VictoryErrorBar` also includes data accessor props `errorX` and `errorY`.
+
+*VictoryNative*
+- Changes have been made across all components in order to support [victory-native](https://github.com/FormidableLabs/victory-native). `VictoryNative` has an identical API to `Victory`, and reuses most of the code. Changes made to `Victory` to support `VictoryNative` are all non-breaking, and minimal. They include the addition of a `groupComponent` prop in all components (which defaults to `<g>`), removing svg transforms whenever possible in favor of absolute positioning, and code reorganization. 
+
+*Performance improvements*
+- Low-hanging performance improvements included in this release:
+  - Replace `Object.assign` with lodash `assign`
+  - Replace `map` / `reduce` array methods with length-cached `for` loops in methods responsible for rendering elements
+
+*Misc*
+- Improvements for `domainPadding`
+  - `domainPadding` is supported in all components compatible with `VictoryChart`
+  - Negative and asymmetric `domainPadding` is supported. Example: `domainPadding={{x: [-20, 20], y: 50}}`
+  - Grouped bar charts get automatic `domainPadding` so that bars wont overflow axes in most cases.
+- Adds Aria roles for all rendered elements
+- Fixes [bugs related to log scales](https://github.com/FormidableLabs/victory-chart/pull/317)
+- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318) 
+- Improves consistency for charts with empty and single value data arrays
+- Removes `reduce-calc-css` as a dependency
+
+
 ## 0.9.0 (2016-06-17)
 
 *Events enhancements*
