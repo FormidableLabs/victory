@@ -1,5 +1,10 @@
 # VictoryLine Changelog
 
+## 10.2.1 (2016-07-29)
+
+- Update `victory-core`
+- Removes `reduce-calc-css`
+
 ## 10.2.0 (2016-07-29)
 
 - Performance improvements across all components
