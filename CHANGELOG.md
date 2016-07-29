@@ -1,4 +1,8 @@
-# VictoryLine Changelog
+# VictoryChart Changelog
+
+## 10.2.2 (2016-07-29)
+
+- Fix tick style bug
 
 ## 10.2.1 (2016-07-29)
 
