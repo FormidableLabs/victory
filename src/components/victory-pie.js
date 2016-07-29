@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes,
   Events,
@@ -371,7 +371,9 @@ export default class VictoryPie extends React.Component {
   renderData(props) {
     const sliceComponents = [];
     const sliceLabelComponents = [];
-    this.dataKeys.forEach((key) => {
+    // this.dataKeys.forEach((key) => {
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {key: `pie-${key}`},
@@ -380,9 +382,9 @@ export default class VictoryPie extends React.Component {
         this.baseProps[key].data,
         props.dataComponent.props
       );
-      sliceComponents.push(React.cloneElement(props.dataComponent, Object.assign(
+      sliceComponents[index] = React.cloneElement(props.dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      ));
 
       const labelProps = defaults(
         {key: `pie-label-${key}`},
@@ -393,18 +395,17 @@ export default class VictoryPie extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        sliceLabelComponents.push(React.cloneElement(props.labelComponent, Object.assign({
+        sliceLabelComponents[index] = React.cloneElement(props.labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps)));
+        }, labelProps));
       }
-    });
+    }
 
     return sliceLabelComponents.length > 0 ?
       React.cloneElement(
-        props.groupComponent,
-        {key: "pie-group"},
-        sliceComponents, sliceLabelComponents
-      ) : sliceComponents;
+        props.groupComponent, {key: "pie-group"}, ...sliceComponents, ...sliceLabelComponents
+      ) :
+      sliceComponents;
   }
 
   renderContainer(props, group) {
@@ -418,7 +419,7 @@ export default class VictoryPie extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
