@@ -1,5 +1,5 @@
 import { assign, omit, defaults, isArray, flatten, pick } from "lodash";
-import { Helpers, Events } from "victory-core";
+import { Helpers, Events, Log } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -49,6 +49,11 @@ export default {
 
   getErrorData(props) {
     if (props.data) {
+      if (props.data.length < 1) {
+        Log.warn("This is an empty dataset.");
+        return [];
+      }
+
       return this.formatErrorData(props.data, props);
     } else {
       const generatedData = (props.errorX || props.errorY) && this.generateData(props);
@@ -108,6 +113,11 @@ export default {
       return Domain.padDomain(categoryDomain, props, axis);
     }
     const dataset = this.getErrorData(props);
+
+    if (dataset.length < 1) {
+      return Scale.getBaseScale(props, axis).domain();
+    }
+
     const domain = this.getDomainFromData(props, axis, dataset);
     return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },

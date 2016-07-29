@@ -1,5 +1,5 @@
 import { sortBy, defaults, last } from "lodash";
-import { Helpers } from "victory-core";
+import { Helpers, Log } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
@@ -25,8 +25,8 @@ export default {
     const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
 
     const labelProps = {
-      x: scale.x(lastData.x) + labelStyle.padding,
-      y: scale.y(lastData.y),
+      x: lastData ? scale.x(lastData.x) + labelStyle.padding : 0,
+      y: lastData ? scale.y(lastData.y) : 0,
       style: labelStyle,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
@@ -46,7 +46,13 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const dataset = Data.getData(props);
+    let dataset = Data.getData(props);
+
+    if (Data.getData(props).length < 2) {
+      Log.warn("VictoryLine needs at least two data points to render properly.");
+      dataset = [];
+    }
+
     const dataSegments = this.getDataSegments(dataset);
     const range = {
       x: Helpers.getRange(props, "x"),

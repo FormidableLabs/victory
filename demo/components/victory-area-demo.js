@@ -331,6 +331,17 @@ export default class App extends React.Component {
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
         </VictoryStack>
+
+        <VictoryChart
+          style={style}
+          theme={VictoryTheme.material}
+        >
+          <VictoryArea
+            style={style}
+            data={[]}
+          />
+        </VictoryChart>
+
       </div>
     );
   }

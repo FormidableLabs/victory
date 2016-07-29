@@ -1,5 +1,5 @@
 import { assign, uniq } from "lodash";
-import { Helpers, Collection } from "victory-core";
+import { Helpers, Collection, Log } from "victory-core";
 import Scale from "./scale";
 
 export default {
@@ -41,7 +41,12 @@ export default {
 
   getData(props) {
     if (props.data) {
-      return this.formatData(props.data, props);
+      if (props.data.length < 1) {
+        Log.warn("This is an empty dataset.");
+        return [];
+      } else {
+        return this.formatData(props.data, props);
+      }
     } else {
       const generatedData = (props.x || props.y) && this.generateData(props);
       return this.formatData(generatedData, props);

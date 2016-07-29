@@ -114,6 +114,7 @@ export default class App extends React.Component {
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
+
         <ChartWrap scale={{x: "log", y: "linear"}}>
           <VictoryBar
             scale={{x: "log", y: "linear"}}
@@ -514,6 +515,12 @@ export default class App extends React.Component {
             ]}
             x={"y"}
             y={"x"}
+          />
+        </VictoryChart>
+
+        <VictoryChart>
+          <VictoryBar
+            data={[]}
           />
         </VictoryChart>
       </div>
