@@ -1,5 +1,3 @@
-import reduceCSSCalc from "reduce-css-calc";
-
 /**
  * Given an object with CSS/SVG transform definitions, return the string value
  * for use with the `transform` CSS property or SVG attribute. Note that we
@@ -32,10 +30,6 @@ const toTransformString = function (obj, ...more) {
 export default {
 
   toTransformString,
-
-  calc(expr, precision) {
-    return reduceCSSCalc(`calc(${expr})`, precision);
-  },
 
   /**
    * Given the name of a color scale, getColorScale will return an array
