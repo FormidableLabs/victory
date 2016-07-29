@@ -1,3 +1,5 @@
+import { assign } from "lodash";
+
 // *
 // * Colors
 // *
@@ -66,7 +68,7 @@ export default {
       strokeLinecap,
       strokeLinejoin
     },
-    axisLabel: Object.assign({}, baseLabelStyles,
+    axisLabel: assign({}, baseLabelStyles,
       {
         padding,
         stroke: "transparent"
@@ -87,7 +89,7 @@ export default {
       strokeLinecap,
       strokeLinejoin
     },
-    tickLabels: Object.assign({}, baseLabelStyles,
+    tickLabels: assign({}, baseLabelStyles,
       {
         fill: blueGrey700,
         stroke: "transparent"
@@ -111,7 +113,7 @@ export default {
     },
     labels: baseLabelStyles,
     parent: {},
-    props: Object.assign({}, baseProps,
+    props: assign({}, baseProps,
       {
         candeColors: {
           positive: "#ffffff",
@@ -126,7 +128,7 @@ export default {
       stroke: blueGrey700,
       strokeWidth: 2
     },
-    labels: Object.assign({}, baseLabelStyles,
+    labels: assign({}, baseLabelStyles,
       {
         stroke: "transparent",
         strokeWidth: 0,
@@ -141,7 +143,7 @@ export default {
       stroke: blueGrey700,
       strokeWidth: 2
     },
-    labels: Object.assign({}, baseLabelStyles,
+    labels: assign({}, baseLabelStyles,
       {
         stroke: "transparent",
         strokeWidth: 0,
@@ -150,7 +152,7 @@ export default {
     parent: {}
   },
   pie: {
-    props: Object.assign({}, baseProps,
+    props: assign({}, baseProps,
       {
         colorScale: colors
       }),
@@ -160,7 +162,7 @@ export default {
         stroke: blueGrey50,
         strokeWidth: 1
       },
-      labels: Object.assign({}, baseLabelStyles,
+      labels: assign({}, baseLabelStyles,
         {
           padding: 200,
           stroke: "transparent",

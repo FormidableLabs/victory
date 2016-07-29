@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Style } from "../victory-util/index";
-import {merge, pick} from "lodash";
+import { assign, merge, pick } from "lodash";
 
 const defaultStyles = {
   backgroundColor: "#d9d9d9",
@@ -152,7 +152,7 @@ export default class VictoryLabel extends React.Component {
   };
 
   static defaultProps = {
-    capHeight: "0.71em", // Magic number from d3.
+    capHeight: 0.71, // Magic number from d3.
     lineHeight: 1
   };
 
@@ -164,8 +164,7 @@ export default class VictoryLabel extends React.Component {
 
   getHeight(props, type) {
     const datum = props.datum || props.data;
-    const height = Helpers.evaluateProp(props[type], datum);
-    return typeof height === "number" ? `${height}em` : height;
+    return Helpers.evaluateProp(props[type], datum);
   }
 
   getContent(props) {
@@ -187,15 +186,11 @@ export default class VictoryLabel extends React.Component {
       Helpers.evaluateProp(props.verticalAnchor, datum) : "middle";
     switch (verticalAnchor) {
     case "end":
-      return Style.calc(
-        `${dy} +  ${capHeight} / 2 + (0.5 - ${length}) * ${lineHeight}`
-      );
+      return dy + capHeight / 2 + (0.5 - length) * lineHeight;
     case "middle":
-      return Style.calc(
-        `${dy} + ${capHeight} / 2 + (0.5 - ${length} / 2) * ${lineHeight}`
-      );
+      return dy + capHeight / 2 + (0.5 - length / 2) * lineHeight;
     default:
-      return Style.calc(`${dy} + ${capHeight} / 2 + ${lineHeight} / 2`);
+      return dy + capHeight / 2 + lineHeight / 2;
     }
   }
 
@@ -209,7 +204,7 @@ export default class VictoryLabel extends React.Component {
     return (transformPart || angle) && Style.toTransformString(transformPart, rotatePart);
   }
 
-  renderElements(props, content) {
+  renderElements(props, style, content) {
     const transform = this.getTransform(props);
     const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);
     return (
@@ -218,7 +213,7 @@ export default class VictoryLabel extends React.Component {
         {...props.events}
       >
         {content.map((line, i) => {
-          const dy = i ? props.lineHeight : undefined;
+          const dy = i ? props.lineHeight * style.fontSize : undefined;
           return (
             <tspan key={i} x={props.x} dy={dy}>
               {line}
@@ -231,16 +226,16 @@ export default class VictoryLabel extends React.Component {
 
   render() {
     const datum = this.props.datum || this.props.data;
+    const style = this.getStyles(this.props);
     const lineHeight = this.getHeight(this.props, "lineHeight");
     const textAnchor = this.props.textAnchor ?
       Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
     const content = this.getContent(this.props);
-    const style = this.getStyles(this.props);
     const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
-    const dy = this.getDy(this.props, content, lineHeight);
-    const labelProps = Object.assign(
+    const dy = this.getDy(this.props, content, lineHeight) * style.fontSize;
+    const labelProps = assign(
       {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, this.props.events
     );
-    return this.renderElements(labelProps, content);
+    return this.renderElements(labelProps, style, content);
   }
 }
