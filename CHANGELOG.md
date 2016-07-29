@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 4.3.0 (2016-07-29)
+
+- Performance improvements
+- Update `victory-core` to remove `reduce-calc-css`
+
 ## 4.2.0 (2016-07-02)
 
 - Adds support for themes
