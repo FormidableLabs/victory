@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "10.1.0",
+  "version": "10.2.0",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -37,7 +37,7 @@
     "builder-victory-component-dev": "^2.3.0",
     "chai": "^3.2.0",
     "ecology": "^1.6.0",
-    "formidable-landers":"^3.3.3",
+    "formidable-landers": "^3.3.3",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
     "radium": "^0.16.2",
