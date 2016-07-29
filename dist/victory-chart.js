@@ -9209,7 +9209,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	childProps[index]={
 	axis:axisProps,
 	axisLabel:axisLabelProps,
-	ticks:this.getTickProps(tickLayout,style.tickStyle,tick),
+	ticks:this.getTickProps(tickLayout,styles.tickStyle,tick),
 	tickLabels:this.getTickLabelProps(
 	tickLayout,(0,_assign3.default)({},anchors,styles.tickLabels),tick,tickFormat(tick,index)),
 	
