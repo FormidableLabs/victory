@@ -1,4 +1,15 @@
 # VictoryLine Changelog
+
+## 10.2.0 (2016-07-29)
+
+- Performance improvements across all components
+- Supports asymmetric `domainPadding`
+- Supports `domainPadding` on all child components
+- Adds automatic `domainPadding` for grouped bars
+- Fixes [bugs related to log scales](https://github.com/FormidableLabs/victory-chart/pull/317)
+- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318) 
+- Improves consistency for charts with empty and single value data arrays
+
 ## 10.1.0 (2016-07-15)
 
 - Adds VictoryErrorBar
