@@ -71,8 +71,13 @@ export default {
 
     const errorNames = {x: "errorX", y: "errorY"};
     const errors = datum[errorNames[axis]];
+    if (errors === 0) {
+      return false;
+    }
+
     return isArray(errors) ?
-      [ scale[axis](errors[0] + datum[axis]), scale[axis](datum[axis] - errors[1]) ] :
+      [ errors[0] === 0 ? false : scale[axis](errors[0] + datum[axis]),
+        errors[1] === 0 ? false : scale[axis](datum[axis] - errors[1]) ] :
       [ scale[axis](errors + datum[axis]), scale[axis](datum[axis] - errors) ];
   },
 
