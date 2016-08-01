@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.10.1 (2016-08-01)
+
+- Fix minor error bar bug
+- Fix minor axis style bugs
+
 ## 0.10.0 (2016-07-29)
 
 **Breaking Changes**
