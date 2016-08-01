@@ -9211,7 +9211,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	axisLabel:axisLabelProps,
 	ticks:this.getTickProps(tickLayout,styles.tickStyle,tick),
 	tickLabels:this.getTickLabelProps(
-	tickLayout,(0,_assign3.default)({},anchors,styles.tickLabels),tick,tickFormat(tick,index)),
+	tickLayout,(0,_assign3.default)({},anchors,styles.labelStyle),tick,tickFormat(tick,index)),
 	
 	grid:this.getGridProps(gridLayout,styles.gridStyle,tick)};
 	
