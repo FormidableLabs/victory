@@ -11942,9 +11942,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	childProps[index]={
 	axis:axisProps,
 	axisLabel:axisLabelProps,
-	ticks:this.getTickProps(tickLayout,style.tickStyle,tick),
+	ticks:this.getTickProps(tickLayout,styles.tickStyle,tick),
 	tickLabels:this.getTickLabelProps(
-	tickLayout,(0,_assign3.default)({},anchors,styles.tickLabels),tick,tickFormat(tick,index)),
+	tickLayout,(0,_assign3.default)({},anchors,styles.labelStyle),tick,tickFormat(tick,index)),
 	
 	grid:this.getGridProps(gridLayout,styles.gridStyle,tick)};
 	
@@ -12967,7 +12967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-scale/ Version 1.0.1. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-scale/ Version 1.0.2. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(242), __webpack_require__(243), __webpack_require__(244), __webpack_require__(246), __webpack_require__(247), __webpack_require__(248), __webpack_require__(245)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-array', 'd3-collection', 'd3-interpolate', 'd3-format', 'd3-time', 'd3-time-format', 'd3-color'], factory) :
@@ -15634,7 +15634,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-format/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-format/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -15971,7 +15971,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-time/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-time/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -16353,7 +16353,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-time-format/ Version 2.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-time-format/ Version 2.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(247)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-time'], factory) :
@@ -16888,11 +16888,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  var locale;
-	  exports.timeFormat;
-	  exports.timeParse;
-	  exports.utcFormat;
-	  exports.utcParse;
-	
 	  defaultLocale({
 	    dateTime: "%x, %X",
 	    date: "%-m/%-d/%Y",
@@ -20698,7 +20693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var group=this.renderGroup(this.renderData(modifiedProps),baseStyles.parent);
 	
 	return standalone?this.renderContainer(modifiedProps,group):group;
-	}}]);return VictoryLine;}(_react2.default.Component);VictoryLine.role="line";VictoryLine.defaultTransitions={onExit:{duration:500,before:function before(){return{y:null};}},onEnter:{duration:500,before:function before(){return{y:null};},after:function after(datum){return{y:datum.y};}}};VictoryLine.propTypes={/**
+	}}]);return VictoryLine;}(_react2.default.Component);VictoryLine.role="line";VictoryLine.defaultTransitions={onExit:{duration:500,before:function before(datum){return{y:datum.y};}},onEnter:{duration:500,before:function before(){return{y:null};},after:function after(datum){return{y:datum.y};}}};VictoryLine.propTypes={/**
 	     * The animate prop specifies props for VictoryAnimation to use. The animate prop should
 	     * also be used to specify enter and exit transition configurations with the `onExit`
 	     * and `onEnter` namespaces respectively.
@@ -20919,7 +20914,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-shape/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-shape/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(321)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-path'], factory) :
@@ -27890,12 +27885,15 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 347 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}/* eslint-disable max-statements */var
 	
 	ErrorBar=function(_React$Component){_inherits(ErrorBar,_React$Component);
 	function ErrorBar(props){_classCallCheck(this,ErrorBar);return _possibleConstructorReturn(this,Object.getPrototypeOf(ErrorBar).call(this,
 	props));
 	}_createClass(ErrorBar,[{key:"renderErrorBar",value:function renderErrorBar(
+	
+	
 	
 	
 	
@@ -27926,6 +27924,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	this.props;var x=_props.x;var y=_props.y;var borderWidth=_props.borderWidth;var groupComponent=_props.groupComponent;
 	
 	return _react2.default.cloneElement(groupComponent,{},
+	error.errorRight?
 	_react2.default.createElement("line",_extends({
 	ref:"borderRight"},
 	this.props.events,{
@@ -27933,8 +27932,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x1:error.errorRight,
 	x2:error.errorRight,
 	y1:y-borderWidth,
-	y2:y+borderWidth})),
+	y2:y+borderWidth})):
 	
+	null,
+	
+	error.errorLeft?
 	_react2.default.createElement("line",_extends({
 	ref:"borderLeft"},
 	this.props.events,{
@@ -27942,8 +27944,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x1:error.errorLeft,
 	x2:error.errorLeft,
 	y1:y-borderWidth,
-	y2:y+borderWidth})),
+	y2:y+borderWidth})):
 	
+	null,
+	
+	error.errorBottom?
 	_react2.default.createElement("line",_extends({
 	ref:"borderBottom"},
 	this.props.events,{
@@ -27951,8 +27956,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x1:x-borderWidth,
 	x2:x+borderWidth,
 	y1:error.errorBottom,
-	y2:error.errorBottom})),
+	y2:error.errorBottom})):
 	
+	null,
+	
+	error.errorTop?
 	_react2.default.createElement("line",_extends({
 	ref:"borderTop"},
 	this.props.events,{
@@ -27960,8 +27968,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x1:x-borderWidth,
 	x2:x+borderWidth,
 	y1:error.errorTop,
-	y2:error.errorTop})),
+	y2:error.errorTop})):
 	
+	null,
+	
+	error.errorTop?
 	_react2.default.createElement("line",_extends({
 	ref:"crossTop"},
 	this.props.events,{
@@ -27970,8 +27981,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x2:x,
 	y1:y,
 	y2:error.errorTop,
-	shapeRendering:"optimizeSpeed"})),
+	shapeRendering:"optimizeSpeed"})):
 	
+	null,
+	
+	error.errorBottom?
 	_react2.default.createElement("line",_extends({
 	ref:"crossBottom"},
 	this.props.events,{
@@ -27980,8 +27994,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x2:x,
 	y1:y,
 	y2:error.errorBottom,
-	shapeRendering:"optimizeSpeed"})),
+	shapeRendering:"optimizeSpeed"})):
 	
+	null,
+	
+	error.errorLeft?
 	_react2.default.createElement("line",_extends({
 	ref:"crossLeft"},
 	this.props.events,{
@@ -27990,8 +28007,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	x2:error.errorLeft,
 	y1:y,
 	y2:y,
-	shapeRendering:"optimizeSpeed"})),
+	shapeRendering:"optimizeSpeed"})):
+	null,
 	
+	error.errorRight?
 	_react2.default.createElement("line",_extends({
 	ref:"crossRight"},
 	this.props.events,{
@@ -28000,8 +28019,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	x2:error.errorRight,
 	y1:y,
 	y2:y,
-	shapeRendering:"optimizeSpeed"})));
-	
+	shapeRendering:"optimizeSpeed"})):
+	null);
 	
 	}},{key:"render",value:function render()
 	
@@ -28012,23 +28031,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	this.props;var errorX=_props2.errorX;var errorY=_props2.errorY;var scale=_props2.scale;
 	
-	var rangeX=scale.x.range();
-	var rangeY=scale.y.range();
-	var positiveErrorX=errorX[0];
-	var negativeErrorX=errorX[1];
-	var positiveErrorY=errorY[1];
-	var negativeErrorY=errorY[0];
-	var errorTop=positiveErrorY>=rangeY[0]?rangeY[0]:positiveErrorY;
-	var errorBottom=negativeErrorY<=rangeY[1]?rangeY[1]:negativeErrorY;
-	var errorRight=positiveErrorX>=rangeX[1]?rangeX[1]:positiveErrorX;
-	var errorLeft=negativeErrorX<=rangeX[0]?rangeX[0]:negativeErrorX;
+	var rangeX=void 0;
+	var rangeY=void 0;
+	var positiveErrorX=void 0;
+	var negativeErrorX=void 0;
+	var positiveErrorY=void 0;
+	var negativeErrorY=void 0;
+	var errorTop=void 0;
+	var errorBottom=void 0;
+	var errorRight=void 0;
+	var errorLeft=void 0;
+	
+	if(errorX){
+	rangeX=scale.x.range();
+	positiveErrorX=errorX[0];
+	negativeErrorX=errorX[1];
+	errorRight=positiveErrorX>=rangeX[1]?rangeX[1]:positiveErrorX;
+	errorLeft=negativeErrorX<=rangeX[0]?rangeX[0]:negativeErrorX;
+	}
+	
+	if(errorY){
+	rangeY=scale.y.range();
+	positiveErrorY=errorY[1];
+	negativeErrorY=errorY[0];
+	errorTop=positiveErrorY>=rangeY[0]?rangeY[0]:positiveErrorY;
+	errorBottom=negativeErrorY<=rangeY[1]?rangeY[1]:negativeErrorY;
+	}
 	
 	return _react2.default.cloneElement(
 	this.props.groupComponent,
 	{},
 	this.renderErrorBar({errorTop:errorTop,errorBottom:errorBottom,errorRight:errorRight,errorLeft:errorLeft}));
 	
-	}}]);return ErrorBar;}(_react2.default.Component);ErrorBar.propTypes={index:_react2.default.PropTypes.number,datum:_react.PropTypes.object,events:_react.PropTypes.object,scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,errorX:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array]),errorY:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array]),borderWidth:_react.PropTypes.number,groupComponent:_react.PropTypes.element};exports.default=ErrorBar;
+	}}]);return ErrorBar;}(_react2.default.Component);ErrorBar.propTypes={index:_react2.default.PropTypes.number,datum:_react.PropTypes.object,events:_react.PropTypes.object,scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,errorX:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array,_react.PropTypes.bool]),errorY:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array,_react.PropTypes.bool]),borderWidth:_react.PropTypes.number,groupComponent:_react.PropTypes.element};exports.default=ErrorBar;
 
 /***/ },
 /* 348 */
@@ -28107,8 +28142,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var errorNames={x:"errorX",y:"errorY"};
 	var errors=datum[errorNames[axis]];
+	if(errors===0){
+	return false;
+	}
+	
 	return(0,_isArray3.default)(errors)?
-	[scale[axis](errors[0]+datum[axis]),scale[axis](datum[axis]-errors[1])]:
+	[errors[0]===0?false:scale[axis](errors[0]+datum[axis]),
+	errors[1]===0?false:scale[axis](datum[axis]-errors[1])]:
 	[scale[axis](errors+datum[axis]),scale[axis](datum[axis]-errors)];
 	},
 	
