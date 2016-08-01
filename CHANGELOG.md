@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 10.2.4 (2016-08-01)
+
+- Fix label style bug
+
 ## 10.2.3 (2016-08-01)
 
 - Fix minor errorbar bug
