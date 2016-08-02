@@ -16,11 +16,11 @@ export default {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
       const x = scale.x(datum.x);
-      const y1 = scale.y(datum.y[2]);
-      const y2 = scale.y(datum.y[3]);
-      const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
-      const y = scale.y(Math.max(datum.y[0], datum.y[1]));
-      const dataStyle = assign(this.getDataStyles(datum, style.data, modifiedProps));
+      const y1 = scale.y(datum.high);
+      const y2 = scale.y(datum.low);
+      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
+      const y = scale.y(Math.max(datum.open, datum.close));
+      const dataStyle = this.getDataStyles(datum, style.data, modifiedProps);
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
         index, style: dataStyle, padding, width
@@ -67,13 +67,9 @@ export default {
   },
 
   getData(props) {
-    let data;
-
-    if (props.data && props.data.length > 0) {
-      data = props.data;
-    } else {
+    if (!props.data || props.data.length < 1) {
       Log.warn("This is an empty dataset.");
-      data = [];
+      return [];
     }
 
     const accessor = {
@@ -83,7 +79,8 @@ export default {
       high: Helpers.createAccessor(props.high),
       low: Helpers.createAccessor(props.low)
     };
-    return data.map((datum) => {
+
+    return props.data.map((datum) => {
       const x = accessor.x(datum);
       const open = accessor.open(datum);
       const close = accessor.close(datum);
@@ -93,7 +90,7 @@ export default {
       return assign(
         {},
         datum,
-        {x, y}
+        {x, y, open, close, high, low}
         );
     });
   },

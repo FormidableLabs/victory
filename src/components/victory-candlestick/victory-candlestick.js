@@ -501,7 +501,6 @@ export default class VictoryCandlestick extends React.Component {
     return candleLabelComponents.length > 0 ?
       React.cloneElement(groupComponent, {}, ...candleComponents, ...candleLabelComponents) :
       candleComponents;
-    return components;
   }
 
   renderContainer(props, group) {
