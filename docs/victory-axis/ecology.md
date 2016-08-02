@@ -27,11 +27,9 @@ Axes are meant to be composable.
 <svg width={450} height={450}>
   <VictoryAxis
     padding={85}
-    label="x-axis"
     standalone={false}/>
   <VictoryAxis dependentAxis
     padding={85}
-    label="y-axis"
     standalone={false}/>
 </svg>
 ```
@@ -66,7 +64,7 @@ The sensible defaults VictoryAxis provides make it easy to get started, but ever
     style={{
       axis: {stroke: "black"},
       grid: {strokeWidth: 2},
-      ticks: {stroke: "red"},
+      ticks: {stroke: "red", size: 4},
       tickLabels: {fontSize: 12},
       axisLabel: {fontsize: 16}
     }}
@@ -133,7 +131,7 @@ class App extends React.Component {
     return {
       axis: {stroke: "black"},
       grid: {strokeWidth: n},
-      ticks: {stroke: tickColors[n]},
+      ticks: {stroke: tickColors[n], size: 4},
       tickLabels: {fill: tickColors[n]}
     };
   }
