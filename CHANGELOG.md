@@ -1,5 +1,13 @@
 # VictoryChart Changelog
 
+## 10.2.5 (2016-08-02)
+
+- Fix animation bug in VictoryCandlestick 
+- Fix label bug in VictoryCandlestick
+- Fix style bug in VictoryCandlestick
+- Fix axis orientation for negative charts
+- Clean up documentation
+
 ## 10.2.4 (2016-08-01)
 
 - Fix label style bug
