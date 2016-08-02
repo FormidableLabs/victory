@@ -155,7 +155,7 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter.
 
 ```playground
-<svg viewBox="0 0 500 300" width="100%">
+<svg height={300} width={500}>
   <VictoryArea
     width={500}
     height={300}

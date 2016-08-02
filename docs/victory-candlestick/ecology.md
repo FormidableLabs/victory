@@ -33,14 +33,16 @@ assign a property to x, open, close, high, or low, or process data on the fly.
 ```playground
 <VictoryCandlestick
   data={[
-    {date: new Date(2016, 8, 2), open: 5, close: 10, low: 0},
-    {date: new Date(2016, 8, 3), open: 15, close: 10, low: 5},
-    {date: new Date(2016, 8, 4), open: 15, close: 20, low: 10},
-    {date: new Date(2016, 8, 5), open: 25, close: 20, low: 15},
-    {date: new Date(2016, 8, 6), open: 25, close: 30, low: 20}
+    {date: new Date(2016, 8, 2), open: 5},
+    {date: new Date(2016, 8, 3), open: 15},
+    {date: new Date(2016, 8, 4), open: 15},
+    {date: new Date(2016, 8, 5), open: 25},
+    {date: new Date(2016, 8, 6), open: 25}
   ]}
   x={"date"}
-  high={(data) => (Math.max(data.open, data.close) + 10)}
+  close={(d) => d.open / 2 + 10}
+  high={(d) => d.open + 10}
+  low={(d) => d.open - 15}
 />
 ```
 
@@ -50,25 +52,17 @@ The sensible defaults VictoryCandlestick provides makes it easy to get started, 
 
 ```playground
 <VictoryChart
-  height={500}
-  padding={75}
   scale={{x: "time"}}
 >
   <VictoryAxis
-    scale="time"
     tickFormat={(x) => (x.getMonth() + 1 + "/" + x.getDate())}
   />
 
-  <VictoryAxis
-    dependentAxis
-  />
+  <VictoryAxis dependentAxis/>
 
   <VictoryCandlestick
     candleColors={{positive: "purple", negative: "blue"}}
-    style={{
-      data: {width: 30},
-      labels: {fontSize: 24}
-    }}
+    style={{data: {width: 30}}}
     domain={{x: [new Date(2016, 5, 30), new Date(2016, 6, 6)]}}
     data={[
     {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
