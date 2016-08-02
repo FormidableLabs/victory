@@ -132,17 +132,12 @@ export default {
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
-    const fillCheck = datum.fill || style.fill;
-    const strokeCheck = datum.stroke || style.stroke;
     const candleColor = datum.open > datum.close ?
-            props.candleColors.negative : props.candleColors.positive;
-    const transparentCheck = this.isTransparent(datum.stroke) ||
-    this.isTransparent(style.stroke);
-    const strokeColor = fillCheck || transparentCheck ? fillCheck || candleColor
-    : strokeCheck;
-    const baseDataStyle = defaults({}, stylesFromData,
-      {stroke: strokeColor || candleColor, fill: fillCheck || candleColor},
-      style);
+      props.candleColors.negative : props.candleColors.positive;
+    const fill = datum.fill || style.fill || candleColor;
+    const strokeColor = datum.stroke || style.stroke;
+    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor;
+    const baseDataStyle = defaults({}, stylesFromData, {stroke, fill}, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
 
