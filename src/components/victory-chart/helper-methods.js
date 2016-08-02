@@ -58,26 +58,21 @@ export default {
   },
 
   getAxisOffset(props, calculatedProps) {
-    const {axisComponents, domain, scale} = calculatedProps;
+    const {axisComponents, scale, origin, originSign} = calculatedProps;
     // make the axes line up, and cross when appropriate
-    const origin = {
-      x: Collection.containsDates(domain.x) ? Math.min(...domain.x)
-      : Math.max(Math.min(...domain.x), 0),
-      y: Collection.containsDates(domain.y) ? Math.min(...domain.y)
-      : Math.max(Math.min(...domain.y), 0)
-    };
     const axisOrientations = {
-      x: Axis.getOrientation(axisComponents.x, "x"),
-      y: Axis.getOrientation(axisComponents.y, "y")
+      x: Axis.getOrientation(axisComponents.x, "x", originSign.x),
+      y: Axis.getOrientation(axisComponents.y, "y", originSign.y)
     };
     const orientationOffset = {
       x: axisOrientations.y === "left" ? 0 : props.width,
       y: axisOrientations.x === "bottom" ? props.height : 0
     };
     const calculatedOffset = {
-      x: Math.abs(orientationOffset.x - scale.x.call(null, origin.x)),
-      y: Math.abs(orientationOffset.y - scale.y.call(null, origin.y))
+      x: Math.abs(orientationOffset.x - scale.x(origin.x)),
+      y: Math.abs(orientationOffset.y - scale.y(origin.y))
     };
+
     return {
       x: axisComponents.x && axisComponents.x.offsetX || calculatedOffset.x,
       y: axisComponents.y && axisComponents.y.offsetY || calculatedOffset.y

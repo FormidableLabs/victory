@@ -237,11 +237,9 @@ export default {
       orientations[otherAxis] === defaultOrientation(axis) :
       orientations[otherAxis] === defaultOrientation(otherAxis);
     if (flippedAxis) {
-      return standardOrientation ?
-        domain.concat().reverse() : domain;
+      return standardOrientation ? domain.concat().reverse() : domain;
     } else {
-      return standardOrientation ?
-        domain : domain.concat().reverse();
+      return standardOrientation ? domain : domain.concat().reverse();
     }
   }
 };

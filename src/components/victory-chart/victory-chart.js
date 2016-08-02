@@ -249,7 +249,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const { domain, scale } = calculatedProps;
+    const { domain, scale, originSign } = calculatedProps;
     const axis = child.type.getAxis(child.props);
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
     const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
@@ -258,6 +258,7 @@ export default class VictoryChart extends React.Component {
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     const crossAxis = child.props.crossAxis === false ? false : true;
+    const orientation = Axis.getOrientation(child, axis, originSign[axis]);
     return {
       domain: domain[axis],
       domainPadding: child.props.domainPadding || props.domainPadding,
@@ -266,7 +267,8 @@ export default class VictoryChart extends React.Component {
       tickFormat,
       offsetY: child.props.offsetY || offsetY,
       offsetX: child.props.offsetX || offsetX,
-      crossAxis
+      crossAxis,
+      orientation
     };
   }
 
@@ -310,6 +312,17 @@ export default class VictoryChart extends React.Component {
       x: baseScale.x.domain(domain.x).range(range.x),
       y: baseScale.y.domain(domain.y).range(range.y)
     };
+
+    const origin = {
+      x: Axis.getOrigin(domain.x),
+      y: Axis.getOrigin(domain.y)
+    };
+
+    const originSign = {
+      x: Axis.getOriginSign(origin.x, domain.x),
+      y: Axis.getOriginSign(origin.y, domain.y)
+    };
+
     // TODO: check
     const categories = {
       x: Wrapper.getCategories(props, "x", childComponents),
@@ -319,7 +332,9 @@ export default class VictoryChart extends React.Component {
       x: ChartHelpers.createStringMap(props, "x", childComponents),
       y: ChartHelpers.createStringMap(props, "y", childComponents)
     };
-    return {axisComponents, categories, domain, horizontal, scale, stringMap, style};
+    return {
+      axisComponents, categories, domain, horizontal, scale, stringMap, style, origin, originSign
+    };
   }
 
   getNewChildren(props, childComponents, calculatedProps) {
