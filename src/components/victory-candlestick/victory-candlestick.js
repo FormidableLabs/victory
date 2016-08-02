@@ -548,8 +548,8 @@ export default class VictoryCandlestick extends React.Component {
         "style", "width", "x", "y"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, ...modifiedProps)}
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
