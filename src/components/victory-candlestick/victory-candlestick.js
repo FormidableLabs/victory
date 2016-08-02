@@ -466,7 +466,8 @@ export default class VictoryCandlestick extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryCandlestick;
-    const components = [];
+    const candleComponents = [];
+    const candleLabelComponents = [];
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
       const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
@@ -477,9 +478,10 @@ export default class VictoryCandlestick extends React.Component {
         this.baseProps[key].data,
         dataComponent.props
       );
-      const candleComponent = React.cloneElement(dataComponent, assign(
+      candleComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
+
       const labelProps = defaults(
         {key: `${role}-label-${key}`, index},
         this.getEventState(key, "labels"),
@@ -490,15 +492,15 @@ export default class VictoryCandlestick extends React.Component {
 
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const candleLabel = React.cloneElement(labelComponent, assign({
+        candleLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        components[index] = React.cloneElement(
-          groupComponent, {key: `candle-group-${key}`}, candleComponent, candleLabel
-        );
       }
-      components[index] = candleComponent;
     }
+
+    return candleLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...candleComponents, ...candleLabelComponents) :
+      candleComponents;
     return components;
   }
 
@@ -542,7 +544,7 @@ export default class VictoryCandlestick extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size",
+        "data", "domain", "height", "padding", "samples", "size",
         "style", "width", "x", "y"
       ];
       return (
