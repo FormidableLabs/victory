@@ -112,7 +112,7 @@ The sensible defaults VictoryBar provides makes it easy to get started, but ever
 
 ```playground
 <VictoryStack horizontal
-  height={600}
+  height={500}
   padding={75}
   style={{
     data: {width: 30},

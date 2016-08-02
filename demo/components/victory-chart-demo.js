@@ -178,6 +178,12 @@ class App extends React.Component {
       <div className="demo">
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
+          <VictoryChart style={chartStyle}>
+            <VictoryScatter
+              data={[{x: 0, y: 0}, {x: -2, y: -2}, {x: -3, y: -3}]}
+            />
+          </VictoryChart>
+
           <VictoryChart style={chartStyle} domainPadding={{x: [0, 20]}}>
             <VictoryAxis
               dependentAxis

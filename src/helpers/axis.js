@@ -85,22 +85,49 @@ export default {
     return findAxisComponents(childComponents);
   },
 
+  getOrigin(domain) {
+    const getSingleOrigin = () => {
+      const domainMin = Math.min(...domain);
+      const domainMax = Math.max(...domain);
+      return domainMax < 0 ? domainMax : Math.max(0, domainMin);
+    };
+
+    return Collection.containsDates(domain) ?
+      new Date(Math.min(...domain)) : getSingleOrigin();
+  },
+
+  getOriginSign(origin, domain) {
+    const getSign = () => {
+      return origin <= 0 && Math.min(...domain) < 0 ? "negative" : "positive";
+    };
+    return Collection.containsDates(domain) ? "positive" : getSign();
+  },
+
   /**
    * @param {ReactComponent} component: a victory axis component.
    * @param {String} axis: desired axis either "x" or "y".
+   * @param {String} originSign: "positive" or "negative"
    * @returns {String} the orientation of the axis ("top", "bottom", "left", or "right")
    */
-  getOrientation(component, axis) {
-    const typicalOrientations = {x: "bottom", y: "left"};
-    const flippedOrientations = {x: "left", y: "bottom"};
-    if (!component) {
-      return typicalOrientations[axis];
-    } else if (component.props && component.props.orientation) {
+  getOrientation(component, axis, originSign) {
+    if (component && component.props && component.props.orientation) {
       return component.props.orientation;
     }
+    const sign = originSign || "positive";
+    const typicalOrientations = {
+      positive: {x: "bottom", y: "left"},
+      negative: {x: "top", y: "right"}
+    };
+    const flippedOrientations = {
+      positive: {x: "left", y: "bottom"},
+      negative: {x: "right", y: "top"}
+    };
+    if (!component) {
+      return typicalOrientations[sign][axis];
+    }
     const dependent = component.props.dependentAxis;
-    return (dependent && axis === "y") || (!dependent && axis === "x") ?
-      typicalOrientations[axis] : flippedOrientations[axis];
+    return (!dependent && axis === "y") || (dependent && axis === "x") ?
+      flippedOrientations[sign][axis] : typicalOrientations[sign][axis];
   },
 
   /**
