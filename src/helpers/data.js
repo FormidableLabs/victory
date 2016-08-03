@@ -1,4 +1,4 @@
-import { assign, uniq } from "lodash";
+import { assign, uniq, range, last } from "lodash";
 import { Helpers, Collection, Log } from "victory-core";
 import Scale from "./scale";
 
@@ -58,12 +58,14 @@ export default {
     const domain = props.domain ? (props.domain.x || props.domain) :
       Scale.getBaseScale(props, "x").domain();
     const samples = props.samples || 1;
-    const max = Math.max(...domain);
-    const values = Array(...Array(samples)).map((val, index) => {
-      const v = (max / samples) * index + Math.min(...domain);
+    const domainMax = Math.max(...domain);
+    const domainMin = Math.min(...domain);
+    const step = (domainMax - domainMin) / samples;
+    const values = range(domainMin, domainMax, step).map((v) => {
       return { x: v, y: v };
     });
-    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
+    return last(values).x === domainMax ?
+      values : values.concat([{ x: domainMax, y: domainMax }]);
   },
 
   formatData(dataset, props, stringMap) {
