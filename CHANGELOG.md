@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 4.3.1 (2016-08-02)
+
+- Update documentation
+
 ## 4.3.0 (2016-07-29)
 
 - Performance improvements
