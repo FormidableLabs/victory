@@ -124,7 +124,7 @@ export default {
   getStackedDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return Domain.padDomain(propsDomain, props, axis);
+      return propsDomain;
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
@@ -132,8 +132,7 @@ export default {
       return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
     };
     const datasets = this.getDataFromChildren(props);
-    const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
-    return Domain.padDomain(dataDomain, props, axis);
+    return ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
   },
 
   getColor(calculatedProps, index) {
