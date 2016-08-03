@@ -3764,7 +3764,6 @@ return /******/ (function(modules) { // webpackBootstrap
 /***/ function(module, exports) {
 
 	// shim for using process in browser
-	
 	var process = module.exports = {};
 	
 	// cached from whatever global is present so that test runners that stub it
@@ -3776,21 +3775,35 @@ return /******/ (function(modules) { // webpackBootstrap
 	var cachedClearTimeout;
 	
 	(function () {
-	  try {
-	    cachedSetTimeout = setTimeout;
-	  } catch (e) {
-	    cachedSetTimeout = function () {
-	      throw new Error('setTimeout is not defined');
+	    try {
+	        cachedSetTimeout = setTimeout;
+	    } catch (e) {
+	        cachedSetTimeout = function () {
+	            throw new Error('setTimeout is not defined');
+	        }
 	    }
-	  }
-	  try {
-	    cachedClearTimeout = clearTimeout;
-	  } catch (e) {
-	    cachedClearTimeout = function () {
-	      throw new Error('clearTimeout is not defined');
+	    try {
+	        cachedClearTimeout = clearTimeout;
+	    } catch (e) {
+	        cachedClearTimeout = function () {
+	            throw new Error('clearTimeout is not defined');
+	        }
 	    }
-	  }
 	} ())
+	function runTimeout(fun) {
+	    if (cachedSetTimeout === setTimeout) {
+	        return setTimeout(fun, 0);
+	    } else {
+	        return cachedSetTimeout.call(null, fun, 0);
+	    }
+	}
+	function runClearTimeout(marker) {
+	    if (cachedClearTimeout === clearTimeout) {
+	        clearTimeout(marker);
+	    } else {
+	        cachedClearTimeout.call(null, marker);
+	    }
+	}
 	var queue = [];
 	var draining = false;
 	var currentQueue;
@@ -3815,7 +3828,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (draining) {
 	        return;
 	    }
-	    var timeout = cachedSetTimeout.call(null, cleanUpNextTick);
+	    var timeout = runTimeout(cleanUpNextTick);
 	    draining = true;
 	
 	    var len = queue.length;
@@ -3832,7 +3845,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    currentQueue = null;
 	    draining = false;
-	    cachedClearTimeout.call(null, timeout);
+	    runClearTimeout(timeout);
 	}
 	
 	process.nextTick = function (fun) {
@@ -3844,7 +3857,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	    queue.push(new Item(fun, args));
 	    if (queue.length === 1 && !draining) {
-	        cachedSetTimeout.call(null, drainQueue, 0);
+	        runTimeout(drainQueue);
 	    }
 	};
 	
@@ -8365,7 +8378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}},{key:"getAxisProps",value:function getAxisProps(
 	
 	child,props,calculatedProps){var
-	domain=calculatedProps.domain;var scale=calculatedProps.scale;
+	domain=calculatedProps.domain;var scale=calculatedProps.scale;var originSign=calculatedProps.originSign;
 	var axis=child.type.getAxis(child.props);
 	var axisOffset=_helperMethods2.default.getAxisOffset(props,calculatedProps);
 	var tickValues=_helperMethods2.default.getTicks(calculatedProps,axis,child);
@@ -8374,6 +8387,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var offsetY=axis==="y"?undefined:axisOffset.y;
 	var offsetX=axis==="x"?undefined:axisOffset.x;
 	var crossAxis=child.props.crossAxis===false?false:true;
+	var orientation=_axis2.default.getOrientation(child,axis,originSign[axis]);
 	return{
 	domain:domain[axis],
 	domainPadding:child.props.domainPadding||props.domainPadding,
@@ -8382,7 +8396,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	tickFormat:tickFormat,
 	offsetY:child.props.offsetY||offsetY,
 	offsetX:child.props.offsetX||offsetX,
-	crossAxis:crossAxis};
+	crossAxis:crossAxis,
+	orientation:orientation};
 	
 	}},{key:"getChildProps",value:function getChildProps(
 	
@@ -8426,6 +8441,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	x:baseScale.x.domain(domain.x).range(range.x),
 	y:baseScale.y.domain(domain.y).range(range.y)};
 	
+	
+	var origin={
+	x:_axis2.default.getOrigin(domain.x),
+	y:_axis2.default.getOrigin(domain.y)};
+	
+	
+	var originSign={
+	x:_axis2.default.getOriginSign(origin.x,domain.x),
+	y:_axis2.default.getOriginSign(origin.y,domain.y)};
+	
+	
 	// TODO: check
 	var categories={
 	x:_wrapper2.default.getCategories(props,"x",childComponents),
@@ -8435,7 +8461,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	x:_helperMethods2.default.createStringMap(props,"x",childComponents),
 	y:_helperMethods2.default.createStringMap(props,"y",childComponents)};
 	
-	return{axisComponents:axisComponents,categories:categories,domain:domain,horizontal:horizontal,scale:scale,stringMap:stringMap,style:style};
+	return{
+	axisComponents:axisComponents,categories:categories,domain:domain,horizontal:horizontal,scale:scale,stringMap:stringMap,style:style,origin:origin,originSign:originSign};
+	
 	}},{key:"getNewChildren",value:function getNewChildren(
 	
 	props,childComponents,calculatedProps){
@@ -12967,7 +12995,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 241 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-scale/ Version 1.0.2. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-scale/ Version 1.0.3. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(242), __webpack_require__(243), __webpack_require__(244), __webpack_require__(246), __webpack_require__(247), __webpack_require__(248), __webpack_require__(245)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-array', 'd3-collection', 'd3-interpolate', 'd3-format', 'd3-time', 'd3-time-format', 'd3-color'], factory) :
@@ -13874,7 +13902,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 242 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-array/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-array/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -14343,7 +14371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 243 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-collection/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-collection/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -14565,7 +14593,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 244 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-interpolate/ Version 1.1.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-interpolate/ Version 1.1.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(245)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-color'], factory) :
@@ -15112,7 +15140,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 245 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-color/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-color/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -15634,7 +15662,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 246 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-format/ Version 1.0.1. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-format/ Version 1.0.2. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -15926,9 +15954,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }
 	
 	  var locale;
-	  exports.format;
-	  exports.formatPrefix;
-	
 	  defaultLocale({
 	    decimal: ".",
 	    thousands: ",",
@@ -15971,7 +15996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 247 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-time/ Version 1.0.1. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-time/ Version 1.0.2. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -16353,7 +16378,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 248 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-time-format/ Version 2.0.1. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-time-format/ Version 2.0.2. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(247)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-time'], factory) :
@@ -16942,7 +16967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _identity2=__webpack_require__(191);var _identity3=_interopRequireDefault(_identity2);var _victoryCore=__webpack_require__(1);
 	
-	var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
+	var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}exports.default=
 	
 	{
 	/**
@@ -17027,22 +17052,49 @@ return /******/ (function(modules) { // webpackBootstrap
 	return findAxisComponents(childComponents);
 	},
 	
+	getOrigin:function getOrigin(domain){
+	var getSingleOrigin=function getSingleOrigin(){
+	var domainMin=Math.min.apply(Math,_toConsumableArray(domain));
+	var domainMax=Math.max.apply(Math,_toConsumableArray(domain));
+	return domainMax<0?domainMax:Math.max(0,domainMin);
+	};
+	
+	return _victoryCore.Collection.containsDates(domain)?
+	new Date(Math.min.apply(Math,_toConsumableArray(domain))):getSingleOrigin();
+	},
+	
+	getOriginSign:function getOriginSign(origin,domain){
+	var getSign=function getSign(){
+	return origin<=0&&Math.min.apply(Math,_toConsumableArray(domain))<0?"negative":"positive";
+	};
+	return _victoryCore.Collection.containsDates(domain)?"positive":getSign();
+	},
+	
 	/**
 	   * @param {ReactComponent} component: a victory axis component.
 	   * @param {String} axis: desired axis either "x" or "y".
+	   * @param {String} originSign: "positive" or "negative"
 	   * @returns {String} the orientation of the axis ("top", "bottom", "left", or "right")
 	   */
-	getOrientation:function getOrientation(component,axis){
-	var typicalOrientations={x:"bottom",y:"left"};
-	var flippedOrientations={x:"left",y:"bottom"};
-	if(!component){
-	return typicalOrientations[axis];
-	}else if(component.props&&component.props.orientation){
+	getOrientation:function getOrientation(component,axis,originSign){
+	if(component&&component.props&&component.props.orientation){
 	return component.props.orientation;
 	}
+	var sign=originSign||"positive";
+	var typicalOrientations={
+	positive:{x:"bottom",y:"left"},
+	negative:{x:"top",y:"right"}};
+	
+	var flippedOrientations={
+	positive:{x:"left",y:"bottom"},
+	negative:{x:"right",y:"top"}};
+	
+	if(!component){
+	return typicalOrientations[sign][axis];
+	}
 	var dependent=component.props.dependentAxis;
-	return dependent&&axis==="y"||!dependent&&axis==="x"?
-	typicalOrientations[axis]:flippedOrientations[axis];
+	return!dependent&&axis==="y"||dependent&&axis==="x"?
+	flippedOrientations[sign][axis]:typicalOrientations[sign][axis];
 	},
 	
 	/**
@@ -17317,11 +17369,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	orientations[otherAxis]===defaultOrientation(axis):
 	orientations[otherAxis]===defaultOrientation(otherAxis);
 	if(flippedAxis){
-	return standardOrientation?
-	domain.concat().reverse():domain;
+	return standardOrientation?domain.concat().reverse():domain;
 	}else{
-	return standardOrientation?
-	domain:domain.concat().reverse();
+	return standardOrientation?domain:domain.concat().reverse();
 	}
 	}};
 
@@ -17789,25 +17839,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	},
 	
 	getAxisOffset:function getAxisOffset(props,calculatedProps){var
-	axisComponents=calculatedProps.axisComponents;var domain=calculatedProps.domain;var scale=calculatedProps.scale;
+	axisComponents=calculatedProps.axisComponents;var scale=calculatedProps.scale;var origin=calculatedProps.origin;var originSign=calculatedProps.originSign;
 	// make the axes line up, and cross when appropriate
-	var origin={
-	x:_victoryCore.Collection.containsDates(domain.x)?Math.min.apply(Math,_toConsumableArray(domain.x)):
-	Math.max(Math.min.apply(Math,_toConsumableArray(domain.x)),0),
-	y:_victoryCore.Collection.containsDates(domain.y)?Math.min.apply(Math,_toConsumableArray(domain.y)):
-	Math.max(Math.min.apply(Math,_toConsumableArray(domain.y)),0)};
-	
 	var axisOrientations={
-	x:_axis2.default.getOrientation(axisComponents.x,"x"),
-	y:_axis2.default.getOrientation(axisComponents.y,"y")};
+	x:_axis2.default.getOrientation(axisComponents.x,"x",originSign.x),
+	y:_axis2.default.getOrientation(axisComponents.y,"y",originSign.y)};
 	
 	var orientationOffset={
 	x:axisOrientations.y==="left"?0:props.width,
 	y:axisOrientations.x==="bottom"?props.height:0};
 	
 	var calculatedOffset={
-	x:Math.abs(orientationOffset.x-scale.x.call(null,origin.x)),
-	y:Math.abs(orientationOffset.y-scale.y.call(null,origin.y))};
+	x:Math.abs(orientationOffset.x-scale.x(origin.x)),
+	y:Math.abs(orientationOffset.y-scale.y(origin.y))};
+	
 	
 	return{
 	x:axisComponents.x&&axisComponents.x.offsetX||calculatedOffset.x,
@@ -20914,7 +20959,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 320 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-shape/ Version 1.0.1. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-shape/ Version 1.0.2. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports, __webpack_require__(321)) :
 	  typeof define === 'function' && define.amd ? define(['exports', 'd3-path'], factory) :
@@ -22734,7 +22779,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 321 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-path/ Version 1.0.0. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-path/ Version 1.0.1. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
@@ -28287,7 +28332,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	var _helperMethods=__webpack_require__(351);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+	var _helperMethods=__webpack_require__(351);var _helperMethods2=_interopRequireDefault(_helperMethods);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
 	var fallbackProps={
 	props:{
@@ -28748,7 +28793,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	props){var
 	dataComponent=props.dataComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;var
 	role=VictoryCandlestick.role;
-	var components=[];
+	var candleComponents=[];
+	var candleLabelComponents=[];
 	for(var index=0,len=this.dataKeys.length;index<len;index++){
 	var key=this.dataKeys[index];
 	var dataEvents=this.getEvents(props,"data",key);
@@ -28759,8 +28805,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	this.baseProps[key].data,
 	dataComponent.props);
 	
-	var candleComponent=_react2.default.cloneElement(dataComponent,(0,_assign3.default)(
+	candleComponents[index]=_react2.default.cloneElement(dataComponent,(0,_assign3.default)(
 	{},dataProps,{events:_victoryCore.Events.getPartialEvents(dataEvents,key,dataProps)}));
+	
 	
 	var labelProps=(0,_defaults3.default)(
 	{key:role+"-label-"+key,index:index},
@@ -28772,16 +28819,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(labelProps&&labelProps.text){
 	var labelEvents=this.getEvents(props,"labels",key);
-	var candleLabel=_react2.default.cloneElement(labelComponent,(0,_assign3.default)({
+	candleLabelComponents[index]=_react2.default.cloneElement(labelComponent,(0,_assign3.default)({
 	events:_victoryCore.Events.getPartialEvents(labelEvents,key,labelProps)},
 	labelProps));
-	components[index]=_react2.default.cloneElement(
-	groupComponent,{key:"candle-group-"+key},candleComponent,candleLabel);
+	}
+	}
 	
-	}
-	components[index]=candleComponent;
-	}
-	return components;
+	return candleLabelComponents.length>0?
+	_react2.default.cloneElement.apply(_react2.default,[groupComponent,{}].concat(candleComponents,candleLabelComponents)):
+	candleComponents;
 	}},{key:"renderContainer",value:function renderContainer(
 	
 	props,group){
@@ -28824,12 +28870,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	// make sense to tween. In the future, allow customization of animated
 	// prop whitelist/blacklist?
 	var whitelist=[
-	"data","domain","height","maxBubbleSize","padding","samples","size",
+	"data","domain","height","padding","samples","size",
 	"style","width","x","y"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:this.props.animate,animationWhitelist:whitelist},
-	_react2.default.createElement.apply(_react2.default,[this.constructor].concat(_toConsumableArray(modifiedProps)))));
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:animate,animationWhitelist:whitelist},
+	_react2.default.createElement(this.constructor,modifiedProps)));
 	
 	
 	}
@@ -29133,11 +29179,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	var datum=data[index];
 	var eventKey=datum.eventKey||index;
 	var x=scale.x(datum.x);
-	var y1=scale.y(datum.y[2]);
-	var y2=scale.y(datum.y[3]);
-	var candleHeight=Math.abs(scale.y(datum.y[0])-scale.y(datum.y[1]));
-	var y=scale.y(Math.max(datum.y[0],datum.y[1]));
-	var dataStyle=(0,_assign3.default)(this.getDataStyles(datum,style.data,modifiedProps));
+	var y1=scale.y(datum.high);
+	var y2=scale.y(datum.low);
+	var candleHeight=Math.abs(scale.y(datum.open)-scale.y(datum.close));
+	var y=scale.y(Math.max(datum.open,datum.close));
+	var dataStyle=this.getDataStyles(datum,style.data,modifiedProps);
 	var dataProps={
 	x:x,y:y,y1:y1,y2:y2,candleHeight:candleHeight,scale:scale,data:data,datum:datum,groupComponent:groupComponent,
 	index:index,style:dataStyle,padding:padding,width:width};
@@ -29184,13 +29230,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	},
 	
 	getData:function getData(props){
-	var data=void 0;
-	
-	if(props.data&&props.data.length>0){
-	data=props.data;
-	}else{
+	if(!props.data||props.data.length<1){
 	_victoryCore.Log.warn("This is an empty dataset.");
-	data=[];
+	return[];
 	}
 	
 	var accessor={
@@ -29200,7 +29242,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	high:_victoryCore.Helpers.createAccessor(props.high),
 	low:_victoryCore.Helpers.createAccessor(props.low)};
 	
-	return data.map(function(datum){
+	
+	return props.data.map(function(datum){
 	var x=accessor.x(datum);
 	var open=accessor.open(datum);
 	var close=accessor.close(datum);
@@ -29210,7 +29253,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return(0,_assign3.default)(
 	{},
 	datum,
-	{x:x,y:y});
+	{x:x,y:y,open:open,close:close,high:high,low:low});
 	
 	});
 	},
@@ -29252,17 +29295,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var stylesFromData=(0,_omit3.default)(datum,[
 	"x","y","size","name","label","open","close","high","low"]);
 	
-	var fillCheck=datum.fill||style.fill;
-	var strokeCheck=datum.stroke||style.stroke;
 	var candleColor=datum.open>datum.close?
 	props.candleColors.negative:props.candleColors.positive;
-	var transparentCheck=this.isTransparent(datum.stroke)||
-	this.isTransparent(style.stroke);
-	var strokeColor=fillCheck||transparentCheck?fillCheck||candleColor:
-	strokeCheck;
-	var baseDataStyle=(0,_defaults3.default)({},stylesFromData,
-	{stroke:strokeColor||candleColor,fill:fillCheck||candleColor},
-	style);
+	var fill=datum.fill||style.fill||candleColor;
+	var strokeColor=datum.stroke||style.stroke;
+	var stroke=this.isTransparent(strokeColor)?fill:strokeColor;
+	var baseDataStyle=(0,_defaults3.default)({},stylesFromData,{stroke:stroke,fill:fill},style);
 	return _victoryCore.Helpers.evaluateStyle(baseDataStyle,datum);
 	},
 	
@@ -29291,7 +29329,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 353 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(354);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(395);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(396);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(416);var _assign3=_interopRequireDefault(_assign2);var _jsxFileName="src/components/victory-pie.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);
+	Object.defineProperty(exports,"__esModule",{value:true});var _partialRight2=__webpack_require__(354);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(395);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(396);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(416);var _assign3=_interopRequireDefault(_assign2);var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);
 	
 	var _victoryCore=__webpack_require__(1);
 	
@@ -29642,24 +29680,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	_this.state={};
 	var getScopedEvents=_victoryCore.Events.getScopedEvents.bind(_this);
 	_this.getEvents=(0,_partialRight3.default)(_victoryCore.Events.getEvents.bind(_this),getScopedEvents);
-	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;}_createClass(VictoryPie,[{key:"componentWillMount",value:function componentWillMount()
-	
+	_this.getEventState=_victoryCore.Events.getEventState.bind(_this);return _this;
+	}_createClass(VictoryPie,[{key:"componentWillMount",value:function componentWillMount()
 	
 	{
-	this.setupEvents(this.props);}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
-	
+	this.setupEvents(this.props);
+	}},{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
 	
 	newProps){
-	this.setupEvents(newProps);}},{key:"setupEvents",value:function setupEvents(
-	
+	this.setupEvents(newProps);
+	}},{key:"setupEvents",value:function setupEvents(
 	
 	props){var
 	sharedEvents=props.sharedEvents;
 	this.baseProps=_helperMethods2.default.getBaseProps(props,fallbackProps);
 	this.dataKeys=Object.keys(this.baseProps).filter(function(key){return key!=="parent";});
 	this.getSharedEventState=sharedEvents&&(0,_isFunction3.default)(sharedEvents.getEventState)?
-	sharedEvents.getEventState:function(){return undefined;};}},{key:"renderData",value:function renderData(
-	
+	sharedEvents.getEventState:function(){return undefined;};
+	}},{key:"renderData",value:function renderData(
 	
 	props){
 	var sliceComponents=[];
@@ -29690,16 +29728,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var labelEvents=this.getEvents(props,"labels",key);
 	sliceLabelComponents[index]=_react2.default.cloneElement(props.labelComponent,(0,_assign3.default)({
 	events:_victoryCore.Events.getPartialEvents(labelEvents,key,labelProps)},
-	labelProps));}}
-	
-	
+	labelProps));
+	}
+	}
 	
 	return sliceLabelComponents.length>0?
 	_react2.default.cloneElement.apply(_react2.default,[
 	props.groupComponent,{key:"pie-group"}].concat(sliceComponents,sliceLabelComponents)):
 	
-	sliceComponents;}},{key:"renderContainer",value:function renderContainer(
-	
+	sliceComponents;
+	}},{key:"renderContainer",value:function renderContainer(
 	
 	props,group){
 	var parentEvents=this.getEvents(props,"parent","parent");
@@ -29715,18 +29753,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	(0,_assign3.default)(
 	{},parentProps,{events:_victoryCore.Events.getPartialEvents(parentEvents,"parent",parentProps)}),
 	
-	group);}},{key:"renderGroup",value:function renderGroup(
+	group);
 	
-	
+	}},{key:"renderGroup",value:function renderGroup(
 	
 	children,style,offset){var
 	x=offset.x;var y=offset.y;
 	return _react2.default.cloneElement(
 	this.props.groupComponent,
 	{role:"presentation",style:style,transform:"translate("+x+", "+y+")"},
-	children);}},{key:"render",value:function render()
+	children);
 	
-	
+	}},{key:"render",value:function render()
 	
 	{
 	// If animating, return a `VictoryAnimation` element that will create
@@ -29738,18 +29776,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	"colorScale","startAngle","style","width"];
 	
 	return(
-	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:this.props.animate,animationWhitelist:whitelist,__source:{fileName:_jsxFileName,lineNumber:448}},
-	_react2.default.createElement(this.constructor,this.props)));}
+	_react2.default.createElement(_victoryCore.VictoryTransition,{animate:this.props.animate,animationWhitelist:whitelist},
+	_react2.default.createElement(this.constructor,this.props)));
 	
 	
-	
+	}
 	
 	var calculatedProps=_helperMethods2.default.getCalculatedValues(this.props,fallbackProps);var
 	style=calculatedProps.style;var padding=calculatedProps.padding;var radius=calculatedProps.radius;
 	var offset={x:radius+padding.left,y:radius+padding.top};
 	var children=this.renderData(this.props,calculatedProps);
 	var group=this.renderGroup(children,style.parent,offset);
-	return this.props.standalone?this.renderContainer(this.props,group):group;}}]);return VictoryPie;}(_react2.default.Component);VictoryPie.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,label:" "};}},onEnter:{duration:500,before:function before(){return{y:0,label:" "};},after:function after(datum){return{y:datum.y,label:datum.label};}}};VictoryPie.propTypes={/**
+	return this.props.standalone?this.renderContainer(this.props,group):group;
+	}}]);return VictoryPie;}(_react2.default.Component);VictoryPie.defaultTransitions={onExit:{duration:500,before:function before(){return{y:0,label:" "};}},onEnter:{duration:500,before:function before(){return{y:0,label:" "};},after:function after(datum){return{y:datum.y,label:datum.label};}}};VictoryPie.propTypes={/**
 	     * The animate prop specifies props for victory-animation to use. If this prop is
 	     * not given, the pie chart will not tween between changing data / style props.
 	     * Large datasets might animate slowly due to the inherent limits of svg rendering.
@@ -29914,7 +29953,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * The groupComponent prop takes an entire component which will be used to
 	     * create group elements for use within container elements. This prop defaults
 	     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
-	     */groupComponent:_react.PropTypes.element};VictoryPie.defaultProps={data:[{x:"A",y:1},{x:"B",y:2},{x:"C",y:3},{x:"D",y:1},{x:"E",y:2}],endAngle:360,height:400,innerRadius:0,cornerRadius:0,padAngle:0,padding:30,startAngle:0,standalone:true,width:400,x:"x",y:"y",dataComponent:_react2.default.createElement(_slice2.default,{__source:{fileName:_jsxFileName,lineNumber:339}}),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,{__source:{fileName:_jsxFileName,lineNumber:340}}),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,{__source:{fileName:_jsxFileName,lineNumber:341}}),groupComponent:_react2.default.createElement("g",{__source:{fileName:_jsxFileName,lineNumber:342}})};VictoryPie.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryPie;
+	     */groupComponent:_react.PropTypes.element};VictoryPie.defaultProps={data:[{x:"A",y:1},{x:"B",y:2},{x:"C",y:3},{x:"D",y:1},{x:"E",y:2}],endAngle:360,height:400,innerRadius:0,cornerRadius:0,padAngle:0,padding:30,startAngle:0,standalone:true,width:400,x:"x",y:"y",dataComponent:_react2.default.createElement(_slice2.default,null),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,null),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,null),groupComponent:_react2.default.createElement("g",null)};VictoryPie.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryPie;
 
 /***/ },
 /* 354 */
@@ -32296,7 +32335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 422 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _jsxFileName="src/components/slice.js";var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(106);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
 	Slice=function(_React$Component){_inherits(Slice,_React$Component);function Slice(){_classCallCheck(this,Slice);return _possibleConstructorReturn(this,Object.getPrototypeOf(Slice).apply(this,arguments));}_createClass(Slice,[{key:"renderSlice",value:function renderSlice(
 	
@@ -32314,13 +32353,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	_react2.default.createElement("path",_extends({
 	d:props.pathFunction(props.slice),
 	style:props.style},
-	props.events,{__source:{fileName:_jsxFileName,lineNumber:16}})));}},{key:"render",value:function render()
+	props.events)));
 	
 	
-	
+	}},{key:"render",value:function render()
 	
 	{
-	return this.renderSlice(this.props);}}]);return Slice;}(_react2.default.Component);Slice.propTypes={index:_react.PropTypes.number,slice:_react.PropTypes.object,pathFunction:_react.PropTypes.func,style:_react.PropTypes.object,datum:_react.PropTypes.object,events:_react.PropTypes.object};exports.default=Slice;
+	return this.renderSlice(this.props);
+	}}]);return Slice;}(_react2.default.Component);Slice.propTypes={index:_react.PropTypes.number,slice:_react.PropTypes.object,pathFunction:_react.PropTypes.func,style:_react.PropTypes.object,datum:_react.PropTypes.object,events:_react.PropTypes.object};exports.default=Slice;
 
 /***/ },
 /* 423 */
@@ -32334,19 +32374,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	{
 	checkForValidText:function checkForValidText(text){
 	if(text===undefined||text===null){
-	return text;}else
-	{
-	return""+text;}},
-	
-	
+	return text;
+	}else{
+	return""+text;
+	}
+	},
 	
 	getSliceStyle:function getSliceStyle(datum,index,calculatedValues){var
 	style=calculatedValues.style;var colors=calculatedValues.colors;
 	var fill=this.getColor(style,colors,index);
 	var dataStyles=(0,_omit3.default)(datum,["x","y","label"]);
 	var sliceStyle=(0,_defaults3.default)({},{fill:fill},style.data,dataStyles);
-	return _victoryCore.Helpers.evaluateStyle(sliceStyle,datum);},
-	
+	return _victoryCore.Helpers.evaluateStyle(sliceStyle,datum);
+	},
 	
 	getBaseProps:function getBaseProps(props,fallbackProps){
 	var calculatedValues=this.getCalculatedValues(props,fallbackProps);var
@@ -32386,11 +32426,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	childProps[eventKey]={
 	data:dataProps,
-	labels:labelProps};}
+	labels:labelProps};
 	
-	
-	return childProps;},
-	
+	}
+	return childProps;
+	},
 	
 	getCalculatedValues:function getCalculatedValues(props,fallbackProps){
 	var theme=props.theme&&props.theme.pie;
@@ -32398,8 +32438,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	fallbackProps.style;
 	var style=_victoryCore.Helpers.getStyles(props.style,styleObject,"auto","100%");
 	var getColorScale=function getColorScale(){
-	return theme?theme.props.colorScale:fallbackProps.colorScale;};
-	
+	return theme?theme.props.colorScale:fallbackProps.colorScale;
+	};
 	var colorScale=props.colorScale||getColorScale();
 	var colors=Array.isArray(colorScale)?
 	colorScale:_victoryCore.Style.getColorScale(colorScale);
@@ -32413,22 +32453,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	cornerRadius(props.cornerRadius).
 	outerRadius(radius).
 	innerRadius(props.innerRadius);
-	return{style:style,colors:colors,padding:padding,radius:radius,data:data,slices:slices,labelPosition:labelPosition,pathFunction:pathFunction};},
-	
+	return{style:style,colors:colors,padding:padding,radius:radius,data:data,slices:slices,labelPosition:labelPosition,pathFunction:pathFunction};
+	},
 	
 	getColor:function getColor(style,colors,index){
 	if(style&&style.data&&style.data.fill){
-	return style.data.fill;}
-	
-	return colors[index%colors.length];},
-	
+	return style.data.fill;
+	}
+	return colors[index%colors.length];
+	},
 	
 	getRadius:function getRadius(props,padding){
 	return Math.min(
 	props.width-padding.left-padding.right,
 	props.height-padding.top-padding.bottom)/
-	2;},
-	
+	2;
+	},
 	
 	getLabelPosition:function getLabelPosition(props,style,radius){
 	// TODO: better label positioning
@@ -32437,29 +32477,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	style.labels.padding;
 	return _d3Shape2.default.arc().
 	outerRadius(radius).
-	innerRadius(innerRadius);},
-	
+	innerRadius(innerRadius);
+	},
 	
 	getLabelText:function getLabelText(props,datum,index){
 	if(datum.label){
-	return datum.label;}else
-	if(Array.isArray(props.labels)){
-	return props.labels[index];}
-	
-	return(0,_isFunction3.default)(props.labels)?props.labels(datum):datum.xName||datum.x;},
-	
+	return datum.label;
+	}else if(Array.isArray(props.labels)){
+	return props.labels[index];
+	}
+	return(0,_isFunction3.default)(props.labels)?props.labels(datum):datum.xName||datum.x;
+	},
 	
 	getSliceFunction:function getSliceFunction(props){
 	var degreesToRadians=function degreesToRadians(degrees){
-	return degrees*(Math.PI/180);};
-	
+	return degrees*(Math.PI/180);
+	};
 	
 	return _d3Shape2.default.pie().
 	sort(null).
 	startAngle(degreesToRadians(props.startAngle)).
 	endAngle(degreesToRadians(props.endAngle)).
 	padAngle(degreesToRadians(props.padAngle)).
-	value(function(datum){return datum.y;});}};
+	value(function(datum){return datum.y;});
+	}};
 
 /***/ },
 /* 424 */
