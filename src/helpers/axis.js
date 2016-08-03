@@ -98,7 +98,7 @@ export default {
 
   getOriginSign(origin, domain) {
     const getSign = () => {
-      return origin <= 0 && Math.min(...domain) < 0 ? "negative" : "positive";
+      return origin <= 0 && Math.max(...domain) <= 0 ? "negative" : "positive";
     };
     return Collection.containsDates(domain) ? "positive" : getSign();
   },
