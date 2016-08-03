@@ -331,8 +331,7 @@ export default class VictoryStack extends React.Component {
       x: Wrapper.getCategories(props, "x"),
       y: Wrapper.getCategories(props, "y")
     };
-    const colorScale = props.theme ? props.colorscale || props.theme.props.colorScale
-    : props.colorScale;
+    const colorScale = props.colorScale;
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
@@ -367,6 +366,16 @@ export default class VictoryStack extends React.Component {
     };
   }
 
+  getColorScale(props, child) {
+    const role = child.type && child.type.role;
+    const colorScaleOptions = child.props.colorScale || props.colorScale;
+    if (role !== "group-wrapper" && role !== "stack-wrapper") {
+      return undefined;
+    }
+    return props.theme ? colorScaleOptions || props.theme.props.colorScale
+    : colorScaleOptions;
+  }
+
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
@@ -386,6 +395,7 @@ export default class VictoryStack extends React.Component {
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
+        colorScale: this.getColorScale(props, child),
         data
       }, childProps));
     }
