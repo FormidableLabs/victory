@@ -50,6 +50,7 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a set 
 ```playground
 <VictoryGroup
   height={500}
+  colorScale={"warm"}
   style={{data: {opacity: 0.3}}}
 >
   <VictoryArea
@@ -79,7 +80,10 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a set 
 Wrap several VictoryArea components in the VictoryGroup wrapper to create a stacked layout. The y domain is automatically set to account for the cumulative maximum of the data:
 
 ```playground
-<VictoryStack height={500}>
+<VictoryStack 
+  colorScale={"warm"}
+  height={500}
+>
   <VictoryArea
     data={[
       {x: 1, y: 1},
