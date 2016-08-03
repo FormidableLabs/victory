@@ -255,7 +255,9 @@ export default class App extends React.Component {
           })}
         </VictoryStack>
 
-        <VictoryChart style={{parent: parentStyle}} domainPadding={{x: 30}} theme={VictoryTheme.material}>
+        <VictoryChart style={{parent: parentStyle}} domainPadding={{x: 30}}
+          theme={VictoryTheme.material}
+        >
           <VictoryGroup
             offset={15}
             animate={{duration: 1000}}
