@@ -62,8 +62,9 @@ Styles of the pie chart itself can also be specified:
 <VictoryPie
   style={{
     data: {
-      stroke: "transparent",
-      opacity: 0.3
+      stroke: "black",
+      strokeDasharray: "5,5",
+      strokeWidth: 2
     }
   }}
 />
@@ -137,16 +138,16 @@ Functional styles allow elements to determine their own styles based on data
   style={{
     data: {
       stroke: (data) => data.y > 75 ?
-        "black" : "transparent",
-      opacity: (data) => data.y > 75 ?
-        1 : 0.4
+        "tomato" : "black",
+      strokeWidth: (data) => data.y > 75 ?
+        3 : 1
     }
   }}
   data={[
     {x: "Cat", y: 62},
-    {x: "Dog", y: 91},
+    {x: "Dog", y: 55},
     {x: "Fish", y: 55},
-    {x: "Bird", y: 55},
+    {x: "Bird", y: 91},
   ]}
 />
 ```
