@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 0.10.2 (2016-08-02)
+
+- Fix animation and style bugs for VictoryCandlestick
+- Fix layout bug effecting negative axes in VictoryChart
+- Update docs
+
 ## 0.10.1 (2016-08-01)
 
 - Fix minor error bar bug
