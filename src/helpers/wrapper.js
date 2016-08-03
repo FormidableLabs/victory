@@ -136,12 +136,14 @@ export default {
     return Domain.padDomain(dataDomain, props, axis);
   },
 
-  getColor(calculatedProps, index) {
+  getColor(calculatedProps, child, index) {
     // check for styles first
-    const { style, colorScale } = calculatedProps;
+    const { style } = calculatedProps;
+    let { colorScale } = calculatedProps;
     if (style && style.data && style.data.fill) {
       return style.data.fill;
     }
+    colorScale = child.props && child.props.colorScale ? child.props.colorScale : colorScale;
     const colors = Array.isArray(colorScale) ?
       colorScale : Style.getColorScale(colorScale);
     return colors[index % colors.length];
@@ -151,7 +153,7 @@ export default {
     const { style } = calculatedProps;
     const role = child.type && child.type.role;
     const defaultFill = role === "group-wrapper" || role === "stack-wrapper" ?
-      undefined : this.getColor(calculatedProps, index);
+      undefined : this.getColor(calculatedProps, child, index);
     const childStyle = child.props.style || {};
     const dataStyle = defaults({}, childStyle.data, style.data, {fill: defaultFill});
     const labelsStyle = defaults({}, childStyle.labels, style.labels);

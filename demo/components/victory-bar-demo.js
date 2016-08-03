@@ -249,18 +249,19 @@ export default class App extends React.Component {
         <VictoryStack
           style={{parent: parentStyle}}
           animate={{duration: 1000}}
-          theme={VictoryTheme.grayscale}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return <Wrapper key={index}><VictoryBar data={data}/></Wrapper>;
+            return <Wrapper key={index}><VictoryBar data={data} colorScale={"warm"}/></Wrapper>;
           })}
         </VictoryStack>
 
-        <VictoryChart style={{parent: parentStyle}} domainPadding={{x: 30}}>
+        <VictoryChart style={{parent: parentStyle}} domainPadding={{x: 30}}
+          theme={VictoryTheme.material}
+        >
           <VictoryGroup
             offset={15}
             animate={{duration: 1000}}
-            colorScale={"qualitative"}
+            colorScale={"warm"}
           >
             {this.state.multiTransitionData.map((data, index) => {
               return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
