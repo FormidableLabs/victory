@@ -108,8 +108,6 @@ export default class VictoryTransition extends React.Component {
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
-          if (newProps.clipWidth)
-            console.log(newProps.clipWidth)
           const component = React.cloneElement(
             child, defaults({animate: null}, newProps, combinedProps));
           return component;

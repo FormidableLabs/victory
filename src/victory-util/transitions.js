@@ -172,9 +172,8 @@ function getChildClipPathToEnter(animate, child, data, enteringNodes, cb) {
   if (enteringNodes) {
     animate = assign({}, animate);
     animate.onEnd = cb;
-    const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
-    const extent = d3Array.extent(filterExit, (filterDatum) => {
-      return child.props.scale.x(filterDatum.x);
+    const extent = d3Array.extent(data, (datum) => {
+      return child.props.scale.x(datum.x);
     });
     clipWidth = d3Array.sum(extent);
   }
@@ -182,7 +181,7 @@ function getChildClipPathToEnter(animate, child, data, enteringNodes, cb) {
   return { animate, clipWidth };
 }
 
-function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) { // eslint-disable-line max-params,max-len
+function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // eslint-disable-line max-params,max-len
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
@@ -195,12 +194,18 @@ function getChildPropsBeforeEnter(animate, data, enteringNodes, cb) { // eslint-
       const key = (datum.key || idx).toString();
       return enteringNodes[key] ? assign({}, datum, before(datum)) : datum;
     });
+
+    const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
+    const extent = d3Array.extent(filterEnter, (filterDatum) => {
+      return child.props.scale.x(filterDatum.x);
+    });
+    clipWidth = d3Array.sum(extent);
   }
 
-  return { animate, data };
+  return { animate, data, clipWidth };
 }
 
-function getChildPropsOnEnter(animate, data, enteringNodes) {
+function getChildPropsOnEnter(animate, child, data, enteringNodes) {
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
@@ -251,10 +256,7 @@ export function getTransitionPropsFactory(props, state, setState) {
   };
 
   const onExit = (nodes, child, data, animate) => {
-    console.log(child.type.role)
-    console.log('onExit!')
     if (child.type.role === 'line' && !nodesDoneClipPathExit) {
-      console.log('inside')
       return getChildClipPathToExit(animate, child, data, nodes, () => {
         setState({ nodesDoneClipPathExit: true });
       })
@@ -266,9 +268,6 @@ export function getTransitionPropsFactory(props, state, setState) {
   };
 
   const onEnter = (nodes, child, data, animate) => {
-    console.log(child.type.role);
-    console.log('onEnter!')
-
     if (nodesShouldEnter) {
       if (child.type.role === 'line' && !nodesDoneClipPathEnter) {
         return getChildClipPathToEnter(animate, child, data, nodes, () => {
@@ -276,10 +275,10 @@ export function getTransitionPropsFactory(props, state, setState) {
         })
       }
 
-      return getChildPropsOnEnter(animate, data, nodes)
+      return getChildPropsOnEnter(animate, child, data, nodes)
     }
 
-    return getChildPropsBeforeEnter(animate, data, nodes, () => {
+    return getChildPropsBeforeEnter(animate, child, data, nodes, () => {
       setState({ nodesShouldEnter: true });
     });
   };
