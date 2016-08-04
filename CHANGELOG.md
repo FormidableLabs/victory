@@ -1,5 +1,12 @@
 # VictoryChart Changelog
 
+## 10.2.6 (2016-08-04)
+
+- Fix bug in automatic domainPadding
+- Fix bug in generated data
+- Fix bug in domainPadding for stacked charts
+- Fix colorScale in wrapped components
+
 ## 10.2.5 (2016-08-02)
 
 - Fix animation bug in VictoryCandlestick 
