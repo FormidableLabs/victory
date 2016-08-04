@@ -2,7 +2,7 @@
   "name": "victory-core",
   "version": "4.5.0",
   "description": "Victory Core",
-  "main": "lib/index.js",
+  "main": "src/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/victory-core.git"
@@ -28,6 +28,7 @@
   "dependencies": {
     "builder": "~2.9.1",
     "builder-victory-component": "^2.3.0",
+    "d3-array": "^1.0.1",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-timer": "^0.0.6",

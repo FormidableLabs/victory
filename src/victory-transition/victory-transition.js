@@ -39,13 +39,17 @@ export default class VictoryTransition extends React.Component {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter
+        nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit,
         oldProps: nodesWillExit ? props : null
       };
     }
@@ -77,6 +81,7 @@ export default class VictoryTransition extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
+    const child = React.Children.toArray(props.children)[0];
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
       Transitions.getTransitionPropsFactory(
@@ -84,7 +89,6 @@ export default class VictoryTransition extends React.Component {
         this.state,
         (newState) => this.setState(newState)
       );
-    const child = React.Children.toArray(props.children)[0];
     const transitionProps = getTransitionProps(child);
     const domain = {
       x: this.getDomainFromChildren(props, "x"),
@@ -93,11 +97,19 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
+
+    if (this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit) {
+      var index = props.animationWhitelist.indexOf("clipWidth");
+      props.animationWhitelist.splice(index, 1);
+    }
+
     const propsToAnimate = props.animationWhitelist ?
       pick(combinedProps, props.animationWhitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
+          if (newProps.clipWidth)
+            console.log(newProps.clipWidth)
           const component = React.cloneElement(
             child, defaults({animate: null}, newProps, combinedProps));
           return component;
