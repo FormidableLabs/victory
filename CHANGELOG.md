@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.10.3 (2016-08-04)
+
+- Fixes minor domainPadding bugs for stacked and grouped charts
+- Fixes a bug in generated data
+
 ## 0.10.2 (2016-08-02)
 
 - Fix animation and style bugs for VictoryCandlestick
