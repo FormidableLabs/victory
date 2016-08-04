@@ -349,6 +349,8 @@ export default class VictoryChart extends React.Component {
         animate: getAnimationProps(props, child, index),
         height: props.height,
         width: props.width,
+        clipWidth: props.width,
+        clipHeight: props.height,
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,

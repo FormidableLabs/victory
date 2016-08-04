@@ -13,7 +13,9 @@ import {
 const fallbackProps = {
   props: {
     height: 300,
-    width: 450
+    width: 450,
+    clipHeight: 300,
+    clipWidth: 450
   },
   style: {
     data: {
@@ -467,7 +469,13 @@ export default class VictoryLine extends React.Component {
     const { clipPathComponent } = modifiedProps;
 
     const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
-      {}, modifiedProps
+      {},
+      {
+        padding: modifiedProps.padding,
+        clipId: modifiedProps.clipId,
+        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
+        clipHeight: modifiedProps.clipHeight ||  modifiedProps.height
+      }
     ));
 
     return React.cloneElement(
@@ -489,7 +497,7 @@ export default class VictoryLine extends React.Component {
       // prop whitelist/blacklist?
       // TODO: extract into helper
       const whitelist = [
-        "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
+        "data", "domain", "height", "padding", "samples", "style", "width", "x", "y", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

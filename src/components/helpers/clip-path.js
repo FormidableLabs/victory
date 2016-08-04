@@ -12,15 +12,15 @@ export default class ClipPath extends React.Component {
      */
     clipId: PropTypes.number,
     /**
-     * The height props specifies the height the svg viewBox of the chart container.
+     * The clipHeight props specifies the height of the clipPath
      * This value should be given as a number of pixels
      */
-    height: CustomPropTypes.nonNegative,
+    clipHeight: CustomPropTypes.nonNegative,
     /**
-     * The width props specifies the width of the svg viewBox of the chart container
+     * The clipWidth props specifies the width of the clipPath
      * This value should be given as a number of pixels
      */
-    width: CustomPropTypes.nonNegative,
+    clipWidth: CustomPropTypes.nonNegative,
     /**
      * The padding props specifies the amount of padding in number of pixels between
      * the edge of the chart and any rendered child components. This prop can be given
@@ -38,16 +38,11 @@ export default class ClipPath extends React.Component {
     ])
   };
 
-  static defaultProps = {
-    width: 450,
-    height: 300
-  }
-
   render() {
     const {
       clipId,
-      width,
-      height
+      clipWidth,
+      clipHeight
     } = this.props;
 
     const padding = Helpers.getPadding(this.props);
@@ -55,12 +50,12 @@ export default class ClipPath extends React.Component {
     return (
       <defs>
         <clipPath id={clipId}>
-            <rect
-              x={padding.left}
-              y={padding.top}
-              width={width - padding.left - padding.right}
-              height={height - padding.top - padding.bottom}
-            />
+          <rect
+            x={padding.left}
+            y={padding.top}
+            width={clipWidth - padding.left - padding.right}
+            height={clipHeight - padding.top - padding.bottom}
+          />
         </clipPath>
       </defs>
     );
