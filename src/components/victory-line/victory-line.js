@@ -2,6 +2,7 @@ import { assign, defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
+import ClipPath from "../helpers/clip-path";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
@@ -370,7 +371,8 @@ export default class VictoryLine extends React.Component {
     dataComponent: <LineSegment/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -402,7 +404,7 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
     const lineComponents = [];
     const lineLabelComponents = [];
@@ -412,7 +414,7 @@ export default class VictoryLine extends React.Component {
       const role = `${VictoryLine.role}-${index}`;
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
-        {index, key: role, role},
+        {index, key: role, role, clipId},
         this.getEventState("all", "data"),
         this.getSharedEventState("all", "data"),
         { data },
@@ -461,16 +463,24 @@ export default class VictoryLine extends React.Component {
     );
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, modifiedProps, style) {
+    const { clipPathComponent } = modifiedProps;
+
+    const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
+      {}, modifiedProps
+    ));
+
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children
+      children,
+      clipComponent
     );
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const clipId = Math.round(Math.random() * 10000);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps, {clipId});
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
@@ -493,7 +503,7 @@ export default class VictoryLine extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
+    const group = this.renderGroup(this.renderData(modifiedProps), modifiedProps, baseStyles.parent);
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

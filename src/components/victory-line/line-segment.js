@@ -3,6 +3,7 @@ import * as d3Shape from "d3-shape";
 
 export default class LineSegment extends React.Component {
   static propTypes = {
+    clipId: PropTypes.number,
     data: PropTypes.array,
     events: PropTypes.object,
     index: PropTypes.number,
@@ -19,9 +20,16 @@ export default class LineSegment extends React.Component {
   }
 
   renderLine(path, style, events) {
-    const { role } = this.props;
+    const { role, clipId } = this.props;
     return (
-      <path style={style} d={path} role={role} {...events} vectorEffect="non-scaling-stroke"/>
+      <path
+        style={style}
+        d={path}
+        role={role}
+        {...events}
+        clipPath={`url(#${clipId})`}
+        vectorEffect="non-scaling-stroke"
+      />
     );
   }
 
