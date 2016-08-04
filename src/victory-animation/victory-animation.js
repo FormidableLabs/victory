@@ -70,8 +70,14 @@ export default class VictoryAnimation extends React.Component {
   constructor(props) {
     super(props);
     /* defaults */
-    this.state = Array.isArray(this.props.data) ?
-      this.props.data[0] : this.props.data;
+    this.state = {
+      data: Array.isArray(this.props.data) ?
+        this.props.data[0] : this.props.data,
+      animationInfo: {
+        progress: 0,
+        animating: false
+      }
+    };
     this.interpolator = null;
     this.queue = Array.isArray(this.props.data) ?
       this.props.data.slice(1) : [];
@@ -120,7 +126,7 @@ export default class VictoryAnimation extends React.Component {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
-      this.interpolator = d3Interpolate.value(this.state, data);
+      this.interpolator = d3Interpolate.value(this.state.data, data);
       /* reset step to zero */
       this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
     } else if (this.props.onEnd) {
@@ -136,7 +142,13 @@ export default class VictoryAnimation extends React.Component {
     const step = elapsed / this.props.duration;
 
     if (step >= 1) {
-      this.setState(this.interpolator(1));
+      this.setState({
+        data: this.interpolator(1),
+        animationInfo: {
+          progress: 1,
+          animating: false
+        }
+      });
       this.timer.stop();
       this.queue.shift();
       this.traverseQueue(); // Will take care of calling `onEnd`.
@@ -147,9 +159,15 @@ export default class VictoryAnimation extends React.Component {
       current step value that's transformed by the ease function to the
       interpolator, which is cached for performance whenever props are received
     */
-    this.setState(this.interpolator(this.ease(step)));
+    this.setState({
+      data: this.interpolator(this.ease(step)),
+      animationInfo: {
+        progress: step,
+        animating: step < 1
+      }
+    });
   }
   render() {
-    return this.props.children(this.state);
+    return this.props.children(this.state.data, this.state.animationInfo);
   }
 }

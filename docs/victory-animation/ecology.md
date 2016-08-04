@@ -44,4 +44,32 @@ Anything can be animated! Your function can return any React component, and itâ€
 </svg>
 ```
 
+### Animation progress
+
+A second argument is passed into your function, giving you `progress` and `animating`
+```js
+{
+  progress: 0.479, // 0 to 1
+  animating: true // true or false
+}
+```
+On intial render, `progress` is `0` and `animating` is `false`.
+
+```playground
+<svg onClick={() => {
+  const state = this.state || {};
+  this.setState({ x: state.x ? 0 : 100 });
+}}>
+  <VictoryAnimation data={
+    this.state || { x: 0 }
+  }>
+    {(props, animationInfo) => (
+      <text { ...props } color={animationInfo.animating ? "green" : "orange"} y={50}>
+        Click me! {animationInfo.progress}
+      </text>
+    )}
+  </VictoryAnimation>
+</svg>
+```
+
 ### Props
