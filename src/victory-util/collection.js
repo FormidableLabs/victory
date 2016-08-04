@@ -22,5 +22,19 @@ export default {
 
   removeUndefined(arr) {
     return arr.filter((el) => el !== undefined);
+  },
+
+  getMaxValue(arr, ...values) {
+    const array = arr.concat(values);
+    return this.containsDates(array) ?
+      new Date(Math.max(...array)) :
+      Math.max(...array);
+  },
+
+  getMinValue(arr, ...values) {
+    const array = arr.concat(values);
+    return this.containsDates(array) ?
+      new Date(Math.min(...array)) :
+      Math.min(...array);
   }
 };

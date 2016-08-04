@@ -1,5 +1,13 @@
 VictoryCore Changelog
 =====================
+## 4.5.0 (2016-07-29)
+
+- Remove `reduce-calc-css` dependency. 
+
+## 4.4.2 (2016-7-26)
+
+- Creates new getMinValue and getMaxValue array methods in order to maintain dates for domains.
+
 ## 4.4.1 (2016-7-12)
 
 - Adjusting the props passed to the text element of VictoryLabel to eliminate error messages

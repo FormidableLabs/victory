@@ -46,7 +46,7 @@ export default class VictoryContainer extends React.Component {
      * The title prop specifies the title to be applied to the SVG to assist
      * accessibility for screen readers. The more descriptive this title is, the more
      * useful it will be. If no title prop is passed, it will default to Victory Chart.
-     * @example "Popularity of Dog Breeds by Percentage"
+     * @examples "Popularity of Dog Breeds by Percentage"
      */
     title: PropTypes.string,
     /**
@@ -54,7 +54,7 @@ export default class VictoryContainer extends React.Component {
      * accessibility for screen readers. The more info about the chart provided in
      * the description, the more usable it will be for people using screen readers.
      * This prop defaults to an empty string.
-     * @example "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
+     * @examples "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
      * not represented above 5% each."
      */
     desc: PropTypes.string
