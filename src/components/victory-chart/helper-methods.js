@@ -35,6 +35,21 @@ export default {
     return childComponents;
   },
 
+  getDefaultDomainPadding(childComponents, horizontal) {
+    const groupComponent = childComponents.filter((child) => {
+      return child.type && child.type.role && child.type.role === "group-wrapper";
+    });
+
+    if (groupComponent.length < 1) {
+      return undefined;
+    }
+
+    const { offset, children } = groupComponent[0].props;
+    return horizontal ?
+      {y: (offset * children.length) / 2} :
+      {x: (offset * children.length) / 2};
+  },
+
   getDataComponents(childComponents) {
     const findDataComponents = (children) => {
       return children.reduce((memo, child) => {
