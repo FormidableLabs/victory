@@ -1,5 +1,10 @@
 VictoryCore Changelog
 =====================
+## 4.5.1 (2016-08-5)
+
+- Fix PropType warnings in React 15.3+
+- Add animationInfo as 2nd argument to victory-animation child function call
+
 ## 4.5.0 (2016-07-29)
 
 - Remove `reduce-calc-css` dependency. 
