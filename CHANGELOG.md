@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.10.4 (2016-08-05)
+
+- Fix PropType warnings in React 15.3+
+- Add animationInfo as 2nd argument to victory-animation child function call
+
 ## 0.10.3 (2016-08-04)
 
 - Fixes minor domainPadding bugs for stacked and grouped charts
