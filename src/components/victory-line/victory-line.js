@@ -474,7 +474,7 @@ export default class VictoryLine extends React.Component {
         padding: modifiedProps.padding,
         clipId: modifiedProps.clipId,
         clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-        clipHeight: modifiedProps.clipHeight ||  modifiedProps.height
+        clipHeight: modifiedProps.clipHeight || modifiedProps.height
       }
     ));
 
@@ -488,7 +488,7 @@ export default class VictoryLine extends React.Component {
 
   render() {
     const clipId = Math.round(Math.random() * 10000);
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps, {clipId});
+    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
@@ -497,7 +497,8 @@ export default class VictoryLine extends React.Component {
       // prop whitelist/blacklist?
       // TODO: extract into helper
       const whitelist = [
-        "data", "domain", "height", "padding", "samples", "style", "width", "x", "y", "clipWidth", "clipHeight"
+        "data", "domain", "height", "padding", "samples",
+        "style", "width", "x", "y", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
@@ -510,8 +511,9 @@ export default class VictoryLine extends React.Component {
     : fallbackProps.style;
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), modifiedProps, baseStyles.parent);
+    const group = this.renderGroup(
+      this.renderData(modifiedProps), modifiedProps, baseStyles.parent
+    );
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
