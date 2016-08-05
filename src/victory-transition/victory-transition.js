@@ -39,14 +39,18 @@ export default class VictoryTransition extends React.Component {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter
+        nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        oldProps: nodesWillEnter ? props : null
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit,
+        oldProps: nodesWillExit ? props : null
       };
     }
   }
@@ -75,7 +79,7 @@ export default class VictoryTransition extends React.Component {
   }
 
   render() {
-    const props = this.state && this.state.nodesWillEnter ?
+    const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
@@ -93,6 +97,12 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
+
+    if (this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit) {
+      const index = props.animationWhitelist.indexOf("clipWidth");
+      props.animationWhitelist.splice(index, 1);
+    }
+
     const propsToAnimate = props.animationWhitelist ?
       pick(combinedProps, props.animationWhitelist) : combinedProps;
     return (
