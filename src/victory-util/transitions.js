@@ -130,7 +130,7 @@ function getInitialChildProps(animate, data) {
   };
 }
 
-function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params max-len
+function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
   let clipWidth;
 
   if (exitingNodes) {
@@ -138,7 +138,7 @@ function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // esl
     animate.onEnd = cb;
     const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
     const extent = d3Array.extent(filterExit, (filterDatum) => {
-      return child.props.scale.x(filterDatum.x);
+      return child.type.getBaseProps(child.props).all.data.scale.x(filterDatum.x);
     });
     clipWidth = d3Array.sum(extent);
   }
@@ -146,7 +146,7 @@ function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // esl
   return { animate, clipWidth };
 }
 
-function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params max-len
+function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
@@ -167,14 +167,14 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint
   return { animate, data };
 }
 
-function getChildClipPathToEnter(animate, child, data, enteringNodes, cb) {
+function getChildClipPathToEnter(animate, child, data, enteringNodes, cb) { // eslint-disable-line max-params,max-len
   let clipWidth;
 
   if (enteringNodes) {
     animate = assign({}, animate);
     animate.onEnd = cb;
     const extent = d3Array.extent(data, (datum) => {
-      return child.props.scale.x(datum.x);
+      return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
     });
     clipWidth = d3Array.sum(extent);
   }
@@ -198,17 +198,23 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // 
       return enteringNodes[key] ? assign({}, datum, before(datum)) : datum;
     });
 
-    const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
-    const extent = d3Array.extent(filterEnter, (filterDatum) => {
-      return child.props.scale.x(filterDatum.x);
-    });
-    clipWidth = d3Array.sum(extent);
+    if (child.type.role === "line") {
+      const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
+      const extent = d3Array.extent(filterEnter, (filterDatum) => {
+        return child.type.getBaseProps(child.props).all.data.scale.x(filterDatum.x);
+      });
+      clipWidth = d3Array.sum(extent);
+    }
   }
 
-  return { animate, data, clipWidth };
+  if (child.type.role === "line") {
+    return { animate, data, clipWidth };
+  }
+
+  return { animate, data };
 }
 
-function getChildPropsOnEnter(animate, child, data, enteringNodes) { // eslint-disable-line max-params
+function getChildPropsOnEnter(animate, child, data, enteringNodes) { // eslint-disable-line max-params, max-len
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
