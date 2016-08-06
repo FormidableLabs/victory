@@ -13,7 +13,9 @@ import {
 const fallbackProps = {
   props: {
     width: 450,
-    height: 300
+    height: 300,
+    clipHeight: 300,
+    clipWidth: 450
   },
   style: {
     data: {
