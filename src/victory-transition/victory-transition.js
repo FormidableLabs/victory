@@ -30,7 +30,7 @@ export default class VictoryTransition extends React.Component {
     if (!animate) {
       return {};
     } else if (animate.parentState) {
-      const oldProps = animate.parentState.nodesWillEnter ? props : null;
+      const oldProps = animate.parentState.nodesWillExit ? props : null;
       return {oldProps};
     } else {
       const oldChildren = React.Children.toArray(props.children);

@@ -28,7 +28,6 @@
   "dependencies": {
     "builder": "~2.9.1",
     "builder-victory-component": "^2.3.0",
-    "d3-array": "^1.0.1",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-timer": "^0.0.6",

@@ -1,6 +1,5 @@
 /* eslint-disable func-style */
-import { assign, defaults, identity, filter } from "lodash";
-import * as d3Array from "d3-array";
+import { assign, defaults, identity } from "lodash";
 import React from "react";
 
 function getDatumKey(datum, idx) {
@@ -72,6 +71,8 @@ function getChildData(child) {
  *                                    - nodesWillEnter
  *                                    - childrenTransitions
  *                                    - nodesShouldEnter
+ *                                    - nodesDoneClipPathEnter
+ *                                    - nodesDoneClipPathExit
  */
 export function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;
@@ -134,13 +135,11 @@ function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // esl
   let clipWidth;
 
   if (exitingNodes) {
-    animate = assign({}, animate);
-    animate.onEnd = cb;
-    const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
-    const extent = d3Array.extent(filterExit, (filterDatum) => {
-      return child.type.getBaseProps(child.props).all.data.scale.x(filterDatum.x);
-    });
-    clipWidth = d3Array.sum(extent);
+    animate = assign({}, animate, { onEnd: cb });
+    const beforeClipPathWidth = animate.onExit && animate.onExit.beforeClipPathWidth ?
+          animate.onExit.beforeClipPathWidth : identity;
+
+    clipWidth = beforeClipPathWidth(data, child, exitingNodes);
   }
 
   return { animate, clipWidth };
@@ -167,16 +166,15 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint
   return { animate, data };
 }
 
-function getChildClipPathToEnter(animate, child, data, enteringNodes, cb) { // eslint-disable-line max-params,max-len
+function getChildClipPathToEnter(animate, child, data, enteringNodes, cb) { // eslint-disable-line max-params, max-len
   let clipWidth;
 
   if (enteringNodes) {
-    animate = assign({}, animate);
-    animate.onEnd = cb;
-    const extent = d3Array.extent(data, (datum) => {
-      return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
-    });
-    clipWidth = d3Array.sum(extent);
+    animate = assign({}, animate, { onEnd: cb });
+    const afterClipPathWidth = animate.onEnter && animate.onEnter.afterClipPathWidth ?
+          animate.onEnter.afterClipPathWidth : identity;
+
+    clipWidth = afterClipPathWidth(data, child);
   }
 
   return { animate, clipWidth };
@@ -190,6 +188,8 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // 
     // the transition for entering nodes.
     animate = assign({}, animate, { onEnd: cb });
     const before = animate.onEnter && animate.onEnter.before ? animate.onEnter.before : identity;
+    const beforeClipPathWidth = animate.onEnter && animate.onEnter.beforeClipPathWidth ?
+      animate.onEnter.beforeClipPathWidth : identity;
     // We want the entering nodes to be included in the transition target
     // domain.  However, we may not want these nodes to be displayed initially,
     // so perform the `onEnter.before` transformation on each node.
@@ -198,20 +198,10 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // 
       return enteringNodes[key] ? assign({}, datum, before(datum)) : datum;
     });
 
-    if (child.type.role === "line") {
-      const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
-      const extent = d3Array.extent(filterEnter, (filterDatum) => {
-        return child.type.getBaseProps(child.props).all.data.scale.x(filterDatum.x);
-      });
-      clipWidth = d3Array.sum(extent);
-    }
+    clipWidth = beforeClipPathWidth(data, child, enteringNodes);
   }
 
-  if (child.type.role === "line") {
-    return { animate, data, clipWidth };
-  }
-
-  return { animate, data };
+  return { animate, data, clipWidth };
 }
 
 function getChildPropsOnEnter(animate, child, data, enteringNodes) { // eslint-disable-line max-params, max-len
