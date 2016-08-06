@@ -372,7 +372,16 @@ export default class VictoryArea extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element,
+    /**
+     * Unique clipId for clipPath
+     */
+    clipId: PropTypes.number
   };
 
   static defaultProps = {
@@ -489,7 +498,7 @@ export default class VictoryArea extends React.Component {
   }
 
   render() {
-    const clipId = Math.round(Math.random() * 10000);
+    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
     const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
