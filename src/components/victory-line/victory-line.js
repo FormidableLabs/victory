@@ -1,4 +1,4 @@
-import { assign, defaults, partialRight, isFunction } from "lodash";
+import { assign, defaults, partialRight, isFunction, min, max, filter } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
@@ -43,12 +43,39 @@ export default class VictoryLine extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: (datum) => ({ y: datum.y })
+      before: (datum) => ({ y: datum.y }),
+      beforeClipPathWidth: (data, child, exitingNodes) => {
+        const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
+        const xVals = filterExit.map((datum) => {
+          return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+
+        return clipPath;
+      }
     },
     onEnter: {
       duration: 500,
       before: () => ({ y: null }),
-      after: (datum) => ({ y: datum.y })
+      after: (datum) => ({ y: datum.y }),
+      beforeClipPathWidth: (data, child, enteringNodes) => {
+        const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
+        const xVals = filterEnter.map((datum) => {
+          return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+
+        return clipPath;
+
+      },
+      afterClipPathWidth: (data, child) => {
+        const xVals = data.map((datum) => {
+          return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+
+        return clipPath;
+      }
     }
   };
 
