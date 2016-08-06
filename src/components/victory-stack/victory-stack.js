@@ -5,11 +5,14 @@ import {
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
+import ClipPath from "../helpers/clip-path";
 
 const fallbackProps = {
   props: {
     width: 450,
-    height: 300
+    height: 300,
+    clipHeight: 300,
+    clipWidth: 450
   },
   style: {
     data: {
@@ -285,7 +288,12 @@ export default class VictoryStack extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -293,7 +301,8 @@ export default class VictoryStack extends React.Component {
     padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
@@ -387,10 +396,12 @@ export default class VictoryStack extends React.Component {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
+      const clipId = props.clipId;
       newChildren[index] = React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
+        clipId,
         domainPadding: child.props.domainPadding || props.domainPadding,
         theme: child.props.theme || props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
@@ -413,18 +424,32 @@ export default class VictoryStack extends React.Component {
     return React.cloneElement(containerComponent, parentProps);
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, modifiedProps, style) {
+    const { clipPathComponent } = modifiedProps;
+
+    const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
+      {},
+      {
+        padding: modifiedProps.padding,
+        clipId: modifiedProps.clipId,
+        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
+        clipHeight: modifiedProps.clipHeight || modifiedProps.height
+      }
+    ));
+
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children
+      children,
+      clipComponent
     );
   }
 
   render() {
+    const clipId = Math.round(Math.random() * 10000);
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(assign({}, props, {clipId}), fallbackProps);
     const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
     const types = uniq(childComponents.map((child) => child.type.role));
@@ -446,7 +471,7 @@ export default class VictoryStack extends React.Component {
         </VictorySharedEvents>
       );
     }
-    const group = this.renderGroup(newChildren, style.parent);
+    const group = this.renderGroup(newChildren, modifiedProps, style.parent);
 
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
