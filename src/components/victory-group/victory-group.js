@@ -453,20 +453,21 @@ export default class VictoryGroup extends React.Component {
 
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
-
+    const barWidth = style.data.width;
     const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
       {},
       {
         padding: modifiedProps.padding,
         clipId: modifiedProps.clipId,
-        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-        clipHeight: modifiedProps.clipHeight || modifiedProps.height
+        barWidth,
+        clipWidth: modifiedProps.clipWidth + barWidth || modifiedProps.width + barWidth,
+        clipHeight: modifiedProps.clipHeight + barWidth || modifiedProps.height + barWidth
       }
     ));
 
     return React.cloneElement(
       this.props.groupComponent,
-      { role: "presentation", style},
+      { role: "presentation", style: style.parent},
       children,
       clipComponent
     );
@@ -495,7 +496,7 @@ export default class VictoryGroup extends React.Component {
         </VictorySharedEvents>
       );
     }
-    const group = this.renderGroup(newChildren, modifiedProps, style.parent);
+    const group = this.renderGroup(newChildren, modifiedProps, style);
 
     return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
   }
