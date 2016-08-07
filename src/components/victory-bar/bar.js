@@ -3,6 +3,7 @@ import React, { PropTypes } from "react";
 export default class Bar extends React.Component {
 
   static propTypes = {
+    clipId: PropTypes.number,
     datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
@@ -47,9 +48,16 @@ export default class Bar extends React.Component {
   }
 
   renderBar(path, style, events) {
-    const { role } = this.props;
+    const { role, clipId } = this.props;
     return (
-      <path d={path} style={style} role={role} shapeRendering="optimizeSpeed" {...events}/>
+      <path
+        d={path}
+        style={style}
+        role={role}
+        shapeRendering="optimizeSpeed"
+        {...events}
+        clipPath={`url(#${clipId}`}
+      />
     );
   }
 
