@@ -261,7 +261,6 @@ export default class VictoryChart extends React.Component {
     const orientation = Axis.getOrientation(child, axis, originSign[axis]);
     return {
       domain: domain[axis],
-      domainPadding: child.props.domainPadding || props.domainPadding,
       scale: scale[axis],
       tickValues,
       tickFormat,
@@ -279,7 +278,6 @@ export default class VictoryChart extends React.Component {
     }
     return {
       domain: calculatedProps.domain,
-      domainPadding: child.props.domainPadding || props.domainPadding,
       scale: calculatedProps.scale,
       categories: calculatedProps.categories
     };
@@ -328,12 +326,17 @@ export default class VictoryChart extends React.Component {
       x: Wrapper.getCategories(props, "x", childComponents),
       y: Wrapper.getCategories(props, "y", childComponents)
     };
+
     const stringMap = {
       x: ChartHelpers.createStringMap(props, "x", childComponents),
       y: ChartHelpers.createStringMap(props, "y", childComponents)
     };
+
+    const defaultDomainPadding = ChartHelpers.getDefaultDomainPadding(childComponents, horizontal);
+
     return {
-      axisComponents, categories, domain, horizontal, scale, stringMap, style, origin, originSign
+      axisComponents, categories, domain, horizontal, scale, stringMap,
+      style, origin, originSign, defaultDomainPadding
     };
   }
 
@@ -351,12 +354,13 @@ export default class VictoryChart extends React.Component {
         width: props.width,
         clipWidth: props.width,
         clipHeight: props.height,
+        domainPadding: child.props.domainPadding ||
+          props.domainPadding || calculatedProps.defaultDomainPadding,
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,
         theme: child.props.theme || props.theme,
         standalone: false,
-        domainPadding: child.props.domainPadding || props.domainPadding,
         style
       }, childProps);
       newChildren[index] = React.cloneElement(child, newProps);

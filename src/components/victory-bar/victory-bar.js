@@ -356,8 +356,11 @@ export default class VictoryBar extends React.Component {
      * The clipPathComponent prop takes an entire component which will be used to
      * create clipPath elements for use within container elements.
      */
-    clipPathComponent: PropTypes.element
-
+    clipPathComponent: PropTypes.element,
+    /**
+     * Unique clipId for clipPath
+     */
+    clipId: PropTypes.number
   };
 
   static defaultProps = {
@@ -462,27 +465,28 @@ export default class VictoryBar extends React.Component {
 
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
-
+    const barWidth = style.data.width;
     const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
       {},
       {
         padding: modifiedProps.padding,
         clipId: modifiedProps.clipId,
-        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-        clipHeight: modifiedProps.clipHeight || modifiedProps.height
+        barWidth,
+        clipWidth: modifiedProps.clipWidth + barWidth || modifiedProps.width + barWidth,
+        clipHeight: modifiedProps.clipHeight + barWidth || modifiedProps.height + barWidth
       }
     ));
 
     return React.cloneElement(
       this.props.groupComponent,
-      { role: "presentation", style},
+      { role: "presentation", style: style.parent},
       children,
       clipComponent
     );
   }
 
   render() {
-    const clipId = Math.round(Math.random() * 10000);
+    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
     const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
@@ -502,7 +506,7 @@ export default class VictoryBar extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
     const group = this.renderGroup(
-      this.renderData(modifiedProps), modifiedProps, baseStyles.parent
+      this.renderData(modifiedProps), modifiedProps, baseStyles
     );
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
