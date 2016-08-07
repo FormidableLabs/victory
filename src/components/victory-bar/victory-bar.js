@@ -1,4 +1,4 @@
-import { assign, defaults, isFunction, partialRight, min, max, filter } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import Bar from "./bar";
 import BarHelpers from "./helper-methods";
@@ -465,15 +465,15 @@ export default class VictoryBar extends React.Component {
 
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
-    const barWidth = style.data.width;
+    const barWidth = BarHelpers.getBarWidth(modifiedProps);
     const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
       {},
       {
         padding: modifiedProps.padding,
         clipId: modifiedProps.clipId,
         barWidth,
-        clipWidth: modifiedProps.clipWidth + barWidth || modifiedProps.width + barWidth,
-        clipHeight: modifiedProps.clipHeight + barWidth || modifiedProps.height + barWidth
+        clipWidth: modifiedProps.clipWidth + barWidth * 2 || modifiedProps.width + barWidth * 2,
+        clipHeight: modifiedProps.clipHeight + barWidth * 2 || modifiedProps.height + barWidth * 2
       }
     ));
 

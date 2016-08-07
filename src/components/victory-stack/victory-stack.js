@@ -433,8 +433,8 @@ export default class VictoryStack extends React.Component {
         padding: modifiedProps.padding,
         clipId: modifiedProps.clipId,
         barWidth,
-        clipWidth: modifiedProps.clipWidth + barWidth || modifiedProps.width + barWidth,
-        clipHeight: modifiedProps.clipHeight + barWidth || modifiedProps.height + barWidth
+        clipWidth: modifiedProps.clipWidth + barWidth * 2 || modifiedProps.width + barWidth * 2,
+        clipHeight: modifiedProps.clipHeight + barWidth * 2 || modifiedProps.height + barWidth * 2
       }
     ));
 

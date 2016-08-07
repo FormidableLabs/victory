@@ -52,7 +52,7 @@ export default class ClipPath extends React.Component {
     } = this.props;
 
     const padding = Helpers.getPadding(this.props);
-    const modifiedBarWidth = barWidth / 2 || 0;
+    const modifiedBarWidth = barWidth || 0;
 
     return (
       <defs>

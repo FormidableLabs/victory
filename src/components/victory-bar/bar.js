@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import BarHelpers from "./helper-methods";
 
 export default class Bar extends React.Component {
 
@@ -56,17 +57,15 @@ export default class Bar extends React.Component {
         role={role}
         shapeRendering="optimizeSpeed"
         {...events}
-        clipPath={`url(#${clipId}`}
+        clipPath={`url(#${clipId})`}
       />
     );
   }
 
   render() {
     // TODO better bar width calculation
-    const { data, events, style, width} = this.props;
-    const padding = this.props.padding.left || this.props.padding;
-    const barWidth = style && style.width ||
-    0.3 * (width - 2 * padding) / data.length;
+    const { events, style} = this.props;
+    const barWidth = BarHelpers.getBarWidth(this.props);
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
     return this.renderBar(path, style, events);
