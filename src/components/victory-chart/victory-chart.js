@@ -117,7 +117,10 @@ export default class VictoryChart extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.string,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
       target: PropTypes.string,
       eventKey: PropTypes.oneOfType([
         PropTypes.func,
