@@ -6,11 +6,6 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getScale(props) {
-    const {scale} = this.getCalculatedValues(modifiedProps);
-    return {scale};
-  },
-
   getBaseProps(props, fallbackProps) {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const {scale, style, data} = this.getCalculatedValues(modifiedProps, fallbackProps);
@@ -52,22 +47,32 @@ export default {
     };
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.area ? props.theme.area
-    : fallbackProps.style;
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+  getScale(props, fallbackProps) {
+    if (fallbackProps) {
+      props = Helpers.modifyProps(props, fallbackProps);
+    }
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Domain.getDomainWithZero(props, "x"),
-      y: Domain.getDomainWithZero(props, "y")
+      x: Domain.getDomain(props, "x"),
+      y: Domain.getDomain(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+
+    return {scale, domain};
+  },
+
+  getCalculatedValues(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.area ? props.theme.area
+    : fallbackProps.style;
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const {scale, domain} = this.getScale(props);
+
     const data = this.getDataWithBaseline(props, domain);
     return { style, data, scale };
   },
