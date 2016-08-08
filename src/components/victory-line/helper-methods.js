@@ -6,13 +6,6 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getScale(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const {scale} = this.getCalculatedValues(modifiedProps);
-
-    return {scale};
-  },
-
   getBaseProps(props, fallbackProps) {
     const defaultStyles = props.theme && props.theme.line ? props.theme.line : fallbackProps.style;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
@@ -52,15 +45,10 @@ export default {
     };
   },
 
-  getCalculatedValues(props) {
-    let dataset = Data.getData(props);
-
-    if (Data.getData(props).length < 2) {
-      Log.warn("VictoryLine needs at least two data points to render properly.");
-      dataset = [];
+  getScale(props, fallbackProps) {
+    if (fallbackProps) {
+      props = Helpers.modifyProps(props, fallbackProps);
     }
-
-    const dataSegments = this.getDataSegments(dataset);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -73,6 +61,21 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+
+    return scale;
+  },
+
+  getCalculatedValues(props) {
+    let dataset = Data.getData(props);
+
+    if (Data.getData(props).length < 2) {
+      Log.warn("VictoryLine needs at least two data points to render properly.");
+      dataset = [];
+    }
+
+    const dataSegments = this.getDataSegments(dataset);
+    const scale = this.getScale(props);
+
     return { dataset, dataSegments, scale };
   },
 

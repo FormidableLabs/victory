@@ -6,10 +6,8 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getScale(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+  getScale(props) {
     const {scale} = this.getCalculatedValues(modifiedProps);
-
     return {scale};
   },
 

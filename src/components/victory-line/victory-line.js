@@ -47,10 +47,9 @@ export default class VictoryLine extends React.Component {
       beforeClipPathWidth: (data, child, exitingNodes) => {
         const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
         const xVals = filterExit.map((datum) => {
-          return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
+          return child.type.getScale(child.props).x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
-
         return clipPath;
       }
     },
@@ -61,19 +60,16 @@ export default class VictoryLine extends React.Component {
       beforeClipPathWidth: (data, child, enteringNodes) => {
         const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
         const xVals = filterEnter.map((datum) => {
-          return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
+          return child.type.getScale(child.props).x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
-
         return clipPath;
-
       },
       afterClipPathWidth: (data, child) => {
         const xVals = data.map((datum) => {
-          return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
+          return child.type.getScale(child.props).x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
-
         return clipPath;
       }
     }
@@ -414,7 +410,7 @@ export default class VictoryLine extends React.Component {
   static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
     fallbackProps);
   static getScale = partialRight(LineHelpers.getScale.bind(LineHelpers),
-    fallbackProps)
+    fallbackProps);
 
   constructor() {
     super();

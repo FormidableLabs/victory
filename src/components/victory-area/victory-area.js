@@ -44,7 +44,6 @@ export default class VictoryArea extends React.Component {
           return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
-
         return clipPath;
       }
     },
@@ -58,7 +57,6 @@ export default class VictoryArea extends React.Component {
           return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
-
         return clipPath;
 
       },
@@ -67,7 +65,6 @@ export default class VictoryArea extends React.Component {
           return child.type.getBaseProps(child.props).all.data.scale.x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
-
         return clipPath;
       }
     }
