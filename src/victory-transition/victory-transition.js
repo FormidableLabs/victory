@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions } from "../victory-util/index";
-import { defaults, isFunction, pick } from "lodash";
+import { defaults, isFunction, pick, filter } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static propTypes = {
@@ -97,14 +97,16 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
+    let animationWhitelist;
 
     if (this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit) {
-      const index = props.animationWhitelist.indexOf("clipWidth");
-      props.animationWhitelist.splice(index, 1);
+      animationWhitelist = filter(props.animationWhitelist, (list) => {
+        return list !== "clipWidth";
+      });
     }
 
-    const propsToAnimate = props.animationWhitelist ?
-      pick(combinedProps, props.animationWhitelist) : combinedProps;
+    const propsToAnimate = animationWhitelist ?
+      pick(combinedProps, animationWhitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
