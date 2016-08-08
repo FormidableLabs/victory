@@ -63,7 +63,10 @@ export default class VictorySharedEvents extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.string,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
       target: PropTypes.string,
       eventKey: PropTypes.oneOfType([
         PropTypes.func,
@@ -134,7 +137,12 @@ export default class VictorySharedEvents extends React.Component {
         if (child.type && isFunction(child.type.getBaseProps)) {
           const name = child.props.name || childNames.shift();
           const childEvents = Array.isArray(events) &&
-            events.filter((event) => event.childName === name);
+            events.filter((event) => {
+              const childEvent = Array.isArray(event.childName) ?
+                event.childName.indexOf(name) > -1 :
+                event.childName === name || event.childName === "all";
+              return assign({}, childEvent, {childName: name});
+            });
           const sharedEvents = {
             events: childEvents,
             getEvents: partialRight(this.getScopedEvents, name, this.baseProps),
