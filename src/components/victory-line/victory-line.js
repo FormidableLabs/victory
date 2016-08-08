@@ -498,7 +498,7 @@ export default class VictoryLine extends React.Component {
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
 
-    const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
+    const clipComponent = React.cloneElement(clipPathComponent, assign(
       {},
       {
         padding: modifiedProps.padding,

@@ -466,7 +466,7 @@ export default class VictoryBar extends React.Component {
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
     const barWidth = BarHelpers.getBarWidth(modifiedProps);
-    const clipComponent = React.cloneElement(clipPathComponent, Object.assign(
+    const clipComponent = React.cloneElement(clipPathComponent, assign(
       {},
       {
         padding: modifiedProps.padding,
