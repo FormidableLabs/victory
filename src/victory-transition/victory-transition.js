@@ -97,7 +97,7 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
-    let animationWhitelist;
+    let animationWhitelist = props.animationWhitelist;
 
     if (this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit) {
       animationWhitelist = filter(props.animationWhitelist, (list) => {
