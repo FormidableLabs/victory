@@ -56,8 +56,8 @@ export default {
       y: Helpers.getRange(props, "y")
     };
     const domain = {
-      x: Domain.getDomain(props, "x"),
-      y: Domain.getDomain(props, "y")
+      x: Domain.getDomainWithZero(props, "x"),
+      y: Domain.getDomainWithZero(props, "y")
     };
     const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
