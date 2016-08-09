@@ -14,7 +14,9 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [],
       nodesWillExit: false,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
+      nodesDoneClipPathEnter: false,
+      nodesDoneClipPathExit: false
     });
   });
 
@@ -25,7 +27,9 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{entering: false, exiting: false}],
       nodesWillExit: false,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
+      nodesDoneClipPathEnter: false,
+      nodesDoneClipPathExit: false
     });
   });
 
@@ -37,7 +41,9 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{entering: false, exiting: {1: true}}],
       nodesWillExit: true,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
+      nodesDoneClipPathEnter: false,
+      nodesDoneClipPathExit: false
     });
   });
 
@@ -49,7 +55,9 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{entering: {1: true}, exiting: false}],
       nodesWillExit: false,
       nodesWillEnter: true,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
+      nodesDoneClipPathEnter: false,
+      nodesDoneClipPathExit: false
     });
   });
 });
@@ -75,7 +83,9 @@ describe("getTransitionPropsFactory", () => {
       childrenTransitions: [{entering: false, exiting: {1: true}}],
       nodesWillExit: true,
       nodesWillEnter: false,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
+      nodesDoneClipPathEnter: false,
+      nodesDoneClipPathExit: true
     };
     const result = Transitions.getTransitionPropsFactory({}, exitingState, callback);
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
@@ -92,7 +102,9 @@ describe("getTransitionPropsFactory", () => {
       childrenTransitions: [{entering: {1: true}, exiting: false}],
       nodesWillExit: false,
       nodesWillEnter: true,
-      nodesShouldEnter: false
+      nodesShouldEnter: false,
+      nodesDoneClipPathEnter: false,
+      nodesDoneClipPathExit: false
     };
     const result = Transitions.getTransitionPropsFactory({}, enteringState, callback);
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
