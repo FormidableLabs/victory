@@ -3,6 +3,8 @@ import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Events } from "../victory-util/index";
 
 export default class VictorySharedEvents extends React.Component {
+  static displayName = "VictorySharedEvents";
+
   static role = "shared-event-wrapper";
 
   static propTypes = {

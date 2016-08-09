@@ -11,6 +11,8 @@ const defaultStyles = {
 };
 
 export default class VictoryLabel extends React.Component {
+  static displayName = "VictoryLabel";
+
   static propTypes = {
     /**
      * Specifies the angle to rotate the text by.
