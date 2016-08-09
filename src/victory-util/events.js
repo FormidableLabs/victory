@@ -148,7 +148,10 @@ export default {
 
         if (eventKey !== undefined && target !== "parent") {
           return targetEvents.filter((obj) => {
-            return obj.eventKey ? `${obj.eventKey}` === `${eventKey}` : true;
+            const targetKeys = obj.eventKey;
+            const useKey = (key) => key ? `${key}` === `${eventKey}` : true;
+            return Array.isArray(targetKeys) ?
+              targetKeys.some((k) => useKey(k)) : useKey(targetKeys);
           });
         }
         return targetEvents;
