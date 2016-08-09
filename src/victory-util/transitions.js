@@ -311,18 +311,14 @@ export function getTransitionPropsFactory(props, state, setState) {
       const exitingNodes = childTransitions && childTransitions.exiting;
       const exit = transitionDurations.exit || getChildTransitionDuration(child, "onExit");
       // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
-      // devide duration to apply half of the duration time to clipPath animation
-      // , half to shape animation
-      const animation = exitingNodes ? {duration: exit / 2} : {delay: exit / 2};
+      const animation = exitingNodes ? {duration: exit} : {delay: exit};
       return onExit(exitingNodes, child, data, assign({}, animate, animation));
     } else if (nodesWillEnter) {
       const enteringNodes = childTransitions && childTransitions.entering;
       const enter = transitionDurations.enter || getChildTransitionDuration(child, "onEnter");
       const move = transitionDurations.move ||
         child.props.animate && child.props.animate.duration;
-      // devide duration to apply half of the duration time to clipPath animation
-      // , half to shape animation
-      const animation = { duration: nodesShouldEnter && enteringNodes ? enter / 2 : move / 2 };
+      const animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
       return onEnter(enteringNodes, child, data, assign({}, animate, animation));
     } else if (!state && animate && animate.onExit) {
       // This is the initial render, and nodes may enter when props change. Because
