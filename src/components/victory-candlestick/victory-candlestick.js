@@ -46,6 +46,8 @@ const defaultData = [
 ];
 
 export default class VictoryCandlestick extends React.Component {
+  static displayName = "VictoryCandlestick";
+
   static role = "candlestick";
 
   static defaultTransitions = {

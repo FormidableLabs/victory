@@ -41,6 +41,8 @@ const defaultData = [
 ];
 
 export default class VictoryBar extends React.Component {
+  static displayName = "VictoryBar";
+
   static role = "bar";
 
   static defaultTransitions = {

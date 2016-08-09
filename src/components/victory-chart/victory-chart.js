@@ -17,6 +17,8 @@ const fallbackProps = {
 };
 
 export default class VictoryChart extends React.Component {
+  static displayName = "VictoryChart";
+
   static propTypes = {
     /**
      * The animate prop specifies props for VictoryAnimation to use. If this prop is

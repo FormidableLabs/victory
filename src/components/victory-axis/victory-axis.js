@@ -53,7 +53,10 @@ const fallbackProps = {
 };
 
 export default class VictoryAxis extends React.Component {
+  static displayName = "VictoryAxis";
+
   static role = "axis";
+
   static defaultTransitions = {
     onExit: {
       duration: 500
