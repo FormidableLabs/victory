@@ -3,93 +3,300 @@ VictoryTheme
 
 Implement themes for your Victory charts. VictoryTheme allows you to create a consistent look across all of your chart elements, either using the included Material theme (more themes coming - stay tuned) or by creating your own. VictoryTheme and custom themes are supported by all Victory components.
 
-## Material Theme
+## Features
 
-### A Consistent Look for Your Charts
+### Material Theme
 
 Using VictoryTheme.material for a component's ```theme``` prop applies a clean, bright style to your charts.
 
-``` playground
-<VictoryChart/>
-```
-
 VictoryTheme works across all component types - it can be applied to chart components themselves.
 
-```playground
-<VictoryChart>
-  <VictoryLine
-    y={(data) => 0.5 * data.x * data.x}/>
-</VictoryChart>
+``` playground
+<svg>
+  <VictoryAxis
+    theme={VictoryTheme.material}
+  />
+  <VictoryCandlestick
+    theme={VictoryTheme.material}
+  />
+</svg>
 ```
 
 It can be applied to VictoryStack or VictoryGroup, and then passed down to wrapped chart components.
 
 ```playground
-<VictoryChart>
-  <VictoryLine
-    y={(data) => 0.5 * data.x * data.x}/>
+<VictoryStack theme={VictoryTheme.material}>
+  <VictoryArea/>
+  <VictoryArea/>
+  <VictoryArea/>
+  <VictoryArea/>
+  <VictoryArea/>
+  <VictoryArea/>
+</VictoryStack>
+```
+
+It can even be applied to VictoryChart and passed down to all subsequent child components.
+
+```playground
+<VictoryChart theme={VictoryTheme.material}>
+  <VictoryGroup
+    height={500}
+    offset={20}
+  >
+    <VictoryBar
+      data={[
+        {x: 1, y: 1},
+        {x: 2, y: 2},
+        {x: 3, y: 3}
+      ]}
+    />
+    <VictoryBar
+      data={[
+        {x: 1, y: 2},
+        {x: 2, y: 1},
+        {x: 3, y: 1}
+      ]}
+    />
+    <VictoryBar
+      data={[
+        {x: 1, y: 3},
+        {x: 2, y: 4},
+        {x: 3, y: 2}
+      ]}
+    />
+  </VictoryGroup>
 </VictoryChart>
 ```
 
-It can also be applied to VictoryChart, and then passed down to all child components including VictoryAxis, VictoryStack, VictoryGroup, and whatever the core chart components may be.
-
 ### Create Your Own Custom Theme Object
 
-Example of a partial custom theme object for two combined charts (scatter and line maybe)
-
-Example of a partial custom theme object for candlestick or errorbar which use props
-
-Example of a partial custom theme object for stack or group which uses main props
-
-Link to the overall structure of the theme object?
+Most chart types only need styles from a theme object, like VictoryScatter and VictoryLine, below.
 
 ```playground_norender
 class App extends React.Component {
   render() {
+    const myTheme = {
+      scatter: {
+        data: {
+          fill: "red"
+        },
+        labels: {
+          padding: -25,
+          fontFamily: "Garamond"
+        },
+        // even if one of the subobjects isn't being utilized,
+        // it needs to exist for the theme to be supported
+        parent: {}
+      },
+      line: {
+        data: {
+          stroke: "red",
+          fill: "none"
+        },
+        labels: {
+          padding: 10,
+          fontFamily: "Garamond"
+        },
+        parent: {}
+      }
+    };
+
+    const data = [
+      {x: 1, y: 1},
+      {x: 2, y: 4},
+      {x: 3, y: 2},
+      {x: 4, y: 6},
+      {x: 5, y: 5},
+      {x: 6, y: 9}
+    ];
+
     return (
-      <VictoryChart>
+      <svg>
         <VictoryScatter
-          data={this.context.dataset}
+          data={data}
+          size={7}
+          theme={myTheme}
+          labels={["one", "two", "three", "four", "five", "six"]}
         />
-      </VictoryChart>
-    );
+        <VictoryLine
+          data={data}
+          theme={myTheme}
+          label="Hello"
+        />
+      </svg>
+    )
   }
 }
 
-App.contextTypes = {
-  dataset: React.PropTypes.array
+ReactDOM.render(<App/>, mountNode);
+```
+
+Other chart types, like VictoryCandlestick and VictoryPie, require that props be a part of their theme object.
+
+```playground_norender
+class App extends React.Component {
+  render() {
+    const myTheme = {
+      candlestick: {
+        style: {
+          data: {
+            stroke: "none"
+          },
+          labels: {},
+          parent: {}
+        },  
+        props: {
+          candleColors: {
+            positive: "aqua",
+            negative: "black"
+          }
+        }
+      }  
+    };
+
+    const data = [
+      {x: 1, open: 10, close: 4, high: 11, low: 1},
+      {x: 2, open: 5, close: 7, high: 10, low: 4},
+      {x: 3, open: 7, close: 3, high: 7, low: 2},
+      {x: 4, open: 7, close: 10, high: 15, low: 6},
+      {x: 5, open: 10, close: 12, high: 18, low: 5},
+      {x: 6, open: 12, close: 9, high: 13, low: 9}
+    ];
+
+    return (
+        <VictoryCandlestick
+          theme={myTheme}
+          data={data}
+        />
+    )
+  }
+}
+
+ReactDOM.render(<App/>, mountNode);
+```
+
+If you want to set a custom chart width and height across all components using the theme, or set a theme-wide colorscale, you can use the props subobject within the theme.
+
+```playground_norender
+class App extends React.Component {
+  render() {
+    const myTheme = {
+      bar: {
+        data: {},
+        labels: {},
+        parent: {}
+      },
+      props: {
+        colorScale: ["red", "orange", "yellow", "green", "blue", "purple"],
+        height: 400,
+        width: 400
+      }  
+    };
+
+    return (
+        <VictoryStack theme={myTheme}>
+          <VictoryBar/>
+          <VictoryBar/>
+          <VictoryBar/>
+          <VictoryBar/>
+          <VictoryBar/>
+          <VictoryBar/>
+        </VictoryStack>
+    )
+  }
+}
+
+ReactDOM.render(<App/>, mountNode);
+```
+
+Want to create a full theme object like Victory's Material theme? Here's the skeleton structure for that: 
+
+```
+{
+  area: {
+    data: {},
+    labels: {},
+    parent: {}
+  },
+  axis: {
+    axis: {},
+    axisLabel: {},
+    grid: {},
+    ticks: {},
+    tickLabels: {}
+  },
+  bar: {
+    data: {},
+    labels: {},
+    parent: {}
+  },
+  candlestick: {
+    data: {},
+    labels: {},
+    parent: {},
+    props: {}
+  },
+  errorbar: {
+    data: {},
+    labels: {},
+    parent: {}
+  },
+  line: {
+    data: {},
+    labels: {},
+    parent: {}
+  },
+  pie: {
+    props: {},
+    style: {
+      data: {},
+      labels: {},
+      parent: {}
+    }
+  },
+  scatter: {
+    data: {},
+    labels: {}
+    parent: {}
+  },
+  props: {}
 };
 
-ReactDOM.render(<DatasetDropdown dataset={dataset}><App/></DatasetDropdown>, mountNode);
 ```
 
 ### Flexible and Overrideable
 
-Colorscale can be overridden if a VictoryStack is passed in
+Any aspect of a theme can be overriden via direct props on a component.
 
-Data color can be overridden
-
-Everything can be overridden omg - props.style is prioritized
-
+Styles passed to a chart component via the ```style``` prop take precedence over styles that may be passed from a theme.
 
 ```playground
-<VictoryChart>
-  <VictoryLine
-    style={{data:
-      {stroke: "red", strokeWidth: 4}
-    }}
-    y={(data) =>
-      Math.sin(2 * Math.PI * data.x)
-    }
-  />
-  <VictoryLine
-    style={{data:
-      {stroke: "blue", strokeWidth: 4}
-    }}
-    y={(data) =>
-      Math.cos(2 * Math.PI * data.x)
-    }
-  />
+<VictoryBar
+  theme={VictoryTheme.material}
+  data={[
+    {x: 1, y: 2},
+    {x: 2, y: 3},
+    {x: 3, y: 4, fill: "aqua"},
+    {x: 4, y: 5},
+    {x: 5, y: 6}
+  ]}
+/>
+```
+
+Color scales can also be overridden by child elements when a theme is passed into a wrapper element.
+
+```playground
+<VictoryChart
+  theme={VictoryTheme.material}
+  domainPadding={20}
+>
+  <VictoryStack colorScale={"red"}>
+    <VictoryBar/>
+    <VictoryBar/>
+    <VictoryBar/>
+    <VictoryBar/>
+    <VictoryBar/>
+  </VictoryStack>
 </VictoryChart>
 ```
 
