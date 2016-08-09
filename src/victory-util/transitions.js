@@ -119,6 +119,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     //       for new nodes. In this case, we wouldn't want a delay before
     //       the new nodes appear.
     nodesShouldEnter: false,
+    nodesDoneLoad: false,
     nodesDoneClipPathEnter: false,
     nodesDoneClipPathExit: false
   };
@@ -257,6 +258,7 @@ export function getTransitionPropsFactory(props, state, setState) {
   const transitionDurations = {
     enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
     exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
+    load: props.animate && props.animate.onLoad && props.animate.onLoad.duration,
     move: props.animate && props.animate.duration
   };
 
