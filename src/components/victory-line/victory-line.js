@@ -41,6 +41,11 @@ export default class VictoryLine extends React.Component {
   static role = "line";
 
   static defaultTransitions = {
+    onLoad: {
+      duration: 500,
+      before: () => ({ y: null }),
+      after: (datum) => ({ y: datum.y })
+    },
     onExit: {
       duration: 500,
       before: (datum) => ({ y: datum.y }),
