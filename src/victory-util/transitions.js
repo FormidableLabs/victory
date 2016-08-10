@@ -135,13 +135,14 @@ function getInitialChildProps(animate, data) {
 }
 
 function getChildBeforeLoad(animate, data, cb) { // eslint-disable-line max-params
-  animate = assign({}, animate, { onEnd: cb });
+  animate = assign({}, animate);
   const before = animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
   // If nodes need to exit, transform them with the provided onLoad.before function.
   data = data.map((datum) => {
     return assign({}, datum, before(datum));
   });
 
+  cb();
   return { animate, data };
 }
 
@@ -305,18 +306,15 @@ export function getTransitionPropsFactory(props, state, setState) {
     if (nodesShouldLoad) {
       if (!nodesDoneClipPathLoad) {
         return getChildClipPathToLoad(animate, child, data, () => {
-          console.log('nodesDoneClipPathLoad')
           setState({ nodesDoneClipPathLoad: true });
         });
       }
       return getChildOnLoad(animate, data, () => {
-        console.log('nodesDoneLoad')
         setState({ nodesDoneLoad: true});
       });
     }
 
     return getChildBeforeLoad(animate, data, () => {
-      console.log('nodesShouldLoad')
       setState({ nodesShouldLoad: true });
     });
   };
@@ -371,7 +369,6 @@ export function getTransitionPropsFactory(props, state, setState) {
     );
 
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];
-
     if (!nodesDoneLoad) {
       // should do onLoad animation
       const load = transitionDurations.load || getChildTransitionDuration(child, "onLoad");
@@ -402,7 +399,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       //
       return getInitialChildProps(animate, data);
     }
-    return { animate, data };
 
+    return { animate, data };
   };
 }
