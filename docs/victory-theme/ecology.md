@@ -1,7 +1,7 @@
 VictoryTheme
 =============
 
-Implement themes for your Victory charts. VictoryTheme allows you to create a consistent look across all of your chart elements, either using the included Material theme (more themes coming - stay tuned) or by creating your own. VictoryTheme and custom themes are supported by all Victory components.
+Implement themes for your Victory charts. VictoryTheme allows you to create a consistent look across all of your chart elements, either using the included Material theme (more themes coming - stay tuned) or by creating your own. VictoryTheme and custom themes are supported by all Victory components, including [VictoryPie][].
 
 ## Features
 
@@ -12,12 +12,15 @@ Using VictoryTheme.material for a component's ```theme``` prop applies a clean, 
 VictoryTheme works across all component types - it can be applied to chart components themselves.
 
 ``` playground
-<svg>
+<svg style={{width: "100%", height: "100%"}} viewBox="0 25 350 300">
   <VictoryAxis
     theme={VictoryTheme.material}
+    standalone={false}
   />
   <VictoryCandlestick
     theme={VictoryTheme.material}
+    standalone={false}
+    domainPadding={5}
   />
 </svg>
 ```
@@ -26,16 +29,11 @@ It can be applied to VictoryStack or VictoryGroup, and then passed down to wrapp
 
 ```playground
 <VictoryStack theme={VictoryTheme.material}>
-  <VictoryArea/>
-  <VictoryArea/>
-  <VictoryArea/>
-  <VictoryArea/>
-  <VictoryArea/>
-  <VictoryArea/>
+  {range(6).map((index) => {return <VictoryArea key={index}/>})}
 </VictoryStack>
 ```
 
-It can even be applied to VictoryChart and passed down to all subsequent child components.
+It can even be applied to [VictoryChart][] and passed down to all subsequent child components.
 
 ```playground
 <VictoryChart theme={VictoryTheme.material}>
@@ -70,7 +68,7 @@ It can even be applied to VictoryChart and passed down to all subsequent child c
 
 ### Create Your Own Custom Theme Object
 
-Most chart types only need styles from a theme object, like VictoryScatter and VictoryLine, below.
+Most chart types only need styles from a theme object, like [VictoryScatter][] and [VictoryLine][], below.
 
 ```playground_norender
 class App extends React.Component {
@@ -94,7 +92,7 @@ class App extends React.Component {
           fill: "none"
         },
         labels: {
-          padding: 10,
+          padding: 15,
           fontFamily: "Garamond"
         },
         parent: {}
@@ -111,12 +109,12 @@ class App extends React.Component {
     ];
 
     return (
-      <svg>
+      <svg style={{width: "100%", height: "100%"}} viewBox="0 25 350 300">
         <VictoryScatter
           data={data}
           size={7}
           theme={myTheme}
-          labels={["one", "two", "three", "four", "five", "six"]}
+          labels={["1", "2", "3", "4", "5", "6"]}
         />
         <VictoryLine
           data={data}
@@ -131,7 +129,7 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
-Other chart types, like VictoryCandlestick and VictoryPie, require that props be a part of their theme object.
+[VictoryCandlestick][] has a special theme object with both style and props sub-objects. This is how you alter VictoryCandlestick's ```candleColors``` prop within a theme.
 
 ```playground_norender
 class App extends React.Component {
@@ -175,7 +173,7 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
-If you want to set a custom chart width and height across all components using the theme, or set a theme-wide colorscale, you can use the props subobject within the theme.
+If you want to set a custom chart width and height across all components using the theme, or set a theme-wide ```colorScale```, you can use the props sub-object within the theme.
 
 ```playground_norender
 class App extends React.Component {
@@ -195,12 +193,7 @@ class App extends React.Component {
 
     return (
         <VictoryStack theme={myTheme}>
-          <VictoryBar/>
-          <VictoryBar/>
-          <VictoryBar/>
-          <VictoryBar/>
-          <VictoryBar/>
-          <VictoryBar/>
+          {range(6).map((index) => {return <VictoryBar key={index}/>})}
         </VictoryStack>
     )
   }
@@ -256,7 +249,7 @@ Want to create a full theme object like Victory's Material theme? Here's the ske
   },
   scatter: {
     data: {},
-    labels: {}
+    labels: {},
     parent: {}
   },
   props: {}
@@ -271,16 +264,21 @@ Any aspect of a theme can be overriden via direct props on a component.
 Styles passed to a chart component via the ```style``` prop take precedence over styles that may be passed from a theme.
 
 ```playground
-<VictoryBar
+<VictoryChart
   theme={VictoryTheme.material}
-  data={[
-    {x: 1, y: 2},
-    {x: 2, y: 3},
-    {x: 3, y: 4, fill: "aqua"},
-    {x: 4, y: 5},
-    {x: 5, y: 6}
-  ]}
-/>
+  domainPadding={15}
+>
+  <VictoryBar
+    style={{data: {fill: "purple"}}}
+    data={[
+      {x: 1, y: 2},
+      {x: 2, y: 3},
+      {x: 3, y: 4},
+      {x: 4, y: 5},
+      {x: 5, y: 6}
+    ]}
+  />
+</VictoryChart>
 ```
 
 Color scales can also be overridden by child elements when a theme is passed into a wrapper element.
@@ -291,21 +289,14 @@ Color scales can also be overridden by child elements when a theme is passed int
   domainPadding={20}
 >
   <VictoryStack colorScale={"red"}>
-    <VictoryBar/>
-    <VictoryBar/>
-    <VictoryBar/>
-    <VictoryBar/>
-    <VictoryBar/>
+    {range(5).map((index) => {return <VictoryBar key={index}/>})}
   </VictoryStack>
 </VictoryChart>
 ```
 
-[React]: https://github.com/facebook/react
-[VictoryAnimation]: http://formidable.com/open-source/victory/docs/victory-animation
-[VictoryAxis]: http://formidable.com/open-source/victory/docs/victory-axis
-[VictoryArea]: http://formidable.com/open-source/victory/docs/victory-area
 [VictoryLine]: http://formidable.com/open-source/victory/docs/victory-line
-[VictoryErrorBar]: http://formidable.com/open-source/victory/docs/victory-errorbar
+[VictoryChart]: http://formidable.com/open-source/victory/docs/victory-chart
 [VictoryScatter]: http://formidable.com/open-source/victory/docs/victory-scatter
-[VictoryBar]: http://formidable.com/open-source/victory/docs/victory-bar
+[VictoryPie]: http://formidable.com/open-source/victory/docs/victory-pie
+[VictoryLine]: http://formidable.com/open-source/victory/docs/victory-line
 [VictoryCandlestick]: http://formidable.com/open-source/victory/docs/victory-candlestick
