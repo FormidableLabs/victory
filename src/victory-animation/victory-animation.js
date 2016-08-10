@@ -8,6 +8,8 @@ import { addVictoryInterpolator } from "./util";
 addVictoryInterpolator();
 
 export default class VictoryAnimation extends React.Component {
+  static displayName = "VictoryAnimation";
+
   static propTypes = {
     /**
      * The child of should be a function that takes an object of tweened values
