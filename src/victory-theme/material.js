@@ -115,7 +115,7 @@ export default {
     parent: {},
     props: assign({}, baseProps,
       {
-        candeColors: {
+        candleColors: {
           positive: "#ffffff",
           negative: blueGrey700
         }
