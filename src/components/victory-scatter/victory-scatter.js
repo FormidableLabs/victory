@@ -34,6 +34,8 @@ const fallbackProps = {
 };
 
 export default class VictoryScatter extends React.Component {
+  static displayName = "VictoryScatter";
+
   static role = "scatter";
 
   static defaultTransitions = {

@@ -35,6 +35,8 @@ const fallbackProps = {
 };
 
 export default class VictoryLine extends React.Component {
+  static displayName = "VictoryLine";
+
   static role = "line";
 
   static defaultTransitions = {

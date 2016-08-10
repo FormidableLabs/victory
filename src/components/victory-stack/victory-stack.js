@@ -20,6 +20,8 @@ const fallbackProps = {
 };
 
 export default class VictoryStack extends React.Component {
+  static displayName = "VictoryStack";
+
   static role = "stack-wrapper";
 
   static propTypes = {
