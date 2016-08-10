@@ -138,10 +138,9 @@ export default class VictorySharedEvents extends React.Component {
           const name = child.props.name || childNames.shift();
           const childEvents = Array.isArray(events) &&
             events.filter((event) => {
-              const childEvent = Array.isArray(event.childName) ?
+              return Array.isArray(event.childName) ?
                 event.childName.indexOf(name) > -1 :
                 event.childName === name || event.childName === "all";
-              return assign({}, childEvent, {childName: name});
             });
           const sharedEvents = {
             events: childEvents,
