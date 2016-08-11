@@ -123,6 +123,7 @@ export default class VictoryChart extends React.Component {
       ]),
       target: PropTypes.string,
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
