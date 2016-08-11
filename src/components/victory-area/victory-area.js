@@ -1,18 +1,21 @@
-import { assign, isFunction, defaults, partialRight } from "lodash";
+import { assign, isFunction, defaults, partialRight, min, max, filter } from "lodash";
 import React, { PropTypes } from "react";
+import Area from "./area";
+import AreaHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
+import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
   VictoryContainer
 } from "victory-core";
-import Area from "./area";
-import AreaHelpers from "./helper-methods";
 
 const fallbackProps = {
   props: {
     width: 450,
-    height: 300
+    height: 300,
+    clipHeight: 300,
+    clipWidth: 450
   },
   style: {
     data: {
@@ -36,12 +39,36 @@ export default class VictoryArea extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: () => ({ y: 0, yOffset: 0 })
+      before: () => ({ y: 0, yOffset: 0 }),
+      beforeClipPathWidth: (data, child, exitingNodes) => {
+        const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
+        const xVals = filterExit.map((datum) => {
+          return child.type.getScale(child.props).scale.x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      }
     },
     onEnter: {
       duration: 500,
       before: () => ({ y: 0, yOffset: 0, xOffset: 0 }),
-      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset })
+      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset }),
+      beforeClipPathWidth: (data, child, enteringNodes) => {
+        const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
+        const xVals = filterEnter.map((datum) => {
+          return child.type.getScale(child.props).scale.x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+
+      },
+      afterClipPathWidth: (data, child) => {
+        const xVals = data.map((datum) => {
+          return child.type.getScale(child.props).scale.x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      }
     }
   };
 
@@ -344,7 +371,16 @@ export default class VictoryArea extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element,
+    /**
+     * Unique clipId for clipPath
+     */
+    clipId: PropTypes.number
   };
 
   static defaultProps = {
@@ -358,12 +394,15 @@ export default class VictoryArea extends React.Component {
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer />,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);
+  static getScale = partialRight(AreaHelpers.getScale.bind(AreaHelpers),
+    fallbackProps);
 
   constructor() {
     super();
@@ -389,11 +428,11 @@ export default class VictoryArea extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const { role } = VictoryArea;
     const dataEvents = this.getEvents(props, "data", "all");
     const dataProps = defaults(
-      {role},
+      {role, clipId},
       this.getEventState("all", "data"),
       this.getSharedEventState("all", "data"),
       dataComponent.props,
@@ -438,21 +477,35 @@ export default class VictoryArea extends React.Component {
     );
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, modifiedProps, style) {
+    const { clipPathComponent } = modifiedProps;
+
+    const clipComponent = React.cloneElement(clipPathComponent, assign(
+      {},
+      {
+        padding: modifiedProps.padding,
+        clipId: modifiedProps.clipId,
+        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
+        clipHeight: modifiedProps.clipHeight || modifiedProps.height
+      }
+    ));
+
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children
+      children,
+      clipComponent
     );
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
+    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       const whitelist = [
-        "data", "domain", "height", "padding", "style", "width"
+        "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
@@ -466,7 +519,9 @@ export default class VictoryArea extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
+    const group = this.renderGroup(
+      this.renderData(modifiedProps), modifiedProps, baseStyles.parent
+    );
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

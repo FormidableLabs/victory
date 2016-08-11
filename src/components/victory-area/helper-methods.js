@@ -47,10 +47,10 @@ export default {
     };
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.area ? props.theme.area
-    : fallbackProps.style;
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+  getScale(props, fallbackProps) {
+    if (fallbackProps) {
+      props = Helpers.modifyProps(props, fallbackProps);
+    }
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -63,6 +63,16 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+
+    return {scale, domain};
+  },
+
+  getCalculatedValues(props, fallbackProps) {
+    const defaultStyles = props.theme && props.theme.area ? props.theme.area
+    : fallbackProps.style;
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const {scale, domain} = this.getScale(props);
+
     const data = this.getDataWithBaseline(props, domain);
     return { style, data, scale };
   },

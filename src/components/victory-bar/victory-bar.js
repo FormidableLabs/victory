@@ -1,18 +1,21 @@
 import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
-import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
-} from "victory-core";
 import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
+import ClipPath from "../helpers/clip-path";
+import {
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer
+} from "victory-core";
 
 const fallbackProps = {
   props: {
     height: 300,
-    width: 450
+    width: 450,
+    clipHeight: 300,
+    clipWidth: 450
   },
   style: {
     data: {
@@ -350,7 +353,16 @@ export default class VictoryBar extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element,
+    /**
+     * Unique clipId for clipPath
+     */
+    clipId: PropTypes.number
   };
 
   static defaultProps = {
@@ -363,7 +375,8 @@ export default class VictoryBar extends React.Component {
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -395,7 +408,7 @@ export default class VictoryBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const { role } = VictoryBar;
     const barComponents = [];
     const barLabelComponents = [];
@@ -403,7 +416,7 @@ export default class VictoryBar extends React.Component {
       const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {index, key: `${role}-${key}`, role: `${role}-${index}`},
+        {index, key: `${role}-${key}`, role: `${role}-${index}`, clipId},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -452,21 +465,36 @@ export default class VictoryBar extends React.Component {
     );
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, modifiedProps, style) {
+    const { clipPathComponent } = modifiedProps;
+    const barWidth = BarHelpers.getBarWidth(modifiedProps);
+    const clipComponent = React.cloneElement(clipPathComponent, assign(
+      {},
+      {
+        padding: modifiedProps.padding,
+        clipId: modifiedProps.clipId,
+        barWidth,
+        clipWidth: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2,
+        clipHeight: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2
+      }
+    ));
+
     return React.cloneElement(
       this.props.groupComponent,
-      { role: "presentation", style},
-      children
+      { role: "presentation", style: style.parent},
+      children,
+      clipComponent
     );
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
+    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
       const whitelist = [
-        "data", "domain", "height", "padding", "style", "width"
+        "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
@@ -479,8 +507,9 @@ export default class VictoryBar extends React.Component {
     : fallbackProps.style;
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
+    const group = this.renderGroup(
+      this.renderData(modifiedProps), modifiedProps, baseStyles
+    );
 
     return standalone ? this.renderContainer(modifiedProps, group) : group;
   }

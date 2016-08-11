@@ -102,7 +102,7 @@ export default class App extends React.Component {
         transitionData: this.getTransitionData(),
         style: this.getStyles()
       });
-    }, 2000);
+    }, 3000);
   }
 
   componentWillUnmount() {

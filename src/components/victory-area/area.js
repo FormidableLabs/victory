@@ -4,6 +4,7 @@ import * as d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
   static propTypes = {
+    clipId: PropTypes.number,
     data: PropTypes.array,
     events: PropTypes.object,
     groupComponent: PropTypes.element,
@@ -43,18 +44,34 @@ export default class Area extends React.Component {
   renderArea(path, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
-    const { role } = this.props;
-    return <path key="area" style={areaStyle} role={role} d={path} {...events}/>;
+    const { role, clipId } = this.props;
+    return (
+      <path
+        key="area"
+        style={areaStyle}
+        role={role}
+        d={path}
+        {...events}
+        clipPath={`url(#${clipId})`}
+      />
+    );
   }
 
   renderLine(path, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
-    const { role } = this.props;
+    const { role, clipId } = this.props;
     const lineStyle = assign({}, style, {fill: "none"});
     return (
-      <path key="area-stroke" style={lineStyle} role={role} d={path} {...events}/>
+      <path
+        key="area-stroke"
+        style={lineStyle}
+        role={role}
+        d={path}
+        {...events}
+        clipPath={`url(#${clipId})`}
+      />
     );
   }
 

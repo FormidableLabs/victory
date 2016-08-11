@@ -38,7 +38,9 @@ export default {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter
+        nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
       this.setState({
@@ -46,6 +48,8 @@ export default {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit,
         oldProps: nodesWillExit ? this.props : null
       });
     }

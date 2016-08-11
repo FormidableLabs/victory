@@ -1,8 +1,10 @@
 import React, { PropTypes } from "react";
+import BarHelpers from "./helper-methods";
 
 export default class Bar extends React.Component {
 
   static propTypes = {
+    clipId: PropTypes.number,
     datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
@@ -47,18 +49,23 @@ export default class Bar extends React.Component {
   }
 
   renderBar(path, style, events) {
-    const { role } = this.props;
+    const { role, clipId } = this.props;
     return (
-      <path d={path} style={style} role={role} shapeRendering="optimizeSpeed" {...events}/>
+      <path
+        d={path}
+        style={style}
+        role={role}
+        shapeRendering="optimizeSpeed"
+        {...events}
+        clipPath={`url(#${clipId})`}
+      />
     );
   }
 
   render() {
     // TODO better bar width calculation
-    const { data, events, style, width} = this.props;
-    const padding = this.props.padding.left || this.props.padding;
-    const barWidth = style && style.width ||
-    0.3 * (width - 2 * padding) / data.length;
+    const { events, style} = this.props;
+    const barWidth = BarHelpers.getBarWidth(this.props);
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
     return this.renderBar(path, style, events);

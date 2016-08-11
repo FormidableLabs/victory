@@ -24,6 +24,15 @@ export default {
     };
   },
 
+  getBarWidth(props) {
+    const {style, width, data} = props;
+    const padding = props.padding.left || props.padding;
+    const barWidth = (style && style.width) || data.length === 0 ?
+      8 : 0.3 * (width - 2 * padding) / data.length;
+
+    return barWidth;
+  },
+
   getBarPosition(props, datum, scale) {
     const currentAxis = props.horizontal ? "x" : "y";
     const defaultMin = Scale.getScaleType(props, currentAxis) === "log" ?
