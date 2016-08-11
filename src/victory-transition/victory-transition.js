@@ -99,7 +99,10 @@ export default class VictoryTransition extends React.Component {
     );
     let animationWhitelist = props.animationWhitelist;
 
-    if (this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit) {
+    if ((this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit)
+      || (transitionProps.animate.parentState
+        && transitionProps.animate.parentState.nodesDoneClipPathExit
+        && transitionProps.animate.parentState.nodesWillExit)) {
       animationWhitelist = filter(props.animationWhitelist, (list) => {
         return list !== "clipWidth";
       });
