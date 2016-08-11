@@ -59,6 +59,10 @@ export default {
   },
 
   getScopedEvents(events, namespace, childType, baseProps) {
+    if (isEmpty(events)) {
+      return {};
+    }
+
     baseProps = baseProps || this.baseProps;
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
@@ -68,11 +72,11 @@ export default {
     };
 
     const parseEvent = (eventReturn, eventKey) => {
-      const nullFunction = () => null;
-      const childName = eventReturn.childName || childType;
+      const childNames = namespace === "parent" ?
+        eventReturn.childName : eventReturn.childName || childType;
       const target = eventReturn.target || namespace;
 
-      const getKeys = () => {
+      const getKeys = (childName) => {
         if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
           return "all";
         } else if (eventReturn.eventKey === "all") {
@@ -84,9 +88,9 @@ export default {
         }
         return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
       };
-      const mutationKeys = getKeys();
 
-      const getMutationObject = (key) => {
+      const getMutationObject = (key, childName) => {
+        const nullFunction = () => null;
         const mutationTargetProps = getTargetProps({childName, key, target}, "props");
         const mutationTargetState = getTargetProps({childName, key, target}, "state");
         const mutation = eventReturn.mutation || nullFunction;
@@ -104,12 +108,19 @@ export default {
             [key]: extend(this.state[key], {[target]: mutatedProps})
           });
       };
-      return Array.isArray(mutationKeys) ?
-        mutationKeys.reduce((memo, k) => {
-          return assign(memo, getMutationObject(k));
-        }, {}) :
-        getMutationObject(mutationKeys);
 
+      const getReturnByChild = (childName) => {
+        const mutationKeys = getKeys(childName);
+        return Array.isArray(mutationKeys) ?
+          mutationKeys.reduce((memo, key) => {
+            return assign(memo, getMutationObject(key, childName));
+          }, {}) :
+          getMutationObject(mutationKeys, childName);
+      };
+
+      return Array.isArray(childNames) ? childNames.reduce((memo, childName) => {
+        return assign(memo, getReturnByChild(childName));
+      }, {}) : getReturnByChild(childNames);
     };
 
     const parseEventReturn = (eventReturn, eventKey) => {
@@ -128,11 +139,10 @@ export default {
       }
     };
 
-    return !isEmpty(events) ?
-      Object.keys(events).reduce((memo, event) => {
-        memo[event] = onEvent;
-        return memo;
-      }, {}) : {};
+    return Object.keys(events).reduce((memo, event) => {
+      memo[event] = onEvent;
+      return memo;
+    }, {});
   },
 
   getEvents(props, target, eventKey, getScopedEvents) {

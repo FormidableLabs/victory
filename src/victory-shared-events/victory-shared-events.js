@@ -69,6 +69,7 @@ export default class VictorySharedEvents extends React.Component {
       ]),
       target: PropTypes.string,
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -80,6 +81,7 @@ export default class VictorySharedEvents extends React.Component {
      * assign eventKeys to data
      */
     eventKey: PropTypes.oneOfType([
+      PropTypes.array,
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
