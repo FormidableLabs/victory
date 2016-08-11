@@ -1,4 +1,4 @@
-import { assign, defaults, partialRight, isFunction, min, max, filter } from "lodash";
+import { assign, defaults, partialRight, isFunction, min, max, filter, sum } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
@@ -42,21 +42,18 @@ export default class VictoryLine extends React.Component {
 
   static defaultTransitions = {
     onLoad: {
-      duration: 3000,
+      duration: 1000,
       entrance: "left",
       before: () => ({ y: 5 }),
       after: (datum) => ({ y: datum.y }),
-      beforeClipPathWidth: (data, child) => {
+      beforeClipPathWidth: (data, child, animate) => {
+        // clip width 都一樣，只是 clipPath x start point not the same
         const paddingLeft = child.type.getScale(child.props).x.range()[0];
         const paddingRight = child.props.width - child.type.getScale(child.props).x.range()[1];
         return paddingLeft + paddingRight;
       },
-      afterClipPathWidth: (data, child) => {
-        const xVals = data.map((datum) => {
-          return child.type.getScale(child.props).x(datum.x);
-        });
-        const clipPath = min(xVals) + max(xVals);
-        return clipPath;
+      afterClipPathWidth: (data, child, animate) => {
+        return sum(child.type.getScale(child.props).x.range());
       }
     },
     onExit: {
