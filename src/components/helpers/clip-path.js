@@ -8,9 +8,14 @@ export default class ClipPath extends React.Component {
     /**
      * A unique ID for clipPath so, it could make sure using specific clipPath on
      * specific chart
-     * @type {String}
+     * @type {Number}
      */
     clipId: PropTypes.number,
+    /**
+     * The clipPadding props specifies the paddings in clipPath
+     * @type {Number}
+     */
+    clipPadding: PropTypes.number,
     /**
      * The clipHeight props specifies the height of the clipPath
      * This value should be given as a number of pixels
@@ -43,12 +48,17 @@ export default class ClipPath extends React.Component {
     barWidth: PropTypes.number
   };
 
+  static defaultProps = {
+    clipPadding: 5
+  }
+
   render() {
     const {
       clipId,
       clipWidth,
       clipHeight,
-      barWidth
+      barWidth,
+      clipPadding
     } = this.props;
 
     const padding = Helpers.getPadding(this.props);
@@ -58,10 +68,10 @@ export default class ClipPath extends React.Component {
       <defs>
         <clipPath id={clipId}>
           <rect
-            x={padding.left - modifiedBarWidth}
-            y={padding.top - modifiedBarWidth}
-            width={clipWidth - padding.left - padding.right}
-            height={clipHeight - padding.top - padding.bottom}
+            x={padding.left - modifiedBarWidth - clipPadding}
+            y={padding.top - modifiedBarWidth - clipPadding}
+            width={clipWidth - padding.left - padding.right + clipPadding * 2}
+            height={clipHeight - padding.top - padding.bottom + clipPadding * 2}
           />
         </clipPath>
       </defs>

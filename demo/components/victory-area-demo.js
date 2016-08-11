@@ -88,7 +88,7 @@ export default class App extends React.Component {
         areaTransitionData: this.getAreaTransitionData(),
         style: this.getStyles()
       });
-    }, 2000);
+    }, 4000);
   }
 
   render() {
