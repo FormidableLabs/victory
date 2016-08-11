@@ -36,13 +36,13 @@ export default class VictoryArea extends React.Component {
 
   static defaultTransitions = {
     onLoad: {
-      duration: 800,
+      duration: 1000,
       entrance: "left",
       before: () => ({ y: 5 }),
       after: (datum) => ({ y: datum.y }),
       beforeClipPathWidth: (data, child, animate) => {
-        const paddingLeft = child.type.getScale(child.props).x.range()[0];
-        const paddingRight = child.props.width - child.type.getScale(child.props).x.range()[1];
+        const paddingLeft = child.type.getScale(child.props).scale.x.range()[0];
+        const paddingRight = child.props.width - child.type.getScale(child.props).scale.x.range()[1]; // eslint-disable-line max-len
         if (animate.onLoad.entrance === "left") {
           return {
             clipWidth: paddingLeft + paddingRight
@@ -60,11 +60,11 @@ export default class VictoryArea extends React.Component {
       afterClipPathWidth: (data, child, animate) => {
         if (animate.onLoad.entrance === "left") {
           return {
-            clipWidth: sum(child.type.getScale(child.props).x.range())
+            clipWidth: sum(child.type.getScale(child.props).scale.x.range())
           };
         } else if (animate.onLoad.entrance === "right") {
           return {
-            clipWidth: sum(child.type.getScale(child.props).x.range()),
+            clipWidth: sum(child.type.getScale(child.props).scale.x.range()),
             translateX: 0
           };
         } else {
