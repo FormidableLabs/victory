@@ -36,13 +36,18 @@ export default class ClipPath extends React.Component {
      * The barWidth props specifies the barWidth of the bars this should be given when the
      * component is using in bar type charts
      */
-    barWidth: PropTypes.number
+    barWidth: PropTypes.number,
+    /**
+     * The translateX props specifies the x-axis translation of the clipPath
+     */
+    translateX: PropTypes.number
   };
 
   render() {
     const {
       padding,
       clipId,
+      translateX,
       width,
       height,
       barWidth
@@ -54,7 +59,7 @@ export default class ClipPath extends React.Component {
       <defs>
         <clipPath id={clipId}>
           <rect
-            x={padding.left - modifiedBarWidth}
+            x={padding.left - modifiedBarWidth + translateX}
             y={padding.top - modifiedBarWidth}
             width={width}
             height={height}
