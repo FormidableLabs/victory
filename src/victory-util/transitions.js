@@ -143,8 +143,8 @@ function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line m
   });
 
   if (beforeClipPathWidth) {
-    const clipWidth = beforeClipPathWidth(data, child, animate);
-    return { animate, data, clipWidth, cb};
+    const { clipWidth, translateX } = beforeClipPathWidth(data, child, animate);
+    return { animate, data, clipWidth, translateX, cb};
   }
 
   return { animate, data, cb};
@@ -165,8 +165,8 @@ function getChildClipPathToLoad(animate, child, data, cb) { // eslint-disable-li
   animate = assign({}, animate, { onEnd: cb });
   const afterClipPathWidth = animate.onLoad && animate.onLoad.afterClipPathWidth;
   if (afterClipPathWidth) {
-    const clipWidth = afterClipPathWidth(data, child, animate);
-    return { animate, clipWidth};
+    const { clipWidth, translateX } = afterClipPathWidth(data, child, animate);
+    return { animate, clipWidth, translateX};
   }
 
   return { animate };
