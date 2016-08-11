@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 10.3.0 (2016-08-11)
+
+- Improved animation for continuous data components (_i.e._ VictoryLine, VictoryArea) using clipPath
+- Support for arrays of `childName` in events
+- Adds `displayName` to all component for ease of debugging / testing
+
 ## 10.2.6 (2016-08-04)
 
 - Fix bug in automatic domainPadding
