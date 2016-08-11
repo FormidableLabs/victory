@@ -134,16 +134,20 @@ function getInitialChildProps(animate, data) {
   };
 }
 
-function getChildBeforeLoad(animate, data, cb) { // eslint-disable-line max-params
-  animate = assign({}, animate);
+function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line max-params
   const before = animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
+  const beforeClipPathWidth = animate.onLoad && animate.onLoad.beforeClipPathWidth;
   // If nodes need to exit, transform them with the provided onLoad.before function.
   data = data.map((datum) => {
     return assign({}, datum, before(datum));
   });
 
-  cb();
-  return { animate, data };
+  if (beforeClipPathWidth) {
+    const clipWidth = beforeClipPathWidth(data, child, animate);
+    return { animate, data, clipWidth, cb};
+  }
+
+  return { animate, data, cb};
 }
 
 function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
@@ -160,9 +164,8 @@ function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
 function getChildClipPathToLoad(animate, child, data, cb) { // eslint-disable-line max-params, max-len
   animate = assign({}, animate, { onEnd: cb });
   const afterClipPathWidth = animate.onLoad && animate.onLoad.afterClipPathWidth;
-
   if (afterClipPathWidth) {
-    const clipWidth = afterClipPathWidth(data, child);
+    const clipWidth = afterClipPathWidth(data, child, animate);
     return { animate, clipWidth};
   }
 
@@ -314,7 +317,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       });
     }
 
-    return getChildBeforeLoad(animate, data, () => {
+    return getChildBeforeLoad(animate, child, data, () => {
       setState({ nodesShouldLoad: true });
     });
   };
@@ -399,7 +402,6 @@ export function getTransitionPropsFactory(props, state, setState) {
       //
       return getInitialChildProps(animate, data);
     }
-
     return { animate, data };
   };
 }

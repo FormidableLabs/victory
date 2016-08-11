@@ -26,7 +26,8 @@ export default class VictoryTransition extends React.Component {
 
     this.state = {
       nodesShouldLoad: false,
-      nodesDoneLoad: false
+      nodesDoneLoad: false,
+      nodesDoneClipPathLoad: false
     };
 
     this.getTransitionState = this.getTransitionState.bind(this);
@@ -34,6 +35,12 @@ export default class VictoryTransition extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState(this.getTransitionState(this.props, nextProps));
+  }
+
+  componentDidMount() {
+    if (this.transitionProps && this.transitionProps.cb) {
+      this.transitionProps.cb();
+    }
   }
 
   getTransitionState(props, nextProps) {
@@ -108,6 +115,7 @@ export default class VictoryTransition extends React.Component {
       );
     const child = React.Children.toArray(props.children)[0];
     const transitionProps = getTransitionProps(child);
+    this.transitionProps = transitionProps;
     const domain = {
       x: this.getDomainFromChildren(props, "x"),
       y: this.getDomainFromChildren(props, "y")
@@ -125,6 +133,7 @@ export default class VictoryTransition extends React.Component {
 
     const propsToAnimate = animationWhitelist ?
       pick(combinedProps, animationWhitelist) : combinedProps;
+
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
