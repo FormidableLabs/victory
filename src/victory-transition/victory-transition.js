@@ -4,6 +4,8 @@ import { Transitions } from "../victory-util/index";
 import { defaults, isFunction, pick, filter } from "lodash";
 
 export default class VictoryTransition extends React.Component {
+  static displayName = "VictoryTransition";
+
   static propTypes = {
     /**
      * The animate prop specifies an animation config for the transition.

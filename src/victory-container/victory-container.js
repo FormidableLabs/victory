@@ -1,6 +1,8 @@
 import React, { PropTypes } from "react";
 
 export default class VictoryContainer extends React.Component {
+  static displayName = "VictoryContainer";
+
   static propTypes = {
     /**
      * The style prop specifies styles for your VictoryContainer. Any valid inline style properties
