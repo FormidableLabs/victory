@@ -49,6 +49,11 @@ export default class VictoryCandlestick extends React.Component {
   static role = "candlestick";
 
   static defaultTransitions = {
+    onLoad: {
+      duration: 1000,
+      before: () => ({ opacity: 0 }),
+      after: (datum) => ({ opacity: datum.opacity || 1 })
+    },
     onExit: {
       duration: 600,
       before: () => ({ opacity: 0 })

@@ -47,6 +47,11 @@ export default class VictoryBar extends React.Component {
   static role = "bar";
 
   static defaultTransitions = {
+    onLoad: {
+      duration: 1000,
+      before: () => ({ y: 0, yOffset: 0 }),
+      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset })
+    },
     onExit: {
       duration: 500,
       before: () => ({ y: 0, yOffset: 0 })
@@ -475,8 +480,8 @@ export default class VictoryBar extends React.Component {
         padding,
         barWidth,
         clipId: modifiedProps.clipId,
-        clipWidth: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2 - paddingX,
-        clipHeight: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2 - paddingY
+        width: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2 - paddingX,
+        height: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2 - paddingY
       }
     ));
 

@@ -49,7 +49,8 @@ export default class ClipPath extends React.Component {
   };
 
   static defaultProps = {
-    clipPadding: 5
+    clipPadding: 5,
+    translateX: 0
   }
 
   render() {

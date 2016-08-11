@@ -43,6 +43,11 @@ export default class VictoryErrorBar extends React.Component {
   static role = "errorBar";
 
   static defaultTransitions = {
+    onLoad: {
+      duration: 1000,
+      before: () => ({ opacity: 0 }),
+      after: (datum) => ({ opacity: datum.opacity || 1 })
+    },
     onExit: {
       duration: 600,
       before: () => ({ opacity: 0 })
