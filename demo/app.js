@@ -9,7 +9,7 @@ import LineDemo from "./components/victory-line-demo";
 import ScatterDemo from "./components/victory-scatter-demo";
 import ErrorBarDemo from "./components/victory-errorbar-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
-import TestDemo from "./components/test-demo";
+import EventsDemo from "./components/events-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
@@ -32,7 +32,7 @@ const App = React.createClass({
           <li><Link to="/scatter">Victory Scatter Demo</Link></li>
           <li><Link to="/errorbar">Victory Error Bar Demo</Link></li>
           <li><Link to="/candlestick">Victory Candlestick Demo</Link></li>
-          <li><Link to="/test">Test Demo</Link></li>
+          <li><Link to="/events">Events Demo</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -51,7 +51,7 @@ ReactDOM.render((
       <Route path="scatter" component={ScatterDemo}/>
       <Route path="errorbar" component={ErrorBarDemo}/>
       <Route path="candlestick" component={CandlestickDemo}/>
-      <Route path="test" component={TestDemo}/>
+      <Route path="events" component={EventsDemo}/>
     </Route>
   </Router>
 ), content);
