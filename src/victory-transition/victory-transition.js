@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions } from "../victory-util/index";
-import { defaults, isFunction, pick } from "lodash";
+import { defaults, isFunction, pick, filter } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -41,13 +41,17 @@ export default class VictoryTransition extends React.Component {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter
+        nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit,
         oldProps: nodesWillExit ? props : null
       };
     }
@@ -95,8 +99,16 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
-    const propsToAnimate = props.animationWhitelist ?
-      pick(combinedProps, props.animationWhitelist) : combinedProps;
+    let animationWhitelist = props.animationWhitelist;
+
+    if (this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit) {
+      animationWhitelist = filter(props.animationWhitelist, (list) => {
+        return list !== "clipWidth";
+      });
+    }
+
+    const propsToAnimate = animationWhitelist ?
+      pick(combinedProps, animationWhitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {

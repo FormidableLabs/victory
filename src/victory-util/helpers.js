@@ -144,8 +144,17 @@ export default {
     const themeCheck = props.theme && props.theme.props;
     const themePropsObject = themeCheck && !themeProps ? props.theme.props : themeProps;
 
-    return themeCheck ? defaults({}, props, themePropsObject, fallbackProps.props)
-    : defaults({}, props, fallbackProps.props);
+    return themeCheck ?
+      defaults({}, props, {
+        clipWidth: props.width,
+        clipHeight: props.height
+      },
+      themePropsObject,
+      fallbackProps.props)
+    : defaults({}, props, {
+      clipWidth: props.width,
+      clipHeight: props.height
+    }, fallbackProps.props);
   },
 
   getEvents(events, namespace) {
