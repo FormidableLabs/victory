@@ -42,7 +42,7 @@ export default class VictoryLine extends React.Component {
 
   static defaultTransitions = {
     onLoad: {
-      duration: 1000,
+      duration: 800,
       entrance: "left",
       before: () => ({ y: 5 }),
       after: (datum) => ({ y: datum.y }),

@@ -1,4 +1,4 @@
-import { assign, isFunction, defaults, partialRight, min, max, filter } from "lodash";
+import { assign, isFunction, defaults, partialRight, min, max, filter, sum } from "lodash";
 import React, { PropTypes } from "react";
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
@@ -7,7 +7,7 @@ import Domain from "../../helpers/domain";
 import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, Log
 } from "victory-core";
 
 const fallbackProps = {
@@ -35,6 +35,44 @@ export default class VictoryArea extends React.Component {
   static role = "area";
 
   static defaultTransitions = {
+    onLoad: {
+      duration: 800,
+      entrance: "left",
+      before: () => ({ y: 5 }),
+      after: (datum) => ({ y: datum.y }),
+      beforeClipPathWidth: (data, child, animate) => {
+        const paddingLeft = child.type.getScale(child.props).x.range()[0];
+        const paddingRight = child.props.width - child.type.getScale(child.props).x.range()[1];
+        if (animate.onLoad.entrance === "left") {
+          return {
+            clipWidth: paddingLeft + paddingRight
+          };
+        } else if (animate.onLoad.entrance === "right") {
+          return {
+            clipWidth: paddingLeft + paddingRight,
+            translateX: child.props.width - paddingLeft - paddingRight
+          };
+        }else {
+          Log.warn("onLoad entrance should be one of left or right");
+          return {};
+        }
+      },
+      afterClipPathWidth: (data, child, animate) => {
+        if (animate.onLoad.entrance === "left") {
+          return {
+            clipWidth: sum(child.type.getScale(child.props).x.range())
+          };
+        } else if (animate.onLoad.entrance === "right") {
+          return {
+            clipWidth: sum(child.type.getScale(child.props).x.range()),
+            translateX: 0
+          };
+        } else {
+          Log.warn("onLoad entrance should be one of left or right");
+          return {};
+        }
+      }
+    },
     onExit: {
       duration: 500,
       before: () => ({ y: 0, yOffset: 0 }),
@@ -477,14 +515,17 @@ export default class VictoryArea extends React.Component {
 
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
-
+    const padding = Helpers.getPadding(modifiedProps);
+    const paddingX = padding.left + padding.right;
+    const paddingY = padding.bottom + padding.top;
     const clipComponent = React.cloneElement(clipPathComponent, assign(
       {},
       {
-        padding: modifiedProps.padding,
+        padding,
         clipId: modifiedProps.clipId,
-        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-        clipHeight: modifiedProps.clipHeight || modifiedProps.height
+        translateX: modifiedProps.translateX || 0,
+        width: (modifiedProps.clipWidth || modifiedProps.width) - paddingX,
+        height: (modifiedProps.clipHeight || modifiedProps.height) - paddingY
       }
     ));
 
@@ -503,7 +544,8 @@ export default class VictoryArea extends React.Component {
 
     if (animate) {
       const whitelist = [
-        "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
+        "data", "domain", "height", "padding", "style", "width",
+        "clipWidth", "clipHeight", "translateX"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
