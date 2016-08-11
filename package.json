@@ -1,8 +1,8 @@
 {
   "name": "victory-core",
-  "version": "4.5.0",
+  "version": "4.6.0",
   "description": "Victory Core",
-  "main": "src/index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/FormidableLabs/victory-core.git"

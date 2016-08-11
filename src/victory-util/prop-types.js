@@ -11,7 +11,7 @@ import { PropTypes } from "react";
  */
 const makeChainable = function (validator) {
   /* eslint-disable max-params */
-  const _chainable = function (isRequired, props, propName, componentName) {
+  const _chainable = function (isRequired, props, propName, componentName, ...rest) {
     const value = props[propName];
     if (typeof value === "undefined" || value === null) {
       if (isRequired) {
@@ -21,7 +21,7 @@ const makeChainable = function (validator) {
       }
       return null;
     }
-    return validator(props, propName, componentName);
+    return validator(props, propName, componentName, ...rest);
   };
   const chainable = _chainable.bind(null, false);
   chainable.isRequired = _chainable.bind(null, true);
@@ -72,7 +72,7 @@ export default {
    * @returns {Function} Validator which logs usage of this propType
    */
   deprecated(propType, explanation) {
-    return (props, propName, componentName) => {
+    return (props, propName, componentName, ...rest) => {
       if (process.env.NODE_ENV !== "production") {
         /* eslint-disable no-console */
         if (typeof console !== "undefined" && console.error) {
@@ -83,7 +83,7 @@ export default {
         }
         /* eslint-enable no-console */
       }
-      return propType(props, propName, componentName);
+      return propType(props, propName, componentName, ...rest);
     };
   },
 
@@ -95,9 +95,9 @@ export default {
    * @returns {Function} Combined validator function
    */
   allOfType(validators) {
-    return makeChainable((props, propName, componentName) => {
+    return makeChainable((props, propName, componentName, ...rest) => {
       const error = validators.reduce((result, validator) => {
-        return result || validator(props, propName, componentName);
+        return result || validator(props, propName, componentName, ...rest);
       }, undefined);
       if (error) {
         return error;
@@ -108,8 +108,8 @@ export default {
   /**
    * Check that the value is a non-negative number.
    */
-  nonNegative: makeChainable((props, propName, componentName) => {
-    const error = PropTypes.number(props, propName, componentName);
+  nonNegative: makeChainable((props, propName, componentName, ...rest) => {
+    const error = PropTypes.number(props, propName, componentName, ...rest);
     if (error) {
       return error;
     }
@@ -124,8 +124,8 @@ export default {
   /**
    * Check that the value is an integer.
    */
-  integer: makeChainable((props, propName, componentName) => {
-    const error = PropTypes.number(props, propName, componentName);
+  integer: makeChainable((props, propName, componentName, ...rest) => {
+    const error = PropTypes.number(props, propName, componentName, ...rest);
     if (error) {
       return error;
     }
@@ -140,8 +140,8 @@ export default {
   /**
    * Check that the value is greater than zero.
    */
-  greaterThanZero: makeChainable((props, propName, componentName) => {
-    const error = PropTypes.number(props, propName, componentName);
+  greaterThanZero: makeChainable((props, propName, componentName, ...rest) => {
+    const error = PropTypes.number(props, propName, componentName, ...rest);
     if (error) {
       return error;
     }
@@ -156,8 +156,8 @@ export default {
   /**
    * Check that the value is an Array of two unique values.
    */
-  domain: makeChainable((props, propName, componentName) => {
-    const error = PropTypes.array(props, propName, componentName);
+  domain: makeChainable((props, propName, componentName, ...rest) => {
+    const error = PropTypes.array(props, propName, componentName, ...rest);
     if (error) {
       return error;
     }
@@ -194,8 +194,8 @@ export default {
   /**
    * Check that an array contains items of the same type.
    */
-  homogeneousArray: makeChainable((props, propName, componentName) => {
-    const error = PropTypes.array(props, propName, componentName);
+  homogeneousArray: makeChainable((props, propName, componentName, ...rest) => {
+    const error = PropTypes.array(props, propName, componentName, ...rest);
     if (error) {
       return error;
     }
