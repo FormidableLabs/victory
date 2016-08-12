@@ -7440,7 +7440,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var animationWhitelist=props.animationWhitelist;
 	
-	if(this.state&&this.state.nodesDoneClipPathExit&&this.state.nodesWillExit){
+	if(this.state&&this.state.nodesDoneClipPathExit&&this.state.nodesWillExit||
+	transitionProps.animate&&
+	transitionProps.animate.parentState&&
+	transitionProps.animate.parentState.nodesDoneClipPathExit&&
+	transitionProps.animate.parentState.nodesWillExit){
 	animationWhitelist=(0,_filter3.default)(props.animationWhitelist,function(list){
 	return list!=="clipWidth";
 	});

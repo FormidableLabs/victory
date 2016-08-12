@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 4.6.1 (2016-08-11)
+
+- Fixes a bug for clipPath animations with parentState
+
 ## 4.6.0 (2016-08-10)
 
 - Adds `displayName` to components for debugging
