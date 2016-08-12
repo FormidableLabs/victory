@@ -34,6 +34,8 @@ const fallbackProps = {
 };
 
 export default class VictoryScatter extends React.Component {
+  static displayName = "VictoryScatter";
+
   static role = "scatter";
 
   static defaultTransitions = {
@@ -178,6 +180,7 @@ export default class VictoryScatter extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string

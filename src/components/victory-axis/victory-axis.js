@@ -53,7 +53,10 @@ const fallbackProps = {
 };
 
 export default class VictoryAxis extends React.Component {
+  static displayName = "VictoryAxis";
+
   static role = "axis";
+
   static defaultTransitions = {
     onExit: {
       duration: 500
@@ -175,6 +178,7 @@ export default class VictoryAxis extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),

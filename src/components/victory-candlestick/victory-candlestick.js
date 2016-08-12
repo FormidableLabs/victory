@@ -46,6 +46,8 @@ const defaultData = [
 ];
 
 export default class VictoryCandlestick extends React.Component {
+  static displayName = "VictoryCandlestick";
+
   static role = "candlestick";
 
   static defaultTransitions = {
@@ -174,6 +176,7 @@ export default class VictoryCandlestick extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string

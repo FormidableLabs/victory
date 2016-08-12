@@ -5,7 +5,7 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
+import { VictoryLabel, VictoryTheme } from "victory-core";
 import { assign } from "lodash";
 
 

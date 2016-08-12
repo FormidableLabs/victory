@@ -32,6 +32,8 @@ const fallbackProps = {
 };
 
 export default class VictoryArea extends React.Component {
+  static displayName = "VictoryArea";
+
   static role = "area";
 
   static defaultTransitions = {

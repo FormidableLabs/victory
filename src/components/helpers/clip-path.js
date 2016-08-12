@@ -15,7 +15,12 @@ export default class ClipPath extends React.Component {
      * The clipPadding props specifies the paddings in clipPath
      * @type {Number}
      */
-    clipPadding: PropTypes.number,
+    clipPadding: PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
+    }),
     /**
      * The clipHeight props specifies the height of the clipPath
      * This value should be given as a number of pixels
@@ -49,8 +54,13 @@ export default class ClipPath extends React.Component {
   };
 
   static defaultProps = {
-    clipPadding: 5,
-    translateX: 0
+    translateX: 0,
+    clipPadding: {
+      top: 5,
+      bottom: 5,
+      left: 0,
+      right: 0
+    }
   }
 
   render() {
@@ -65,15 +75,16 @@ export default class ClipPath extends React.Component {
     } = this.props;
 
     const modifiedBarWidth = barWidth || 0;
+    const totalPadding = (side) => padding[side] - clipPadding[side];
 
     return (
       <defs>
         <clipPath id={clipId}>
           <rect
-            x={padding.left - modifiedBarWidth + translateX - clipPadding}
-            y={padding.top - modifiedBarWidth - clipPadding}
-            width={width + clipPadding * 2}
-            height={height + clipPadding * 2}
+            x={totalPadding("left") - modifiedBarWidth + translateX}
+            y={totalPadding("top") - modifiedBarWidth}
+            width={width - totalPadding("left") - totalPadding("right")}
+            height={height - totalPadding("top") - totalPadding("bottom")}
           />
         </clipPath>
       </defs>

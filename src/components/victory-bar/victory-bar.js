@@ -44,6 +44,8 @@ const defaultData = [
 ];
 
 export default class VictoryBar extends React.Component {
+  static displayName = "VictoryBar";
+
   static role = "bar";
 
   static defaultTransitions = {
@@ -182,6 +184,7 @@ export default class VictoryBar extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),

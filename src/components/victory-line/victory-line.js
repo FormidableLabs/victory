@@ -38,6 +38,8 @@ const fallbackProps = {
 };
 
 export default class VictoryLine extends React.Component {
+  static displayName = "VictoryLine";
+
   static role = "line";
 
   static defaultTransitions = {
@@ -230,6 +232,7 @@ export default class VictoryLine extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
