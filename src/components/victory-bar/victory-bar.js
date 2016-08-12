@@ -50,7 +50,7 @@ export default class VictoryBar extends React.Component {
 
   static defaultTransitions = {
     onLoad: {
-      duration: 1000,
+      duration: 2000,
       before: () => ({ y: 0, yOffset: 0 }),
       after: (datum) => ({ y: datum.y, yOffset: datum.yOffset })
     },
@@ -475,16 +475,14 @@ export default class VictoryBar extends React.Component {
     const { clipPathComponent } = modifiedProps;
     const barWidth = BarHelpers.getBarWidth(modifiedProps);
     const padding = Helpers.getPadding(modifiedProps);
-    const paddingX = padding.left + padding.right;
-    const paddingY = padding.bottom + padding.top;
     const clipComponent = React.cloneElement(clipPathComponent, assign(
       {},
       {
         padding,
         barWidth,
         clipId: modifiedProps.clipId,
-        width: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2 - paddingX,
-        height: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2 - paddingY
+        width: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2,
+        height: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2
       }
     ));
 

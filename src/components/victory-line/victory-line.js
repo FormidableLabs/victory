@@ -44,9 +44,9 @@ export default class VictoryLine extends React.Component {
 
   static defaultTransitions = {
     onLoad: {
-      duration: 1000,
+      duration: 2000,
       entrance: "left",
-      before: () => ({ y: 5 }),
+      before: () => ({ y: 0, yOffset: 0 }),
       after: (datum) => ({ y: datum.y }),
       beforeClipPathWidth: (data, child, animate) => {
         const paddingLeft = child.type.getScale(child.props).x.range()[0];
@@ -539,16 +539,14 @@ export default class VictoryLine extends React.Component {
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
     const padding = Helpers.getPadding(modifiedProps);
-    const paddingX = padding.left + padding.right;
-    const paddingY = padding.bottom + padding.top;
     const clipComponent = React.cloneElement(clipPathComponent, assign(
       {},
       {
         padding,
         clipId: modifiedProps.clipId,
         translateX: modifiedProps.translateX || 0,
-        width: (modifiedProps.clipWidth || modifiedProps.width) - paddingX,
-        height: (modifiedProps.clipHeight || modifiedProps.height) - paddingY
+        width: (modifiedProps.clipWidth || modifiedProps.width),
+        height: (modifiedProps.clipHeight || modifiedProps.height)
       }
     ));
 

@@ -40,7 +40,7 @@ export default class VictoryScatter extends React.Component {
 
   static defaultTransitions = {
     onLoad: {
-      duration: 1000,
+      duration: 2000,
       before: () => ({ opacity: 0 }),
       after: (datum) => ({ opacity: datum.opacity || 1 })
     },
