@@ -43,7 +43,7 @@ export default class VictoryArea extends React.Component {
       beforeClipPathWidth: (data, child, exitingNodes) => {
         const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
         const xVals = filterExit.map((datum) => {
-          return child.type.getScale(child.props).scale.x(datum.x);
+          return child.type.getScale(child.props).x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
         return clipPath;
@@ -56,7 +56,7 @@ export default class VictoryArea extends React.Component {
       beforeClipPathWidth: (data, child, enteringNodes) => {
         const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
         const xVals = filterEnter.map((datum) => {
-          return child.type.getScale(child.props).scale.x(datum.x);
+          return child.type.getScale(child.props).x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
         return clipPath;
@@ -64,7 +64,7 @@ export default class VictoryArea extends React.Component {
       },
       afterClipPathWidth: (data, child) => {
         const xVals = data.map((datum) => {
-          return child.type.getScale(child.props).scale.x(datum.x);
+          return child.type.getScale(child.props).x(datum.x);
         });
         const clipPath = min(xVals) + max(xVals);
         return clipPath;
