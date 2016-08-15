@@ -1,4 +1,4 @@
-import { defaults, isFunction, merge, partial, property } from "lodash";
+import { defaults, isFunction, isEmpty, merge, partial, property, omit } from "lodash";
 
 export default {
   getPadding(props) {
@@ -18,10 +18,13 @@ export default {
     }
 
     const {data, labels, parent} = style;
+    const defaultParent = defaultStyles && defaultStyles.parent || {};
+    const defaultLabels = defaultStyles && defaultStyles.labels || {};
+    const defaultData = defaultStyles && defaultStyles.data || {};
     return {
-      parent: defaults({ height, width }, parent, defaultStyles.parent),
-      labels: defaults({}, labels, defaultStyles.labels),
-      data: defaults({}, data, defaultStyles.data)
+      parent: defaults({ height, width }, parent, defaultParent),
+      labels: defaults({}, labels, defaultLabels),
+      data: defaults({}, data, defaultData)
     };
   },
 
@@ -30,13 +33,25 @@ export default {
   },
 
   evaluateStyle(style, data, index) {
-    if (!Object.keys(style).some((value) => isFunction(style[value]))) {
+    if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
       return style;
     }
     return Object.keys(style).reduce((prev, curr) => {
       prev[curr] = this.evaluateProp(style[curr], data, index);
       return prev;
     }, {});
+  },
+
+  getWidth(props, role) {
+    const theme = props.theme && props.theme[role];
+    const themeWidth = theme && theme.width;
+    return props.width || themeWidth || 350
+  },
+
+  getHeight(props, role) {
+    const theme = props.theme && props.theme[role];
+    const themeHeight = theme && theme.height;
+    return props.width || themeHeight || 350
   },
 
   getRange(props, axis) {
@@ -140,21 +155,10 @@ export default {
       {};
   },
 
-  modifyProps(props, fallbackProps, themeProps) {
-    const themeCheck = props.theme && props.theme.props;
-    const themePropsObject = themeCheck && !themeProps ? props.theme.props : themeProps;
-
-    return themeCheck ?
-      defaults({}, props, {
-        clipWidth: props.width,
-        clipHeight: props.height
-      },
-      themePropsObject,
-      fallbackProps.props)
-    : defaults({}, props, {
-      clipWidth: props.width,
-      clipHeight: props.height
-    }, fallbackProps.props);
+  modifyProps(props, fallbackProps, role) {
+    const theme = props.theme && props.theme[role] ? props.theme[role] : {};
+    const themeProps = omit(theme, "style");
+    return defaults({}, props, themeProps, fallbackProps);
   },
 
   getEvents(events, namespace) {

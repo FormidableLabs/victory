@@ -39,11 +39,11 @@ const baseProps = {
 // * Labels
 // *
 const baseLabelStyles = {
-  fontFamily: sansSerif,
-  fontSize,
-  letterSpacing,
-  padding,
-  fill: blueGrey700
+  // fontFamily: sansSerif,
+  // fontSize,
+  // letterSpacing,
+  // padding,
+  // fill: blueGrey700
 };
 // *
 // * Strokes
@@ -54,65 +54,67 @@ const strokeLinejoin = "round";
 
 export default {
   area: {
-    data: {
-      fill: grey900
-    },
-    labels: baseLabelStyles,
-    parent: {}
+    style: {
+      data: {
+        // fill: grey900
+      },
+      labels: baseLabelStyles
+    }
   },
   axis: {
-    axis: {
-      fill: "none",
-      stroke: blueGrey300,
-      strokeWidth: 2,
-      strokeLinecap,
-      strokeLinejoin
-    },
-    axisLabel: assign({}, baseLabelStyles,
-      {
-        padding,
-        stroke: "transparent"
+    style: {
+      axis: {
+        // fill: "none",
+        // stroke: blueGrey300,
+        // strokeWidth: 2,
+        // strokeLinecap,
+        // strokeLinejoin
+      },
+      axisLabel: assign({}, baseLabelStyles, {
+        // padding,
+        // stroke: "transparent"
       }),
-    grid: {
-      fill: "none",
-      stroke: blueGrey50,
-      strokeDasharray,
-      strokeLinecap,
-      strokeLinejoin
-    },
-    ticks: {
-      fill: "none",
-      padding,
-      size: 5,
-      stroke: blueGrey300,
-      strokeWidth: 1,
-      strokeLinecap,
-      strokeLinejoin
-    },
-    tickLabels: assign({}, baseLabelStyles,
-      {
-        fill: blueGrey700,
-        stroke: "transparent"
+      grid: {
+        // fill: "none",
+        // stroke: blueGrey50,
+        // strokeDasharray,
+        // strokeLinecap,
+        // strokeLinejoin
+      },
+      ticks: {
+        // fill: "none",
+        // padding: 0,
+        // size: 0,
+        // stroke: blueGrey300,
+        // strokeWidth: 1,
+        // strokeLinecap,
+        // strokeLinejoin
+      },
+      tickLabels: assign({}, baseLabelStyles, {
+        // fill: blueGrey700,
+        // stroke: "transparent"
       })
+    }
   },
   bar: {
-    data: {
-      fill: blueGrey700,
-      opacity: 1,
-      padding,
-      stroke: "transparent",
-      strokeWidth: 0,
-      width: 5
-    },
-    labels: baseLabelStyles,
-    parent: {}
+    style: {
+      data: {
+        // fill: blueGrey700,
+        // padding,
+        // stroke: "transparent",
+        // strokeWidth: 0,
+        // width: 5
+      },
+      labels: baseLabelStyles
+    }
   },
   candlestick: {
-    data: {
-      stroke: blueGrey700
+    style: {
+      data: {
+        // stroke: blueGrey700
+      },
+      labels: baseLabelStyles
     },
-    labels: baseLabelStyles,
-    parent: {},
     props: assign({}, baseProps,
       {
         candleColors: {
@@ -122,34 +124,34 @@ export default {
       })
   },
   errorbar: {
-    data: {
-      fill: "none",
-      opacity: 1,
-      stroke: blueGrey700,
-      strokeWidth: 2
-    },
-    labels: assign({}, baseLabelStyles,
-      {
+    style: {
+      data: {
+        // fill: "none",
+        // opacity: 1,
+        // stroke: blueGrey700,
+        // strokeWidth: 2
+      },
+      labels: assign({}, baseLabelStyles, {
         stroke: "transparent",
         strokeWidth: 0,
         textAnchor: "start"
-      }),
-    parent: {}
+      })
+    }
   },
   line: {
-    data: {
-      fill: "none",
-      opacity: 1,
-      stroke: blueGrey700,
-      strokeWidth: 2
-    },
-    labels: assign({}, baseLabelStyles,
-      {
+    style: {
+      data: {
+        // fill: "none",
+        // opacity: 1,
+        // stroke: blueGrey700,
+        // strokeWidth: 2
+      },
+      labels: assign({}, baseLabelStyles, {
         stroke: "transparent",
         strokeWidth: 0,
         textAnchor: "start"
-      }),
-    parent: {}
+      })
+    }
   },
   pie: {
     props: assign({}, baseProps,
@@ -162,29 +164,27 @@ export default {
         stroke: blueGrey50,
         strokeWidth: 1
       },
-      labels: assign({}, baseLabelStyles,
-        {
-          padding: 200,
-          stroke: "transparent",
-          strokeWidth: 0,
-          textAnchor: "middle"
-        }),
-      parent: {}
+      labels: assign({}, baseLabelStyles, {
+        padding: 200,
+        stroke: "transparent",
+        strokeWidth: 0,
+        textAnchor: "middle"
+      })
     }
   },
   scatter: {
-    data: {
-      fill: blueGrey700,
-      opacity: 1,
-      stroke: "transparent",
-      strokeWidth: 0
-    },
-    labels: Object.assign({}, baseLabelStyles,
-      {
-        stroke: "transparent",
-        textAnchor: "middle"
-      }),
-    parent: {}
+    style: {
+      data: {
+        // fill: blueGrey700,
+        // opacity: 1,
+        // stroke: "transparent",
+        // strokeWidth: 0
+      },
+      labels: Object.assign({}, baseLabelStyles, {
+        // stroke: "transparent",
+        // textAnchor: "middle"
+      })
+    }
   },
   props: Object.assign({}, baseProps,
     {
