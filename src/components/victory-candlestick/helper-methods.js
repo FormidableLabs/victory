@@ -129,7 +129,7 @@ export default {
   },
 
   getDataStyles(datum, style, props) {
-    style = style || {}
+    style = style || {};
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);

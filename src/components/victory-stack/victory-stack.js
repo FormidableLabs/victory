@@ -1,8 +1,7 @@
-import { assign, uniq, defaults } from "lodash";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer,
-  VictoryTheme
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
@@ -424,16 +423,13 @@ export default class VictoryStack extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "stack");
     const { theme, standalone, events, eventKey} = modifiedProps;
     const fallbackStyle = theme && theme.stack && theme.stack.style ?
       theme.stack.style : {};
     const style = Helpers.getStyles(modifiedProps.style, fallbackStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.some((type) => type === "group-wrapper")) {
-      Log.warn("It is not possible to stack groups.");
-    }
+
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style);
 
     const container = standalone && this.getContainer(modifiedProps, calculatedProps);
