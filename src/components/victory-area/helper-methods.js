@@ -59,34 +59,32 @@ export default {
       x: Domain.getDomainWithZero(props, "x"),
       y: Domain.getDomainWithZero(props, "y")
     };
-    const scale = {
+    return {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-
-    return {scale, domain};
   },
 
   getCalculatedValues(props, fallbackProps) {
     const defaultStyles = props.theme && props.theme.area ? props.theme.area
     : fallbackProps.style;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const {scale, domain} = this.getScale(props);
+    const scale = this.getScale(props);
 
-    const data = this.getDataWithBaseline(props, domain);
+    const data = this.getDataWithBaseline(props, scale);
     return { style, data, scale };
   },
 
-  getDataWithBaseline(props, domain) {
+  getDataWithBaseline(props, scale) {
     let data = Data.getData(props);
 
     if (data.length < 2) {
       Log.warn("Area requires at least two data points.");
       data = [];
     }
-
-    const defaultMin = Scale.getScaleType(props, "y") === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
-    const minY = Math.min(...domain.y) > 0 ? Math.min(...domain.y) : defaultMin;
+    const defaultMin = Scale.getType(scale.y) === "log" ? 1 / Number.MAX_SAFE_INTEGER : 0;
+    const domainY = scale.y.domain();
+    const minY = Math.min(...domainY) > 0 ? Math.min(...domainY) : defaultMin;
 
     return data.map((datum) => {
       const y1 = datum.yOffset ? datum.yOffset + datum.y : datum.y;
