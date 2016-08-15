@@ -7,7 +7,7 @@ import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    modifiedProps = Helpers.modifyProps(props, fallbackProps, "errorbar");
     const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
     const { data, style, scale } = calculatedValues;
     const { groupComponent, height, width, borderWidth } = modifiedProps;
@@ -25,11 +25,12 @@ export default {
         errorY: this.getErrors(datum, scale, "y")
       };
 
-      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
+      const labelPadding = labelStyle.padding || 0;
       const labelProps = {
         style: labelStyle,
-        x: x - labelStyle.padding,
-        y: y - labelStyle.padding,
+        x: x - labelPadding,
+        y: y - labelPadding,
         text: this.getLabelText(modifiedProps, datum, index),
         index,
         scale,
@@ -198,6 +199,7 @@ export default {
   },
 
   getLabelStyle(labelStyle, dataProps) {
+    labelStyle = labelStyle || {};
     const { datum, size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;

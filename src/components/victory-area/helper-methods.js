@@ -22,7 +22,7 @@ export default {
 
     const text = Helpers.evaluateProp(label, data);
     const lastData = last(data);
-    const labelStyle = Helpers.evaluateStyle(style.labels, data);
+    const labelStyle = Helpers.evaluateStyle(style.labels, data) || {};
     const labelPadding = labelStyle.padding || 0;
 
     const labelProps = {

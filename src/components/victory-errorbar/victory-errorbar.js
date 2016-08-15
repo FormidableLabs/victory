@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import { assign, defaults, isFunction, partialRight } from "lodash";
 import ErrorBar from "./errorbar";
@@ -10,7 +10,8 @@ import ErrorBarHelpers from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50
 };
 
 const defaultData = [
@@ -342,7 +343,6 @@ export default class VictoryErrorBar extends React.Component {
 
   static defaultProps = {
     data: defaultData,
-    padding: 50,
     scale: "linear",
     standalone: true,
     x: "x",
@@ -352,7 +352,8 @@ export default class VictoryErrorBar extends React.Component {
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
@@ -450,8 +451,8 @@ export default class VictoryErrorBar extends React.Component {
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(this.props, fallbackProps, "errorbar");
+    const { animate, style, standalone, theme } = props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -462,18 +463,17 @@ export default class VictoryErrorBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.errorbar
-    ? modifiedProps.theme.errorbar
-    : fallbackProps.style;
+    const styleObject = theme && theme.errorbar && theme.errorbar.style ?
+      theme.errorbar.style : {};
 
     const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

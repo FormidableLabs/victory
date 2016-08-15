@@ -54,7 +54,7 @@ export default {
 
   getBarStyle(datum, baseStyle) {
     const styleData = omit(datum, [
-      "xName", "yName", "x", "y", "label"
+      "xName", "yName", "x", "y", "label", "errorX", "errorY", "eventKey"
     ]);
     return Helpers.evaluateStyle(defaults({}, styleData, baseStyle), datum);
   },

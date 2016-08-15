@@ -7,12 +7,14 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50,
+  interpolation: "linear"
 };
 
 export default class VictoryLine extends React.Component {
@@ -372,8 +374,6 @@ export default class VictoryLine extends React.Component {
   };
 
   static defaultProps = {
-    interpolation: "linear",
-    padding: 50,
     samples: 50,
     scale: "linear",
     standalone: true,
@@ -383,7 +383,8 @@ export default class VictoryLine extends React.Component {
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    clipPathComponent: <ClipPath/>
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomain.bind(Domain);

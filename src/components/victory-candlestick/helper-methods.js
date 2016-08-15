@@ -129,6 +129,7 @@ export default {
   },
 
   getDataStyles(datum, style, props) {
+    style = style || {}
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
@@ -136,7 +137,7 @@ export default {
       props.candleColors.negative : props.candleColors.positive;
     const fill = datum.fill || style.fill || candleColor;
     const strokeColor = datum.stroke || style.stroke;
-    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor;
+    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
     const baseDataStyle = defaults({}, stylesFromData, {stroke, fill}, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
@@ -148,6 +149,7 @@ export default {
   },
 
   getLabelStyle(labelStyle, dataProps) {
+    labelStyle = labelStyle || {};
     const { datum, size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;

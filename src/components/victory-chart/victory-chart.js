@@ -11,7 +11,8 @@ import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryChart extends React.Component {
@@ -226,11 +227,10 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    theme: VictoryTheme.material,
+    theme: VictoryTheme.grayscale,
     defaultAxes: {
       independent: <VictoryAxis/>,
       dependent: <VictoryAxis dependentAxis/>

@@ -1,14 +1,17 @@
 import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
-  VictoryContainer } from "victory-core";
+  VictoryContainer, VictoryTheme
+} from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50,
+  offset: 0
 };
 
 export default class VictoryGroup extends React.Component {
@@ -290,11 +293,10 @@ export default class VictoryGroup extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    offset: 0,
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);

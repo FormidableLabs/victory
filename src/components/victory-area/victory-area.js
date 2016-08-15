@@ -7,12 +7,14 @@ import Domain from "../../helpers/domain";
 import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
   width: 450,
   height: 300,
+  padding: 50,
+  interpolation: "linear"
 };
 
 export default class VictoryArea extends React.Component {
@@ -370,16 +372,15 @@ export default class VictoryArea extends React.Component {
   static defaultProps = {
     dataComponent: <Area/>,
     labelComponent: <VictoryLabel/>,
-    padding: 50,
     scale: "linear",
     samples: 50,
     standalone: true,
-    interpolation: "linear",
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer />,
     groupComponent: <g/>,
-    clipPathComponent: <ClipPath/>
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);

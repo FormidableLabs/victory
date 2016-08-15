@@ -1,14 +1,16 @@
 import { assign, uniq, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer
+  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer,
+  VictoryTheme
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryStack extends React.Component {
@@ -288,10 +290,10 @@ export default class VictoryStack extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme. grayscale
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);

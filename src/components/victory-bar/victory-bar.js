@@ -7,12 +7,13 @@ import Domain from "../../helpers/domain";
 import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50
 };
 
 const defaultData = [
@@ -349,14 +350,14 @@ export default class VictoryBar extends React.Component {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    padding: 50,
     scale: "linear",
     standalone: true,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    clipPathComponent: <ClipPath/>
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -464,8 +465,8 @@ export default class VictoryBar extends React.Component {
 
   render() {
     const clipId = this.props.clipId || Math.round(Math.random() * 10000);
-    const props = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "bar");
+    const { animate, style, standalone, theme } = props;
 
     if (animate) {
       const whitelist = [
@@ -473,19 +474,18 @@ export default class VictoryBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.bar ? modifiedProps.theme.bar
-    : fallbackProps.style;
+    const styleObject = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
     const group = this.renderGroup(
-      this.renderData(modifiedProps), modifiedProps, baseStyles
+      this.renderData(props), props, baseStyles
     );
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

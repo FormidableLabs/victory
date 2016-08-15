@@ -3,13 +3,18 @@ import { assign, defaults, isFunction, partialRight } from "lodash";
 import Candle from "./candle";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
-  height: 300
+  height: 300,
+  padding: 50,
+  candleColors: {
+    positive: "#ffffff",
+    negative: "#252525"
+  }
 };
 
 const defaultData = [
@@ -399,7 +404,6 @@ export default class VictoryCandlestick extends React.Component {
   };
 
   static defaultProps = {
-    padding: 50,
     samples: 50,
     scale: "linear",
     data: defaultData,
@@ -412,7 +416,8 @@ export default class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
@@ -511,11 +516,9 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   render() {
-    const modifiedProps = this.props.theme && this.props.theme.candlestick
-      ? Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props)
-      : Helpers.modifyProps(this.props, fallbackProps);
+    const props = Helpers.modifyProps(this.props, fallbackProps, "candlestick");
 
-    const { animate, standalone, style } = modifiedProps;
+    const { animate, standalone, style, theme } = props;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -529,14 +532,15 @@ export default class VictoryCandlestick extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
+    const styleObject = theme && theme.candlestick && theme.candlestick.style ?
+      theme.candlestick.style : {};
+    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const baseStyle = Helpers.getStyles(style, fallbackProps.style, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }
