@@ -28,6 +28,10 @@ export default class ErrorBar extends React.Component {
     groupComponent: PropTypes.element
   };
 
+  static defaultProps = {
+    borderWidth: 10
+  }
+
   renderErrorBar(error) {
     const {
       x,

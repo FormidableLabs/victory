@@ -7,16 +7,8 @@ import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      width: 8,
-      padding: 6
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 export default class VictoryGroup extends React.Component {

@@ -11,24 +11,8 @@ import {
 } from "victory-core";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300,
-    clipHeight: 300,
-    clipWidth: 450
-  },
-  style: {
-    data: {
-      fill: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10
-    }
-  }
+  width: 450,
+  height: 300,
 };
 
 export default class VictoryArea extends React.Component {
@@ -477,18 +461,15 @@ export default class VictoryArea extends React.Component {
     );
   }
 
-  renderGroup(children, modifiedProps, style) {
-    const { clipPathComponent } = modifiedProps;
+  renderGroup(children, props, style) {
+    const { clipPathComponent } = props;
 
-    const clipComponent = React.cloneElement(clipPathComponent, assign(
-      {},
-      {
-        padding: modifiedProps.padding,
-        clipId: modifiedProps.clipId,
-        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-        clipHeight: modifiedProps.clipHeight || modifiedProps.height
-      }
-    ));
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: props.padding,
+      clipId: props.clipId,
+      clipWidth: props.clipWidth || props.width,
+      clipHeight: props.clipHeight || props.height
+    });
 
     return React.cloneElement(
       this.props.groupComponent,
@@ -500,8 +481,8 @@ export default class VictoryArea extends React.Component {
 
   render() {
     const clipId = this.props.clipId || Math.round(Math.random() * 10000);
-    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "area");
+    const { animate, style, standalone } = props;
 
     if (animate) {
       const whitelist = [
@@ -509,20 +490,20 @@ export default class VictoryArea extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.area ? modifiedProps.theme.area
-    : fallbackProps.style;
+    const styleObject = props.theme && props.theme.area ?
+      props.theme.area.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = this.renderGroup(
-      this.renderData(modifiedProps), modifiedProps, baseStyles.parent
+      this.renderData(props), props, baseStyles.parent
     );
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

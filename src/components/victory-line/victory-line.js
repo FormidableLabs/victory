@@ -11,30 +11,8 @@ import {
 } from "victory-core";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450,
-    clipHeight: 300,
-    clipWidth: 450
-  },
-  style: {
-    data: {
-      fill: "none",
-      opacity: 1,
-      strokeWidth: 2,
-      stroke: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      strokeWidth: 0,
-      stroke: "transparent",
-      textAnchor: "start"
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 export default class VictoryLine extends React.Component {
@@ -501,15 +479,12 @@ export default class VictoryLine extends React.Component {
   renderGroup(children, modifiedProps, style) {
     const { clipPathComponent } = modifiedProps;
 
-    const clipComponent = React.cloneElement(clipPathComponent, assign(
-      {},
-      {
-        padding: modifiedProps.padding,
-        clipId: modifiedProps.clipId,
-        clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-        clipHeight: modifiedProps.clipHeight || modifiedProps.height
-      }
-    ));
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: modifiedProps.padding,
+      clipId: modifiedProps.clipId,
+      clipWidth: modifiedProps.clipWidth || modifiedProps.width,
+      clipHeight: modifiedProps.clipHeight || modifiedProps.height
+    });
 
     return React.cloneElement(
       this.props.groupComponent,
@@ -521,8 +496,8 @@ export default class VictoryLine extends React.Component {
 
   render() {
     const clipId = Math.round(Math.random() * 10000);
-    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "line");
+    const { animate, style, standalone } = props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -535,19 +510,19 @@ export default class VictoryLine extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.line ? modifiedProps.theme.line
-    : fallbackProps.style;
+    const styleObject = props.theme && props.theme.line && props.theme.line.style ?
+      props.theme.line.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
     const group = this.renderGroup(
-      this.renderData(modifiedProps), modifiedProps, baseStyles.parent
+      this.renderData(props), props, baseStyles.parent
     );
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

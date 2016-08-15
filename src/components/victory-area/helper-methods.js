@@ -23,10 +23,11 @@ export default {
     const text = Helpers.evaluateProp(label, data);
     const lastData = last(data);
     const labelStyle = Helpers.evaluateStyle(style.labels, data);
+    const labelPadding = labelStyle.padding || 0;
 
     const labelProps = {
       key: "area-label",
-      x: lastData ? scale.x(lastData.x) + labelStyle.padding : 0,
+      x: lastData ? scale.x(lastData.x) + labelPadding : 0,
       y: lastData ? scale.y(lastData.y1) : 0,
       y0: lastData ? scale.y(lastData.y0) : 0,
       style: labelStyle,

@@ -54,6 +54,7 @@ export default {
 
   getStyles(props, styleObject) {
     const style = props.style || {};
+    styleObject = styleObject || {};
     const parentStyleProps = { height: "auto", width: "100%" };
     return {
       parent: defaults(parentStyleProps, style.parent, styleObject.parent),
@@ -183,7 +184,8 @@ export default {
   },
 
   getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.axis ? props.theme.axis : fallbackProps.style;
+    const defaultStyles = props.theme && props.theme.axis && props.theme.axis.style ?
+      props.theme.axis.style : fallbackProps.style;
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
@@ -271,7 +273,8 @@ export default {
     }
     const isVertical = Axis.isVertical(props);
     // TODO: magic numbers
-    return props.label ? (labelStyle.fontSize * (isVertical ? 2.3 : 1.6)) : 0;
+    const fontSize = labelStyle.fontSize || 14;
+    return props.label ? (fontSize * (isVertical ? 2.3 : 1.6)) : 0;
   },
 
   getOffset(props, calculatedValues) {
@@ -280,7 +283,7 @@ export default {
     } = calculatedValues;
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
-    const fontSize = style.axisLabel.fontSize;
+    const fontSize = style.axisLabel.fontSize || 14;
     const offsetX = (props.offsetX !== null) && (props.offsetX !== undefined)
       ? props.offsetX : xPadding;
     const offsetY = (props.offsetY !== null) && (props.offsetY !== undefined)
@@ -288,7 +291,7 @@ export default {
     const tickSizes = ticks.map((data) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
       const tickStyle = Helpers.evaluateStyle(style.ticks, tick);
-      return tickStyle.size;
+      return tickStyle.size || 0;
     });
     const totalPadding = fontSize + (2 * Math.max(...tickSizes)) + labelPadding;
     const minimumPadding = 1.2 * fontSize; // TODO: magic numbers
@@ -311,13 +314,15 @@ export default {
   },
 
   getTickPosition(style, orientation, isVertical) {
-    const tickSpacing = style.size + style.padding;
+    const size = style.size || 0;
+    const padding = style.padding || 0;
+    const tickSpacing = size + padding;
     const sign = orientationSign[orientation];
     return {
       x: isVertical ? sign * tickSpacing : 0,
-      x2: isVertical ? sign * style.size : 0,
+      x2: isVertical ? sign * size : 0,
       y: isVertical ? 0 : sign * tickSpacing,
-      y2: isVertical ? 0 : sign * style.size
+      y2: isVertical ? 0 : sign * size
     };
   },
 

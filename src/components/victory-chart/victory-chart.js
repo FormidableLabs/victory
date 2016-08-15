@@ -1,7 +1,7 @@
 import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -10,10 +10,8 @@ import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  }
+  width: 450,
+  height: 300
 };
 
 export default class VictoryChart extends React.Component {
@@ -232,6 +230,7 @@ export default class VictoryChart extends React.Component {
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    theme: VictoryTheme.material,
     defaultAxes: {
       independent: <VictoryAxis/>,
       dependent: <VictoryAxis dependentAxis/>

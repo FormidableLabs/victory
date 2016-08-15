@@ -9,27 +9,8 @@ import Data from "../../helpers/data";
 import ErrorBarHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      fill: "none",
-      opacity: 1,
-      strokeWidth: 2,
-      stroke: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "start"
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 const defaultData = [
@@ -368,7 +349,6 @@ export default class VictoryErrorBar extends React.Component {
     y: "y",
     errorX: "errorX",
     errorY: "errorY",
-    borderWidth: 10,
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,

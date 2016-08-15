@@ -11,29 +11,8 @@ import {
 } from "victory-core";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450,
-    clipHeight: 300,
-    clipWidth: 450
-  },
-  style: {
-    data: {
-      fill: "#242424",
-      opacity: 1,
-      padding: 10,
-      stroke: "transparent",
-      strokeWidth: 0,
-      width: 8
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 const defaultData = [
@@ -466,22 +445,17 @@ export default class VictoryBar extends React.Component {
     );
   }
 
-  renderGroup(children, modifiedProps, style) {
-    const { clipPathComponent } = modifiedProps;
-    const barWidth = BarHelpers.getBarWidth(modifiedProps);
-    const clipComponent = React.cloneElement(clipPathComponent, assign(
-      {},
-      {
-        padding: modifiedProps.padding,
-        clipId: modifiedProps.clipId,
-        barWidth,
-        clipWidth: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2,
-        clipHeight: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2
-      }
-    ));
-
+  renderGroup(children, props, style) {
+    const { clipPathComponent } = props;
+    const barWidth = BarHelpers.getBarWidth(props);
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: props.padding,
+      clipId: props.clipId,
+      clipWidth: (props.clipWidth || props.width) + barWidth * 2,
+      clipHeight: (props.clipHeight || props.height) + barWidth * 2
+    });
     return React.cloneElement(
-      this.props.groupComponent,
+      props.groupComponent,
       { role: "presentation", style: style.parent},
       children,
       clipComponent
@@ -490,7 +464,7 @@ export default class VictoryBar extends React.Component {
 
   render() {
     const clipId = this.props.clipId || Math.round(Math.random() * 10000);
-    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
+    const props = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {

@@ -99,8 +99,8 @@ export default {
   },
 
   getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter
-    : fallbackProps.style;
+    const defaultStyles = props.theme && props.theme.bar && props.theme.bar.style ?
+      props.theme.bar.style : fallbackProps.style;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const scale = this.getScale(props);

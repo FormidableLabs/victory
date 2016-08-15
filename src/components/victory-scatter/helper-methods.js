@@ -47,8 +47,8 @@ export default {
   },
 
   getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter
-    : fallbackProps.style;
+    const defaultStyles = props.theme && props.theme.scatter && props.theme.scatter.style ?
+      props.theme.scatter.style : fallbackProps.style;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const range = {

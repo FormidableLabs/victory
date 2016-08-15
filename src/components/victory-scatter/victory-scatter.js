@@ -10,27 +10,8 @@ import {
 import ScatterHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      fill: "#242424",
-      opacity: 1,
-      stroke: "transparent",
-      strokeWidth: 0
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "middle"
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 export default class VictoryScatter extends React.Component {

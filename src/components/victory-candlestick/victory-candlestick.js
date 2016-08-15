@@ -8,30 +8,8 @@ import {
 import CandlestickHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450,
-    candleColors: {
-      positive: "#ffffff",
-      negative: "#252525"
-    }
-  },
-  style: {
-    data: {
-      opacity: 1,
-      strokeWidth: 1,
-      stroke: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "end"
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 const defaultData = [

@@ -7,16 +7,8 @@ import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      width: 8,
-      padding: 6
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 export default class VictoryStack extends React.Component {
@@ -431,7 +423,10 @@ export default class VictoryStack extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
+    const { theme, standalone, events, eventKey} = modifiedProps;
+    const fallbackStyle = theme && theme.stack && theme.stack.style ?
+      theme.stack.style : {};
+    const style = Helpers.getStyles(modifiedProps.style, fallbackStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
     const types = uniq(childComponents.map((child) => child.type.role));
     if (types.some((type) => type === "group-wrapper")) {
@@ -439,13 +434,13 @@ export default class VictoryStack extends React.Component {
     }
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style);
 
-    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (modifiedProps.events) {
+    if (events) {
       return (
         <VictorySharedEvents
-          events={modifiedProps.events}
-          eventKey={modifiedProps.eventKey}
+          events={events}
+          eventKey={eventKey}
           container={container}
         >
           {newChildren}

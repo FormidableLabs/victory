@@ -9,47 +9,8 @@ import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    axis: {
-      fill: "none",
-      stroke: "#252525",
-      strokeWidth: 1,
-      strokeLinecap: "round"
-    },
-    axisLabel: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 25,
-      stroke: "transparent"
-    },
-    grid: {
-      fill: "none",
-      stroke: "transparent",
-      strokeLinecap: "round"
-    },
-    ticks: {
-      fill: "none",
-      padding: 10,
-      size: 1,
-      stroke: "none",
-      strokeWidth: 1,
-      strokeLinecap: "round"
-    },
-    tickLabels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent"
-    }
-  }
+  width: 450,
+  height: 300
 };
 
 export default class VictoryAxis extends React.Component {
@@ -512,7 +473,7 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps, "axis");
     const { animate, standalone } = modifiedProps;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
