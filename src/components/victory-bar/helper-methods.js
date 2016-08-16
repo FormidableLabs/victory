@@ -30,10 +30,8 @@ export default {
   getBarWidth(props) {
     const {style, width, data} = props;
     const padding = props.padding.left || props.padding;
-    const barWidth = (style && style.width) || data.length === 0 ?
-      8 : 0.3 * (width - 2 * padding) / data.length;
-
-    return barWidth;
+    const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
+    return style && style.width ? style.width : defaultWidth;
   },
 
   getBarPosition(props, datum, scale) {
@@ -102,7 +100,7 @@ export default {
   },
 
   getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter
+    const defaultStyles = props.theme && props.theme.bar ? props.theme.bar
     : fallbackProps.style;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
