@@ -35,8 +35,7 @@ export default {
   },
 
   getBarPosition(props, datum, scale) {
-    const currentAxis = props.horizontal ? "x" : "y";
-    const defaultMin = Scale.getType(scale[currentAxis]) === "log" ?
+    const defaultMin = Scale.getType(scale.y) === "log" ?
       1 / Number.MAX_SAFE_INTEGER : 0;
     const yOffset = datum.yOffset || 0;
     const xOffset = datum.xOffset || 0;
