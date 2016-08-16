@@ -1,4 +1,4 @@
-import { defaults, isFunction, isEmpty, merge, partial, property, omit } from "lodash";
+import { defaults, isFunction, merge, partial, property, omit } from "lodash";
 
 export default {
   getPadding(props) {
@@ -40,18 +40,6 @@ export default {
       prev[curr] = this.evaluateProp(style[curr], data, index);
       return prev;
     }, {});
-  },
-
-  getWidth(props, role) {
-    const theme = props.theme && props.theme[role];
-    const themeWidth = theme && theme.width;
-    return props.width || themeWidth || 350
-  },
-
-  getHeight(props, role) {
-    const theme = props.theme && props.theme[role];
-    const themeHeight = theme && theme.height;
-    return props.width || themeHeight || 350
   },
 
   getRange(props, axis) {

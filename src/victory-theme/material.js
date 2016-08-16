@@ -39,11 +39,11 @@ const baseProps = {
 // * Labels
 // *
 const baseLabelStyles = {
-  // fontFamily: sansSerif,
-  // fontSize,
-  // letterSpacing,
-  // padding,
-  // fill: blueGrey700
+  fontFamily: sansSerif,
+  fontSize,
+  letterSpacing,
+  padding,
+  fill: blueGrey700
 };
 // *
 // * Strokes
@@ -56,7 +56,7 @@ export default {
   area: {
     style: {
       data: {
-        // fill: grey900
+        fill: grey900
       },
       labels: baseLabelStyles
     }
@@ -64,46 +64,46 @@ export default {
   axis: {
     style: {
       axis: {
-        // fill: "none",
-        // stroke: blueGrey300,
-        // strokeWidth: 2,
-        // strokeLinecap,
-        // strokeLinejoin
+        fill: "none",
+        stroke: blueGrey300,
+        strokeWidth: 2,
+        strokeLinecap,
+        strokeLinejoin
       },
       axisLabel: assign({}, baseLabelStyles, {
-        // padding,
-        // stroke: "transparent"
+        padding,
+        stroke: "transparent"
       }),
       grid: {
-        // fill: "none",
-        // stroke: blueGrey50,
-        // strokeDasharray,
-        // strokeLinecap,
-        // strokeLinejoin
+        fill: "none",
+        stroke: blueGrey50,
+        strokeDasharray,
+        strokeLinecap,
+        strokeLinejoin
       },
       ticks: {
-        // fill: "none",
-        // padding: 0,
-        // size: 0,
-        // stroke: blueGrey300,
-        // strokeWidth: 1,
-        // strokeLinecap,
-        // strokeLinejoin
+        fill: "none",
+        padding: 0,
+        size: 0,
+        stroke: blueGrey300,
+        strokeWidth: 1,
+        strokeLinecap,
+        strokeLinejoin
       },
       tickLabels: assign({}, baseLabelStyles, {
-        // fill: blueGrey700,
-        // stroke: "transparent"
+        fill: blueGrey700,
+        stroke: "transparent"
       })
     }
   },
   bar: {
     style: {
       data: {
-        // fill: blueGrey700,
-        // padding,
-        // stroke: "transparent",
-        // strokeWidth: 0,
-        // width: 5
+        fill: blueGrey700,
+        padding,
+        stroke: "transparent",
+        strokeWidth: 0,
+        width: 5
       },
       labels: baseLabelStyles
     }
@@ -111,7 +111,7 @@ export default {
   candlestick: {
     style: {
       data: {
-        // stroke: blueGrey700
+        stroke: blueGrey700
       },
       labels: baseLabelStyles
     },
@@ -126,10 +126,10 @@ export default {
   errorbar: {
     style: {
       data: {
-        // fill: "none",
-        // opacity: 1,
-        // stroke: blueGrey700,
-        // strokeWidth: 2
+        fill: "none",
+        opacity: 1,
+        stroke: blueGrey700,
+        strokeWidth: 2
       },
       labels: assign({}, baseLabelStyles, {
         stroke: "transparent",
@@ -141,10 +141,10 @@ export default {
   line: {
     style: {
       data: {
-        // fill: "none",
-        // opacity: 1,
-        // stroke: blueGrey700,
-        // strokeWidth: 2
+        fill: "none",
+        opacity: 1,
+        stroke: blueGrey700,
+        strokeWidth: 2
       },
       labels: assign({}, baseLabelStyles, {
         stroke: "transparent",
@@ -175,14 +175,14 @@ export default {
   scatter: {
     style: {
       data: {
-        // fill: blueGrey700,
-        // opacity: 1,
-        // stroke: "transparent",
-        // strokeWidth: 0
+        fill: blueGrey700,
+        opacity: 1,
+        stroke: "transparent",
+        strokeWidth: 0
       },
       labels: Object.assign({}, baseLabelStyles, {
-        // stroke: "transparent",
-        // textAnchor: "middle"
+        stroke: "transparent",
+        textAnchor: "middle"
       })
     }
   },

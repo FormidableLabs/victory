@@ -45,7 +45,6 @@ const baseLabelStyles = {
 // *
 // * Strokes
 // *
-const strokeDasharray = "10, 5";
 const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
@@ -72,7 +71,7 @@ export default {
       }),
       grid: {
         fill: "none",
-        stroke: "transparent",
+        stroke: "transparent"
       },
       ticks: {
         fill: "none",
