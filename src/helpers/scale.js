@@ -1,4 +1,4 @@
-import { flatten, includes, isFunction } from "lodash";
+import { includes, isFunction } from "lodash";
 import { Collection, Helpers } from "victory-core";
 import * as d3Scale from "d3-scale";
 
@@ -34,6 +34,14 @@ export default {
     return true;
   },
 
+  getScaleTypeFromProps(props, axis) {
+    if (!this.isScaleDefined(props, axis)) {
+      return undefined;
+    }
+    const scale = props.scale[axis] || props.scale;
+    return typeof scale === "string" ? scale : this.getType(scale);
+  },
+
   getScaleFromProps(props, axis) {
     if (!this.isScaleDefined(props, axis)) {
       return undefined;
@@ -50,8 +58,7 @@ export default {
       return "linear";
     }
     const accessor = Helpers.createAccessor(props[axis]);
-    const allData = flatten(props.data);
-    const axisData = allData.map(accessor);
+    const axisData = props.data.map(accessor);
     return Collection.containsDates(axisData) ? "time" : "linear";
   },
 
@@ -64,16 +71,7 @@ export default {
     return d3Scale[this.toNewName(dataScale)]();
   },
 
-  getScaleType(props, axis) {
-    const scale = this.getScaleFromProps(props, axis);
-    // if the scale was not given in props, it will be set to linear or time depending on data
-    if (!scale) {
-      return this.getScaleTypeFromData(props, axis);
-    } else if (typeof scale === "string") {
-      return includes(supportedScaleStrings, scale) ? scale : "invalid";
-    } else if (!this.validScale(scale)) {
-      return "invalid";
-    }
+  getType(scale) {
     const duckTypes = [
       {name: "log", method: "base"},
       {name: "ordinal", method: "unknown"},
@@ -84,9 +82,11 @@ export default {
     const scaleType = duckTypes.filter((type) => {
       return scale[type.method] !== undefined;
     })[0];
-    if (scaleType) {
-      return scaleType.name;
-    }
-    return this.getScaleTypeFromData(props, axis);
+    return scaleType ? scaleType.name : undefined;
+  },
+
+  getScaleType(props, axis) {
+    // if the scale was not given in props, it will be set to linear or time depending on data
+    return this.getScaleTypeFromProps(props, axis) || this.getScaleTypeFromData(props, axis);
   }
 };

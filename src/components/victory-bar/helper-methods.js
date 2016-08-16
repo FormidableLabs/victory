@@ -6,7 +6,10 @@ import Scale from "../../helpers/scale";
 
 export default {
 
-  getScale(props) {
+  getScale(props, fallbackProps) {
+    if (fallbackProps) {
+      props = Helpers.modifyProps(props, fallbackProps);
+    }
     const { horizontal } = props;
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -27,15 +30,13 @@ export default {
   getBarWidth(props) {
     const {style, width, data} = props;
     const padding = props.padding.left || props.padding;
-    const barWidth = (style && style.width) || data.length === 0 ?
-      8 : 0.3 * (width - 2 * padding) / data.length;
-
-    return barWidth;
+    const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
+    return style && style.width ? style.width : defaultWidth;
   },
 
   getBarPosition(props, datum, scale) {
     const currentAxis = props.horizontal ? "x" : "y";
-    const defaultMin = Scale.getScaleType(props, currentAxis) === "log" ?
+    const defaultMin = Scale.getType(scale[currentAxis]) === "log" ?
       1 / Number.MAX_SAFE_INTEGER : 0;
     const yOffset = datum.yOffset || 0;
     const xOffset = datum.xOffset || 0;
