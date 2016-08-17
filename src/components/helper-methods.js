@@ -21,7 +21,8 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-    const calculatedValues = this.getCalculatedValues(props, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "pie");
+    const calculatedValues = this.getCalculatedValues(props);
     const { slices, style, pathFunction, labelPosition } = calculatedValues;
     const { width, height } = props;
     const childProps = { parent: {slices, pathFunction, width, height, style: style.parent} };
@@ -64,17 +65,11 @@ export default {
     return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const theme = props.theme && props.theme.pie;
-    const styleObject = theme ? props.theme.pie.style
-    : fallbackProps.style;
+  getCalculatedValues(props) {
+    const { theme, colorScale } = props;
+    const styleObject = theme && theme.pie && theme.pie.style ? theme.pie.style : {};
     const style = Helpers.getStyles(props.style, styleObject, "auto", "100%");
-    const getColorScale = () => {
-      return theme ? theme.props.colorScale : fallbackProps.colorScale;
-    };
-    const colorScale = props.colorScale || getColorScale();
-    const colors = Array.isArray(colorScale) ?
-    colorScale : Style.getColorScale(colorScale);
+    const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
     const radius = this.getRadius(props, padding);
     const data = Events.addEventKeys(props, Helpers.getData(props));
@@ -104,9 +99,8 @@ export default {
 
   getLabelPosition(props, style, radius) {
     // TODO: better label positioning
-    const innerRadius = props.innerRadius ?
-    props.innerRadius + style.labels.padding :
-      style.labels.padding;
+    const padding = style && style.labels && style.labels.padding || 0;
+    const innerRadius = props.innerRadius ? props.innerRadius + padding : padding;
     return d3Shape.arc()
       .outerRadius(radius)
       .innerRadius(innerRadius);
