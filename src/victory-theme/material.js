@@ -84,8 +84,8 @@ export default {
       },
       ticks: {
         fill: "none",
-        padding: 0,
-        size: 0,
+        padding,
+        size: 5,
         stroke: blueGrey300,
         strokeWidth: 1,
         strokeLinecap,
