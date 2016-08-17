@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 5.0.2 (2016-08-17)
+
+- Fixes a minor bug in VictoryTheme.material
+
 ## 5.0.1 (2016-08-17)
 
 - Fixes a minor bug for VictoryTransition
