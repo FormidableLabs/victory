@@ -1,6 +1,6 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
-import { Transitions } from "../victory-util/index";
+import { Transitions, Collection } from "../victory-util/index";
 import { defaults, isFunction, pick, filter } from "lodash";
 
 export default class VictoryTransition extends React.Component {
@@ -76,7 +76,7 @@ export default class VictoryTransition extends React.Component {
     } else {
       const childDomains = getChildDomains(childComponents);
       return childDomains.length === 0 ?
-        [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
+        [0, 1] : [Collection.getMinValue(childDomains), Collection.getMaxValue(childDomains)];
     }
   }
 
