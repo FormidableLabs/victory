@@ -31,8 +31,7 @@ describe("components/victory-pie", () => {
         <VictoryPie/>
       );
       const svg = wrapper.find("svg");
-      const viewBoxValue = `0 0 ${VictoryPie.defaultProps.width} ${VictoryPie.defaultProps.height}`;
-      expect(svg.prop("viewBox")).to.equal(viewBoxValue);
+      expect(svg.prop("viewBox")).to.equal("0 0 400 400");
     });
 
     it("renders 5 slices", () => {
@@ -193,7 +192,7 @@ describe("components/victory-pie", () => {
         <VictoryPie width={width} />
       );
 
-      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 ${width} ${VictoryPie.defaultProps.height}`);
+      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 ${width} 400`);
     });
   });
 
@@ -204,7 +203,7 @@ describe("components/victory-pie", () => {
         <VictoryPie height={height} />
       );
 
-      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 ${VictoryPie.defaultProps.width} ${height}`);
+      expect(wrapper.find("svg")).to.have.prop("viewBox", `0 0 400 ${height}`);
     });
   });
 

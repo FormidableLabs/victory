@@ -3,31 +3,24 @@ import { assign, defaults, isFunction, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes,
   Events,
+  Helpers,
   VictoryLabel,
   VictoryTransition,
-  VictoryContainer
+  VictoryContainer,
+  VictoryTheme
 } from "victory-core";
 import Slice from "./slice";
 import PieHelpers from "./helper-methods";
 
 const fallbackProps = {
-  style: {
-    data: {
-      padding: 10,
-      stroke: "transparent",
-      strokeWidth: 0
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      strokeWidth: 0,
-      textAnchor: "middle"
-    }
-  },
+  endAngle: 360,
+  height: 400,
+  innerRadius: 0,
+  cornerRadius: 0,
+  padAngle: 0,
+  padding: 30,
+  width: 400,
+  startAngle: 0,
   colorScale: [
     "#ffffff",
     "#f0f0f0",
@@ -42,6 +35,8 @@ const fallbackProps = {
 };
 
 export default class VictoryPie extends React.Component {
+  static displayName = "VictoryPie";
+
   static defaultTransitions = {
     onExit: {
       duration: 500,
@@ -325,21 +320,14 @@ export default class VictoryPie extends React.Component {
       { x: "D", y: 1 },
       { x: "E", y: 2 }
     ],
-    endAngle: 360,
-    height: 400,
-    innerRadius: 0,
-    cornerRadius: 0,
-    padAngle: 0,
-    padding: 30,
-    startAngle: 0,
     standalone: true,
-    width: 400,
     x: "x",
     y: "y",
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
@@ -436,26 +424,29 @@ export default class VictoryPie extends React.Component {
   }
 
   render() {
+    const props = Helpers.modifyProps(this.props, fallbackProps, "pie");
+
+    const { animate, standalone } = props;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
-    if (this.props.animate) {
+    if (animate) {
       const whitelist = [
         "data", "endAngle", "height", "innerRadius", "cornerRadius", "padAngle", "padding",
         "colorScale", "startAngle", "style", "width"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          { React.createElement(this.constructor, this.props) }
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+          { React.createElement(this.constructor, props) }
         </VictoryTransition>
       );
     }
 
-    const calculatedProps = PieHelpers.getCalculatedValues(this.props, fallbackProps);
+    const calculatedProps = PieHelpers.getCalculatedValues(props, fallbackProps);
     const { style, padding, radius } = calculatedProps;
     const offset = { x: radius + padding.left, y: radius + padding.top };
-    const children = this.renderData(this.props, calculatedProps);
+    const children = this.renderData(props, calculatedProps);
     const group = this.renderGroup(children, style.parent, offset);
-    return this.props.standalone ? this.renderContainer(this.props, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }
