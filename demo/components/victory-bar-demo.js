@@ -101,7 +101,7 @@ export default class App extends React.Component {
         multiTransitionData: this.getMultiTransitionData(),
         numericBarData: this.getNumericBarData()
       });
-    }, 10000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -134,6 +134,7 @@ export default class App extends React.Component {
 
         <ChartWrap scale={{x: "linear", y: "log"}}>
           <VictoryBar
+            style={{data: {width: 15, fill: "red"}}}
             scale={{x: "linear", y: "log"}}
             data={[
               {x: 1, y: 0.1},
@@ -538,11 +539,15 @@ class ChartWrap extends React.Component {
   // to test both cases at once
   render() {
     const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
-    const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
+    const childProps = this.props.children.props;
+    const style = Object.assign({}, childProps.style, {parent: parentStyle});
+    const props = Object.assign({}, childProps, {style});
     return (
       <div>
         {React.cloneElement(this.props.children, props)}
-        <VictoryChart {...props}>{this.props.children}</VictoryChart>
+        <VictoryChart {...this.props} style={{parent: parentStyle}}>
+          {this.props.children}
+        </VictoryChart>
       </div>
     );
   }

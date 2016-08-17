@@ -1,7 +1,7 @@
 import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -10,13 +10,14 @@ import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryChart extends React.Component {
+  static displayName = "VictoryChart";
+
   static propTypes = {
     /**
      * The animate prop specifies props for VictoryAnimation to use. If this prop is
@@ -117,9 +118,13 @@ export default class VictoryChart extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.string,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
       target: PropTypes.string,
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -222,10 +227,10 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    theme: VictoryTheme.grayscale,
     defaultAxes: {
       independent: <VictoryAxis/>,
       dependent: <VictoryAxis dependentAxis/>
@@ -352,6 +357,8 @@ export default class VictoryChart extends React.Component {
         animate: getAnimationProps(props, child, index),
         height: props.height,
         width: props.width,
+        clipWidth: props.width,
+        clipHeight: props.height,
         domainPadding: child.props.domainPadding ||
           props.domainPadding || calculatedProps.defaultDomainPadding,
         padding: Helpers.getPadding(props),
@@ -388,7 +395,7 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);

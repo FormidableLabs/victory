@@ -2,58 +2,23 @@ import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import AxisLine from "./axis-line";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    axis: {
-      fill: "none",
-      stroke: "#252525",
-      strokeWidth: 1,
-      strokeLinecap: "round"
-    },
-    axisLabel: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 25,
-      stroke: "transparent"
-    },
-    grid: {
-      fill: "none",
-      stroke: "transparent",
-      strokeLinecap: "round"
-    },
-    ticks: {
-      fill: "none",
-      padding: 10,
-      size: 1,
-      stroke: "none",
-      strokeWidth: 1,
-      strokeLinecap: "round"
-    },
-    tickLabels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent"
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryAxis extends React.Component {
+  static displayName = "VictoryAxis";
+
   static role = "axis";
+
   static defaultTransitions = {
     onExit: {
       duration: 500
@@ -175,6 +140,7 @@ export default class VictoryAxis extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
@@ -365,9 +331,9 @@ export default class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>,
     tickComponent: <AxisLine type={"tick"}/>,
     gridComponent: <AxisLine type={"grid"}/>,
-    padding: 50,
     scale: "linear",
     standalone: true,
+    theme: VictoryTheme.grayscale,
     tickCount: 5,
     containerComponent: <VictoryContainer />,
     groupComponent: <g/>
@@ -508,8 +474,8 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
+    const { animate, standalone, theme } = props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -520,22 +486,21 @@ export default class VictoryAxis extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis
-    : fallbackProps.style;
-    const style = AxisHelpers.getStyles(modifiedProps, styleObject);
+    const styleObject = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
+    const style = AxisHelpers.getStyles(props, styleObject);
     const children = [
-      ...this.renderGridAndTicks(modifiedProps),
-      this.renderLine(modifiedProps),
-      this.renderLabel(modifiedProps)
+      ...this.renderGridAndTicks(props),
+      this.renderLine(props),
+      this.renderLabel(props)
     ];
 
     const group = this.renderGroup(children, style.parent);
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

@@ -5,12 +5,10 @@ import Domain from "../../helpers/domain";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
-    const modifiedProps = props.theme && props.theme.candlestick ?
-    Helpers.modifyProps(props, fallbackProps, props.theme.candlestick.props) :
-    Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "candlestick");
+    const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale } = calculatedValues;
-    const { groupComponent, width, height, padding } = modifiedProps;
+    const { groupComponent, width, height, padding } = props;
     const childProps = {parent: {scale, width, height, data, style: style.parent}};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
@@ -20,13 +18,13 @@ export default {
       const y2 = scale.y(datum.low);
       const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
       const y = scale.y(Math.max(datum.open, datum.close));
-      const dataStyle = this.getDataStyles(datum, style.data, modifiedProps);
+      const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
         index, style: dataStyle, padding, width
       };
 
-      const text = this.getLabelText(modifiedProps, datum, index);
+      const text = this.getLabelText(props, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
@@ -48,8 +46,11 @@ export default {
     return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const style = Helpers.getStyles(props.style, fallbackProps.style, "auto", "100%");
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
+      theme.candlestick.style : {};
+    const style = Helpers.getStyles(props.style, defaultStyle, "auto", "100%");
     const data = Events.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -129,6 +130,7 @@ export default {
   },
 
   getDataStyles(datum, style, props) {
+    style = style || {};
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
@@ -136,7 +138,7 @@ export default {
       props.candleColors.negative : props.candleColors.positive;
     const fill = datum.fill || style.fill || candleColor;
     const strokeColor = datum.stroke || style.stroke;
-    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor;
+    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
     const baseDataStyle = defaults({}, stylesFromData, {stroke, fill}, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
@@ -148,6 +150,7 @@ export default {
   },
 
   getLabelStyle(labelStyle, dataProps) {
+    labelStyle = labelStyle || {};
     const { datum, size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;

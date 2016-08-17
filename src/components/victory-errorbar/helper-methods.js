@@ -7,10 +7,10 @@ import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "errorbar");
+    const calculatedValues = this.getCalculatedValues(props, fallbackProps);
     const { data, style, scale } = calculatedValues;
-    const { groupComponent, height, width, borderWidth } = modifiedProps;
+    const { groupComponent, height, width, borderWidth } = props;
     const childProps = { parent: {style: style.parent, scale, data, height, width} };
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
@@ -28,9 +28,9 @@ export default {
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
-        x: x - labelStyle.padding,
-        y: y - labelStyle.padding,
-        text: this.getLabelText(modifiedProps, datum, index),
+        x: x - (labelStyle.padding || 0),
+        y: y - (labelStyle.padding || 0),
+        text: this.getLabelText(props, datum, index),
         index,
         scale,
         datum: dataProps.datum,
@@ -161,12 +161,12 @@ export default {
     return [min, max];
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.errorbar ? props.theme.errorbar
-    : fallbackProps.style;
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const assignData = Object.assign(Data.getData(props), this.getErrorData(props));
-    const data = Events.addEventKeys(props, assignData);
+  getCalculatedValues(props) {
+    const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
+      props.theme.errorbar.style : {};
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%") || {};
+    const dataWithErrors = assign(Data.getData(props), this.getErrorData(props));
+    const data = Events.addEventKeys(props, dataWithErrors);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -198,10 +198,11 @@ export default {
   },
 
   getLabelStyle(labelStyle, dataProps) {
+    labelStyle = labelStyle || {};
     const { datum, size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;
     const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
-    return Helpers.evaluateStyle(baseLabelStyle, datum);
+    return Helpers.evaluateStyle(baseLabelStyle, datum) || {};
   }
 };

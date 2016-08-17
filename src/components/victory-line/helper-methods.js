@@ -7,11 +7,12 @@ import Scale from "../../helpers/scale";
 export default {
 
   getBaseProps(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.line ? props.theme.line : fallbackProps.style;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const {scale, dataSegments, dataset} = this.getCalculatedValues(modifiedProps);
-    const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height} = modifiedProps;
+    props = Helpers.modifyProps(props, fallbackProps, "line");
+    const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
+      props.theme.line.style : {};
+    const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const {interpolation, label, width, height} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
     const dataProps = {
       scale,
@@ -45,15 +46,10 @@ export default {
     };
   },
 
-  getCalculatedValues(props) {
-    let dataset = Data.getData(props);
-
-    if (Data.getData(props).length < 2) {
-      Log.warn("VictoryLine needs at least two data points to render properly.");
-      dataset = [];
+  getScale(props, fallbackProps) {
+    if (fallbackProps) {
+      props = Helpers.modifyProps(props, fallbackProps);
     }
-
-    const dataSegments = this.getDataSegments(dataset);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -66,6 +62,21 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+
+    return scale;
+  },
+
+  getCalculatedValues(props) {
+    let dataset = Data.getData(props);
+
+    if (Data.getData(props).length < 2) {
+      Log.warn("VictoryLine needs at least two data points to render properly.");
+      dataset = [];
+    }
+
+    const dataSegments = this.getDataSegments(dataset);
+    const scale = this.getScale(props);
+
     return { dataset, dataSegments, scale };
   },
 

@@ -1,36 +1,19 @@
 import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
-import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
-} from "victory-core";
 import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
+import ClipPath from "../helpers/clip-path";
+import {
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer, VictoryTheme
+} from "victory-core";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450
-  },
-  style: {
-    data: {
-      fill: "#242424",
-      opacity: 1,
-      padding: 10,
-      stroke: "transparent",
-      strokeWidth: 0,
-      width: 8
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 const defaultData = [
@@ -41,6 +24,8 @@ const defaultData = [
 ];
 
 export default class VictoryBar extends React.Component {
+  static displayName = "VictoryBar";
+
   static role = "bar";
 
   static defaultTransitions = {
@@ -174,6 +159,7 @@ export default class VictoryBar extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
@@ -348,20 +334,30 @@ export default class VictoryBar extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element,
+    /**
+     * Unique clipId for clipPath
+     */
+    clipId: PropTypes.number
   };
 
   static defaultProps = {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    padding: 50,
     scale: "linear",
     standalone: true,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -393,7 +389,7 @@ export default class VictoryBar extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const { role } = VictoryBar;
     const barComponents = [];
     const barLabelComponents = [];
@@ -401,7 +397,7 @@ export default class VictoryBar extends React.Component {
       const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {index, key: `${role}-${key}`, role: `${role}-${index}`},
+        {index, key: `${role}-${key}`, role: `${role}-${index}`, clipId},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         dataComponent.props,
@@ -450,36 +446,48 @@ export default class VictoryBar extends React.Component {
     );
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, props, style) {
+    const { clipPathComponent, horizontal } = props;
+    const barWidth = BarHelpers.getBarWidth(props);
+    const clipPadding = horizontal ?
+      {"top": barWidth, bottom: barWidth} : {left: barWidth, right: barWidth};
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: props.padding,
+      clipId: props.clipId,
+      clipWidth: (props.clipWidth || props.width),
+      clipHeight: (props.clipHeight || props.height),
+      clipPadding
+    });
     return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
+      props.groupComponent,
+      { role: "presentation", style: style.parent},
+      children,
+      clipComponent
     );
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
-
+    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "bar");
+    const { animate, style, standalone, theme } = props;
     if (animate) {
       const whitelist = [
-        "data", "domain", "height", "padding", "style", "width"
+        "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.bar ? modifiedProps.theme.bar
-    : fallbackProps.style;
+    const styleObject = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+    const group = this.renderGroup(
+      this.renderData(props), props, baseStyles
+    );
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
-
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

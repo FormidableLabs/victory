@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 
 export default class AxisLine extends React.Component {
   static propTypes = {
@@ -17,7 +18,8 @@ export default class AxisLine extends React.Component {
   }
 
   render() {
-    const { x1, x2, y1, y2, style, events} = this.props;
+    const { x1, x2, y1, y2, events} = this.props;
+    const style = assign({stroke: "black"}, this.props.style);
     return this.renderAxisLine({x1, x2, y1, y2}, style, events);
   }
 }
