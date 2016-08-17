@@ -8377,8 +8377,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	ticks:{
 	fill:"none",
-	padding:0,
-	size:0,
+	padding:padding,
+	size:5,
 	stroke:blueGrey300,
 	strokeWidth:1,
 	strokeLinecap:strokeLinecap,
