@@ -24,8 +24,9 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "pie");
     const calculatedValues = this.getCalculatedValues(props);
     const { slices, style, pathFunction, labelPosition } = calculatedValues;
-    const { width, height } = props;
-    const childProps = { parent: {slices, pathFunction, width, height, style: style.parent} };
+    const childProps = { parent: {
+      slices, pathFunction, width: props.width, height: props.height, style: style.parent}
+    };
     for (let index = 0, len = slices.length; index < len; index++) {
       const slice = slices[index];
       const datum = slice.data;

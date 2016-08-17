@@ -35,6 +35,8 @@ const fallbackProps = {
 };
 
 export default class VictoryPie extends React.Component {
+  static displayName = "VictoryPie";
+
   static defaultTransitions = {
     onExit: {
       duration: 500,
@@ -325,7 +327,7 @@ export default class VictoryPie extends React.Component {
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    theme: {}
+    theme: VictoryTheme.grayscale
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
@@ -424,7 +426,7 @@ export default class VictoryPie extends React.Component {
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "pie");
 
-    const { animate, standalone, theme } = props;
+    const { animate, standalone } = props;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -445,6 +447,6 @@ export default class VictoryPie extends React.Component {
     const offset = { x: radius + padding.left, y: radius + padding.top };
     const children = this.renderData(props, calculatedProps);
     const group = this.renderGroup(children, style.parent, offset);
-    return this.props.standalone ? this.renderContainer(props, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }
