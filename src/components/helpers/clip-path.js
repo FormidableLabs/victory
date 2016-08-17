@@ -62,7 +62,6 @@ export default class ClipPath extends React.Component {
       clipId,
       clipWidth,
       clipHeight,
-      barWidth,
       clipPadding
     } = this.props;
 

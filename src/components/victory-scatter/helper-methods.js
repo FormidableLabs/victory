@@ -6,11 +6,11 @@ import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "scatter");
+    const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale } = calculatedValues;
     const childProps = { parent: {
-      style: style.parent, scale, data, height: modifiedProps.height, width: modifiedProps.width
+      style: style.parent, scale, data, height: props.height, width: props.width
     }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
@@ -19,12 +19,12 @@ export default {
       const y = scale.y(datum.y);
       const dataProps = {
         x, y, datum, index, scale,
-        size: this.getSize(datum, modifiedProps, calculatedValues),
-        symbol: this.getSymbol(datum, modifiedProps),
+        size: this.getSize(datum, props, calculatedValues),
+        symbol: this.getSymbol(datum, props),
         style: this.getDataStyles(datum, style.data)
       };
 
-      const text = this.getLabelText(modifiedProps, datum, index);
+      const text = this.getLabelText(props, datum, index);
       const labelStyle = this.getLabelStyle(style.labels, dataProps);
       const labelProps = {
         style: labelStyle,
@@ -46,9 +46,9 @@ export default {
     return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
+  getCalculatedValues(props) {
     const defaultStyles = props.theme && props.theme.scatter && props.theme.scatter.style ?
-      props.theme.scatter.style : fallbackProps.style;
+      props.theme.scatter.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const range = {

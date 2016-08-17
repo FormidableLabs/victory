@@ -134,8 +134,8 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "axis");
+    const calculatedValues = this.getCalculatedValues(props);
     const {
       style, orientation, isVertical, scale, ticks, tickFormat,
       stringTicks, anchors
@@ -143,16 +143,16 @@ export default {
 
     const {
       globalTransform, gridOffset, gridEdge
-    } = this.getLayoutProps(modifiedProps, calculatedValues);
+    } = this.getLayoutProps(props, calculatedValues);
 
-    const axisProps = this.getAxisProps(modifiedProps, calculatedValues, globalTransform);
-    const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
+    const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
+    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
 
     const childProps = { parent: {
-      style: style.parent, ticks, scale, width: modifiedProps.width, height: modifiedProps.height
+      style: style.parent, ticks, scale, width: props.width, height: props.height
     }};
     for (let index = 0, len = ticks.length; index < len; index++) {
-      const tick = stringTicks ? modifiedProps.tickValues[(ticks[index]) - 1] : ticks[index];
+      const tick = stringTicks ? props.tickValues[(ticks[index]) - 1] : ticks[index];
 
       const styles = this.getEvaluatedStyles(style, tick, index);
       const tickLayout = {
@@ -183,9 +183,9 @@ export default {
     return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.axis && props.theme.axis.style ?
-      props.theme.axis.style : fallbackProps.style;
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyles = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");

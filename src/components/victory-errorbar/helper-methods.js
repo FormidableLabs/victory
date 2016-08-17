@@ -161,9 +161,9 @@ export default {
     return [min, max];
   },
 
-  getCalculatedValues(props, fallbackProps) {
+  getCalculatedValues(props) {
     const defaultStyles = props.theme && props.theme.errorbar && props.theme.errorbar.style ?
-      props.theme.errorbar.style : fallbackProps.style;
+      props.theme.errorbar.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%") || {};
     const dataWithErrors = assign(Data.getData(props), this.getErrorData(props));
     const data = Events.addEventKeys(props, dataWithErrors);

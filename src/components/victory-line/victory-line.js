@@ -498,7 +498,7 @@ export default class VictoryLine extends React.Component {
   render() {
     const clipId = Math.round(Math.random() * 10000);
     const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "line");
-    const { animate, style, standalone } = props;
+    const { animate, style, standalone, theme } = props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -516,8 +516,7 @@ export default class VictoryLine extends React.Component {
       );
     }
 
-    const styleObject = props.theme && props.theme.line && props.theme.line.style ?
-      props.theme.line.style : {};
+    const styleObject = theme && theme.line && theme.line.style ? theme.line.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
     const group = this.renderGroup(

@@ -470,7 +470,6 @@ export default class VictoryBar extends React.Component {
     const clipId = this.props.clipId || Math.round(Math.random() * 10000);
     const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "bar");
     const { animate, style, standalone, theme } = props;
-
     if (animate) {
       const whitelist = [
         "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"

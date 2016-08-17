@@ -483,7 +483,7 @@ export default class VictoryArea extends React.Component {
   render() {
     const clipId = this.props.clipId || Math.round(Math.random() * 10000);
     const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "area");
-    const { animate, style, standalone } = props;
+    const { animate, style, standalone, theme } = props;
 
     if (animate) {
       const whitelist = [
@@ -496,8 +496,7 @@ export default class VictoryArea extends React.Component {
       );
     }
 
-    const styleObject = props.theme && props.theme.area ?
-      props.theme.area.style : {};
+    const styleObject = theme && theme.area ? theme.area.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 

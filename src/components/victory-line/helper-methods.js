@@ -7,12 +7,12 @@ import Scale from "../../helpers/scale";
 export default {
 
   getBaseProps(props, fallbackProps) {
+    props = Helpers.modifyProps(props, fallbackProps, "line");
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
-      props.theme.line.style : fallbackProps.style;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const {scale, dataSegments, dataset} = this.getCalculatedValues(modifiedProps);
-    const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height} = modifiedProps;
+      props.theme.line.style : {};
+    const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const {interpolation, label, width, height} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
     const dataProps = {
       scale,
