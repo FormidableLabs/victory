@@ -138,7 +138,7 @@ export default {
       })
     }
   }, baseProps),
-  pie: assign({
+  pie: {
     style: {
       data: {
         padding: 10,
@@ -150,8 +150,11 @@ export default {
         textAnchor: "middle"
       })
     },
-    colorScale: colors
-  }, baseProps),
+    colorScale: colors,
+    width: 400,
+    height: 400,
+    padding: 50
+  },
   scatter: assign({
     style: {
       data: {
