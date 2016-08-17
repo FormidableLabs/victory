@@ -33,7 +33,8 @@ const fontSize = 12;
 const padding = 8;
 const baseProps = {
   width: 350,
-  height: 350
+  height: 350,
+  padding: 50
 };
 // *
 // * Labels
@@ -53,15 +54,15 @@ const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
 export default {
-  area: {
+  area: assign({
     style: {
       data: {
         fill: grey900
       },
       labels: baseLabelStyles
     }
-  },
-  axis: {
+  }, baseProps),
+  axis: assign({
     style: {
       axis: {
         fill: "none",
@@ -95,8 +96,8 @@ export default {
         stroke: "transparent"
       })
     }
-  },
-  bar: {
+  }, baseProps),
+  bar: assign({
     style: {
       data: {
         fill: blueGrey700,
@@ -107,23 +108,21 @@ export default {
       },
       labels: baseLabelStyles
     }
-  },
-  candlestick: {
+  }, baseProps),
+  candlestick: assign({
     style: {
       data: {
         stroke: blueGrey700
       },
       labels: baseLabelStyles
     },
-    props: assign({}, baseProps,
-      {
-        candleColors: {
-          positive: "#ffffff",
-          negative: blueGrey700
-        }
-      })
-  },
-  errorbar: {
+    candleColors: {
+      positive: "#ffffff",
+      negative: blueGrey700
+    }
+  }, baseProps),
+  chart: baseProps,
+  errorbar: assign({
     style: {
       data: {
         fill: "none",
@@ -137,8 +136,11 @@ export default {
         textAnchor: "start"
       })
     }
-  },
-  line: {
+  }, baseProps),
+  group: assign({
+    colorScale: colors
+  }, baseProps),
+  line: assign({
     style: {
       data: {
         fill: "none",
@@ -152,12 +154,9 @@ export default {
         textAnchor: "start"
       })
     }
-  },
-  pie: {
-    props: assign({}, baseProps,
-      {
-        colorScale: colors
-      }),
+  }, baseProps),
+  pie: assign({
+    colorScale: colors,
     style: {
       data: {
         padding,
@@ -171,8 +170,8 @@ export default {
         textAnchor: "middle"
       })
     }
-  },
-  scatter: {
+  }, baseProps),
+  scatter: assign({
     style: {
       data: {
         fill: blueGrey700,
@@ -185,10 +184,8 @@ export default {
         textAnchor: "middle"
       })
     }
-  },
-  props: Object.assign({}, baseProps,
-    {
-      colorScale: colors
-    }
-  )
+  }, baseProps),
+  stack: assign({
+    colorScale: colors
+  }, baseProps)
 };

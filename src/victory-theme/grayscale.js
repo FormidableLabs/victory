@@ -49,15 +49,15 @@ const strokeLinecap = "round";
 const strokeLinejoin = "round";
 
 export default {
-  area: {
+  area: assign({
     style: {
       data: {
         fill: charcoal
       },
       labels: baseLabelStyles
     }
-  },
-  axis: {
+  }, baseProps),
+  axis: assign({
     style: {
       axis: {
         fill: "none",
@@ -81,8 +81,8 @@ export default {
       },
       tickLabels: baseLabelStyles
     }
-  },
-  bar: {
+  }, baseProps),
+  bar: assign({
     style: {
       data: {
         fill: charcoal,
@@ -93,8 +93,8 @@ export default {
       },
       labels: baseLabelStyles
     }
-  },
-  candlestick: {
+  }, baseProps),
+  candlestick: assign({
     style: {
       data: {
         stroke: charcoal,
@@ -109,8 +109,9 @@ export default {
       positive: "#ffffff",
       negative: charcoal
     }
-  },
-  errorbar: {
+  }, baseProps),
+  chart: baseProps,
+  errorbar: assign({
     style: {
       data: {
         fill: "none",
@@ -121,8 +122,11 @@ export default {
         textAnchor: "start"
       })
     }
-  },
-  line: {
+  }, baseProps),
+  group: assign({
+    colorScale: colors
+  }, baseProps),
+  line: assign({
     style: {
       data: {
         fill: "none",
@@ -133,8 +137,8 @@ export default {
         textAnchor: "start"
       })
     }
-  },
-  pie: {
+  }, baseProps),
+  pie: assign({
     style: {
       data: {
         padding: 10,
@@ -147,8 +151,8 @@ export default {
       })
     },
     colorScale: colors
-  },
-  scatter: {
+  }, baseProps),
+  scatter: assign({
     style: {
       data: {
         fill: charcoal,
@@ -159,10 +163,8 @@ export default {
         textAnchor: "middle"
       })
     }
-  },
-  props: Object.assign({}, baseProps,
-    {
-      colorScale: colors
-    }
-  )
+  }, baseProps),
+  stack: assign({
+    colorScale: colors
+  }, baseProps)
 };

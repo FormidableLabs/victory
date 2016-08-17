@@ -145,7 +145,7 @@ export default {
 
   modifyProps(props, fallbackProps, role) {
     const theme = props.theme && props.theme[role] ? props.theme[role] : {};
-    const themeProps = omit(theme, "style");
+    const themeProps = omit(theme, ["style"]);
     return defaults({}, props, themeProps, fallbackProps);
   },
 
