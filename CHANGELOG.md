@@ -1,5 +1,11 @@
 VictoryCore Changelog
 =====================
+## 5.0.0 (2016-08-17)
+
+** This is a breaking change for themes **
+- Alters the `VictoryTheme` API to match props. 
+- Adds `VictoryTheme.grayscale`
+
 ## 4.6.1 (2016-08-11)
 
 - Fixes a bug for clipPath animations with parentState
