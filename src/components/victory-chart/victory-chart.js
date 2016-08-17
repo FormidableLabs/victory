@@ -364,7 +364,7 @@ export default class VictoryChart extends React.Component {
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,
-        theme: child.props.theme || props.theme,
+        theme: props.theme,
         standalone: false,
         style
       }, childProps);

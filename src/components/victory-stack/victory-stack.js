@@ -391,7 +391,7 @@ export default class VictoryStack extends React.Component {
         key: index,
         labels,
         domainPadding: child.props.domainPadding || props.domainPadding,
-        theme: child.props.theme || props.theme,
+        theme: props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
         colorScale: this.getColorScale(props, child),

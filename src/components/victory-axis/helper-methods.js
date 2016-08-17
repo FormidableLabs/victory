@@ -267,7 +267,7 @@ export default {
   },
 
   getLabelPadding(props, style) {
-    const labelStyle = style.axisLabel;
+    const labelStyle = style.axisLabel || {};
     if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
       return labelStyle.padding;
     }

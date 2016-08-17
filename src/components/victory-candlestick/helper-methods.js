@@ -25,11 +25,11 @@ export default {
       };
 
       const text = this.getLabelText(props, datum, index);
-      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
       const labelProps = {
         style: labelStyle,
-        x: x - labelStyle.padding,
-        y: y - labelStyle.padding,
+        x: x - (labelStyle.padding || 0),
+        y: y - (labelStyle.padding || 0),
         text,
         index,
         scale,
