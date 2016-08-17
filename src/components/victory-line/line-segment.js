@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class LineSegment extends React.Component {
@@ -41,6 +42,7 @@ export default class LineSegment extends React.Component {
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((d) => xScale(d.x))
       .y((d) => yScale(d.y));
-    return this.renderLine(lineFunction(data), style, events);
+    const lineStyle = assign({fill: "none", stroke: "black"}, style);
+    return this.renderLine(lineFunction(data), lineStyle, events);
   }
 }

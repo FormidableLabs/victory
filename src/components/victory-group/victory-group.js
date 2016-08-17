@@ -1,22 +1,17 @@
 import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
-  VictoryContainer } from "victory-core";
+  VictoryContainer, VictoryTheme
+} from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      width: 8,
-      padding: 6
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50,
+  offset: 0
 };
 
 export default class VictoryGroup extends React.Component {
@@ -298,11 +293,10 @@ export default class VictoryGroup extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    offset: 0,
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -457,19 +451,21 @@ export default class VictoryGroup extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "group");
+    const { theme, standalone, events, eventKey } = modifiedProps;
+    const defaultStyle = theme && theme.group && theme.group.style ? theme.group.style : {};
+    const style = Helpers.getStyles(modifiedProps.style, defaultStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
 
-    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     if (modifiedProps.events) {
       return (
         <VictorySharedEvents
-          events={modifiedProps.events}
-          eventKey={modifiedProps.eventKey}
+          events={events}
+          eventKey={eventKey}
           container={container}
         >
           {newChildren}
@@ -478,6 +474,6 @@ export default class VictoryGroup extends React.Component {
     }
     const group = this.renderGroup(newChildren, style.parent);
 
-    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
+    return standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

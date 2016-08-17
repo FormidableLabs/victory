@@ -7,9 +7,9 @@ import Scale from "../../helpers/scale";
 export default {
 
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const {scale, style, data} = this.getCalculatedValues(modifiedProps, fallbackProps);
-    const {interpolation, label, width, height, groupComponent} = modifiedProps;
+    props = Helpers.modifyProps(props, fallbackProps, "area");
+    const {scale, style, data} = this.getCalculatedValues(props, fallbackProps);
+    const {interpolation, label, width, height, groupComponent} = props;
 
     const dataProps = {
       groupComponent,
@@ -22,11 +22,12 @@ export default {
 
     const text = Helpers.evaluateProp(label, data);
     const lastData = last(data);
-    const labelStyle = Helpers.evaluateStyle(style.labels, data);
+    const labelStyle = Helpers.evaluateStyle(style.labels, data) || {};
+    const labelPadding = labelStyle.padding || 0;
 
     const labelProps = {
       key: "area-label",
-      x: lastData ? scale.x(lastData.x) + labelStyle.padding : 0,
+      x: lastData ? scale.x(lastData.x) + labelPadding : 0,
       y: lastData ? scale.y(lastData.y1) : 0,
       y0: lastData ? scale.y(lastData.y0) : 0,
       style: labelStyle,
@@ -48,9 +49,7 @@ export default {
   },
 
   getScale(props, fallbackProps) {
-    if (fallbackProps) {
-      props = Helpers.modifyProps(props, fallbackProps);
-    }
+    props = Helpers.modifyProps(props, fallbackProps, "area");
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -65,9 +64,9 @@ export default {
     };
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.area ? props.theme.area
-    : fallbackProps.style;
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const scale = this.getScale(props);
 

@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 
 export default class ErrorBar extends React.Component {
   constructor(props) {
@@ -28,20 +29,19 @@ export default class ErrorBar extends React.Component {
     groupComponent: PropTypes.element
   };
 
-  renderErrorBar(error) {
-    const {
-      x,
-      y,
-      borderWidth,
-      groupComponent
-    } = this.props;
+  static defaultProps = {
+    borderWidth: 10
+  }
 
+  renderErrorBar(error) {
+    const { x, y, borderWidth, groupComponent, events} = this.props;
+    const style = assign({stroke: "black"}, this.props.style);
     return React.cloneElement(groupComponent, {},
       error.errorRight ?
         <line
           ref="borderRight"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={error.errorRight}
           x2={error.errorRight}
           y1={y - borderWidth}
@@ -52,8 +52,8 @@ export default class ErrorBar extends React.Component {
       error.errorLeft ?
         <line
           ref="borderLeft"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={error.errorLeft}
           x2={error.errorLeft}
           y1={y - borderWidth}
@@ -64,8 +64,8 @@ export default class ErrorBar extends React.Component {
       error.errorBottom ?
         <line
           ref="borderBottom"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={x - borderWidth}
           x2={x + borderWidth}
           y1={error.errorBottom}
@@ -76,8 +76,8 @@ export default class ErrorBar extends React.Component {
       error.errorTop ?
         <line
           ref="borderTop"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={x - borderWidth}
           x2={x + borderWidth}
           y1={error.errorTop}
@@ -88,8 +88,8 @@ export default class ErrorBar extends React.Component {
       error.errorTop ?
         <line
           ref="crossTop"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={x}
           x2={x}
           y1={y}
@@ -101,8 +101,8 @@ export default class ErrorBar extends React.Component {
       error.errorBottom ?
         <line
           ref="crossBottom"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={x}
           x2={x}
           y1={y}
@@ -114,8 +114,8 @@ export default class ErrorBar extends React.Component {
       error.errorLeft ?
         <line
           ref="crossLeft"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={x}
           x2={error.errorLeft}
           y1={y}
@@ -126,8 +126,8 @@ export default class ErrorBar extends React.Component {
       error.errorRight ?
         <line
           ref="crossRight"
-          {...this.props.events}
-          style={this.props.style}
+          {...events}
+          style={style}
           x1={x}
           x2={error.errorRight}
           y1={y}
@@ -143,7 +143,6 @@ export default class ErrorBar extends React.Component {
       errorY,
       scale
     } = this.props;
-
     let rangeX;
     let rangeY;
     let positiveErrorX;

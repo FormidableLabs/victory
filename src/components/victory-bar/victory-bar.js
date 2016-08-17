@@ -7,33 +7,13 @@ import Domain from "../../helpers/domain";
 import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450,
-    clipHeight: 300,
-    clipWidth: 450
-  },
-  style: {
-    data: {
-      fill: "#242424",
-      opacity: 1,
-      padding: 10,
-      stroke: "transparent",
-      strokeWidth: 0,
-      width: 8
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 const defaultData = [
@@ -370,14 +350,14 @@ export default class VictoryBar extends React.Component {
     data: defaultData,
     dataComponent: <Bar/>,
     labelComponent: <VictoryLabel/>,
-    padding: 50,
     scale: "linear",
     standalone: true,
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    clipPathComponent: <ClipPath/>
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
@@ -466,22 +446,20 @@ export default class VictoryBar extends React.Component {
     );
   }
 
-  renderGroup(children, modifiedProps, style) {
-    const { clipPathComponent } = modifiedProps;
-    const barWidth = BarHelpers.getBarWidth(modifiedProps);
-    const clipComponent = React.cloneElement(clipPathComponent, assign(
-      {},
-      {
-        padding: modifiedProps.padding,
-        clipId: modifiedProps.clipId,
-        barWidth,
-        clipWidth: (modifiedProps.clipWidth || modifiedProps.width) + barWidth * 2,
-        clipHeight: (modifiedProps.clipHeight || modifiedProps.height) + barWidth * 2
-      }
-    ));
-
+  renderGroup(children, props, style) {
+    const { clipPathComponent, horizontal } = props;
+    const barWidth = BarHelpers.getBarWidth(props);
+    const clipPadding = horizontal ?
+      {"top": barWidth, bottom: barWidth} : {left: barWidth, right: barWidth};
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: props.padding,
+      clipId: props.clipId,
+      clipWidth: (props.clipWidth || props.width),
+      clipHeight: (props.clipHeight || props.height),
+      clipPadding
+    });
     return React.cloneElement(
-      this.props.groupComponent,
+      props.groupComponent,
       { role: "presentation", style: style.parent},
       children,
       clipComponent
@@ -490,28 +468,26 @@ export default class VictoryBar extends React.Component {
 
   render() {
     const clipId = this.props.clipId || Math.round(Math.random() * 10000);
-    const modifiedProps = Helpers.modifyProps(assign({}, this.props, {clipId}), fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
-
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "bar");
+    const { animate, style, standalone, theme } = props;
     if (animate) {
       const whitelist = [
         "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.bar ? modifiedProps.theme.bar
-    : fallbackProps.style;
+    const styleObject = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
     const group = this.renderGroup(
-      this.renderData(modifiedProps), modifiedProps, baseStyles
+      this.renderData(props), props, baseStyles
     );
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

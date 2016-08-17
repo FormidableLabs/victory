@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 import BarHelpers from "./helper-methods";
 
 export default class Bar extends React.Component {
@@ -64,10 +65,10 @@ export default class Bar extends React.Component {
 
   render() {
     // TODO better bar width calculation
-    const { events, style} = this.props;
     const barWidth = BarHelpers.getBarWidth(this.props);
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
-    return this.renderBar(path, style, events);
+    const style = assign({fill: "black", stroke: "none"}, this.props.style);
+    return this.renderBar(path, style, this.props.events);
   }
 }

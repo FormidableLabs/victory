@@ -5,32 +5,16 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      fill: "#242424",
-      opacity: 1,
-      stroke: "transparent",
-      strokeWidth: 0
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "middle"
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50,
+  size: 3,
+  symbol: "circle"
 };
 
 export default class VictoryScatter extends React.Component {
@@ -374,18 +358,16 @@ export default class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
-    padding: 50,
     samples: 50,
     scale: "linear",
-    size: 3,
     standalone: true,
-    symbol: "circle",
     x: "x",
     y: "y",
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomain.bind(Domain);

@@ -7,9 +7,7 @@ import Scale from "../../helpers/scale";
 export default {
 
   getScale(props, fallbackProps) {
-    if (fallbackProps) {
-      props = Helpers.modifyProps(props, fallbackProps);
-    }
+    props = Helpers.modifyProps(props, fallbackProps, "bar");
     const { horizontal } = props;
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -54,7 +52,7 @@ export default {
 
   getBarStyle(datum, baseStyle) {
     const styleData = omit(datum, [
-      "xName", "yName", "x", "y", "label"
+      "xName", "yName", "x", "y", "label", "errorX", "errorY", "eventKey"
     ]);
     return Helpers.evaluateStyle(defaults({}, styleData, baseStyle), datum);
   },
@@ -98,9 +96,9 @@ export default {
     };
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.bar ? props.theme.bar
-    : fallbackProps.style;
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const scale = this.getScale(props);
@@ -108,14 +106,14 @@ export default {
   },
 
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const {style, data, scale } = this.getCalculatedValues(modifiedProps, fallbackProps);
-    const { horizontal, width, height, padding } = modifiedProps;
+    props = Helpers.modifyProps(props, fallbackProps, "bar");
+    const {style, data, scale } = this.getCalculatedValues(props);
+    const { horizontal, width, height, padding } = props;
     const childProps = {parent: { scale, width, height, data, style: style.parent }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
-      const position = this.getBarPosition(modifiedProps, datum, scale);
+      const position = this.getBarPosition(props, datum, scale);
       const dataProps = assign(
         {
           style: this.getBarStyle(datum, style.data),
@@ -138,7 +136,7 @@ export default {
         x: horizontal ? position.y + labelPadding.x : position.x + labelPadding.x,
         y: horizontal ? position.x + labelPadding.y : position.y - labelPadding.y,
         y0: position.y0,
-        text: this.getLabel(modifiedProps, datum, index),
+        text: this.getLabel(props, datum, index),
         index,
         scale,
         datum: dataProps.datum,

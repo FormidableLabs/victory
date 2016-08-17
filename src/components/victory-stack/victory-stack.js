@@ -1,22 +1,15 @@
-import { assign, uniq, defaults } from "lodash";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      width: 8,
-      padding: 6
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryStack extends React.Component {
@@ -296,10 +289,10 @@ export default class VictoryStack extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme. grayscale
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
@@ -430,22 +423,22 @@ export default class VictoryStack extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "stack");
+    const { theme, standalone, events, eventKey} = modifiedProps;
+    const fallbackStyle = theme && theme.stack && theme.stack.style ?
+      theme.stack.style : {};
+    const style = Helpers.getStyles(modifiedProps.style, fallbackStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.some((type) => type === "group-wrapper")) {
-      Log.warn("It is not possible to stack groups.");
-    }
+
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style);
 
-    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (modifiedProps.events) {
+    if (events) {
       return (
         <VictorySharedEvents
-          events={modifiedProps.events}
-          eventKey={modifiedProps.eventKey}
+          events={events}
+          eventKey={eventKey}
           container={container}
         >
           {newChildren}
