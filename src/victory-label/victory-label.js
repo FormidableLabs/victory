@@ -203,7 +203,8 @@ export default class VictoryLabel extends React.Component {
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum);
     const rotatePart = angle && {rotate: [angle, x, y]};
-    return (transformPart || angle) && Style.toTransformString(transformPart, rotatePart);
+    return transformPart || angle ?
+      Style.toTransformString(transformPart, rotatePart) : undefined;
   }
 
   renderElements(props, content) {
@@ -230,12 +231,13 @@ export default class VictoryLabel extends React.Component {
   render() {
     const datum = this.props.datum || this.props.data;
     const style = this.getStyles(this.props);
+    const fontSize = style.fontSize || 14;
     const lineHeight = this.getHeight(this.props, "lineHeight");
     const textAnchor = this.props.textAnchor ?
       Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
     const content = this.getContent(this.props);
     const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
-    const dy = this.getDy(this.props, content, lineHeight) * style.fontSize;
+    const dy = this.getDy(this.props, content, lineHeight) * fontSize;
     const labelProps = assign(
       {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, this.props.events
     );
