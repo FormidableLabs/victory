@@ -25,9 +25,8 @@ export default class VictoryArea extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: () => ({ y: 0, yOffset: 0 }),
       beforeClipPathWidth: (data, child, exitingNodes) => {
-        const filterExit = filter(data, (datum) => { return !exitingNodes[datum.x]; });
+        const filterExit = filter(data, (datum, index) => !exitingNodes[index]);
         const xVals = filterExit.map((datum) => {
           return child.type.getScale(child.props).x(datum.x);
         });
@@ -37,10 +36,8 @@ export default class VictoryArea extends React.Component {
     },
     onEnter: {
       duration: 500,
-      before: () => ({ y: 0, yOffset: 0, xOffset: 0 }),
-      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset }),
       beforeClipPathWidth: (data, child, enteringNodes) => {
-        const filterEnter = filter(data, (datum) => { return !enteringNodes[datum.x]; });
+        const filterEnter = filter(data, (datum, index) => !enteringNodes[index]);
         const xVals = filterEnter.map((datum) => {
           return child.type.getScale(child.props).x(datum.x);
         });
