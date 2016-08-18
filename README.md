@@ -11,6 +11,8 @@ VictoryChart includes:
 - [VictoryAxis](http://formidable.com/open-source/victory/docs/victory-axis)
 - [VictoryArea](http://formidable.com/open-source/victory/docs/victory-area)
 - [VictoryBar](http://formidable.com/open-source/victory/docs/victory-bar)
+- [VictoryCandlestick](http://formidable.com/open-source/victory/docs/victory-candlestick)
+- [VictoryErrorBar](http://formidable.com/open-source/victory/docs/victory-errorbar)
 - [VictoryLine](http://formidable.com/open-source/victory/docs/victory-line)
 - [VictoryScatter](http://formidable.com/open-source/victory/docs/victory-scatter)
 
@@ -34,7 +36,9 @@ For more on the development environment, see [DEVELOPMENT](https://github.com/Fo
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
+Please review our [Code of Conduct](https://github.com/FormidableLabs/builder-victory-component/blob/master/CONTRIBUTING.md#contributor-covenant-code-of-conduct) before contributing.
+
+For a detailed contribution guide, please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
 
 ## Caveats
 

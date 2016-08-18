@@ -1,5 +1,15 @@
 # VictoryChart Changelog
 
+## 11.0.0 (2016-08-18)
+
+**This release includes breaking changes for Themes**
+- Updates the VictoryTheme API to more closely match the props object
+- Uses `VictoryTheme.grayscale` for default styling
+- Fixes a bug related to bar width
+- Improves performance by simplifying scale type checking for VictoryBar and VictoryArea
+- Fixes default transitions for VictoryBar and VictoryArea
+- Adds documentation for VictoryTheme
+
 ## 10.3.0 (2016-08-11)
 
 - Improved animation for continuous data components (_i.e._ VictoryLine, VictoryArea) using clipPath
