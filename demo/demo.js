@@ -216,10 +216,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={{
-              ...this.state.style,
-              labels: { padding: 60 }
-            }}
+            style={{...this.state.style}}
             innerRadius={140}
           />
 
@@ -242,7 +239,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={{...this.state.style, labels: {padding: 110}}}
+            style={{...this.state.style, labels: {padding: 0}}}
             data={this.state.data}
             innerRadius={100}
             animate={{duration: 2000}}
@@ -250,7 +247,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={{...this.state.style, labels: {padding: 60}}}
+            style={{...this.state.style}}
             endAngle={90}
             innerRadius={140}
             padAngle={5}
