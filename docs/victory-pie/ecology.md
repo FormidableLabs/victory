@@ -104,7 +104,8 @@ Here's an example of a donut chart with custom data and colors
     labels: {
       fill: "white",
       fontSize: 12,
-      fontWeight: "bold"
+      fontWeight: "bold",
+      padding: 0
     }
   }}
   data={[

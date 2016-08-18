@@ -100,11 +100,10 @@ export default {
 
   getLabelPosition(props, style, radius) {
     // TODO: better label positioning
-    const padding = style && style.labels && style.labels.padding || 0;
-    const innerRadius = props.innerRadius ? props.innerRadius + padding : padding;
+    const padding = style && style.labels && style.labels.padding || props.innerRadius;
     return d3Shape.arc()
       .outerRadius(radius)
-      .innerRadius(innerRadius);
+      .innerRadius(padding);
   },
 
   getLabelText(props, datum, index) {
