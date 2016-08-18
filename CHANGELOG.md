@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 5.1.0 (2016 -08-18)
+
+- Updates `builder-victory-component` to fix problems caused by missing lodash methods. Incomplete feature sets using `lodash-webpack-plugin`
+
 ## 5.0.2 (2016-08-17)
 
 - Fixes a minor bug in VictoryTheme.material
