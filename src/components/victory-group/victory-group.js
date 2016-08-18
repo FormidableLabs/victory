@@ -417,7 +417,7 @@ export default class VictoryGroup extends React.Component {
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
-        theme: child.props.theme || props.theme,
+        theme: props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         domainPadding,
         style,

@@ -193,7 +193,7 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 3000);
+    }, 2500);
   }
 
   render() {

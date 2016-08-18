@@ -520,11 +520,6 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryChart>
-          <VictoryBar
-            data={[]}
-          />
-        </VictoryChart>
       </div>
     );
   }

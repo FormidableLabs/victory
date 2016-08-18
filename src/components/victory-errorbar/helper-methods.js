@@ -25,7 +25,7 @@ export default {
         errorY: this.getErrors(datum, scale, "y")
       };
 
-      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
       const labelProps = {
         style: labelStyle,
         x: x - (labelStyle.padding || 0),
