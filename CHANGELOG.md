@@ -1,5 +1,13 @@
 # VictoryPie Changelog
 
+## 5.0.0 (2016-08-18)
+
+** This release includes breaking changes for themes and label styles **
+- Updates VictoryTheme API, uses `VictoryTheme.grayscale` for default styling
+- Alters label placement so that when label styles include padding, the `innerRadius` of the pie does not effect label placement.
+- Adds a `displayName` for ease of debugging
+- Updates documentation to reflect changes
+
 ## 4.3.1 (2016-08-02)
 
 - Update documentation
