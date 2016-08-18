@@ -1,5 +1,17 @@
 # Victory Changelog
 
+## 0.11.0 (2016-08-18)
+
+** This is a breaking change for themes across all components and for label placement in VictoryPie **
+
+-  Updates VictoryTheme API, uses `VictoryTheme.grayscale` for default styling
+- Alters label placement in VictoryPie so that when label styles include padding, the `innerRadius` of the pie does not effect label placement.
+- Adds a `displayName` to all components for ease of debugging
+- Improves animation for continuous data components (_i.e._ VictoryLine, VictoryArea) using clipPath
+- Improves performance by simplifying scale type checking for VictoryBar and VictoryArea
+- Supports for arrays of `childName` in events
+- Fixes a bug related to bar width
+
 ## 0.10.4 (2016-08-05)
 
 - Fix PropType warnings in React 15.3+
