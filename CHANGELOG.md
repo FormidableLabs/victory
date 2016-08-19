@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.11.1 (2016-08-18)
+
+- Updates dependencies
+- Includes check in VictoryLabel for string values of `fontSize`
+
 ## 0.11.0 (2016-08-18)
 
 ** This is a breaking change for themes across all components and for label placement in VictoryPie **
