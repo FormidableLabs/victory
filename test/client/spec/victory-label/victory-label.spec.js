@@ -31,6 +31,22 @@ describe("components/victory-label", () => {
     expect(output.prop("transform")).to.contain("rotate(46");
   });
 
+  it("strips px from fontSize", () => {
+    const wrapper = shallow(
+      <VictoryLabel style={{fontSize: "10px"}} text={"such text, wow"}/>
+    );
+    const output = wrapper.find("text");
+    expect(output.prop("style")).to.contain({fontSize: 10});
+  });
+
+  it("uses a default fontSize when an invalid fontSize is given", () => {
+    const wrapper = shallow(
+      <VictoryLabel style={{fontSize: "foo"}} text={"such text, wow"}/>
+    );
+    const output = wrapper.find("text");
+    expect(output.prop("style")).to.contain({fontSize: 14});
+  });
+
   describe("event handling", () => {
     it("attaches an to the parent object", () => {
       const clickHandler = sinon.spy();

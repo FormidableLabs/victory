@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Style } from "../victory-util/index";
+import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-util/index";
 import { assign, merge, pick } from "lodash";
 
 const defaultStyles = {
@@ -161,7 +161,8 @@ export default class VictoryLabel extends React.Component {
   getStyles(props) {
     const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
     const datum = props.datum || props.data;
-    return Helpers.evaluateStyle(style, datum);
+    const baseStyles = Helpers.evaluateStyle(style, datum);
+    return assign({}, baseStyles, {fontSize: this.getFontSize(baseStyles)});
   }
 
   getHeight(props, type) {
@@ -207,10 +208,28 @@ export default class VictoryLabel extends React.Component {
       Style.toTransformString(transformPart, rotatePart) : undefined;
   }
 
+  getFontSize(style) {
+    const baseSize = style && style.fontSize;
+    if (typeof baseSize === "number") {
+      return baseSize;
+    } else if (baseSize === undefined || baseSize === null) {
+      return defaultStyles.fontSize;
+    } else if (typeof baseSize === "string") {
+      const fontSize = +baseSize.replace("px", "");
+      if (!isNaN(fontSize)) {
+        return fontSize;
+      } else {
+        Log.warn("fontSize should be expressed as a number of pixels");
+        return defaultStyles.fontSize;
+      }
+    }
+    return defaultStyles.fontSize;
+  }
+
   renderElements(props, content) {
     const transform = this.getTransform(props);
     const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);
-    const fontSize = props.style && props.style.fontSize || 14;
+    const fontSize = this.getFontSize(props.style);
     return (
       <text {...textProps}
         transform={transform}
@@ -231,13 +250,12 @@ export default class VictoryLabel extends React.Component {
   render() {
     const datum = this.props.datum || this.props.data;
     const style = this.getStyles(this.props);
-    const fontSize = style.fontSize || 14;
     const lineHeight = this.getHeight(this.props, "lineHeight");
     const textAnchor = this.props.textAnchor ?
       Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
     const content = this.getContent(this.props);
     const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
-    const dy = this.getDy(this.props, content, lineHeight) * fontSize;
+    const dy = this.getDy(this.props, content, lineHeight) * style.fontSize;
     const labelProps = assign(
       {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, this.props.events
     );
