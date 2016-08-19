@@ -34,17 +34,17 @@
     "builder": "~2.9.1",
     "builder-victory-component": "^2.4.0",
     "victory-chart": "^11.0.0",
-    "victory-core": "^5.1.0",
+    "victory-core": "^5.1.1",
     "victory-pie": "^5.0.0"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^2.4.0",
     "chai": "^3.2.0",
-    "lodash": "^3.10.1",
+    "lodash": "^4.12.0",
     "mocha": "^2.3.3",
-    "react": "~15.1.0",
-    "react-addons-test-utils": "~15.1.0",
-    "react-dom": "~15.1.0",
+    "react": "^15.1.0",
+    "react-addons-test-utils": "^15.1.0",
+    "react-dom": "^15.1.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   }
