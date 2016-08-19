@@ -7292,7 +7292,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	props){
 	var style=props.style?(0,_merge3.default)({},defaultStyles,props.style):defaultStyles;
 	var datum=props.datum||props.data;
-	return _index.Helpers.evaluateStyle(style,datum);
+	var baseStyles=_index.Helpers.evaluateStyle(style,datum);
+	return(0,_assign3.default)({},baseStyles,{fontSize:this.getFontSize(baseStyles)});
 	}},{key:"getHeight",value:function getHeight(
 	
 	props,type){
@@ -7336,12 +7337,30 @@ return /******/ (function(modules) { // webpackBootstrap
 	var rotatePart=angle&&{rotate:[angle,x,y]};
 	return transformPart||angle?
 	_index.Style.toTransformString(transformPart,rotatePart):undefined;
+	}},{key:"getFontSize",value:function getFontSize(
+	
+	style){
+	var baseSize=style&&style.fontSize;
+	if(typeof baseSize==="number"){
+	return baseSize;
+	}else if(baseSize===undefined||baseSize===null){
+	return defaultStyles.fontSize;
+	}else if(typeof baseSize==="string"){
+	var fontSize=+baseSize.replace("px","");
+	if(!isNaN(fontSize)){
+	return fontSize;
+	}else{
+	_index.Log.warn("fontSize should be expressed as a number of pixels");
+	return defaultStyles.fontSize;
+	}
+	}
+	return defaultStyles.fontSize;
 	}},{key:"renderElements",value:function renderElements(
 	
 	props,content){
 	var transform=this.getTransform(props);
 	var textProps=(0,_pick3.default)(props,["dx","dy","x","y","style","textAnchor"]);
-	var fontSize=props.style&&props.style.fontSize||14;
+	var fontSize=this.getFontSize(props.style);
 	return(
 	_react2.default.createElement("text",_extends({},textProps,{
 	transform:transform},
@@ -7362,13 +7381,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	{
 	var datum=this.props.datum||this.props.data;
 	var style=this.getStyles(this.props);
-	var fontSize=style.fontSize||14;
 	var lineHeight=this.getHeight(this.props,"lineHeight");
 	var textAnchor=this.props.textAnchor?
 	_index.Helpers.evaluateProp(this.props.textAnchor,datum):"start";
 	var content=this.getContent(this.props);
 	var dx=this.props.dx?_index.Helpers.evaluateProp(this.props.dx,datum):0;
-	var dy=this.getDy(this.props,content,lineHeight)*fontSize;
+	var dy=this.getDy(this.props,content,lineHeight)*style.fontSize;
 	var labelProps=(0,_assign3.default)(
 	{},this.props,{dy:dy,dx:dx,datum:datum,lineHeight:lineHeight,textAnchor:textAnchor,style:style},this.props.events);
 	
