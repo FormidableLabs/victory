@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 5.1.1 (2016 -08-18)
+
+- VictoryLabel: Adds a check for `fontSize` given as a string, and strips "px" when present
+
 ## 5.1.0 (2016 -08-18)
 
 - Updates `builder-victory-component` to fix problems caused by missing lodash methods. Incomplete feature sets using `lodash-webpack-plugin`
