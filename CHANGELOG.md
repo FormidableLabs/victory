@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 11.0.1 (2016-08-21)
+
+- Refactors ClipPath component to make it easier to write a native version.
+
 ## 11.0.0 (2016-08-18)
 
 **This release includes breaking changes for Themes**
