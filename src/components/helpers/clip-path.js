@@ -57,6 +57,16 @@ export default class ClipPath extends React.Component {
     }
   }
 
+  renderClipPath(props, id) {
+    return (
+      <defs>
+        <clipPath id={id}>
+          <rect {...props}/>
+        </clipPath>
+      </defs>
+    );
+  }
+
   render() {
     const {
       clipId,
@@ -69,17 +79,13 @@ export default class ClipPath extends React.Component {
 
     const totalPadding = (side) => padding[side] - (clipPadding[side] || 0);
 
-    return (
-      <defs>
-        <clipPath id={clipId}>
-          <rect
-            x={totalPadding("left")}
-            y={totalPadding("top")}
-            width={clipWidth - totalPadding("left") - totalPadding("right")}
-            height={clipHeight - totalPadding("top") - totalPadding("bottom")}
-          />
-        </clipPath>
-      </defs>
-    );
+    const clipProps = {
+      x: totalPadding("left"),
+      y: totalPadding("top"),
+      width: clipWidth - totalPadding("left") - totalPadding("right"),
+      height: clipHeight - totalPadding("top") - totalPadding("bottom")
+    };
+
+    return this.renderClipPath(clipProps, clipId);
   }
 }
