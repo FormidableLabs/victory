@@ -172,7 +172,9 @@ class App extends React.Component {
 ReactDOM.render(<App/>, mountNode);
 ```
 
-Want to create a full theme object like Victory's Material theme? Just start adding props to the following namespaces, just as you would if you were providing props to corresponding victory components. Please not that only props that affect layout are supported. `data`, `scale` etc as well as any custom components should still be provided via props rather than themes.
+Want to create a full theme object like Victory's Material theme? Just start adding props to the following namespaces, just as you would if you were providing props to corresponding Victory components. Please note that only props that affect layout and appearance are supported. `data`, `scale`, etc. as well as any custom components should still be provided via props rather than themes.
+
+You can try editting the Victory themes and creating your own in the interactive [Theme Park](https://formidable.com/open-source/victory/recipes/theme-park).
 
 ```
 {
