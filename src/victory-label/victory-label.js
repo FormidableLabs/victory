@@ -3,7 +3,6 @@ import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-ut
 import { assign, merge, pick } from "lodash";
 
 const defaultStyles = {
-  backgroundColor: "#d9d9d9",
   fill: "#252525",
   fontSize: 14,
   fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
@@ -177,7 +176,7 @@ export default class VictoryLabel extends React.Component {
       const child = Helpers.evaluateProp(text, datum);
       return `${child}`.split("\n");
     }
-    return [""];
+    return [" "];
   }
 
   getDy(props, content, lineHeight) {
