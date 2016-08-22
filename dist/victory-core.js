@@ -7134,7 +7134,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	var defaultStyles={
-	backgroundColor:"#d9d9d9",
 	fill:"#252525",
 	fontSize:14,
 	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
@@ -7308,7 +7307,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var child=_index.Helpers.evaluateProp(text,datum);
 	return(""+child).split("\n");
 	}
-	return[""];
+	return[" "];
 	}},{key:"getDy",value:function getDy(
 	
 	props,content,lineHeight){
