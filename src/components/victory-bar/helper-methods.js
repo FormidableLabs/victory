@@ -35,18 +35,15 @@ export default {
   getBarPosition(props, datum, scale) {
     const defaultMin = Scale.getType(scale.y) === "log" ?
       1 / Number.MAX_SAFE_INTEGER : 0;
-    const yOffset = datum.yOffset || 0;
-    const xOffset = datum.xOffset || 0;
-    const y0 = yOffset || defaultMin;
-    const y = datum.y + yOffset;
-    const x = datum.x + xOffset;
+
+    const y0 = datum.y0 || defaultMin;
     const formatValue = (value, axis) => {
       return datum[axis] instanceof Date ? new Date(value) : value;
     };
     return {
-      x: scale.x(formatValue(x, "x")),
+      x: scale.x(formatValue(datum.x, "x")),
       y0: scale.y(formatValue(y0, "y")),
-      y: scale.y(formatValue(y, "y"))
+      y: scale.y(formatValue(datum.y, "y"))
     };
   },
 

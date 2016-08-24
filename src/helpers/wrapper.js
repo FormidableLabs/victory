@@ -16,6 +16,8 @@ export default {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
       return propsDomain;
+    } else if (props.data) {
+      return Domain.getDomain(props, axis);
     }
     childComponents = childComponents || React.Children.toArray(props.children);
     return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
@@ -113,8 +115,7 @@ export default {
     const getChildData = (children) => {
       return children.map((child) => {
         if (child.type && isFunction(child.type.getData)) {
-          const childData = child.props && child.type.getData(child.props);
-          return childData;
+          return child.props && child.type.getData(child.props);
         } else if (child.props && child.props.children) {
           return flatten(getChildData(React.Children.toArray(child.props.children)));
         }
