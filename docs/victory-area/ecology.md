@@ -156,37 +156,28 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 
 ### Data Markers
 
-To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter.
+To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter. VictoryGroup can help!
 
 ```playground
-<svg height={300} width={500}>
+<VictoryGroup
+  style={{
+    data: {fill: "teal"}
+  }}
+  data={[
+    {x: 1, y: 3},
+    {x: 2, y: 2},      
+    {x: 3, y: 4},
+    {x: 4, y: 3},
+    {x: 5, y: 5}
+  ]}
+>
   <VictoryArea
-    width={500}
-    height={300}
-    standalone={false}
     style={{
-      data: {
-        fill: "teal",
-        opacity: 0.3
-      }
+      data: {opacity: 0.3}
     }}
-    data={[
-      {x: 0, y: 0},
-      {x: 1, y: 3},
-      {x: 2, y: 2},      
-      {x: 3, y: 4},
-      {x: 4, y: 3},
-      {x: 5, y: 5}
-    ]}
   />
   <VictoryScatter
-    width={500}
-    height={300}
-    standalone={false}
     style={{
-      data: {
-        fill: "teal",
-      },
       labels: {
         fill: "teal",
         fontSize: 14,
@@ -195,18 +186,10 @@ To create markers and labels for individual data points along an area, just comp
     }}
     size={4}
     labels={[
-     "a", "b", "c", "d", "e", "f"
-    ]}
-    data={[
-      {x: 0, y: 0},
-      {x: 1, y: 3},
-      {x: 2, y: 2},      
-      {x: 3, y: 4},
-      {x: 4, y: 3},
-      {x: 5, y: 5}
+     "a", "b", "c", "d", "e"
     ]}
   />
-</svg>
+</VictoryGroup>
 ```
 
 ### Events

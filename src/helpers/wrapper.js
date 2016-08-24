@@ -152,6 +152,9 @@ export default {
       return style.data.fill;
     }
     colorScale = child.props && child.props.colorScale ? child.props.colorScale : colorScale;
+    if (!colorScale) {
+      return undefined;
+    }
     const colors = Array.isArray(colorScale) ?
       colorScale : Style.getColorScale(colorScale);
     return colors[index % colors.length];
