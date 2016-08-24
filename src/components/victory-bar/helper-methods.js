@@ -64,9 +64,8 @@ export default {
   },
 
   getLabel(props, datum, index) {
-    const propsLabel = Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
-    return datum.label || propsLabel;
+    return datum.label || (Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
   },
 
   getLabelAnchors(datum, horizontal) {
