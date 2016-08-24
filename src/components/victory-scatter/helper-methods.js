@@ -5,7 +5,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 
 export default {
-  getBaseProps(props, fallbackProps) {
+  getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
     props = Helpers.modifyProps(props, fallbackProps, "scatter");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale } = calculatedValues;
@@ -25,23 +25,25 @@ export default {
       };
 
       const text = this.getLabelText(props, datum, index);
-      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
-      const labelProps = {
-        style: labelStyle,
-        x,
-        y: y - (labelStyle.padding || 0),
-        text,
-        index,
-        scale,
-        datum: dataProps.datum,
-        textAnchor: labelStyle.textAnchor,
-        verticalAnchor: labelStyle.verticalAnchor || "end",
-        angle: labelStyle.angle
-      };
-      childProps[eventKey] = {
-        data: dataProps,
-        labels: labelProps
-      };
+      if (!text && !props.events) {
+        const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
+        const labelProps = {
+          style: labelStyle,
+          x,
+          y: y - (labelStyle.padding || 0),
+          text,
+          index,
+          scale,
+          datum: dataProps.datum,
+          textAnchor: labelStyle.textAnchor,
+          verticalAnchor: labelStyle.verticalAnchor || "end",
+          angle: labelStyle.angle
+        };
+        childProps[eventKey] = {
+          data: dataProps,
+          labels: labelProps
+        };
+      }
     }
     return childProps;
   },
