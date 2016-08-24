@@ -49,21 +49,60 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
+          <VictoryChart style={chartStyle}>
+            <VictoryStack colorScale="qualitative">
+              <VictoryGroup
+                data={[
+                  {x: 1, y: 3},
+                  {x: 2, y: 4},
+                  {x: 3, y: 2}
+                ]}
+              >
+                <VictoryArea/>
+                <VictoryScatter/>
+              </VictoryGroup>
+              <VictoryGroup
+                style={chartStyle}
+                colorScale="qualitative"
+                data={[
+                  {x: 1, y: 4},
+                  {x: 2, y: 5},
+                  {x: 3, y: 1}
+                ]}
+              >
+                <VictoryArea/>
+                <VictoryScatter/>
+              </VictoryGroup>
+              <VictoryGroup
+                style={chartStyle}
+                colorScale="qualitative"
+                data={[
+                  {x: 1, y: 1},
+                  {x: 2, y: 2},
+                  {x: 3, y: 5}
+                ]}
+              >
+                <VictoryArea/>
+                <VictoryScatter/>
+              </VictoryGroup>
+            </VictoryStack>
+          </VictoryChart>
 
-
-
+          <VictoryChart style={chartStyle}>
             <VictoryGroup
-              style={chartStyle}
+              colorScale={"qualitative"}
               data={[
                 {x: 1, y: 3},
                 {x: 2, y: 4},
-                {x: 3, y: 2}
+                {x: 3, y: 2},
+                {x: 4, y: 5}
               ]}
             >
-              <VictoryArea style={{data: {fill: "tomato"}}}/>
-              <VictoryScatter style={{data: {fill: "blue"}}}/>
+              <VictoryLine/>
+              <VictoryScatter/>
+              <VictoryBar/>
             </VictoryGroup>
-
+          </VictoryChart>
 
         </div>
       </div>

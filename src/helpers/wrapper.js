@@ -8,18 +8,26 @@ import { Style, Transitions, Helpers, Collection } from "victory-core";
 
 export default {
   getData(props, childComponents) {
+    if(props.data) {
+      return Data.getData(props);
+    }
     childComponents = childComponents || React.Children.toArray(props.children);
     return this.getDataFromChildren(childComponents);
   },
 
   getDomain(props, axis, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
       return propsDomain;
     } else if (props.data) {
-      return Domain.getDomain(props, axis);
+      const zeroType = (child) => {
+        const role = child.type && child.type.role;
+        return role === "area" || role == "bar";
+      };
+      const includeZero = childComponents.filter((child) => zeroType(child)).length;
+      return includeZero ? Domain.getDomainWithZero(props, axis) : Domain.getDomain(props, axis);
     }
-    childComponents = childComponents || React.Children.toArray(props.children);
     return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
       props,
       axis);
@@ -156,10 +164,11 @@ export default {
   getChildStyle(child, index, calculatedProps) {
     const { style } = calculatedProps;
     const role = child.type && child.type.role;
-    const defaultFill = role === "group-wrapper" || role === "stack-wrapper" ?
+    const defaultFill = role === "stack-wrapper" ?
       undefined : this.getColor(calculatedProps, child, index);
+    const defaultColor = role === "line" ? {stroke: defaultFill} : {fill: defaultFill};
     const childStyle = child.props.style || {};
-    const dataStyle = defaults({}, childStyle.data, style.data, {fill: defaultFill});
+    const dataStyle = defaults({}, childStyle.data, style.data, defaultColor);
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
       parent: style.parent,
