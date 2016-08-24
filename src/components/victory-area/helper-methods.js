@@ -86,7 +86,7 @@ export default {
     const minY = Math.min(...domainY) > 0 ? Math.min(...domainY) : defaultMin;
 
     return data.map((datum) => {
-      const y1 = datum.y;
+      const y1 = datum.y1 || datum.y;
       const y0 = datum.y0 || minY;
       return assign({}, datum, {y0, y1});
     });

@@ -41,9 +41,9 @@ export default {
       return datum[axis] instanceof Date ? new Date(value) : value;
     };
     return {
-      x: scale.x(formatValue(datum.x, "x")),
+      x: scale.x(formatValue(datum.x1 || datum.x, "x")),
       y0: scale.y(formatValue(y0, "y")),
-      y: scale.y(formatValue(datum.y, "y"))
+      y: scale.y(formatValue(datum.y1 || datum.y, "y"))
     };
   },
 

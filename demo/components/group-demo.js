@@ -1,6 +1,7 @@
 import React from "react";
 import {
-  VictoryChart, VictoryArea, VictoryStack, VictoryBar, VictoryLine, VictoryGroup, VictoryScatter
+  VictoryChart, VictoryStack, VictoryBar, VictoryLine,
+  VictoryGroup, VictoryScatter, VictoryErrorBar
 } from "../../src/index";
 import { range, random } from "lodash";
 
@@ -49,41 +50,58 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-          <VictoryChart style={chartStyle}>
-            <VictoryStack colorScale="qualitative">
+          <VictoryChart style={chartStyle} domainPadding={20}>
+            <VictoryStack
+              style={{
+                data: {strokeDasharray: "10, 5"}
+              }}
+              colorScale="qualitative"
+            >
               <VictoryGroup
                 data={[
                   {x: 1, y: 3},
                   {x: 2, y: 4},
                   {x: 3, y: 2}
                 ]}
+                style={{
+                  data: {width: 40, opacity: 0.6}
+                }}
               >
-                <VictoryArea/>
-                <VictoryScatter/>
+                <VictoryBar/>
+                <VictoryLine/>
               </VictoryGroup>
               <VictoryGroup
-                style={chartStyle}
-                colorScale="qualitative"
                 data={[
                   {x: 1, y: 4},
                   {x: 2, y: 5},
                   {x: 3, y: 1}
                 ]}
+                style={{
+                  data: {width: 20, opacity: 0.8}
+                }}
               >
-                <VictoryArea/>
-                <VictoryScatter/>
+                <VictoryBar/>
+                <VictoryLine/>
               </VictoryGroup>
               <VictoryGroup
-                style={chartStyle}
-                colorScale="qualitative"
                 data={[
-                  {x: 1, y: 1},
+                  {x: 1, y: 3},
                   {x: 2, y: 2},
                   {x: 3, y: 5}
                 ]}
+                style={{
+                  data: {width: 10, opacity: 1}
+                }}
               >
-                <VictoryArea/>
-                <VictoryScatter/>
+                <VictoryBar/>
+                <VictoryLine/>
+                <VictoryScatter
+                  symbol={"plus"}
+                  size={10}
+                  style={{
+                    data: {fill: "tomato"}
+                  }}
+                />
               </VictoryGroup>
             </VictoryStack>
           </VictoryChart>
@@ -92,15 +110,19 @@ class App extends React.Component {
             <VictoryGroup
               colorScale={"qualitative"}
               data={[
-                {x: 1, y: 3},
-                {x: 2, y: 4},
-                {x: 3, y: 2},
-                {x: 4, y: 5}
+                {x: 1, y: 3, errorX: 0.2, errorY: 0.5},
+                {x: 2, y: 4, errorX: 0.3, errorY: 0.3},
+                {x: 3, y: 2, errorX: 0.2, errorY: 0.2},
+                {x: 4, y: 5, errorX: 0.3, errorY: 0.5}
               ]}
             >
               <VictoryLine/>
-              <VictoryScatter/>
               <VictoryBar/>
+              <VictoryErrorBar
+                style={{
+                  data: {stroke: "tomato"}
+                }}
+              />
             </VictoryGroup>
           </VictoryChart>
 

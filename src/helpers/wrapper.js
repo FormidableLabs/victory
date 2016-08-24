@@ -1,4 +1,4 @@
-import { defaults, flatten, isFunction, partialRight, uniq } from "lodash";
+import { assign, defaults, flatten, isFunction, partialRight, uniq } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import Data from "./data";
@@ -8,7 +8,7 @@ import { Style, Transitions, Helpers, Collection } from "victory-core";
 
 export default {
   getData(props, childComponents) {
-    if(props.data) {
+    if (props.data) {
       return Data.getData(props);
     }
     childComponents = childComponents || React.Children.toArray(props.children);
@@ -20,13 +20,6 @@ export default {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
       return propsDomain;
-    } else if (props.data) {
-      const zeroType = (child) => {
-        const role = child.type && child.type.role;
-        return role === "area" || role == "bar";
-      };
-      const includeZero = childComponents.filter((child) => zeroType(child)).length;
-      return includeZero ? Domain.getDomainWithZero(props, axis) : Domain.getDomain(props, axis);
     }
     return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
       props,
@@ -98,7 +91,10 @@ export default {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
-          const childDomain = child.props && child.type.getDomain(child.props, currentAxis);
+          const parentData = props.data ? Data.getData(props, axis) : undefined;
+          const sharedProps = parentData ?
+            assign({}, child.props, {data: parentData}) : child.props;
+          const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
           return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
@@ -166,9 +162,10 @@ export default {
     const role = child.type && child.type.role;
     const defaultFill = role === "stack-wrapper" ?
       undefined : this.getColor(calculatedProps, child, index);
-    const defaultColor = role === "line" ? {stroke: defaultFill} : {fill: defaultFill};
+    const defaultColor = role === "line" ?
+      {fill: "none", stroke: defaultFill} : {fill: defaultFill};
     const childStyle = child.props.style || {};
-    const dataStyle = defaults({}, childStyle.data, style.data, defaultColor);
+    const dataStyle = defaults({}, childStyle.data, assign({}, style.data, defaultColor));
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
       parent: style.parent,

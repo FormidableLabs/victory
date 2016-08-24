@@ -439,7 +439,7 @@ export default class VictoryGroup extends React.Component {
   addOffset(dataset, offset) {
     const xOffset = offset || 0;
     return dataset.map((datum) => {
-      return assign({}, datum, {x: datum.x + xOffset})
+      return assign({}, datum, {x1: datum.x + xOffset});
     });
   }
 

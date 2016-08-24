@@ -340,8 +340,8 @@ export default class VictoryStack extends React.Component {
       const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
       return assign({}, datum, {
         y0: yOffset,
-        y: datum.y + yOffset,
-        x: datum.x + xOffset
+        y1: datum.y + yOffset,
+        x1: datum.x + xOffset
       });
     });
   }
