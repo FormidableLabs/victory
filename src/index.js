@@ -13,3 +13,4 @@ export { default as VictoryTransition } from "./victory-transition/victory-trans
 export { default as VictorySharedEvents } from "./victory-shared-events/victory-shared-events";
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
+export { default as VictoryLegend } from "./victory-legend/victory-legend";
