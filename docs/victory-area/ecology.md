@@ -156,7 +156,7 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 
 ### Data Markers
 
-To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter. VictoryGroup can help!
+To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter. Use VictoryGroup for convenience.
 
 ```playground
 <VictoryGroup

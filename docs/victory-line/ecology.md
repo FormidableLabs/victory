@@ -89,7 +89,7 @@ Add labels, style the data, change the interpolation, add a custom domain:
 
 ### Data Markers
 
-To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter. VictoryGroup can help!
+To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter; you can use VictoryGroup to help with this.
 
 ```playground
 <VictoryGroup
