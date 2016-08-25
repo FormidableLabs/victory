@@ -1,25 +1,20 @@
-import { uniq, defaults } from "lodash";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, Log, VictorySharedEvents, VictoryContainer
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      width: 8,
-      padding: 6
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryStack extends React.Component {
+  static displayName = "VictoryStack";
+
   static role = "stack-wrapper";
 
   static propTypes = {
@@ -95,10 +90,16 @@ export default class VictoryStack extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -143,9 +144,13 @@ export default class VictoryStack extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.string,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -261,7 +266,7 @@ export default class VictoryStack extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryStack will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -271,8 +276,7 @@ export default class VictoryStack extends React.Component {
     * When using VictoryStack to wrap a chart component, implement the theme directly on
     * VictoryStack. If you are wrapping VictoryStack in VictoryChart,
     * please call the theme on the wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -285,10 +289,10 @@ export default class VictoryStack extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme. grayscale
   };
 
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
@@ -326,14 +330,13 @@ export default class VictoryStack extends React.Component {
       x: Wrapper.getCategories(props, "x"),
       y: Wrapper.getCategories(props, "y")
     };
-    const colorScale = props.theme ? props.colorscale || props.theme.props.colorScale
-    : props.colorScale;
+    const colorScale = props.colorScale;
     return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
   }
 
   addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
     return datasets[index].map((datum) => {
-      return Object.assign(datum, {
+      return assign(datum, {
         yOffset: Wrapper.getY0(datum, index, calculatedProps),
         xOffset: props.xOffset
       });
@@ -362,25 +365,40 @@ export default class VictoryStack extends React.Component {
     };
   }
 
+  getColorScale(props, child) {
+    const role = child.type && child.type.role;
+    const colorScaleOptions = child.props.colorScale || props.colorScale;
+    if (role !== "group-wrapper" && role !== "stack-wrapper") {
+      return undefined;
+    }
+    return props.theme ? colorScaleOptions || props.theme.props.colorScale
+    : colorScaleOptions;
+  }
+
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return childComponents.map((child, index) => {
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      return React.cloneElement(child, Object.assign({
+      newChildren[index] = React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
-        theme: child.props.theme || props.theme,
+        domainPadding: child.props.domainPadding || props.domainPadding,
+        theme: props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
         style,
+        colorScale: this.getColorScale(props, child),
         data
       }, childProps));
-    });
+    }
+    return newChildren;
   }
 
   getContainer(props, calculatedProps) {
@@ -405,22 +423,22 @@ export default class VictoryStack extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "stack");
+    const { theme, standalone, events, eventKey} = modifiedProps;
+    const fallbackStyle = theme && theme.stack && theme.stack.style ?
+      theme.stack.style : {};
+    const style = Helpers.getStyles(modifiedProps.style, fallbackStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const types = uniq(childComponents.map((child) => child.type.role));
-    if (types.some((type) => type === "group-wrapper")) {
-      Log.warn("It is not possible to stack groups.");
-    }
+
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style);
 
-    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (modifiedProps.events) {
+    if (events) {
       return (
         <VictorySharedEvents
-          events={modifiedProps.events}
-          eventKey={modifiedProps.eventKey}
+          events={events}
+          eventKey={eventKey}
           container={container}
         >
           {newChildren}

@@ -1,7 +1,7 @@
 import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -10,13 +10,14 @@ import Scale from "../../helpers/scale";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryChart extends React.Component {
+  static displayName = "VictoryChart";
+
   static propTypes = {
     /**
      * The animate prop specifies props for VictoryAnimation to use. If this prop is
@@ -63,8 +64,14 @@ export default class VictoryChart extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -111,9 +118,13 @@ export default class VictoryChart extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.string,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
       target: PropTypes.string,
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -195,7 +206,7 @@ export default class VictoryChart extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryChart will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -204,8 +215,7 @@ export default class VictoryChart extends React.Component {
     * You can create this object yourself, or you can use a theme provided by Victory.
     * When using VictoryChart, either alone or as a wrapper for other components,
     * you will only need to implement the theme on VictoryChart itself.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -217,10 +227,10 @@ export default class VictoryChart extends React.Component {
   };
 
   static defaultProps = {
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    theme: VictoryTheme.grayscale,
     defaultAxes: {
       independent: <VictoryAxis/>,
       dependent: <VictoryAxis dependentAxis/>
@@ -244,7 +254,7 @@ export default class VictoryChart extends React.Component {
   }
 
   getAxisProps(child, props, calculatedProps) {
-    const {domain, scale} = calculatedProps;
+    const { domain, scale, originSign } = calculatedProps;
     const axis = child.type.getAxis(child.props);
     const axisOffset = ChartHelpers.getAxisOffset(props, calculatedProps);
     const tickValues = ChartHelpers.getTicks(calculatedProps, axis, child);
@@ -253,6 +263,7 @@ export default class VictoryChart extends React.Component {
     const offsetY = axis === "y" ? undefined : axisOffset.y;
     const offsetX = axis === "x" ? undefined : axisOffset.x;
     const crossAxis = child.props.crossAxis === false ? false : true;
+    const orientation = Axis.getOrientation(child, axis, originSign[axis]);
     return {
       domain: domain[axis],
       scale: scale[axis],
@@ -260,7 +271,8 @@ export default class VictoryChart extends React.Component {
       tickFormat,
       offsetY: child.props.offsetY || offsetY,
       offsetX: child.props.offsetX || offsetX,
-      crossAxis
+      crossAxis,
+      orientation
     };
   }
 
@@ -303,37 +315,62 @@ export default class VictoryChart extends React.Component {
       x: baseScale.x.domain(domain.x).range(range.x),
       y: baseScale.y.domain(domain.y).range(range.y)
     };
+
+    const origin = {
+      x: Axis.getOrigin(domain.x),
+      y: Axis.getOrigin(domain.y)
+    };
+
+    const originSign = {
+      x: Axis.getOriginSign(origin.x, domain.x),
+      y: Axis.getOriginSign(origin.y, domain.y)
+    };
+
     // TODO: check
     const categories = {
       x: Wrapper.getCategories(props, "x", childComponents),
       y: Wrapper.getCategories(props, "y", childComponents)
     };
+
     const stringMap = {
       x: ChartHelpers.createStringMap(props, "x", childComponents),
       y: ChartHelpers.createStringMap(props, "y", childComponents)
     };
-    return {axisComponents, categories, domain, horizontal, scale, stringMap, style};
+
+    const defaultDomainPadding = ChartHelpers.getDefaultDomainPadding(childComponents, horizontal);
+
+    return {
+      axisComponents, categories, domain, horizontal, scale, stringMap,
+      style, origin, originSign, defaultDomainPadding
+    };
   }
 
   getNewChildren(props, childComponents, calculatedProps) {
     const baseStyle = calculatedProps.style.parent;
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return childComponents.map((child, index) => {
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
       const style = defaults({}, child.props.style, {parent: baseStyle});
       const childProps = this.getChildProps(child, props, calculatedProps);
       const newProps = defaults({
         animate: getAnimationProps(props, child, index),
         height: props.height,
         width: props.width,
+        clipWidth: props.width,
+        clipHeight: props.height,
+        domainPadding: child.props.domainPadding ||
+          props.domainPadding || calculatedProps.defaultDomainPadding,
         padding: Helpers.getPadding(props),
         ref: index,
         key: index,
-        theme: child.props.theme || props.theme,
+        theme: props.theme,
         standalone: false,
         style
       }, childProps);
-      return React.cloneElement(child, newProps);
-    });
+      newChildren[index] = React.cloneElement(child, newProps);
+    }
+    return newChildren;
   }
 
   getContainer(props, calculatedProps) {
@@ -358,8 +395,9 @@ export default class VictoryChart extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const childComponents = ChartHelpers.getChildComponents(modifiedProps, props.defaultAxes);
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
+    const childComponents = ChartHelpers.getChildComponents(modifiedProps,
+      modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);

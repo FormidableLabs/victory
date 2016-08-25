@@ -15,11 +15,12 @@ export default {
   getDomain(props, axis, childComponents) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return Domain.padDomain(propsDomain, props, axis);
+      return propsDomain;
     }
     childComponents = childComponents || React.Children.toArray(props.children);
-    const domain = this.getDomainFromChildren(props, axis, childComponents);
-    return Domain.padDomain(domain, props, axis);
+    return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
+      props,
+      axis);
   },
 
   setAnimationState(nextProps) {
@@ -37,7 +38,9 @@ export default {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter
+        nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
       this.setState({
@@ -45,6 +48,8 @@ export default {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesDoneClipPathEnter,
+        nodesDoneClipPathExit,
         oldProps: nodesWillExit ? this.props : null
       });
     }
@@ -93,8 +98,10 @@ export default {
     };
 
     const childDomains = getChildDomains(childComponents);
+    const min = Collection.getMinValue(childDomains);
+    const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
-      [0, 1] : [Math.min(...childDomains), Math.max(...childDomains)];
+      [0, 1] : [min, max];
   },
 
   getDataFromChildren(props, childComponents) {
@@ -121,7 +128,7 @@ export default {
   getStackedDomain(props, axis) {
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return Domain.padDomain(propsDomain, props, axis);
+      return propsDomain;
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
@@ -129,16 +136,17 @@ export default {
       return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
     };
     const datasets = this.getDataFromChildren(props);
-    const dataDomain = ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
-    return Domain.padDomain(dataDomain, props, axis);
+    return ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
   },
 
-  getColor(calculatedProps, index) {
+  getColor(calculatedProps, child, index) {
     // check for styles first
-    const { style, colorScale } = calculatedProps;
+    const { style } = calculatedProps;
+    let { colorScale } = calculatedProps;
     if (style && style.data && style.data.fill) {
       return style.data.fill;
     }
+    colorScale = child.props && child.props.colorScale ? child.props.colorScale : colorScale;
     const colors = Array.isArray(colorScale) ?
       colorScale : Style.getColorScale(colorScale);
     return colors[index % colors.length];
@@ -148,7 +156,7 @@ export default {
     const { style } = calculatedProps;
     const role = child.type && child.type.role;
     const defaultFill = role === "group-wrapper" || role === "stack-wrapper" ?
-      undefined : this.getColor(calculatedProps, index);
+      undefined : this.getColor(calculatedProps, child, index);
     const childStyle = child.props.style || {};
     const dataStyle = defaults({}, childStyle.data, style.data, {fill: defaultFill});
     const labelsStyle = defaults({}, childStyle.labels, style.labels);

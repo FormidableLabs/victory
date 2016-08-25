@@ -1,51 +1,59 @@
-import { defaults, partialRight, isFunction } from "lodash";
+import { assign, defaults, partialRight, isFunction, min, max, filter } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
+import ClipPath from "../helpers/clip-path";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450
-  },
-  style: {
-    data: {
-      fill: "none",
-      opacity: 1,
-      strokeWidth: 2,
-      stroke: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      strokeWidth: 0,
-      stroke: "transparent",
-      textAnchor: "start"
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50,
+  interpolation: "linear"
 };
 
 export default class VictoryLine extends React.Component {
+  static displayName = "VictoryLine";
+
   static role = "line";
 
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: (datum) => ({ y: datum.y })
+      before: (datum) => ({ y: datum.y }),
+      beforeClipPathWidth: (data, child, exitingNodes) => {
+        const filterExit = filter(data, (datum, index) => !exitingNodes[index]);
+        const xVals = filterExit.map((datum) => {
+          return child.type.getScale(child.props).x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      }
     },
     onEnter: {
       duration: 500,
       before: () => ({ y: null }),
-      after: (datum) => ({ y: datum.y })
+      after: (datum) => ({ y: datum.y }),
+      beforeClipPathWidth: (data, child, enteringNodes) => {
+        const filterEnter = filter(data, (datum, index) => !enteringNodes[index]);
+        const xVals = filterEnter.map((datum) => {
+          return child.type.getScale(child.props).x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      },
+      afterClipPathWidth: (data, child) => {
+        const xVals = data.map((datum) => {
+          return child.type.getScale(child.props).x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      }
     }
   };
 
@@ -79,8 +87,14 @@ export default class VictoryLine extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -160,6 +174,7 @@ export default class VictoryLine extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
@@ -332,7 +347,7 @@ export default class VictoryLine extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryLine will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -342,8 +357,7 @@ export default class VictoryLine extends React.Component {
     * When using VictoryLine as a solo component, implement the theme directly on
     * VictoryLine. If you are wrapping VictoryLine in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -351,12 +365,15 @@ export default class VictoryLine extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element
   };
 
   static defaultProps = {
-    interpolation: "linear",
-    padding: 50,
     samples: 50,
     scale: "linear",
     standalone: true,
@@ -365,12 +382,16 @@ export default class VictoryLine extends React.Component {
     dataComponent: <LineSegment/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
+    fallbackProps);
+  static getScale = partialRight(LineHelpers.getScale.bind(LineHelpers),
     fallbackProps);
 
   constructor() {
@@ -397,26 +418,29 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
-
-    return dataSegments.map((data, key) => {
-      const role = `${VictoryLine.role}-${key}`;
+    const lineComponents = [];
+    const lineLabelComponents = [];
+    for (let index = 0, len = dataSegments.length; index < len; index++) {
+    // return dataSegments.map((data, key) => {
+      const data = dataSegments[index];
+      const role = `${VictoryLine.role}-${index}`;
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
-        {index: key, key: role, role},
+        {index, key: role, role, clipId},
         this.getEventState("all", "data"),
         this.getSharedEventState("all", "data"),
         { data },
         dataComponent.props,
         this.baseProps.all.data
       );
-      const lineComponent = React.cloneElement(dataComponent, Object.assign(
+      lineComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
       const labelProps = defaults(
-          {key: `${role}-label-${key}`},
+          {index, key: `${role}-label-${index}`},
           this.getEventState("all", "labels"),
           this.getSharedEventState("all", "labels"),
           { data },
@@ -425,16 +449,14 @@ export default class VictoryLine extends React.Component {
         );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", "all");
-        const lineLabel = React.cloneElement(labelComponent, Object.assign({
+        lineLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, "all", labelProps)
         }, labelProps));
-
-        return React.cloneElement(
-          groupComponent, {key: `line-group-${key}`}, lineComponent, lineLabel
-        );
       }
-      return lineComponent;
-    });
+    }
+    return lineLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...lineComponents, ...lineLabelComponents) :
+      lineComponents;
   }
 
   renderContainer(props, group) {
@@ -448,24 +470,35 @@ export default class VictoryLine extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
     );
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, modifiedProps, style) {
+    const { clipPathComponent } = modifiedProps;
+
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: modifiedProps.padding,
+      clipId: modifiedProps.clipId,
+      clipWidth: modifiedProps.clipWidth || modifiedProps.width,
+      clipHeight: modifiedProps.clipHeight || modifiedProps.height
+    });
+
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children
+      children,
+      clipComponent
     );
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const clipId = Math.round(Math.random() * 10000);
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "line");
+    const { animate, style, standalone, theme } = props;
 
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
@@ -473,22 +506,23 @@ export default class VictoryLine extends React.Component {
       // prop whitelist/blacklist?
       // TODO: extract into helper
       const whitelist = [
-        "data", "domain", "height", "padding", "samples", "style", "width", "x", "y"
+        "data", "domain", "height", "padding", "samples",
+        "style", "width", "x", "y", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.line ? modifiedProps.theme.line
-    : fallbackProps.style;
+    const styleObject = theme && theme.line && theme.line.style ? theme.line.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+    const group = this.renderGroup(
+      this.renderData(props), props, baseStyles.parent
+    );
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
-
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

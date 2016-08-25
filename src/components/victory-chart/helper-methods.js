@@ -35,6 +35,21 @@ export default {
     return childComponents;
   },
 
+  getDefaultDomainPadding(childComponents, horizontal) {
+    const groupComponent = childComponents.filter((child) => {
+      return child.type && child.type.role && child.type.role === "group-wrapper";
+    });
+
+    if (groupComponent.length < 1) {
+      return undefined;
+    }
+
+    const { offset, children } = groupComponent[0].props;
+    return horizontal ?
+      {y: (offset * children.length) / 2} :
+      {x: (offset * children.length) / 2};
+  },
+
   getDataComponents(childComponents) {
     const findDataComponents = (children) => {
       return children.reduce((memo, child) => {
@@ -58,24 +73,21 @@ export default {
   },
 
   getAxisOffset(props, calculatedProps) {
-    const {axisComponents, domain, scale} = calculatedProps;
+    const {axisComponents, scale, origin, originSign} = calculatedProps;
     // make the axes line up, and cross when appropriate
-    const origin = {
-      x: Math.max(Math.min(...domain.x), 0),
-      y: Math.max(Math.min(...domain.y), 0)
-    };
     const axisOrientations = {
-      x: Axis.getOrientation(axisComponents.x, "x"),
-      y: Axis.getOrientation(axisComponents.y, "y")
+      x: Axis.getOrientation(axisComponents.x, "x", originSign.x),
+      y: Axis.getOrientation(axisComponents.y, "y", originSign.y)
     };
     const orientationOffset = {
       x: axisOrientations.y === "left" ? 0 : props.width,
       y: axisOrientations.x === "bottom" ? props.height : 0
     };
     const calculatedOffset = {
-      x: Math.abs(orientationOffset.x - scale.x.call(null, origin.x)),
-      y: Math.abs(orientationOffset.y - scale.y.call(null, origin.y))
+      x: Math.abs(orientationOffset.x - scale.x(origin.x)),
+      y: Math.abs(orientationOffset.y - scale.y(origin.y))
     };
+
     return {
       x: axisComponents.x && axisComponents.x.offsetX || calculatedOffset.x,
       y: axisComponents.y && axisComponents.y.offsetY || calculatedOffset.y

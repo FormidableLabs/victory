@@ -1,39 +1,25 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import Point from "./point";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      fill: "#242424",
-      opacity: 1,
-      stroke: "transparent",
-      strokeWidth: 0
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "middle"
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50,
+  size: 3,
+  symbol: "circle"
 };
 
 export default class VictoryScatter extends React.Component {
+  static displayName = "VictoryScatter";
+
   static role = "scatter";
 
   static defaultTransitions = {
@@ -94,8 +80,14 @@ export default class VictoryScatter extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -167,6 +159,7 @@ export default class VictoryScatter extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -343,7 +336,7 @@ export default class VictoryScatter extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryScatter will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -353,8 +346,7 @@ export default class VictoryScatter extends React.Component {
     * When using VictoryScatter as a solo component, implement the theme directly on
     * VictoryScatter. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -366,18 +358,16 @@ export default class VictoryScatter extends React.Component {
   };
 
   static defaultProps = {
-    padding: 50,
     samples: 50,
     scale: "linear",
-    size: 3,
     standalone: true,
-    symbol: "circle",
     x: "x",
     y: "y",
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomain.bind(Domain);
@@ -414,7 +404,9 @@ export default class VictoryScatter extends React.Component {
     const { role } = VictoryScatter;
     const pointComponents = [];
     const pointLabelComponents = [];
-    this.dataKeys.forEach((key, index) => {
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
+    // this.dataKeys.forEach((key, index) => {
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {index, key: `${role}-${key}`, role: `${role}-${index}`},
@@ -424,9 +416,9 @@ export default class VictoryScatter extends React.Component {
         this.baseProps[key].data
       );
 
-      pointComponents.push(React.cloneElement(dataComponent, Object.assign(
+      pointComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      )));
+      ));
 
       const labelProps = defaults(
         {key: `scatter-label-${key}`, index},
@@ -437,18 +429,15 @@ export default class VictoryScatter extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        pointLabelComponents.push(React.cloneElement(labelComponent, Object.assign({
+        pointLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps)));
+        }, labelProps));
       }
-    });
-
-    if (pointLabelComponents.length > 0) {
-      return React.cloneElement(
-        groupComponent, {}, ...pointComponents, ...pointLabelComponents
-      );
     }
-    return pointComponents;
+
+    return pointLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...pointComponents, ...pointLabelComponents) :
+      pointComponents;
   }
 
   renderContainer(props, group) {
@@ -462,7 +451,7 @@ export default class VictoryScatter extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group

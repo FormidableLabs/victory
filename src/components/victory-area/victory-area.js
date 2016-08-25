@@ -1,45 +1,57 @@
-import { isFunction, defaults, partialRight } from "lodash";
+import { assign, isFunction, defaults, partialRight, min, max, filter } from "lodash";
 import React, { PropTypes } from "react";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
-import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
-} from "victory-core";
 import Area from "./area";
 import AreaHelpers from "./helper-methods";
+import Data from "../../helpers/data";
+import Domain from "../../helpers/domain";
+import ClipPath from "../helpers/clip-path";
+import {
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
+  VictoryContainer, VictoryTheme
+} from "victory-core";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      fill: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50,
+  interpolation: "linear"
 };
 
 export default class VictoryArea extends React.Component {
+  static displayName = "VictoryArea";
+
   static role = "area";
 
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: () => ({ y: 0, yOffset: 0 })
+      beforeClipPathWidth: (data, child, exitingNodes) => {
+        const filterExit = filter(data, (datum, index) => !exitingNodes[index]);
+        const xVals = filterExit.map((datum) => {
+          return child.type.getScale(child.props).x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      }
     },
     onEnter: {
       duration: 500,
-      before: () => ({ y: 0, yOffset: 0, xOffset: 0 }),
-      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset, xOffset: datum.xOffset })
+      beforeClipPathWidth: (data, child, enteringNodes) => {
+        const filterEnter = filter(data, (datum, index) => !enteringNodes[index]);
+        const xVals = filterEnter.map((datum) => {
+          return child.type.getScale(child.props).x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+
+      },
+      afterClipPathWidth: (data, child) => {
+        const xVals = data.map((datum) => {
+          return child.type.getScale(child.props).x(datum.x);
+        });
+        const clipPath = min(xVals) + max(xVals);
+        return clipPath;
+      }
     }
   };
 
@@ -82,8 +94,14 @@ export default class VictoryArea extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -318,7 +336,7 @@ export default class VictoryArea extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryArea will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -328,8 +346,7 @@ export default class VictoryArea extends React.Component {
     * When using VictoryArea as a solo component, implement the theme directly on
     * VictoryArea. If you are wrapping VictoryArea in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -337,26 +354,37 @@ export default class VictoryArea extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element
+    groupComponent: PropTypes.element,
+    /**
+     * The clipPathComponent prop takes an entire component which will be used to
+     * create clipPath elements for use within container elements.
+     */
+    clipPathComponent: PropTypes.element,
+    /**
+     * Unique clipId for clipPath
+     */
+    clipId: PropTypes.number
   };
 
   static defaultProps = {
     dataComponent: <Area/>,
     labelComponent: <VictoryLabel/>,
-    padding: 50,
     scale: "linear",
     samples: 50,
     standalone: true,
-    interpolation: "linear",
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer />,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    clipPathComponent: <ClipPath/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);
+  static getScale = partialRight(AreaHelpers.getScale.bind(AreaHelpers),
+    fallbackProps);
 
   constructor() {
     super();
@@ -382,17 +410,17 @@ export default class VictoryArea extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const { role } = VictoryArea;
     const dataEvents = this.getEvents(props, "data", "all");
     const dataProps = defaults(
-      {role},
+      {role, clipId},
       this.getEventState("all", "data"),
       this.getSharedEventState("all", "data"),
       dataComponent.props,
       this.baseProps.all.data
     );
-    const areaComponent = React.cloneElement(dataComponent, Object.assign(
+    const areaComponent = React.cloneElement(dataComponent, assign(
       {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
     ));
 
@@ -405,7 +433,7 @@ export default class VictoryArea extends React.Component {
       );
     if (labelProps && labelProps.text) {
       const labelEvents = this.getEvents(props, "labels", "all");
-      const areaLabel = React.cloneElement(labelComponent, Object.assign({
+      const areaLabel = React.cloneElement(labelComponent, assign({
         events: Events.getPartialEvents(labelEvents, "all", labelProps)
       }, labelProps));
       return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
@@ -424,43 +452,55 @@ export default class VictoryArea extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
     );
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, props, style) {
+    const { clipPathComponent } = props;
+
+    const clipComponent = React.cloneElement(clipPathComponent, {
+      padding: props.padding,
+      clipId: props.clipId,
+      clipWidth: props.clipWidth || props.width,
+      clipHeight: props.clipHeight || props.height
+    });
+
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children
+      children,
+      clipComponent
     );
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
+    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "area");
+    const { animate, style, standalone, theme } = props;
 
     if (animate) {
       const whitelist = [
-        "data", "domain", "height", "padding", "style", "width"
+        "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.area ? modifiedProps.theme.area
-    : fallbackProps.style;
+    const styleObject = theme && theme.area ? theme.area.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
+    const group = this.renderGroup(
+      this.renderData(props), props, baseStyles.parent
+    );
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

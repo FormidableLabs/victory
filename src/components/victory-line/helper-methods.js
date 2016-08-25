@@ -1,5 +1,5 @@
 import { sortBy, defaults, last } from "lodash";
-import { Helpers } from "victory-core";
+import { Helpers, Log } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import Scale from "../../helpers/scale";
@@ -7,11 +7,12 @@ import Scale from "../../helpers/scale";
 export default {
 
   getBaseProps(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.line ? props.theme.line : fallbackProps.style;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const {scale, dataSegments, dataset} = this.getCalculatedValues(modifiedProps);
-    const style = Helpers.getStyles(modifiedProps.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height} = modifiedProps;
+    props = Helpers.modifyProps(props, fallbackProps, "line");
+    const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
+      props.theme.line.style : {};
+    const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const {interpolation, label, width, height} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
     const dataProps = {
       scale,
@@ -21,12 +22,12 @@ export default {
 
     const text = Helpers.evaluateProp(label, dataset);
     const lastData = last(last(dataSegments));
-    const baseLabelStyle = Helpers.evaluateStyle(style.labels, dataset);
+    const baseLabelStyle = Helpers.evaluateStyle(style.labels, dataset) || {};
     const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
 
     const labelProps = {
-      x: scale.x(lastData.x) + labelStyle.padding,
-      y: scale.y(lastData.y),
+      x: lastData ? scale.x(lastData.x) + (labelStyle.padding || 0) : 0,
+      y: lastData ? scale.y(lastData.y) : 0,
       style: labelStyle,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
@@ -45,9 +46,10 @@ export default {
     };
   },
 
-  getCalculatedValues(props) {
-    const dataset = Data.getData(props);
-    const dataSegments = this.getDataSegments(dataset);
+  getScale(props, fallbackProps) {
+    if (fallbackProps) {
+      props = Helpers.modifyProps(props, fallbackProps);
+    }
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -60,6 +62,21 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
+
+    return scale;
+  },
+
+  getCalculatedValues(props) {
+    let dataset = Data.getData(props);
+
+    if (Data.getData(props).length < 2) {
+      Log.warn("VictoryLine needs at least two data points to render properly.");
+      dataset = [];
+    }
+
+    const dataSegments = this.getDataSegments(dataset);
+    const scale = this.getScale(props);
+
     return { dataset, dataSegments, scale };
   },
 
@@ -77,13 +94,16 @@ export default {
     const orderedData = sortBy(dataset, "x");
     const segments = [];
     let segmentStartIndex = 0;
-    orderedData.forEach((datum, index) => {
+    let segmentIndex = 0;
+    for (let index = 0, len = orderedData.length; index < len; index++) {
+      const datum = orderedData[index];
       if (datum.y === null || typeof datum.y === "undefined") {
-        segments.push(orderedData.slice(segmentStartIndex, index));
+        segments[segmentIndex] = orderedData.slice(segmentStartIndex, index);
+        segmentIndex++;
         segmentStartIndex = index + 1;
       }
-    });
-    segments.push(orderedData.slice(segmentStartIndex, orderedData.length));
+    }
+    segments[segmentIndex] = orderedData.slice(segmentStartIndex, orderedData.length);
     return segments.filter((segment) => {
       return Array.isArray(segment) && segment.length > 0;
     });

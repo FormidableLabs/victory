@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom";
 import Ecology from "ecology";
 import { merge, random } from "lodash";
-import Radium, { Style } from "radium";
+import Radium from "radium";
 import * as docgen from "react-docgen";
 import { VictoryLine, VictoryScatter } from "../../src/index";
-import { VictoryTheme, appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
+import { appendLinkIcon, ecologyPlaygroundLoading } from "formidable-landers";
 
 class Docs extends React.Component {
   render() {
@@ -17,8 +17,9 @@ class Docs extends React.Component {
           scope={{ merge, random, React, ReactDOM, VictoryLine, VictoryScatter }}
           playgroundtheme="elegant"
           customRenderers={merge(appendLinkIcon, ecologyPlaygroundLoading)}
+          exportGist
+          copyToClipboard
         />
-        <Style rules={VictoryTheme}/>
       </div>
     );
   }

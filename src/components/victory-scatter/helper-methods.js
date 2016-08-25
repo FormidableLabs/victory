@@ -6,28 +6,30 @@ import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "scatter");
+    const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale } = calculatedValues;
-    const { height, width } = modifiedProps;
-    const parentProps = {style: style.parent, scale, data, height, width};
-    return data.reduce((memo, datum, index) => {
+    const childProps = { parent: {
+      style: style.parent, scale, data, height: props.height, width: props.width
+    }};
+    for (let index = 0, len = data.length; index < len; index++) {
+      const datum = data[index];
       const eventKey = datum.eventKey;
       const x = scale.x(datum.x);
       const y = scale.y(datum.y);
-      const size = this.getSize(datum, modifiedProps, calculatedValues);
-      const symbol = this.getSymbol(datum, modifiedProps);
-      const dataStyle = this.getDataStyles(datum, style.data);
       const dataProps = {
-        x, y, size, scale, datum, symbol, index, style: dataStyle
+        x, y, datum, index, scale,
+        size: this.getSize(datum, props, calculatedValues),
+        symbol: this.getSymbol(datum, props),
+        style: this.getDataStyles(datum, style.data)
       };
 
-      const text = this.getLabelText(modifiedProps, datum, index);
-      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const text = this.getLabelText(props, datum, index);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
       const labelProps = {
         style: labelStyle,
         x,
-        y: y - labelStyle.padding,
+        y: y - (labelStyle.padding || 0),
         text,
         index,
         scale,
@@ -36,17 +38,17 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || "end",
         angle: labelStyle.angle
       };
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.scatter ? props.theme.scatter
-    : fallbackProps.style;
+  getCalculatedValues(props) {
+    const defaultStyles = props.theme && props.theme.scatter && props.theme.scatter.style ?
+      props.theme.scatter.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const range = {

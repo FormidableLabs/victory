@@ -1,4 +1,4 @@
-import { includes, defaults, isFunction, range, without } from "lodash";
+import { includes, defaults, isFunction, range, without, assign } from "lodash";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -18,14 +18,16 @@ export default {
     if (axis && axis !== inherentAxis) {
       return undefined;
     }
+    let domain;
     if (Array.isArray(props.domain)) {
-      return Domain.padDomain(props.domain, props, axis);
+      domain = props.domain;
     } else if (props.domain && props.domain[inherentAxis]) {
-      return Domain.padDomain(props.domain[inherentAxis], props, axis);
+      domain = props.domain[inherentAxis];
     } else if (props.tickValues) {
-      return Domain.padDomain(Domain.getDomainFromTickValues(props), props, axis);
+      domain = Domain.getDomainFromTickValues(props);
     }
-    return undefined;
+    const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
+    return domain ? Domain.cleanDomain(paddedDomain, props, inherentAxis) : undefined;
   },
 
   // exposed for use by VictoryChart
@@ -52,6 +54,7 @@ export default {
 
   getStyles(props, styleObject) {
     const style = props.style || {};
+    styleObject = styleObject || {};
     const parentStyleProps = { height: "auto", width: "100%" };
     return {
       parent: defaults(parentStyleProps, style.parent, styleObject.parent),
@@ -63,92 +66,126 @@ export default {
     };
   },
 
+  getTickProps(layout, style, tick) {
+    const { position, transform } = layout;
+    return {
+      x1: transform.x,
+      y1: transform.y,
+      x2: transform.x + position.x2,
+      y2: transform.y + position.y2,
+      style,
+      tick
+    };
+  },
+
+  getTickLabelProps(layout, style, tick, text) { // eslint-disable-line max-params
+    const { position, transform } = layout;
+    return {
+      style,
+      x: transform.x + position.x,
+      y: transform.y + position.y,
+      verticalAnchor: style.verticalAnchor,
+      textAnchor: style.textAnchor,
+      angle: style.angle,
+      text,
+      tick
+    };
+  },
+
+  getGridProps(layout, style, tick) {
+    const {edge, transform} = layout;
+    return {
+      x1: transform.x,
+      y1: transform.y,
+      x2: edge.x + transform.x,
+      y2: edge.y + transform.y,
+      style,
+      tick
+    };
+  },
+
+  getAxisProps(modifiedProps, calculatedValues, globalTransform) {
+    const { style, padding, isVertical } = calculatedValues;
+    const { width, height } = modifiedProps;
+    return {
+      style: style.axis,
+      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
+      x2: isVertical ? globalTransform.x : width - padding.right + globalTransform.x,
+      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
+      y2: isVertical ? height - padding.bottom + globalTransform.y : globalTransform.y
+    };
+  },
+
+  getLayoutProps(modifiedProps, calculatedValues) {
+    const offset = this.getOffset(modifiedProps, calculatedValues);
+    return {
+      globalTransform: this.getTransform(modifiedProps, calculatedValues, offset),
+      gridOffset: this.getGridOffset(modifiedProps, calculatedValues, offset),
+      gridEdge: this.getGridEdge(modifiedProps, calculatedValues)
+    };
+  },
+
+  getEvaluatedStyles(style, tick, index) {
+    return {
+      tickStyle: Helpers.evaluateStyle(style.ticks, tick, index),
+      labelStyle: Helpers.evaluateStyle(style.tickLabels, tick, index),
+      gridStyle: Helpers.evaluateStyle(style.grid, tick, index)
+    };
+  },
+
   getBaseProps(props, fallbackProps) {
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "axis");
+    const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, padding, orientation, isVertical, scale, ticks, tickFormat,
+      style, orientation, isVertical, scale, ticks, tickFormat,
       stringTicks, anchors
     } = calculatedValues;
 
-    const { width, height } = modifiedProps;
-    const offset = this.getOffset(modifiedProps, calculatedValues);
+    const {
+      globalTransform, gridOffset, gridEdge
+    } = this.getLayoutProps(props, calculatedValues);
 
-    const globalTransform = this.getTransform(modifiedProps, calculatedValues, offset);
+    const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
+    const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
 
-    const gridOffset = this.getGridOffset(modifiedProps, calculatedValues, offset);
-    const gridEdge = this.getGridEdge(modifiedProps, calculatedValues);
+    const childProps = { parent: {
+      style: style.parent, ticks, scale, width: props.width, height: props.height
+    }};
+    for (let index = 0, len = ticks.length; index < len; index++) {
+      const tick = stringTicks ? props.tickValues[(ticks[index]) - 1] : ticks[index];
 
-    const axisProps = {
-      style: style.axis,
-      x1: isVertical ? globalTransform.x : padding.left + globalTransform.x,
-      x2: isVertical ? globalTransform.x : modifiedProps.width - padding.right + globalTransform.x,
-      y1: isVertical ? padding.top + globalTransform.y : globalTransform.y,
-      y2: isVertical ? modifiedProps.height - padding.bottom + globalTransform.y : globalTransform.y
-    };
-
-    const parentProps = {style: style.parent, ticks, scale, width, height};
-    const axisLabelProps = this.getAxisLabelProps(modifiedProps, calculatedValues, globalTransform);
-
-    return ticks.reduce((memo, data, index) => {
-      const tick = stringTicks ? modifiedProps.tickValues[data - 1] : data;
-      const tickStyle = Helpers.evaluateStyle(style.ticks, tick, index);
-      const scaledTick = scale(data);
-      const tickPosition = this.getTickPosition(tickStyle, orientation, isVertical);
-      const tickTransform = {
-        x: isVertical ? globalTransform.x : scaledTick + globalTransform.x,
-        y: isVertical ? scaledTick + globalTransform.y : globalTransform.y
+      const styles = this.getEvaluatedStyles(style, tick, index);
+      const tickLayout = {
+        position: this.getTickPosition(styles.tickStyle, orientation, isVertical),
+        transform: this.getTickTransform(scale(ticks[index]), globalTransform, isVertical)
       };
 
-      const gridTransform = {
-        x: isVertical ? -gridOffset.x + globalTransform.x : scaledTick + globalTransform.x,
-        y: isVertical ? scaledTick + globalTransform.y : gridOffset.y + globalTransform.y
+      const gridLayout = {
+        edge: gridEdge,
+        transform: {
+          x: isVertical ?
+            -gridOffset.x + globalTransform.x : scale(ticks[index]) + globalTransform.x,
+          y: isVertical ?
+            scale(ticks[index]) + globalTransform.y : gridOffset.y + globalTransform.y
+        }
       };
 
-      const tickProps = {
-        x1: tickTransform.x,
-        y1: tickTransform.y,
-        x2: tickTransform.x + tickPosition.x2,
-        y2: tickTransform.y + tickPosition.y2,
-        style: tickStyle,
-        tick
-      };
-      const text = tickFormat(tick, index);
-      const labelStyle = Helpers.evaluateStyle(style.tickLabels, tick, index);
-      const tickLabelProps = {
-        style: labelStyle,
-        x: tickTransform.x + tickPosition.x,
-        y: tickTransform.y + tickPosition.y,
-        verticalAnchor: labelStyle.verticalAnchor || anchors.verticalAnchor,
-        textAnchor: labelStyle.textAnchor || anchors.textAnchor,
-        angle: labelStyle.angle,
-        text,
-        tick
-      };
-
-      const gridProps = {
-        x1: gridTransform.x,
-        y1: gridTransform.y,
-        x2: gridEdge.x + gridTransform.x,
-        y2: gridEdge.y + gridTransform.y,
-        style: Helpers.evaluateStyle(style.grid, tick, index),
-        tick
-      };
-
-      memo[index] = {
+      childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
-        ticks: tickProps,
-        tickLabels: tickLabelProps,
-        grid: gridProps
+        ticks: this.getTickProps(tickLayout, styles.tickStyle, tick),
+        tickLabels: this.getTickLabelProps(
+          tickLayout, assign({}, anchors, styles.labelStyle), tick, tickFormat(tick, index)
+        ),
+        grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
       };
-
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const defaultStyles = props.theme && props.theme.axis ? props.theme.axis : fallbackProps.style;
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyles = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
@@ -230,13 +267,14 @@ export default {
   },
 
   getLabelPadding(props, style) {
-    const labelStyle = style.axisLabel;
+    const labelStyle = style.axisLabel || {};
     if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
       return labelStyle.padding;
     }
     const isVertical = Axis.isVertical(props);
     // TODO: magic numbers
-    return props.label ? (labelStyle.fontSize * (isVertical ? 2.3 : 1.6)) : 0;
+    const fontSize = labelStyle.fontSize || 14;
+    return props.label ? (fontSize * (isVertical ? 2.3 : 1.6)) : 0;
   },
 
   getOffset(props, calculatedValues) {
@@ -245,7 +283,7 @@ export default {
     } = calculatedValues;
     const xPadding = orientation === "right" ? padding.right : padding.left;
     const yPadding = orientation === "top" ? padding.top : padding.bottom;
-    const fontSize = style.axisLabel.fontSize;
+    const fontSize = style.axisLabel.fontSize || 14;
     const offsetX = (props.offsetX !== null) && (props.offsetX !== undefined)
       ? props.offsetX : xPadding;
     const offsetY = (props.offsetY !== null) && (props.offsetY !== undefined)
@@ -253,7 +291,7 @@ export default {
     const tickSizes = ticks.map((data) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
       const tickStyle = Helpers.evaluateStyle(style.ticks, tick);
-      return tickStyle.size;
+      return tickStyle.size || 0;
     });
     const totalPadding = fontSize + (2 * Math.max(...tickSizes)) + labelPadding;
     const minimumPadding = 1.2 * fontSize; // TODO: magic numbers
@@ -276,13 +314,22 @@ export default {
   },
 
   getTickPosition(style, orientation, isVertical) {
-    const tickSpacing = style.size + style.padding;
+    const size = style.size || 0;
+    const padding = style.padding || 0;
+    const tickSpacing = size + padding;
     const sign = orientationSign[orientation];
     return {
       x: isVertical ? sign * tickSpacing : 0,
-      x2: isVertical ? sign * style.size : 0,
+      x2: isVertical ? sign * size : 0,
       y: isVertical ? 0 : sign * tickSpacing,
-      y2: isVertical ? 0 : sign * style.size
+      y2: isVertical ? 0 : sign * size
+    };
+  },
+
+  getTickTransform(tick, globalTransform, isVertical) {
+    return {
+      x: isVertical ? globalTransform.x : tick + globalTransform.x,
+      y: isVertical ? tick + globalTransform.y : globalTransform.y
     };
   },
 

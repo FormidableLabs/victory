@@ -1,36 +1,35 @@
-import { pick, omit, defaults } from "lodash";
-import { Helpers, Events } from "victory-core";
+import { assign, pick, omit, defaults } from "lodash";
+import { Helpers, Events, Log } from "victory-core";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
-    const modifiedProps = props.theme && props.theme.candlestick ?
-    Helpers.modifyProps(props, fallbackProps, props.theme.candlestick.props) :
-    Helpers.modifyProps(props, fallbackProps);
-    const calculatedValues = this.getCalculatedValues(modifiedProps, fallbackProps);
+    props = Helpers.modifyProps(props, fallbackProps, "candlestick");
+    const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale } = calculatedValues;
-    const { groupComponent, width, height, padding } = modifiedProps;
-    const parentProps = {scale, width, height, data, style: style.parent};
-    return data.reduce((memo, datum, index) => {
-      const eventKey = datum.eventKey;
+    const { groupComponent, width, height, padding } = props;
+    const childProps = {parent: {scale, width, height, data, style: style.parent}};
+    for (let index = 0, len = data.length; index < len; index++) {
+      const datum = data[index];
+      const eventKey = datum.eventKey || index;
       const x = scale.x(datum.x);
-      const y1 = scale.y(datum.y[2]);
-      const y2 = scale.y(datum.y[3]);
-      const candleHeight = Math.abs(scale.y(datum.y[0]) - scale.y(datum.y[1]));
-      const y = scale.y(Math.max(datum.y[0], datum.y[1]));
-      const dataStyle = Object.assign(this.getDataStyles(datum, style.data, modifiedProps));
+      const y1 = scale.y(datum.high);
+      const y2 = scale.y(datum.low);
+      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
+      const y = scale.y(Math.max(datum.open, datum.close));
+      const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
         index, style: dataStyle, padding, width
       };
 
-      const text = this.getLabelText(modifiedProps, datum, index);
-      const labelStyle = this.getLabelStyle(style.labels, dataProps);
+      const text = this.getLabelText(props, datum, index);
+      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
       const labelProps = {
         style: labelStyle,
-        x: x - labelStyle.padding,
-        y: y - labelStyle.padding,
+        x: x - (labelStyle.padding || 0),
+        y: y - (labelStyle.padding || 0),
         text,
         index,
         scale,
@@ -39,16 +38,19 @@ export default {
         verticalAnchor: labelStyle.verticalAnchor || "end",
         angle: labelStyle.angle
       };
-      memo[eventKey] = {
+      childProps[eventKey] = {
         data: dataProps,
         labels: labelProps
       };
-      return memo;
-    }, {parent: parentProps});
+    }
+    return childProps;
   },
 
-  getCalculatedValues(props, fallbackProps) {
-    const style = Helpers.getStyles(props.style, fallbackProps.style, "auto", "100%");
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
+      theme.candlestick.style : {};
+    const style = Helpers.getStyles(props.style, defaultStyle, "auto", "100%");
     const data = Events.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -66,7 +68,11 @@ export default {
   },
 
   getData(props) {
-    const data = props.data;
+    if (!props.data || props.data.length < 1) {
+      Log.warn("This is an empty dataset.");
+      return [];
+    }
+
     const accessor = {
       x: Helpers.createAccessor(props.x),
       open: Helpers.createAccessor(props.open),
@@ -74,17 +80,18 @@ export default {
       high: Helpers.createAccessor(props.high),
       low: Helpers.createAccessor(props.low)
     };
-    return data.map((datum) => {
+
+    return props.data.map((datum) => {
       const x = accessor.x(datum);
       const open = accessor.open(datum);
       const close = accessor.close(datum);
       const high = accessor.high(datum);
       const low = accessor.low(datum);
       const y = [open, close, high, low];
-      return Object.assign(
+      return assign(
         {},
         datum,
-        {x, y}
+        {x, y, open, close, high, low}
         );
     });
   },
@@ -102,15 +109,20 @@ export default {
          memo.concat(...datum[axis]) : memo.concat(datum[axis]);
       },
       []);
+
+      if (allData.length < 1) {
+        return Scale.getBaseScale(props, axis).domain();
+      }
+
       const min = Math.min(...allData);
       const max = Math.max(...allData);
       if (min === max) {
-        const adjustedMax = max === 0 ? 1 : max;
+        const adjustedMax = max === 0 ? 1 : max + max;
         return [0, adjustedMax];
       }
       domain = [min, max];
     }
-    return Domain.padDomain(domain, props, axis);
+    return Domain.cleanDomain(Domain.padDomain(domain, props, axis), props);
   },
 
   isTransparent(attr) {
@@ -118,20 +130,16 @@ export default {
   },
 
   getDataStyles(datum, style, props) {
+    style = style || {};
     const stylesFromData = omit(datum, [
       "x", "y", "size", "name", "label", "open", "close", "high", "low"
     ]);
-    const fillCheck = datum.fill || style.fill;
-    const strokeCheck = datum.stroke || style.stroke;
     const candleColor = datum.open > datum.close ?
-            props.candleColors.negative : props.candleColors.positive;
-    const transparentCheck = this.isTransparent(datum.stroke) ||
-    this.isTransparent(style.stroke);
-    const strokeColor = fillCheck || transparentCheck ? fillCheck || candleColor
-    : strokeCheck;
-    const baseDataStyle = defaults({}, stylesFromData,
-      {stroke: strokeColor || candleColor, fill: fillCheck || candleColor},
-      style);
+      props.candleColors.negative : props.candleColors.positive;
+    const fill = datum.fill || style.fill || candleColor;
+    const strokeColor = datum.stroke || style.stroke;
+    const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
+    const baseDataStyle = defaults({}, stylesFromData, {stroke, fill}, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);
   },
 
@@ -142,6 +150,7 @@ export default {
   },
 
   getLabelStyle(labelStyle, dataProps) {
+    labelStyle = labelStyle || {};
     const { datum, size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;

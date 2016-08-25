@@ -1,4 +1,67 @@
-# VictoryLine Changelog
+# VictoryChart Changelog
+
+## 11.0.1 (2016-08-21)
+
+- Refactors ClipPath component to make it easier to write a native version.
+
+## 11.0.0 (2016-08-18)
+
+**This release includes breaking changes for Themes**
+- Updates the VictoryTheme API to more closely match the props object
+- Uses `VictoryTheme.grayscale` for default styling
+- Fixes a bug related to bar width
+- Improves performance by simplifying scale type checking for VictoryBar and VictoryArea
+- Fixes default transitions for VictoryBar and VictoryArea
+- Adds documentation for VictoryTheme
+
+## 10.3.0 (2016-08-11)
+
+- Improved animation for continuous data components (_i.e._ VictoryLine, VictoryArea) using clipPath
+- Support for arrays of `childName` in events
+- Adds `displayName` to all component for ease of debugging / testing
+
+## 10.2.6 (2016-08-04)
+
+- Fix bug in automatic domainPadding
+- Fix bug in generated data
+- Fix bug in domainPadding for stacked charts
+- Fix colorScale in wrapped components
+
+## 10.2.5 (2016-08-02)
+
+- Fix animation bug in VictoryCandlestick 
+- Fix label bug in VictoryCandlestick
+- Fix style bug in VictoryCandlestick
+- Fix axis orientation for negative charts
+- Clean up documentation
+
+## 10.2.4 (2016-08-01)
+
+- Fix label style bug
+
+## 10.2.3 (2016-08-01)
+
+- Fix minor errorbar bug
+
+## 10.2.2 (2016-07-29)
+
+- Fix tick style bug
+
+## 10.2.1 (2016-07-29)
+
+- Update `victory-core`
+- Removes `reduce-calc-css`
+
+## 10.2.0 (2016-07-29)
+
+- Performance improvements across all components
+- Supports asymmetric `domainPadding`
+- Supports `domainPadding` on all child components
+- Adds automatic `domainPadding` for grouped bars
+- Fixes [bugs related to log scales](https://github.com/FormidableLabs/victory-chart/pull/317)
+- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318) 
+- Improves consistency for charts with empty and single value data arrays
+
 ## 10.1.0 (2016-07-15)
 
 - Adds VictoryErrorBar

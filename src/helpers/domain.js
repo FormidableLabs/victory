@@ -1,6 +1,7 @@
-import { flatten, includes } from "lodash";
+import { flatten, includes, isPlainObject } from "lodash";
 import Data from "./data";
 import Axis from "./axis";
+import Scale from "./scale";
 import { Helpers, Collection } from "victory-core";
 
 export default {
@@ -15,28 +16,51 @@ export default {
     }
     const dataset = Data.getData(props);
     const domain = this.getDomainFromData(props, axis, dataset);
-    return this.padDomain(domain, props, axis);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
+  },
+
+  cleanDomain(domain, props, axis) {
+    // Some scale types break when certain data is supplies. This method will
+    // remove data points that break scales. So far this method only removes
+    // zeroes for log scales
+    // TODO other cases?
+    const scaleType = Scale.getScaleType(props, axis);
+
+    if (scaleType !== "log") {
+      return domain;
+    }
+
+    const rules = (dom) => {
+      const almostZero = dom[0] < 0 || dom[1] < 0 ? -1 / Number.MAX_SAFE_INTEGER
+      : 1 / Number.MAX_SAFE_INTEGER;
+      const domainOne = dom[0] === 0 ? almostZero : dom[0];
+      const domainTwo = dom[1] === 0 ? almostZero : dom[1];
+      return [domainOne, domainTwo];
+    };
+
+    return rules(domain);
   },
 
   getDomainWithZero(props, axis) {
     const propsDomain = this.getDomainFromProps(props, axis);
     if (propsDomain) {
-      return this.padDomain(propsDomain, props, axis);
+      return this.cleanDomain(this.padDomain(propsDomain, props, axis), props, axis);
     }
     const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      const zeroDomain = isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)]
-      : domain;
+      const min = Collection.getMinValue(domain, 0);
+      const max = Collection.getMaxValue(domain, 0);
+      const zeroDomain = isDependent ? [min, max] : domain;
       return this.padDomain(zeroDomain, props, axis);
     };
     const categoryDomain = this.getDomainFromCategories(props, axis);
     if (categoryDomain) {
-      return this.padDomain(ensureZero(categoryDomain), props, axis);
+      return this.cleanDomain(this.padDomain(ensureZero(categoryDomain), props, axis), props, axis);
     }
     const dataset = Data.getData(props);
     const domain = ensureZero(this.getDomainFromData(props, axis, dataset));
-    return this.padDomain(domain, props, axis);
+    return this.cleanDomain(this.padDomain(domain, props, axis), props, axis);
   },
 
   getDomainFromProps(props, axis) {
@@ -50,12 +74,17 @@ export default {
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
     const allData = flatten(dataset).map((datum) => datum[currentAxis]);
-    const min = Math.min(...allData);
-    const max = Math.max(...allData);
+
+    if (allData.length < 1) {
+      return Scale.getBaseScale(props, axis).domain();
+    }
+
+    const min = Collection.getMinValue(allData);
+    const max = Collection.getMaxValue(allData);
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
     if (min === max) {
-      const adjustedMax = max === 0 ? 1 : max;
+      const adjustedMax = max === 0 ? 1 : max + max;
       return [0, adjustedMax];
     }
     return [min, max];
@@ -160,26 +189,40 @@ export default {
     return categories.length === 0 ? _dataByIndex() : _dataByCategory();
   },
 
+  getDomainPadding(props, axis) {
+    const formatPadding = (padding) => {
+      return Array.isArray(padding) ?
+        {left: padding[0], right: padding[1]} : {left: padding, right: padding};
+    };
+
+    return isPlainObject(props.domainPadding) ?
+      formatPadding(props.domainPadding[axis]) : formatPadding(props.domainPadding);
+  },
+
   padDomain(domain, props, axis) {
     if (!props.domainPadding) {
       return domain;
     }
-    const domainPadding = typeof props.domainPadding === "number" ?
-      props.domainPadding : props.domainPadding[axis];
 
-    if (!domainPadding) {
+    const padding = this.getDomainPadding(props, axis);
+    if (!padding.left && !padding.right) {
       return domain;
     }
-    const domainMin = Math.min(...domain);
-    const domainMax = Math.max(...domain);
+
+    const domainMin = Collection.getMinValue(domain);
+    const domainMax = Collection.getMaxValue(domain);
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
-    const padding = Math.abs(domainMax - domainMin) * domainPadding / rangeExtent;
+
+    const paddingLeft = Math.abs(domainMax - domainMin) * padding.left / rangeExtent;
+    const paddingRight = Math.abs(domainMax - domainMin) * padding.right / rangeExtent;
     // don't make the axes cross if they aren't already
-    const adjustedMin = (domainMin >= 0 && (domainMin - padding) <= 0) ?
-      0 : domainMin.valueOf() - padding;
-    const adjustedMax = (domainMax <= 0 && (domainMax + padding) >= 0) ?
-      0 : domainMax.valueOf() + padding;
+    const adjustedMin = (domainMin >= 0 && (domainMin - paddingLeft) <= 0) ?
+      0 : domainMin.valueOf() - paddingLeft;
+
+    const adjustedMax = (domainMax <= 0 && (domainMax + paddingRight) >= 0) ?
+      0 : domainMax.valueOf() + paddingRight;
+
     return domainMin instanceof Date || domainMax instanceof Date ?
       [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
   },
@@ -194,11 +237,9 @@ export default {
       orientations[otherAxis] === defaultOrientation(axis) :
       orientations[otherAxis] === defaultOrientation(otherAxis);
     if (flippedAxis) {
-      return standardOrientation ?
-        domain.concat().reverse() : domain;
+      return standardOrientation ? domain.concat().reverse() : domain;
     } else {
-      return standardOrientation ?
-        domain : domain.concat().reverse();
+      return standardOrientation ? domain : domain.concat().reverse();
     }
   }
 };

@@ -79,7 +79,7 @@ export default class App extends React.Component {
   getBarTransitionData() {
     const bars = random(6, 10);
     return range(bars).map((bar) => {
-      return {x: bar, y: random(2, 10)};
+      return {x: bar + 1, y: random(2, 10)};
     });
   }
 
@@ -87,7 +87,7 @@ export default class App extends React.Component {
     const bars = random(3, 5);
     return range(4).map(() => {
       return range(bars).map((bar) => {
-        return {x: bar, y: random(2, 10)};
+        return {x: bar + 1, y: random(2, 10)};
       });
     });
   }
@@ -101,7 +101,7 @@ export default class App extends React.Component {
         multiTransitionData: this.getMultiTransitionData(),
         numericBarData: this.getNumericBarData()
       });
-    }, 2000);
+    }, 3000);
   }
 
   componentWillUnmount() {
@@ -109,18 +109,49 @@ export default class App extends React.Component {
   }
 
   render() {
-    const parentStyle = {
-      border: "1px solid #ccc",
-      margin: "2%",
-      maxWidth: "40%"
-    };
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
 
     return (
       <div className="demo">
         <h1>VictoryBar</h1>
+
+        <ChartWrap scale={{x: "log", y: "linear"}}>
+          <VictoryBar
+            scale={{x: "log", y: "linear"}}
+            horizontal
+            data={[
+              {x: 1, y: 0.1},
+              {x: 2, y: 1},
+              {x: 3, y: 10},
+              {x: 4, y: 100},
+              {x: 5, y: 0.1},
+              {x: 6, y: 1},
+              {x: 7, y: 10},
+              {x: 8, y: 100}
+            ]}
+          />
+        </ChartWrap>
+
+        <ChartWrap scale={{x: "linear", y: "log"}}>
+          <VictoryBar
+            style={{data: {width: 15, fill: "red"}}}
+            scale={{x: "linear", y: "log"}}
+            data={[
+              {x: 1, y: 0.1},
+              {x: 2, y: 1},
+              {x: 3, y: 10},
+              {x: 4, y: 100},
+              {x: 5, y: 0.1},
+              {x: 6, y: 1},
+              {x: 7, y: 10},
+              {x: 8, y: 100}
+            ]}
+          />
+        </ChartWrap>
         <ChartWrap>
           <VictoryBar
             horizontal
+            labels={(d) => d.y}
             data={[
               {x: 1, y: "Label 1"},
               {x: 7, y: "Label 2"},
@@ -131,20 +162,21 @@ export default class App extends React.Component {
         </ChartWrap>
 
         <ChartWrap>
+          <VictoryBar horizontal
+            labels={(d) => d.y}
+            data={[ {x: 1, y: 20}, {x: 7, y: -40}, {x: 3, y: -60}, {x: 4, y: 80} ]}
+          />
+        </ChartWrap>
+
+        <ChartWrap>
           <VictoryBar
-            horizontal
-            data={[
-              {x: 1, y: 20},
-              {x: 7, y: 40},
-              {x: 3, y: 60},
-              {x: 4, y: 80}
-            ]}
+            labels={(d) => d.y}
+            data={[ {x: 1, y: 20}, {x: 7, y: -40}, {x: 3, y: -60}, {x: 4, y: 80} ]}
           />
         </ChartWrap>
 
         <VictoryChart
-          style={{ parent: parentStyle }}
-          theme={VictoryTheme.material}
+          domainPadding={{x: 20}}
         >
           <VictoryBar
             horizontal
@@ -160,6 +192,7 @@ export default class App extends React.Component {
         <VictoryChart
           style={{ parent: parentStyle }}
           theme={VictoryTheme.material}
+          scale={{x: "linear", y: "log"}}
         >
           <VictoryBar
             horizontal
@@ -174,11 +207,9 @@ export default class App extends React.Component {
 
         <VictoryBar
           style={{
-            data: {width: 10},
             parent: parentStyle,
             labels: {angle: 45, verticalAnchor: "end", textAnchor: "end"}
           }}
-          domainPadding={100}
           labels={() => "HELLO"}
           animate={{
             duration: 500,
@@ -217,30 +248,27 @@ export default class App extends React.Component {
           data={this.state.barTransitionData}
         />
         <VictoryStack
-          animate={{duration: 1000}}
-          labels={["uno", "dos", "tres", "cuatro", "cinco"]}
           style={{parent: parentStyle}}
-          theme={VictoryTheme.material}
+          animate={{duration: 1000}}
         >
           {this.state.multiTransitionData.map((data, index) => {
-            return (
-              <Wrapper key={index}>
-                <VictoryBar data={data} />
-              </Wrapper>
-            );
+            return <Wrapper key={index}><VictoryBar data={data} colorScale={"warm"}/></Wrapper>;
           })}
         </VictoryStack>
 
-        <VictoryGroup
-          offset={15}
-          style={{parent: parentStyle}}
-          animate={{duration: 1000}}
-          colorScale={"qualitative"}
+        <VictoryChart style={{parent: parentStyle}} domainPadding={{x: 30}}
+          theme={VictoryTheme.material}
         >
-          {this.state.multiTransitionData.map((data, index) => {
-            return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
-          })}
-        </VictoryGroup>
+          <VictoryGroup
+            offset={15}
+            animate={{duration: 1000}}
+            colorScale={"warm"}
+          >
+            {this.state.multiTransitionData.map((data, index) => {
+              return <Wrapper key={index}><VictoryBar key={index} data={data}/></Wrapper>;
+            })}
+          </VictoryGroup>
+        </VictoryChart>
 
         <VictoryGroup
           style={{parent: parentStyle}} offset={18}
@@ -430,7 +458,7 @@ export default class App extends React.Component {
           </VictorySharedEvents>
         </svg>
         <VictoryBar
-          theme={VictoryTheme.material}
+          theme={VictoryTheme.grayscale}
           style={{
             parent: parentStyle,
             data: {fill: "blue"}
@@ -478,6 +506,20 @@ export default class App extends React.Component {
             }
           ]}
         />
+
+        <VictoryChart>
+          <VictoryBar horizontal
+            data={[
+              {x: 21, y: "Label 1"},
+              {x: 28, y: "Label 2"},
+              {x: 35, y: "Label 3"},
+              {x: 40, y: "Label 4"}
+            ]}
+            x={"y"}
+            y={"x"}
+          />
+        </VictoryChart>
+
       </div>
     );
   }
@@ -496,16 +538,16 @@ class ChartWrap extends React.Component {
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once
   render() {
-    const parentStyle = {
-      border: "1px solid #ccc",
-      margin: "2%",
-      maxWidth: "40%"
-    };
-    const props = Object.assign({}, this.props, {style: {parent: parentStyle}});
+    const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
+    const childProps = this.props.children.props;
+    const style = Object.assign({}, childProps.style, {parent: parentStyle});
+    const props = Object.assign({}, childProps, {style});
     return (
       <div>
         {React.cloneElement(this.props.children, props)}
-        <VictoryChart {...props}>{this.props.children}</VictoryChart>
+        <VictoryChart {...this.props} style={{parent: parentStyle}}>
+          {this.props.children}
+        </VictoryChart>
       </div>
     );
   }

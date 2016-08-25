@@ -50,6 +50,7 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a set 
 ```playground
 <VictoryGroup
   height={500}
+  colorScale={"warm"}
   style={{data: {opacity: 0.3}}}
 >
   <VictoryArea
@@ -79,7 +80,10 @@ Wrap several VictoryArea components in the VictoryGroup wrapper to create a set 
 Wrap several VictoryArea components in the VictoryGroup wrapper to create a stacked layout. The y domain is automatically set to account for the cumulative maximum of the data:
 
 ```playground
-<VictoryStack height={500}>
+<VictoryStack 
+  colorScale={"warm"}
+  height={500}
+>
   <VictoryArea
     data={[
       {x: 1, y: 1},
@@ -110,7 +114,7 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 
 ```playground
 <VictoryStack
-  height={800}
+  height={500}
   style={{ data: {
     strokeDasharray: "5,5",
     strokeWidth: 2,
@@ -155,7 +159,7 @@ The sensible defaults VictoryArea provides makes it easy to get started, but eve
 To create markers and labels for individual data points along an area, just compose VictoryArea with VictoryScatter.
 
 ```playground
-<svg viewBox="0 0 500 300" width="100%">
+<svg height={300} width={500}>
   <VictoryArea
     width={500}
     height={300}
@@ -207,7 +211,7 @@ To create markers and labels for individual data points along an area, just comp
 
 ### Events
 
-Use the `events` prop to attach events to specific elements in VictoryArea. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryArea events. 
+Use the `events` prop to attach events to specific elements in VictoryArea. The `events` prop takes an array of event objects, each of which is composed of a `target`, an `eventKey`, and `eventHandlers`. `target` may be any valid style namespace for a given component, so `parent`, `data` and `labels` are all valid targets for VictoryArea events.
 
 
 Since VictoryArea only renders a single element, the `eventKey` property is not used. The `eventHandlers` object should be given as an object whose keys are standard event names (i.e. `onClick`) and whose values are event callbacks. The return value of an event handler is used to modify elements. The return value should be given as an object or an array of objects with optional `eventKey` and `target` keys, and a `mutation` key whose value is a function. The `eventKey` and `target` keys will default to values corresponding to the element the event handler was attached to. The `mutation` function will be called with the calculated props for the individual selected element (_i.e._ a single label), and the object returned from the mutation function will override the props of the selected element via object assignment. VictoryArea may also be used with the `VictorySharedEvents` wrapper.
@@ -232,7 +236,7 @@ Since VictoryArea only renders a single element, the `eventKey` property is not 
       onClick: () => {
         return [{
           mutation: (props) => {
-            return  props.style.fill === "orange" ? 
+            return  props.style.fill === "orange" ?
               {} :
               {style: merge({}, props.style, {fill: "orange"})};
           }

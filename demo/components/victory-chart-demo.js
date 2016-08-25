@@ -5,7 +5,7 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
-import { VictoryLabel, VictoryContainer, VictoryTheme } from "victory-core";
+import { VictoryLabel, VictoryTheme } from "victory-core";
 import { assign } from "lodash";
 
 
@@ -179,10 +179,15 @@ class App extends React.Component {
         <h1>VictoryChart</h1>
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}>
+            <VictoryScatter
+              data={[{x: 0, y: 0}, {x: -2, y: -2}, {x: -3, y: -3}]}
+            />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle} domainPadding={{x: [0, 20]}}>
             <VictoryAxis
               dependentAxis
               style={axisStyle}
-              tickCount={0}
             />
           <VictoryAxis style={axisStyle} tickCount={6} />
             <VictoryBar
@@ -200,7 +205,7 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle}>
+          <VictoryChart style={chartStyle} domainPadding={{y: [0, 20]}}>
             <VictoryBar
               horizontal
               style={{data: {fill: "tomato"}}}
@@ -332,17 +337,10 @@ class App extends React.Component {
           <VictoryChart
             style={chartStyle}
             animate={{ duration: 1500 }}
-            containerComponent={
-              <VictoryContainer
-                desc="This is an example of a bar chart wrapped in Victory Chart."
-              />
-            }
           >
-          <Wrapper>
-            <VictoryBar
+            <VictoryLine
               data={this.state.barTransitionData}
             />
-            </Wrapper>
           </VictoryChart>
 
           <VictoryChart style={chartStyle} animate={{ duration: 1500 }}>

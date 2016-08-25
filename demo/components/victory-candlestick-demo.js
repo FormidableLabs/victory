@@ -72,7 +72,6 @@ export default class App extends React.Component {
           data={data}
           size={8}
           standalone={false}
-          domainPadding={100}
           events={[{
             target: "labels",
             eventHandlers: {
@@ -108,7 +107,6 @@ export default class App extends React.Component {
         />
         <VictoryAxis
           standalone={false}
-          domainPadding={20}
         />
         </svg>
 
@@ -156,6 +154,7 @@ export default class App extends React.Component {
           style={{
             parent: style.parent
           }}
+          domainPadding={{x: [20, 50]}}
         >
           <VictoryCandlestick
             candleColors={{positive: "#8BC34A", negative: "#C62828"}}
@@ -177,6 +176,12 @@ export default class App extends React.Component {
         <VictoryCandlestick
           size={1}
         />
+
+        <VictoryChart>
+          <VictoryCandlestick
+            data={[]}
+          />
+        </VictoryChart>
 
       </div>
     );

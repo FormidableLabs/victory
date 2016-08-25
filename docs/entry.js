@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { Router, Route, browserHistory } from "react-router";
+import { Router, Route, hashHistory } from "react-router";
 import App from "./app";
 import AreaDocs from "./victory-area/docs";
 import AxisDocs from "./victory-axis/docs";
@@ -10,11 +10,12 @@ import LineDocs from "./victory-line/docs";
 import ScatterDocs from "./victory-scatter/docs";
 import CandlestickDocs from "./victory-candlestick/docs";
 import ErrorBarDocs from "./victory-errorbar/docs";
+import ThemeDocs from "./victory-theme/docs";
 
 const content = document.getElementById("content");
 
 ReactDOM.render((
-  <Router history={browserHistory}>
+  <Router history={hashHistory}>
     <Route path="/" component={App}>
       <Route path="area" component={AreaDocs}/>
       <Route path="axis" component={AxisDocs}/>
@@ -24,6 +25,7 @@ ReactDOM.render((
       <Route path="scatter" component={ScatterDocs}/>
       <Route path="candlestick" component={CandlestickDocs}/>
       <Route path="errorbar" component={ErrorBarDocs}/>
+      <Route path="theme" component={ThemeDocs}/>
     </Route>
   </Router>
 ), content);

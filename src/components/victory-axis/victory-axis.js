@@ -1,59 +1,24 @@
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import AxisLine from "./axis-line";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    axis: {
-      fill: "none",
-      stroke: "#252525",
-      strokeWidth: 1,
-      strokeLinecap: "round"
-    },
-    axisLabel: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 25,
-      stroke: "transparent"
-    },
-    grid: {
-      fill: "none",
-      stroke: "transparent",
-      strokeLinecap: "round"
-    },
-    ticks: {
-      fill: "none",
-      padding: 10,
-      size: 1,
-      stroke: "none",
-      strokeWidth: 1,
-      strokeLinecap: "round"
-    },
-    tickLabels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent"
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 export default class VictoryAxis extends React.Component {
+  static displayName = "VictoryAxis";
+
   static role = "axis";
+
   static defaultTransitions = {
     onExit: {
       duration: 500
@@ -108,8 +73,14 @@ export default class VictoryAxis extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -169,6 +140,7 @@ export default class VictoryAxis extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
       ]),
@@ -332,7 +304,7 @@ export default class VictoryAxis extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryAxis will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -342,8 +314,7 @@ export default class VictoryAxis extends React.Component {
     * Victory. When using VictoryAxis as a solo component, implement the theme directly on
     * VictoryAxis. If you are wrapping VictoryAxis in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -360,9 +331,9 @@ export default class VictoryAxis extends React.Component {
     tickLabelComponent: <VictoryLabel/>,
     tickComponent: <AxisLine type={"tick"}/>,
     gridComponent: <AxisLine type={"grid"}/>,
-    padding: 50,
     scale: "linear",
     standalone: true,
+    theme: VictoryTheme.grayscale,
     tickCount: 5,
     containerComponent: <VictoryContainer />,
     groupComponent: <g/>
@@ -409,7 +380,7 @@ export default class VictoryAxis extends React.Component {
       props.axisComponent.props,
       baseProps ? baseProps.axis : null
     );
-    return React.cloneElement(props.axisComponent, Object.assign(
+    return React.cloneElement(props.axisComponent, assign(
       {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
     ));
   }
@@ -425,51 +396,55 @@ export default class VictoryAxis extends React.Component {
       props.axisLabelComponent.props,
       baseProps ? baseProps.axisLabel : null
     );
-    return React.cloneElement(props.axisLabelComponent, Object.assign(
+    return React.cloneElement(props.axisLabelComponent, assign(
       {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
     ));
   }
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
-    return this.dataKeys.map((key) => {
+    const gridAndTickComponents = [];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const tickEvents = this.getEvents(props, "ticks", key);
       const tickProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "ticks"),
         this.getSharedEventState(key, "ticks"),
         tickComponent.props,
         this.baseProps[key].ticks
       );
-      const TickComponent = React.cloneElement(tickComponent, Object.assign(
+      const TickComponent = React.cloneElement(tickComponent, assign(
         {}, tickProps, {events: Events.getPartialEvents(tickEvents, key, tickProps)}
       ));
       const gridEvents = this.getEvents(props, "grid", key);
       const gridProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "grid"),
         this.getSharedEventState(key, "grid"),
         gridComponent.props,
         this.baseProps[key].grid
       );
-      const GridComponent = React.cloneElement(gridComponent, Object.assign(
+      const GridComponent = React.cloneElement(gridComponent, assign(
         {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
       ));
       const tickLabelProps = defaults(
-        {},
+        {index},
         this.getEventState(key, "tickLabels"),
         this.getSharedEventState(key, "tickLabels"),
         tickLabelComponent.props,
         this.baseProps[key].tickLabels
       );
       const tickLabelEvents = this.getEvents(props, "tickLabels", key);
-      const TickLabel = React.cloneElement(tickLabelComponent, Object.assign({
+      const TickLabel = React.cloneElement(tickLabelComponent, assign({
         events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
       }, tickLabelProps));
-      return React.cloneElement(
+
+      gridAndTickComponents[index] = React.cloneElement(
         props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
-    });
+    }
+    return gridAndTickComponents;
   }
 
   renderContainer(props, group) {
@@ -483,7 +458,7 @@ export default class VictoryAxis extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
@@ -499,8 +474,8 @@ export default class VictoryAxis extends React.Component {
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
+    const { animate, standalone, theme } = props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -511,22 +486,21 @@ export default class VictoryAxis extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.axis ? modifiedProps.theme.axis
-    : fallbackProps.style;
-    const style = AxisHelpers.getStyles(modifiedProps, styleObject);
+    const styleObject = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
+    const style = AxisHelpers.getStyles(props, styleObject);
     const children = [
-      ...this.renderGridAndTicks(modifiedProps),
-      this.renderLine(modifiedProps),
-      this.renderLabel(modifiedProps)
+      ...this.renderGridAndTicks(props),
+      this.renderLine(props),
+      this.renderLabel(props)
     ];
 
     const group = this.renderGroup(children, style.parent);
 
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

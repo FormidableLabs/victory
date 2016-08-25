@@ -43,7 +43,7 @@ export default class App extends React.Component {
       this.setState({
         data: getData()
       });
-    }, 10000);
+    }, 2000);
   }
 
   componentWillUnmount() {
@@ -149,6 +149,15 @@ export default class App extends React.Component {
           <VictoryErrorBar
             style={style}
             data={this.state.data}
+          />
+        </VictoryChart>
+
+        <VictoryChart
+          theme={VictoryTheme.material}
+        >
+          <VictoryErrorBar
+            style={style}
+            data={[]}
           />
         </VictoryChart>
       </div>

@@ -1,4 +1,4 @@
-VictoryCandlestick
+VictoryErrorBar
 =============
 
 Draw SVG error bar charts with [React][]. VictoryErrorBar is a composable component, so it doesn't include axes. Check out [VictoryChart][] for complete error bar charts and more.
@@ -50,21 +50,19 @@ The sensible defaults VictoryErrorBar provides makes it easy to get started, but
 
 ```playground
 <VictoryChart
-  height={600}
-  padding={75}
-  domainPadding={20}
+  domain={{x: [0, 5], y: [0, 5]}}
 >
   <VictoryErrorBar
     style={{
       data: {width: 30, stroke: "blue"},
-      labels: {fontSize: 24, padding: 40}
+      labels: {fontSize: 18}
     }}
     data={[
       {x: 1, y: 1, errorY: .1, label: "first"},
       {x: 2, y: 2, errorY: .1},
-      {x: 3, y: 3, errorY: [.2, .3], label: "third"},
+      {x: 3, y: 3, errorY: [.2, .3]},
       {x: 4, y: 4, errorY: .1},
-      {x: 5, y: 5, errorY: .2, label: "fifth"}
+      {x: 5, y: 5, errorY: .2, label: "last"}
     ]}
   />
 
@@ -82,12 +80,12 @@ Data objects can be styled directly for granular control
     labels: {fontSize: 20}
   }}
   data={[
-    {x: 1, y: 5, errorY: 0.1, errorX: [1, 2], label: "HI", stroke: "green"},
-    {x: 2, y: 15, errorY: 0.1, errorX: [2, 0], opacity: 0.5, stroke: "yellow"},
-    {x: 3, y: 10, errorY: 0.2, errorX: [2, 1], opacity: 0.75, label: "HELLO", stroke: "salmon"},
-    {x: 4, y: 20, errorY: 0.25, errorX: [3, 2], stroke: "pink"},
-    {x: 5, y: 30, errorY: 0.25, errorX: [2, 1], label: "HEY", stroke: "purple"},
-    {x: 6, y: 35, errorY: 0.35, errorX: [0, 3], stroke: "blue"}
+    {x: 1, y: 5, errorY: 1, stroke: "green"},
+    {x: 2, y: 15, errorY: 1, stroke: "gold"},
+    {x: 3, y: 10, errorY: 2, stroke: "salmon"},
+    {x: 4, y: 20, errorY: 3, stroke: "pink"},
+    {x: 5, y: 30, errorY: 3, stroke: "purple"},
+    {x: 6, y: 35, errorY: 4, stroke: "blue"}
   ]}
 />
 ```
@@ -102,7 +100,7 @@ Functional styles allow elements to determine their own styles based on data
     data: {
       strokeWidth: (data) => data.errorX ?
         5 : 1,
-        stroke: (data) => data.y > 3 ? "pink" : "purple"
+        stroke: (data) => data.y > 3 ? "red" : "blue"
     }
   }}
   data={[
@@ -124,26 +122,28 @@ The `eventKey` may optionally be used to select a single element by index rather
 
 ```playground
 <VictoryErrorBar
-  height={500}
-  padding={75}
-  style={{labels: {padding: 40}, data: {stroke: "orange"}}}
+  style={{data: {stroke: "orange"}}}
   data={[
-    {x: 1, y: 1, errorX: [1, 0.5], errorY: .1, label: "click me"},
-    {x: 2, y: 2, errorX: [1, 3], errorY: .1},
-    {x: 3, y: 3, errorX: [1, 3], errorY: [.2, .3]},
-    {x: 4, y: 2, errorX: [1, 0.5], errorY: .1, label: "click me too"},
-    {x: 5, y: 1, errorX: [1, 0.5], errorY: .2}
+    {x: 1, y: 1, errorX: 0.3, errorY: 0.3},
+    {x: 2, y: 2, errorX: 0.3, errorY: 0.3},
+    {x: 3, y: 3, errorX: 0.3, errorY: 0.3},
+    {x: 4, y: 4, errorX: 0.3, errorY: 0.3},
+    {x: 5, y: 5, errorX: 0.3, errorY: 0.3}
   ]}
   events={[{
-    target: "labels",
+    target: "data",
     eventHandlers: {
-      onClick: () => {
+      onMouseOver: () => {
         return [
           {
-            target: "data",
             mutation: (props) => {
+              const stroke = props.style.stroke;
+              const color = stroke === "orange" ?
+                "blue" : "orange";
               return {
-                style: merge({}, props.style, {stroke: "blue", strokeWidth: 2})
+                style: {
+                  stroke: color, strokeWidth: 2
+                }
               };
             }  
           }
@@ -171,34 +171,35 @@ class App extends React.Component {
   }
 
   getData() {
-    const n = random(1, 30)
+    const n = random(5, 10)
     return range(n).map((i) => {
       return {
-        x: i,
-        y: random(1, 10),
-        errorX: random(0, 2),
+        x: 5 * i,
+        y: 2 * i,
+        errorX: random(0.5, 2.5),
         errorY: random(0, 1),
         stroke: this.getColors()
       };
     });
   }
-  
+
   getColors(){
-    const colors = ["salmon", "pink", "lime", "aqua", "fuchsia"];
+    const colors = ["teal", "orange", "grey", "gold", "tomato"];
     return colors[random(0, 4)];
   }
-  
+
   componentDidMount() {
     setInterval(() => {
       this.setState({
         data: this.getData(),
       });
-    }, 1500);
+    }, 2500);
   }
 
   render() {
     return (
       <VictoryErrorBar
+        borderWidth={4}
         animate={{
           duration: 1000,
           onEnter: {

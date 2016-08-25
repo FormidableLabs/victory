@@ -1,36 +1,19 @@
 import React, { PropTypes } from "react";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import Candle from "./candle";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    height: 300,
-    width: 450,
-    candleColors: {
-      positive: "#ffffff",
-      negative: "#252525"
-    }
-  },
-  style: {
-    data: {
-      opacity: 1,
-      strokeWidth: 1,
-      stroke: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "end"
-    }
+  width: 450,
+  height: 300,
+  padding: 50,
+  candleColors: {
+    positive: "#ffffff",
+    negative: "#252525"
   }
 };
 
@@ -46,6 +29,8 @@ const defaultData = [
 ];
 
 export default class VictoryCandlestick extends React.Component {
+  static displayName = "VictoryCandlestick";
+
   static role = "candlestick";
 
   static defaultTransitions = {
@@ -99,8 +84,14 @@ export default class VictoryCandlestick extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -163,6 +154,7 @@ export default class VictoryCandlestick extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -378,7 +370,7 @@ export default class VictoryCandlestick extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryCandlestick will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -388,7 +380,7 @@ export default class VictoryCandlestick extends React.Component {
     * candleColors prop takes an object with keys positive and negative, which each take
     * a string that should be a color. Positive is for data points where close is higher
     * than open, and defaults to white, and negative (close < open) defaults to black.
-    * @example: candleColors={{positive: "purple", negative: "blue"}}
+    * @examples candleColors={{positive: "purple", negative: "blue"}}
     */
     candleColors: PropTypes.shape({
       positive: PropTypes.string,
@@ -406,14 +398,12 @@ export default class VictoryCandlestick extends React.Component {
     * When using VictoryCandlestick as a solo component, implement the theme directly on
     * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object
   };
 
   static defaultProps = {
-    padding: 50,
     samples: 50,
     scale: "linear",
     data: defaultData,
@@ -427,10 +417,7 @@ export default class VictoryCandlestick extends React.Component {
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    candleColors: {
-      positive: "green",
-      negative: "red"
-    }
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
@@ -465,20 +452,24 @@ export default class VictoryCandlestick extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryCandlestick;
-    return this.dataKeys.map((key, index) => {
+    const candleComponents = [];
+    const candleLabelComponents = [];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `${role}-${key}`, role: `${role}-${index}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`, index},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
         dataComponent.props
       );
-      const candleComponent = React.cloneElement(dataComponent, Object.assign(
+      candleComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
+
       const labelProps = defaults(
-        {key: `${role}-label-${key}`},
+        {key: `${role}-label-${key}`, index},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,
@@ -487,15 +478,15 @@ export default class VictoryCandlestick extends React.Component {
 
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const candleLabel = React.cloneElement(labelComponent, Object.assign({
+        candleLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return React.cloneElement(
-          groupComponent, {key: `candle-group-${key}`}, candleComponent, candleLabel
-        );
       }
-      return candleComponent;
-    });
+    }
+
+    return candleLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...candleComponents, ...candleLabelComponents) :
+      candleComponents;
   }
 
   renderContainer(props, group) {
@@ -509,7 +500,7 @@ export default class VictoryCandlestick extends React.Component {
     );
     return React.cloneElement(
       props.containerComponent,
-      Object.assign(
+      assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
       group
@@ -525,11 +516,9 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   render() {
-    const modifiedProps = this.props.theme && this.props.theme.candlestick
-      ? Helpers.modifyProps(this.props, fallbackProps, this.props.theme.candlestick.props)
-      : Helpers.modifyProps(this.props, fallbackProps);
+    const props = Helpers.modifyProps(this.props, fallbackProps, "candlestick");
 
-    const { animate, standalone, style } = modifiedProps;
+    const { animate, standalone, style, theme } = props;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -538,19 +527,20 @@ export default class VictoryCandlestick extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size",
+        "data", "domain", "height", "padding", "samples", "size",
         "style", "width", "x", "y"
       ];
       return (
-        <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, ...modifiedProps)}
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
+    const styleObject = theme && theme.candlestick && theme.candlestick.style ?
+      theme.candlestick.style : {};
+    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const baseStyle = Helpers.getStyles(style, fallbackProps.style, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

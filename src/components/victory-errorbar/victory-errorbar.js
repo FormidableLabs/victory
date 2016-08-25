@@ -1,35 +1,17 @@
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer
+  VictoryContainer, VictoryTheme
 } from "victory-core";
-import { defaults, isFunction, partialRight } from "lodash";
+import { assign, defaults, isFunction, partialRight } from "lodash";
 import ErrorBar from "./errorbar";
 import Data from "../../helpers/data";
 import ErrorBarHelpers from "./helper-methods";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      fill: "none",
-      opacity: 1,
-      strokeWidth: 2,
-      stroke: "#252525"
-    },
-    labels: {
-      fill: "#252525",
-      fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-      fontSize: 14,
-      letterSpacing: "0.04em",
-      padding: 10,
-      stroke: "transparent",
-      textAnchor: "start"
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50
 };
 
 const defaultData = [
@@ -40,6 +22,8 @@ const defaultData = [
 ];
 
 export default class VictoryErrorBar extends React.Component {
+  static displayName = "VictoryErrorBar";
+
   static role = "errorBar";
 
   static defaultTransitions = {
@@ -102,8 +86,14 @@ export default class VictoryErrorBar extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: PropTypes.number,
-        y: PropTypes.number
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
       PropTypes.number
     ]),
@@ -160,6 +150,7 @@ export default class VictoryErrorBar extends React.Component {
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -323,7 +314,7 @@ export default class VictoryErrorBar extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryErrorBar will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -333,8 +324,7 @@ export default class VictoryErrorBar extends React.Component {
     * When using VictoryErrorBar as a solo component, implement the theme directly on
     * VictoryErrorBar. If you are wrapping VictoryErrorBar in VictoryChart, VictoryStack, or
     * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -353,18 +343,17 @@ export default class VictoryErrorBar extends React.Component {
 
   static defaultProps = {
     data: defaultData,
-    padding: 50,
     scale: "linear",
     standalone: true,
     x: "x",
     y: "y",
     errorX: "errorX",
     errorY: "errorY",
-    borderWidth: 10,
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
@@ -399,20 +388,23 @@ export default class VictoryErrorBar extends React.Component {
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryErrorBar;
-    return this.dataKeys.map((key, index) => {
+    const errorBarComponents = [];
+    const errorBarLabelComponents = [];
+    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
+      const key = this.dataKeys[index];
       const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
-        {key: `${role}-${key}`, role: `${role}-${index}`},
+        {key: `${role}-${key}`, role: `${role}-${index}`, index},
         this.getEventState(key, "data"),
         this.getSharedEventState(key, "data"),
         this.baseProps[key].data,
         dataComponent.props
       );
-      const errorBarComponent = React.cloneElement(dataComponent, Object.assign(
+      errorBarComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
       const labelProps = defaults(
-        {key: `${role}-label-${key}`},
+        {key: `${role}-label-${key}`, index},
         this.getEventState(key, "labels"),
         this.getSharedEventState(key, "labels"),
         this.baseProps[key].labels,
@@ -420,15 +412,16 @@ export default class VictoryErrorBar extends React.Component {
       );
       if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", key);
-        const errorLabel = React.cloneElement(labelComponent, Object.assign({
+        errorBarLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)
         }, labelProps));
-        return React.cloneElement(
-          groupComponent, {key: `error-group-${key}`}, errorBarComponent, errorLabel
-        );
+
       }
-      return errorBarComponent;
-    });
+    }
+
+    return errorBarLabelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...errorBarComponents, ...errorBarLabelComponents) :
+      errorBarComponents;
   }
 
   renderGroup(children, style) {
@@ -458,8 +451,8 @@ export default class VictoryErrorBar extends React.Component {
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+    const props = Helpers.modifyProps(this.props, fallbackProps, "errorbar");
+    const { animate, style, standalone, theme } = props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -470,18 +463,17 @@ export default class VictoryErrorBar extends React.Component {
       ];
       return (
         <VictoryTransition animate={this.props.animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = modifiedProps.theme && modifiedProps.theme.errorbar
-    ? modifiedProps.theme.errorbar
-    : fallbackProps.style;
+    const styleObject = theme && theme.errorbar && theme.errorbar.style ?
+      theme.errorbar.style : {};
 
     const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyle.parent);
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
+    return standalone ? this.renderContainer(props, group) : group;
   }
 }

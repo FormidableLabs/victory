@@ -235,6 +235,15 @@ export default class App extends React.Component {
           x="a.x"
           y="a.b[0]y"
         />
+
+        <VictoryChart>
+          <VictoryScatter
+            style={style}
+            theme={VictoryTheme.material}
+            data={[]}
+          />
+        </VictoryChart>
+
       </div>
     );
   }

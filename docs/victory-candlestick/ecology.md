@@ -18,11 +18,11 @@ To display your own data, just pass in an array of data objects, or an array of 
 ```playground
 <VictoryCandlestick
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 1, open: 5, close: 10, high: 15, low: 0},
+    {x: 2, open: 15, close: 10, high: 20, low: 5},
+    {x: 3, open: 15, close: 20, high: 25, low: 10},
+    {x: 4, open: 20, close: 25, high: 30, low: 15},
+    {x: 5, open: 30, close: 25, high: 35, low: 20}
   ]}
 />
 ```
@@ -33,14 +33,16 @@ assign a property to x, open, close, high, or low, or process data on the fly.
 ```playground
 <VictoryCandlestick
   data={[
-    {date: new Date(2016, 8, 2), open: 5, close: 10, low: 0},
-    {date: new Date(2016, 8, 3), open: 15, close: 10, low: 5},
-    {date: new Date(2016, 8, 4), open: 15, close: 20, low: 10},
-    {date: new Date(2016, 8, 5), open: 25, close: 20, low: 15},
-    {date: new Date(2016, 8, 6), open: 25, close: 30, low: 20}
+    {date: new Date(2016, 8, 2), open: 5},
+    {date: new Date(2016, 8, 3), open: 15},
+    {date: new Date(2016, 8, 4), open: 15},
+    {date: new Date(2016, 8, 5), open: 25},
+    {date: new Date(2016, 8, 6), open: 25}
   ]}
   x={"date"}
-  high={(data) => (Math.max(data.open, data.close) + 10)}
+  close={(d) => d.open / 2 + 10}
+  high={(d) => d.open + 10}
+  low={(d) => d.open - 5}
 />
 ```
 
@@ -50,33 +52,37 @@ The sensible defaults VictoryCandlestick provides makes it easy to get started, 
 
 ```playground
 <VictoryChart
-  height={600}
+  height={500}
   padding={75}
   scale={{x: "time"}}
 >
   <VictoryAxis
-    scale="time"
-    tickFormat={(x) => (x.getMonth() + 1 + "/" + x.getDate())}
+    tickFormat={(x) => 
+      (x.getMonth() + "/" + x.getDate())
+    }
   />
 
-  <VictoryAxis
-    dependentAxis
-  />
+  <VictoryAxis dependentAxis/>
 
   <VictoryCandlestick
-    candleColors={{positive: "purple", negative: "blue"}}
-    style={{
-      data: {width: 30},
-      labels: {fontSize: 24}
+    candleColors={{
+      positive: "teal", negative: "tomato"
     }}
-    domain={{x: [new Date(2016, 5, 30), new Date(2016, 6, 6)]}}
+    style={{data: {width: 30}}}
+    domain={{x: [
+      new Date(2016, 8, 1), 
+      new Date(2016, 8, 7)
+    ]}}
     data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
-  ]}
+      {x: new Date(2016, 8, 2), open: 5},
+      {x: new Date(2016, 8, 3), open: 15},
+      {x: new Date(2016, 8, 4), open: 15},
+      {x: new Date(2016, 8, 5), open: 25},
+      {x: new Date(2016, 8, 6), open: 25}
+    ]}
+    close={(d) => d.open / 2 + 10}
+    high={(d) => d.open + 10}
+    low={(d) => d.open - 5}
   />
 
 </VictoryChart>
@@ -93,13 +99,15 @@ Data objects can be styled directly for granular control
     labels: {fontSize: 20}
   }}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0, opacity: 0.1, label: "OMG"},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, opacity: 0.5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10, opacity: 0.75, label: "WOW"},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, opacity: 0.2},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20, label: "LOL"},
-    {x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25}
+    {x: 1, open: 5, label: "WOW"},
+    {x: 2, open: 15, fill: "tomato"},
+    {x: 3, open: 15, strokeWidth: 4},
+    {x: 4, open: 25, width: 10},
+    {x: 5, open: 25, stroke: "tomato"}
   ]}
+  close={(d) => d.open / 2 + 10}
+  high={(d) => d.open + 10}
+  low={(d) => d.open - 5}
 />
 ```
 
@@ -114,11 +122,11 @@ Candlestick wicks can be changed to whatever color you'd like, but to ensure tha
     labels: {fontSize: 20}
   }}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 1, open: 5, close: 10, high: 15, low: 0},
+    {x: 2, open: 15, close: 10, high: 20, low: 5},
+    {x: 3, open: 15, close: 20, high: 25, low: 10},
+    {x: 4, open: 20, close: 25, high: 30, low: 15},
+    {x: 5, open: 30, close: 25, high: 35, low: 20}
   ]}
 />
 ```
@@ -136,11 +144,11 @@ Functional styles allow elements to determine their own styles based on data
     }
   }}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 1, open: 5, close: 10, high: 15, low: 0},
+    {x: 2, open: 15, close: 10, high: 20, low: 5},
+    {x: 3, open: 15, close: 20, high: 25, low: 10},
+    {x: 4, open: 20, close: 25, high: 30, low: 15},
+    {x: 5, open: 30, close: 25, high: 35, low: 20}
   ]}
 />
 ```
@@ -157,38 +165,26 @@ The `eventKey` may optionally be used to select a single element by index rather
   height={500}
   padding={75}
   data={[
-    {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-    {x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5, label: "hello"},
-    {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-    {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15, label: "there"},
-    {x: new Date(2016, 6, 5), open: 30, close: 25, high: 35, low: 20}
+    {x: 1, open: 5, close: 10, high: 15, low: 0},
+    {x: 2, open: 15, close: 10, high: 20, low: 5},
+    {x: 3, open: 15, close: 20, high: 25, low: 10},
+    {x: 4, open: 20, close: 25, high: 30, low: 15},
+    {x: 5, open: 30, close: 25, high: 35, low: 20}
   ]}
   events={[{
-    target: "labels",
-    eventHandlers: {
-      onClick: () => {
-        return [
-          {
-            mutation: (props) => {
-              return {
-                style: merge({}, props.style.labels, {fill: "orange"})
-              };
-            }
-          }
-        ];
-      }
-    }
-  },
-  {
     target: "data",
     eventHandlers: {
       onClick: () => {
         return [
           {
             mutation: (props) => {
-              return {
-                style: merge({}, props.style, {fill: "blue"})
-              };
+              const newStyle = merge(
+                {}, 
+                props.style, 
+                {width: 10, stroke: "red"}
+              );
+              return props.style.stroke === "red" ?
+                null : {style: newStyle};
             }
           }
         ];
@@ -232,7 +228,7 @@ class App extends React.Component {
       this.setState({
         data: this.getData(),
       });
-    }, 1500);
+    }, 3000);
   }
 
   render() {

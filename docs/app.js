@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router";
-import { StyleRoot } from "radium";
+import { StyleRoot, Style } from "radium";
+import { VictoryTheme } from "formidable-landers";
+
 
 const App = React.createClass({
   propTypes: {
@@ -19,8 +21,10 @@ const App = React.createClass({
           <li><Link to="/scatter">Victory Scatter Docs</Link></li>
           <li><Link to="/candlestick">Victory Candlestick Docs</Link></li>
           <li><Link to="/errorbar">Victory ErrorBar Docs</Link></li>
+          <li><Link to="/theme">Victory Theme Docs</Link></li>
         </ul>
         {this.props.children}
+        <Style rules={VictoryTheme} />
       </StyleRoot>
     );
   }

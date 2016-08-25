@@ -1,8 +1,10 @@
 import React, { PropTypes } from "react";
+import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class LineSegment extends React.Component {
   static propTypes = {
+    clipId: PropTypes.number,
     data: PropTypes.array,
     events: PropTypes.object,
     index: PropTypes.number,
@@ -19,9 +21,16 @@ export default class LineSegment extends React.Component {
   }
 
   renderLine(path, style, events) {
-    const { role } = this.props;
+    const { role, clipId } = this.props;
     return (
-      <path style={style} d={path} role={role} {...events} vectorEffect="non-scaling-stroke"/>
+      <path
+        style={style}
+        d={path}
+        role={role}
+        {...events}
+        clipPath={`url(#${clipId})`}
+        vectorEffect="non-scaling-stroke"
+      />
     );
   }
 
@@ -33,6 +42,7 @@ export default class LineSegment extends React.Component {
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((d) => xScale(d.x))
       .y((d) => yScale(d.y));
-    return this.renderLine(lineFunction(data), style, events);
+    const lineStyle = assign({fill: "none", stroke: "black"}, style);
+    return this.renderLine(lineFunction(data), lineStyle, events);
   }
 }

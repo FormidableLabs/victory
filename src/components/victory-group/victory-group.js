@@ -1,25 +1,22 @@
-import { defaults } from "lodash";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
-  VictoryContainer } from "victory-core";
+  VictoryContainer, VictoryTheme
+} from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
-  props: {
-    width: 450,
-    height: 300
-  },
-  style: {
-    data: {
-      width: 8,
-      padding: 6
-    }
-  }
+  width: 450,
+  height: 300,
+  padding: 50,
+  offset: 0
 };
 
 export default class VictoryGroup extends React.Component {
+  static displayName = "VictoryGroup";
+
   static role = "group-wrapper";
 
   static propTypes = {
@@ -95,10 +92,16 @@ export default class VictoryGroup extends React.Component {
      */
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
-        x: CustomPropTypes.nonNegative,
-        y: CustomPropTypes.nonNegative
+        x: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ]),
+        y: PropTypes.oneOfType([
+          PropTypes.number,
+          CustomPropTypes.domain
+        ])
       }),
-      CustomPropTypes.nonNegative
+      PropTypes.number
     ]),
     /**
      * The event prop take an array of event objects. Event objects are composed of
@@ -143,9 +146,13 @@ export default class VictoryGroup extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.string,
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
+        PropTypes.array,
         PropTypes.func,
         CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
         PropTypes.string
@@ -263,7 +270,7 @@ export default class VictoryGroup extends React.Component {
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
      * not provided, VictoryGroup will use the default VictoryContainer component.
-     * @example <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+     * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
@@ -273,8 +280,7 @@ export default class VictoryGroup extends React.Component {
     * When using VictoryGrou as the outermost wrapper for your chart, implement the theme
     * directly on VictoyrGroup. If you are wrapping VictoryGroup in VictoryChart,
     * please call the theme on the wrapper component instead.
-    * @example theme={VictoryTheme.grayscale}
-    * http://www.github.com/FormidableLabs/victory-core/tree/master/src/victory-theme/grayscale.js
+    * @examples theme={VictoryTheme.material}
     */
     theme: PropTypes.object,
     /**
@@ -287,11 +293,10 @@ export default class VictoryGroup extends React.Component {
 
   static defaultProps = {
     scale: "linear",
-    offset: 0,
-    padding: 50,
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>
+    groupComponent: <g/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -387,28 +392,41 @@ export default class VictoryGroup extends React.Component {
     : colorScaleOptions;
   }
 
+  addOffset(dataset, xOffset) {
+    return dataset.map((datum) => assign({}, datum, {xOffset}));
+  }
+
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets } = calculatedProps;
+    const { datasets, horizontal } = calculatedProps;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    return childComponents.map((child, index) => {
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      const data = datasets[index].map((datum) => Object.assign({}, datum, {xOffset}));
+      const data = this.addOffset(datasets[index], xOffset);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      return React.cloneElement(child, Object.assign({
+      const defaultDomainPadding = horizontal ?
+        {y: (props.offset * childComponents.length) / 2} :
+        {x: (props.offset * childComponents.length) / 2};
+      const domainPadding = child.props.domainPadding ||
+        props.domainPadding || defaultDomainPadding;
+      newChildren[index] = React.cloneElement(child, assign({
         animate: getAnimationProps(props, child, index),
         key: index,
         labels,
-        theme: child.props.theme || props.theme,
+        theme: props.theme,
         labelComponent: props.labelComponent || child.props.labelComponent,
+        domainPadding,
         style,
         data,
         xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
         colorScale: this.getColorScale(props, child)
       }, childProps));
-    });
+    }
+    return newChildren;
   }
 
   getContainer(props, calculatedProps) {
@@ -433,19 +451,21 @@ export default class VictoryGroup extends React.Component {
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps);
-    const style = Helpers.getStyles(modifiedProps.style, fallbackProps.style, "auto", "100%");
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "group");
+    const { theme, standalone, events, eventKey } = modifiedProps;
+    const defaultStyle = theme && theme.group && theme.group.style ? theme.group.style : {};
+    const style = Helpers.getStyles(modifiedProps.style, defaultStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
 
-    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
+    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     if (modifiedProps.events) {
       return (
         <VictorySharedEvents
-          events={modifiedProps.events}
-          eventKey={modifiedProps.eventKey}
+          events={events}
+          eventKey={eventKey}
           container={container}
         >
           {newChildren}
@@ -454,6 +474,6 @@ export default class VictoryGroup extends React.Component {
     }
     const group = this.renderGroup(newChildren, style.parent);
 
-    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
+    return standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

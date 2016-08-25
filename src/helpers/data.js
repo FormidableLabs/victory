@@ -1,5 +1,5 @@
-import { uniq } from "lodash";
-import { Helpers, Collection } from "victory-core";
+import { assign, uniq, range, last } from "lodash";
+import { Helpers, Collection, Log } from "victory-core";
 import Scale from "./scale";
 
 export default {
@@ -41,7 +41,12 @@ export default {
 
   getData(props) {
     if (props.data) {
-      return this.formatData(props.data, props);
+      if (props.data.length < 1) {
+        Log.warn("This is an empty dataset.");
+        return [];
+      } else {
+        return this.formatData(props.data, props);
+      }
     } else {
       const generatedData = (props.x || props.y) && this.generateData(props);
       return this.formatData(generatedData, props);
@@ -53,12 +58,14 @@ export default {
     const domain = props.domain ? (props.domain.x || props.domain) :
       Scale.getBaseScale(props, "x").domain();
     const samples = props.samples || 1;
-    const max = Math.max(...domain);
-    const values = Array(...Array(samples)).map((val, index) => {
-      const v = (max / samples) * index + Math.min(...domain);
+    const domainMax = Math.max(...domain);
+    const domainMin = Math.min(...domain);
+    const step = (domainMax - domainMin) / samples;
+    const values = range(domainMin, domainMax, step).map((v) => {
       return { x: v, y: v };
     });
-    return values[samples - 1].x === max ? values : values.concat([{ x: max, y: max }]);
+    return last(values).x === domainMax ?
+      values : values.concat([{ x: domainMax, y: domainMax }]);
   },
 
   formatData(dataset, props, stringMap) {
@@ -76,7 +83,7 @@ export default {
     return this.cleanData(dataset, props).map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
-      return Object.assign(
+      return assign(
           {},
           datum,
           { x, y },
