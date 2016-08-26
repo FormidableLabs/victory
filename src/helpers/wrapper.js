@@ -83,6 +83,7 @@ export default {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
+  // TODO: Convert to loops
   getDomainFromChildren(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
@@ -110,6 +111,7 @@ export default {
       [0, 1] : [min, max];
   },
 
+  // TODO: Convert to loops
   getDataFromChildren(props, childComponents) {
     const getData = (childProps) => {
       const data = Data.getData(childProps);
@@ -178,22 +180,22 @@ export default {
   },
 
   getStringsFromCategories(childComponents, axis) {
-    const stringsFromCategories = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.props && child.props.categories) {
-          return memo.concat(Data.getStringsFromCategories(child.props, axis));
-        } else if (child.props && child.props.children) {
-          return memo.concat(stringsFromCategories(
-            React.Children.toArray(child.props.children)
-          ));
-        }
-        return memo;
-      }, []);
-    };
+    const strings = [];
+    const children = childComponents.slice(0);
 
-    return stringsFromCategories(childComponents);
+    while (children.length > 0) {
+      const child = children.pop();
+      if (child.props && child.props.categories) {
+        strings.push(...Data.getStringsFromCategories(child.props, axis));
+      } else if (child.props && child.props.children) {
+        children.push(...React.Children.toArray(child.props.children));
+      }
+    }
+
+    return strings;
   },
 
+  // TODO: Convert to loops
   getStringsFromData(childComponents, axis) {
     const stringsFromData = (children) => {
       return children.reduce((memo, child) => {
