@@ -468,10 +468,7 @@ export default class VictoryCandlestick extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      const shouldGetLabelProps = (this.baseProps[key].labels && this.baseProps[key].labels.text)
-        || this.props.events;
-
-      if (shouldGetLabelProps) {
+      if (this.baseProps[key].labels || this.props.events) {
         const labelProps = defaults(
           {key: `${role}-label-${key}`, index},
           this.getEventState(key, "labels"),
@@ -479,10 +476,12 @@ export default class VictoryCandlestick extends React.Component {
           this.baseProps[key].labels,
           labelComponent.props
         );
-        const labelEvents = this.getEvents(props, "labels", key);
-        candleLabelComponents[index] = React.cloneElement(labelComponent, assign({
-          events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps));
+        if (labelProps && labelProps.text) {
+          const labelEvents = this.getEvents(props, "labels", key);
+          candleLabelComponents[index] = React.cloneElement(labelComponent, assign({
+            events: Events.getPartialEvents(labelEvents, key, labelProps)
+          }, labelProps));
+        }
       }
     }
 

@@ -419,10 +419,7 @@ export default class VictoryScatter extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      const shouldGetLabelProps = (this.baseProps[key].labels && this.baseProps[key].labels.text)
-          || this.props.events;
-
-      if (shouldGetLabelProps) {
+      if (this.baseProps[key].labels || this.props.events) {
         const labelProps = defaults(
           {key: `scatter-label-${key}`, index},
           this.getEventState(key, "labels"),
@@ -430,10 +427,12 @@ export default class VictoryScatter extends React.Component {
           labelComponent.props,
           this.baseProps[key].labels
         );
-        const labelEvents = this.getEvents(props, "labels", key);
-        pointLabelComponents[index] = React.cloneElement(labelComponent, assign({
-          events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps));
+        if (labelProps && labelProps.text) {
+          const labelEvents = this.getEvents(props, "labels", key);
+          pointLabelComponents[index] = React.cloneElement(labelComponent, assign({
+            events: Events.getPartialEvents(labelEvents, key, labelProps)
+          }, labelProps));
+        }
       }
     }
 

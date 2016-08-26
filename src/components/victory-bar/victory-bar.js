@@ -408,10 +408,7 @@ export default class VictoryBar extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      const shouldGetLabelProps = (this.baseProps[key].labels && this.baseProps[key].labels.text)
-        || this.props.events;
-
-      if (shouldGetLabelProps) {
+      if (this.baseProps[key].label || this.props.events) {
         const labelProps = defaults(
           {index, key: `${role}-label-${key}`},
           this.getEventState(key, "labels"),
@@ -419,10 +416,12 @@ export default class VictoryBar extends React.Component {
           labelComponent.props,
           this.baseProps[key].labels
         );
-        const labelEvents = this.getEvents(props, "labels", key);
-        barLabelComponents[index] = React.cloneElement(labelComponent, assign({
-          events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps));
+        if (labelProps && labelProps.text) {
+          const labelEvents = this.getEvents(props, "labels", key);
+          barLabelComponents[index] = React.cloneElement(labelComponent, assign({
+            events: Events.getPartialEvents(labelEvents, key, labelProps)
+          }, labelProps));
+        }
       }
     }
     return barLabelComponents.length > 0 ?
