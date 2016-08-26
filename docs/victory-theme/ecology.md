@@ -144,27 +144,23 @@ class App extends React.Component {
       }
     };
 
-    const data = [
-      {x: 1, y: 1},
-      {x: 2, y: 4},
-      {x: 3, y: 2},
-      {x: 4, y: 6},
-      {x: 5, y: 5},
-      {x: 6, y: 9}
-    ];
-
     return (
-      <svg style={{width: "100%", height: "100%"}} viewBox="0 25 350 300">
+      <VictoryGroup
+        data={[
+          {x: 1, y: 1},
+          {x: 2, y: 4},
+          {x: 3, y: 2},
+          {x: 4, y: 6},
+          {x: 5, y: 5},
+          {x: 6, y: 9}
+        ]}
+        theme={myTheme}
+      >
+        <VictoryLine/>
         <VictoryScatter
-          data={data}
-          theme={myTheme}
           labels={["1", "2", "3", "4", "5", "6"]}
         />
-        <VictoryLine
-          data={data}
-          theme={myTheme}
-        />
-      </svg>
+      </VictoryGroup>
     )
   }
 }

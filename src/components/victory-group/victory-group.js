@@ -5,6 +5,7 @@ import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
 } from "victory-core";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
+import Data from "../../helpers/data";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
@@ -69,6 +70,15 @@ export default class VictoryGroup extends React.Component {
         "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
+    /**
+     * The data prop specifies the data to be plotted. Data should be in the form of an array
+     * of data points. Each data point may be any format you wish
+     * (depending on the `x` and `y` accessor props), but by default, an object
+     * with x and y properties is expected.
+     * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
+     * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+     */
+    data: PropTypes.array,
     /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
@@ -259,6 +269,38 @@ export default class VictoryGroup extends React.Component {
      */
     width: CustomPropTypes.nonNegative,
     /**
+     * The x prop specifies how to access the X value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+     */
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
+     * The y prop specifies how to access the Y value of each data point.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+     */
+    y: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    /**
      * The containerComponent prop takes an entire component which will be used to
      * create a container element for standalone charts.
      * The new element created from the passed containerComponent wil be provided with
@@ -296,7 +338,9 @@ export default class VictoryGroup extends React.Component {
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    theme: VictoryTheme.grayscale
+    theme: VictoryTheme.grayscale,
+    x: "x",
+    y: "y"
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -388,12 +432,15 @@ export default class VictoryGroup extends React.Component {
     if (role !== "group-wrapper" && role !== "stack-wrapper") {
       return undefined;
     }
-    return props.theme ? colorScaleOptions || props.theme.props.colorScale
+    return props.theme && props.theme.group ? colorScaleOptions || props.theme.group.colorScale
     : colorScaleOptions;
   }
 
-  addOffset(dataset, xOffset) {
-    return dataset.map((datum) => assign({}, datum, {xOffset}));
+  addOffset(dataset, offset) {
+    const xOffset = offset || 0;
+    return dataset.map((datum) => {
+      return assign({}, datum, {x1: datum.x + xOffset});
+    });
   }
 
   // the old ones were bad
@@ -403,9 +450,10 @@ export default class VictoryGroup extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const newChildren = [];
     for (let index = 0, len = childComponents.length; index < len; index++) {
+      const dataset = props.data ? Data.getData(props) : datasets[index];
       const child = childComponents[index];
       const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      const data = this.addOffset(datasets[index], xOffset);
+      const data = this.addOffset(dataset, xOffset);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       const defaultDomainPadding = horizontal ?

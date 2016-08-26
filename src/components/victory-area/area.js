@@ -25,8 +25,8 @@ export default class Area extends React.Component {
     const yScale = props.scale.y;
     const areaFunction = d3Shape.area()
       .curve(d3Shape[this.toNewName(props.interpolation)])
-      .x((data) => xScale(data.x))
-      .y1((data) => yScale(data.y1))
+      .x((data) => xScale(data.x1 || data.x))
+      .y1((data) => yScale(data.y1 || data.y))
       .y0((data) => yScale(data.y0));
     return areaFunction(props.data);
   }
