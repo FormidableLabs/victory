@@ -403,14 +403,18 @@ export default class VictoryErrorBar extends React.Component {
       errorBarComponents[index] = React.cloneElement(dataComponent, assign(
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
-      const labelProps = defaults(
-        {key: `${role}-label-${key}`, index},
-        this.getEventState(key, "labels"),
-        this.getSharedEventState(key, "labels"),
-        this.baseProps[key].labels,
-        labelComponent.props
-      );
-      if (labelProps && labelProps.text) {
+
+      const shouldGetLabelProps = (this.baseProps[key].labels && this.baseProps[key].labels.text)
+        || this.props.events;
+
+      if (shouldGetLabelProps) {
+        const labelProps = defaults(
+          {key: `${role}-label-${key}`, index},
+          this.getEventState(key, "labels"),
+          this.getSharedEventState(key, "labels"),
+          this.baseProps[key].labels,
+          labelComponent.props
+        );
         const labelEvents = this.getEvents(props, "labels", key);
         errorBarLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, key, labelProps)

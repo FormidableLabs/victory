@@ -417,7 +417,7 @@ export default class VictoryLine extends React.Component {
       sharedEvents.getEventState : () => undefined;
   }
 
-  renderData(props) {
+  renderData(props) { // eslint-disable-line max-statements
     const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
     const lineComponents = [];
@@ -438,7 +438,11 @@ export default class VictoryLine extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
-      const labelProps = defaults(
+      const shouldGetLabelProps = (this.baseProps.all.labels && this.baseProps.all.labels.text)
+        || this.props.events;
+
+      if (shouldGetLabelProps) {
+        const labelProps = defaults(
           {index, key: `${role}-label-${index}`},
           this.getEventState("all", "labels"),
           this.getSharedEventState("all", "labels"),
@@ -446,7 +450,6 @@ export default class VictoryLine extends React.Component {
           labelComponent.props,
           this.baseProps.all.labels
         );
-      if (labelProps && labelProps.text) {
         const labelEvents = this.getEvents(props, "labels", "all");
         lineLabelComponents[index] = React.cloneElement(labelComponent, assign({
           events: Events.getPartialEvents(labelEvents, "all", labelProps)
