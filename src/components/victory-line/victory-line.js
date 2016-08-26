@@ -423,7 +423,6 @@ export default class VictoryLine extends React.Component {
     const lineComponents = [];
     const lineLabelComponents = [];
     for (let index = 0, len = dataSegments.length; index < len; index++) {
-    // return dataSegments.map((data, key) => {
       const data = dataSegments[index];
       const role = `${VictoryLine.role}-${index}`;
       const dataEvents = this.getEvents(props, "data", "all");
