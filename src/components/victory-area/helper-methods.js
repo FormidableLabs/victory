@@ -20,12 +20,28 @@ export default {
       style: Helpers.evaluateStyle(style.data, data)
     };
 
+    const baseProps = {
+      parent: { style: style.parent, width, height, scale, data },
+      all: {
+        data: dataProps
+      }
+    };
+
     const text = Helpers.evaluateProp(label, data);
+    if (text || props.events) {
+      baseProps.all.labels = this.getLabelProps(dataProps, text, style);
+    }
+
+    return baseProps;
+  },
+
+  getLabelProps(dataProps, text, calculatedStyle) {
+    const { data, scale } = dataProps;
     const lastData = last(data);
-    const labelStyle = Helpers.evaluateStyle(style.labels, data) || {};
+    const labelStyle = Helpers.evaluateStyle(calculatedStyle.labels, data) || {};
     const labelPadding = labelStyle.padding || 0;
 
-    const labelProps = {
+    return {
       key: "area-label",
       x: lastData ? scale.x(lastData.x) + labelPadding : 0,
       y: lastData ? scale.y(lastData.y1) : 0,
@@ -37,14 +53,6 @@ export default {
       data,
       scale,
       text
-    };
-
-    return {
-      parent: {style: style.parent, width, height, scale, data},
-      all: {
-        data: dataProps,
-        labels: labelProps
-      }
     };
   },
 
