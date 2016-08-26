@@ -8,8 +8,7 @@ import Data from "../../helpers/data";
 export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "errorbar");
-    const calculatedValues = this.getCalculatedValues(props, fallbackProps);
-    const { data, style, scale } = calculatedValues;
+    const { data, style, scale } = this.getCalculatedValues(props, fallbackProps);
     const { groupComponent, height, width, borderWidth } = props;
     const childProps = { parent: {style: style.parent, scale, data, height, width} };
     for (let index = 0, len = data.length; index < len; index++) {
@@ -25,26 +24,32 @@ export default {
         errorY: this.getErrors(datum, scale, "y")
       };
 
-      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
-      const labelProps = {
-        style: labelStyle,
-        x: x - (labelStyle.padding || 0),
-        y: y - (labelStyle.padding || 0),
-        text: this.getLabelText(props, datum, index),
-        index,
-        scale,
-        datum: dataProps.datum,
-        textAnchor: labelStyle.textAnchor,
-        verticalAnchor: labelStyle.verticalAnchor || "end",
-        angle: labelStyle.angle
-      };
-
       childProps[eventKey] = {
-        data: dataProps,
-        labels: labelProps
+        data: dataProps
       };
+      const text = this.getLabelText(props, datum, index);
+      if (text || props.events) {
+        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+      }
     }
     return childProps;
+  },
+
+  getLabelProps(dataProps, text, calculatedStyle) {
+    const { x, y, index, scale } = dataProps;
+    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
+    return {
+      style: labelStyle,
+      x: x - (labelStyle.padding || 0),
+      y: y - (labelStyle.padding || 0),
+      text,
+      index,
+      scale,
+      datum: dataProps.datum,
+      textAnchor: labelStyle.textAnchor,
+      verticalAnchor: labelStyle.verticalAnchor || "end",
+      angle: labelStyle.angle
+    };
   },
 
   getErrorData(props) {

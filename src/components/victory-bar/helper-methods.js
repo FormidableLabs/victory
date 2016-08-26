@@ -124,28 +124,34 @@ export default {
         position
       );
 
-      const labelStyle = this.getLabelStyle(style.labels, datum);
-      const labelPadding = this.getlabelPadding(labelStyle, datum, horizontal);
-      const anchors = this.getLabelAnchors(datum, horizontal);
-      const labelProps = {
-        style: labelStyle,
-        x: horizontal ? position.y + labelPadding.x : position.x + labelPadding.x,
-        y: horizontal ? position.x + labelPadding.y : position.y - labelPadding.y,
-        y0: position.y0,
-        text: this.getLabel(props, datum, index),
-        index,
-        scale,
-        datum: dataProps.datum,
-        textAnchor: labelStyle.textAnchor || anchors.text,
-        verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
-        angle: labelStyle.angle
-      };
-
       childProps[eventKey] = {
-        data: dataProps,
-        labels: labelProps
+        data: dataProps
       };
+      const text = this.getLabel(props, datum, index);
+      if (text || props.events) {
+        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+      }
     }
     return childProps;
+  },
+
+  getLabelProps(dataProps, text, calculatedStyle) {
+    const { datum, horizontal, x, y, y0, index, scale } = dataProps;
+    const labelStyle = this.getLabelStyle(calculatedStyle.labels, datum);
+    const labelPadding = this.getlabelPadding(labelStyle, datum, horizontal);
+    const anchors = this.getLabelAnchors(datum, horizontal);
+    return {
+      style: labelStyle,
+      x: horizontal ? y + labelPadding.x : x + labelPadding.x,
+      y: horizontal ? x + labelPadding.y : y - labelPadding.y,
+      y0,
+      text,
+      index,
+      scale,
+      datum,
+      textAnchor: labelStyle.textAnchor || anchors.text,
+      verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
+      angle: labelStyle.angle
+    };
   }
 };
