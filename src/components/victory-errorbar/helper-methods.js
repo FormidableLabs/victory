@@ -15,8 +15,8 @@ export default {
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
-      const x = scale.x(datum.x);
-      const y = scale.y(datum.y);
+      const x = scale.x(datum.x1 || datum.x);
+      const y = scale.y(datum.y1 || datum.y);
 
       const dataProps = {
         x, y, scale, datum, index, groupComponent, borderWidth,

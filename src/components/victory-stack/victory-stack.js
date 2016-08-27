@@ -335,10 +335,13 @@ export default class VictoryStack extends React.Component {
   }
 
   addLayoutData(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
+    const xOffset = props.xOffset || 0;
     return datasets[index].map((datum) => {
-      return assign(datum, {
-        yOffset: Wrapper.getY0(datum, index, calculatedProps),
-        xOffset: props.xOffset
+      const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
+      return assign({}, datum, {
+        y0: yOffset,
+        y1: datum.y + yOffset,
+        x1: datum.x + xOffset
       });
     });
   }

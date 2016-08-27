@@ -26,8 +26,8 @@ export default {
     const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
 
     const labelProps = {
-      x: lastData ? scale.x(lastData.x) + (labelStyle.padding || 0) : 0,
-      y: lastData ? scale.y(lastData.y) : 0,
+      x: lastData ? scale.x(lastData.x1 || lastData.x) + (labelStyle.padding || 0) : 0,
+      y: lastData ? scale.y(lastData.y1 || lastData.y) : 0,
       style: labelStyle,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
