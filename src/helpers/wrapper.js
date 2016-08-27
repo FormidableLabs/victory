@@ -195,26 +195,29 @@ export default {
     return strings;
   },
 
-  // TODO: Convert to loops
   getStringsFromData(childComponents, axis) {
-    const stringsFromData = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.props && child.props.data) {
-          return memo.concat(Helpers.getStringsFromData(child.props, axis));
-        } else if (child.type && isFunction(child.type.getData)) {
-          const data = flatten(child.type.getData(child.props));
-          const attr = axis === "x" ? "xName" : "yName";
-          return memo.concat(data.reduce((prev, datum) => {
-            return datum[attr] ? prev.concat(datum[attr]) : prev;
-          }, []));
-        } else if (child.props && child.props.children) {
-          return memo.concat(stringsFromData(React.Children.toArray(child.props.children)));
-        }
-        return memo;
-      }, []);
-    };
+    const strings = [];
+    const children = childComponents.slice(0);
 
-    return stringsFromData(childComponents);
+    while (children.length > 0) {
+      const child = children.pop();
+      if (child.props && child.props.data) {
+        strings.push(...Helpers.getStringsFromData(child.props, axis));
+      } else if (child.type && isFunction(child.type.getData)) {
+        const data = flatten(child.type.getData(child.props));
+        const attr = axis === "x" ? "xName" : "yName";
+        for (let index = 0; index < data.length; index++) {
+          const datum = data[index];
+          if (datum[attr]) {
+            strings.push(datum[attr]);
+          }
+        }
+      } else if (child.props && child.props.children) {
+        children.push(...React.Children.toArray(child.props.children));
+      }
+    }
+
+    return strings;
   },
 
   getStringsFromChildren(props, axis, childComponents) {
