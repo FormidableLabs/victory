@@ -408,7 +408,7 @@ export default class VictoryBar extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      if (this.baseProps[key].label || this.props.events) {
+      if (this.baseProps[key].labels || this.props.events) {
         const labelProps = defaults(
           {index, key: `${role}-label-${key}`},
           this.getEventState(key, "labels"),
