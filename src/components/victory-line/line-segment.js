@@ -40,8 +40,8 @@ export default class LineSegment extends React.Component {
     const yScale = scale.y;
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
-      .x((d) => xScale(d.x))
-      .y((d) => yScale(d.y));
+      .x((d) => xScale(d.x1 || d.x))
+      .y((d) => yScale(d.y1 || d.y));
     const lineStyle = assign({fill: "none", stroke: "black"}, style);
     return this.renderLine(lineFunction(data), lineStyle, events);
   }

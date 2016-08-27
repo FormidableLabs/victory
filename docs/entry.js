@@ -11,6 +11,7 @@ import ScatterDocs from "./victory-scatter/docs";
 import CandlestickDocs from "./victory-candlestick/docs";
 import ErrorBarDocs from "./victory-errorbar/docs";
 import ThemeDocs from "./victory-theme/docs";
+import GroupDocs from "./victory-group/docs";
 
 const content = document.getElementById("content");
 
@@ -26,6 +27,7 @@ ReactDOM.render((
       <Route path="candlestick" component={CandlestickDocs}/>
       <Route path="errorbar" component={ErrorBarDocs}/>
       <Route path="theme" component={ThemeDocs}/>
+      <Route path="group" component={GroupDocs}/>
     </Route>
   </Router>
 ), content);

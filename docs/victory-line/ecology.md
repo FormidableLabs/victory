@@ -89,39 +89,32 @@ Add labels, style the data, change the interpolation, add a custom domain:
 
 ### Data Markers
 
-To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter.
+To create markers and labels for individual data points along a line, just compose VictoryLine with VictoryScatter; you can use VictoryGroup to help with this.
 
 ```playground
-<svg height={300} width={500}>
+<VictoryGroup
+  style={{
+    data: {strokeWidth: 3}  
+  }}
+  data={[
+    {x: 1, y: 3},
+    {x: 2, y: 2},      
+    {x: 3, y: 4},
+    {x: 4, y: 3},
+    {x: 5, y: 5}
+  ]}
+>
   <VictoryLine
-    width={500}
-    height={300}
-    standalone={false}
     interpolation={"cardinal"}
     style={{
-      data: {
-        stroke: "#822722",
-        strokeWidth: 3
-      }
-    }}
-    data={[
-      {x: 0, y: 1},
-      {x: 1, y: 3},
-      {x: 2, y: 2},      
-      {x: 3, y: 4},
-      {x: 4, y: 3},
-      {x: 5, y: 5}
-    ]}
+      data: {stroke: "#822722"}
+    }} 
   />
   <VictoryScatter
-    width={500}
-    height={300}
-    standalone={false}
     style={{
       data: {
         fill: "#822722",
-        stroke: "white",
-        strokeWidth: 3
+        stroke: "white"
       },
       labels: {
         fill: "#822722",
@@ -131,18 +124,10 @@ To create markers and labels for individual data points along a line, just compo
     }}
     size={6}
     labels={[
-     "a", "b", "c", "d", "e", "f"
-    ]}
-    data={[
-      {x: 0, y: 1},
-      {x: 1, y: 3},
-      {x: 2, y: 2},      
-      {x: 3, y: 4},
-      {x: 4, y: 3},
-      {x: 5, y: 5}
+     "a", "b", "c", "d", "e"
     ]}
   />
-</svg>
+</VictoryGroup>
 ```
 
 ### Functional styles

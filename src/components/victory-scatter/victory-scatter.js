@@ -213,7 +213,7 @@ export default class VictoryScatter extends React.Component {
      * If given as an array, the number of elements in the array should be equal to
      * the length of the data array. Labels may also be added directly to the data object
      * like data={[{x: 1, y: 1, label: "first"}]}.
-     * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
+     * @examples ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
       PropTypes.func,

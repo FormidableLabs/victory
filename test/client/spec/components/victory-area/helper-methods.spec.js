@@ -20,7 +20,7 @@ describe("victory-area/helper-methods", () => {
       {x: 1, y: 1}, {x: 2, y: 1}
     ];
     const stackedData = [
-      {x: 1, y: 1, yOffset: 1}, {x: 2, y: 1, yOffset: 1}
+      {x: 1, y: 1, y0: 1, y1: 2}, {x: 2, y: 1, y0: 1, y1: 2}
     ];
     const defaultDomain = {x: [0, 10], y: [0, 10]};
     const nonZeroDomain = {x: [0, 10], y: [1, 10]};
@@ -56,9 +56,7 @@ describe("victory-area/helper-methods", () => {
     it("should return yOffset if present", () => {
       const props = {data: stackedData};
       const result = AreaHelpers.getDataWithBaseline(props, scale(defaultDomain));
-      const expectedResult = [
-        {y0: 1, y1: 2, x: 1, y: 1, yOffset: 1}, {y0: 1, y1: 2, x: 2, y: 1, yOffset: 1}
-      ];
+      const expectedResult = stackedData;
       expect(result).to.eql(expectedResult);
     });
   });

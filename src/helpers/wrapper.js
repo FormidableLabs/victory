@@ -1,4 +1,4 @@
-import { defaults, flatten, isFunction, partialRight, uniq } from "lodash";
+import { assign, defaults, flatten, isFunction, partialRight, uniq } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import Data from "./data";
@@ -8,16 +8,19 @@ import { Style, Transitions, Helpers, Collection } from "victory-core";
 
 export default {
   getData(props, childComponents) {
+    if (props.data) {
+      return Data.getData(props);
+    }
     childComponents = childComponents || React.Children.toArray(props.children);
     return this.getDataFromChildren(childComponents);
   },
 
   getDomain(props, axis, childComponents) {
+    childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
     if (propsDomain) {
       return propsDomain;
     }
-    childComponents = childComponents || React.Children.toArray(props.children);
     return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
       props,
       axis);
@@ -94,7 +97,10 @@ export default {
     const getChildDomains = (children) => {
       return children.reduce((memo, child) => {
         if (child.type && isFunction(child.type.getDomain)) {
-          const childDomain = child.props && child.type.getDomain(child.props, currentAxis);
+          const parentData = props.data ? Data.getData(props, axis) : undefined;
+          const sharedProps = parentData ?
+            assign({}, child.props, {data: parentData}) : child.props;
+          const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
           return childDomain ? memo.concat(childDomain) : memo;
         } else if (child.props && child.props.children) {
           return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
@@ -119,8 +125,7 @@ export default {
     const getChildData = (children) => {
       return children.map((child) => {
         if (child.type && isFunction(child.type.getData)) {
-          const childData = child.props && child.type.getData(child.props);
-          return childData;
+          return child.props && child.type.getData(child.props);
         } else if (child.props && child.props.children) {
           return flatten(getChildData(React.Children.toArray(child.props.children)));
         }
@@ -153,6 +158,9 @@ export default {
       return style.data.fill;
     }
     colorScale = child.props && child.props.colorScale ? child.props.colorScale : colorScale;
+    if (!colorScale) {
+      return undefined;
+    }
     const colors = Array.isArray(colorScale) ?
       colorScale : Style.getColorScale(colorScale);
     return colors[index % colors.length];
@@ -161,10 +169,12 @@ export default {
   getChildStyle(child, index, calculatedProps) {
     const { style } = calculatedProps;
     const role = child.type && child.type.role;
-    const defaultFill = role === "group-wrapper" || role === "stack-wrapper" ?
+    const defaultFill = role === "stack-wrapper" ?
       undefined : this.getColor(calculatedProps, child, index);
+    const defaultColor = role === "line" ?
+      {fill: "none", stroke: defaultFill} : {fill: defaultFill};
     const childStyle = child.props.style || {};
-    const dataStyle = defaults({}, childStyle.data, style.data, {fill: defaultFill});
+    const dataStyle = defaults({}, childStyle.data, assign({}, style.data, defaultColor));
     const labelsStyle = defaults({}, childStyle.labels, style.labels);
     return {
       parent: style.parent,
