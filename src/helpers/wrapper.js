@@ -83,28 +83,31 @@ export default {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
-  // TODO: Convert to loops
-  getDomainFromChildren(props, axis, childComponents) {
-    childComponents = childComponents || React.Children.toArray(props.children);
+  getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements
+    const childDomains = [];
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
-    const getChildDomains = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.type && isFunction(child.type.getDomain)) {
-          const parentData = props.data ? Data.getData(props, axis) : undefined;
-          const sharedProps = parentData ?
-            assign({}, child.props, {data: parentData}) : child.props;
-          const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
-          return childDomain ? memo.concat(childDomain) : memo;
-        } else if (child.props && child.props.children) {
-          return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
-        }
-        return memo;
-      }, []);
-    };
 
-    const childDomains = getChildDomains(childComponents);
+    while (children.length > 0) {
+      const child = children.pop();
+
+      if (child.type && isFunction(child.type.getDomain)) {
+        const parentData = props.data ? Data.getData(props, axis) : undefined;
+        const sharedProps = parentData ?
+          assign({}, child.props, {data: parentData}) : child.props;
+        const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
+        if (childDomain) {
+          childDomains.push(...childDomain);
+        }
+      } else if (child.props && child.props.children) {
+        children.push(...React.Children.toArray(child.props.children));
+      }
+    }
+
     const min = Collection.getMinValue(childDomains);
     const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
