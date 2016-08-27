@@ -114,25 +114,30 @@ export default {
       [0, 1] : [min, max];
   },
 
-  // TODO: Convert to loops
   getDataFromChildren(props, childComponents) {
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
-    const getChildData = (children) => {
-      return children.map((child) => {
-        if (child.type && isFunction(child.type.getData)) {
-          return child.props && child.type.getData(child.props);
-        } else if (child.props && child.props.children) {
-          return flatten(getChildData(React.Children.toArray(child.props.children)));
-        }
-        return getData(child.props);
-      });
-    };
-    childComponents = childComponents || React.Children.toArray(props.children);
-    return getChildData(childComponents);
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+    const dataArr = [];
+
+    while (children.length > 0) {
+      const child = children.pop();
+
+      if (child.type && isFunction(child.type.getData)) {
+        dataArr.push(child.props && child.type.getData(child.props));
+      } else if (child.props && child.props.children) {
+        children.push(...React.Children.toArray(child.props.children));
+      } else {
+        dataArr.push(getData(child.props));
+      }
+    }
+
+    return dataArr;
   },
 
   getStackedDomain(props, axis) {
