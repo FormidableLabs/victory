@@ -521,8 +521,8 @@ export default class VictoryLine extends React.Component {
       padding: props.padding,
       clipId: props.clipId,
       translateX: props.translateX || 0,
-      width: (props.clipWidth || props.width),
-      height: (props.clipHeight || props.height)
+      clipWidth: props.clipWidth || props.width,
+      clipHeight: props.clipHeight || props.height
     });
 
     return React.cloneElement(
