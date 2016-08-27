@@ -29,6 +29,11 @@ export default class VictoryBar extends React.Component {
   static role = "bar";
 
   static defaultTransitions = {
+    onLoad: {
+      duration: 2000,
+      before: () => ({ y: 0, yOffset: 0 }),
+      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset })
+    },
     onExit: {
       duration: 500,
       before: () => ({ y: 0, yOffset: 0 })
@@ -458,6 +463,7 @@ export default class VictoryBar extends React.Component {
       clipHeight: (props.clipHeight || props.height),
       clipPadding
     });
+
     return React.cloneElement(
       props.groupComponent,
       { role: "presentation", style: style.parent},

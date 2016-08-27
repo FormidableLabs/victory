@@ -39,6 +39,9 @@ export default {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesShouldLoad,
+        nodesDoneLoad,
+        nodesDoneClipPathLoad,
         nodesDoneClipPathEnter,
         nodesDoneClipPathExit
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
@@ -50,6 +53,9 @@ export default {
         nodesShouldEnter,
         nodesDoneClipPathEnter,
         nodesDoneClipPathExit,
+        nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
+        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
+        nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
         oldProps: nodesWillExit ? this.props : null
       });
     }

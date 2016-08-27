@@ -33,9 +33,8 @@ export default class ClipPath extends React.Component {
     clipWidth: CustomPropTypes.nonNegative,
     /**
      * The padding props specifies the amount of padding in number of pixels between
-     * the edge of the chart and any rendered child components. This prop can be given
-     * as a number or as an object with padding specified for top, bottom, left
-     * and right.
+     * the edge of the chart and any rendered child components. This prop should be given
+     * as an object with padding specified for top, bottom, left and right.
      */
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -45,10 +44,15 @@ export default class ClipPath extends React.Component {
         left: PropTypes.number,
         right: PropTypes.number
       })
-    ])
+    ]),
+    /**
+     * The translateX props specifies the x-axis translation of the clipPath
+     */
+    translateX: PropTypes.number
   };
 
   static defaultProps = {
+    translateX: 0,
     clipPadding: {
       top: 5,
       bottom: 5,
@@ -72,6 +76,7 @@ export default class ClipPath extends React.Component {
       clipId,
       clipWidth,
       clipHeight,
+      translateX,
       clipPadding
     } = this.props;
 
@@ -80,7 +85,7 @@ export default class ClipPath extends React.Component {
     const totalPadding = (side) => padding[side] - (clipPadding[side] || 0);
 
     const clipProps = {
-      x: totalPadding("left"),
+      x: totalPadding("left") + translateX,
       y: totalPadding("top"),
       width: clipWidth - totalPadding("left") - totalPadding("right"),
       height: clipHeight - totalPadding("top") - totalPadding("bottom")
