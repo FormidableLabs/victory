@@ -1,5 +1,31 @@
 VictoryCore Changelog
 =====================
+## 5.1.2 (2016-08-22)
+
+- VictoryLabel: minor changes to support `victory-core-native`
+
+## 5.1.1 (2016-08-18)
+
+- VictoryLabel: Adds a check for `fontSize` given as a string, and strips "px" when present
+
+## 5.1.0 (2016-08-18)
+
+- Updates `builder-victory-component` to fix problems caused by missing lodash methods. Incomplete feature sets using `lodash-webpack-plugin`
+
+## 5.0.2 (2016-08-17)
+
+- Fixes a minor bug in VictoryTheme.material
+
+## 5.0.1 (2016-08-17)
+
+- Fixes a minor bug for VictoryTransition
+
+## 5.0.0 (2016-08-17)
+
+** This is a breaking change for themes **
+- Alters the `VictoryTheme` API to match props. 
+- Adds `VictoryTheme.grayscale`
+
 ## 4.6.1 (2016-08-11)
 
 - Fixes a bug for clipPath animations with parentState

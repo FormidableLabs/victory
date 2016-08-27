@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "4.6.1",
+  "version": "5.1.2",
   "description": "Victory Core",
   "main": "lib/index.js",
   "repository": {
@@ -27,14 +27,14 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "^2.3.0",
+    "builder-victory-component": "^2.4.0",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-timer": "^0.0.6",
     "lodash": "^4.12.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.3.0",
+    "builder-victory-component-dev": "^2.4.0",
     "chai": "^3.2.0",
     "ecology": "^1.6.0",
     "enzyme": "^2.3.0",

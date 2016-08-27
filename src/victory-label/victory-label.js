@@ -1,9 +1,8 @@
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Style } from "../victory-util/index";
+import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-util/index";
 import { assign, merge, pick } from "lodash";
 
 const defaultStyles = {
-  backgroundColor: "#d9d9d9",
   fill: "#252525",
   fontSize: 14,
   fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
@@ -161,7 +160,8 @@ export default class VictoryLabel extends React.Component {
   getStyles(props) {
     const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
     const datum = props.datum || props.data;
-    return Helpers.evaluateStyle(style, datum);
+    const baseStyles = Helpers.evaluateStyle(style, datum);
+    return assign({}, baseStyles, {fontSize: this.getFontSize(baseStyles)});
   }
 
   getHeight(props, type) {
@@ -176,7 +176,7 @@ export default class VictoryLabel extends React.Component {
       const child = Helpers.evaluateProp(text, datum);
       return `${child}`.split("\n");
     }
-    return [""];
+    return [" "];
   }
 
   getDy(props, content, lineHeight) {
@@ -203,13 +203,32 @@ export default class VictoryLabel extends React.Component {
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum);
     const rotatePart = angle && {rotate: [angle, x, y]};
-    return (transformPart || angle) && Style.toTransformString(transformPart, rotatePart);
+    return transformPart || angle ?
+      Style.toTransformString(transformPart, rotatePart) : undefined;
+  }
+
+  getFontSize(style) {
+    const baseSize = style && style.fontSize;
+    if (typeof baseSize === "number") {
+      return baseSize;
+    } else if (baseSize === undefined || baseSize === null) {
+      return defaultStyles.fontSize;
+    } else if (typeof baseSize === "string") {
+      const fontSize = +baseSize.replace("px", "");
+      if (!isNaN(fontSize)) {
+        return fontSize;
+      } else {
+        Log.warn("fontSize should be expressed as a number of pixels");
+        return defaultStyles.fontSize;
+      }
+    }
+    return defaultStyles.fontSize;
   }
 
   renderElements(props, content) {
     const transform = this.getTransform(props);
     const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);
-    const fontSize = props.style && props.style.fontSize || 14;
+    const fontSize = this.getFontSize(props.style);
     return (
       <text {...textProps}
         transform={transform}
