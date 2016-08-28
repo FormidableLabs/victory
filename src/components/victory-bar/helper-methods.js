@@ -128,7 +128,7 @@ export default {
         data: dataProps
       };
       const text = this.getLabel(props, datum, index);
-      if (text || props.events) {
+      if (text || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
     }

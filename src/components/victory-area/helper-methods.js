@@ -28,7 +28,7 @@ export default {
     };
 
     const text = Helpers.evaluateProp(label, data);
-    if (text || props.events) {
+    if (text || props.events || props.sharedEvents) {
       baseProps.all.labels = this.getLabelProps(dataProps, text, style);
     }
 
