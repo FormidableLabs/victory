@@ -28,7 +28,7 @@ What to use `Victory` with React Native? Check out [VictoryNative](https://githu
 
 2. Add your first Victory component:
 
-  ```jsx
+  ```js
   import React, { Component } from 'react';
   import { render } from 'react-dom';
   import { VictoryPie } from 'victory';
@@ -53,7 +53,7 @@ What to use `Victory` with React Native? Check out [VictoryNative](https://githu
 
 Components can be included individually
 
-```jsx
+```js
 import {VictoryLine, VictoryAxis} from "victory"
 
 <VictoryLine/>
@@ -61,7 +61,7 @@ import {VictoryLine, VictoryAxis} from "victory"
 
 Or imported as a set:
 
-```jsx
+```js
 import * as V from "victory"
 
 <V.VictoryLine/>
