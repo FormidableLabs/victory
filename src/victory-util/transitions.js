@@ -181,7 +181,6 @@ function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // esl
 
     if (beforeClipPathWidth) {
       clipWidth = beforeClipPathWidth(data, child, exitingNodes);
-      console.log(clipWidth)
       return { animate, clipWidth };
     }
   }
