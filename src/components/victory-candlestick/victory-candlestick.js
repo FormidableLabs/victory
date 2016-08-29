@@ -3,7 +3,7 @@ import { assign, defaults, isFunction, partialRight } from "lodash";
 import Candle from "./candle";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, DefaultTransitions
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
@@ -30,25 +30,8 @@ const defaultData = [
 
 export default class VictoryCandlestick extends React.Component {
   static displayName = "VictoryCandlestick";
-
   static role = "candlestick";
-
-  static defaultTransitions = {
-    onLoad: {
-      duration: 2000,
-      before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
-    },
-    onExit: {
-      duration: 600,
-      before: () => ({ opacity: 0 })
-    },
-    onEnter: {
-      duration: 600,
-      before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
-    }
-  };
+  static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
     /**
