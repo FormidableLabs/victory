@@ -424,19 +424,21 @@ export default class VictoryArea extends React.Component {
       {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
     ));
 
-    const labelProps = defaults(
+    if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
+      const labelProps = defaults(
         {},
         this.getEventState("all", "labels"),
         this.getSharedEventState("all", "labels"),
         labelComponent.props,
         this.baseProps.all.labels
       );
-    if (labelProps && labelProps.text) {
-      const labelEvents = this.getEvents(props, "labels", "all");
-      const areaLabel = React.cloneElement(labelComponent, assign({
-        events: Events.getPartialEvents(labelEvents, "all", labelProps)
-      }, labelProps));
-      return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
+      if (labelProps && labelProps.text) {
+        const labelEvents = this.getEvents(props, "labels", "all");
+        const areaLabel = React.cloneElement(labelComponent, assign({
+          events: Events.getPartialEvents(labelEvents, "all", labelProps)
+        }, labelProps));
+        return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
+      }
     }
     return areaComponent;
   }

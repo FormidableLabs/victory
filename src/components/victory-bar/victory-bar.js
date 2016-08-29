@@ -408,19 +408,20 @@ export default class VictoryBar extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      const labelProps = defaults(
-        {index, key: `${role}-label-${key}`},
-        this.getEventState(key, "labels"),
-        this.getSharedEventState(key, "labels"),
-        labelComponent.props,
-        this.baseProps[key].labels
-      );
-
-      if (labelProps && labelProps.text) {
-        const labelEvents = this.getEvents(props, "labels", key);
-        barLabelComponents[index] = React.cloneElement(labelComponent, assign({
-          events: Events.getPartialEvents(labelEvents, key, labelProps)
-        }, labelProps));
+      if (this.baseProps[key].labels || this.props.events || this.props.sharedEvents) {
+        const labelProps = defaults(
+          {index, key: `${role}-label-${key}`},
+          this.getEventState(key, "labels"),
+          this.getSharedEventState(key, "labels"),
+          labelComponent.props,
+          this.baseProps[key].labels
+        );
+        if (labelProps && labelProps.text) {
+          const labelEvents = this.getEvents(props, "labels", key);
+          barLabelComponents[index] = React.cloneElement(labelComponent, assign({
+            events: Events.getPartialEvents(labelEvents, key, labelProps)
+          }, labelProps));
+        }
       }
     }
     return barLabelComponents.length > 0 ?

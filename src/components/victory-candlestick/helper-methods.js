@@ -24,26 +24,32 @@ export default {
         index, style: dataStyle, padding, width
       };
 
-      const text = this.getLabelText(props, datum, index);
-      const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
-      const labelProps = {
-        style: labelStyle,
-        x: x - (labelStyle.padding || 0),
-        y: y - (labelStyle.padding || 0),
-        text,
-        index,
-        scale,
-        datum: dataProps.datum,
-        textAnchor: labelStyle.textAnchor,
-        verticalAnchor: labelStyle.verticalAnchor || "end",
-        angle: labelStyle.angle
-      };
       childProps[eventKey] = {
-        data: dataProps,
-        labels: labelProps
+        data: dataProps
       };
+      const text = this.getLabelText(props, datum, index);
+      if (text || props.events || props.sharedEvents) {
+        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+      }
     }
     return childProps;
+  },
+
+  getLabelProps(dataProps, text, calculatedStyle) {
+    const {x, y, index, scale, datum } = dataProps;
+    const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
+    return {
+      style: labelStyle,
+      x: x - (labelStyle.padding || 0),
+      y: y - (labelStyle.padding || 0),
+      text,
+      index,
+      scale,
+      datum,
+      textAnchor: labelStyle.textAnchor,
+      verticalAnchor: labelStyle.verticalAnchor || "end",
+      angle: labelStyle.angle
+    };
   },
 
   getCalculatedValues(props) {
@@ -144,9 +150,8 @@ export default {
   },
 
   getLabelText(props, datum, index) {
-    const propsLabel = Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum);
-    return datum.label || propsLabel;
+    return datum.label || (Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
   },
 
   getLabelStyle(labelStyle, dataProps) {
