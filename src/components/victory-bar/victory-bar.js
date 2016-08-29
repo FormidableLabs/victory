@@ -31,8 +31,8 @@ export default class VictoryBar extends React.Component {
   static defaultTransitions = {
     onLoad: {
       duration: 2000,
-      before: () => ({ y: 0, yOffset: 0 }),
-      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset })
+      before: () => ({ y: 0, y1: 0, y0: 0 }),
+      after: (datum) => ({ y: datum.y, y1: datum.y1, y0: datum.y0 })
     },
     onExit: {
       duration: 500,
@@ -40,8 +40,8 @@ export default class VictoryBar extends React.Component {
     },
     onEnter: {
       duration: 500,
-      before: () => ({ y: 0, yOffset: 0 }),
-      after: (datum) => ({ y: datum.y, yOffset: datum.yOffset })
+      before: () => ({ y: 0, y1: 0, y0: 0 }),
+      after: (datum) => ({ y: datum.y, y1: datum.y1, y0: datum.y0 })
     }
   };
 

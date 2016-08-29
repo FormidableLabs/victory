@@ -26,8 +26,6 @@ export default class VictoryArea extends React.Component {
     onLoad: {
       duration: 2000,
       entrance: "left",
-      before: () => ({ y: 0, yOffset: 0 }),
-      after: (datum) => ({ y: datum.y }),
       beforeClipPathWidth: (data, child, animate) => {
         const paddingLeft = child.type.getScale(child.props).x.range()[0];
         const paddingRight = child.props.width - child.type.getScale(child.props).x.range()[1]; // eslint-disable-line max-len
