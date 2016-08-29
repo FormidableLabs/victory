@@ -83,17 +83,21 @@ export default {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
-  getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements
+  getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements, complexity, max-len
     const childDomains = [];
+    let childDomainsLength = 0;
+
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
+    let childrenLength = children.length;
+
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
 
-    while (children.length > 0) {
-      const child = children.pop();
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
 
       if (child.type && isFunction(child.type.getDomain)) {
         const parentData = props.data ? Data.getData(props, axis) : undefined;
@@ -101,10 +105,17 @@ export default {
           assign({}, child.props, {data: parentData}) : child.props;
         const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
         if (childDomain) {
-          childDomains.push(...childDomain);
+          const childDomainLength = childDomain.length;
+          for (let index = 0; index < childDomainLength; index++) {
+            childDomains[childDomainsLength++] = childDomain[index];
+          }
         }
       } else if (child.props && child.props.children) {
-        children.push(...React.Children.toArray(child.props.children));
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
       }
     }
 
