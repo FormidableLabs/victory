@@ -10,7 +10,8 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "line");
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
       props.theme.line.style : {};
-    const {scale, dataSegments, dataset} = this.getCalculatedValues(props);
+    const calculatedValues = this.getCalculatedValues(props);
+    const {scale, dataset} = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const {interpolation, label, width, height} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
@@ -19,13 +20,30 @@ export default {
       interpolation: Helpers.evaluateProp(interpolation, dataset),
       style: dataStyle
     };
+    const parentProps = { style: style.parent, scale, data: dataset, width, height };
+    const baseProps = {
+      parent: parentProps,
+      all: {
+        data: dataProps
+      }
+    };
 
     const text = Helpers.evaluateProp(label, dataset);
+    if (text || props.events || props.sharedEvents) {
+      baseProps.all.labels = this.getLabelProps(dataProps, text, calculatedValues, style);
+    }
+
+    return baseProps;
+  },
+
+  getLabelProps(dataProps, text, calculatedValues, style) { // eslint-disable-line max-params
+    const { dataSegments, dataset, scale } = calculatedValues;
+    const { style: dataStyle } = dataProps;
     const lastData = last(last(dataSegments));
     const baseLabelStyle = Helpers.evaluateStyle(style.labels, dataset) || {};
     const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
 
-    const labelProps = {
+    return {
       x: lastData ? scale.x(lastData.x1 || lastData.x) + (labelStyle.padding || 0) : 0,
       y: lastData ? scale.y(lastData.y1 || lastData.y) : 0,
       style: labelStyle,
@@ -34,15 +52,6 @@ export default {
       angle: labelStyle.angle,
       scale,
       text
-    };
-
-    const parentProps = { style: style.parent, scale, data: dataset, width, height};
-    return {
-      parent: parentProps,
-      all: {
-        data: dataProps,
-        labels: labelProps
-      }
     };
   },
 
