@@ -29,7 +29,8 @@ export default class VictoryTransition extends React.Component {
     this.state = {
       nodesShouldLoad: false,
       nodesDoneLoad: false,
-      nodesDoneClipPathLoad: false
+      nodesDoneClipPathLoad: false,
+      isAnimate: true
     };
 
     this.getTransitionState = this.getTransitionState.bind(this);
@@ -64,7 +65,8 @@ export default class VictoryTransition extends React.Component {
         nodesDoneLoad,
         nodesDoneClipPathLoad,
         nodesDoneClipPathEnter,
-        nodesDoneClipPathExit
+        nodesDoneClipPathExit,
+        isAnimate
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
       return {
@@ -77,6 +79,7 @@ export default class VictoryTransition extends React.Component {
         nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
         nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
         nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
+        isAnimate: isAnimate || this.state.isAnimate,
         oldProps: nodesWillExit ? props : null
       };
     }
