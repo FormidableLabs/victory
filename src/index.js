@@ -5,7 +5,8 @@ export { default as Style } from "./victory-util/style";
 export { default as PropTypes } from "./victory-util/prop-types";
 export { default as Events } from "./victory-util/events";
 import * as Transitions from "./victory-util/transitions";
-export { Transitions };
+import * as DefaultTransitions from "./victory-util/default-transitions";
+export { Transitions, DefaultTransitions };
 
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryLabel } from "./victory-label/victory-label";
