@@ -438,7 +438,7 @@ export default class VictoryLine extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
-      if (this.baseProps.all.labels || this.props.events) {
+      if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
         const labelProps = defaults(
           {index, key: `${role}-label-${index}`},
           this.getEventState("all", "labels"),

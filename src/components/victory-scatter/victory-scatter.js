@@ -419,7 +419,7 @@ export default class VictoryScatter extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      if (this.baseProps[key].labels || this.props.events) {
+      if (this.baseProps[key].labels || this.props.events || this.props.sharedEvents) {
         const labelProps = defaults(
           {key: `scatter-label-${key}`, index},
           this.getEventState(key, "labels"),

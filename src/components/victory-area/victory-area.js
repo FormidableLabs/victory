@@ -424,7 +424,7 @@ export default class VictoryArea extends React.Component {
       {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
     ));
 
-    if (this.baseProps.all.labels || this.props.events) {
+    if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
       const labelProps = defaults(
         {},
         this.getEventState("all", "labels"),
