@@ -353,8 +353,12 @@ export function getTransitionPropsFactory(props, state, setState) {
   const getChildTransitionDuration = function (child, type) {
     const animate = child.props.animate;
     const defaultTransitions = child.type && child.type.defaultTransitions;
-    return animate[type] && animate[type].duration ||
-      defaultTransitions[type] && defaultTransitions[type].duration;
+    if (defaultTransitions) {
+      return animate[type] && animate[type].duration ||
+        defaultTransitions[type] && defaultTransitions[type].duration;
+    }
+
+    return {};
   };
 
   return function getTransitionProps(child, index) { // eslint-disable-line max-statements, complexity, max-len

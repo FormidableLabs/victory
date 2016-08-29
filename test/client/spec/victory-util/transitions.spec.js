@@ -1,4 +1,4 @@
-/* eslint no-unused-expressions: 0 */
+/* eslint no-unused-expressions: 0*/
 /* global sinon */
 import { Transitions } from "src/index";
 import React from "react";
@@ -16,7 +16,10 @@ describe("getInitialTransitionState", () => {
       nodesWillEnter: false,
       nodesShouldEnter: false,
       nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false
+      nodesDoneClipPathExit: false,
+      nodesShouldLoad: false,
+      nodesDoneClipPathLoad: false,
+      nodesDoneLoad: false
     });
   });
 
@@ -29,7 +32,10 @@ describe("getInitialTransitionState", () => {
       nodesWillEnter: false,
       nodesShouldEnter: false,
       nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false
+      nodesDoneClipPathExit: false,
+      nodesShouldLoad: false,
+      nodesDoneClipPathLoad: false,
+      nodesDoneLoad: false
     });
   });
 
@@ -43,7 +49,10 @@ describe("getInitialTransitionState", () => {
       nodesWillEnter: false,
       nodesShouldEnter: false,
       nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false
+      nodesDoneClipPathExit: false,
+      nodesShouldLoad: false,
+      nodesDoneClipPathLoad: false,
+      nodesDoneLoad: false
     });
   });
 
@@ -57,7 +66,10 @@ describe("getInitialTransitionState", () => {
       nodesWillEnter: true,
       nodesShouldEnter: false,
       nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false
+      nodesDoneClipPathExit: false,
+      nodesShouldLoad: false,
+      nodesDoneClipPathLoad: false,
+      nodesDoneLoad: false
     });
   });
 });
@@ -85,7 +97,10 @@ describe("getTransitionPropsFactory", () => {
       nodesWillEnter: false,
       nodesShouldEnter: false,
       nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: true
+      nodesDoneClipPathExit: true,
+      nodesShouldLoad: true,
+      nodesDoneClipPathLoad: true,
+      nodesDoneLoad: true
     };
     const result = Transitions.getTransitionPropsFactory({}, exitingState, callback);
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
@@ -104,12 +119,17 @@ describe("getTransitionPropsFactory", () => {
       nodesWillEnter: true,
       nodesShouldEnter: false,
       nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false
+      nodesDoneClipPathExit: false,
+      nodesShouldLoad: true,
+      nodesDoneClipPathLoad: true,
+      nodesDoneLoad: true
     };
     const result = Transitions.getTransitionPropsFactory({}, enteringState, callback);
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
     const calledResult = result(child);
     expect(result).to.be.a("function");
+    expect(calledResult).to.be.a("object");
+    expect(calledResult).to.be.a("object");
     expect(calledResult).to.have.keys(["animate", "data"]);
     expect(toZero).calledWith({x: 2, y: 3});
     expect(calledResult.data).to.eql([{x: 1, y: 1}, {x: 2, y: 0}]);
