@@ -134,17 +134,24 @@ export default {
     const children = childComponents
       ? childComponents.slice(0)
       : React.Children.toArray(props.children);
-    const dataArr = [];
+    let childrenLength = children.length;
 
-    while (children.length > 0) {
-      const child = children.pop();
+    const dataArr = [];
+    let dataArrLength = 0;
+
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
 
       if (child.type && isFunction(child.type.getData)) {
-        dataArr.push(child.props && child.type.getData(child.props));
+        dataArr[dataArrLength++] = child.props && child.type.getData(child.props);
       } else if (child.props && child.props.children) {
-        children.push(...React.Children.toArray(child.props.children));
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
       } else {
-        dataArr.push(getData(child.props));
+        dataArr[dataArrLength++] = getData(child.props);
       }
     }
 
