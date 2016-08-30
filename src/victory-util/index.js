@@ -5,6 +5,7 @@ import Style from "./style";
 import PropTypes from "./prop-types";
 import Events from "./events";
 import * as Transitions from "./transitions";
+import * as DefaultTransitions from "./default-transitions";
 
 export {
   Collection,
@@ -12,6 +13,7 @@ export {
   Log,
   Style,
   Transitions,
+  DefaultTransitions,
   PropTypes,
   Events
 };
