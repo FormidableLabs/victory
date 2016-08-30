@@ -4,15 +4,14 @@ import { assign } from "lodash";
 // * Colors
 // *
 const colors = [
-  "#ffffff",
-  "#f0f0f0",
-  "#d9d9d9",
-  "#bdbdbd",
-  "#969696",
-  "#737373",
-  "#525252",
+  "#000000",
   "#252525",
-  "#000000"
+  "#525252",
+  "#737373",
+  "#969696",
+  "#bdbdbd",
+  "#d9d9d9",
+  "#f0f0f0"
 ];
 
 const charcoal = "#252525";
