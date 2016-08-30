@@ -205,16 +205,28 @@ export default {
     };
   },
 
-  getStringsFromCategories(childComponents, axis) {
+  getStringsFromCategories(childComponents, axis) { // eslint-disable-line max-statements
     const strings = [];
-    const children = childComponents.slice(0);
+    let stringsLength = 0;
 
-    while (children.length > 0) {
-      const child = children.pop();
+    const children = childComponents.slice(0);
+    let childrenLength = children.length;
+
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
+
       if (child.props && child.props.categories) {
-        strings.push(...Data.getStringsFromCategories(child.props, axis));
+        const newStrings = Data.getStringsFromCategories(child.props, axis);
+        const newStringsLength = newStrings.length;
+        for (let index = 0; index < newStringsLength; index++) {
+          strings[stringsLength++] = newStrings[index];
+        }
       } else if (child.props && child.props.children) {
-        children.push(...React.Children.toArray(child.props.children));
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
       }
     }
 
