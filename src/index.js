@@ -6,7 +6,7 @@ export { default as PropTypes } from "./victory-util/prop-types";
 export { default as Events } from "./victory-util/events";
 import * as Transitions from "./victory-util/transitions";
 import * as DefaultTransitions from "./victory-util/default-transitions";
-export { Transitions, DefaultTransitions };
+export { Transitions, DefaultTransitions};
 
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryLabel } from "./victory-label/victory-label";
@@ -14,3 +14,6 @@ export { default as VictoryTransition } from "./victory-transition/victory-trans
 export { default as VictorySharedEvents } from "./victory-shared-events/victory-shared-events";
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
+export {
+  Area, Bar, Candle, Curve, ErrorBar, Line, Point, Slice
+} from "./victory-primitives/index";
