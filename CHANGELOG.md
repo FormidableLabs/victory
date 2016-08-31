@@ -1,5 +1,14 @@
 VictoryCore Changelog
 =====================
+## 5.2.0 (2016-08-31)
+
+- Adds support for `onLoad` animations
+- Adds an `animating` state for `VictoryTransition` so that the global `onEnd` callback is only called after all other transitions have finished
+- Fixes a bug in `onExit` clipPath transitions
+- Fixes a stylistic bug in the default `grayscale` theme [#117](https://github.com/FormidableLabs/victory-core/issues/117)
+- Adds a `TextSize` utility for calculating the size of a text element without needing to render it. Thanks @nightwolfdu!
+- Exports all basic svg components from VictoryCore (_i.e._ `Bar`, `Point`, `Slice` etc.)
+
 ## 5.1.2 (2016-08-22)
 
 - VictoryLabel: minor changes to support `victory-core-native`
