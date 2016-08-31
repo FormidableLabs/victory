@@ -41,7 +41,7 @@ export default {
   getColorScale(name) {
     const scales = {
       greyscale: [
-        "#f7f7f7", "#cccccc", "#969696", "#636363", "#252525"
+        "#cccccc", "#969696", "#636363", "#252525"
       ],
       qualitative: [
         "#334D5C", "#45B29D", "#EFC94C", "#E27A3F", "#DF5A49",
