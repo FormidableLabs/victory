@@ -124,7 +124,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     nodesDoneClipPathLoad: false,
     nodesDoneClipPathEnter: false,
     nodesDoneClipPathExit: false,
-    isAnimate: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
+    animating: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
   };
 }
 
@@ -315,7 +315,7 @@ export function getTransitionPropsFactory(props, state, setState) {
         });
       }
       return getChildOnLoad(animate, data, () => {
-        setState({ nodesDoneLoad: true, isAnimate: false});
+        setState({ nodesDoneLoad: true, animating: false});
       });
     }
 
@@ -332,7 +332,7 @@ export function getTransitionPropsFactory(props, state, setState) {
     }
 
     return getChildPropsOnExit(animate, data, nodes, () => {
-      setState({ nodesWillExit: false, isAnimate: false });
+      setState({ nodesWillExit: false, animating: false });
     });
   };
 
@@ -345,7 +345,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       }
 
       return getChildPropsOnEnter(animate, data, nodes, () => {
-        setState({ nodesWillEnter: false, isAnimate: false });
+        setState({ nodesWillEnter: false, animating: false });
       });
     }
 
@@ -411,7 +411,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       return getInitialChildProps(animate, data);
     }
 
-    animate.onEnd = () => { setState({ isAnimate: false }); };
+    animate.onEnd = () => { setState({ animating: false }); };
     return { animate, data };
   };
 }
