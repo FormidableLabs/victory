@@ -1,9 +1,10 @@
 /*global document:false */
 
 import React, { PropTypes } from "react";
-import { merge } from "lodash";
+import { merge, assign, isEmpty } from "lodash";
 import VictoryLabel from "../victory-label/victory-label";
-import VictorySymbol from "../victory-legend/victory-symbol";
+import VictoryContainer from "../victory-container/victory-container";
+import Point from "../point/point"; // it should be replaced
 
 const defaultFontStyle = {
   fontSize: 14,
@@ -12,6 +13,30 @@ const defaultFontStyle = {
   backgroundColor: "#d9d9d9",
   stroke: "transparent"
 };
+
+const defaultLegendStyle = {
+  height: 200,
+  width: 300,
+  padding: 20
+};
+
+const defaultLegendData = [{
+  name: "Series 1",
+  symbol: {
+    type: "circle",
+    style: {
+      fill: "red"
+    }
+  }
+}, {
+  name: "Series 2",
+  symbol: {
+    type: "diamond",
+    style: {
+      fill: "blue"
+    }
+  }
+}];
 
 export default class VictoryLegend extends React.Component {
   static propTypes = {
@@ -22,34 +47,44 @@ export default class VictoryLegend extends React.Component {
     orientation: PropTypes.string,
     data: PropTypes.arrayOf(
       PropTypes.shape({
-        color: PropTypes.string,
-        symbol: PropTypes.string,
-        name: PropTypes.string
+        name: PropTypes.string.isRequired,
+        label: PropTypes.object,
+        symbol: PropTypes.object
       })
     ),
-    font: PropTypes.shape({
-      fontSize: PropTypes.number,
-      fontFamily: PropTypes.string
-    }),
     columnItemSpacing: PropTypes.number,
-    rowItemSpacing: PropTypes.number
+    rowItemSpacing: PropTypes.number,
+    groupComponent: PropTypes.element,
+    standalone: PropTypes.bool,
+    style: PropTypes.object
   };
 
   static defaultProps = {
     x: 0,
     y: 0,
-    height: 200,
-    width: 300,
-    data: [],
+    height: 100,
+    width: 150,
     orientation: "vertical",
     columnItemSpacing: 10,
-    rowItemSpacing: 8
+    rowItemSpacing: 8,
+    symbolComponent: <Point/>,
+    labelComponent: <VictoryLabel/>,
+    containerComponent: <VictoryContainer/>,
+    groupComponent: <g/>,
+    standalone: true
   };
 
   getFontStyles(props) {
-    return merge({}, defaultFontStyle, props.font);
+    return merge({}, defaultFontStyle, props.label);
   }
 
+  getLegendStyle(props) {
+    return {
+      style: merge({}, defaultLegendStyle, props.style)
+    };
+  }
+
+  // it should be changed to approximateTextSize
   getLabelBbox(text, font) {
     const body = document.body;
     const container = document.createElement("svg");
@@ -74,55 +109,78 @@ export default class VictoryLegend extends React.Component {
     return bBox;
   }
 
+  renderContainer(props, group) {
+    return React.cloneElement(
+      props.containerComponent,
+      this.getLegendStyle(props),
+      group
+    );
+  }
+
+  renderGroup(children) {
+    return React.cloneElement(
+      this.props.groupComponent,
+      { role: "presentation" },
+      children
+    );
+  }
+
   render() {
-    const props = this.props;
-    const font = this.getFontStyles(props);
-    const { data } = props;
     let yPadding = 0;
-    const symbolSize = font.fontSize;
+    let xPadding = 0;
+    const props = this.props;
     const itemXPosition = [];
-    const labelSymbolPadding = symbolSize * 1.5 + props.columnItemSpacing;
+    const symbolComponents = [];
+    const labelComponents = [];
+    const { symbolComponent, labelComponent } = props;
+    const data = isEmpty(props.data) ? defaultLegendData : props.data;
 
-    if (props.orientation === "horizontal") {
-      let xPadding = 0;
-      data.forEach((item) => {
+    data.forEach((series, index) => {
+      const font = this.getFontStyles(series);
+      const symbolSize = font.fontSize;
+      const hPadding = symbolSize * 0.87;
+      const yPos = props.y + index * yPadding;
+      const labelSymbolPadding = symbolSize * 1.5 + props.columnItemSpacing;
+
+      if (props.orientation === "horizontal") {
         itemXPosition.push(xPadding);
-        xPadding += labelSymbolPadding + this.getLabelBbox(item.name, font).width;
-      });
-    } else {
-      yPadding = symbolSize + props.rowItemSpacing;
-    }
+        xPadding += labelSymbolPadding + this.getLabelBbox(series.name, font).width;
+      } else {
+        yPadding = symbolSize + props.rowItemSpacing;
+      }
 
-    const items = data.map((seria, index) => {
-      const hPadding = 1.5 * symbolSize;
-      const yPos = index * yPadding;
-      const xLabelPos = (props.orientation !== "horizontal" ? 0 : itemXPosition[index]) + hPadding;
-      const xSymbolPos = props.orientation !== "horizontal" ? props.x : itemXPosition[index];
+      const xLabelPos = (props.orientation !== "horizontal" ?
+        props.x : itemXPosition[index]) + hPadding;
+      const xSymbolPos = props.orientation !== "horizontal" ?
+        props.x : itemXPosition[index];
 
-      return (
-        <g key={index}>
-          <VictorySymbol
-            x={xSymbolPos}
-            y={yPos}
-            type={seria.symbol}
-            size={symbolSize}
-            color={seria.color}
-          />
-          <VictoryLabel
-            x={xLabelPos}
-            y={yPos}
-            style={font}
-          >
-            {seria.name}
-          </VictoryLabel>
-        </g>
+      const symbolProps = assign({
+        key: `symbol-${index}`
+      }, {
+        x: xSymbolPos,
+        y: yPos,
+        size: series.symbol.size || symbolSize / 2.5,
+        symbol: series.symbol.type
+      }, series.symbol);
+
+      const labelProps = assign({
+        key: `label-${index}`
+      }, {
+        x: xLabelPos,
+        y: yPos,
+        style: font,
+        text: series.name
+      }, series.label);
+
+      symbolComponents[index] = React.cloneElement(
+        symbolComponent, assign({}, symbolProps)
+      );
+      labelComponents[index] = React.cloneElement(
+        labelComponent, assign({}, labelProps)
       );
     });
 
-    return (
-      <g transform={`translate(${props.x}, ${props.y})`}>
-        {items}
-      </g>
-    );
+    const group = this.renderGroup([...symbolComponents, ...labelComponents]);
+    return props.standalone ? this.renderContainer(props, group) : group;
   }
 }
