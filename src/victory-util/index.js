@@ -5,6 +5,7 @@ import Style from "./style";
 import PropTypes from "./prop-types";
 import Events from "./events";
 import * as Transitions from "./transitions";
+import TextSize from "./textsize";
 import * as DefaultTransitions from "./default-transitions";
 
 export {
@@ -15,5 +16,6 @@ export {
   Transitions,
   DefaultTransitions,
   PropTypes,
-  Events
+  Events,
+  TextSize
 };
