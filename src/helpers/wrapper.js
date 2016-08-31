@@ -83,27 +83,42 @@ export default {
     return defaults({getTransitions, parentState}, props.animate, child.props.animate);
   },
 
-  getDomainFromChildren(props, axis, childComponents) {
-    childComponents = childComponents || React.Children.toArray(props.children);
+  getDomainFromChildren(props, axis, childComponents) { // eslint-disable-line max-statements, complexity, max-len
+    const childDomains = [];
+    let childDomainsLength = 0;
+
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+    let childrenLength = children.length;
+
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
-    const getChildDomains = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.type && isFunction(child.type.getDomain)) {
-          const parentData = props.data ? Data.getData(props, axis) : undefined;
-          const sharedProps = parentData ?
-            assign({}, child.props, {data: parentData}) : child.props;
-          const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
-          return childDomain ? memo.concat(childDomain) : memo;
-        } else if (child.props && child.props.children) {
-          return memo.concat(getChildDomains(React.Children.toArray(child.props.children)));
-        }
-        return memo;
-      }, []);
-    };
 
-    const childDomains = getChildDomains(childComponents);
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
+
+      if (child.type && isFunction(child.type.getDomain)) {
+        const parentData = props.data ? Data.getData(props, axis) : undefined;
+        const sharedProps = parentData ?
+          assign({}, child.props, {data: parentData}) : child.props;
+        const childDomain = child.props && child.type.getDomain(sharedProps, currentAxis);
+        if (childDomain) {
+          const childDomainLength = childDomain.length;
+          for (let index = 0; index < childDomainLength; index++) {
+            childDomains[childDomainsLength++] = childDomain[index];
+          }
+        }
+      } else if (child.props && child.props.children) {
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
+      }
+    }
+
     const min = Collection.getMinValue(childDomains);
     const max = Collection.getMaxValue(childDomains);
     return childDomains.length === 0 ?
@@ -116,18 +131,31 @@ export default {
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
-    const getChildData = (children) => {
-      return children.map((child) => {
-        if (child.type && isFunction(child.type.getData)) {
-          return child.props && child.type.getData(child.props);
-        } else if (child.props && child.props.children) {
-          return flatten(getChildData(React.Children.toArray(child.props.children)));
+    const children = childComponents
+      ? childComponents.slice(0)
+      : React.Children.toArray(props.children);
+    let childrenLength = children.length;
+
+    const dataArr = [];
+    let dataArrLength = 0;
+
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
+
+      if (child.type && isFunction(child.type.getData)) {
+        dataArr[dataArrLength++] = child.props && child.type.getData(child.props);
+      } else if (child.props && child.props.children) {
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
         }
-        return getData(child.props);
-      });
-    };
-    childComponents = childComponents || React.Children.toArray(props.children);
-    return getChildData(childComponents);
+      } else {
+        dataArr[dataArrLength++] = getData(child.props);
+      }
+    }
+
+    return dataArr;
   },
 
   getStackedDomain(props, axis) {
@@ -177,42 +205,69 @@ export default {
     };
   },
 
-  getStringsFromCategories(childComponents, axis) {
-    const stringsFromCategories = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.props && child.props.categories) {
-          return memo.concat(Data.getStringsFromCategories(child.props, axis));
-        } else if (child.props && child.props.children) {
-          return memo.concat(stringsFromCategories(
-            React.Children.toArray(child.props.children)
-          ));
-        }
-        return memo;
-      }, []);
-    };
+  getStringsFromCategories(childComponents, axis) { // eslint-disable-line max-statements
+    const strings = [];
+    let stringsLength = 0;
 
-    return stringsFromCategories(childComponents);
+    const children = childComponents.slice(0);
+    let childrenLength = children.length;
+
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
+
+      if (child.props && child.props.categories) {
+        const newStrings = Data.getStringsFromCategories(child.props, axis);
+        const newStringsLength = newStrings.length;
+        for (let index = 0; index < newStringsLength; index++) {
+          strings[stringsLength++] = newStrings[index];
+        }
+      } else if (child.props && child.props.children) {
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
+      }
+    }
+
+    return strings;
   },
 
-  getStringsFromData(childComponents, axis) {
-    const stringsFromData = (children) => {
-      return children.reduce((memo, child) => {
-        if (child.props && child.props.data) {
-          return memo.concat(Helpers.getStringsFromData(child.props, axis));
-        } else if (child.type && isFunction(child.type.getData)) {
-          const data = flatten(child.type.getData(child.props));
-          const attr = axis === "x" ? "xName" : "yName";
-          return memo.concat(data.reduce((prev, datum) => {
-            return datum[attr] ? prev.concat(datum[attr]) : prev;
-          }, []));
-        } else if (child.props && child.props.children) {
-          return memo.concat(stringsFromData(React.Children.toArray(child.props.children)));
-        }
-        return memo;
-      }, []);
-    };
+  getStringsFromData(childComponents, axis) { // eslint-disable-line max-statements
+    const strings = [];
+    let stringsLength = 0;
 
-    return stringsFromData(childComponents);
+    const children = childComponents.slice(0);
+    let childrenLength = children.length;
+
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
+
+      if (child.props && child.props.data) {
+        const newStrings = Helpers.getStringsFromData(child.props, axis);
+        const newStringsLength = newStrings.length;
+        for (let index = 0; index < newStringsLength; index++) {
+          strings[stringsLength++] = newStrings[index];
+        }
+      } else if (child.type && isFunction(child.type.getData)) {
+        const data = flatten(child.type.getData(child.props));
+        const attr = axis === "x" ? "xName" : "yName";
+        for (let index = 0; index < data.length; index++) {
+          const datum = data[index];
+          if (datum[attr]) {
+            strings[stringsLength++] = datum[attr];
+          }
+        }
+      } else if (child.props && child.props.children) {
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
+      }
+    }
+
+    return strings;
   },
 
   getStringsFromChildren(props, axis, childComponents) {
