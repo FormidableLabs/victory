@@ -1,6 +1,6 @@
 VictoryCore Changelog
 =====================
-## 5.2.0 (2016-08-31)
+## 6.0.0 (2016-08-31)
 
 - Adds support for `onLoad` animations
 - Adds an `animating` state for `VictoryTransition` so that the global `onEnd` callback is only called after all other transitions have finished
