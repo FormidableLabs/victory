@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers
-} from "../index";
+} from "../victory-util/index";
 
 export default class ClipPath extends React.Component {
   static propTypes = {
