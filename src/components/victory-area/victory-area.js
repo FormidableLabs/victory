@@ -3,10 +3,9 @@ import React, { PropTypes } from "react";
 import AreaHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, Area
+  VictoryContainer, VictoryTheme, Area, ClipPath
 } from "victory-core";
 
 const fallbackProps = {
