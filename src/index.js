@@ -4,6 +4,7 @@ export { default as Log } from "./victory-util/log";
 export { default as Style } from "./victory-util/style";
 export { default as PropTypes } from "./victory-util/prop-types";
 export { default as Events } from "./victory-util/events";
+export { default as TextSize } from "./victory-util/textsize";
 import * as Transitions from "./victory-util/transitions";
 import * as DefaultTransitions from "./victory-util/default-transitions";
 export { Transitions, DefaultTransitions };
