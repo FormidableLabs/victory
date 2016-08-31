@@ -123,7 +123,8 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     nodesDoneLoad: false,
     nodesDoneClipPathLoad: false,
     nodesDoneClipPathEnter: false,
-    nodesDoneClipPathExit: false
+    nodesDoneClipPathExit: false,
+    animating: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
   };
 }
 
@@ -251,7 +252,7 @@ function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // 
   return { animate, data };
 }
 
-function getChildPropsOnEnter(animate, data, enteringNodes) { // eslint-disable-line max-params, max-len
+function getChildPropsOnEnter(animate, data, enteringNodes, cb) { // eslint-disable-line max-params, max-len
   // Whether or not _this_ child has entering nodes, we want the entering-
   // transition for all children to have the same duration, delay, etc.
   const onEnter = animate && animate.onEnter;
@@ -261,6 +262,7 @@ function getChildPropsOnEnter(animate, data, enteringNodes) { // eslint-disable-
     // Old nodes have been transitioned to their new values, and the
     // domain should encompass the nodes that will now enter. So perform
     // the `onEnter.after` transformation on each node.
+    animate.onEnd = cb;
     const after = animate.onEnter && animate.onEnter.after ? animate.onEnter.after : identity;
     data = data.map((datum, idx) => {
       const key = getDatumKey(datum, idx);
@@ -313,7 +315,7 @@ export function getTransitionPropsFactory(props, state, setState) {
         });
       }
       return getChildOnLoad(animate, data, () => {
-        setState({ nodesDoneLoad: true});
+        setState({ nodesDoneLoad: true, animating: false});
       });
     }
 
@@ -330,7 +332,7 @@ export function getTransitionPropsFactory(props, state, setState) {
     }
 
     return getChildPropsOnExit(animate, data, nodes, () => {
-      setState({ nodesWillExit: false });
+      setState({ nodesWillExit: false, animating: false });
     });
   };
 
@@ -342,7 +344,9 @@ export function getTransitionPropsFactory(props, state, setState) {
         });
       }
 
-      return getChildPropsOnEnter(animate, data, nodes);
+      return getChildPropsOnEnter(animate, data, nodes, () => {
+        setState({ nodesWillEnter: false, animating: false });
+      });
     }
 
     return getChildPropsBeforeEnter(animate, child, data, nodes, () => {
@@ -406,6 +410,8 @@ export function getTransitionPropsFactory(props, state, setState) {
       //
       return getInitialChildProps(animate, data);
     }
+
+    animate.onEnd = () => { setState({ animating: false }); };
     return { animate, data };
   };
 }
