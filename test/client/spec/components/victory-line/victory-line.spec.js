@@ -10,8 +10,7 @@ import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryLine from "src/components/victory-line/victory-line";
-import Line from "src/components/victory-line/line-segment";
-import { VictoryLabel } from "victory-core";
+import { VictoryLabel, Curve } from "victory-core";
 
 class MyLineSegment extends React.Component {
   render() { }
@@ -74,7 +73,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(1);
     });
 
@@ -90,7 +89,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine {...props}/>
       );
-      const line = wrapper.find(Line);
+      const line = wrapper.find(Curve);
       SvgTestHelper.expectCorrectD3Path(line, props, "line");
     });
   });
@@ -109,7 +108,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(2);
     });
 
@@ -126,7 +125,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(2);
     });
 
@@ -143,7 +142,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(2);
     });
 
@@ -160,7 +159,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(2);
     });
 
@@ -178,7 +177,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(3);
     });
   });
@@ -192,7 +191,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data} x={0} y={1} />
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(1);
     });
 
@@ -201,7 +200,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data} x={null} y={null} />
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(1);
     });
 
@@ -213,7 +212,7 @@ describe("components/victory-line", () => {
       const wrapper = shallow(
         <VictoryLine data={data} x={'a.b[0].x'} y={'a.b.0.y'} />
       );
-      const lines = wrapper.find(Line);
+      const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(1);
     });
   });
@@ -247,7 +246,7 @@ describe("components/victory-line", () => {
           }]}
         />
       );
-      const Data = wrapper.find(Line);
+      const Data = wrapper.find(Curve);
       Data.forEach((node, index) => {
         const initialProps = Data.at(index).props();
         node.simulate("click");

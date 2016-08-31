@@ -1,13 +1,12 @@
 import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
-import Bar from "./bar";
 import BarHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, Bar
 } from "victory-core";
 
 const fallbackProps = {

@@ -1,13 +1,12 @@
 import { assign, isFunction, defaults, partialRight, min, max, filter } from "lodash";
 import React, { PropTypes } from "react";
-import Area from "./area";
 import AreaHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import ClipPath from "../helpers/clip-path";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, Area
 } from "victory-core";
 
 const fallbackProps = {

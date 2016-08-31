@@ -9,8 +9,7 @@ import { omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryArea from "src/components/victory-area/victory-area";
-import { VictoryLabel } from "victory-core";
-import Area from "src/components/victory-area/area";
+import { VictoryLabel, Area } from "victory-core";
 
 describe("components/victory-area", () => {
   describe("default component rendering", () => {

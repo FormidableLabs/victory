@@ -1,9 +1,8 @@
 import React, { PropTypes } from "react";
 import { assign, defaults, isFunction, partialRight } from "lodash";
-import Candle from "./candle";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, Candle
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 

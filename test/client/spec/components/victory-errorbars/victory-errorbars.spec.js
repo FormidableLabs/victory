@@ -9,7 +9,7 @@ import { shallow, mount, render } from "enzyme";
 import { omit, range } from "lodash";
 import * as d3Scale from "d3-scale";
 import VictoryErrorBar from "src/components/victory-errorbar/victory-errorbar";
-import ErrorBar from "src/components/victory-errorbar/errorbar";
+import { ErrorBar } from "victory-core";
 
 class MyErrorBar extends React.Component {
 

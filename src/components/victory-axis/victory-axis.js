@@ -2,9 +2,8 @@ import { assign, defaults, isFunction, partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, Line
 } from "victory-core";
-import AxisLine from "./axis-line";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
 
@@ -326,11 +325,11 @@ export default class VictoryAxis extends React.Component {
   };
 
   static defaultProps = {
-    axisComponent: <AxisLine type={"axis"}/>,
+    axisComponent: <Line type={"axis"}/>,
     axisLabelComponent: <VictoryLabel/>,
     tickLabelComponent: <VictoryLabel/>,
-    tickComponent: <AxisLine type={"tick"}/>,
-    gridComponent: <AxisLine type={"grid"}/>,
+    tickComponent: <Line type={"tick"}/>,
+    gridComponent: <Line type={"grid"}/>,
     scale: "linear",
     standalone: true,
     theme: VictoryTheme.grayscale,
