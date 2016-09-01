@@ -88,7 +88,7 @@ export default class App extends React.Component {
         areaTransitionData: this.getAreaTransitionData(),
         style: this.getStyles()
       });
-    }, 4000);
+    }, 5000);
   }
 
   render() {
@@ -126,7 +126,10 @@ export default class App extends React.Component {
 
         <VictoryStack
           style={style}
-          animate={{duration: 1000}}
+          animate={{
+            duration: 1000,
+            onLoad: {entrance: "right"}
+          }}
           colorScale={"warm"}
           containerComponent={
             <VictoryContainer

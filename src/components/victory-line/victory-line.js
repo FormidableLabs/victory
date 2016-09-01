@@ -1,4 +1,4 @@
-import { assign, defaults, partialRight, isFunction, min, max, filter } from "lodash";
+import { assign, defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
 import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
@@ -7,7 +7,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, DefaultTransitions
 } from "victory-core";
 
 const fallbackProps = {
@@ -19,43 +19,8 @@ const fallbackProps = {
 
 export default class VictoryLine extends React.Component {
   static displayName = "VictoryLine";
-
   static role = "line";
-
-  static defaultTransitions = {
-    onExit: {
-      duration: 500,
-      before: (datum) => ({ y: datum.y }),
-      beforeClipPathWidth: (data, child, exitingNodes) => {
-        const filterExit = filter(data, (datum, index) => !exitingNodes[index]);
-        const xVals = filterExit.map((datum) => {
-          return child.type.getScale(child.props).x(datum.x);
-        });
-        const clipPath = min(xVals) + max(xVals);
-        return clipPath;
-      }
-    },
-    onEnter: {
-      duration: 500,
-      before: () => ({ y: null }),
-      after: (datum) => ({ y: datum.y }),
-      beforeClipPathWidth: (data, child, enteringNodes) => {
-        const filterEnter = filter(data, (datum, index) => !enteringNodes[index]);
-        const xVals = filterEnter.map((datum) => {
-          return child.type.getScale(child.props).x(datum.x);
-        });
-        const clipPath = min(xVals) + max(xVals);
-        return clipPath;
-      },
-      afterClipPathWidth: (data, child) => {
-        const xVals = data.map((datum) => {
-          return child.type.getScale(child.props).x(datum.x);
-        });
-        const clipPath = min(xVals) + max(xVals);
-        return clipPath;
-      }
-    }
-  };
+  static defaultTransitions = DefaultTransitions.continuousTransitions();
 
   static propTypes = {
     /**
@@ -478,14 +443,14 @@ export default class VictoryLine extends React.Component {
     );
   }
 
-  renderGroup(children, modifiedProps, style) {
-    const { clipPathComponent } = modifiedProps;
-
+  renderGroup(children, props, style) {
+    const { clipPathComponent } = props;
     const clipComponent = React.cloneElement(clipPathComponent, {
-      padding: modifiedProps.padding,
-      clipId: modifiedProps.clipId,
-      clipWidth: modifiedProps.clipWidth || modifiedProps.width,
-      clipHeight: modifiedProps.clipHeight || modifiedProps.height
+      padding: props.padding,
+      clipId: props.clipId,
+      translateX: props.translateX || 0,
+      clipWidth: props.clipWidth || props.width,
+      clipHeight: props.clipHeight || props.height
     });
 
     return React.cloneElement(
@@ -508,7 +473,7 @@ export default class VictoryLine extends React.Component {
       // TODO: extract into helper
       const whitelist = [
         "data", "domain", "height", "padding", "samples",
-        "style", "width", "x", "y", "clipWidth", "clipHeight"
+        "style", "width", "x", "y", "clipWidth", "clipHeight", "translateX"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

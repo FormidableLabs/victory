@@ -101,7 +101,7 @@ export default class App extends React.Component {
         multiTransitionData: this.getMultiTransitionData(),
         numericBarData: this.getNumericBarData()
       });
-    }, 3000);
+    }, 5000);
   }
 
   componentWillUnmount() {
