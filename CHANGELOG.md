@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 6.0.1 (2016-09-01)
+
+- Add `translateX` prop to `ClipPath`
+
 ## 6.0.0 (2016-08-31)
 
 - Adds support for `onLoad` animations
