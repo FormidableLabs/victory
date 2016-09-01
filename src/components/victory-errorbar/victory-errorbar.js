@@ -1,10 +1,9 @@
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions
+  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar
 } from "victory-core";
 import { assign, defaults, isFunction, partialRight } from "lodash";
-import ErrorBar from "./errorbar";
 import Data from "../../helpers/data";
 import ErrorBarHelpers from "./helper-methods";
 

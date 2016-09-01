@@ -2,18 +2,16 @@
 import React from "react";
 import { merge, random, range } from "lodash";
 import {VictoryLine, VictoryChart} from "../../src/index";
-import LineSegment from "../../src/components/victory-line/line-segment";
-import Point from "../../src/components/victory-scatter/point";
-import { VictoryContainer, VictoryTheme } from "victory-core";
+import { VictoryContainer, VictoryTheme, Curve, Point } from "victory-core";
 
 class PointedLine extends React.Component {
   static propTypes = {
-    ...LineSegment.propTypes,
+    ...Curve.propTypes,
     index: React.PropTypes.number
   };
 
   renderLine(props) {
-    return <LineSegment {...props} />;
+    return <Curve {...props} />;
   }
 
   renderPoints(props) {

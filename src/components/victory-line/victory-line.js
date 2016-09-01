@@ -1,13 +1,11 @@
 import { assign, defaults, partialRight, isFunction } from "lodash";
 import React, { PropTypes } from "react";
-import LineSegment from "./line-segment";
 import LineHelpers from "./helper-methods";
-import ClipPath from "../helpers/clip-path";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions
+  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, ClipPath
 } from "victory-core";
 
 const fallbackProps = {
@@ -344,7 +342,7 @@ export default class VictoryLine extends React.Component {
     standalone: true,
     x: "x",
     y: "y",
-    dataComponent: <LineSegment/>,
+    dataComponent: <Curve/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,

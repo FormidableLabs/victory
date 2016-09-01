@@ -10,8 +10,7 @@ import React from "react";
 import { shallow, mount } from "enzyme";
 import { range, omit } from "lodash";
 import VictoryCandlestick from "src/components/victory-candlestick/victory-candlestick";
-import Candle from "src/components/victory-candlestick/candle";
-import { VictoryLabel } from "victory-core";
+import { VictoryLabel, Candle } from "victory-core";
 
 class MyCandle extends React.Component {
 
