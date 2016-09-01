@@ -7,9 +7,9 @@ import {
   VictoryLabel,
   VictoryTransition,
   VictoryContainer,
-  VictoryTheme
+  VictoryTheme,
+  Slice
 } from "victory-core";
-import Slice from "./slice";
 import PieHelpers from "./helper-methods";
 
 const fallbackProps = {

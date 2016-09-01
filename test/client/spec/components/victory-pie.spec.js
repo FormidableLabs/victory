@@ -6,10 +6,9 @@
 import { range, omit } from "lodash";
 import React from "react";
 import { shallow, mount } from "enzyme";
-import { Style, VictoryLabel } from "victory-core";
+import { Style, VictoryLabel, Slice } from "victory-core";
 import SvgTestHelper from "../../../svg-test-helper";
 import VictoryPie from "src/components/victory-pie";
-import Slice from "src/components/slice";
 
 class PizzaSlice extends React.Component {
   render() {}
