@@ -2,8 +2,7 @@
 import React from "react";
 import { merge, random, range } from "lodash";
 import { VictoryErrorBar, VictoryScatter, VictoryLine, VictoryChart } from "../../src/index";
-import ErrorBar from "../../src/components/victory-errorbar/errorbar";
-import { VictoryContainer, VictoryTheme } from "victory-core";
+import { VictoryContainer, VictoryTheme, ErrorBar } from "victory-core";
 
 const getData = () => {
   return range(4).map(() => {
