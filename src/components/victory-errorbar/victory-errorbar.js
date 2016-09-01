@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, ErrorBar
+  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar
 } from "victory-core";
 import { assign, defaults, isFunction, partialRight } from "lodash";
 import Data from "../../helpers/data";
@@ -22,20 +22,8 @@ const defaultData = [
 
 export default class VictoryErrorBar extends React.Component {
   static displayName = "VictoryErrorBar";
-
   static role = "errorBar";
-
-  static defaultTransitions = {
-    onExit: {
-      duration: 600,
-      before: () => ({ opacity: 0 })
-    },
-    onEnter: {
-      duration: 600,
-      before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
-    }
-  };
+  static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
     /**

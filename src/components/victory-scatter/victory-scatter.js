@@ -4,7 +4,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, Point
+  VictoryContainer, VictoryTheme, DefaultTransitions, Point
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
@@ -18,20 +18,8 @@ const fallbackProps = {
 
 export default class VictoryScatter extends React.Component {
   static displayName = "VictoryScatter";
-
   static role = "scatter";
-
-  static defaultTransitions = {
-    onExit: {
-      duration: 600,
-      before: () => ({ opacity: 0 })
-    },
-    onEnter: {
-      duration: 600,
-      before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
-    }
-  };
+  static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
     /**
