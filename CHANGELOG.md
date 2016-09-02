@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 6.0.2 (2016-09-01)
+
+- Fix `onEnd` animation callback
+
 ## 6.0.1 (2016-09-01)
 
 - Add `translateX` prop to `ClipPath`
