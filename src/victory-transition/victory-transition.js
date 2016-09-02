@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions, Collection } from "../victory-util/index";
-import { defaults, isFunction, pick, filter } from "lodash";
+import { defaults, isFunction, pick, filter, identity } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -42,7 +42,8 @@ export default class VictoryTransition extends React.Component {
 
   componentWillUpdate(nextProps, nextState) {
     if (nextState.animating !== this.state.animating && nextState.animating === false) {
-      nextProps.onEnd();
+      const onEnd = nextProps && nextProps.animate && nextProps.animate.onEnd || identity;
+      onEnd();
     }
   }
 
