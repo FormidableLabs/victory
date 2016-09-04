@@ -1,4 +1,5 @@
-import { sortBy, defaults, last } from "lodash";
+import { sortBy, defaults, last, without } from "lodash";
+import { voronoi as d3Voronoi } from "d3-voronoi";
 import { Helpers, Log } from "victory-core";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
@@ -11,7 +12,7 @@ export default {
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
       props.theme.line.style : {};
     const calculatedValues = this.getCalculatedValues(props);
-    const {scale, dataset} = calculatedValues;
+    const {scale, dataset, polygons} = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const {interpolation, label, width, height} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
@@ -28,30 +29,41 @@ export default {
       }
     };
 
-    const text = Helpers.evaluateProp(label, dataset);
-    if (text || props.events || props.sharedEvents) {
-      baseProps.all.labels = this.getLabelProps(dataProps, text, calculatedValues, style);
-    }
+    for (let index = 0, len = dataset.length; index < len; index++) {
+      const datum = dataset[index];
+      const polygon = without(polygons[index], "data");
+      const eventKey = datum.eventKey || index;
+      const x = scale.x(datum.x1 || datum.x);
+      const y = scale.y(datum.y1 || datum.y);
+      const voronoiProps = {
+        x, y, datum, index, scale, polygon,
+        size: props.size,
+        style: {fill: "none", stroke: "none"}
+      };
 
+      baseProps[eventKey] = { data: voronoiProps };
+      const text = this.getLabelText(props, datum, index);
+      if (text || props.events || props.sharedEvents) {
+        baseProps[eventKey].labels = this.getLabelProps(voronoiProps, text, style);
+      }
+    }
     return baseProps;
   },
 
-  getLabelProps(dataProps, text, calculatedValues, style) { // eslint-disable-line max-params
-    const { dataSegments, dataset, scale } = calculatedValues;
-    const { style: dataStyle } = dataProps;
-    const lastData = last(last(dataSegments));
-    const baseLabelStyle = Helpers.evaluateStyle(style.labels, dataset) || {};
-    const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
-
+  getLabelProps(dataProps, text, style) {
+    const { x, y, index, scale, datum } = dataProps;
+    const labelStyle = this.getLabelStyle(style.labels, dataProps) || {};
     return {
-      x: lastData ? scale.x(lastData.x1 || lastData.x) + (labelStyle.padding || 0) : 0,
-      y: lastData ? scale.y(lastData.y1 || lastData.y) : 0,
       style: labelStyle,
-      textAnchor: labelStyle.textAnchor || "start",
-      verticalAnchor: labelStyle.verticalAnchor || "middle",
-      angle: labelStyle.angle,
+      x,
+      y: y - (labelStyle.padding || 0),
+      text,
+      index,
       scale,
-      text
+      datum,
+      textAnchor: labelStyle.textAnchor,
+      verticalAnchor: labelStyle.verticalAnchor || "end",
+      angle: labelStyle.angle
     };
   },
 
@@ -82,11 +94,29 @@ export default {
       Log.warn("VictoryLine needs at least two data points to render properly.");
       dataset = [];
     }
-
+    const range = {
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
+    };
     const dataSegments = this.getDataSegments(dataset);
     const scale = this.getScale(props);
+    const voronoi = this.getVoronoi(range, scale);
+    const polygons = voronoi.polygons(dataset);
+    return { dataset, dataSegments, scale, polygons };
+  },
 
-    return { dataset, dataSegments, scale };
+  getVoronoi(range, scale) {
+    const minRange = [Math.min(...range.x), Math.min(...range.y)];
+    const maxRange = [Math.max(...range.x), Math.max(...range.y)];
+    return d3Voronoi()
+      .x((d) => scale.x(d.x1 || d.x))
+      .y((d) => scale.y(d.y1 || d.y))
+      .extent([minRange, maxRange]);
+  },
+
+  getLabelText(props, datum, index) {
+    return datum.label || (Array.isArray(props.labels) ?
+      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
   },
 
   getLabelStyle(labelStyle, dataStyle) {

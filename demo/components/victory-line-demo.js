@@ -128,7 +128,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle, data: this.state.style}}
           data={this.state.data}
-          label={"label\none"}
           animate={{duration: 1500}}
         />
 
@@ -195,6 +194,7 @@ export default class App extends React.Component {
             {x: new Date(2011, 1, 1), y: 270},
             {x: new Date(2015, 1, 1), y: 470}
           ]}
+          labels={(d) => d.x.getFullYear()}
         />
 
         <VictoryLine
