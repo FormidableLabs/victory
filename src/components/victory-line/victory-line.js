@@ -5,7 +5,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, ClipPath, Voronoi
+  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, ClipPath
 } from "victory-core";
 
 const fallbackProps = {
@@ -186,16 +186,15 @@ export default class VictoryLine extends React.Component {
       "stepBefore"
     ]),
     /**
-     * The labels prop defines labels that will appear with each point in your chart.
-     * This prop should be given as an array of values or as a function of data.
-     * If given as an array, the number of elements in the array should be equal to
-     * the length of the data array. Labels may also be added directly to the data object
-     * like data={[{x: 1, y: 1, label: "first"}]}.
-     * @examples ["spring", "summer", "fall", "winter"], (datum) => datum.title
+     * The label prop defines the label that will appear at the end of the line.
+     * This prop should be given a string or as a function of data. If individual
+     * labels are required for each data point, they should be created by composing
+     * VictoryLine with VictoryScatter
+     * @examples: "Series 1", (data) => `${data.length} points`
      */
-    labels: PropTypes.oneOfType([
+    label: PropTypes.oneOfType([
       PropTypes.func,
-      PropTypes.array
+      PropTypes.string
     ]),
     /**
      * The labelComponent prop takes in an entire label component which will be used
@@ -334,8 +333,7 @@ export default class VictoryLine extends React.Component {
      * The clipPathComponent prop takes an entire component which will be used to
      * create clipPath elements for use within container elements.
      */
-    clipPathComponent: PropTypes.element,
-    voronoiComponent: PropTypes.element
+    clipPathComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -349,7 +347,6 @@ export default class VictoryLine extends React.Component {
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
     clipPathComponent: <ClipPath/>,
-    voronoiComponent: <Voronoi/>,
     theme: VictoryTheme.grayscale
   };
 
@@ -384,62 +381,46 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) { // eslint-disable-line max-statements
-    const { dataComponent, labelComponent, groupComponent, clipId, voronoiComponent } = props;
-    const data = Data.getData(props);
-    const dataSegments = LineHelpers.getDataSegments(data);
+    const { dataComponent, labelComponent, groupComponent, clipId } = props;
+    const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
     const lineComponents = [];
     const lineLabelComponents = [];
-    const voronoiComponents = [];
     for (let index = 0, len = dataSegments.length; index < len; index++) {
-      const dataSegment = dataSegments[index];
+      const data = dataSegments[index];
       const role = `${VictoryLine.role}-${index}`;
       const dataEvents = this.getEvents(props, "data", "all");
       const dataProps = defaults(
         {index, key: role, role, clipId},
         this.getEventState("all", "data"),
         this.getSharedEventState("all", "data"),
-        { data: dataSegment },
+        { data },
         dataComponent.props,
         this.baseProps.all.data
       );
-      lineComponents[index] = React.cloneElement(dataComponent, dataProps)
-    }
-
-    for (let index = 0, len = data.length; index < len; index++) {
-      const key = index;
-      const dataEvents = this.getEvents(props, "data", key);
-      const dataProps = defaults(
-        {index, key: `voronoi-${key}`, role: `voronoi-${index}`},
-        voronoiComponent.props,
-        this.baseProps[key].data
-      );
-
-      voronoiComponents[index] = React.cloneElement(voronoiComponent, assign(
-        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
+      lineComponents[index] = React.cloneElement(dataComponent, assign(
+        {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
-      if (this.baseProps[key].labels || this.props.events || this.props.sharedEvents) {
+      if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
         const labelProps = defaults(
-          {key: `scatter-label-${key}`, index},
-          this.getEventState(key, "labels"),
-          this.getSharedEventState(key, "labels"),
+          {index, key: `${role}-label-${index}`},
+          this.getEventState("all", "labels"),
+          this.getSharedEventState("all", "labels"),
+          { data },
           labelComponent.props,
-          this.baseProps[key].labels
+          this.baseProps.all.labels
         );
         if (labelProps && labelProps.text) {
-          const labelEvents = this.getEvents(props, "labels", key);
+          const labelEvents = this.getEvents(props, "labels", "all");
           lineLabelComponents[index] = React.cloneElement(labelComponent, assign({
-            events: Events.getPartialEvents(labelEvents, key, labelProps)
+            events: Events.getPartialEvents(labelEvents, "all", labelProps)
           }, labelProps));
         }
       }
     }
-
     return lineLabelComponents.length > 0 ?
-      React.cloneElement(
-        groupComponent, {}, ...lineComponents, ...voronoiComponents, ...lineLabelComponents
-      ) :
-      React.cloneElement(groupComponent, {}, ...lineComponents, ...voronoiComponents)
+      React.cloneElement(groupComponent, {}, ...lineComponents, ...lineLabelComponents) :
+      lineComponents;
   }
 
   renderContainer(props, group) {
