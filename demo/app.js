@@ -11,6 +11,7 @@ import ErrorBarDemo from "./components/victory-errorbar-demo";
 import CandlestickDemo from "./components/victory-candlestick-demo";
 import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";
+import VoronoiDemo from "./components/victory-voronoi-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
@@ -35,6 +36,7 @@ const App = React.createClass({
           <li><Link to="/candlestick">Victory Candlestick Demo</Link></li>
           <li><Link to="/events">Events Demo</Link></li>
           <li><Link to="/group">Group Demo</Link></li>
+          <li><Link to="/voronoi">Victory Voronoi Demo</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -55,6 +57,7 @@ ReactDOM.render((
       <Route path="candlestick" component={CandlestickDemo}/>
       <Route path="events" component={EventsDemo}/>
       <Route path="group" component={GroupDemo}/>
+      <Route path="voronoi" component={VoronoiDemo}/>
     </Route>
   </Router>
 ), content);
