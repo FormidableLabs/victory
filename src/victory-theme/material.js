@@ -179,7 +179,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: Object.assign({}, baseLabelStyles, {
+      labels: assign({}, baseLabelStyles, {
         stroke: "transparent",
         textAnchor: "middle"
       })
@@ -187,5 +187,15 @@ export default {
   }, baseProps),
   stack: assign({
     colorScale: colors
+  }, baseProps),
+  voronoi: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: baseLabelStyles
+    }
   }, baseProps)
 };
