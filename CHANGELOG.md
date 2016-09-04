@@ -253,7 +253,7 @@ Breaking Changes:
 
 ## 0.1.1 (2015-12-29)
 
-- Fix issue with exported `dist` file. You can now include Victory via `npmcdn`: `https://npmcdn.com/victory/dist/victory.min.js`
+- Fix issue with exported `dist` file. You can now include Victory via `unpkg`: `https://unpkg.com/victory/dist/victory.min.js`
 
 ## 0.1.0 (2015-12-18)
 
