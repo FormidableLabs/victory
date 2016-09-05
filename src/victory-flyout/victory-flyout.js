@@ -71,28 +71,25 @@ export default class VictoryFlyout extends React.Component {
     y: PropTypes.number,
     width: CustomPropTypes.nonNegative,
     height: CustomPropTypes.nonNegative,
-    containerWidth: CustomPropTypes.nonNegative,
-    containerHeight: CustomPropTypes.nonNegative,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-    pointerHeight: CustomPropTypes.nonNegative,
+    pointerLength: CustomPropTypes.nonNegative,
     pointerWidth: CustomPropTypes.nonNegative,
     cornerRadius: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
-    active: true,
     cornerRadius: 5,
-    pointerHeight: 10,
+    pointerLength: 10,
     pointerWidth: 10,
     orientation: "top"
   }
 
   getVerticalPath(props, dimensions) {
     const { width, height } = dimensions;
-    const { pointerHeight, pointerWidth, cornerRadius, x, y, orientation} = props;
+    const { pointerLength, pointerWidth, cornerRadius, x, y, orientation} = props;
     const sign = orientation === "top" ? 1 : -1;
-    const pointerEdge = y - (sign * pointerHeight);
-    const oppositeEdge = y - (sign * pointerHeight) - (sign * height);
+    const pointerEdge = y - (sign * pointerLength);
+    const oppositeEdge = y - (sign * pointerLength) - (sign * height);
     const rightEdge = x + (width / 2);
     const leftEdge = x - (width / 2);
     const direction = orientation === "top" ? "0 0 0" : "0 0 1";
@@ -113,10 +110,10 @@ export default class VictoryFlyout extends React.Component {
 
   getHorizontalPath(props, dimensions) {
     const { width, height } = dimensions;
-    const { pointerHeight, pointerWidth, cornerRadius, x, y, orientation} = props;
+    const { pointerLength, pointerWidth, cornerRadius, x, y, orientation} = props;
     const sign = orientation === "right" ? 1 : -1;
-    const pointerEdge = x + sign * pointerHeight;
-    const oppositeEdge = x + (sign * pointerHeight) + (sign * width);
+    const pointerEdge = x + sign * pointerLength;
+    const oppositeEdge = x + (sign * pointerLength) + (sign * width);
     const bottomEdge = y + height / 2;
     const topEdge = y - height / 2;
     const direction = orientation === "right" ? "0 0 0" : "0 0 1";
@@ -153,30 +150,34 @@ export default class VictoryFlyout extends React.Component {
   }
 
   getFlyoutCenter(props, dimensions) {
-    const {x, y, pointerHeight, orientation} = props;
+    const {x, y, pointerLength, orientation} = props;
     const {height, width} = dimensions;
     const sign = orientation === "right" || orientation === "top" ? 1 : -1;
     return {
       x: orientation === "left" || orientation === "right" ?
-        x + sign * (pointerHeight + (width / 2)) : x,
+        x + sign * (pointerLength + (width / 2)) : x,
       y: orientation === "top" || orientation === "bottom" ?
-        y - sign * (pointerHeight + (height / 2)) : y
+        y - sign * (pointerLength + (height / 2)) : y
     };
   }
 
   getDimensions(props, labelSize, labelStyle) {
-    const { orientation } = props;
+    const { orientation, cornerRadius, pointerLength, pointerWidth } = props;
     const padding = labelStyle.padding || 0;
     const getHeight = () => {
-      return orientation === "top" || orientation === "bottom" ?
-        labelSize.height + props.pointerHeight : labelSize.height;
+      const calculatedHeight = labelSize.height + padding;
+      const minHeight = orientation === "top" || orientation === "bottom" ?
+        2 * cornerRadius : 2 * cornerRadius + pointerWidth;
+      return Math.max(minHeight, calculatedHeight);
     };
     const getWidth = () => {
-      return orientation === "left" || orientation === "right" ?
-        labelSize.width + props.pointerHeight : labelSize.width;
+      const calculatedWidth = labelSize.width + padding;
+      const minWidth = orientation === "left" || orientation === "right" ?
+        2 * cornerRadius + pointerLength : 2 * cornerRadius;
+      return Math.max(minWidth, calculatedWidth);
     };
     return {
-      height: props.height || getHeight(props, labelSize, orientation) + padding,
+      height: props.height || getHeight(props, labelSize, orientation) + (padding / 2),
       width: props.width || getWidth(props, labelSize, orientation) + padding
     };
   }
