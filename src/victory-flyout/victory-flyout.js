@@ -69,6 +69,8 @@ export default class VictoryFlyout extends React.Component {
      * positioning.
      */
     y: PropTypes.number,
+    dx: CustomPropTypes.nonNegative,
+    dy: CustomPropTypes.nonNegative,
     width: CustomPropTypes.nonNegative,
     height: CustomPropTypes.nonNegative,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
@@ -81,13 +83,17 @@ export default class VictoryFlyout extends React.Component {
     cornerRadius: 5,
     pointerLength: 10,
     pointerWidth: 10,
-    orientation: "top"
+    orientation: "top",
+    dx: 0,
+    dy: 0
   }
 
   getVerticalPath(props, dimensions) {
     const { width, height } = dimensions;
-    const { pointerLength, pointerWidth, cornerRadius, x, y, orientation} = props;
+    const { pointerLength, pointerWidth, cornerRadius, orientation} = props;
     const sign = orientation === "top" ? 1 : -1;
+    const x = props.x + props.dx;
+    const y = props.y - sign * props.dy;
     const pointerEdge = y - (sign * pointerLength);
     const oppositeEdge = y - (sign * pointerLength) - (sign * height);
     const rightEdge = x + (width / 2);
@@ -110,8 +116,10 @@ export default class VictoryFlyout extends React.Component {
 
   getHorizontalPath(props, dimensions) {
     const { width, height } = dimensions;
-    const { pointerLength, pointerWidth, cornerRadius, x, y, orientation} = props;
+    const { pointerLength, pointerWidth, cornerRadius, orientation} = props;
     const sign = orientation === "right" ? 1 : -1;
+    const x = props.x + sign * props.dx;
+    const y = props.y - props.dy;
     const pointerEdge = x + sign * pointerLength;
     const oppositeEdge = x + (sign * pointerLength) + (sign * width);
     const bottomEdge = y + height / 2;
@@ -132,7 +140,6 @@ export default class VictoryFlyout extends React.Component {
       z`;
   }
 
-
   getFlyoutPath(props, dimensions) {
     const { orientation } = props;
     return orientation === "left" || orientation === "right" ?
@@ -150,14 +157,14 @@ export default class VictoryFlyout extends React.Component {
   }
 
   getFlyoutCenter(props, dimensions) {
-    const {x, y, pointerLength, orientation} = props;
+    const {x, y, dx, dy, pointerLength, orientation} = props;
     const {height, width} = dimensions;
     const sign = orientation === "right" || orientation === "top" ? 1 : -1;
     return {
       x: orientation === "left" || orientation === "right" ?
-        x + sign * (pointerLength + (width / 2)) : x,
+        x + sign * (pointerLength + (width / 2) + dx) : x + sign * dx,
       y: orientation === "top" || orientation === "bottom" ?
-        y - sign * (pointerLength + (height / 2)) : y
+        y - sign * (pointerLength + (height / 2) + dy) : y - sign * dy
     };
   }
 
