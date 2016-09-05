@@ -462,7 +462,7 @@ export default class VictoryAxis extends React.Component {
      .map((child) => child.props);
     const paddingToObject = (padding) =>
       typeof (padding) === "object"
-        ? Object.assign({}, {top: 0, right: 0, bottom: 0, left: 0}, padding)
+        ? assign({}, {top: 0, right: 0, bottom: 0, left: 0}, padding)
         : {top: padding, right: padding, bottom: padding, left: padding };
     const labelsSumSize = labels.reduce((sum, label) => {
       const padding = paddingToObject(label.style.padding);

@@ -402,16 +402,16 @@ export default class App extends React.Component {
                   childName: "firstBar",
                   target: "data",
                   eventKey: 1,
-                  eventHandlers: {
-                    onClick: () => {
-                      return {
-                        childName: "secondBar",
-                        mutation: (props) => {
-                          return {style: merge({}, props.style, {fill: "blue"})};
-                        }
-                      };
+                    eventHandlers: {
+                      onClick: () => {
+                        return {
+                          childName: "secondBar",
+                          mutation: (props) => {
+                            return {style: merge({}, props.style, {fill: "blue"})};
+                          }
+                        };
+                      }
                     }
-                  }
                 }, {
                   childName: "secondBar",
                   target: "data",
