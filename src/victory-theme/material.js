@@ -188,6 +188,25 @@ export default {
   stack: assign({
     colorScale: colors
   }, baseProps),
+  tooltip: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: baseLabelStyles,
+      flyout: {
+        stroke: blueGrey700,
+        strokeWidth: 1,
+        fill: "#f0f0f0"
+      }
+    },
+    flyoutProps: {
+      cornerRadius: 10,
+      pointerLength: 10
+    }
+  }, baseProps),
   voronoi: assign({
     style: {
       data: {
