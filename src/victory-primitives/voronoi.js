@@ -18,7 +18,7 @@ export default class Voronoi extends React.Component {
   }
 
   getCirclePath(props) {
-   const {x, y, size} = props;
+    const {x, y, size} = props;
     return `M ${x}, ${y} m ${-size}, 0
       a ${size}, ${size} 0 1,0 ${size * 2},0
       a ${size}, ${size} 0 1,0 ${-size * 2},0`;

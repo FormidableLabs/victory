@@ -6,9 +6,9 @@ export default class App extends React.Component {
 
   render() {
     const svgProps = {
-      viewBox: "0 0 300 300",
-      width: 300,
-      height: 300,
+      viewBox: "0 0 150 150",
+      width: 150,
+      height: 150,
       style: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
     };
 
@@ -21,18 +21,34 @@ export default class App extends React.Component {
     };
 
     const baseFlyoutProps = {
-      x: 150, y: 150, cornerRadius: 5
-    }
+      x: 75, y: 75, cornerRadius: 3
+    };
+
     return (
       <div className="demo" style={containerStyle}>
         <svg {...svgProps}>
-          <VictoryFlyout {...baseFlyoutProps} text={"yo dog\nwhat up?\nnot much, you?"}/>
-          <circle cx="150" cy="150" r="2" fill="red"/>
+          <VictoryFlyout {...baseFlyoutProps} text={"what up?\nnot much, you?"}/>
+          <circle cx="75" cy="75" r="2" fill="red"/>
         </svg>
 
         <svg {...svgProps}>
-          <VictoryFlyout {...baseFlyoutProps} text={"hi"}/>
-          <circle cx="150" cy="150" r="2" fill="red"/>
+          <VictoryFlyout {...baseFlyoutProps} text={"o shit\nwaddup"}/>
+          <circle cx="75" cy="75" r="2" fill="red"/>
+        </svg>
+
+        <svg {...svgProps}>
+          <VictoryFlyout {...baseFlyoutProps} text={"o shit\nwaddup"} orientation="bottom"/>
+          <circle cx="75" cy="75" r="2" fill="red"/>
+        </svg>
+
+        <svg {...svgProps}>
+          <VictoryFlyout {...baseFlyoutProps} text={"o shit\nwaddup"} orientation="right"/>
+          <circle cx="75" cy="75" r="2" fill="red"/>
+        </svg>
+
+        <svg {...svgProps}>
+          <VictoryFlyout {...baseFlyoutProps} text={"o shit\nwaddup"} orientation="left"/>
+          <circle cx="75" cy="75" r="2" fill="red"/>
         </svg>
       </div>
     );

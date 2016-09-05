@@ -1,11 +1,11 @@
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Helpers, Style, Log, TextSize } from "../victory-util/index";
-import { default as VictoryLabel } from "../victory-label/victory-label"
-import { assign, merge, pick } from "lodash";
+import { PropTypes as CustomPropTypes, TextSize } from "../victory-util/index";
+import { default as VictoryLabel } from "../victory-label/victory-label";
+import { assign, merge } from "lodash";
 
 const defaultStyles = {
   stroke: "black",
-  strokeWidth: 2,
+  strokeWidth: 1,
   fill: "f0f0f0"
 };
 
@@ -69,14 +69,14 @@ export default class VictoryFlyout extends React.Component {
      * positioning.
      */
     y: PropTypes.number,
-    width: PropTypes.number,
-    height: PropTypes.number,
-    containerWidth: PropTypes.number,
-    containerHeight: PropTypes.number,
+    width: CustomPropTypes.nonNegative,
+    height: CustomPropTypes.nonNegative,
+    containerWidth: CustomPropTypes.nonNegative,
+    containerHeight: CustomPropTypes.nonNegative,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-    pointerHeight: PropTypes.number,
-    pointerWidth: PropTypes.number,
-    cornerRadius: PropTypes.number
+    pointerHeight: CustomPropTypes.nonNegative,
+    pointerWidth: CustomPropTypes.nonNegative,
+    cornerRadius: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
@@ -87,27 +87,59 @@ export default class VictoryFlyout extends React.Component {
     orientation: "top"
   }
 
-
-  getFlyoutPath(props, calculatedValues) {
-    const { width, height } = calculatedValues.flyoutDimensions;
-    const { pointerHeight, pointerWidth, cornerRadius, x, y} = props;
-    const bottomEdge = y - pointerHeight;
-    const topEdge = y - pointerHeight - height;
+  getVerticalPath(props, dimensions) {
+    const { width, height } = dimensions;
+    const { pointerHeight, pointerWidth, cornerRadius, x, y, orientation} = props;
+    const sign = orientation === "top" ? 1 : -1;
+    const pointerEdge = y - (sign * pointerHeight);
+    const oppositeEdge = y - (sign * pointerHeight) - (sign * height);
     const rightEdge = x + (width / 2);
     const leftEdge = x - (width / 2);
-    // orientation top only
-    return `M ${x - pointerWidth / 2}, ${bottomEdge}
+    const direction = orientation === "top" ? "0 0 0" : "0 0 1";
+    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
+    return `M ${x - pointerWidth / 2}, ${pointerEdge}
       L ${x}, ${y}
-      L ${x + pointerWidth / 2}, ${bottomEdge}
-      L ${rightEdge - cornerRadius}, ${bottomEdge}
-      A ${cornerRadius} ${cornerRadius} 0 0 0 ${rightEdge}, ${bottomEdge - cornerRadius}
-      L ${rightEdge}, ${topEdge + cornerRadius}
-      A ${cornerRadius} ${cornerRadius} 0 0 0 ${rightEdge - cornerRadius}, ${topEdge}
-      L ${leftEdge + cornerRadius}, ${topEdge}
-      A ${cornerRadius} ${cornerRadius} 0 0 0 ${leftEdge}, ${topEdge + cornerRadius}
-      L ${leftEdge}, ${bottomEdge - cornerRadius}
-      A ${cornerRadius} ${cornerRadius} 0 0 0 ${leftEdge + cornerRadius}, ${bottomEdge}
+      L ${x + pointerWidth / 2}, ${pointerEdge}
+      L ${rightEdge - cornerRadius}, ${pointerEdge}
+      A ${arc} ${rightEdge}, ${pointerEdge - sign * cornerRadius}
+      L ${rightEdge}, ${oppositeEdge + sign * cornerRadius}
+      A ${arc} ${rightEdge - cornerRadius}, ${oppositeEdge}
+      L ${leftEdge + cornerRadius}, ${oppositeEdge}
+      A ${arc} ${leftEdge}, ${oppositeEdge + sign * cornerRadius}
+      L ${leftEdge}, ${pointerEdge - sign * cornerRadius}
+      A ${arc} ${leftEdge + cornerRadius}, ${pointerEdge}
       z`;
+  }
+
+  getHorizontalPath(props, dimensions) {
+    const { width, height } = dimensions;
+    const { pointerHeight, pointerWidth, cornerRadius, x, y, orientation} = props;
+    const sign = orientation === "right" ? 1 : -1;
+    const pointerEdge = x + sign * pointerHeight;
+    const oppositeEdge = x + (sign * pointerHeight) + (sign * width);
+    const bottomEdge = y + height / 2;
+    const topEdge = y - height / 2;
+    const direction = orientation === "right" ? "0 0 0" : "0 0 1";
+    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
+    return `M ${pointerEdge}, ${y - pointerWidth / 2}
+      L ${x}, ${y}
+      L ${pointerEdge}, ${y + pointerWidth / 2}
+      L ${pointerEdge}, ${bottomEdge - cornerRadius}
+      A ${arc} ${pointerEdge + sign * cornerRadius}, ${bottomEdge}
+      L ${oppositeEdge - sign * cornerRadius}, ${bottomEdge}
+      A ${arc} ${oppositeEdge}, ${bottomEdge - cornerRadius}
+      L ${oppositeEdge}, ${topEdge + cornerRadius}
+      A ${arc} ${oppositeEdge - sign * cornerRadius}, ${topEdge}
+      L ${pointerEdge + sign * cornerRadius}, ${topEdge}
+      A ${arc} ${pointerEdge}, ${topEdge + cornerRadius}
+      z`;
+  }
+
+
+  getFlyoutPath(props, dimensions) {
+    const { orientation } = props;
+    return orientation === "left" || orientation === "right" ?
+      this.getHorizontalPath(props, dimensions) : this.getVerticalPath(props, dimensions);
   }
 
   getCalculatedValues(props) {
@@ -117,13 +149,13 @@ export default class VictoryFlyout extends React.Component {
     const labelSize = TextSize.approximateTextSize(props.text, labelStyle);
     const flyoutDimensions = this.getDimensions(props, labelSize, labelStyle);
     const flyoutCenter = this.getFlyoutCenter(props, flyoutDimensions);
-    return {labelStyle, flyoutStyle, labelSize, flyoutDimensions, flyoutCenter}
+    return {labelStyle, flyoutStyle, labelSize, flyoutDimensions, flyoutCenter};
   }
 
   getFlyoutCenter(props, dimensions) {
     const {x, y, pointerHeight, orientation} = props;
     const {height, width} = dimensions;
-    const sign = orientation === "right" || orientation === "top" ? 1 : -1
+    const sign = orientation === "right" || orientation === "top" ? 1 : -1;
     return {
       x: orientation === "left" || orientation === "right" ?
         x + sign * (pointerHeight + (width / 2)) : x,
@@ -133,15 +165,15 @@ export default class VictoryFlyout extends React.Component {
   }
 
   getDimensions(props, labelSize, labelStyle) {
-    const { height, width, orientation } = props;
+    const { orientation } = props;
     const padding = labelStyle.padding || 0;
-    const getHeight = (props, labelSize, orientation) => {
+    const getHeight = () => {
       return orientation === "top" || orientation === "bottom" ?
-        labelSize.height + props.pointerHeight : labelSize.height
+        labelSize.height + props.pointerHeight : labelSize.height;
     };
-    const getWidth = (props, labelSize, orientation) => {
+    const getWidth = () => {
       return orientation === "left" || orientation === "right" ?
-        labelSize.width + props.pointerHeight : labelSize.width
+        labelSize.width + props.pointerHeight : labelSize.width;
     };
     return {
       height: props.height || getHeight(props, labelSize, orientation) + padding,
@@ -164,14 +196,15 @@ export default class VictoryFlyout extends React.Component {
   }
 
   getFlyoutProps(props, calculatedValues) {
+    const {flyoutDimensions, flyoutStyle} = calculatedValues;
     return assign(
       {},
       {
-        style: calculatedValues.flyoutStyle,
-        d: this.getFlyoutPath(props, calculatedValues)
+        style: flyoutStyle,
+        d: this.getFlyoutPath(props, flyoutDimensions)
       },
       props.events
-    )
+    );
   }
 
   render() {
