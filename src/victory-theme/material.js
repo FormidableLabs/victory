@@ -44,7 +44,8 @@ const baseLabelStyles = {
   fontSize,
   letterSpacing,
   padding,
-  fill: blueGrey700
+  fill: blueGrey700,
+  textAnchor: "middle"
 };
 // *
 // * Strokes
@@ -132,8 +133,7 @@ export default {
       },
       labels: assign({}, baseLabelStyles, {
         stroke: "transparent",
-        strokeWidth: 0,
-        textAnchor: "start"
+        strokeWidth: 0
       })
     }
   }, baseProps),
@@ -166,8 +166,7 @@ export default {
       labels: assign({}, baseLabelStyles, {
         padding: 200,
         stroke: "transparent",
-        strokeWidth: 0,
-        textAnchor: "middle"
+        strokeWidth: 0
       })
     }
   }, baseProps),
@@ -180,8 +179,7 @@ export default {
         strokeWidth: 0
       },
       labels: assign({}, baseLabelStyles, {
-        stroke: "transparent",
-        textAnchor: "middle"
+        stroke: "transparent"
       })
     }
   }, baseProps),
