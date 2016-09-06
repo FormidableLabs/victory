@@ -18,4 +18,4 @@ export { default as VictoryTheme } from "./victory-theme/victory-theme";
 export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export {
   Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
-} from "./victory-primitives/index"
+} from "./victory-primitives/index";
