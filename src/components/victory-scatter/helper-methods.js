@@ -106,7 +106,7 @@ export default {
       const minPadding = Math.min(...values(Helpers.getPadding(props)));
       return Math.max(minPadding, 5);
     };
-    const zData = data.map((point) => point.z);
+    const zData = data.map((point) => point[z]);
     const zMin = Math.min(...zData);
     const zMax = Math.max(...zData);
     const maxRadius = props.maxBubbleSize || getMaxRadius();
