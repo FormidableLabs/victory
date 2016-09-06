@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  VictoryChart, VictoryStack, VictoryBar, VictoryLine, VictoryArea,
+  VictoryChart, VictoryStack, VictoryBar, VictoryLine,
   VictoryGroup, VictoryScatter, VictoryErrorBar, VictoryVoronoiTooltip
 } from "../../src/index";
 import { range, random } from "lodash";

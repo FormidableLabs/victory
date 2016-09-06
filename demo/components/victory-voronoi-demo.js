@@ -1,3 +1,4 @@
+/*global window:false */
 import React from "react";
 import {VictoryVoronoi, VictoryVoronoiTooltip} from "../../src/index";
 import { range, random } from "lodash";
@@ -46,7 +47,6 @@ class App extends React.Component {
 
     const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
     const visible = {fill: "gray", opacity: 0.1, stroke: "black", strokeWidth: 2};
-    const invisible= {stroke: "none", fill: "none"};
 
     return (
       <div className="demo">

@@ -1,4 +1,4 @@
-import { values, pick, omit, defaults, without } from "lodash";
+import { omit, defaults, without } from "lodash";
 import { Helpers, Events } from "victory-core";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import Scale from "../../helpers/scale";
@@ -101,6 +101,5 @@ export default {
       verticalAnchor: datum.verticalAnchor
     }, style);
     return Helpers.evaluateStyle(labelStyle, datum);
-  },
-
+  }
 };

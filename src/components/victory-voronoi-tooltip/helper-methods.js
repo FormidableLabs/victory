@@ -1,4 +1,4 @@
-import { assign, values, pick, omit, defaults, without } from "lodash";
+import { assign, omit, defaults, without } from "lodash";
 import { Helpers, Events } from "victory-core";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import Scale from "../../helpers/scale";
@@ -69,7 +69,7 @@ export default {
   getPolygons(range, scale, data) {
     const minRange = [Math.min(...range.x), Math.min(...range.y)];
     const maxRange = [Math.max(...range.x), Math.max(...range.y)];
-    const voronoi =  d3Voronoi()
+    const voronoi = d3Voronoi()
       .x((d) => scale.x(d.x1 || d.x))
       .y((d) => scale.y(d.y1 || d.y))
       .extent([minRange, maxRange]);

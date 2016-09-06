@@ -380,9 +380,14 @@ export default class VictoryVoronoiTooltip extends React.Component {
       sharedEvents.getEventState : () => undefined;
   }
 
+  shouldPlotLabels(props) {
+    return props.events || props.sharedEvents || this.componentEvents;
+  };
+
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const { role } = VictoryVoronoiTooltip;
+    const plotLabels = this.shouldPlotLabels(props);
     const pointComponents = [];
     const pointLabelComponents = [];
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
@@ -400,12 +405,8 @@ export default class VictoryVoronoiTooltip extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      const plotLabels = this.baseProps[key].labels ||
-        this.props.events ||
-        this.props.sharedEvents ||
-        this.componentEvents;
 
-      if (plotLabels) {
+      if (this.baseProps[key].labels || plotLabels) {
         const labelProps = defaults(
           {key: `tooltip-label-${key}`, index},
           this.getEventState(key, "labels"),

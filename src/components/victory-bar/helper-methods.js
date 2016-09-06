@@ -149,6 +149,7 @@ export default {
       index,
       scale,
       datum,
+      horizontal,
       textAnchor: labelStyle.textAnchor || anchors.text,
       verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,
       angle: labelStyle.angle
