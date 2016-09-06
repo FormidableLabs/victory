@@ -322,9 +322,9 @@ export default class App extends React.Component {
 
         <VictoryLine
           style={{parent: parentStyle}}
-          data={range(0, 2*Math.PI, 0.01).map((t) => ({t}))}
+          data={range(0, 2 * Math.PI, 0.01).map((t) => ({t}))}
           sortKey={'t'}
-          x={({t}) => Math.sin(3 * t + (2*Math.PI))}
+          x={({t}) => Math.sin(3 * t + (2 * Math.PI))}
           y={({t}) => Math.sin(2 * t)}
         />
       </div>
