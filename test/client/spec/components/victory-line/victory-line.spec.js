@@ -215,6 +215,34 @@ describe("components/victory-line", () => {
       const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(1);
     });
+
+    it("renders data ordered by x-value, by default", () => {
+      const data = [
+        { t: 0 /*x: 10, y: 1*/},
+        { t: 1 /*x:  9, y: 1*/}
+      ];
+      const wrapper = shallow(
+        <VictoryLine data={data} x={({t}) => 10 - t} y={() => 1} />
+      );
+      const lines = wrapper.find(Curve);
+
+      expect(lines.props().data[0].t).to.equal(1);
+      expect(lines.props().data[1].t).to.equal(0);
+    });
+
+    it("renders data ordered by value of sortKey, if given", () => {
+      const data = [
+        { t: 0 /*x: 10, y: 1*/},
+        { t: 1 /*x:  9, y: 1*/}
+      ];
+      const wrapper = shallow(
+        <VictoryLine data={data} sortKey={'t'} x={({t}) => 10 - t} y={() => 1} />
+      );
+      const lines = wrapper.find(Curve);
+
+      expect(lines.props().data[0].t).to.equal(0);
+      expect(lines.props().data[1].t).to.equal(1);
+    });
   });
 
   describe("event handling", () => {
