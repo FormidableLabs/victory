@@ -1,5 +1,5 @@
 import React from "react";
-import {VictoryVoronoi, VictoryTooltip} from "../../src/index";
+import {VictoryVoronoi, VictoryVoronoiTooltip} from "../../src/index";
 import { range, random } from "lodash";
 
 const getData = () => {
@@ -74,7 +74,7 @@ class App extends React.Component {
             ]}
           />
 
-          <VictoryTooltip
+          <VictoryVoronoiTooltip
             style={{parent: parentStyle, data: visible}}
             size={40}
             labels={(d) => d.y}
@@ -87,14 +87,14 @@ class App extends React.Component {
             ]}
           />
 
-          <VictoryTooltip
+          <VictoryVoronoiTooltip
             animate={{duration: 2000}}
             style={{parent: parentStyle, data: visible}}
             size={20}
             data={this.state.data}
           />
 
-          <VictoryTooltip
+          <VictoryVoronoiTooltip
             animate={{duration: 2000}}
             style={{parent: parentStyle, data: visible}}
             data={this.state.data}

@@ -3,7 +3,7 @@ import { assign, defaults, isFunction, partialRight } from "lodash";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
-  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryFlyout,
+  PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryTooltip,
   VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi
 } from "victory-core";
 import TooltipHelpers from "./helper-methods";
@@ -14,10 +14,8 @@ const fallbackProps = {
   padding: 50
 };
 
-
-
-export default class VictoryTooltip extends React.Component {
-  static displayName = "VictoryTooltip";
+export default class VictoryVoronoiTooltip extends React.Component {
+  static displayName = "VictoryVoronoiTooltip";
   static role = "tooltip";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
@@ -326,7 +324,16 @@ export default class VictoryTooltip extends React.Component {
     /**
      * The flyoutProps prop defines the layout of the tooltip flyout container
      */
-    flyoutProps: PropTypes.object
+    flyoutProps: PropTypes.shape({
+      dx: CustomPropTypes.nonNegative,
+      dy: CustomPropTypes.nonNegative,
+      cornerRadius: CustomPropTypes.nonNegative,
+      pointerLength: CustomPropTypes.nonNegative,
+      pointerWidth: CustomPropTypes.nonNegative,
+      orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+      width: CustomPropTypes.nonNegative,
+      height: CustomPropTypes.nonNegative
+    })
   };
 
   static defaultProps = {
@@ -336,7 +343,7 @@ export default class VictoryTooltip extends React.Component {
     x: "x",
     y: "y",
     dataComponent: <Voronoi/>,
-    labelComponent: <VictoryFlyout/>,
+    labelComponent: <VictoryTooltip/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
     theme: VictoryTheme.grayscale
@@ -365,47 +372,22 @@ export default class VictoryTooltip extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
+    const components = ["dataComponent", "labelComponent", "groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
     this.baseProps = TooltipHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
   }
 
-  addDefaultEvents(props) {
-    // This method will be overridden in victory-chart-native
-    const defaultEvents = [{
-      target: "data",
-      eventHandlers: {
-        onMouseOver: () => {
-          return {
-            target: "labels",
-            mutation: () => {
-              return { active: true };
-            }
-          };
-        },
-        onMouseOut: () => {
-          return {
-            target: "labels",
-            mutation: () => {
-              return { active: false };
-            }
-          };
-        }
-      }
-    }];
-    const events = props.events ? defaultEvents.concat(...props.events) : defaultEvents;
-    return assign({}, props, {events});
-  }
-
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
-    const { role } = VictoryTooltip;
+    const { role } = VictoryVoronoiTooltip;
     const pointComponents = [];
     const pointLabelComponents = [];
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
       const key = this.dataKeys[index];
-      const dataEvents = this.getEvents(this.addDefaultEvents(props), "data", key);
+      const dataEvents = this.getEvents(props, "data", key);
       const dataProps = defaults(
         {index, key: `${role}-${key}`, role: `${role}-${index}`},
         this.getEventState(key, "data"),
@@ -418,13 +400,18 @@ export default class VictoryTooltip extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
       ));
 
-      if (this.baseProps[key].labels || this.props.events || this.props.sharedEvents) {
+      const plotLabels = this.baseProps[key].labels ||
+        this.props.events ||
+        this.props.sharedEvents ||
+        this.componentEvents;
+
+      if (plotLabels) {
         const labelProps = defaults(
           {key: `tooltip-label-${key}`, index},
           this.getEventState(key, "labels"),
           this.getSharedEventState(key, "labels"),
-          this.baseProps[key].labels,
-          labelComponent.props
+          labelComponent.props,
+          this.baseProps[key].labels
         );
         if (labelProps && labelProps.text) {
           const labelEvents = this.getEvents(props, "labels", key);

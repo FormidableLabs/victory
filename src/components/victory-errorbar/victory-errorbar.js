@@ -366,6 +366,8 @@ export default class VictoryErrorBar extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
+    const components = ["dataComponent", "labelComponent", "groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
     this.baseProps = ErrorBarHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?

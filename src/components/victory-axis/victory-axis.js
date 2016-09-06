@@ -368,6 +368,11 @@ export default class VictoryAxis extends React.Component {
 
   setupEvents(props) {
     const {sharedEvents} = props;
+    const components = [
+      "axisComponent", "axisLabelComponent", "groupComponent", "containerComponent",
+      "tickComponent", "tickLabelComponent", "gridComponent"
+    ];
+    this.componentEvents = Events.getComponentEvents(props, components);
     this.baseProps = AxisHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?

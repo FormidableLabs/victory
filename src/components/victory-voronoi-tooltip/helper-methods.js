@@ -30,7 +30,6 @@ export default {
         childProps[eventKey].labels = assign(
           {},
           this.getFlyoutProps(dataProps, text, style),
-          {...props.flyoutProps}
         );
       }
     }
@@ -41,9 +40,8 @@ export default {
     const { x, y, index, scale, datum } = dataProps;
     return {
       x, y, text, index, scale, datum,
-      style: Helpers.evaluateStyle(style.flyout, datum),
-      labelStyle: Helpers.evaluateStyle(style.labels, datum),
-      active: false
+      flyoutStyle: Helpers.evaluateStyle(style.flyout, datum),
+      style: Helpers.evaluateStyle(style.labels, datum)
     };
   },
 

@@ -8,7 +8,9 @@ export { default as VictoryGroup } from "./components/victory-group/victory-grou
 export { default as VictoryStack } from "./components/victory-stack/victory-stack";
 export { default as VictoryErrorBar } from "./components/victory-errorbar/victory-errorbar";
 export { default as VictoryVoronoi } from "./components/victory-voronoi/victory-voronoi";
-export { default as VictoryTooltip } from "./components/victory-tooltip/victory-tooltip";
+export {
+  default as VictoryVoronoiTooltip
+} from "./components/victory-voronoi-tooltip/victory-voronoi-tooltip";
 export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";

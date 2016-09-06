@@ -446,6 +446,7 @@ export default class VictoryGroup extends React.Component {
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets, horizontal } = calculatedProps;
+    const { offset, theme, labelComponent } = props;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const newChildren = [];
@@ -459,21 +460,18 @@ export default class VictoryGroup extends React.Component {
         undefined : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       const defaultDomainPadding = horizontal ?
-        {y: (props.offset * childComponents.length) / 2} :
-        {x: (props.offset * childComponents.length) / 2};
+        {y: (offset * childComponents.length) / 2} :
+        {x: (offset * childComponents.length) / 2};
       const domainPadding = child.props.domainPadding ||
         props.domainPadding || defaultDomainPadding;
       newChildren[index] = React.cloneElement(child, assign({
+        data, domainPadding, labels, style, theme,
         animate: getAnimationProps(props, child, index),
+        colorScale: this.getColorScale(props, child),
+        horizontal: role === "bar" || role === "tooltip" ? horizontal : undefined,
         key: index,
-        labels,
-        theme: props.theme,
-        labelComponent: props.labelComponent || child.props.labelComponent,
-        domainPadding,
-        style,
-        data,
-        xOffset: child.type.role === "stack-wrapper" ? xOffset : undefined,
-        colorScale: this.getColorScale(props, child)
+        labelComponent: labelComponent || child.props.labelComponent,
+        xOffset: role === "stack-wrapper" ? xOffset : undefined
       }, childProps));
     }
     return newChildren;
