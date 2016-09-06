@@ -266,6 +266,23 @@ export default class VictoryLine extends React.Component {
      * This value should be given as a number of pixels
      */
     width: CustomPropTypes.nonNegative,
+
+    /**
+     * The sortKey prop specifies the sort key for data points.
+     * If given as a function, it will be run on each data point, and returned value will be used.
+     * If given as an integer, it will be used as an array index for array-type data points.
+     * If given as a string, it will be used as a property key for object-type data points.
+     * If given as an array of strings, or a string containing dots or brackets,
+     * it will be used as a nested object property path (for details see Lodash docs for _.get).
+     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+     * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+     */
+    sortKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     /**
      * The x prop specifies how to access the X value of each data point.
      * If given as a function, it will be run on each data point, and returned value will be used.
@@ -340,6 +357,7 @@ export default class VictoryLine extends React.Component {
     samples: 50,
     scale: "linear",
     standalone: true,
+    sortKey: "x",
     x: "x",
     y: "y",
     dataComponent: <Curve/>,
@@ -384,9 +402,9 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) { // eslint-disable-line max-statements
-    const { dataComponent, labelComponent, groupComponent, clipId } = props;
+    const { dataComponent, labelComponent, groupComponent, clipId, sortKey } = props;
     const { role } = VictoryLine;
-    const dataSegments = LineHelpers.getDataSegments(Data.getData(props));
+    const dataSegments = LineHelpers.getDataSegments(Data.getData(props), sortKey);
     const lineComponents = [];
     const lineLabelComponents = [];
     const getComponentProps = (index, component, type) => {

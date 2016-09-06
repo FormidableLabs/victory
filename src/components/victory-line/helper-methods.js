@@ -99,8 +99,8 @@ export default {
     return defaults({}, labelStyle, {opacity, fill, padding});
   },
 
-  getDataSegments(dataset) {
-    const orderedData = sortBy(dataset, "x");
+  getDataSegments(dataset, sortKey = "x") {
+    const orderedData = sortBy(dataset, sortKey);
     const segments = [];
     let segmentStartIndex = 0;
     let segmentIndex = 0;
