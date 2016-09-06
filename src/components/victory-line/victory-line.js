@@ -471,7 +471,7 @@ export default class VictoryLine extends React.Component {
       // TODO: extract into helper
       const whitelist = [
         "data", "domain", "height", "padding", "samples",
-        "style", "width", "x", "y", "clipWidth", "clipHeight", "translateX"
+        "style", "width", "x", "y"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

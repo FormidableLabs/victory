@@ -453,7 +453,7 @@ export default class VictoryArea extends React.Component {
     if (animate) {
       const whitelist = [
         "data", "domain", "height", "padding", "style", "width",
-        "x", "y", "clipWidth", "clipHeight", "translateX"
+        "x", "y"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
