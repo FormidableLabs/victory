@@ -381,35 +381,47 @@ export default class VictoryAxis extends React.Component {
   }
 
   renderLine(props) {
-    const key = 0;
-    const axisEvents = this.getEvents(props, "axis", key);
-    const baseProps = this.baseProps[key];
-    const axisProps = defaults(
-      {},
-      this.getEventState(key, "axis"),
-      this.getSharedEventState(key, "axis"),
-      props.axisComponent.props,
-      baseProps ? baseProps.axis : null
-    );
-    return React.cloneElement(props.axisComponent, assign(
-      {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
-    ));
+    let axisProps;
+    const precalculatedProps = this.baseProps[0] ? this.baseProps[0].axis : null;
+    if (this.hasEvents) {
+      const axisEvents = this.getEvents(props, "axis", 0);
+      const baseProps = defaults(
+        {},
+        this.getEventState(0, "axis"),
+        this.getSharedEventState(0, "axis"),
+        props.axisComponent.props,
+        precalculatedProps
+      );
+      axisProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(axisEvents, 0, baseProps)}
+      );
+    } else {
+      axisProps = defaults({}, props.axisComponent.props, precalculatedProps);
+    }
+
+    return React.cloneElement(props.axisComponent, axisProps);
   }
 
   renderLabel(props) {
-    const key = 0;
-    const axisLabelEvents = this.getEvents(props, "axisLabel", key);
-    const baseProps = this.baseProps[key];
-    const axisLabelProps = defaults(
-      {},
-      this.getEventState(key, "axisLabel"),
-      this.getSharedEventState(key, "axisLabel"),
-      props.axisLabelComponent.props,
-      baseProps ? baseProps.axisLabel : null
-    );
-    return React.cloneElement(props.axisLabelComponent, assign(
-      {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
-    ));
+    let axisLabelProps;
+    const precalculatedProps = this.baseProps[0] ? this.baseProps[0].axisLabel : null;
+    if (this.hasEvents) {
+      const axisLabelEvents = this.getEvents(props, "axisLabel", 0);
+      const baseProps = defaults(
+        {},
+        this.getEventState(0, "axisLabel"),
+        this.getSharedEventState(0, "axisLabel"),
+        props.axisLabelComponent.props,
+        precalculatedProps
+      );
+      axisLabelProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(axisLabelEvents, 0, baseProps)}
+      );
+    } else {
+      axisLabelProps = defaults({}, props.axisLabelComponent.props, precalculatedProps);
+    }
+
+    return React.cloneElement(props.axisLabelComponent, axisLabelProps);
   }
 
   renderGridAndTicks(props) {
@@ -489,21 +501,24 @@ export default class VictoryAxis extends React.Component {
   }
 
   renderContainer(props, group) {
-    const parentEvents = this.getEvents(props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      props.containerComponent.props,
-      this.baseProps.parent
-    );
-    return React.cloneElement(
-      props.containerComponent,
-      assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    let parentProps;
+    if (this.hasEvents) {
+      const parentEvents = this.getEvents(props, "parent", "parent");
+      const baseProps = defaults(
+        {},
+        this.getEventState("parent", "parent"),
+        this.getSharedEventState("parent", "parent"),
+        props.containerComponent.props,
+        this.baseProps.parent
+      );
+      parentProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(parentEvents, "parent", baseProps)}
+      );
+    } else {
+      parentProps = defaults({}, props.containerComponent.props, this.baseProps.parent);
+    }
+
+    return React.cloneElement(props.containerComponent, parentProps, group);
   }
 
   renderGroup(children, style) {

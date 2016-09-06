@@ -428,21 +428,24 @@ export default class VictoryErrorBar extends React.Component {
   }
 
   renderContainer(props, group) {
-    const parentEvents = this.getEvents(props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      props.containerComponent.props,
-      this.baseProps.parent
-    );
-    return React.cloneElement(
-      props.containerComponent,
-      Object.assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    let parentProps;
+    if (this.hasEvents) {
+      const parentEvents = this.getEvents(props, "parent", "parent");
+      const baseProps = defaults(
+        {},
+        this.getEventState("parent", "parent"),
+        this.getSharedEventState("parent", "parent"),
+        props.containerComponent.props,
+        this.baseProps.parent
+      );
+      parentProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(parentEvents, "parent", baseProps)}
+      );
+    } else {
+      parentProps = defaults({}, props.containerComponent.props, this.baseProps.parent);
+    }
+
+    return React.cloneElement(props.containerComponent, parentProps, group);
   }
 
   render() {
