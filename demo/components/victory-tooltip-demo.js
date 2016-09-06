@@ -23,11 +23,13 @@ class App extends React.Component {
         <div style={containerStyle}>
           <VictoryBar
             style={{parent: parentStyle}}
-            labelComponent={<VictoryTooltip
-              flyoutStyle={{stroke: "red"}}
-              cornerRadius={0}
-              pointerLength={20}
-            />}
+            labelComponent={
+              <VictoryTooltip
+                flyoutStyle={{stroke: "red"}}
+                cornerRadius={0}
+                pointerLength={20}
+              />
+            }
             labels={(d) => `hello #${d.x}`}
             data={[
               {x: 1, y: 1},
