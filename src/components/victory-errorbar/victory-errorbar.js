@@ -372,47 +372,51 @@ export default class VictoryErrorBar extends React.Component {
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
   }
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent} = props;
     const { role } = VictoryErrorBar;
-    const errorBarComponents = [];
-    const errorBarLabelComponents = [];
+    const dataComponents = [];
+    const labelComponents = [];
+    const getComponentProps = (index, component, type) => {
+      const key = this.dataKeys[index];
+      if (this.hasEvents) {
+        const events = this.getEvents(props, type, key);
+        const componentProps = defaults(
+          {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
+          this.getEventState(key, type),
+          this.getSharedEventState(key, type),
+          component.props,
+          this.baseProps[key][type]
+        );
+        return assign(
+          {}, componentProps, {events: Events.getPartialEvents(events, key, componentProps)}
+        );
+      }
+      return defaults(
+        {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
+        component.props,
+        this.baseProps[key][type]
+      );
+    };
+
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
       const key = this.dataKeys[index];
-      const dataEvents = this.getEvents(props, "data", key);
-      const dataProps = defaults(
-        {key: `${role}-${key}`, role: `${role}-${index}`, index},
-        this.getEventState(key, "data"),
-        this.getSharedEventState(key, "data"),
-        this.baseProps[key].data,
-        dataComponent.props
-      );
-      errorBarComponents[index] = React.cloneElement(dataComponent, assign(
-        {}, dataProps, {events: Events.getPartialEvents(dataEvents, key, dataProps)}
-      ));
+      const dataProps = getComponentProps(index, dataComponent, "data");
+      dataComponents[index] = React.cloneElement(dataComponent, dataProps);
 
-      if (this.baseProps[key].labels || this.props.events || this.props.sharedEvents) {
-        const labelProps = defaults(
-          {key: `${role}-label-${key}`, index},
-          this.getEventState(key, "labels"),
-          this.getSharedEventState(key, "labels"),
-          this.baseProps[key].labels,
-          labelComponent.props
-        );
+      if (this.baseProps[key].labels || this.hasEvents) {
+        const labelProps = getComponentProps(index, labelComponent, "labels");
         if (labelProps && labelProps.text) {
-          const labelEvents = this.getEvents(props, "labels", key);
-          errorBarLabelComponents[index] = React.cloneElement(labelComponent, assign({
-            events: Events.getPartialEvents(labelEvents, key, labelProps)
-          }, labelProps));
+          labelComponents[index] = React.cloneElement(labelComponent, labelProps);
         }
       }
     }
-
-    return errorBarLabelComponents.length > 0 ?
-      React.cloneElement(groupComponent, {}, ...errorBarComponents, ...errorBarLabelComponents) :
-      errorBarComponents;
+    return labelComponents.length > 0 ?
+      React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
+      dataComponents;
   }
 
   renderGroup(children, style) {

@@ -380,6 +380,7 @@ export default class VictoryLine extends React.Component {
     this.baseProps = LineHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
   }
 
   renderData(props) { // eslint-disable-line max-statements
@@ -403,7 +404,7 @@ export default class VictoryLine extends React.Component {
         {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
       ));
 
-      if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
+      if (this.baseProps.all.labels || this.hasEvents) {
         const labelProps = defaults(
           {index, key: `${role}-label-${index}`},
           this.getEventState("all", "labels"),

@@ -398,8 +398,8 @@ export default class VictoryGroup extends React.Component {
     return domainExtent / rangeExtent * props.offset;
   }
 
-  getXO(props, calculatedProps, datasets, index) { // eslint-disable-line max-params
-    const center = (datasets.length - 1) / 2;
+  getXO(props, calculatedProps, index) {
+    const center = (calculatedProps.datasets.length - 1) / 2;
     const totalWidth = this.pixelsToValue(props, "x", calculatedProps);
     return (index - center) * totalWidth;
   }
@@ -436,7 +436,8 @@ export default class VictoryGroup extends React.Component {
     : colorScaleOptions;
   }
 
-  addOffset(dataset, offset) {
+  getDataWithOffset(props, defaultDataset, offset) {
+    const dataset = props.data ? Data.getData(props) : defaultDataset;
     const xOffset = offset || 0;
     return dataset.map((datum) => {
       return assign({}, datum, {x1: datum.x + xOffset});
@@ -451,11 +452,9 @@ export default class VictoryGroup extends React.Component {
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const newChildren = [];
     for (let index = 0, len = childComponents.length; index < len; index++) {
-      const dataset = props.data ? Data.getData(props) : datasets[index];
       const child = childComponents[index];
       const role = child.type && child.type.role;
-      const xOffset = this.getXO(props, calculatedProps, datasets, index);
-      const data = this.addOffset(dataset, xOffset);
+      const xOffset = this.getXO(props, calculatedProps, index);
       const style = role === "voronoi" || role === "tooltip" ?
         undefined : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
@@ -465,10 +464,10 @@ export default class VictoryGroup extends React.Component {
       const domainPadding = child.props.domainPadding ||
         props.domainPadding || defaultDomainPadding;
       newChildren[index] = React.cloneElement(child, assign({
-        data, domainPadding, labels, style, theme,
+        domainPadding, labels, style, theme, horizontal,
+        data: this.getDataWithOffset(props, datasets[index], xOffset),
         animate: getAnimationProps(props, child, index),
         colorScale: this.getColorScale(props, child),
-        horizontal: role === "bar" || role === "tooltip" ? horizontal : undefined,
         key: index,
         labelComponent: labelComponent || child.props.labelComponent,
         xOffset: role === "stack-wrapper" ? xOffset : undefined

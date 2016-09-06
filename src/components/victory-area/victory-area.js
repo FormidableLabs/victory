@@ -374,6 +374,7 @@ export default class VictoryArea extends React.Component {
     this.baseProps = AreaHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
   }
 
   renderData(props) {
@@ -391,7 +392,7 @@ export default class VictoryArea extends React.Component {
       {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
     ));
 
-    if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
+    if (this.baseProps.all.labels || this.hasEvents) {
       const labelProps = defaults(
         {},
         this.getEventState("all", "labels"),
