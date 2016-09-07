@@ -27,7 +27,7 @@ export default class VictoryTooltip extends React.Component {
      */
     active: PropTypes.bool,
     /**
-     * Victory components can pass a datum prop to their label component. This can
+     * Victory components can pass a datum prop to their tooltip component. This can
      * be used to calculate functional styles, and determine child text
      */
     datum: PropTypes.object,
@@ -37,15 +37,14 @@ export default class VictoryTooltip extends React.Component {
      */
     data: PropTypes.array,
     /**
-     * The events prop attaches arbitrary event handlers to the label component.
+     * The events prop attaches arbitrary event handlers to the tooltip component.
      * Event handlers are currently only called with their corresponding events.
      * @examples {(evt) => alert(`x: ${evt.clientX}, y: ${evt.clientY}`)}
      */
     events: PropTypes.object,
     /**
      * all Victory components will pass a text prop to their label component.
-     * This defines the content of the label when child nodes are absent. It
-     * will be ignored if children are provided.
+     * This defines the content of the label.
      */
     text: PropTypes.oneOfType([
       PropTypes.string,
@@ -70,18 +69,78 @@ export default class VictoryTooltip extends React.Component {
      * positioning.
      */
     y: PropTypes.number,
+    /**
+     * The dx prop defines a horizontal shift from the `x` coordinate.
+     */
     dx: CustomPropTypes.nonNegative,
+    /**
+     * The dy prop defines a vertical shift from the `y` coordinate.
+     */
     dy: CustomPropTypes.nonNegative,
+    /**
+     * The width prop defines the width of the tooltip flyout.
+     */
     width: CustomPropTypes.nonNegative,
+    /**
+     * The height prop defines the height of the tooltip flyout.
+     */
     height: CustomPropTypes.nonNegative,
+    /**
+     * The orientation prop determines which side of the (x, y) coordinate the tooltip
+     * be rendered on
+     */
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    /**
+     * The pointerLength prop determines the length of the pointer extending from the flyout
+     */
     pointerLength: CustomPropTypes.nonNegative,
+    /**
+     * The pointerLength prop determines the width of the base of the triangular pointer
+     * extending from the flyout
+     */
     pointerWidth: CustomPropTypes.nonNegative,
+    /**
+     * The cornerRadius prop determines corner radius of the flyout container
+     */
     cornerRadius: CustomPropTypes.nonNegative,
+    /**
+     * The horizontal prop determines whether to plot the flyouts to the left / right
+     * of the (x, y) coordinate rather than top / bottom. This is useful when an orientation
+     * prop is not provided, and data will determine the default orientation. i.e. negative
+     * values result in a left orientation and positive values will result in a y orientation
+     * by default
+     */
     horizontal: PropTypes.bool,
+    /**
+     * The labelComponent prop takes in an entire label component which will be used
+     * to create labels for each tooltip. The new element created from
+     * the passed labelComponent will be supplied with the following properties:
+     * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
+     * any of these props may be overridden by passing in props to the supplied component,
+     * or modified or ignored within the custom component itself. If labelComponent is omitted,
+     * a new VictoryLabel will be created with props described above.
+     */
     labelComponent: PropTypes.element,
+    /**
+     * The flyoutComponent prop takes in an entire flyout component which will be used
+     * to create the container path for each tooltip. The new element created from
+     * the passed flyoutComponent will be supplied with the following properties:
+     * x, y, dx, dy, index, datum, cornerRadius, pointerLength, pointerWidth, width, height,
+     * style, and events. Any of these props may be overridden by passing in props to
+     * the supplied component, or modified or ignored within the custom component itself.
+     * If labelComponent is omitted, a a default Flyout component will be created with
+     * props described above.
+     */
     flyoutComponent: PropTypes.element,
+    /**
+     * The groupComponent prop takes an entire component which will be used to
+     * create group elements for use within container elements. This prop defaults
+     * to a <g> tag.
+     */
     groupComponent: PropTypes.element,
+    /**
+     * Victory components pass an index prop to their tooltip component.
+     */
     index: PropTypes.number
   };
 
