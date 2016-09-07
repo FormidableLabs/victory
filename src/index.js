@@ -15,6 +15,7 @@ export { default as VictoryTransition } from "./victory-transition/victory-trans
 export { default as VictorySharedEvents } from "./victory-shared-events/victory-shared-events";
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
+export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export {
-  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice
+  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
 } from "./victory-primitives/index";

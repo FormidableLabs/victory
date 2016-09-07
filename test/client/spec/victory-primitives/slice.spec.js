@@ -3,7 +3,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import Slice from "src/victory-primitives/slice";
 
-describe("components/slice", () => {
+describe("victory-primitives/slice", () => {
   describe("rendering", () => {
     it("renders a path with attribute `d` equal to the result of `props.pathFunction` called with `props.slice`", () => {
       const EXPECTED_D_ATTR = "M1,1";

@@ -7,6 +7,10 @@ import ErrorBar from "./error-bar";
 import Line from "./line";
 import Point from "./point";
 import Slice from "./slice";
+import Voronoi from "./voronoi";
+import Flyout from "./flyout";
 
 
-export { Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice };
+export {
+  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
+};

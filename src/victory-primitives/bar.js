@@ -12,9 +12,9 @@ export default class Bar extends React.Component {
     role: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object,
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
-    y0: React.PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number,
+    y0: PropTypes.number,
     width: PropTypes.number,
     padding: PropTypes.oneOfType([
       PropTypes.number,

@@ -39,7 +39,8 @@ const baseLabelStyles = {
   letterSpacing,
   padding: 10,
   fill: charcoal,
-  stroke: "transparent"
+  stroke: "transparent",
+  textAnchor: "middle"
 };
 // *
 // * Strokes
@@ -99,10 +100,7 @@ export default {
         stroke: charcoal,
         strokeWidth: 1
       },
-      labels: assign({}, baseLabelStyles, {
-        padding: 25,
-        textAnchor: "end"
-      })
+      labels: baseLabelStyles
     },
     candleColors: {
       positive: "#ffffff",
@@ -117,9 +115,7 @@ export default {
         stroke: charcoal,
         strokeWidth: 2
       },
-      labels: assign({}, baseLabelStyles, {
-        textAnchor: "start"
-      })
+      labels: baseLabelStyles
     }
   }, baseProps),
   group: assign({
@@ -145,8 +141,7 @@ export default {
         strokeWidth: 1
       },
       labels: assign({}, baseLabelStyles, {
-        padding: 200,
-        textAnchor: "middle"
+        padding: 200
       })
     },
     colorScale: colors,
@@ -161,12 +156,39 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: Object.assign({}, baseLabelStyles, {
-        textAnchor: "middle"
-      })
+      labels: baseLabelStyles
     }
   }, baseProps),
   stack: assign({
     colorScale: colors
+  }, baseProps),
+  tooltip: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: baseLabelStyles,
+      flyout: {
+        stroke: charcoal,
+        strokeWidth: 1,
+        fill: "#f0f0f0"
+      }
+    },
+    flyoutProps: {
+      cornerRadius: 10,
+      pointerLength: 10
+    }
+  }, baseProps),
+  voronoi: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: baseLabelStyles
+    }
   }, baseProps)
 };
