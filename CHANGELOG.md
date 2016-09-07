@@ -1,5 +1,13 @@
 VictoryCore Changelog
 =====================
+## 6.1.0 (2016-09-07)
+
+- Adds `Flyout` and `Voronoi` primitives
+- Adds `VictoryTooltip` a component with `defaultEvents` that renders a label within a flyout when `active={true}` and renders nothing when `active={false}`
+- Events now add `this.componentEvents` to the set of events for a component instance
+- Adds `getComponentEvents` helper to `Events`
+- Padding consistency and small stylistic changes in `VictoryTheme`
+
 ## 6.0.2 (2016-09-01)
 
 - Fix `onEnd` animation callback
