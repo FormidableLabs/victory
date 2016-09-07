@@ -1,5 +1,7 @@
 import * as d3Shape from "d3-shape";
 import * as d3Scale from "d3-scale";
+import { voronoi as d3Voronoi } from "d3-voronoi";
+import { without } from "lodash";
 
 const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
@@ -35,13 +37,14 @@ const exhibitsShapeSequence = (wrapper, shapeSequence) => {
   });
 };
 
-const calculateD3Path = (props, pathType) => {
-  const {width, height, padding, scale, interpolation, data} = props;
-  const scaleType = `scale${scale[0].toUpperCase() + scale.slice(1)}`;
-  const curveType =
+const calculateD3Path = (props, pathType, index) => {
+  const {width, height, padding, scale, interpolation, data, domain} = props;
+  const scaleType = scale ?
+    `scale${scale[0].toUpperCase() + scale.slice(1)}` : "scaleLinear";
+  const curveType = interpolation &&
     `curve${interpolation[0].toUpperCase() + interpolation.slice(1)}`;
 
-  const domain = data.reduce((prev, datum) => {
+  const dataDomain = data.reduce((prev, datum) => {
     if (datum.x < prev.x[0]) {
       prev.x[0] = datum.x;
     } else if (datum.x > prev.x[1]) {
@@ -57,12 +60,17 @@ const calculateD3Path = (props, pathType) => {
     return prev;
   }, {x: [0, 0], y: [0, 0]});
 
+  const range = {
+    x: [padding, width - padding],
+    y: [height - padding, padding]
+  };
+
   const scaleX = d3Scale[scaleType]()
-    .domain(domain.x)
-    .range([padding, width - padding]);
+    .domain(domain && domain.x || dataDomain.x)
+    .range(range.x);
   const scaleY = d3Scale[scaleType]()
-    .domain(domain.y)
-    .range([height - padding, padding]);
+    .domain(domain && domain.y || dataDomain.y)
+    .range(range.y);
 
   switch (pathType) {
   case "line":
@@ -79,6 +87,16 @@ const calculateD3Path = (props, pathType) => {
       .x((d) => scaleX(d.x))
       .y1((d) => scaleY(d.y1))
       .y0((d) => scaleY(d.y0))(modifiedData);
+  case "voronoi":
+    const minRange = [Math.min(...range.x), Math.min(...range.y)];
+    const maxRange = [Math.max(...range.x), Math.max(...range.y)];
+    const voronoi = d3Voronoi()
+      .x((d) => scaleX(d.x))
+      .y((d) => scaleY(d.y))
+      .extent([minRange, maxRange]);
+    const polygons = voronoi.polygons(data);
+    const polygon = without(polygons[index], "data");
+    return `M ${polygon.join("L")} Z`;
   }
 };
 
@@ -128,13 +146,13 @@ const expectations = {
    * @param {String} props.interpolation - The type of curve.
    * @param {Array} props.data - The raw data for the chart.
    * @param {String} pathType - The type of path d3 should generate (e.g.
-   * "line", "area").
+   * @param {Numner} index - Optional: the index of the data element in the data array
    * @returns {undefined}
    */
-  expectCorrectD3Path(wrapper, props, pathType) {
+  expectCorrectD3Path(wrapper, props, pathType, index) { // eslint-disable-line max-params
     const path = wrapper.render().find("path").attr("d");
     expect(path).to.not.equal(undefined);
-    expect(path).to.equal(calculateD3Path(props, pathType));
+    expect(path).to.equal(calculateD3Path(props, pathType, index));
   }
 };
 

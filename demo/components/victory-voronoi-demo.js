@@ -53,12 +53,32 @@ class App extends React.Component {
         <div style={containerStyle}>
           <VictoryVoronoi
             style={{parent: parentStyle, data: visible}}
+          />
+
+          <VictoryVoronoi
+            style={{parent: parentStyle, data: visible}}
             data={[
               {x: 1, y: 1},
               {x: 2, y: 2},
               {x: 3, y: 3},
               {x: 4, y: 2},
               {x: 5, y: 1}
+            ]}
+            events={[
+              {
+                target: "data",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: () => {
+                          return {style: {fill: "orange"}};
+                        }
+                      }
+                    ];
+                  }
+                }
+              }
             ]}
           />
 
