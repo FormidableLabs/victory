@@ -486,7 +486,7 @@ export default class VictoryBar extends React.Component {
     const { animate, style, standalone, theme } = props;
     if (animate) {
       const whitelist = [
-        "data", "domain", "height", "padding", "style", "width", "clipWidth", "clipHeight"
+        "data", "domain", "height", "padding", "style", "width"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

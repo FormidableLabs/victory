@@ -2,6 +2,7 @@ import { assign, pick, omit, defaults } from "lodash";
 import { Helpers, Events, Log } from "victory-core";
 import Scale from "../../helpers/scale";
 import Domain from "../../helpers/domain";
+import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
@@ -78,6 +79,9 @@ export default {
       Log.warn("This is an empty dataset.");
       return [];
     }
+    const stringMap = {
+      x: Data.createStringMap(props, "x")
+    };
 
     const accessor = {
       x: Helpers.createAccessor(props.x),
@@ -97,7 +101,9 @@ export default {
       return assign(
         {},
         datum,
-        {x, y, open, close, high, low}
+        {x, y, open, close, high, low},
+        typeof x === "string" ? { x: stringMap.x[x], xName: x } : {}
+
         );
     });
   },

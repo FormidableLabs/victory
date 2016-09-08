@@ -105,13 +105,25 @@ export default {
       return isArray(errors) ? errors.map((err) => replaceNeg(err)) : replaceNeg(errors);
     };
 
+    const stringMap = {
+      x: Data.createStringMap(props, "x"),
+      y: Data.createStringMap(props, "y")
+    };
+
     return dataset.map((datum) => {
       const x = accessor.x(datum);
       const y = accessor.y(datum);
       const errorX = replaceNegatives(accessor.errorX(datum));
       const errorY = replaceNegatives(accessor.errorY(datum));
 
-      return assign({}, datum, { x, y, errorX, errorY });
+      return assign(
+        {},
+        datum,
+        { x, y, errorX, errorY },
+        // map string data to numeric values, and add names
+        typeof x === "string" ? { x: stringMap.x[x], xName: x } : {},
+        typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
+      );
     });
   },
 
