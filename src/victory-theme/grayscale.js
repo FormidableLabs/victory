@@ -92,7 +92,7 @@ export default {
         strokeWidth: 0,
         width: 8
       },
-      labels: centeredLabelStyles
+      labels: baseLabelStyles
     }
   }, baseProps),
   candlestick: assign({
