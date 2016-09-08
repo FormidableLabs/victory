@@ -16,7 +16,7 @@ Victory is an opinionated, but fully overridable, ecosystem of composable React 
 **SEMVER** Minor version bumps should be considered breaking changes until we hit v1.0.0. Patches can be considered safe.
 
 **VictoryNative**
-What to use `Victory` with React Native? Check out [VictoryNative](https://github.com/FormidableLabs/victory-native)
+Want to use `Victory` with React Native? Check out [VictoryNative](https://github.com/FormidableLabs/victory-native)
 
 ## Get started
 
