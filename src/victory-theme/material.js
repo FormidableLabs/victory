@@ -44,9 +44,10 @@ const baseLabelStyles = {
   fontSize,
   letterSpacing,
   padding,
-  fill: blueGrey700,
-  textAnchor: "middle"
+  fill: blueGrey700
 };
+
+const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 // *
 // * Strokes
 // *
@@ -60,7 +61,7 @@ export default {
       data: {
         fill: grey900
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     }
   }, baseProps),
   axis: assign({
@@ -72,7 +73,7 @@ export default {
         strokeLinecap,
         strokeLinejoin
       },
-      axisLabel: assign({}, baseLabelStyles, {
+      axisLabel: assign({}, centeredLabelStyles, {
         padding,
         stroke: "transparent"
       }),
@@ -107,7 +108,7 @@ export default {
         strokeWidth: 0,
         width: 5
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     }
   }, baseProps),
   candlestick: assign({
@@ -115,7 +116,7 @@ export default {
       data: {
         stroke: blueGrey700
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     },
     candleColors: {
       positive: "#ffffff",
@@ -131,7 +132,7 @@ export default {
         stroke: blueGrey700,
         strokeWidth: 2
       },
-      labels: assign({}, baseLabelStyles, {
+      labels: assign({}, centeredLabelStyles, {
         stroke: "transparent",
         strokeWidth: 0
       })
@@ -163,7 +164,7 @@ export default {
         stroke: blueGrey50,
         strokeWidth: 1
       },
-      labels: assign({}, baseLabelStyles, {
+      labels: assign({}, centeredLabelStyles, {
         padding: 200,
         stroke: "transparent",
         strokeWidth: 0
@@ -178,7 +179,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: assign({}, baseLabelStyles, {
+      labels: assign({}, centeredLabelStyles, {
         stroke: "transparent"
       })
     }
@@ -193,7 +194,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: baseLabelStyles,
+      labels: centeredLabelStyles,
       flyout: {
         stroke: blueGrey700,
         strokeWidth: 1,
@@ -212,7 +213,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     }
   }, baseProps)
 };
