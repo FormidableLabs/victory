@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 6.1.1 (2016-09-08)
+
+- Fix axis themes
+
 ## 6.1.0 (2016-09-07)
 
 - Adds `Flyout` and `Voronoi` primitives
