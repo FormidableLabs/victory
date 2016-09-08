@@ -8972,9 +8972,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	fontSize:fontSize,
 	letterSpacing:letterSpacing,
 	padding:padding,
-	fill:blueGrey700,
-	textAnchor:"middle"};
+	fill:blueGrey700};
 	
+	
+	var centeredLabelStyles=(0,_assign3.default)({textAnchor:"middle"},baseLabelStyles);
 	
 	
 	
@@ -8988,7 +8989,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:{
 	fill:grey900},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	axis:(0,_assign3.default)({
@@ -9000,7 +9001,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeLinecap:strokeLinecap,
 	strokeLinejoin:strokeLinejoin},
 	
-	axisLabel:(0,_assign3.default)({},baseLabelStyles,{
+	axisLabel:(0,_assign3.default)({},centeredLabelStyles,{
 	padding:padding,
 	stroke:"transparent"}),
 	
@@ -9035,7 +9036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeWidth:0,
 	width:5},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	candlestick:(0,_assign3.default)({
@@ -9043,7 +9044,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:{
 	stroke:blueGrey700},
 	
-	labels:baseLabelStyles},
+	labels:centeredLabelStyles},
 	
 	candleColors:{
 	positive:"#ffffff",
@@ -9059,7 +9060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:blueGrey700,
 	strokeWidth:2},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
+	labels:(0,_assign3.default)({},centeredLabelStyles,{
 	stroke:"transparent",
 	strokeWidth:0})}},
 	
@@ -9091,7 +9092,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:blueGrey50,
 	strokeWidth:1},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
+	labels:(0,_assign3.default)({},centeredLabelStyles,{
 	padding:200,
 	stroke:"transparent",
 	strokeWidth:0})}},
@@ -9106,7 +9107,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
+	labels:(0,_assign3.default)({},centeredLabelStyles,{
 	stroke:"transparent"})}},
 	
 	
@@ -9121,7 +9122,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:baseLabelStyles,
+	labels:centeredLabelStyles,
 	flyout:{
 	stroke:blueGrey700,
 	strokeWidth:1,
@@ -9140,7 +9141,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps)};
 
@@ -9189,9 +9190,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	letterSpacing:letterSpacing,
 	padding:10,
 	fill:charcoal,
-	stroke:"transparent",
-	textAnchor:"middle"};
+	stroke:"transparent"};
 	
+	
+	var centeredLabelStyles=(0,_assign3.default)({textAnchor:"middle"},baseLabelStyles);
 	
 	
 	
@@ -9204,7 +9206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:{
 	fill:charcoal},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	axis:(0,_assign3.default)({
@@ -9216,7 +9218,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeLinecap:strokeLinecap,
 	strokeLinejoin:strokeLinejoin},
 	
-	axisLabel:(0,_assign3.default)({},baseLabelStyles,{
+	axisLabel:(0,_assign3.default)({},centeredLabelStyles,{
 	padding:25}),
 	
 	grid:{
@@ -9241,7 +9243,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeWidth:0,
 	width:8},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	candlestick:(0,_assign3.default)({
@@ -9250,7 +9252,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:charcoal,
 	strokeWidth:1},
 	
-	labels:baseLabelStyles},
+	labels:centeredLabelStyles},
 	
 	candleColors:{
 	positive:"#ffffff",
@@ -9265,7 +9267,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:charcoal,
 	strokeWidth:2},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	group:(0,_assign3.default)({
@@ -9290,7 +9292,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"none",
 	strokeWidth:1},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
+	labels:(0,_assign3.default)({},centeredLabelStyles,{
 	padding:200})},
 	
 	
@@ -9306,7 +9308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	stack:(0,_assign3.default)({
@@ -9319,7 +9321,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:baseLabelStyles,
+	labels:centeredLabelStyles,
 	flyout:{
 	stroke:charcoal,
 	strokeWidth:1,
@@ -9338,7 +9340,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps)};
 
