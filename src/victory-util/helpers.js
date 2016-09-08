@@ -146,9 +146,8 @@ export default {
   modifyProps(props, fallbackProps, role) {
     const theme = props.theme && props.theme[role] ? props.theme[role] : {};
     const themeProps = omit(theme, ["style"]);
-    const clipPathProps = { clipWidth: theme.width, clipHeight: theme.height };
-
-    return defaults({}, props, clipPathProps, themeProps, fallbackProps);
+    const baseProps = defaults({}, props, themeProps, fallbackProps);
+    return defaults({}, baseProps, {clipWidth: baseProps.width, clipHeight: baseProps.height});
   },
 
   getEvents(events, namespace) {
