@@ -142,7 +142,7 @@ export default {
         strokeWidth: 1
       },
       labels: assign({}, centeredLabelStyles, {
-        padding: 200
+        padding: 20
       })
     },
     colorScale: colors,
