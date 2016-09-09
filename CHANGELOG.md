@@ -1,8 +1,25 @@
 # Victory Changelog
 
+## 0.12.0 (2016-09-09)
+
+**This is a breaking change for label placement in VictoryPie**
+
+- Adds support for `VictoryTooltip`
+- Adds `VictoryVoronoi` component
+- Adds `VictoryVoronoiTooltip`
+- Moves all primitive rendered components to `victory-core` where they are exported for external use
+- Enhances `VictoryGroup` so that it can accept a `data` prop which it will pass to all children. This also allows groups of components to be stacked as one
+- Adds support for `defaultEvents` in any primitive component (_i.e._ `dataComponent`, `labelComponent`)
+- Adds `onLoad` animations
+- Adds a `sortKey` prop to `VictoryLine` to allow sorting by fields other than "x"
+- Adds a `fixLabelOverlap` boolean prop to `VictoryAxis`. When enables, this feature renders a smaller subset of ticks when the full set of ticks would cause overlapping labels. This feature is currently limited to evenly spaced labels. 
+- Fixes a bug related to `bubbleProperty` in `VictoryScatter`
+- Allows string data in `VictoryCandlestick` and `VictoryErrorBar`
+- Performance optimizations 
+
 ## 0.11.0 (2016-08-18)
 
-** This is a breaking change for themes across all components and for label placement in VictoryPie **
+**This is a breaking change for themes across all components and for label placement in VictoryPie**
 
 -  Updates VictoryTheme API, uses `VictoryTheme.grayscale` for default styling
 - Alters label placement in VictoryPie so that when label styles include padding, the `innerRadius` of the pie does not effect label placement.
