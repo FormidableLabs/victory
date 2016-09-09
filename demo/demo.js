@@ -2,9 +2,8 @@
 import { merge, random, range } from "lodash";
 import React from "react";
 import { VictoryPie } from "../src/index";
-import Slice from "../src/components/slice";
 import {
-  VictoryContainer, VictoryTheme
+  VictoryContainer, VictoryTheme, Slice, VictoryTooltip
 } from "victory-core";
 
 class BorderLabelSlice extends React.Component {
@@ -140,7 +139,6 @@ export default class App extends React.Component {
               parent: parentStyle,
               labels: {
                 fontSize: 10,
-                padding: 100,
                 paintOrder: "stroke",
                 stroke: "#ffffff",
                 strokeWidth: 3,
@@ -158,8 +156,7 @@ export default class App extends React.Component {
 
           <VictoryPie
             style={{
-              parent: { ...parentStyle, padding: "1% 3%" },
-              labels: { padding: 230 }
+              parent: { ...parentStyle, padding: "1% 3%" }
             }}
             theme={VictoryTheme.material}
             labels={() => "click me!"}
@@ -210,13 +207,15 @@ export default class App extends React.Component {
           <VictoryPie
             style={{
               parent: parentStyle,
-              labels: {fontSize: 20, padding: 100, fill: "white"}
+              labels: {fontSize: 10, padding: 10}
             }}
+            labelComponent={<VictoryTooltip/>}
             colorScale="greyscale"
           />
 
           <VictoryPie
             style={{...this.state.style}}
+            labelRadius={120}
             innerRadius={140}
           />
 
@@ -242,6 +241,7 @@ export default class App extends React.Component {
             style={{...this.state.style, labels: {padding: 0}}}
             data={this.state.data}
             innerRadius={100}
+            labelRadius={110}
             animate={{duration: 2000}}
             colorScale={this.state.colorScale}
           />

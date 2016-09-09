@@ -43,14 +43,15 @@ assign a property to x or y, or process data on the fly.
 
 ### Flexible and Configurable
 
-Labels are placed at the centroid of each pie slice by default. Apply styles to the labels, or apply padding to move the labels:
+Labels are placed at the outer edge of the pie by default. Set a `labelRadius` to adjust the position of the labels
 
 ``` playground
 <VictoryPie
+  labelRadius={80}
   style={{
     labels: {
       fontSize: 20,
-      padding: 100
+      fill: "white"
     }
   }}
 />
@@ -62,7 +63,7 @@ Styles of the pie chart itself can also be specified:
 <VictoryPie
   style={{
     data: {
-      stroke: "black",
+      stroke: "tomato",
       strokeDasharray: "5,5",
       strokeWidth: 2
     }
@@ -70,7 +71,7 @@ Styles of the pie chart itself can also be specified:
 />
 ```
 
-Set the `innerRadius` prop to create a donut chart. Label positions will automatically adjust.
+Set the `innerRadius` prop to create a donut chart.
 
 ``` playground
 <VictoryPie innerRadius={140}/>
@@ -104,8 +105,7 @@ Here's an example of a donut chart with custom data and colors
     labels: {
       fill: "white",
       fontSize: 12,
-      fontWeight: "bold",
-      padding: 0
+      fontWeight: "bold"
     }
   }}
   data={[
@@ -117,7 +117,8 @@ Here's an example of a donut chart with custom data and colors
     {x: "45-64", y: 4263},
     {x: "≥65", y: 7502}
   ]}
-  innerRadius={110}
+  innerRadius={100}
+  labelRadius={110}
   colorScale={[
     "#D85F49",
     "#F66D3B",
@@ -162,6 +163,7 @@ The `eventKey` may optionally be used to select a single element by index rather
 
 ``` playground
   <VictoryPie
+    padding={75}
     data={[
       {x: "Cat", y: 62},
       {x: "Dog", y: 91},
