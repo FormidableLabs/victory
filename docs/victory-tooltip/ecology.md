@@ -23,7 +23,7 @@ The example below using `VictoryTooltip` as the label component of a bar chart.
       {x: 2, y: 5, label: "right-side-up"},
       {x: 4, y: -6, label: "upside-down"},
       {x: 6, y: 4, label: "tiny"},
-      {x: 8, y: -5, label: "or much \n BIGGER"},
+      {x: 8, y: -5, label: "or a little \n BIGGER"},
       {x: 10, y: 7, label: "automatically"}
     ]}
     style={{
@@ -59,7 +59,7 @@ Tooltips can be customized directly on the the `VictoryTooltip` component
       {x: 2, y: 5, label: "right-side-up"},
       {x: 4, y: -6, label: "upside-down"},
       {x: 6, y: 4, label: "tiny"},
-      {x: 8, y: -5, label: "or much \n BIGGER"},
+      {x: 8, y: -5, label: "or a little \n BIGGER"},
       {x: 10, y: 7, label: "automatically"}
     ]}
     style={{
@@ -100,14 +100,14 @@ Use `VictoryGroup` to group to provide the same data and styles to several compo
 
 ```playground
 <VictoryChart
-  domain={{y: [-225, 225]}}
+  domain={{y: [-25, 25]}}
 >
   <VictoryGroup
     data={
-      range(20).map((i) => {
+      range(10).map((i) => {
         return {
-          x: random(600),
-          y: random(-200, 200)
+          x: i,
+          y: random(-20, 20)
         };
       })
     }
