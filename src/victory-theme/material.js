@@ -164,7 +164,7 @@ export default {
         stroke: blueGrey50,
         strokeWidth: 1
       },
-      labels: assign({}, centeredLabelStyles, {
+      labels: assign({}, baseLabelStyles, {
         padding: 20,
         stroke: "transparent",
         strokeWidth: 0

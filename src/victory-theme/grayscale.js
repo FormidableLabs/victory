@@ -141,7 +141,7 @@ export default {
         stroke: "none",
         strokeWidth: 1
       },
-      labels: assign({}, centeredLabelStyles, {
+      labels: assign({}, baseLabelStyles, {
         padding: 20
       })
     },
