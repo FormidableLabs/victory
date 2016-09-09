@@ -1,8 +1,17 @@
 # VictoryPie Changelog
 
+## 6.0.0 (2016-09-09)
+
+**This release includes breaking changes for themes and label styles**
+- Adds support for `VictoryTooltip`
+- Adds a `labelRadius` prop used to position labels rather than relying only on `style.labels.padding`
+- Calculates default `textAnchor` and `verticalAnchor` for labels depending on which quadrant of the pie they appear in
+- Uses `Slice` component exported from `victory-core`
+- Performance improvements
+
 ## 5.0.0 (2016-08-18)
 
-** This release includes breaking changes for themes and label styles **
+**This release includes breaking changes for themes and label styles**
 - Updates VictoryTheme API, uses `VictoryTheme.grayscale` for default styling
 - Alters label placement so that when label styles include padding, the `innerRadius` of the pie does not effect label placement.
 - Adds a `displayName` for ease of debugging
