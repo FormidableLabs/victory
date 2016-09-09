@@ -1,10 +1,12 @@
 import {
+  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout,
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
   VictorySharedEvents,
   VictoryTheme,
-  VictoryTransition
+  VictoryTransition,
+  VictoryTooltip
 } from "victory-core";
 
 import {
@@ -17,12 +19,16 @@ import {
   VictoryGroup,
   VictoryLine,
   VictoryScatter,
-  VictoryStack
+  VictoryStack,
+  VictoryVoronoi,
+  VictoryVoronoiTooltip
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
 
 export {
+  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout,
+  VictoryAnimation,
   VictoryAnimation,
   VictoryArea,
   VictoryAxis,
@@ -39,5 +45,8 @@ export {
   VictoryStack,
   VictoryTheme,
   VictoryTransition,
-  VictorySharedEvents
+  VictorySharedEvents,
+  VictoryTooltip,
+  VictoryVoronoi,
+  VictoryVoronoiTooltip
 };
