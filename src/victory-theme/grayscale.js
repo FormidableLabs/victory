@@ -4,7 +4,6 @@ import { assign } from "lodash";
 // * Colors
 // *
 const colors = [
-  "#000000",
   "#252525",
   "#525252",
   "#737373",
@@ -92,7 +91,7 @@ export default {
         strokeWidth: 0,
         width: 8
       },
-      labels: centeredLabelStyles
+      labels: baseLabelStyles
     }
   }, baseProps),
   candlestick: assign({
@@ -141,8 +140,8 @@ export default {
         stroke: "none",
         strokeWidth: 1
       },
-      labels: assign({}, centeredLabelStyles, {
-        padding: 200
+      labels: assign({}, baseLabelStyles, {
+        padding: 20
       })
     },
     colorScale: colors,

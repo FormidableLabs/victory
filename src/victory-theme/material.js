@@ -108,7 +108,7 @@ export default {
         strokeWidth: 0,
         width: 5
       },
-      labels: centeredLabelStyles
+      labels: baseLabelStyles
     }
   }, baseProps),
   candlestick: assign({
@@ -164,8 +164,8 @@ export default {
         stroke: blueGrey50,
         strokeWidth: 1
       },
-      labels: assign({}, centeredLabelStyles, {
-        padding: 200,
+      labels: assign({}, baseLabelStyles, {
+        padding: 20,
         stroke: "transparent",
         strokeWidth: 0
       })
