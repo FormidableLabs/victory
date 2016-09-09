@@ -23,6 +23,8 @@ const App = React.createClass({
           <li><Link to="/errorbar">Victory ErrorBar Docs</Link></li>
           <li><Link to="/theme">Victory Theme Docs</Link></li>
           <li><Link to="/group">Victory Group Docs</Link></li>
+          <li><Link to="/voronoi">Victory Voronoi Docs</Link></li>
+          <li><Link to="/tooltip">Victory tooltip Docs</Link></li>
         </ul>
         {this.props.children}
         <Style rules={VictoryTheme} />

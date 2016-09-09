@@ -1,35 +1,22 @@
 import React, { PropTypes } from "react";
 import { assign, defaults, isFunction, partialRight } from "lodash";
+import Domain from "../../helpers/domain";
+import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Candle
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi
 } from "victory-core";
-import CandlestickHelpers from "./helper-methods";
+import VoronoiHelpers from "./helper-methods";
 
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50,
-  candleColors: {
-    positive: "#ffffff",
-    negative: "#252525"
-  }
+  padding: 50
 };
 
-const defaultData = [
-  {x: new Date(2016, 6, 1), open: 5, close: 10, high: 15, low: 0},
-  {x: new Date(2016, 6, 2), open: 10, close: 15, high: 20, low: 5},
-  {x: new Date(2016, 6, 3), open: 15, close: 20, high: 25, low: 10},
-  {x: new Date(2016, 6, 4), open: 20, close: 25, high: 30, low: 15},
-  {x: new Date(2016, 6, 5), open: 25, close: 30, high: 35, low: 20},
-  {x: new Date(2016, 6, 6), open: 30, close: 35, high: 40, low: 25},
-  {x: new Date(2016, 6, 7), open: 35, close: 40, high: 45, low: 30},
-  {x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35}
-];
-
-export default class VictoryCandlestick extends React.Component {
-  static displayName = "VictoryCandlestick";
-  static role = "candlestick";
+export default class VictoryVoronoi extends React.Component {
+  static displayName = "VictoryVoronoi";
+  static role = "voronoi";
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
@@ -41,28 +28,30 @@ export default class VictoryCandlestick extends React.Component {
      */
     animate: PropTypes.object,
     /**
+     * The categories prop specifies how categorical data for a chart should be ordered.
+     * This prop should be given as an array of string values, or an object with
+     * these arrays of values specified for x and y. If this prop is not set,
+     * categorical data will be plotted in the order it was given in the data array
+     * @examples ["dogs", "cats", "mice"]
+     */
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string),
+        y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    /**
      * The data prop specifies the data to be plotted.
      * Data should be in the form of an array of data points.
-     * Each data point may be any format you wish (depending on the `x`, `open`, `close`, `high`,
-     * and `low` accessor props), but by default, an object with x, open, close, high, and low
-     * properties is expected. Other properties may be added to the data point object, such as
-     * fill and symbol. These properties will be interpreted and applied to the
-     * individual lines
-     * @examples [{x: 1, open: 2, close: 3, high: 4, low: 1, fill: "red"},
-     * {x: 1, open: 2, close: 3, high: 4, low: 1, label: "foo"}]
+     * Each data point may be any format you wish (depending on the `x` and `y` accessor props),
+     * but by default, an object with x and y properties is expected.
+     * Other properties may be added to the data point object, such as fill, size, and symbol.
+     * These properties will be interpreted and applied to the individual lines
+     * @examples [{x: 1, y: 2, fill: "red"}, {x: 2, y: 3, label: "foo"}]
      */
 
     data: PropTypes.array,
-    /**
-     * The dataComponent prop takes an entire component which will be used to create points for
-     * each datum in the chart. The new element created from the passed dataComponent will be
-     * provided with the following properties calculated by VictoryCandlestick: datum, index, scale,
-     * style, events, x, open, close, high, low, and symbol. Any of these props may be overridden by
-     * passing in props to the supplied component, or modified or ignored within the custom
-     * component itself. If a dataComponent is not provided, VictoryCandlestick will use its
-     * default Candle component.
-     */
-    dataComponent: PropTypes.element,
     /**
      * The domainPadding prop specifies a number of pixels of padding to add to the
      * beginning and end of a domain. This prop is useful for explicitly spacing ticks farther
@@ -83,6 +72,15 @@ export default class VictoryCandlestick extends React.Component {
       PropTypes.number
     ]),
     /**
+     * The dataComponent prop takes an entire component which will be used to create points for
+     * each datum in the chart. The new element created from the passed dataComponent will be
+     * provided with the following properties calculated by VictoryScatter: datum, index, scale,
+     * style, events, x, y, size, and symbol. Any of these props may be overridden by passing in
+     * props to the supplied component, or modified or ignored within the custom component itself.
+     * If a dataComponent is not provided, VictoryScatter will use its default Point component.
+     */
+    dataComponent: PropTypes.element,
+    /**
      * The domain prop describes the range of values your chart will include. This prop can be
      * given as a array of the minimum and maximum expected values for your chart,
      * or as an object that specifies separate arrays for x and y.
@@ -100,7 +98,7 @@ export default class VictoryCandlestick extends React.Component {
     /**
      * The event prop take an array of event objects. Event objects are composed of
      * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
-     * for a given component, so "data" and "labels" are all valid targets for VictoryCandlestick
+     * for a given component, so "data" and "labels" are all valid targets for VictoryScatter
      * events. The eventKey may optionally be used to select a single element by index rather than
      * an entire set. The eventHandlers object should be given as an object whose keys are standard
      * event names (i.e. onClick) and whose values are event callbacks. The return value
@@ -139,7 +137,7 @@ export default class VictoryCandlestick extends React.Component {
      *}}
      */
     events: PropTypes.arrayOf(PropTypes.shape({
-      target: PropTypes.oneOf(["data", "labels"]),
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
         PropTypes.array,
         PropTypes.func,
@@ -153,8 +151,8 @@ export default class VictoryCandlestick extends React.Component {
      */
     name: PropTypes.string,
     /**
-     * Similar to data accessor props `x`, `open`, `close`, `high` and `low, this prop may
-     * be used to functionally assign eventKeys to data.
+     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+     * assign eventKeys to data
      */
     eventKey: PropTypes.oneOfType([
       PropTypes.func,
@@ -176,7 +174,7 @@ export default class VictoryCandlestick extends React.Component {
     height: CustomPropTypes.nonNegative,
     /**
      * The labelComponent prop takes in an entire label component which will be used
-     * to create labels for each point in the chart. The new element created from
+     * to create labels for each point in the scatter. The new element created from
      * the passed labelComponent will be supplied with the following properties:
      * x, y, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
      * any of these props may be overridden by passing in props to the supplied component,
@@ -189,9 +187,8 @@ export default class VictoryCandlestick extends React.Component {
      * This prop should be given as an array of values or as a function of data.
      * If given as an array, the number of elements in the array should be equal to
      * the length of the data array. Labels may also be added directly to the data object
-     * like data={[{x: new Date(2016, 6, 2), open: 15, close: 10, high: 20, low: 5,
-     * label: "hello"}]}.
-     * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
+     * like data={[{x: 1, y: 1, label: "first"}]}.
+     * @examples ["spring", "summer", "fall", "winter"], (datum) => datum.title
      */
     labels: PropTypes.oneOfType([
       PropTypes.func,
@@ -231,21 +228,19 @@ export default class VictoryCandlestick extends React.Component {
       })
     ]),
     /**
-     * The size prop determines how to scale each data point
+     * The size prop determines the maximum size of each voronoi area. If this prop
+     * is not given, the entire voronoi area will be used.
      */
-    size: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func
-    ]),
+    size: CustomPropTypes.nonNegative,
     /**
      * The standalone prop determines whether the component will render a standalone svg
      * or a <g> tag that will be included in an external svg. Set standalone to false to
-     * compose VictoryCandlestick with other components within an enclosing <svg> tag.
+     * compose VictoryScatter with other components within an enclosing <svg> tag.
      */
     standalone: PropTypes.bool,
     /**
-     * The style prop specifies styles for your VictoryCandlestick. Any valid inline style
-     * properties will be applied. Height, width, and padding should be specified via the height,
+     * The style prop specifies styles for your VictoryScatter. Any valid inline style properties
+     * will be applied. Height, width, and padding should be specified via the height,
      * width, and padding props, as they are used to calculate the alignment of
      * components within chart. In addition to normal style properties, angle and verticalAnchor
      * may also be specified via the labels object, and they will be passed as props to
@@ -279,67 +274,16 @@ export default class VictoryCandlestick extends React.Component {
       PropTypes.arrayOf(PropTypes.string)
     ]),
     /**
-     * The open prop specifies how to access the open value of each data point.
+     * The y prop specifies how to access the Y value of each data point.
      * If given as a function, it will be run on each data point, and returned value will be used.
      * If given as an integer, it will be used as an array index for array-type data points.
      * If given as a string, it will be used as a property key for object-type data points.
      * If given as an array of strings, or a string containing dots or brackets,
      * it will be used as a nested object property path (for details see Lodash docs for _.get).
      * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'open', 'open.value.nested.1.thing', 'open[2].also.nested', null,
-     * d => Math.sin(d)
+     * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
      */
-    open: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    /**
-     * The close prop specifies how to access the close value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'close', 'close.value.nested.1.thing', 'close[2].also.nested', null,
-     * d => Math.sin(d)
-     */
-    close: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    /**
-     * The high prop specifies how to access the high value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'high', 'high.value.nested.1.thing', 'high[2].also.nested', null,
-     * d => Math.sin(d)
-     */
-    high: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    /**
-     * The low prop specifies how to access the low value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'low', 'low.value.nested.1.thing', 'low[2].also.nested', null, d => Math.sin(d)
-     */
-    low: PropTypes.oneOfType([
+    y: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
@@ -349,68 +293,52 @@ export default class VictoryCandlestick extends React.Component {
      * The containerComponent prop takes an entire component which will be used to
      * create a container element for standalone charts.
      * The new element created from the passed containerComponent wil be provided with
-     * these props from VictoryCandlestick: height, width, children
+     * these props from VictoryScatter: height, width, children
      * (the chart itself) and style. Props that are not provided by the
      * child chart component include title and desc, both of which
      * are intended to add accessibility to Victory components. The more descriptive these props
      * are, the more accessible your data will be for people using screen readers.
      * Any of these props may be overridden by passing in props to the supplied component,
      * or modified or ignored within the custom component itself. If a dataComponent is
-     * not provided, VictoryCandlestick will use the default VictoryContainer component.
+     * not provided, VictoryScatter will use the default VictoryContainer component.
      * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
      * popular each dog breed is by percentage in Seattle." />
      */
     containerComponent: PropTypes.element,
     /**
-    * Candle colors are significant in candlestick charts - one color signifies the stock
-    * closed at a higher price than it opened, and the other signifies the reverse. The
-    * candleColors prop takes an object with keys positive and negative, which each take
-    * a string that should be a color. Positive is for data points where close is higher
-    * than open, and defaults to white, and negative (close < open) defaults to black.
-    * @examples candleColors={{positive: "purple", negative: "blue"}}
+    * The theme prop takes a style object with nested data, labels, and parent objects.
+    * You can create this object yourself, or you can use a theme provided by Victory.
+    * When using VictoryScatter as a solo component, implement the theme directly on
+    * VictoryScatter. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
+    * VictoryGroup, please call the theme on the outermost wrapper component instead.
+    * @examples theme={VictoryTheme.material}
     */
-    candleColors: PropTypes.shape({
-      positive: PropTypes.string,
-      negative: PropTypes.string
-    }),
+    theme: PropTypes.object,
     /**
      * The groupComponent prop takes an entire component which will be used to
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element,
-    /**
-    * The theme prop takes a props object, and a style object with nested data, labels, and parent
-    * objects. You can create this object yourself, or you can use a theme provided by Victory.
-    * When using VictoryCandlestick as a solo component, implement the theme directly on
-    * VictoryCandlestick. If you are wrapping VictoryScatter in VictoryChart, VictoryStack, or
-    * VictoryGroup, please call the theme on the outermost wrapper component instead.
-    * @examples theme={VictoryTheme.material}
-    */
-    theme: PropTypes.object
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
     samples: 50,
     scale: "linear",
-    data: defaultData,
     standalone: true,
     x: "x",
-    open: "open",
-    close: "close",
-    high: "high",
-    low: "low",
-    dataComponent: <Candle/>,
+    y: "y",
+    dataComponent: <Voronoi/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 
-  static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
-  static getData = CandlestickHelpers.getData.bind(CandlestickHelpers);
+  static getDomain = Domain.getDomain.bind(Domain);
+  static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(
-    CandlestickHelpers.getBaseProps.bind(CandlestickHelpers), fallbackProps);
+    VoronoiHelpers.getBaseProps.bind(VoronoiHelpers), fallbackProps);
 
   constructor() {
     super();
@@ -432,7 +360,7 @@ export default class VictoryCandlestick extends React.Component {
     const { sharedEvents } = props;
     const components = ["dataComponent", "labelComponent", "groupComponent", "containerComponent"];
     this.componentEvents = Events.getComponentEvents(props, components);
-    this.baseProps = CandlestickHelpers.getBaseProps(props, fallbackProps);
+    this.baseProps = VoronoiHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
@@ -440,10 +368,11 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent} = props;
-    const { role } = VictoryCandlestick;
+    const { dataComponent, labelComponent, groupComponent } = props;
+    const { role } = VictoryVoronoi;
     const dataComponents = [];
     const labelComponents = [];
+
     const getComponentProps = (index, component, type) => {
       const key = this.dataKeys[index];
       if (this.hasEvents) {
@@ -479,7 +408,7 @@ export default class VictoryCandlestick extends React.Component {
       }
     }
     return labelComponents.length > 0 ?
-      React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
+      React.cloneElement(groupComponent, {}, ...labelComponents, ...dataComponents) :
       dataComponents;
   }
 
@@ -513,12 +442,9 @@ export default class VictoryCandlestick extends React.Component {
   }
 
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "candlestick");
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const { animate, style, standalone } = modifiedProps;
 
-    const { animate, standalone, style, theme } = props;
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -529,15 +455,19 @@ export default class VictoryCandlestick extends React.Component {
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, props)}
+          {React.createElement(this.constructor, modifiedProps)}
         </VictoryTransition>
       );
     }
-    const styleObject = theme && theme.candlestick && theme.candlestick.style ?
-      theme.candlestick.style : {};
-    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
-    return standalone ? this.renderContainer(props, group) : group;
+    const styleObject = modifiedProps.theme && modifiedProps.theme.voronoi
+    ? modifiedProps.theme.voronoi
+    : fallbackProps.style;
+
+    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+
+    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
+
+    return standalone ? this.renderContainer(modifiedProps, group) : group;
   }
 }

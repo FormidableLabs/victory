@@ -36,12 +36,14 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, y, index, scale } = dataProps;
+    const { x, index, scale, errorY} = dataProps;
+    const error = errorY && Array.isArray(errorY) ? errorY[0] : errorY;
+    const y = error || dataProps.y;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
       style: labelStyle,
-      x: x - (labelStyle.padding || 0),
       y: y - (labelStyle.padding || 0),
+      x,
       text,
       index,
       scale,

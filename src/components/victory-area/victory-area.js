@@ -369,39 +369,42 @@ export default class VictoryArea extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
+    const components = ["dataComponent", "labelComponent", "groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
     this.baseProps = AreaHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
   }
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent, clipId } = props;
     const { role } = VictoryArea;
-    const dataEvents = this.getEvents(props, "data", "all");
-    const dataProps = defaults(
-      {role, clipId},
-      this.getEventState("all", "data"),
-      this.getSharedEventState("all", "data"),
-      dataComponent.props,
-      this.baseProps.all.data
-    );
-    const areaComponent = React.cloneElement(dataComponent, assign(
-      {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
-    ));
+    const getComponentProps = (component, type) => {
+      const key = "all";
+      if (this.hasEvents) {
+        const events = this.getEvents(props, type, key);
+        const componentProps = defaults(
+          {role: `${role}`, clipId},
+          this.getEventState(key, type),
+          this.getSharedEventState(key, type),
+          component.props,
+          this.baseProps[key][type]
+        );
+        return assign(
+          {}, componentProps, {events: Events.getPartialEvents(events, key, componentProps)}
+        );
+      }
+      return defaults({role: `${role}`, clipId}, component.props, this.baseProps[key][type]);
+    };
 
-    if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
-      const labelProps = defaults(
-        {},
-        this.getEventState("all", "labels"),
-        this.getSharedEventState("all", "labels"),
-        labelComponent.props,
-        this.baseProps.all.labels
-      );
+    const dataProps = getComponentProps(dataComponent, "data");
+    const areaComponent = React.cloneElement(dataComponent, dataProps);
+
+    if (this.baseProps.all.labels || this.hasEvents) {
+      const labelProps = getComponentProps(labelComponent, "labels");
       if (labelProps && labelProps.text) {
-        const labelEvents = this.getEvents(props, "labels", "all");
-        const areaLabel = React.cloneElement(labelComponent, assign({
-          events: Events.getPartialEvents(labelEvents, "all", labelProps)
-        }, labelProps));
+        const areaLabel = React.cloneElement(labelComponent, labelProps);
         return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
       }
     }
@@ -409,21 +412,24 @@ export default class VictoryArea extends React.Component {
   }
 
   renderContainer(props, group) {
-    const parentEvents = this.getEvents(props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      props.containerComponent.props,
-      this.baseProps.parent
-    );
-    return React.cloneElement(
-      props.containerComponent,
-      assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    let parentProps;
+    if (this.hasEvents) {
+      const parentEvents = this.getEvents(props, "parent", "parent");
+      const baseProps = defaults(
+        {},
+        this.getEventState("parent", "parent"),
+        this.getSharedEventState("parent", "parent"),
+        props.containerComponent.props,
+        this.baseProps.parent
+      );
+      parentProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(parentEvents, "parent", baseProps)}
+      );
+    } else {
+      parentProps = defaults({}, props.containerComponent.props, this.baseProps.parent);
+    }
+
+    return React.cloneElement(props.containerComponent, parentProps, group);
   }
 
   renderGroup(children, props, style) {

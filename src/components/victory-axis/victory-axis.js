@@ -368,83 +368,95 @@ export default class VictoryAxis extends React.Component {
 
   setupEvents(props) {
     const {sharedEvents} = props;
+    const components = [
+      "axisComponent", "axisLabelComponent", "groupComponent", "containerComponent",
+      "tickComponent", "tickLabelComponent", "gridComponent"
+    ];
+    this.componentEvents = Events.getComponentEvents(props, components);
     this.baseProps = AxisHelpers.getBaseProps(props, fallbackProps);
     this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
   }
 
   renderLine(props) {
-    const key = 0;
-    const axisEvents = this.getEvents(props, "axis", key);
-    const baseProps = this.baseProps[key];
-    const axisProps = defaults(
-      {},
-      this.getEventState(key, "axis"),
-      this.getSharedEventState(key, "axis"),
-      props.axisComponent.props,
-      baseProps ? baseProps.axis : null
-    );
-    return React.cloneElement(props.axisComponent, assign(
-      {}, axisProps, {events: Events.getPartialEvents(axisEvents, key, axisProps)}
-    ));
+    let axisProps;
+    const precalculatedProps = this.baseProps[0] ? this.baseProps[0].axis : null;
+    if (this.hasEvents) {
+      const axisEvents = this.getEvents(props, "axis", 0);
+      const baseProps = defaults(
+        {},
+        this.getEventState(0, "axis"),
+        this.getSharedEventState(0, "axis"),
+        props.axisComponent.props,
+        precalculatedProps
+      );
+      axisProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(axisEvents, 0, baseProps)}
+      );
+    } else {
+      axisProps = defaults({}, props.axisComponent.props, precalculatedProps);
+    }
+
+    return React.cloneElement(props.axisComponent, axisProps);
   }
 
   renderLabel(props) {
-    const key = 0;
-    const axisLabelEvents = this.getEvents(props, "axisLabel", key);
-    const baseProps = this.baseProps[key];
-    const axisLabelProps = defaults(
-      {},
-      this.getEventState(key, "axisLabel"),
-      this.getSharedEventState(key, "axisLabel"),
-      props.axisLabelComponent.props,
-      baseProps ? baseProps.axisLabel : null
-    );
-    return React.cloneElement(props.axisLabelComponent, assign(
-      {}, axisLabelProps, {events: Events.getPartialEvents(axisLabelEvents, key, axisLabelProps)}
-    ));
+    let axisLabelProps;
+    const precalculatedProps = this.baseProps[0] ? this.baseProps[0].axisLabel : null;
+    if (this.hasEvents) {
+      const axisLabelEvents = this.getEvents(props, "axisLabel", 0);
+      const baseProps = defaults(
+        {},
+        this.getEventState(0, "axisLabel"),
+        this.getSharedEventState(0, "axisLabel"),
+        props.axisLabelComponent.props,
+        precalculatedProps
+      );
+      axisLabelProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(axisLabelEvents, 0, baseProps)}
+      );
+    } else {
+      axisLabelProps = defaults({}, props.axisLabelComponent.props, precalculatedProps);
+    }
+
+    return React.cloneElement(props.axisLabelComponent, axisLabelProps);
   }
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
+    const { role } = VictoryAxis;
     const gridAndTickComponents = [];
+    const getComponentProps = (index, component, type) => {
+      const key = this.dataKeys[index];
+      if (this.hasEvents) {
+        const events = this.getEvents(props, type, key);
+        const componentProps = defaults(
+          {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
+          this.getEventState(key, type),
+          this.getSharedEventState(key, type),
+          component.props,
+          this.baseProps[key][type]
+        );
+        return assign(
+          {}, componentProps, {events: Events.getPartialEvents(events, key, componentProps)}
+        );
+      }
+      return defaults(
+        {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
+        component.props,
+        this.baseProps[key][type]
+      );
+    };
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
       const key = this.dataKeys[index];
-      const tickEvents = this.getEvents(props, "ticks", key);
-      const tickProps = defaults(
-        {index},
-        this.getEventState(key, "ticks"),
-        this.getSharedEventState(key, "ticks"),
-        tickComponent.props,
-        this.baseProps[key].ticks
-      );
-      const TickComponent = React.cloneElement(tickComponent, assign(
-        {}, tickProps, {events: Events.getPartialEvents(tickEvents, key, tickProps)}
-      ));
-      const gridEvents = this.getEvents(props, "grid", key);
-      const gridProps = defaults(
-        {index},
-        this.getEventState(key, "grid"),
-        this.getSharedEventState(key, "grid"),
-        gridComponent.props,
-        this.baseProps[key].grid
-      );
-      const GridComponent = React.cloneElement(gridComponent, assign(
-        {}, gridProps, {events: Events.getPartialEvents(gridEvents, key, gridProps)}
-      ));
-      const tickLabelProps = defaults(
-        {index},
-        this.getEventState(key, "tickLabels"),
-        this.getSharedEventState(key, "tickLabels"),
-        tickLabelComponent.props,
-        this.baseProps[key].tickLabels
-      );
-      const tickLabelEvents = this.getEvents(props, "tickLabels", key);
-      const TickLabel = React.cloneElement(tickLabelComponent, assign({
-        events: Events.getPartialEvents(tickLabelEvents, key, tickLabelProps)
-      }, tickLabelProps));
-
+      const tickProps = getComponentProps(index, tickComponent, "ticks");
+      const TickComponent = React.cloneElement(tickComponent, tickProps);
+      const gridProps = getComponentProps(index, gridComponent, "grid");
+      const GridComponent = React.cloneElement(gridComponent, gridProps);
+      const tickLabelProps = getComponentProps(index, tickLabelComponent, "tickLabels");
+      const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
       gridAndTickComponents[index] = React.cloneElement(
         props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
@@ -462,7 +474,7 @@ export default class VictoryAxis extends React.Component {
      .map((child) => child.props);
     const paddingToObject = (padding) =>
       typeof (padding) === "object"
-        ? Object.assign({}, {top: 0, right: 0, bottom: 0, left: 0}, padding)
+        ? assign({}, {top: 0, right: 0, bottom: 0, left: 0}, padding)
         : {top: padding, right: padding, bottom: padding, left: padding };
     const labelsSumSize = labels.reduce((sum, label) => {
       const padding = paddingToObject(label.style.padding);
@@ -489,21 +501,24 @@ export default class VictoryAxis extends React.Component {
   }
 
   renderContainer(props, group) {
-    const parentEvents = this.getEvents(props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      props.containerComponent.props,
-      this.baseProps.parent
-    );
-    return React.cloneElement(
-      props.containerComponent,
-      assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    let parentProps;
+    if (this.hasEvents) {
+      const parentEvents = this.getEvents(props, "parent", "parent");
+      const baseProps = defaults(
+        {},
+        this.getEventState("parent", "parent"),
+        this.getSharedEventState("parent", "parent"),
+        props.containerComponent.props,
+        this.baseProps.parent
+      );
+      parentProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(parentEvents, "parent", baseProps)}
+      );
+    } else {
+      parentProps = defaults({}, props.containerComponent.props, this.baseProps.parent);
+    }
+
+    return React.cloneElement(props.containerComponent, parentProps, group);
   }
 
   renderGroup(children, style) {

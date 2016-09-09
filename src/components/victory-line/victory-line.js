@@ -393,46 +393,52 @@ export default class VictoryLine extends React.Component {
 
   setupEvents(props) {
     const { sharedEvents } = props;
+    const components = ["dataComponent", "labelComponent", "groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
     this.baseProps = LineHelpers.getBaseProps(props, fallbackProps);
     this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
       sharedEvents.getEventState : () => undefined;
+    this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
   }
 
   renderData(props) { // eslint-disable-line max-statements
-    const { dataComponent, labelComponent, groupComponent, clipId, sortKey} = props;
+    const { dataComponent, labelComponent, groupComponent, clipId, sortKey } = props;
+    const { role } = VictoryLine;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props), sortKey);
     const lineComponents = [];
     const lineLabelComponents = [];
-    for (let index = 0, len = dataSegments.length; index < len; index++) {
+    const getComponentProps = (index, component, type) => {
+      const key = "all";
       const data = dataSegments[index];
-      const role = `${VictoryLine.role}-${index}`;
-      const dataEvents = this.getEvents(props, "data", "all");
-      const dataProps = defaults(
-        {index, key: role, role, clipId},
-        this.getEventState("all", "data"),
-        this.getSharedEventState("all", "data"),
-        { data },
-        dataComponent.props,
-        this.baseProps.all.data
-      );
-      lineComponents[index] = React.cloneElement(dataComponent, assign(
-        {}, dataProps, {events: Events.getPartialEvents(dataEvents, "all", dataProps)}
-      ));
-
-      if (this.baseProps.all.labels || this.props.events || this.props.sharedEvents) {
-        const labelProps = defaults(
-          {index, key: `${role}-label-${index}`},
-          this.getEventState("all", "labels"),
-          this.getSharedEventState("all", "labels"),
+      if (this.hasEvents) {
+        const events = this.getEvents(props, type, key);
+        const componentProps = defaults(
+          {index, key: `${role}-${type}-${index}`, role: `${role}-${index}`, clipId},
+          this.getEventState(key, type),
+          this.getSharedEventState(key, type),
           { data },
-          labelComponent.props,
-          this.baseProps.all.labels
+          component.props,
+          this.baseProps[key][type]
         );
+        return assign(
+          {}, componentProps, {events: Events.getPartialEvents(events, key, componentProps)}
+        );
+      }
+      return defaults(
+        {index, key: `${role}-${type}-${index}`, role: `${role}-${index}`, clipId, data},
+        component.props,
+        this.baseProps[key][type]
+      );
+    };
+
+    for (let index = 0, len = dataSegments.length; index < len; index++) {
+      const dataProps = getComponentProps(index, dataComponent, "data");
+      lineComponents[index] = React.cloneElement(dataComponent, dataProps);
+
+      if (this.baseProps.all.labels || this.hasEvents) {
+        const labelProps = getComponentProps(index, labelComponent, "labels");
         if (labelProps && labelProps.text) {
-          const labelEvents = this.getEvents(props, "labels", "all");
-          lineLabelComponents[index] = React.cloneElement(labelComponent, assign({
-            events: Events.getPartialEvents(labelEvents, "all", labelProps)
-          }, labelProps));
+          lineLabelComponents[index] = React.cloneElement(labelComponent, labelProps);
         }
       }
     }
@@ -442,21 +448,24 @@ export default class VictoryLine extends React.Component {
   }
 
   renderContainer(props, group) {
-    const parentEvents = this.getEvents(props, "parent", "parent");
-    const parentProps = defaults(
-      {},
-      this.getEventState("parent", "parent"),
-      this.getSharedEventState("parent", "parent"),
-      props.containerComponent.props,
-      this.baseProps.parent
-    );
-    return React.cloneElement(
-      props.containerComponent,
-      assign(
-        {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      group
-    );
+    let parentProps;
+    if (this.hasEvents) {
+      const parentEvents = this.getEvents(props, "parent", "parent");
+      const baseProps = defaults(
+        {},
+        this.getEventState("parent", "parent"),
+        this.getSharedEventState("parent", "parent"),
+        props.containerComponent.props,
+        this.baseProps.parent
+      );
+      parentProps = assign(
+        {}, baseProps, {events: Events.getPartialEvents(parentEvents, "parent", baseProps)}
+      );
+    } else {
+      parentProps = defaults({}, props.containerComponent.props, this.baseProps.parent);
+    }
+
+    return React.cloneElement(props.containerComponent, parentProps, group);
   }
 
   renderGroup(children, props, style) {
