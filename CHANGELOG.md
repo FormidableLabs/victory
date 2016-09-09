@@ -1,5 +1,11 @@
 VictoryCore Changelog
 =====================
+## 7.0.0 (2016-09-09)
+
+**Breaking Changes for `VictoryPie` themes**
+
+- This PR alters the label padding for `VictoryPie` in themes to work with the new `labelRadius` prop.
+ 
 ## 6.1.1 (2016-09-08)
 
 - Fix axis themes
