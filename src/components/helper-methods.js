@@ -23,7 +23,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "pie");
     const calculatedValues = this.getCalculatedValues(props);
-    const { slices, style, pathFunction, labelPosition } = calculatedValues;
+    const { slices, style, pathFunction } = calculatedValues;
     const childProps = { parent: {
       slices, pathFunction, width: props.width, height: props.height, style: style.parent}
     };
@@ -39,31 +39,32 @@ export default {
         datum
       };
 
-      const text = this.getLabelText(props, datum, index);
-      const position = labelPosition.centroid(slice);
-      const labelStyle = Helpers.evaluateStyle(
-        assign({padding: 0}, style.labels),
-        dataProps.datum
-      );
-
-      const labelProps = {
-        style: labelStyle,
-        x: position[0],
-        y: position[1],
-        slice,
-        text: this.checkForValidText(text),
-        index,
-        datum: dataProps.datum,
-        textAnchor: labelStyle.textAnchor || "start",
-        verticalAnchor: labelStyle.verticalAnchor || "middle",
-        angle: labelStyle.angle
-      };
       childProps[eventKey] = {
         data: dataProps,
-        labels: labelProps
+        labels: this.getLabelProps(props, dataProps, calculatedValues)
       };
     }
     return childProps;
+  },
+
+  getLabelProps(props, dataProps, calculatedValues) {
+    const { index, datum, slice } = dataProps;
+    const { style, radius } = calculatedValues;
+    const labelStyle = Helpers.evaluateStyle(assign({padding: 0}, style.labels), datum);
+    const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
+    const labelPosition = this.getLabelPosition(radius, labelRadius, labelStyle);
+    const position = labelPosition.centroid(slice);
+    const orientation = this.getLabelOrientation(slice);
+    return {
+      index, datum, slice, orientation,
+      style: labelStyle,
+      x: position[0],
+      y: position[1],
+      text: this.getLabelText(props, datum, index),
+      textAnchor: labelStyle.textAnchor || this.getTextAnchor(orientation),
+      verticalAnchor: labelStyle.verticalAnchor || this.getVerticalAnchor(orientation),
+      angle: labelStyle.angle
+    };
   },
 
   getCalculatedValues(props) {
@@ -74,14 +75,13 @@ export default {
     const padding = Helpers.getPadding(props);
     const radius = this.getRadius(props, padding);
     const data = Events.addEventKeys(props, Helpers.getData(props));
-    const labelPosition = this.getLabelPosition(props, style, radius);
     const layoutFunction = this.getSliceFunction(props);
     const slices = layoutFunction(data);
     const pathFunction = d3Shape.arc()
       .cornerRadius(props.cornerRadius)
       .outerRadius(radius)
       .innerRadius(props.innerRadius);
-    return {style, colors, padding, radius, data, slices, labelPosition, pathFunction};
+    return {style, colors, padding, radius, data, slices, pathFunction};
   },
 
   getColor(style, colors, index) {
@@ -98,21 +98,57 @@ export default {
     ) / 2;
   },
 
-  getLabelPosition(props, style, radius) {
+  getLabelPosition(radius, labelRadius, style) {
     // TODO: better label positioning
-    const padding = style && style.labels && style.labels.padding || props.innerRadius;
+    const padding = style && style.padding || 0;
+    const arcRadius = labelRadius || radius + padding;
     return d3Shape.arc()
-      .outerRadius(radius)
-      .innerRadius(padding);
+      .outerRadius(arcRadius)
+      .innerRadius(arcRadius);
+  },
+
+  getLabelOrientation(slice) {
+    const radiansToDegrees = (radians) => {
+      return radians * (180 / Math.PI);
+    };
+    const start = radiansToDegrees(slice.startAngle);
+    const end = radiansToDegrees(slice.endAngle);
+    const degree = start + (end - start) / 2;
+    if (degree < 45 || degree > 315) {
+      return "top";
+    } else if (degree >= 45 && degree < 135) {
+      return "right";
+    } else if (degree >= 135 && degree < 225) {
+      return "bottom";
+    } else {
+      return "left";
+    }
+  },
+
+  getTextAnchor(orientation) {
+    if (orientation === "top" || orientation === "bottom") {
+      return "middle";
+    }
+    return orientation === "right" ? "start" : "end";
+  },
+
+  getVerticalAnchor(orientation) {
+    if (orientation === "left" || orientation === "right") {
+      return "middle";
+    }
+    return orientation === "bottom" ? "start" : "end";
   },
 
   getLabelText(props, datum, index) {
+    let text;
     if (datum.label) {
-      return datum.label;
+      text = datum.label;
     } else if (Array.isArray(props.labels)) {
-      return props.labels[index];
+      text = props.labels[index];
+    } else {
+      text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum.x;
     }
-    return isFunction(props.labels) ? props.labels(datum) : datum.xName || datum.x;
+    return this.checkForValidText(text);
   },
 
   getSliceFunction(props) {
