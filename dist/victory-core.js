@@ -271,9 +271,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	modifyProps:function modifyProps(props,fallbackProps,role){
 	var theme=props.theme&&props.theme[role]?props.theme[role]:{};
 	var themeProps=(0,_omit3.default)(theme,["style"]);
-	var clipPathProps={clipWidth:theme.width,clipHeight:theme.height};
-	
-	return(0,_defaults3.default)({},props,clipPathProps,themeProps,fallbackProps);
+	var baseProps=(0,_defaults3.default)({},props,themeProps,fallbackProps);
+	return(0,_defaults3.default)({},baseProps,{clipWidth:baseProps.width,clipHeight:baseProps.height});
 	},
 	
 	getEvents:function getEvents(events,namespace){var _this2=this;
@@ -9036,7 +9035,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeWidth:0,
 	width:5},
 	
-	labels:centeredLabelStyles}},
+	labels:baseLabelStyles}},
 	
 	baseProps),
 	candlestick:(0,_assign3.default)({
@@ -9092,8 +9091,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:blueGrey50,
 	strokeWidth:1},
 	
-	labels:(0,_assign3.default)({},centeredLabelStyles,{
-	padding:200,
+	labels:(0,_assign3.default)({},baseLabelStyles,{
+	padding:20,
 	stroke:"transparent",
 	strokeWidth:0})}},
 	
@@ -9155,7 +9154,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	var colors=[
-	"#000000",
 	"#252525",
 	"#525252",
 	"#737373",
@@ -9243,7 +9241,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeWidth:0,
 	width:8},
 	
-	labels:centeredLabelStyles}},
+	labels:baseLabelStyles}},
 	
 	baseProps),
 	candlestick:(0,_assign3.default)({
@@ -9292,8 +9290,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"none",
 	strokeWidth:1},
 	
-	labels:(0,_assign3.default)({},centeredLabelStyles,{
-	padding:200})},
+	labels:(0,_assign3.default)({},baseLabelStyles,{
+	padding:20})},
 	
 	
 	colorScale:colors,
