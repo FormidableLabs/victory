@@ -4,7 +4,6 @@ import { assign } from "lodash";
 // * Colors
 // *
 const colors = [
-  "#000000",
   "#252525",
   "#525252",
   "#737373",
