@@ -31,7 +31,7 @@ An example of a voronoi diagram is shown below. The regions have been colored in
 
 ## Voronoi ClipPath
 
-When it isn't appropriate for voronoi polygons to fill the entire `svg` area, their sixe can be limited with the `size` prop. Circular sections of radius `size` will be drawn for each point, and restricted to their voronoi areas via clipPath
+When it isn't appropriate for voronoi polygons to fill the entire `svg` area, their size can be limited with the `size` prop. Circular sections of radius `size` will be drawn for each point, and restricted to their voronoi areas via clipPath
 
 ```playground
 <VictoryVoronoi
@@ -55,7 +55,7 @@ When it isn't appropriate for voronoi polygons to fill the entire `svg` area, th
 
 ## Fully Featured
 
-`VictoryVoronoi` supports the same sef of features as other victory components. Animation and events are included.
+`VictoryVoronoi` supports the same set of features as other victory components. Animation and events are included.
 
 ```playground_norender
 class App extends React.Component {
