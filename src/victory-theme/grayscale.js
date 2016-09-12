@@ -4,15 +4,13 @@ import { assign } from "lodash";
 // * Colors
 // *
 const colors = [
-  "#ffffff",
-  "#f0f0f0",
-  "#d9d9d9",
-  "#bdbdbd",
-  "#969696",
-  "#737373",
-  "#525252",
   "#252525",
-  "#000000"
+  "#525252",
+  "#737373",
+  "#969696",
+  "#bdbdbd",
+  "#d9d9d9",
+  "#f0f0f0"
 ];
 
 const charcoal = "#252525";
@@ -42,6 +40,8 @@ const baseLabelStyles = {
   fill: charcoal,
   stroke: "transparent"
 };
+
+const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 // *
 // * Strokes
 // *
@@ -54,7 +54,7 @@ export default {
       data: {
         fill: charcoal
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     }
   }, baseProps),
   axis: assign({
@@ -66,7 +66,7 @@ export default {
         strokeLinecap,
         strokeLinejoin
       },
-      axisLabel: assign({}, baseLabelStyles, {
+      axisLabel: assign({}, centeredLabelStyles, {
         padding: 25
       }),
       grid: {
@@ -100,10 +100,7 @@ export default {
         stroke: charcoal,
         strokeWidth: 1
       },
-      labels: assign({}, baseLabelStyles, {
-        padding: 25,
-        textAnchor: "end"
-      })
+      labels: centeredLabelStyles
     },
     candleColors: {
       positive: "#ffffff",
@@ -118,9 +115,7 @@ export default {
         stroke: charcoal,
         strokeWidth: 2
       },
-      labels: assign({}, baseLabelStyles, {
-        textAnchor: "start"
-      })
+      labels: centeredLabelStyles
     }
   }, baseProps),
   group: assign({
@@ -146,8 +141,7 @@ export default {
         strokeWidth: 1
       },
       labels: assign({}, baseLabelStyles, {
-        padding: 200,
-        textAnchor: "middle"
+        padding: 20
       })
     },
     colorScale: colors,
@@ -162,12 +156,39 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: Object.assign({}, baseLabelStyles, {
-        textAnchor: "middle"
-      })
+      labels: centeredLabelStyles
     }
   }, baseProps),
   stack: assign({
     colorScale: colors
+  }, baseProps),
+  tooltip: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: centeredLabelStyles,
+      flyout: {
+        stroke: charcoal,
+        strokeWidth: 1,
+        fill: "#f0f0f0"
+      }
+    },
+    flyoutProps: {
+      cornerRadius: 10,
+      pointerLength: 10
+    }
+  }, baseProps),
+  voronoi: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: centeredLabelStyles
+    }
   }, baseProps)
 };

@@ -46,6 +46,8 @@ const baseLabelStyles = {
   padding,
   fill: blueGrey700
 };
+
+const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
 // *
 // * Strokes
 // *
@@ -59,7 +61,7 @@ export default {
       data: {
         fill: grey900
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     }
   }, baseProps),
   axis: assign({
@@ -71,7 +73,7 @@ export default {
         strokeLinecap,
         strokeLinejoin
       },
-      axisLabel: assign({}, baseLabelStyles, {
+      axisLabel: assign({}, centeredLabelStyles, {
         padding,
         stroke: "transparent"
       }),
@@ -114,7 +116,7 @@ export default {
       data: {
         stroke: blueGrey700
       },
-      labels: baseLabelStyles
+      labels: centeredLabelStyles
     },
     candleColors: {
       positive: "#ffffff",
@@ -130,10 +132,9 @@ export default {
         stroke: blueGrey700,
         strokeWidth: 2
       },
-      labels: assign({}, baseLabelStyles, {
+      labels: assign({}, centeredLabelStyles, {
         stroke: "transparent",
-        strokeWidth: 0,
-        textAnchor: "start"
+        strokeWidth: 0
       })
     }
   }, baseProps),
@@ -164,10 +165,9 @@ export default {
         strokeWidth: 1
       },
       labels: assign({}, baseLabelStyles, {
-        padding: 200,
+        padding: 20,
         stroke: "transparent",
-        strokeWidth: 0,
-        textAnchor: "middle"
+        strokeWidth: 0
       })
     }
   }, baseProps),
@@ -179,13 +179,41 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: Object.assign({}, baseLabelStyles, {
-        stroke: "transparent",
-        textAnchor: "middle"
+      labels: assign({}, centeredLabelStyles, {
+        stroke: "transparent"
       })
     }
   }, baseProps),
   stack: assign({
     colorScale: colors
+  }, baseProps),
+  tooltip: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: centeredLabelStyles,
+      flyout: {
+        stroke: blueGrey700,
+        strokeWidth: 1,
+        fill: "#f0f0f0"
+      }
+    },
+    flyoutProps: {
+      cornerRadius: 10,
+      pointerLength: 10
+    }
+  }, baseProps),
+  voronoi: assign({
+    style: {
+      data: {
+        fill: "none",
+        stroke: "transparent",
+        strokeWidth: 0
+      },
+      labels: centeredLabelStyles
+    }
   }, baseProps)
 };

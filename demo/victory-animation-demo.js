@@ -1,5 +1,5 @@
 import React from "react";
-import {VictoryAnimation} from "../../src/index";
+import {VictoryAnimation} from "../src/index";
 
 export default class App extends React.Component {
   constructor() {

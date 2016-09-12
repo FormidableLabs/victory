@@ -4,8 +4,10 @@ export { default as Log } from "./victory-util/log";
 export { default as Style } from "./victory-util/style";
 export { default as PropTypes } from "./victory-util/prop-types";
 export { default as Events } from "./victory-util/events";
+export { default as TextSize } from "./victory-util/textsize";
 import * as Transitions from "./victory-util/transitions";
-export { Transitions };
+import * as DefaultTransitions from "./victory-util/default-transitions";
+export { Transitions, DefaultTransitions };
 
 export { default as VictoryAnimation } from "./victory-animation/victory-animation";
 export { default as VictoryLabel } from "./victory-label/victory-label";
@@ -14,3 +16,7 @@ export { default as VictorySharedEvents } from "./victory-shared-events/victory-
 export { default as VictoryContainer } from "./victory-container/victory-container";
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
 export { default as VictoryLegend } from "./victory-legend/victory-legend";
+export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
+export {
+  Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
+} from "./victory-primitives/index";

@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions, Collection } from "../victory-util/index";
-import { defaults, isFunction, pick, filter } from "lodash";
+import { defaults, isFunction, pick, filter, identity } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -23,8 +23,34 @@ export default class VictoryTransition extends React.Component {
     animationWhitelist: React.PropTypes.array
   };
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      nodesShouldLoad: false,
+      nodesDoneLoad: false,
+      nodesDoneClipPathLoad: false,
+      animating: true
+    };
+
+    this.getTransitionState = this.getTransitionState.bind(this);
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState(this.getTransitionState(this.props, nextProps));
+  }
+
+  componentWillUpdate(nextProps, nextState) {
+    if (nextState.animating !== this.state.animating && nextState.animating === false) {
+      const onEnd = nextProps && nextProps.animate && nextProps.animate.onEnd || identity;
+      onEnd();
+    }
+  }
+
+  componentDidMount() {
+    if (this.transitionProps && this.transitionProps.cb) {
+      this.transitionProps.cb();
+    }
   }
 
   getTransitionState(props, nextProps) {
@@ -42,9 +68,14 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesShouldLoad,
+        nodesDoneLoad,
+        nodesDoneClipPathLoad,
         nodesDoneClipPathEnter,
-        nodesDoneClipPathExit
+        nodesDoneClipPathExit,
+        animating
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
+
       return {
         nodesWillExit,
         nodesWillEnter,
@@ -52,6 +83,10 @@ export default class VictoryTransition extends React.Component {
         nodesShouldEnter,
         nodesDoneClipPathEnter,
         nodesDoneClipPathExit,
+        nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
+        nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
+        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
+        animating: animating || this.state.animating,
         oldProps: nodesWillExit ? props : null
       };
     }
@@ -92,6 +127,7 @@ export default class VictoryTransition extends React.Component {
       );
     const child = React.Children.toArray(props.children)[0];
     const transitionProps = getTransitionProps(child);
+    this.transitionProps = transitionProps;
     const domain = {
       x: this.getDomainFromChildren(props, "x"),
       y: this.getDomainFromChildren(props, "y")
@@ -99,20 +135,22 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
-    let animationWhitelist = props.animationWhitelist;
+    const animationWhitelist = props.animationWhitelist;
+    let clipPathWhitelist = ["clipWidth", "clipHeight", "translateX"];
 
     if ((this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit)
       || (transitionProps.animate
         && transitionProps.animate.parentState
         && transitionProps.animate.parentState.nodesDoneClipPathExit
         && transitionProps.animate.parentState.nodesWillExit)) {
-      animationWhitelist = filter(props.animationWhitelist, (list) => {
+      clipPathWhitelist = filter(clipPathWhitelist, (list) => {
         return list !== "clipWidth";
       });
     }
 
     const propsToAnimate = animationWhitelist ?
-      pick(combinedProps, animationWhitelist) : combinedProps;
+      pick(combinedProps, animationWhitelist.concat(clipPathWhitelist)) : combinedProps;
+
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {

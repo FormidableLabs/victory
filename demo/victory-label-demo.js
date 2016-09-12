@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryLabel } from "../../src/index";
+import { VictoryLabel } from "../src/index";
 
 export default class App extends React.Component {
   render() {

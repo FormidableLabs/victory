@@ -173,7 +173,16 @@ export default {
       }, {});
     };
 
-    const ownEvents = props.events && getScopedEvents(getEventsFromProps(props.events), target);
+    const getAllEvents = () => {
+      if (Array.isArray(this.componentEvents)) {
+        return Array.isArray(props.events) ?
+          this.componentEvents.concat(...props.events) : this.componentEvents;
+      }
+      return props.events;
+    };
+
+    const allEvents = getAllEvents();
+    const ownEvents = allEvents && getScopedEvents(getEventsFromProps(allEvents), target);
     if (!props.sharedEvents) {
       return ownEvents;
     }
@@ -210,5 +219,15 @@ export default {
       const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
       return assign({eventKey}, datum);
     });
+  },
+
+  getComponentEvents(props, components) {
+    const events = Array.isArray(components) && components.reduce((memo, componentName) => {
+      const component = props[componentName];
+      const componentEvents = component && component.type && component.type.defaultEvents;
+      memo = Array.isArray(componentEvents) ? memo.concat(...componentEvents) : memo;
+      return memo;
+    }, []);
+    return events && events.length ? events : undefined;
   }
 };

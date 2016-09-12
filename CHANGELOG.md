@@ -1,5 +1,40 @@
 VictoryCore Changelog
 =====================
+## 7.0.0 (2016-09-09)
+
+**Breaking Changes for `VictoryPie` themes**
+
+- This PR alters the label padding for `VictoryPie` in themes to work with the new `labelRadius` prop.
+ 
+## 6.1.1 (2016-09-08)
+
+- Fix axis themes
+
+## 6.1.0 (2016-09-07)
+
+- Adds `Flyout` and `Voronoi` primitives
+- Adds `VictoryTooltip` a component with `defaultEvents` that renders a label within a flyout when `active={true}` and renders nothing when `active={false}`
+- Events now add `this.componentEvents` to the set of events for a component instance
+- Adds `getComponentEvents` helper to `Events`
+- Padding consistency and small stylistic changes in `VictoryTheme`
+
+## 6.0.2 (2016-09-01)
+
+- Fix `onEnd` animation callback
+
+## 6.0.1 (2016-09-01)
+
+- Add `translateX` prop to `ClipPath`
+
+## 6.0.0 (2016-08-31)
+
+- Adds support for `onLoad` animations
+- Adds an `animating` state for `VictoryTransition` so that the global `onEnd` callback is only called after all other transitions have finished
+- Fixes a bug in `onExit` clipPath transitions
+- Fixes a stylistic bug in the default `grayscale` theme [#117](https://github.com/FormidableLabs/victory-core/issues/117)
+- Adds a `TextSize` utility for calculating the size of a text element without needing to render it. Thanks @nightwolfdu!
+- Exports all basic svg components from VictoryCore (_i.e._ `Bar`, `Point`, `Slice` etc.)
+
 ## 5.1.2 (2016-08-22)
 
 - VictoryLabel: minor changes to support `victory-core-native`

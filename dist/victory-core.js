@@ -54,21 +54,26 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 0 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});exports.VictoryTheme=exports.VictoryContainer=exports.VictorySharedEvents=exports.VictoryTransition=exports.VictoryLabel=exports.VictoryAnimation=exports.Transitions=exports.Events=exports.PropTypes=exports.Style=exports.Log=exports.Helpers=exports.Collection=undefined;var _collection=__webpack_require__(1);Object.defineProperty(exports,"Collection",{enumerable:true,get:function get(){return _interopRequireDefault(_collection).default;}});var _helpers=__webpack_require__(2);Object.defineProperty(exports,"Helpers",{enumerable:true,get:function get(){return _interopRequireDefault(_helpers).
+	Object.defineProperty(exports,"__esModule",{value:true});exports.Flyout=exports.Voronoi=exports.Slice=exports.Point=exports.Line=exports.ErrorBar=exports.Curve=exports.ClipPath=exports.Candle=exports.Bar=exports.Area=exports.VictoryTooltip=exports.VictoryTheme=exports.VictoryContainer=exports.VictorySharedEvents=exports.VictoryTransition=exports.VictoryLabel=exports.VictoryAnimation=exports.DefaultTransitions=exports.Transitions=exports.TextSize=exports.Events=exports.PropTypes=exports.Style=exports.Log=exports.Helpers=exports.Collection=undefined;var _collection=__webpack_require__(1);Object.defineProperty(exports,"Collection",{enumerable:true,get:function get(){return _interopRequireDefault(_collection).default;}});var _helpers=__webpack_require__(2);Object.defineProperty(exports,"Helpers",{enumerable:true,get:function get(){return _interopRequireDefault(_helpers).
 	default;}});var _log=__webpack_require__(118);Object.defineProperty(exports,"Log",{enumerable:true,get:function get(){return _interopRequireDefault(_log).
 	default;}});var _style=__webpack_require__(120);Object.defineProperty(exports,"Style",{enumerable:true,get:function get(){return _interopRequireDefault(_style).
 	default;}});var _propTypes=__webpack_require__(121);Object.defineProperty(exports,"PropTypes",{enumerable:true,get:function get(){return _interopRequireDefault(_propTypes).
 	default;}});var _events=__webpack_require__(123);Object.defineProperty(exports,"Events",{enumerable:true,get:function get(){return _interopRequireDefault(_events).
-	default;}});var _victoryAnimation=__webpack_require__(140);Object.defineProperty(exports,"VictoryAnimation",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryAnimation).
+	default;}});var _textsize=__webpack_require__(140);Object.defineProperty(exports,"TextSize",{enumerable:true,get:function get(){return _interopRequireDefault(_textsize).
+	default;}});var _victoryAnimation=__webpack_require__(141);Object.defineProperty(exports,"VictoryAnimation",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryAnimation).
 	
 	
 	
-	default;}});var _victoryLabel=__webpack_require__(146);Object.defineProperty(exports,"VictoryLabel",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryLabel).
-	default;}});var _victoryTransition=__webpack_require__(150);Object.defineProperty(exports,"VictoryTransition",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTransition).
-	default;}});var _victorySharedEvents=__webpack_require__(152);Object.defineProperty(exports,"VictorySharedEvents",{enumerable:true,get:function get(){return _interopRequireDefault(_victorySharedEvents).
-	default;}});var _victoryContainer=__webpack_require__(154);Object.defineProperty(exports,"VictoryContainer",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryContainer).
-	default;}});var _victoryTheme=__webpack_require__(155);Object.defineProperty(exports,"VictoryTheme",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTheme).
-	default;}});var _transitions=__webpack_require__(149);var Transitions=_interopRequireWildcard(_transitions);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.Transitions=Transitions;
+	
+	default;}});var _victoryLabel=__webpack_require__(147);Object.defineProperty(exports,"VictoryLabel",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryLabel).
+	default;}});var _victoryTransition=__webpack_require__(160);Object.defineProperty(exports,"VictoryTransition",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTransition).
+	default;}});var _victorySharedEvents=__webpack_require__(161);Object.defineProperty(exports,"VictorySharedEvents",{enumerable:true,get:function get(){return _interopRequireDefault(_victorySharedEvents).
+	default;}});var _victoryContainer=__webpack_require__(163);Object.defineProperty(exports,"VictoryContainer",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryContainer).
+	default;}});var _victoryTheme=__webpack_require__(164);Object.defineProperty(exports,"VictoryTheme",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTheme).
+	default;}});var _victoryTooltip=__webpack_require__(167);Object.defineProperty(exports,"VictoryTooltip",{enumerable:true,get:function get(){return _interopRequireDefault(_victoryTooltip).
+	default;}});var _index=__webpack_require__(168);Object.defineProperty(exports,"Area",{enumerable:true,get:function get(){return _index.
+	
+	Area;}});Object.defineProperty(exports,"Bar",{enumerable:true,get:function get(){return _index.Bar;}});Object.defineProperty(exports,"Candle",{enumerable:true,get:function get(){return _index.Candle;}});Object.defineProperty(exports,"ClipPath",{enumerable:true,get:function get(){return _index.ClipPath;}});Object.defineProperty(exports,"Curve",{enumerable:true,get:function get(){return _index.Curve;}});Object.defineProperty(exports,"ErrorBar",{enumerable:true,get:function get(){return _index.ErrorBar;}});Object.defineProperty(exports,"Line",{enumerable:true,get:function get(){return _index.Line;}});Object.defineProperty(exports,"Point",{enumerable:true,get:function get(){return _index.Point;}});Object.defineProperty(exports,"Slice",{enumerable:true,get:function get(){return _index.Slice;}});Object.defineProperty(exports,"Voronoi",{enumerable:true,get:function get(){return _index.Voronoi;}});Object.defineProperty(exports,"Flyout",{enumerable:true,get:function get(){return _index.Flyout;}});var _transitions=__webpack_require__(150);var Transitions=_interopRequireWildcard(_transitions);var _defaultTransitions=__webpack_require__(151);var DefaultTransitions=_interopRequireWildcard(_defaultTransitions);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.Transitions=Transitions;exports.DefaultTransitions=DefaultTransitions;
 
 /***/ },
 /* 1 */
@@ -266,7 +271,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	modifyProps:function modifyProps(props,fallbackProps,role){
 	var theme=props.theme&&props.theme[role]?props.theme[role]:{};
 	var themeProps=(0,_omit3.default)(theme,["style"]);
-	return(0,_defaults3.default)({},props,themeProps,fallbackProps);
+	var baseProps=(0,_defaults3.default)({},props,themeProps,fallbackProps);
+	return(0,_defaults3.default)({},baseProps,{clipWidth:baseProps.width,clipHeight:baseProps.height});
 	},
 	
 	getEvents:function getEvents(events,namespace){var _this2=this;
@@ -4433,7 +4439,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	getColorScale:function getColorScale(name){
 	var scales={
 	greyscale:[
-	"#f7f7f7","#cccccc","#969696","#636363","#252525"],
+	"#cccccc","#969696","#636363","#252525"],
 	
 	qualitative:[
 	"#334D5C","#45B29D","#EFC94C","#E27A3F","#DF5A49",
@@ -4696,7 +4702,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 123 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _property2=__webpack_require__(55);var _property3=_interopRequireDefault(_property2);var _isEmpty2=__webpack_require__(124);var _isEmpty3=_interopRequireDefault(_isEmpty2);var _isFunction2=__webpack_require__(52);var _isFunction3=_interopRequireDefault(_isFunction2);var _partial2=__webpack_require__(66);var _partial3=_interopRequireDefault(_partial2);var _merge2=__webpack_require__(97);var _merge3=_interopRequireDefault(_merge2);var _extend7=__webpack_require__(136);var _extend8=_interopRequireDefault(_extend7);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _defineProperty(obj,key,value){if(key in obj){Object.defineProperty(obj,key,{value:value,enumerable:true,configurable:true,writable:true});}else{obj[key]=value;}return obj;}exports.default=
+	Object.defineProperty(exports,"__esModule",{value:true});var _property2=__webpack_require__(55);var _property3=_interopRequireDefault(_property2);var _isEmpty2=__webpack_require__(124);var _isEmpty3=_interopRequireDefault(_isEmpty2);var _isFunction2=__webpack_require__(52);var _isFunction3=_interopRequireDefault(_isFunction2);var _partial2=__webpack_require__(66);var _partial3=_interopRequireDefault(_partial2);var _merge2=__webpack_require__(97);var _merge3=_interopRequireDefault(_merge2);var _extend7=__webpack_require__(136);var _extend8=_interopRequireDefault(_extend7);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _defineProperty(obj,key,value){if(key in obj){Object.defineProperty(obj,key,{value:value,enumerable:true,configurable:true,writable:true});}else{obj[key]=value;}return obj;}exports.default=
 	
 	
 	
@@ -4843,7 +4849,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	},{});
 	},
 	
-	getEvents:function getEvents(props,target,eventKey,getScopedEvents){
+	getEvents:function getEvents(props,target,eventKey,getScopedEvents){var _this2=this;
 	var getEventsFromProps=function getEventsFromProps(events){
 	
 	var getSelectedEvents=function getSelectedEvents(){
@@ -4871,7 +4877,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	},{});
 	};
 	
-	var ownEvents=props.events&&getScopedEvents(getEventsFromProps(props.events),target);
+	var getAllEvents=function getAllEvents(){
+	if(Array.isArray(_this2.componentEvents)){var _componentEvents;
+	return Array.isArray(props.events)?
+	(_componentEvents=_this2.componentEvents).concat.apply(_componentEvents,_toConsumableArray(props.events)):_this2.componentEvents;
+	}
+	return props.events;
+	};
+	
+	var allEvents=getAllEvents();
+	var ownEvents=allEvents&&getScopedEvents(getEventsFromProps(allEvents),target);
 	if(!props.sharedEvents){
 	return ownEvents;
 	}
@@ -4908,6 +4923,16 @@ return /******/ (function(modules) { // webpackBootstrap
 	var eventKey=datum.eventKey||eventKeyAccessor(datum)||index;
 	return(0,_assign3.default)({eventKey:eventKey},datum);
 	});
+	},
+	
+	getComponentEvents:function getComponentEvents(props,components){
+	var events=Array.isArray(components)&&components.reduce(function(memo,componentName){var _memo;
+	var component=props[componentName];
+	var componentEvents=component&&component.type&&component.type.defaultEvents;
+	memo=Array.isArray(componentEvents)?(_memo=memo).concat.apply(_memo,_toConsumableArray(componentEvents)):memo;
+	return memo;
+	},[]);
+	return events&&events.length?events:undefined;
 	}};
 
 /***/ },
@@ -5439,11 +5464,163 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 140 */
 /***/ function(module, exports, __webpack_require__) {
 
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _merge2=__webpack_require__(97);var _merge3=_interopRequireDefault(_merge2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+	
+	
+	var fontDictionary={
+	"American Typewriter":2.09,
+	"Baskerville":2.51,
+	"Georgia":2.27,
+	"Hoefler Text":2.39,
+	"Palatino":2.26,
+	"Times New Roman":2.48,
+	"Arial":2.26,
+	"Gill Sans":2.47,
+	"Gill Sans 300":2.58,
+	"Helvetica Neue":2.24,
+	"Lucida Grande":2.05,
+	"Tahoma":2.25,
+	"Trebuchet MS":2.2,
+	"Verdana":1.96,
+	"Courier New":1.67,
+	"cursive":1.84,
+	"fantasy":2.09,
+	"monospace":1.81,
+	"serif":2.04,
+	"sans-serif":1.89};
+	
+	
+	
+	var absoluteMeasurementUnitsToPixels={
+	"mm":3.8,
+	"sm":38,
+	"pt":1.33,
+	"pc":16,
+	"in":96,
+	"px":1};
+	
+	var relativeMeasurementUnitsCoef={
+	"em":1,
+	"ex":0.5};
+	
+	
+	var coefficients={
+	averageFontConstant:2.1675,
+	widthOverlapCoef:1.25,
+	heightOverlapCoef:1.05,
+	lineCapitalCoef:1.15,
+	lineSpaceHeightCoef:0.2};
+	
+	var defaultStyle={
+	lineHeight:1,
+	letterSpacing:"0px",
+	fontSize:0,
+	angle:0,
+	fontFamily:""};
+	
+	
+	var degreeToRadian=function degreeToRadian(angle){return angle*Math.PI/180;};
+	
+	var getFontCharacterConstant=function getFontCharacterConstant(fontFamily){
+	var firstFont=fontFamily.split(",")[0].replace(/'|"/g,"");
+	return fontDictionary[firstFont]||coefficients.averageFontConstant;
+	};
+	
+	var splitToLines=function splitToLines(text){return text.toString().split(/\r\n|\r|\n/g);};
+	
+	var getWidestString=function getWidestString(strings){return strings.reduce(function(max,elem){return(
+	max.length>=elem.length?max:elem);});};
+	
+	
+	var getSizeWithRotate=function getSizeWithRotate(axisSize,dependentSize,angle){
+	var angleInRadian=degreeToRadian(angle);
+	return Math.abs(Math.cos(angleInRadian)*axisSize)+
+	Math.abs(Math.sin(angleInRadian)*dependentSize);
+	};
+	
+	var aproximateTextWidthInternal=function aproximateTextWidthInternal(text,style){
+	var strLength=getWidestString(splitToLines(text.toString())).length;
+	return strLength*style.fontSize/style.characterConstant+
+	style.letterSpacing*Math.max(strLength-1,0);
+	};
+	
+	var aproximateTextHeightInternal=function aproximateTextHeightInternal(text,style){
+	var splittedTextArray=splitToLines(text);
+	var lineCount=splittedTextArray.length;
+	var lineHeightNumber=style.fontSize*coefficients.lineCapitalCoef;
+	var emptySpace=style.fontSize*coefficients.lineSpaceHeightCoef;
+	return style.lineHeight*(lineHeightNumber*lineCount+emptySpace*(lineCount-1));
+	};
+	
+	
+	
+	
+	
+	
+	
+	var convertLengthToPixels=function convertLengthToPixels(length,fontSize){
+	var attribute=length.match(/[a-zA-Z%]+/)[0];
+	var value=length.match(/[0-9.,]+/);
+	var result=void 0;
+	if(absoluteMeasurementUnitsToPixels.hasOwnProperty(attribute)){
+	result=value*absoluteMeasurementUnitsToPixels[attribute];
+	}else if(relativeMeasurementUnitsCoef.hasOwnProperty(attribute)){
+	result=(fontSize?value*fontSize:value*coefficients.defaultFontSize)*
+	relativeMeasurementUnitsCoef[attribute];
+	}else{
+	result=value;
+	}
+	return result;
+	};
+	
+	var prepareParams=function prepareParams(inputStyle){
+	var style=(0,_defaults3.default)(inputStyle,defaultStyle);
+	return(0,_merge3.default)({},style,{
+	characterConstant:style.characterConstant||getFontCharacterConstant(style.fontFamily),
+	letterSpacing:convertLengthToPixels(style.letterSpacing,style.fontSize),
+	fontSize:typeof style.fontSize==="number"?
+	style.fontSize:
+	convertLengthToPixels(String(style.fontSize))});
+	
+	};
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	var approximateTextSize=function approximateTextSize(text,style){
+	var params=prepareParams(style);
+	var height=aproximateTextHeightInternal(text,params);
+	var width=aproximateTextWidthInternal(text,params);
+	var widthWithRotate=getSizeWithRotate(width,height,params.angle);
+	var heightWithRotate=getSizeWithRotate(height,width,params.angle);
+	return{
+	width:widthWithRotate*coefficients.widthOverlapCoef,
+	height:heightWithRotate*coefficients.heightOverlapCoef};
+	
+	};exports.default=
+	
+	{
+	approximateTextSize:approximateTextSize,
+	convertLengthToPixels:convertLengthToPixels};
+
+/***/ },
+/* 141 */
+/***/ function(module, exports, __webpack_require__) {
+
 	Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
-	var _d3Ease=__webpack_require__(141);var _d3Ease2=_interopRequireDefault(_d3Ease);
-	var _d3Interpolate=__webpack_require__(142);var _d3Interpolate2=_interopRequireDefault(_d3Interpolate);
-	var _d3Timer=__webpack_require__(144);
-	var _util=__webpack_require__(145);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+	var _d3Ease=__webpack_require__(142);var _d3Ease2=_interopRequireDefault(_d3Ease);
+	var _d3Interpolate=__webpack_require__(143);var _d3Interpolate2=_interopRequireDefault(_d3Interpolate);
+	var _d3Timer=__webpack_require__(145);
+	var _util=__webpack_require__(146);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _toConsumableArray(arr){if(Array.isArray(arr)){for(var i=0,arr2=Array(arr.length);i<arr.length;i++){arr2[i]=arr[i];}return arr2;}else{return Array.from(arr);}}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
 	
 	(0,_util.addVictoryInterpolator)();var
@@ -5615,7 +5792,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}}]);return VictoryAnimation;}(_react2.default.Component);VictoryAnimation.displayName="VictoryAnimation";VictoryAnimation.propTypes={children:_react2.default.PropTypes.func,duration:_react2.default.PropTypes.number,easing:_react2.default.PropTypes.oneOf(["back","backIn","backOut","backInOut","bounce","bounceIn","bounceOut","bounceInOut","circle","circleIn","circleOut","circleInOut","linear","linearIn","linearOut","linearInOut","cubic","cubicIn","cubicOut","cubicInOut","elastic","elasticIn","elasticOut","elasticInOut","exp","expIn","expOut","expInOut","poly","polyIn","polyOut","polyInOut","quad","quadIn","quadOut","quadInOut","sin","sinIn","sinOut","sinInOut"]),delay:_react2.default.PropTypes.number,onEnd:_react2.default.PropTypes.func,data:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.object,_react2.default.PropTypes.array])};VictoryAnimation.defaultProps={duration:1000,easing:"quadInOut",delay:0,data:{}};exports.default=VictoryAnimation;
 
 /***/ },
-/* 141 */
+/* 142 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -5845,11 +6022,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 142 */
+/* 143 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
-	   true ? factory(exports, __webpack_require__(143)) :
+	   true ? factory(exports, __webpack_require__(144)) :
 	  typeof define === 'function' && define.amd ? define('d3-interpolate', ['exports', 'd3-color'], factory) :
 	  factory((global.d3_interpolate = {}),global.d3_color);
 	}(this, function (exports,d3Color) { 'use strict';
@@ -6332,7 +6509,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 143 */
+/* 144 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -6852,7 +7029,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 144 */
+/* 145 */
 /***/ function(module, exports, __webpack_require__) {
 
 	(function (global, factory) {
@@ -6958,10 +7135,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}));
 
 /***/ },
-/* 145 */
+/* 146 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});exports.addVictoryInterpolator=exports.victoryInterpolator=exports.interpolateArray=exports.interpolateFunction=exports.interpolateImmediate=exports.isInterpolatable=undefined;var _isPlainObject2=__webpack_require__(104);var _isPlainObject3=_interopRequireDefault(_isPlainObject2);var _d3Interpolate=__webpack_require__(142);var _d3Interpolate2=_interopRequireDefault(_d3Interpolate);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+	Object.defineProperty(exports,"__esModule",{value:true});exports.addVictoryInterpolator=exports.victoryInterpolator=exports.interpolateArray=exports.interpolateFunction=exports.interpolateImmediate=exports.isInterpolatable=undefined;var _isPlainObject2=__webpack_require__(104);var _isPlainObject3=_interopRequireDefault(_isPlainObject2);var _d3Interpolate=__webpack_require__(143);var _d3Interpolate2=_interopRequireDefault(_d3Interpolate);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
 	
 	var isInterpolatable=exports.isInterpolatable=function isInterpolatable(obj){
@@ -7126,11 +7303,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 146 */
+/* 147 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _pick2=__webpack_require__(147);var _pick3=_interopRequireDefault(_pick2);var _merge2=__webpack_require__(97);var _merge3=_interopRequireDefault(_merge2);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
-	var _index=__webpack_require__(148);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+	Object.defineProperty(exports,"__esModule",{value:true});var _pick2=__webpack_require__(148);var _pick3=_interopRequireDefault(_pick2);var _merge2=__webpack_require__(97);var _merge3=_interopRequireDefault(_merge2);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	var _index=__webpack_require__(149);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
 	
 	
 	var defaultStyles={
@@ -7393,7 +7570,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}}]);return VictoryLabel;}(_react2.default.Component);VictoryLabel.displayName="VictoryLabel";VictoryLabel.propTypes={angle:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number]),capHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),datum:_react.PropTypes.object,data:_react.PropTypes.array,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),children:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),lineHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),style:_react.PropTypes.object,textAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end","inherit"]),_react.PropTypes.func]),verticalAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end"]),_react.PropTypes.func]),transform:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.object,_react.PropTypes.func]),x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func]),dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func])};VictoryLabel.defaultProps={capHeight:0.71,lineHeight:1};exports.default=VictoryLabel;
 
 /***/ },
-/* 147 */
+/* 148 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var arrayMap = __webpack_require__(4),
@@ -7427,16 +7604,18 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 148 */
+/* 149 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});exports.Events=exports.PropTypes=exports.Transitions=exports.Style=exports.Log=exports.Helpers=exports.Collection=undefined;var _collection=__webpack_require__(1);var _collection2=_interopRequireDefault(_collection);
+	Object.defineProperty(exports,"__esModule",{value:true});exports.TextSize=exports.Events=exports.PropTypes=exports.DefaultTransitions=exports.Transitions=exports.Style=exports.Log=exports.Helpers=exports.Collection=undefined;var _collection=__webpack_require__(1);var _collection2=_interopRequireDefault(_collection);
 	var _helpers=__webpack_require__(2);var _helpers2=_interopRequireDefault(_helpers);
 	var _log=__webpack_require__(118);var _log2=_interopRequireDefault(_log);
 	var _style=__webpack_require__(120);var _style2=_interopRequireDefault(_style);
 	var _propTypes=__webpack_require__(121);var _propTypes2=_interopRequireDefault(_propTypes);
 	var _events=__webpack_require__(123);var _events2=_interopRequireDefault(_events);
-	var _transitions=__webpack_require__(149);var Transitions=_interopRequireWildcard(_transitions);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.
+	var _transitions=__webpack_require__(150);var Transitions=_interopRequireWildcard(_transitions);
+	var _textsize=__webpack_require__(140);var _textsize2=_interopRequireDefault(_textsize);
+	var _defaultTransitions=__webpack_require__(151);var DefaultTransitions=_interopRequireWildcard(_defaultTransitions);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.
 	
 	
 	Collection=_collection2.default;exports.
@@ -7444,11 +7623,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	Log=_log2.default;exports.
 	Style=_style2.default;exports.
 	Transitions=Transitions;exports.
+	DefaultTransitions=DefaultTransitions;exports.
 	PropTypes=_propTypes2.default;exports.
-	Events=_events2.default;
+	Events=_events2.default;exports.
+	TextSize=_textsize2.default;
 
 /***/ },
-/* 149 */
+/* 150 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _identity2=__webpack_require__(85);var _identity3=_interopRequireDefault(_identity2);var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);exports.
@@ -7700,18 +7881,82 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	getTransitionPropsFactory=getTransitionPropsFactory;var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function getDatumKey(datum,idx){return(datum.key||idx).toString();}function getKeyedData(data){return data.reduce(function(keyedData,datum,idx){var key=getDatumKey(datum,idx);keyedData[key]=datum;return keyedData;},{});}function getKeyedDataDifference(a,b){var hasDifference=false;var difference=Object.keys(a).reduce(function(_difference,key){if(!(key in b)){hasDifference=true;_difference[key]=true;}return _difference;},{});return hasDifference&&difference;}function getNodeTransitions(oldData,nextData){var oldDataKeyed=oldData&&getKeyedData(oldData);var nextDataKeyed=nextData&&getKeyedData(nextData);return{entering:oldDataKeyed&&getKeyedDataDifference(nextDataKeyed,oldDataKeyed),exiting:nextDataKeyed&&getKeyedDataDifference(oldDataKeyed,nextDataKeyed)};}function getChildData(child){if(child.type&&child.type.getData){return child.type.getData(child.props);}return child.props&&child.props.data||false;}function getInitialTransitionState(oldChildren,nextChildren){var nodesWillExit=false;var nodesWillEnter=false;var getTransition=function getTransition(oldChild,newChild){if(!newChild||oldChild.type!==newChild.type){return{};}var _ref=getNodeTransitions(getChildData(oldChild),getChildData(newChild))||{};var entering=_ref.entering;var exiting=_ref.exiting;nodesWillExit=nodesWillExit||!!exiting;nodesWillEnter=nodesWillEnter||!!entering;return{entering:entering||false,exiting:exiting||false};};var getTransitionsFromChildren=function getTransitionsFromChildren(old,next){return old.map(function(child,idx){if(child&&child.props&&child.props.children){return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children),_react2.default.Children.toArray(next[idx].props.children));}return getTransition(child,next[idx]);});};var childrenTransitions=getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren),_react2.default.Children.toArray(nextChildren));return{nodesWillExit:nodesWillExit,nodesWillEnter:nodesWillEnter,childrenTransitions:childrenTransitions,nodesShouldEnter:false,nodesDoneClipPathEnter:false,nodesDoneClipPathExit:false};}function getInitialChildProps(animate,data){var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;return{data:data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));})};}function getChildClipPathToExit(animate,child,data,exitingNodes,cb){var clipWidth=void 0;if(exitingNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var beforeClipPathWidth=animate.onExit&&animate.onExit.beforeClipPathWidth;if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,exitingNodes);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsOnExit(animate,child,data,exitingNodes,cb){var onExit=animate&&animate.onExit;animate=(0,_assign3.default)({},animate,onExit);if(exitingNodes){(function(){animate.onEnd=cb;var before=animate.onExit&&animate.onExit.before?animate.onExit.before:_identity3.default;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return exitingNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});})();}return{animate:animate,data:data};}function getChildClipPathToEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onEnter&&animate.onEnter.afterClipPathWidth;if(afterClipPathWidth){clipWidth=afterClipPathWidth(data,child);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsBeforeEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){var _ret2=function(){animate=(0,_assign3.default)({},animate,{onEnd:cb});var before=animate.onEnter&&animate.onEnter.before?animate.onEnter.before:_identity3.default;var beforeClipPathWidth=animate.onEnter&&animate.onEnter.beforeClipPathWidth;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return enteringNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,enteringNodes);return{v:{animate:animate,data:data,clipWidth:clipWidth}};}}();if(typeof _ret2==="object")return _ret2.v;}return{animate:animate,data:data};}function getChildPropsOnEnter(animate,child,data,enteringNodes){var onEnter=animate&&animate.onEnter;animate=(0,_assign3.default)({},animate,onEnter);if(enteringNodes){(function(){var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;data=data.map(function(datum,idx){var key=getDatumKey(datum,idx);return enteringNodes[key]?(0,_assign3.default)({},datum,after(datum)):datum;});})();}return{animate:animate,data:data};}function getTransitionPropsFactory(props,state,setState){
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	getTransitionPropsFactory=getTransitionPropsFactory;var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function getDatumKey(datum,idx){return(datum.key||idx).toString();}function getKeyedData(data){return data.reduce(function(keyedData,datum,idx){var key=getDatumKey(datum,idx);keyedData[key]=datum;return keyedData;},{});}function getKeyedDataDifference(a,b){var hasDifference=false;var difference=Object.keys(a).reduce(function(_difference,key){if(!(key in b)){hasDifference=true;_difference[key]=true;}return _difference;},{});return hasDifference&&difference;}function getNodeTransitions(oldData,nextData){var oldDataKeyed=oldData&&getKeyedData(oldData);var nextDataKeyed=nextData&&getKeyedData(nextData);return{entering:oldDataKeyed&&getKeyedDataDifference(nextDataKeyed,oldDataKeyed),exiting:nextDataKeyed&&getKeyedDataDifference(oldDataKeyed,nextDataKeyed)};}function getChildData(child){if(child.type&&child.type.getData){return child.type.getData(child.props);}return child.props&&child.props.data||false;}function getInitialTransitionState(oldChildren,nextChildren){var nodesWillExit=false;var nodesWillEnter=false;var getTransition=function getTransition(oldChild,newChild){if(!newChild||oldChild.type!==newChild.type){return{};}var _ref=getNodeTransitions(getChildData(oldChild),getChildData(newChild))||{};var entering=_ref.entering;var exiting=_ref.exiting;nodesWillExit=nodesWillExit||!!exiting;nodesWillEnter=nodesWillEnter||!!entering;return{entering:entering||false,exiting:exiting||false};};var getTransitionsFromChildren=function getTransitionsFromChildren(old,next){return old.map(function(child,idx){if(child&&child.props&&child.props.children){return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children),_react2.default.Children.toArray(next[idx].props.children));}return getTransition(child,next[idx]);});};var childrenTransitions=getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren),_react2.default.Children.toArray(nextChildren));return{nodesWillExit:nodesWillExit,nodesWillEnter:nodesWillEnter,childrenTransitions:childrenTransitions,nodesShouldEnter:false,nodesShouldLoad:false,nodesDoneLoad:false,nodesDoneClipPathLoad:false,nodesDoneClipPathEnter:false,nodesDoneClipPathExit:false,animating:nodesWillExit||nodesWillEnter||childrenTransitions.length>0};}function getInitialChildProps(animate,data){var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;return{data:data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));})};}function getChildBeforeLoad(animate,child,data,cb){var before=animate.onLoad&&animate.onLoad.before?animate.onLoad.before:_identity3.default;var beforeClipPathWidth=animate.onLoad&&animate.onLoad.beforeClipPathWidth;data=data.map(function(datum){return(0,_assign3.default)({},datum,before(datum));});if(beforeClipPathWidth){var _beforeClipPathWidth=beforeClipPathWidth(data,child,animate);var clipWidth=_beforeClipPathWidth.clipWidth;var translateX=_beforeClipPathWidth.translateX;return{animate:animate,data:data,clipWidth:clipWidth,translateX:translateX,cb:cb};}return{animate:animate,data:data,cb:cb};}function getChildOnLoad(animate,data,cb){animate=(0,_assign3.default)({},animate,{onEnd:cb});var after=animate.onLoad&&animate.onLoad.after?animate.onLoad.after:_identity3.default;data=data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));});return{animate:animate,data:data};}function getChildClipPathToLoad(animate,child,data,cb){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onLoad&&animate.onLoad.afterClipPathWidth;if(afterClipPathWidth){var _afterClipPathWidth=afterClipPathWidth(data,child,animate);var clipWidth=_afterClipPathWidth.clipWidth;var translateX=_afterClipPathWidth.translateX;return{animate:animate,clipWidth:clipWidth,translateX:translateX};}return{animate:animate};}function getChildClipPathToExit(animate,child,data,exitingNodes,cb){var clipWidth=void 0;if(exitingNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var beforeClipPathWidth=animate.onExit&&animate.onExit.beforeClipPathWidth;if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,exitingNodes);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsOnExit(animate,data,exitingNodes,cb){var onExit=animate&&animate.onExit;animate=(0,_assign3.default)({},animate,onExit);if(exitingNodes){(function(){animate.onEnd=cb;var before=animate.onExit&&animate.onExit.before?animate.onExit.before:_identity3.default;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return exitingNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});})();}return{animate:animate,data:data};}function getChildClipPathToEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onEnter&&animate.onEnter.afterClipPathWidth;if(afterClipPathWidth){clipWidth=afterClipPathWidth(data,child);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsBeforeEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){var _ret2=function(){animate=(0,_assign3.default)({},animate,{onEnd:cb});var before=animate.onEnter&&animate.onEnter.before?animate.onEnter.before:_identity3.default;var beforeClipPathWidth=animate.onEnter&&animate.onEnter.beforeClipPathWidth;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return enteringNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,enteringNodes);return{v:{animate:animate,data:data,clipWidth:clipWidth}};}}();if(typeof _ret2==="object")return _ret2.v;}return{animate:animate,data:data};}function getChildPropsOnEnter(animate,data,enteringNodes,cb){var onEnter=animate&&animate.onEnter;animate=(0,_assign3.default)({},animate,onEnter);if(enteringNodes){(function(){animate.onEnd=cb;var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;data=data.map(function(datum,idx){var key=getDatumKey(datum,idx);return enteringNodes[key]?(0,_assign3.default)({},datum,after(datum)):datum;});})();}return{animate:animate,data:data};}function getTransitionPropsFactory(props,state,setState){
 	var nodesWillExit=state&&state.nodesWillExit;
 	var nodesWillEnter=state&&state.nodesWillEnter;
 	var nodesShouldEnter=state&&state.nodesShouldEnter;
+	var nodesShouldLoad=state&&state.nodesShouldLoad;
+	var nodesDoneLoad=state&&state.nodesDoneLoad;
+	var nodesDoneClipPathLoad=state&&state.nodesDoneClipPathLoad;
 	var nodesDoneClipPathEnter=state&&state.nodesDoneClipPathEnter;
 	var nodesDoneClipPathExit=state&&state.nodesDoneClipPathExit;
 	var childrenTransitions=state&&state.childrenTransitions||[];
 	var transitionDurations={
 	enter:props.animate&&props.animate.onEnter&&props.animate.onEnter.duration,
 	exit:props.animate&&props.animate.onExit&&props.animate.onExit.duration,
+	load:props.animate&&props.animate.onLoad&&props.animate.onLoad.duration,
 	move:props.animate&&props.animate.duration};
 	
+	
+	var onLoad=function onLoad(child,data,animate){
+	if(nodesShouldLoad){
+	if(!nodesDoneClipPathLoad){
+	return getChildClipPathToLoad(animate,child,data,function(){
+	setState({nodesDoneClipPathLoad:true});
+	});
+	}
+	return getChildOnLoad(animate,data,function(){
+	setState({nodesDoneLoad:true,animating:false});
+	});
+	}
+	
+	return getChildBeforeLoad(animate,child,data,function(){
+	setState({nodesShouldLoad:true});
+	});
+	};
 	
 	var onExit=function onExit(nodes,child,data,animate){
 	if(!nodesDoneClipPathExit){
@@ -7720,8 +7965,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	}
 	
-	return getChildPropsOnExit(animate,child,data,nodes,function(){
-	setState({nodesWillExit:false});
+	return getChildPropsOnExit(animate,data,nodes,function(){
+	setState({nodesWillExit:false,animating:false});
 	});
 	};
 	
@@ -7733,7 +7978,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	});
 	}
 	
-	return getChildPropsOnEnter(animate,child,data,nodes);
+	return getChildPropsOnEnter(animate,data,nodes,function(){
+	setState({nodesWillEnter:false,animating:false});
+	});
 	}
 	
 	return getChildPropsBeforeEnter(animate,child,data,nodes,function(){
@@ -7744,8 +7991,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	var getChildTransitionDuration=function getChildTransitionDuration(child,type){
 	var animate=child.props.animate;
 	var defaultTransitions=child.type&&child.type.defaultTransitions;
+	if(defaultTransitions){
 	return animate[type]&&animate[type].duration||
 	defaultTransitions[type]&&defaultTransitions[type].duration;
+	}
+	
+	return{};
 	};
 	
 	return function getTransitionProps(child,index){
@@ -7758,21 +8009,29 @@ return /******/ (function(modules) { // webpackBootstrap
 	animate.onEnter=(0,_defaults3.default)(
 	{},animate.onEnter,child.type.defaultTransitions&&child.type.defaultTransitions.onEnter);
 	
+	animate.onLoad=(0,_defaults3.default)(
+	{},animate.onLoad,child.type.defaultTransitions&&child.type.defaultTransitions.onLoad);
+	
 	
 	var childTransitions=childrenTransitions[index]||childrenTransitions[0];
-	if(nodesWillExit){
+	if(!nodesDoneLoad){
+	
+	var load=transitionDurations.load||getChildTransitionDuration(child,"onLoad");
+	var animation={duration:load};
+	return onLoad(child,data,(0,_assign3.default)({},animate,animation));
+	}else if(nodesWillExit){
 	var exitingNodes=childTransitions&&childTransitions.exiting;
 	var exit=transitionDurations.exit||getChildTransitionDuration(child,"onExit");
 	
-	var animation=exitingNodes?{duration:exit}:{delay:exit};
-	return onExit(exitingNodes,child,data,(0,_assign3.default)({},animate,animation));
+	var _animation=exitingNodes?{duration:exit}:{delay:exit};
+	return onExit(exitingNodes,child,data,(0,_assign3.default)({},animate,_animation));
 	}else if(nodesWillEnter){
 	var enteringNodes=childTransitions&&childTransitions.entering;
 	var enter=transitionDurations.enter||getChildTransitionDuration(child,"onEnter");
 	var move=transitionDurations.move||
 	child.props.animate&&child.props.animate.duration;
-	var _animation={duration:nodesShouldEnter&&enteringNodes?enter:move};
-	return onEnter(enteringNodes,child,data,(0,_assign3.default)({},animate,_animation));
+	var _animation2={duration:nodesShouldEnter&&enteringNodes?enter:move};
+	return onEnter(enteringNodes,child,data,(0,_assign3.default)({},animate,_animation2));
 	}else if(!state&&animate&&animate.onExit){
 	
 	
@@ -7785,24 +8044,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	return getInitialChildProps(animate,data);
 	}
-	return{animate:animate,data:data};
 	
+	animate.onEnd=function(){setState({animating:false});};
+	return{animate:animate,data:data};
 	};
 	}
 
 /***/ },
-/* 150 */
+/* 151 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _filter2=__webpack_require__(151);var _filter3=_interopRequireDefault(_filter2);var _pick2=__webpack_require__(147);var _pick3=_interopRequireDefault(_pick2);var _isFunction2=__webpack_require__(52);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
-	var _victoryAnimation=__webpack_require__(140);var _victoryAnimation2=_interopRequireDefault(_victoryAnimation);
-	var _index=__webpack_require__(148);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
-	
-	
-	VictoryTransition=function(_React$Component){_inherits(VictoryTransition,_React$Component);function VictoryTransition(){_classCallCheck(this,VictoryTransition);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryTransition).apply(this,arguments));}_createClass(VictoryTransition,[{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
+	Object.defineProperty(exports,"__esModule",{value:true});var _sum2=__webpack_require__(152);var _sum3=_interopRequireDefault(_sum2);var _min2=__webpack_require__(154);var _min3=_interopRequireDefault(_min2);var _max2=__webpack_require__(157);var _max3=_interopRequireDefault(_max2);var _filter2=__webpack_require__(159);var _filter3=_interopRequireDefault(_filter2);exports.
 	
 	
 	
+	
+	continuousTransitions=continuousTransitions;exports.
 	
 	
 	
@@ -7818,9 +8075,378 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	discreteTransitions=discreteTransitions;var _helpers=__webpack_require__(2);var _helpers2=_interopRequireDefault(_helpers);var _log=__webpack_require__(118);var _log2=_interopRequireDefault(_log);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function continuousTransitions(){return{onLoad:{duration:2000,entrance:"left",beforeClipPathWidth:function beforeClipPathWidth(data,child,animate){var range=_helpers2.default.getRange(child.props,"x");var paddingLeft=range[0];var paddingRight=child.props.width-range[1];if(animate.onLoad.entrance==="left"){return{clipWidth:paddingLeft+paddingRight};}else if(animate.onLoad.entrance==="right"){return{clipWidth:paddingLeft+paddingRight,translateX:child.props.width-paddingLeft-paddingRight};}else{_log2.default.warn("onLoad entrance should be one of left or right");return{};}},afterClipPathWidth:function afterClipPathWidth(data,child,animate){var range=_helpers2.default.getRange(child.props,"x");if(animate.onLoad.entrance==="left"){return{clipWidth:(0,_sum3.default)(range)};}else if(animate.onLoad.entrance==="right"){return{clipWidth:(0,_sum3.default)(range),translateX:0};}else{_log2.default.warn("onLoad entrance should be one of left or right");return{};}}},onExit:{duration:500,beforeClipPathWidth:function beforeClipPathWidth(data,child,exitingNodes){var filterExit=(0,_filter3.default)(data,function(datum,index){return!exitingNodes[index];});var xVals=filterExit.map(function(datum){return child.type.getScale(child.props).x(datum.x);});var clipPath=(0,_min3.default)(xVals)+(0,_max3.default)(xVals);return clipPath;}},onEnter:{duration:500,beforeClipPathWidth:function beforeClipPathWidth(data,child,enteringNodes){var filterEnter=(0,_filter3.default)(data,function(datum,index){return!enteringNodes[index];});var xVals=filterEnter.map(function(datum){return child.type.getScale(child.props).x(datum.x);});var clipPath=(0,_min3.default)(xVals)+(0,_max3.default)(xVals);return clipPath;},afterClipPathWidth:function afterClipPathWidth(data,child){var xVals=data.map(function(datum){return child.type.getScale(child.props).x(datum.x);});var clipPath=(0,_min3.default)(xVals)+(0,_max3.default)(xVals);return clipPath;}}};}function discreteTransitions(){
+	return{
+	onLoad:{
+	duration:2000,
+	before:function before(){return{opacity:0};},
+	after:function after(datum){return{opacity:datum.opacity||1};}},
+	
+	onExit:{
+	duration:600,
+	before:function before(){return{opacity:0};}},
+	
+	onEnter:{
+	duration:600,
+	before:function before(){return{opacity:0};},
+	after:function after(datum){return{opacity:datum.opacity||1};}}};
+	
+	
+	}
+
+/***/ },
+/* 152 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseSum = __webpack_require__(153),
+	    identity = __webpack_require__(85);
+	
+	/**
+	 * Computes the sum of the values in `array`.
+	 *
+	 * @static
+	 * @memberOf _
+	 * @since 3.4.0
+	 * @category Math
+	 * @param {Array} array The array to iterate over.
+	 * @returns {number} Returns the sum.
+	 * @example
+	 *
+	 * _.sum([4, 2, 8, 6]);
+	 * // => 20
+	 */
+	function sum(array) {
+	  return (array && array.length)
+	    ? baseSum(array, identity)
+	    : 0;
+	}
+	
+	module.exports = sum;
+
+
+/***/ },
+/* 153 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.sum` and `_.sumBy` without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} iteratee The function invoked per iteration.
+	 * @returns {number} Returns the sum.
+	 */
+	function baseSum(array, iteratee) {
+	  var result,
+	      index = -1,
+	      length = array.length;
+	
+	  while (++index < length) {
+	    var current = iteratee(array[index]);
+	    if (current !== undefined) {
+	      result = result === undefined ? current : (result + current);
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = baseSum;
+
+
+/***/ },
+/* 154 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseExtremum = __webpack_require__(155),
+	    baseLt = __webpack_require__(156),
+	    identity = __webpack_require__(85);
+	
+	/**
+	 * Computes the minimum value of `array`. If `array` is empty or falsey,
+	 * `undefined` is returned.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Math
+	 * @param {Array} array The array to iterate over.
+	 * @returns {*} Returns the minimum value.
+	 * @example
+	 *
+	 * _.min([4, 2, 8, 6]);
+	 * // => 2
+	 *
+	 * _.min([]);
+	 * // => undefined
+	 */
+	function min(array) {
+	  return (array && array.length)
+	    ? baseExtremum(array, identity, baseLt)
+	    : undefined;
+	}
+	
+	module.exports = min;
+
+
+/***/ },
+/* 155 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var isSymbol = __webpack_require__(64);
+	
+	/**
+	 * The base implementation of methods like `_.max` and `_.min` which accepts a
+	 * `comparator` to determine the extremum value.
+	 *
+	 * @private
+	 * @param {Array} array The array to iterate over.
+	 * @param {Function} iteratee The iteratee invoked per iteration.
+	 * @param {Function} comparator The comparator used to compare values.
+	 * @returns {*} Returns the extremum value.
+	 */
+	function baseExtremum(array, iteratee, comparator) {
+	  var index = -1,
+	      length = array.length;
+	
+	  while (++index < length) {
+	    var value = array[index],
+	        current = iteratee(value);
+	
+	    if (current != null && (computed === undefined
+	          ? (current === current && !isSymbol(current))
+	          : comparator(current, computed)
+	        )) {
+	      var computed = current,
+	          result = value;
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = baseExtremum;
+
+
+/***/ },
+/* 156 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.lt` which doesn't coerce arguments.
+	 *
+	 * @private
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if `value` is less than `other`,
+	 *  else `false`.
+	 */
+	function baseLt(value, other) {
+	  return value < other;
+	}
+	
+	module.exports = baseLt;
+
+
+/***/ },
+/* 157 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseExtremum = __webpack_require__(155),
+	    baseGt = __webpack_require__(158),
+	    identity = __webpack_require__(85);
+	
+	/**
+	 * Computes the maximum value of `array`. If `array` is empty or falsey,
+	 * `undefined` is returned.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Math
+	 * @param {Array} array The array to iterate over.
+	 * @returns {*} Returns the maximum value.
+	 * @example
+	 *
+	 * _.max([4, 2, 8, 6]);
+	 * // => 8
+	 *
+	 * _.max([]);
+	 * // => undefined
+	 */
+	function max(array) {
+	  return (array && array.length)
+	    ? baseExtremum(array, identity, baseGt)
+	    : undefined;
+	}
+	
+	module.exports = max;
+
+
+/***/ },
+/* 158 */
+/***/ function(module, exports) {
+
+	/**
+	 * The base implementation of `_.gt` which doesn't coerce arguments.
+	 *
+	 * @private
+	 * @param {*} value The value to compare.
+	 * @param {*} other The other value to compare.
+	 * @returns {boolean} Returns `true` if `value` is greater than `other`,
+	 *  else `false`.
+	 */
+	function baseGt(value, other) {
+	  return value > other;
+	}
+	
+	module.exports = baseGt;
+
+
+/***/ },
+/* 159 */
+/***/ function(module, exports) {
+
+	/**
+	 * A specialized version of `_.filter` for arrays without support for
+	 * iteratee shorthands.
+	 *
+	 * @private
+	 * @param {Array} [array] The array to iterate over.
+	 * @param {Function} predicate The function invoked per iteration.
+	 * @returns {Array} Returns the new filtered array.
+	 */
+	function arrayFilter(array, predicate) {
+	  var index = -1,
+	      length = array ? array.length : 0,
+	      resIndex = 0,
+	      result = [];
+	
+	  while (++index < length) {
+	    var value = array[index];
+	    if (predicate(value, index, array)) {
+	      result[resIndex++] = value;
+	    }
+	  }
+	  return result;
+	}
+	
+	module.exports = arrayFilter;
+
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _identity2=__webpack_require__(85);var _identity3=_interopRequireDefault(_identity2);var _filter2=__webpack_require__(159);var _filter3=_interopRequireDefault(_filter2);var _pick2=__webpack_require__(148);var _pick3=_interopRequireDefault(_pick2);var _isFunction2=__webpack_require__(52);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	var _victoryAnimation=__webpack_require__(141);var _victoryAnimation2=_interopRequireDefault(_victoryAnimation);
+	var _index=__webpack_require__(149);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	
+	VictoryTransition=function(_React$Component){_inherits(VictoryTransition,_React$Component);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	function VictoryTransition(props){_classCallCheck(this,VictoryTransition);var _this=_possibleConstructorReturn(this,Object.getPrototypeOf(VictoryTransition).call(this,
+	props));
+	
+	_this.state={
+	nodesShouldLoad:false,
+	nodesDoneLoad:false,
+	nodesDoneClipPathLoad:false,
+	animating:true};
+	
+	
+	_this.getTransitionState=_this.getTransitionState.bind(_this);return _this;
+	}_createClass(VictoryTransition,[{key:"componentWillReceiveProps",value:function componentWillReceiveProps(
 	
 	nextProps){
 	this.setState(this.getTransitionState(this.props,nextProps));
+	}},{key:"componentWillUpdate",value:function componentWillUpdate(
+	
+	nextProps,nextState){
+	if(nextState.animating!==this.state.animating&&nextState.animating===false){
+	var onEnd=nextProps&&nextProps.animate&&nextProps.animate.onEnd||_identity3.default;
+	onEnd();
+	}
+	}},{key:"componentDidMount",value:function componentDidMount()
+	
+	{
+	if(this.transitionProps&&this.transitionProps.cb){
+	this.transitionProps.cb();
+	}
 	}},{key:"getTransitionState",value:function getTransitionState(
 	
 	props,nextProps){var
@@ -7840,7 +8466,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	_index.Transitions.getInitialTransitionState(oldChildren,nextChildren);var nodesWillExit=_Transitions$getIniti.nodesWillExit;var nodesWillEnter=_Transitions$getIniti.nodesWillEnter;var childrenTransitions=_Transitions$getIniti.childrenTransitions;var nodesShouldEnter=_Transitions$getIniti.nodesShouldEnter;var nodesDoneClipPathEnter=_Transitions$getIniti.nodesDoneClipPathEnter;var nodesDoneClipPathExit=_Transitions$getIniti.nodesDoneClipPathExit;
+	
+	
+	
+	
+	_index.Transitions.getInitialTransitionState(oldChildren,nextChildren);var nodesWillExit=_Transitions$getIniti.nodesWillExit;var nodesWillEnter=_Transitions$getIniti.nodesWillEnter;var childrenTransitions=_Transitions$getIniti.childrenTransitions;var nodesShouldEnter=_Transitions$getIniti.nodesShouldEnter;var nodesShouldLoad=_Transitions$getIniti.nodesShouldLoad;var nodesDoneLoad=_Transitions$getIniti.nodesDoneLoad;var nodesDoneClipPathLoad=_Transitions$getIniti.nodesDoneClipPathLoad;var nodesDoneClipPathEnter=_Transitions$getIniti.nodesDoneClipPathEnter;var nodesDoneClipPathExit=_Transitions$getIniti.nodesDoneClipPathExit;var animating=_Transitions$getIniti.animating;
+	
 	return{
 	nodesWillExit:nodesWillExit,
 	nodesWillEnter:nodesWillEnter,
@@ -7848,6 +8479,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	nodesShouldEnter:nodesShouldEnter,
 	nodesDoneClipPathEnter:nodesDoneClipPathEnter,
 	nodesDoneClipPathExit:nodesDoneClipPathExit,
+	nodesShouldLoad:nodesShouldLoad||this.state.nodesShouldLoad,
+	nodesDoneClipPathLoad:nodesDoneClipPathLoad||this.state.nodesDoneClipPathLoad,
+	nodesDoneLoad:nodesDoneLoad||this.state.nodesDoneLoad,
+	animating:animating||this.state.animating,
 	oldProps:nodesWillExit?props:null};
 	
 	}
@@ -7888,6 +8523,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var child=_react2.default.Children.toArray(props.children)[0];
 	var transitionProps=getTransitionProps(child);
+	this.transitionProps=transitionProps;
 	var domain={
 	x:this.getDomainFromChildren(props,"x"),
 	y:this.getDomainFromChildren(props,"y")};
@@ -7896,19 +8532,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	{domain:domain},transitionProps,child.props);
 	
 	var animationWhitelist=props.animationWhitelist;
+	var clipPathWhitelist=["clipWidth","clipHeight","translateX"];
 	
 	if(this.state&&this.state.nodesDoneClipPathExit&&this.state.nodesWillExit||
 	transitionProps.animate&&
 	transitionProps.animate.parentState&&
 	transitionProps.animate.parentState.nodesDoneClipPathExit&&
 	transitionProps.animate.parentState.nodesWillExit){
-	animationWhitelist=(0,_filter3.default)(props.animationWhitelist,function(list){
+	clipPathWhitelist=(0,_filter3.default)(clipPathWhitelist,function(list){
 	return list!=="clipWidth";
 	});
 	}
 	
 	var propsToAnimate=animationWhitelist?
-	(0,_pick3.default)(combinedProps,animationWhitelist):combinedProps;
+	(0,_pick3.default)(combinedProps,animationWhitelist.concat(clipPathWhitelist)):combinedProps;
+	
 	return(
 	_react2.default.createElement(_victoryAnimation2.default,_extends({},combinedProps.animate,{data:propsToAnimate}),
 	function(newProps){
@@ -7921,43 +8559,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	}}]);return VictoryTransition;}(_react2.default.Component);VictoryTransition.displayName="VictoryTransition";VictoryTransition.propTypes={animate:_react2.default.PropTypes.object,children:_react2.default.PropTypes.node,animationWhitelist:_react2.default.PropTypes.array};exports.default=VictoryTransition;
 
 /***/ },
-/* 151 */
-/***/ function(module, exports) {
-
-	/**
-	 * A specialized version of `_.filter` for arrays without support for
-	 * iteratee shorthands.
-	 *
-	 * @private
-	 * @param {Array} [array] The array to iterate over.
-	 * @param {Function} predicate The function invoked per iteration.
-	 * @returns {Array} Returns the new filtered array.
-	 */
-	function arrayFilter(array, predicate) {
-	  var index = -1,
-	      length = array ? array.length : 0,
-	      resIndex = 0,
-	      result = [];
-	
-	  while (++index < length) {
-	    var value = array[index];
-	    if (predicate(value, index, array)) {
-	      result[resIndex++] = value;
-	    }
-	  }
-	  return result;
-	}
-	
-	module.exports = arrayFilter;
-
-
-/***/ },
-/* 152 */
+/* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _partialRight2=__webpack_require__(153);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(52);var _isFunction3=_interopRequireDefault(_isFunction2);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _partialRight2=__webpack_require__(162);var _partialRight3=_interopRequireDefault(_partialRight2);var _isFunction2=__webpack_require__(52);var _isFunction3=_interopRequireDefault(_isFunction2);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
 	var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
-	var _index=__webpack_require__(148);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	var _index=__webpack_require__(149);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
 	VictorySharedEvents=function(_React$Component){_inherits(VictorySharedEvents,_React$Component);
 	
@@ -8160,7 +8767,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	}}]);return VictorySharedEvents;}(_react2.default.Component);VictorySharedEvents.displayName="VictorySharedEvents";VictorySharedEvents.role="shared-event-wrapper";VictorySharedEvents.propTypes={children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),container:_react2.default.PropTypes.node,events:_react.PropTypes.arrayOf(_react.PropTypes.shape({childName:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.array]),target:_react.PropTypes.string,eventKey:_react.PropTypes.oneOfType([_react.PropTypes.array,_react.PropTypes.func,_index.PropTypes.allOfType([_index.PropTypes.integer,_index.PropTypes.nonNegative]),_react.PropTypes.string]),eventHandlers:_react.PropTypes.object})),eventKey:_react.PropTypes.oneOfType([_react.PropTypes.array,_react.PropTypes.func,_index.PropTypes.allOfType([_index.PropTypes.integer,_index.PropTypes.nonNegative]),_react.PropTypes.string])};exports.default=VictorySharedEvents;
 
 /***/ },
-/* 153 */
+/* 162 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var baseRest = __webpack_require__(34),
@@ -8215,7 +8822,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 154 */
+/* 163 */
 /***/ function(module, exports, __webpack_require__) {
 
 	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
@@ -8304,21 +8911,21 @@ return /******/ (function(modules) { // webpackBootstrap
 	}}]);return VictoryContainer;}(_react2.default.Component);VictoryContainer.displayName="VictoryContainer";VictoryContainer.propTypes={style:_react.PropTypes.object,height:_react.PropTypes.number,width:_react.PropTypes.number,events:_react.PropTypes.object,children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),title:_react.PropTypes.string,desc:_react.PropTypes.string};VictoryContainer.defaultProps={title:"Victory Chart",desc:""};exports.default=VictoryContainer;
 
 /***/ },
-/* 155 */
+/* 164 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _material=__webpack_require__(156);var _material2=_interopRequireDefault(_material);
-	var _grayscale=__webpack_require__(157);var _grayscale2=_interopRequireDefault(_grayscale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
+	Object.defineProperty(exports,"__esModule",{value:true});var _material=__webpack_require__(165);var _material2=_interopRequireDefault(_material);
+	var _grayscale=__webpack_require__(166);var _grayscale2=_interopRequireDefault(_grayscale);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
 	
 	{
 	material:_material2.default,
 	grayscale:_grayscale2.default};
 
 /***/ },
-/* 156 */
+/* 165 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
 	
 	
@@ -8367,6 +8974,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	fill:blueGrey700};
 	
 	
+	var centeredLabelStyles=(0,_assign3.default)({textAnchor:"middle"},baseLabelStyles);
+	
 	
 	
 	var strokeDasharray="10, 5";
@@ -8379,7 +8988,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:{
 	fill:grey900},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	axis:(0,_assign3.default)({
@@ -8391,7 +9000,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeLinecap:strokeLinecap,
 	strokeLinejoin:strokeLinejoin},
 	
-	axisLabel:(0,_assign3.default)({},baseLabelStyles,{
+	axisLabel:(0,_assign3.default)({},centeredLabelStyles,{
 	padding:padding,
 	stroke:"transparent"}),
 	
@@ -8434,7 +9043,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:{
 	stroke:blueGrey700},
 	
-	labels:baseLabelStyles},
+	labels:centeredLabelStyles},
 	
 	candleColors:{
 	positive:"#ffffff",
@@ -8450,10 +9059,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:blueGrey700,
 	strokeWidth:2},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
+	labels:(0,_assign3.default)({},centeredLabelStyles,{
 	stroke:"transparent",
-	strokeWidth:0,
-	textAnchor:"start"})}},
+	strokeWidth:0})}},
 	
 	
 	baseProps),
@@ -8484,10 +9092,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeWidth:1},
 	
 	labels:(0,_assign3.default)({},baseLabelStyles,{
-	padding:200,
+	padding:20,
 	stroke:"transparent",
-	strokeWidth:0,
-	textAnchor:"middle"})}},
+	strokeWidth:0})}},
 	
 	
 	baseProps),
@@ -8499,35 +9106,61 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:_extends({},baseLabelStyles,{
-	stroke:"transparent",
-	textAnchor:"middle"})}},
+	labels:(0,_assign3.default)({},centeredLabelStyles,{
+	stroke:"transparent"})}},
 	
 	
 	baseProps),
 	stack:(0,_assign3.default)({
 	colorScale:colors},
+	baseProps),
+	tooltip:(0,_assign3.default)({
+	style:{
+	data:{
+	fill:"none",
+	stroke:"transparent",
+	strokeWidth:0},
+	
+	labels:centeredLabelStyles,
+	flyout:{
+	stroke:blueGrey700,
+	strokeWidth:1,
+	fill:"#f0f0f0"}},
+	
+	
+	flyoutProps:{
+	cornerRadius:10,
+	pointerLength:10}},
+	
+	baseProps),
+	voronoi:(0,_assign3.default)({
+	style:{
+	data:{
+	fill:"none",
+	stroke:"transparent",
+	strokeWidth:0},
+	
+	labels:centeredLabelStyles}},
+	
 	baseProps)};
 
 /***/ },
-/* 157 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}
 	
 	
 	
 	
 	var colors=[
-	"#ffffff",
-	"#f0f0f0",
-	"#d9d9d9",
-	"#bdbdbd",
-	"#969696",
-	"#737373",
-	"#525252",
 	"#252525",
-	"#000000"];
+	"#525252",
+	"#737373",
+	"#969696",
+	"#bdbdbd",
+	"#d9d9d9",
+	"#f0f0f0"];
 	
 	
 	var charcoal="#252525";
@@ -8558,6 +9191,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent"};
 	
 	
+	var centeredLabelStyles=(0,_assign3.default)({textAnchor:"middle"},baseLabelStyles);
+	
 	
 	
 	var strokeLinecap="round";
@@ -8569,7 +9204,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:{
 	fill:charcoal},
 	
-	labels:baseLabelStyles}},
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	axis:(0,_assign3.default)({
@@ -8581,7 +9216,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeLinecap:strokeLinecap,
 	strokeLinejoin:strokeLinejoin},
 	
-	axisLabel:(0,_assign3.default)({},baseLabelStyles,{
+	axisLabel:(0,_assign3.default)({},centeredLabelStyles,{
 	padding:25}),
 	
 	grid:{
@@ -8615,10 +9250,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:charcoal,
 	strokeWidth:1},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
-	padding:25,
-	textAnchor:"end"})},
-	
+	labels:centeredLabelStyles},
 	
 	candleColors:{
 	positive:"#ffffff",
@@ -8633,9 +9265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:charcoal,
 	strokeWidth:2},
 	
-	labels:(0,_assign3.default)({},baseLabelStyles,{
-	textAnchor:"start"})}},
-	
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	group:(0,_assign3.default)({
@@ -8661,8 +9291,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	strokeWidth:1},
 	
 	labels:(0,_assign3.default)({},baseLabelStyles,{
-	padding:200,
-	textAnchor:"middle"})},
+	padding:20})},
 	
 	
 	colorScale:colors,
@@ -8677,14 +9306,3417 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent",
 	strokeWidth:0},
 	
-	labels:_extends({},baseLabelStyles,{
-	textAnchor:"middle"})}},
-	
+	labels:centeredLabelStyles}},
 	
 	baseProps),
 	stack:(0,_assign3.default)({
 	colorScale:colors},
+	baseProps),
+	tooltip:(0,_assign3.default)({
+	style:{
+	data:{
+	fill:"none",
+	stroke:"transparent",
+	strokeWidth:0},
+	
+	labels:centeredLabelStyles,
+	flyout:{
+	stroke:charcoal,
+	strokeWidth:1,
+	fill:"#f0f0f0"}},
+	
+	
+	flyoutProps:{
+	cornerRadius:10,
+	pointerLength:10}},
+	
+	baseProps),
+	voronoi:(0,_assign3.default)({
+	style:{
+	data:{
+	fill:"none",
+	stroke:"transparent",
+	strokeWidth:0},
+	
+	labels:centeredLabelStyles}},
+	
 	baseProps)};
+
+/***/ },
+/* 167 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _defaults2=__webpack_require__(115);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	var _index=__webpack_require__(149);
+	var _victoryLabel=__webpack_require__(147);var _victoryLabel2=_interopRequireDefault(_victoryLabel);
+	var _index2=__webpack_require__(168);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}
+	
+	
+	var defaultStyles={
+	stroke:"black",
+	strokeWidth:1,
+	fill:"f0f0f0"};
+	
+	
+	var defaultLabelStyles={
+	fill:"#252525",
+	fontSize:14,
+	fontFamily:"'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
+	stroke:"transparent",
+	padding:5};var
+	
+	
+	VictoryTooltip=function(_React$Component){_inherits(VictoryTooltip,_React$Component);function VictoryTooltip(){_classCallCheck(this,VictoryTooltip);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryTooltip).apply(this,arguments));}_createClass(VictoryTooltip,[{key:"getEvaluatedProps",value:function getEvaluatedProps(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props){var
+	
+	horizontal=
+	
+	props.horizontal;var datum=props.datum;var pointerLength=props.pointerLength;var pointerWidth=props.pointerWidth;var cornerRadius=props.cornerRadius;var width=props.width;var height=props.height;var orientation=props.orientation;var dx=props.dx;var dy=props.dy;var text=props.text;var active=props.active;
+	var style=_index.Helpers.evaluateStyle(props.style,datum);
+	var flyoutStyle=_index.Helpers.evaluateStyle(props.flyoutStyle,datum);
+	var padding=flyoutStyle&&flyoutStyle.padding||0;
+	var defaultDx=horizontal?padding:0;
+	var defaultDy=horizontal?0:padding;
+	var getDefaultOrientation=function getDefaultOrientation(){
+	var positive=horizontal?"right":"top";
+	var negative=horizontal?"left":"bottom";
+	return datum&&datum.y<0?negative:positive;
+	};
+	return(0,_assign3.default)(
+	{},
+	props,
+	{
+	style:style,
+	flyoutStyle:flyoutStyle,
+	dx:dx!==undefined?_index.Helpers.evaluateProp(dx,datum):defaultDx,
+	dy:dy!==undefined?_index.Helpers.evaluateProp(dy,datum):defaultDy,
+	cornerRadius:_index.Helpers.evaluateProp(cornerRadius,datum),
+	pointerLength:_index.Helpers.evaluateProp(pointerLength,datum),
+	pointerWidth:_index.Helpers.evaluateProp(pointerWidth,datum),
+	orientation:_index.Helpers.evaluateProp(orientation,datum)||getDefaultOrientation(),
+	width:_index.Helpers.evaluateProp(width,datum),
+	height:_index.Helpers.evaluateProp(height,datum),
+	active:_index.Helpers.evaluateProp(active,datum),
+	text:_index.Helpers.evaluateProp(text,datum)});
+	
+	
+	}},{key:"getCalculatedValues",value:function getCalculatedValues(
+	
+	props){var
+	style=props.style;var text=props.text;var datum=props.datum;
+	var baseLabelStyle=style?
+	(0,_defaults3.default)({},style,defaultLabelStyles):defaultLabelStyles;
+	var baseFlyoutStyle=props.flyoutStyle?
+	(0,_defaults3.default)({},props.flyoutStyle,defaultStyles):defaultStyles;
+	var labelStyle=_index.Helpers.evaluateStyle(baseLabelStyle,datum);
+	var flyoutStyle=_index.Helpers.evaluateStyle(baseFlyoutStyle,datum);
+	var labelSize=_index.TextSize.approximateTextSize(text,labelStyle);
+	var flyoutDimensions=this.getDimensions(props,labelSize,labelStyle);
+	var flyoutCenter=this.getFlyoutCenter(props,flyoutDimensions);
+	return{labelStyle:labelStyle,flyoutStyle:flyoutStyle,labelSize:labelSize,flyoutDimensions:flyoutDimensions,flyoutCenter:flyoutCenter};
+	}},{key:"getFlyoutCenter",value:function getFlyoutCenter(
+	
+	props,dimensions){var
+	x=props.x;var y=props.y;var dx=props.dx;var dy=props.dy;var pointerLength=props.pointerLength;var orientation=props.orientation;var
+	height=dimensions.height;var width=dimensions.width;
+	var sign=orientation==="right"||orientation==="top"?1:-1;
+	return{
+	x:orientation==="left"||orientation==="right"?
+	x+sign*(pointerLength+width/2+dx):x+sign*dx,
+	y:orientation==="top"||orientation==="bottom"?
+	y-sign*(pointerLength+height/2+dy):y-sign*dy};
+	
+	}},{key:"getDimensions",value:function getDimensions(
+	
+	props,labelSize,labelStyle){var
+	orientation=props.orientation;var cornerRadius=props.cornerRadius;var pointerLength=props.pointerLength;var pointerWidth=props.pointerWidth;
+	var padding=labelStyle&&labelStyle.padding||0;
+	var getHeight=function getHeight(){
+	var calculatedHeight=labelSize.height+padding;
+	var minHeight=orientation==="top"||orientation==="bottom"?
+	2*cornerRadius:2*cornerRadius+pointerWidth;
+	return Math.max(minHeight,calculatedHeight);
+	};
+	var getWidth=function getWidth(){
+	var calculatedWidth=labelSize.width+padding;
+	var minWidth=orientation==="left"||orientation==="right"?
+	2*cornerRadius+pointerLength:2*cornerRadius;
+	return Math.max(minWidth,calculatedWidth);
+	};
+	return{
+	height:props.height||getHeight(props,labelSize,orientation)+padding/2,
+	width:props.width||getWidth(props,labelSize,orientation)+padding};
+	
+	}},{key:"getLabelProps",value:function getLabelProps(
+	
+	props,calculatedValues){var
+	flyoutCenter=calculatedValues.flyoutCenter;var labelStyle=calculatedValues.labelStyle;var labelSize=calculatedValues.labelSize;var flyoutDimensions=calculatedValues.flyoutDimensions;var
+	text=props.text;var datum=props.datum;var labelComponent=props.labelComponent;var index=props.index;
+	var textAnchor=labelStyle.textAnchor||"middle";
+	var getLabelX=function getLabelX(){
+	var sign=textAnchor==="end"?-1:1;
+	return flyoutCenter.x-sign*(flyoutDimensions.width-labelSize.width);
+	};
+	return(0,_defaults3.default)(
+	{},
+	labelComponent.props,
+	{
+	key:"label-"+index,
+	text:text,datum:datum,textAnchor:textAnchor,
+	style:labelStyle,
+	x:!labelStyle.textAnchor||labelStyle.textAnchor==="middle"?
+	flyoutCenter.x:getLabelX(),
+	y:flyoutCenter.y,
+	verticalAnchor:"middle",
+	angle:labelStyle.angle});
+	
+	
+	}},{key:"getFlyoutProps",value:function getFlyoutProps(
+	
+	props,calculatedValues){var
+	flyoutDimensions=calculatedValues.flyoutDimensions;var flyoutStyle=calculatedValues.flyoutStyle;var
+	
+	x=
+	
+	props.x;var y=props.y;var dx=props.dx;var dy=props.dy;var orientation=props.orientation;var pointerLength=props.pointerLength;var pointerWidth=props.pointerWidth;var cornerRadius=props.cornerRadius;var events=props.events;var flyoutComponent=props.flyoutComponent;var index=props.index;
+	return(0,_defaults3.default)(
+	{},
+	flyoutComponent.props,
+	{
+	x:x,y:y,dx:dx,dy:dy,orientation:orientation,pointerLength:pointerLength,pointerWidth:pointerWidth,cornerRadius:cornerRadius,events:events,
+	key:"flyout-"+index,
+	width:flyoutDimensions.width,
+	height:flyoutDimensions.height,
+	style:flyoutStyle});
+	
+	
+	}},{key:"renderTooltip",value:function renderTooltip(
+	
+	props){var
+	flyoutComponent=props.flyoutComponent;var labelComponent=props.labelComponent;var groupComponent=props.groupComponent;var active=props.active;
+	if(!active){
+	return null;
+	}
+	var calculatedValues=this.getCalculatedValues(props);
+	var children=[
+	_react2.default.cloneElement(flyoutComponent,this.getFlyoutProps(props,calculatedValues)),
+	_react2.default.cloneElement(labelComponent,this.getLabelProps(props,calculatedValues))];
+	
+	return _react2.default.cloneElement(groupComponent,{role:"presentation"},children);
+	}},{key:"render",value:function render()
+	
+	{
+	var evaluatedProps=this.getEvaluatedProps(this.props);
+	return this.renderTooltip(evaluatedProps);
+	}}]);return VictoryTooltip;}(_react2.default.Component);VictoryTooltip.displayName="VictoryTooltip";VictoryTooltip.propTypes={active:_react.PropTypes.bool,datum:_react.PropTypes.object,data:_react.PropTypes.array,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),style:_react.PropTypes.object,flyoutStyle:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_index.PropTypes.nonNegative,dy:_index.PropTypes.nonNegative,width:_index.PropTypes.nonNegative,height:_index.PropTypes.nonNegative,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),pointerLength:_index.PropTypes.nonNegative,pointerWidth:_index.PropTypes.nonNegative,cornerRadius:_index.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labelComponent:_react.PropTypes.element,flyoutComponent:_react.PropTypes.element,groupComponent:_react.PropTypes.element,index:_react.PropTypes.number};VictoryTooltip.defaultProps={active:false,cornerRadius:5,pointerLength:10,pointerWidth:10,labelComponent:_react2.default.createElement(_victoryLabel2.default,null),flyoutComponent:_react2.default.createElement(_index2.Flyout,null),groupComponent:_react2.default.createElement("g",null)};VictoryTooltip.defaultEvents=[{target:"data",eventHandlers:{onMouseOver:function onMouseOver(){return{target:"labels",mutation:function mutation(){return{active:true};}};},onMouseOut:function onMouseOut(){return{target:"labels",mutation:function mutation(){return{active:false};}};}}}];exports.default=VictoryTooltip;
+
+/***/ },
+/* 168 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});exports.Flyout=exports.Voronoi=exports.Slice=exports.Point=exports.Line=exports.ErrorBar=exports.Curve=exports.ClipPath=exports.Candle=exports.Bar=exports.Area=undefined;var _area=__webpack_require__(169);var _area2=_interopRequireDefault(_area);
+	var _bar=__webpack_require__(172);var _bar2=_interopRequireDefault(_bar);
+	var _candle=__webpack_require__(173);var _candle2=_interopRequireDefault(_candle);
+	var _clipPath=__webpack_require__(174);var _clipPath2=_interopRequireDefault(_clipPath);
+	var _curve=__webpack_require__(175);var _curve2=_interopRequireDefault(_curve);
+	var _errorBar=__webpack_require__(176);var _errorBar2=_interopRequireDefault(_errorBar);
+	var _line=__webpack_require__(177);var _line2=_interopRequireDefault(_line);
+	var _point=__webpack_require__(178);var _point2=_interopRequireDefault(_point);
+	var _slice=__webpack_require__(184);var _slice2=_interopRequireDefault(_slice);
+	var _voronoi=__webpack_require__(185);var _voronoi2=_interopRequireDefault(_voronoi);
+	var _flyout=__webpack_require__(186);var _flyout2=_interopRequireDefault(_flyout);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.
+	
+	
+	
+	Area=_area2.default;exports.Bar=_bar2.default;exports.Candle=_candle2.default;exports.ClipPath=_clipPath2.default;exports.Curve=_curve2.default;exports.ErrorBar=_errorBar2.default;exports.Line=_line2.default;exports.Point=_point2.default;exports.Slice=_slice2.default;exports.Voronoi=_voronoi2.default;exports.Flyout=_flyout2.default;
+
+/***/ },
+/* 169 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	
+	var _d3Shape=__webpack_require__(170);var d3Shape=_interopRequireWildcard(_d3Shape);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	Area=function(_React$Component){_inherits(Area,_React$Component);function Area(){_classCallCheck(this,Area);return _possibleConstructorReturn(this,Object.getPrototypeOf(Area).apply(this,arguments));}_createClass(Area,[{key:"toNewName",value:function toNewName(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	interpolation){
+	
+	var capitalize=function capitalize(s){return s&&s[0].toUpperCase()+s.slice(1);};
+	return"curve"+capitalize(interpolation);
+	}},{key:"getAreaPath",value:function getAreaPath(
+	
+	props){
+	var xScale=props.scale.x;
+	var yScale=props.scale.y;
+	var areaFunction=d3Shape.area().
+	curve(d3Shape[this.toNewName(props.interpolation)]).
+	x(function(data){return xScale(data.x1||data.x);}).
+	y1(function(data){return yScale(data.y1||data.y);}).
+	y0(function(data){return yScale(data.y0);});
+	return areaFunction(props.data);
+	}},{key:"getLinePath",value:function getLinePath(
+	
+	props){
+	var xScale=props.scale.x;
+	var yScale=props.scale.y;
+	var lineFunction=d3Shape.line().
+	curve(d3Shape[this.toNewName(props.interpolation)]).
+	x(function(data){return xScale(data.x1||data.x);}).
+	y(function(data){return yScale(data.y1);});
+	return lineFunction(props.data);
+	}},{key:"renderArea",value:function renderArea(
+	
+	path,style,events){
+	var areaStroke=style.stroke?"none":style.fill;
+	var areaStyle=(0,_assign3.default)({},style,{stroke:areaStroke});var _props=
+	this.props;var role=_props.role;var clipId=_props.clipId;
+	return(
+	_react2.default.createElement("path",_extends({
+	key:"area",
+	style:areaStyle,
+	role:role,
+	d:path},
+	events,{
+	clipPath:"url(#"+clipId+")"})));
+	
+	
+	}},{key:"renderLine",value:function renderLine(
+	
+	path,style,events){
+	if(!style.stroke||style.stroke==="none"||style.stroke==="transparent"){
+	return undefined;
+	}var _props2=
+	this.props;var role=_props2.role;var clipId=_props2.clipId;
+	var lineStyle=(0,_assign3.default)({},style,{fill:"none"});
+	return(
+	_react2.default.createElement("path",_extends({
+	key:"area-stroke",
+	style:lineStyle,
+	role:role,
+	d:path},
+	events,{
+	clipPath:"url(#"+clipId+")"})));
+	
+	
+	}},{key:"render",value:function render()
+	
+	{var _props3=
+	this.props;var events=_props3.events;var groupComponent=_props3.groupComponent;
+	var style=(0,_assign3.default)({fill:"black"},this.props.style);
+	var area=this.renderArea(this.getAreaPath(this.props),style,events);
+	var line=this.renderLine(this.getLinePath(this.props),style,events);
+	return _react2.default.cloneElement(groupComponent,{},area,line);
+	}}]);return Area;}(_react2.default.Component);Area.propTypes={clipId:_react.PropTypes.number,data:_react.PropTypes.array,events:_react.PropTypes.object,groupComponent:_react.PropTypes.element,interpolation:_react.PropTypes.string,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object};exports.default=Area;
+
+/***/ },
+/* 170 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://d3js.org/d3-shape/ Version 1.0.3. Copyright 2016 Mike Bostock.
+	(function (global, factory) {
+	   true ? factory(exports, __webpack_require__(171)) :
+	  typeof define === 'function' && define.amd ? define(['exports', 'd3-path'], factory) :
+	  (factory((global.d3 = global.d3 || {}),global.d3));
+	}(this, (function (exports,d3Path) { 'use strict';
+	
+	function constant(x) {
+	  return function constant() {
+	    return x;
+	  };
+	}
+	
+	var epsilon = 1e-12;
+	var pi = Math.PI;
+	var halfPi = pi / 2;
+	var tau = 2 * pi;
+	
+	function arcInnerRadius(d) {
+	  return d.innerRadius;
+	}
+	
+	function arcOuterRadius(d) {
+	  return d.outerRadius;
+	}
+	
+	function arcStartAngle(d) {
+	  return d.startAngle;
+	}
+	
+	function arcEndAngle(d) {
+	  return d.endAngle;
+	}
+	
+	function arcPadAngle(d) {
+	  return d && d.padAngle; // Note: optional!
+	}
+	
+	function asin(x) {
+	  return x >= 1 ? halfPi : x <= -1 ? -halfPi : Math.asin(x);
+	}
+	
+	function intersect(x0, y0, x1, y1, x2, y2, x3, y3) {
+	  var x10 = x1 - x0, y10 = y1 - y0,
+	      x32 = x3 - x2, y32 = y3 - y2,
+	      t = (x32 * (y0 - y2) - y32 * (x0 - x2)) / (y32 * x10 - x32 * y10);
+	  return [x0 + t * x10, y0 + t * y10];
+	}
+	
+	// Compute perpendicular offset line of length rc.
+	// http://mathworld.wolfram.com/Circle-LineIntersection.html
+	function cornerTangents(x0, y0, x1, y1, r1, rc, cw) {
+	  var x01 = x0 - x1,
+	      y01 = y0 - y1,
+	      lo = (cw ? rc : -rc) / Math.sqrt(x01 * x01 + y01 * y01),
+	      ox = lo * y01,
+	      oy = -lo * x01,
+	      x11 = x0 + ox,
+	      y11 = y0 + oy,
+	      x10 = x1 + ox,
+	      y10 = y1 + oy,
+	      x00 = (x11 + x10) / 2,
+	      y00 = (y11 + y10) / 2,
+	      dx = x10 - x11,
+	      dy = y10 - y11,
+	      d2 = dx * dx + dy * dy,
+	      r = r1 - rc,
+	      D = x11 * y10 - x10 * y11,
+	      d = (dy < 0 ? -1 : 1) * Math.sqrt(Math.max(0, r * r * d2 - D * D)),
+	      cx0 = (D * dy - dx * d) / d2,
+	      cy0 = (-D * dx - dy * d) / d2,
+	      cx1 = (D * dy + dx * d) / d2,
+	      cy1 = (-D * dx + dy * d) / d2,
+	      dx0 = cx0 - x00,
+	      dy0 = cy0 - y00,
+	      dx1 = cx1 - x00,
+	      dy1 = cy1 - y00;
+	
+	  // Pick the closer of the two intersection points.
+	  // TODO Is there a faster way to determine which intersection to use?
+	  if (dx0 * dx0 + dy0 * dy0 > dx1 * dx1 + dy1 * dy1) cx0 = cx1, cy0 = cy1;
+	
+	  return {
+	    cx: cx0,
+	    cy: cy0,
+	    x01: -ox,
+	    y01: -oy,
+	    x11: cx0 * (r1 / r - 1),
+	    y11: cy0 * (r1 / r - 1)
+	  };
+	}
+	
+	function arc() {
+	  var innerRadius = arcInnerRadius,
+	      outerRadius = arcOuterRadius,
+	      cornerRadius = constant(0),
+	      padRadius = null,
+	      startAngle = arcStartAngle,
+	      endAngle = arcEndAngle,
+	      padAngle = arcPadAngle,
+	      context = null;
+	
+	  function arc() {
+	    var buffer,
+	        r,
+	        r0 = +innerRadius.apply(this, arguments),
+	        r1 = +outerRadius.apply(this, arguments),
+	        a0 = startAngle.apply(this, arguments) - halfPi,
+	        a1 = endAngle.apply(this, arguments) - halfPi,
+	        da = Math.abs(a1 - a0),
+	        cw = a1 > a0;
+	
+	    if (!context) context = buffer = d3Path.path();
+	
+	    // Ensure that the outer radius is always larger than the inner radius.
+	    if (r1 < r0) r = r1, r1 = r0, r0 = r;
+	
+	    // Is it a point?
+	    if (!(r1 > epsilon)) context.moveTo(0, 0);
+	
+	    // Or is it a circle or annulus?
+	    else if (da > tau - epsilon) {
+	      context.moveTo(r1 * Math.cos(a0), r1 * Math.sin(a0));
+	      context.arc(0, 0, r1, a0, a1, !cw);
+	      if (r0 > epsilon) {
+	        context.moveTo(r0 * Math.cos(a1), r0 * Math.sin(a1));
+	        context.arc(0, 0, r0, a1, a0, cw);
+	      }
+	    }
+	
+	    // Or is it a circular or annular sector?
+	    else {
+	      var a01 = a0,
+	          a11 = a1,
+	          a00 = a0,
+	          a10 = a1,
+	          da0 = da,
+	          da1 = da,
+	          ap = padAngle.apply(this, arguments) / 2,
+	          rp = (ap > epsilon) && (padRadius ? +padRadius.apply(this, arguments) : Math.sqrt(r0 * r0 + r1 * r1)),
+	          rc = Math.min(Math.abs(r1 - r0) / 2, +cornerRadius.apply(this, arguments)),
+	          rc0 = rc,
+	          rc1 = rc,
+	          t0,
+	          t1;
+	
+	      // Apply padding? Note that since r1 ≥ r0, da1 ≥ da0.
+	      if (rp > epsilon) {
+	        var p0 = asin(rp / r0 * Math.sin(ap)),
+	            p1 = asin(rp / r1 * Math.sin(ap));
+	        if ((da0 -= p0 * 2) > epsilon) p0 *= (cw ? 1 : -1), a00 += p0, a10 -= p0;
+	        else da0 = 0, a00 = a10 = (a0 + a1) / 2;
+	        if ((da1 -= p1 * 2) > epsilon) p1 *= (cw ? 1 : -1), a01 += p1, a11 -= p1;
+	        else da1 = 0, a01 = a11 = (a0 + a1) / 2;
+	      }
+	
+	      var x01 = r1 * Math.cos(a01),
+	          y01 = r1 * Math.sin(a01),
+	          x10 = r0 * Math.cos(a10),
+	          y10 = r0 * Math.sin(a10);
+	
+	      // Apply rounded corners?
+	      if (rc > epsilon) {
+	        var x11 = r1 * Math.cos(a11),
+	            y11 = r1 * Math.sin(a11),
+	            x00 = r0 * Math.cos(a00),
+	            y00 = r0 * Math.sin(a00);
+	
+	        // Restrict the corner radius according to the sector angle.
+	        if (da < pi) {
+	          var oc = da0 > epsilon ? intersect(x01, y01, x00, y00, x11, y11, x10, y10) : [x10, y10],
+	              ax = x01 - oc[0],
+	              ay = y01 - oc[1],
+	              bx = x11 - oc[0],
+	              by = y11 - oc[1],
+	              kc = 1 / Math.sin(Math.acos((ax * bx + ay * by) / (Math.sqrt(ax * ax + ay * ay) * Math.sqrt(bx * bx + by * by))) / 2),
+	              lc = Math.sqrt(oc[0] * oc[0] + oc[1] * oc[1]);
+	          rc0 = Math.min(rc, (r0 - lc) / (kc - 1));
+	          rc1 = Math.min(rc, (r1 - lc) / (kc + 1));
+	        }
+	      }
+	
+	      // Is the sector collapsed to a line?
+	      if (!(da1 > epsilon)) context.moveTo(x01, y01);
+	
+	      // Does the sector’s outer ring have rounded corners?
+	      else if (rc1 > epsilon) {
+	        t0 = cornerTangents(x00, y00, x01, y01, r1, rc1, cw);
+	        t1 = cornerTangents(x11, y11, x10, y10, r1, rc1, cw);
+	
+	        context.moveTo(t0.cx + t0.x01, t0.cy + t0.y01);
+	
+	        // Have the corners merged?
+	        if (rc1 < rc) context.arc(t0.cx, t0.cy, rc1, Math.atan2(t0.y01, t0.x01), Math.atan2(t1.y01, t1.x01), !cw);
+	
+	        // Otherwise, draw the two corners and the ring.
+	        else {
+	          context.arc(t0.cx, t0.cy, rc1, Math.atan2(t0.y01, t0.x01), Math.atan2(t0.y11, t0.x11), !cw);
+	          context.arc(0, 0, r1, Math.atan2(t0.cy + t0.y11, t0.cx + t0.x11), Math.atan2(t1.cy + t1.y11, t1.cx + t1.x11), !cw);
+	          context.arc(t1.cx, t1.cy, rc1, Math.atan2(t1.y11, t1.x11), Math.atan2(t1.y01, t1.x01), !cw);
+	        }
+	      }
+	
+	      // Or is the outer ring just a circular arc?
+	      else context.moveTo(x01, y01), context.arc(0, 0, r1, a01, a11, !cw);
+	
+	      // Is there no inner ring, and it’s a circular sector?
+	      // Or perhaps it’s an annular sector collapsed due to padding?
+	      if (!(r0 > epsilon) || !(da0 > epsilon)) context.lineTo(x10, y10);
+	
+	      // Does the sector’s inner ring (or point) have rounded corners?
+	      else if (rc0 > epsilon) {
+	        t0 = cornerTangents(x10, y10, x11, y11, r0, -rc0, cw);
+	        t1 = cornerTangents(x01, y01, x00, y00, r0, -rc0, cw);
+	
+	        context.lineTo(t0.cx + t0.x01, t0.cy + t0.y01);
+	
+	        // Have the corners merged?
+	        if (rc0 < rc) context.arc(t0.cx, t0.cy, rc0, Math.atan2(t0.y01, t0.x01), Math.atan2(t1.y01, t1.x01), !cw);
+	
+	        // Otherwise, draw the two corners and the ring.
+	        else {
+	          context.arc(t0.cx, t0.cy, rc0, Math.atan2(t0.y01, t0.x01), Math.atan2(t0.y11, t0.x11), !cw);
+	          context.arc(0, 0, r0, Math.atan2(t0.cy + t0.y11, t0.cx + t0.x11), Math.atan2(t1.cy + t1.y11, t1.cx + t1.x11), cw);
+	          context.arc(t1.cx, t1.cy, rc0, Math.atan2(t1.y11, t1.x11), Math.atan2(t1.y01, t1.x01), !cw);
+	        }
+	      }
+	
+	      // Or is the inner ring just a circular arc?
+	      else context.arc(0, 0, r0, a10, a00, cw);
+	    }
+	
+	    context.closePath();
+	
+	    if (buffer) return context = null, buffer + "" || null;
+	  }
+	
+	  arc.centroid = function() {
+	    var r = (+innerRadius.apply(this, arguments) + +outerRadius.apply(this, arguments)) / 2,
+	        a = (+startAngle.apply(this, arguments) + +endAngle.apply(this, arguments)) / 2 - pi / 2;
+	    return [Math.cos(a) * r, Math.sin(a) * r];
+	  };
+	
+	  arc.innerRadius = function(_) {
+	    return arguments.length ? (innerRadius = typeof _ === "function" ? _ : constant(+_), arc) : innerRadius;
+	  };
+	
+	  arc.outerRadius = function(_) {
+	    return arguments.length ? (outerRadius = typeof _ === "function" ? _ : constant(+_), arc) : outerRadius;
+	  };
+	
+	  arc.cornerRadius = function(_) {
+	    return arguments.length ? (cornerRadius = typeof _ === "function" ? _ : constant(+_), arc) : cornerRadius;
+	  };
+	
+	  arc.padRadius = function(_) {
+	    return arguments.length ? (padRadius = _ == null ? null : typeof _ === "function" ? _ : constant(+_), arc) : padRadius;
+	  };
+	
+	  arc.startAngle = function(_) {
+	    return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant(+_), arc) : startAngle;
+	  };
+	
+	  arc.endAngle = function(_) {
+	    return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant(+_), arc) : endAngle;
+	  };
+	
+	  arc.padAngle = function(_) {
+	    return arguments.length ? (padAngle = typeof _ === "function" ? _ : constant(+_), arc) : padAngle;
+	  };
+	
+	  arc.context = function(_) {
+	    return arguments.length ? ((context = _ == null ? null : _), arc) : context;
+	  };
+	
+	  return arc;
+	}
+	
+	function Linear(context) {
+	  this._context = context;
+	}
+	
+	Linear.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+	      case 1: this._point = 2; // proceed
+	      default: this._context.lineTo(x, y); break;
+	    }
+	  }
+	};
+	
+	function curveLinear(context) {
+	  return new Linear(context);
+	}
+	
+	function x(p) {
+	  return p[0];
+	}
+	
+	function y(p) {
+	  return p[1];
+	}
+	
+	function line() {
+	  var x$$ = x,
+	      y$$ = y,
+	      defined = constant(true),
+	      context = null,
+	      curve = curveLinear,
+	      output = null;
+	
+	  function line(data) {
+	    var i,
+	        n = data.length,
+	        d,
+	        defined0 = false,
+	        buffer;
+	
+	    if (context == null) output = curve(buffer = d3Path.path());
+	
+	    for (i = 0; i <= n; ++i) {
+	      if (!(i < n && defined(d = data[i], i, data)) === defined0) {
+	        if (defined0 = !defined0) output.lineStart();
+	        else output.lineEnd();
+	      }
+	      if (defined0) output.point(+x$$(d, i, data), +y$$(d, i, data));
+	    }
+	
+	    if (buffer) return output = null, buffer + "" || null;
+	  }
+	
+	  line.x = function(_) {
+	    return arguments.length ? (x$$ = typeof _ === "function" ? _ : constant(+_), line) : x$$;
+	  };
+	
+	  line.y = function(_) {
+	    return arguments.length ? (y$$ = typeof _ === "function" ? _ : constant(+_), line) : y$$;
+	  };
+	
+	  line.defined = function(_) {
+	    return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), line) : defined;
+	  };
+	
+	  line.curve = function(_) {
+	    return arguments.length ? (curve = _, context != null && (output = curve(context)), line) : curve;
+	  };
+	
+	  line.context = function(_) {
+	    return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), line) : context;
+	  };
+	
+	  return line;
+	}
+	
+	function area() {
+	  var x0 = x,
+	      x1 = null,
+	      y0 = constant(0),
+	      y1 = y,
+	      defined = constant(true),
+	      context = null,
+	      curve = curveLinear,
+	      output = null;
+	
+	  function area(data) {
+	    var i,
+	        j,
+	        k,
+	        n = data.length,
+	        d,
+	        defined0 = false,
+	        buffer,
+	        x0z = new Array(n),
+	        y0z = new Array(n);
+	
+	    if (context == null) output = curve(buffer = d3Path.path());
+	
+	    for (i = 0; i <= n; ++i) {
+	      if (!(i < n && defined(d = data[i], i, data)) === defined0) {
+	        if (defined0 = !defined0) {
+	          j = i;
+	          output.areaStart();
+	          output.lineStart();
+	        } else {
+	          output.lineEnd();
+	          output.lineStart();
+	          for (k = i - 1; k >= j; --k) {
+	            output.point(x0z[k], y0z[k]);
+	          }
+	          output.lineEnd();
+	          output.areaEnd();
+	        }
+	      }
+	      if (defined0) {
+	        x0z[i] = +x0(d, i, data), y0z[i] = +y0(d, i, data);
+	        output.point(x1 ? +x1(d, i, data) : x0z[i], y1 ? +y1(d, i, data) : y0z[i]);
+	      }
+	    }
+	
+	    if (buffer) return output = null, buffer + "" || null;
+	  }
+	
+	  function arealine() {
+	    return line().defined(defined).curve(curve).context(context);
+	  }
+	
+	  area.x = function(_) {
+	    return arguments.length ? (x0 = typeof _ === "function" ? _ : constant(+_), x1 = null, area) : x0;
+	  };
+	
+	  area.x0 = function(_) {
+	    return arguments.length ? (x0 = typeof _ === "function" ? _ : constant(+_), area) : x0;
+	  };
+	
+	  area.x1 = function(_) {
+	    return arguments.length ? (x1 = _ == null ? null : typeof _ === "function" ? _ : constant(+_), area) : x1;
+	  };
+	
+	  area.y = function(_) {
+	    return arguments.length ? (y0 = typeof _ === "function" ? _ : constant(+_), y1 = null, area) : y0;
+	  };
+	
+	  area.y0 = function(_) {
+	    return arguments.length ? (y0 = typeof _ === "function" ? _ : constant(+_), area) : y0;
+	  };
+	
+	  area.y1 = function(_) {
+	    return arguments.length ? (y1 = _ == null ? null : typeof _ === "function" ? _ : constant(+_), area) : y1;
+	  };
+	
+	  area.lineX0 =
+	  area.lineY0 = function() {
+	    return arealine().x(x0).y(y0);
+	  };
+	
+	  area.lineY1 = function() {
+	    return arealine().x(x0).y(y1);
+	  };
+	
+	  area.lineX1 = function() {
+	    return arealine().x(x1).y(y0);
+	  };
+	
+	  area.defined = function(_) {
+	    return arguments.length ? (defined = typeof _ === "function" ? _ : constant(!!_), area) : defined;
+	  };
+	
+	  area.curve = function(_) {
+	    return arguments.length ? (curve = _, context != null && (output = curve(context)), area) : curve;
+	  };
+	
+	  area.context = function(_) {
+	    return arguments.length ? (_ == null ? context = output = null : output = curve(context = _), area) : context;
+	  };
+	
+	  return area;
+	}
+	
+	function descending(a, b) {
+	  return b < a ? -1 : b > a ? 1 : b >= a ? 0 : NaN;
+	}
+	
+	function identity(d) {
+	  return d;
+	}
+	
+	function pie() {
+	  var value = identity,
+	      sortValues = descending,
+	      sort = null,
+	      startAngle = constant(0),
+	      endAngle = constant(tau),
+	      padAngle = constant(0);
+	
+	  function pie(data) {
+	    var i,
+	        n = data.length,
+	        j,
+	        k,
+	        sum = 0,
+	        index = new Array(n),
+	        arcs = new Array(n),
+	        a0 = +startAngle.apply(this, arguments),
+	        da = Math.min(tau, Math.max(-tau, endAngle.apply(this, arguments) - a0)),
+	        a1,
+	        p = Math.min(Math.abs(da) / n, padAngle.apply(this, arguments)),
+	        pa = p * (da < 0 ? -1 : 1),
+	        v;
+	
+	    for (i = 0; i < n; ++i) {
+	      if ((v = arcs[index[i] = i] = +value(data[i], i, data)) > 0) {
+	        sum += v;
+	      }
+	    }
+	
+	    // Optionally sort the arcs by previously-computed values or by data.
+	    if (sortValues != null) index.sort(function(i, j) { return sortValues(arcs[i], arcs[j]); });
+	    else if (sort != null) index.sort(function(i, j) { return sort(data[i], data[j]); });
+	
+	    // Compute the arcs! They are stored in the original data's order.
+	    for (i = 0, k = sum ? (da - n * pa) / sum : 0; i < n; ++i, a0 = a1) {
+	      j = index[i], v = arcs[j], a1 = a0 + (v > 0 ? v * k : 0) + pa, arcs[j] = {
+	        data: data[j],
+	        index: i,
+	        value: v,
+	        startAngle: a0,
+	        endAngle: a1,
+	        padAngle: p
+	      };
+	    }
+	
+	    return arcs;
+	  }
+	
+	  pie.value = function(_) {
+	    return arguments.length ? (value = typeof _ === "function" ? _ : constant(+_), pie) : value;
+	  };
+	
+	  pie.sortValues = function(_) {
+	    return arguments.length ? (sortValues = _, sort = null, pie) : sortValues;
+	  };
+	
+	  pie.sort = function(_) {
+	    return arguments.length ? (sort = _, sortValues = null, pie) : sort;
+	  };
+	
+	  pie.startAngle = function(_) {
+	    return arguments.length ? (startAngle = typeof _ === "function" ? _ : constant(+_), pie) : startAngle;
+	  };
+	
+	  pie.endAngle = function(_) {
+	    return arguments.length ? (endAngle = typeof _ === "function" ? _ : constant(+_), pie) : endAngle;
+	  };
+	
+	  pie.padAngle = function(_) {
+	    return arguments.length ? (padAngle = typeof _ === "function" ? _ : constant(+_), pie) : padAngle;
+	  };
+	
+	  return pie;
+	}
+	
+	var curveRadialLinear = curveRadial(curveLinear);
+	
+	function Radial(curve) {
+	  this._curve = curve;
+	}
+	
+	Radial.prototype = {
+	  areaStart: function() {
+	    this._curve.areaStart();
+	  },
+	  areaEnd: function() {
+	    this._curve.areaEnd();
+	  },
+	  lineStart: function() {
+	    this._curve.lineStart();
+	  },
+	  lineEnd: function() {
+	    this._curve.lineEnd();
+	  },
+	  point: function(a, r) {
+	    this._curve.point(r * Math.sin(a), r * -Math.cos(a));
+	  }
+	};
+	
+	function curveRadial(curve) {
+	
+	  function radial(context) {
+	    return new Radial(curve(context));
+	  }
+	
+	  radial._curve = curve;
+	
+	  return radial;
+	}
+	
+	function radialLine(l) {
+	  var c = l.curve;
+	
+	  l.angle = l.x, delete l.x;
+	  l.radius = l.y, delete l.y;
+	
+	  l.curve = function(_) {
+	    return arguments.length ? c(curveRadial(_)) : c()._curve;
+	  };
+	
+	  return l;
+	}
+	
+	function radialLine$1() {
+	  return radialLine(line().curve(curveRadialLinear));
+	}
+	
+	function radialArea() {
+	  var a = area().curve(curveRadialLinear),
+	      c = a.curve,
+	      x0 = a.lineX0,
+	      x1 = a.lineX1,
+	      y0 = a.lineY0,
+	      y1 = a.lineY1;
+	
+	  a.angle = a.x, delete a.x;
+	  a.startAngle = a.x0, delete a.x0;
+	  a.endAngle = a.x1, delete a.x1;
+	  a.radius = a.y, delete a.y;
+	  a.innerRadius = a.y0, delete a.y0;
+	  a.outerRadius = a.y1, delete a.y1;
+	  a.lineStartAngle = function() { return radialLine(x0()); }, delete a.lineX0;
+	  a.lineEndAngle = function() { return radialLine(x1()); }, delete a.lineX1;
+	  a.lineInnerRadius = function() { return radialLine(y0()); }, delete a.lineY0;
+	  a.lineOuterRadius = function() { return radialLine(y1()); }, delete a.lineY1;
+	
+	  a.curve = function(_) {
+	    return arguments.length ? c(curveRadial(_)) : c()._curve;
+	  };
+	
+	  return a;
+	}
+	
+	var circle = {
+	  draw: function(context, size) {
+	    var r = Math.sqrt(size / pi);
+	    context.moveTo(r, 0);
+	    context.arc(0, 0, r, 0, tau);
+	  }
+	};
+	
+	var cross = {
+	  draw: function(context, size) {
+	    var r = Math.sqrt(size / 5) / 2;
+	    context.moveTo(-3 * r, -r);
+	    context.lineTo(-r, -r);
+	    context.lineTo(-r, -3 * r);
+	    context.lineTo(r, -3 * r);
+	    context.lineTo(r, -r);
+	    context.lineTo(3 * r, -r);
+	    context.lineTo(3 * r, r);
+	    context.lineTo(r, r);
+	    context.lineTo(r, 3 * r);
+	    context.lineTo(-r, 3 * r);
+	    context.lineTo(-r, r);
+	    context.lineTo(-3 * r, r);
+	    context.closePath();
+	  }
+	};
+	
+	var tan30 = Math.sqrt(1 / 3);
+	var tan30_2 = tan30 * 2;
+	var diamond = {
+	  draw: function(context, size) {
+	    var y = Math.sqrt(size / tan30_2),
+	        x = y * tan30;
+	    context.moveTo(0, -y);
+	    context.lineTo(x, 0);
+	    context.lineTo(0, y);
+	    context.lineTo(-x, 0);
+	    context.closePath();
+	  }
+	};
+	
+	var ka = 0.89081309152928522810;
+	var kr = Math.sin(pi / 10) / Math.sin(7 * pi / 10);
+	var kx = Math.sin(tau / 10) * kr;
+	var ky = -Math.cos(tau / 10) * kr;
+	var star = {
+	  draw: function(context, size) {
+	    var r = Math.sqrt(size * ka),
+	        x = kx * r,
+	        y = ky * r;
+	    context.moveTo(0, -r);
+	    context.lineTo(x, y);
+	    for (var i = 1; i < 5; ++i) {
+	      var a = tau * i / 5,
+	          c = Math.cos(a),
+	          s = Math.sin(a);
+	      context.lineTo(s * r, -c * r);
+	      context.lineTo(c * x - s * y, s * x + c * y);
+	    }
+	    context.closePath();
+	  }
+	};
+	
+	var square = {
+	  draw: function(context, size) {
+	    var w = Math.sqrt(size),
+	        x = -w / 2;
+	    context.rect(x, x, w, w);
+	  }
+	};
+	
+	var sqrt3 = Math.sqrt(3);
+	
+	var triangle = {
+	  draw: function(context, size) {
+	    var y = -Math.sqrt(size / (sqrt3 * 3));
+	    context.moveTo(0, y * 2);
+	    context.lineTo(-sqrt3 * y, -y);
+	    context.lineTo(sqrt3 * y, -y);
+	    context.closePath();
+	  }
+	};
+	
+	var c = -0.5;
+	var s = Math.sqrt(3) / 2;
+	var k = 1 / Math.sqrt(12);
+	var a = (k / 2 + 1) * 3;
+	var wye = {
+	  draw: function(context, size) {
+	    var r = Math.sqrt(size / a),
+	        x0 = r / 2,
+	        y0 = r * k,
+	        x1 = x0,
+	        y1 = r * k + r,
+	        x2 = -x1,
+	        y2 = y1;
+	    context.moveTo(x0, y0);
+	    context.lineTo(x1, y1);
+	    context.lineTo(x2, y2);
+	    context.lineTo(c * x0 - s * y0, s * x0 + c * y0);
+	    context.lineTo(c * x1 - s * y1, s * x1 + c * y1);
+	    context.lineTo(c * x2 - s * y2, s * x2 + c * y2);
+	    context.lineTo(c * x0 + s * y0, c * y0 - s * x0);
+	    context.lineTo(c * x1 + s * y1, c * y1 - s * x1);
+	    context.lineTo(c * x2 + s * y2, c * y2 - s * x2);
+	    context.closePath();
+	  }
+	};
+	
+	var symbols = [
+	  circle,
+	  cross,
+	  diamond,
+	  square,
+	  star,
+	  triangle,
+	  wye
+	];
+	
+	function symbol() {
+	  var type = constant(circle),
+	      size = constant(64),
+	      context = null;
+	
+	  function symbol() {
+	    var buffer;
+	    if (!context) context = buffer = d3Path.path();
+	    type.apply(this, arguments).draw(context, +size.apply(this, arguments));
+	    if (buffer) return context = null, buffer + "" || null;
+	  }
+	
+	  symbol.type = function(_) {
+	    return arguments.length ? (type = typeof _ === "function" ? _ : constant(_), symbol) : type;
+	  };
+	
+	  symbol.size = function(_) {
+	    return arguments.length ? (size = typeof _ === "function" ? _ : constant(+_), symbol) : size;
+	  };
+	
+	  symbol.context = function(_) {
+	    return arguments.length ? (context = _ == null ? null : _, symbol) : context;
+	  };
+	
+	  return symbol;
+	}
+	
+	function noop() {}
+	
+	function point(that, x, y) {
+	  that._context.bezierCurveTo(
+	    (2 * that._x0 + that._x1) / 3,
+	    (2 * that._y0 + that._y1) / 3,
+	    (that._x0 + 2 * that._x1) / 3,
+	    (that._y0 + 2 * that._y1) / 3,
+	    (that._x0 + 4 * that._x1 + x) / 6,
+	    (that._y0 + 4 * that._y1 + y) / 6
+	  );
+	}
+	
+	function Basis(context) {
+	  this._context = context;
+	}
+	
+	Basis.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 =
+	    this._y0 = this._y1 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 3: point(this, this._x1, this._y1); // proceed
+	      case 2: this._context.lineTo(this._x1, this._y1); break;
+	    }
+	    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+	      case 1: this._point = 2; break;
+	      case 2: this._point = 3; this._context.lineTo((5 * this._x0 + this._x1) / 6, (5 * this._y0 + this._y1) / 6); // proceed
+	      default: point(this, x, y); break;
+	    }
+	    this._x0 = this._x1, this._x1 = x;
+	    this._y0 = this._y1, this._y1 = y;
+	  }
+	};
+	
+	function basis(context) {
+	  return new Basis(context);
+	}
+	
+	function BasisClosed(context) {
+	  this._context = context;
+	}
+	
+	BasisClosed.prototype = {
+	  areaStart: noop,
+	  areaEnd: noop,
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 = this._x3 = this._x4 =
+	    this._y0 = this._y1 = this._y2 = this._y3 = this._y4 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 1: {
+	        this._context.moveTo(this._x2, this._y2);
+	        this._context.closePath();
+	        break;
+	      }
+	      case 2: {
+	        this._context.moveTo((this._x2 + 2 * this._x3) / 3, (this._y2 + 2 * this._y3) / 3);
+	        this._context.lineTo((this._x3 + 2 * this._x2) / 3, (this._y3 + 2 * this._y2) / 3);
+	        this._context.closePath();
+	        break;
+	      }
+	      case 3: {
+	        this.point(this._x2, this._y2);
+	        this.point(this._x3, this._y3);
+	        this.point(this._x4, this._y4);
+	        break;
+	      }
+	    }
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; this._x2 = x, this._y2 = y; break;
+	      case 1: this._point = 2; this._x3 = x, this._y3 = y; break;
+	      case 2: this._point = 3; this._x4 = x, this._y4 = y; this._context.moveTo((this._x0 + 4 * this._x1 + x) / 6, (this._y0 + 4 * this._y1 + y) / 6); break;
+	      default: point(this, x, y); break;
+	    }
+	    this._x0 = this._x1, this._x1 = x;
+	    this._y0 = this._y1, this._y1 = y;
+	  }
+	};
+	
+	function basisClosed(context) {
+	  return new BasisClosed(context);
+	}
+	
+	function BasisOpen(context) {
+	  this._context = context;
+	}
+	
+	BasisOpen.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 =
+	    this._y0 = this._y1 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    if (this._line || (this._line !== 0 && this._point === 3)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; break;
+	      case 1: this._point = 2; break;
+	      case 2: this._point = 3; var x0 = (this._x0 + 4 * this._x1 + x) / 6, y0 = (this._y0 + 4 * this._y1 + y) / 6; this._line ? this._context.lineTo(x0, y0) : this._context.moveTo(x0, y0); break;
+	      case 3: this._point = 4; // proceed
+	      default: point(this, x, y); break;
+	    }
+	    this._x0 = this._x1, this._x1 = x;
+	    this._y0 = this._y1, this._y1 = y;
+	  }
+	};
+	
+	function basisOpen(context) {
+	  return new BasisOpen(context);
+	}
+	
+	function Bundle(context, beta) {
+	  this._basis = new Basis(context);
+	  this._beta = beta;
+	}
+	
+	Bundle.prototype = {
+	  lineStart: function() {
+	    this._x = [];
+	    this._y = [];
+	    this._basis.lineStart();
+	  },
+	  lineEnd: function() {
+	    var x = this._x,
+	        y = this._y,
+	        j = x.length - 1;
+	
+	    if (j > 0) {
+	      var x0 = x[0],
+	          y0 = y[0],
+	          dx = x[j] - x0,
+	          dy = y[j] - y0,
+	          i = -1,
+	          t;
+	
+	      while (++i <= j) {
+	        t = i / j;
+	        this._basis.point(
+	          this._beta * x[i] + (1 - this._beta) * (x0 + t * dx),
+	          this._beta * y[i] + (1 - this._beta) * (y0 + t * dy)
+	        );
+	      }
+	    }
+	
+	    this._x = this._y = null;
+	    this._basis.lineEnd();
+	  },
+	  point: function(x, y) {
+	    this._x.push(+x);
+	    this._y.push(+y);
+	  }
+	};
+	
+	var bundle = (function custom(beta) {
+	
+	  function bundle(context) {
+	    return beta === 1 ? new Basis(context) : new Bundle(context, beta);
+	  }
+	
+	  bundle.beta = function(beta) {
+	    return custom(+beta);
+	  };
+	
+	  return bundle;
+	})(0.85);
+	
+	function point$1(that, x, y) {
+	  that._context.bezierCurveTo(
+	    that._x1 + that._k * (that._x2 - that._x0),
+	    that._y1 + that._k * (that._y2 - that._y0),
+	    that._x2 + that._k * (that._x1 - x),
+	    that._y2 + that._k * (that._y1 - y),
+	    that._x2,
+	    that._y2
+	  );
+	}
+	
+	function Cardinal(context, tension) {
+	  this._context = context;
+	  this._k = (1 - tension) / 6;
+	}
+	
+	Cardinal.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 =
+	    this._y0 = this._y1 = this._y2 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 2: this._context.lineTo(this._x2, this._y2); break;
+	      case 3: point$1(this, this._x1, this._y1); break;
+	    }
+	    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+	      case 1: this._point = 2; this._x1 = x, this._y1 = y; break;
+	      case 2: this._point = 3; // proceed
+	      default: point$1(this, x, y); break;
+	    }
+	    this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
+	    this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
+	  }
+	};
+	
+	var cardinal = (function custom(tension) {
+	
+	  function cardinal(context) {
+	    return new Cardinal(context, tension);
+	  }
+	
+	  cardinal.tension = function(tension) {
+	    return custom(+tension);
+	  };
+	
+	  return cardinal;
+	})(0);
+	
+	function CardinalClosed(context, tension) {
+	  this._context = context;
+	  this._k = (1 - tension) / 6;
+	}
+	
+	CardinalClosed.prototype = {
+	  areaStart: noop,
+	  areaEnd: noop,
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 = this._x3 = this._x4 = this._x5 =
+	    this._y0 = this._y1 = this._y2 = this._y3 = this._y4 = this._y5 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 1: {
+	        this._context.moveTo(this._x3, this._y3);
+	        this._context.closePath();
+	        break;
+	      }
+	      case 2: {
+	        this._context.lineTo(this._x3, this._y3);
+	        this._context.closePath();
+	        break;
+	      }
+	      case 3: {
+	        this.point(this._x3, this._y3);
+	        this.point(this._x4, this._y4);
+	        this.point(this._x5, this._y5);
+	        break;
+	      }
+	    }
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; this._x3 = x, this._y3 = y; break;
+	      case 1: this._point = 2; this._context.moveTo(this._x4 = x, this._y4 = y); break;
+	      case 2: this._point = 3; this._x5 = x, this._y5 = y; break;
+	      default: point$1(this, x, y); break;
+	    }
+	    this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
+	    this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
+	  }
+	};
+	
+	var cardinalClosed = (function custom(tension) {
+	
+	  function cardinal(context) {
+	    return new CardinalClosed(context, tension);
+	  }
+	
+	  cardinal.tension = function(tension) {
+	    return custom(+tension);
+	  };
+	
+	  return cardinal;
+	})(0);
+	
+	function CardinalOpen(context, tension) {
+	  this._context = context;
+	  this._k = (1 - tension) / 6;
+	}
+	
+	CardinalOpen.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 =
+	    this._y0 = this._y1 = this._y2 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    if (this._line || (this._line !== 0 && this._point === 3)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; break;
+	      case 1: this._point = 2; break;
+	      case 2: this._point = 3; this._line ? this._context.lineTo(this._x2, this._y2) : this._context.moveTo(this._x2, this._y2); break;
+	      case 3: this._point = 4; // proceed
+	      default: point$1(this, x, y); break;
+	    }
+	    this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
+	    this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
+	  }
+	};
+	
+	var cardinalOpen = (function custom(tension) {
+	
+	  function cardinal(context) {
+	    return new CardinalOpen(context, tension);
+	  }
+	
+	  cardinal.tension = function(tension) {
+	    return custom(+tension);
+	  };
+	
+	  return cardinal;
+	})(0);
+	
+	function point$2(that, x, y) {
+	  var x1 = that._x1,
+	      y1 = that._y1,
+	      x2 = that._x2,
+	      y2 = that._y2;
+	
+	  if (that._l01_a > epsilon) {
+	    var a = 2 * that._l01_2a + 3 * that._l01_a * that._l12_a + that._l12_2a,
+	        n = 3 * that._l01_a * (that._l01_a + that._l12_a);
+	    x1 = (x1 * a - that._x0 * that._l12_2a + that._x2 * that._l01_2a) / n;
+	    y1 = (y1 * a - that._y0 * that._l12_2a + that._y2 * that._l01_2a) / n;
+	  }
+	
+	  if (that._l23_a > epsilon) {
+	    var b = 2 * that._l23_2a + 3 * that._l23_a * that._l12_a + that._l12_2a,
+	        m = 3 * that._l23_a * (that._l23_a + that._l12_a);
+	    x2 = (x2 * b + that._x1 * that._l23_2a - x * that._l12_2a) / m;
+	    y2 = (y2 * b + that._y1 * that._l23_2a - y * that._l12_2a) / m;
+	  }
+	
+	  that._context.bezierCurveTo(x1, y1, x2, y2, that._x2, that._y2);
+	}
+	
+	function CatmullRom(context, alpha) {
+	  this._context = context;
+	  this._alpha = alpha;
+	}
+	
+	CatmullRom.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 =
+	    this._y0 = this._y1 = this._y2 = NaN;
+	    this._l01_a = this._l12_a = this._l23_a =
+	    this._l01_2a = this._l12_2a = this._l23_2a =
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 2: this._context.lineTo(this._x2, this._y2); break;
+	      case 3: this.point(this._x2, this._y2); break;
+	    }
+	    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	
+	    if (this._point) {
+	      var x23 = this._x2 - x,
+	          y23 = this._y2 - y;
+	      this._l23_a = Math.sqrt(this._l23_2a = Math.pow(x23 * x23 + y23 * y23, this._alpha));
+	    }
+	
+	    switch (this._point) {
+	      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+	      case 1: this._point = 2; break;
+	      case 2: this._point = 3; // proceed
+	      default: point$2(this, x, y); break;
+	    }
+	
+	    this._l01_a = this._l12_a, this._l12_a = this._l23_a;
+	    this._l01_2a = this._l12_2a, this._l12_2a = this._l23_2a;
+	    this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
+	    this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
+	  }
+	};
+	
+	var catmullRom = (function custom(alpha) {
+	
+	  function catmullRom(context) {
+	    return alpha ? new CatmullRom(context, alpha) : new Cardinal(context, 0);
+	  }
+	
+	  catmullRom.alpha = function(alpha) {
+	    return custom(+alpha);
+	  };
+	
+	  return catmullRom;
+	})(0.5);
+	
+	function CatmullRomClosed(context, alpha) {
+	  this._context = context;
+	  this._alpha = alpha;
+	}
+	
+	CatmullRomClosed.prototype = {
+	  areaStart: noop,
+	  areaEnd: noop,
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 = this._x3 = this._x4 = this._x5 =
+	    this._y0 = this._y1 = this._y2 = this._y3 = this._y4 = this._y5 = NaN;
+	    this._l01_a = this._l12_a = this._l23_a =
+	    this._l01_2a = this._l12_2a = this._l23_2a =
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 1: {
+	        this._context.moveTo(this._x3, this._y3);
+	        this._context.closePath();
+	        break;
+	      }
+	      case 2: {
+	        this._context.lineTo(this._x3, this._y3);
+	        this._context.closePath();
+	        break;
+	      }
+	      case 3: {
+	        this.point(this._x3, this._y3);
+	        this.point(this._x4, this._y4);
+	        this.point(this._x5, this._y5);
+	        break;
+	      }
+	    }
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	
+	    if (this._point) {
+	      var x23 = this._x2 - x,
+	          y23 = this._y2 - y;
+	      this._l23_a = Math.sqrt(this._l23_2a = Math.pow(x23 * x23 + y23 * y23, this._alpha));
+	    }
+	
+	    switch (this._point) {
+	      case 0: this._point = 1; this._x3 = x, this._y3 = y; break;
+	      case 1: this._point = 2; this._context.moveTo(this._x4 = x, this._y4 = y); break;
+	      case 2: this._point = 3; this._x5 = x, this._y5 = y; break;
+	      default: point$2(this, x, y); break;
+	    }
+	
+	    this._l01_a = this._l12_a, this._l12_a = this._l23_a;
+	    this._l01_2a = this._l12_2a, this._l12_2a = this._l23_2a;
+	    this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
+	    this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
+	  }
+	};
+	
+	var catmullRomClosed = (function custom(alpha) {
+	
+	  function catmullRom(context) {
+	    return alpha ? new CatmullRomClosed(context, alpha) : new CardinalClosed(context, 0);
+	  }
+	
+	  catmullRom.alpha = function(alpha) {
+	    return custom(+alpha);
+	  };
+	
+	  return catmullRom;
+	})(0.5);
+	
+	function CatmullRomOpen(context, alpha) {
+	  this._context = context;
+	  this._alpha = alpha;
+	}
+	
+	CatmullRomOpen.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 = this._x2 =
+	    this._y0 = this._y1 = this._y2 = NaN;
+	    this._l01_a = this._l12_a = this._l23_a =
+	    this._l01_2a = this._l12_2a = this._l23_2a =
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    if (this._line || (this._line !== 0 && this._point === 3)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	
+	    if (this._point) {
+	      var x23 = this._x2 - x,
+	          y23 = this._y2 - y;
+	      this._l23_a = Math.sqrt(this._l23_2a = Math.pow(x23 * x23 + y23 * y23, this._alpha));
+	    }
+	
+	    switch (this._point) {
+	      case 0: this._point = 1; break;
+	      case 1: this._point = 2; break;
+	      case 2: this._point = 3; this._line ? this._context.lineTo(this._x2, this._y2) : this._context.moveTo(this._x2, this._y2); break;
+	      case 3: this._point = 4; // proceed
+	      default: point$2(this, x, y); break;
+	    }
+	
+	    this._l01_a = this._l12_a, this._l12_a = this._l23_a;
+	    this._l01_2a = this._l12_2a, this._l12_2a = this._l23_2a;
+	    this._x0 = this._x1, this._x1 = this._x2, this._x2 = x;
+	    this._y0 = this._y1, this._y1 = this._y2, this._y2 = y;
+	  }
+	};
+	
+	var catmullRomOpen = (function custom(alpha) {
+	
+	  function catmullRom(context) {
+	    return alpha ? new CatmullRomOpen(context, alpha) : new CardinalOpen(context, 0);
+	  }
+	
+	  catmullRom.alpha = function(alpha) {
+	    return custom(+alpha);
+	  };
+	
+	  return catmullRom;
+	})(0.5);
+	
+	function LinearClosed(context) {
+	  this._context = context;
+	}
+	
+	LinearClosed.prototype = {
+	  areaStart: noop,
+	  areaEnd: noop,
+	  lineStart: function() {
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    if (this._point) this._context.closePath();
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    if (this._point) this._context.lineTo(x, y);
+	    else this._point = 1, this._context.moveTo(x, y);
+	  }
+	};
+	
+	function linearClosed(context) {
+	  return new LinearClosed(context);
+	}
+	
+	function sign(x) {
+	  return x < 0 ? -1 : 1;
+	}
+	
+	// Calculate the slopes of the tangents (Hermite-type interpolation) based on
+	// the following paper: Steffen, M. 1990. A Simple Method for Monotonic
+	// Interpolation in One Dimension. Astronomy and Astrophysics, Vol. 239, NO.
+	// NOV(II), P. 443, 1990.
+	function slope3(that, x2, y2) {
+	  var h0 = that._x1 - that._x0,
+	      h1 = x2 - that._x1,
+	      s0 = (that._y1 - that._y0) / (h0 || h1 < 0 && -0),
+	      s1 = (y2 - that._y1) / (h1 || h0 < 0 && -0),
+	      p = (s0 * h1 + s1 * h0) / (h0 + h1);
+	  return (sign(s0) + sign(s1)) * Math.min(Math.abs(s0), Math.abs(s1), 0.5 * Math.abs(p)) || 0;
+	}
+	
+	// Calculate a one-sided slope.
+	function slope2(that, t) {
+	  var h = that._x1 - that._x0;
+	  return h ? (3 * (that._y1 - that._y0) / h - t) / 2 : t;
+	}
+	
+	// According to https://en.wikipedia.org/wiki/Cubic_Hermite_spline#Representations
+	// "you can express cubic Hermite interpolation in terms of cubic Bézier curves
+	// with respect to the four values p0, p0 + m0 / 3, p1 - m1 / 3, p1".
+	function point$3(that, t0, t1) {
+	  var x0 = that._x0,
+	      y0 = that._y0,
+	      x1 = that._x1,
+	      y1 = that._y1,
+	      dx = (x1 - x0) / 3;
+	  that._context.bezierCurveTo(x0 + dx, y0 + dx * t0, x1 - dx, y1 - dx * t1, x1, y1);
+	}
+	
+	function MonotoneX(context) {
+	  this._context = context;
+	}
+	
+	MonotoneX.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x0 = this._x1 =
+	    this._y0 = this._y1 =
+	    this._t0 = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    switch (this._point) {
+	      case 2: this._context.lineTo(this._x1, this._y1); break;
+	      case 3: point$3(this, this._t0, slope2(this, this._t0)); break;
+	    }
+	    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+	    this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    var t1 = NaN;
+	
+	    x = +x, y = +y;
+	    if (x === this._x1 && y === this._y1) return; // Ignore coincident points.
+	    switch (this._point) {
+	      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+	      case 1: this._point = 2; break;
+	      case 2: this._point = 3; point$3(this, slope2(this, t1 = slope3(this, x, y)), t1); break;
+	      default: point$3(this, this._t0, t1 = slope3(this, x, y)); break;
+	    }
+	
+	    this._x0 = this._x1, this._x1 = x;
+	    this._y0 = this._y1, this._y1 = y;
+	    this._t0 = t1;
+	  }
+	}
+	
+	function MonotoneY(context) {
+	  this._context = new ReflectContext(context);
+	}
+	
+	(MonotoneY.prototype = Object.create(MonotoneX.prototype)).point = function(x, y) {
+	  MonotoneX.prototype.point.call(this, y, x);
+	};
+	
+	function ReflectContext(context) {
+	  this._context = context;
+	}
+	
+	ReflectContext.prototype = {
+	  moveTo: function(x, y) { this._context.moveTo(y, x); },
+	  closePath: function() { this._context.closePath(); },
+	  lineTo: function(x, y) { this._context.lineTo(y, x); },
+	  bezierCurveTo: function(x1, y1, x2, y2, x, y) { this._context.bezierCurveTo(y1, x1, y2, x2, y, x); }
+	};
+	
+	function monotoneX(context) {
+	  return new MonotoneX(context);
+	}
+	
+	function monotoneY(context) {
+	  return new MonotoneY(context);
+	}
+	
+	function Natural(context) {
+	  this._context = context;
+	}
+	
+	Natural.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x = [];
+	    this._y = [];
+	  },
+	  lineEnd: function() {
+	    var x = this._x,
+	        y = this._y,
+	        n = x.length;
+	
+	    if (n) {
+	      this._line ? this._context.lineTo(x[0], y[0]) : this._context.moveTo(x[0], y[0]);
+	      if (n === 2) {
+	        this._context.lineTo(x[1], y[1]);
+	      } else {
+	        var px = controlPoints(x),
+	            py = controlPoints(y);
+	        for (var i0 = 0, i1 = 1; i1 < n; ++i0, ++i1) {
+	          this._context.bezierCurveTo(px[0][i0], py[0][i0], px[1][i0], py[1][i0], x[i1], y[i1]);
+	        }
+	      }
+	    }
+	
+	    if (this._line || (this._line !== 0 && n === 1)) this._context.closePath();
+	    this._line = 1 - this._line;
+	    this._x = this._y = null;
+	  },
+	  point: function(x, y) {
+	    this._x.push(+x);
+	    this._y.push(+y);
+	  }
+	};
+	
+	// See https://www.particleincell.com/2012/bezier-splines/ for derivation.
+	function controlPoints(x) {
+	  var i,
+	      n = x.length - 1,
+	      m,
+	      a = new Array(n),
+	      b = new Array(n),
+	      r = new Array(n);
+	  a[0] = 0, b[0] = 2, r[0] = x[0] + 2 * x[1];
+	  for (i = 1; i < n - 1; ++i) a[i] = 1, b[i] = 4, r[i] = 4 * x[i] + 2 * x[i + 1];
+	  a[n - 1] = 2, b[n - 1] = 7, r[n - 1] = 8 * x[n - 1] + x[n];
+	  for (i = 1; i < n; ++i) m = a[i] / b[i - 1], b[i] -= m, r[i] -= m * r[i - 1];
+	  a[n - 1] = r[n - 1] / b[n - 1];
+	  for (i = n - 2; i >= 0; --i) a[i] = (r[i] - a[i + 1]) / b[i];
+	  b[n - 1] = (x[n] + a[n - 1]) / 2;
+	  for (i = 0; i < n - 1; ++i) b[i] = 2 * x[i + 1] - a[i + 1];
+	  return [a, b];
+	}
+	
+	function natural(context) {
+	  return new Natural(context);
+	}
+	
+	function Step(context, t) {
+	  this._context = context;
+	  this._t = t;
+	}
+	
+	Step.prototype = {
+	  areaStart: function() {
+	    this._line = 0;
+	  },
+	  areaEnd: function() {
+	    this._line = NaN;
+	  },
+	  lineStart: function() {
+	    this._x = this._y = NaN;
+	    this._point = 0;
+	  },
+	  lineEnd: function() {
+	    if (0 < this._t && this._t < 1 && this._point === 2) this._context.lineTo(this._x, this._y);
+	    if (this._line || (this._line !== 0 && this._point === 1)) this._context.closePath();
+	    if (this._line >= 0) this._t = 1 - this._t, this._line = 1 - this._line;
+	  },
+	  point: function(x, y) {
+	    x = +x, y = +y;
+	    switch (this._point) {
+	      case 0: this._point = 1; this._line ? this._context.lineTo(x, y) : this._context.moveTo(x, y); break;
+	      case 1: this._point = 2; // proceed
+	      default: {
+	        if (this._t <= 0) {
+	          this._context.lineTo(this._x, y);
+	          this._context.lineTo(x, y);
+	        } else {
+	          var x1 = this._x * (1 - this._t) + x * this._t;
+	          this._context.lineTo(x1, this._y);
+	          this._context.lineTo(x1, y);
+	        }
+	        break;
+	      }
+	    }
+	    this._x = x, this._y = y;
+	  }
+	};
+	
+	function step(context) {
+	  return new Step(context, 0.5);
+	}
+	
+	function stepBefore(context) {
+	  return new Step(context, 0);
+	}
+	
+	function stepAfter(context) {
+	  return new Step(context, 1);
+	}
+	
+	var slice = Array.prototype.slice;
+	
+	function none(series, order) {
+	  if (!((n = series.length) > 1)) return;
+	  for (var i = 1, s0, s1 = series[order[0]], n, m = s1.length; i < n; ++i) {
+	    s0 = s1, s1 = series[order[i]];
+	    for (var j = 0; j < m; ++j) {
+	      s1[j][1] += s1[j][0] = isNaN(s0[j][1]) ? s0[j][0] : s0[j][1];
+	    }
+	  }
+	}
+	
+	function none$1(series) {
+	  var n = series.length, o = new Array(n);
+	  while (--n >= 0) o[n] = n;
+	  return o;
+	}
+	
+	function stackValue(d, key) {
+	  return d[key];
+	}
+	
+	function stack() {
+	  var keys = constant([]),
+	      order = none$1,
+	      offset = none,
+	      value = stackValue;
+	
+	  function stack(data) {
+	    var kz = keys.apply(this, arguments),
+	        i,
+	        m = data.length,
+	        n = kz.length,
+	        sz = new Array(n),
+	        oz;
+	
+	    for (i = 0; i < n; ++i) {
+	      for (var ki = kz[i], si = sz[i] = new Array(m), j = 0, sij; j < m; ++j) {
+	        si[j] = sij = [0, +value(data[j], ki, j, data)];
+	        sij.data = data[j];
+	      }
+	      si.key = ki;
+	    }
+	
+	    for (i = 0, oz = order(sz); i < n; ++i) {
+	      sz[oz[i]].index = i;
+	    }
+	
+	    offset(sz, oz);
+	    return sz;
+	  }
+	
+	  stack.keys = function(_) {
+	    return arguments.length ? (keys = typeof _ === "function" ? _ : constant(slice.call(_)), stack) : keys;
+	  };
+	
+	  stack.value = function(_) {
+	    return arguments.length ? (value = typeof _ === "function" ? _ : constant(+_), stack) : value;
+	  };
+	
+	  stack.order = function(_) {
+	    return arguments.length ? (order = _ == null ? none$1 : typeof _ === "function" ? _ : constant(slice.call(_)), stack) : order;
+	  };
+	
+	  stack.offset = function(_) {
+	    return arguments.length ? (offset = _ == null ? none : _, stack) : offset;
+	  };
+	
+	  return stack;
+	}
+	
+	function expand(series, order) {
+	  if (!((n = series.length) > 0)) return;
+	  for (var i, n, j = 0, m = series[0].length, y; j < m; ++j) {
+	    for (y = i = 0; i < n; ++i) y += series[i][j][1] || 0;
+	    if (y) for (i = 0; i < n; ++i) series[i][j][1] /= y;
+	  }
+	  none(series, order);
+	}
+	
+	function silhouette(series, order) {
+	  if (!((n = series.length) > 0)) return;
+	  for (var j = 0, s0 = series[order[0]], n, m = s0.length; j < m; ++j) {
+	    for (var i = 0, y = 0; i < n; ++i) y += series[i][j][1] || 0;
+	    s0[j][1] += s0[j][0] = -y / 2;
+	  }
+	  none(series, order);
+	}
+	
+	function wiggle(series, order) {
+	  if (!((n = series.length) > 0) || !((m = (s0 = series[order[0]]).length) > 0)) return;
+	  for (var y = 0, j = 1, s0, m, n; j < m; ++j) {
+	    for (var i = 0, s1 = 0, s2 = 0; i < n; ++i) {
+	      var si = series[order[i]],
+	          sij0 = si[j][1] || 0,
+	          sij1 = si[j - 1][1] || 0,
+	          s3 = (sij0 - sij1) / 2;
+	      for (var k = 0; k < i; ++k) {
+	        var sk = series[order[k]],
+	            skj0 = sk[j][1] || 0,
+	            skj1 = sk[j - 1][1] || 0;
+	        s3 += skj0 - skj1;
+	      }
+	      s1 += sij0, s2 += s3 * sij0;
+	    }
+	    s0[j - 1][1] += s0[j - 1][0] = y;
+	    if (s1) y -= s2 / s1;
+	  }
+	  s0[j - 1][1] += s0[j - 1][0] = y;
+	  none(series, order);
+	}
+	
+	function ascending(series) {
+	  var sums = series.map(sum);
+	  return none$1(series).sort(function(a, b) { return sums[a] - sums[b]; });
+	}
+	
+	function sum(series) {
+	  var s = 0, i = -1, n = series.length, v;
+	  while (++i < n) if (v = +series[i][1]) s += v;
+	  return s;
+	}
+	
+	function descending$1(series) {
+	  return ascending(series).reverse();
+	}
+	
+	function insideOut(series) {
+	  var n = series.length,
+	      i,
+	      j,
+	      sums = series.map(sum),
+	      order = none$1(series).sort(function(a, b) { return sums[b] - sums[a]; }),
+	      top = 0,
+	      bottom = 0,
+	      tops = [],
+	      bottoms = [];
+	
+	  for (i = 0; i < n; ++i) {
+	    j = order[i];
+	    if (top < bottom) {
+	      top += sums[j];
+	      tops.push(j);
+	    } else {
+	      bottom += sums[j];
+	      bottoms.push(j);
+	    }
+	  }
+	
+	  return bottoms.reverse().concat(tops);
+	}
+	
+	function reverse(series) {
+	  return none$1(series).reverse();
+	}
+	
+	exports.arc = arc;
+	exports.area = area;
+	exports.line = line;
+	exports.pie = pie;
+	exports.radialArea = radialArea;
+	exports.radialLine = radialLine$1;
+	exports.symbol = symbol;
+	exports.symbols = symbols;
+	exports.symbolCircle = circle;
+	exports.symbolCross = cross;
+	exports.symbolDiamond = diamond;
+	exports.symbolSquare = square;
+	exports.symbolStar = star;
+	exports.symbolTriangle = triangle;
+	exports.symbolWye = wye;
+	exports.curveBasisClosed = basisClosed;
+	exports.curveBasisOpen = basisOpen;
+	exports.curveBasis = basis;
+	exports.curveBundle = bundle;
+	exports.curveCardinalClosed = cardinalClosed;
+	exports.curveCardinalOpen = cardinalOpen;
+	exports.curveCardinal = cardinal;
+	exports.curveCatmullRomClosed = catmullRomClosed;
+	exports.curveCatmullRomOpen = catmullRomOpen;
+	exports.curveCatmullRom = catmullRom;
+	exports.curveLinearClosed = linearClosed;
+	exports.curveLinear = curveLinear;
+	exports.curveMonotoneX = monotoneX;
+	exports.curveMonotoneY = monotoneY;
+	exports.curveNatural = natural;
+	exports.curveStep = step;
+	exports.curveStepAfter = stepAfter;
+	exports.curveStepBefore = stepBefore;
+	exports.stack = stack;
+	exports.stackOffsetExpand = expand;
+	exports.stackOffsetNone = none;
+	exports.stackOffsetSilhouette = silhouette;
+	exports.stackOffsetWiggle = wiggle;
+	exports.stackOrderAscending = ascending;
+	exports.stackOrderDescending = descending$1;
+	exports.stackOrderInsideOut = insideOut;
+	exports.stackOrderNone = none$1;
+	exports.stackOrderReverse = reverse;
+	
+	Object.defineProperty(exports, '__esModule', { value: true });
+	
+	})));
+
+/***/ },
+/* 171 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// https://d3js.org/d3-path/ Version 1.0.1. Copyright 2016 Mike Bostock.
+	(function (global, factory) {
+	   true ? factory(exports) :
+	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	  (factory((global.d3 = global.d3 || {})));
+	}(this, function (exports) { 'use strict';
+	
+	  var pi = Math.PI;
+	  var tau = 2 * pi;
+	  var epsilon = 1e-6;
+	  var tauEpsilon = tau - epsilon;
+	  function Path() {
+	    this._x0 = this._y0 = // start of current subpath
+	    this._x1 = this._y1 = null; // end of current subpath
+	    this._ = [];
+	  }
+	
+	  function path() {
+	    return new Path;
+	  }
+	
+	  Path.prototype = path.prototype = {
+	    constructor: Path,
+	    moveTo: function(x, y) {
+	      this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y);
+	    },
+	    closePath: function() {
+	      if (this._x1 !== null) {
+	        this._x1 = this._x0, this._y1 = this._y0;
+	        this._.push("Z");
+	      }
+	    },
+	    lineTo: function(x, y) {
+	      this._.push("L", this._x1 = +x, ",", this._y1 = +y);
+	    },
+	    quadraticCurveTo: function(x1, y1, x, y) {
+	      this._.push("Q", +x1, ",", +y1, ",", this._x1 = +x, ",", this._y1 = +y);
+	    },
+	    bezierCurveTo: function(x1, y1, x2, y2, x, y) {
+	      this._.push("C", +x1, ",", +y1, ",", +x2, ",", +y2, ",", this._x1 = +x, ",", this._y1 = +y);
+	    },
+	    arcTo: function(x1, y1, x2, y2, r) {
+	      x1 = +x1, y1 = +y1, x2 = +x2, y2 = +y2, r = +r;
+	      var x0 = this._x1,
+	          y0 = this._y1,
+	          x21 = x2 - x1,
+	          y21 = y2 - y1,
+	          x01 = x0 - x1,
+	          y01 = y0 - y1,
+	          l01_2 = x01 * x01 + y01 * y01;
+	
+	      // Is the radius negative? Error.
+	      if (r < 0) throw new Error("negative radius: " + r);
+	
+	      // Is this path empty? Move to (x1,y1).
+	      if (this._x1 === null) {
+	        this._.push(
+	          "M", this._x1 = x1, ",", this._y1 = y1
+	        );
+	      }
+	
+	      // Or, is (x1,y1) coincident with (x0,y0)? Do nothing.
+	      else if (!(l01_2 > epsilon));
+	
+	      // Or, are (x0,y0), (x1,y1) and (x2,y2) collinear?
+	      // Equivalently, is (x1,y1) coincident with (x2,y2)?
+	      // Or, is the radius zero? Line to (x1,y1).
+	      else if (!(Math.abs(y01 * x21 - y21 * x01) > epsilon) || !r) {
+	        this._.push(
+	          "L", this._x1 = x1, ",", this._y1 = y1
+	        );
+	      }
+	
+	      // Otherwise, draw an arc!
+	      else {
+	        var x20 = x2 - x0,
+	            y20 = y2 - y0,
+	            l21_2 = x21 * x21 + y21 * y21,
+	            l20_2 = x20 * x20 + y20 * y20,
+	            l21 = Math.sqrt(l21_2),
+	            l01 = Math.sqrt(l01_2),
+	            l = r * Math.tan((pi - Math.acos((l21_2 + l01_2 - l20_2) / (2 * l21 * l01))) / 2),
+	            t01 = l / l01,
+	            t21 = l / l21;
+	
+	        // If the start tangent is not coincident with (x0,y0), line to.
+	        if (Math.abs(t01 - 1) > epsilon) {
+	          this._.push(
+	            "L", x1 + t01 * x01, ",", y1 + t01 * y01
+	          );
+	        }
+	
+	        this._.push(
+	          "A", r, ",", r, ",0,0,", +(y01 * x20 > x01 * y20), ",", this._x1 = x1 + t21 * x21, ",", this._y1 = y1 + t21 * y21
+	        );
+	      }
+	    },
+	    arc: function(x, y, r, a0, a1, ccw) {
+	      x = +x, y = +y, r = +r;
+	      var dx = r * Math.cos(a0),
+	          dy = r * Math.sin(a0),
+	          x0 = x + dx,
+	          y0 = y + dy,
+	          cw = 1 ^ ccw,
+	          da = ccw ? a0 - a1 : a1 - a0;
+	
+	      // Is the radius negative? Error.
+	      if (r < 0) throw new Error("negative radius: " + r);
+	
+	      // Is this path empty? Move to (x0,y0).
+	      if (this._x1 === null) {
+	        this._.push(
+	          "M", x0, ",", y0
+	        );
+	      }
+	
+	      // Or, is (x0,y0) not coincident with the previous point? Line to (x0,y0).
+	      else if (Math.abs(this._x1 - x0) > epsilon || Math.abs(this._y1 - y0) > epsilon) {
+	        this._.push(
+	          "L", x0, ",", y0
+	        );
+	      }
+	
+	      // Is this arc empty? We’re done.
+	      if (!r) return;
+	
+	      // Is this a complete circle? Draw two arcs to complete the circle.
+	      if (da > tauEpsilon) {
+	        this._.push(
+	          "A", r, ",", r, ",0,1,", cw, ",", x - dx, ",", y - dy,
+	          "A", r, ",", r, ",0,1,", cw, ",", this._x1 = x0, ",", this._y1 = y0
+	        );
+	      }
+	
+	      // Otherwise, draw an arc!
+	      else {
+	        if (da < 0) da = da % tau + tau;
+	        this._.push(
+	          "A", r, ",", r, ",0,", +(da >= pi), ",", cw, ",", this._x1 = x + r * Math.cos(a1), ",", this._y1 = y + r * Math.sin(a1)
+	        );
+	      }
+	    },
+	    rect: function(x, y, w, h) {
+	      this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y, "h", +w, "v", +h, "h", -w, "Z");
+	    },
+	    toString: function() {
+	      return this._.join("");
+	    }
+	  };
+	
+	  exports.path = path;
+	
+	  Object.defineProperty(exports, '__esModule', { value: true });
+	
+	}));
+
+/***/ },
+/* 172 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	
+	Bar=function(_React$Component){_inherits(Bar,_React$Component);function Bar(){_classCallCheck(this,Bar);return _possibleConstructorReturn(this,Object.getPrototypeOf(Bar).apply(this,arguments));}_createClass(Bar,[{key:"getVerticalBarPath",value:function getVerticalBarPath(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props,width){var
+	x=props.x;var y0=props.y0;var y=props.y;
+	var size=width/2;
+	return"M "+(x-size)+", "+y0+"\n      L "+(
+	x-size)+", "+y+"\n      L "+(
+	x+size)+", "+y+"\n      L "+(
+	x+size)+", "+y0+"\n      L "+(
+	x-size)+", "+y0;
+	}},{key:"getHorizontalBarPath",value:function getHorizontalBarPath(
+	
+	props,width){var
+	x=props.x;var y0=props.y0;var y=props.y;
+	var size=width/2;
+	return"M "+y0+", "+(x-size)+"\n      L "+
+	y0+", "+(x+size)+"\n      L "+
+	y+", "+(x+size)+"\n      L "+
+	y+", "+(x-size)+"\n      L "+
+	y0+", "+(x-size);
+	}},{key:"getBarPath",value:function getBarPath(
+	
+	props,width){
+	return this.props.horizontal?
+	this.getHorizontalBarPath(props,width):this.getVerticalBarPath(props,width);
+	}},{key:"getBarWidth",value:function getBarWidth(
+	
+	props){var
+	style=props.style;var width=props.width;var data=props.data;
+	var padding=props.padding.left||props.padding;
+	var defaultWidth=data.length===0?8:(width-2*padding)/data.length;
+	return style&&style.width?style.width:defaultWidth;
+	}},{key:"renderBar",value:function renderBar(
+	
+	path,style,events){var _props=
+	this.props;var role=_props.role;var clipId=_props.clipId;
+	return(
+	_react2.default.createElement("path",_extends({
+	d:path,
+	style:style,
+	role:role,
+	shapeRendering:"optimizeSpeed"},
+	events,{
+	clipPath:"url(#"+clipId+")"})));
+	
+	
+	}},{key:"render",value:function render()
+	
+	{
+	
+	var barWidth=this.getBarWidth(this.props);
+	var path=typeof this.props.x==="number"?
+	this.getBarPath(this.props,barWidth):undefined;
+	var style=(0,_assign3.default)({fill:"black",stroke:"none"},this.props.style);
+	return this.renderBar(path,style,this.props.events);
+	}}]);return Bar;}(_react2.default.Component);Bar.propTypes={clipId:_react.PropTypes.number,datum:_react.PropTypes.object,events:_react.PropTypes.object,horizontal:_react.PropTypes.bool,index:_react.PropTypes.number,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,y0:_react.PropTypes.number,width:_react.PropTypes.number,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.object]),data:_react.PropTypes.array};exports.default=Bar;
+
+/***/ },
+/* 173 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	
+	
+	Candle=function(_React$Component){_inherits(Candle,_React$Component);function Candle(){_classCallCheck(this,Candle);return _possibleConstructorReturn(this,Object.getPrototypeOf(Candle).apply(this,arguments));}_createClass(Candle,[{key:"renderWick",value:function renderWick(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	wickProps){
+	return _react2.default.createElement("line",wickProps);
+	}},{key:"renderCandle",value:function renderCandle(
+	
+	candleProps){
+	return _react2.default.createElement("rect",candleProps);
+	}},{key:"getCandleProps",value:function getCandleProps(
+	
+	props){var
+	width=props.width;var candleHeight=props.candleHeight;var x=props.x;var y=props.y;var data=props.data;var events=props.events;var role=props.role;
+	var style=(0,_assign3.default)({stroke:"black"},props.style);
+	var padding=props.padding.left||props.padding;
+	var candleWidth=style.width||0.5*(width-2*padding)/data.length;
+	var candleX=x-candleWidth/2;
+	return(0,_assign3.default)({x:candleX,y:y,style:style,role:role,width:candleWidth,height:candleHeight},events);
+	}},{key:"getWickProps",value:function getWickProps(
+	
+	props){var
+	x=props.x;var y1=props.y1;var y2=props.y2;var events=props.events;var role=props.role;
+	var style=(0,_assign3.default)({stroke:"black"},props.style);
+	return(0,_assign3.default)({x1:x,x2:x,y1:y1,y2:y2,style:style,role:role},events);
+	}},{key:"render",value:function render()
+	
+	{
+	var candleProps=this.getCandleProps(this.props);
+	var wickProps=this.getWickProps(this.props);
+	return _react2.default.cloneElement(
+	this.props.groupComponent,{},this.renderWick(wickProps),this.renderCandle(candleProps));
+	
+	}}]);return Candle;}(_react2.default.Component);Candle.propTypes={index:_react2.default.PropTypes.number,x:_react.PropTypes.number,y1:_react.PropTypes.number,y2:_react.PropTypes.number,y:_react.PropTypes.number,events:_react.PropTypes.object,candleHeight:_react.PropTypes.number,scale:_react.PropTypes.object,style:_react.PropTypes.object,datum:_react.PropTypes.object,width:_react.PropTypes.number,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.object]),data:_react.PropTypes.array,groupComponent:_react.PropTypes.element,role:_react.PropTypes.string};exports.default=Candle;
+
+/***/ },
+/* 174 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	var _index=__webpack_require__(149);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	
+	
+	ClipPath=function(_React$Component){_inherits(ClipPath,_React$Component);function ClipPath(){_classCallCheck(this,ClipPath);return _possibleConstructorReturn(this,Object.getPrototypeOf(ClipPath).apply(this,arguments));}_createClass(ClipPath,[{key:"renderClipPath",value:function renderClipPath(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props,id){
+	return(
+	_react2.default.createElement("defs",null,
+	_react2.default.createElement("clipPath",{id:id},
+	_react2.default.createElement("rect",props))));
+	
+	
+	
+	}},{key:"render",value:function render()
+	
+	{var _props=
+	
+	
+	
+	
+	
+	
+	this.props;var clipId=_props.clipId;var clipWidth=_props.clipWidth;var clipHeight=_props.clipHeight;var translateX=_props.translateX;var clipPadding=_props.clipPadding;
+	
+	var padding=_index.Helpers.getPadding(this.props);
+	
+	var totalPadding=function totalPadding(side){return padding[side]-(clipPadding[side]||0);};
+	
+	var clipProps={
+	x:totalPadding("left")+translateX,
+	y:totalPadding("top"),
+	width:clipWidth-totalPadding("left")-totalPadding("right"),
+	height:clipHeight-totalPadding("top")-totalPadding("bottom")};
+	
+	
+	return this.renderClipPath(clipProps,clipId);
+	}}]);return ClipPath;}(_react2.default.Component);ClipPath.propTypes={clipId:_react.PropTypes.number,clipPadding:_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number}),clipHeight:_index.PropTypes.nonNegative,clipWidth:_index.PropTypes.nonNegative,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),translateX:_react.PropTypes.number};ClipPath.defaultProps={translateX:0,clipPadding:{top:5,bottom:5,left:0,right:0}};exports.default=ClipPath;
+
+/***/ },
+/* 175 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	
+	var _d3Shape=__webpack_require__(170);var d3Shape=_interopRequireWildcard(_d3Shape);function _interopRequireWildcard(obj){if(obj&&obj.__esModule){return obj;}else{var newObj={};if(obj!=null){for(var key in obj){if(Object.prototype.hasOwnProperty.call(obj,key))newObj[key]=obj[key];}}newObj.default=obj;return newObj;}}function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	Curve=function(_React$Component){_inherits(Curve,_React$Component);function Curve(){_classCallCheck(this,Curve);return _possibleConstructorReturn(this,Object.getPrototypeOf(Curve).apply(this,arguments));}_createClass(Curve,[{key:"toNewName",value:function toNewName(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	interpolation){
+	
+	var capitalize=function capitalize(s){return s&&s[0].toUpperCase()+s.slice(1);};
+	return"curve"+capitalize(interpolation);
+	}},{key:"renderLine",value:function renderLine(
+	
+	path,style,events){var _props=
+	this.props;var role=_props.role;var clipId=_props.clipId;
+	return(
+	_react2.default.createElement("path",_extends({
+	style:style,
+	d:path,
+	role:role},
+	events,{
+	clipPath:"url(#"+clipId+")",
+	vectorEffect:"non-scaling-stroke"})));
+	
+	
+	}},{key:"render",value:function render()
+	
+	{var _props2=
+	this.props;var data=_props2.data;var events=_props2.events;var interpolation=_props2.interpolation;var scale=_props2.scale;var style=_props2.style;
+	var xScale=scale.x;
+	var yScale=scale.y;
+	var lineFunction=d3Shape.line().
+	curve(d3Shape[this.toNewName(interpolation)]).
+	x(function(d){return xScale(d.x1||d.x);}).
+	y(function(d){return yScale(d.y1||d.y);});
+	var lineStyle=(0,_assign3.default)({fill:"none",stroke:"black"},style);
+	return this.renderLine(lineFunction(data),lineStyle,events);
+	}}]);return Curve;}(_react2.default.Component);Curve.propTypes={clipId:_react.PropTypes.number,data:_react.PropTypes.array,events:_react.PropTypes.object,index:_react.PropTypes.number,interpolation:_react.PropTypes.string,role:_react.PropTypes.string,scale:_react.PropTypes.object,style:_react.PropTypes.object};exports.default=Curve;
+
+/***/ },
+/* 176 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();
+	var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	
+	ErrorBar=function(_React$Component){_inherits(ErrorBar,_React$Component);
+	function ErrorBar(props){_classCallCheck(this,ErrorBar);return _possibleConstructorReturn(this,Object.getPrototypeOf(ErrorBar).call(this,
+	props));
+	}_createClass(ErrorBar,[{key:"renderErrorBar",value:function renderErrorBar(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	error){var _props=
+	this.props;var x=_props.x;var y=_props.y;var borderWidth=_props.borderWidth;var groupComponent=_props.groupComponent;var events=_props.events;
+	var style=(0,_assign3.default)({stroke:"black"},this.props.style);
+	return _react2.default.cloneElement(groupComponent,{},
+	error.errorRight?
+	_react2.default.createElement("line",_extends({
+	key:"borderRight"},
+	events,{
+	style:style,
+	x1:error.errorRight,
+	x2:error.errorRight,
+	y1:y-borderWidth,
+	y2:y+borderWidth})):
+	
+	null,
+	
+	error.errorLeft?
+	_react2.default.createElement("line",_extends({
+	key:"borderLeft"},
+	events,{
+	style:style,
+	x1:error.errorLeft,
+	x2:error.errorLeft,
+	y1:y-borderWidth,
+	y2:y+borderWidth})):
+	
+	null,
+	
+	error.errorBottom?
+	_react2.default.createElement("line",_extends({
+	key:"borderBottom"},
+	events,{
+	style:style,
+	x1:x-borderWidth,
+	x2:x+borderWidth,
+	y1:error.errorBottom,
+	y2:error.errorBottom})):
+	
+	null,
+	
+	error.errorTop?
+	_react2.default.createElement("line",_extends({
+	key:"borderTop"},
+	events,{
+	style:style,
+	x1:x-borderWidth,
+	x2:x+borderWidth,
+	y1:error.errorTop,
+	y2:error.errorTop})):
+	
+	null,
+	
+	error.errorTop?
+	_react2.default.createElement("line",_extends({
+	key:"crossTop"},
+	events,{
+	style:style,
+	x1:x,
+	x2:x,
+	y1:y,
+	y2:error.errorTop,
+	shapeRendering:"optimizeSpeed"})):
+	
+	null,
+	
+	error.errorBottom?
+	_react2.default.createElement("line",_extends({
+	key:"crossBottom"},
+	events,{
+	style:style,
+	x1:x,
+	x2:x,
+	y1:y,
+	y2:error.errorBottom,
+	shapeRendering:"optimizeSpeed"})):
+	
+	null,
+	
+	error.errorLeft?
+	_react2.default.createElement("line",_extends({
+	key:"crossLeft"},
+	events,{
+	style:style,
+	x1:x,
+	x2:error.errorLeft,
+	y1:y,
+	y2:y,
+	shapeRendering:"optimizeSpeed"})):
+	null,
+	
+	error.errorRight?
+	_react2.default.createElement("line",_extends({
+	key:"crossRight"},
+	events,{
+	style:style,
+	x1:x,
+	x2:error.errorRight,
+	y1:y,
+	y2:y,
+	shapeRendering:"optimizeSpeed"})):
+	null);
+	
+	}},{key:"render",value:function render()
+	
+	{var _props2=
+	
+	
+	
+	
+	this.props;var errorX=_props2.errorX;var errorY=_props2.errorY;var scale=_props2.scale;
+	var rangeX=void 0;
+	var rangeY=void 0;
+	var positiveErrorX=void 0;
+	var negativeErrorX=void 0;
+	var positiveErrorY=void 0;
+	var negativeErrorY=void 0;
+	var errorTop=void 0;
+	var errorBottom=void 0;
+	var errorRight=void 0;
+	var errorLeft=void 0;
+	
+	if(errorX){
+	rangeX=scale.x.range();
+	positiveErrorX=errorX[0];
+	negativeErrorX=errorX[1];
+	errorRight=positiveErrorX>=rangeX[1]?rangeX[1]:positiveErrorX;
+	errorLeft=negativeErrorX<=rangeX[0]?rangeX[0]:negativeErrorX;
+	}
+	
+	if(errorY){
+	rangeY=scale.y.range();
+	positiveErrorY=errorY[1];
+	negativeErrorY=errorY[0];
+	errorTop=positiveErrorY>=rangeY[0]?rangeY[0]:positiveErrorY;
+	errorBottom=negativeErrorY<=rangeY[1]?rangeY[1]:negativeErrorY;
+	}
+	
+	return _react2.default.cloneElement(
+	this.props.groupComponent,
+	{},
+	this.renderErrorBar({errorTop:errorTop,errorBottom:errorBottom,errorRight:errorRight,errorLeft:errorLeft}));
+	
+	}}]);return ErrorBar;}(_react2.default.Component);ErrorBar.propTypes={index:_react2.default.PropTypes.number,datum:_react.PropTypes.object,events:_react.PropTypes.object,scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,errorX:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array,_react.PropTypes.bool]),errorY:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.array,_react.PropTypes.bool]),borderWidth:_react.PropTypes.number,groupComponent:_react.PropTypes.element};ErrorBar.defaultProps={borderWidth:10};exports.default=ErrorBar;
+
+/***/ },
+/* 177 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _assign2=__webpack_require__(138);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	
+	Line=function(_React$Component){_inherits(Line,_React$Component);function Line(){_classCallCheck(this,Line);return _possibleConstructorReturn(this,Object.getPrototypeOf(Line).apply(this,arguments));}_createClass(Line,[{key:"renderAxisLine",value:function renderAxisLine(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props,style,events){
+	return _react2.default.createElement("line",_extends({},props,{style:style},events,{vectorEffect:"non-scaling-stroke"}));
+	}},{key:"render",value:function render()
+	
+	{var _props=
+	this.props;var x1=_props.x1;var x2=_props.x2;var y1=_props.y1;var y2=_props.y2;var events=_props.events;
+	var style=(0,_assign3.default)({stroke:"black"},this.props.style);
+	return this.renderAxisLine({x1:x1,x2:x2,y1:y1,y2:y2},style,events);
+	}}]);return Line;}(_react2.default.Component);Line.propTypes={index:_react.PropTypes.number,tick:_react.PropTypes.any,x1:_react.PropTypes.number,x2:_react.PropTypes.number,y1:_react.PropTypes.number,y2:_react.PropTypes.number,style:_react.PropTypes.object,events:_react.PropTypes.object};exports.default=Line;
+
+/***/ },
+/* 178 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);
+	var _pathHelpers=__webpack_require__(179);var _pathHelpers2=_interopRequireDefault(_pathHelpers);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	Point=function(_React$Component){_inherits(Point,_React$Component);function Point(){_classCallCheck(this,Point);return _possibleConstructorReturn(this,Object.getPrototypeOf(Point).apply(this,arguments));}_createClass(Point,[{key:"getPath",value:function getPath(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props){
+	var pathFunctions={
+	circle:_pathHelpers2.default.circle,
+	square:_pathHelpers2.default.square,
+	diamond:_pathHelpers2.default.diamond,
+	triangleDown:_pathHelpers2.default.triangleDown,
+	triangleUp:_pathHelpers2.default.triangleUp,
+	plus:_pathHelpers2.default.plus,
+	star:_pathHelpers2.default.star};
+	
+	return pathFunctions[props.symbol].call(null,props.x,props.y,props.size);
+	}},{key:"renderPoint",value:function renderPoint(
+	
+	path,style,events){var
+	role=this.props.role;
+	return(
+	_react2.default.createElement("path",_extends({},events,{d:path,role:role,shapeRendering:"optimizeSpeed",style:style})));
+	
+	}},{key:"render",value:function render()
+	
+	{
+	return this.renderPoint(this.getPath(this.props),this.props.style,this.props.events);
+	}}]);return Point;}(_react2.default.Component);Point.propTypes={datum:_react.PropTypes.object,events:_react.PropTypes.object,index:_react.PropTypes.number,role:_react.PropTypes.string,size:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),symbol:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["circle","diamond","plus","square","star","triangleDown","triangleUp"]),_react.PropTypes.func]),scale:_react.PropTypes.object,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number};exports.default=Point;
+
+/***/ },
+/* 179 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _range2=__webpack_require__(180);var _range3=_interopRequireDefault(_range2);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}exports.default=
+	
+	{
+	circle:function circle(x,y,size){
+	return"M "+x+", "+y+" m "+-size+", 0\n      a "+
+	size+", "+size+" 0 1,0 "+size*2+",0\n      a "+
+	size+", "+size+" 0 1,0 "+-size*2+",0";
+	},
+	
+	square:function square(x,y,size){
+	var baseSize=0.87*size;
+	return"M "+(x-baseSize)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize)+", "+(y-baseSize)+"\n      L "+(
+	x-baseSize)+", "+(y-baseSize)+"\n      z";
+	
+	},
+	
+	diamond:function diamond(x,y,size){
+	var baseSize=0.87*size;
+	var length=Math.sqrt(2*(baseSize*baseSize));
+	return"M "+x+", "+(y+length)+"\n      L "+(
+	x+length)+", "+y+"\n      L "+
+	x+", "+(y-length)+"\n      L "+(
+	x-length)+", "+y+"\n      z";
+	
+	},
+	
+	triangleDown:function triangleDown(x,y,size){
+	var height=size/2*Math.sqrt(3);
+	return"M "+(x-size)+", "+(y-size)+"\n      L "+(
+	x+size)+", "+(y-size)+"\n      L "+
+	x+", "+(y+height)+"\n      z";
+	
+	},
+	
+	triangleUp:function triangleUp(x,y,size){
+	var height=size/2*Math.sqrt(3);
+	return"M "+(x-size)+", "+(y+size)+"\n      L "+(
+	x+size)+", "+(y+size)+"\n      L "+
+	x+", "+(y-height)+"\n      z";
+	
+	},
+	
+	plus:function plus(x,y,size){
+	var baseSize=1.1*size;
+	return"M "+(x-baseSize/2.5)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y+baseSize)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y+baseSize/2.5)+"\n      L "+(
+	x+baseSize)+", "+(y+baseSize/2.5)+"\n      L "+(
+	x+baseSize)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x+baseSize/2.5)+", "+(y-baseSize)+"\n      L "+(
+	x-baseSize/2.5)+", "+(y-baseSize)+"\n      L "+(
+	x-baseSize/2.5)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x-baseSize)+", "+(y-baseSize/2.5)+"\n      L "+(
+	x-baseSize)+", "+(y+baseSize/2.5)+"\n      L "+(
+	x-baseSize/2.5)+", "+(y+baseSize/2.5)+"\n      z";
+	
+	},
+	
+	star:function star(x,y,size){
+	var baseSize=1.35*size;
+	var angle=Math.PI/5;
+	var starCoords=(0,_range3.default)(10).map(function(index){
+	var length=index%2===0?baseSize:baseSize/2;
+	return length*Math.sin(angle*(index+1))+x+",\n        "+(
+	length*Math.cos(angle*(index+1))+y);
+	});
+	return"M "+starCoords.join("L")+" z";
+	}};
+
+/***/ },
+/* 180 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var createRange = __webpack_require__(181);
+	
+	/**
+	 * Creates an array of numbers (positive and/or negative) progressing from
+	 * `start` up to, but not including, `end`. A step of `-1` is used if a negative
+	 * `start` is specified without an `end` or `step`. If `end` is not specified,
+	 * it's set to `start` with `start` then set to `0`.
+	 *
+	 * **Note:** JavaScript follows the IEEE-754 standard for resolving
+	 * floating-point values which can produce unexpected results.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Util
+	 * @param {number} [start=0] The start of the range.
+	 * @param {number} end The end of the range.
+	 * @param {number} [step=1] The value to increment or decrement by.
+	 * @returns {Array} Returns the range of numbers.
+	 * @see _.inRange, _.rangeRight
+	 * @example
+	 *
+	 * _.range(4);
+	 * // => [0, 1, 2, 3]
+	 *
+	 * _.range(-4);
+	 * // => [0, -1, -2, -3]
+	 *
+	 * _.range(1, 5);
+	 * // => [1, 2, 3, 4]
+	 *
+	 * _.range(0, 20, 5);
+	 * // => [0, 5, 10, 15]
+	 *
+	 * _.range(0, -4, -1);
+	 * // => [0, -1, -2, -3]
+	 *
+	 * _.range(1, 4, 0);
+	 * // => [1, 1, 1]
+	 *
+	 * _.range(0);
+	 * // => []
+	 */
+	var range = createRange();
+	
+	module.exports = range;
+
+
+/***/ },
+/* 181 */
+/***/ function(module, exports, __webpack_require__) {
+
+	var baseRange = __webpack_require__(182),
+	    isIterateeCall = __webpack_require__(114),
+	    toFinite = __webpack_require__(183);
+	
+	/**
+	 * Creates a `_.range` or `_.rangeRight` function.
+	 *
+	 * @private
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {Function} Returns the new range function.
+	 */
+	function createRange(fromRight) {
+	  return function(start, end, step) {
+	    if (step && typeof step != 'number' && isIterateeCall(start, end, step)) {
+	      end = step = undefined;
+	    }
+	    // Ensure the sign of `-0` is preserved.
+	    start = toFinite(start);
+	    if (end === undefined) {
+	      end = start;
+	      start = 0;
+	    } else {
+	      end = toFinite(end);
+	    }
+	    step = step === undefined ? (start < end ? 1 : -1) : toFinite(step);
+	    return baseRange(start, end, step, fromRight);
+	  };
+	}
+	
+	module.exports = createRange;
+
+
+/***/ },
+/* 182 */
+/***/ function(module, exports) {
+
+	/* Built-in method references for those with the same name as other `lodash` methods. */
+	var nativeCeil = Math.ceil,
+	    nativeMax = Math.max;
+	
+	/**
+	 * The base implementation of `_.range` and `_.rangeRight` which doesn't
+	 * coerce arguments.
+	 *
+	 * @private
+	 * @param {number} start The start of the range.
+	 * @param {number} end The end of the range.
+	 * @param {number} step The value to increment or decrement by.
+	 * @param {boolean} [fromRight] Specify iterating from right to left.
+	 * @returns {Array} Returns the range of numbers.
+	 */
+	function baseRange(start, end, step, fromRight) {
+	  var index = -1,
+	      length = nativeMax(nativeCeil((end - start) / (step || 1)), 0),
+	      result = Array(length);
+	
+	  while (length--) {
+	    result[fromRight ? length : ++index] = start;
+	    start += step;
+	  }
+	  return result;
+	}
+	
+	module.exports = baseRange;
+
+
+/***/ },
+/* 183 */
+/***/ function(module, exports) {
+
+	/**
+	 * This method returns the first argument it receives.
+	 *
+	 * @static
+	 * @since 0.1.0
+	 * @memberOf _
+	 * @category Util
+	 * @param {*} value Any value.
+	 * @returns {*} Returns `value`.
+	 * @example
+	 *
+	 * var object = { 'a': 1 };
+	 *
+	 * console.log(_.identity(object) === object);
+	 * // => true
+	 */
+	function identity(value) {
+	  return value;
+	}
+	
+	module.exports = identity;
+
+
+/***/ },
+/* 184 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	Slice=function(_React$Component){_inherits(Slice,_React$Component);function Slice(){_classCallCheck(this,Slice);return _possibleConstructorReturn(this,Object.getPrototypeOf(Slice).apply(this,arguments));}_createClass(Slice,[{key:"renderSlice",value:function renderSlice(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props){
+	return(
+	_react2.default.createElement("path",_extends({
+	d:props.pathFunction(props.slice),
+	style:props.style},
+	props.events)));
+	
+	
+	}},{key:"render",value:function render()
+	
+	{
+	return this.renderSlice(this.props);
+	}}]);return Slice;}(_react2.default.Component);Slice.propTypes={index:_react.PropTypes.number,slice:_react.PropTypes.object,pathFunction:_react.PropTypes.func,style:_react.PropTypes.object,datum:_react.PropTypes.object,events:_react.PropTypes.object};exports.default=Slice;
+
+/***/ },
+/* 185 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	Voronoi=function(_React$Component){_inherits(Voronoi,_React$Component);function Voronoi(){_classCallCheck(this,Voronoi);return _possibleConstructorReturn(this,Object.getPrototypeOf(Voronoi).apply(this,arguments));}_createClass(Voronoi,[{key:"getVoronoiPath",value:function getVoronoiPath(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props){
+	return"M "+props.polygon.join("L")+" Z";
+	}},{key:"getCirclePath",value:function getCirclePath(
+	
+	props){var
+	x=props.x;var y=props.y;var size=props.size;
+	return"M "+x+", "+y+" m "+-size+", 0\n      a "+
+	size+", "+size+" 0 1,0 "+size*2+",0\n      a "+
+	size+", "+size+" 0 1,0 "+-size*2+",0";
+	}},{key:"renderPoint",value:function renderPoint(
+	
+	paths,style,events){
+	var clipId="clipPath-"+Math.random();
+	return paths.circle?
+	
+	_react2.default.createElement("g",null,
+	_react2.default.createElement("defs",null,
+	_react2.default.createElement("clipPath",{id:clipId},
+	_react2.default.createElement("path",{d:paths.voronoi}))),
+	
+	
+	_react2.default.createElement("path",_extends({d:paths.circle,clipPath:"url(#"+clipId+")",style:style},events))):
+	
+	
+	_react2.default.createElement("path",_extends({d:paths.voronoi,style:style},events));
+	}},{key:"render",value:function render()
+	
+	{
+	var paths={
+	circle:this.props.size&&this.getCirclePath(this.props),
+	voronoi:this.getVoronoiPath(this.props)};var _props=
+	
+	this.props;var style=_props.style;var events=_props.events;
+	return this.renderPoint(paths,style,events);
+	}}]);return Voronoi;}(_react2.default.Component);Voronoi.propTypes={datum:_react.PropTypes.object,events:_react.PropTypes.object,index:_react.PropTypes.number,polygon:_react.PropTypes.array,scale:_react.PropTypes.object,size:_react.PropTypes.number,style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number};exports.default=Voronoi;
+
+/***/ },
+/* 186 */
+/***/ function(module, exports, __webpack_require__) {
+
+	Object.defineProperty(exports,"__esModule",{value:true});var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(122);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
+	
+	Flyout=function(_React$Component){_inherits(Flyout,_React$Component);function Flyout(){_classCallCheck(this,Flyout);return _possibleConstructorReturn(this,Object.getPrototypeOf(Flyout).apply(this,arguments));}_createClass(Flyout,[{key:"getVerticalPath",value:function getVerticalPath(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	props){var
+	pointerLength=props.pointerLength;var pointerWidth=props.pointerWidth;var cornerRadius=props.cornerRadius;var orientation=props.orientation;var width=props.width;var height=props.height;
+	var sign=orientation==="top"?1:-1;
+	var x=props.x+(props.dx||0);
+	var y=props.y-sign*(props.dy||0);
+	var pointerEdge=y-sign*pointerLength;
+	var oppositeEdge=y-sign*pointerLength-sign*height;
+	var rightEdge=x+width/2;
+	var leftEdge=x-width/2;
+	var direction=orientation==="top"?"0 0 0":"0 0 1";
+	var arc=cornerRadius+" "+cornerRadius+" "+direction;
+	return"M "+(x-pointerWidth/2)+", "+pointerEdge+"\n      L "+
+	x+", "+y+"\n      L "+(
+	x+pointerWidth/2)+", "+pointerEdge+"\n      L "+(
+	rightEdge-cornerRadius)+", "+pointerEdge+"\n      A "+
+	arc+" "+rightEdge+", "+(pointerEdge-sign*cornerRadius)+"\n      L "+
+	rightEdge+", "+(oppositeEdge+sign*cornerRadius)+"\n      A "+
+	arc+" "+(rightEdge-cornerRadius)+", "+oppositeEdge+"\n      L "+(
+	leftEdge+cornerRadius)+", "+oppositeEdge+"\n      A "+
+	arc+" "+leftEdge+", "+(oppositeEdge+sign*cornerRadius)+"\n      L "+
+	leftEdge+", "+(pointerEdge-sign*cornerRadius)+"\n      A "+
+	arc+" "+(leftEdge+cornerRadius)+", "+pointerEdge+"\n      z";
+	
+	}},{key:"getHorizontalPath",value:function getHorizontalPath(
+	
+	props){var
+	pointerLength=props.pointerLength;var pointerWidth=props.pointerWidth;var cornerRadius=props.cornerRadius;var orientation=props.orientation;var width=props.width;var height=props.height;
+	var sign=orientation==="right"?1:-1;
+	var x=props.x+sign*(props.dx||0);
+	var y=props.y-(props.dy||0);
+	var pointerEdge=x+sign*pointerLength;
+	var oppositeEdge=x+sign*pointerLength+sign*width;
+	var bottomEdge=y+height/2;
+	var topEdge=y-height/2;
+	var direction=orientation==="right"?"0 0 0":"0 0 1";
+	var arc=cornerRadius+" "+cornerRadius+" "+direction;
+	return"M "+pointerEdge+", "+(y-pointerWidth/2)+"\n      L "+
+	x+", "+y+"\n      L "+
+	pointerEdge+", "+(y+pointerWidth/2)+"\n      L "+
+	pointerEdge+", "+(bottomEdge-cornerRadius)+"\n      A "+
+	arc+" "+(pointerEdge+sign*cornerRadius)+", "+bottomEdge+"\n      L "+(
+	oppositeEdge-sign*cornerRadius)+", "+bottomEdge+"\n      A "+
+	arc+" "+oppositeEdge+", "+(bottomEdge-cornerRadius)+"\n      L "+
+	oppositeEdge+", "+(topEdge+cornerRadius)+"\n      A "+
+	arc+" "+(oppositeEdge-sign*cornerRadius)+", "+topEdge+"\n      L "+(
+	pointerEdge+sign*cornerRadius)+", "+topEdge+"\n      A "+
+	arc+" "+pointerEdge+", "+(topEdge+cornerRadius)+"\n      z";
+	
+	}},{key:"getFlyoutPath",value:function getFlyoutPath(
+	
+	props){
+	var orientation=props.orientation||"top";
+	return orientation==="left"||orientation==="right"?
+	this.getHorizontalPath(props):this.getVerticalPath(props);
+	}},{key:"renderFlyout",value:function renderFlyout(
+	
+	path,style,events){
+	return(
+	_react2.default.createElement("path",_extends({d:path,style:style},events)));
+	
+	}},{key:"render",value:function render()
+	
+	{
+	var path=this.getFlyoutPath(this.props);
+	return this.renderFlyout(path,this.props.style,this.props.events);
+	}}]);return Flyout;}(_react2.default.Component);Flyout.propTypes={style:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.number,dy:_react.PropTypes.number,width:_react.PropTypes.number,height:_react.PropTypes.number,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),pointerLength:_react.PropTypes.number,pointerWidth:_react.PropTypes.number,cornerRadius:_react.PropTypes.number,events:_react.PropTypes.object};exports.default=Flyout;
 
 /***/ }
 /******/ ])
