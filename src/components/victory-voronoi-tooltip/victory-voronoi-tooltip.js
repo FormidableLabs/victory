@@ -416,7 +416,7 @@ export default class VictoryVoronoiTooltip extends React.Component {
 
       if (this.baseProps[key].labels || this.hasEvents) {
         const labelProps = getComponentProps(index, labelComponent, "labels");
-        if (labelProps && labelProps.text) {
+        if (labelProps && labelProps.text !== undefined) {
           labelComponents[index] = React.cloneElement(labelComponent, labelProps);
         }
       }
