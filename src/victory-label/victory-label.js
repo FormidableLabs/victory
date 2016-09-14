@@ -170,8 +170,8 @@ export default class VictoryLabel extends React.Component {
   }
 
   getContent(props) {
-    const text = props.text || props.children;
-    if (text) {
+    const text = props.text !== undefined ? props.text : props.children;
+    if (text !== undefined) {
       const datum = props.datum || props.data;
       const child = Helpers.evaluateProp(text, datum);
       return `${child}`.split("\n");
