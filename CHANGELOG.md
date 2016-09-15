@@ -1,5 +1,13 @@
 # Victory Changelog
 
+## 0.12.1 (2016-09-05)
+
+- Fixes ordering for stacked and grouped data
+- Fixes broken tooltips in Safari
+- Fixes tooltip fill bug
+- Corrects `propTypes` in `VictoryTooltip`
+- Removes unused `flyoutProps` prop in `VictoryVoronoiTooltip`
+
 ## 0.12.0 (2016-09-09)
 
 **This is a breaking change for label placement in VictoryPie**
