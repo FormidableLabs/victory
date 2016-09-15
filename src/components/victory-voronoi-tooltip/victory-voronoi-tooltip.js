@@ -419,8 +419,9 @@ export default class VictoryVoronoiTooltip extends React.Component {
           {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
+          type === "labels" ? props.flyoutProps : {},
           component.props,
-          this.baseProps[key][type]
+          this.baseProps[key][type],
         );
         return assign(
           {}, componentProps, {events: Events.getPartialEvents(events, key, componentProps)}
