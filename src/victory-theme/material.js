@@ -67,7 +67,7 @@ export default {
   axis: assign({
     style: {
       axis: {
-        fill: "none",
+        fill: "transparent",
         stroke: blueGrey300,
         strokeWidth: 2,
         strokeLinecap,
@@ -78,14 +78,14 @@ export default {
         stroke: "transparent"
       }),
       grid: {
-        fill: "none",
+        fill: "transparent",
         stroke: blueGrey50,
         strokeDasharray,
         strokeLinecap,
         strokeLinejoin
       },
       ticks: {
-        fill: "none",
+        fill: "transparent",
         padding,
         size: 5,
         stroke: blueGrey300,
@@ -127,7 +127,7 @@ export default {
   errorbar: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         opacity: 1,
         stroke: blueGrey700,
         strokeWidth: 2
@@ -144,7 +144,7 @@ export default {
   line: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         opacity: 1,
         stroke: blueGrey700,
         strokeWidth: 2
@@ -190,7 +190,7 @@ export default {
   tooltip: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         stroke: "transparent",
         strokeWidth: 0
       },
@@ -209,7 +209,7 @@ export default {
   voronoi: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         stroke: "transparent",
         strokeWidth: 0
       },
