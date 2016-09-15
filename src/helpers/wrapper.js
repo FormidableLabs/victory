@@ -137,9 +137,12 @@ export default {
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
+    // Reverse the child array to maintain correct order when looping over
+    // children starting from the end of the array.
     const children = childComponents
-      ? childComponents.slice(0)
-      : React.Children.toArray(props.children);
+      ? childComponents.slice(0).reverse()
+      : React.Children.toArray(props.children).reverse();
+
     let childrenLength = children.length;
 
     const dataArr = [];
