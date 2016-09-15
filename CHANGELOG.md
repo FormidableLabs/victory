@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 12.0.1 (2016-09-15)
+
+- Fixes ordering in stacked and grouped data
+- Fixes minor tooltip bugs
+- Removes unused `flyoutProps` prop from `VictoryVoronoiTooltip`
+
 ## 12.0.0 (2016-09-09)
 
 - Adds support for `VictoryTooltip`
