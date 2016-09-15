@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 7.0.1 (2016-09-15)
+
+- Fixes minor bugs related to tooltips
+
 ## 7.0.0 (2016-09-09)
 
 **Breaking Changes for `VictoryPie` themes**
