@@ -7573,8 +7573,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}},{key:"getContent",value:function getContent(
 	
 	props){
-	var text=props.text||props.children;
-	if(text){
+	var text=props.text!==undefined?props.text:props.children;
+	if(text!==undefined){
 	var datum=props.datum||props.data;
 	var child=_index.Helpers.evaluateProp(text,datum);
 	return(""+child).split("\n");
@@ -9248,7 +9248,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	axis:(0,_assign3.default)({
 	style:{
 	axis:{
-	fill:"none",
+	fill:"transparent",
 	stroke:blueGrey300,
 	strokeWidth:2,
 	strokeLinecap:strokeLinecap,
@@ -9259,14 +9259,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent"}),
 	
 	grid:{
-	fill:"none",
+	fill:"transparent",
 	stroke:blueGrey50,
 	strokeDasharray:strokeDasharray,
 	strokeLinecap:strokeLinecap,
 	strokeLinejoin:strokeLinejoin},
 	
 	ticks:{
-	fill:"none",
+	fill:"transparent",
 	padding:padding,
 	size:5,
 	stroke:blueGrey300,
@@ -9308,7 +9308,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	errorbar:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	opacity:1,
 	stroke:blueGrey700,
 	strokeWidth:2},
@@ -9325,7 +9325,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	line:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	opacity:1,
 	stroke:blueGrey700,
 	strokeWidth:2},
@@ -9371,7 +9371,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	tooltip:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9390,7 +9390,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	voronoi:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9464,7 +9464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	axis:(0,_assign3.default)({
 	style:{
 	axis:{
-	fill:"none",
+	fill:"transparent",
 	stroke:charcoal,
 	strokeWidth:1,
 	strokeLinecap:strokeLinecap,
@@ -9474,11 +9474,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	padding:25}),
 	
 	grid:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent"},
 	
 	ticks:{
-	fill:"none",
+	fill:"transparent",
 	padding:10,
 	size:1,
 	stroke:"transparent"},
@@ -9515,7 +9515,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	errorbar:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:charcoal,
 	strokeWidth:2},
 	
@@ -9528,7 +9528,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	line:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:charcoal,
 	strokeWidth:2},
 	
@@ -9541,7 +9541,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	style:{
 	data:{
 	padding:10,
-	stroke:"none",
+	stroke:"transparent",
 	strokeWidth:1},
 	
 	labels:(0,_assign3.default)({},baseLabelStyles,{
@@ -9569,7 +9569,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	tooltip:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9588,7 +9588,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	voronoi:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9609,7 +9609,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var defaultStyles={
 	stroke:"black",
 	strokeWidth:1,
-	fill:"f0f0f0"};
+	fill:"#f0f0f0"};
 	
 	
 	var defaultLabelStyles={
@@ -9621,6 +9621,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	VictoryTooltip=function(_React$Component){_inherits(VictoryTooltip,_React$Component);function VictoryTooltip(){_classCallCheck(this,VictoryTooltip);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryTooltip).apply(this,arguments));}_createClass(VictoryTooltip,[{key:"getEvaluatedProps",value:function getEvaluatedProps(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -9921,7 +9949,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return this.renderTooltip(evaluatedProps);
 	}}]);return VictoryTooltip;}(_react2.default.Component);VictoryTooltip.displayName="VictoryTooltip";VictoryTooltip.propTypes={/**
 	     * Specifies whether the flyout will be displayed
-	     */active:_react.PropTypes.bool,/**
+	     */active:_react.PropTypes.oneOfType([_react.PropTypes.bool,_react.PropTypes.func]),/**
 	     * Victory components can pass a datum prop to their tooltip component. This can
 	     * be used to calculate functional styles, and determine child text
 	     */datum:_react.PropTypes.object,/**
@@ -9946,23 +9974,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * positioning.
 	     */y:_react.PropTypes.number,/**
 	     * The dx prop defines a horizontal shift from the `x` coordinate.
-	     */dx:_index.PropTypes.nonNegative,/**
+	     */dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),/**
 	     * The dy prop defines a vertical shift from the `y` coordinate.
-	     */dy:_index.PropTypes.nonNegative,/**
+	     */dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),/**
 	     * The width prop defines the width of the tooltip flyout.
-	     */width:_index.PropTypes.nonNegative,/**
+	     */width:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
 	     * The height prop defines the height of the tooltip flyout.
-	     */height:_index.PropTypes.nonNegative,/**
+	     */height:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
 	     * The orientation prop determines which side of the (x, y) coordinate the tooltip
-	     * be rendered on
-	     */orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),/**
+	     * be rendered on. This prop can be given as "top", "bottom", "left", "right", or
+	     * as a function of datum that returns one of these values.
+	     */orientation:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["top","bottom","left","right"]),_react.PropTypes.func]),/**
 	     * The pointerLength prop determines the length of the pointer extending from the flyout
-	     */pointerLength:_index.PropTypes.nonNegative,/**
+	     */pointerLength:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
 	     * The pointerLength prop determines the width of the base of the triangular pointer
 	     * extending from the flyout
-	     */pointerWidth:_index.PropTypes.nonNegative,/**
+	     */pointerWidth:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
 	     * The cornerRadius prop determines corner radius of the flyout container
-	     */cornerRadius:_index.PropTypes.nonNegative,/**
+	     */cornerRadius:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),/**
 	     * The horizontal prop determines whether to plot the flyouts to the left / right
 	     * of the (x, y) coordinate rather than top / bottom. This is useful when an orientation
 	     * prop is not provided, and data will determine the default orientation. i.e. negative
@@ -11926,161 +11955,162 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 172 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-path/ Version 1.0.1. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-path/ Version 1.0.2. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	  (factory((global.d3 = global.d3 || {})));
-	}(this, function (exports) { 'use strict';
+	}(this, (function (exports) { 'use strict';
 	
-	  var pi = Math.PI;
-	  var tau = 2 * pi;
-	  var epsilon = 1e-6;
-	  var tauEpsilon = tau - epsilon;
-	  function Path() {
-	    this._x0 = this._y0 = // start of current subpath
-	    this._x1 = this._y1 = null; // end of current subpath
-	    this._ = [];
-	  }
+	var pi = Math.PI;
+	var tau = 2 * pi;
+	var epsilon = 1e-6;
+	var tauEpsilon = tau - epsilon;
 	
-	  function path() {
-	    return new Path;
-	  }
+	function Path() {
+	  this._x0 = this._y0 = // start of current subpath
+	  this._x1 = this._y1 = null; // end of current subpath
+	  this._ = [];
+	}
 	
-	  Path.prototype = path.prototype = {
-	    constructor: Path,
-	    moveTo: function(x, y) {
-	      this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y);
-	    },
-	    closePath: function() {
-	      if (this._x1 !== null) {
-	        this._x1 = this._x0, this._y1 = this._y0;
-	        this._.push("Z");
-	      }
-	    },
-	    lineTo: function(x, y) {
-	      this._.push("L", this._x1 = +x, ",", this._y1 = +y);
-	    },
-	    quadraticCurveTo: function(x1, y1, x, y) {
-	      this._.push("Q", +x1, ",", +y1, ",", this._x1 = +x, ",", this._y1 = +y);
-	    },
-	    bezierCurveTo: function(x1, y1, x2, y2, x, y) {
-	      this._.push("C", +x1, ",", +y1, ",", +x2, ",", +y2, ",", this._x1 = +x, ",", this._y1 = +y);
-	    },
-	    arcTo: function(x1, y1, x2, y2, r) {
-	      x1 = +x1, y1 = +y1, x2 = +x2, y2 = +y2, r = +r;
-	      var x0 = this._x1,
-	          y0 = this._y1,
-	          x21 = x2 - x1,
-	          y21 = y2 - y1,
-	          x01 = x0 - x1,
-	          y01 = y0 - y1,
-	          l01_2 = x01 * x01 + y01 * y01;
+	function path() {
+	  return new Path;
+	}
 	
-	      // Is the radius negative? Error.
-	      if (r < 0) throw new Error("negative radius: " + r);
-	
-	      // Is this path empty? Move to (x1,y1).
-	      if (this._x1 === null) {
-	        this._.push(
-	          "M", this._x1 = x1, ",", this._y1 = y1
-	        );
-	      }
-	
-	      // Or, is (x1,y1) coincident with (x0,y0)? Do nothing.
-	      else if (!(l01_2 > epsilon));
-	
-	      // Or, are (x0,y0), (x1,y1) and (x2,y2) collinear?
-	      // Equivalently, is (x1,y1) coincident with (x2,y2)?
-	      // Or, is the radius zero? Line to (x1,y1).
-	      else if (!(Math.abs(y01 * x21 - y21 * x01) > epsilon) || !r) {
-	        this._.push(
-	          "L", this._x1 = x1, ",", this._y1 = y1
-	        );
-	      }
-	
-	      // Otherwise, draw an arc!
-	      else {
-	        var x20 = x2 - x0,
-	            y20 = y2 - y0,
-	            l21_2 = x21 * x21 + y21 * y21,
-	            l20_2 = x20 * x20 + y20 * y20,
-	            l21 = Math.sqrt(l21_2),
-	            l01 = Math.sqrt(l01_2),
-	            l = r * Math.tan((pi - Math.acos((l21_2 + l01_2 - l20_2) / (2 * l21 * l01))) / 2),
-	            t01 = l / l01,
-	            t21 = l / l21;
-	
-	        // If the start tangent is not coincident with (x0,y0), line to.
-	        if (Math.abs(t01 - 1) > epsilon) {
-	          this._.push(
-	            "L", x1 + t01 * x01, ",", y1 + t01 * y01
-	          );
-	        }
-	
-	        this._.push(
-	          "A", r, ",", r, ",0,0,", +(y01 * x20 > x01 * y20), ",", this._x1 = x1 + t21 * x21, ",", this._y1 = y1 + t21 * y21
-	        );
-	      }
-	    },
-	    arc: function(x, y, r, a0, a1, ccw) {
-	      x = +x, y = +y, r = +r;
-	      var dx = r * Math.cos(a0),
-	          dy = r * Math.sin(a0),
-	          x0 = x + dx,
-	          y0 = y + dy,
-	          cw = 1 ^ ccw,
-	          da = ccw ? a0 - a1 : a1 - a0;
-	
-	      // Is the radius negative? Error.
-	      if (r < 0) throw new Error("negative radius: " + r);
-	
-	      // Is this path empty? Move to (x0,y0).
-	      if (this._x1 === null) {
-	        this._.push(
-	          "M", x0, ",", y0
-	        );
-	      }
-	
-	      // Or, is (x0,y0) not coincident with the previous point? Line to (x0,y0).
-	      else if (Math.abs(this._x1 - x0) > epsilon || Math.abs(this._y1 - y0) > epsilon) {
-	        this._.push(
-	          "L", x0, ",", y0
-	        );
-	      }
-	
-	      // Is this arc empty? We’re done.
-	      if (!r) return;
-	
-	      // Is this a complete circle? Draw two arcs to complete the circle.
-	      if (da > tauEpsilon) {
-	        this._.push(
-	          "A", r, ",", r, ",0,1,", cw, ",", x - dx, ",", y - dy,
-	          "A", r, ",", r, ",0,1,", cw, ",", this._x1 = x0, ",", this._y1 = y0
-	        );
-	      }
-	
-	      // Otherwise, draw an arc!
-	      else {
-	        if (da < 0) da = da % tau + tau;
-	        this._.push(
-	          "A", r, ",", r, ",0,", +(da >= pi), ",", cw, ",", this._x1 = x + r * Math.cos(a1), ",", this._y1 = y + r * Math.sin(a1)
-	        );
-	      }
-	    },
-	    rect: function(x, y, w, h) {
-	      this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y, "h", +w, "v", +h, "h", -w, "Z");
-	    },
-	    toString: function() {
-	      return this._.join("");
+	Path.prototype = path.prototype = {
+	  constructor: Path,
+	  moveTo: function(x, y) {
+	    this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y);
+	  },
+	  closePath: function() {
+	    if (this._x1 !== null) {
+	      this._x1 = this._x0, this._y1 = this._y0;
+	      this._.push("Z");
 	    }
-	  };
+	  },
+	  lineTo: function(x, y) {
+	    this._.push("L", this._x1 = +x, ",", this._y1 = +y);
+	  },
+	  quadraticCurveTo: function(x1, y1, x, y) {
+	    this._.push("Q", +x1, ",", +y1, ",", this._x1 = +x, ",", this._y1 = +y);
+	  },
+	  bezierCurveTo: function(x1, y1, x2, y2, x, y) {
+	    this._.push("C", +x1, ",", +y1, ",", +x2, ",", +y2, ",", this._x1 = +x, ",", this._y1 = +y);
+	  },
+	  arcTo: function(x1, y1, x2, y2, r) {
+	    x1 = +x1, y1 = +y1, x2 = +x2, y2 = +y2, r = +r;
+	    var x0 = this._x1,
+	        y0 = this._y1,
+	        x21 = x2 - x1,
+	        y21 = y2 - y1,
+	        x01 = x0 - x1,
+	        y01 = y0 - y1,
+	        l01_2 = x01 * x01 + y01 * y01;
 	
-	  exports.path = path;
+	    // Is the radius negative? Error.
+	    if (r < 0) throw new Error("negative radius: " + r);
 	
-	  Object.defineProperty(exports, '__esModule', { value: true });
+	    // Is this path empty? Move to (x1,y1).
+	    if (this._x1 === null) {
+	      this._.push(
+	        "M", this._x1 = x1, ",", this._y1 = y1
+	      );
+	    }
 	
-	}));
+	    // Or, is (x1,y1) coincident with (x0,y0)? Do nothing.
+	    else if (!(l01_2 > epsilon)) {}
+	
+	    // Or, are (x0,y0), (x1,y1) and (x2,y2) collinear?
+	    // Equivalently, is (x1,y1) coincident with (x2,y2)?
+	    // Or, is the radius zero? Line to (x1,y1).
+	    else if (!(Math.abs(y01 * x21 - y21 * x01) > epsilon) || !r) {
+	      this._.push(
+	        "L", this._x1 = x1, ",", this._y1 = y1
+	      );
+	    }
+	
+	    // Otherwise, draw an arc!
+	    else {
+	      var x20 = x2 - x0,
+	          y20 = y2 - y0,
+	          l21_2 = x21 * x21 + y21 * y21,
+	          l20_2 = x20 * x20 + y20 * y20,
+	          l21 = Math.sqrt(l21_2),
+	          l01 = Math.sqrt(l01_2),
+	          l = r * Math.tan((pi - Math.acos((l21_2 + l01_2 - l20_2) / (2 * l21 * l01))) / 2),
+	          t01 = l / l01,
+	          t21 = l / l21;
+	
+	      // If the start tangent is not coincident with (x0,y0), line to.
+	      if (Math.abs(t01 - 1) > epsilon) {
+	        this._.push(
+	          "L", x1 + t01 * x01, ",", y1 + t01 * y01
+	        );
+	      }
+	
+	      this._.push(
+	        "A", r, ",", r, ",0,0,", +(y01 * x20 > x01 * y20), ",", this._x1 = x1 + t21 * x21, ",", this._y1 = y1 + t21 * y21
+	      );
+	    }
+	  },
+	  arc: function(x, y, r, a0, a1, ccw) {
+	    x = +x, y = +y, r = +r;
+	    var dx = r * Math.cos(a0),
+	        dy = r * Math.sin(a0),
+	        x0 = x + dx,
+	        y0 = y + dy,
+	        cw = 1 ^ ccw,
+	        da = ccw ? a0 - a1 : a1 - a0;
+	
+	    // Is the radius negative? Error.
+	    if (r < 0) throw new Error("negative radius: " + r);
+	
+	    // Is this path empty? Move to (x0,y0).
+	    if (this._x1 === null) {
+	      this._.push(
+	        "M", x0, ",", y0
+	      );
+	    }
+	
+	    // Or, is (x0,y0) not coincident with the previous point? Line to (x0,y0).
+	    else if (Math.abs(this._x1 - x0) > epsilon || Math.abs(this._y1 - y0) > epsilon) {
+	      this._.push(
+	        "L", x0, ",", y0
+	      );
+	    }
+	
+	    // Is this arc empty? We’re done.
+	    if (!r) return;
+	
+	    // Is this a complete circle? Draw two arcs to complete the circle.
+	    if (da > tauEpsilon) {
+	      this._.push(
+	        "A", r, ",", r, ",0,1,", cw, ",", x - dx, ",", y - dy,
+	        "A", r, ",", r, ",0,1,", cw, ",", this._x1 = x0, ",", this._y1 = y0
+	      );
+	    }
+	
+	    // Otherwise, draw an arc!
+	    else {
+	      if (da < 0) da = da % tau + tau;
+	      this._.push(
+	        "A", r, ",", r, ",0,", +(da >= pi), ",", cw, ",", this._x1 = x + r * Math.cos(a1), ",", this._y1 = y + r * Math.sin(a1)
+	      );
+	    }
+	  },
+	  rect: function(x, y, w, h) {
+	    this._.push("M", this._x0 = this._x1 = +x, ",", this._y0 = this._y1 = +y, "h", +w, "v", +h, "h", -w, "Z");
+	  },
+	  toString: function() {
+	    return this._.join("");
+	  }
+	};
+	
+	exports.path = path;
+	
+	Object.defineProperty(exports, '__esModule', { value: true });
+	
+	})));
 
 /***/ },
 /* 173 */
@@ -20843,383 +20873,384 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 286 */
 /***/ function(module, exports, __webpack_require__) {
 
-	// https://d3js.org/d3-time/ Version 1.0.2. Copyright 2016 Mike Bostock.
+	// https://d3js.org/d3-time/ Version 1.0.3. Copyright 2016 Mike Bostock.
 	(function (global, factory) {
 	   true ? factory(exports) :
 	  typeof define === 'function' && define.amd ? define(['exports'], factory) :
 	  (factory((global.d3 = global.d3 || {})));
-	}(this, function (exports) { 'use strict';
+	}(this, (function (exports) { 'use strict';
 	
-	  var t0 = new Date;
-	  var t1 = new Date;
-	  function newInterval(floori, offseti, count, field) {
+	var t0 = new Date;
+	var t1 = new Date;
 	
-	    function interval(date) {
-	      return floori(date = new Date(+date)), date;
-	    }
+	function newInterval(floori, offseti, count, field) {
 	
-	    interval.floor = interval;
-	
-	    interval.ceil = function(date) {
-	      return floori(date = new Date(date - 1)), offseti(date, 1), floori(date), date;
-	    };
-	
-	    interval.round = function(date) {
-	      var d0 = interval(date),
-	          d1 = interval.ceil(date);
-	      return date - d0 < d1 - date ? d0 : d1;
-	    };
-	
-	    interval.offset = function(date, step) {
-	      return offseti(date = new Date(+date), step == null ? 1 : Math.floor(step)), date;
-	    };
-	
-	    interval.range = function(start, stop, step) {
-	      var range = [];
-	      start = interval.ceil(start);
-	      step = step == null ? 1 : Math.floor(step);
-	      if (!(start < stop) || !(step > 0)) return range; // also handles Invalid Date
-	      do range.push(new Date(+start)); while (offseti(start, step), floori(start), start < stop)
-	      return range;
-	    };
-	
-	    interval.filter = function(test) {
-	      return newInterval(function(date) {
-	        while (floori(date), !test(date)) date.setTime(date - 1);
-	      }, function(date, step) {
-	        while (--step >= 0) while (offseti(date, 1), !test(date));
-	      });
-	    };
-	
-	    if (count) {
-	      interval.count = function(start, end) {
-	        t0.setTime(+start), t1.setTime(+end);
-	        floori(t0), floori(t1);
-	        return Math.floor(count(t0, t1));
-	      };
-	
-	      interval.every = function(step) {
-	        step = Math.floor(step);
-	        return !isFinite(step) || !(step > 0) ? null
-	            : !(step > 1) ? interval
-	            : interval.filter(field
-	                ? function(d) { return field(d) % step === 0; }
-	                : function(d) { return interval.count(0, d) % step === 0; });
-	      };
-	    }
-	
-	    return interval;
+	  function interval(date) {
+	    return floori(date = new Date(+date)), date;
 	  }
 	
-	  var millisecond = newInterval(function() {
-	    // noop
-	  }, function(date, step) {
-	    date.setTime(+date + step);
-	  }, function(start, end) {
-	    return end - start;
-	  });
+	  interval.floor = interval;
 	
-	  // An optimized implementation for this simple case.
-	  millisecond.every = function(k) {
-	    k = Math.floor(k);
-	    if (!isFinite(k) || !(k > 0)) return null;
-	    if (!(k > 1)) return millisecond;
+	  interval.ceil = function(date) {
+	    return floori(date = new Date(date - 1)), offseti(date, 1), floori(date), date;
+	  };
+	
+	  interval.round = function(date) {
+	    var d0 = interval(date),
+	        d1 = interval.ceil(date);
+	    return date - d0 < d1 - date ? d0 : d1;
+	  };
+	
+	  interval.offset = function(date, step) {
+	    return offseti(date = new Date(+date), step == null ? 1 : Math.floor(step)), date;
+	  };
+	
+	  interval.range = function(start, stop, step) {
+	    var range = [];
+	    start = interval.ceil(start);
+	    step = step == null ? 1 : Math.floor(step);
+	    if (!(start < stop) || !(step > 0)) return range; // also handles Invalid Date
+	    do range.push(new Date(+start)); while (offseti(start, step), floori(start), start < stop)
+	    return range;
+	  };
+	
+	  interval.filter = function(test) {
 	    return newInterval(function(date) {
-	      date.setTime(Math.floor(date / k) * k);
+	      while (floori(date), !test(date)) date.setTime(date - 1);
 	    }, function(date, step) {
-	      date.setTime(+date + step * k);
-	    }, function(start, end) {
-	      return (end - start) / k;
+	      while (--step >= 0) while (offseti(date, 1), !test(date)) {} // eslint-disable-line no-empty
 	    });
 	  };
 	
-	  var milliseconds = millisecond.range;
+	  if (count) {
+	    interval.count = function(start, end) {
+	      t0.setTime(+start), t1.setTime(+end);
+	      floori(t0), floori(t1);
+	      return Math.floor(count(t0, t1));
+	    };
 	
-	  var durationSecond = 1e3;
-	  var durationMinute = 6e4;
-	  var durationHour = 36e5;
-	  var durationDay = 864e5;
-	  var durationWeek = 6048e5;
-	
-	  var second = newInterval(function(date) {
-	    date.setTime(Math.floor(date / durationSecond) * durationSecond);
-	  }, function(date, step) {
-	    date.setTime(+date + step * durationSecond);
-	  }, function(start, end) {
-	    return (end - start) / durationSecond;
-	  }, function(date) {
-	    return date.getUTCSeconds();
-	  });
-	
-	  var seconds = second.range;
-	
-	  var minute = newInterval(function(date) {
-	    date.setTime(Math.floor(date / durationMinute) * durationMinute);
-	  }, function(date, step) {
-	    date.setTime(+date + step * durationMinute);
-	  }, function(start, end) {
-	    return (end - start) / durationMinute;
-	  }, function(date) {
-	    return date.getMinutes();
-	  });
-	
-	  var minutes = minute.range;
-	
-	  var hour = newInterval(function(date) {
-	    var offset = date.getTimezoneOffset() * durationMinute % durationHour;
-	    if (offset < 0) offset += durationHour;
-	    date.setTime(Math.floor((+date - offset) / durationHour) * durationHour + offset);
-	  }, function(date, step) {
-	    date.setTime(+date + step * durationHour);
-	  }, function(start, end) {
-	    return (end - start) / durationHour;
-	  }, function(date) {
-	    return date.getHours();
-	  });
-	
-	  var hours = hour.range;
-	
-	  var day = newInterval(function(date) {
-	    date.setHours(0, 0, 0, 0);
-	  }, function(date, step) {
-	    date.setDate(date.getDate() + step);
-	  }, function(start, end) {
-	    return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationDay;
-	  }, function(date) {
-	    return date.getDate() - 1;
-	  });
-	
-	  var days = day.range;
-	
-	  function weekday(i) {
-	    return newInterval(function(date) {
-	      date.setDate(date.getDate() - (date.getDay() + 7 - i) % 7);
-	      date.setHours(0, 0, 0, 0);
-	    }, function(date, step) {
-	      date.setDate(date.getDate() + step * 7);
-	    }, function(start, end) {
-	      return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationWeek;
-	    });
+	    interval.every = function(step) {
+	      step = Math.floor(step);
+	      return !isFinite(step) || !(step > 0) ? null
+	          : !(step > 1) ? interval
+	          : interval.filter(field
+	              ? function(d) { return field(d) % step === 0; }
+	              : function(d) { return interval.count(0, d) % step === 0; });
+	    };
 	  }
 	
-	  var sunday = weekday(0);
-	  var monday = weekday(1);
-	  var tuesday = weekday(2);
-	  var wednesday = weekday(3);
-	  var thursday = weekday(4);
-	  var friday = weekday(5);
-	  var saturday = weekday(6);
+	  return interval;
+	}
 	
-	  var sundays = sunday.range;
-	  var mondays = monday.range;
-	  var tuesdays = tuesday.range;
-	  var wednesdays = wednesday.range;
-	  var thursdays = thursday.range;
-	  var fridays = friday.range;
-	  var saturdays = saturday.range;
+	var millisecond = newInterval(function() {
+	  // noop
+	}, function(date, step) {
+	  date.setTime(+date + step);
+	}, function(start, end) {
+	  return end - start;
+	});
 	
-	  var month = newInterval(function(date) {
-	    date.setDate(1);
+	// An optimized implementation for this simple case.
+	millisecond.every = function(k) {
+	  k = Math.floor(k);
+	  if (!isFinite(k) || !(k > 0)) return null;
+	  if (!(k > 1)) return millisecond;
+	  return newInterval(function(date) {
+	    date.setTime(Math.floor(date / k) * k);
+	  }, function(date, step) {
+	    date.setTime(+date + step * k);
+	  }, function(start, end) {
+	    return (end - start) / k;
+	  });
+	};
+	
+	var milliseconds = millisecond.range;
+	
+	var durationSecond = 1e3;
+	var durationMinute = 6e4;
+	var durationHour = 36e5;
+	var durationDay = 864e5;
+	var durationWeek = 6048e5;
+	
+	var second = newInterval(function(date) {
+	  date.setTime(Math.floor(date / durationSecond) * durationSecond);
+	}, function(date, step) {
+	  date.setTime(+date + step * durationSecond);
+	}, function(start, end) {
+	  return (end - start) / durationSecond;
+	}, function(date) {
+	  return date.getUTCSeconds();
+	});
+	
+	var seconds = second.range;
+	
+	var minute = newInterval(function(date) {
+	  date.setTime(Math.floor(date / durationMinute) * durationMinute);
+	}, function(date, step) {
+	  date.setTime(+date + step * durationMinute);
+	}, function(start, end) {
+	  return (end - start) / durationMinute;
+	}, function(date) {
+	  return date.getMinutes();
+	});
+	
+	var minutes = minute.range;
+	
+	var hour = newInterval(function(date) {
+	  var offset = date.getTimezoneOffset() * durationMinute % durationHour;
+	  if (offset < 0) offset += durationHour;
+	  date.setTime(Math.floor((+date - offset) / durationHour) * durationHour + offset);
+	}, function(date, step) {
+	  date.setTime(+date + step * durationHour);
+	}, function(start, end) {
+	  return (end - start) / durationHour;
+	}, function(date) {
+	  return date.getHours();
+	});
+	
+	var hours = hour.range;
+	
+	var day = newInterval(function(date) {
+	  date.setHours(0, 0, 0, 0);
+	}, function(date, step) {
+	  date.setDate(date.getDate() + step);
+	}, function(start, end) {
+	  return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationDay;
+	}, function(date) {
+	  return date.getDate() - 1;
+	});
+	
+	var days = day.range;
+	
+	function weekday(i) {
+	  return newInterval(function(date) {
+	    date.setDate(date.getDate() - (date.getDay() + 7 - i) % 7);
 	    date.setHours(0, 0, 0, 0);
 	  }, function(date, step) {
-	    date.setMonth(date.getMonth() + step);
+	    date.setDate(date.getDate() + step * 7);
 	  }, function(start, end) {
-	    return end.getMonth() - start.getMonth() + (end.getFullYear() - start.getFullYear()) * 12;
-	  }, function(date) {
-	    return date.getMonth();
+	    return (end - start - (end.getTimezoneOffset() - start.getTimezoneOffset()) * durationMinute) / durationWeek;
 	  });
+	}
 	
-	  var months = month.range;
+	var sunday = weekday(0);
+	var monday = weekday(1);
+	var tuesday = weekday(2);
+	var wednesday = weekday(3);
+	var thursday = weekday(4);
+	var friday = weekday(5);
+	var saturday = weekday(6);
 	
-	  var year = newInterval(function(date) {
+	var sundays = sunday.range;
+	var mondays = monday.range;
+	var tuesdays = tuesday.range;
+	var wednesdays = wednesday.range;
+	var thursdays = thursday.range;
+	var fridays = friday.range;
+	var saturdays = saturday.range;
+	
+	var month = newInterval(function(date) {
+	  date.setDate(1);
+	  date.setHours(0, 0, 0, 0);
+	}, function(date, step) {
+	  date.setMonth(date.getMonth() + step);
+	}, function(start, end) {
+	  return end.getMonth() - start.getMonth() + (end.getFullYear() - start.getFullYear()) * 12;
+	}, function(date) {
+	  return date.getMonth();
+	});
+	
+	var months = month.range;
+	
+	var year = newInterval(function(date) {
+	  date.setMonth(0, 1);
+	  date.setHours(0, 0, 0, 0);
+	}, function(date, step) {
+	  date.setFullYear(date.getFullYear() + step);
+	}, function(start, end) {
+	  return end.getFullYear() - start.getFullYear();
+	}, function(date) {
+	  return date.getFullYear();
+	});
+	
+	// An optimized implementation for this simple case.
+	year.every = function(k) {
+	  return !isFinite(k = Math.floor(k)) || !(k > 0) ? null : newInterval(function(date) {
+	    date.setFullYear(Math.floor(date.getFullYear() / k) * k);
 	    date.setMonth(0, 1);
 	    date.setHours(0, 0, 0, 0);
 	  }, function(date, step) {
-	    date.setFullYear(date.getFullYear() + step);
-	  }, function(start, end) {
-	    return end.getFullYear() - start.getFullYear();
-	  }, function(date) {
-	    return date.getFullYear();
+	    date.setFullYear(date.getFullYear() + step * k);
 	  });
+	};
 	
-	  // An optimized implementation for this simple case.
-	  year.every = function(k) {
-	    return !isFinite(k = Math.floor(k)) || !(k > 0) ? null : newInterval(function(date) {
-	      date.setFullYear(Math.floor(date.getFullYear() / k) * k);
-	      date.setMonth(0, 1);
-	      date.setHours(0, 0, 0, 0);
-	    }, function(date, step) {
-	      date.setFullYear(date.getFullYear() + step * k);
-	    });
-	  };
+	var years = year.range;
 	
-	  var years = year.range;
+	var utcMinute = newInterval(function(date) {
+	  date.setUTCSeconds(0, 0);
+	}, function(date, step) {
+	  date.setTime(+date + step * durationMinute);
+	}, function(start, end) {
+	  return (end - start) / durationMinute;
+	}, function(date) {
+	  return date.getUTCMinutes();
+	});
 	
-	  var utcMinute = newInterval(function(date) {
-	    date.setUTCSeconds(0, 0);
-	  }, function(date, step) {
-	    date.setTime(+date + step * durationMinute);
-	  }, function(start, end) {
-	    return (end - start) / durationMinute;
-	  }, function(date) {
-	    return date.getUTCMinutes();
-	  });
+	var utcMinutes = utcMinute.range;
 	
-	  var utcMinutes = utcMinute.range;
+	var utcHour = newInterval(function(date) {
+	  date.setUTCMinutes(0, 0, 0);
+	}, function(date, step) {
+	  date.setTime(+date + step * durationHour);
+	}, function(start, end) {
+	  return (end - start) / durationHour;
+	}, function(date) {
+	  return date.getUTCHours();
+	});
 	
-	  var utcHour = newInterval(function(date) {
-	    date.setUTCMinutes(0, 0, 0);
-	  }, function(date, step) {
-	    date.setTime(+date + step * durationHour);
-	  }, function(start, end) {
-	    return (end - start) / durationHour;
-	  }, function(date) {
-	    return date.getUTCHours();
-	  });
+	var utcHours = utcHour.range;
 	
-	  var utcHours = utcHour.range;
+	var utcDay = newInterval(function(date) {
+	  date.setUTCHours(0, 0, 0, 0);
+	}, function(date, step) {
+	  date.setUTCDate(date.getUTCDate() + step);
+	}, function(start, end) {
+	  return (end - start) / durationDay;
+	}, function(date) {
+	  return date.getUTCDate() - 1;
+	});
 	
-	  var utcDay = newInterval(function(date) {
+	var utcDays = utcDay.range;
+	
+	function utcWeekday(i) {
+	  return newInterval(function(date) {
+	    date.setUTCDate(date.getUTCDate() - (date.getUTCDay() + 7 - i) % 7);
 	    date.setUTCHours(0, 0, 0, 0);
 	  }, function(date, step) {
-	    date.setUTCDate(date.getUTCDate() + step);
+	    date.setUTCDate(date.getUTCDate() + step * 7);
 	  }, function(start, end) {
-	    return (end - start) / durationDay;
-	  }, function(date) {
-	    return date.getUTCDate() - 1;
+	    return (end - start) / durationWeek;
 	  });
+	}
 	
-	  var utcDays = utcDay.range;
+	var utcSunday = utcWeekday(0);
+	var utcMonday = utcWeekday(1);
+	var utcTuesday = utcWeekday(2);
+	var utcWednesday = utcWeekday(3);
+	var utcThursday = utcWeekday(4);
+	var utcFriday = utcWeekday(5);
+	var utcSaturday = utcWeekday(6);
 	
-	  function utcWeekday(i) {
-	    return newInterval(function(date) {
-	      date.setUTCDate(date.getUTCDate() - (date.getUTCDay() + 7 - i) % 7);
-	      date.setUTCHours(0, 0, 0, 0);
-	    }, function(date, step) {
-	      date.setUTCDate(date.getUTCDate() + step * 7);
-	    }, function(start, end) {
-	      return (end - start) / durationWeek;
-	    });
-	  }
+	var utcSundays = utcSunday.range;
+	var utcMondays = utcMonday.range;
+	var utcTuesdays = utcTuesday.range;
+	var utcWednesdays = utcWednesday.range;
+	var utcThursdays = utcThursday.range;
+	var utcFridays = utcFriday.range;
+	var utcSaturdays = utcSaturday.range;
 	
-	  var utcSunday = utcWeekday(0);
-	  var utcMonday = utcWeekday(1);
-	  var utcTuesday = utcWeekday(2);
-	  var utcWednesday = utcWeekday(3);
-	  var utcThursday = utcWeekday(4);
-	  var utcFriday = utcWeekday(5);
-	  var utcSaturday = utcWeekday(6);
+	var utcMonth = newInterval(function(date) {
+	  date.setUTCDate(1);
+	  date.setUTCHours(0, 0, 0, 0);
+	}, function(date, step) {
+	  date.setUTCMonth(date.getUTCMonth() + step);
+	}, function(start, end) {
+	  return end.getUTCMonth() - start.getUTCMonth() + (end.getUTCFullYear() - start.getUTCFullYear()) * 12;
+	}, function(date) {
+	  return date.getUTCMonth();
+	});
 	
-	  var utcSundays = utcSunday.range;
-	  var utcMondays = utcMonday.range;
-	  var utcTuesdays = utcTuesday.range;
-	  var utcWednesdays = utcWednesday.range;
-	  var utcThursdays = utcThursday.range;
-	  var utcFridays = utcFriday.range;
-	  var utcSaturdays = utcSaturday.range;
+	var utcMonths = utcMonth.range;
 	
-	  var utcMonth = newInterval(function(date) {
-	    date.setUTCDate(1);
-	    date.setUTCHours(0, 0, 0, 0);
-	  }, function(date, step) {
-	    date.setUTCMonth(date.getUTCMonth() + step);
-	  }, function(start, end) {
-	    return end.getUTCMonth() - start.getUTCMonth() + (end.getUTCFullYear() - start.getUTCFullYear()) * 12;
-	  }, function(date) {
-	    return date.getUTCMonth();
-	  });
+	var utcYear = newInterval(function(date) {
+	  date.setUTCMonth(0, 1);
+	  date.setUTCHours(0, 0, 0, 0);
+	}, function(date, step) {
+	  date.setUTCFullYear(date.getUTCFullYear() + step);
+	}, function(start, end) {
+	  return end.getUTCFullYear() - start.getUTCFullYear();
+	}, function(date) {
+	  return date.getUTCFullYear();
+	});
 	
-	  var utcMonths = utcMonth.range;
-	
-	  var utcYear = newInterval(function(date) {
+	// An optimized implementation for this simple case.
+	utcYear.every = function(k) {
+	  return !isFinite(k = Math.floor(k)) || !(k > 0) ? null : newInterval(function(date) {
+	    date.setUTCFullYear(Math.floor(date.getUTCFullYear() / k) * k);
 	    date.setUTCMonth(0, 1);
 	    date.setUTCHours(0, 0, 0, 0);
 	  }, function(date, step) {
-	    date.setUTCFullYear(date.getUTCFullYear() + step);
-	  }, function(start, end) {
-	    return end.getUTCFullYear() - start.getUTCFullYear();
-	  }, function(date) {
-	    return date.getUTCFullYear();
+	    date.setUTCFullYear(date.getUTCFullYear() + step * k);
 	  });
+	};
 	
-	  // An optimized implementation for this simple case.
-	  utcYear.every = function(k) {
-	    return !isFinite(k = Math.floor(k)) || !(k > 0) ? null : newInterval(function(date) {
-	      date.setUTCFullYear(Math.floor(date.getUTCFullYear() / k) * k);
-	      date.setUTCMonth(0, 1);
-	      date.setUTCHours(0, 0, 0, 0);
-	    }, function(date, step) {
-	      date.setUTCFullYear(date.getUTCFullYear() + step * k);
-	    });
-	  };
+	var utcYears = utcYear.range;
 	
-	  var utcYears = utcYear.range;
+	exports.timeInterval = newInterval;
+	exports.timeMillisecond = millisecond;
+	exports.timeMilliseconds = milliseconds;
+	exports.utcMillisecond = millisecond;
+	exports.utcMilliseconds = milliseconds;
+	exports.timeSecond = second;
+	exports.timeSeconds = seconds;
+	exports.utcSecond = second;
+	exports.utcSeconds = seconds;
+	exports.timeMinute = minute;
+	exports.timeMinutes = minutes;
+	exports.timeHour = hour;
+	exports.timeHours = hours;
+	exports.timeDay = day;
+	exports.timeDays = days;
+	exports.timeWeek = sunday;
+	exports.timeWeeks = sundays;
+	exports.timeSunday = sunday;
+	exports.timeSundays = sundays;
+	exports.timeMonday = monday;
+	exports.timeMondays = mondays;
+	exports.timeTuesday = tuesday;
+	exports.timeTuesdays = tuesdays;
+	exports.timeWednesday = wednesday;
+	exports.timeWednesdays = wednesdays;
+	exports.timeThursday = thursday;
+	exports.timeThursdays = thursdays;
+	exports.timeFriday = friday;
+	exports.timeFridays = fridays;
+	exports.timeSaturday = saturday;
+	exports.timeSaturdays = saturdays;
+	exports.timeMonth = month;
+	exports.timeMonths = months;
+	exports.timeYear = year;
+	exports.timeYears = years;
+	exports.utcMinute = utcMinute;
+	exports.utcMinutes = utcMinutes;
+	exports.utcHour = utcHour;
+	exports.utcHours = utcHours;
+	exports.utcDay = utcDay;
+	exports.utcDays = utcDays;
+	exports.utcWeek = utcSunday;
+	exports.utcWeeks = utcSundays;
+	exports.utcSunday = utcSunday;
+	exports.utcSundays = utcSundays;
+	exports.utcMonday = utcMonday;
+	exports.utcMondays = utcMondays;
+	exports.utcTuesday = utcTuesday;
+	exports.utcTuesdays = utcTuesdays;
+	exports.utcWednesday = utcWednesday;
+	exports.utcWednesdays = utcWednesdays;
+	exports.utcThursday = utcThursday;
+	exports.utcThursdays = utcThursdays;
+	exports.utcFriday = utcFriday;
+	exports.utcFridays = utcFridays;
+	exports.utcSaturday = utcSaturday;
+	exports.utcSaturdays = utcSaturdays;
+	exports.utcMonth = utcMonth;
+	exports.utcMonths = utcMonths;
+	exports.utcYear = utcYear;
+	exports.utcYears = utcYears;
 	
-	  exports.timeInterval = newInterval;
-	  exports.timeMillisecond = millisecond;
-	  exports.timeMilliseconds = milliseconds;
-	  exports.utcMillisecond = millisecond;
-	  exports.utcMilliseconds = milliseconds;
-	  exports.timeSecond = second;
-	  exports.timeSeconds = seconds;
-	  exports.utcSecond = second;
-	  exports.utcSeconds = seconds;
-	  exports.timeMinute = minute;
-	  exports.timeMinutes = minutes;
-	  exports.timeHour = hour;
-	  exports.timeHours = hours;
-	  exports.timeDay = day;
-	  exports.timeDays = days;
-	  exports.timeWeek = sunday;
-	  exports.timeWeeks = sundays;
-	  exports.timeSunday = sunday;
-	  exports.timeSundays = sundays;
-	  exports.timeMonday = monday;
-	  exports.timeMondays = mondays;
-	  exports.timeTuesday = tuesday;
-	  exports.timeTuesdays = tuesdays;
-	  exports.timeWednesday = wednesday;
-	  exports.timeWednesdays = wednesdays;
-	  exports.timeThursday = thursday;
-	  exports.timeThursdays = thursdays;
-	  exports.timeFriday = friday;
-	  exports.timeFridays = fridays;
-	  exports.timeSaturday = saturday;
-	  exports.timeSaturdays = saturdays;
-	  exports.timeMonth = month;
-	  exports.timeMonths = months;
-	  exports.timeYear = year;
-	  exports.timeYears = years;
-	  exports.utcMinute = utcMinute;
-	  exports.utcMinutes = utcMinutes;
-	  exports.utcHour = utcHour;
-	  exports.utcHours = utcHours;
-	  exports.utcDay = utcDay;
-	  exports.utcDays = utcDays;
-	  exports.utcWeek = utcSunday;
-	  exports.utcWeeks = utcSundays;
-	  exports.utcSunday = utcSunday;
-	  exports.utcSundays = utcSundays;
-	  exports.utcMonday = utcMonday;
-	  exports.utcMondays = utcMondays;
-	  exports.utcTuesday = utcTuesday;
-	  exports.utcTuesdays = utcTuesdays;
-	  exports.utcWednesday = utcWednesday;
-	  exports.utcWednesdays = utcWednesdays;
-	  exports.utcThursday = utcThursday;
-	  exports.utcThursdays = utcThursdays;
-	  exports.utcFriday = utcFriday;
-	  exports.utcFridays = utcFridays;
-	  exports.utcSaturday = utcSaturday;
-	  exports.utcSaturdays = utcSaturdays;
-	  exports.utcMonth = utcMonth;
-	  exports.utcMonths = utcMonths;
-	  exports.utcYear = utcYear;
-	  exports.utcYears = utcYears;
+	Object.defineProperty(exports, '__esModule', { value: true });
 	
-	  Object.defineProperty(exports, '__esModule', { value: true });
-	
-	}));
+	})));
 
 /***/ },
 /* 287 */
@@ -25140,9 +25171,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	return Array.isArray(data)&&data.length>0?data:undefined;
 	};
 	
+	// Reverse the child array to maintain correct order when looping over
+	// children starting from the end of the array.
 	var children=childComponents?
-	childComponents.slice(0):
-	_react2.default.Children.toArray(props.children);
+	childComponents.slice(0).reverse():
+	_react2.default.Children.toArray(props.children).reverse();
+	
 	var childrenLength=children.length;
 	
 	var dataArr=[];
@@ -25755,7 +25789,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps.all.labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	lineLabelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -26055,7 +26089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	var text=_victoryCore.Helpers.evaluateProp(label,dataset);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	baseProps.all.labels=this.getLabelProps(dataProps,text,calculatedValues,style);
 	}
 	
@@ -26553,7 +26587,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps.all.labels||this.hasEvents){
 	var labelProps=getComponentProps(labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	var areaLabel=_react2.default.cloneElement(labelComponent,labelProps);
 	return _react2.default.cloneElement(groupComponent,{},areaComponent,areaLabel);
 	}
@@ -26839,7 +26873,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	var text=_victoryCore.Helpers.evaluateProp(label,data);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	baseProps.all.labels=this.getLabelProps(dataProps,text,style);
 	}
 	
@@ -27345,7 +27379,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps[key].labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	labelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -27737,7 +27771,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:dataProps};
 	
 	var text=this.getLabel(props,datum,index);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	childProps[eventKey].labels=this.getLabelProps(dataProps,text,style);
 	}
 	}
@@ -28425,7 +28459,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps[key].labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	labelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -29310,7 +29344,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var role=child.type&&child.type.role;
 	var xOffset=this.getXO(props,calculatedProps,index);
 	var style=role==="voronoi"||role==="tooltip"?
-	undefined:_wrapper2.default.getChildStyle(child,index,calculatedProps);
+	child.props.style:_wrapper2.default.getChildStyle(child,index,calculatedProps);
 	var labels=props.labels?this.getLabels(props,datasets,index):child.props.labels;
 	var defaultDomainPadding=horizontal?
 	{y:offset*childComponents.length/2}:
@@ -30588,7 +30622,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps[key].labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	labelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -30861,7 +30895,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:dataProps};
 	
 	var text=this.getLabelText(props,datum,index);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	childProps[eventKey].labels=this.getLabelProps(dataProps,text,style);
 	}
 	}
@@ -31465,7 +31499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps[key].labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	labelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -31744,7 +31778,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	childProps[eventKey]={data:dataProps};
 	var text=this.getLabelText(props,datum,index);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	childProps[eventKey].labels=this.getLabelProps(dataProps,text,style);
 	}
 	}
@@ -33148,19 +33182,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	function VictoryVoronoiTooltip(){_classCallCheck(this,VictoryVoronoiTooltip);var _this=_possibleConstructorReturn(this,(VictoryVoronoiTooltip.__proto__||Object.getPrototypeOf(VictoryVoronoiTooltip)).call(this));
 	
 	_this.state={};
@@ -33223,7 +33244,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps[key].labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	labelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -33468,9 +33489,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	     * The groupComponent prop takes an entire component which will be used to
 	     * create group elements for use within container elements. This prop defaults
 	     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
-	     */groupComponent:_react.PropTypes.element,/**
-	     * The flyoutProps prop defines the layout of the tooltip flyout container
-	     */flyoutProps:_react.PropTypes.shape({dx:_victoryCore.PropTypes.nonNegative,dy:_victoryCore.PropTypes.nonNegative,cornerRadius:_victoryCore.PropTypes.nonNegative,pointerLength:_victoryCore.PropTypes.nonNegative,pointerWidth:_victoryCore.PropTypes.nonNegative,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),width:_victoryCore.PropTypes.nonNegative,height:_victoryCore.PropTypes.nonNegative})};VictoryVoronoiTooltip.defaultProps={samples:50,scale:"linear",standalone:true,x:"x",y:"y",dataComponent:_react2.default.createElement(_victoryCore.Voronoi,null),labelComponent:_react2.default.createElement(_victoryCore.VictoryTooltip,null),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,null),groupComponent:_react2.default.createElement("g",null),theme:_victoryCore.VictoryTheme.grayscale};VictoryVoronoiTooltip.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryVoronoiTooltip.getData=_data2.default.getData.bind(_data2.default);VictoryVoronoiTooltip.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryVoronoiTooltip;
+	     */groupComponent:_react.PropTypes.element};VictoryVoronoiTooltip.defaultProps={samples:50,scale:"linear",standalone:true,x:"x",y:"y",dataComponent:_react2.default.createElement(_victoryCore.Voronoi,null),labelComponent:_react2.default.createElement(_victoryCore.VictoryTooltip,null),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,null),groupComponent:_react2.default.createElement("g",null),theme:_victoryCore.VictoryTheme.grayscale};VictoryVoronoiTooltip.getDomain=_domain2.default.getDomain.bind(_domain2.default);VictoryVoronoiTooltip.getData=_data2.default.getData.bind(_data2.default);VictoryVoronoiTooltip.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);exports.default=VictoryVoronoiTooltip;
 
 /***/ },
 /* 387 */
@@ -33504,7 +33523,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	childProps[eventKey]={data:dataProps};
 	var text=this.getLabelText(props,datum,index);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	childProps[eventKey].labels=(0,_assign3.default)(
 	{},
 	this.getFlyoutProps(dataProps,text,style));
@@ -34046,7 +34065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	if(this.baseProps[key].labels||this.hasEvents){
 	var labelProps=getComponentProps(index,labelComponent,"labels");
-	if(labelProps&&labelProps.text){
+	if(labelProps&&labelProps.text!==undefined){
 	labelComponents[index]=_react2.default.cloneElement(labelComponent,labelProps);
 	}
 	}
@@ -34361,7 +34380,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data:dataProps};
 	
 	var text=this.getLabelText(props,datum,index);
-	if(text||props.events||props.sharedEvents){
+	if(text!==undefined||props.events||props.sharedEvents){
 	childProps[eventKey].labels=this.getLabelProps(dataProps,text,style);
 	}
 	}
