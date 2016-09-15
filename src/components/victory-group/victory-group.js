@@ -456,7 +456,7 @@ export default class VictoryGroup extends React.Component {
       const role = child.type && child.type.role;
       const xOffset = this.getXO(props, calculatedProps, index);
       const style = role === "voronoi" || role === "tooltip" ?
-        undefined : Wrapper.getChildStyle(child, index, calculatedProps);
+        child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
       const defaultDomainPadding = horizontal ?
         {y: (offset * childComponents.length) / 2} :
