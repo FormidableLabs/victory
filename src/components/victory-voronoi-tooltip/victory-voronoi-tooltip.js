@@ -320,44 +320,7 @@ export default class VictoryVoronoiTooltip extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element,
-    /**
-     * The flyoutProps prop defines the layout of the tooltip flyout container
-     */
-    flyoutProps: PropTypes.shape({
-      dx: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.func
-      ]),
-      dy: PropTypes.oneOfType([
-        PropTypes.number,
-        PropTypes.func
-      ]),
-      cornerRadius: PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.func
-      ]),
-      pointerLength: PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.func
-      ]),
-      pointerWidth: PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.func
-      ]),
-      orientation: PropTypes.oneOfType([
-        PropTypes.oneOf(["top", "bottom", "left", "right"]),
-        PropTypes.func
-      ]),
-      width: PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.func
-      ]),
-      height: PropTypes.oneOfType([
-        CustomPropTypes.nonNegative,
-        PropTypes.func
-      ])
-    })
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -419,7 +382,6 @@ export default class VictoryVoronoiTooltip extends React.Component {
           {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
-          type === "labels" ? props.flyoutProps : {},
           component.props,
           this.baseProps[key][type],
         );
