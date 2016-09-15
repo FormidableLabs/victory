@@ -33,8 +33,8 @@
   "dependencies": {
     "builder": "~2.9.1",
     "builder-victory-component": "^2.4.0",
-    "victory-chart": "^12.0.0",
-    "victory-core": "^7.0.0",
+    "victory-chart": "^12.0.1",
+    "victory-core": "^7.0.1",
     "victory-pie": "^6.0.0"
   },
   "devDependencies": {
