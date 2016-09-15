@@ -325,14 +325,38 @@ export default class VictoryVoronoiTooltip extends React.Component {
      * The flyoutProps prop defines the layout of the tooltip flyout container
      */
     flyoutProps: PropTypes.shape({
-      dx: CustomPropTypes.nonNegative,
-      dy: CustomPropTypes.nonNegative,
-      cornerRadius: CustomPropTypes.nonNegative,
-      pointerLength: CustomPropTypes.nonNegative,
-      pointerWidth: CustomPropTypes.nonNegative,
-      orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
-      width: CustomPropTypes.nonNegative,
-      height: CustomPropTypes.nonNegative
+      dx: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.func
+      ]),
+      dy: PropTypes.oneOfType([
+        PropTypes.number,
+        PropTypes.func
+      ]),
+      cornerRadius: PropTypes.oneOfType([
+        CustomPropTypes.nonNegative,
+        PropTypes.func
+      ]),
+      pointerLength: PropTypes.oneOfType([
+        CustomPropTypes.nonNegative,
+        PropTypes.func
+      ]),
+      pointerWidth: PropTypes.oneOfType([
+        CustomPropTypes.nonNegative,
+        PropTypes.func
+      ]),
+      orientation: PropTypes.oneOfType([
+        PropTypes.oneOf(["top", "bottom", "left", "right"]),
+        PropTypes.func
+      ]),
+      width: PropTypes.oneOfType([
+        CustomPropTypes.nonNegative,
+        PropTypes.func
+      ]),
+      height: PropTypes.oneOfType([
+        CustomPropTypes.nonNegative,
+        PropTypes.func
+      ])
     })
   };
 
