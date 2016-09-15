@@ -7478,8 +7478,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}},{key:"getContent",value:function getContent(
 	
 	props){
-	var text=props.text||props.children;
-	if(text){
+	var text=props.text!==undefined?props.text:props.children;
+	if(text!==undefined){
 	var datum=props.datum||props.data;
 	var child=_index.Helpers.evaluateProp(text,datum);
 	return(""+child).split("\n");
@@ -8994,7 +8994,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	axis:(0,_assign3.default)({
 	style:{
 	axis:{
-	fill:"none",
+	fill:"transparent",
 	stroke:blueGrey300,
 	strokeWidth:2,
 	strokeLinecap:strokeLinecap,
@@ -9005,14 +9005,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	stroke:"transparent"}),
 	
 	grid:{
-	fill:"none",
+	fill:"transparent",
 	stroke:blueGrey50,
 	strokeDasharray:strokeDasharray,
 	strokeLinecap:strokeLinecap,
 	strokeLinejoin:strokeLinejoin},
 	
 	ticks:{
-	fill:"none",
+	fill:"transparent",
 	padding:padding,
 	size:5,
 	stroke:blueGrey300,
@@ -9054,7 +9054,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	errorbar:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	opacity:1,
 	stroke:blueGrey700,
 	strokeWidth:2},
@@ -9071,7 +9071,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	line:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	opacity:1,
 	stroke:blueGrey700,
 	strokeWidth:2},
@@ -9117,7 +9117,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	tooltip:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9136,7 +9136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	voronoi:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9210,7 +9210,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	axis:(0,_assign3.default)({
 	style:{
 	axis:{
-	fill:"none",
+	fill:"transparent",
 	stroke:charcoal,
 	strokeWidth:1,
 	strokeLinecap:strokeLinecap,
@@ -9220,11 +9220,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	padding:25}),
 	
 	grid:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent"},
 	
 	ticks:{
-	fill:"none",
+	fill:"transparent",
 	padding:10,
 	size:1,
 	stroke:"transparent"},
@@ -9261,7 +9261,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	errorbar:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:charcoal,
 	strokeWidth:2},
 	
@@ -9274,7 +9274,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	line:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:charcoal,
 	strokeWidth:2},
 	
@@ -9287,7 +9287,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	style:{
 	data:{
 	padding:10,
-	stroke:"none",
+	stroke:"transparent",
 	strokeWidth:1},
 	
 	labels:(0,_assign3.default)({},baseLabelStyles,{
@@ -9315,7 +9315,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	tooltip:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9334,7 +9334,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	voronoi:(0,_assign3.default)({
 	style:{
 	data:{
-	fill:"none",
+	fill:"transparent",
 	stroke:"transparent",
 	strokeWidth:0},
 	
@@ -9355,7 +9355,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var defaultStyles={
 	stroke:"black",
 	strokeWidth:1,
-	fill:"f0f0f0"};
+	fill:"#f0f0f0"};
 	
 	
 	var defaultLabelStyles={
@@ -9367,6 +9367,34 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	VictoryTooltip=function(_React$Component){_inherits(VictoryTooltip,_React$Component);function VictoryTooltip(){_classCallCheck(this,VictoryTooltip);return _possibleConstructorReturn(this,Object.getPrototypeOf(VictoryTooltip).apply(this,arguments));}_createClass(VictoryTooltip,[{key:"getEvaluatedProps",value:function getEvaluatedProps(
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -9665,7 +9693,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	{
 	var evaluatedProps=this.getEvaluatedProps(this.props);
 	return this.renderTooltip(evaluatedProps);
-	}}]);return VictoryTooltip;}(_react2.default.Component);VictoryTooltip.displayName="VictoryTooltip";VictoryTooltip.propTypes={active:_react.PropTypes.bool,datum:_react.PropTypes.object,data:_react.PropTypes.array,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),style:_react.PropTypes.object,flyoutStyle:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_index.PropTypes.nonNegative,dy:_index.PropTypes.nonNegative,width:_index.PropTypes.nonNegative,height:_index.PropTypes.nonNegative,orientation:_react.PropTypes.oneOf(["top","bottom","left","right"]),pointerLength:_index.PropTypes.nonNegative,pointerWidth:_index.PropTypes.nonNegative,cornerRadius:_index.PropTypes.nonNegative,horizontal:_react.PropTypes.bool,labelComponent:_react.PropTypes.element,flyoutComponent:_react.PropTypes.element,groupComponent:_react.PropTypes.element,index:_react.PropTypes.number};VictoryTooltip.defaultProps={active:false,cornerRadius:5,pointerLength:10,pointerWidth:10,labelComponent:_react2.default.createElement(_victoryLabel2.default,null),flyoutComponent:_react2.default.createElement(_index2.Flyout,null),groupComponent:_react2.default.createElement("g",null)};VictoryTooltip.defaultEvents=[{target:"data",eventHandlers:{onMouseOver:function onMouseOver(){return{target:"labels",mutation:function mutation(){return{active:true};}};},onMouseOut:function onMouseOut(){return{target:"labels",mutation:function mutation(){return{active:false};}};}}}];exports.default=VictoryTooltip;
+	}}]);return VictoryTooltip;}(_react2.default.Component);VictoryTooltip.displayName="VictoryTooltip";VictoryTooltip.propTypes={active:_react.PropTypes.oneOfType([_react.PropTypes.bool,_react.PropTypes.func]),datum:_react.PropTypes.object,data:_react.PropTypes.array,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),style:_react.PropTypes.object,flyoutStyle:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),width:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),height:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),orientation:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["top","bottom","left","right"]),_react.PropTypes.func]),pointerLength:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),pointerWidth:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),cornerRadius:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),horizontal:_react.PropTypes.bool,labelComponent:_react.PropTypes.element,flyoutComponent:_react.PropTypes.element,groupComponent:_react.PropTypes.element,index:_react.PropTypes.number};VictoryTooltip.defaultProps={active:false,cornerRadius:5,pointerLength:10,pointerWidth:10,labelComponent:_react2.default.createElement(_victoryLabel2.default,null),flyoutComponent:_react2.default.createElement(_index2.Flyout,null),groupComponent:_react2.default.createElement("g",null)};VictoryTooltip.defaultEvents=[{target:"data",eventHandlers:{onMouseOver:function onMouseOver(){return{target:"labels",mutation:function mutation(){return{active:true};}};},onMouseOut:function onMouseOut(){return{target:"labels",mutation:function mutation(){return{active:false};}};}}}];exports.default=VictoryTooltip;
 
 /***/ },
 /* 168 */
