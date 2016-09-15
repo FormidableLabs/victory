@@ -7,7 +7,7 @@ import { assign, defaults } from "lodash";
 const defaultStyles = {
   stroke: "black",
   strokeWidth: 1,
-  fill: "f0f0f0"
+  fill: "#f0f0f0"
 };
 
 const defaultLabelStyles = {
@@ -25,7 +25,10 @@ export default class VictoryTooltip extends React.Component {
     /**
      * Specifies whether the flyout will be displayed
      */
-    active: PropTypes.bool,
+    active: PropTypes.oneOfType([
+      PropTypes.bool,
+      PropTypes.func
+    ]),
     /**
      * Victory components can pass a datum prop to their tooltip component. This can
      * be used to calculate functional styles, and determine child text
@@ -72,37 +75,62 @@ export default class VictoryTooltip extends React.Component {
     /**
      * The dx prop defines a horizontal shift from the `x` coordinate.
      */
-    dx: CustomPropTypes.nonNegative,
+    dx: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func
+    ]),
     /**
      * The dy prop defines a vertical shift from the `y` coordinate.
      */
-    dy: CustomPropTypes.nonNegative,
+    dy: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.func
+    ]),
     /**
      * The width prop defines the width of the tooltip flyout.
      */
-    width: CustomPropTypes.nonNegative,
+    width: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     /**
      * The height prop defines the height of the tooltip flyout.
      */
-    height: CustomPropTypes.nonNegative,
+    height: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     /**
      * The orientation prop determines which side of the (x, y) coordinate the tooltip
-     * be rendered on
+     * be rendered on. This prop can be given as "top", "bottom", "left", "right", or
+     * as a function of datum that returns one of these values.
      */
-    orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    orientation: PropTypes.oneOfType([
+      PropTypes.oneOf(["top", "bottom", "left", "right"]),
+      PropTypes.func
+    ]),
     /**
      * The pointerLength prop determines the length of the pointer extending from the flyout
      */
-    pointerLength: CustomPropTypes.nonNegative,
+    pointerLength: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     /**
      * The pointerLength prop determines the width of the base of the triangular pointer
      * extending from the flyout
      */
-    pointerWidth: CustomPropTypes.nonNegative,
+    pointerWidth: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     /**
      * The cornerRadius prop determines corner radius of the flyout container
      */
-    cornerRadius: CustomPropTypes.nonNegative,
+    cornerRadius: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
     /**
      * The horizontal prop determines whether to plot the flyouts to the left / right
      * of the (x, y) coordinate rather than top / bottom. This is useful when an orientation
