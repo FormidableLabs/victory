@@ -72,7 +72,7 @@ export default class VictoryContainer extends React.Component {
   static defaultProps = {
     title: "Victory Chart",
     desc: "",
-    groupComponent: <VictoryPortal/>
+    portalComponent: <VictoryPortal/>
   }
 
   static childContextTypes = {
