@@ -1,4 +1,4 @@
 # Victory Release Roadmap
 
-[Keep track of Victory tasks and milestones via huboard](https://huboard.com/FormidableLabs/victory#/)
+[Keep track of Victory tasks via our project board](https://github.com/FormidableLabs/victory/projects/1)
 
