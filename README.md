@@ -20,7 +20,7 @@ VictoryChart includes:
 Detailed documentation and interactive examples can be found at http://formidable.com/open-source/victory/docs/victory-chart
 
 ## Issues 
-To make it easier to manage issues across all of Victory, we have disabled issued on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues) and add the "Victory Chart" label. You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
+To make it easier to manage issues across all of Victory, we have disabled issued on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
 
 
 ## Development
