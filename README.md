@@ -6,9 +6,9 @@ VictoryCore
 
 This package contains shared libraries and components for [Victory][].
 
-- VictoryAnimation: Animation component
-- VictoryLabel: Label component
-- VictoryUtil: Supporting math and logic helper functions
+## Issues 
+To make it easier to manage issues across all of Victory, we have disabled issued on this repo. [Please open issues in the main victory repo instead](https://github.com/FormidableLabs/victory/issues). You can track our progress on issues [here](https://github.com/FormidableLabs/victory/projects/1)
+
 
 ## Development
 
