@@ -218,7 +218,7 @@ export default {
     const strings = [];
     let stringsLength = 0;
 
-    const children = childComponents.slice(0);
+    const children = childComponents.slice(0).reverse();
     let childrenLength = children.length;
 
     while (childrenLength > 0) {
@@ -246,7 +246,7 @@ export default {
     const strings = [];
     let stringsLength = 0;
 
-    const children = childComponents.slice(0);
+    const children = childComponents.slice(0).reverse();
     let childrenLength = children.length;
 
     while (childrenLength > 0) {
