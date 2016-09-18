@@ -82,9 +82,10 @@ export default class VictoryContainer extends React.Component {
   }
 
   componentWillMount() {
-    this.portalUpdate = (key, el) => this.refs.portal.portalUpdate(key, el);
-    this.portalRegister = () => this.refs.portal.portalRegister();
-    this.portalDeregister = (key) => this.refs.portal.portalDeregister(key);
+    this.savePortalRef = (portal) => this.portalRef = portal;
+    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
+    this.portalRegister = () => this.portalRef.portalRegister();
+    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
   }
 
   getChildContext() {
@@ -107,7 +108,8 @@ export default class VictoryContainer extends React.Component {
         <title id="title">{this.props.title}</title>
         <desc id="desc">{this.props.desc}</desc>
         {this.props.children}
-        {React.cloneElement(this.props.portalComponent, {ref: "portal"})}
+        {React.cloneElement(this.props.portalComponent, {
+          ref: this.savePortalRef})}
       </svg>
       );
   }
