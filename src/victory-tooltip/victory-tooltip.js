@@ -330,20 +330,22 @@ export default class VictoryTooltip extends React.Component {
   }
 
   renderTooltip(props) {
-    const {flyoutComponent, labelComponent, groupComponent, active} = props;
-    if (!active) {
-      return null;
-    }
-    const calculatedValues = this.getCalculatedValues(props);
+    const evaluatedProps = this.getEvaluatedProps(props);
+    const { flyoutComponent, labelComponent, groupComponent } = evaluatedProps;
+    const calculatedValues = this.getCalculatedValues(evaluatedProps);
     const children = [
-      React.cloneElement(flyoutComponent, this.getFlyoutProps(props, calculatedValues)),
-      React.cloneElement(labelComponent, this.getLabelProps(props, calculatedValues))
+      React.cloneElement(flyoutComponent, this.getFlyoutProps(evaluatedProps, calculatedValues)),
+      React.cloneElement(labelComponent, this.getLabelProps(evaluatedProps, calculatedValues))
     ];
-    return React.cloneElement(groupComponent, { role: "presentation"}, children);
+    return React.cloneElement(groupComponent, { role: "presentation" }, children);
+  }
+
+  // this will be overridden in victory-core-native
+  renderEmpty() {
+    return null;
   }
 
   render() {
-    const evaluatedProps = this.getEvaluatedProps(this.props);
-    return this.renderTooltip(evaluatedProps);
+    return this.props.active ? this.renderTooltip(this.props) : this.renderEmpty();
   }
 }
