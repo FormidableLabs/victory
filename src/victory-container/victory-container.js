@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import VictoryPortal from "../victory-portal/victory-portal";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -59,12 +60,40 @@ export default class VictoryContainer extends React.Component {
      * @examples "Golden retreivers make up 30%, Labs make up 25%, and other dog breeds are
      * not represented above 5% each."
      */
-    desc: PropTypes.string
+    desc: PropTypes.string,
+    /**
+     * The portalComponent prop takes an entire component which will be used as
+     * a container for children that render inside a portal, eg. VictoryTooltip.
+     * This prop defaults to VictoryPortal.
+     */
+    portalComponent: PropTypes.element
   }
 
   static defaultProps = {
     title: "Victory Chart",
-    desc: ""
+    desc: "",
+    portalComponent: <VictoryPortal/>
+  }
+
+  static childContextTypes = {
+    portalUpdate: React.PropTypes.func,
+    portalRegister: React.PropTypes.func,
+    portalDeregister: React.PropTypes.func
+  }
+
+  componentWillMount() {
+    this.savePortalRef = (portal) => this.portalRef = portal;
+    this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
+    this.portalRegister = () => this.portalRef.portalRegister();
+    this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
+  }
+
+  getChildContext() {
+    return {
+      portalUpdate: this.portalUpdate,
+      portalRegister: this.portalRegister,
+      portalDeregister: this.portalDeregister
+    };
   }
 
   render() {
@@ -79,6 +108,8 @@ export default class VictoryContainer extends React.Component {
         <title id="title">{this.props.title}</title>
         <desc id="desc">{this.props.desc}</desc>
         {this.props.children}
+        {React.cloneElement(this.props.portalComponent, {
+          ref: this.savePortalRef})}
       </svg>
       );
   }
