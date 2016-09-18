@@ -181,7 +181,6 @@ export default class VictoryTooltip extends React.Component {
 
   static defaultProps = {
     active: false,
-    renderInPortal: true,
     cornerRadius: 5,
     pointerLength: 10,
     pointerWidth: 10,
