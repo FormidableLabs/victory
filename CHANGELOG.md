@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 7.0.2 (2016-09-18)
+
+- Minor changes in VictoryTooltip to support native version
+
 ## 7.0.1 (2016-09-15)
 
 - Fixes minor bugs related to tooltips
