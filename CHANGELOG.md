@@ -1,9 +1,5 @@
 VictoryCore Changelog
 =====================
-## 7.0.3 (2016-09-18)
-
-- export VictoryPortal
-
 ## 7.0.2 (2016-09-18)
 
 - Minor changes in VictoryTooltip to support native version

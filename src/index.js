@@ -17,6 +17,7 @@ export { default as VictoryContainer } from "./victory-container/victory-contain
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
 export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
+export { default as RenderInPortal } from "./victory-portal/render-in-portal";
 export {
   Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout
 } from "./victory-primitives/index";

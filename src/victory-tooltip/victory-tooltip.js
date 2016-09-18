@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, TextSize, Helpers } from "../victory-util/index";
 import { default as VictoryLabel } from "../victory-label/victory-label";
 import { Flyout } from "../victory-primitives/index";
+import { default as RenderInPortal} from "../victory-portal/render-in-portal";
 import { assign, defaults } from "lodash";
 
 const defaultStyles = {
@@ -169,11 +170,18 @@ export default class VictoryTooltip extends React.Component {
     /**
      * Victory components pass an index prop to their tooltip component.
      */
-    index: PropTypes.number
+    index: PropTypes.number,
+    /**
+     * When this prop is set to true, tooltips will render in a portal element within
+     * VictoryContainer. Note: this prop should not be set to true when using a custom
+     * container element
+     */
+    renderInPortal: PropTypes.bool
   };
 
   static defaultProps = {
     active: false,
+    renderInPortal: true,
     cornerRadius: 5,
     pointerLength: 10,
     pointerWidth: 10,
@@ -346,6 +354,14 @@ export default class VictoryTooltip extends React.Component {
   }
 
   render() {
-    return this.props.active ? this.renderTooltip(this.props) : this.renderEmpty();
+    const tooltip = this.props.active ? this.renderTooltip(this.props) : this.renderEmpty();
+    if (this.props.renderInPortal) {
+      return (
+        <RenderInPortal>
+          {React.createElement(this.constructor, this.props)}
+        </RenderInPortal>
+      );
+    }
+    return tooltip;
   }
 }
