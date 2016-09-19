@@ -1,5 +1,5 @@
 import React from "react";
-import { assign } from "lodash";
+import { Log } from "../victory-util/index";
 
 export default class RenderInPortal extends React.Component {
   static propTypes = {
@@ -16,6 +16,15 @@ export default class RenderInPortal extends React.Component {
     if (!this.portalKey) {
       this.portalKey = this.context.portalRegister();
     }
+    if (!this.checkedContext) {
+      if (typeof this.context.portalUpdate !== "function") {
+        const msg = "`renderInPortal` is not supported outside of `VictoryContainer`. " +
+          "Component will be rendered in place";
+        Log.warn(msg);
+        this.renderInPlace = true;
+      }
+      this.checkedContext = true;
+    }
     this.context.portalUpdate(this.portalKey, this.element);
   }
 
@@ -24,9 +33,10 @@ export default class RenderInPortal extends React.Component {
   }
 
   render() {
-    const childProps = this.props.children && this.props.children.props || {};
-    const newProps = assign({}, childProps, {renderInPortal: false});
-    const child = React.cloneElement(this.props.children, newProps);
+    const child = React.cloneElement(this.props.children, {renderInPortal: false});
+    if (this.renderInPlace) {
+      return child;
+    }
     this.element = child;
     return null;
   }
