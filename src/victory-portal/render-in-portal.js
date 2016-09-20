@@ -12,7 +12,7 @@ export default class RenderInPortal extends React.Component {
     portalDeregister: React.PropTypes.func
   }
 
-  componentDidUpdate() {
+  checkForPortal() {
     if (!this.checkedContext) {
       if (typeof this.context.portalUpdate !== "function") {
         const msg = "`renderInPortal` is not supported outside of `VictoryContainer`. " +
@@ -22,6 +22,10 @@ export default class RenderInPortal extends React.Component {
       }
       this.checkedContext = true;
     }
+  }
+
+  componentDidUpdate() {
+    this.checkForPortal();
     if (!this.renderInPlace) {
       this.portalKey = this.portalKey || this.context.portalRegister();
       this.context.portalUpdate(this.portalKey, this.element);
@@ -33,6 +37,7 @@ export default class RenderInPortal extends React.Component {
   }
 
   render() {
+    this.checkForPortal();
     const child = React.cloneElement(this.props.children, {renderInPortal: false});
     if (this.renderInPlace) {
       return child;
