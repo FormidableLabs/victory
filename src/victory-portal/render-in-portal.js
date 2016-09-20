@@ -13,9 +13,6 @@ export default class RenderInPortal extends React.Component {
   }
 
   componentDidUpdate() {
-    if (!this.portalKey) {
-      this.portalKey = this.context.portalRegister();
-    }
     if (!this.checkedContext) {
       if (typeof this.context.portalUpdate !== "function") {
         const msg = "`renderInPortal` is not supported outside of `VictoryContainer`. " +
@@ -25,7 +22,10 @@ export default class RenderInPortal extends React.Component {
       }
       this.checkedContext = true;
     }
-    this.context.portalUpdate(this.portalKey, this.element);
+    if (!this.renderInPlace) {
+      this.portalKey = this.portalKey || this.context.portalRegister();
+      this.context.portalUpdate(this.portalKey, this.element);
+    }
   }
 
   componentWillUnmount() {
