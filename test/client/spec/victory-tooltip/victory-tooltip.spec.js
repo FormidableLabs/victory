@@ -9,7 +9,7 @@ import VictoryTooltip from "src/victory-tooltip/victory-tooltip";
 import Flyout from "src/victory-primitives/flyout";
 
 describe("components/victory-label", () => {
-  const baseProps = {x: 0, y: 0, active: true, text: "such text, wow"};
+  const baseProps = {x: 0, y: 0, active: true, text: "such text, wow", renderInPortal: false};
   it("renders nothing when not active", () => {
     const wrapper = mount(
       <VictoryTooltip {...baseProps} active={false}/>
