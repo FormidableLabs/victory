@@ -45,10 +45,22 @@ export default {
     };
   },
 
+  getStyles(style, styleObject) {
+    style = style || {};
+    styleObject = styleObject || {};
+    const parentStyleProps = { height: "auto", width: "100%" };
+    return {
+      parent: defaults(parentStyleProps, style.parent, styleObject.parent),
+      data: defaults({}, style.data, styleObject.data),
+      labels: defaults({}, style.labels, styleObject.labels),
+      flyout: defaults({}, style.flyout, styleObject.flyout)
+    };
+  },
+
   getCalculatedValues(props) {
     const defaultStyles = props.theme && props.theme.voronoi && props.theme.voronoi.style ?
       props.theme.voronoi.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+    const style = this.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Events.addEventKeys(props, Data.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),

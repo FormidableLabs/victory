@@ -460,12 +460,11 @@ export default class VictoryVoronoiTooltip extends React.Component {
         </VictoryTransition>
       );
     }
-
     const styleObject = modifiedProps.theme && modifiedProps.theme.voronoi
     ? modifiedProps.theme.voronoi
     : fallbackProps.style;
 
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+    const baseStyles = TooltipHelpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
