@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, TextSize, Helpers } from "../victory-util/index";
 import { default as VictoryLabel } from "../victory-label/victory-label";
 import { Flyout } from "../victory-primitives/index";
-import { default as RenderInPortal} from "../victory-portal/render-in-portal";
+import { default as VictoryPortal} from "../victory-portal/victory-portal";
 import { assign, defaults } from "lodash";
 
 const defaultStyles = {
@@ -356,6 +356,6 @@ export default class VictoryTooltip extends React.Component {
   render() {
     const { active, renderInPortal } = this.props;
     const tooltip = active ? this.renderTooltip(this.props) : this.renderEmpty();
-    return renderInPortal ? <RenderInPortal>{tooltip}</RenderInPortal> : tooltip;
+    return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
   }
 }

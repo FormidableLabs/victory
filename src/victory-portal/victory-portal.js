@@ -1,51 +1,62 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import { Log } from "../victory-util/index";
+import { defaults, omit } from "lodash";
 
 export default class VictoryPortal extends React.Component {
-  static displayName = "VictoryPortal";
-
   static propTypes = {
     /**
-     * The groupComponent prop takes an entire component which will be used to
-     * create group elements for use within container elements. This prop defaults
-     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+     * children passed to VictoryPortal will be rendered in the portal container provided
+     * by VictoryContainer if it exists, or rendered in place if it does not. Any additional
+     * props passed to VictoryPortal will be applied to children. This allows VictoryPortal
+     * to be used as a wrapper for any Victory component without interfering with how other
+     * wrappers like VictoryChart interact with their children.
      */
-    groupComponent: PropTypes.element
-  }
-
-  static defaultProps = {
-    groupComponent: <g/>
+    children: React.PropTypes.node
   };
 
-  constructor(props) {
-    super(props);
-    this.map = {};
-    this.index = 1;
-    this.portalUpdate = this.portalUpdate.bind(this);
-    this.portalRegister = this.portalRegister.bind(this);
-    this.portalDeregister = this.portalDeregister.bind(this);
+  static contextTypes = {
+    portalUpdate: React.PropTypes.func,
+    portalRegister: React.PropTypes.func,
+    portalDeregister: React.PropTypes.func
   }
 
-  portalRegister() {
-    return ++this.index;
-  }
-
-  portalUpdate(key, element) {
-    this.map[key] = element;
+  componentDidMount() {
+    if (!this.checkedContext) {
+      if (typeof this.context.portalUpdate !== "function") {
+        const msg = "`renderInPortal` is not supported outside of `VictoryContainer`. " +
+          "Component will be rendered in place";
+        Log.warn(msg);
+        this.renderInPlace = true;
+      }
+      this.checkedContext = true;
+    }
     this.forceUpdate();
   }
 
-  portalDeregister(key) {
-    delete this.map[key];
+  componentDidUpdate() {
+    if (!this.renderInPlace) {
+      this.portalKey = this.portalKey || this.context.portalRegister();
+      this.context.portalUpdate(this.portalKey, this.element);
+    }
+  }
+
+  componentWillUnmount() {
+    if (this.context && this.context.portalDeregister) {
+      this.context.portalDeregister(this.portalKey);
+    }
   }
 
   render() {
-    return React.cloneElement(
-      this.props.groupComponent,
-      {},
-      Object.keys(this.map).map((key) => {
-        const el = this.map[key];
-        return el ? React.cloneElement(el, {key}) : el;
-      })
+    const { children } = this.props;
+    const childProps = children && children.props || {};
+    const child = children && React.cloneElement(
+      children, defaults({}, childProps, omit(this.props, "children"))
     );
+    if (this.renderInPlace) {
+      return child;
+    }
+    this.element = child;
+    return null;
   }
 }
+
