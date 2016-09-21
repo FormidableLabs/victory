@@ -4,6 +4,7 @@ import { VictoryAxis } from "../../src/index";
 import { VictoryLabel } from "victory-core";
 import { merge, random, range } from "lodash";
 import { VictoryContainer, VictoryTheme } from "victory-core";
+import XYTheme from "../theme/victory-axis-differential-styling-theme";
 
 export default class App extends React.Component {
   constructor() {
@@ -162,6 +163,29 @@ export default class App extends React.Component {
             />
           </svg>
         </div>
+
+        <div>
+          <h2>XY Theming Support</h2>
+          <svg style={style} width={500} height={400}>
+            <VictoryAxis crossAxis
+              width={500}
+              height={400}
+              domain={this.state.domain}
+              theme={XYTheme}
+              offsetY={200}
+              standalone={false}
+            />
+            <VictoryAxis dependentAxis crossAxis
+              width={500}
+              height={400}
+              domain={this.state.domain}
+              theme={XYTheme}
+              offsetX={250}
+              standalone={false}
+            />
+          </svg>
+        </div>
+
         <div>
 
         <h2>Log Scale Axis</h2>
