@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import VictoryPortal from "../victory-portal/victory-portal";
+import Portal from "../victory-portal/portal";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -64,7 +64,7 @@ export default class VictoryContainer extends React.Component {
     /**
      * The portalComponent prop takes an entire component which will be used as
      * a container for children that render inside a portal, eg. VictoryTooltip.
-     * This prop defaults to VictoryPortal.
+     * This prop defaults to Portal.
      */
     portalComponent: PropTypes.element
   }
@@ -72,7 +72,7 @@ export default class VictoryContainer extends React.Component {
   static defaultProps = {
     title: "Victory Chart",
     desc: "",
-    portalComponent: <VictoryPortal/>
+    portalComponent: <Portal/>
   }
 
   static childContextTypes = {
