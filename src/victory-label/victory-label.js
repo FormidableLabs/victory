@@ -37,12 +37,7 @@ export default class VictoryLabel extends React.Component {
      * Victory components can pass a datum prop to their label component. This can
      * be used to calculate functional styles, and determine child text
      */
-    datum: PropTypes.object,
-    /**
-     * Labels that apply to an entire data series will recieve the entire series
-     * as `data` instead of an individual datum prop.
-     */
-    data: PropTypes.array,
+    datum: PropTypes.any,
     /**
      * The events prop attaches arbitrary event handlers to the label component.
      * Event handlers are currently only called with their corresponding events.
@@ -247,7 +242,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    const datum = this.props.datum || this.props.data;
+    const { datum, events } = this.props;
     const style = this.getStyles(this.props);
     const lineHeight = this.getHeight(this.props, "lineHeight");
     const textAnchor = this.props.textAnchor ?
@@ -256,7 +251,7 @@ export default class VictoryLabel extends React.Component {
     const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
     const dy = this.getDy(this.props, content, lineHeight) * style.fontSize;
     const labelProps = assign(
-      {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, this.props.events
+      {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, events
     );
     return this.renderElements(labelProps, content);
   }
