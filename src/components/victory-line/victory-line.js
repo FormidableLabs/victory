@@ -437,7 +437,7 @@ export default class VictoryLine extends React.Component {
 
       if (this.baseProps.all.labels || this.hasEvents) {
         const labelProps = getComponentProps(index, labelComponent, "labels");
-        if (labelProps && labelProps.text !== undefined) {
+        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
           lineLabelComponents[index] = React.cloneElement(labelComponent, labelProps);
         }
       }

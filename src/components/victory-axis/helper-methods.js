@@ -1,4 +1,4 @@
-import { includes, defaults, isFunction, range, without, assign } from "lodash";
+import { includes, defaults, isFunction, range, without } from "lodash";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -66,7 +66,7 @@ export default {
     };
   },
 
-  getTickProps(layout, style, tick) {
+  getTickProps(layout, style, datum) {
     const { position, transform } = layout;
     return {
       x1: transform.x,
@@ -74,25 +74,25 @@ export default {
       x2: transform.x + position.x2,
       y2: transform.y + position.y2,
       style,
-      tick
+      datum
     };
   },
 
-  getTickLabelProps(layout, style, tick, text) { // eslint-disable-line max-params
+  getTickLabelProps(layout, style, anchors, datum, text) { // eslint-disable-line max-params
     const { position, transform } = layout;
     return {
       style,
       x: transform.x + position.x,
       y: transform.y + position.y,
-      verticalAnchor: style.verticalAnchor,
-      textAnchor: style.textAnchor,
+      verticalAnchor: anchors.verticalAnchor,
+      textAnchor: anchors.textAnchor,
       angle: style.angle,
       text,
-      tick
+      datum
     };
   },
 
-  getGridProps(layout, style, tick) {
+  getGridProps(layout, style, datum) {
     const {edge, transform} = layout;
     return {
       x1: transform.x,
@@ -100,7 +100,7 @@ export default {
       x2: edge.x + transform.x,
       y2: edge.y + transform.y,
       style,
-      tick
+      datum
     };
   },
 
@@ -137,8 +137,7 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "axis");
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat,
-      stringTicks, anchors
+      style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors
     } = calculatedValues;
 
     const {
@@ -175,7 +174,7 @@ export default {
         axisLabel: axisLabelProps,
         ticks: this.getTickProps(tickLayout, styles.tickStyle, tick),
         tickLabels: this.getTickLabelProps(
-          tickLayout, assign({}, anchors, styles.labelStyle), tick, tickFormat(tick, index)
+          tickLayout, styles.labelStyle, anchors, tick, tickFormat(tick, index)
         ),
         grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
       };

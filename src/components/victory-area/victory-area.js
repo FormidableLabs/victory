@@ -403,7 +403,7 @@ export default class VictoryArea extends React.Component {
 
     if (this.baseProps.all.labels || this.hasEvents) {
       const labelProps = getComponentProps(labelComponent, "labels");
-      if (labelProps && labelProps.text !== undefined) {
+      if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
         const areaLabel = React.cloneElement(labelComponent, labelProps);
         return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
       }
