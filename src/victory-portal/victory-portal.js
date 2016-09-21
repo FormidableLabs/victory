@@ -16,7 +16,8 @@ export default class VictoryPortal extends React.Component {
     groupComponent: <g/>
   };
 
-  componentWillMount() {
+  constructor(props) {
+    super(props);
     this.map = {};
     this.index = 1;
     this.portalUpdate = this.portalUpdate.bind(this);

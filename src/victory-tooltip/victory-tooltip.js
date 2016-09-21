@@ -354,14 +354,8 @@ export default class VictoryTooltip extends React.Component {
   }
 
   render() {
-    const tooltip = this.props.active ? this.renderTooltip(this.props) : this.renderEmpty();
-    if (this.props.renderInPortal) {
-      return (
-        <RenderInPortal>
-          {React.createElement(this.constructor, this.props)}
-        </RenderInPortal>
-      );
-    }
-    return tooltip;
+    const { active, renderInPortal } = this.props;
+    const tooltip = active ? this.renderTooltip(this.props) : this.renderEmpty();
+    return renderInPortal ? <RenderInPortal>{tooltip}</RenderInPortal> : tooltip;
   }
 }

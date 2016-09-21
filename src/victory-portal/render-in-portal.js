@@ -1,5 +1,6 @@
 import React from "react";
 import { Log } from "../victory-util/index";
+import { defaults } from "lodash";
 
 export default class RenderInPortal extends React.Component {
   static propTypes = {
@@ -12,7 +13,8 @@ export default class RenderInPortal extends React.Component {
     portalDeregister: React.PropTypes.func
   }
 
-  checkForPortal() {
+  componentDidMount() {
+    this.forceUpdate();
     if (!this.checkedContext) {
       if (typeof this.context.portalUpdate !== "function") {
         const msg = "`renderInPortal` is not supported outside of `VictoryContainer`. " +
@@ -25,7 +27,6 @@ export default class RenderInPortal extends React.Component {
   }
 
   componentDidUpdate() {
-    this.checkForPortal();
     if (!this.renderInPlace) {
       this.portalKey = this.portalKey || this.context.portalRegister();
       this.context.portalUpdate(this.portalKey, this.element);
@@ -33,12 +34,17 @@ export default class RenderInPortal extends React.Component {
   }
 
   componentWillUnmount() {
-    this.context.portalDeregister(this.portalKey);
+    if (this.context && this.context.portalDeregister) {
+      this.context.portalDeregister(this.portalKey);
+    }
   }
 
   render() {
-    this.checkForPortal();
-    const child = React.cloneElement(this.props.children, {renderInPortal: false});
+    const { children } = this.props;
+    const childProps = children && children.props || {};
+    const child = children && React.cloneElement(
+      children, defaults({}, childProps, this.props)
+    );
     if (this.renderInPlace) {
       return child;
     }
