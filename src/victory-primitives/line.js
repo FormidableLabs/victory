@@ -4,7 +4,7 @@ import { assign } from "lodash";
 export default class Line extends React.Component {
   static propTypes = {
     index: PropTypes.number,
-    tick: PropTypes.any,
+    datum: PropTypes.any,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
