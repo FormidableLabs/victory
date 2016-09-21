@@ -52,17 +52,82 @@ export default {
     return scale;
   },
 
+  getStyleOverrides(props, style, styleObject) {
+    if (props.dependentAxis) {
+      return {
+        style: {
+          axis: style.dependentAxis,
+          axisLabel: style.dependentAxisLabel,
+          grid: style.dependentGrid,
+          ticks: style.dependentTicks,
+          tickLabels: style.dependentTickLabels
+        },
+        styleObject: {
+          axis: styleObject.dependentAxis,
+          axisLabel: styleObject.dependentAxisLabel,
+          grid: styleObject.dependentGrid,
+          ticks: styleObject.dependentTicks,
+          tickLabels: styleObject.dependentTickLabels
+        }
+      };
+    }
+
+    return {
+      style: {
+        axis: style.independentAxis,
+        axisLabel: style.independentAxisLabel,
+        grid: style.independentGrid,
+        ticks: style.independentTicks,
+        tickLabels: style.independentTickLabels
+      },
+      styleObject: {
+        axis: styleObject.independentAxis,
+        axisLabel: styleObject.independentAxisLabel,
+        grid: styleObject.independentGrid,
+        ticks: styleObject.independentTicks,
+        tickLabels: styleObject.independentTickLabels
+      }
+    };
+  },
+
   getStyles(props, styleObject) {
     const style = props.style || {};
     styleObject = styleObject || {};
     const parentStyleProps = { height: "auto", width: "100%" };
+    const overrides = this.getStyleOverrides(props, style, styleObject);
+
     return {
       parent: defaults(parentStyleProps, style.parent, styleObject.parent),
-      axis: defaults({}, style.axis, styleObject.axis),
-      axisLabel: defaults({}, style.axisLabel, styleObject.axisLabel),
-      grid: defaults({}, style.grid, styleObject.grid),
-      ticks: defaults({}, style.ticks, styleObject.ticks),
-      tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels)
+      axis: defaults({},
+        overrides.style.axis,
+        style.axis,
+        overrides.styleObject.axis,
+        styleObject.axis
+      ),
+      axisLabel: defaults({},
+        overrides.style.axisLabel,
+        style.axisLabel,
+        overrides.styleObject.axisLabel,
+        styleObject.axisLabel
+      ),
+      grid: defaults({},
+        overrides.style.grid,
+        style.grid,
+        overrides.styleObject.grid,
+        styleObject.grid
+      ),
+      ticks: defaults({},
+        overrides.style.ticks,
+        style.ticks,
+        overrides.styleObject.ticks,
+        styleObject.ticks
+      ),
+      tickLabels: defaults({},
+        overrides.style.tickLabels,
+        style.tickLabels,
+        overrides.styleObject.tickLabels,
+        styleObject.tickLabels
+      )
     };
   },
 
