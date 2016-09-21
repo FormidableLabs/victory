@@ -165,7 +165,7 @@ export default class App extends React.Component {
         </div>
 
         <div>
-          <h2>XY Theming Support</h2>
+          <h2>X-Y Axis Theming</h2>
           <svg style={style} width={500} height={400}>
             <VictoryAxis crossAxis
               width={500}
