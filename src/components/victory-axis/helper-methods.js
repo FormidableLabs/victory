@@ -70,7 +70,6 @@ export default {
     const style = props.style || {};
     styleObject = styleObject || {};
     const parentStyleProps = { height: "auto", width: "100%" };
-
     return {
       parent: defaults(parentStyleProps, style.parent, styleObject.parent),
       axis: defaults({}, style.axis, styleObject.axis),
