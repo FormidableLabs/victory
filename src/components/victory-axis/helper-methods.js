@@ -54,27 +54,16 @@ export default {
 
   getStyleObject(props) {
     const { theme, dependentAxis } = props;
-    const generalAxisStyle = theme && theme.axis && theme.axis.style
-        ? theme.axis.style
-        : null;
-    let specificAxisStyle;
+    const generalAxisStyle = theme && theme.axis && theme.axis.style;
+    const axisType = dependentAxis ? "dependentAxis" : "independentAxis";
+    const specificAxisStyle = theme && theme[axisType] && theme[axisType].style;
 
-    if (dependentAxis) {
-      specificAxisStyle = theme && theme.dependentAxis && theme.dependentAxis.style
-        ? theme.dependentAxis.style
-        : {};
-    } else {
-      specificAxisStyle = theme && theme.independentAxis && theme.independentAxis.style
-        ? theme.independentAxis.style
-        : {};
-    }
-
-    return generalAxisStyle
+    return generalAxisStyle && specificAxisStyle
       ? defaultsDeep({},
           specificAxisStyle,
           generalAxisStyle
         )
-      : specificAxisStyle;
+      : specificAxisStyle || generalAxisStyle;
   },
 
   getStyles(props, styleObject) {
