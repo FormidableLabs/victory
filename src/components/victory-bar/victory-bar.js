@@ -428,7 +428,7 @@ export default class VictoryBar extends React.Component {
 
       if (this.baseProps[key].labels || this.hasEvents) {
         const labelProps = getComponentProps(index, labelComponent, "labels");
-        if (labelProps && labelProps.text !== undefined) {
+        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
           labelComponents[index] = React.cloneElement(labelComponent, labelProps);
         }
       }

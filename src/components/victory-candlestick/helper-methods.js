@@ -29,7 +29,7 @@ export default {
         data: dataProps
       };
       const text = this.getLabelText(props, datum, index);
-      if (text !== undefined || props.events || props.sharedEvents) {
+      if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
     }

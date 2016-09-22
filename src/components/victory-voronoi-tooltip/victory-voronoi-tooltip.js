@@ -403,7 +403,7 @@ export default class VictoryVoronoiTooltip extends React.Component {
 
       if (this.baseProps[key].labels || this.hasEvents) {
         const labelProps = getComponentProps(index, labelComponent, "labels");
-        if (labelProps && labelProps.text !== undefined) {
+        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
           labelComponents[index] = React.cloneElement(labelComponent, labelProps);
         }
       }
@@ -460,12 +460,11 @@ export default class VictoryVoronoiTooltip extends React.Component {
         </VictoryTransition>
       );
     }
-
     const styleObject = modifiedProps.theme && modifiedProps.theme.voronoi
     ? modifiedProps.theme.voronoi
     : fallbackProps.style;
 
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
+    const baseStyles = TooltipHelpers.getStyles(style, styleObject, "auto", "100%");
 
     const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
 
