@@ -168,19 +168,13 @@ export default class App extends React.Component {
           <h2>X-Y Axis Theming</h2>
           <svg style={style} width={500} height={400}>
             <VictoryAxis crossAxis
-              width={500}
-              height={400}
               domain={this.state.domain}
               theme={XYTheme}
-              offsetY={200}
               standalone={false}
             />
             <VictoryAxis dependentAxis crossAxis
-              width={500}
-              height={400}
               domain={this.state.domain}
               theme={XYTheme}
-              offsetX={250}
               standalone={false}
             />
           </svg>

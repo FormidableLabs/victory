@@ -1,4 +1,4 @@
-import { includes, defaults, isFunction, range, without, assign } from "lodash";
+import { includes, defaults, defaultsDeep, isFunction, range, without, assign } from "lodash";
 import Scale from "../../helpers/scale";
 import Axis from "../../helpers/axis";
 import Domain from "../../helpers/domain";
@@ -52,82 +52,43 @@ export default {
     return scale;
   },
 
-  getStyleOverrides(props, style, styleObject) {
-    if (props.dependentAxis) {
-      return {
-        style: {
-          axis: style.dependentAxis,
-          axisLabel: style.dependentAxisLabel,
-          grid: style.dependentGrid,
-          ticks: style.dependentTicks,
-          tickLabels: style.dependentTickLabels
-        },
-        styleObject: {
-          axis: styleObject.dependentAxis,
-          axisLabel: styleObject.dependentAxisLabel,
-          grid: styleObject.dependentGrid,
-          ticks: styleObject.dependentTicks,
-          tickLabels: styleObject.dependentTickLabels
-        }
-      };
+  getStyleObject(props) {
+    const { theme, dependentAxis } = props;
+    const generalAxisStyle = theme && theme.axis && theme.axis.style
+        ? theme.axis.style
+        : null;
+    let specificAxisStyle;
+
+    if (dependentAxis) {
+      specificAxisStyle = theme && theme.dependentAxis && theme.dependentAxis.style
+        ? theme.dependentAxis.style
+        : {};
+    } else {
+      specificAxisStyle = theme && theme.independentAxis && theme.independentAxis.style
+        ? theme.independentAxis.style
+        : {};
     }
 
-    return {
-      style: {
-        axis: style.independentAxis,
-        axisLabel: style.independentAxisLabel,
-        grid: style.independentGrid,
-        ticks: style.independentTicks,
-        tickLabels: style.independentTickLabels
-      },
-      styleObject: {
-        axis: styleObject.independentAxis,
-        axisLabel: styleObject.independentAxisLabel,
-        grid: styleObject.independentGrid,
-        ticks: styleObject.independentTicks,
-        tickLabels: styleObject.independentTickLabels
-      }
-    };
+    return generalAxisStyle
+      ? defaultsDeep({},
+          specificAxisStyle,
+          generalAxisStyle
+        )
+      : specificAxisStyle;
   },
 
   getStyles(props, styleObject) {
     const style = props.style || {};
     styleObject = styleObject || {};
     const parentStyleProps = { height: "auto", width: "100%" };
-    const overrides = this.getStyleOverrides(props, style, styleObject);
 
     return {
       parent: defaults(parentStyleProps, style.parent, styleObject.parent),
-      axis: defaults({},
-        overrides.style.axis,
-        style.axis,
-        overrides.styleObject.axis,
-        styleObject.axis
-      ),
-      axisLabel: defaults({},
-        overrides.style.axisLabel,
-        style.axisLabel,
-        overrides.styleObject.axisLabel,
-        styleObject.axisLabel
-      ),
-      grid: defaults({},
-        overrides.style.grid,
-        style.grid,
-        overrides.styleObject.grid,
-        styleObject.grid
-      ),
-      ticks: defaults({},
-        overrides.style.ticks,
-        style.ticks,
-        overrides.styleObject.ticks,
-        styleObject.ticks
-      ),
-      tickLabels: defaults({},
-        overrides.style.tickLabels,
-        style.tickLabels,
-        overrides.styleObject.tickLabels,
-        styleObject.tickLabels
-      )
+      axis: defaults({}, style.axis, styleObject.axis),
+      axisLabel: defaults({}, style.axisLabel, styleObject.axisLabel),
+      grid: defaults({}, style.grid, styleObject.grid),
+      ticks: defaults({}, style.ticks, styleObject.ticks),
+      tickLabels: defaults({}, style.tickLabels, styleObject.tickLabels)
     };
   },
 
@@ -198,8 +159,33 @@ export default {
     };
   },
 
+  getRole(props) {
+    if (props.dependentAxis) {
+      return props.theme && props.theme.dependentAxis
+        ? "dependentAxis"
+        : "axis";
+    }
+
+    return props.theme && props.theme.independentAxis
+      ? "independentAxis"
+      : "axis";
+  },
+
+  getShallowMergedThemeProps(props, role) {
+    const axisTheme = props.theme.axis || {};
+    return defaults({}, props.theme[role], axisTheme);
+  },
+
+  modifyProps(props, fallbackProps, role) {
+    if (role !== "axis") {
+      props.theme[role] = this.getShallowMergedThemeProps(props, role);
+    }
+    return Helpers.modifyProps(props, fallbackProps, role);
+  },
+
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "axis");
+    const role = this.getRole(props);
+    props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
       style, orientation, isVertical, scale, ticks, tickFormat,
@@ -249,8 +235,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
-    const defaultStyles = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
+    const defaultStyles = this.getStyleObject(props);
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
