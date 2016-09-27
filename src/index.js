@@ -29,7 +29,6 @@ import { VictoryPie } from "victory-pie";
 export {
   Area, Bar, Candle, ClipPath, Curve, ErrorBar, Line, Point, Slice, Voronoi, Flyout,
   VictoryAnimation,
-  VictoryAnimation,
   VictoryArea,
   VictoryAxis,
   VictoryBar,
