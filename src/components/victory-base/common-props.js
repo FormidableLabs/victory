@@ -1,0 +1,232 @@
+import React, { PropTypes } from "react";
+import { PropTypes as CustomPropTypes } from "victory-core";
+
+export default {
+  /**
+   * The animate prop specifies props for VictoryAnimation to use. The animate prop should
+   * also be used to specify enter and exit transition configurations with the `onExit`
+   * and `onEnter` namespaces respectively.
+   * @examples {duration: 500, onEnd: () => {}, onEnter: {duration: 500, before: () => ({y: 0})})}
+   */
+  animate: PropTypes.object,
+  /**
+   * The data prop specifies the data to be plotted. Data should be in the form of an array
+   * of data points. Each data point may be any format you wish
+   * (depending on the `x` and `y` accessor props), but by default, an object
+   * with x and y properties is expected.
+   * @examples [{x: 1, y: 2}, {x: 2, y: 3}], [[1, 2], [2, 3]],
+   * [[{x: "a", y: 1}, {x: "b", y: 2}], [{x: "a", y: 2}, {x: "b", y: 3}]]
+   */
+  data: PropTypes.array,
+  /**
+   * The dataComponent prop takes an entire component which will be used to create bars for
+   * each datum in the chart. The new element created from the passed dataComponent will be
+   * provided with the following properties calculated by VictoryBar: datum, index, scale,
+   * style, events, horizontal (boolean), x, y, and y0. Any of these props may be overridden
+   * by passing in props to the supplied component, or modified or ignored within the custom
+   * component itself. If a dataComponent is not provided, VictoryBar will use its default
+   * Bar component.
+   */
+  dataComponent: PropTypes.element,
+  /**
+   * The event prop take an array of event objects. Event objects are composed of
+   * a target, an eventKey, and eventHandlers. Targets may be any valid style namespace
+   * for a given component, so "data" and "labels" are all valid targets for VictoryBar events.
+   * The eventKey may optionally be used to select a single element by index rather than an entire
+   * set. The eventHandlers object should be given as an object whose keys are standard
+   * event names (i.e. onClick) and whose values are event callbacks. The return value
+   * of an event handler is used to modify elemnts. The return value should be given
+   * as an object or an array of objects with optional target and eventKey keys,
+   * and a mutation key whose value is a function. The target and eventKey keys
+   * will default to those corresponding to the element the event handler was attached to.
+   * The mutation function will be called with the calculated props for the individual selected
+   * element (i.e. a single bar), and the object returned from the mutation function
+   * will override the props of the selected element via object assignment.
+   * @examples
+   * events={[
+   *   {
+   *     target: "data",
+   *     eventKey: "thisOne",
+   *     eventHandlers: {
+   *       onClick: () => {
+   *         return [
+   *            {
+   *              eventKey: "theOtherOne",
+   *              mutation: (props) => {
+   *                return {style: merge({}, props.style, {fill: "orange"})};
+   *              }
+   *            }, {
+   *              eventKey: "theOtherOne",
+   *              target: "labels",
+   *              mutation: () => {
+   *                return {text: "hey"};
+   *              }
+   *            }
+   *          ];
+   *       }
+   *     }
+   *   }
+   * ]}
+   *}}
+   */
+  events: PropTypes.arrayOf(PropTypes.shape({
+    target: PropTypes.oneOf(["data", "labels", "parent"]),
+    eventKey: PropTypes.oneOfType([
+      PropTypes.array,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    eventHandlers: PropTypes.object
+  })),
+  /**
+   * The name prop is used to reference a component instance when defining shared events.
+   */
+  name: PropTypes.string,
+  /**
+   * Similar to data accessor props `x` and `y`, this prop may be used to functionally
+   * assign eventKeys to data
+   */
+  eventKey: PropTypes.oneOfType([
+    PropTypes.func,
+    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    PropTypes.string
+  ]),
+  /**
+   * This prop is used to coordinate events between VictoryArea and other Victory
+   * Components via VictorySharedEvents. This prop should not be set manually.
+   */
+  sharedEvents: PropTypes.shape({
+    events: PropTypes.array,
+    getEventState: PropTypes.func
+  }),
+  /**
+   * The height props specifies the height the svg viewBox of the chart container.
+   * This value should be given as a number of pixels
+   */
+  height: CustomPropTypes.nonNegative,
+  /**
+   * The labels prop defines labels that will appear above each bar in your bar chart.
+   * This prop should be given as an array of values or as a function of data.
+   * If given as an array, the number of elements in the array should be equal to
+   * the length of the data array. Labels may also be added directly to the data object
+   * like data={[{x: 1, y: 1, label: "first"}]}.
+   * @examples: ["spring", "summer", "fall", "winter"], (datum) => datum.title
+   */
+  labels: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.array
+  ]),
+  /**
+   * The labelComponent prop takes in an entire label component which will be used
+   * to create labels for each bar in the bar chart. The new element created from
+   * the passed labelComponent will be supplied with the following properties:
+   * x, y, y0, index, datum, verticalAnchor, textAnchor, angle, style, text, and events.
+   * Any of these props may be overridden by passing in props to the supplied component,
+   * or modified or ignored within the custom component itself. If labelComponent is omitted,
+   * a new VictoryLabel will be created with props described above.
+   */
+  labelComponent: PropTypes.element,
+  /**
+   * The padding props specifies the amount of padding in number of pixels between
+   * the edge of the chart and any rendered child components. This prop can be given
+   * as a number or as an object with padding specified for top, bottom, left
+   * and right.
+   */
+  padding: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.shape({
+      top: PropTypes.number,
+      bottom: PropTypes.number,
+      left: PropTypes.number,
+      right: PropTypes.number
+    })
+  ]),
+  /**
+   * The standalone prop determines whether the component will render a standalone svg
+   * or a <g> tag that will be included in an external svg. Set standalone to false to
+   * compose VictoryBar with other components within an enclosing <svg> tag.
+   */
+  standalone: PropTypes.bool,
+  /**
+   * The style prop specifies styles for your VictoryBar. Any valid inline style properties
+   * will be applied. Height, width, and padding should be specified via the height,
+   * width, and padding props, as they are used to calculate the alignment of
+   * components within chart. In addition to normal style properties, angle and verticalAnchor
+   * may also be specified via the labels object, and they will be passed as props to
+   * VictoryLabel, or any custom labelComponent.
+   * @examples {data: {fill: "red", width: 8}, labels: {fontSize: 12}}
+   */
+  style: PropTypes.shape({
+    parent: PropTypes.object,
+    data: PropTypes.object,
+    labels: PropTypes.object
+  }),
+  /**
+   * The width props specifies the width of the svg viewBox of the chart container
+   * This value should be given as a number of pixels
+   */
+  width: CustomPropTypes.nonNegative,
+  /**
+   * The x prop specifies how to access the X value of each data point.
+   * If given as a function, it will be run on each data point, and returned value will be used.
+   * If given as an integer, it will be used as an array index for array-type data points.
+   * If given as a string, it will be used as a property key for object-type data points.
+   * If given as an array of strings, or a string containing dots or brackets,
+   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+   * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
+   */
+  x: PropTypes.oneOfType([
+    PropTypes.func,
+    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  /**
+   * The y prop specifies how to access the Y value of each data point.
+   * If given as a function, it will be run on each data point, and returned value will be used.
+   * If given as an integer, it will be used as an array index for array-type data points.
+   * If given as a string, it will be used as a property key for object-type data points.
+   * If given as an array of strings, or a string containing dots or brackets,
+   * it will be used as a nested object property path (for details see Lodash docs for _.get).
+   * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
+   * @examples 0, 'y', 'y.value.nested.1.thing', 'y[2].also.nested', null, d => Math.sin(d)
+   */
+  y: PropTypes.oneOfType([
+    PropTypes.func,
+    CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+    PropTypes.string,
+    PropTypes.arrayOf(PropTypes.string)
+  ]),
+  /**
+   * The containerComponent prop takes an entire component which will be used to
+   * create a container element for standalone charts.
+   * The new element created from the passed containerComponent wil be provided with
+   * these props from VictoryBar: height, width, children
+   * (the chart itself) and style. Props that are not provided by the
+   * child chart component include title and desc, both of which
+   * are intended to add accessibility to Victory components. The more descriptive these props
+   * are, the more accessible your data will be for people using screen readers.
+   * Any of these props may be overridden by passing in props to the supplied component,
+   * or modified or ignored within the custom component itself. If a dataComponent is
+   * not provided, VictoryBar will use the default VictoryContainer component.
+   * @examples <VictoryContainer title="Chart of Dog Breeds" desc="This chart shows how
+   * popular each dog breed is by percentage in Seattle." />
+   */
+  containerComponent: PropTypes.element,
+  /**
+  * The theme prop takes a style object with nested data, labels, and parent objects.
+  * You can create this object yourself, or you can use a theme provided by Victory.
+  * When using VictoryBar as a solo component, implement the theme directly on
+  * VictoryBar. If you are wrapping VictoryBar in VictoryChart, VictoryStack, or
+  * VictoryGroup, please call the theme on the outermost wrapper component instead.
+  * @examples theme={VictoryTheme.material}
+  */
+  theme: PropTypes.object,
+  /**
+   * The groupComponent prop takes an entire component which will be used to
+   * create group elements for use within container elements. This prop defaults
+   * to a <g> tag on web, and a react-native-svg <G> tag on mobile
+   */
+  groupComponent: PropTypes.element
+};
