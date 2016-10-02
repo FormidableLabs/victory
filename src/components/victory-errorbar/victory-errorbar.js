@@ -1,6 +1,4 @@
 import React, { PropTypes } from "react";
-import cartesianProps from "../victory-base/cartesian-props";
-import commonProps from "../victory-base/common-props";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, VictoryGroupContainer
@@ -28,48 +26,91 @@ class VictoryErrorBar extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...commonProps,
-    ...cartesianProps,
-    /**
-     * The errorX prop specifies how to access the errorX value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'errorX', 'errorX.value.nested.1.thing', 'errorX[2].also.nested', null,
-     * d => Math.sin(d)
-     */
+    animate: PropTypes.object,
+    borderWidth: PropTypes.number,
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    containerComponent: PropTypes.element,
+    data: PropTypes.array,
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
+        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+      }),
+      PropTypes.number
+    ]),
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     errorX: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    /**
-     * The errorY prop specifies how to access the errorY value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'errorY', 'errorY.value.nested.1.thing', 'errorY[2].also.nested', null,
-     * d => Math.sin(d)
-     */
     errorY: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    /**
-     * The borderWidth prop sets the border width of the error bars. `borderWidth` will set
-     * both x, y error bar width.
-     * @type {number}
-     */
-    borderWidth: PropTypes.number
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOf(["all"]),
+      eventHandlers: PropTypes.object
+    })),
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    groupComponent: PropTypes.element,
+    height: CustomPropTypes.nonNegative,
+    horizontal: PropTypes.bool,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    labelComponent: PropTypes.element,
+    name: PropTypes.string,
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number, bottom: PropTypes.number,
+        left: PropTypes.number, right: PropTypes.number
+      })
+    ]),
+    samples: CustomPropTypes.nonNegative,
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
+    standalone: PropTypes.bool,
+    style: PropTypes.shape({
+      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+    }),
+    theme: PropTypes.object,
+    width: CustomPropTypes.nonNegative,
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    y: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.func)
+    ])
   };
 
   static defaultProps = {

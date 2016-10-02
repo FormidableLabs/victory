@@ -3,11 +3,9 @@ import React, { PropTypes } from "react";
 import AreaHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import cartesianProps from "../victory-base/cartesian-props";
-import commonProps from "../victory-base/common-props";
 import {
-  Helpers, VictoryTransition, VictoryLabel, VictoryContainer, VictoryTheme,
-  DefaultTransitions, Area, VictoryGroupContainer, addEvents
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, VictoryContainer,
+  DefaultTransitions, Area, VictoryGroupContainer, addEvents, VictoryTheme
 } from "victory-core";
 
 const fallbackProps = {
@@ -18,48 +16,78 @@ const fallbackProps = {
 };
 
 class VictoryArea extends React.Component {
-  static displayName = "VictoryArea";
-  static role = "area";
-  static defaultTransitions = DefaultTransitions.continuousTransitions();
 
   static propTypes = {
-    ...cartesianProps,
-    ...commonProps,
-    /**
-     * The label prop defines the label that will appear at the end of the line.
-     * This prop should be given a string or as a function of data. If individual
-     * labels are required for each data point, they should be created by composing
-     * VictoryLine with VictoryScatter
-     * @examples: "Series 1", (data) => `${data.length} points`
-     */
-    label: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string
+    animate: PropTypes.object,
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+      })
     ]),
-    /**
-     * The interpolation prop determines how data points should be connected
-     * when plotting a line
-     */
+    containerComponent: PropTypes.element,
+    data: PropTypes.array,
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
+        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+      }),
+      PropTypes.number
+    ]),
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOf(["all"]),
+      eventHandlers: PropTypes.object
+    })),
+    groupComponent: PropTypes.element,
+    height: CustomPropTypes.nonNegative,
     interpolation: PropTypes.oneOf([
-      "basis",
-      "basisClosed",
-      "basisOpen",
-      "bundle",
-      "cardinal",
-      "cardinalClosed",
-      "cardinalOpen",
-      "catmullRom",
-      "catmullRomClosed",
-      "catmullRomOpen",
-      "linear",
-      "linearClosed",
-      "monotoneX",
-      "monotoneY",
-      "natural",
-      "radial",
-      "step",
-      "stepAfter",
-      "stepBefore"
+      "basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen",
+      "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX",
+      "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
+    ]),
+    label: PropTypes.string,
+    labelComponent: PropTypes.element,
+    name: PropTypes.string,
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number, bottom: PropTypes.number,
+        left: PropTypes.number, right: PropTypes.number
+      })
+    ]),
+    samples: CustomPropTypes.nonNegative,
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
+    standalone: PropTypes.bool,
+    style: PropTypes.shape({
+      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+    }),
+    theme: PropTypes.object,
+    width: CustomPropTypes.nonNegative,
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    y: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.func)
     ])
   };
 
@@ -76,6 +104,9 @@ class VictoryArea extends React.Component {
     theme: VictoryTheme.grayscale
   };
 
+  static displayName = "VictoryArea";
+  static role = "area";
+  static defaultTransitions = DefaultTransitions.continuousTransitions();
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);

@@ -2,8 +2,6 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import cartesianProps from "../victory-base/cartesian-props";
-import commonProps from "../victory-base/common-props";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Point, VictoryGroupContainer
@@ -24,25 +22,84 @@ class VictoryScatter extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...commonProps,
-    ...cartesianProps,
-    /**
-     * The bubbleProperty prop indicates which property of the data object should be used
-     * to scale data points in a bubble chart
-     */
+    animate: PropTypes.object,
     bubbleProperty: PropTypes.string,
-    /**
-     * The maxBubbleSize prop sets an upper limit for scaling data points in a bubble chart
-     */
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    containerComponent: PropTypes.element,
+    data: PropTypes.array,
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
+        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+      }),
+      PropTypes.number
+    ]),
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOf(["all"]),
+      eventHandlers: PropTypes.object
+    })),
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    groupComponent: PropTypes.element,
+    height: CustomPropTypes.nonNegative,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    labelComponent: PropTypes.element,
     maxBubbleSize: CustomPropTypes.nonNegative,
-    /**
-     * The symbol prop determines which symbol should be drawn to represent data points.
-     */
+    name: PropTypes.string,
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number, bottom: PropTypes.number,
+        left: PropTypes.number, right: PropTypes.number
+      })
+    ]),
+    samples: CustomPropTypes.nonNegative,
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
+    standalone: PropTypes.bool,
+    style: PropTypes.shape({
+      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+    }),
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
         "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"
       ]),
       PropTypes.func
+    ]),
+    theme: PropTypes.object,
+    width: CustomPropTypes.nonNegative,
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    y: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.func)
     ])
   };
 

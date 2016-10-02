@@ -1,7 +1,5 @@
 import React, { PropTypes } from "react";
 import { assign, partialRight } from "lodash";
-import cartesianProps from "../victory-base/cartesian-props";
-import commonProps from "../victory-base/common-props";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
   VictoryContainer, VictoryTheme, Line, TextSize, VictoryGroupContainer, addEvents
@@ -30,130 +28,64 @@ class VictoryAxis extends React.Component {
   };
 
   static propTypes = {
-    ...commonProps,
-    ...cartesianProps,
-    /**
-     * The axisComponent prop takes in an entire component which will be used
-     * to create the axis line. The new element created from the passed axisComponent
-     * will be supplied with the following properties: x1, y1, x2, y2, style and events.
-     * Any of these props may be overridden by passing in props to the supplied component,
-     * or modified or ignored within the custom component itself. If an axisComponent
-     * is not supplied, VictoryAxis will render its default AxisLine component.
-     */
+    animate: PropTypes.object,
     axisComponent: PropTypes.element,
-    /**
-     * The axisLabelComponent prop takes in an entire component which will be used
-     * to create the axis label. The new element created from the passed axisLabelComponent
-     * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
-     * angle, transform, style and events. Any of these props may be overridden by
-     * passing in props to the supplied component, or modified or ignored within
-     * the custom component itself. If an axisLabelComponent is not supplied, a new
-     * VictoryLabel will be created with props described above
-     */
     axisLabelComponent: PropTypes.element,
-    /**
-     * This prop specifies whether a given axis is intended to cross another axis.
-     */
+    containerComponent: PropTypes.element,
     crossAxis: PropTypes.bool,
-    /**
-     * The dependentAxis prop specifies whether the axis corresponds to the
-     * dependent variable (usually y). This prop is useful when composing axis
-     * with other components to form a chart.
-     */
     dependentAxis: PropTypes.bool,
-    /**
-     * This fixLabelOverlap prop enable algorithm for overlapped ticks labels.
-     * This prop is useful when ticks amount much more than axis size.
-     */
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
+        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+      }),
+      PropTypes.number
+    ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["axis", "axisLabel", "grid", "ticks", "tickLabels", "parent"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      eventHandlers: PropTypes.object
+    })),
     fixLabelOverlap: PropTypes.bool,
-    /**
-     * The gridComponent prop takes in an entire component which will be used
-     * to create grid lines. The new element created from the passed gridComponent
-     * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
-     * Any of these props may be overridden by passing in props to the supplied component,
-     * or modified or ignored within the custom component itself. If a gridComponent
-     * is not supplied, VictoryAxis will render its default GridLine component.
-     */
     gridComponent: PropTypes.element,
-    /**
-     * The label prop defines the label that will appear along the axis. This
-     * prop should be given as a value or an entire, HTML-complete label
-     * component. If a label component is given, it will be cloned. The new
-     * element's properties x, y, textAnchor, verticalAnchor, and transform
-     * will have defaults provided by the axis; styles filled out with
-     * defaults provided by the axis, and overrides from the label component.
-     * If a value is given, a new VictoryLabel will be created with props and
-     * styles from the axis.
-     */
+    groupComponent: PropTypes.element,
+    height: CustomPropTypes.nonNegative,
     label: PropTypes.any,
-    /**
-     * This value describes how far from the "edge" of its permitted area each axis
-     * will be set back in the x-direction.  If this prop is not given,
-     * the offset is calculated based on font size, axis orientation, and label padding.
-     */
+    name: PropTypes.string,
     offsetX: PropTypes.number,
-    /**
-     * This value describes how far from the "edge" of its permitted area each axis
-     * will be set back in the y-direction.  If this prop is not given,
-     * the offset is calculated based on font size, axis orientation, and label padding.
-     */
     offsetY: PropTypes.number,
-    /**
-     * The orientation prop specifies the position and orientation of your axis.
-     */
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number, bottom: PropTypes.number,
+        left: PropTypes.number, right: PropTypes.number
+      })
+    ]),
+    scale: CustomPropTypes.scale,
+    sharedEvents: PropTypes.shape({ events: PropTypes.array, getEventState: PropTypes.func }),
+    standalone: PropTypes.bool,
     style: PropTypes.shape({
-      parent: PropTypes.object,
-      axis: PropTypes.object,
-      axisLabel: PropTypes.object,
-      grid: PropTypes.object,
-      ticks: PropTypes.object,
-      tickLabels: PropTypes.object
+      parent: PropTypes.object, axis: PropTypes.object, axisLabel: PropTypes.object,
+      grid: PropTypes.object, ticks: PropTypes.object, tickLabels: PropTypes.object
     }),
-    /**
-     * The tickComponent prop takes in an entire component which will be used
-     * to create tick lines. The new element created from the passed tickComponent
-     * will be supplied with the following properties: x1, y1, x2, y2, tick, style and events.
-     * Any of these props may be overridden by passing in props to the supplied component,
-     * or modified or ignored within the custom component itself. If a tickComponent
-     * is not supplied, VictoryAxis will render its default Tick component.
-     */
+    theme: PropTypes.object,
     tickComponent: PropTypes.element,
-    /**
-     * The tickCount prop specifies approximately how many ticks should be drawn on the axis if
-     * tickValues are not explicitly provided. This value is calculated by d3 scale and
-     * prioritizes returning "nice" values and evenly spaced ticks over an exact number of ticks.
-     * If you need an exact number of ticks, please specify them via the tickValues prop.
-     * This prop must have a value greater than zero.
-     */
     tickCount: CustomPropTypes.allOfType([
       CustomPropTypes.integer, CustomPropTypes.greaterThanZero
     ]),
-    /**
-     * The tickLabelComponent prop takes in an entire component which will be used
-     * to create the tick labels. The new element created from the passed tickLabelComponent
-     * will be supplied with the following properties: x, y, verticalAnchor, textAnchor,
-     * angle, tick, style and events. Any of these props may be overridden by
-     * passing in props to the supplied component, or modified or ignored within
-     * the custom component itself. If an tickLabelComponent is not supplied, a new
-     * VictoryLabel will be created with props described above
-     */
+    tickFormat: PropTypes.oneOfType([ PropTypes.func, CustomPropTypes.homogeneousArray ]),
     tickLabelComponent: PropTypes.element,
-    /**
-     * The tickFormat prop specifies how tick values should be expressed visually.
-     * tickFormat can be given as a function to be applied to every tickValue, or as
-     * an array of display values for each tickValue.
-     * @examples d3.time.format("%Y"), (x) => x.toPrecision(2), ["first", "second", "third"]
-     */
-    tickFormat: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.homogeneousArray
-    ]),
-    /**
-     * The tickValues prop explicitly specifies which tick values to draw on the axis.
-     * @examples ["apples", "bananas", "oranges"], [2, 4, 6, 8]
-     */
-    tickValues: CustomPropTypes.homogeneousArray
+    tickValues: CustomPropTypes.homogeneousArray,
+    width: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {

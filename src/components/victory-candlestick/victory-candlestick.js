@@ -1,7 +1,5 @@
 import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
-import cartesianProps from "../victory-base/cartesian-props";
-import commonProps from "../victory-base/common-props";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Candle, VictoryGroupContainer
@@ -35,94 +33,99 @@ class VictoryCandlestick extends React.Component {
   static defaultTransitions = DefaultTransitions.discreteTransitions();
 
   static propTypes = {
-    ...commonProps,
-    ...cartesianProps,
-    /**
-     * The size prop determines how to scale each data point
-     */
-    size: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func
+    animate: PropTypes.object,
+    candleColors: PropTypes.shape({ positive: PropTypes.string, negative: PropTypes.string }),
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+      })
     ]),
-    /**
-     * The open prop specifies how to access the open value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'open', 'open.value.nested.1.thing', 'open[2].also.nested', null,
-     * d => Math.sin(d)
-     */
-    open: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
-    ]),
-    /**
-     * The close prop specifies how to access the close value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'close', 'close.value.nested.1.thing', 'close[2].also.nested', null,
-     * d => Math.sin(d)
-     */
     close: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    /**
-     * The high prop specifies how to access the high value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'high', 'high.value.nested.1.thing', 'high[2].also.nested', null,
-     * d => Math.sin(d)
-     */
+    containerComponent: PropTypes.element,
+    data: PropTypes.array,
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
+        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+      }),
+      PropTypes.number
+    ]),
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOf(["all"]),
+      eventHandlers: PropTypes.object
+    })),
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
+    groupComponent: PropTypes.element,
+    height: CustomPropTypes.nonNegative,
     high: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    /**
-     * The low prop specifies how to access the low value of each data point.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'low', 'low.value.nested.1.thing', 'low[2].also.nested', null, d => Math.sin(d)
-     */
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
+    labelComponent: PropTypes.element,
     low: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
     ]),
-    /**
-    * Candle colors are significant in candlestick charts - one color signifies the stock
-    * closed at a higher price than it opened, and the other signifies the reverse. The
-    * candleColors prop takes an object with keys positive and negative, which each take
-    * a string that should be a color. Positive is for data points where close is higher
-    * than open, and defaults to white, and negative (close < open) defaults to black.
-    * @examples candleColors={{positive: "purple", negative: "blue"}}
-    */
-    candleColors: PropTypes.shape({
-      positive: PropTypes.string,
-      negative: PropTypes.string
-    })
+    name: PropTypes.string,
+    open: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number, bottom: PropTypes.number,
+        left: PropTypes.number, right: PropTypes.number
+      })
+    ]),
+    samples: CustomPropTypes.nonNegative,
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
+    size: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
+    standalone: PropTypes.bool,
+    style: PropTypes.shape({
+      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+    }),
+    theme: PropTypes.object,
+    width: CustomPropTypes.nonNegative,
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ])
   };
 
   static defaultProps = {

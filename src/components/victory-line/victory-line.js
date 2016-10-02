@@ -23,59 +23,82 @@ class VictoryLine extends React.Component {
   static defaultTransitions = DefaultTransitions.continuousTransitions();
 
   static propTypes = {
-    ...commonProps,
-    ...cartesianProps,
-    /**
-     * The interpolation prop determines how data points should be connected
-     * when plotting a line
-     */
+    animate: PropTypes.object,
+    categories: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.shape({
+        x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
+      })
+    ]),
+    containerComponent: PropTypes.element,
+    data: PropTypes.array,
+    domainPadding: PropTypes.oneOfType([
+      PropTypes.shape({
+        x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
+        y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
+      }),
+      PropTypes.number
+    ]),
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      target: PropTypes.oneOf(["data", "labels", "parent"]),
+      eventKey: PropTypes.oneOf(["all"]),
+      eventHandlers: PropTypes.object
+    })),
+    groupComponent: PropTypes.element,
+    height: CustomPropTypes.nonNegative,
     interpolation: PropTypes.oneOf([
-      "basis",
-      "basisClosed",
-      "basisOpen",
-      "bundle",
-      "cardinal",
-      "cardinalClosed",
-      "cardinalOpen",
-      "catmullRom",
-      "catmullRomClosed",
-      "catmullRomOpen",
-      "linear",
-      "linearClosed",
-      "monotoneX",
-      "monotoneY",
-      "natural",
-      "radial",
-      "step",
-      "stepAfter",
-      "stepBefore"
+      "basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen",
+      "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX",
+      "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
-    /**
-     * The label prop defines the label that will appear at the end of the line.
-     * This prop should be given a string or as a function of data. If individual
-     * labels are required for each data point, they should be created by composing
-     * VictoryLine with VictoryScatter
-     * @examples: "Series 1", (data) => `${data.length} points`
-     */
-    label: PropTypes.oneOfType([
-      PropTypes.func,
-      PropTypes.string
+    label: PropTypes.string,
+    labelComponent: PropTypes.element,
+    name: PropTypes.string,
+    padding: PropTypes.oneOfType([
+      PropTypes.number,
+      PropTypes.shape({
+        top: PropTypes.number, bottom: PropTypes.number,
+        left: PropTypes.number, right: PropTypes.number
+      })
     ]),
-    /**
-     * The sortKey prop specifies the sort key for data points.
-     * If given as a function, it will be run on each data point, and returned value will be used.
-     * If given as an integer, it will be used as an array index for array-type data points.
-     * If given as a string, it will be used as a property key for object-type data points.
-     * If given as an array of strings, or a string containing dots or brackets,
-     * it will be used as a nested object property path (for details see Lodash docs for _.get).
-     * If `null` or `undefined`, the data value will be used as is (identity function/pass-through).
-     * @examples 0, 'x', 'x.value.nested.1.thing', 'x[2].also.nested', null, d => Math.sin(d)
-     */
+    samples: CustomPropTypes.nonNegative,
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
     sortKey: PropTypes.oneOfType([
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
+    ]),
+    standalone: PropTypes.bool,
+    style: PropTypes.shape({
+      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+    }),
+    theme: PropTypes.object,
+    width: CustomPropTypes.nonNegative,
+    x: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
+    y: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.func)
     ])
   };
 
