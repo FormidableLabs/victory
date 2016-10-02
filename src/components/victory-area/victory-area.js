@@ -3,12 +3,11 @@ import React, { PropTypes } from "react";
 import AreaHelpers from "./helper-methods";
 import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
-import addEvents from "../victory-base/add-events";
 import cartesianProps from "../victory-base/cartesian-props";
 import commonProps from "../victory-base/common-props";
 import {
   Helpers, VictoryTransition, VictoryLabel, VictoryContainer, VictoryTheme,
-  DefaultTransitions, Area, VictoryGroupContainer
+  DefaultTransitions, Area, VictoryGroupContainer, addEvents
 } from "victory-core";
 
 const fallbackProps = {

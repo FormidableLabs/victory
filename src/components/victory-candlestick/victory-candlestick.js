@@ -1,10 +1,9 @@
 import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
-import addEvents from "../victory-base/add-events";
 import cartesianProps from "../victory-base/cartesian-props";
 import commonProps from "../victory-base/common-props";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Candle, VictoryGroupContainer
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";

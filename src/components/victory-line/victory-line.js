@@ -3,11 +3,10 @@ import React, { PropTypes } from "react";
 import LineHelpers from "./helper-methods";
 import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
-import addEvents from "../victory-base/add-events";
 import cartesianProps from "../victory-base/cartesian-props";
 import commonProps from "../victory-base/common-props";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Curve, VictoryGroupContainer
 } from "victory-core";
 

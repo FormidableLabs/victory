@@ -1,12 +1,11 @@
 import React, { PropTypes } from "react";
-import addEvents from "../victory-base/add-events";
 import cartesianProps from "../victory-base/cartesian-props";
 import commonProps from "../victory-base/common-props";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
+  PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, VictoryGroupContainer
 } from "victory-core";
-import { assign, defaults, isFunction, partialRight } from "lodash";
+import { partialRight } from "lodash";
 import Data from "../../helpers/data";
 import ErrorBarHelpers from "./helper-methods";
 

@@ -523,12 +523,14 @@ class App extends React.Component {
                     }, {
                       childName: "line",
                       target: "data",
+                      eventKey: "all",
                       mutation: (props) => {
                         return {style: merge({}, props.style, {stroke: "lime"})};
                       }
                     }, {
                       childName: "line",
                       target: "labels",
+                      eventKey: "all",
                       mutation: (props) => {
                         return {
                           style: merge({}, props.style, {fill: "green"}),

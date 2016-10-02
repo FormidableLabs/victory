@@ -1,11 +1,10 @@
 import React, { PropTypes } from "react";
 import { assign, partialRight } from "lodash";
-import addEvents from "../victory-base/add-events";
 import cartesianProps from "../victory-base/cartesian-props";
 import commonProps from "../victory-base/common-props";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, TextSize, VictoryGroupContainer
+  VictoryContainer, VictoryTheme, Line, TextSize, VictoryGroupContainer, addEvents
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
