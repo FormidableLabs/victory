@@ -1,4 +1,4 @@
-import { defaults, isFunction, merge, partial, property, omit } from "lodash";
+import { defaults, isFunction, property, omit } from "lodash";
 
 export default {
   getPadding(props) {
