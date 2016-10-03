@@ -82,7 +82,7 @@ export default class App extends React.Component {
         data: this.getData(),
         transitionData: this.getTransitionData()
       });
-    }, 2000);
+    }, 4000);
   }
 
   getTransitionData() {
