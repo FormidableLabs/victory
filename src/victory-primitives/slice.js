@@ -7,20 +7,26 @@ export default class Slice extends React.Component {
     pathFunction: PropTypes.func,
     style: PropTypes.object,
     datum: PropTypes.object,
-    events: PropTypes.object
+    events: PropTypes.object,
+    endAngle: PropTypes.number,
+    startAngle: PropTypes.number,
+    padAngle: PropTypes.number
   };
 
-  renderSlice(props) {
-    return (
-      <path
-        d={props.pathFunction(props.slice)}
-        style={props.style}
-        {...props.events}
-      />
-    );
+  renderSlice(path, style, events) {
+    return <path d={path} style={style} {...events}/>;
+  }
+
+  getPath(props) {
+    const { endAngle, startAngle, padAngle, index, datum, pathFunction } = props;
+    return pathFunction({
+      endAngle, startAngle, padAngle, index, data: datum, value: datum.y
+    });
   }
 
   render() {
-    return this.renderSlice(this.props);
+    const path = this.getPath(this.props);
+    const { style, events } = this.props;
+    return this.renderSlice(path, style, events);
   }
 }

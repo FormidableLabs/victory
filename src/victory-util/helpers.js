@@ -1,4 +1,5 @@
 import { defaults, isFunction, property, omit } from "lodash";
+import Collection from "./collection";
 
 export default {
   getPadding(props) {
@@ -52,68 +53,6 @@ export default {
     return [padding.left, props.width - padding.right];
   },
 
-  // for components that take single datasets
-  getData(props) {
-    if (props.data) {
-      return this.formatData(props.data, props);
-    }
-  },
-
-  formatData(dataset, props, stringMap) {
-    if (!dataset) {
-      return [];
-    }
-    stringMap = stringMap || {
-      x: this.createStringMap(props, "x"),
-      y: this.createStringMap(props, "y")
-    };
-    const accessor = {
-      x: this.createAccessor(props.x),
-      y: this.createAccessor(props.y)
-    };
-
-    return dataset.map((datum) => {
-      const x = accessor.x(datum);
-      const y = accessor.y(datum);
-      const xName = typeof x === "string" ? {xName: x} : undefined;
-      const yName = typeof y === "string" ? {yName: y} : undefined;
-      return defaults({
-        // map string data to numeric values, and add names
-        x: typeof x === "string" ? stringMap.x[x] : x,
-        y: typeof y === "string" ? stringMap.y[y] : y
-      }, xName, yName, datum);
-    });
-  },
-
-  createStringMap(props, axis) {
-    const stringsFromData = this.getStringsFromData(props, axis);
-    if (stringsFromData.length) {
-      return stringsFromData.reduce((acc, string, index) => {
-        acc[string] = index + 1;
-        return acc;
-      }, {});
-    }
-    return null;
-  },
-
-  getStringsFromData(props, axis) {
-    if (!props.data) {
-      return [];
-    }
-    const key = typeof props[axis] === "undefined" ? axis : props[axis];
-    const accessor = this.createAccessor(key);
-    const dataStrings = (props.data)
-        .map((datum) => accessor(datum))
-        .filter((datum) => typeof datum === "string");
-    // return a unique set of strings
-    return dataStrings.reduce((prev, curr) => {
-      if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
-        prev.push(curr);
-      }
-      return prev;
-    }, []);
-  },
-
   createAccessor(key) {
     // creates a data accessor function
     // given a property key, path, array index, or null for identity.
@@ -132,5 +71,36 @@ export default {
     const themeProps = omit(theme, ["style"]);
     const baseProps = defaults({}, props, themeProps, fallbackProps);
     return defaults({}, baseProps, {clipWidth: baseProps.width, clipHeight: baseProps.height});
+  },
+
+  // Axis helpers
+
+  /**
+   * Returns the given axis or the opposite axis when horizontal
+   * @param {string} axis: the given axis, either "x" pr "y"
+   * @param {Boolean} horizontal: true when the chart is flipped to the horizontal orientation
+   * @returns {String} the dimension appropriate for the axis given its props "x" or "y"
+   */
+  getCurrentAxis(axis, horizontal) {
+    const otherAxis = axis === "x" ? "y" : "x";
+    return horizontal ? otherAxis : axis;
+  },
+
+  /**
+   * @param {Object} props: axis component props
+   * @returns {Boolean} true when the axis is vertical
+   */
+  isVertical(props) {
+    const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
+    const vertical = {top: false, bottom: false, left: true, right: true};
+    return vertical[orientation];
+  },
+
+  /**
+   * @param {Object} props: axis component props
+   * @returns {Boolean} true when tickValues contain strings
+   */
+  stringTicks(props) {
+    return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
   }
 };

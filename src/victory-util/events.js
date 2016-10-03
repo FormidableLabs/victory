@@ -1,46 +1,5 @@
 import { assign, extend, merge, partial, isFunction, isEmpty, property } from "lodash";
 
-  /* Example Event Prop
-    [
-      {
-        childName: "firstBar",
-        target: "data",
-        eventKey: 1,
-        eventKey: "thisOne",
-        eventHandlers: {
-          onClick: () => {},
-          ...
-        }
-      },
-      {
-        target: "labels",
-        eventHandlers: {
-          onClick: () => {}
-        }
-      }
-    ]
-
-
-  */
-
-  /* Example Event handler return
-  [
-    {
-      childName: "fistBar",
-      target: "data",
-      eventKey: 1,
-      mutation: (propsForTarget) => {
-        return {style: merge({}, propsForTarget.style, {fill: "red"})}
-      }
-    },
-    {
-      target: "labels",
-      eventKey: 2,
-      mutation: () => { return {text: "hello"}; }
-    }
-  ]
-  */
-
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
    * i.e. an individual bar specified by target: "data", eventKey: [index].
@@ -231,28 +190,6 @@ export default {
     return this.state[childType] &&
       this.state[childType][eventKey] &&
       this.state[childType][eventKey][namespace];
-  },
-
-  // Returns a data accessor given an eventKey prop
-  getEventKey(key) {
-    // creates a data accessor function
-    // given a property key, path, array index, or null for identity.
-    if (isFunction(key)) {
-      return key;
-    } else if (key === null || typeof key === "undefined") {
-      return () => undefined;
-    }
-    // otherwise, assume it is an array index, property key or path (_.property handles all three)
-    return property(key);
-  },
-
-  // Returns data with an eventKey prop added to each datum
-  addEventKeys(props, data) {
-    const eventKeyAccessor = this.getEventKey(props.eventKey);
-    return data.map((datum, index) => {
-      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-      return assign({eventKey}, datum);
-    });
   },
 
   /* Returns an array of defaultEvents from sub-components of a given component.

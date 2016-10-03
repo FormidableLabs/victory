@@ -1,21 +1,29 @@
+import addEvents from "./add-events";
 import Collection from "./collection";
+import Data from "./data";
+import * as DefaultTransitions from "./default-transitions";
+import Domain from "./domain";
+import Events from "./events";
 import Helpers from "./helpers";
 import Log from "./log";
-import Style from "./style";
 import PropTypes from "./prop-types";
-import Events from "./events";
-import * as Transitions from "./transitions";
+import Scale from "./scale";
+import Style from "./style";
 import TextSize from "./textsize";
-import * as DefaultTransitions from "./default-transitions";
+import * as Transitions from "./transitions";
 
 export {
+  addEvents,
   Collection,
+  Data,
+  DefaultTransitions,
+  Domain,
+  Events,
   Helpers,
   Log,
-  Style,
-  Transitions,
-  DefaultTransitions,
   PropTypes,
-  Events,
-  TextSize
+  Scale,
+  Style,
+  TextSize,
+  Transitions
 };
