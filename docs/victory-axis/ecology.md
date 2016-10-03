@@ -66,7 +66,7 @@ The sensible defaults VictoryAxis provides make it easy to get started, but ever
       grid: {strokeWidth: 2},
       ticks: {stroke: "red", size: 4},
       tickLabels: {fontSize: 12},
-      axisLabel: {fontsize: 16}
+      axisLabel: {fontSize: 16}
     }}
     label="Planets"
     tickValues={[
