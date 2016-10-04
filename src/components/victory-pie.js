@@ -172,6 +172,7 @@ class VictoryPie extends React.Component {
   }
 
   render() {
+    console.log("render")
     const props = Helpers.modifyProps(this.props, fallbackProps, "pie");
 
     const { animate, standalone } = props;
