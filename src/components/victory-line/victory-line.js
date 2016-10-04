@@ -1,13 +1,10 @@
 import { partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import LineHelpers from "./helper-methods";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
-import cartesianProps from "../victory-base/cartesian-props";
-import commonProps from "../victory-base/common-props";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, VictoryGroupContainer
+  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, VictoryGroupContainer,
+  Data, Domain
 } from "victory-core";
 
 const fallbackProps = {

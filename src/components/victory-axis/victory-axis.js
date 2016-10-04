@@ -144,7 +144,7 @@ class VictoryAxis extends React.Component {
   }
 
   fixLabelOverlap(gridAndTicks, props) {
-    const isVertical = Axis.isVertical(props);
+    const isVertical = Helpers.isVertical(props);
     const size = isVertical ? props.height : props.width;
     const isVictoryLabel = (child) => child.type.name === "VictoryLabel";
     const labels = gridAndTicks.map((gridAndTick) => gridAndTick.props.children)
@@ -229,4 +229,4 @@ class VictoryAxis extends React.Component {
   }
 }
 
-export default addEvents(VictoryAxis)
+export default addEvents(VictoryAxis);

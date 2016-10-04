@@ -6,7 +6,6 @@ export default {
   /**
    * Returns the axis (x or y) of a particular axis component
    * @param {Object} props: the props object.
-   * @param {Boolean} flipped: true when the axis component is in an atypical orientation
    * @returns {String} the dimension appropriate for the axis given its props
    */
   getAxis(props) {
@@ -17,6 +16,12 @@ export default {
     return props.dependentAxis ? "y" : "x";
   },
 
+  /**
+   * Returns the given axis or the opposite axis when horizontal
+   * @param {string} axis: the given axis, either "x" pr "y"
+   * @param {Boolean} horizontal: true when the chart is flipped to the horizontal orientation
+   * @returns {String} the dimension appropriate for the axis given its props "x" or "y"
+   */
   getCurrentAxis(axis, horizontal) {
     const otherAxis = axis === "x" ? "y" : "x";
     return horizontal ? otherAxis : axis;

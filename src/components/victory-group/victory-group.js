@@ -1,11 +1,8 @@
 import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
-  VictoryContainer, VictoryTheme, VictoryGroupContainer
+  VictoryContainer, VictoryTheme, VictoryGroupContainer, Scale, Data
 } from "victory-core";
-import Scale from "../../helpers/scale";
-import Axis from "../../helpers/axis";
-import Data from "../../helpers/data";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
@@ -171,7 +168,7 @@ export default class VictoryGroup extends React.Component {
     const childComponents = React.Children.toArray(props.children);
     const horizontalChildren = childComponents.some((child) => child.props.horizontal);
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-    const currentAxis = Axis.getCurrentAxis(axis, horizontal);
+    const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
     const domain = calculatedProps.domain[currentAxis];
     const range = calculatedProps.range[currentAxis];
     const domainExtent = Math.max(...domain) - Math.min(...domain);

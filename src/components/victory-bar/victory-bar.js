@@ -1,11 +1,9 @@
 import React, { PropTypes } from "react";
 import BarHelpers from "./helper-methods";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, VictoryContainer,
-  VictoryTheme, Bar, VictoryGroupContainer, addEvents
+  VictoryTheme, Bar, VictoryGroupContainer, addEvents, Data, Domain
 } from "victory-core";
 
 const fallbackProps = {

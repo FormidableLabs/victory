@@ -1,11 +1,9 @@
 import { partialRight } from "lodash";
 import React, { PropTypes } from "react";
 import AreaHelpers from "./helper-methods";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, VictoryContainer,
-  DefaultTransitions, Area, VictoryGroupContainer, addEvents, VictoryTheme
+  DefaultTransitions, Area, VictoryGroupContainer, addEvents, VictoryTheme, Data, Domain
 } from "victory-core";
 
 const fallbackProps = {

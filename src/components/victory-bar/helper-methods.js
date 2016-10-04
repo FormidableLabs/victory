@@ -1,8 +1,5 @@
 import { assign, defaults, omit } from "lodash";
-import { Helpers, Events } from "victory-core";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
-import Scale from "../../helpers/scale";
+import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
@@ -96,7 +93,7 @@ export default {
     const { theme } = props;
     const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
+    const data = Data.getData(props);
     const scale = this.getScale(props);
     return { style, data, scale };
   },

@@ -1,9 +1,6 @@
 import { omit, defaults, without } from "lodash";
-import { Helpers, Events } from "victory-core";
+import { Helpers, Scale, Domain, Data } from "victory-core";
 import { voronoi as d3Voronoi } from "d3-voronoi";
-import Scale from "../../helpers/scale";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -54,7 +51,7 @@ export default {
     const defaultStyles = props.theme && props.theme.voronoi && props.theme.voronoi.style ?
       props.theme.voronoi.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
+    const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")

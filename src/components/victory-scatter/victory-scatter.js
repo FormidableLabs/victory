@@ -1,10 +1,9 @@
 import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Point, VictoryGroupContainer
+  VictoryContainer, VictoryTheme, DefaultTransitions, Point, VictoryGroupContainer,
+  Data, Domain
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 

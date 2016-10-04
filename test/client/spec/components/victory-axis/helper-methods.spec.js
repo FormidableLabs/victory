@@ -1,10 +1,8 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import AxisHelpers from "src/components/victory-axis/helper-methods";
-import Scale from "src/helpers/scale";
 import Axis from "src/helpers/axis";
-import Domain from "src/helpers/domain";
-import { Helpers } from "victory-core";
+import { Helpers, Domain, Scale } from "victory-core";
 
 describe("victory-axis/helper-methods", () => {
   describe("getDomain", () => {

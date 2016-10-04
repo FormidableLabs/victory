@@ -1,10 +1,9 @@
 import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, VictoryGroupContainer
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, VictoryGroupContainer,
+  Data, Domain
 } from "victory-core";
 import VoronoiHelpers from "./helper-methods";
 
