@@ -12,6 +12,7 @@ export default class ErrorBar extends React.Component {
     datum: PropTypes.object,
     events: PropTypes.object,
     scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
@@ -35,6 +36,7 @@ export default class ErrorBar extends React.Component {
 
   renderErrorBar(error) {
     const { x, y, borderWidth, groupComponent, events} = this.props;
+    const shapeRendering = this.props.shapeRendering || "auto";
     const style = assign({stroke: "black"}, this.props.style);
     return React.cloneElement(groupComponent, {},
       error.errorRight ?
@@ -94,7 +96,7 @@ export default class ErrorBar extends React.Component {
           x2={x}
           y1={y}
           y2={error.errorTop}
-          shapeRendering="optimizeSpeed"
+          shapeRendering={shapeRendering}
         />
         : null
       ,
@@ -107,7 +109,7 @@ export default class ErrorBar extends React.Component {
           x2={x}
           y1={y}
           y2={error.errorBottom}
-          shapeRendering="optimizeSpeed"
+          shapeRendering={shapeRendering}
         />
         : null
       ,
@@ -120,7 +122,7 @@ export default class ErrorBar extends React.Component {
           x2={error.errorLeft}
           y1={y}
           y2={y}
-          shapeRendering="optimizeSpeed"
+          shapeRendering={shapeRendering}
         /> : null
       ,
       error.errorRight ?
@@ -132,7 +134,7 @@ export default class ErrorBar extends React.Component {
           x2={error.errorRight}
           y1={y}
           y2={y}
-          shapeRendering="optimizeSpeed"
+          shapeRendering={shapeRendering}
         /> : null
     );
   }
