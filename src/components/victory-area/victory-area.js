@@ -104,6 +104,7 @@ class VictoryArea extends React.Component {
 
   static displayName = "VictoryArea";
   static role = "area";
+  static continuous = true;
   static defaultTransitions = DefaultTransitions.continuousTransitions();
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
@@ -143,7 +144,8 @@ class VictoryArea extends React.Component {
   }
 
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "area");
+    const { role } = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     const { animate, style, standalone, theme } = props;
 
     if (animate) {

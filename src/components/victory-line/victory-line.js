@@ -18,6 +18,7 @@ class VictoryLine extends React.Component {
   static displayName = "VictoryLine";
   static role = "line";
   static defaultTransitions = DefaultTransitions.continuousTransitions();
+  static continuous = true;
 
   static propTypes = {
     animate: PropTypes.object,
@@ -156,7 +157,8 @@ class VictoryLine extends React.Component {
   }
 
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "line");
+    const { role } = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     const { animate, style, standalone, theme } = props;
 
     if (animate) {
