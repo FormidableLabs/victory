@@ -1,4 +1,4 @@
-import { assign, extend, merge, partial, isFunction, isEmpty, property } from "lodash";
+import { assign, extend, merge, partial, isEmpty } from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,

@@ -1,9 +1,9 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 
-import Events from "src/index";
+import { Events } from "src/index";
 
-describe("helpers", () => {
+describe("helpers/events", () => {
   describe("getPartialEvents", () => {
     it("returns a set of new event functions with partially applied arguments", () => {
       const events = {
@@ -47,7 +47,6 @@ describe("helpers", () => {
     it("returns new functions that call set state", () => {
       const getBoundEvents = Events.getEvents.bind(fake);
       const result = getBoundEvents(fake.props.events.data, "data");
-      expect(result).to.have.keys(["onClick"]);
       const index = 0;
       const partialEvents = Events.getPartialEvents(result, index, {});
       expect(partialEvents).to.have.keys(["onClick"]);
