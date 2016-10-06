@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "builder": "~2.9.1",
-    "builder-victory-component": "^2.4.0",
+    "builder-victory-component": "^3.0.0",
     "d3-ease": "^0.3.0",
     "d3-interpolate": "0.2.0",
     "d3-scale": "^1.0.0",
@@ -35,7 +35,7 @@
     "lodash": "^4.12.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.4.0",
+    "builder-victory-component-dev": "^3.0.0",
     "chai": "^3.2.0",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
