@@ -1,5 +1,15 @@
 VictoryCore Changelog
 =====================
+## 8.0.0 (2016-10-06)
+
+- Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
+- Adds `VictoryGroupContainer` which renders children in a group container with a `clipPath` if clipPath props exist
+- Removes `clipPath` properties from `Curve` and `Area` primitives
+- `VictoryTransition` only passes `clipPath` props to continuous children (_i.e._ `VictoryLine`, `VictoryArea`)
+- Adds an aggressive `shouldComponentUpdate` check to `VictoryTransition` to prevent unnecessary rendering
+- Extracts event logic into a new inverted inheritance higher order component `addEvents`
+- Moves `Data`, `Domain`, and `Scale` helpers from `victory-chart` to `victory-core`
+
 ## 7.0.2 (2016-09-18)
 
 - Minor changes in VictoryTooltip to support native version
