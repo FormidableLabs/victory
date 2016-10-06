@@ -28,12 +28,22 @@ describe("helpers/events", () => {
       sandbox = sinon.sandbox.create();
       fake = {
         props: {
-          events: {
-            data: {
-              onClick: () => { return {data: "foo"}; }
+          events: [{
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return {
+                  mutation: () => {
+                    return {foo: "foo"};
+                  }
+                };
+              }
             }
-          }
+          }]
         },
+        baseProps: { 0: {
+          data: {foo: "bar"}
+        }},
         setState: (x) => x,
         state: {}
       };
@@ -45,15 +55,17 @@ describe("helpers/events", () => {
     });
 
     it("returns new functions that call set state", () => {
+      const getScopedEvents = Events.getScopedEvents.bind(fake);
       const getBoundEvents = Events.getEvents.bind(fake);
-      const result = getBoundEvents(fake.props.events.data, "data");
       const index = 0;
+      const result = getBoundEvents(fake.props, "data", index, getScopedEvents);
+      expect(result).to.have.keys(["onClick"]);
       const partialEvents = Events.getPartialEvents(result, index, {});
       expect(partialEvents).to.have.keys(["onClick"]);
       partialEvents.onClick();
-      expect(fake.setState).calledWith({
+      expect(fake.setState).returned({
         [index]: {
-          data: "foo"
+          data: {foo: "foo"}
         }
       });
     });
