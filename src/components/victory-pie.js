@@ -6,7 +6,6 @@ import {
   PropTypes as CustomPropTypes,
   Slice,
   VictoryContainer,
-  VictoryGroupContainer,
   VictoryLabel,
   VictoryTheme,
   VictoryTransition
@@ -132,7 +131,7 @@ class VictoryPie extends React.Component {
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 
