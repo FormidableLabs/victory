@@ -36,14 +36,8 @@ export default {
       const slice = slices[index];
       const datum = slice.data;
       const eventKey = datum.eventKey || index;
-      const padAngle = datum.padAngle !== undefined ?
-        this.degreesToRadians(datum.padAngle) : slice.padAngle;
-      const startAngle = datum.startAngle !== undefined ?
-          this.degreesToRadians(datum.startAngle) : slice.startAngle;
-      const endAngle = datum.endAngle !== undefined ?
-        this.degreesToRadians(datum.endAngle) : slice.endAngle;
       const dataProps = {
-        index, slice, pathFunction, datum, padAngle, startAngle, endAngle,
+        index, slice, pathFunction, datum,
         style: this.getSliceStyle(datum, index, calculatedValues)
       };
 
