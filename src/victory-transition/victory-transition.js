@@ -7,19 +7,8 @@ export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
 
   static propTypes = {
-    /**
-     * The animate prop specifies an animation config for the transition.
-     * This prop should be given as an object.
-     */
     animate: React.PropTypes.object,
-    /**
-     * VictoryTransition animates a single child component
-     */
     children: React.PropTypes.node,
-    /**
-     * This prop specifies which of the child's props are safe to interpolate.
-     * This props should be given as an array.
-     */
     animationWhitelist: React.PropTypes.array
   };
 

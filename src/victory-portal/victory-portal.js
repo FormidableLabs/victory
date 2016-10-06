@@ -4,13 +4,6 @@ import { defaults, omit } from "lodash";
 
 export default class VictoryPortal extends React.Component {
   static propTypes = {
-    /**
-     * children passed to VictoryPortal will be rendered in the portal container provided
-     * by VictoryContainer if it exists, or rendered in place if it does not. Any additional
-     * props passed to VictoryPortal will be applied to children. This allows VictoryPortal
-     * to be used as a wrapper for any Victory component without interfering with how other
-     * wrappers like VictoryChart interact with their children.
-     */
     children: React.PropTypes.node
   };
 

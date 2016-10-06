@@ -4,11 +4,6 @@ export default class Portal extends React.Component {
   static displayName = "Portal";
 
   static propTypes = {
-    /**
-     * The groupComponent prop takes an entire component which will be used to
-     * create group elements for use within container elements. This prop defaults
-     * to a <g> tag on web, and a react-native-svg <G> tag on mobile
-     */
     groupComponent: PropTypes.element
   }
 

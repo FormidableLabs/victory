@@ -11,18 +11,8 @@ export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
 
   static propTypes = {
-    /**
-     * The child of should be a function that takes an object of tweened values
-     * and returns a component to render.
-     */
     children: React.PropTypes.func,
-    /**
-     * The number of milliseconds the animation should take to complete.
-     */
     duration: React.PropTypes.number,
-    /**
-     * The easing prop specifies an easing function name to use for tweening.
-     */
     easing: React.PropTypes.oneOf([
       "back", "backIn", "backOut", "backInOut",
       "bounce", "bounceIn", "bounceOut", "bounceInOut",
@@ -35,23 +25,8 @@ export default class VictoryAnimation extends React.Component {
       "quad", "quadIn", "quadOut", "quadInOut",
       "sin", "sinIn", "sinOut", "sinInOut"
     ]),
-    /**
-     * The delay prop specifies a delay in milliseconds before the animation
-     * begins. If multiple values are in the animation queue, it is the delay
-     * between each animation.
-     */
     delay: React.PropTypes.number,
-    /**
-     * The onEnd prop specifies a function to run when the animation ends. If
-     * multiple animations are in the queue, it is called after the last
-     * animation.
-     */
     onEnd: React.PropTypes.func,
-    /**
-     * The data prop specifies the latest set of values to tween to. When this
-     * prop changes, VictoryAnimation will begin animating from the current
-     * value to the new value.
-     */
     data: React.PropTypes.oneOfType([
       React.PropTypes.object,
       React.PropTypes.array
@@ -59,13 +34,9 @@ export default class VictoryAnimation extends React.Component {
   };
 
   static defaultProps = {
-    /* length of animation */
     duration: 1000,
-    /* easing modifies step each frame */
     easing: "quadInOut",
-    /* delay between transitions */
     delay: 0,
-    /* we got nothin' */
     data: {}
   };
 

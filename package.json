@@ -22,8 +22,7 @@
     "preversion": "builder run npm:preversion",
     "start": "builder run hot",
     "test": "builder run check",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
-    "docs-build-static": "echo 'Static docs generation for victory-core is not supported.'"
+    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
   },
   "dependencies": {
     "builder": "~2.9.1",
@@ -38,10 +37,8 @@
   "devDependencies": {
     "builder-victory-component-dev": "^2.4.0",
     "chai": "^3.2.0",
-    "ecology": "^1.6.0",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
-    "radium": "^0.16.2",
     "react": "~15.1.0",
     "react-addons-test-utils": "~15.1.0",
     "react-dom": "~15.1.0",
