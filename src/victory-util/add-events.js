@@ -3,19 +3,22 @@ import Events from "./events";
 
 export default (WrappedComponent) => {
   return class addEvents extends WrappedComponent {
-    constructor() {
-      super();
-      this.state = {};
+
+    componentWillMount() {
+      if (isFunction(super.componentWillMount)) {
+        super.componentWillMount();
+      }
+      this.state = this.state || {};
       const getScopedEvents = Events.getScopedEvents.bind(this);
       this.getEvents = partialRight(Events.getEvents.bind(this), getScopedEvents);
       this.getEventState = Events.getEventState.bind(this);
-    }
-
-    componentWillMount() {
       this.setupEvents(this.props);
     }
 
     componentWillReceiveProps(newProps) {
+      if (isFunction(super.componentWillReceiveProps)) {
+        super.componentWillReceiveProps();
+      }
       this.setupEvents(newProps);
     }
 
