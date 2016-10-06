@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { assign, omit } from "lodash";
 import Portal from "../victory-portal/portal";
 
 export default class VictoryContainer extends React.Component {
@@ -15,13 +16,15 @@ export default class VictoryContainer extends React.Component {
     ]),
     title: PropTypes.string,
     desc: PropTypes.string,
-    portalComponent: PropTypes.element
+    portalComponent: PropTypes.element,
+    responsive: PropTypes.bool
   }
 
   static defaultProps = {
     title: "Victory Chart",
     desc: "",
-    portalComponent: <Portal/>
+    portalComponent: <Portal/>,
+    responsive: true
   }
 
   static childContextTypes = {
@@ -46,19 +49,25 @@ export default class VictoryContainer extends React.Component {
   }
 
   render() {
+    const {
+      style, title, desc, width, height, children, responsive, portalComponent, events
+    } = this.props;
+    const svgProps = assign(
+      {
+        "aria-labelledby": "title desc", role: "img",
+        style: responsive ? style : omit(style, ["height", "width"]),
+        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
+        width: responsive ? undefined : width,
+        height: responsive ? undefined : height
+      },
+      events
+    );
     return (
-      <svg
-        style={this.props.style}
-        viewBox={`0 0 ${this.props.width} ${this.props.height}`}
-        role="img"
-        aria-labelledby="title desc"
-        {...this.props.events}
-      >
-        <title id="title">{this.props.title}</title>
-        <desc id="desc">{this.props.desc}</desc>
-        {this.props.children}
-        {React.cloneElement(this.props.portalComponent, {
-          ref: this.savePortalRef})}
+      <svg {...svgProps}>
+        <title id="title">{title}</title>
+        <desc id="desc">{desc}</desc>
+        {children}
+        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
       </svg>
       );
   }
