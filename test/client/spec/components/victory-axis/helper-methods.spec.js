@@ -1,7 +1,6 @@
 /* eslint no-unused-expressions: 0 */
 /* global sinon */
 import AxisHelpers from "src/components/victory-axis/helper-methods";
-import Axis from "src/helpers/axis";
 import { Helpers, Domain, Scale } from "victory-core";
 
 describe("victory-axis/helper-methods", () => {
@@ -96,7 +95,7 @@ describe("victory-axis/helper-methods", () => {
     const scale = Scale.getBaseScale({scale: {x: "linear"}}, "x");
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Axis, "stringTicks");
+      sandbox.spy(Helpers, "stringTicks");
       sandbox.spy(scale, "ticks");
     });
 
@@ -107,14 +106,14 @@ describe("victory-axis/helper-methods", () => {
     it("returns tickValues from props", () => {
       const props = {tickValues: [1, 2, 3]};
       const tickResult = AxisHelpers.getTicks(props);
-      expect(Axis.stringTicks).calledWith(props).and.returned(false);
+      expect(Helpers.stringTicks).calledWith(props).and.returned(false);
       expect(tickResult).to.eql(props.tickValues);
     });
 
     it("returns converts string tickValues to numbers", () => {
       const props = {tickValues: ["a", "b", "c", "d"]};
       const tickResult = AxisHelpers.getTicks(props);
-      expect(Axis.stringTicks).calledWith(props).and.returned(true);
+      expect(Helpers.stringTicks).calledWith(props).and.returned(true);
       expect(tickResult).to.eql([1, 2, 3, 4]);
     });
 
@@ -138,7 +137,7 @@ describe("victory-axis/helper-methods", () => {
     const ticks = [1, 2, 3, 4, 5];
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(Axis, "stringTicks");
+      sandbox.spy(Helpers, "stringTicks");
       sandbox.stub(scale, "tickFormat");
     });
 
@@ -150,7 +149,7 @@ describe("victory-axis/helper-methods", () => {
       const props = {tickFormat: (x) => x * 5};
       const tickProps = {scale, ticks};
       const formatResult = AxisHelpers.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).notCalled;
+      expect(Helpers.stringTicks).notCalled;
       expect(scale.tickFormat).notCalled;
       expect(formatResult).to.eql(props.tickFormat);
     });
@@ -159,7 +158,7 @@ describe("victory-axis/helper-methods", () => {
       const props = {tickFormat: [1, 2, 3, 4, 5]};
       const tickProps = {scale, ticks};
       const formatResult = AxisHelpers.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).notCalled;
+      expect(Helpers.stringTicks).notCalled;
       expect(scale.tickFormat).notCalled;
       expect(formatResult).to.be.a("function");
     });
@@ -168,7 +167,7 @@ describe("victory-axis/helper-methods", () => {
       const props = {tickValues: ["cats", "dogs", "birds"]};
       const tickProps = {scale, ticks};
       const formatResult = AxisHelpers.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).calledWith(props).and.returned(true);
+      expect(Helpers.stringTicks).calledWith(props).and.returned(true);
       expect(scale.tickFormat).notCalled;
       expect(formatResult).to.be.a("function");
     });
@@ -177,7 +176,7 @@ describe("victory-axis/helper-methods", () => {
       const props = {};
       const tickProps = {scale, ticks};
       const formatResult = AxisHelpers.getTickFormat(props, tickProps);
-      expect(Axis.stringTicks).calledWith(props).and.returned(false);
+      expect(Helpers.stringTicks).calledWith(props).and.returned(false);
       expect(formatResult).to.be.a("function");
     });
   });
