@@ -240,17 +240,20 @@ export default class VictoryChart extends React.Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      nodesShouldLoad: false,
-      nodesDoneLoad: false,
-      nodesDoneClipPathLoad: false
-    };
+    if (props.animate) {
+      this.state = {
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      };
+      this.setAnimationState = Wrapper.setAnimationState.bind(this);
+    }
   }
 
   componentWillReceiveProps(nextProps) {
-    const setAnimationState = Wrapper.setAnimationState.bind(this);
-    setAnimationState(nextProps);
+    if (this.props.animate) {
+      this.setAnimationState(this.props, nextProps);
+    }
   }
 
   getStyles(props) {

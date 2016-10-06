@@ -26,16 +26,16 @@ export default {
       axis);
   },
 
-  setAnimationState(nextProps) {
-    if (!this.props.animate) {
+  setAnimationState(props, nextProps) {
+    if (!props.animate) {
       return;
     }
-    if (this.props.animate.parentState) {
-      const nodesWillExit = this.props.animate.parentState.nodesWillExit;
-      const oldProps = nodesWillExit ? this.props : null;
-      this.setState(defaults({oldProps}, this.props.animate.parentState));
+    if (props.animate.parentState) {
+      const nodesWillExit = props.animate.parentState.nodesWillExit;
+      const oldProps = nodesWillExit ? props : null;
+      this.setState(defaults({oldProps}, props.animate.parentState));
     } else {
-      const oldChildren = React.Children.toArray(this.props.children);
+      const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
       const {
         nodesWillExit,
@@ -52,14 +52,15 @@ export default {
       this.setState({
         nodesWillExit,
         nodesWillEnter,
-        childrenTransitions,
         nodesShouldEnter,
         nodesDoneClipPathEnter,
         nodesDoneClipPathExit,
+        childrenTransitions: Collection.isArrayOfArrays(childrenTransitions) ?
+          childrenTransitions[0] : childrenTransitions,
         nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
         nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
         nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
-        oldProps: nodesWillExit ? this.props : null
+        oldProps: nodesWillExit ? props : null
       });
     }
   },
