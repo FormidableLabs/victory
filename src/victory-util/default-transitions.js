@@ -81,7 +81,7 @@ export function discreteTransitions() {
     onLoad: {
       duration: 2000,
       before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
+      after: (datum) => datum
     },
     onExit: {
       duration: 600,
@@ -90,7 +90,7 @@ export function discreteTransitions() {
     onEnter: {
       duration: 600,
       before: () => ({ opacity: 0 }),
-      after: (datum) => ({ opacity: datum.opacity || 1 })
+      after: (datum) => datum
     }
   };
 }
