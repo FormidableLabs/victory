@@ -23,7 +23,6 @@
     "start": "builder run hot",
     "test": "builder run check",
     "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
-    "docs-build-static": "echo 'Static docs generation for victory-pie is not supported",
     "storybook": "start-storybook -p 3001"
   },
   "dependencies": {
@@ -38,10 +37,8 @@
     "builder-victory-component-dev": "^2.4.0",
     "chai": "^3.2.0",
     "chai-enzyme": "0.4.1",
-    "ecology": "^1.5.1",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
-    "radium": "^0.16.2",
     "react": "~15.1.0",
     "react-addons-test-utils": "~15.1.0",
     "react-dom": "~15.1.0",
