@@ -2,8 +2,7 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, VictoryGroupContainer,
-  Data, Domain
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
 } from "victory-core";
 import VoronoiHelpers from "./helper-methods";
 
@@ -102,7 +101,7 @@ class VictoryVoronoi extends React.Component {
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 

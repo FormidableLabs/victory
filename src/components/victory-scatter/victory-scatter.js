@@ -2,8 +2,7 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Point, VictoryGroupContainer,
-  Data, Domain
+  VictoryContainer, VictoryTheme, DefaultTransitions, Point, Data, Domain
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
@@ -111,7 +110,7 @@ class VictoryScatter extends React.Component {
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 

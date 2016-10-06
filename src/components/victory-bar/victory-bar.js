@@ -3,7 +3,7 @@ import BarHelpers from "./helper-methods";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, VictoryContainer,
-  VictoryTheme, Bar, VictoryGroupContainer, addEvents, Data, Domain
+  VictoryTheme, Bar, addEvents, Data, Domain
 } from "victory-core";
 
 const fallbackProps = {
@@ -125,7 +125,7 @@ class VictoryBar extends React.Component {
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 

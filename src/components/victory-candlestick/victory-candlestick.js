@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Candle, VictoryGroupContainer
+  VictoryContainer, VictoryTheme, DefaultTransitions, Candle
 } from "victory-core";
 import CandlestickHelpers from "./helper-methods";
 
@@ -141,7 +141,7 @@ class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 
