@@ -43,11 +43,12 @@ export default class VictoryTransition extends React.Component {
 
   // TODO: This method is expensive, but also prevents unnecessary animations
   shouldAnimateProps(nextProps) {
-    const getChildProps = (props) => {
-      const childProps = props.children && props.children.props || {};
-      return props.animationWhitelist ? pick(childProps, props.animationWhitelist) : childProps;
-    };
-    return !isEqual(getChildProps(this.props), getChildProps(nextProps));
+    return !isEqual(this.getWhitelistedProps(this.props), this.getWhitelistedProps(nextProps));
+  }
+
+  getWhitelistedProps(props) {
+    const childProps = props.children && props.children.props || {};
+    return props.animationWhitelist ? pick(childProps, props.animationWhitelist) : childProps;
   }
 
   shouldAnimateState(nextProps, nextState) {
@@ -56,25 +57,30 @@ export default class VictoryTransition extends React.Component {
     if (child.type.role && child.type.role === "axis") {
       return false;
     }
-    const animateState = (state, forceLoad) => {
-      const {
-        nodesWillExit, nodesWillEnter, nodesShouldEnter, nodesShouldLoad, nodesDoneLoad,
-        nodesDoneClipPathLoad, nodesDoneClipPathEnter, nodesDoneClipPathExit, animating
-      } = state;
-      const loading = forceLoad || !nodesDoneLoad && (!!nodesShouldLoad || nodesDoneClipPathLoad);
-      const entering = nodesShouldEnter || nodesWillEnter || nodesDoneClipPathEnter;
-      const exiting = nodesWillExit || nodesDoneClipPathExit;
-      return (animating || this.state.animating) && (loading || entering || exiting);
-    };
-    const props = nextState.oldProps || this.props;
-    const parentState = props.animate && props.animate.parentState ||
-      nextProps.animate && nextProps.animate.parentState;
+    const parentState = this.getParentState(nextProps, nextState);
     if (!parentState) {
-      return animateState(nextState);
+      return this.animateState(nextState);
     }
     // TODO: parentState does not have the correct nodesShouldLoad state
     const forceLoad = parentState.animating && !parentState.nodesDoneLoad;
-    return animateState(parentState, forceLoad);
+    return this.animateState(parentState, forceLoad);
+  }
+
+  getParentState(nextProps, nextState) {
+    const props = nextState.oldProps || this.props;
+    return props.animate && props.animate.parentState ||
+      nextProps.animate && nextProps.animate.parentState;
+  }
+
+  animateState(state, forceLoad) {
+    const {
+      nodesWillExit, nodesWillEnter, nodesShouldEnter, nodesShouldLoad, nodesDoneLoad,
+      nodesDoneClipPathLoad, nodesDoneClipPathEnter, nodesDoneClipPathExit, animating
+    } = state;
+    const loading = forceLoad || !nodesDoneLoad && (!!nodesShouldLoad || nodesDoneClipPathLoad);
+    const entering = nodesShouldEnter || nodesWillEnter || nodesDoneClipPathEnter;
+    const exiting = nodesWillExit || nodesDoneClipPathExit;
+    return (animating || this.state.animating) && (loading || entering || exiting);
   }
 
   shouldComponentUpdate(nextProps, nextState) {
