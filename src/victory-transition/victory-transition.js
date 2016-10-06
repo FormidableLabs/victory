@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions, Collection } from "../victory-util/index";
-import { defaults, isFunction, pick, filter, identity, isEqual } from "lodash";
+import { assign, defaults, isFunction, pick, filter, identity, isEqual } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -31,6 +31,9 @@ export default class VictoryTransition extends React.Component {
       nodesDoneClipPathLoad: false,
       animating: true
     };
+    const child = this.props.children;
+    this.continuous = child.type && child.type.continuous;
+    this.clipId = Math.round(Math.random() * 10000);
     this.getTransitionState = this.getTransitionState.bind(this);
   }
 
@@ -124,19 +127,24 @@ export default class VictoryTransition extends React.Component {
         nodesDoneClipPathExit,
         animating
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-      return {
+      const transitionState = {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit,
-        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
-        nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
         nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
+        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
         animating: animating || this.state.animating,
         oldProps: nodesWillExit ? props : null
       };
+      return this.continuous ? assign(
+        {
+          nodesDoneClipPathEnter,
+          nodesDoneClipPathExit,
+          nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad
+        },
+        transitionState
+      ) : transitionState;
     }
   }
 
@@ -198,18 +206,26 @@ export default class VictoryTransition extends React.Component {
     const combinedProps = defaults(
       {domain}, transitionProps, child.props
     );
-    const animationWhitelist = props.animationWhitelist;
-    const clipPathWhitelist = this.getClipPathWhitelist(transitionProps);
-
-    const propsToAnimate = animationWhitelist ?
-      pick(combinedProps, animationWhitelist.concat(clipPathWhitelist)) : combinedProps;
-
+    const animationWhitelist = props.animationWhitelist || [];
+    const whitelist = this.continuous ?
+      animationWhitelist.concat(this.getClipPathWhitelist(transitionProps)) : animationWhitelist;
+    const propsToAnimate = whitelist.length ? pick(combinedProps, whitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
-          const component = React.cloneElement(
-            child, defaults({animate: null}, newProps, combinedProps));
-          return component;
+          if (this.continuous) {
+            const { clipWidth, clipHeight, translateX, padding } = newProps;
+            const groupComponent = React.cloneElement(
+              child.props.groupComponent,
+              { clipWidth, clipHeight, translateX, padding, clipId: this.clipId }
+            );
+            return React.cloneElement(
+              child, defaults({animate: null, groupComponent}, newProps, combinedProps)
+            );
+          }
+          return React.cloneElement(
+            child, defaults({animate: null}, newProps, combinedProps)
+          );
         }}
       </VictoryAnimation>
     );

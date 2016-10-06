@@ -4,7 +4,6 @@ import { assign } from "lodash";
 export default class Bar extends React.Component {
 
   static propTypes = {
-    clipId: PropTypes.number,
     datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
@@ -57,7 +56,7 @@ export default class Bar extends React.Component {
   }
 
   renderBar(path, style, events) {
-    const { role, clipId, shapeRendering } = this.props;
+    const { role, shapeRendering } = this.props;
     return (
       <path
         d={path}
@@ -65,7 +64,6 @@ export default class Bar extends React.Component {
         role={role}
         shapeRendering={shapeRendering || "auto"}
         {...events}
-        clipPath={`url(#${clipId})`}
       />
     );
   }
