@@ -1,4 +1,4 @@
-import { includes, defaults, isFunction, range, without } from "lodash";
+import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
 import { Helpers, Scale, Domain } from "victory-core";
 
 const orientationSign = {
@@ -47,6 +47,20 @@ export default {
     scale.range(Helpers.getRange(props, axis));
     scale.domain(domain);
     return scale;
+  },
+
+  getStyleObject(props) {
+    const { theme, dependentAxis } = props;
+    const generalAxisStyle = theme && theme.axis && theme.axis.style;
+    const axisType = dependentAxis ? "dependentAxis" : "independentAxis";
+    const specificAxisStyle = theme && theme[axisType] && theme[axisType].style;
+
+    return generalAxisStyle && specificAxisStyle
+      ? defaultsDeep({},
+          specificAxisStyle,
+          generalAxisStyle
+        )
+      : specificAxisStyle || generalAxisStyle;
   },
 
   getStyles(props, styleObject) {
@@ -130,8 +144,33 @@ export default {
     };
   },
 
+  getRole(props) {
+    if (props.dependentAxis) {
+      return props.theme && props.theme.dependentAxis
+        ? "dependentAxis"
+        : "axis";
+    }
+
+    return props.theme && props.theme.independentAxis
+      ? "independentAxis"
+      : "axis";
+  },
+
+  getShallowMergedThemeProps(props, role) {
+    const axisTheme = props.theme.axis || {};
+    return defaults({}, props.theme[role], axisTheme);
+  },
+
+  modifyProps(props, fallbackProps, role) {
+    if (role !== "axis") {
+      props.theme[role] = this.getShallowMergedThemeProps(props, role);
+    }
+    return Helpers.modifyProps(props, fallbackProps, role);
+  },
+
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "axis");
+    const role = this.getRole(props);
+    props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
       style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors
@@ -180,8 +219,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
-    const defaultStyles = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
+    const defaultStyles = this.getStyleObject(props);
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");

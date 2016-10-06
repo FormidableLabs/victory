@@ -195,7 +195,7 @@ class VictoryAxis extends React.Component {
 
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
-    const { animate, standalone, theme } = props;
+    const { animate, standalone } = props;
     if (animate) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
@@ -211,7 +211,7 @@ class VictoryAxis extends React.Component {
       );
     }
 
-    const styleObject = theme && theme.axis && theme.axis.style ? theme.axis.style : {};
+    const styleObject = AxisHelpers.getStyleObject(props);
     const style = AxisHelpers.getStyles(props, styleObject);
     const gridAndTicks = this.renderGridAndTicks(props);
     const modifiedGridAndTicks = props.fixLabelOverlap
