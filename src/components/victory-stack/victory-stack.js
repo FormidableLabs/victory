@@ -298,9 +298,22 @@ export default class VictoryStack extends React.Component {
   static getDomain = Wrapper.getStackedDomain.bind(Wrapper);
   static getData = Wrapper.getData.bind(Wrapper);
 
+  constructor(props) {
+    super(props);
+    if (props.animate) {
+      this.state = {
+        nodesShouldLoad: false,
+        nodesDoneLoad: false,
+        animating: true
+      };
+      this.setAnimationState = Wrapper.setAnimationState.bind(this);
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    const setAnimationState = Wrapper.setAnimationState.bind(this);
-    setAnimationState(nextProps);
+    if (this.props.animate) {
+      this.setAnimationState(this.props, nextProps);
+    }
   }
 
   getCalculatedProps(props, childComponents, style) {
