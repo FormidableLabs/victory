@@ -1,5 +1,4 @@
 /* eslint no-unused-expressions: 0 */
-/* global sinon */
 
 import Helpers from "src/victory-util/helpers";
 describe("helpers", () => {
@@ -78,34 +77,6 @@ describe("helpers", () => {
     });
   });
 
-  describe("getStringsFromData", () => {
-    it("returns an array of strings from a data prop", () => {
-      const props = {data: [{x: "one", y: 1}, {x: "red", y: 2}, {x: "cat", y: 3}]};
-      const dataStrings = Helpers.getStringsFromData(props, "x");
-      expect(dataStrings).to.eql(["one", "red", "cat"]);
-    });
-
-    it("returns an array of strings from array-type data", () => {
-      const props = {data: [["one", 1], ["red", 2], ["cat", 3]], x: 0, y: 1};
-      const dataStrings = Helpers.getStringsFromData(props, "x");
-      expect(dataStrings).to.eql(["one", "red", "cat"]);
-    });
-
-    it("only returns strings, if data is mixed", () => {
-      const props = {data: [{x: 1, y: 1}, {x: "three", y: 3}]};
-      expect(Helpers.getStringsFromData(props, "x")).to.eql(["three"]);
-    });
-
-    it("returns an empty array when no strings are present", () => {
-      const props = {data: [{x: 1, y: 1}, {x: 3, y: 3}]};
-      expect(Helpers.getStringsFromData(props, "x")).to.eql([]);
-    });
-
-    it("returns an empty array when the data prop is undefined", () => {
-      expect(Helpers.getStringsFromData({}, "x")).to.eql([]);
-    });
-  });
-
   describe("createAccessor", () => {
     it("creates a valid object accessor from a property key", () => {
       const accessor = Helpers.createAccessor("k");
@@ -130,79 +101,17 @@ describe("helpers", () => {
     });
   });
 
-  describe("formatData", () => {
-    it("formats a single dataset", () => {
-      const dataset = [{x: 1, y: 3}, {x: 2, y: 5}];
-      const props = {};
-      const formatted = Helpers.formatData(dataset, props);
-      expect(formatted).to.be.an.array;
-      expect(formatted[0]).to.have.keys(["x", "y"]);
-    });
-  });
-
-  describe("getData", () => {
-    it("formats and returns the data prop", () => {
-      const data = [{x: "kittens", y: 3}, {x: "cats", y: 5}];
-      const props = {data, x: "x", y: "y"};
-      const expectedReturn = [{x: 1, xName: "kittens", y: 3}, {x: 2, xName: "cats", y: 5}];
-      const returnData = Helpers.getData(props);
-      expect(returnData).to.eql(expectedReturn);
-    });
-  });
-
-  describe("getPartialEvents", () => {
-    it("returns a set of new event functions with partially applied arguments", () => {
-      const events = {
-        onClick: (evt, childProps, index) => {
-          return {evt, childProps, index};
-        }
-      };
-      const index = 0;
-      const childProps = {style: {fill: "green"}};
-      const result = Helpers.getPartialEvents(events, index, childProps);
-      expect(result).to.have.keys(["onClick"]);
-      expect(result.onClick()).to.have.keys(["evt", "childProps", "index"]);
-      expect(result.onClick().index).to.eql(index);
-      expect(result.onClick().childProps).to.eql(childProps);
-    });
-  });
-
-  describe("getEvents", () => {
-    let sandbox;
-    let fake;
-    beforeEach(() => {
-      sandbox = sinon.sandbox.create();
-      fake = {
-        props: {
-          events: {
-            data: {
-              onClick: () => { return {data: "foo"}; }
-            }
-          }
-        },
-        setState: (x) => x,
-        state: {}
-      };
-      sandbox.spy(fake, "setState");
+  describe("isVertical", () => {
+    it("returns true when the orientation is vertical", () => {
+      const props = {orientation: "left"};
+      const verticalResult = Helpers.isVertical(props);
+      expect(verticalResult).to.equal(true);
     });
 
-    afterEach(() => {
-      sandbox.reset();
-    });
-
-    it("returns new functions that call set state", () => {
-      const getBoundEvents = Helpers.getEvents.bind(fake);
-      const result = getBoundEvents(fake.props.events.data, "data");
-      expect(result).to.have.keys(["onClick"]);
-      const index = 0;
-      const partialEvents = Helpers.getPartialEvents(result, index, {});
-      expect(partialEvents).to.have.keys(["onClick"]);
-      partialEvents.onClick();
-      expect(fake.setState).calledWith({
-        [index]: {
-          data: "foo"
-        }
-      });
+    it("returns false when the orientation is horizontal", () => {
+      const props = {orientation: "bottom"};
+      const verticalResult = Helpers.isVertical(props);
+      expect(verticalResult).to.equal(false);
     });
   });
 });

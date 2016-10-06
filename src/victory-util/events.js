@@ -1,153 +1,15 @@
-import { assign, extend, merge, partial, isFunction, isEmpty, property } from "lodash";
-
-  /* Example Event Prop
-    [
-      {
-        childName: "firstBar",
-        target: "data",
-        eventKey: 1,
-        eventKey: "thisOne",
-        eventHandlers: {
-          onClick: () => {},
-          ...
-        }
-      },
-      {
-        target: "labels",
-        eventHandlers: {
-          onClick: () => {}
-        }
-      }
-    ]
-
-
-  */
-
-  /* Example Event handler return
-  [
-    {
-      childName: "fistBar",
-      target: "data",
-      eventKey: 1,
-      mutation: (propsForTarget) => {
-        return {style: merge({}, propsForTarget.style, {fill: "red"})}
-      }
-    },
-    {
-      target: "labels",
-      eventKey: 2,
-      mutation: () => { return {text: "hello"}; }
-    }
-  ]
-  */
+import { assign, extend, merge, partial, isEmpty } from "lodash";
 
 export default {
-  getPartialEvents(events, eventKey, childProps) {
-    return events ?
-      Object.keys(events).reduce((memo, eventName) => {
-        /* eslint max-params: 0 */
-        memo[eventName] = partial(
-          events[eventName],
-          partial.placeholder, // evt will still be the first argument for event handlers
-          childProps, // event handlers will have access to data component props, including data
-          eventKey, // used in setting a unique state property
-          eventName // used in setting a unique state property
-        );
-        return memo;
-      }, {}) :
-      {};
-  },
-
-  getScopedEvents(events, namespace, childType, baseProps) {
-    if (isEmpty(events)) {
-      return {};
-    }
-
-    baseProps = baseProps || this.baseProps;
-    const getTargetProps = (identifier, type) => {
-      const { childName, target, key } = identifier;
-      const baseType = type === "props" ? baseProps : this.state;
-      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
-      return key === "parent" ? base.parent : base[key] && base[key][target];
-    };
-
-    const parseEvent = (eventReturn, eventKey) => {
-      const childNames = namespace === "parent" ?
-        eventReturn.childName : eventReturn.childName || childType;
-      const target = eventReturn.target || namespace;
-
-      const getKeys = (childName) => {
-        if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
-          return "all";
-        } else if (eventReturn.eventKey === "all") {
-          return baseProps[childName] ?
-            Object.keys(baseProps[childName]) : Object.keys(baseProps);
-        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
-          return baseProps[childName] ?
-            Object.keys(baseProps[childName]) : Object.keys(baseProps);
-        }
-        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
-      };
-
-      const getMutationObject = (key, childName) => {
-        const nullFunction = () => null;
-        const mutationTargetProps = getTargetProps({childName, key, target}, "props");
-        const mutationTargetState = getTargetProps({childName, key, target}, "state");
-        const mutation = eventReturn.mutation || nullFunction;
-        const mutatedProps = mutation(
-          assign({}, mutationTargetProps, mutationTargetState), baseProps
-        );
-        const childState = this.state[childName] || {};
-        return childName ?
-          extend(this.state, {
-            [childName]: extend(childState, {
-              [key]: extend(childState[key], {[target]: mutatedProps})
-            })
-          }) :
-          extend(this.state, {
-            [key]: extend(this.state[key], {[target]: mutatedProps})
-          });
-      };
-
-      const getReturnByChild = (childName) => {
-        const mutationKeys = getKeys(childName);
-        return Array.isArray(mutationKeys) ?
-          mutationKeys.reduce((memo, key) => {
-            return assign(memo, getMutationObject(key, childName));
-          }, {}) :
-          getMutationObject(mutationKeys, childName);
-      };
-
-      return Array.isArray(childNames) ? childNames.reduce((memo, childName) => {
-        return assign(memo, getReturnByChild(childName));
-      }, {}) : getReturnByChild(childNames);
-    };
-
-    const parseEventReturn = (eventReturn, eventKey) => {
-      return Array.isArray(eventReturn) ?
-        eventReturn.reduce((memo, props) => {
-          memo = merge({}, memo, parseEvent(props, eventKey));
-          return memo;
-        }, {}) :
-        parseEvent(eventReturn, eventKey);
-    };
-
-    const onEvent = (evt, childProps, eventKey, eventName) => {
-      const eventReturn = events[eventName](evt, childProps, eventKey);
-      if (eventReturn) {
-        this.setState(parseEventReturn(eventReturn, eventKey));
-      }
-    };
-
-    return Object.keys(events).reduce((memo, event) => {
-      memo[event] = onEvent;
-      return memo;
-    }, {});
-  },
-
+  /* Returns all own and shared events that should be attached to a single target element,
+   * i.e. an individual bar specified by target: "data", eventKey: [index].
+   * Returned events are scoped to the appropriate state. Either that of the component itself
+   * (i.e. VictoryBar) in the case of own events, or that of the parent component
+   * (i.e. VictoryChart) in the case of shared events
+   */
   getEvents(props, target, eventKey, getScopedEvents) {
-    const getEventsFromProps = (events) => {
-
+    // Returns all events that apply to a particular target element
+    const getEventsByTarget = (events) => {
       const getSelectedEvents = () => {
         const targetEvents = events.reduce((memo, event) => {
           if (event.target !== undefined) {
@@ -173,6 +35,10 @@ export default {
       }, {});
     };
 
+    /* Returns all events from props and defaultEvents from components. Events handlers
+     * specified in props will override handlers for the same event if they are also
+     * specified in defaultEvents of a sub-component
+     */
     const getAllEvents = () => {
       if (Array.isArray(this.componentEvents)) {
         return Array.isArray(props.events) ?
@@ -182,16 +48,141 @@ export default {
     };
 
     const allEvents = getAllEvents();
-    const ownEvents = allEvents && getScopedEvents(getEventsFromProps(allEvents), target);
+    const ownEvents = allEvents && getScopedEvents(getEventsByTarget(allEvents), target);
     if (!props.sharedEvents) {
       return ownEvents;
     }
     const getSharedEvents = props.sharedEvents.getEvents;
     const sharedEvents = props.sharedEvents.events &&
-      getSharedEvents(getEventsFromProps(props.sharedEvents.events), target);
+      getSharedEvents(getEventsByTarget(props.sharedEvents.events), target);
     return assign({}, sharedEvents, ownEvents);
   },
 
+  /* Returns a modified events object where each event handler is replaced by a new
+   * function that calls the original handler and then calls setState with the return
+   * of the original event handler assigned to state property that maps to the target
+   * element.
+   */
+  getScopedEvents(events, namespace, childType, baseProps) {
+    if (isEmpty(events)) {
+      return {};
+    }
+
+    baseProps = baseProps || this.baseProps;
+    // returns the original base props or base state of a given target element
+    const getTargetProps = (identifier, type) => {
+      const { childName, target, key } = identifier;
+      const baseType = type === "props" ? baseProps : this.state;
+      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
+      return key === "parent" ? base.parent : base[key] && base[key][target];
+    };
+
+    // Returns the state object with the mutation caused by a given eventReturn
+    // applied to the appropriate property on the state object
+    const parseEvent = (eventReturn, eventKey) => {
+      const childNames = namespace === "parent" ?
+        eventReturn.childName : eventReturn.childName || childType;
+      const target = eventReturn.target || namespace;
+
+      // returns all eventKeys to modify for a targeted childName
+      const getKeys = (childName) => {
+        if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
+          return "all";
+        } else if (eventReturn.eventKey === "all") {
+          return baseProps[childName] ?
+            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+        } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
+          return baseProps[childName] ?
+            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+        }
+        return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
+      };
+
+      // returns the state object with mutated props applied for a single key
+      const getMutationObject = (key, childName) => {
+        const nullFunction = () => null;
+        const mutationTargetProps = getTargetProps({childName, key, target}, "props");
+        const mutationTargetState = getTargetProps({childName, key, target}, "state");
+        const mutation = eventReturn.mutation || nullFunction;
+        const mutatedProps = mutation(
+          assign({}, mutationTargetProps, mutationTargetState), baseProps
+        );
+        const childState = this.state[childName] || {};
+        return childName ?
+          extend(this.state, {
+            [childName]: extend(childState, {
+              [key]: extend(childState[key], {[target]: mutatedProps})
+            })
+          }) :
+          extend(this.state, {
+            [key]: extend(this.state[key], {[target]: mutatedProps})
+          });
+      };
+
+      // returns entire mutated state for a given childName
+      const getReturnByChild = (childName) => {
+        const mutationKeys = getKeys(childName);
+        return Array.isArray(mutationKeys) ?
+          mutationKeys.reduce((memo, key) => {
+            return assign(memo, getMutationObject(key, childName));
+          }, {}) :
+          getMutationObject(mutationKeys, childName);
+      };
+
+      // returns an entire mutated state for all children
+      return Array.isArray(childNames) ? childNames.reduce((memo, childName) => {
+        return assign(memo, getReturnByChild(childName));
+      }, {}) : getReturnByChild(childNames);
+    };
+
+    // Parses an array of event returns into a single state mutation
+    const parseEventReturn = (eventReturn, eventKey) => {
+      return Array.isArray(eventReturn) ?
+        eventReturn.reduce((memo, props) => {
+          memo = merge({}, memo, parseEvent(props, eventKey));
+          return memo;
+        }, {}) :
+        parseEvent(eventReturn, eventKey);
+    };
+
+    // A function that calls a particular event handler, parses its return
+    // into a state mutation, and calls setState
+    const onEvent = (evt, childProps, eventKey, eventName) => {
+      const eventReturn = events[eventName](evt, childProps, eventKey);
+      if (eventReturn) {
+        this.setState(parseEventReturn(eventReturn, eventKey));
+      }
+    };
+
+    // returns a new events object with enhanced event handlers
+    return Object.keys(events).reduce((memo, event) => {
+      memo[event] = onEvent;
+      return memo;
+    }, {});
+  },
+
+  /* Returns a partially applied event handler for a specific target element
+   * This allows event handlers to have access to props controlling each element
+   */
+  getPartialEvents(events, eventKey, childProps) {
+    return events ?
+      Object.keys(events).reduce((memo, eventName) => {
+        /* eslint max-params: 0 */
+        memo[eventName] = partial(
+          events[eventName],
+          partial.placeholder, // evt will still be the first argument for event handlers
+          childProps, // event handlers will have access to data component props, including data
+          eventKey, // used in setting a unique state property
+          eventName // used in setting a unique state property
+        );
+        return memo;
+      }, {}) :
+      {};
+  },
+
+  /* Returns the property of the state object corresponding to event changes for
+   * a particular element
+   */
   getEventState(eventKey, namespace, childType) {
     if (!childType) {
       return this.state[eventKey] && this.state[eventKey][namespace];
@@ -201,26 +192,9 @@ export default {
       this.state[childType][eventKey][namespace];
   },
 
-  getEventKey(key) {
-    // creates a data accessor function
-    // given a property key, path, array index, or null for identity.
-    if (isFunction(key)) {
-      return key;
-    } else if (key === null || typeof key === "undefined") {
-      return () => undefined;
-    }
-    // otherwise, assume it is an array index, property key or path (_.property handles all three)
-    return property(key);
-  },
-
-  addEventKeys(props, data) {
-    const eventKeyAccessor = this.getEventKey(props.eventKey);
-    return data.map((datum, index) => {
-      const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-      return assign({eventKey}, datum);
-    });
-  },
-
+  /* Returns an array of defaultEvents from sub-components of a given component.
+   * i.e. any static `defaultEvents` on `labelComponent` will be returned
+  */
   getComponentEvents(props, components) {
     const events = Array.isArray(components) && components.reduce((memo, componentName) => {
       const component = props[componentName];
