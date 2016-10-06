@@ -4,7 +4,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, VictoryGroupContainer
 } from "victory-core";
 import VoronoiHelpers from "./helper-methods";
 
@@ -331,7 +331,7 @@ export default class VictoryVoronoi extends React.Component {
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale
   };
 

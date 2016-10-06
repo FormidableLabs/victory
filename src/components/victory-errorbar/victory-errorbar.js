@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar
+  VictoryContainer, VictoryTheme, DefaultTransitions, ErrorBar, VictoryGroupContainer
 } from "victory-core";
 import { assign, defaults, isFunction, partialRight } from "lodash";
 import Data from "../../helpers/data";
@@ -339,7 +339,7 @@ export default class VictoryErrorBar extends React.Component {
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale
   };
 

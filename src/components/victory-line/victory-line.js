@@ -5,7 +5,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, ClipPath
+  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, VictoryGroupContainer
 } from "victory-core";
 
 const fallbackProps = {
@@ -19,7 +19,7 @@ export default class VictoryLine extends React.Component {
   static displayName = "VictoryLine";
   static role = "line";
   static defaultTransitions = DefaultTransitions.continuousTransitions();
-
+  static continuous = true;
   static propTypes = {
     /**
      * The animate prop specifies props for VictoryAnimation to use. The animate prop should
@@ -345,12 +345,7 @@ export default class VictoryLine extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element,
-    /**
-     * The clipPathComponent prop takes an entire component which will be used to
-     * create clipPath elements for use within container elements.
-     */
-    clipPathComponent: PropTypes.element
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -363,8 +358,7 @@ export default class VictoryLine extends React.Component {
     dataComponent: <Curve/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    clipPathComponent: <ClipPath/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale
   };
 
@@ -402,7 +396,7 @@ export default class VictoryLine extends React.Component {
   }
 
   renderData(props) { // eslint-disable-line max-statements
-    const { dataComponent, labelComponent, groupComponent, clipId, sortKey } = props;
+    const { dataComponent, labelComponent, groupComponent, sortKey } = props;
     const { role } = VictoryLine;
     const dataSegments = LineHelpers.getDataSegments(Data.getData(props), sortKey);
     const lineComponents = [];
@@ -413,7 +407,7 @@ export default class VictoryLine extends React.Component {
       if (this.hasEvents) {
         const events = this.getEvents(props, type, key);
         const componentProps = defaults(
-          {index, key: `${role}-${type}-${index}`, role: `${role}-${index}`, clipId},
+          {index, key: `${role}-${type}-${index}`, role: `${role}-${index}`},
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
           { data },
@@ -425,7 +419,7 @@ export default class VictoryLine extends React.Component {
         );
       }
       return defaults(
-        {index, key: `${role}-${type}-${index}`, role: `${role}-${index}`, clipId, data},
+        {index, key: `${role}-${type}-${index}`, role: `${role}-${index}`, data},
         component.props,
         this.baseProps[key][type]
       );
@@ -469,26 +463,15 @@ export default class VictoryLine extends React.Component {
   }
 
   renderGroup(children, props, style) {
-    const { clipPathComponent } = props;
-    const clipComponent = React.cloneElement(clipPathComponent, {
-      padding: props.padding,
-      clipId: props.clipId,
-      translateX: props.translateX || 0,
-      clipWidth: props.clipWidth || props.width,
-      clipHeight: props.clipHeight || props.height
-    });
-
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children,
-      clipComponent
+      children
     );
   }
 
   render() {
-    const clipId = Math.round(Math.random() * 10000);
-    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "line");
+    const props = Helpers.modifyProps(this.props, fallbackProps, "line");
     const { animate, style, standalone, theme } = props;
 
     if (animate) {

@@ -5,7 +5,7 @@ import Data from "../../helpers/data";
 import Domain from "../../helpers/domain";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Area, ClipPath
+  VictoryContainer, VictoryTheme, DefaultTransitions, Area, VictoryGroupContainer
 } from "victory-core";
 
 const fallbackProps = {
@@ -19,7 +19,7 @@ export default class VictoryArea extends React.Component {
   static displayName = "VictoryArea";
   static role = "area";
   static defaultTransitions = DefaultTransitions.continuousTransitions();
-
+  static continuous = true;
   static propTypes = {
     /**
      * The animate prop specifies props for VictoryAnimation to use. The animate prop should
@@ -319,16 +319,7 @@ export default class VictoryArea extends React.Component {
      * create group elements for use within container elements. This prop defaults
      * to a <g> tag on web, and a react-native-svg <G> tag on mobile
      */
-    groupComponent: PropTypes.element,
-    /**
-     * The clipPathComponent prop takes an entire component which will be used to
-     * create clipPath elements for use within container elements.
-     */
-    clipPathComponent: PropTypes.element,
-    /**
-     * Unique clipId for clipPath
-     */
-    clipId: PropTypes.number
+    groupComponent: PropTypes.element
   };
 
   static defaultProps = {
@@ -340,8 +331,7 @@ export default class VictoryArea extends React.Component {
     x: "x",
     y: "y",
     containerComponent: <VictoryContainer />,
-    groupComponent: <g/>,
-    clipPathComponent: <ClipPath/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale
   };
 
@@ -378,14 +368,14 @@ export default class VictoryArea extends React.Component {
   }
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent, clipId } = props;
+    const { dataComponent, labelComponent, groupComponent } = props;
     const { role } = VictoryArea;
     const getComponentProps = (component, type) => {
       const key = "all";
       if (this.hasEvents) {
         const events = this.getEvents(props, type, key);
         const componentProps = defaults(
-          {role: `${role}`, clipId},
+          {role: `${role}`},
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
           component.props,
@@ -395,7 +385,7 @@ export default class VictoryArea extends React.Component {
           {}, componentProps, {events: Events.getPartialEvents(events, key, componentProps)}
         );
       }
-      return defaults({role: `${role}`, clipId}, component.props, this.baseProps[key][type]);
+      return defaults({role: `${role}`}, component.props, this.baseProps[key][type]);
     };
 
     const dataProps = getComponentProps(dataComponent, "data");
@@ -433,27 +423,15 @@ export default class VictoryArea extends React.Component {
   }
 
   renderGroup(children, props, style) {
-    const { clipPathComponent } = props;
-
-    const clipComponent = React.cloneElement(clipPathComponent, {
-      padding: props.padding,
-      clipId: props.clipId,
-      translateX: props.translateX || 0,
-      clipWidth: props.clipWidth || props.width,
-      clipHeight: props.clipHeight || props.height
-    });
-
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
-      children,
-      clipComponent
+      children
     );
   }
 
   render() {
-    const clipId = this.props.clipId || Math.round(Math.random() * 10000);
-    const props = Helpers.modifyProps(assign({clipId}, this.props), fallbackProps, "area");
+    const props = Helpers.modifyProps(this.props, fallbackProps, "area");
     const { animate, style, standalone, theme } = props;
 
     if (animate) {

@@ -1,7 +1,8 @@
 import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer, VictoryTheme
+  PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
+  VictoryTheme, VictoryGroupContainer
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -229,7 +230,7 @@ export default class VictoryChart extends React.Component {
   static defaultProps = {
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale,
     defaultAxes: {
       independent: <VictoryAxis/>,
