@@ -11,6 +11,7 @@ export default class Point extends React.Component {
       PropTypes.number,
       PropTypes.func
     ]),
+    shapeRendering: React.PropTypes.string,
     symbol: PropTypes.oneOfType([
       PropTypes.oneOf([
         "circle", "diamond", "plus", "square", "star", "triangleDown", "triangleUp"
@@ -37,9 +38,15 @@ export default class Point extends React.Component {
   }
 
   renderPoint(path, style, events) {
-    const { role } = this.props;
+    const { role, shapeRendering } = this.props;
     return (
-      <path {...events} d={path} role={role} shapeRendering="optimizeSpeed" style={style}/>
+      <path
+        {...events}
+        d={path}
+        role={role}
+        shapeRendering={shapeRendering || "auto"}
+        style={style}
+      />
     );
   }
 

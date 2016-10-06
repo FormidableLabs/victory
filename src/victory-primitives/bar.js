@@ -11,6 +11,7 @@ export default class Bar extends React.Component {
     index: PropTypes.number,
     role: PropTypes.string,
     scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
@@ -56,13 +57,13 @@ export default class Bar extends React.Component {
   }
 
   renderBar(path, style, events) {
-    const { role, clipId } = this.props;
+    const { role, clipId, shapeRendering } = this.props;
     return (
       <path
         d={path}
         style={style}
         role={role}
-        shapeRendering="optimizeSpeed"
+        shapeRendering={shapeRendering || "auto"}
         {...events}
         clipPath={`url(#${clipId})`}
       />
