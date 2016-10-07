@@ -4,7 +4,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Point
+  VictoryContainer, VictoryTheme, DefaultTransitions, Point, VictoryGroupContainer
 } from "victory-core";
 import ScatterHelpers from "./helper-methods";
 
@@ -353,7 +353,7 @@ export default class VictoryScatter extends React.Component {
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale
   };
 

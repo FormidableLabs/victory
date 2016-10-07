@@ -4,7 +4,7 @@ import Domain from "../../helpers/domain";
 import Data from "../../helpers/data";
 import {
   PropTypes as CustomPropTypes, Helpers, Events, VictoryTransition, VictoryTooltip,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, VictoryGroupContainer
 } from "victory-core";
 import TooltipHelpers from "./helper-methods";
 
@@ -332,7 +332,7 @@ export default class VictoryVoronoiTooltip extends React.Component {
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryTooltip/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale
   };
 
