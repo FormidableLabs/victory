@@ -116,9 +116,7 @@ export default class VictoryGroup extends React.Component {
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    theme: VictoryTheme.grayscale,
-    x: "x",
-    y: "y"
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);

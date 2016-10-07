@@ -95,8 +95,6 @@ class VictoryArea extends React.Component {
     scale: "linear",
     samples: 50,
     standalone: true,
-    x: "x",
-    y: "y",
     containerComponent: <VictoryContainer />,
     groupComponent: <VictoryGroupContainer/>,
     theme: VictoryTheme.grayscale

@@ -144,6 +144,15 @@ class App extends React.Component {
             </VictoryGroup>
           </VictoryChart>
 
+          <VictoryChart style={chartStyle}>
+            <VictoryGroup
+              y={(data) => Math.sin(2 * Math.PI * data.x)}
+            >
+              <VictoryLine/>
+              <VictoryVoronoiTooltip labels={(d) => d.y}/>
+            </VictoryGroup>
+          </VictoryChart>
+
         </div>
       </div>
     );

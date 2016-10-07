@@ -81,15 +81,15 @@ export default {
     };
 
     const accessor = {
-      x: Helpers.createAccessor(props.x),
-      open: Helpers.createAccessor(props.open),
-      close: Helpers.createAccessor(props.close),
-      high: Helpers.createAccessor(props.high),
-      low: Helpers.createAccessor(props.low)
+      x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
+      open: Helpers.createAccessor(props.open !== undefined ? props.open : "open"),
+      close: Helpers.createAccessor(props.close !== undefined ? props.close : "close"),
+      high: Helpers.createAccessor(props.high !== undefined ? props.high : "high"),
+      low: Helpers.createAccessor(props.low !== undefined ? props.low : "low")
     };
-
-    return props.data.map((datum) => {
-      const x = accessor.x(datum);
+    return props.data.map((datum, index) => {
+      const evaluatedX = accessor.x(datum);
+      const x = evaluatedX !== undefined ? evaluatedX : index;
       const open = accessor.open(datum);
       const close = accessor.close(datum);
       const high = accessor.high(datum);

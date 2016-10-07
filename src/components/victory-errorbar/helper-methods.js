@@ -89,10 +89,10 @@ export default {
       return [];
     }
     const accessor = {
-      x: Helpers.createAccessor(props.x),
-      y: Helpers.createAccessor(props.y),
-      errorX: Helpers.createAccessor(props.errorX),
-      errorY: Helpers.createAccessor(props.errorY)
+      x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
+      y: Helpers.createAccessor(props.y !== undefined ? props.y : "y"),
+      errorX: Helpers.createAccessor(props.errorX !== undefined ? props.errorX : "errorX"),
+      errorY: Helpers.createAccessor(props.errorY !== undefined ? props.errorY : "errorY")
     };
 
     const replaceNegatives = (errors) => {
@@ -106,9 +106,11 @@ export default {
       y: Data.createStringMap(props, "y")
     };
 
-    return dataset.map((datum) => {
-      const x = accessor.x(datum);
-      const y = accessor.y(datum);
+    return dataset.map((datum, index) => {
+      const evaluatedX = accessor.x(datum);
+      const evaluatedY = accessor.y(datum);
+      const x = evaluatedX !== undefined ? evaluatedX : index;
+      const y = evaluatedY !== undefined ? evaluatedY : datum;
       const errorX = replaceNegatives(accessor.errorX(datum));
       const errorY = replaceNegatives(accessor.errorY(datum));
 

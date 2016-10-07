@@ -105,8 +105,6 @@ class VictoryLine extends React.Component {
     scale: "linear",
     standalone: true,
     sortKey: "x",
-    x: "x",
-    y: "y",
     dataComponent: <Curve/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,

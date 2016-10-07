@@ -100,8 +100,6 @@ class VictoryVoronoiTooltip extends React.Component {
     samples: 50,
     scale: "linear",
     standalone: true,
-    x: "x",
-    y: "y",
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryTooltip/>,
     containerComponent: <VictoryContainer/>,
