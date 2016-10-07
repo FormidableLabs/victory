@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { assign, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel,
-  VictoryContainer, VictoryTheme, Line, TextSize, VictoryGroupContainer, addEvents
+  VictoryContainer, VictoryTheme, Line, TextSize, addEvents
 } from "victory-core";
 import AxisHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -99,7 +99,7 @@ class VictoryAxis extends React.Component {
     theme: VictoryTheme.grayscale,
     tickCount: 5,
     containerComponent: <VictoryContainer />,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     fixLabelOverlap: false
   };
 

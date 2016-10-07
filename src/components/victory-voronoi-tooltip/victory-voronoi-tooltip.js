@@ -2,8 +2,7 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryTooltip, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, VictoryGroupContainer,
-  Data, Domain
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
 } from "victory-core";
 import TooltipHelpers from "./helper-methods";
 
@@ -42,7 +41,11 @@ class VictoryVoronoiTooltip extends React.Component {
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOf(["all"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
       eventHandlers: PropTypes.object
     })),
     eventKey: PropTypes.oneOfType([
@@ -102,7 +105,7 @@ class VictoryVoronoiTooltip extends React.Component {
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryTooltip/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme.grayscale
   };
 

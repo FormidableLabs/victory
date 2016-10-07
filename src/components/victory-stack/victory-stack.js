@@ -2,7 +2,7 @@ import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
-  VictoryTheme, VictoryGroupContainer, Scale
+  VictoryTheme, Scale
 } from "victory-core";
 import Wrapper from "../../helpers/wrapper";
 
@@ -101,7 +101,7 @@ export default class VictoryStack extends React.Component {
     scale: "linear",
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <g/>,
     theme: VictoryTheme. grayscale
   };
 
