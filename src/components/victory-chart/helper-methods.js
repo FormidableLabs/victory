@@ -1,9 +1,8 @@
 import { invert, sortBy, values } from "lodash";
 import Axis from "../../helpers/axis";
-import Domain from "../../helpers/domain";
 import Wrapper from "../../helpers/wrapper";
 import React from "react";
-import { Collection, Log } from "victory-core";
+import { Helpers, Collection, Log, Domain } from "victory-core";
 
 const identity = (x) => x;
 
@@ -95,7 +94,7 @@ export default {
   },
 
   getTicksFromData(calculatedProps, axis) {
-    const currentAxis = Axis.getCurrentAxis(axis, calculatedProps.horizontal);
+    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
     // if tickValues are defined for an axis component use them
     const categoryArray = calculatedProps.categories[currentAxis];
@@ -112,7 +111,7 @@ export default {
     if (!tickValues) {
       return undefined;
     }
-    const currentAxis = Axis.getCurrentAxis(axis, calculatedProps.horizontal);
+    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
     return Collection.containsOnlyStrings(tickValues) && stringMap ?
       tickValues.map((tick) => stringMap[tick]) : tickValues;
@@ -123,7 +122,7 @@ export default {
   },
 
   getTickFormat(component, axis, calculatedProps) {
-    const currentAxis = Axis.getCurrentAxis(axis, calculatedProps.horizontal);
+    const currentAxis = Helpers.getCurrentAxis(axis, calculatedProps.horizontal);
     const stringMap = calculatedProps.stringMap[currentAxis];
     const tickValues = component.props.tickValues;
     const useIdentity = tickValues && !Collection.containsStrings(tickValues) &&

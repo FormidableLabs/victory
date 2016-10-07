@@ -1,8 +1,5 @@
 import { assign, pick, omit, defaults } from "lodash";
-import { Helpers, Events, Log } from "victory-core";
-import Scale from "../../helpers/scale";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
+import { Helpers, Log, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
@@ -58,7 +55,7 @@ export default {
     const defaultStyle = theme && theme.candlestick && theme.candlestick.style ?
       theme.candlestick.style : {};
     const style = Helpers.getStyles(props.style, defaultStyle, "auto", "100%");
-    const data = Events.addEventKeys(props, this.getData(props));
+    const data = Data.addEventKeys(props, this.getData(props));
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")

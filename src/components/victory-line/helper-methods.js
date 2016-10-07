@@ -1,8 +1,5 @@
 import { sortBy, defaults, last } from "lodash";
-import { Helpers, Log } from "victory-core";
-import Data from "../../helpers/data";
-import Domain from "../../helpers/domain";
-import Scale from "../../helpers/scale";
+import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
 export default {
 
@@ -11,29 +8,29 @@ export default {
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
       props.theme.line.style : {};
     const calculatedValues = this.getCalculatedValues(props);
-    const {scale, dataset} = calculatedValues;
+    const { scale, dataset, dataSegments } = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height} = props;
+    const {interpolation, label, width, height, events, sharedEvents} = props;
     const dataStyle = Helpers.evaluateStyle(style.data, dataset);
-    const dataProps = {
-      scale,
-      interpolation: Helpers.evaluateProp(interpolation, dataset),
-      style: dataStyle
-    };
-    const parentProps = { style: style.parent, scale, data: dataset, width, height };
-    const baseProps = {
-      parent: parentProps,
-      all: {
-        data: dataProps
-      }
-    };
-
-    const text = Helpers.evaluateProp(label, dataset);
-    if (text !== undefined && text !== null || props.events || props.sharedEvents) {
-      baseProps.all.labels = this.getLabelProps(dataProps, text, calculatedValues, style);
+    const childProps = { parent: {
+      style: style.parent, scale, data: dataset, height, width
+    }};
+    for (let index = 0, len = dataSegments.length; index < len; index++) {
+      const dataProps = {
+        scale,
+        interpolation: Helpers.evaluateProp(interpolation, dataset),
+        style: dataStyle,
+        data: dataSegments[index]
+      };
+      const text = index === dataSegments.length - 1 ?
+        Helpers.evaluateProp(label, dataset) : undefined;
+      const addLabels = (text !== undefined && text !== null) || events || sharedEvents;
+      const labelProps = addLabels ?
+        this.getLabelProps(dataProps, text, calculatedValues, style) : undefined;
+      childProps[index] = { data: dataProps, labels: labelProps };
     }
 
-    return baseProps;
+    return childProps;
   },
 
   getLabelProps(dataProps, text, calculatedValues, style) { // eslint-disable-line max-params
@@ -83,7 +80,7 @@ export default {
       dataset = [];
     }
 
-    const dataSegments = this.getDataSegments(dataset);
+    const dataSegments = this.getDataSegments(dataset, props.sortKey);
     const scale = this.getScale(props);
 
     return { dataset, dataSegments, scale };

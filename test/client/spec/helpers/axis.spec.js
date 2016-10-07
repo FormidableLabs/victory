@@ -9,20 +9,6 @@ describe("helpers/axis", () => {
   const getVictoryAxis = (props) => React.createElement(VictoryAxis, props);
   const getVictoryBar = (props) => React.createElement(VictoryBar, props);
 
-  describe("isVertical", () => {
-    it("returns true when the orientation is vertical", () => {
-      const props = {orientation: "left"};
-      const verticalResult = Axis.isVertical(props);
-      expect(verticalResult).to.equal(true);
-    });
-
-    it("returns false when the orientation is horizontal", () => {
-      const props = {orientation: "bottom"};
-      const verticalResult = Axis.isVertical(props);
-      expect(verticalResult).to.equal(false);
-    });
-  });
-
   describe("getAxisComponent", () => {
     const dependentAxis = getVictoryAxis({dependentAxis: true});
     const independentAxis = getVictoryAxis({dependentAxis: false});

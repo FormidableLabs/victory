@@ -3,9 +3,7 @@
 import Helpers from "src/components/victory-chart/helper-methods";
 import React from "react";
 import { VictoryAxis, VictoryLine, VictoryBar } from "src/index";
-import { Log } from "victory-core";
-import Data from "src/helpers/data";
-import Scale from "src/helpers/scale";
+import { Log, Data, Scale } from "victory-core";
 import Wrapper from "src/helpers/wrapper";
 
 describe("victory-chart/helpers-methods", () => {

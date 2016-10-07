@@ -1,8 +1,5 @@
 import { includes, defaults, defaultsDeep, isFunction, range, without } from "lodash";
-import Scale from "../../helpers/scale";
-import Axis from "../../helpers/axis";
-import Domain from "../../helpers/domain";
-import { Helpers } from "victory-core";
+import { Helpers, Scale, Domain } from "victory-core";
 
 const orientationSign = {
   top: -1,
@@ -226,9 +223,9 @@ export default {
     const style = this.getStyles(props, defaultStyles);
     const padding = Helpers.getPadding(props);
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-    const isVertical = Axis.isVertical(props);
+    const isVertical = Helpers.isVertical(props);
     const labelPadding = this.getLabelPadding(props, style);
-    const stringTicks = Axis.stringTicks(props);
+    const stringTicks = Helpers.stringTicks(props);
     const scale = this.getScale(props);
     const ticks = this.getTicks(props, scale);
     const tickFormat = this.getTickFormat(props, scale, ticks);
@@ -266,7 +263,7 @@ export default {
 
   getTicks(props, scale) {
     if (props.tickValues) {
-      if (Axis.stringTicks(props)) {
+      if (Helpers.stringTicks(props)) {
         return range(1, props.tickValues.length + 1);
       }
       return props.tickValues;
@@ -294,7 +291,7 @@ export default {
       return props.tickFormat;
     } else if (props.tickFormat && Array.isArray(props.tickFormat)) {
       return (x, index) => props.tickFormat[index];
-    } else if (Axis.stringTicks(props)) {
+    } else if (Helpers.stringTicks(props)) {
       return (x, index) => props.tickValues[index];
     } else if (scale.tickFormat && isFunction(scale.tickFormat)) {
       return scale.tickFormat();
@@ -308,7 +305,7 @@ export default {
     if (typeof labelStyle.padding !== "undefined" && labelStyle.padding !== null) {
       return labelStyle.padding;
     }
-    const isVertical = Axis.isVertical(props);
+    const isVertical = Helpers.isVertical(props);
     // TODO: magic numbers
     const fontSize = labelStyle.fontSize || 14;
     return props.label ? (fontSize * (isVertical ? 2.3 : 1.6)) : 0;

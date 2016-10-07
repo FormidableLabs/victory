@@ -1,9 +1,5 @@
 import { assign, omit, defaults, isArray, flatten, pick } from "lodash";
-import { Helpers, Events, Log } from "victory-core";
-import Scale from "../../helpers/scale";
-import Axis from "../../helpers/axis";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
+import { Helpers, Log, Scale, Domain, Data } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -147,7 +143,7 @@ export default {
   },
 
   getDomainFromData(props, axis, dataset) {
-    const currentAxis = Axis.getCurrentAxis(axis, props.horizontal);
+    const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
     let error;
     if (currentAxis === "x") {
       error = "errorX";
@@ -185,7 +181,7 @@ export default {
       props.theme.errorbar.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%") || {};
     const dataWithErrors = assign(Data.getData(props), this.getErrorData(props));
-    const data = Events.addEventKeys(props, dataWithErrors);
+    const data = Data.addEventKeys(props, dataWithErrors);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")

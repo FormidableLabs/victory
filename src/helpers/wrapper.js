@@ -1,9 +1,7 @@
 import { assign, defaults, flatten, isFunction, partialRight, uniq } from "lodash";
 import React from "react";
 import Axis from "./axis";
-import Data from "./data";
-import Domain from "./domain";
-import { Style, Transitions, Helpers, Collection } from "victory-core";
+import { Style, Transitions, Collection, Data, Domain } from "victory-core";
 
 
 export default {
@@ -254,7 +252,7 @@ export default {
       const child = children[--childrenLength];
 
       if (child.props && child.props.data) {
-        const newStrings = Helpers.getStringsFromData(child.props, axis);
+        const newStrings = Data.getStringsFromData(child.props, axis);
         const newStringsLength = newStrings.length;
         for (let index = 0; index < newStringsLength; index++) {
           strings[stringsLength++] = newStrings[index];

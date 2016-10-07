@@ -1,8 +1,5 @@
 import { values, pick, omit, defaults } from "lodash";
-import { Helpers, Events } from "victory-core";
-import Scale from "../../helpers/scale";
-import Domain from "../../helpers/domain";
-import Data from "../../helpers/data";
+import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
   getBaseProps(props, fallbackProps) {
@@ -54,7 +51,7 @@ export default {
     const defaultStyles = props.theme && props.theme.scatter && props.theme.scatter.style ?
       props.theme.scatter.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const data = Events.addEventKeys(props, Data.getData(props));
+    const data = Data.getData(props);
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")

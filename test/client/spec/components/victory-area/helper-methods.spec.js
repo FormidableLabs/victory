@@ -2,7 +2,7 @@
 /* eslint-disable max-nested-callbacks */
 /* global sinon */
 import AreaHelpers from "src/components/victory-area/helper-methods";
-import Data from "src/helpers/data";
+import { Data } from "victory-core";
 
 describe("victory-area/helper-methods", () => {
   describe("getDataWithBaseline", () => {
