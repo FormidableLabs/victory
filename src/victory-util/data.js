@@ -20,8 +20,7 @@ export default {
         data = this.formatData(props.data, props);
       }
     } else {
-      const generatedData = (props.x || props.y) && this.generateData(props);
-      data = this.formatData(generatedData, props);
+      data = this.formatData(this.generateData(props), props);
     }
     return this.addEventKeys(props, data);
   },
@@ -62,12 +61,14 @@ export default {
       y: this.createStringMap(props, "y")
     };
     const accessor = {
-      x: Helpers.createAccessor(props.x),
-      y: Helpers.createAccessor(props.y)
+      x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
+      y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
     };
-    return this.cleanData(dataset, props).map((datum) => {
-      const x = accessor.x(datum);
-      const y = accessor.y(datum);
+    return this.cleanData(dataset, props).map((datum, index) => {
+      const evaluatedX = accessor.x(datum);
+      const evaluatedY = accessor.y(datum);
+      const x = evaluatedX !== undefined ? evaluatedX : index;
+      const y = evaluatedY !== undefined ? evaluatedY : datum;
       return assign(
           {},
           datum,
