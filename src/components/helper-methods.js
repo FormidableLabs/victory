@@ -1,9 +1,13 @@
 import { assign, defaults, isFunction, omit } from "lodash";
 import d3Shape from "d3-shape";
 
-import { Helpers, Events, Style } from "victory-core";
+import { Helpers, Data, Style } from "victory-core";
 
 export default {
+  degreesToRadians(degrees) {
+    return degrees * (Math.PI / 180);
+  },
+
   checkForValidText(text) {
     if (text === undefined || text === null) {
       return text;
@@ -27,16 +31,14 @@ export default {
     const childProps = { parent: {
       slices, pathFunction, width: props.width, height: props.height, style: style.parent}
     };
+
     for (let index = 0, len = slices.length; index < len; index++) {
       const slice = slices[index];
       const datum = slice.data;
       const eventKey = datum.eventKey || index;
       const dataProps = {
-        index,
-        slice,
-        pathFunction,
-        style: this.getSliceStyle(datum, index, calculatedValues),
-        datum
+        index, slice, pathFunction, datum,
+        style: this.getSliceStyle(datum, index, calculatedValues)
       };
 
       childProps[eventKey] = {
@@ -74,9 +76,8 @@ export default {
     const colors = Array.isArray(colorScale) ? colorScale : Style.getColorScale(colorScale);
     const padding = Helpers.getPadding(props);
     const radius = this.getRadius(props, padding);
-    const data = Events.addEventKeys(props, Helpers.getData(props));
-    const layoutFunction = this.getSliceFunction(props);
-    const slices = layoutFunction(data);
+    const data = Data.getData(props);
+    const slices = this.getSlices(props, data);
     const pathFunction = d3Shape.arc()
       .cornerRadius(props.cornerRadius)
       .outerRadius(radius)
@@ -151,16 +152,13 @@ export default {
     return this.checkForValidText(text);
   },
 
-  getSliceFunction(props) {
-    const degreesToRadians = (degrees) => {
-      return degrees * (Math.PI / 180);
-    };
-
-    return d3Shape.pie()
+  getSlices(props, data) {
+    const layoutFunction = d3Shape.pie()
       .sort(null)
-      .startAngle(degreesToRadians(props.startAngle))
-      .endAngle(degreesToRadians(props.endAngle))
-      .padAngle(degreesToRadians(props.padAngle))
+      .startAngle(this.degreesToRadians(props.startAngle))
+      .endAngle(this.degreesToRadians(props.endAngle))
+      .padAngle(this.degreesToRadians(props.padAngle))
       .value((datum) => { return datum.y; });
+    return layoutFunction(data);
   }
 };
