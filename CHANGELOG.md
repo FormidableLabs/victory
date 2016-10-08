@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 8.0.1 (2016-10-07)
+
+- Adds fallbacks to `formatData` so that data accessor props are optional
+
 ## 8.0.0 (2016-10-06)
 
 - Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
