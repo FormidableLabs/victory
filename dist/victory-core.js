@@ -7060,8 +7060,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	data=this.formatData(props.data,props);
 	}
 	}else{
-	var generatedData=(props.x||props.y)&&this.generateData(props);
-	data=this.formatData(generatedData,props);
+	data=this.formatData(this.generateData(props),props);
 	}
 	return this.addEventKeys(props,data);
 	},
@@ -7102,12 +7101,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	y:this.createStringMap(props,"y")};
 	
 	var accessor={
-	x:_helpers2.default.createAccessor(props.x),
-	y:_helpers2.default.createAccessor(props.y)};
+	x:_helpers2.default.createAccessor(props.x!==undefined?props.x:"x"),
+	y:_helpers2.default.createAccessor(props.y!==undefined?props.y:"y")};
 	
-	return this.cleanData(dataset,props).map(function(datum){
-	var x=accessor.x(datum);
-	var y=accessor.y(datum);
+	return this.cleanData(dataset,props).map(function(datum,index){
+	var evaluatedX=accessor.x(datum);
+	var evaluatedY=accessor.y(datum);
+	var x=evaluatedX!==undefined?evaluatedX:index;
+	var y=evaluatedY!==undefined?evaluatedY:datum;
 	return(0,_assign3.default)(
 	{},
 	datum,
