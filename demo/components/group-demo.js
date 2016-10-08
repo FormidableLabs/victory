@@ -58,6 +58,7 @@ class App extends React.Component {
               colorScale="qualitative"
             >
               <VictoryGroup
+                color={"purple"}
                 data={[
                   {x: 1, y: 3},
                   {x: 2, y: 4},
@@ -108,7 +109,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle}>
             <VictoryGroup
-              colorScale={"qualitative"}
+              color="red"
               data={[
                 {x: 1, y: 3, errorX: 0.2, errorY: 0.5},
                 {x: 2, y: 4, errorX: 0.3, errorY: 0.3},

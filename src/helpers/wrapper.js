@@ -19,9 +19,12 @@ export default {
     if (propsDomain) {
       return propsDomain;
     }
-    return Domain.cleanDomain(this.getDomainFromChildren(props, axis, childComponents),
-      props,
-      axis);
+    const dataset = (props.data || props.y) && Data.getData(props);
+    const dataDomain = dataset ? Domain.getDomainFromData(props, axis, dataset) : [];
+    const childDomain = this.getDomainFromChildren(props, axis, childComponents);
+    const min = Collection.getMinValue([...dataDomain, ...childDomain]);
+    const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
+    return Domain.cleanDomain([min, max], props, axis);
   },
 
   setAnimationState(props, nextProps) {
@@ -183,17 +186,18 @@ export default {
   getColor(calculatedProps, child, index) {
     // check for styles first
     const { style } = calculatedProps;
-    let { colorScale } = calculatedProps;
+    let { colorScale, color } = calculatedProps;
     if (style && style.data && style.data.fill) {
       return style.data.fill;
     }
     colorScale = child.props && child.props.colorScale ? child.props.colorScale : colorScale;
-    if (!colorScale) {
+    color = child.props && child.props.color ? child.props.color : color;
+    if (!colorScale && !color) {
       return undefined;
     }
     const colors = Array.isArray(colorScale) ?
       colorScale : Style.getColorScale(colorScale);
-    return colors[index % colors.length];
+    return color || colors[index % colors.length];
   },
 
   getChildStyle(child, index, calculatedProps) {
