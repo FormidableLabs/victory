@@ -175,9 +175,7 @@ export default {
   scale: makeChainable((props, propName, componentName) => {
     const supportedScaleStrings = ["linear", "time", "log", "sqrt"];
     const validScale = (scl) => {
-      if (isFunction(scl)) {
-        return (isFunction(scl.copy) && isFunction(scl.domain) && isFunction(scl.range));
-      } else if (typeof scl === "string") {
+      if (typeof scl === "string") {
         return supportedScaleStrings.indexOf(scl) !== -1;
       }
       return false;
