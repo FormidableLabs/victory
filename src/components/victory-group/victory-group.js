@@ -28,6 +28,7 @@ export default class VictoryGroup extends React.Component {
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node), React.PropTypes.node
     ]),
+    color: PropTypes.string,
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
@@ -112,13 +113,12 @@ export default class VictoryGroup extends React.Component {
   };
 
   static defaultProps = {
+    samples: 50,
     scale: "linear",
     standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
-    theme: VictoryTheme.grayscale,
-    x: "x",
-    y: "y"
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);
@@ -171,7 +171,8 @@ export default class VictoryGroup extends React.Component {
       y: Wrapper.getCategories(modifiedProps, "y")
     };
     const colorScale = modifiedProps.colorScale;
-    return {datasets, categories, range, domain, horizontal, scale, style, colorScale};
+    const color = modifiedProps.color;
+    return {datasets, categories, range, domain, horizontal, scale, style, colorScale, color};
   }
 
   pixelsToValue(props, axis, calculatedProps) {
@@ -228,7 +229,7 @@ export default class VictoryGroup extends React.Component {
   }
 
   getDataWithOffset(props, defaultDataset, offset) {
-    const dataset = props.data ? Data.getData(props) : defaultDataset;
+    const dataset = props.data || props.y ? Data.getData(props) : defaultDataset;
     const xOffset = offset || 0;
     return dataset.map((datum) => {
       return assign({}, datum, {x1: datum.x + xOffset});

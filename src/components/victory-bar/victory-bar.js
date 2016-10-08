@@ -126,8 +126,6 @@ class VictoryBar extends React.Component {
     labelComponent: <VictoryLabel/>,
     scale: "linear",
     standalone: true,
-    x: "x",
-    y: "y",
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
     theme: VictoryTheme.grayscale

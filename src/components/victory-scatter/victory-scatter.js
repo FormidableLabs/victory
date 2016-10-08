@@ -109,8 +109,6 @@ class VictoryScatter extends React.Component {
     samples: 50,
     scale: "linear",
     standalone: true,
-    x: "x",
-    y: "y",
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
