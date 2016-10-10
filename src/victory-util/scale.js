@@ -1,4 +1,4 @@
-import { includes } from "lodash";
+import { includes, isFunction } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import * as d3Scale from "d3-scale";
@@ -18,7 +18,9 @@ export default {
   },
 
   validScale(scale) {
-    if (typeof scale === "string") {
+    if (typeof scale === "function") {
+      return (isFunction(scale.copy) && isFunction(scale.domain) && isFunction(scale.range));
+    } else if (typeof scale === "string") {
       return includes(supportedScaleStrings, scale);
     }
     return false;
@@ -38,7 +40,7 @@ export default {
       return undefined;
     }
     const scale = props.scale[axis] || props.scale;
-    return scale;
+    return typeof scale === "string" ? scale : this.getType(scale);
   },
 
   getScaleFromProps(props, axis) {
@@ -48,7 +50,7 @@ export default {
     const scale = props.scale[axis] || props.scale;
 
     if (this.validScale(scale)) {
-      return d3Scale[this.toNewName(scale)]();
+      return isFunction(scale) ? scale : d3Scale[this.toNewName(scale)]();
     }
   },
 
@@ -68,6 +70,20 @@ export default {
     }
     const dataScale = this.getScaleTypeFromData(props, axis);
     return d3Scale[this.toNewName(dataScale)]();
+  },
+
+  getType(scale) {
+    const duckTypes = [
+      {name: "log", method: "base"},
+      {name: "ordinal", method: "unknown"},
+      {name: "pow-sqrt", method: "exponent"},
+      {name: "quantile", method: "quantiles"},
+      {name: "quantize-threshold", method: "invertExtent"}
+    ];
+    const scaleType = duckTypes.filter((type) => {
+      return scale[type.method] !== undefined;
+    })[0];
+    return scaleType ? scaleType.name : undefined;
   },
 
   getScaleType(props, axis) {
