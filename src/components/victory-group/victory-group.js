@@ -107,8 +107,7 @@ export default class VictoryGroup extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.arrayOf(PropTypes.func)
+      PropTypes.arrayOf(PropTypes.string)
     ])
   };
 

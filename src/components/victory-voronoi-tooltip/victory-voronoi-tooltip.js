@@ -91,8 +91,7 @@ class VictoryVoronoiTooltip extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.arrayOf(PropTypes.func)
+      PropTypes.arrayOf(PropTypes.string)
     ])
   };
 
@@ -148,7 +147,7 @@ class VictoryVoronoiTooltip extends React.Component {
   }
 
   render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
+    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps, "tooltip");
     const { animate, style, standalone } = modifiedProps;
 
     if (animate) {
@@ -165,8 +164,8 @@ class VictoryVoronoiTooltip extends React.Component {
         </VictoryTransition>
       );
     }
-    const styleObject = modifiedProps.theme && modifiedProps.theme.voronoi
-    ? modifiedProps.theme.voronoi
+    const styleObject = modifiedProps.theme && modifiedProps.theme.tooltip
+    ? modifiedProps.theme.tooltip
     : fallbackProps.style;
 
     const baseStyles = TooltipHelpers.getStyles(style, styleObject, "auto", "100%");
