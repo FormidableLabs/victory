@@ -22,7 +22,6 @@ export default class VictoryTransition extends React.Component {
     };
     const child = this.props.children;
     this.continuous = child.type && child.type.continuous;
-    this.clipId = Math.round(Math.random() * 10000);
     this.getTransitionState = this.getTransitionState.bind(this);
   }
 
@@ -206,7 +205,7 @@ export default class VictoryTransition extends React.Component {
             const { clipWidth, clipHeight, translateX, padding } = newProps;
             const groupComponent = React.cloneElement(
               child.props.groupComponent,
-              { clipWidth, clipHeight, translateX, padding, clipId: this.clipId }
+              { clipWidth, clipHeight, translateX, padding }
             );
             return React.cloneElement(
               child, defaults({animate: null, groupComponent}, newProps, combinedProps)

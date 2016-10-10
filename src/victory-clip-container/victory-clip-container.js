@@ -1,8 +1,8 @@
 import React, { PropTypes } from "react";
 import { ClipPath } from "../victory-primitives/index";
 
-export default class VictoryGroupContainer extends React.Component {
-  static displayName = "VictoryGroupContainer";
+export default class VictoryClipContainer extends React.Component {
+  static displayName = "VictoryClipContainer";
 
   static propTypes = {
     style: PropTypes.object,
@@ -23,7 +23,6 @@ export default class VictoryGroupContainer extends React.Component {
       React.PropTypes.node
     ]),
     clipPathComponent: PropTypes.element,
-    clipId: PropTypes.number,
     translateX: PropTypes.number,
     transform: PropTypes.string
   }
@@ -35,7 +34,8 @@ export default class VictoryGroupContainer extends React.Component {
   render() {
     const { style, events, children, transform, clipWidth } = this.props;
     if (clipWidth || clipWidth === 0) {
-      const { padding, clipId, translateX, clipHeight, clipPathComponent } = this.props;
+      const { padding, translateX, clipHeight, clipPathComponent } = this.props;
+      const clipId = Math.round(Math.random() * 10000);
       const clipComponent = React.cloneElement(
         clipPathComponent,
         { padding, clipId, translateX, clipWidth, clipHeight }
