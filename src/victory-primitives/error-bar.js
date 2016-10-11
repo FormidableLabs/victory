@@ -10,9 +10,11 @@ export default class ErrorBar extends React.Component {
   static propTypes = {
     index: React.PropTypes.number,
     datum: PropTypes.object,
+    data: PropTypes.array,
     events: PropTypes.object,
     scale: PropTypes.object,
     shapeRendering: PropTypes.string,
+    role: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
@@ -34,116 +36,53 @@ export default class ErrorBar extends React.Component {
     borderWidth: 10
   }
 
-  renderErrorBar(error) {
-    const { x, y, borderWidth, groupComponent, events} = this.props;
-    const shapeRendering = this.props.shapeRendering || "auto";
-    const style = assign({stroke: "black"}, this.props.style);
+  renderBorder(props, errors, type) {
+    const {x, y, borderWidth, events, style, role, shapeRendering} = props;
+    const vertical = type === "Right" || type === "Left";
+    const error = errors[`error${type}`];
+    const borderProps = assign({
+      style, role, shapeRendering,
+      key: `border${type}`,
+      x1: vertical ? error : x - borderWidth,
+      x2: vertical ? error : x + borderWidth,
+      y1: vertical ? y - borderWidth : error,
+      y2: vertical ? y + borderWidth : error
+    }, events);
+    return <line {...borderProps}/>;
+  }
+
+  renderCross(props, errors, type) {
+    const {x, y, events, style, role, shapeRendering} = props;
+    const vertical = type === "Top" || type === "Bottom";
+    const error = errors[`error${type}`];
+    const borderProps = assign({
+      style, role, shapeRendering,
+      key: `cross${type}`,
+      x1: x,
+      x2: vertical ? x : error,
+      y1: y,
+      y2: vertical ? error : y
+    }, events);
+    return <line {...borderProps}/>;
+  }
+
+  renderErrorBar(error, props) {
+    const { groupComponent } = props;
     return React.cloneElement(groupComponent, {},
-      error.errorRight ?
-        <line
-          key="borderRight"
-          {...events}
-          style={style}
-          x1={error.errorRight}
-          x2={error.errorRight}
-          y1={y - borderWidth}
-          y2={y + borderWidth}
-        />
-        : null
-      ,
-      error.errorLeft ?
-        <line
-          key="borderLeft"
-          {...events}
-          style={style}
-          x1={error.errorLeft}
-          x2={error.errorLeft}
-          y1={y - borderWidth}
-          y2={y + borderWidth}
-        />
-        : null
-      ,
-      error.errorBottom ?
-        <line
-          key="borderBottom"
-          {...events}
-          style={style}
-          x1={x - borderWidth}
-          x2={x + borderWidth}
-          y1={error.errorBottom}
-          y2={error.errorBottom}
-        />
-        : null
-      ,
-      error.errorTop ?
-        <line
-          key="borderTop"
-          {...events}
-          style={style}
-          x1={x - borderWidth}
-          x2={x + borderWidth}
-          y1={error.errorTop}
-          y2={error.errorTop}
-        />
-        : null
-      ,
-      error.errorTop ?
-        <line
-          key="crossTop"
-          {...events}
-          style={style}
-          x1={x}
-          x2={x}
-          y1={y}
-          y2={error.errorTop}
-          shapeRendering={shapeRendering}
-        />
-        : null
-      ,
-      error.errorBottom ?
-        <line
-          key="crossBottom"
-          {...events}
-          style={style}
-          x1={x}
-          x2={x}
-          y1={y}
-          y2={error.errorBottom}
-          shapeRendering={shapeRendering}
-        />
-        : null
-      ,
-      error.errorLeft ?
-        <line
-          key="crossLeft"
-          {...events}
-          style={style}
-          x1={x}
-          x2={error.errorLeft}
-          y1={y}
-          y2={y}
-          shapeRendering={shapeRendering}
-        /> : null
-      ,
-      error.errorRight ?
-        <line
-          key="crossRight"
-          {...events}
-          style={style}
-          x1={x}
-          x2={error.errorRight}
-          y1={y}
-          y2={y}
-          shapeRendering={shapeRendering}
-        /> : null
+      error.errorRight ? this.renderBorder(props, error, "Right") : null,
+      error.errorLeft ? this.renderBorder(props, error, "Left") : null,
+      error.errorBottom ? this.renderBorder(props, error, "Bottom") : null,
+      error.errorTop ? this.renderBorder(props, error, "Top") : null,
+      error.errorRight ? this.renderCross(props, error, "Right") : null,
+      error.errorLeft ? this.renderCross(props, error, "Left") : null,
+      error.errorBottom ? this.renderCross(props, error, "Bottom") : null,
+      error.errorTop ? this.renderCross(props, error, "Top") : null
     );
   }
 
   render() {
     const {
-      errorX,
-      errorY,
-      scale
+      x, y, borderWidth, groupComponent, events, errorX, errorY, scale, role, shapeRendering, style
     } = this.props;
     let rangeX;
     let rangeY;
@@ -171,11 +110,16 @@ export default class ErrorBar extends React.Component {
       errorTop = positiveErrorY >= rangeY[0] ? rangeY[0] : positiveErrorY;
       errorBottom = negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY;
     }
-
+    const props = {
+      x, y, borderWidth, groupComponent, events,
+      role: role || "presentation",
+      shapeRendering: shapeRendering || "auto",
+      style: assign({stroke: "black"}, style)
+    };
     return React.cloneElement(
       this.props.groupComponent,
       {},
-      this.renderErrorBar({errorTop, errorBottom, errorRight, errorLeft})
+      this.renderErrorBar({errorTop, errorBottom, errorRight, errorLeft}, props)
     );
   }
 }

@@ -8,13 +8,17 @@ export default class Flyout extends React.Component {
     y: PropTypes.number,
     dx: PropTypes.number,
     dy: PropTypes.number,
+    datum: PropTypes.object,
+    data: PropTypes.array,
     width: PropTypes.number,
     height: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     pointerLength: PropTypes.number,
     pointerWidth: PropTypes.number,
     cornerRadius: PropTypes.number,
-    events: PropTypes.object
+    events: PropTypes.object,
+    shapeRendering: PropTypes.string,
+    role: PropTypes.string
   };
 
   getVerticalPath(props) {
@@ -74,8 +78,15 @@ export default class Flyout extends React.Component {
   }
 
   renderFlyout(path, style, events) {
+    const { role, shapeRendering } = this.props;
     return (
-      <path d={path} style={style} {...events}/>
+      <path
+        d={path}
+        style={style}
+        shapeRendering={shapeRendering || "auto"}
+        role={role || "presentation"}
+        {...events}
+      />
     );
   }
 

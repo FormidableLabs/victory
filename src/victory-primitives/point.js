@@ -4,6 +4,7 @@ import pathHelpers from "./path-helpers";
 export default class Point extends React.Component {
   static propTypes = {
     datum: PropTypes.object,
+    data: PropTypes.array,
     events: PropTypes.object,
     index: PropTypes.number,
     role: PropTypes.string,
@@ -43,7 +44,7 @@ export default class Point extends React.Component {
       <path
         {...events}
         d={path}
-        role={role}
+        role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
         style={style}
       />

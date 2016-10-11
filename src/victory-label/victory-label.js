@@ -23,13 +23,9 @@ export default class VictoryLabel extends React.Component {
       PropTypes.func
     ]),
     datum: PropTypes.any,
+    data: PropTypes.array,
     events: PropTypes.object,
     text: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.number,
-      PropTypes.func
-    ]),
-    children: PropTypes.oneOfType([ // TODO: Expand child support in future release
       PropTypes.string,
       PropTypes.number,
       PropTypes.func
@@ -94,10 +90,9 @@ export default class VictoryLabel extends React.Component {
   }
 
   getContent(props) {
-    const text = props.text !== undefined ? props.text : props.children;
-    if (text !== undefined) {
+    if (props.text !== undefined) {
       const datum = props.datum || props.data;
-      const child = Helpers.evaluateProp(text, datum);
+      const child = Helpers.evaluateProp(props.text, datum);
       return `${child}`.split("\n");
     }
     return [" "];

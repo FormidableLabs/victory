@@ -3,6 +3,7 @@ import React, { PropTypes } from "react";
 export default class Voronoi extends React.Component {
   static propTypes = {
     datum: PropTypes.object,
+    data: PropTypes.array,
     events: PropTypes.object,
     index: PropTypes.number,
     polygon: PropTypes.array,
@@ -10,7 +11,9 @@ export default class Voronoi extends React.Component {
     size: PropTypes.number,
     style: PropTypes.object,
     x: PropTypes.number,
-    y: PropTypes.number
+    y: PropTypes.number,
+    shapeRendering: PropTypes.string,
+    role: PropTypes.string
   };
 
   getVoronoiPath(props) {
@@ -25,7 +28,19 @@ export default class Voronoi extends React.Component {
   }
 
   renderPoint(paths, style, events) {
-    const clipId = `clipPath-${Math.random()}`;
+    const clipId = paths.circle && `clipPath-${Math.random()}`;
+    const clipPath = paths.circle ? `url(#${clipId})` : undefined;
+    const { role, shapeRendering } = this.props;
+    const voronoiPath = (
+      <path
+        d={paths.circle || paths.voronoi}
+        clipPath={clipPath}
+        style={style}
+        role={role || "presentation"}
+        shapeRendering={shapeRendering || "auto"}
+        {...events}
+      />
+    );
     return paths.circle ?
       (
         <g>
@@ -34,10 +49,10 @@ export default class Voronoi extends React.Component {
               <path d={paths.voronoi}/>
             </clipPath>
           </defs>
-          <path d={paths.circle} clipPath={`url(#${clipId})`} style={style} {...events}/>
+          {voronoiPath}
         </g>
       ) :
-      <path d={paths.voronoi} style={style} {...events}/>;
+      voronoiPath;
   }
 
   render() {

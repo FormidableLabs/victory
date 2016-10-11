@@ -61,7 +61,7 @@ export default class Bar extends React.Component {
       <path
         d={path}
         style={style}
-        role={role}
+        role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
         {...events}
       />
