@@ -10,6 +10,7 @@ export default class Flyout extends React.Component {
     dy: PropTypes.number,
     datum: PropTypes.object,
     data: PropTypes.array,
+    index: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
