@@ -34,7 +34,7 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const {x, y1, index, scale, datum } = dataProps;
+    const {x, y1, index, scale, datum, data } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
       style: labelStyle,
@@ -44,6 +44,7 @@ export default {
       index,
       scale,
       datum,
+      data,
       textAnchor: labelStyle.textAnchor,
       verticalAnchor: labelStyle.verticalAnchor || "end",
       angle: labelStyle.angle

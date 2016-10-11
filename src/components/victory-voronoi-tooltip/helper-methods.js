@@ -16,7 +16,7 @@ export default {
       const x = scale.x(datum.x1 || datum.x);
       const y = scale.y(datum.y1 || datum.y);
       const dataProps = {
-        x, y, datum, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };
@@ -34,9 +34,9 @@ export default {
   },
 
   getFlyoutProps(dataProps, text, style) {
-    const { x, y, index, scale, datum } = dataProps;
+    const { x, y, index, scale, datum, data } = dataProps;
     return {
-      x, y, text, index, scale, datum,
+      x, y, text, index, scale, datum, data,
       flyoutStyle: Helpers.evaluateStyle(style.flyout, datum),
       style: Helpers.evaluateStyle(style.labels, datum)
     };

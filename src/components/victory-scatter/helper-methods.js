@@ -15,7 +15,7 @@ export default {
       const x = scale.x(datum.x1 || datum.x);
       const y = scale.y(datum.y1 || datum.y);
       const dataProps = {
-        x, y, datum, index, scale,
+        x, y, datum, data, index, scale,
         size: this.getSize(datum, props, calculatedValues),
         symbol: this.getSymbol(datum, props),
         style: this.getDataStyles(datum, style.data)
@@ -31,7 +31,7 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, y, index, scale, datum } = dataProps;
+    const { x, y, index, scale, datum, data } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
       style: labelStyle,
@@ -41,6 +41,7 @@ export default {
       index,
       scale,
       datum,
+      data,
       textAnchor: labelStyle.textAnchor,
       verticalAnchor: labelStyle.verticalAnchor || "end",
       angle: labelStyle.angle
