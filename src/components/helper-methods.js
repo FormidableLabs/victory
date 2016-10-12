@@ -27,7 +27,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "pie");
     const calculatedValues = this.getCalculatedValues(props);
-    const { slices, style, pathFunction } = calculatedValues;
+    const { slices, style, pathFunction, data } = calculatedValues;
     const childProps = { parent: {
       slices, pathFunction, width: props.width, height: props.height, style: style.parent}
     };
@@ -37,7 +37,7 @@ export default {
       const datum = slice.data;
       const eventKey = datum.eventKey || index;
       const dataProps = {
-        index, slice, pathFunction, datum,
+        index, slice, pathFunction, datum, data
         style: this.getSliceStyle(datum, index, calculatedValues)
       };
 
@@ -50,7 +50,7 @@ export default {
   },
 
   getLabelProps(props, dataProps, calculatedValues) {
-    const { index, datum, slice } = dataProps;
+    const { index, datum, data, slice } = dataProps;
     const { style, radius } = calculatedValues;
     const labelStyle = Helpers.evaluateStyle(assign({padding: 0}, style.labels), datum);
     const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
@@ -58,7 +58,7 @@ export default {
     const position = labelPosition.centroid(slice);
     const orientation = this.getLabelOrientation(slice);
     return {
-      index, datum, slice, orientation,
+      index, datum, data, slice, orientation,
       style: labelStyle,
       x: position[0],
       y: position[1],
