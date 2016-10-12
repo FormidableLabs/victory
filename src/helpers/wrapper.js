@@ -1,4 +1,4 @@
-import { assign, defaults, flatten, isFunction, partialRight, uniq } from "lodash";
+import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain } from "victory-core";
@@ -177,7 +177,8 @@ export default {
     const { horizontal } = props;
     const ensureZero = (domain) => {
       const isDependent = (axis === "y" && !horizontal) || (axis === "x" && horizontal);
-      return isDependent ? [Math.min(...domain, 0), Math.max(... domain, 0)] : domain;
+      return isDependent ?
+        [Collection.getMinValue(domain, 0), Collection.getMaxValue(domain, 0)] : domain;
     };
     const datasets = this.getDataFromChildren(props);
     return ensureZero(Domain.getDomainFromGroupedData(props, axis, datasets));
@@ -309,9 +310,10 @@ export default {
         .map((previousDatum) => previousDatum.y || 0)
       );
     }, []);
-    return previousPoints.reduce((memo, value) => {
+    const y0 = previousPoints.length && previousPoints.reduce((memo, value) => {
       const sameSign = (y < 0 && value < 0) || (y >= 0 && value >= 0);
-      return sameSign ? memo + value : memo;
+      return sameSign ? +value + memo : memo;
     }, 0);
+    return previousPoints.some((point) => point instanceof Date) ? new Date(y0) : y0;
   }
 };
