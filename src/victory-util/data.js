@@ -65,7 +65,7 @@ export default {
       x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
       y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
     };
-    return this.cleanData(dataset, props).map((datum, index) => {
+    const data = dataset.map((datum, index) => {
       const evaluatedX = accessor.x(datum);
       const evaluatedY = accessor.y(datum);
       const x = evaluatedX !== undefined ? evaluatedX : index;
@@ -79,6 +79,7 @@ export default {
           typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
         );
     });
+    return this.cleanData(data, props);
   },
 
   /**
@@ -94,15 +95,11 @@ export default {
       x: Scale.getScaleType(props, "x"),
       y: Scale.getScaleType(props, "y")
     };
-    const accessor = {
-      x: Helpers.createAccessor(props.x),
-      y: Helpers.createAccessor(props.y)
-    };
     if (scaleType.x !== "log" && scaleType.y !== "log") {
       return dataset;
     }
     const rules = (datum, axis) => {
-      return scaleType[axis] === "log" ? accessor[axis](datum) !== 0 : true;
+      return scaleType[axis] === "log" ? datum[axis] !== 0 : true;
     };
     return dataset.filter((datum) => {
       return rules(datum, "x") && rules(datum, "y");
