@@ -21,7 +21,8 @@ describe("victory-primitives/slice", () => {
         />
       );
 
-      expect(wrapper.html()).to.eql(`<path d="${EXPECTED_D_ATTR}"></path>`);
+      expect(wrapper.html()).to.eql(`<path d="${EXPECTED_D_ATTR}" role="presentation" shape-rendering="auto"></path>` // eslint-disable-line max-len
+      );
     });
   });
 });

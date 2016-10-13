@@ -134,7 +134,7 @@ export default {
     } else {
       // coerce ticks to numbers
       const ticks = props.tickValues.map((value) => +value);
-      domain = [Math.min(...ticks), Math.max(...ticks)];
+      domain = [Collection.getMinValue(ticks), Collection.getMaxValue(ticks)];
     }
     if (Helpers.isVertical(props)) {
       domain.reverse();
@@ -162,7 +162,9 @@ export default {
       }, {});
     const categoryValues = stringMap ?
       categories.map((value) => stringMap[value]) : categories;
-    return [Math.min(...categoryValues), Math.max(...categoryValues)];
+    return [
+      Collection.getMinValue(categoryValues), Collection.getMaxValue(categoryValues)
+    ];
   },
 
   /**
@@ -186,19 +188,19 @@ export default {
 
     const cumulativeMaxArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
-        return val > 0 ? memo + val : memo;
+        return val > 0 ? +val + +memo : memo;
       }, 0);
     });
     const cumulativeMinArray = cumulativeData.map((dataset) => {
       return dataset.reduce((memo, val) => {
-        return val < 0 ? memo + val : memo;
+        return val < 0 ? +val + +memo : memo;
       }, 0);
     });
 
     const cumulativeMin = Math.min(...cumulativeMinArray);
     // use greatest min / max
-    const domainMin = cumulativeMin < 0 ? cumulativeMin : Math.min(...globalDomain);
-    const domainMax = Math.max(...globalDomain, ...cumulativeMaxArray);
+    const domainMin = cumulativeMin < 0 ? cumulativeMin : Collection.getMinValue(globalDomain);
+    const domainMax = Collection.getMaxValue(globalDomain, ...cumulativeMaxArray);
     // TODO: is this the correct behavior, or should we just error. How do we
     // handle charts with just one data point?
     if (domainMin === domainMax) {

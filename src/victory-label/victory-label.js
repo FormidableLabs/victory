@@ -24,7 +24,7 @@ export default class VictoryLabel extends React.Component {
     ]),
     datum: PropTypes.any,
     data: PropTypes.array,
-    index: PropTypes.nonNegative,
+    index: PropTypes.number,
     events: PropTypes.object,
     text: PropTypes.oneOfType([
       PropTypes.string,

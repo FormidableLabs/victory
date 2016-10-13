@@ -5,6 +5,7 @@ export default class Line extends React.Component {
   static propTypes = {
     index: PropTypes.number,
     datum: PropTypes.any,
+    data: PropTypes.array,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
