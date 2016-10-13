@@ -3,7 +3,7 @@ import React, { PropTypes } from "react";
 import LineHelpers from "./helper-methods";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, VictoryGroupContainer,
+  VictoryContainer, VictoryTheme, DefaultTransitions, Curve, VictoryClipContainer,
   Data, Domain
 } from "victory-core";
 
@@ -50,8 +50,7 @@ class VictoryLine extends React.Component {
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     interpolation: PropTypes.oneOf([
-      "basis", "basisClosed", "basisOpen", "bundle", "cardinal", "cardinalClosed", "cardinalOpen",
-      "catmullRom", "catmullRomClosed", "catmullRomOpen", "linear", "linearClosed", "monotoneX",
+      "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
     label: PropTypes.string,
@@ -95,8 +94,7 @@ class VictoryLine extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.arrayOf(PropTypes.func)
+      PropTypes.arrayOf(PropTypes.string)
     ])
   };
 
@@ -108,7 +106,7 @@ class VictoryLine extends React.Component {
     dataComponent: <Curve/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryGroupContainer/>,
+    groupComponent: <VictoryClipContainer/>,
     theme: VictoryTheme.grayscale
   };
 

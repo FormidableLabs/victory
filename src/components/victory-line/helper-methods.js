@@ -47,6 +47,7 @@ export default {
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
       angle: labelStyle.angle,
+      data: dataset,
       scale,
       text
     };

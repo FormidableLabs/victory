@@ -32,7 +32,7 @@ export default class VictoryGroup extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
     containerComponent: PropTypes.element,
@@ -107,8 +107,7 @@ export default class VictoryGroup extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.arrayOf(PropTypes.func)
+      PropTypes.arrayOf(PropTypes.string)
     ])
   };
 

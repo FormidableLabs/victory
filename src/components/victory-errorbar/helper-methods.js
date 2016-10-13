@@ -14,7 +14,7 @@ export default {
       const y = scale.y(datum.y1 || datum.y);
 
       const dataProps = {
-        x, y, scale, datum, index, groupComponent, borderWidth,
+        x, y, scale, datum, data, index, groupComponent, borderWidth,
         style: this.getDataStyles(datum, style.data),
         errorX: this.getErrors(datum, scale, "x"),
         errorY: this.getErrors(datum, scale, "y")
@@ -44,6 +44,7 @@ export default {
       index,
       scale,
       datum: dataProps.datum,
+      data: dataProps.data,
       textAnchor: labelStyle.textAnchor,
       verticalAnchor: labelStyle.verticalAnchor || "end",
       angle: labelStyle.angle
@@ -202,7 +203,7 @@ export default {
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
-      "x", "y", "name"
+      "x", "y", "name", "errorX", "errorY", "eventKey"
     ]);
     const baseDataStyle = defaults({}, stylesFromData, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);

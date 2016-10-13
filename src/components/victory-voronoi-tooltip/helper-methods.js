@@ -4,7 +4,7 @@ import { voronoi as d3Voronoi } from "d3-voronoi";
 
 export default {
   getBaseProps(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "voronoi");
+    props = Helpers.modifyProps(props, fallbackProps, "tooltip");
     const { data, style, scale, polygons } = this.getCalculatedValues(props);
     const childProps = { parent: {
       style: style.parent, scale, data, height: props.height, width: props.width
@@ -16,7 +16,7 @@ export default {
       const x = scale.x(datum.x1 || datum.x);
       const y = scale.y(datum.y1 || datum.y);
       const dataProps = {
-        x, y, datum, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };
@@ -34,9 +34,9 @@ export default {
   },
 
   getFlyoutProps(dataProps, text, style) {
-    const { x, y, index, scale, datum } = dataProps;
+    const { x, y, index, scale, datum, data } = dataProps;
     return {
-      x, y, text, index, scale, datum,
+      x, y, text, index, scale, datum, data,
       flyoutStyle: Helpers.evaluateStyle(style.flyout, datum),
       style: Helpers.evaluateStyle(style.labels, datum)
     };
@@ -55,8 +55,8 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const defaultStyles = props.theme && props.theme.voronoi && props.theme.voronoi.style ?
-      props.theme.voronoi.style : {};
+    const defaultStyles = props.theme && props.theme.tooltip && props.theme.tooltip.style ?
+      props.theme.tooltip.style : {};
     const style = this.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Data.getData(props);
     const range = {

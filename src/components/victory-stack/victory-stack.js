@@ -31,7 +31,7 @@ export default class VictoryStack extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
     containerComponent: PropTypes.element,
@@ -162,9 +162,9 @@ export default class VictoryStack extends React.Component {
     return datasets[index].map((datum) => {
       const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
       return assign({}, datum, {
-        y0: yOffset,
-        y1: datum.y + yOffset,
-        x1: datum.x + xOffset
+        y0: datum.y instanceof Date ? yOffset && new Date(yOffset) || datum.y : yOffset,
+        y1: datum.y instanceof Date ? new Date(+datum.y + +yOffset) : datum.y + yOffset,
+        x1: datum.x instanceof Date ? new Date(+datum.x + +xOffset) : datum.x + xOffset
       });
     });
   }

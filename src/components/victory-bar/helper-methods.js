@@ -133,7 +133,7 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const { datum, horizontal, x, y, y0, index, scale } = dataProps;
+    const { datum, data, horizontal, x, y, y0, index, scale } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, datum);
     const labelPadding = this.getlabelPadding(labelStyle, datum, horizontal);
     const anchors = this.getLabelAnchors(datum, horizontal);
@@ -146,6 +146,7 @@ export default {
       index,
       scale,
       datum,
+      data,
       horizontal,
       textAnchor: labelStyle.textAnchor || anchors.text,
       verticalAnchor: labelStyle.verticalAnchor || anchors.vertical,

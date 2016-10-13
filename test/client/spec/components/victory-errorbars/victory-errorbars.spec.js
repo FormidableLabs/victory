@@ -112,13 +112,13 @@ describe("components/victory-errorbar", () => {
           ? xScaleMax : errorX;
 
         // right border
-        expect(node.find("line").at(0).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().x1)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(0).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().x2)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(0).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().y1)
           .to.equal(yScale(data[i].y) - borderWidth);
-        expect(node.find("line").at(0).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().y2)
           .to.equal(yScale(data[i].y) + borderWidth);
       });
     });
@@ -154,13 +154,13 @@ describe("components/victory-errorbar", () => {
           ? xScaleMin : errorX;
 
         // left border
-        expect(node.find("line").at(1).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().x1)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(1).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().x2)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(1).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().y1)
           .to.equal(yScale(data[i].y) - borderWidth);
-        expect(node.find("line").at(1).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().y2)
           .to.equal(yScale(data[i].y) + borderWidth);
       });
     });
@@ -196,13 +196,13 @@ describe("components/victory-errorbar", () => {
           ? yScaleMin : errorY;
 
         // bottom border
-        expect(node.find("line").at(2).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().x1)
           .to.equal(xScale(data[i].x) - borderWidth);
-        expect(node.find("line").at(2).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().x2)
           .to.equal(xScale(data[i].x) + borderWidth);
-        expect(node.find("line").at(2).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().y1)
           .to.equal(negativeErrorY);
-        expect(node.find("line").at(2).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().y2)
           .to.equal(negativeErrorY);
       });
     });
@@ -238,13 +238,13 @@ describe("components/victory-errorbar", () => {
           ? yScaleMax : errorY;
 
         // top border
-        expect(node.find("line").at(3).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().x1)
           .to.equal(xScale(data[i].x) - borderWidth);
-        expect(node.find("line").at(3).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().x2)
           .to.equal(xScale(data[i].x) + borderWidth);
-        expect(node.find("line").at(3).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().y1)
           .to.equal(positiveErrorY);
-        expect(node.find("line").at(3).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().y2)
           .to.equal(positiveErrorY);
       });
     });
@@ -278,13 +278,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorY = errorY >= yScaleMax
           ? yScaleMax : errorY;
 
-        expect(node.find("line").at(4).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(4).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().y2)
           .to.equal(positiveErrorY);
       });
     });
@@ -318,13 +318,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorY = errorY <= yScaleMin
           ? yScaleMin : errorY;
 
-        expect(node.find("line").at(5).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(5).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().y2)
           .to.equal(negativeErrorY);
       });
     });
@@ -358,13 +358,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorX = errorX <= xScaleMin
           ? xScaleMin : errorX;
 
-        expect(node.find("line").at(6).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(6).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().x2)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(6).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(6).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
@@ -398,13 +398,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorX = errorX >= xScaleMax
           ? xScaleMax : errorX;
 
-        expect(node.find("line").at(7).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(7).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().x2)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(7).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(7).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
@@ -476,13 +476,13 @@ describe("components/victory-errorbar", () => {
           ? xScaleMax : errorX;
 
         // right border
-        expect(node.find("line").at(0).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().x1)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(0).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().x2)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(0).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().y1)
           .to.equal(yScale(data[i].y) - borderWidth);
-        expect(node.find("line").at(0).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderRight").props().y2)
           .to.equal(yScale(data[i].y) + borderWidth);
       });
     });
@@ -518,13 +518,13 @@ describe("components/victory-errorbar", () => {
           ? xScaleMin : errorX;
 
         // left border
-        expect(node.find("line").at(1).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().x1)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(1).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().x2)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(1).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().y1)
           .to.equal(yScale(data[i].y) - borderWidth);
-        expect(node.find("line").at(1).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderLeft").props().y2)
           .to.equal(yScale(data[i].y) + borderWidth);
       });
     });
@@ -560,13 +560,13 @@ describe("components/victory-errorbar", () => {
           ? yScaleMin : errorY;
 
         // bottom border
-        expect(node.find("line").at(2).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().x1)
           .to.equal(xScale(data[i].x) - borderWidth);
-        expect(node.find("line").at(2).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().x2)
           .to.equal(xScale(data[i].x) + borderWidth);
-        expect(node.find("line").at(2).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().y1)
           .to.equal(negativeErrorY);
-        expect(node.find("line").at(2).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderBottom").props().y2)
           .to.equal(negativeErrorY);
       });
     });
@@ -602,13 +602,13 @@ describe("components/victory-errorbar", () => {
           ? yScaleMax : errorY;
 
         // top border
-        expect(node.find("line").at(3).props().x1)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().x1)
           .to.equal(xScale(data[i].x) - borderWidth);
-        expect(node.find("line").at(3).props().x2)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().x2)
           .to.equal(xScale(data[i].x) + borderWidth);
-        expect(node.find("line").at(3).props().y1)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().y1)
           .to.equal(positiveErrorY);
-        expect(node.find("line").at(3).props().y2)
+        expect(node.findWhere((n) => n.key() === "borderTop").props().y2)
           .to.equal(positiveErrorY);
       });
     });
@@ -642,13 +642,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorY = errorY >= yScaleMax
           ? yScaleMax : errorY;
 
-        expect(node.find("line").at(4).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(4).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossTop").props().y2)
           .to.equal(positiveErrorY);
       });
     });
@@ -682,13 +682,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorY = errorY <= yScaleMin
           ? yScaleMin : errorY;
 
-        expect(node.find("line").at(5).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(5).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossBottom").props().y2)
           .to.equal(negativeErrorY);
       });
     });
@@ -722,13 +722,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorX = errorX <= xScaleMin
           ? xScaleMin : errorX;
 
-        expect(node.find("line").at(6).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(6).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().x2)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(6).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(6).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossLeft").props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
@@ -762,13 +762,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorX = errorX >= xScaleMax
           ? xScaleMax : errorX;
 
-        expect(node.find("line").at(7).props().x1)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(7).props().x2)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().x2)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(7).props().y1)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(7).props().y2)
+        expect(node.findWhere((n) => n.key() === "crossRight").props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
