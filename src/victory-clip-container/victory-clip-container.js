@@ -31,28 +31,24 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: <ClipPath/>
   }
 
-  render() {
-    const { style, events, children, transform, clipWidth } = this.props;
-    if (clipWidth || clipWidth === 0) {
-      const { padding, translateX, clipHeight, clipPathComponent } = this.props;
-      const clipId = Math.round(Math.random() * 10000);
-      const clipComponent = React.cloneElement(
-        clipPathComponent,
-        { padding, clipId, translateX, clipWidth, clipHeight }
-      );
-      return (
-        <g
-          style={style}
-          {...events}
-          transform={transform}
-        >
-          {clipComponent}
-          <g clipPath={`url(#${clipId})`}>
-            {children}
-          </g>
+  renderClippedGroup(props, clipComponent, clipId) {
+    const { style, events, transform, children } = props;
+    return (
+      <g
+        style={style}
+        {...events}
+        transform={transform}
+      >
+        {clipComponent}
+        <g clipPath={`url(#${clipId})`}>
+          {children}
         </g>
-      );
-    }
+      </g>
+    );
+  }
+
+  renderGroup(props) {
+    const { style, events, transform, children } = props;
     return (
       <g
         style={style}
@@ -62,5 +58,19 @@ export default class VictoryClipContainer extends React.Component {
         {children}
       </g>
     );
+  }
+
+  render() {
+    const { clipWidth } = this.props;
+    if (clipWidth || clipWidth === 0) {
+      const { padding, translateX, clipHeight, clipPathComponent } = this.props;
+      const clipId = Math.round(Math.random() * 10000);
+      const clipComponent = React.cloneElement(
+        clipPathComponent,
+        { padding, clipId, translateX, clipWidth, clipHeight }
+      );
+      return this.renderClippedGroup(this.props, clipComponent, clipId);
+    }
+    return this.renderGroup(this.props);
   }
 }
