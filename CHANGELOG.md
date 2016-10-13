@@ -1,5 +1,16 @@
 VictoryCore Changelog
 =====================
+## 9.0.0 (2016-10-12)
+
+- removes support for `children` for VictoryLabel. Use `text` instead
+- upgrades all d3 packages
+- renames `VictoryGroupContainer` -> `VictoryClipContainer`
+- refactors `VictoryClipContainer` for ease of native implementation
+- consistency of props for primitive components and VictoryLabel
+- refactors ErrorBar primitive for clarity and ease of native implementation
+- fixes a 0/falsey bug in transitions to allow for durations of 0 rather than falling back to defaults
+- Fixes date related  domain bugs
+
 ## 8.0.1 (2016-10-07)
 
 - Adds fallbacks to `formatData` so that data accessor props are optional
