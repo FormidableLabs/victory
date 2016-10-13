@@ -278,13 +278,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorY = errorY >= yScaleMax
           ? yScaleMax : errorY;
 
-        expect(node.find("line").at(4).props().x1)
+        expect(node.find("line").at(7).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().x2)
+        expect(node.find("line").at(7).props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().y1)
+        expect(node.find("line").at(7).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(4).props().y2)
+        expect(node.find("line").at(7).props().y2)
           .to.equal(positiveErrorY);
       });
     });
@@ -318,13 +318,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorY = errorY <= yScaleMin
           ? yScaleMin : errorY;
 
-        expect(node.find("line").at(5).props().x1)
+        expect(node.find("line").at(6).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().x2)
+        expect(node.find("line").at(6).props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().y1)
+        expect(node.find("line").at(6).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(5).props().y2)
+        expect(node.find("line").at(6).props().y2)
           .to.equal(negativeErrorY);
       });
     });
@@ -358,13 +358,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorX = errorX <= xScaleMin
           ? xScaleMin : errorX;
 
-        expect(node.find("line").at(6).props().x1)
+        expect(node.find("line").at(5).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(6).props().x2)
+        expect(node.find("line").at(5).props().x2)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(6).props().y1)
+        expect(node.find("line").at(5).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(6).props().y2)
+        expect(node.find("line").at(5).props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
@@ -398,13 +398,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorX = errorX >= xScaleMax
           ? xScaleMax : errorX;
 
-        expect(node.find("line").at(7).props().x1)
+        expect(node.find("line").at(4).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(7).props().x2)
+        expect(node.find("line").at(4).props().x2)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(7).props().y1)
+        expect(node.find("line").at(4).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(7).props().y2)
+        expect(node.find("line").at(4).props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
@@ -642,13 +642,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorY = errorY >= yScaleMax
           ? yScaleMax : errorY;
 
-        expect(node.find("line").at(4).props().x1)
+        expect(node.find("line").at(7).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().x2)
+        expect(node.find("line").at(7).props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(4).props().y1)
+        expect(node.find("line").at(7).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(4).props().y2)
+        expect(node.find("line").at(7).props().y2)
           .to.equal(positiveErrorY);
       });
     });
@@ -682,13 +682,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorY = errorY <= yScaleMin
           ? yScaleMin : errorY;
 
-        expect(node.find("line").at(5).props().x1)
+        expect(node.find("line").at(6).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().x2)
+        expect(node.find("line").at(6).props().x2)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(5).props().y1)
+        expect(node.find("line").at(6).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(5).props().y2)
+        expect(node.find("line").at(6).props().y2)
           .to.equal(negativeErrorY);
       });
     });
@@ -722,13 +722,13 @@ describe("components/victory-errorbar", () => {
         const negativeErrorX = errorX <= xScaleMin
           ? xScaleMin : errorX;
 
-        expect(node.find("line").at(6).props().x1)
+        expect(node.find("line").at(5).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(6).props().x2)
+        expect(node.find("line").at(5).props().x2)
           .to.equal(negativeErrorX);
-        expect(node.find("line").at(6).props().y1)
+        expect(node.find("line").at(5).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(6).props().y2)
+        expect(node.find("line").at(5).props().y2)
           .to.equal(yScale(data[i].y));
       });
     });
@@ -762,13 +762,13 @@ describe("components/victory-errorbar", () => {
         const positiveErrorX = errorX >= xScaleMax
           ? xScaleMax : errorX;
 
-        expect(node.find("line").at(7).props().x1)
+        expect(node.find("line").at(4).props().x1)
           .to.equal(xScale(data[i].x));
-        expect(node.find("line").at(7).props().x2)
+        expect(node.find("line").at(4).props().x2)
           .to.equal(positiveErrorX);
-        expect(node.find("line").at(7).props().y1)
+        expect(node.find("line").at(4).props().y1)
           .to.equal(yScale(data[i].y));
-        expect(node.find("line").at(7).props().y2)
+        expect(node.find("line").at(4).props().y2)
           .to.equal(yScale(data[i].y));
       });
     });

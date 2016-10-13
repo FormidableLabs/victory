@@ -111,7 +111,8 @@ class VictoryErrorBar extends React.Component {
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string)
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.arrayOf(PropTypes.func)
     ])
   };
 
@@ -174,8 +175,8 @@ class VictoryErrorBar extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "domain", "height", "padding", "samples", "borderWidth",
-        "style", "width", "x", "y"
+        "data", "domain", "height", "padding", "samples",
+        "style", "width", "x", "y", "errorX", "errorY", "borderWidth"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

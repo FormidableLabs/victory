@@ -80,9 +80,9 @@ export default {
     }
 
     return isArray(errors) ?
-      [ errors[0] === 0 ? false : scale[axis](datum[axis] - errors[0]),
-        errors[1] === 0 ? false : scale[axis](datum[axis] + errors[1]) ] :
-      [ scale[axis](datum[axis] - errors), scale[axis](datum[axis] + errors) ];
+      [ errors[0] === 0 ? false : scale[axis](errors[0] + datum[axis]),
+        errors[1] === 0 ? false : scale[axis](datum[axis] - errors[1]) ] :
+      [ scale[axis](errors + datum[axis]), scale[axis](datum[axis] - errors) ];
   },
 
   formatErrorData(dataset, props) {
