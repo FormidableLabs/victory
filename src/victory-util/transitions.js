@@ -358,8 +358,9 @@ export function getTransitionPropsFactory(props, state, setState) {
     const animate = child.props.animate;
     const defaultTransitions = child.type && child.type.defaultTransitions;
     if (defaultTransitions) {
-      return animate[type] && animate[type].duration ||
-        defaultTransitions[type] && defaultTransitions[type].duration;
+      const animationDuration = animate[type] && animate[type].duration;
+      return animationDuration !== undefined ?
+        animationDuration : defaultTransitions[type] && defaultTransitions[type].duration;
     }
 
     return {};
@@ -382,20 +383,23 @@ export function getTransitionPropsFactory(props, state, setState) {
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];
     if (!nodesDoneLoad) {
       // should do onLoad animation
-      const load = transitionDurations.load || getChildTransitionDuration(child, "onLoad");
+      const load = transitionDurations.load !== undefined ?
+        transitionDurations.load : getChildTransitionDuration(child, "onLoad");
       const animation = {duration: load};
       return onLoad(child, data, assign({}, animate, animation));
     } else if (nodesWillExit) {
       const exitingNodes = childTransitions && childTransitions.exiting;
-      const exit = transitionDurations.exit || getChildTransitionDuration(child, "onExit");
+      const exit = transitionDurations.exit !== undefined ?
+        transitionDurations.exit : getChildTransitionDuration(child, "onExit");
       // if nodesWillExit, but this child has no exiting nodes, set a delay instead of a duration
       const animation = exitingNodes ? {duration: exit} : {delay: exit};
       return onExit(exitingNodes, child, data, assign({}, animate, animation));
     } else if (nodesWillEnter) {
       const enteringNodes = childTransitions && childTransitions.entering;
-      const enter = transitionDurations.enter || getChildTransitionDuration(child, "onEnter");
-      const move = transitionDurations.move ||
-        child.props.animate && child.props.animate.duration;
+      const enter = transitionDurations.enter !== undefined ?
+        transitionDurations.enter : getChildTransitionDuration(child, "onEnter");
+      const move = transitionDurations.move !== undefined ?
+        transitionDurations.move : child.props.animate && child.props.animate.duration;
       const animation = { duration: nodesShouldEnter && enteringNodes ? enter : move };
       return onEnter(enteringNodes, child, data, assign({}, animate, animation));
     } else if (!state && animate && animate.onExit) {
