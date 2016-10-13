@@ -6,7 +6,12 @@ import {
   VictorySharedEvents,
   VictoryTheme,
   VictoryTransition,
-  VictoryTooltip
+  VictoryTooltip,
+  VictoryPortal,
+  Portal,
+  VictoryClipContainer,
+  addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
+  PropTypes, Scale, Style, TextSize, Transitions
 } from "victory-core";
 
 import {
@@ -47,5 +52,10 @@ export {
   VictorySharedEvents,
   VictoryTooltip,
   VictoryVoronoi,
-  VictoryVoronoiTooltip
+  VictoryVoronoiTooltip,
+  VictoryPortal,
+  Portal,
+  VictoryClipContainer,
+  addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
+  PropTypes, Scale, Style, TextSize, Transitions
 };
