@@ -1,5 +1,12 @@
 # VictoryPie Changelog
 
+## 7.0.0 (2016-10-13)
+    - Upgrades all d3 packages
+    - Greater consistency of props for props passed to primitive components
+    - Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
+    - Removes `clipPath` properties from `VictoryLine` and `VictoryArea`
+    - Extracts event logic into a new inverted inheritance higher order component `addEvents` which is used by all chart components
+
 ## 6.0.0 (2016-09-09)
 
 **This release includes breaking changes for themes and label styles**
