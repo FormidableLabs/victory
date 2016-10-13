@@ -226,7 +226,7 @@ describe("components/victory-pie", () => {
     describe("if provided a string", () => {
       describe("and the string is a valid victory color scale", () => {
         it("renders the chart using the given color scale", () => {
-          const VALID_VICTORY_COLOR_SCALE_NAMES = ["greyscale", "qualitative",
+          const VALID_VICTORY_COLOR_SCALE_NAMES = ["grayscale", "qualitative",
             "heatmap", "warm", "cool", "red", "green", "blue"];
 
           VALID_VICTORY_COLOR_SCALE_NAMES.map((colorScaleName) => {
@@ -245,11 +245,11 @@ describe("components/victory-pie", () => {
       });
 
       describe("and the string isn't a valid victory color scale", () => {
-        it("renders the chart using the victory greyscale", () => {
-          it("renders slices using the victory greyscale", () => {
+        it("renders the chart using the victory grayscale", () => {
+          it("renders slices using the victory grayscale", () => {
             const invalidColorScale = "foobar";
-            const greyscale = Style.getColorScale("greyscale");
-            const data = range(greyscale.length);
+            const grayscale = Style.getColorScale("grayscale");
+            const data = range(grayscale.length);
 
             const wrapper = shallow(
               <VictoryPie colorScale={invalidColorScale} data={data}/>
@@ -257,7 +257,7 @@ describe("components/victory-pie", () => {
 
             const slices = wrapper.find(Slice);
             slices.map((slice, i) => {
-              expect(slice).to.have.style("fill", greyscale[i]);
+              expect(slice).to.have.style("fill", grayscale[i]);
             });
           });
         });
