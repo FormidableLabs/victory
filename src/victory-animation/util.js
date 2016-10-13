@@ -1,4 +1,4 @@
-import d3Interpolate from "d3-interpolate";
+import { interpolate } from "d3-interpolate";
 import { isPlainObject } from "lodash";
 
 export const isInterpolatable = function (obj) {
@@ -82,38 +82,10 @@ export const interpolateFunction = function (a, b) {
       /* eslint-disable no-invalid-this */
       const aval = (typeof a === "function") ? a.apply(this, arguments) : a;
       const bval = (typeof b === "function") ? b.apply(this, arguments) : b;
-      return d3Interpolate.value(aval, bval)(t);
+      return interpolate(aval, bval)(t);
     };
   };
 };
-
-/**
- * This function is adapted from https://github.com/d3-interpolate/master/src/array.js
- * This function may be removed pending the merge of https://github.com/d3/d3-interpolate/pull/19
- * This function differs from d3-interpolate in that it wont return an array longer
- * than the end array.
- *
- * @param {any} a - Start value.
- * @param {any} b - End value.
- * @returns {Function} An interpolation function.
- */
-export const interpolateArray = function (a, b) {
-  const x = [];
-  const c = [];
-  const na = a ? a.length : 0;
-  const nb = b ? b.length : 0;
-  const n0 = Math.min(na, nb);
-  let i;
-
-  for (i = 0; i < n0; ++i) { x.push(d3Interpolate.value(a[i], b[i])); }
-  for (i = 0; i < nb; ++i) { c[i] = b[i]; }
-
-  return function (t) {
-    for (i = 0; i < n0; ++i) { c[i] = x[i](t); }
-    return c;
-  };
-};
-
 
 /**
  * By default, the list of interpolators used by `d3.interpolate` has a few
@@ -148,16 +120,6 @@ export const victoryInterpolator = function (a, b) {
   if (typeof a === "function" || typeof b === "function") {
     return interpolateFunction(a, b);
   }
-  if (Array.isArray(a) && Array.isArray(b)) {
-    return interpolateArray(a, b);
-  }
+  return interpolate(a, b);
 };
 
-let interpolatorAdded = false;
-
-export const addVictoryInterpolator = function () {
-  if (!interpolatorAdded) {
-    d3Interpolate.values.push(victoryInterpolator);
-    interpolatorAdded = true;
-  }
-};
