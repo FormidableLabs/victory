@@ -210,7 +210,7 @@ export default class App extends React.Component {
               labels: {fontSize: 10, padding: 10}
             }}
             labelComponent={<VictoryTooltip/>}
-            colorScale="greyscale"
+            colorScale="grayscale"
           />
 
           <VictoryPie

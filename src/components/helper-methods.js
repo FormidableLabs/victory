@@ -1,5 +1,5 @@
 import { assign, defaults, isFunction, omit } from "lodash";
-import d3Shape from "d3-shape";
+import * as d3Shape from "d3-shape";
 
 import { Helpers, Data, Style } from "victory-core";
 
@@ -37,7 +37,7 @@ export default {
       const datum = slice.data;
       const eventKey = datum.eventKey || index;
       const dataProps = {
-        index, slice, pathFunction, datum, data
+        index, slice, pathFunction, datum, data,
         style: this.getSliceStyle(datum, index, calculatedValues)
       };
 
@@ -89,7 +89,7 @@ export default {
     if (style && style.data && style.data.fill) {
       return style.data.fill;
     }
-    return colors[index % colors.length];
+    return colors && colors[index % colors.length];
   },
 
   getRadius(props, padding) {
