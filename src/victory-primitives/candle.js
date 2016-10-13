@@ -11,6 +11,7 @@ export default class Candle extends React.Component {
     y: PropTypes.number,
     events: PropTypes.object,
     candleHeight: PropTypes.number,
+    shapeRendering: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object,
     datum: PropTypes.object,
@@ -38,13 +39,18 @@ export default class Candle extends React.Component {
     const padding = props.padding.left || props.padding;
     const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
     const candleX = x - candleWidth / 2;
-    return assign({x: candleX, y, style, role, width: candleWidth, height: candleHeight}, events);
+    const shapeRendering = props.shapeRendering || "auto";
+    return assign({
+      x: candleX, y, style, role, width: candleWidth, height: candleHeight, shapeRendering
+    }, events);
   }
 
   getWickProps(props) {
-    const {x, y1, y2, events, role} = props;
+    const { x, y1, y2, events } = props;
     const style = assign({stroke: "black"}, props.style);
-    return assign({x1: x, x2: x, y1, y2, style, role}, events);
+    const shapeRendering = props.shapeRendering || "auto";
+    const role = props.role || "presentation";
+    return assign({x1: x, x2: x, y1, y2, style, role, shapeRendering}, events);
   }
 
   render() {

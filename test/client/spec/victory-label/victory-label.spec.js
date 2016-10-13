@@ -7,15 +7,8 @@ import { shallow, mount } from "enzyme";
 import VictoryLabel from "src/victory-label/victory-label";
 
 describe("components/victory-label", () => {
-  it("has expected content with shallow render", () => {
-    const wrapper = shallow(
-      <VictoryLabel>time (ms)</VictoryLabel>
-    );
-    const output = wrapper.find("text");
-    expect(output.html()).to.contain("time (ms)");
-  });
 
-  it("falls back to label prop without children", () => {
+  it("has expected content with shallow render", () => {
     const wrapper = shallow(
       <VictoryLabel text={"such text, wow"}/>
     );

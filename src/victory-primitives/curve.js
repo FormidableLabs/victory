@@ -10,6 +10,7 @@ export default class Curve extends React.Component {
     interpolation: PropTypes.string,
     role: PropTypes.string,
     scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
     style: PropTypes.object
   };
 
@@ -20,12 +21,13 @@ export default class Curve extends React.Component {
   }
 
   renderLine(path, style, events) {
-    const { role } = this.props;
+    const { role, shapeRendering } = this.props;
     return (
       <path
         style={style}
+        shapeRendering={shapeRendering || "auto"}
         d={path}
-        role={role}
+        role={role || "presentation"}
         {...events}
         vectorEffect="non-scaling-stroke"
       />

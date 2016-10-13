@@ -32,8 +32,9 @@ export default {
    */
   generateData(props) {
     // create an array of values evenly spaced across the x domain that include domain min/max
-    const domain = props.domain ? (props.domain.x || props.domain) :
-      Scale.getBaseScale(props, "x").domain();
+    const propsDomain = props.domain && Array.isArray(props.domain) ?
+      props.domain : props.domain && props.domain.x;
+    const domain = propsDomain || Scale.getBaseScale(props, "x").domain();
     const samples = props.samples || 1;
     const domainMax = Math.max(...domain);
     const domainMin = Math.min(...domain);

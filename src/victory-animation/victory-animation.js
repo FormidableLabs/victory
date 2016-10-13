@@ -1,11 +1,7 @@
 import React from "react";
-import d3Ease from "d3-ease";
-import d3Interpolate from "d3-interpolate";
+import * as d3Ease from "d3-ease";
 import { timer } from "d3-timer";
-import { addVictoryInterpolator } from "./util";
-
-
-addVictoryInterpolator();
+import { victoryInterpolator } from "./util";
 
 export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
@@ -55,19 +51,21 @@ export default class VictoryAnimation extends React.Component {
     this.queue = Array.isArray(this.props.data) ?
       this.props.data.slice(1) : [];
     /* build easing function */
-    this.ease = d3Ease[this.props.easing];
+    this.ease = d3Ease[this.toNewName(this.props.easing)];
     /*
       unlike React.createClass({}), there is no autobinding of this in ES6 classes
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
   }
+
   componentDidMount() {
     // Length check prevents us from triggering `onEnd` in `traverseQueue`.
     if (this.queue.length) {
       this.traverseQueue();
     }
   }
+
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
@@ -88,18 +86,26 @@ export default class VictoryAnimation extends React.Component {
     /* Start traversing the tween queue */
     this.traverseQueue();
   }
+
   componentWillUnmount() {
     if (this.timer) {
       this.timer.stop();
     }
   }
+
+  toNewName(ease) {
+    // d3-ease changed the naming scheme for ease from "linear" -> "easeLinear" etc.
+    const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
+    return `ease${capitalize(ease)}`;
+  }
+
   /* Traverse the tween queue */
   traverseQueue() {
     if (this.queue.length) {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
-      this.interpolator = d3Interpolate.value(this.state.data, data);
+      this.interpolator = victoryInterpolator(this.state.data, data);
       /* reset step to zero */
       this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
     } else if (this.props.onEnd) {

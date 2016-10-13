@@ -5,16 +5,29 @@ export default class Line extends React.Component {
   static propTypes = {
     index: PropTypes.number,
     datum: PropTypes.any,
+    data: PropTypes.array,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
     y2: PropTypes.number,
     style: PropTypes.object,
-    events: PropTypes.object
+    events: PropTypes.object,
+    role: PropTypes.string,
+    shapeRendering: PropTypes.string
   };
 
   renderAxisLine(props, style, events) {
-    return <line {...props} style={style} {...events} vectorEffect="non-scaling-stroke"/>;
+    const { role, shapeRendering } = this.props;
+    return (
+      <line
+        {...props}
+        style={style}
+        role={role}
+        shapeRendering={shapeRendering || "auto"}
+        vectorEffect="non-scaling-stroke"
+        {...events}
+      />
+    );
   }
 
   render() {

@@ -8,6 +8,7 @@ export default class Area extends React.Component {
     events: PropTypes.object,
     groupComponent: PropTypes.element,
     interpolation: PropTypes.string,
+    shapeRendering: PropTypes.string,
     role: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object
@@ -43,12 +44,13 @@ export default class Area extends React.Component {
   renderArea(path, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
-    const { role } = this.props;
+    const { role, shapeRendering } = this.props;
     return (
       <path
         key="area"
         style={areaStyle}
-        role={role}
+        shapeRendering={shapeRendering || "auto"}
+        role={role || "presentation"}
         d={path}
         {...events}
       />
@@ -59,13 +61,14 @@ export default class Area extends React.Component {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
-    const { role } = this.props;
+    const { role, shapeRendering } = this.props;
     const lineStyle = assign({}, style, {fill: "none"});
     return (
       <path
         key="area-stroke"
+        shapeRendering={shapeRendering || "auto"}
         style={lineStyle}
-        role={role}
+        role={role || "presentation"}
         d={path}
         {...events}
       />
