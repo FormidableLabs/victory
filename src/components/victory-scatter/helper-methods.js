@@ -71,7 +71,7 @@ export default {
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
-      "x", "y", "z", "size", "symbol", "name", "label"
+      "x", "y", "z", "size", "symbol", "name", "label", "eventKey"
     ]);
     const baseDataStyle = defaults({}, stylesFromData, style);
     return Helpers.evaluateStyle(baseDataStyle, datum);

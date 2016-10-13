@@ -174,8 +174,8 @@ class VictoryErrorBar extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "domain", "height", "padding", "samples",
-        "style", "width", "x", "y", "errorX", "errorY", "borderWidth"
+        "data", "domain", "height", "padding", "samples", "borderWidth",
+        "style", "width", "x", "y"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

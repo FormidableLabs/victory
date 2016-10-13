@@ -1,4 +1,4 @@
-import { assign, defaults, isDate } from "lodash";
+import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
@@ -162,9 +162,9 @@ export default class VictoryStack extends React.Component {
     return datasets[index].map((datum) => {
       const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
       return assign({}, datum, {
-        y0: isDate(datum.y) ? yOffset && new Date(yOffset) || datum.y : yOffset,
-        y1: isDate(datum.y) ? new Date(+datum.y + +yOffset) : datum.y + yOffset,
-        x1: isDate(datum.x) ? new Date(+datum.x + +xOffset) : datum.x + xOffset
+        y0: datum.y instanceof Date ? yOffset && new Date(yOffset) || datum.y : yOffset,
+        y1: datum.y instanceof Date ? new Date(+datum.y + +yOffset) : datum.y + yOffset,
+        x1: datum.x instanceof Date ? new Date(+datum.x + +xOffset) : datum.x + xOffset
       });
     });
   }
