@@ -1,5 +1,19 @@
 # VictoryChart Changelog
 
+## 13.0.0 (2016-10-13)
+
+- Upgrades all d3 packages
+- Greater consistency of props for props passed to primitive components
+- Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
+- Adds `VictoryClipContainer` which renders children in a group container with a `clipPath` if `clipPath` props exist
+- `VictoryArea` and `VictoryLine` use `VictoryClipContainer` as their `groupComponent`
+- Removes `clipPath` properties from `VictoryLine` and `VictoryArea`
+- Extracts event logic into a new inverted inheritance higher order component `addEvents` which is used by all chart components
+- Moves `Data`, `Domain`, and `Scale` helpers from `victory-chart` to `victory-core`
+- Fixes date related domain bugs
+- Fixes stacking for time scale data
+- Supports separate theming for x and y axes
+
 ## 12.0.1 (2016-09-15)
 
 - Fixes ordering in stacked and grouped data
