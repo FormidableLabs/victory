@@ -4608,7 +4608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	{},this.props,{dy:dy,dx:dx,datum:datum,lineHeight:lineHeight,textAnchor:textAnchor,style:style},events);
 	
 	return this.renderElements(labelProps,content);
-	}}]);return VictoryLabel;}(_react2.default.Component);VictoryLabel.displayName="VictoryLabel";VictoryLabel.propTypes={angle:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number]),capHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),datum:_react.PropTypes.any,data:_react.PropTypes.array,index:_react.PropTypes.number,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),lineHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),style:_react.PropTypes.object,textAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end","inherit"]),_react.PropTypes.func]),verticalAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end"]),_react.PropTypes.func]),transform:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.object,_react.PropTypes.func]),x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func]),dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func])};VictoryLabel.defaultProps={capHeight:0.71,lineHeight:1};exports.default=VictoryLabel;
+	}}]);return VictoryLabel;}(_react2.default.Component);VictoryLabel.displayName="VictoryLabel";VictoryLabel.propTypes={angle:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number]),capHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),datum:_react.PropTypes.any,data:_react.PropTypes.array,index:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string]),events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),lineHeight:_react.PropTypes.oneOfType([_react.PropTypes.string,_index.PropTypes.nonNegative,_react.PropTypes.func]),style:_react.PropTypes.object,textAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end","inherit"]),_react.PropTypes.func]),verticalAnchor:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["start","middle","end"]),_react.PropTypes.func]),transform:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.object,_react.PropTypes.func]),x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func]),dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string,_react.PropTypes.func])};VictoryLabel.defaultProps={capHeight:0.71,lineHeight:1};exports.default=VictoryLabel;
 
 /***/ },
 /* 90 */
@@ -7206,7 +7206,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	x:_helpers2.default.createAccessor(props.x!==undefined?props.x:"x"),
 	y:_helpers2.default.createAccessor(props.y!==undefined?props.y:"y")};
 	
-	return this.cleanData(dataset,props).map(function(datum,index){
+	var data=dataset.map(function(datum,index){
 	var evaluatedX=accessor.x(datum);
 	var evaluatedY=accessor.y(datum);
 	var x=evaluatedX!==undefined?evaluatedX:index;
@@ -7220,6 +7220,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	typeof y==="string"?{y:stringMap.y[y],yName:y}:{});
 	
 	});
+	return this.cleanData(data,props);
 	},
 	
 	
@@ -7235,15 +7236,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	x:_scale2.default.getScaleType(props,"x"),
 	y:_scale2.default.getScaleType(props,"y")};
 	
-	var accessor={
-	x:_helpers2.default.createAccessor(props.x),
-	y:_helpers2.default.createAccessor(props.y)};
-	
 	if(scaleType.x!=="log"&&scaleType.y!=="log"){
 	return dataset;
 	}
 	var rules=function rules(datum,axis){
-	return scaleType[axis]==="log"?accessor[axis](datum)!==0:true;
+	return scaleType[axis]==="log"?datum[axis]!==0:true;
 	};
 	return dataset.filter(function(datum){
 	return rules(datum,"x")&&rules(datum,"y");
