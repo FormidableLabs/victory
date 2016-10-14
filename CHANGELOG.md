@@ -17,7 +17,7 @@ VictoryCore Changelog
 
 ## 8.0.0 (2016-10-06)
 
-- Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
+- Adds `VictoryPortal` which renders a single child in a top level portal container if it exists
 - Adds `VictoryGroupContainer` which renders children in a group container with a `clipPath` if clipPath props exist
 - Removes `clipPath` properties from `Curve` and `Area` primitives
 - `VictoryTransition` only passes `clipPath` props to continuous children (_i.e._ `VictoryLine`, `VictoryArea`)
