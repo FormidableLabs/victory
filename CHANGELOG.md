@@ -2,6 +2,7 @@
 
 ## 0.12.1 (2016-10-13)
 
+- Removes support for `children` for VictoryLabel. Use `text` instead
 - Upgrades all d3 packages
 - Greater consistency of props for props passed to primitive components
 - Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
