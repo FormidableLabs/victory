@@ -1,6 +1,6 @@
 # Victory Changelog
 
-## 0.12.1 (2016-10-13)
+## 0.13.0 (2016-10-13)
 
 - Removes support for `children` for VictoryLabel. Use `text` instead
 - Upgrades all d3 packages
