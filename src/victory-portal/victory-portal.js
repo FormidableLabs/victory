@@ -53,7 +53,7 @@ export default class VictoryPortal extends React.Component {
     const child = children && React.cloneElement(
       children, defaults({}, childProps, omit(this.props, "children"))
     );
-    this.renderPortal(child);
+    return this.renderPortal(child);
   }
 }
 
