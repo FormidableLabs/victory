@@ -174,14 +174,12 @@ function getChildClipPathToLoad(animate, child, data, cb) { // eslint-disable-li
 }
 
 function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
-  let clipWidth;
-
   if (exitingNodes) {
     animate = assign({}, animate, { onEnd: cb });
     const beforeClipPathWidth = animate.onExit && animate.onExit.beforeClipPathWidth;
 
     if (beforeClipPathWidth) {
-      clipWidth = beforeClipPathWidth(data, child, exitingNodes);
+      const clipWidth = beforeClipPathWidth(data, child, exitingNodes);
       return { animate, clipWidth };
     }
   }
@@ -189,10 +187,11 @@ function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // esl
   return { animate };
 }
 
-function getChildPropsOnExit(animate, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
+function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
   // Whether or not _this_ child has exiting nodes, we want the exit-
   // transition for all children to have the same duration, delay, etc.
   const onExit = animate && animate.onExit;
+  const beforeClipPathWidth = animate.onExit && animate.onExit.beforeClipPathWidth;
   animate = assign({}, animate, onExit);
 
   if (exitingNodes) {
@@ -205,6 +204,11 @@ function getChildPropsOnExit(animate, data, exitingNodes, cb) { // eslint-disabl
       const key = (datum.key || idx).toString();
       return exitingNodes[key] ? assign({}, datum, before(datum)) : datum;
     });
+
+    if (beforeClipPathWidth) {
+      const clipWidth = beforeClipPathWidth(data, child, exitingNodes);
+      return { animate, data, clipWidth};
+    }
   }
 
   return { animate, data };
@@ -325,13 +329,13 @@ export function getTransitionPropsFactory(props, state, setState) {
   };
 
   const onExit = (nodes, child, data, animate) => { // eslint-disable-line max-params
-    if (!nodesDoneClipPathExit) {
+    if (nodesDoneClipPathExit === false) {
       return getChildClipPathToExit(animate, child, data, nodes, () => {
-        setState({ nodesDoneClipPathExit: true });
+        setState({ nodesWillExit: false, nodesDoneClipPathExit: true });
       });
     }
 
-    return getChildPropsOnExit(animate, data, nodes, () => {
+    return getChildPropsOnExit(animate, child, data, nodes, () => {
       setState({ nodesWillExit: false, animating: false });
     });
   };
