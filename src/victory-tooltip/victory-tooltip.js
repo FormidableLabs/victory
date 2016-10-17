@@ -75,7 +75,7 @@ export default class VictoryTooltip extends React.Component {
     labelComponent: PropTypes.element,
     flyoutComponent: PropTypes.element,
     groupComponent: PropTypes.element,
-    index: PropTypes.number,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     renderInPortal: PropTypes.bool
   };
 
