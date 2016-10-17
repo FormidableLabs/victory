@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions, Collection } from "../victory-util/index";
-import { assign, defaults, isFunction, pick, filter, identity, isEqual } from "lodash";
+import { assign, defaults, isFunction, pick, identity, isEqual } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -98,7 +98,8 @@ export default class VictoryTransition extends React.Component {
     if (!animate) {
       return {};
     } else if (animate.parentState) {
-      const oldProps = animate.parentState.nodesWillExit ? props : null;
+      const state = animate.parentState;
+      const oldProps = state.nodesWillExit && !state.nodesDoneClipPathExit ? props : null;
       return {oldProps};
     } else {
       const oldChildren = React.Children.toArray(props.children);
@@ -123,7 +124,7 @@ export default class VictoryTransition extends React.Component {
         nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
         nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
         animating: animating || this.state.animating,
-        oldProps: nodesWillExit ? props : null
+        oldProps: nodesWillExit && !nodesDoneClipPathExit ? props : null
       };
       return this.continuous ? assign(
         {
@@ -159,23 +160,8 @@ export default class VictoryTransition extends React.Component {
     }
   }
 
-  getClipPathWhitelist(transitionProps) {
-    const clipPathWhitelist = ["clipWidth", "clipHeight", "translateX"];
-
-    if ((this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit)
-      || (transitionProps.animate
-        && transitionProps.animate.parentState
-        && transitionProps.animate.parentState.nodesDoneClipPathExit
-        && transitionProps.animate.parentState.nodesWillExit)) {
-      return filter(clipPathWhitelist, (list) => {
-        return list !== "clipWidth";
-      });
-    }
-    return clipPathWhitelist;
-  }
-
   render() {
-    const props = this.state && this.state.nodesWillExit ?
+    const props = this.state && this.state.nodesWillExit && !this.state.nodesDoneClipPathExit ?
       this.state.oldProps : this.props;
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
@@ -196,7 +182,7 @@ export default class VictoryTransition extends React.Component {
     );
     const animationWhitelist = props.animationWhitelist || [];
     const whitelist = this.continuous ?
-      animationWhitelist.concat(this.getClipPathWhitelist(transitionProps)) : animationWhitelist;
+      animationWhitelist.concat(["clipWidth", "clipHeight", "translateX"]) : animationWhitelist;
     const propsToAnimate = whitelist.length ? pick(combinedProps, whitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
