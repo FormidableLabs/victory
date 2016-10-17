@@ -176,9 +176,7 @@ class VictoryLine extends React.Component {
     const styleObject = theme && theme.line && theme.line.style ? theme.line.style : {};
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-    const group = this.renderGroup(
-      this.renderData(props), props, baseStyles.parent
-    );
+    const group = this.renderGroup(this.renderData(props), baseStyles.parent);
 
     return standalone ? this.renderContainer(props, group) : group;
   }
