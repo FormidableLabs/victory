@@ -33,7 +33,8 @@ export default {
     }
     if (props.animate.parentState) {
       const nodesWillExit = props.animate.parentState.nodesWillExit;
-      const oldProps = nodesWillExit ? props : null;
+      const nodesDoneClipPathExit = props.animate.parentState.nodesDoneClipPathExit;
+      const oldProps = nodesWillExit && !nodesDoneClipPathExit ? props : null;
       this.setState(defaults({oldProps}, props.animate.parentState));
     } else {
       const oldChildren = React.Children.toArray(props.children);
@@ -61,7 +62,7 @@ export default {
         nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
         nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
         nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
-        oldProps: nodesWillExit ? props : null
+        oldProps: nodesWillExit && !nodesDoneClipPathExit ? props : null
       });
     }
   },
