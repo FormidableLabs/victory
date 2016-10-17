@@ -331,7 +331,7 @@ export function getTransitionPropsFactory(props, state, setState) {
   const onExit = (nodes, child, data, animate) => { // eslint-disable-line max-params
     if (nodesDoneClipPathExit === false) {
       return getChildClipPathToExit(animate, child, data, nodes, () => {
-        setState({ nodesWillExit: false, nodesDoneClipPathExit: true });
+        setState({ nodesDoneClipPathExit: true });
       });
     }
 
