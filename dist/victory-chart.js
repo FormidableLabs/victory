@@ -3637,7 +3637,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 55 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _omit2=__webpack_require__(56);var _omit3=_interopRequireDefault(_omit2);var _assign2=__webpack_require__(90);var _assign3=_interopRequireDefault(_assign2);var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(44);var _react2=_interopRequireDefault(_react);
+	Object.defineProperty(exports,"__esModule",{value:true});var _omit2=__webpack_require__(56);var _omit3=_interopRequireDefault(_omit2);var _assign2=__webpack_require__(90);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(44);var _react2=_interopRequireDefault(_react);
 	
 	var _portal=__webpack_require__(93);var _portal2=_interopRequireDefault(_portal);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
@@ -3685,30 +3685,32 @@ return /******/ (function(modules) { // webpackBootstrap
 	portalRegister:this.portalRegister,
 	portalDeregister:this.portalDeregister};
 	
-	}},{key:"render",value:function render()
-	
-	{var _props=
+	}},{key:"renderContainer",value:function renderContainer(
 	
 	
-	this.props;var style=_props.style;var title=_props.title;var desc=_props.desc;var width=_props.width;var height=_props.height;var children=_props.children;var responsive=_props.responsive;var portalComponent=_props.portalComponent;var events=_props.events;
-	var svgProps=(0,_assign3.default)(
-	{
-	"aria-labelledby":"title desc",role:"img",
-	style:responsive?style:(0,_omit3.default)(style,["height","width"]),
-	viewBox:responsive?"0 0 "+width+" "+height:undefined,
-	width:responsive?undefined:width,
-	height:responsive?undefined:height},
-	
-	events);
-	
+	props,svgProps,style){var
+	title=props.title;var desc=props.desc;var children=props.children;var portalComponent=props.portalComponent;
 	return(
-	_react2.default.createElement("svg",svgProps,
+	_react2.default.createElement("svg",_extends({},svgProps,{style:style}),
 	_react2.default.createElement("title",{id:"title"},title),
 	_react2.default.createElement("desc",{id:"desc"},desc),
 	children,
 	_react2.default.cloneElement(portalComponent,{ref:this.savePortalRef})));
 	
 	
+	}},{key:"render",value:function render()
+	
+	{var _props=
+	this.props;var width=_props.width;var height=_props.height;var responsive=_props.responsive;var events=_props.events;
+	var style=responsive?this.props.style:(0,_omit3.default)(this.props.style,["height","width"]);
+	var svgProps=(0,_assign3.default)(
+	{
+	"aria-labelledby":"title desc",role:"img",width:width,height:height,
+	viewBox:responsive?"0 0 "+width+" "+height:undefined},
+	
+	events);
+	
+	return this.renderContainer(this.props,svgProps,style);
 	}}]);return VictoryContainer;}(_react2.default.Component);VictoryContainer.displayName="VictoryContainer";VictoryContainer.propTypes={style:_react.PropTypes.object,height:_react.PropTypes.number,width:_react.PropTypes.number,events:_react.PropTypes.object,children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),title:_react.PropTypes.string,desc:_react.PropTypes.string,portalComponent:_react.PropTypes.element,responsive:_react.PropTypes.bool};VictoryContainer.defaultProps={title:"Victory Chart",desc:"",portalComponent:_react2.default.createElement(_portal2.default,null),responsive:true};VictoryContainer.childContextTypes={portalUpdate:_react2.default.PropTypes.func,portalRegister:_react2.default.PropTypes.func,portalDeregister:_react2.default.PropTypes.func};exports.default=VictoryContainer;
 
 /***/ },
@@ -4834,6 +4836,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	delete this.map[key];
 	}},{key:"render",value:function render()
 	
+	
 	{var _this2=this;
 	return _react2.default.cloneElement(
 	this.props.groupComponent,
@@ -4996,6 +4999,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return defaultStyles.fontSize;
 	}},{key:"renderElements",value:function renderElements(
 	
+	
 	props,content){
 	var transform=this.getTransform(props);
 	var textProps=(0,_pick3.default)(props,["dx","dy","x","y","style","textAnchor"]);
@@ -5008,7 +5012,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	content.map(function(line,i){
 	var dy=i?props.lineHeight*fontSize:undefined;
 	return(
-	_react2.default.createElement("tspan",{key:i,x:props.x,dy:dy},
+	_react2.default.createElement("tspan",{key:i,x:props.x,dy:dy,dx:props.dx},
 	line));
 	
 	
@@ -13079,7 +13083,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	getTransitionPropsFactory=getTransitionPropsFactory;var _react=__webpack_require__(44);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function getDatumKey(datum,idx){return(datum.key||idx).toString();}function getKeyedData(data){return data.reduce(function(keyedData,datum,idx){var key=getDatumKey(datum,idx);keyedData[key]=datum;return keyedData;},{});}function getKeyedDataDifference(a,b){var hasDifference=false;var difference=Object.keys(a).reduce(function(_difference,key){if(!(key in b)){hasDifference=true;_difference[key]=true;}return _difference;},{});return hasDifference&&difference;}function getNodeTransitions(oldData,nextData){var oldDataKeyed=oldData&&getKeyedData(oldData);var nextDataKeyed=nextData&&getKeyedData(nextData);return{entering:oldDataKeyed&&getKeyedDataDifference(nextDataKeyed,oldDataKeyed),exiting:nextDataKeyed&&getKeyedDataDifference(oldDataKeyed,nextDataKeyed)};}function getChildData(child){if(child.type&&child.type.getData){return child.type.getData(child.props);}return child.props&&child.props.data||false;}function getInitialTransitionState(oldChildren,nextChildren){var nodesWillExit=false;var nodesWillEnter=false;var getTransition=function getTransition(oldChild,newChild){if(!newChild||oldChild.type!==newChild.type){return{};}var _ref=getNodeTransitions(getChildData(oldChild),getChildData(newChild))||{};var entering=_ref.entering;var exiting=_ref.exiting;nodesWillExit=nodesWillExit||!!exiting;nodesWillEnter=nodesWillEnter||!!entering;return{entering:entering||false,exiting:exiting||false};};var getTransitionsFromChildren=function getTransitionsFromChildren(old,next){return old.map(function(child,idx){if(child&&child.props&&child.props.children){return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children),_react2.default.Children.toArray(next[idx].props.children));}return getTransition(child,next[idx]);});};var childrenTransitions=getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren),_react2.default.Children.toArray(nextChildren));return{nodesWillExit:nodesWillExit,nodesWillEnter:nodesWillEnter,childrenTransitions:childrenTransitions,nodesShouldEnter:false,nodesShouldLoad:false,nodesDoneLoad:false,nodesDoneClipPathLoad:false,nodesDoneClipPathEnter:false,nodesDoneClipPathExit:false,animating:nodesWillExit||nodesWillEnter||childrenTransitions.length>0};}function getInitialChildProps(animate,data){var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;return{data:data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));})};}function getChildBeforeLoad(animate,child,data,cb){var before=animate.onLoad&&animate.onLoad.before?animate.onLoad.before:_identity3.default;var beforeClipPathWidth=animate.onLoad&&animate.onLoad.beforeClipPathWidth;data=data.map(function(datum){return(0,_assign3.default)({},datum,before(datum));});if(beforeClipPathWidth){var _beforeClipPathWidth=beforeClipPathWidth(data,child,animate);var clipWidth=_beforeClipPathWidth.clipWidth;var translateX=_beforeClipPathWidth.translateX;return{animate:animate,data:data,clipWidth:clipWidth,translateX:translateX,cb:cb};}return{animate:animate,data:data,cb:cb};}function getChildOnLoad(animate,data,cb){animate=(0,_assign3.default)({},animate,{onEnd:cb});var after=animate.onLoad&&animate.onLoad.after?animate.onLoad.after:_identity3.default;data=data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));});return{animate:animate,data:data};}function getChildClipPathToLoad(animate,child,data,cb){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onLoad&&animate.onLoad.afterClipPathWidth;if(afterClipPathWidth){var _afterClipPathWidth=afterClipPathWidth(data,child,animate);var clipWidth=_afterClipPathWidth.clipWidth;var translateX=_afterClipPathWidth.translateX;return{animate:animate,clipWidth:clipWidth,translateX:translateX};}return{animate:animate};}function getChildClipPathToExit(animate,child,data,exitingNodes,cb){var clipWidth=void 0;if(exitingNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var beforeClipPathWidth=animate.onExit&&animate.onExit.beforeClipPathWidth;if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,exitingNodes);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsOnExit(animate,data,exitingNodes,cb){var onExit=animate&&animate.onExit;animate=(0,_assign3.default)({},animate,onExit);if(exitingNodes){(function(){animate.onEnd=cb;var before=animate.onExit&&animate.onExit.before?animate.onExit.before:_identity3.default;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return exitingNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});})();}return{animate:animate,data:data};}function getChildClipPathToEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onEnter&&animate.onEnter.afterClipPathWidth;if(afterClipPathWidth){clipWidth=afterClipPathWidth(data,child);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsBeforeEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){var _ret2=function(){animate=(0,_assign3.default)({},animate,{onEnd:cb});var before=animate.onEnter&&animate.onEnter.before?animate.onEnter.before:_identity3.default;var beforeClipPathWidth=animate.onEnter&&animate.onEnter.beforeClipPathWidth;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return enteringNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,enteringNodes);return{v:{animate:animate,data:data,clipWidth:clipWidth}};}}();if(typeof _ret2==="object")return _ret2.v;}return{animate:animate,data:data};}function getChildPropsOnEnter(animate,data,enteringNodes,cb){var onEnter=animate&&animate.onEnter;animate=(0,_assign3.default)({},animate,onEnter);if(enteringNodes){(function(){animate.onEnd=cb;var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;data=data.map(function(datum,idx){var key=getDatumKey(datum,idx);return enteringNodes[key]?(0,_assign3.default)({},datum,after(datum)):datum;});})();}return{animate:animate,data:data};}function getTransitionPropsFactory(props,state,setState){
+	
+	
+	
+	
+	getTransitionPropsFactory=getTransitionPropsFactory;var _react=__webpack_require__(44);var _react2=_interopRequireDefault(_react);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function getDatumKey(datum,idx){return(datum.key||idx).toString();}function getKeyedData(data){return data.reduce(function(keyedData,datum,idx){var key=getDatumKey(datum,idx);keyedData[key]=datum;return keyedData;},{});}function getKeyedDataDifference(a,b){var hasDifference=false;var difference=Object.keys(a).reduce(function(_difference,key){if(!(key in b)){hasDifference=true;_difference[key]=true;}return _difference;},{});return hasDifference&&difference;}function getNodeTransitions(oldData,nextData){var oldDataKeyed=oldData&&getKeyedData(oldData);var nextDataKeyed=nextData&&getKeyedData(nextData);return{entering:oldDataKeyed&&getKeyedDataDifference(nextDataKeyed,oldDataKeyed),exiting:nextDataKeyed&&getKeyedDataDifference(oldDataKeyed,nextDataKeyed)};}function getChildData(child){if(child.type&&child.type.getData){return child.type.getData(child.props);}return child.props&&child.props.data||false;}function getInitialTransitionState(oldChildren,nextChildren){var nodesWillExit=false;var nodesWillEnter=false;var getTransition=function getTransition(oldChild,newChild){if(!newChild||oldChild.type!==newChild.type){return{};}var _ref=getNodeTransitions(getChildData(oldChild),getChildData(newChild))||{};var entering=_ref.entering;var exiting=_ref.exiting;nodesWillExit=nodesWillExit||!!exiting;nodesWillEnter=nodesWillEnter||!!entering;return{entering:entering||false,exiting:exiting||false};};var getTransitionsFromChildren=function getTransitionsFromChildren(old,next){return old.map(function(child,idx){if(child&&child.props&&child.props.children){return getTransitionsFromChildren(_react2.default.Children.toArray(old[idx].props.children),_react2.default.Children.toArray(next[idx].props.children));}return getTransition(child,next[idx]);});};var childrenTransitions=getTransitionsFromChildren(_react2.default.Children.toArray(oldChildren),_react2.default.Children.toArray(nextChildren));return{nodesWillExit:nodesWillExit,nodesWillEnter:nodesWillEnter,childrenTransitions:childrenTransitions,nodesShouldEnter:false,nodesShouldLoad:false,nodesDoneLoad:false,nodesDoneClipPathLoad:false,nodesDoneClipPathEnter:false,nodesDoneClipPathExit:false,animating:nodesWillExit||nodesWillEnter||childrenTransitions.length>0};}function getInitialChildProps(animate,data){var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;return{data:data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));})};}function getChildBeforeLoad(animate,child,data,cb){var before=animate.onLoad&&animate.onLoad.before?animate.onLoad.before:_identity3.default;var beforeClipPathWidth=animate.onLoad&&animate.onLoad.beforeClipPathWidth;data=data.map(function(datum){return(0,_assign3.default)({},datum,before(datum));});if(beforeClipPathWidth){var _beforeClipPathWidth=beforeClipPathWidth(data,child,animate);var clipWidth=_beforeClipPathWidth.clipWidth;var translateX=_beforeClipPathWidth.translateX;return{animate:animate,data:data,clipWidth:clipWidth,translateX:translateX,cb:cb};}return{animate:animate,data:data,cb:cb};}function getChildOnLoad(animate,data,cb){animate=(0,_assign3.default)({},animate,{onEnd:cb});var after=animate.onLoad&&animate.onLoad.after?animate.onLoad.after:_identity3.default;data=data.map(function(datum){return(0,_assign3.default)({},datum,after(datum));});return{animate:animate,data:data};}function getChildClipPathToLoad(animate,child,data,cb){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onLoad&&animate.onLoad.afterClipPathWidth;if(afterClipPathWidth){var _afterClipPathWidth=afterClipPathWidth(data,child,animate);var clipWidth=_afterClipPathWidth.clipWidth;var translateX=_afterClipPathWidth.translateX;return{animate:animate,clipWidth:clipWidth,translateX:translateX};}return{animate:animate};}function getChildClipPathToExit(animate,child,data,exitingNodes,cb){if(exitingNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var beforeClipPathWidth=animate.onExit&&animate.onExit.beforeClipPathWidth;if(beforeClipPathWidth){var clipWidth=beforeClipPathWidth(data,child,exitingNodes);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsOnExit(animate,child,data,exitingNodes,cb){var onExit=animate&&animate.onExit;var beforeClipPathWidth=animate.onExit&&animate.onExit.beforeClipPathWidth;animate=(0,_assign3.default)({},animate,onExit);if(exitingNodes){var _ret=function(){animate.onEnd=cb;var before=animate.onExit&&animate.onExit.before?animate.onExit.before:_identity3.default;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return exitingNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});if(beforeClipPathWidth){var clipWidth=beforeClipPathWidth(data,child,exitingNodes);return{v:{animate:animate,data:data,clipWidth:clipWidth}};}}();if(typeof _ret==="object")return _ret.v;}return{animate:animate,data:data};}function getChildClipPathToEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){animate=(0,_assign3.default)({},animate,{onEnd:cb});var afterClipPathWidth=animate.onEnter&&animate.onEnter.afterClipPathWidth;if(afterClipPathWidth){clipWidth=afterClipPathWidth(data,child);return{animate:animate,clipWidth:clipWidth};}}return{animate:animate};}function getChildPropsBeforeEnter(animate,child,data,enteringNodes,cb){var clipWidth=void 0;if(enteringNodes){var _ret2=function(){animate=(0,_assign3.default)({},animate,{onEnd:cb});var before=animate.onEnter&&animate.onEnter.before?animate.onEnter.before:_identity3.default;var beforeClipPathWidth=animate.onEnter&&animate.onEnter.beforeClipPathWidth;data=data.map(function(datum,idx){var key=(datum.key||idx).toString();return enteringNodes[key]?(0,_assign3.default)({},datum,before(datum)):datum;});if(beforeClipPathWidth){clipWidth=beforeClipPathWidth(data,child,enteringNodes);return{v:{animate:animate,data:data,clipWidth:clipWidth}};}}();if(typeof _ret2==="object")return _ret2.v;}return{animate:animate,data:data};}function getChildPropsOnEnter(animate,data,enteringNodes,cb){var onEnter=animate&&animate.onEnter;animate=(0,_assign3.default)({},animate,onEnter);if(enteringNodes){(function(){animate.onEnd=cb;var after=animate.onEnter&&animate.onEnter.after?animate.onEnter.after:_identity3.default;data=data.map(function(datum,idx){var key=getDatumKey(datum,idx);return enteringNodes[key]?(0,_assign3.default)({},datum,after(datum)):datum;});})();}return{animate:animate,data:data};}function getTransitionPropsFactory(props,state,setState){
 	var nodesWillExit=state&&state.nodesWillExit;
 	var nodesWillEnter=state&&state.nodesWillEnter;
 	var nodesShouldEnter=state&&state.nodesShouldEnter;
@@ -13114,13 +13122,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 	
 	var onExit=function onExit(nodes,child,data,animate){
-	if(!nodesDoneClipPathExit){
+	if(nodesDoneClipPathExit===false){
 	return getChildClipPathToExit(animate,child,data,nodes,function(){
 	setState({nodesDoneClipPathExit:true});
 	});
 	}
 	
-	return getChildPropsOnExit(animate,data,nodes,function(){
+	return getChildPropsOnExit(animate,child,data,nodes,function(){
 	setState({nodesWillExit:false,animating:false});
 	});
 	};
@@ -13213,7 +13221,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
-	Object.defineProperty(exports,"__esModule",{value:true});var _isEqual2=__webpack_require__(201);var _isEqual3=_interopRequireDefault(_isEqual2);var _identity2=__webpack_require__(14);var _identity3=_interopRequireDefault(_identity2);var _filter2=__webpack_require__(194);var _filter3=_interopRequireDefault(_filter2);var _pick2=__webpack_require__(95);var _pick3=_interopRequireDefault(_pick2);var _isFunction2=__webpack_require__(43);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(90);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(44);var _react2=_interopRequireDefault(_react);
+	Object.defineProperty(exports,"__esModule",{value:true});var _isEqual2=__webpack_require__(201);var _isEqual3=_interopRequireDefault(_isEqual2);var _identity2=__webpack_require__(14);var _identity3=_interopRequireDefault(_identity2);var _pick2=__webpack_require__(95);var _pick3=_interopRequireDefault(_pick2);var _isFunction2=__webpack_require__(43);var _isFunction3=_interopRequireDefault(_isFunction2);var _defaults2=__webpack_require__(2);var _defaults3=_interopRequireDefault(_defaults2);var _assign2=__webpack_require__(90);var _assign3=_interopRequireDefault(_assign2);var _extends=Object.assign||function(target){for(var i=1;i<arguments.length;i++){var source=arguments[i];for(var key in source){if(Object.prototype.hasOwnProperty.call(source,key)){target[key]=source[key];}}}return target;};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if("value"in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor);}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor;};}();var _react=__webpack_require__(44);var _react2=_interopRequireDefault(_react);
 	var _victoryAnimation=__webpack_require__(46);var _victoryAnimation2=_interopRequireDefault(_victoryAnimation);
 	var _index=__webpack_require__(112);function _interopRequireDefault(obj){return obj&&obj.__esModule?obj:{default:obj};}function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError("Cannot call a class as a function");}}function _possibleConstructorReturn(self,call){if(!self){throw new ReferenceError("this hasn't been initialised - super() hasn't been called");}return call&&(typeof call==="object"||typeof call==="function")?call:self;}function _inherits(subClass,superClass){if(typeof superClass!=="function"&&superClass!==null){throw new TypeError("Super expression must either be null or a function, not "+typeof superClass);}subClass.prototype=Object.create(superClass&&superClass.prototype,{constructor:{value:subClass,enumerable:false,writable:true,configurable:true}});if(superClass)Object.setPrototypeOf?Object.setPrototypeOf(subClass,superClass):subClass.__proto__=superClass;}var
 	
@@ -13313,7 +13321,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(!animate){
 	return{};
 	}else if(animate.parentState){
-	var oldProps=animate.parentState.nodesWillExit?props:null;
+	var state=animate.parentState;
+	var oldProps=state.nodesWillExit&&!state.nodesDoneClipPathExit?props:null;
 	return{oldProps:oldProps};
 	}else{
 	var oldChildren=_react2.default.Children.toArray(props.children);
@@ -13338,7 +13347,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	nodesShouldLoad:nodesShouldLoad||this.state.nodesShouldLoad,
 	nodesDoneLoad:nodesDoneLoad||this.state.nodesDoneLoad,
 	animating:animating||this.state.animating,
-	oldProps:nodesWillExit?props:null};
+	oldProps:nodesWillExit&&!nodesDoneClipPathExit?props:null};
 	
 	return this.continuous?(0,_assign3.default)(
 	{
@@ -13372,25 +13381,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	return childDomains.length===0?
 	[0,1]:[_index.Collection.getMinValue(childDomains),_index.Collection.getMaxValue(childDomains)];
 	}
-	}},{key:"getClipPathWhitelist",value:function getClipPathWhitelist(
-	
-	transitionProps){
-	var clipPathWhitelist=["clipWidth","clipHeight","translateX"];
-	
-	if(this.state&&this.state.nodesDoneClipPathExit&&this.state.nodesWillExit||
-	transitionProps.animate&&
-	transitionProps.animate.parentState&&
-	transitionProps.animate.parentState.nodesDoneClipPathExit&&
-	transitionProps.animate.parentState.nodesWillExit){
-	return(0,_filter3.default)(clipPathWhitelist,function(list){
-	return list!=="clipWidth";
-	});
-	}
-	return clipPathWhitelist;
 	}},{key:"render",value:function render()
 	
 	{var _this2=this;
-	var props=this.state&&this.state.nodesWillExit?
+	var props=this.state&&this.state.nodesWillExit&&!this.state.nodesDoneClipPathExit?
 	this.state.oldProps:this.props;
 	var getTransitionProps=this.props.animate&&this.props.animate.getTransitions?
 	this.props.animate.getTransitions:
@@ -13411,7 +13405,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var animationWhitelist=props.animationWhitelist||[];
 	var whitelist=this.continuous?
-	animationWhitelist.concat(this.getClipPathWhitelist(transitionProps)):animationWhitelist;
+	animationWhitelist.concat(["clipWidth","clipHeight","translateX"]):animationWhitelist;
 	var propsToAnimate=whitelist.length?(0,_pick3.default)(combinedProps,whitelist):combinedProps;
 	return(
 	_react2.default.createElement(_victoryAnimation2.default,_extends({},combinedProps.animate,{data:propsToAnimate}),
@@ -14154,8 +14148,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	props,clipComponent,clipId){var
+	
+	props,clipId){var
 	style=props.style;var events=props.events;var transform=props.transform;var children=props.children;
+	var clipComponent=this.renderClipComponent(props,clipId);
 	return(
 	_react2.default.createElement("g",_extends({
 	style:style},
@@ -14170,6 +14166,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	}},{key:"renderGroup",value:function renderGroup(
 	
+	
 	props){var
 	style=props.style;var events=props.events;var transform=props.transform;var children=props.children;
 	return(
@@ -14181,18 +14178,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	children));
 	
 	
+	}},{key:"renderClipComponent",value:function renderClipComponent(
+	
+	
+	props,clipId){var
+	padding=props.padding;var translateX=props.translateX;var clipHeight=props.clipHeight;var clipWidth=props.clipWidth;var clipPathComponent=props.clipPathComponent;
+	return _react2.default.cloneElement(
+	clipPathComponent,
+	{padding:padding,clipId:clipId,translateX:translateX,clipWidth:clipWidth,clipHeight:clipHeight});
+	
 	}},{key:"render",value:function render()
 	
 	{var
 	clipWidth=this.props.clipWidth;
-	if(clipWidth||clipWidth===0){var _props=
-	this.props;var padding=_props.padding;var translateX=_props.translateX;var clipHeight=_props.clipHeight;var clipPathComponent=_props.clipPathComponent;
+	if(clipWidth||clipWidth===0){
 	var clipId=Math.round(Math.random()*10000);
-	var clipComponent=_react2.default.cloneElement(
-	clipPathComponent,
-	{padding:padding,clipId:clipId,translateX:translateX,clipWidth:clipWidth,clipHeight:clipHeight});
-	
-	return this.renderClippedGroup(this.props,clipComponent,clipId);
+	return this.renderClippedGroup(this.props,clipId);
 	}
 	return this.renderGroup(this.props);
 	}}]);return VictoryClipContainer;}(_react2.default.Component);VictoryClipContainer.displayName="VictoryClipContainer";VictoryClipContainer.propTypes={style:_react.PropTypes.object,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),clipHeight:_react.PropTypes.number,clipWidth:_react.PropTypes.number,events:_react.PropTypes.object,children:_react2.default.PropTypes.oneOfType([_react2.default.PropTypes.arrayOf(_react2.default.PropTypes.node),_react2.default.PropTypes.node]),clipPathComponent:_react.PropTypes.element,translateX:_react.PropTypes.number,transform:_react.PropTypes.string};VictoryClipContainer.defaultProps={clipPathComponent:_react2.default.createElement(_index.ClipPath,null)};exports.default=VictoryClipContainer;
@@ -14264,6 +14265,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return lineFunction(props.data);
 	}},{key:"renderArea",value:function renderArea(
 	
+	
 	path,style,events){
 	var areaStroke=style.stroke?"none":style.fill;
 	var areaStyle=(0,_assign3.default)({},style,{stroke:areaStroke});var _props=
@@ -14279,6 +14281,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	}},{key:"renderLine",value:function renderLine(
+	
 	
 	path,style,events){
 	if(!style.stroke||style.stroke==="none"||style.stroke==="transparent"){
@@ -16348,6 +16351,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return style&&style.width?style.width:defaultWidth;
 	}},{key:"renderBar",value:function renderBar(
 	
+	
 	path,style,events){var _props=
 	this.props;var role=_props.role;var shapeRendering=_props.shapeRendering;
 	return(
@@ -16401,9 +16405,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
+	
 	wickProps){
 	return _react2.default.createElement("line",wickProps);
 	}},{key:"renderCandle",value:function renderCandle(
+	
 	
 	candleProps){
 	return _react2.default.createElement("rect",candleProps);
@@ -16447,6 +16453,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	ClipPath=function(_React$Component){_inherits(ClipPath,_React$Component);function ClipPath(){_classCallCheck(this,ClipPath);return _possibleConstructorReturn(this,(ClipPath.__proto__||Object.getPrototypeOf(ClipPath)).apply(this,arguments));}_createClass(ClipPath,[{key:"renderClipPath",value:function renderClipPath(
+	
 	
 	
 	
@@ -16538,6 +16545,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return"curve"+capitalize(interpolation);
 	}},{key:"renderLine",value:function renderLine(
 	
+	
 	path,style,events){var _props=
 	this.props;var role=_props.role;var shapeRendering=_props.shapeRendering;
 	return(
@@ -16576,6 +16584,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	function ErrorBar(props){_classCallCheck(this,ErrorBar);return _possibleConstructorReturn(this,(ErrorBar.__proto__||Object.getPrototypeOf(ErrorBar)).call(this,
 	props));
 	}_createClass(ErrorBar,[{key:"renderLine",value:function renderLine(
+	
 	
 	
 	
@@ -16719,6 +16728,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
+	
 	props,style,events){var _props=
 	this.props;var role=_props.role;var shapeRendering=_props.shapeRendering;
 	return(
@@ -16782,6 +16792,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	return pathFunctions[props.symbol].call(null,props.x,props.y,props.size);
 	}},{key:"renderPoint",value:function renderPoint(
+	
 	
 	path,style,events){var _props=
 	this.props;var role=_props.role;var shapeRendering=_props.shapeRendering;
@@ -16895,6 +16906,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
+	
 	path,style,events){var _props=
 	this.props;var role=_props.role;var shapeRendering=_props.shapeRendering;
 	return(
@@ -16946,6 +16958,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	size+", "+size+" 0 1,0 "+size*2+",0\n      a "+
 	size+", "+size+" 0 1,0 "+-size*2+",0";
 	}},{key:"renderPoint",value:function renderPoint(
+	
 	
 	paths,style,events){
 	var clipId=paths.circle&&"clipPath-"+Math.random();
@@ -17067,6 +17080,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return orientation==="left"||orientation==="right"?
 	this.getHorizontalPath(props):this.getVerticalPath(props);
 	}},{key:"renderFlyout",value:function renderFlyout(
+	
 	
 	path,style,events){var _props=
 	this.props;var role=_props.role;var shapeRendering=_props.shapeRendering;
@@ -17770,18 +17784,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	_react2.default.cloneElement(labelComponent,this.getLabelProps(evaluatedProps,calculatedValues))];
 	
 	return _react2.default.cloneElement(groupComponent,{role:"presentation"},children);
-	}},{key:"renderEmpty",value:function renderEmpty()
-	
-	
-	{
-	return null;
 	}},{key:"render",value:function render()
+	
 	
 	{var _props=
 	this.props;var active=_props.active;var renderInPortal=_props.renderInPortal;
-	var tooltip=active?this.renderTooltip(this.props):this.renderEmpty();
+	var tooltip=active?this.renderTooltip(this.props):null;
 	return renderInPortal?_react2.default.createElement(_victoryPortal2.default,null,tooltip):tooltip;
-	}}]);return VictoryTooltip;}(_react2.default.Component);VictoryTooltip.displayName="VictoryTooltip";VictoryTooltip.propTypes={active:_react.PropTypes.oneOfType([_react.PropTypes.bool,_react.PropTypes.func]),datum:_react.PropTypes.object,data:_react.PropTypes.array,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),style:_react.PropTypes.object,flyoutStyle:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),width:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),height:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),orientation:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["top","bottom","left","right"]),_react.PropTypes.func]),pointerLength:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),pointerWidth:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),cornerRadius:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),horizontal:_react.PropTypes.bool,labelComponent:_react.PropTypes.element,flyoutComponent:_react.PropTypes.element,groupComponent:_react.PropTypes.element,index:_react.PropTypes.number,renderInPortal:_react.PropTypes.bool};VictoryTooltip.defaultProps={active:false,renderInPortal:true,cornerRadius:5,pointerLength:10,pointerWidth:10,labelComponent:_react2.default.createElement(_victoryLabel2.default,null),flyoutComponent:_react2.default.createElement(_index2.Flyout,null),groupComponent:_react2.default.createElement("g",null)};VictoryTooltip.defaultEvents=[{target:"data",eventHandlers:{onMouseOver:function onMouseOver(){return{target:"labels",mutation:function mutation(){return{active:true};}};},onMouseOut:function onMouseOut(){return{target:"labels",mutation:function mutation(){return{active:false};}};}}}];exports.default=VictoryTooltip;
+	}}]);return VictoryTooltip;}(_react2.default.Component);VictoryTooltip.displayName="VictoryTooltip";VictoryTooltip.propTypes={active:_react.PropTypes.oneOfType([_react.PropTypes.bool,_react.PropTypes.func]),datum:_react.PropTypes.object,data:_react.PropTypes.array,events:_react.PropTypes.object,text:_react.PropTypes.oneOfType([_react.PropTypes.string,_react.PropTypes.number,_react.PropTypes.func]),style:_react.PropTypes.object,flyoutStyle:_react.PropTypes.object,x:_react.PropTypes.number,y:_react.PropTypes.number,dx:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),dy:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.func]),width:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),height:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),orientation:_react.PropTypes.oneOfType([_react.PropTypes.oneOf(["top","bottom","left","right"]),_react.PropTypes.func]),pointerLength:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),pointerWidth:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),cornerRadius:_react.PropTypes.oneOfType([_index.PropTypes.nonNegative,_react.PropTypes.func]),horizontal:_react.PropTypes.bool,labelComponent:_react.PropTypes.element,flyoutComponent:_react.PropTypes.element,groupComponent:_react.PropTypes.element,index:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.string]),renderInPortal:_react.PropTypes.bool};VictoryTooltip.defaultProps={active:false,renderInPortal:true,cornerRadius:5,pointerLength:10,pointerWidth:10,labelComponent:_react2.default.createElement(_victoryLabel2.default,null),flyoutComponent:_react2.default.createElement(_index2.Flyout,null),groupComponent:_react2.default.createElement("g",null)};VictoryTooltip.defaultEvents=[{target:"data",eventHandlers:{onMouseOver:function onMouseOver(){return{target:"labels",mutation:function mutation(){return{active:true};}};},onMouseOut:function onMouseOut(){return{target:"labels",mutation:function mutation(){return{active:false};}};}}}];exports.default=VictoryTooltip;
 
 /***/ },
 /* 230 */
@@ -17826,6 +17836,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(this.context&&this.context.portalDeregister){
 	this.context.portalDeregister(this.portalKey);
 	}
+	}},{key:"renderPortal",value:function renderPortal(
+	
+	
+	child){
+	if(this.renderInPlace){
+	return child;
+	}
+	this.element=child;
+	return null;
 	}},{key:"render",value:function render()
 	
 	{var
@@ -17834,11 +17853,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var child=children&&_react2.default.cloneElement(
 	children,(0,_defaults3.default)({},childProps,(0,_omit3.default)(this.props,"children")));
 	
-	if(this.renderInPlace){
-	return child;
-	}
-	this.element=child;
-	return null;
+	return this.renderPortal(child);
 	}}]);return VictoryPortal;}(_react2.default.Component);VictoryPortal.propTypes={children:_react2.default.PropTypes.node};VictoryPortal.contextTypes={portalUpdate:_react2.default.PropTypes.func,portalRegister:_react2.default.PropTypes.func,portalDeregister:_react2.default.PropTypes.func};exports.default=VictoryPortal;
 
 /***/ },
@@ -19795,7 +19810,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	if(props.animate.parentState){
 	var nodesWillExit=props.animate.parentState.nodesWillExit;
-	var oldProps=nodesWillExit?props:null;
+	var nodesDoneClipPathExit=props.animate.parentState.nodesDoneClipPathExit;
+	var oldProps=nodesWillExit&&!nodesDoneClipPathExit?props:null;
 	this.setState((0,_defaults3.default)({oldProps:oldProps},props.animate.parentState));
 	}else{
 	var oldChildren=_react2.default.Children.toArray(props.children);
@@ -19810,20 +19826,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	
-	_victoryCore.Transitions.getInitialTransitionState(oldChildren,nextChildren);var _nodesWillExit=_Transitions$getIniti.nodesWillExit;var nodesWillEnter=_Transitions$getIniti.nodesWillEnter;var childrenTransitions=_Transitions$getIniti.childrenTransitions;var nodesShouldEnter=_Transitions$getIniti.nodesShouldEnter;var nodesShouldLoad=_Transitions$getIniti.nodesShouldLoad;var nodesDoneLoad=_Transitions$getIniti.nodesDoneLoad;var nodesDoneClipPathLoad=_Transitions$getIniti.nodesDoneClipPathLoad;var nodesDoneClipPathEnter=_Transitions$getIniti.nodesDoneClipPathEnter;var nodesDoneClipPathExit=_Transitions$getIniti.nodesDoneClipPathExit;
+	_victoryCore.Transitions.getInitialTransitionState(oldChildren,nextChildren);var _nodesWillExit=_Transitions$getIniti.nodesWillExit;var nodesWillEnter=_Transitions$getIniti.nodesWillEnter;var childrenTransitions=_Transitions$getIniti.childrenTransitions;var nodesShouldEnter=_Transitions$getIniti.nodesShouldEnter;var nodesShouldLoad=_Transitions$getIniti.nodesShouldLoad;var nodesDoneLoad=_Transitions$getIniti.nodesDoneLoad;var nodesDoneClipPathLoad=_Transitions$getIniti.nodesDoneClipPathLoad;var nodesDoneClipPathEnter=_Transitions$getIniti.nodesDoneClipPathEnter;var _nodesDoneClipPathExit=_Transitions$getIniti.nodesDoneClipPathExit;
 	
 	this.setState({
 	nodesWillExit:_nodesWillExit,
 	nodesWillEnter:nodesWillEnter,
 	nodesShouldEnter:nodesShouldEnter,
 	nodesDoneClipPathEnter:nodesDoneClipPathEnter,
-	nodesDoneClipPathExit:nodesDoneClipPathExit,
+	nodesDoneClipPathExit:_nodesDoneClipPathExit,
 	childrenTransitions:_victoryCore.Collection.isArrayOfArrays(childrenTransitions)?
 	childrenTransitions[0]:childrenTransitions,
 	nodesShouldLoad:nodesShouldLoad||this.state.nodesShouldLoad,
 	nodesDoneLoad:nodesDoneLoad||this.state.nodesDoneLoad,
 	nodesDoneClipPathLoad:nodesDoneClipPathLoad||this.state.nodesDoneClipPathLoad,
-	oldProps:_nodesWillExit?props:null});
+	oldProps:_nodesWillExit&&!_nodesDoneClipPathExit?props:null});
 	
 	}
 	},
@@ -20261,9 +20277,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	var styleObject=theme&&theme.line&&theme.line.style?theme.line.style:{};
 	
 	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
-	var group=this.renderGroup(
-	this.renderData(props),props,baseStyles.parent);
-	
+	var group=this.renderGroup(this.renderData(props),baseStyles.parent);
 	
 	return standalone?this.renderContainer(props,group):group;
 	}}]);return VictoryLine;}(_react2.default.Component);VictoryLine.displayName="VictoryLine";VictoryLine.role="line";VictoryLine.defaultTransitions=_victoryCore.DefaultTransitions.continuousTransitions();VictoryLine.continuous=true;VictoryLine.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),containerComponent:_react.PropTypes.element,data:_react.PropTypes.array,domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_react.PropTypes.oneOfType([_react.PropTypes.number,_victoryCore.PropTypes.domain]),y:_react.PropTypes.oneOfType([_react.PropTypes.number,_victoryCore.PropTypes.domain])}),_react.PropTypes.number]),dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOf(["all"]),eventHandlers:_react.PropTypes.object})),groupComponent:_react.PropTypes.element,height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","bundle","cardinal","catmullRom","linear","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.string,labelComponent:_react.PropTypes.element,name:_react.PropTypes.string,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),sortKey:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),theme:_react.PropTypes.object,width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)])};VictoryLine.defaultProps={samples:50,scale:"linear",standalone:true,sortKey:"x",dataComponent:_react2.default.createElement(_victoryCore.Curve,null),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,null),containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,null),groupComponent:_react2.default.createElement(_victoryCore.VictoryClipContainer,null),theme:_victoryCore.VictoryTheme.grayscale};VictoryLine.getDomain=_victoryCore.Domain.getDomain.bind(_victoryCore.Domain);VictoryLine.getData=_victoryCore.Data.getData.bind(_victoryCore.Data);VictoryLine.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);VictoryLine.getScale=(0,_partialRight3.default)(_helperMethods2.default.getScale.bind(_helperMethods2.default),fallbackProps);VictoryLine.expectedComponents=["dataComponent","labelComponent","groupComponent","containerComponent"];exports.default=
@@ -20529,7 +20543,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	return _react2.default.cloneElement(containerComponent,parentProps,group);
 	}},{key:"renderGroup",value:function renderGroup(
 	
-	children,props,style){
+	children,style){
 	return _react2.default.cloneElement(
 	this.props.groupComponent,
 	{role:"presentation",style:style},
@@ -20558,9 +20572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var baseStyles=_victoryCore.Helpers.getStyles(style,styleObject,"auto","100%");
 	
-	var group=this.renderGroup(
-	this.renderData(props),props,baseStyles.parent);
-	
+	var group=this.renderGroup(this.renderData(props),baseStyles.parent);
 	
 	return standalone?this.renderContainer(props,group):group;
 	}}]);return VictoryArea;}(_react2.default.Component);VictoryArea.propTypes={animate:_react.PropTypes.object,categories:_react.PropTypes.oneOfType([_react.PropTypes.arrayOf(_react.PropTypes.string),_react.PropTypes.shape({x:_react.PropTypes.arrayOf(_react.PropTypes.string),y:_react.PropTypes.arrayOf(_react.PropTypes.string)})]),containerComponent:_react.PropTypes.element,data:_react.PropTypes.array,domainPadding:_react.PropTypes.oneOfType([_react.PropTypes.shape({x:_react.PropTypes.oneOfType([_react.PropTypes.number,_victoryCore.PropTypes.domain]),y:_react.PropTypes.oneOfType([_react.PropTypes.number,_victoryCore.PropTypes.domain])}),_react.PropTypes.number]),dataComponent:_react.PropTypes.element,domain:_react.PropTypes.oneOfType([_victoryCore.PropTypes.domain,_react.PropTypes.shape({x:_victoryCore.PropTypes.domain,y:_victoryCore.PropTypes.domain})]),events:_react.PropTypes.arrayOf(_react.PropTypes.shape({target:_react.PropTypes.oneOf(["data","labels","parent"]),eventKey:_react.PropTypes.oneOf(["all"]),eventHandlers:_react.PropTypes.object})),groupComponent:_react.PropTypes.element,height:_victoryCore.PropTypes.nonNegative,interpolation:_react.PropTypes.oneOf(["basis","bundle","cardinal","catmullRom","linear","monotoneX","monotoneY","natural","radial","step","stepAfter","stepBefore"]),label:_react.PropTypes.string,labelComponent:_react.PropTypes.element,name:_react.PropTypes.string,padding:_react.PropTypes.oneOfType([_react.PropTypes.number,_react.PropTypes.shape({top:_react.PropTypes.number,bottom:_react.PropTypes.number,left:_react.PropTypes.number,right:_react.PropTypes.number})]),samples:_victoryCore.PropTypes.nonNegative,scale:_react.PropTypes.oneOfType([_victoryCore.PropTypes.scale,_react.PropTypes.shape({x:_victoryCore.PropTypes.scale,y:_victoryCore.PropTypes.scale})]),sharedEvents:_react.PropTypes.shape({events:_react.PropTypes.array,getEventState:_react.PropTypes.func}),standalone:_react.PropTypes.bool,style:_react.PropTypes.shape({parent:_react.PropTypes.object,data:_react.PropTypes.object,labels:_react.PropTypes.object}),theme:_react.PropTypes.object,width:_victoryCore.PropTypes.nonNegative,x:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)]),y:_react.PropTypes.oneOfType([_react.PropTypes.func,_victoryCore.PropTypes.allOfType([_victoryCore.PropTypes.integer,_victoryCore.PropTypes.nonNegative]),_react.PropTypes.string,_react.PropTypes.arrayOf(_react.PropTypes.string)])};VictoryArea.defaultProps={dataComponent:_react2.default.createElement(_victoryCore.Area,null),labelComponent:_react2.default.createElement(_victoryCore.VictoryLabel,null),scale:"linear",samples:50,standalone:true,containerComponent:_react2.default.createElement(_victoryCore.VictoryContainer,null),groupComponent:_react2.default.createElement(_victoryCore.VictoryClipContainer,null),theme:_victoryCore.VictoryTheme.grayscale};VictoryArea.displayName="VictoryArea";VictoryArea.role="area";VictoryArea.continuous=true;VictoryArea.defaultTransitions=_victoryCore.DefaultTransitions.continuousTransitions();VictoryArea.getDomain=_victoryCore.Domain.getDomainWithZero.bind(_victoryCore.Domain);VictoryArea.getData=_victoryCore.Data.getData.bind(_victoryCore.Data);VictoryArea.getBaseProps=(0,_partialRight3.default)(_helperMethods2.default.getBaseProps.bind(_helperMethods2.default),fallbackProps);VictoryArea.getScale=(0,_partialRight3.default)(_helperMethods2.default.getScale.bind(_helperMethods2.default),fallbackProps);VictoryArea.expectedComponents=["dataComponent","labelComponent","groupComponent","containerComponent"];exports.default=
