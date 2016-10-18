@@ -1,5 +1,15 @@
 VictoryCore Changelog
 =====================
+## 9.0.2 (2016-10-18)
+
+- Refactor rendered components for ease of native versions
+- Fix bugs in exit transitions for continuous data components (line, area)
+- Fix `dx` bug in `VictoryLabel` Thanks to @gcedo
+
+## 9.0.1 (2016-10-12)
+
+- Simplify cleanData so accessors are called only once
+
 ## 9.0.0 (2016-10-12)
 
 - removes support for `children` for VictoryLabel. Use `text` instead
@@ -17,7 +27,7 @@ VictoryCore Changelog
 
 ## 8.0.0 (2016-10-06)
 
-- Adds `VictoryPortal` which renders a single child in a top level portal container if it exists
+- Adds `VictoryPortal` which renders a single child in a top level portal container if it exists. Thanks to @nfcampos
 - Adds `VictoryGroupContainer` which renders children in a group container with a `clipPath` if clipPath props exist
 - Removes `clipPath` properties from `Curve` and `Area` primitives
 - `VictoryTransition` only passes `clipPath` props to continuous children (_i.e._ `VictoryLine`, `VictoryArea`)
