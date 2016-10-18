@@ -16,6 +16,7 @@ export default class Line extends React.Component {
     shapeRendering: PropTypes.string
   };
 
+  // Overridden in victory-core-native
   renderAxisLine(props, style, events) {
     const { role, shapeRendering } = this.props;
     return (

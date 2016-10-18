@@ -48,6 +48,7 @@ export default class VictoryContainer extends React.Component {
     };
   }
 
+  // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
     const { title, desc, children, portalComponent } = props;
     return (

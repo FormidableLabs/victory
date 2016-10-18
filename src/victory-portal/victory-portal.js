@@ -39,6 +39,7 @@ export default class VictoryPortal extends React.Component {
     }
   }
 
+  // Overridden in victory-core-native
   renderPortal(child) {
     if (this.renderInPlace) {
       return child;

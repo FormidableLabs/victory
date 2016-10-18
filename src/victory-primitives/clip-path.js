@@ -36,6 +36,7 @@ export default class ClipPath extends React.Component {
     }
   }
 
+  // Overridden in victory-core-native
   renderClipPath(props, id) {
     return (
       <defs>

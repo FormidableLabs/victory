@@ -31,6 +31,7 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: <ClipPath/>
   }
 
+  // Overridden in victory-core-native
   renderClippedGroup(props, clipId) {
     const { style, events, transform, children } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
@@ -48,6 +49,7 @@ export default class VictoryClipContainer extends React.Component {
     );
   }
 
+  // Overridden in victory-core-native
   renderGroup(props) {
     const { style, events, transform, children } = props;
     return (
@@ -61,6 +63,7 @@ export default class VictoryClipContainer extends React.Component {
     );
   }
 
+  // Overridden in victory-core-native
   renderClipComponent(props, clipId) {
     const { padding, translateX, clipHeight, clipWidth, clipPathComponent } = props;
     return React.cloneElement(

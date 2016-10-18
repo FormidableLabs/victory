@@ -33,6 +33,7 @@ export default class Portal extends React.Component {
     delete this.map[key];
   }
 
+  // Overridden in victory-core-native
   render() {
     return React.cloneElement(
       this.props.groupComponent,

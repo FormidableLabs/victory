@@ -145,6 +145,7 @@ export default class VictoryLabel extends React.Component {
     return defaultStyles.fontSize;
   }
 
+  // Overridden in victory-core-native
   renderElements(props, content) {
     const transform = this.getTransform(props);
     const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);

@@ -38,6 +38,7 @@ export default class Point extends React.Component {
     return pathFunctions[props.symbol].call(null, props.x, props.y, props.size);
   }
 
+  // Overridden in victory-core-native
   renderPoint(path, style, events) {
     const { role, shapeRendering } = this.props;
     return (

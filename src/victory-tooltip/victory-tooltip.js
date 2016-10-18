@@ -248,6 +248,7 @@ export default class VictoryTooltip extends React.Component {
     return React.cloneElement(groupComponent, { role: "presentation" }, children);
   }
 
+  // Overridden in victory-core-native
   render() {
     const { active, renderInPortal } = this.props;
     const tooltip = active ? this.renderTooltip(this.props) : null;

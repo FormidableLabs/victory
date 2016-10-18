@@ -41,6 +41,7 @@ export default class Area extends React.Component {
     return lineFunction(props.data);
   }
 
+  // Overridden in victory-core-native
   renderArea(path, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
@@ -57,6 +58,7 @@ export default class Area extends React.Component {
     );
   }
 
+  // Overridden in victory-core-native
   renderLine(path, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;

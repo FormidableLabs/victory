@@ -13,6 +13,7 @@ export default class Slice extends React.Component {
     shapeRendering: PropTypes.string
   };
 
+  // Overridden in victory-core-native
   renderSlice(path, style, events) {
     const { role, shapeRendering } = this.props;
     return (
