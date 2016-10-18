@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 13.0.1 (2016-10-18)
+
+- Update `victory-core` for react native support
+- Fix bugs in exit transitions for continuous data components (line, area)
+
 ## 13.0.0 (2016-10-13)
 
 - Upgrades all d3 packages
