@@ -75,7 +75,7 @@ export default class VictoryTooltip extends React.Component {
     labelComponent: PropTypes.element,
     flyoutComponent: PropTypes.element,
     groupComponent: PropTypes.element,
-    index: PropTypes.number,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     renderInPortal: PropTypes.bool
   };
 
@@ -248,14 +248,10 @@ export default class VictoryTooltip extends React.Component {
     return React.cloneElement(groupComponent, { role: "presentation" }, children);
   }
 
-  // this will be overridden in victory-core-native
-  renderEmpty() {
-    return null;
-  }
-
+  // Overridden in victory-core-native
   render() {
     const { active, renderInPortal } = this.props;
-    const tooltip = active ? this.renderTooltip(this.props) : this.renderEmpty();
+    const tooltip = active ? this.renderTooltip(this.props) : null;
     return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
   }
 }

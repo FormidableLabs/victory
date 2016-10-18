@@ -48,27 +48,29 @@ export default class VictoryContainer extends React.Component {
     };
   }
 
-  render() {
-    const {
-      style, title, desc, width, height, children, responsive, portalComponent, events
-    } = this.props;
-    const svgProps = assign(
-      {
-        "aria-labelledby": "title desc", role: "img",
-        style: responsive ? style : omit(style, ["height", "width"]),
-        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
-        width: responsive ? undefined : width,
-        height: responsive ? undefined : height
-      },
-      events
-    );
+  // Overridden in victory-core-native
+  renderContainer(props, svgProps, style) {
+    const { title, desc, children, portalComponent } = props;
     return (
-      <svg {...svgProps}>
+      <svg {...svgProps} style={style}>
         <title id="title">{title}</title>
         <desc id="desc">{desc}</desc>
         {children}
         {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
       </svg>
-      );
+    );
+  }
+
+  render() {
+    const { width, height, responsive, events } = this.props;
+    const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
+    const svgProps = assign(
+      {
+        "aria-labelledby": "title desc", role: "img", width, height,
+        viewBox: responsive ? `0 0 ${width} ${height}` : undefined
+      },
+      events
+    );
+    return this.renderContainer(this.props, svgProps, style);
   }
 }

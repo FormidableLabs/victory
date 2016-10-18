@@ -39,17 +39,22 @@ export default class VictoryPortal extends React.Component {
     }
   }
 
+  // Overridden in victory-core-native
+  renderPortal(child) {
+    if (this.renderInPlace) {
+      return child;
+    }
+    this.element = child;
+    return null;
+  }
+
   render() {
     const { children } = this.props;
     const childProps = children && children.props || {};
     const child = children && React.cloneElement(
       children, defaults({}, childProps, omit(this.props, "children"))
     );
-    if (this.renderInPlace) {
-      return child;
-    }
-    this.element = child;
-    return null;
+    return this.renderPortal(child);
   }
 }
 

@@ -78,6 +78,7 @@ export default class Flyout extends React.Component {
       this.getHorizontalPath(props) : this.getVerticalPath(props);
   }
 
+  // Overridden in victory-core-native
   renderFlyout(path, style, events) {
     const { role, shapeRendering } = this.props;
     return (

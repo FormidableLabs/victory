@@ -55,6 +55,7 @@ export default class Bar extends React.Component {
     return style && style.width ? style.width : defaultWidth;
   }
 
+  // Overridden in victory-core-native
   renderBar(path, style, events) {
     const { role, shapeRendering } = this.props;
     return (

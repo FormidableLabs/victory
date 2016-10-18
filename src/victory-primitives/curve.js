@@ -20,6 +20,7 @@ export default class Curve extends React.Component {
     return `curve${capitalize(interpolation)}`;
   }
 
+  // Overridden in victory-core-native
   renderLine(path, style, events) {
     const { role, shapeRendering } = this.props;
     return (

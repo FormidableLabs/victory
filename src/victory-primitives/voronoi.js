@@ -27,6 +27,7 @@ export default class Voronoi extends React.Component {
       a ${size}, ${size} 0 1,0 ${-size * 2},0`;
   }
 
+  // Overridden in victory-core-native
   renderPoint(paths, style, events) {
     const clipId = paths.circle && `clipPath-${Math.random()}`;
     const clipPath = paths.circle ? `url(#${clipId})` : undefined;

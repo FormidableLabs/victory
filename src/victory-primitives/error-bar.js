@@ -36,6 +36,7 @@ export default class ErrorBar extends React.Component {
     borderWidth: 10
   }
 
+  // Overridden in victory-core-native
   renderLine(props, style, events) {
     return <line {...props} style={style} {...events}/>;
   }

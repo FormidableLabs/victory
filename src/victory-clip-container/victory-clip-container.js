@@ -31,8 +31,10 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: <ClipPath/>
   }
 
-  renderClippedGroup(props, clipComponent, clipId) {
+  // Overridden in victory-core-native
+  renderClippedGroup(props, clipId) {
     const { style, events, transform, children } = props;
+    const clipComponent = this.renderClipComponent(props, clipId);
     return (
       <g
         style={style}
@@ -47,6 +49,7 @@ export default class VictoryClipContainer extends React.Component {
     );
   }
 
+  // Overridden in victory-core-native
   renderGroup(props) {
     const { style, events, transform, children } = props;
     return (
@@ -60,16 +63,20 @@ export default class VictoryClipContainer extends React.Component {
     );
   }
 
+  // Overridden in victory-core-native
+  renderClipComponent(props, clipId) {
+    const { padding, translateX, clipHeight, clipWidth, clipPathComponent } = props;
+    return React.cloneElement(
+      clipPathComponent,
+      { padding, clipId, translateX, clipWidth, clipHeight }
+    );
+  }
+
   render() {
     const { clipWidth } = this.props;
     if (clipWidth || clipWidth === 0) {
-      const { padding, translateX, clipHeight, clipPathComponent } = this.props;
       const clipId = Math.round(Math.random() * 10000);
-      const clipComponent = React.cloneElement(
-        clipPathComponent,
-        { padding, clipId, translateX, clipWidth, clipHeight }
-      );
-      return this.renderClippedGroup(this.props, clipComponent, clipId);
+      return this.renderClippedGroup(this.props, clipId);
     }
     return this.renderGroup(this.props);
   }

@@ -25,10 +25,12 @@ export default class Candle extends React.Component {
     role: PropTypes.string
   }
 
+  // Overridden in victory-core-native
   renderWick(wickProps) {
     return <line {...wickProps}/>;
   }
 
+  // Overridden in victory-core-native
   renderCandle(candleProps) {
     return <rect {...candleProps}/>;
   }
