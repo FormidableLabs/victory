@@ -131,7 +131,7 @@ class VictoryArea extends React.Component {
     return React.cloneElement(containerComponent, parentProps, group);
   }
 
-  renderGroup(children, props, style) {
+  renderGroup(children, style) {
     return React.cloneElement(
       this.props.groupComponent,
       { role: "presentation", style},
@@ -160,9 +160,7 @@ class VictoryArea extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
 
-    const group = this.renderGroup(
-      this.renderData(props), props, baseStyles.parent
-    );
+    const group = this.renderGroup(this.renderData(props), baseStyles.parent);
 
     return standalone ? this.renderContainer(props, group) : group;
   }
