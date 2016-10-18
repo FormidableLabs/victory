@@ -157,7 +157,7 @@ export default class VictoryLabel extends React.Component {
         {content.map((line, i) => {
           const dy = i ? props.lineHeight * fontSize : undefined;
           return (
-            <tspan key={i} x={props.x} dy={dy}>
+            <tspan key={i} x={props.x} dy={dy} dx={props.dx}>
               {line}
             </tspan>
           );
