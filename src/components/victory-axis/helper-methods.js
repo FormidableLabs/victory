@@ -20,7 +20,7 @@ export default {
       domain = props.domain;
     } else if (props.domain && props.domain[inherentAxis]) {
       domain = props.domain[inherentAxis];
-    } else if (props.tickValues) {
+    } else if (Array.isArray(props.tickValues) && props.tickValues.length > 1) {
       domain = Domain.getDomainFromTickValues(props);
     }
     const paddedDomain = Domain.padDomain(domain, props, inherentAxis);
@@ -266,9 +266,10 @@ export default {
       if (Helpers.stringTicks(props)) {
         return range(1, props.tickValues.length + 1);
       }
-      return props.tickValues;
+      return props.tickValues.length ? props.tickValues : scale.domain();
     } else if (scale.ticks && isFunction(scale.ticks)) {
-      const ticks = scale.ticks(props.tickCount);
+      const scaleTicks = scale.ticks(props.tickCount);
+      const ticks = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
       if (props.crossAxis) {
         return includes(ticks, 0) ? without(ticks, 0) : ticks;
       }
