@@ -231,7 +231,8 @@ export default class VictoryGroup extends React.Component {
     const dataset = props.data || props.y ? Data.getData(props) : defaultDataset;
     const xOffset = offset || 0;
     return dataset.map((datum) => {
-      return assign({}, datum, {x1: datum.x + xOffset});
+      const x1 = datum.x instanceof Date ? new Date(datum.x + xOffset) : datum.x + xOffset;
+      return assign({}, datum, {x1});
     });
   }
 
