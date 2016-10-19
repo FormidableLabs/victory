@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 13.0.2 (2016-10-19)
+
+- Fix date bug in `VictoryGroup`
+- Ensure axis ticks always exist
+
 ## 13.0.1 (2016-10-18)
 
 - Update `victory-core` for react native support
