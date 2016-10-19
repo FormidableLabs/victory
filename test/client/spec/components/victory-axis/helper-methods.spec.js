@@ -32,6 +32,13 @@ describe("victory-axis/helper-methods", () => {
       expect(domainResult).to.eql([1, 4]);
     });
 
+    it("does not calculate a domain from too few tick values", () => {
+      const props = {tickValues: [0]};
+      const domainResult = AxisHelpers.getDomain(props);
+      expect(Domain.getDomainFromTickValues).not.called;
+      expect(domainResult).to.equal(undefined);
+    });
+
     it("returns undefined if the given axis doesn't match this axis", () => {
       const props = {domain: [1, 3]};
       const domainResultX = AxisHelpers.getDomain(props, "x");
