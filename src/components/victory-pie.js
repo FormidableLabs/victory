@@ -170,6 +170,10 @@ class VictoryPie extends React.Component {
     );
   }
 
+  shouldAnimate() {
+    return Boolean(this.props.animate);
+  }
+
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "pie");
 
@@ -177,7 +181,7 @@ class VictoryPie extends React.Component {
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
-    if (animate) {
+    if (this.shouldAnimate()) {
       const whitelist = [
         "data", "endAngle", "height", "innerRadius", "cornerRadius", "padAngle", "padding",
         "colorScale", "startAngle", "style", "width"
