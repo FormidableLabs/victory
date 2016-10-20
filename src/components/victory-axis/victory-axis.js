@@ -193,10 +193,14 @@ class VictoryAxis extends React.Component {
     );
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
     const { animate, standalone } = props;
-    if (animate) {
+    if (this.shouldAnimate()) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?

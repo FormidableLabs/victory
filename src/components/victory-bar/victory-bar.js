@@ -151,6 +151,10 @@ class VictoryBar extends React.Component {
     );
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const dataComponents = [];
@@ -173,7 +177,7 @@ class VictoryBar extends React.Component {
     const { role } = this.constructor;
     const props = Helpers.modifyProps((this.props), fallbackProps, role);
     const { animate, style, standalone, theme } = props;
-    if (animate) {
+    if (this.shouldAnimate()) {
       const animationWhitelist = [
         "data", "domain", "height", "padding", "style", "width"
       ];
@@ -197,4 +201,3 @@ class VictoryBar extends React.Component {
 }
 
 export default addEvents(VictoryBar);
-

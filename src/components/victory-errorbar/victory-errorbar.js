@@ -167,10 +167,14 @@ class VictoryErrorBar extends React.Component {
       dataComponents;
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "errorbar");
     const { animate, style, standalone, theme } = props;
-    if (animate) {
+    if (this.shouldAnimate()) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?

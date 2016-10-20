@@ -186,6 +186,10 @@ class VictoryCandlestick extends React.Component {
     );
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "candlestick");
 
@@ -193,7 +197,7 @@ class VictoryCandlestick extends React.Component {
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
-    if (animate) {
+    if (this.shouldAnimate()) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
