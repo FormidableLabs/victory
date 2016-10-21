@@ -146,11 +146,15 @@ class VictoryVoronoi extends React.Component {
       dataComponents;
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
-    if (animate) {
+    if (this.shouldAnimate()) {
       // Do less work by having `VictoryAnimation` tween only values that
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?

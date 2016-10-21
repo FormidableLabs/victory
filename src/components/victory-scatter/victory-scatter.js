@@ -155,11 +155,15 @@ class VictoryScatter extends React.Component {
       dataComponents;
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
     const { animate, style, standalone } = modifiedProps;
 
-    if (animate) {
+    if (this.shouldAnimate()) {
       const whitelist = [
         "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size",
         "style", "width", "x", "y"

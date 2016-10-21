@@ -139,12 +139,16 @@ class VictoryArea extends React.Component {
     );
   }
 
+  shouldAnimate() {
+    return !!this.props.animate;
+  }
+
   render() {
     const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
     const { animate, style, standalone, theme } = props;
 
-    if (animate) {
+    if (this.shouldAnimate()) {
       const whitelist = [
         "data", "domain", "height", "padding", "style", "width",
         "x", "y"
@@ -167,4 +171,3 @@ class VictoryArea extends React.Component {
 }
 
 export default addEvents(VictoryArea);
-
