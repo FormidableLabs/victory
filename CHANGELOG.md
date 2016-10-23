@@ -14,7 +14,7 @@
 
 - Upgrades all d3 packages
 - Greater consistency of props for props passed to primitive components
-- Adds `VictoryPortal` which renders any child elments in a top level portal container if it exists
+- Adds `VictoryPortal` which renders any child elements in a top level portal container if it exists
 - Adds `VictoryClipContainer` which renders children in a group container with a `clipPath` if `clipPath` props exist
 - `VictoryArea` and `VictoryLine` use `VictoryClipContainer` as their `groupComponent`
 - Removes `clipPath` properties from `VictoryLine` and `VictoryArea`
