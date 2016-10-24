@@ -43,7 +43,7 @@ export default (WrappedComponent) => {
       if (this.hasEvents) {
         const events = this.getEvents(this.props, type, key);
         const componentProps = defaults(
-          {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
+          {index, key: `${role}-${type}-${key}`},
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
           component.props,
@@ -54,7 +54,7 @@ export default (WrappedComponent) => {
         );
       }
       return defaults(
-        {index, key: `${role}-${type}-${key}`, role: `${role}-${index}`},
+        {index, key: `${role}-${type}-${key}`},
         component.props,
         baseProps
       );
