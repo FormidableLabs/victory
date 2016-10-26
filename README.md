@@ -44,9 +44,7 @@ Please review our [Code of Conduct](https://github.com/FormidableLabs/builder-vi
 
 For a detailed contribution guide, please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
 
-## Caveats
-
-Victory requires npm v3 and Node > 0.10 for development and git installs
+**Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
 
 ## _IMPORTANT_
 

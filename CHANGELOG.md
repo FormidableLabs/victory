@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 13.0.3 (2016-10-26)
+
+- Allow npm 2 install
+- Add `shouldAnimate` conditional for victory-native compatibility
+
 ## 13.0.2 (2016-10-19)
 
 - Fix date bug in `VictoryGroup`
