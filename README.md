@@ -37,6 +37,8 @@ For a detailed contribution guide, please see [CONTRIBUTING](https://github.com/
 
 This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
 
+**Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
+
 [React]: https://github.com/facebook/react
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-pie.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-pie

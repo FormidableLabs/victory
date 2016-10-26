@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 7.0.1 (2016-10-26)
+
+- allow npm 2 install
+- add shouldAnimate check for victory-native compatibility
+
 ## 7.0.0 (2016-10-13)
     - Upgrades all d3 packages
     - Greater consistency of props for props passed to primitive components
