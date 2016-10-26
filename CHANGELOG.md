@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 0.13.1 (2016-10-26)
+
+- Allows npm 2 installs
+
 ## 0.13.0 (2016-10-13)
 
 - Removes support for `children` for VictoryLabel. Use `text` instead
