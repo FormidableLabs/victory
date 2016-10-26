@@ -32,10 +32,8 @@ Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-comp
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-core.svg
 [trav_site]: https://travis-ci.org/FormidableLabs/victory-core
 
-## Caveats
-
-Victory requires npm v3 and Node > 0.10 for development and git installs
-
 ## _IMPORTANT_
 
 This project is in a pre-release state. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!
+
+**Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0

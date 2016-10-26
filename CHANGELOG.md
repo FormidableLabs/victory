@@ -1,5 +1,10 @@
 VictoryCore Changelog
 =====================
+## 9.0.3 (2016-10-26)
+
+- Fix aria role bug
+- Allow npm 2 install 
+
 ## 9.0.2 (2016-10-18)
 
 - Refactor rendered components for ease of native versions
