@@ -5298,7 +5298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	if(this.hasEvents){
 	var events=this.getEvents(this.props,type,key);
 	var componentProps=(0,_defaults3.default)(
-	{index:index,key:role+"-"+type+"-"+key,role:role+"-"+index},
+	{index:index,key:role+"-"+type+"-"+key},
 	this.getEventState(key,type),
 	this.getSharedEventState(key,type),
 	component.props,
@@ -5309,7 +5309,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	}
 	return(0,_defaults3.default)(
-	{index:index,key:role+"-"+type+"-"+key,role:role+"-"+index},
+	{index:index,key:role+"-"+type+"-"+key},
 	component.props,
 	baseProps);
 	
