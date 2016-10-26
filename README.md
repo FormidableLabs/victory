@@ -15,6 +15,8 @@ Victory is an opinionated, but fully overridable, ecosystem of composable React 
 
 **SEMVER** Minor version bumps should be considered breaking changes until we hit v1.0.0. Patches can be considered safe.
 
+**Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
+
 **VictoryNative**
 Want to use `Victory` with React Native? Check out [VictoryNative](https://github.com/FormidableLabs/victory-native)
 
