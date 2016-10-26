@@ -13,9 +13,8 @@
     "type": "git",
     "url": "https://github.com/formidablelabs/victory.git"
   },
-  "engineStrict": true,
   "engines": {
-    "npm": ">=3.0.0"
+    "npm": ">=2.0.0"
   },
   "author": "Formidable",
   "license": "MIT",
