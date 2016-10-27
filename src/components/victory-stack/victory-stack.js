@@ -248,31 +248,25 @@ export default class VictoryStack extends React.Component {
 
   render() {
     const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps : this.props;
+      this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "stack");
     const { theme, standalone, events, eventKey} = modifiedProps;
     const fallbackStyle = theme && theme.stack && theme.stack.style ?
       theme.stack.style : {};
     const style = Helpers.getStyles(modifiedProps.style, fallbackStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
-
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style);
-
-    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    const group = this.renderGroup(newChildren, style.parent);
+    const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
     if (events) {
       return (
-        <VictorySharedEvents
-          events={events}
-          eventKey={eventKey}
-          container={container}
-        >
+        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );
     }
-    const group = this.renderGroup(newChildren, style.parent);
 
-    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
+    return standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }

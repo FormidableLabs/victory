@@ -297,22 +297,17 @@ export default class VictoryGroup extends React.Component {
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
-
-    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (modifiedProps.events) {
+    const group = this.renderGroup(newChildren, style.parent);
+    const container = standalone ?
+      this.getContainer(modifiedProps, calculatedProps) : group;
+    if (events) {
       return (
-        <VictorySharedEvents
-          events={events}
-          eventKey={eventKey}
-          container={container}
-        >
+        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );
     }
-    const group = this.renderGroup(newChildren, style.parent);
-
     return standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }
