@@ -164,11 +164,14 @@ describe("components/victory-candlestick", () => {
         <VictoryCandlestick data={data} />
       );
 
-      wrapper.find("rect").nodes.forEach((r, i) => {
+      wrapper.find("rect").nodes.forEach((r) => {
         const {attributes: attr} = r;
-        const roleValue = attr.getNamedItem("role").value;
-        expect(roleValue).to.be.a("string");
-        expect(roleValue).to.equal(`candlestick-${i}`);
+        const role = attr.getNamedItem("role");
+        if (role) {
+          const roleValue = role.value;
+          expect(roleValue).to.be.a("string");
+          expect(roleValue).to.equal("presentation");
+        }
       });
     });
   });

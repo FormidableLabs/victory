@@ -314,7 +314,7 @@ describe("components/victory-line", () => {
       const {attributes: attr} = p;
       const roleValue = attr.getNamedItem("role").value;
       expect(roleValue).to.be.a("string");
-      expect(roleValue).to.equal(`line-0`);
+      expect(roleValue).to.equal("presentation");
     });
 
     it("adds an area role to each line segment", () => {
@@ -332,11 +332,11 @@ describe("components/victory-line", () => {
       ];
       const wrapper = mount(<VictoryLine data={data} />);
 
-      wrapper.find("path").nodes.forEach((p, i) => {
+      wrapper.find("path").nodes.forEach((p) => {
         const {attributes: attr} = p;
         const roleValue = attr.getNamedItem("role").value;
         expect(roleValue).to.be.a("string");
-        expect(roleValue).to.equal(`line-${i}`);
+        expect(roleValue).to.equal("presentation");
       });
     });
 

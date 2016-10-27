@@ -199,11 +199,11 @@ describe("components/victory-scatter", () => {
       const data = range(20).map((y, x) => ({x, y}));
       const wrapper = mount(<VictoryScatter data={data} />);
 
-      wrapper.find("path").nodes.forEach((p, i) => {
+      wrapper.find("path").nodes.forEach((p) => {
         const {attributes: attr} = p;
         const roleValue = attr.getNamedItem("role").value;
         expect(roleValue).to.be.a("string");
-        expect(roleValue).to.equal(`scatter-${i}`);
+        expect(roleValue).to.equal("presentation");
       });
     });
   });

@@ -137,13 +137,13 @@ describe("components/victory-voronoi-tooltip", () => {
   describe("accessibility", () => {
     it("adds an area role to the path area", () => {
       const wrapper = mount(<VictoryVoronoiTooltip/>);
-      wrapper.find("path").nodes.forEach((p, i) => {
+      wrapper.find("path").nodes.forEach((p) => {
         const {attributes: attr} = p;
         const role = attr.getNamedItem("role");
         if (role) {
           const roleValue = role.value;
           expect(roleValue).to.be.a("string");
-          expect(roleValue).to.equal(`tooltip-${i}`);
+          expect(roleValue).to.equal("presentation");
         }
       });
     });
