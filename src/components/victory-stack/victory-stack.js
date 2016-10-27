@@ -15,7 +15,7 @@ const fallbackProps = {
 export default class VictoryStack extends React.Component {
   static displayName = "VictoryStack";
 
-  static role = "stack-wrapper";
+  static role = "stack";
 
   static propTypes = {
     animate: PropTypes.object,
@@ -194,7 +194,7 @@ export default class VictoryStack extends React.Component {
   getColorScale(props, child) {
     const role = child.type && child.type.role;
     const colorScaleOptions = child.props.colorScale || props.colorScale;
-    if (role !== "group-wrapper" && role !== "stack-wrapper") {
+    if (role !== "group" && role !== "stack") {
       return undefined;
     }
     return props.theme ? colorScaleOptions || props.theme.props.colorScale

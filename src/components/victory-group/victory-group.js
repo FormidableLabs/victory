@@ -15,7 +15,7 @@ const fallbackProps = {
 export default class VictoryGroup extends React.Component {
   static displayName = "VictoryGroup";
 
-  static role = "group-wrapper";
+  static role = "group";
 
   static propTypes = {
     animate: PropTypes.object,
@@ -220,7 +220,7 @@ export default class VictoryGroup extends React.Component {
   getColorScale(props, child) {
     const role = child.type && child.type.role;
     const colorScaleOptions = child.props.colorScale || props.colorScale;
-    if (role !== "group-wrapper" && role !== "stack-wrapper") {
+    if (role !== "group" && role !== "stack") {
       return undefined;
     }
     return props.theme && props.theme.group ? colorScaleOptions || props.theme.group.colorScale
@@ -262,7 +262,7 @@ export default class VictoryGroup extends React.Component {
         colorScale: this.getColorScale(props, child),
         key: index,
         labelComponent: labelComponent || child.props.labelComponent,
-        xOffset: role === "stack-wrapper" ? xOffset : undefined
+        xOffset: role === "stack" ? xOffset : undefined
       }, childProps));
     }
     return newChildren;
@@ -289,7 +289,7 @@ export default class VictoryGroup extends React.Component {
 
   render() {
     const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps : this.props;
+      this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "group");
     const { theme, standalone, events, eventKey } = modifiedProps;
     const defaultStyle = theme && theme.group && theme.group.style ? theme.group.style : {};

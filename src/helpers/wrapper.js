@@ -205,7 +205,7 @@ export default {
   getChildStyle(child, index, calculatedProps) {
     const { style } = calculatedProps;
     const role = child.type && child.type.role;
-    const defaultFill = role === "stack-wrapper" ?
+    const defaultFill = role === "stack" ?
       undefined : this.getColor(calculatedProps, child, index);
     const defaultColor = role === "line" ?
       {fill: "none", stroke: defaultFill} : {fill: defaultFill};
