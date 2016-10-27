@@ -162,7 +162,7 @@ export default class VictoryTransition extends React.Component {
 
   render() {
     const props = this.state && this.state.nodesWillExit && !this.state.nodesDoneClipPathExit ?
-      this.state.oldProps : this.props;
+      this.state.oldProps || this.props : this.props;
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
       Transitions.getTransitionPropsFactory(
