@@ -191,7 +191,7 @@ export default {
 
       const styles = this.getEvaluatedStyles(style, tick, index);
       const tickLayout = {
-        position: this.getTickPosition(styles.tickStyle, orientation, isVertical),
+        position: this.getTickPosition(styles, orientation, isVertical),
         transform: this.getTickTransform(scale(ticks[index]), globalTransform, isVertical)
       };
 
@@ -204,7 +204,6 @@ export default {
             scale(ticks[index]) + globalTransform.y : gridOffset.y + globalTransform.y
         }
       };
-
       childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
@@ -349,9 +348,11 @@ export default {
   },
 
   getTickPosition(style, orientation, isVertical) {
-    const size = style.size || 0;
-    const padding = style.padding || 0;
-    const tickSpacing = size + padding;
+    const {tickStyle, labelStyle} = style;
+    const size = tickStyle.size || 0;
+    const tickPadding = tickStyle.padding || 0;
+    const labelPadding = labelStyle.padding || 0;
+    const tickSpacing = size + tickPadding + labelPadding;
     const sign = orientationSign[orientation];
     return {
       x: isVertical ? sign * tickSpacing : 0,
