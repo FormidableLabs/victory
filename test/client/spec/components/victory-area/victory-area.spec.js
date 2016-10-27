@@ -122,7 +122,7 @@ describe("components/victory-area", () => {
         if (role) {
           const roleValue = role.value;
           expect(roleValue).to.be.a("string");
-          expect(roleValue).to.equal("area-all");
+          expect(roleValue).to.equal("presentation");
         }
       });
     });
