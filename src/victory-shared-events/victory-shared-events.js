@@ -13,6 +13,7 @@ export default class VictorySharedEvents extends React.Component {
       React.PropTypes.node
     ]),
     container: React.PropTypes.node,
+    groupComponent: React.PropTypes.node,
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.oneOfType([
         PropTypes.string,
@@ -33,6 +34,10 @@ export default class VictorySharedEvents extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
     ])
+  };
+
+  static defaultProps = {
+    groupComponent: <g/>
   };
 
   constructor() {
@@ -124,16 +129,17 @@ export default class VictorySharedEvents extends React.Component {
         getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
         getEventState: partialRight(this.getEventState, null)
       } : null;
+    const container = this.props.container || this.props.groupComponent;
     const boundGetEvents = Events.getEvents.bind(this);
     const parentEvents = boundGetEvents({sharedEvents}, "parent");
     const parentProps = defaults(
       {},
       this.getEventState("parent", "parent"),
-      props.container.props,
+      container.props,
       this.baseProps.parent
     );
     return React.cloneElement(
-      props.container,
+      container,
       assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
       ),
@@ -143,7 +149,6 @@ export default class VictorySharedEvents extends React.Component {
 
   render() {
     const children = this.getNewChildren(this.props);
-    return this.props.container ? this.getContainer(this.props, children) : <g>{children}</g>;
-
+    return this.getContainer(this.props, children);
   }
 }

@@ -75,7 +75,6 @@ export default {
       },
       ticks: {
         fill: "transparent",
-        padding: 10,
         size: 1,
         stroke: "transparent"
       },

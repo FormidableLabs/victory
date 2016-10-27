@@ -86,7 +86,6 @@ export default {
       },
       ticks: {
         fill: "transparent",
-        padding,
         size: 5,
         stroke: blueGrey300,
         strokeWidth: 1,
