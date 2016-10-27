@@ -270,7 +270,8 @@ export default {
       const scaleTicks = scale.ticks(props.tickCount);
       const ticks = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
       if (props.crossAxis) {
-        return includes(ticks, 0) ? without(ticks, 0) : ticks;
+        const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
+        return filteredTicks.length ? filteredTicks : ticks;
       }
       return ticks;
     }
