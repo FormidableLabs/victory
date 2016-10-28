@@ -15,7 +15,7 @@ const fallbackProps = {
 export default class VictoryGroup extends React.Component {
   static displayName = "VictoryGroup";
 
-  static role = "group-wrapper";
+  static role = "group";
 
   static propTypes = {
     animate: PropTypes.object,
@@ -220,7 +220,7 @@ export default class VictoryGroup extends React.Component {
   getColorScale(props, child) {
     const role = child.type && child.type.role;
     const colorScaleOptions = child.props.colorScale || props.colorScale;
-    if (role !== "group-wrapper" && role !== "stack-wrapper") {
+    if (role !== "group" && role !== "stack") {
       return undefined;
     }
     return props.theme && props.theme.group ? colorScaleOptions || props.theme.group.colorScale
@@ -262,7 +262,7 @@ export default class VictoryGroup extends React.Component {
         colorScale: this.getColorScale(props, child),
         key: index,
         labelComponent: labelComponent || child.props.labelComponent,
-        xOffset: role === "stack-wrapper" ? xOffset : undefined
+        xOffset: role === "stack" ? xOffset : undefined
       }, childProps));
     }
     return newChildren;
@@ -289,7 +289,7 @@ export default class VictoryGroup extends React.Component {
 
   render() {
     const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps : this.props;
+      this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "group");
     const { theme, standalone, events, eventKey } = modifiedProps;
     const defaultStyle = theme && theme.group && theme.group.style ? theme.group.style : {};
@@ -297,22 +297,17 @@ export default class VictoryGroup extends React.Component {
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
-
-    const container = standalone && this.getContainer(modifiedProps, calculatedProps);
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (modifiedProps.events) {
+    const group = this.renderGroup(newChildren, style.parent);
+    const container = standalone ?
+      this.getContainer(modifiedProps, calculatedProps) : group;
+    if (events) {
       return (
-        <VictorySharedEvents
-          events={events}
-          eventKey={eventKey}
-          container={container}
-        >
+        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );
     }
-    const group = this.renderGroup(newChildren, style.parent);
-
     return standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }
