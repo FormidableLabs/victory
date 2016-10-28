@@ -3,7 +3,7 @@ import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
   VictoryTheme, Scale
-} from "victory-core";
+} from "victory-core/src";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
 import Axis from "../../helpers/axis";
@@ -112,7 +112,8 @@ export default class VictoryChart extends React.Component {
     return {
       parent: defaults({
         height: "auto",
-        width: "100%"
+        width: "100%",
+        userSelect: "none"
       },
       styleProps
     )};
