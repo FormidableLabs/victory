@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 7.1.0 (2016-10-28)
+
+- Uses `publishr` to reduce npm installed package size [#413](https://github.com/FormidableLabs/victory/issues/413)
+
 ## 7.0.1 (2016-10-26)
 
 - allow npm 2 install
