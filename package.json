@@ -17,11 +17,12 @@
     "npm": ">=2.0.0"
   },
   "scripts": {
-    "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
+    "postversion": "builder run npm:postversion",
+    "postpublish": "builder run npm:postpublish",
     "start": "builder run hot",
     "test": "builder run check",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
+    "version": "builder run npm:version"
   },
   "dependencies": {
     "builder": "^3.1.0",
@@ -44,5 +45,10 @@
     "react-router": "^2.4.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
+  },
+  "publishr": {
+    "dependencies": [
+      "^builder"
+    ]
   }
 }
