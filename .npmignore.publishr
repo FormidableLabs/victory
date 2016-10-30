@@ -1,32 +1,9 @@
-# Cruft
-._*
-.AppleDouble
-.DS_Store
-.LSOverride
-.Spotlight-V100
-.tmp
-.Trashes
-*.sublime-workspace
-$RECYCLE.BIN/
-Desktop.ini
-ehthumbs.db
-Icon
-npm-debug.log*
-Thumbs.db
-
-# Code / build
-.editor*
-.eslint*
-.travis*
-bower_components
-coverage
-demo
+/*
+!/dist
 dist/*.map
-karma*
-node_modules
-test
-webpack*
-
-# Files to ignore only for the npm package
-.babelrc
-.eslintrc
+!/lib
+!/src
+!LICENSE.txt
+!CHANGELOG.md
+!README.md
+!package.json
