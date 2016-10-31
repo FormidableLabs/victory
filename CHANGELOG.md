@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 13.1.1 (2016-10-31)
+
+- Stricter npmignore
+
 ## 13.1.0 (2016-10-26)
 
 - Uses `publishr` to reduce npm installed package size [#413](https://github.com/FormidableLabs/victory/issues/413)
