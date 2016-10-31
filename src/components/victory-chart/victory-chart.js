@@ -101,6 +101,10 @@ export default class VictoryChart extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.getContainerRef = (component) => this.containerRef = component;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
@@ -140,6 +144,7 @@ export default class VictoryChart extends React.Component {
       crossAxis,
       orientation
     };
+
   }
 
   getChildProps(child, props, calculatedProps) {
@@ -239,13 +244,17 @@ export default class VictoryChart extends React.Component {
     return newChildren;
   }
 
+  getSvgRef() {
+    return this.containerRef.svgRef;
+  }
+
   getContainer(props, calculatedProps) {
     const { width, height, containerComponent } = props;
     const { scale, style } = calculatedProps;
     const parentProps = defaults(
       {},
       containerComponent.props,
-      {style: style.parent, scale, width, height}
+      {style: style.parent, scale, width, height, ref: this.getContainerRef}
     );
     return React.cloneElement(containerComponent, parentProps);
   }
