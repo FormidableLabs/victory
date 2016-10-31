@@ -52,6 +52,9 @@
   "publishr": {
     "dependencies": [
       "^builder"
-    ]
+    ],
+    "files": {
+      ".npmignore": ".npmignore.publishr"
+    }
   }
 }
