@@ -2,12 +2,12 @@
 import React, {Component, PropTypes} from "react";
 import { assign } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
-import {VictoryClipContainer} from "victory-core/src";
+import {Helpers} from "victory-core/src";
 
 // TODO: [x] Get calculated domain
 // TODO: [x] Get chart width or fallback
 // TODO: [x] targetBounds of SVG rather than event target.
-// TODO: [ ] Get true axis width
+// TODO: [x] Get true axis width
 // TODO: [x] What is the correct way to calculate zoom?
 // TODO: [x] Limit zoom to data bounds on Zoom out
 // TODO: [x] Limit pan to data bounds
@@ -51,55 +51,49 @@ class VictoryZoom extends Component {
   static displayName = "VictoryZoom";
   static role = "zoom";
 
-  constructor(props) {
-    super(props);
-
-    const chart = React.Children.only(this.props.children);
-    const chartChildren = React.Children.toArray(chart);
-    this.domain = {
-      x: ChartHelpers.getDomain(chart.props, "x", chartChildren)
-    };
-
-    this.width = chart.props.width || fallbackProps.width;
-
-    this.state = {
-      domain: this.domain
-    };
-  }
-
   static propTypes = {
     children: PropTypes.node,
     domain: PropTypes.array
   }
 
-  componentWillMount() {
-    this.getChartRef = (chart) => { this.chartRef = chart; };
-  }
+  constructor(props) {
+    super(props);
 
-  render() {
-    const events = [{
+    const chart = React.Children.only(this.props.children);
+    const chartChildren = React.Children.toArray(chart);
+
+    this.domain = {
+      x: ChartHelpers.getDomain(chart.props, "x", chartChildren)
+    };
+
+    const [rangex1, rangex0] = Helpers.getRange(
+      Helpers.modifyProps(chart.props, {}, "chart"), // TODO: Don't presume chart role
+      "x"
+    );
+
+    this.plottableWidth = rangex0 - rangex1;
+    this.width = chart.props.width || fallbackProps.width;
+    this.state = { domain: this.domain };
+
+    this.events = [{
       target: "parent",
       eventHandlers: {
         onMouseDown: (evt) => {
-          this.targetBounds = this.chartRef.getSvgRef().getBoundingClientRect();
+          this.targetBounds = this.chartRef.getSvgBounds();
           const x = evt.clientX - this.targetBounds.left;
           this.isPanning = true;
           this.startX = x;
           this.lastDomain = this.state.domain;
         },
-        onMouseUp: () => {
-          this.isPanning = false;
-        },
-        onMouseLeave: () => {
-          this.isPanning = false;
-        },
+        onMouseUp: () => { this.isPanning = false; },
+        onMouseLeave: () => { this.isPanning = false; },
         onMouseMove: (evt) => {
           const clientX = evt.clientX;
           if (this.isPanning) {
             requestAnimationFrame(() => {
               const {x: [from, to]} = this.lastDomain;
               const ratio = this.targetBounds.width / this.width;
-              const absoluteAxisWidth = ratio * 350;
+              const absoluteAxisWidth = ratio * this.plottableWidth;
               const domainDeltaRatio = absoluteAxisWidth / (to - from);
               const delta = this.startX - (clientX - this.targetBounds.left);
               const calculatedDx = delta / domainDeltaRatio;
@@ -121,10 +115,16 @@ class VictoryZoom extends Component {
         }
       }
     }];
+  }
 
+  componentWillMount() {
+    this.getChartRef = (chart) => { this.chartRef = chart; };
+  }
+
+  render() {
     const chart = React.Children.only(this.props.children);
     const nextProps = assign({
-      events,
+      events: chart.props.events ? chart.props.events.unshift(...this.events) : this.events,
       domain: this.state.domain,
       ref: this.getChartRef
     }, chart.props);

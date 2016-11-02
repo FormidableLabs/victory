@@ -244,8 +244,8 @@ export default class VictoryChart extends React.Component {
     return newChildren;
   }
 
-  getSvgRef() {
-    return this.containerRef.svgRef;
+  getSvgBounds() {
+    return this.containerRef.svgRef.getBoundingClientRect();
   }
 
   getContainer(props, calculatedProps) {

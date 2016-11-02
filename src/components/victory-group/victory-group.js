@@ -2,7 +2,7 @@ import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
   VictoryContainer, VictoryTheme, Scale, Data
-} from "victory-core";
+} from "victory-core/src";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
@@ -133,6 +133,10 @@ export default class VictoryGroup extends React.Component {
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
+  }
+
+  componentWillMount() {
+    this.getContainerRef = (component) => this.containerRef = component;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -274,9 +278,13 @@ export default class VictoryGroup extends React.Component {
     const parentProps = defaults(
       {},
       containerComponent.props,
-      {style: style.parent, scale, width, height}
+      {style: style.parent, scale, width, height, ref: this.getContainerRef}
     );
     return React.cloneElement(containerComponent, parentProps);
+  }
+
+  getSvgBounds() {
+    return this.containerRef.svgRef.getBoundingClientRect();
   }
 
   renderGroup(children, style) {
