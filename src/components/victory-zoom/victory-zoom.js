@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from "react";
 import { assign, groupBy } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
-import {VictoryClipContainer, Helpers} from "victory-core/src";
+import {VictoryClipContainer, Helpers} from "victory-core";
 
 const fallbackProps = {
   width: 450,

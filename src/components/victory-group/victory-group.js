@@ -2,7 +2,7 @@ import { assign, defaults } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
   VictoryContainer, VictoryTheme, Scale, Data
-} from "victory-core/src";
+} from "victory-core";
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
