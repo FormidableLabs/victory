@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from "react";
 import { assign, groupBy } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
-import {VictoryClipContainer, Helpers} from "victory-core";
+import {VictoryClipContainer, Helpers, PropTypes as CustomPropTypes} from "victory-core";
 
 const fallbackProps = {
   width: 450,
@@ -17,7 +17,13 @@ class VictoryZoom extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    domain: PropTypes.array,
+    initialDomain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({
+        x: CustomPropTypes.domain,
+        y: CustomPropTypes.domain
+      })
+    ]),
     clipContainerComponent: PropTypes.element.isRequired
   }
 
@@ -42,7 +48,7 @@ class VictoryZoom extends Component {
 
     this.plottableWidth = rangex0 - rangex1;
     this.width = chart.props.width || fallbackProps.width;
-    this.state = { domain: this.domain };
+    this.state = { domain: props.initialDomain || this.domain };
 
     this.events = this.initializeEvents();
     this.clipDataComponents = this.clipDataComponents.bind(this);
