@@ -1,17 +1,9 @@
 /* globals requestAnimationFrame */
 import React, {Component, PropTypes} from "react";
-import { assign } from "lodash";
+import { assign, groupBy } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
-import {Helpers} from "victory-core/src";
-
-// TODO: [x] Get calculated domain
-// TODO: [x] Get chart width or fallback
-// TODO: [x] targetBounds of SVG rather than event target.
-// TODO: [x] Get true axis width
-// TODO: [x] What is the correct way to calculate zoom?
-// TODO: [x] Limit zoom to data bounds on Zoom out
-// TODO: [x] Limit pan to data bounds
-// TODO: [ ] Zoom from mouse position?
+import ZoomHelpers from "./helper-methods";
+import {VictoryClipContainer, Helpers} from "victory-core/src";
 
 const fallbackProps = {
   width: 450,
@@ -19,41 +11,18 @@ const fallbackProps = {
   padding: 50
 };
 
-const scale = (factor, [fromBound, toBound], [from, to]) => {
-  const range = Math.abs(from - to);
-  const midpoint = from + (range / 2);
-  const newRange = (range * factor) / 2;
-  return [
-    Math.max(midpoint - newRange, fromBound),
-    Math.min(midpoint + newRange, toBound)
-  ];
-};
-
-const pan = (currentDomain, originalDomain, delta) => {
-  const [fromCurrent, toCurrent] = currentDomain;
-  const [fromOriginal, toOriginal] = originalDomain;
-  const lowerBound = fromCurrent + delta;
-  const upperBound = toCurrent + delta;
-
-  if (lowerBound > fromOriginal && upperBound < toOriginal) {
-    return [lowerBound, upperBound];
-  } else if (lowerBound < fromOriginal) { // Clamp to lower limit
-    const dx = toCurrent - fromCurrent;
-    return [fromOriginal, fromOriginal + dx];
-  } else if (upperBound > toOriginal) { // Clamp to upper limit
-    const dx = toCurrent - fromCurrent;
-    return [toOriginal - dx, toOriginal];
-  }
-};
-
-
 class VictoryZoom extends Component {
   static displayName = "VictoryZoom";
   static role = "zoom";
 
   static propTypes = {
     children: PropTypes.node,
-    domain: PropTypes.array
+    domain: PropTypes.array,
+    clipContainerComponent: PropTypes.element.isRequired
+  }
+
+  static defaultProps = {
+    clipContainerComponent: <VictoryClipContainer/>
   }
 
   constructor(props) {
@@ -75,7 +44,16 @@ class VictoryZoom extends Component {
     this.width = chart.props.width || fallbackProps.width;
     this.state = { domain: this.domain };
 
-    this.events = [{
+    this.events = this.initializeEvents();
+    this.clipDataComponents = this.clipDataComponents.bind(this);
+  }
+
+  componentWillMount() {
+    this.getChartRef = (chart) => { this.chartRef = chart; };
+  }
+
+  initializeEvents() {
+    return [{
       target: "parent",
       eventHandlers: {
         onMouseDown: (evt) => {
@@ -91,14 +69,9 @@ class VictoryZoom extends Component {
           const clientX = evt.clientX;
           if (this.isPanning) {
             requestAnimationFrame(() => {
-              const {x: [from, to]} = this.lastDomain;
-              const ratio = this.targetBounds.width / this.width;
-              const absoluteAxisWidth = ratio * this.plottableWidth;
-              const domainDeltaRatio = absoluteAxisWidth / (to - from);
               const delta = this.startX - (clientX - this.targetBounds.left);
-              const calculatedDx = delta / domainDeltaRatio;
-
-              const nextXDomain = pan(this.lastDomain.x, this.domain.x, calculatedDx);
+              const calculatedDx = delta / this.getDomainScale();
+              const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, this.domain.x, calculatedDx);
               this.setState({domain: {x: nextXDomain}});
             });
           }
@@ -109,7 +82,9 @@ class VictoryZoom extends Component {
           requestAnimationFrame(() => {
             const {x} = this.state.domain;
             const {x: xBounds} = this.domain;
-            const nextXDomain = scale(1 + (deltaY / 100), xBounds, x);
+
+            // TODO: Check scale factor
+            const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 100));
             this.setState({domain: {x: nextXDomain}});
           });
         }
@@ -117,18 +92,48 @@ class VictoryZoom extends Component {
     }];
   }
 
-  componentWillMount() {
-    this.getChartRef = (chart) => { this.chartRef = chart; };
+  getDomainScale() {
+    const {x: [from, to]} = this.lastDomain;
+    const ratio = this.targetBounds.width / this.width;
+    const absoluteAxisWidth = ratio * this.plottableWidth;
+    return absoluteAxisWidth / (to - from);
+  }
+
+  clipDataComponents(children, props) {
+    const {data, axes = []} = groupBy(children, (child) => {
+      return child.type.displayName === "VictoryAxis"
+      ? "axes"
+      : "data";
+    });
+
+    const [rangex0, rangex1] = Helpers.getRange(props, "x");
+
+    return [
+      React.cloneElement(this.props.clipContainerComponent, {
+        key: "ZoomClipContainer",
+        clipWidth: rangex1 - rangex0,
+        clipHeight: fallbackProps.height,
+        translateX: rangex0,
+        children: data
+      }),
+      ...axes
+    ];
+  }
+
+  renderChart(chartElement, props) {
+    return React.cloneElement(chartElement, props);
   }
 
   render() {
     const chart = React.Children.only(this.props.children);
-    const nextProps = assign({
+    const nextProps = assign({}, chart.props, {
       events: chart.props.events ? chart.props.events.unshift(...this.events) : this.events,
       domain: this.state.domain,
-      ref: this.getChartRef
-    }, chart.props);
-    return React.cloneElement(chart, nextProps);
+      ref: this.getChartRef,
+      modifyChildren: this.clipDataComponents
+    });
+
+    return this.renderChart(chart, nextProps);
   }
 
 }

@@ -75,7 +75,8 @@ export default class VictoryChart extends React.Component {
     standalone: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
+    modifyChildren: PropTypes.func
   };
 
   static defaultProps = {
@@ -275,7 +276,12 @@ export default class VictoryChart extends React.Component {
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
-    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+
+    if (this.props.modifyChildren) {
+      newChildren = this.props.modifyChildren(newChildren, modifiedProps);
+    }
+
     if (modifiedProps.events) {
       return (
         <VictorySharedEvents events={modifiedProps.events}

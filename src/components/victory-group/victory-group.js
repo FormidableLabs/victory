@@ -108,7 +108,8 @@ export default class VictoryGroup extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    modifyChildren: PropTypes.func
   };
 
   static defaultProps = {
@@ -307,7 +308,12 @@ export default class VictoryGroup extends React.Component {
       fallbackProps.props);
 
     const container = standalone && this.getContainer(modifiedProps, calculatedProps);
-    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+
+    if (this.props.modifyChildren) {
+      newChildren = this.props.modifyChildren(newChildren, modifiedProps);
+    }
+
     if (modifiedProps.events) {
       return (
         <VictorySharedEvents
