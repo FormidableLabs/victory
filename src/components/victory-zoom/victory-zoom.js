@@ -24,6 +24,7 @@ class VictoryZoom extends Component {
         y: CustomPropTypes.domain
       })
     ]),
+    onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired
   }
 
@@ -78,7 +79,7 @@ class VictoryZoom extends Component {
               const delta = this.startX - (clientX - this.targetBounds.left);
               const calculatedDx = delta / this.getDomainScale();
               const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, this.domain.x, calculatedDx);
-              this.setState({domain: {x: nextXDomain}});
+              this.setDomain({x: nextXDomain});
             });
           }
         },
@@ -91,11 +92,17 @@ class VictoryZoom extends Component {
 
             // TODO: Check scale factor
             const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 100));
-            this.setState({domain: {x: nextXDomain}});
+            this.setDomain({x: nextXDomain});
           });
         }
       }
     }];
+  }
+
+  setDomain(domain) {
+    const {onDomainChange} = this.props;
+    this.setState({domain});
+    if (onDomainChange) { onDomainChange(domain); }
   }
 
   getDomainScale() {
