@@ -36,12 +36,6 @@ class VictoryZoom extends Component {
     super(props);
 
     const chart = React.Children.only(this.props.children);
-    const chartChildren = React.Children.toArray(chart);
-
-    this.domain = {
-      x: ChartHelpers.getDomain(chart.props, "x", chartChildren)
-    };
-
     const [rangex1, rangex0] = Helpers.getRange(
       Helpers.modifyProps(chart.props, {}, "chart"), // TODO: Don't presume chart role
       "x"
@@ -49,9 +43,9 @@ class VictoryZoom extends Component {
 
     this.plottableWidth = rangex0 - rangex1;
     this.width = chart.props.width || fallbackProps.width;
-    this.state = { domain: props.initialDomain || this.domain };
+    this.state = { domain: props.initialDomain || this.getDataDomain() };
 
-    this.events = this.initializeEvents();
+    this.events = this.getEvents();
     this.clipDataComponents = this.clipDataComponents.bind(this);
   }
 
@@ -59,7 +53,16 @@ class VictoryZoom extends Component {
     this.getChartRef = (chart) => { this.chartRef = chart; };
   }
 
-  initializeEvents() {
+  getDataDomain() {
+    const chart = React.Children.only(this.props.children);
+    const chartChildren = React.Children.toArray(chart);
+
+    return {
+      x: ChartHelpers.getDomain(chart.props, "x", chartChildren)
+    };
+  }
+
+  getEvents() {
     return [{
       target: "parent",
       eventHandlers: {
@@ -76,10 +79,12 @@ class VictoryZoom extends Component {
           const clientX = evt.clientX;
           if (this.isPanning) {
             requestAnimationFrame(() => {
+              const domain = this.getDataDomain();
               const delta = this.startX - (clientX - this.targetBounds.left);
               const calculatedDx = delta / this.getDomainScale();
-              const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, this.domain.x, calculatedDx);
+              const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, domain.x, calculatedDx);
               this.setDomain({x: nextXDomain});
+              this.setState({domain: {x: nextXDomain}});
             });
           }
         },
@@ -88,7 +93,7 @@ class VictoryZoom extends Component {
           const deltaY = evt.deltaY;
           requestAnimationFrame(() => {
             const {x} = this.state.domain;
-            const {x: xBounds} = this.domain;
+            const xBounds = this.getDataDomain().x;
 
             // TODO: Check scale factor
             const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 100));
