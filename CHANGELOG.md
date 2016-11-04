@@ -1,5 +1,17 @@
 # VictoryChart Changelog
 
+## 13.1.1 (2016-10-31)
+
+- Stricter npmignore
+
+## 13.1.0 (2016-10-26)
+
+- Uses `publishr` to reduce npm installed package size [#413](https://github.com/FormidableLabs/victory/issues/413)
+- Fixes a bug where label padding was not being applied to tick labels [#408](https://github.com/FormidableLabs/victory/issues/408)
+- Changes how the domain is calculated when there is only one data point, or when the minimum and maximum of the data is equal in a given dimension [#407](https://github.com/FormidableLabs/victory/issues/407)
+- Ensures that ticks array is not empty after filtering zeroes for crossed axes
+- Fixes naming for "stack" and "group" roles
+
 ## 13.0.3 (2016-10-26)
 
 - Allow npm 2 install

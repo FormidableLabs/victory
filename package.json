@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "13.0.3",
+  "version": "13.1.1",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -19,20 +19,22 @@
   "scripts": {
     "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
+    "postversion": "builder run npm:postversion",
+    "postpublish": "builder run npm:postpublish",
     "start": "builder run hot",
     "test": "builder run check",
     "benchmark": "builder run check-perf",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\""
+    "version": "builder run npm:version"
   },
   "dependencies": {
     "builder": "^3.1.0",
-    "builder-victory-component": "^3.0.0",
+    "builder-victory-component": "^3.1.0",
     "d3-voronoi": "^1.0.0",
     "lodash": "^4.12.0",
-    "victory-core": "FormidableLabs/victory-core#save-svg-ref"
+    "victory-core": "^9.1.1"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^3.0.0",
+    "builder-victory-component-dev": "^3.1.0",
     "chai": "^3.2.0",
     "d3-scale": "^1.0.0",
     "d3-shape": "^1.0.0",
@@ -44,5 +46,13 @@
     "react-router": "^2.4.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
+  },
+  "publishr": {
+    "dependencies": [
+      "^builder"
+    ],
+    "files": {
+      ".npmignore": ".npmignore.publishr"
+    }
   }
 }

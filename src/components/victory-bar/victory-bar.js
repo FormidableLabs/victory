@@ -193,7 +193,7 @@ class VictoryBar extends React.Component {
 
     const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
     const group = this.renderGroup(
-      this.renderData(props), props, baseStyles
+      this.renderData(props), baseStyles.parent
     );
 
     return standalone ? this.renderContainer(props, group) : group;

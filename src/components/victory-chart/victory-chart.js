@@ -270,30 +270,25 @@ export default class VictoryChart extends React.Component {
 
   render() {
     const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps : this.props;
+      this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
+    const { standalone, events, eventKey } = modifiedProps;
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
-    const container = modifiedProps.standalone && this.getContainer(modifiedProps, calculatedProps);
     let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-
     if (this.props.modifyChildren) {
       newChildren = this.props.modifyChildren(newChildren, modifiedProps);
     }
-
-    if (modifiedProps.events) {
+    const group = this.renderGroup(newChildren, calculatedProps.style.parent);
+    const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
+    if (events) {
       return (
-        <VictorySharedEvents events={modifiedProps.events}
-          eventKey={modifiedProps.eventKey}
-          container={container}
-        >
+        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );
     }
-
-    const group = this.renderGroup(newChildren, calculatedProps.style.parent);
-    return modifiedProps.standalone ? React.cloneElement(container, container.props, group) : group;
+    return standalone ? React.cloneElement(container, container.props, group) : group;
   }
 }
