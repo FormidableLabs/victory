@@ -1,3 +1,5 @@
+/* globals setTimeout */
+
 import React from "react";
 import * as d3Ease from "d3-ease";
 import { timer } from "d3-timer";
@@ -36,6 +38,10 @@ export default class VictoryAnimation extends React.Component {
     data: {}
   };
 
+  static contextTypes = {
+    timer: React.PropTypes.object
+  };
+
   constructor(props) {
     super(props);
     /* defaults */
@@ -69,7 +75,9 @@ export default class VictoryAnimation extends React.Component {
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
-    if (this.timer) {
+    if (this.context.timer) {
+      this.context.timer.unsubscribe(this.loopID);
+    } else if (this.timer) {
       this.timer.stop();
     }
     /* If an object was supplied */
@@ -88,7 +96,9 @@ export default class VictoryAnimation extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.timer) {
+    if (this.context.timer) {
+      this.context.timer.unsubscribe(this.loopID);
+    } else if (this.timer) {
       this.timer.stop();
     }
   }
@@ -107,7 +117,21 @@ export default class VictoryAnimation extends React.Component {
       /* compare cached version to next props */
       this.interpolator = victoryInterpolator(this.state.data, data);
       /* reset step to zero */
-      this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
+      if (this.context.timer) {
+        if (this.props.delay) {
+          setTimeout(() => {
+            this.loopID = this.context.timer.subscribe(
+              this.functionToBeRunEachFrame, this.props.delay
+            );
+          }, this.props.delay);
+        } else {
+          this.loopID = this.context.timer.subscribe(
+            this.functionToBeRunEachFrame, this.props.delay
+          );
+        }
+      } else {
+        this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
+      }
     } else if (this.props.onEnd) {
       this.props.onEnd();
     }
@@ -128,7 +152,11 @@ export default class VictoryAnimation extends React.Component {
           animating: false
         }
       });
-      this.timer.stop();
+      if (this.context.timer) {
+        this.context.timer.unsubscribe(this.loopID);
+      } else if (this.timer) {
+        this.timer.stop();
+      }
       this.queue.shift();
       this.traverseQueue(); // Will take care of calling `onEnd`.
       return;

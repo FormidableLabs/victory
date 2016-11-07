@@ -13,5 +13,5 @@ export {
 } from "./victory-primitives/index";
 export {
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions
+  PropTypes, Scale, Style, TextSize, Timer, Transitions
 } from "./victory-util/index";
