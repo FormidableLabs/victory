@@ -21,6 +21,10 @@ export default class Timer {
       this.subscribers.forEach((s) => {
         s.callback(now() - s.startTime);
       });
+    } else {
+      this.subscribers.forEach((s) => {
+        s.callback(s.duration);
+      });
     }
   }
 
@@ -32,10 +36,11 @@ export default class Timer {
     this.timer.stop();
   }
 
-  subscribe(callback) {
+  subscribe(callback, duration) {
     return this.subscribers.push({
       startTime: now(),
-      callback
+      callback,
+      duration
     });
   }
 

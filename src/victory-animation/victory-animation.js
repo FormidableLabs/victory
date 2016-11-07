@@ -121,12 +121,12 @@ export default class VictoryAnimation extends React.Component {
         if (this.props.delay) {
           setTimeout(() => {
             this.loopID = this.context.timer.subscribe(
-              this.functionToBeRunEachFrame, this.props.delay
+              this.functionToBeRunEachFrame, this.props.duration
             );
           }, this.props.delay);
         } else {
           this.loopID = this.context.timer.subscribe(
-            this.functionToBeRunEachFrame, this.props.delay
+            this.functionToBeRunEachFrame, this.props.duration
           );
         }
       } else {
