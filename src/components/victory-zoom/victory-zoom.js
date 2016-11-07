@@ -17,13 +17,10 @@ class VictoryZoom extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    initialDomain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({
-        x: CustomPropTypes.domain,
-        y: CustomPropTypes.domain
-      })
-    ]),
+    initialDomain: PropTypes.shape({
+      x: CustomPropTypes.domain,
+      y: CustomPropTypes.domain
+    }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired
   }
