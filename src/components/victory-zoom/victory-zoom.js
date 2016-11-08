@@ -1,6 +1,6 @@
 /* globals requestAnimationFrame */
 import React, {Component, PropTypes} from "react";
-import { assign, groupBy } from "lodash";
+import { assign, groupBy, isEqual } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
 import {VictoryClipContainer, Helpers, PropTypes as CustomPropTypes, Timer} from "victory-core";
@@ -17,7 +17,7 @@ class VictoryZoom extends Component {
 
   static propTypes = {
     children: PropTypes.node,
-    initialDomain: PropTypes.shape({
+    zoomDomain: PropTypes.shape({
       x: CustomPropTypes.domain,
       y: CustomPropTypes.domain
     }),
@@ -44,7 +44,7 @@ class VictoryZoom extends Component {
 
     this.plottableWidth = rangex0 - rangex1;
     this.width = chart.props.width || fallbackProps.width;
-    this.state = { domain: props.initialDomain || this.getDataDomain() };
+    this.state = { domain: props.zoomDomain || this.getDataDomain() };
 
     this.events = this.getEvents();
     this.clipDataComponents = this.clipDataComponents.bind(this);
@@ -64,6 +64,13 @@ class VictoryZoom extends Component {
  componentWillUnmount() {
    if (!this.context.timer) {
      this.timer.stop();
+   }
+ }
+
+ componentWillReceiveProps({zoomDomain: nextDomain}) {
+   const {zoomDomain} = this.props;
+   if (!isEqual(zoomDomain, nextDomain)) {
+     this.setState({domain: nextDomain});
    }
  }
 
