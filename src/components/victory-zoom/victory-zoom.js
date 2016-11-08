@@ -3,7 +3,7 @@ import React, {Component, PropTypes} from "react";
 import { assign, groupBy } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
-import {VictoryClipContainer, Helpers, PropTypes as CustomPropTypes} from "victory-core";
+import {VictoryClipContainer, Helpers, PropTypes as CustomPropTypes, Timer} from "victory-core";
 
 const fallbackProps = {
   width: 450,
@@ -23,6 +23,10 @@ class VictoryZoom extends Component {
     }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired
+  }
+
+  static childContextTypes = {
+    timer: React.PropTypes.object
   }
 
   static defaultProps = {
@@ -46,9 +50,22 @@ class VictoryZoom extends Component {
     this.clipDataComponents = this.clipDataComponents.bind(this);
   }
 
+  getChildContext() {
+    return {
+      timer: this.timer
+    };
+  }
+
   componentWillMount() {
     this.getChartRef = (chart) => { this.chartRef = chart; };
+    this.timer = this.context.timer || new Timer();
   }
+
+ componentWillUnmount() {
+   if (!this.context.timer) {
+     this.timer.stop();
+   }
+ }
 
   getDataDomain() {
     const chart = React.Children.only(this.props.children);
@@ -93,7 +110,7 @@ class VictoryZoom extends Component {
             const xBounds = this.getDataDomain().x;
 
             // TODO: Check scale factor
-            const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 100));
+            const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
             this.setDomain({x: nextXDomain});
           });
         }
@@ -103,7 +120,8 @@ class VictoryZoom extends Component {
 
   setDomain(domain) {
     const {onDomainChange} = this.props;
-    this.setState({domain});
+    this.timer.bypassAnimation();
+    this.setState({domain}, () => this.timer.resumeAnimation());
     if (onDomainChange) { onDomainChange(domain); }
   }
 
