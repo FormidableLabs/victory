@@ -17,15 +17,9 @@ export default class Timer {
   }
 
   loop() {
-    if (this.shouldAnimate) {
-      this.subscribers.forEach((s) => {
-        s.callback(now() - s.startTime);
-      });
-    } else {
-      this.subscribers.forEach((s) => {
-        s.callback(s.duration);
-      });
-    }
+    this.subscribers.forEach((s) => {
+      s.callback(now() - s.startTime);
+    });
   }
 
   start() {
@@ -37,14 +31,21 @@ export default class Timer {
   }
 
   subscribe(callback, duration) {
-    return this.subscribers.push({
-      startTime: now(),
-      callback,
-      duration
-    });
+    if (this.shouldAnimate) {
+      return this.subscribers.push({
+        startTime: now(),
+        callback,
+        duration
+      });
+    }
+
+    callback(duration);
+    return null;
   }
 
   unsubscribe(id) {
-    delete this.subscribers[id - 1];
+    if (id !== null) {
+      delete this.subscribers[id - 1];
+    }
   }
 }
