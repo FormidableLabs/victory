@@ -18,7 +18,14 @@ export default class App extends React.Component {
       style: {
         stroke: "blue",
         strokeWidth: 2
-      }
+      },
+      zoomDomain: this.getZoomDomain()
+    };
+  }
+
+  getZoomDomain() {
+    return {
+      x: [random(0, 0.5, 0.1), random(0.5, 1, 0.1)]
     };
   }
 
@@ -87,7 +94,11 @@ export default class App extends React.Component {
           />
           </VictoryChart>
         </VictoryZoom>
-        <VictoryZoom>
+
+        <button onClick={() => this.setState({zoomDomain: this.getZoomDomain()})}>
+          New domain
+        </button>
+        <VictoryZoom zoomDomain={this.state.zoomDomain}>
         <VictoryChart style={{parent: parentStyle}}>
 
           <VictoryLine
@@ -97,6 +108,7 @@ export default class App extends React.Component {
           />
           </VictoryChart>
         </VictoryZoom>
+
         <VictoryZoom>
         <VictoryChart style={{parent: parentStyle}}>
 
