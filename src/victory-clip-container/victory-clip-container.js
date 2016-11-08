@@ -31,6 +31,11 @@ export default class VictoryClipContainer extends React.Component {
     clipPathComponent: <ClipPath/>
   }
 
+  constructor(props) {
+    super(props);
+    this.clipId = Math.round(Math.random() * 10000);
+  }
+
   // Overridden in victory-core-native
   renderClippedGroup(props, clipId) {
     const { style, events, transform, children } = props;
@@ -75,8 +80,7 @@ export default class VictoryClipContainer extends React.Component {
   render() {
     const { clipWidth } = this.props;
     if (clipWidth || clipWidth === 0) {
-      const clipId = Math.round(Math.random() * 10000);
-      return this.renderClippedGroup(this.props, clipId);
+      return this.renderClippedGroup(this.props, this.clipId);
     }
     return this.renderGroup(this.props);
   }
