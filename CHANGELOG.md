@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 13.2.0 (2016-11-09)
+
+- Adds `VictoryZoom` to enable panning and zooming on charts
+
 ## 13.1.1 (2016-10-31)
 
 - Stricter npmignore
