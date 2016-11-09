@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 0.13.5 (2016-11-09)
+
+- Export VictoryZoom
+
 ## 0.13.4 (2016-11-09)
 
 - Add global animation timer
