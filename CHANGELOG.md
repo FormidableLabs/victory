@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 9.2.0 (2016-11-09)
+
+- Adds a global animation timer (non-breaking change)
+
 ## 9.1.1 (2016-10-31)
 
 - Stricter npmignore
