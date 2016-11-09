@@ -75,7 +75,8 @@ export default class VictoryChart extends React.Component {
     standalone: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
-    width: CustomPropTypes.nonNegative
+    width: CustomPropTypes.nonNegative,
+    modifyChildren: PropTypes.func
   };
 
   static defaultProps = {
@@ -101,6 +102,10 @@ export default class VictoryChart extends React.Component {
     }
   }
 
+  componentWillMount() {
+    this.getContainerRef = (component) => this.containerRef = component;
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
@@ -112,7 +117,8 @@ export default class VictoryChart extends React.Component {
     return {
       parent: defaults({
         height: "auto",
-        width: "100%"
+        width: "100%",
+        userSelect: "none"
       },
       styleProps
     )};
@@ -139,6 +145,7 @@ export default class VictoryChart extends React.Component {
       crossAxis,
       orientation
     };
+
   }
 
   getChildProps(child, props, calculatedProps) {
@@ -238,13 +245,17 @@ export default class VictoryChart extends React.Component {
     return newChildren;
   }
 
+  getSvgBounds() {
+    return this.containerRef.svgRef.getBoundingClientRect();
+  }
+
   getContainer(props, calculatedProps) {
     const { width, height, containerComponent } = props;
     const { scale, style } = calculatedProps;
     const parentProps = defaults(
       {},
       containerComponent.props,
-      {style: style.parent, scale, width, height}
+      {style: style.parent, scale, width, height, ref: this.getContainerRef}
     );
     return React.cloneElement(containerComponent, parentProps);
   }
@@ -265,7 +276,10 @@ export default class VictoryChart extends React.Component {
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
-    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    if (this.props.modifyChildren) {
+      newChildren = this.props.modifyChildren(newChildren, modifiedProps);
+    }
     const group = this.renderGroup(newChildren, calculatedProps.style.parent);
     const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
     if (events) {

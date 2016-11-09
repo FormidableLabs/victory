@@ -108,7 +108,8 @@ export default class VictoryGroup extends React.Component {
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string,
       PropTypes.arrayOf(PropTypes.string)
-    ])
+    ]),
+    modifyChildren: PropTypes.func
   };
 
   static defaultProps = {
@@ -133,6 +134,10 @@ export default class VictoryGroup extends React.Component {
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
+  }
+
+  componentWillMount() {
+    this.getContainerRef = (component) => this.containerRef = component;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -274,9 +279,13 @@ export default class VictoryGroup extends React.Component {
     const parentProps = defaults(
       {},
       containerComponent.props,
-      {style: style.parent, scale, width, height}
+      {style: style.parent, scale, width, height, ref: this.getContainerRef}
     );
     return React.cloneElement(containerComponent, parentProps);
+  }
+
+  getSvgBounds() {
+    return this.containerRef.svgRef.getBoundingClientRect();
   }
 
   renderGroup(children, style) {
@@ -297,7 +306,10 @@ export default class VictoryGroup extends React.Component {
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
       fallbackProps.props);
-    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
+    if (this.props.modifyChildren) {
+      newChildren = this.props.modifyChildren(newChildren, modifiedProps);
+    }
     const group = this.renderGroup(newChildren, style.parent);
     const container = standalone ?
       this.getContainer(modifiedProps, calculatedProps) : group;

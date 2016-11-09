@@ -13,6 +13,7 @@ import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
+import BrushDemo from "./components/victory-brush-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
@@ -39,6 +40,7 @@ const App = React.createClass({
           <li><Link to="/group">Group Demo</Link></li>
           <li><Link to="/voronoi">Victory Voronoi Demo</Link></li>
           <li><Link to="/tooltip">Victory Tooltip Demo</Link></li>
+          <li><Link to="/brush">Victory Brush Demo</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -61,6 +63,7 @@ ReactDOM.render((
       <Route path="group" component={GroupDemo}/>
       <Route path="voronoi" component={VoronoiDemo}/>
       <Route path="tooltip" component={TooltipDemo}/>
+      <Route path="brush" component={BrushDemo}/>
     </Route>
   </Router>
 ), content);

@@ -19,7 +19,7 @@ export default {
     };
 
     if (axisComponents.dependent.length === 0 && axisComponents.independent.length === 0) {
-      return [defaultAxes.independent, defaultAxes.dependent].concat(childComponents);
+      return childComponents.concat([defaultAxes.independent, defaultAxes.dependent]);
     }
     if (axisComponents.dependent.length > 1 || axisComponents.independent.length > 1) {
       const msg = `Only one VictoryAxis component of each axis type is allowed when ` +
@@ -28,7 +28,7 @@ export default {
       Log.warn(msg);
       const dataComponents = this.getDataComponents(childComponents);
       return Collection.removeUndefined(
-        [axisComponents.dependent[0], axisComponents.independent[0]].concat(dataComponents)
+        dataComponents.concat([axisComponents.dependent[0], axisComponents.independent[0]])
       );
     }
     return childComponents;
