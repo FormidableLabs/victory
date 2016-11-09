@@ -1,6 +1,8 @@
 import React, { PropTypes } from "react";
 import { assign, omit } from "lodash";
 import Portal from "../victory-portal/portal";
+import { Timer } from "../victory-util";
+
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -27,10 +29,15 @@ export default class VictoryContainer extends React.Component {
     responsive: true
   }
 
+  static contextTypes = {
+    timer: React.PropTypes.object
+  }
+
   static childContextTypes = {
     portalUpdate: React.PropTypes.func,
     portalRegister: React.PropTypes.func,
-    portalDeregister: React.PropTypes.func
+    portalDeregister: React.PropTypes.func,
+    timer: React.PropTypes.object
   }
 
   componentWillMount() {
@@ -39,13 +46,21 @@ export default class VictoryContainer extends React.Component {
     this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
+    this.timer = this.context.timer || new Timer();
+  }
+
+  componentWillUnmount() {
+    if (!this.context.timer) {
+      this.timer.stop();
+    }
   }
 
   getChildContext() {
     return {
       portalUpdate: this.portalUpdate,
       portalRegister: this.portalRegister,
-      portalDeregister: this.portalDeregister
+      portalDeregister: this.portalDeregister,
+      timer: this.timer
     };
   }
 

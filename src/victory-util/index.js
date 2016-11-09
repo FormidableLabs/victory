@@ -10,6 +10,7 @@ import PropTypes from "./prop-types";
 import Scale from "./scale";
 import Style from "./style";
 import TextSize from "./textsize";
+import Timer from "./timer";
 import * as Transitions from "./transitions";
 
 export {
@@ -25,5 +26,6 @@ export {
   Scale,
   Style,
   TextSize,
+  Timer,
   Transitions
 };
