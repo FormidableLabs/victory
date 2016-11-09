@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.13.4 (2016-11-09)
+
+- Add global animation timer
+- Add VictoryZoom
+
 ## 0.13.3 (2016-10-31)
 
 - Stricter npmignore
