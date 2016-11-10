@@ -52,6 +52,5 @@ describe("victory", () => {
     expect(Victory.Style).not.to.equal(undefined);
     expect(Victory.TextSize).not.to.equal(undefined);
     expect(Victory.Transitions).not.to.equal(undefined);
-    expect(Victory.VictoryZoom).not.to.equal(undefined);
   });
 });
