@@ -1,5 +1,3 @@
-/* globals setTimeout */
-
 import React from "react";
 import * as d3Ease from "d3-ease";
 import { timer } from "d3-timer";
@@ -119,7 +117,7 @@ export default class VictoryAnimation extends React.Component {
       /* reset step to zero */
       if (this.context.timer) {
         if (this.props.delay) {
-          setTimeout(() => {
+          setTimeout(() => { // eslint-disable-line no-undef
             this.loopID = this.context.timer.subscribe(
               this.functionToBeRunEachFrame, this.props.duration
             );
