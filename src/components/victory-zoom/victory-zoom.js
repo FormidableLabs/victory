@@ -25,7 +25,7 @@ class VictoryZoom extends Component {
   }
 
   static childContextTypes = {
-    timer: React.PropTypes.object
+    getTimer: React.PropTypes.func
   }
 
   static defaultProps = {
@@ -47,23 +47,28 @@ class VictoryZoom extends Component {
 
     this.events = this.getEvents();
     this.clipDataComponents = this.clipDataComponents.bind(this);
+    this.getTimer = this.getTimer.bind(this);
   }
 
   getChildContext() {
     return {
-      timer: this.timer
+      getTimer: this.getTimer
     };
+  }
+
+  getTimer() {
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
   }
 
   componentWillMount() {
     this.getChartRef = (chart) => { this.chartRef = chart; };
-    this.timer = this.context.timer || new Timer();
   }
 
  componentWillUnmount() {
-   if (!this.context.timer) {
-     this.timer.stop();
-   }
+   this.getTimer.stop();
  }
 
  componentWillReceiveProps({zoomDomain: nextDomain}) {
@@ -126,8 +131,8 @@ class VictoryZoom extends Component {
 
   setDomain(domain) {
     const {onDomainChange} = this.props;
-    this.timer.bypassAnimation();
-    this.setState({domain}, () => this.timer.resumeAnimation());
+    this.getTimer().bypassAnimation();
+    this.setState({domain}, () => this.getTimer().resumeAnimation());
     if (onDomainChange) { onDomainChange(domain); }
   }
 
