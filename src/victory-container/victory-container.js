@@ -3,7 +3,6 @@ import { assign, omit } from "lodash";
 import Portal from "../victory-portal/portal";
 import { Timer } from "../victory-util";
 
-
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
 
@@ -30,7 +29,7 @@ export default class VictoryContainer extends React.Component {
   }
 
   static contextTypes = {
-    timer: React.PropTypes.object
+    getTimer: React.PropTypes.func
   }
 
   static childContextTypes = {
@@ -46,12 +45,11 @@ export default class VictoryContainer extends React.Component {
     this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
-    this.timer = this.context.timer || new Timer();
   }
 
   componentWillUnmount() {
     if (!this.context.timer) {
-      this.timer.stop();
+      this.getTimer().stop();
     }
   }
 
@@ -60,8 +58,18 @@ export default class VictoryContainer extends React.Component {
       portalUpdate: this.portalUpdate,
       portalRegister: this.portalRegister,
       portalDeregister: this.portalDeregister,
-      timer: this.timer
+      timer: this.getTimer()
     };
+  }
+
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
+    }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
   }
 
   // Overridden in victory-core-native
