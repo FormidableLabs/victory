@@ -1,4 +1,3 @@
-/* globals requestAnimationFrame */
 import React, {Component, PropTypes} from "react";
 import { assign, groupBy, isEqual } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
@@ -99,7 +98,7 @@ class VictoryZoom extends Component {
         onMouseMove: (evt) => {
           const clientX = evt.clientX;
           if (this.isPanning) {
-            requestAnimationFrame(() => {
+            requestAnimationFrame(() => { // eslint-disable-line no-undef
               const domain = this.getDataDomain();
               const delta = this.startX - (clientX - this.targetBounds.left);
               const calculatedDx = delta / this.getDomainScale();
@@ -112,7 +111,7 @@ class VictoryZoom extends Component {
         onWheel: (evt) => {
           evt.preventDefault();
           const deltaY = evt.deltaY;
-          requestAnimationFrame(() => {
+          requestAnimationFrame(() => { // eslint-disable-line no-undef
             const {x} = this.state.domain;
             const xBounds = this.getDataDomain().x;
 
