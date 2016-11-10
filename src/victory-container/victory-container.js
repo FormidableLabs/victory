@@ -36,7 +36,12 @@ export default class VictoryContainer extends React.Component {
     portalUpdate: React.PropTypes.func,
     portalRegister: React.PropTypes.func,
     portalDeregister: React.PropTypes.func,
-    timer: React.PropTypes.object
+    getTimer: React.PropTypes.func
+  }
+
+  constructor(props) {
+    super(props);
+    this.getTimer = this.getTimer.bind(this);
   }
 
   componentWillMount() {
@@ -48,7 +53,7 @@ export default class VictoryContainer extends React.Component {
   }
 
   componentWillUnmount() {
-    if (!this.context.timer) {
+    if (!this.context.getTimer) {
       this.getTimer().stop();
     }
   }
@@ -58,7 +63,7 @@ export default class VictoryContainer extends React.Component {
       portalUpdate: this.portalUpdate,
       portalRegister: this.portalRegister,
       portalDeregister: this.portalDeregister,
-      timer: this.getTimer()
+      getTimer: this.getTimer
     };
   }
 
