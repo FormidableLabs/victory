@@ -1,5 +1,9 @@
 # Victory Changelog
 
+## 0.13.7 (2012-11-09)
+
+- Fix timer issues and export VictoryZoom
+
 ## 0.13.6 (2016-11-09)
 
 - Temporarily revert global animation timer and VictoryZoom changes

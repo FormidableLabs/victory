@@ -26,7 +26,8 @@ import {
   VictoryScatter,
   VictoryStack,
   VictoryVoronoi,
-  VictoryVoronoiTooltip
+  VictoryVoronoiTooltip,
+  VictoryZoom
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
@@ -53,6 +54,7 @@ export {
   VictoryTooltip,
   VictoryVoronoi,
   VictoryVoronoiTooltip,
+  VictoryZoom,
   VictoryPortal,
   Portal,
   VictoryClipContainer,
