@@ -68,7 +68,7 @@ class VictoryZoom extends Component {
   }
 
  componentWillUnmount() {
-   this.getTimer.stop();
+   this.getTimer().stop();
  }
 
  componentWillReceiveProps({zoomDomain: nextDomain}) {
