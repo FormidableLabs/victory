@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 13.2.2 (2016-11-09)
+
+- Get timer only when needed
+
 ## 13.2.1 (2016-11-09)
 
 - Code style consistency
