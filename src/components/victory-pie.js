@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { partialRight } from "lodash";
+import { partialRight, assign } from "lodash";
 import {
   addEvents,
   Helpers,
@@ -137,6 +137,10 @@ class VictoryPie extends React.Component {
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
 
+  static expectedComponents = [
+    "dataComponent", "labelComponent", "groupComponent", "containerComponent"
+  ];
+
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const dataComponents = [];
@@ -147,7 +151,9 @@ class VictoryPie extends React.Component {
 
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
       if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-        labelComponents[index] = React.cloneElement(labelComponent, labelProps);
+        labelComponents[index] = React.cloneElement(
+          labelComponent, assign({}, labelProps, {renderInPortal: false})
+          );
       }
     }
     return labelComponents.length > 0 ?
