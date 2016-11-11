@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 9.2.2 (2016-11-09)
+
+- Create timer only when needed
+
 ## 9.2.1 (2016-11-09)
 
 - Code style consistency
