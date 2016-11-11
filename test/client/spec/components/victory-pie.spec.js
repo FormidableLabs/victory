@@ -321,8 +321,7 @@ describe("components/victory-pie", () => {
         node.simulate("click");
         expect(clickHandler.called).to.equal(true);
         // the first argument is the standard evt object
-        expect(omit(clickHandler.args[index][1], ["events", "key"]))
-          .to.eql(omit(initialProps, ["events", "key"]));
+        expect(clickHandler.args[index][1].datum).to.eql(initialProps.datum);
         expect(`${clickHandler.args[index][2]}`).to.eql(`${index}`);
       });
     });
