@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 7.1.2 (2016-11-11)
+
+- Fix tooltip bug. Force `renderInPortal={false}` for VictoryPie tooltips
+
 ## 7.1.1 (2016-10-31)
 
 - Stricter npmignore
