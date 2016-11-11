@@ -73,7 +73,7 @@ export default class VictoryAnimation extends React.Component {
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
-    if (this.context.getTimer()) {
+    if (this.context.getTimer) {
       this.context.getTimer().unsubscribe(this.loopID);
     } else if (this.timer) {
       this.timer.stop();
@@ -94,7 +94,7 @@ export default class VictoryAnimation extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.context.getTimer()) {
+    if (this.context.getTimer) {
       this.context.getTimer().unsubscribe(this.loopID);
     } else if (this.timer) {
       this.timer.stop();
@@ -115,7 +115,7 @@ export default class VictoryAnimation extends React.Component {
       /* compare cached version to next props */
       this.interpolator = victoryInterpolator(this.state.data, data);
       /* reset step to zero */
-      if (this.context.getTimer()) {
+      if (this.context.getTimer) {
         if (this.props.delay) {
           setTimeout(() => { // eslint-disable-line no-undef
             this.loopID = this.context.getTimer().subscribe(
@@ -150,7 +150,7 @@ export default class VictoryAnimation extends React.Component {
           animating: false
         }
       });
-      if (this.context.getTimer()) {
+      if (this.context.getTimer) {
         this.context.getTimer().unsubscribe(this.loopID);
       } else if (this.timer) {
         this.timer.stop();
