@@ -385,7 +385,8 @@ export function getTransitionPropsFactory(props, state, setState) {
     );
 
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];
-    if (!nodesDoneLoad) {
+    // if (!nodesDoneLoad) {
+    if (false) {
       // should do onLoad animation
       const load = transitionDurations.load !== undefined ?
         transitionDurations.load : getChildTransitionDuration(child, "onLoad");
