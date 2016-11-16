@@ -59,12 +59,11 @@ export default class VictoryTransition extends React.Component {
 
   animateState(state, forceLoad) {
     const {
-      nodesWillExit, nodesWillEnter, nodesShouldEnter, nodesShouldLoad, nodesDoneLoad,
-      nodesDoneClipPathLoad, nodesDoneClipPathEnter, nodesDoneClipPathExit, animating
+      nodesWillExit, nodesWillEnter, nodesShouldEnter, nodesShouldLoad, nodesDoneLoad, animating
     } = state;
-    const loading = forceLoad || !nodesDoneLoad && (!!nodesShouldLoad || nodesDoneClipPathLoad);
-    const entering = nodesShouldEnter || nodesWillEnter || nodesDoneClipPathEnter;
-    const exiting = nodesWillExit || nodesDoneClipPathExit;
+    const loading = forceLoad || !nodesDoneLoad && !!nodesShouldLoad;
+    const entering = nodesShouldEnter || nodesWillEnter;
+    const exiting = nodesWillExit;
     return (animating || this.state.animating) && (loading || entering || exiting);
   }
 
@@ -106,11 +105,9 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit,
         animating
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-      const transitionState = {
+      return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
@@ -119,13 +116,6 @@ export default class VictoryTransition extends React.Component {
         oldProps: nodesWillExit ? props : null,
         nextProps
       };
-      return this.continuous ? assign(
-        {
-          nodesDoneClipPathEnter,
-          nodesDoneClipPathExit
-        },
-        transitionState
-      ) : transitionState;
     }
   }
 
@@ -162,7 +152,6 @@ export default class VictoryTransition extends React.Component {
   pickDomainProps(props) {
     const parentState = props.animate && props.animate.parentState;
     if (parentState && parentState.nodesWillExit) {
-      console.log(this.continuous, parentState.continuous)
       return this.continous || parentState.continuous ?
         parentState.nextProps || this.state.nextProps || props : props;
     }
