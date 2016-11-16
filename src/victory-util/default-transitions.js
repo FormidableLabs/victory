@@ -2,7 +2,7 @@
 export function continuousTransitions() {
   return {
     onLoad: {
-      duration: 2000
+      duration: 500
     },
     onExit: {
       duration: 500

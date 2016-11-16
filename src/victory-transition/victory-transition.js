@@ -17,7 +17,7 @@ export default class VictoryTransition extends React.Component {
     this.state = {
       nodesShouldLoad: false,
       nodesDoneLoad: false,
-      animating: true
+      animating: false
     };
     const child = this.props.children;
     this.continuous = child.type && child.type.continuous === true;
@@ -70,26 +70,13 @@ export default class VictoryTransition extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.shouldAnimateState(nextProps, nextState)) {
-      return true;
-    } else if (this.shouldAnimateProps(nextProps)) {
-      return true;
-    }
-    return false;
-    // return true;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.animating !== this.state.animating && nextState.animating === false) {
-      const onEnd = nextProps && nextProps.animate && nextProps.animate.onEnd || identity;
-      onEnd();
-    }
-  }
-
-  componentDidMount() {
-    if (this.transitionProps && this.transitionProps.cb) {
-      this.transitionProps.cb();
-    }
+    // if (this.shouldAnimateState(nextProps, nextState)) {
+    //   return true;
+    // } else if (this.shouldAnimateProps(nextProps)) {
+    //   return true;
+    // }
+    // return false;
+    return true;
   }
 
   getTransitionState(props, nextProps) {
@@ -108,6 +95,7 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesShouldLoad,
         nodesDoneLoad,
         animating
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
@@ -116,6 +104,7 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesShouldLoad,
         nodesDoneLoad,
         animating: animating || this.state.animating,
         oldProps: nodesWillExit ? props : null,
@@ -175,6 +164,7 @@ export default class VictoryTransition extends React.Component {
   }
 
   render() {
+    console.log(this.state.nodesShouldLoad, this.state.nodesDoneLoad)
     const props = this.pickProps();
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :

@@ -119,7 +119,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     //       for new nodes. In this case, we wouldn't want a delay before
     //       the new nodes appear.
     nodesShouldEnter: false,
-    nodesShouldLoad: false,
+    nodesShouldLoad: true,
     nodesDoneLoad: false,
     animating: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
   };
@@ -133,17 +133,24 @@ function getInitialChildProps(animate, data) {
 }
 
 function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line max-params
+  animate = assign({}, animate, { onEnd: cb });
+  if (animate && animate.onLoad && !animate.onLoad.duration) {
+    return { animate, data };
+  }
   const before = animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
   // If nodes need to exit, transform them with the provided onLoad.before function.
   data = data.map((datum) => {
     return assign({}, datum, before(datum));
   });
 
-  return { animate, data, cb, clipWidth: 0};
+  return { animate, data, clipWidth: 0};
 }
 
 function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
   animate = assign({}, animate, { onEnd: cb });
+  if (animate && animate.onLoad && !animate.onLoad.duration) {
+    return { animate, data };
+  }
   const after = animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
   // If nodes need to exit, transform them with the provided onLoad.after function.
   data = data.map((datum) => {
@@ -252,7 +259,7 @@ export function getTransitionPropsFactory(props, state, setState) {
     }
 
     return getChildBeforeLoad(animate, child, data, () => {
-      setState({ nodesShouldLoad: true });
+      setState({ nodesShouldLoad: true, nodesDoneLoad: true });
     });
   };
 
