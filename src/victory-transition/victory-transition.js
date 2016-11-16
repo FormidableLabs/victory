@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions, Collection } from "../victory-util/index";
-import { defaults, isFunction, pick, identity, isEqual } from "lodash";
+import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -24,59 +24,12 @@ export default class VictoryTransition extends React.Component {
     this.getTransitionState = this.getTransitionState.bind(this);
   }
 
+  componentDidMount() {
+    this.setState({nodesShouldLoad: true}); //eslint-disable-line react/no-did-mount-set-state
+  }
+
   componentWillReceiveProps(nextProps) {
     this.setState(this.getTransitionState(this.props, nextProps));
-  }
-
-  // TODO: This method is expensive, but also prevents unnecessary animations
-  shouldAnimateProps(nextProps) {
-    return !isEqual(this.getWhitelistedProps(this.props), this.getWhitelistedProps(nextProps));
-  }
-
-  getWhitelistedProps(props) {
-    const childProps = props.children && props.children.props || {};
-    return props.animationWhitelist ? pick(childProps, props.animationWhitelist) : childProps;
-  }
-
-  shouldAnimateState(nextProps, nextState) {
-    const child = this.props.children;
-    // the axes don't need to transition, they should only respond to props changes
-    if (child.type.role && child.type.role === "axis") {
-      return false;
-    }
-    const parentState = this.getParentState(nextProps, nextState);
-    if (!parentState) {
-      return this.animateState(nextState);
-    }
-    // TODO: parentState does not have the correct nodesShouldLoad state
-    const forceLoad = parentState.animating && !parentState.nodesDoneLoad;
-    return this.animateState(parentState, forceLoad);
-  }
-
-  getParentState(nextProps, nextState) {
-    const props = nextState.oldProps || this.props;
-    return props.animate && props.animate.parentState ||
-      nextProps.animate && nextProps.animate.parentState;
-  }
-
-  animateState(state, forceLoad) {
-    const {
-      nodesWillExit, nodesWillEnter, nodesShouldEnter, nodesShouldLoad, nodesDoneLoad, animating
-    } = state;
-    const loading = forceLoad || !nodesDoneLoad && !!nodesShouldLoad;
-    const entering = nodesShouldEnter || nodesWillEnter;
-    const exiting = nodesWillExit;
-    return (animating || this.state.animating) && (loading || entering || exiting);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    // if (this.shouldAnimateState(nextProps, nextState)) {
-    //   return true;
-    // } else if (this.shouldAnimateProps(nextProps)) {
-    //   return true;
-    // }
-    // return false;
-    return true;
   }
 
   getTransitionState(props, nextProps) {
@@ -95,8 +48,6 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesShouldLoad,
-        nodesDoneLoad,
         animating
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
@@ -104,8 +55,6 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesShouldLoad,
-        nodesDoneLoad,
         animating: animating || this.state.animating,
         oldProps: nodesWillExit ? props : null,
         nextProps
@@ -164,7 +113,6 @@ export default class VictoryTransition extends React.Component {
   }
 
   render() {
-    console.log(this.state.nodesShouldLoad, this.state.nodesDoneLoad)
     const props = this.pickProps();
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :

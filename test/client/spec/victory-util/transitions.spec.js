@@ -15,11 +15,6 @@ describe("getInitialTransitionState", () => {
       nodesWillExit: false,
       nodesWillEnter: false,
       nodesShouldEnter: false,
-      nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false,
-      nodesShouldLoad: false,
-      nodesDoneClipPathLoad: false,
-      nodesDoneLoad: false,
       animating: false
     });
   });
@@ -32,11 +27,6 @@ describe("getInitialTransitionState", () => {
       nodesWillExit: false,
       nodesWillEnter: false,
       nodesShouldEnter: false,
-      nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false,
-      nodesShouldLoad: false,
-      nodesDoneClipPathLoad: false,
-      nodesDoneLoad: false,
       animating: true
     });
   });
@@ -50,11 +40,6 @@ describe("getInitialTransitionState", () => {
       nodesWillExit: true,
       nodesWillEnter: false,
       nodesShouldEnter: false,
-      nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false,
-      nodesShouldLoad: false,
-      nodesDoneClipPathLoad: false,
-      nodesDoneLoad: false,
       animating: true
     });
   });
@@ -68,11 +53,6 @@ describe("getInitialTransitionState", () => {
       nodesWillExit: false,
       nodesWillEnter: true,
       nodesShouldEnter: false,
-      nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false,
-      nodesShouldLoad: false,
-      nodesDoneClipPathLoad: false,
-      nodesDoneLoad: false,
       animating: true
     });
   });
@@ -100,10 +80,7 @@ describe("getTransitionPropsFactory", () => {
       nodesWillExit: true,
       nodesWillEnter: false,
       nodesShouldEnter: false,
-      nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: true,
       nodesShouldLoad: true,
-      nodesDoneClipPathLoad: true,
       nodesDoneLoad: true,
       animating: false
     };
@@ -123,10 +100,7 @@ describe("getTransitionPropsFactory", () => {
       nodesWillExit: false,
       nodesWillEnter: true,
       nodesShouldEnter: false,
-      nodesDoneClipPathEnter: false,
-      nodesDoneClipPathExit: false,
       nodesShouldLoad: true,
-      nodesDoneClipPathLoad: true,
       nodesDoneLoad: true,
       animating: false
     };

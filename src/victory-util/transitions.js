@@ -119,8 +119,6 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     //       for new nodes. In this case, we wouldn't want a delay before
     //       the new nodes appear.
     nodesShouldEnter: false,
-    nodesShouldLoad: true,
-    nodesDoneLoad: false,
     animating: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
   };
 }
@@ -254,12 +252,12 @@ export function getTransitionPropsFactory(props, state, setState) {
   const onLoad = (child, data, animate) => {
     if (nodesShouldLoad) {
       return getChildOnLoad(animate, data, () => {
-        setState({ nodesDoneLoad: true, animating: false});
+        setState({ nodesShouldLoad: false, nodesDoneLoad: true, animating: false});
       });
     }
 
     return getChildBeforeLoad(animate, child, data, () => {
-      setState({ nodesShouldLoad: true, nodesDoneLoad: true });
+      setState({ nodesDoneLoad: true });
     });
   };
 
