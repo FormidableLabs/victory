@@ -1,4 +1,4 @@
-import { assign, defaults, flatten, isFunction, partialRight, uniq } from "lodash";
+import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";
 import { Style, Transitions, Collection, Data, Domain } from "victory-core";
@@ -33,36 +33,28 @@ export default {
     }
     if (props.animate.parentState) {
       const nodesWillExit = props.animate.parentState.nodesWillExit;
-      const nodesDoneClipPathExit = props.animate.parentState.nodesDoneClipPathExit;
-      const oldProps = nodesWillExit && !nodesDoneClipPathExit ? props : null;
-      this.setState(defaults({oldProps}, props.animate.parentState));
+      const oldProps = nodesWillExit ? props : null;
+      this.setState(defaults({oldProps, nextProps}, props.animate.parentState));
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
+      const continuous = some(oldChildren, (child) => child.type && child.type.continuous);
       const {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter,
-        nodesShouldLoad,
-        nodesDoneLoad,
-        nodesDoneClipPathLoad,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit
+        nodesShouldEnter
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
 
       this.setState({
         nodesWillExit,
         nodesWillEnter,
         nodesShouldEnter,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit,
         childrenTransitions: Collection.isArrayOfArrays(childrenTransitions) ?
           childrenTransitions[0] : childrenTransitions,
-        nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
-        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
-        nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
-        oldProps: nodesWillExit && !nodesDoneClipPathExit ? props : null
+        oldProps: nodesWillExit ? props : null,
+        nextProps,
+        continuous
       });
     }
   },
