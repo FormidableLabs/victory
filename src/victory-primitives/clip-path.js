@@ -63,8 +63,8 @@ export default class ClipPath extends React.Component {
     const clipProps = {
       x: totalPadding("left") + translateX,
       y: totalPadding("top"),
-      width: clipWidth - totalPadding("left") - totalPadding("right"),
-      height: clipHeight - totalPadding("top") - totalPadding("bottom")
+      width: Math.max(clipWidth - totalPadding("left") - totalPadding("right"), 0),
+      height: Math.max(clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
     };
 
     return this.renderClipPath(clipProps, clipId);
