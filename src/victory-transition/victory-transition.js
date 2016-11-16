@@ -15,13 +15,10 @@ export default class VictoryTransition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      nodesShouldLoad: false,
-      nodesDoneLoad: false,
-      nodesDoneClipPathLoad: false,
       animating: true
     };
     const child = this.props.children;
-    this.continuous = child.type && child.type.continuous;
+    this.continuous = child.type && child.type.continuous === true;
     this.getTransitionState = this.getTransitionState.bind(this);
   }
 
@@ -99,8 +96,8 @@ export default class VictoryTransition extends React.Component {
       return {};
     } else if (animate.parentState) {
       const state = animate.parentState;
-      const oldProps = state.nodesWillExit && !state.nodesDoneClipPathExit ? props : null;
-      return {oldProps};
+      const oldProps = state.nodesWillExit ? props : null;
+      return {oldProps, nextProps};
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
@@ -109,9 +106,6 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesShouldLoad,
-        nodesDoneLoad,
-        nodesDoneClipPathLoad,
         nodesDoneClipPathEnter,
         nodesDoneClipPathExit,
         animating
@@ -121,16 +115,14 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
-        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
         animating: animating || this.state.animating,
-        oldProps: nodesWillExit && !nodesDoneClipPathExit ? props : null
+        oldProps: nodesWillExit ? props : null,
+        nextProps
       };
       return this.continuous ? assign(
         {
           nodesDoneClipPathEnter,
-          nodesDoneClipPathExit,
-          nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad
+          nodesDoneClipPathExit
         },
         transitionState
       ) : transitionState;
@@ -160,9 +152,35 @@ export default class VictoryTransition extends React.Component {
     }
   }
 
+  pickProps() {
+    if (!this.state) {
+      return this.props;
+    }
+    return this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+  }
+
+  pickDomainProps(props) {
+    const parentState = props.animate && props.animate.parentState;
+    if (parentState && parentState.nodesWillExit) {
+      console.log(this.continuous, parentState.continuous)
+      return this.continous || parentState.continuous ?
+        parentState.nextProps || this.state.nextProps || props : props;
+    }
+    return this.continuous && this.state.nodesWillExit ? this.state.nextProps || props : props;
+  }
+
+  getClipProps(props, child) {
+    if (!this.continuous) {
+      return {};
+    }
+    return {
+      clipHeight: child.props.height,
+      clipWidth: child.props.width
+    };
+  }
+
   render() {
-    const props = this.state && this.state.nodesWillExit && !this.state.nodesDoneClipPathExit ?
-      this.state.oldProps || this.props : this.props;
+    const props = this.pickProps();
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
       Transitions.getTransitionPropsFactory(
@@ -174,11 +192,12 @@ export default class VictoryTransition extends React.Component {
     const transitionProps = getTransitionProps(child);
     this.transitionProps = transitionProps;
     const domain = {
-      x: this.getDomainFromChildren(props, "x"),
+      x: this.getDomainFromChildren(this.pickDomainProps(props), "x"),
       y: this.getDomainFromChildren(props, "y")
     };
+    const clipProps = this.getClipProps(props, child);
     const combinedProps = defaults(
-      {domain}, transitionProps, child.props
+      {domain}, clipProps, transitionProps, child.props
     );
     const animationWhitelist = props.animationWhitelist || [];
     const whitelist = this.continuous ?
