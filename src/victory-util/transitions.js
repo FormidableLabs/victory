@@ -119,6 +119,8 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     //       for new nodes. In this case, we wouldn't want a delay before
     //       the new nodes appear.
     nodesShouldEnter: false,
+    nodesShouldLoad: false,
+    nodesDoneLoad: false,
     animating: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
   };
 }
@@ -130,13 +132,25 @@ function getInitialChildProps(animate, data) {
   };
 }
 
+function getChildBeforeLoad(animate, child, data, cb) { // eslint-disable-line max-params
+  const before = animate.onLoad && animate.onLoad.before ? animate.onLoad.before : identity;
+  // If nodes need to exit, transform them with the provided onLoad.before function.
+  data = data.map((datum) => {
+    return assign({}, datum, before(datum));
+  });
 
-function getChildClipPathToExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
-  if (exitingNodes) {
-    animate = assign({}, animate, { onEnd: cb });
-  }
+  return { animate, data, cb, clipWidth: 0};
+}
 
-  return { animate };
+function getChildOnLoad(animate, data, cb) { // eslint-disable-line max-params
+  animate = assign({}, animate, { onEnd: cb });
+  const after = animate.onLoad && animate.onLoad.after ? animate.onLoad.after : identity;
+  // If nodes need to exit, transform them with the provided onLoad.after function.
+  data = data.map((datum) => {
+    return assign({}, datum, after(datum));
+  });
+
+  return { animate, data };
 }
 
 function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint-disable-line max-params, max-len
@@ -161,8 +175,6 @@ function getChildPropsOnExit(animate, child, data, exitingNodes, cb) { // eslint
 }
 
 function getChildPropsBeforeEnter(animate, child, data, enteringNodes, cb) { // eslint-disable-line max-params,max-len
-  let clipWidth;
-
   if (enteringNodes) {
     // Perform a normal animation here, except - when it finishes - trigger
     // the transition for entering nodes.
@@ -222,11 +234,26 @@ export function getTransitionPropsFactory(props, state, setState) {
   const nodesWillExit = state && state.nodesWillExit;
   const nodesWillEnter = state && state.nodesWillEnter;
   const nodesShouldEnter = state && state.nodesShouldEnter;
+  const nodesShouldLoad = state && state.nodesShouldLoad;
+  const nodesDoneLoad = state && state.nodesDoneLoad;
   const childrenTransitions = state && state.childrenTransitions || [];
   const transitionDurations = {
     enter: props.animate && props.animate.onEnter && props.animate.onEnter.duration,
     exit: props.animate && props.animate.onExit && props.animate.onExit.duration,
+    load: props.animate && props.animate.onLoad && props.animate.onLoad.duration,
     move: props.animate && props.animate.duration
+  };
+
+  const onLoad = (child, data, animate) => {
+    if (nodesShouldLoad) {
+      return getChildOnLoad(animate, data, () => {
+        setState({ nodesDoneLoad: true, animating: false});
+      });
+    }
+
+    return getChildBeforeLoad(animate, child, data, () => {
+      setState({ nodesShouldLoad: true });
+    });
   };
 
   const onExit = (nodes, child, data, animate) => { // eslint-disable-line max-params
@@ -255,6 +282,7 @@ export function getTransitionPropsFactory(props, state, setState) {
       return animationDuration !== undefined ?
         animationDuration : defaultTransitions[type] && defaultTransitions[type].duration;
     }
+
     return {};
   };
 
@@ -268,9 +296,18 @@ export function getTransitionPropsFactory(props, state, setState) {
     animate.onEnter = defaults(
       {}, animate.onEnter, child.type.defaultTransitions && child.type.defaultTransitions.onEnter
     );
+    animate.onLoad = defaults(
+      {}, animate.onLoad, child.type.defaultTransitions && child.type.defaultTransitions.onLoad
+    );
 
     const childTransitions = childrenTransitions[index] || childrenTransitions[0];
-    if (nodesWillExit) {
+    if (!nodesDoneLoad) {
+      // should do onLoad animation
+      const load = transitionDurations.load !== undefined ?
+        transitionDurations.load : getChildTransitionDuration(child, "onLoad");
+      const animation = {duration: load};
+      return onLoad(child, data, assign({}, animate, animation));
+    } else if (nodesWillExit) {
       const exitingNodes = childTransitions && childTransitions.exiting;
       const exit = transitionDurations.exit !== undefined ?
         transitionDurations.exit : getChildTransitionDuration(child, "onExit");

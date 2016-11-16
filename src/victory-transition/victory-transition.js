@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
 import { Transitions, Collection } from "../victory-util/index";
-import { assign, defaults, isFunction, pick, identity, isEqual } from "lodash";
+import { defaults, isFunction, pick, identity, isEqual } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -15,6 +15,8 @@ export default class VictoryTransition extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      nodesShouldLoad: false,
+      nodesDoneLoad: false,
       animating: true
     };
     const child = this.props.children;
@@ -74,6 +76,7 @@ export default class VictoryTransition extends React.Component {
       return true;
     }
     return false;
+    // return true;
   }
 
   componentWillUpdate(nextProps, nextState) {
@@ -105,6 +108,7 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesDoneLoad,
         animating
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
@@ -112,6 +116,7 @@ export default class VictoryTransition extends React.Component {
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
+        nodesDoneLoad,
         animating: animating || this.state.animating,
         oldProps: nodesWillExit ? props : null,
         nextProps
@@ -162,9 +167,10 @@ export default class VictoryTransition extends React.Component {
     if (!this.continuous) {
       return {};
     }
+    const clipWidth = this.transitionProps && this.transitionProps.clipWidth;
     return {
       clipHeight: child.props.height,
-      clipWidth: child.props.width
+      clipWidth: clipWidth !== undefined ? clipWidth : child.props.width
     };
   }
 
