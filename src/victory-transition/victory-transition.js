@@ -150,11 +150,14 @@ export default class VictoryTransition extends React.Component {
       }, []);
     };
 
-    const childComponents = React.Children.toArray(props.children);
-    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
-      return Array.isArray(props.domain) ? props.domain : props.domain[axis];
+    const child = React.Children.toArray(props.children)[0];
+    const childProps = child.props || {};
+    const domain = Array.isArray(childProps.domain) ?
+      childProps.domain : childProps.domain && childProps.domain[axis];
+    if (!childProps.children && domain) {
+      return domain;
     } else {
-      const childDomains = getChildDomains(childComponents);
+      const childDomains = getChildDomains([child]);
       return childDomains.length === 0 ?
         [0, 1] : [Collection.getMinValue(childDomains), Collection.getMaxValue(childDomains)];
     }
