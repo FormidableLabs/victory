@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 13.2.3 (2016-18-09)
+
+- fix broken timer on unmount
+
 ## 13.2.2 (2016-11-09)
 
 - Get timer only when needed
