@@ -140,8 +140,8 @@ export default class VictoryChart extends React.Component {
       scale: scale[axis],
       tickValues,
       tickFormat,
-      offsetY: child.props.offsetY || offsetY,
-      offsetX: child.props.offsetX || offsetX,
+      offsetY: child.props.offsetY !== undefined ? child.props.offsetY : offsetY,
+      offsetX: child.props.offsetX !== undefined ? child.props.offsetX : offsetX,
       crossAxis,
       orientation
     };

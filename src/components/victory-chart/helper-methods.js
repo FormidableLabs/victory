@@ -88,8 +88,10 @@ export default {
     };
 
     return {
-      x: axisComponents.x && axisComponents.x.offsetX || calculatedOffset.x,
-      y: axisComponents.y && axisComponents.y.offsetY || calculatedOffset.y
+      x: axisComponents.x && axisComponents.x.offsetX !== undefined ?
+        axisComponents.x.offsetX : calculatedOffset.x,
+      y: axisComponents.y && axisComponents.y.offsetY !== undefined ?
+        axisComponents.y.offsetY : calculatedOffset.y
     };
   },
 
@@ -101,7 +103,7 @@ export default {
     const ticksFromCategories = categoryArray && Collection.containsOnlyStrings(categoryArray) ?
       categoryArray.map((tick) => stringMap[tick]) : categoryArray;
     const ticksFromStringMap = stringMap && values(stringMap);
-    // when ticks is undefined, axis will determine it's own ticks
+    // when ticks is undefined, axis will determine its own ticks
     return ticksFromCategories && ticksFromCategories.length !== 0 ?
       ticksFromCategories : ticksFromStringMap;
   },
