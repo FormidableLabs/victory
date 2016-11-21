@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 9.2.2 (2016-21-09)
+
+- Fix Transition domain bug
+
 ## 9.2.2 (2016-11-09)
 
 - Create timer only when needed
