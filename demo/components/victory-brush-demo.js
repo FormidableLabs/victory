@@ -77,21 +77,20 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryZoom</h1>
 
-          <VictoryZoom>
-            <VictoryGroup data={this.state.transitionData}>
-              <VictoryLine style={{data: this.state.style}} />
-            </VictoryGroup>
-          </VictoryZoom>
+        <VictoryZoom>
+          <VictoryGroup data={this.state.transitionData}>
+            <VictoryLine style={{data: this.state.style}} />
+          </VictoryGroup>
+        </VictoryZoom>
 
-          <VictoryZoom>
+        <VictoryZoom>
           <VictoryChart style={{parent: parentStyle}}>
-
-          <VictoryLine
-            style={{parent: parentStyle, data: this.state.style}}
-            data={this.state.data}
-            label={"label\none"}
-            animate={{duration: 1500}}
-          />
+            <VictoryLine
+              style={{parent: parentStyle, data: this.state.style}}
+              data={this.state.data}
+              label={"label\none"}
+              animate={{duration: 1500}}
+            />
           </VictoryChart>
         </VictoryZoom>
 
@@ -99,60 +98,57 @@ export default class App extends React.Component {
           New domain
         </button>
         <VictoryZoom zoomDomain={this.state.zoomDomain}>
-        <VictoryChart style={{parent: parentStyle}}>
-
-          <VictoryLine
-            style={{parent: parentStyle, data: {stroke: "blue"}}}
-            y={(d) => Math.sin(2 * Math.PI * d.x)}
-            sample={25}
-          />
+          <VictoryChart style={{parent: parentStyle}}>
+            <VictoryLine
+              style={{parent: parentStyle, data: {stroke: "blue"}}}
+              y={(d) => Math.sin(2 * Math.PI * d.x)}
+              sample={25}
+            />
           </VictoryChart>
         </VictoryZoom>
 
         <VictoryZoom>
-        <VictoryChart style={{parent: parentStyle}}>
-
-          <VictoryLine
-            style={{
-              parent: parentStyle,
-              data: {stroke: "red", strokeWidth: 6}
-            }}
-            events={[{
-              target: "data",
-              eventHandlers: {
-                onClick: () => {
-                  return [
-                    {
-                      mutation: (props) => {
-                        return {style: merge({}, props.style, {stroke: "orange"})};
+          <VictoryChart style={{parent: parentStyle}}>
+            <VictoryLine
+              style={{
+                parent: parentStyle,
+                data: {stroke: "red", strokeWidth: 6}
+              }}
+              events={[{
+                target: "data",
+                eventHandlers: {
+                  onClick: () => {
+                    return [
+                      {
+                        mutation: (props) => {
+                          return {style: merge({}, props.style, {stroke: "orange"})};
+                        }
+                      }, {
+                        target: "labels",
+                        mutation: () => {
+                          return {text: "hey"};
+                        }
                       }
-                    }, {
-                      target: "labels",
-                      mutation: () => {
-                        return {text: "hey"};
-                      }
-                    }
-                  ];
+                    ];
+                  }
                 }
-              }
-            }]}
-            label={this.state.label}
-            data={range(0, 100)}
-            y={(d) => d * d}
-          />
+              }]}
+              label={this.state.label}
+              data={range(0, 100)}
+              y={(d) => d * d}
+            />
           </VictoryChart>
         </VictoryZoom>
-        <VictoryZoom>
-        <VictoryChart style={{parent: parentStyle}}>
 
+        <VictoryZoom>
+          <VictoryChart style={{parent: parentStyle}}>
             <VictoryArea
               style={{parent: parentStyle, data: {stroke: "#333", fill: "#888", opacity: 0.4}}}
               data={this.state.barData}
               interpolation="stepBefore"
             />
-            </VictoryChart>
-          </VictoryZoom>
-
+          </VictoryChart>
+        </VictoryZoom>
       </div>
     );
   }

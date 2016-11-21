@@ -21,7 +21,8 @@ class VictoryZoom extends Component {
       y: CustomPropTypes.domain
     }),
     onDomainChange: PropTypes.func,
-    clipContainerComponent: PropTypes.element.isRequired
+    clipContainerComponent: PropTypes.element.isRequired,
+    allowZoom: PropTypes.bool
   }
 
   static childContextTypes = {
@@ -29,7 +30,8 @@ class VictoryZoom extends Component {
   }
 
   static defaultProps = {
-    clipContainerComponent: <VictoryClipContainer/>
+    clipContainerComponent: <VictoryClipContainer/>,
+    allowZoom: true
   }
 
   constructor(props) {
@@ -45,7 +47,7 @@ class VictoryZoom extends Component {
     this.width = chart.props.width || fallbackProps.width;
     this.state = { domain: props.zoomDomain || this.getDataDomain() };
 
-    this.events = this.getEvents();
+    this.events = this.getEvents(props.allowZoom);
     this.clipDataComponents = this.clipDataComponents.bind(this);
     this.getTimer = this.getTimer.bind(this);
   }
@@ -71,10 +73,14 @@ class VictoryZoom extends Component {
    this.getTimer().stop();
  }
 
- componentWillReceiveProps({zoomDomain: nextDomain}) {
-   const {zoomDomain} = this.props;
+ componentWillReceiveProps({allowZoom: nextAllowZoom, zoomDomain: nextDomain}) {
+   const {allowZoom, zoomDomain} = this.props;
    if (!isEqual(zoomDomain, nextDomain)) {
      this.setState({domain: nextDomain});
+   }
+
+   if (allowZoom !== nextAllowZoom) {
+     this.events = this.getEvents(nextAllowZoom);
    }
  }
 
@@ -87,7 +93,7 @@ class VictoryZoom extends Component {
     };
   }
 
-  getEvents() {
+  getEvents(allowZoom) {
     return [{
       target: "parent",
       eventHandlers: {
@@ -113,7 +119,7 @@ class VictoryZoom extends Component {
             });
           }
         },
-        onWheel: (evt) => {
+        ...allowZoom && {onWheel: (evt) => {
           evt.preventDefault();
           const deltaY = evt.deltaY;
           requestAnimationFrame(() => { // eslint-disable-line no-undef
@@ -124,7 +130,7 @@ class VictoryZoom extends Component {
             const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
             this.setDomain({x: nextXDomain});
           });
-        }
+        }}
       }
     }];
   }
