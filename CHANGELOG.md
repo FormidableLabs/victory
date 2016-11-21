@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 13.2.4 (2016-21-16)
+
+- Fixes a bug with `VictoryAxis` offsets
+- Adds an `allowZoom` prop that can turn on / off zooming on VictoryZoom. This prop is `true` by default
+
 ## 13.2.3 (2016-18-09)
 
 - fix broken timer on unmount
