@@ -26,24 +26,35 @@ export default {
   },
 
   /**
-   * Returns generated data based on domain and sample from props
+   * Returns generated data for a given axis based on domain and sample from props
    * @param {Object} props: the props object
+   * @param {String} axis: the current axis
    * @returns {Array} an array of data
    */
-  generateData(props) {
-    // create an array of values evenly spaced across the x domain that include domain min/max
+  generateDataArray(props, axis) {
     const propsDomain = props.domain && Array.isArray(props.domain) ?
-      props.domain : props.domain && props.domain.x;
-    const domain = propsDomain || Scale.getBaseScale(props, "x").domain();
+      props.domain : props.domain && props.domain[axis];
+    const domain = propsDomain || Scale.getBaseScale(props, axis).domain();
     const samples = props.samples || 1;
     const domainMax = Math.max(...domain);
     const domainMin = Math.min(...domain);
     const step = (domainMax - domainMin) / samples;
-    const values = range(domainMin, domainMax, step).map((v) => {
-      return { x: v, y: v };
+    const values = range(domainMin, domainMax, step);
+    return last(values) === domainMax ? values : values.concat(domainMax);
+  },
+
+  /**
+   * Returns generated x and y data based on domain and sample from props
+   * @param {Object} props: the props object
+   * @returns {Array} an array of data
+   */
+  generateData(props) {
+    const xValues = this.generateDataArray(props, "x");
+    const yValues = this.generateDataArray(props, "y");
+    const values = xValues.map((x, i) => {
+      return { x, y: yValues[i]};
     });
-    return last(values).x === domainMax ?
-      values : values.concat([{ x: domainMax, y: domainMax }]);
+    return values;
   },
 
   /**
