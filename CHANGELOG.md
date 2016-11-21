@@ -1,6 +1,6 @@
 VictoryCore Changelog
 =====================
-## 9.2.2 (2016-21-09)
+## 9.2.3 (2016-21-09)
 
 - Fix Transition domain bug
 
