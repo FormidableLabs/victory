@@ -1,5 +1,9 @@
 VictoryCore Changelog
 =====================
+## 9.2.4 (2016-21-09)
+
+- Change how data is generated for accessors to handle edge cases like https://github.com/FormidableLabs/victory/issues/397
+
 ## 9.2.3 (2016-21-09)
 
 - Fix Transition domain bug
