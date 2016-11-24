@@ -30,7 +30,8 @@ export default class Bar extends React.Component {
       L ${x - size}, ${y}
       L ${x + size}, ${y}
       L ${x + size}, ${y0}
-      L ${x - size}, ${y0}`;
+      L ${x - size}, ${y0}
+      z`;
   }
 
   getHorizontalBarPath(props, width) {
@@ -40,7 +41,8 @@ export default class Bar extends React.Component {
       L ${y0}, ${x + size}
       L ${y}, ${x + size}
       L ${y}, ${x - size}
-      L ${y0}, ${x - size}`;
+      L ${y0}, ${x - size}
+      z`;
   }
 
   getBarPath(props, width) {
