@@ -61,6 +61,7 @@ export default class VictoryAnimation extends React.Component {
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
+    this.getTimer = this.getTimer.bind(this);
   }
 
   getTimer() {
@@ -74,7 +75,6 @@ export default class VictoryAnimation extends React.Component {
   }
 
   componentDidMount() {
-    this.timer = this.getTimer();
     // Length check prevents us from triggering `onEnd` in `traverseQueue`.
     if (this.queue.length) {
       this.traverseQueue();
@@ -84,7 +84,7 @@ export default class VictoryAnimation extends React.Component {
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
-    this.timer.unsubscribe(this.loopID);
+    this.getTimer().unsubscribe(this.loopID);
 
     /* If an object was supplied */
     if (!Array.isArray(nextProps.data)) {
@@ -103,9 +103,9 @@ export default class VictoryAnimation extends React.Component {
 
   componentWillUnmount() {
     if (this.loopID) {
-      this.timer.unsubscribe(this.loopID);
+      this.getTimer().unsubscribe(this.loopID);
     } else {
-      this.timer.stop();
+      this.getTimer().stop();
     }
   }
 
@@ -125,12 +125,12 @@ export default class VictoryAnimation extends React.Component {
       /* reset step to zero */
       if (this.props.delay) {
         setTimeout(() => { // eslint-disable-line no-undef
-          this.loopID = this.timer.subscribe(
+          this.loopID = this.getTimer().subscribe(
             this.functionToBeRunEachFrame, this.props.duration
           );
         }, this.props.delay);
       } else {
-        this.loopID = this.timer.subscribe(
+        this.loopID = this.getTimer().subscribe(
           this.functionToBeRunEachFrame, this.props.duration
         );
       }
@@ -155,7 +155,7 @@ export default class VictoryAnimation extends React.Component {
         }
       });
       if (this.loopID) {
-        this.timer.unsubscribe(this.loopID);
+        this.getTimer().unsubscribe(this.loopID);
       }
       this.queue.shift();
       this.traverseQueue();
