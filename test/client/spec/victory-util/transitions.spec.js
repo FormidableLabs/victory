@@ -14,8 +14,7 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [],
       nodesWillExit: false,
       nodesWillEnter: false,
-      nodesShouldEnter: false,
-      animating: false
+      nodesShouldEnter: false
     });
   });
 
@@ -26,8 +25,7 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{entering: false, exiting: false}],
       nodesWillExit: false,
       nodesWillEnter: false,
-      nodesShouldEnter: false,
-      animating: true
+      nodesShouldEnter: false
     });
   });
 
@@ -39,8 +37,7 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{entering: false, exiting: {1: true}}],
       nodesWillExit: true,
       nodesWillEnter: false,
-      nodesShouldEnter: false,
-      animating: true
+      nodesShouldEnter: false
     });
   });
 
@@ -52,8 +49,7 @@ describe("getInitialTransitionState", () => {
       childrenTransitions: [{entering: {1: true}, exiting: false}],
       nodesWillExit: false,
       nodesWillEnter: true,
-      nodesShouldEnter: false,
-      animating: true
+      nodesShouldEnter: false
     });
   });
 });
@@ -81,8 +77,7 @@ describe("getTransitionPropsFactory", () => {
       nodesWillEnter: false,
       nodesShouldEnter: false,
       nodesShouldLoad: true,
-      nodesDoneLoad: true,
-      animating: false
+      nodesDoneLoad: true
     };
     const result = Transitions.getTransitionPropsFactory({}, exitingState, callback);
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
@@ -101,8 +96,7 @@ describe("getTransitionPropsFactory", () => {
       nodesWillEnter: true,
       nodesShouldEnter: false,
       nodesShouldLoad: true,
-      nodesDoneLoad: true,
-      animating: false
+      nodesDoneLoad: true
     };
     const result = Transitions.getTransitionPropsFactory({}, enteringState, callback);
     const child = makeChild([{x: 1, y: 1}, {x: 2, y: 3}]);
