@@ -16,8 +16,7 @@ export default class VictoryTransition extends React.Component {
     super(props);
     this.state = {
       nodesShouldLoad: false,
-      nodesDoneLoad: false,
-      animating: false
+      nodesDoneLoad: false
     };
     const child = this.props.children;
     this.continuous = child.type && child.type.continuous === true;
@@ -65,15 +64,13 @@ export default class VictoryTransition extends React.Component {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter,
-        animating
+        nodesShouldEnter
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
       return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        animating: animating || this.state.animating,
         oldProps: nodesWillExit ? props : null,
         nextProps
       };

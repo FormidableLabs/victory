@@ -118,8 +118,7 @@ export function getInitialTransitionState(oldChildren, nextChildren) {
     //       is a perfect match for the previous data and domain except
     //       for new nodes. In this case, we wouldn't want a delay before
     //       the new nodes appear.
-    nodesShouldEnter: false,
-    animating: nodesWillExit || nodesWillEnter || childrenTransitions.length > 0
+    nodesShouldEnter: false
   };
 }
 
@@ -252,7 +251,7 @@ export function getTransitionPropsFactory(props, state, setState) {
   const onLoad = (child, data, animate) => {
     if (nodesShouldLoad) {
       return getChildOnLoad(animate, data, () => {
-        setState({ nodesShouldLoad: false, nodesDoneLoad: true, animating: false});
+        setState({ nodesShouldLoad: false, nodesDoneLoad: true});
       });
     }
 
@@ -263,14 +262,14 @@ export function getTransitionPropsFactory(props, state, setState) {
 
   const onExit = (nodes, child, data, animate) => { // eslint-disable-line max-params
     return getChildPropsOnExit(animate, child, data, nodes, () => {
-      setState({ nodesWillExit: false, animating: false });
+      setState({ nodesWillExit: false });
     });
   };
 
   const onEnter = (nodes, child, data, animate) => { // eslint-disable-line max-params
     if (nodesShouldEnter) {
       return getChildPropsOnEnter(animate, data, nodes, () => {
-        setState({ nodesWillEnter: false, animating: false });
+        setState({ nodesWillEnter: false });
       });
     }
 
@@ -339,8 +338,6 @@ export function getTransitionPropsFactory(props, state, setState) {
       //
       return getInitialChildProps(animate, data);
     }
-
-    animate.onEnd = () => { setState({ animating: false }); };
     return { animate, data };
   };
 }
