@@ -1,7 +1,7 @@
 import React from "react";
 import * as d3Ease from "d3-ease";
-import { timer } from "d3-timer";
 import { victoryInterpolator } from "./util";
+import Timer from "../victory-util/timer";
 
 export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
@@ -61,6 +61,17 @@ export default class VictoryAnimation extends React.Component {
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
+    this.getTimer = this.getTimer.bind(this);
+  }
+
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
+    }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
   }
 
   componentDidMount() {
@@ -73,11 +84,8 @@ export default class VictoryAnimation extends React.Component {
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
-    if (this.context.getTimer) {
-      this.context.getTimer().unsubscribe(this.loopID);
-    } else if (this.timer) {
-      this.timer.stop();
-    }
+    this.getTimer().unsubscribe(this.loopID);
+
     /* If an object was supplied */
     if (!Array.isArray(nextProps.data)) {
       // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
@@ -94,10 +102,10 @@ export default class VictoryAnimation extends React.Component {
   }
 
   componentWillUnmount() {
-    if (this.context.getTimer) {
-      this.context.getTimer().unsubscribe(this.loopID);
-    } else if (this.timer) {
-      this.timer.stop();
+    if (this.loopID) {
+      this.getTimer().unsubscribe(this.loopID);
+    } else {
+      this.getTimer().stop();
     }
   }
 
@@ -115,33 +123,29 @@ export default class VictoryAnimation extends React.Component {
       /* compare cached version to next props */
       this.interpolator = victoryInterpolator(this.state.data, data);
       /* reset step to zero */
-      if (this.context.getTimer) {
-        if (this.props.delay) {
-          setTimeout(() => { // eslint-disable-line no-undef
-            this.loopID = this.context.getTimer().subscribe(
-              this.functionToBeRunEachFrame, this.props.duration
-            );
-          }, this.props.delay);
-        } else {
-          this.loopID = this.context.getTimer().subscribe(
+      if (this.props.delay) {
+        setTimeout(() => { // eslint-disable-line no-undef
+          this.loopID = this.getTimer().subscribe(
             this.functionToBeRunEachFrame, this.props.duration
           );
-        }
+        }, this.props.delay);
       } else {
-        this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
+        this.loopID = this.getTimer().subscribe(
+          this.functionToBeRunEachFrame, this.props.duration
+        );
       }
     } else if (this.props.onEnd) {
       this.props.onEnd();
     }
   }
   /* every frame we... */
-  functionToBeRunEachFrame(elapsed) {
+  functionToBeRunEachFrame(elapsed, duration) {
     /*
       step can generate imprecise values, sometimes greater than 1
       if this happens set the state to 1 and return, cancelling the timer
     */
-    const step = elapsed / this.props.duration;
-
+    duration = duration !== undefined ? duration : this.props.duration;
+    const step = duration ? elapsed / duration : 1;
     if (step >= 1) {
       this.setState({
         data: this.interpolator(1),
@@ -150,13 +154,11 @@ export default class VictoryAnimation extends React.Component {
           animating: false
         }
       });
-      if (this.context.getTimer) {
-        this.context.getTimer().unsubscribe(this.loopID);
-      } else if (this.timer) {
-        this.timer.stop();
+      if (this.loopID) {
+        this.getTimer().unsubscribe(this.loopID);
       }
       this.queue.shift();
-      this.traverseQueue(); // Will take care of calling `onEnd`.
+      this.traverseQueue();
       return;
     }
     /*
@@ -172,6 +174,7 @@ export default class VictoryAnimation extends React.Component {
       }
     });
   }
+
   render() {
     return this.props.children(this.state.data, this.state.animationInfo);
   }

@@ -1,7 +1,7 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
-import { Transitions, Collection } from "../victory-util/index";
-import { assign, defaults, isFunction, pick, identity, isEqual } from "lodash";
+import { Transitions, Collection, Timer } from "../victory-util/index";
+import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
@@ -16,81 +16,37 @@ export default class VictoryTransition extends React.Component {
     super(props);
     this.state = {
       nodesShouldLoad: false,
-      nodesDoneLoad: false,
-      nodesDoneClipPathLoad: false,
-      animating: true
+      nodesDoneLoad: false
     };
     const child = this.props.children;
-    this.continuous = child.type && child.type.continuous;
+    this.continuous = child.type && child.type.continuous === true;
     this.getTransitionState = this.getTransitionState.bind(this);
+    this.getTimer = this.getTimer.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.getTransitionState(this.props, nextProps));
-  }
-
-  // TODO: This method is expensive, but also prevents unnecessary animations
-  shouldAnimateProps(nextProps) {
-    return !isEqual(this.getWhitelistedProps(this.props), this.getWhitelistedProps(nextProps));
-  }
-
-  getWhitelistedProps(props) {
-    const childProps = props.children && props.children.props || {};
-    return props.animationWhitelist ? pick(childProps, props.animationWhitelist) : childProps;
-  }
-
-  shouldAnimateState(nextProps, nextState) {
-    const child = this.props.children;
-    // the axes don't need to transition, they should only respond to props changes
-    if (child.type.role && child.type.role === "axis") {
-      return false;
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
     }
-    const parentState = this.getParentState(nextProps, nextState);
-    if (!parentState) {
-      return this.animateState(nextState);
+    if (!this.timer) {
+      this.timer = new Timer();
     }
-    // TODO: parentState does not have the correct nodesShouldLoad state
-    const forceLoad = parentState.animating && !parentState.nodesDoneLoad;
-    return this.animateState(parentState, forceLoad);
-  }
-
-  getParentState(nextProps, nextState) {
-    const props = nextState.oldProps || this.props;
-    return props.animate && props.animate.parentState ||
-      nextProps.animate && nextProps.animate.parentState;
-  }
-
-  animateState(state, forceLoad) {
-    const {
-      nodesWillExit, nodesWillEnter, nodesShouldEnter, nodesShouldLoad, nodesDoneLoad,
-      nodesDoneClipPathLoad, nodesDoneClipPathEnter, nodesDoneClipPathExit, animating
-    } = state;
-    const loading = forceLoad || !nodesDoneLoad && (!!nodesShouldLoad || nodesDoneClipPathLoad);
-    const entering = nodesShouldEnter || nodesWillEnter || nodesDoneClipPathEnter;
-    const exiting = nodesWillExit || nodesDoneClipPathExit;
-    return (animating || this.state.animating) && (loading || entering || exiting);
-  }
-
-  shouldComponentUpdate(nextProps, nextState) {
-    if (this.shouldAnimateState(nextProps, nextState)) {
-      return true;
-    } else if (this.shouldAnimateProps(nextProps)) {
-      return true;
-    }
-    return false;
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.animating !== this.state.animating && nextState.animating === false) {
-      const onEnd = nextProps && nextProps.animate && nextProps.animate.onEnd || identity;
-      onEnd();
-    }
+    return this.timer;
   }
 
   componentDidMount() {
-    if (this.transitionProps && this.transitionProps.cb) {
-      this.transitionProps.cb();
-    }
+    this.setState({nodesShouldLoad: true}); //eslint-disable-line react/no-did-mount-set-state
+  }
+
+  componentWillUnmount() {
+    this.getTimer().stop();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getTimer().bypassAnimation();
+    this.setState(
+      this.getTransitionState(this.props, nextProps), () => this.getTimer().resumeAnimation()
+    );
   }
 
   getTransitionState(props, nextProps) {
@@ -99,8 +55,8 @@ export default class VictoryTransition extends React.Component {
       return {};
     } else if (animate.parentState) {
       const state = animate.parentState;
-      const oldProps = state.nodesWillExit && !state.nodesDoneClipPathExit ? props : null;
-      return {oldProps};
+      const oldProps = state.nodesWillExit ? props : null;
+      return {oldProps, nextProps};
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
@@ -108,32 +64,16 @@ export default class VictoryTransition extends React.Component {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter,
-        nodesShouldLoad,
-        nodesDoneLoad,
-        nodesDoneClipPathLoad,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit,
-        animating
+        nodesShouldEnter
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-      const transitionState = {
+      return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
-        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
-        animating: animating || this.state.animating,
-        oldProps: nodesWillExit && !nodesDoneClipPathExit ? props : null
+        oldProps: nodesWillExit ? props : null,
+        nextProps
       };
-      return this.continuous ? assign(
-        {
-          nodesDoneClipPathEnter,
-          nodesDoneClipPathExit,
-          nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad
-        },
-        transitionState
-      ) : transitionState;
     }
   }
 
@@ -163,9 +103,35 @@ export default class VictoryTransition extends React.Component {
     }
   }
 
+  pickProps() {
+    if (!this.state) {
+      return this.props;
+    }
+    return this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+  }
+
+  pickDomainProps(props) {
+    const parentState = props.animate && props.animate.parentState;
+    if (parentState && parentState.nodesWillExit) {
+      return this.continous || parentState.continuous ?
+        parentState.nextProps || this.state.nextProps || props : props;
+    }
+    return this.continuous && this.state.nodesWillExit ? this.state.nextProps || props : props;
+  }
+
+  getClipProps(props, child) {
+    if (!this.continuous) {
+      return {};
+    }
+    const clipWidth = this.transitionProps && this.transitionProps.clipWidth;
+    return {
+      clipHeight: child.props.height,
+      clipWidth: clipWidth !== undefined ? clipWidth : child.props.width
+    };
+  }
+
   render() {
-    const props = this.state && this.state.nodesWillExit && !this.state.nodesDoneClipPathExit ?
-      this.state.oldProps || this.props : this.props;
+    const props = this.pickProps();
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
       Transitions.getTransitionPropsFactory(
@@ -177,11 +143,12 @@ export default class VictoryTransition extends React.Component {
     const transitionProps = getTransitionProps(child);
     this.transitionProps = transitionProps;
     const domain = {
-      x: this.getDomainFromChildren(props, "x"),
+      x: this.getDomainFromChildren(this.pickDomainProps(props), "x"),
       y: this.getDomainFromChildren(props, "y")
     };
+    const clipProps = this.getClipProps(props, child);
     const combinedProps = defaults(
-      {domain}, transitionProps, child.props
+      {domain}, clipProps, transitionProps, child.props
     );
     const animationWhitelist = props.animationWhitelist || [];
     const whitelist = this.continuous ?
