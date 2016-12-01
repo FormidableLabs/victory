@@ -1,6 +1,6 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
-import { Transitions, Collection } from "../victory-util/index";
+import { Transitions, Collection, Timer } from "../victory-util/index";
 import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
@@ -22,14 +22,32 @@ export default class VictoryTransition extends React.Component {
     const child = this.props.children;
     this.continuous = child.type && child.type.continuous === true;
     this.getTransitionState = this.getTransitionState.bind(this);
+    this.getTimer = this.getTimer.bind(this);
+  }
+
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
+    }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
   }
 
   componentDidMount() {
     this.setState({nodesShouldLoad: true}); //eslint-disable-line react/no-did-mount-set-state
   }
 
+  componentWillUnmount() {
+    this.getTimer().stop();
+  }
+
   componentWillReceiveProps(nextProps) {
-    this.setState(this.getTransitionState(this.props, nextProps));
+    this.getTimer().bypassAnimation();
+    this.setState(
+      this.getTransitionState(this.props, nextProps), () => this.getTimer().resumeAnimation()
+    );
   }
 
   getTransitionState(props, nextProps) {

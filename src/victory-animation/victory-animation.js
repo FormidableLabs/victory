@@ -135,12 +135,13 @@ export default class VictoryAnimation extends React.Component {
     }
   }
   /* every frame we... */
-  functionToBeRunEachFrame(elapsed) {
+  functionToBeRunEachFrame(elapsed, duration) {
     /*
       step can generate imprecise values, sometimes greater than 1
       if this happens set the state to 1 and return, cancelling the timer
     */
-    const step = elapsed / this.props.duration;
+    duration = duration !== undefined ? duration : this.props.duration;
+    const step = duration ? elapsed / duration : 1;
 
     if (step >= 1) {
       this.setState({
