@@ -1,10 +1,20 @@
 VictoryCore Changelog
 =====================
-## 9.2.4 (2016-21-09)
+
+## 10.0.0 (2016-12-01)
+
+- Change how continuous animations behave
+  - clipPath curtain will never be smaller than the range except onLoad
+- Simplify transitions code
+- Ensure that animations and transitions use the global timer passed in context or create their own
+- Fix `bypassAnimation` bug
+- Ensure that clipPath width and height are never negative
+
+## 9.2.4 (2016-11-21)
 
 - Change how data is generated for accessors to handle edge cases like https://github.com/FormidableLabs/victory/issues/397
 
-## 9.2.3 (2016-21-09)
+## 9.2.3 (2016-11-21)
 
 - Fix Transition domain bug
 
@@ -35,7 +45,7 @@ VictoryCore Changelog
 ## 9.0.3 (2016-10-26)
 
 - Fix aria role bug
-- Allow npm 2 install 
+- Allow npm 2 install
 
 ## 9.0.2 (2016-10-18)
 
@@ -85,7 +95,7 @@ VictoryCore Changelog
 **Breaking Changes for `VictoryPie` themes**
 
 - This PR alters the label padding for `VictoryPie` in themes to work with the new `labelRadius` prop.
- 
+
 ## 6.1.1 (2016-09-08)
 
 - Fix axis themes
@@ -138,7 +148,7 @@ VictoryCore Changelog
 ## 5.0.0 (2016-08-17)
 
 ** This is a breaking change for themes **
-- Alters the `VictoryTheme` API to match props. 
+- Alters the `VictoryTheme` API to match props.
 - Adds `VictoryTheme.grayscale`
 
 ## 4.6.1 (2016-08-11)
@@ -158,7 +168,7 @@ VictoryCore Changelog
 
 ## 4.5.0 (2016-07-29)
 
-- Remove `reduce-calc-css` dependency. 
+- Remove `reduce-calc-css` dependency.
 
 ## 4.4.2 (2016-7-26)
 
@@ -212,7 +222,7 @@ VictoryCore Changelog
   unless the child component standalone prop is set to true. Helps add roles and optional titles/descriptions to make
   Victory charts more accessible to users using screen readers.
 
-## 3.0.0 (2016-06-01) 
+## 3.0.0 (2016-06-01)
 
 - Adds `VictorySharedEvents` wrapper for coordinating events between supported Victory Components. An annotated example of the new events API:
 
@@ -220,15 +230,15 @@ VictoryCore Changelog
 <VictorySharedEvents
   events={[
     {
-      childName: "firstBar", // if a child name is not provided, event will be attached to all children. 
+      childName: "firstBar", // if a child name is not provided, event will be attached to all children.
       target: "data", // what type of element to attach to. Matches the style namespaces
-      eventKey: 1, // What event key of element to attach to. Defaults to the index in data. 
+      eventKey: 1, // What event key of element to attach to. Defaults to the index in data.
       eventHandlers: {
         onClick: () => {
           return {
             childName: "secondBar", // the child to be modified
             // props here are the props that define the targeted component i.e. what is passed to an individual bar
-            mutation: (props) => { 
+            mutation: (props) => {
               return {style: merge({}, props.style, {fill: "blue"})}; // Whatever is returned here will override the existing props
             }
           };
@@ -295,7 +305,7 @@ VictoryCore Changelog
 events: {
  data: {
   onClick: () => {
-   return { data: { style: {fill: "red"} }, labels: { style: {fill: "black"} } };  
+   return { data: { style: {fill: "red"} }, labels: { style: {fill: "black"} } };
   }
  }
 }
