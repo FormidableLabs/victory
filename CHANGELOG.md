@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 7.2.0 (2016-12-02)
+
+- Ensure that animations and transitions use the global timer passed in context or create their own
+
 ## 7.1.2 (2016-11-11)
 
 - Fix tooltip bug. Force `renderInPortal={false}` for VictoryPie tooltips
@@ -66,7 +70,7 @@
 - Renders all slices _before_ labels so that labels are not overlapped.
 
 
-## 4.0.0 (2016-06-01) 
+## 4.0.0 (2016-06-01)
 
 - Upgrades to React 15
 - Updates the events API to support shared events **This is a breaking change for events**
