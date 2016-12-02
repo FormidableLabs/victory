@@ -3,7 +3,7 @@ import * as d3Scale from "d3-scale";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import { without } from "lodash";
 
-const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L"];
+const RECTANGULAR_SEQUENCE = ["M", "L", "L", "L", "L", "z"];
 const CIRCULAR_SEQUENCE = ["M", "m", "a", "a"];
 
 const parseSvgPathCommands = (commandStr) => {
