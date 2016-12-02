@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 14.0.0 (2016-12-02)
+
+- Change how continuous animations behave _i.e._ VictoryArea and VictoryLine
+  - clipPath curtain will never be smaller than the range except during `onLoad`
+- Fixes a bug where paths defining bars were not being closed.
+
 ## 13.2.4 (2016-21-16)
 
 - Fixes a bug with `VictoryAxis` offsets
@@ -78,10 +84,10 @@
 - Adds support for `defaultEvents` in any primitive component (_i.e._ `dataComponent`, `labelComponent`)
 - Adds `onLoad` animations
 - Adds a `sortKey` prop to `VictoryLine` to allow sorting by fields other than "x"
-- Adds a `fixLabelOverlap` boolean prop to `VictoryAxis`. When enables, this feature renders a smaller subset of ticks when the full set of ticks would cause overlapping labels. This feature is currently limited to evenly spaced labels. 
+- Adds a `fixLabelOverlap` boolean prop to `VictoryAxis`. When enables, this feature renders a smaller subset of ticks when the full set of ticks would cause overlapping labels. This feature is currently limited to evenly spaced labels.
 - Fixes a bug related to `bubbleProperty` in `VictoryScatter`
 - Allows string data in `VictoryCandlestick` and `VictoryErrorBar`
-- Performance optimizations 
+- Performance optimizations
 
 ## 11.0.1 (2016-08-21)
 
@@ -112,7 +118,7 @@
 
 ## 10.2.5 (2016-08-02)
 
-- Fix animation bug in VictoryCandlestick 
+- Fix animation bug in VictoryCandlestick
 - Fix label bug in VictoryCandlestick
 - Fix style bug in VictoryCandlestick
 - Fix axis orientation for negative charts
@@ -142,7 +148,7 @@
 - Supports `domainPadding` on all child components
 - Adds automatic `domainPadding` for grouped bars
 - Fixes [bugs related to log scales](https://github.com/FormidableLabs/victory-chart/pull/317)
-- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318) 
+- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318)
 - Improves consistency for charts with empty and single value data arrays
 
 ## 10.1.0 (2016-07-15)
@@ -155,7 +161,7 @@
 
 ## 10.0.0 (2016-07-07)
 
-- Adds support for Victory Native 
+- Adds support for Victory Native
   - Adds `containerComponent` and `groupComponent` props to all components
 
 ## 9.2.1 (2016-06-30)
@@ -194,7 +200,7 @@
 - Adds support for custom container elements
 - Adds vectorEffect non-scaling-stroke to support responsive charts
 
-## 9.0.0 (2016-06-01) 
+## 9.0.0 (2016-06-01)
 
 - Upgrades to React 15
 - Supports wrapped components
