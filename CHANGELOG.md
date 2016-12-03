@@ -1,6 +1,16 @@
 # Victory Changelog
 
-## 0.13.7 (2012-11-09)
+## 0.14.0 (2016-12-02)
+
+*This may be a breaking change for animating VictoryArea and VictoryLine. Animation behavior is changed.*
+- Change how animations behave for continuous data _i.e._ VictoryArea and VictoryLine
+  - clipPath curtain will never be smaller than the range except during `onLoad`
+- Simplify transitions code
+- Ensure that animations and transitions use the global timer passed in context or create their own
+- Fix `bypassAnimation` bug
+- Ensure that clipPath width and height are never negative
+
+## 0.13.7 (2016-11-09)
 
 - Fix timer issues and export VictoryZoom
 
@@ -73,10 +83,10 @@
 - Adds support for `defaultEvents` in any primitive component (_i.e._ `dataComponent`, `labelComponent`)
 - Adds `onLoad` animations
 - Adds a `sortKey` prop to `VictoryLine` to allow sorting by fields other than "x"
-- Adds a `fixLabelOverlap` boolean prop to `VictoryAxis`. When enables, this feature renders a smaller subset of ticks when the full set of ticks would cause overlapping labels. This feature is currently limited to evenly spaced labels. 
+- Adds a `fixLabelOverlap` boolean prop to `VictoryAxis`. When enables, this feature renders a smaller subset of ticks when the full set of ticks would cause overlapping labels. This feature is currently limited to evenly spaced labels.
 - Fixes a bug related to `bubbleProperty` in `VictoryScatter`
 - Allows string data in `VictoryCandlestick` and `VictoryErrorBar`
-- Performance optimizations 
+- Performance optimizations
 
 ## 0.11.0 (2016-08-18)
 
@@ -114,10 +124,10 @@
 ## 0.10.0 (2016-07-29)
 
 **Breaking Changes**
-- Default styles and some default props have changed across all components in this release. 
+- Default styles and some default props have changed across all components in this release.
 
 *VictoryTheme*
-- All Victory components support a `theme` prop that can be used to define styles and props across different component types. 
+- All Victory components support a `theme` prop that can be used to define styles and props across different component types.
 - `victory-core` includes the [material theme](https://github.com/FormidableLabs/victory-core/blob/master/src/victory-theme/material.js)
 
 *VictoryCandlestick*
@@ -127,7 +137,7 @@
 - The new `VictoryErrorBar` component may be used standalone or in conjunction with `VictoryChart`. It has an idential API and feature set as other chart compatible components with the exception of the `data` and data accessor props. `VictoryErrorBar` expects `data` in the form `[{x: value, y: value, errorX: ERR, errorY: ERR}...]`, Where `ERR` is a number or a two value array for asymmetric errors. `VictoryErrorBar` also includes data accessor props `errorX` and `errorY`.
 
 *VictoryNative*
-- Changes have been made across all components in order to support [victory-native](https://github.com/FormidableLabs/victory-native). `VictoryNative` has an identical API to `Victory`, and reuses most of the code. Changes made to `Victory` to support `VictoryNative` are all non-breaking, and minimal. They include the addition of a `groupComponent` prop in all components (which defaults to `<g>`), removing svg transforms whenever possible in favor of absolute positioning, and code reorganization. 
+- Changes have been made across all components in order to support [victory-native](https://github.com/FormidableLabs/victory-native). `VictoryNative` has an identical API to `Victory`, and reuses most of the code. Changes made to `Victory` to support `VictoryNative` are all non-breaking, and minimal. They include the addition of a `groupComponent` prop in all components (which defaults to `<g>`), removing svg transforms whenever possible in favor of absolute positioning, and code reorganization.
 
 *Performance improvements*
 - Low-hanging performance improvements included in this release:
@@ -141,7 +151,7 @@
   - Grouped bar charts get automatic `domainPadding` so that bars wont overflow axes in most cases.
 - Adds Aria roles for all rendered elements
 - Fixes [bugs related to log scales](https://github.com/FormidableLabs/victory-chart/pull/317)
-- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318) 
+- Fixes [a bug related to time scales](https://github.com/FormidableLabs/victory-chart/pull/318)
 - Improves consistency for charts with empty and single value data arrays
 - Removes `reduce-calc-css` as a dependency
 
@@ -186,15 +196,15 @@
 <VictorySharedEvents
   events={[
     {
-      childName: "firstBar", // if a child name is not provided, event will be attached to all children. 
+      childName: "firstBar", // if a child name is not provided, event will be attached to all children.
       target: "data", // what type of element to attach to. Matches the style namespaces
-      eventKey: 1, // What event key of element to attach to. Defaults to the index in data. 
+      eventKey: 1, // What event key of element to attach to. Defaults to the index in data.
       eventHandlers: {
         onClick: () => {
           return {
             childName: "secondBar", // the child to be modified
             // props here are the props that define the targeted component i.e. what is passed to an individual bar
-            mutation: (props) => { 
+            mutation: (props) => {
               return {style: merge({}, props.style, {fill: "blue"})}; // Whatever is returned here will override the existing props
             }
           };
