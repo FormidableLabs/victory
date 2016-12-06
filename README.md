@@ -5,17 +5,11 @@
 Victory
 =======
 
-Victory is an opinionated, but fully overridable, ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
+Victory is an ecosystem of composable React components for building interactive data visualizations. This repo aggregates all of the stable Victory components so they can be conveniently included.
 
 * See the **docs and examples** on the website: http://formidable.com/open-source/victory.
 * **Experiment** with all Victory components in this [JSBin](http://jsbin.com/qekike/edit) or this [JSFiddle](https://jsfiddle.net/5g20p8vd/6/).
 * For support, join the **Gitter chat room** at https://gitter.im/FormidableLabs/victory.
-
-**Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
-
-**SEMVER** Minor version bumps should be considered breaking changes until we hit v1.0.0. Patches can be considered safe.
-
-**Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
 
 **VictoryNative**
 Want to use `Victory` with React Native? Check out [VictoryNative](https://github.com/FormidableLabs/victory-native)
@@ -105,6 +99,12 @@ $ npm test
 ```
 
 For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md) in the project builder archetype.
+
+**Important:** _This project is in alpha release. We're hard at work fixing bugs and improving the API. Be prepared for breaking changes!_
+
+**SEMVER** Minor version bumps should be considered breaking changes until we hit v1.0.0. Patches can be considered safe.
+
+**Caveats** git installs using npm 2 may fail in postinstall. If you are consuming Victory via git installs please use npm >=3.0.0
 
 ## Roadmap
 
