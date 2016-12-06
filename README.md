@@ -8,8 +8,9 @@
   an ecosystem of composable React components for building interactive data visualizations.
 </h4>
 
-![animating-area](https://cloud.githubusercontent.com/assets/3719995/20915445/ca54be30-bb3a-11e6-95d0-7867af91f269.gif)
-
+<p align="center">
+  <img width="471" alt="animation" src="https://cloud.githubusercontent.com/assets/3719995/20915445/ca54be30-bb3a-11e6-95d0-7867af91f269.gif">
+</p>
 
 - [Getting Started](#getting-started)
 - [Victory Native](#victory-native)
@@ -52,9 +53,11 @@
 
 3. `VictoryPie` component will be rendered, and you should see:
 
-![VictoryPie](https://cloud.githubusercontent.com/assets/3719995/20915779/b51e3652-bb3c-11e6-8243-6e7521a59115.png)
+<p align="center">
+  <img align="center" width="471" alt="pie" src="https://cloud.githubusercontent.com/assets/3719995/20915779/b51e3652-bb3c-11e6-8243-6e7521a59115.png">
+</p>
 
-## VictoryNative
+## Victory Native
 Want to use `Victory` with React Native? Check out [victory-native](https://github.com/FormidableLabs/victory-native)
 Victory Native shares most of its code with Victory, and has a nearly identical api!
 
