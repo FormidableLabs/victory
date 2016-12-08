@@ -165,8 +165,7 @@ class VictoryScatter extends React.Component {
 
     if (this.shouldAnimate()) {
       const whitelist = [
-        "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size",
-        "style", "width", "x", "y"
+        "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

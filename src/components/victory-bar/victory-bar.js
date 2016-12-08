@@ -178,12 +178,9 @@ class VictoryBar extends React.Component {
     const props = Helpers.modifyProps((this.props), fallbackProps, role);
     const { animate, style, standalone, theme } = props;
     if (this.shouldAnimate()) {
-      const animationWhitelist = [
-        "data", "domain", "height", "padding", "style", "width"
-      ];
-
+      const whitelist = ["data", "domain", "height", "padding", "style", "width"];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );

@@ -180,7 +180,7 @@ class VictoryErrorBar extends React.Component {
       // prop whitelist/blacklist?
       const whitelist = [
         "data", "domain", "height", "padding", "samples",
-        "style", "width", "x", "y", "errorX", "errorY", "borderWidth"
+        "style", "width", "errorX", "errorY", "borderWidth"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
