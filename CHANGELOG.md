@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 14.0.1 (2016-12-07)
+
+- Fixes an [animation bug](https://github.com/FormidableLabs/victory/issues/444) by removing data accessor props from the animation whitelist
+
 ## 14.0.0 (2016-12-02)
 
 - Change how continuous animations behave _i.e._ VictoryArea and VictoryLine
