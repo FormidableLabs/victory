@@ -98,8 +98,27 @@ export default class App extends React.Component {
           New domain
         </button>
         <VictoryZoom zoomDomain={this.state.zoomDomain}>
-          <VictoryChart style={{parent: parentStyle}}>
+          <VictoryChart
+            style={{parent: parentStyle}}
+            events={[{
+              target: "data",
+              childName: "line",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      mutation: (props) => {
+                        const strokeWidth = props.style.strokeWidth + 1;
+                        return {style: merge({}, props.style, {strokeWidth})};
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          >
             <VictoryLine
+              name="line"
               style={{parent: parentStyle, data: {stroke: "blue"}}}
               y={(d) => Math.sin(2 * Math.PI * d.x)}
               sample={25}

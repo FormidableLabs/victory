@@ -176,8 +176,12 @@ class VictoryZoom extends Component {
 
   render() {
     const chart = React.Children.only(this.props.children);
+    const events = chart.props.events
+      ? (this.events || []).concat(chart.props.events)
+      : this.events;
+
     const nextProps = assign({}, chart.props, {
-      events: chart.props.events ? chart.props.events.unshift(...this.events) : this.events,
+      events,
       domain: this.state.domain,
       ref: this.getChartRef,
       modifyChildren: this.clipDataComponents
