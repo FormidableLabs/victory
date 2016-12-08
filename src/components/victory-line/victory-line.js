@@ -166,10 +166,7 @@ class VictoryLine extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       // TODO: extract into helper
-      const whitelist = [
-        "data", "domain", "height", "padding", "samples",
-        "style", "width", "x", "y"
-      ];
+      const whitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           {React.createElement(this.constructor, props)}

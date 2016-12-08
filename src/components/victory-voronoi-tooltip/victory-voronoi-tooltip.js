@@ -159,8 +159,7 @@ class VictoryVoronoiTooltip extends React.Component {
       // make sense to tween. In the future, allow customization of animated
       // prop whitelist/blacklist?
       const whitelist = [
-        "data", "domain", "height", "padding", "samples", "size",
-        "style", "width", "x", "y"
+        "data", "domain", "height", "padding", "samples", "size", "style", "width"
       ];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>

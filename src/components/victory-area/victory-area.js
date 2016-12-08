@@ -149,10 +149,7 @@ class VictoryArea extends React.Component {
     const { animate, style, standalone, theme } = props;
 
     if (this.shouldAnimate()) {
-      const whitelist = [
-        "data", "domain", "height", "padding", "style", "width",
-        "x", "y"
-      ];
+      const whitelist = ["data", "domain", "height", "padding", "style", "width"];
       return (
         <VictoryTransition animate={animate} animationWhitelist={whitelist}>
           {React.createElement(this.constructor, props)}
