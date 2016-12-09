@@ -1,5 +1,5 @@
 import React, {Component, PropTypes} from "react";
-import { assign, groupBy, isEqual } from "lodash";
+import { assign, isEqual } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
 import {VictoryClipContainer, Helpers, PropTypes as CustomPropTypes, Timer} from "victory-core";
@@ -94,44 +94,48 @@ class VictoryZoom extends Component {
   }
 
   getEvents(allowZoom) {
+    const standardEvents = {
+      onMouseDown: (evt) => {
+        this.targetBounds = this.chartRef.getSvgBounds();
+        const x = evt.clientX - this.targetBounds.left;
+        this.isPanning = true;
+        this.startX = x;
+        this.lastDomain = this.state.domain;
+      },
+      onMouseUp: () => { this.isPanning = false; },
+      onMouseLeave: () => { this.isPanning = false; },
+      onMouseMove: (evt) => {
+        const clientX = evt.clientX;
+        if (this.isPanning) {
+          requestAnimationFrame(() => { // eslint-disable-line no-undef
+            const domain = this.getDataDomain();
+            const delta = this.startX - (clientX - this.targetBounds.left);
+            const calculatedDx = delta / this.getDomainScale();
+            const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, domain.x, calculatedDx);
+            this.setDomain({x: nextXDomain});
+            this.setState({domain: {x: nextXDomain}});
+          });
+        }
+      }
+    };
+    const wheelEvent = {
+      onWheel: (evt) => {
+        evt.preventDefault();
+        const deltaY = evt.deltaY;
+        requestAnimationFrame(() => { // eslint-disable-line no-undef
+          const {x} = this.state.domain;
+          const xBounds = this.getDataDomain().x;
+
+          // TODO: Check scale factor
+          const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
+          this.setDomain({x: nextXDomain});
+        });
+      }
+    };
+
     return [{
       target: "parent",
-      eventHandlers: {
-        onMouseDown: (evt) => {
-          this.targetBounds = this.chartRef.getSvgBounds();
-          const x = evt.clientX - this.targetBounds.left;
-          this.isPanning = true;
-          this.startX = x;
-          this.lastDomain = this.state.domain;
-        },
-        onMouseUp: () => { this.isPanning = false; },
-        onMouseLeave: () => { this.isPanning = false; },
-        onMouseMove: (evt) => {
-          const clientX = evt.clientX;
-          if (this.isPanning) {
-            requestAnimationFrame(() => { // eslint-disable-line no-undef
-              const domain = this.getDataDomain();
-              const delta = this.startX - (clientX - this.targetBounds.left);
-              const calculatedDx = delta / this.getDomainScale();
-              const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, domain.x, calculatedDx);
-              this.setDomain({x: nextXDomain});
-              this.setState({domain: {x: nextXDomain}});
-            });
-          }
-        },
-        ...allowZoom && {onWheel: (evt) => {
-          evt.preventDefault();
-          const deltaY = evt.deltaY;
-          requestAnimationFrame(() => { // eslint-disable-line no-undef
-            const {x} = this.state.domain;
-            const xBounds = this.getDataDomain().x;
-
-            // TODO: Check scale factor
-            const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
-            this.setDomain({x: nextXDomain});
-          });
-        }}
-      }
+      eventHandlers: allowZoom ? assign({}, standardEvents, wheelEvent) : standardEvents
     }];
   }
 
@@ -149,25 +153,43 @@ class VictoryZoom extends Component {
     return absoluteAxisWidth / (to - from);
   }
 
-  clipDataComponents(children, props) {
-    const {data, axes = []} = groupBy(children, (child) => {
-      return child.type.displayName === "VictoryAxis"
-      ? "axes"
-      : "data";
-    });
-
+  clipDataComponents(children, props) { //eslint-disable-line max-statements
     const [rangex0, rangex1] = Helpers.getRange(props, "x");
+    const childComponents = [];
+    let group = [];
+    let groupNumber = 0;
 
-    return [
-      React.cloneElement(this.props.clipContainerComponent, {
-        key: "ZoomClipContainer",
+    const makeGroup = (arr, index) => {
+      return React.cloneElement(this.props.clipContainerComponent, {
+        key: `ZoomClipContainer-${index}`,
         clipWidth: rangex1 - rangex0,
         clipHeight: fallbackProps.height,
         translateX: rangex0,
-        children: data
-      }),
-      ...axes
-    ];
+        children: arr
+      });
+    };
+
+    const findNextAxis = (start) => {
+      const subset = children.slice(start);
+      return subset.findIndex((child) => child.type.displayName === "VictoryAxis") + start;
+    };
+
+    let axisIndex = findNextAxis(0);
+
+    if (axisIndex === -1) {
+      return makeGroup(children, groupNumber);
+    }
+    for (let i = 0, len = children.length; i < len; i++) {
+      if (i === axisIndex) {
+        childComponents.push(makeGroup(group, groupNumber), children[i]);
+        axisIndex = findNextAxis(i + 1);
+        group = [];
+        groupNumber++;
+      }
+      group.push(children[i]);
+    }
+    childComponents.push(makeGroup(group, groupNumber));
+    return childComponents;
   }
 
   renderChart(chartElement, props) {
