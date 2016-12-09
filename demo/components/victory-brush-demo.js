@@ -1,7 +1,10 @@
 /* globals window */
 import React from "react";
 import { range, merge, random } from "lodash";
-import {VictoryChart, VictoryZoom, VictoryArea, VictoryLine, VictoryGroup} from "../../src/index";
+import {
+  VictoryChart, VictoryZoom, VictoryArea, VictoryLine, VictoryGroup, VictoryAxis, VictoryStack
+} from "../../src/index";
+import { VictoryTheme } from "victory-core";
 
 export default class App extends React.Component {
 
@@ -163,9 +166,76 @@ export default class App extends React.Component {
           <VictoryChart style={{parent: parentStyle}}>
             <VictoryArea
               style={{parent: parentStyle, data: {stroke: "#333", fill: "#888", opacity: 0.4}}}
-              data={this.state.barData}
+              data={this.state.data}
               interpolation="stepBefore"
             />
+            <VictoryAxis/>
+            <VictoryLine data={this.state.data} interpolation="stepBefore"/>
+            <VictoryAxis dependentAxis/>
+          </VictoryChart>
+        </VictoryZoom>
+
+        <VictoryZoom>
+          <VictoryChart style={{parent: parentStyle}}
+            theme={VictoryTheme.material}
+            events={[{
+              childName: "area-1",
+              target: "data",
+              eventHandlers: {
+                onClick: () => {
+                  return [
+                    {
+                      childName: "area-2",
+                      target: "data",
+                      mutation: (props) => {
+                        return {style: merge({}, props.style, {fill: "gold"})};
+                      }
+                    }, {
+                      childName: "area-3",
+                      target: "data",
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, {fill: "orange"})
+                        };
+                      }
+                    }, {
+                      childName: "area-4",
+                      target: "data",
+                      mutation: (props) => {
+                        return {
+                          style: merge({}, props.style, {fill: "red"})
+                        };
+                      }
+                    }
+                  ];
+                }
+              }
+            }]}
+          >
+            <VictoryAxis/>
+            <VictoryStack>
+              <VictoryArea name="area-1"
+                data={[
+                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}, {x: "e", y: 7}
+                ]}
+              />
+              <VictoryArea name="area-2"
+                data={[
+                  {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}, {x: "e", y: 5}
+                ]}
+              />
+              <VictoryArea name="area-3"
+                data={[
+                  {x: "a", y: 3}, {x: "b", y: 2}, {x: "c", y: 6}, {x: "d", y: 2}, {x: "e", y: 6}
+                ]}
+              />
+              <VictoryArea name="area-4"
+                data={[
+                  {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 3}, {x: "d", y: 4}, {x: "e", y: 7}
+                ]}
+              />
+            </VictoryStack>
+            <VictoryAxis dependentAxis/>
           </VictoryChart>
         </VictoryZoom>
       </div>
