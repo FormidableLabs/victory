@@ -63,18 +63,19 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getBasePropsFromChildren(childComponents) {
-    const getBaseProps = (children) => {
+    const getBaseProps = (children, childIndex) => {
       return children.reduce((memo, child, index) => {
-        if (child.type && isFunction(child.type.getBaseProps)) {
+        if (child.props && child.props.children) {
+          return getBaseProps(React.Children.toArray(child.props.children), index);
+        } else if (child.type && isFunction(child.type.getBaseProps)) {
           const baseChildProps = child.props && child.type.getBaseProps(child.props);
           if (baseChildProps) {
-            const childKey = child.props.name || index;
+            const key = childIndex ? `${childIndex}-${index}` : index;
+            const childKey = child.props.name || key;
             memo[childKey] = baseChildProps;
             return memo;
           }
           return memo;
-        } else if (child.props && child.props.children) {
-          return getBaseProps(React.Children.toArray(child.props.children));
         }
         return memo;
       }, {});
@@ -85,11 +86,10 @@ export default class VictorySharedEvents extends React.Component {
   getNewChildren(props) {
     const {events, eventKey} = props;
     const childNames = Object.keys(this.baseProps);
-
     const alterChildren = (children) => {
-      return children.reduce((memo, child) => {
+      return children.reduce((memo, child, index) => {
         if (child.type && isFunction(child.type.getBaseProps)) {
-          const name = child.props.name || childNames.shift();
+          const name = child.props.name || childNames.shift() || index;
           const childEvents = Array.isArray(events) &&
             events.filter((event) => {
               return Array.isArray(event.childName) ?
