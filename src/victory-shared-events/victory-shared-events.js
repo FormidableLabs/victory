@@ -42,7 +42,7 @@ export default class VictorySharedEvents extends React.Component {
 
   constructor() {
     super();
-    this.state = {};
+    this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
   }
@@ -56,10 +56,21 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   setUpChildren(props) {
+    this.componentEvents = props.container.type && props.container.type.defaultEvents;
     this.childComponents = React.Children.toArray(props.children);
     const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
     const parentBaseProps = props.container ? { parent: props.container.props } : {};
     this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+    this.hasEvents = props.events || this.componentEvents;
+    this.events = this.getAllEvents(props);
+  }
+
+  getAllEvents(props) {
+    if (Array.isArray(this.componentEvents)) {
+      return Array.isArray(props.events) ?
+        this.componentEvents.concat(...props.events) : this.componentEvents;
+    }
+    return props.events;
   }
 
   getBasePropsFromChildren(childComponents) {
@@ -121,8 +132,8 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getContainer(props, children) {
-    const parents = Array.isArray(props.events) &&
-      props.events.filter((event) => event.target === "parent");
+    const parents = Array.isArray(this.events) &&
+      this.events.filter((event) => event.target === "parent");
     const sharedEvents = parents.length > 0 ?
       {
         events: parents,

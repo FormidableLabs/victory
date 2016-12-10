@@ -26,11 +26,21 @@ export default (WrappedComponent) => {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       this.componentEvents = Events.getComponentEvents(props, components);
-      this.baseProps = WrappedComponent.getBaseProps(props);
+      this.baseProps = isFunction(WrappedComponent.getBaseProps) ?
+        WrappedComponent.getBaseProps(props) : {};
       this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
       this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
         sharedEvents.getEventState : () => undefined;
       this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
+      this.events = this.getAllEvents(props);
+    }
+
+    getAllEvents(props) {
+      if (Array.isArray(this.componentEvents)) {
+        return Array.isArray(props.events) ?
+          this.componentEvents.concat(...props.events) : this.componentEvents;
+      }
+      return props.events;
     }
 
     getComponentProps(component, type, index) {
