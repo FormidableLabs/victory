@@ -168,11 +168,14 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: centeredLabelStyles,
+      labels: assign({}, centeredLabelStyles, {
+        pointerEvents: "none"
+      }),
       flyout: {
         stroke: charcoal,
         strokeWidth: 1,
-        fill: "#f0f0f0"
+        fill: "#f0f0f0",
+        pointerEvents: "none"
       }
     },
     flyoutProps: {
