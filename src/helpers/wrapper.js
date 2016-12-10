@@ -38,7 +38,14 @@ export default {
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
-      const continuous = some(oldChildren, (child) => child.type && child.type.continuous);
+      const isContinuous = (child) => {
+        const check = (c) => c.type && c.type.continuous;
+        return Array.isArray(child) ? some(child, check) : check(child);
+      };
+
+      const continuous = some(oldChildren, (child) => {
+        return isContinuous(child) || child.props.children && isContinuous(child.props.children);
+      });
       const {
         nodesWillExit,
         nodesWillEnter,
