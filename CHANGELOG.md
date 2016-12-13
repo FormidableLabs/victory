@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 0.14.1 (2016-12-12)
+
+- Fixes minor animation bugs
+- Fixes bugs in VictoryZoom
+- Adds `pointerEvent: "none"` to tooltip
+
 ## 0.14.0 (2016-12-02)
 
 *This may be a breaking change for animating VictoryArea and VictoryLine. Animation behavior is changed.*
