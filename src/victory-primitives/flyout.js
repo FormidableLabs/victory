@@ -3,6 +3,7 @@ import React, { PropTypes } from "react";
 export default class Flyout extends React.Component {
 
   static propTypes = {
+    className: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
@@ -80,9 +81,10 @@ export default class Flyout extends React.Component {
 
   // Overridden in victory-core-native
   renderFlyout(path, style, events) {
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
+        className={className}
         d={path}
         style={style}
         shapeRendering={shapeRendering || "auto"}

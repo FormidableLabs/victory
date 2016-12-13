@@ -7,6 +7,7 @@ export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
 
   static propTypes = {
+    className: PropTypes.string,
     style: PropTypes.object,
     height: PropTypes.number,
     width: PropTypes.number,
@@ -79,9 +80,9 @@ export default class VictoryContainer extends React.Component {
 
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent } = props;
+    const { title, desc, children, portalComponent, className } = props;
     return (
-      <svg {...svgProps} style={style}>
+      <svg {...svgProps} style={style} className={className}>
         <title id="title">{title}</title>
         <desc id="desc">{desc}</desc>
         {children}

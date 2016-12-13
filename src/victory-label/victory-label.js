@@ -13,6 +13,7 @@ export default class VictoryLabel extends React.Component {
   static displayName = "VictoryLabel";
 
   static propTypes = {
+    className: PropTypes.string,
     angle: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number
@@ -148,7 +149,7 @@ export default class VictoryLabel extends React.Component {
   // Overridden in victory-core-native
   renderElements(props, content) {
     const transform = this.getTransform(props);
-    const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor"]);
+    const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor", "className"]);
     const fontSize = this.getFontSize(props.style);
     return (
       <text {...textProps}

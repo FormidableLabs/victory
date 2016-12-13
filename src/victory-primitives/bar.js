@@ -4,6 +4,7 @@ import { assign } from "lodash";
 export default class Bar extends React.Component {
 
   static propTypes = {
+    className: PropTypes.string,
     datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
@@ -59,10 +60,11 @@ export default class Bar extends React.Component {
 
   // Overridden in victory-core-native
   renderBar(path, style, events) {
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
         d={path}
+        className={className}
         style={style}
         role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}

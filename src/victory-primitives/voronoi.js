@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 
 export default class Voronoi extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     datum: PropTypes.object,
     data: PropTypes.array,
     events: PropTypes.object,
@@ -31,10 +32,11 @@ export default class Voronoi extends React.Component {
   renderPoint(paths, style, events) {
     const clipId = paths.circle && `clipPath-${Math.random()}`;
     const clipPath = paths.circle ? `url(#${clipId})` : undefined;
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     const voronoiPath = (
       <path
         d={paths.circle || paths.voronoi}
+        className={className}
         clipPath={clipPath}
         style={style}
         role={role || "presentation"}
@@ -47,7 +49,7 @@ export default class Voronoi extends React.Component {
         <g>
           <defs>
             <clipPath id={clipId}>
-              <path d={paths.voronoi}/>
+              <path d={paths.voronoi} className={className}/>
             </clipPath>
           </defs>
           {voronoiPath}
