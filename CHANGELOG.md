@@ -1,5 +1,13 @@
 # VictoryChart Changelog
 
+## 14.0.3 (2016-12-12)
+
+- Fixes an animation bug with continuous children.
+
+## 14.0.2 (2016-12-09)
+
+- Fixes VictoryZoom bugs related to events and render order.
+
 ## 14.0.1 (2016-12-07)
 
 - Fixes an [animation bug](https://github.com/FormidableLabs/victory/issues/444) by removing data accessor props from the animation whitelist
