@@ -87,6 +87,35 @@ export default class App extends React.Component {
         </VictoryZoom>
 
         <VictoryZoom>
+          <VictoryChart style={{parent: parentStyle}}
+            scale={{
+              x: "time"
+            }}
+          >
+            <VictoryAxis
+              tickFormat={(x) => new Date(x).getFullYear()}
+            />
+            <VictoryLine
+              style={{
+                data: {stroke: "red", strokeWidth: 5},
+                labels: {fontSize: 12}
+              }}
+              label={this.state.label}
+              data={[
+                {x: new Date(1982, 1, 1), y: 125},
+                {x: new Date(1987, 1, 1), y: 257},
+                {x: new Date(1993, 1, 1), y: 345},
+                {x: new Date(1997, 1, 1), y: 515},
+                {x: new Date(2001, 1, 1), y: 132},
+                {x: new Date(2005, 1, 1), y: 305},
+                {x: new Date(2011, 1, 1), y: 270},
+                {x: new Date(2015, 1, 1), y: 470}
+              ]}
+            />
+          </VictoryChart>
+        </VictoryZoom>
+
+        <VictoryZoom>
           <VictoryChart style={{parent: parentStyle}}>
             <VictoryLine
               style={{parent: parentStyle, data: this.state.style}}
