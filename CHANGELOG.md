@@ -1,6 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 10.0.2 (2016-12-12)
+
+- Add `pointerEvents: "none"` to tooltip themes
+
+## 10.0.1 (2016-12-09)
+
+- Fix bug related to duplicate keys in shared event children
+
 ## 10.0.0 (2016-12-01)
 
 - Change how continuous animations behave
