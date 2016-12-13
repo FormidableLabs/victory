@@ -5,6 +5,7 @@ import {
 
 export default class ClipPath extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     clipId: PropTypes.number,
     clipPadding: PropTypes.shape({
       top: PropTypes.number,
@@ -53,7 +54,8 @@ export default class ClipPath extends React.Component {
       clipWidth,
       clipHeight,
       translateX,
-      clipPadding
+      clipPadding,
+      className
     } = this.props;
 
     const padding = Helpers.getPadding(this.props);
@@ -61,6 +63,7 @@ export default class ClipPath extends React.Component {
     const totalPadding = (side) => padding[side] - (clipPadding[side] || 0);
 
     const clipProps = {
+      className,
       x: totalPadding("left") + translateX,
       y: totalPadding("top"),
       width: Math.max(clipWidth - totalPadding("left") - totalPadding("right"), 0),

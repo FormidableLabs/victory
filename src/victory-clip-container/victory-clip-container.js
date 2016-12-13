@@ -5,6 +5,7 @@ export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
 
   static propTypes = {
+    className: PropTypes.string,
     style: PropTypes.object,
     padding: PropTypes.oneOfType([
       PropTypes.number,
@@ -38,10 +39,11 @@ export default class VictoryClipContainer extends React.Component {
 
   // Overridden in victory-core-native
   renderClippedGroup(props, clipId) {
-    const { style, events, transform, children } = props;
+    const { style, events, transform, children, className } = props;
     const clipComponent = this.renderClipComponent(props, clipId);
     return (
       <g
+        className={className}
         style={style}
         {...events}
         transform={transform}
@@ -56,9 +58,10 @@ export default class VictoryClipContainer extends React.Component {
 
   // Overridden in victory-core-native
   renderGroup(props) {
-    const { style, events, transform, children } = props;
+    const { style, events, transform, children, className } = props;
     return (
       <g
+        className={className}
         style={style}
         {...events}
         transform={transform}

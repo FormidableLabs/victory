@@ -8,7 +8,8 @@ export default class ErrorBar extends React.Component {
   }
 
   static propTypes = {
-    index: React.PropTypes.number,
+    className: PropTypes.string,
+    index: PropTypes.number,
     datum: PropTypes.object,
     data: PropTypes.array,
     events: PropTypes.object,
@@ -42,11 +43,11 @@ export default class ErrorBar extends React.Component {
   }
 
   renderBorder(props, errors, type) {
-    const {x, y, borderWidth, events, style, role, shapeRendering} = props;
+    const {x, y, borderWidth, events, style, role, shapeRendering, className} = props;
     const vertical = type === "Right" || type === "Left";
     const error = errors[`error${type}`];
     const borderProps = {
-      role, shapeRendering,
+      role, shapeRendering, className,
       key: `border${type}`,
       x1: vertical ? error : x - borderWidth,
       x2: vertical ? error : x + borderWidth,
@@ -57,11 +58,11 @@ export default class ErrorBar extends React.Component {
   }
 
   renderCross(props, errors, type) {
-    const {x, y, events, style, role, shapeRendering} = props;
+    const {x, y, events, style, role, shapeRendering, className} = props;
     const vertical = type === "Top" || type === "Bottom";
     const error = errors[`error${type}`];
     const borderProps = {
-      role, shapeRendering,
+      role, shapeRendering, className,
       key: `cross${type}`,
       x1: x,
       x2: vertical ? x : error,
@@ -87,7 +88,8 @@ export default class ErrorBar extends React.Component {
 
   render() {
     const {
-      x, y, borderWidth, groupComponent, events, errorX, errorY, scale, role, shapeRendering, style
+      x, y, borderWidth, groupComponent, events, errorX, errorY, scale, role,
+      shapeRendering, style, className
     } = this.props;
     let rangeX;
     let rangeY;
@@ -116,7 +118,7 @@ export default class ErrorBar extends React.Component {
       errorBottom = negativeErrorY <= rangeY[1] ? rangeY[1] : negativeErrorY;
     }
     const props = {
-      x, y, borderWidth, groupComponent, events,
+      x, y, borderWidth, groupComponent, events, className,
       role: role || "presentation",
       shapeRendering: shapeRendering || "auto",
       style: assign({stroke: "black"}, style)

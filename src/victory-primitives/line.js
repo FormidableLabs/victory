@@ -3,6 +3,7 @@ import { assign } from "lodash";
 
 export default class Line extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     index: PropTypes.number,
     datum: PropTypes.any,
     data: PropTypes.array,
@@ -18,12 +19,13 @@ export default class Line extends React.Component {
 
   // Overridden in victory-core-native
   renderAxisLine(props, style, events) {
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <line
         {...props}
+        className={className}
         style={style}
-        role={role}
+        role={role || "presentation"}
         shapeRendering={shapeRendering || "auto"}
         vectorEffect="non-scaling-stroke"
         {...events}

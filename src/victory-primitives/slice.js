@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 
 export default class Slice extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     index: PropTypes.number,
     slice: PropTypes.object,
     pathFunction: PropTypes.func,
@@ -15,10 +16,11 @@ export default class Slice extends React.Component {
 
   // Overridden in victory-core-native
   renderSlice(path, style, events) {
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
         d={path}
+        className={className}
         role={role || "presentation"}
         style={style}
         shapeRendering={shapeRendering || "auto"}

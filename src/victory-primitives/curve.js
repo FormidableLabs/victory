@@ -4,6 +4,7 @@ import * as d3Shape from "d3-shape";
 
 export default class Curve extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
     index: PropTypes.number,
@@ -22,9 +23,10 @@ export default class Curve extends React.Component {
 
   // Overridden in victory-core-native
   renderLine(path, style, events) {
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
+        className={className}
         style={style}
         shapeRendering={shapeRendering || "auto"}
         d={path}

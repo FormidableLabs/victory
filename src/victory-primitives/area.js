@@ -4,6 +4,7 @@ import * as d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
   static propTypes = {
+    className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
     groupComponent: PropTypes.element,
@@ -45,7 +46,7 @@ export default class Area extends React.Component {
   renderArea(path, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
         key="area"
@@ -53,6 +54,7 @@ export default class Area extends React.Component {
         shapeRendering={shapeRendering || "auto"}
         role={role || "presentation"}
         d={path}
+        className={className}
         {...events}
       />
     );
@@ -63,7 +65,7 @@ export default class Area extends React.Component {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
       return undefined;
     }
-    const { role, shapeRendering } = this.props;
+    const { role, shapeRendering, className } = this.props;
     const lineStyle = assign({}, style, {fill: "none"});
     return (
       <path
@@ -72,6 +74,7 @@ export default class Area extends React.Component {
         style={lineStyle}
         role={role || "presentation"}
         d={path}
+        className={className}
         {...events}
       />
     );
