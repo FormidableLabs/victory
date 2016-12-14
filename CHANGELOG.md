@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.14.2 (2016-12-13)
+
+- Fixes date handling in VictoryZoom
+- Adds support for className in primitive components
+
 ## 0.14.1 (2016-12-12)
 
 - Fixes minor animation bugs
