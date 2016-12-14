@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 14.0.4 (2016-12-13)
+
+- Fixes date handling in VictoryZoom
+
 ## 14.0.3 (2016-12-12)
 
 - Fixes an animation bug with continuous children.
