@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 10.0.3 (2016-12-13)
+
+- Add support for `className` on all primitive components
+
 ## 10.0.2 (2016-12-12)
 
 - Add `pointerEvents: "none"` to tooltip themes
