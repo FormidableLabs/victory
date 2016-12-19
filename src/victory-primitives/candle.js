@@ -4,7 +4,8 @@ import { assign } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {
-    index: React.PropTypes.number,
+    className: PropTypes.string,
+    index: PropTypes.number,
     x: PropTypes.number,
     y1: PropTypes.number,
     y2: PropTypes.number,
@@ -36,23 +37,24 @@ export default class Candle extends React.Component {
   }
 
   getCandleProps(props) {
-    const { width, candleHeight, x, y, data, events, role} = props;
+    const { width, candleHeight, x, y, data, events, role, className} = props;
     const style = assign({stroke: "black"}, props.style);
     const padding = props.padding.left || props.padding;
     const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
     const candleX = x - candleWidth / 2;
     const shapeRendering = props.shapeRendering || "auto";
     return assign({
-      x: candleX, y, style, role, width: candleWidth, height: candleHeight, shapeRendering
+      x: candleX, y, style, role, width: candleWidth, height: candleHeight,
+      shapeRendering, className
     }, events);
   }
 
   getWickProps(props) {
-    const { x, y1, y2, events } = props;
+    const { x, y1, y2, events, className } = props;
     const style = assign({stroke: "black"}, props.style);
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
-    return assign({x1: x, x2: x, y1, y2, style, role, shapeRendering}, events);
+    return assign({x1: x, x2: x, y1, y2, style, role, shapeRendering, className}, events);
   }
 
   render() {
