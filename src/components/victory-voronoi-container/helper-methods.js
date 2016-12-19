@@ -1,8 +1,10 @@
-import { assign, defaults } from "lodash";
+import { assign, defaults, flatten, groupBy } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
-  VictoryContainer, VictoryTheme, Scale, Data
+  VictoryContainer, VictoryTheme, Scale
 } from "victory-core";
+import { voronoi as d3Voronoi } from "d3-voronoi";
+
 import Wrapper from "../../helpers/wrapper";
 
 const fallbackProps = {
@@ -27,13 +29,6 @@ export default class VictoryGroup extends React.Component {
     ]),
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node), React.PropTypes.node
-    ]),
-    color: PropTypes.string,
-    colorScale: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.oneOf([
-        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
-      ])
     ]),
     containerComponent: PropTypes.element,
     data: PropTypes.array,
@@ -174,37 +169,36 @@ export default class VictoryGroup extends React.Component {
       x: Wrapper.getCategories(modifiedProps, "x"),
       y: Wrapper.getCategories(modifiedProps, "y")
     };
-    const colorScale = modifiedProps.colorScale;
-    const color = modifiedProps.color;
-    return {datasets, categories, range, domain, horizontal, scale, style, colorScale, color};
+    const mergedData = this.mergeData(flatten(datasets));
+    const voronoi = this.getVoronoiFunction(range, scale);
+    const polygons = voronoi.polygons(mergedData);
+    return {datasets, categories, range, domain, horizontal, scale, style, polygons};
   }
 
-  pixelsToValue(props, axis, calculatedProps) {
-    if (props.offset === 0) {
-      return 0;
+  getVoronoiFunction(range, scale) {
+    const minRange = [Math.min(...range.x), Math.min(...range.y)];
+    const maxRange = [Math.max(...range.x), Math.max(...range.y)];
+    return d3Voronoi()
+      .x((d) => scale.x(d.x1 || d.x))
+      .y((d) => scale.y(d.y1 || d.y))
+      .extent([minRange, maxRange]);
+  }
+
+  mergeData(datasets) {
+    const groups = groupBy(datasets, (d) => `${d.x}, ${d.y}`);
+    const keys = Object.keys(groups);
+    const mergedData = [];
+    for (let index = 0, len = keys.length; index < len; index++) {
+      const group = groups[keys[index]];
+      if (group.length === 1) {
+        mergedData[index] = group[0];
+      } else {
+        const childNames = group.map((d) => d.childNames);
+        mergedData[index] = assign({childName: childNames}, group[0]);
+      }
     }
-    const childComponents = React.Children.toArray(props.children);
-    const horizontalChildren = childComponents.some((child) => child.props.horizontal);
-    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-    const currentAxis = Helpers.getCurrentAxis(axis, horizontal);
-    const domain = calculatedProps.domain[currentAxis];
-    const range = calculatedProps.range[currentAxis];
-    const domainExtent = Math.max(...domain) - Math.min(...domain);
-    const rangeExtent = Math.max(...range) - Math.min(...range);
-    return domainExtent / rangeExtent * props.offset;
-  }
+    return mergedData;
 
-  getXO(props, calculatedProps, index) {
-    const center = (calculatedProps.datasets.length - 1) / 2;
-    const totalWidth = this.pixelsToValue(props, "x", calculatedProps);
-    return (index - center) * totalWidth;
-  }
-
-  getLabels(props, datasets, index) {
-    if (!props.labels) {
-      return undefined;
-    }
-    return Math.floor(datasets.length / 2) === index ? props.labels : undefined;
   }
 
   getChildProps(props, calculatedProps) {
@@ -222,52 +216,26 @@ export default class VictoryGroup extends React.Component {
     };
   }
 
-  getColorScale(props, child) {
-    const role = child.type && child.type.role;
-    const colorScaleOptions = child.props.colorScale || props.colorScale;
-    if (role !== "group" && role !== "stack") {
-      return undefined;
-    }
-    return props.theme && props.theme.group ? colorScaleOptions || props.theme.group.colorScale
-    : colorScaleOptions;
-  }
-
-  getDataWithOffset(props, defaultDataset, offset) {
-    const dataset = props.data || props.y ? Data.getData(props) : defaultDataset;
-    const xOffset = offset || 0;
-    return dataset.map((datum) => {
-      const x1 = datum.x instanceof Date ? new Date(datum.x + xOffset) : datum.x + xOffset;
-      return assign({}, datum, {x1});
-    });
-  }
-
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
     const { datasets, horizontal } = calculatedProps;
-    const { offset, theme, labelComponent } = props;
+    const { theme, labelComponent } = props;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
     const newChildren = [];
     for (let index = 0, len = childComponents.length; index < len; index++) {
       const child = childComponents[index];
       const role = child.type && child.type.role;
-      const xOffset = this.getXO(props, calculatedProps, index);
       const style = role === "voronoi" || role === "tooltip" ?
         child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      const defaultDomainPadding = horizontal ?
-        {y: (offset * childComponents.length) / 2} :
-        {x: (offset * childComponents.length) / 2};
-      const domainPadding = child.props.domainPadding ||
-        props.domainPadding || defaultDomainPadding;
+      const domainPadding = child.props.domainPadding || props.domainPadding;
       newChildren[index] = React.cloneElement(child, assign({
         domainPadding, labels, style, theme, horizontal,
-        data: this.getDataWithOffset(props, datasets[index], xOffset),
+        data: datasets[index],
         animate: getAnimationProps(props, child, index),
-        colorScale: this.getColorScale(props, child),
         key: index,
-        labelComponent: labelComponent || child.props.labelComponent,
-        xOffset: role === "stack" ? xOffset : undefined
+        labelComponent: labelComponent || child.props.labelComponent
       }, childProps));
     }
     return newChildren;

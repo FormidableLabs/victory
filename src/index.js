@@ -13,5 +13,8 @@ export {
   default as VictoryVoronoiTooltip
 } from "./components/victory-voronoi-tooltip/victory-voronoi-tooltip";
 export {
+  default as VictoryVoronoiContainer
+} from "./components/victory-voronoi-container/victory-voronoi-container";
+export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";

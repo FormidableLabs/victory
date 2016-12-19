@@ -133,7 +133,15 @@ export default {
       [0, 1] : [min, max];
   },
 
-  getDataFromChildren(props, childComponents) {
+  addChildName(data, childName) {
+    const modifiedData = [];
+    for (let index = 0, len = data.length; index < len; index++) {
+      modifiedData[index] = assign({childName}, data[index]);
+    }
+    return modifiedData;
+  },
+
+  getDataFromChildren(props, childComponents) { // eslint-disable-line max-statements
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
@@ -149,12 +157,15 @@ export default {
 
     const dataArr = [];
     let dataArrLength = 0;
-
+    let childIndex = 0;
     while (childrenLength > 0) {
       const child = children[--childrenLength];
-
-      if (child.type && isFunction(child.type.getData)) {
-        dataArr[dataArrLength++] = child.props && child.type.getData(child.props);
+      const childName = child.props.name || childIndex;
+      childIndex++;
+      if (child.type && child.type.role === "axis") {
+        childIndex++;
+      } else if (child.type && isFunction(child.type.getData)) {
+        dataArr[dataArrLength++] = this.addChildName(child.type.getData(child.props), childName);
       } else if (child.props && child.props.children) {
         const newChildren = React.Children.toArray(child.props.children);
         const newChildrenLength = newChildren.length;
@@ -162,7 +173,7 @@ export default {
           children[childrenLength++] = newChildren[index];
         }
       } else {
-        dataArr[dataArrLength++] = getData(child.props);
+        dataArr[dataArrLength++] = this.addChildName(getData(child.props), childName);
       }
     }
 

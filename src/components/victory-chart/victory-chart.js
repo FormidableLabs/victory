@@ -2,7 +2,7 @@ import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
-  VictoryTheme, Scale
+  VictoryTheme, Scale, Events
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -90,6 +90,10 @@ export default class VictoryChart extends React.Component {
     }
   };
 
+  static expectedComponents = [
+    "groupComponent", "containerComponent"
+  ];
+
   constructor(props) {
     super(props);
     if (props.animate) {
@@ -103,7 +107,19 @@ export default class VictoryChart extends React.Component {
   }
 
   componentWillMount() {
+    const components = ["groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(this.props, components);
+    this.hasEvents = this.props.events || this.componentEvents;
+    this.events = this.getAllEvents(this.props);
     this.getContainerRef = (component) => this.containerRef = component;
+  }
+
+  getAllEvents(props) {
+    if (Array.isArray(this.componentEvents)) {
+      return Array.isArray(props.events) ?
+        this.componentEvents.concat(...props.events) : this.componentEvents;
+    }
+    return props.events;
   }
 
   componentWillReceiveProps(nextProps) {
