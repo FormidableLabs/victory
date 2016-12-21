@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryChart, VictoryLine, VictoryVoronoiContainer, VictoryGroup } from "../../src/index";
+import { VictoryChart, VictoryLine, VictorySelectionContainer } from "../../src/index";
 import { range, random } from "lodash";
 
 
@@ -48,7 +48,7 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
 
-          <VictoryChart style={chartStyle} containerComponent={<VictoryVoronoiContainer/>}>
+          <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer/>}>
             <VictoryLine
               data={[
                 {x: 1, y: -5},

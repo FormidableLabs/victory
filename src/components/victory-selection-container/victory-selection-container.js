@@ -1,6 +1,5 @@
 import React from "react";
-import { VictoryContainer } from "victory-core";
-import VoronoiHelpers from "./helper-methods";
+import { VictoryContainer, Selection } from "victory-core";
 import { assign } from "lodash";
 
 export default class VictoryVoronoiContainer extends VictoryContainer {
@@ -9,7 +8,7 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt) => {
-        const {x, y} = VoronoiHelpers.getMousePosition(evt);
+        const {x, y} = Selection.getSVGEventCoordinates(evt);
         return {
           target: "parent",
           mutation: (props) => {
@@ -19,9 +18,9 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
       },
       onMouseMove: (evt, containerProps) => {
         if (!containerProps.select) {
-          return;
+          return {};
         } else {
-          const {x, y} = VoronoiHelpers.getMousePosition(evt);
+          const {x, y} = Selection.getSVGEventCoordinates(evt);
           return {
             target: "parent",
             mutation: (props) => {
@@ -31,7 +30,7 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
         }
       },
       onMouseUp: (evt) => {
-        const {x, y} = VoronoiHelpers.getMousePosition(evt);
+        const {x, y} = Selection.getSVGEventCoordinates(evt);
         return {
           target: "parent",
           mutation: (props) => {

@@ -15,7 +15,7 @@ import VoronoiDemo from "./components/victory-voronoi-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import BrushDemo from "./components/victory-brush-demo";
 import AnimationDemo from "./components/animation-demo";
-import VoronoiGroupDemo from "./components/voronoi-group-demo";
+import SelectionDemo from "./components/selection-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
@@ -44,7 +44,7 @@ const App = React.createClass({
           <li><Link to="/tooltip">Victory Tooltip Demo</Link></li>
           <li><Link to="/brush">Victory Brush Demo</Link></li>
           <li><Link to="/animation">Animation Demo</Link></li>
-          <li><Link to="/voronoi-group">Voronoi Demo</Link></li>
+          <li><Link to="/selection">Selection Demo</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -69,7 +69,7 @@ ReactDOM.render((
       <Route path="tooltip" component={TooltipDemo}/>
       <Route path="brush" component={BrushDemo}/>
       <Route path="animation" component={AnimationDemo}/>
-      <Route path="voronoi-group" component={VoronoiGroupDemo}/>
+      <Route path="selection" component={SelectionDemo}/>
     </Route>
   </Router>
 ), content);
