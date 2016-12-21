@@ -1,5 +1,12 @@
 # VictoryPie Changelog
 
+## 8.0.0 (2016-12-20)
+
+- Changes how the positioning of the Pie is calculated so that VictoryPie is centered when padding is equal
+https://github.com/FormidableLabs/victory-pie/pull/125
+
+- This may be a breaking change for VictoryPie components where height != width.
+
 ## 7.2.0 (2016-12-02)
 
 - Ensure that animations and transitions use the global timer passed in context or create their own
