@@ -139,7 +139,7 @@ export default class App extends React.Component {
             width={400} height={200}
           />
 
-           <VictoryPie
+          <VictoryPie
             style={{parent: parentStyle}}
             width={200} height={400}
           />
