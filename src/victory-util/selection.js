@@ -9,7 +9,7 @@ export default {
     }
   },
 
-  (evt) {
+  getSVGEventCoordinates(evt) {
     const svg = this.getParentSVG(evt.target);
     const matrix = svg.getScreenCTM().inverse();
     const {a, d, e, f} = matrix;
