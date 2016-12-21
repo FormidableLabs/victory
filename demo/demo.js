@@ -134,6 +134,20 @@ export default class App extends React.Component {
         <h1>VictoryPie Demo</h1>
 
         <div style={containerStyle}>
+          <VictoryPie
+            style={{parent: parentStyle}}
+            width={400} height={200}
+          />
+
+          <VictoryPie
+            style={{parent: parentStyle}}
+            width={200} height={400}
+          />
+
+          <VictoryPie
+            style={{parent: parentStyle}}
+          />
+
           <VictoryPie animate={{duration: 1000}}
             style={{
               parent: parentStyle,
