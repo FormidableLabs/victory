@@ -183,7 +183,7 @@ class VictoryPie extends React.Component {
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "pie");
 
-    const { animate, standalone } = props;
+    const { animate, standalone, width, height } = props;
     // If animating, return a `VictoryAnimation` element that will create
     // a new `VictoryBar` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
@@ -201,7 +201,12 @@ class VictoryPie extends React.Component {
 
     const calculatedProps = PieHelpers.getCalculatedValues(props, fallbackProps);
     const { style, padding, radius } = calculatedProps;
-    const offset = { x: radius + padding.left, y: radius + padding.top };
+    const offsetWidth = width / 2 + padding.left - padding.right;
+    const offsetHeight = height / 2 + padding.top - padding.bottom;
+    const offset = {
+      x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
+    };
     const children = this.renderData(props);
     const group = this.renderGroup(children, style.parent, offset);
     return standalone ? this.renderContainer(props, group) : group;
