@@ -55,22 +55,24 @@ export default class VictorySharedEvents extends React.Component {
     this.setUpChildren(newProps);
   }
 
-  setUpChildren(props) {
-    this.componentEvents = props.container.type && props.container.type.defaultEvents;
-    this.childComponents = React.Children.toArray(props.children);
-    const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-    const parentBaseProps = props.container ? { parent: props.container.props } : {};
-    this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
-    this.hasEvents = props.events || this.componentEvents;
-    this.events = this.getAllEvents(props);
-  }
-
   getAllEvents(props) {
+    const components = ["container", "groupComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
     if (Array.isArray(this.componentEvents)) {
       return Array.isArray(props.events) ?
         this.componentEvents.concat(...props.events) : this.componentEvents;
     }
     return props.events;
+  }
+
+  setUpChildren(props) {
+    this.events = this.getAllEvents(props);
+    if (this.events) {
+      this.childComponents = React.Children.toArray(props.children);
+      const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
+      const parentBaseProps = props.container ? props.container.props : {};
+      this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+    }
   }
 
   getBasePropsFromChildren(childComponents) {
@@ -142,7 +144,7 @@ export default class VictorySharedEvents extends React.Component {
       } : null;
     const container = this.props.container || this.props.groupComponent;
     const boundGetEvents = Events.getEvents.bind(this);
-    const parentEvents = boundGetEvents({sharedEvents}, "parent");
+    const parentEvents = sharedEvents && boundGetEvents({sharedEvents}, "parent");
     const parentProps = defaults(
       {},
       this.getEventState("parent", "parent"),
@@ -159,7 +161,10 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   render() {
-    const children = this.getNewChildren(this.props);
-    return this.getContainer(this.props, children);
+    if (this.events) {
+      const children = this.getNewChildren(this.props);
+      return this.getContainer(this.props, children);
+    }
+    return React.cloneElement(this.props.container, {}, this.props.children);
   }
 }

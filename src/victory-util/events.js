@@ -1,4 +1,4 @@
-import { assign, extend, merge, partial, isEmpty } from "lodash";
+import { assign, extend, merge, partial, isEmpty, isFunction } from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -48,7 +48,8 @@ export default {
     };
 
     const allEvents = getAllEvents();
-    const ownEvents = allEvents && getScopedEvents(getEventsByTarget(allEvents), target);
+    const ownEvents = allEvents && isFunction(getScopedEvents) ?
+      getScopedEvents(getEventsByTarget(allEvents), target) : undefined;
     if (!props.sharedEvents) {
       return ownEvents;
     }
@@ -108,15 +109,13 @@ export default {
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
         const childState = this.state[childName] || {};
+        const extendState = (state) => {
+          return target === "parent" ?
+            extend(state[key], mutatedProps) : extend(state[key], {[target]: mutatedProps});
+        };
         return childName ?
-          extend(this.state, {
-            [childName]: extend(childState, {
-              [key]: extend(childState[key], {[target]: mutatedProps})
-            })
-          }) :
-          extend(this.state, {
-            [key]: extend(this.state[key], {[target]: mutatedProps})
-          });
+          extend(this.state, {[childName]: extend(childState, {[key]: extendState(childState)})}) :
+          extend(this.state, {[key]: extendState(this.state)});
       };
 
       // returns entire mutated state for a given childName
@@ -185,7 +184,7 @@ export default {
    */
   getEventState(eventKey, namespace, childType) {
     if (!childType) {
-      return this.state[eventKey] && this.state[eventKey][namespace];
+      return this.state[eventKey] && this.state[eventKey][namespace] || this.state[eventKey];
     }
     return this.state[childType] &&
       this.state[childType][eventKey] &&
