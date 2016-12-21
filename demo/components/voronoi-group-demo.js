@@ -72,25 +72,6 @@ class App extends React.Component {
               ]}
             />
           </VictoryChart>
-
-          <VictoryChart style={chartStyle}>
-            <VictoryGroup >
-              <VictoryLine
-                data={[
-                  {x: 1, y: -5},
-                  {x: 2, y: 4, label: "yo"},
-                  {x: 3, y: 2},
-                  {x: 4, y: 3, label: "o shit\nwhaddup?"},
-                  {x: 5, y: 1},
-                  {x: 6, y: -3, label: "hello!"},
-                  {x: 7, y: 3}
-                ]}
-              />
-              <VictoryLine
-                y={(data) => Math.sin(2 * Math.PI * data.x)}
-              />
-            </VictoryGroup>
-          </VictoryChart>
         </div>
       </div>
     );
