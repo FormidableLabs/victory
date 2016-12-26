@@ -1,4 +1,4 @@
-import { assign, extend, merge, partial, isEmpty, isFunction } from "lodash";
+import { assign, extend, merge, partial, isEmpty, isFunction, without } from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -129,9 +129,11 @@ export default {
       };
 
       // returns an entire mutated state for all children
-      return Array.isArray(childNames) ? childNames.reduce((memo, childName) => {
+      const allChildNames = childNames === "all" ?
+        without(Object.keys(baseProps), "parent") : childNames;
+      return Array.isArray(allChildNames) ? allChildNames.reduce((memo, childName) => {
         return assign(memo, getReturnByChild(childName));
-      }, {}) : getReturnByChild(childNames);
+      }, {}) : getReturnByChild(allChildNames);
     };
 
     // Parses an array of event returns into a single state mutation
