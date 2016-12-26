@@ -272,7 +272,6 @@ export default class VictoryChart extends React.Component {
   }
 
   getContainer(props, calculatedProps) {
-    console.log(this.state)
     const { width, height, containerComponent } = props;
     const { scale, style } = calculatedProps;
     const parentProps = defaults(

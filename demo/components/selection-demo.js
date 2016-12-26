@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryChart, VictoryLine, VictorySelectionContainer } from "../../src/index";
+import { VictoryChart, VictoryScatter, VictorySelectionContainer } from "../../src/index";
 import { range, random } from "lodash";
 
 
@@ -48,26 +48,39 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
 
-          <VictoryChart style={chartStyle} containerComponent={<VictorySelectionContainer/>}>
-            <VictoryLine
+          <VictoryChart style={chartStyle}
+            containerComponent={
+              <VictorySelectionContainer
+                selectionStyle={{
+                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                }}
+              />
+            }
+          >
+            <VictoryScatter
+              name="first"
+              style={{
+                data: {fill: "tomato"}
+              }}
               data={[
                 {x: 1, y: -5},
-                {x: 2, y: 4, label: "yo"},
+                {x: 2, y: 4},
                 {x: 3, y: 2},
-                {x: 4, y: 3, label: "o shit\nwhaddup?"},
+                {x: 4, y: 3},
                 {x: 5, y: 1},
-                {x: 6, y: -3, label: "hello!"},
+                {x: 6, y: -3},
                 {x: 7, y: 3}
               ]}
             />
-            <VictoryLine
+            <VictoryScatter
+              name="second"
               data={[
                 {x: 1, y: 5},
-                {x: 2, y: -4, label: "yo"},
+                {x: 2, y: -4},
                 {x: 3, y: -2},
-                {x: 4, y: -3, label: "o shit\nwhaddup?"},
+                {x: 4, y: -3},
                 {x: 5, y: -1},
-                {x: 6, y: 3, label: "hello!"},
+                {x: 6, y: 3},
                 {x: 7, y: -3}
               ]}
             />
