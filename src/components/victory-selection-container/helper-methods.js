@@ -31,9 +31,10 @@ export default {
     // Reverse the child array to maintain correct order when looping over
     // children starting from the end of the array.
     const children = React.Children.toArray(props.children).reverse();
-
     let childrenLength = children.length;
-
+    if (childrenLength === 0) {
+      return [{data: getData(props)}];
+    }
     const dataArr = [];
     let dataArrLength = 0;
     let childIndex = 0;

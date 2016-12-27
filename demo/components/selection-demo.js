@@ -58,7 +58,6 @@ class App extends React.Component {
             }
           >
             <VictoryScatter
-              name="first"
               style={{
                 data: {fill: "tomato"}
               }}
@@ -73,7 +72,20 @@ class App extends React.Component {
               ]}
             />
             <VictoryScatter
-              name="second"
+              style={{
+                data: {fill: "blue"}
+              }}
+              data={[
+                {x: 1, y: -3},
+                {x: 2, y: 5},
+                {x: 3, y: 3},
+                {x: 4, y: 0},
+                {x: 5, y: -2},
+                {x: 6, y: -2},
+                {x: 7, y: 5}
+              ]}
+            />
+            <VictoryScatter
               data={[
                 {x: 1, y: 5},
                 {x: 2, y: -4},
@@ -85,6 +97,26 @@ class App extends React.Component {
               ]}
             />
           </VictoryChart>
+
+            <VictoryScatter
+              style={chartStyle}
+              containerComponent={
+                <VictorySelectionContainer
+                  selectionStyle={{
+                    stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                  }}
+                />
+              }
+              data={[
+                {x: 1, y: -5},
+                {x: 2, y: 4},
+                {x: 3, y: 2},
+                {x: 4, y: 3},
+                {x: 5, y: 1},
+                {x: 6, y: -3},
+                {x: 7, y: 3}
+              ]}
+            />
         </div>
       </div>
     );
