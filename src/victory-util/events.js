@@ -74,7 +74,8 @@ export default {
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
       const baseType = type === "props" ? baseProps : this.state;
-      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
+      const base = (childName === undefined || childName === null || !baseType[childName]) ?
+        baseType : baseType[childName];
       return key === "parent" ? base.parent : base[key] && base[key][target];
     };
 
@@ -113,7 +114,7 @@ export default {
           return target === "parent" ?
             extend(state[key], mutatedProps) : extend(state[key], {[target]: mutatedProps});
         };
-        return childName ?
+        return childName !== undefined && childName !== null ?
           extend(this.state, {[childName]: extend(childState, {[key]: extendState(childState)})}) :
           extend(this.state, {[key]: extendState(this.state)});
       };
