@@ -92,7 +92,8 @@ export default {
           return "all";
         } else if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
-            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+            without(Object.keys(baseProps[childName]), "parent") :
+            without(Object.keys(baseProps), "parent");
         } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
           return baseProps[childName] ?
             Object.keys(baseProps[childName]) : Object.keys(baseProps);
