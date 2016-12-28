@@ -4,6 +4,7 @@ import * as d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
