@@ -1,6 +1,5 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
-import { assign, isFunction } from "lodash";
 import Helpers from "./helper-methods";
 
 
@@ -23,17 +22,18 @@ export default class VictorySelectionContainer extends VictoryContainer {
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
-      onMouseDown: (evt) => {
+      onMouseDown: (evt, targetProps) => {
         const {x, y} = Selection.getSVGEventCoordinates(evt);
         return [
           {
             target: "parent",
-            mutation: (props) => {
-              return assign({}, props, {x1: x, y1: y, select: true, x2: null, y2: null});
+            mutation: () => {
+              return {x1: x, y1: y, select: true, x2: null, y2: null};
             }
           }, {
             target: "data",
-            childName: "all",
+            childName: targetProps.children ? "all" : undefined,
+            eventKey: "all",
             mutation: () => null
           }
         ];
@@ -45,8 +45,8 @@ export default class VictorySelectionContainer extends VictoryContainer {
           const {x, y} = Selection.getSVGEventCoordinates(evt);
           return {
             target: "parent",
-            mutation: (props) => {
-              return assign({}, props, {x2: x, y2: y});
+            mutation: () => {
+              return { x2: x, y2: y };
             }
           };
         }
@@ -55,8 +55,8 @@ export default class VictorySelectionContainer extends VictoryContainer {
         const {x2, y2} = targetProps;
         const parentMutation = [{
           target: "parent",
-          mutation: (props) => {
-            return assign({}, props, {select: false});
+          mutation: () => {
+            return { select: false, x1: null, x2: null, y1: null, y2: null };
           }
         }];
         if (!x2 || !y2) {

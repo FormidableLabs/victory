@@ -1,4 +1,4 @@
-import { isFunction, assign } from "lodash";
+import { isFunction } from "lodash";
 import React from "react";
 import { Data, Collection } from "victory-core";
 
@@ -23,6 +23,9 @@ export default {
   },
 
   getDatasets(props) { // eslint-disable-line max-statements
+    if (props.data) {
+      return [{data: props.data}];
+    }
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
@@ -32,9 +35,6 @@ export default {
     // children starting from the end of the array.
     const children = React.Children.toArray(props.children).reverse();
     let childrenLength = children.length;
-    if (childrenLength === 0) {
-      return [{data: getData(props)}];
-    }
     const dataArr = [];
     let dataArrLength = 0;
     let childIndex = 0;
