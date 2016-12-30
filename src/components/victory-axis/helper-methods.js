@@ -9,6 +9,20 @@ const orientationSign = {
 };
 
 export default {
+  evaluateProp(prop, data, index) {
+    return isFunction(prop) ? prop(data, index) : prop;
+  },
+
+  evaluateStyle(style, data, index) {
+    if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
+      return style;
+    }
+    return Object.keys(style).reduce((prev, curr) => {
+      prev[curr] = this.evaluateProp(style[curr], data, index);
+      return prev;
+    }, {});
+  },
+
   // exposed for use by VictoryChart
   getDomain(props, axis) {
     const inherentAxis = this.getAxis(props);
@@ -138,9 +152,9 @@ export default {
 
   getEvaluatedStyles(style, tick, index) {
     return {
-      tickStyle: Helpers.evaluateStyle(style.ticks, tick, index),
-      labelStyle: Helpers.evaluateStyle(style.tickLabels, tick, index),
-      gridStyle: Helpers.evaluateStyle(style.grid, tick, index)
+      tickStyle: this.evaluateStyle(style.ticks, tick, index),
+      labelStyle: this.evaluateStyle(style.tickLabels, tick, index),
+      gridStyle: this.evaluateStyle(style.grid, tick, index)
     };
   },
 
@@ -325,7 +339,7 @@ export default {
       ? props.offsetY : yPadding;
     const tickSizes = ticks.map((data) => {
       const tick = stringTicks ? props.tickValues[data - 1] : data;
-      const tickStyle = Helpers.evaluateStyle(style.ticks, tick);
+      const tickStyle = this.evaluateStyle(style.ticks, tick);
       return tickStyle.size || 0;
     });
     const totalPadding = fontSize + (2 * Math.max(...tickSizes)) + labelPadding;

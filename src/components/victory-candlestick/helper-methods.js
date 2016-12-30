@@ -149,21 +149,19 @@ export default {
     const fill = datum.fill || style.fill || candleColor;
     const strokeColor = datum.stroke || style.stroke;
     const stroke = this.isTransparent(strokeColor) ? fill : strokeColor || "black";
-    const baseDataStyle = defaults({}, stylesFromData, {stroke, fill}, style);
-    return Helpers.evaluateStyle(baseDataStyle, datum);
+    return defaults({}, stylesFromData, {stroke, fill}, style);
   },
 
   getLabelText(props, datum, index) {
     return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
+      props.labels[index] : props.labels);
   },
 
   getLabelStyle(labelStyle, dataProps) {
     labelStyle = labelStyle || {};
-    const { datum, size, style } = dataProps;
+    const { size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;
-    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
-    return Helpers.evaluateStyle(baseLabelStyle, datum);
+    return defaults({}, labelStyle, matchedStyle, {padding});
   }
 };

@@ -73,29 +73,26 @@ export default {
     const stylesFromData = omit(datum, [
       "x", "y", "z", "size", "symbol", "name", "label", "eventKey"
     ]);
-    const baseDataStyle = defaults({}, stylesFromData, style);
-    return Helpers.evaluateStyle(baseDataStyle, datum);
+    return defaults({}, stylesFromData, style);
   },
 
   getLabelText(props, datum, index) {
     return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
+      props.labels[index] : props.labels);
   },
 
   getLabelStyle(labelStyle, dataProps) {
-    const { datum, size, style } = dataProps;
+    const { size, style } = dataProps;
     const matchedStyle = pick(style, ["opacity", "fill"]);
     const padding = labelStyle.padding || size * 0.25;
-    const baseLabelStyle = defaults({}, labelStyle, matchedStyle, {padding});
-    return Helpers.evaluateStyle(baseLabelStyle, datum);
+    return defaults({}, labelStyle, matchedStyle, {padding});
   },
 
   getSymbol(data, props) {
     if (props.bubbleProperty) {
       return "circle";
     }
-    const symbol = data.symbol || props.symbol;
-    return Helpers.evaluateProp(symbol, data);
+    return data.symbol || props.symbol;
   },
 
   getBubbleSize(datum, props, calculatedValues) {
@@ -115,16 +112,14 @@ export default {
   },
 
   getSize(data, props, calculatedValues) {
-    let size;
     if (data.size) {
-      size = typeof data.size === "function" ? data.size : Math.max(data.size, 1);
+      return typeof data.size === "function" ? data.size : Math.max(data.size, 1);
     } else if (typeof props.size === "function") {
-      size = props.size;
+      return props.size;
     } else if (data[calculatedValues.z]) {
-      size = this.getBubbleSize(data, props, calculatedValues);
+      return this.getBubbleSize(data, props, calculatedValues);
     } else {
-      size = Math.max(props.size, 1);
+      return Math.max(props.size, 1);
     }
-    return Helpers.evaluateProp(size, data);
   }
 };

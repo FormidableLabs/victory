@@ -83,21 +83,19 @@ export default {
     const stylesFromData = omit(datum, [
       "x", "y", "name", "label"
     ]);
-    const baseDataStyle = defaults({}, stylesFromData, style);
-    return Helpers.evaluateStyle(baseDataStyle, datum);
+    return defaults({}, stylesFromData, style);
   },
 
   getLabelText(props, datum, index) {
-    return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
+    return datum.label || Array.isArray(props.labels) ?
+      props.labels[index] : props.labels;
   },
 
   getLabelStyle(style, datum) {
-    const labelStyle = defaults({}, {
+    return defaults({}, {
       angle: datum.angle,
       textAnchor: datum.textAnchor,
       verticalAnchor: datum.verticalAnchor
     }, style);
-    return Helpers.evaluateStyle(labelStyle, datum);
   }
 };

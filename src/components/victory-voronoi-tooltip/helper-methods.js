@@ -37,8 +37,8 @@ export default {
     const { x, y, index, scale, datum, data } = dataProps;
     return {
       x, y, text, index, scale, datum, data,
-      flyoutStyle: Helpers.evaluateStyle(style.flyout, datum),
-      style: Helpers.evaluateStyle(style.labels, datum)
+      flyoutStyle: style.flyout,
+      style: style.labels
     };
   },
 
@@ -89,12 +89,11 @@ export default {
     const stylesFromData = omit(datum, [
       "x", "y", "name", "label"
     ]);
-    const baseDataStyle = defaults({}, stylesFromData, style);
-    return Helpers.evaluateStyle(baseDataStyle, datum);
+    return defaults({}, stylesFromData, style);
   },
 
   getLabelText(props, datum, index) {
     return datum.label || (Array.isArray(props.labels) ?
-      props.labels[index] : Helpers.evaluateProp(props.labels, datum));
+      props.labels[index] : props.labels);
   }
 };
