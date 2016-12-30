@@ -1,7 +1,9 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 
 export default class Voronoi extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     datum: PropTypes.object,
     data: PropTypes.array,
@@ -22,7 +24,8 @@ export default class Voronoi extends React.Component {
   }
 
   getCirclePath(props) {
-    const {x, y, size} = props;
+    const { x, y, datum, active } = props;
+    const size = Helpers.evaluateProp(props.size, datum, active);
     return `M ${x}, ${y} m ${-size}, 0
       a ${size}, ${size} 0 1,0 ${size * 2},0
       a ${size}, ${size} 0 1,0 ${-size * 2},0`;
@@ -63,7 +66,8 @@ export default class Voronoi extends React.Component {
       circle: this.props.size && this.getCirclePath(this.props),
       voronoi: this.getVoronoiPath(this.props)
     };
-    const { style, events } = this.props;
-    return this.renderPoint(paths, style, events);
+    const { style, events, datum, active } = this.props;
+    const evaluatedStyle = Helpers.evaluateStyle(style, datum, active);
+    return this.renderPoint(paths, evaluatedStyle, events);
   }
 }

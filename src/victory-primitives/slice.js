@@ -1,7 +1,9 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 
 export default class Slice extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     index: PropTypes.number,
     slice: PropTypes.object,
@@ -30,8 +32,9 @@ export default class Slice extends React.Component {
   }
 
   render() {
-    const path = this.props.pathFunction(this.props.slice);
-    const { style, events } = this.props;
-    return this.renderSlice(path, style, events);
+    const { style, events, datum, active, slice } = this.props;
+    const path = this.props.pathFunction(slice);
+    const evaluatedStyle = Helpers.evaluateStyle(style, datum, active);
+    return this.renderSlice(path, evaluatedStyle, events);
   }
 }

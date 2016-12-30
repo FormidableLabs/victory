@@ -1,8 +1,10 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
 
 export default class Point extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     datum: PropTypes.object,
     data: PropTypes.array,
@@ -27,6 +29,7 @@ export default class Point extends React.Component {
   };
 
   getPath(props) {
+    const {datum, active, x, y} = props;
     const pathFunctions = {
       circle: pathHelpers.circle,
       square: pathHelpers.square,
@@ -36,7 +39,9 @@ export default class Point extends React.Component {
       plus: pathHelpers.plus,
       star: pathHelpers.star
     };
-    return pathFunctions[props.symbol].call(null, props.x, props.y, props.size);
+    const symbol = Helpers.evaluateProp(props.symbol, datum, active);
+    const size = Helpers.evaluateProp(props.size, datum, active);
+    return pathFunctions[symbol].call(null, x, y, size);
   }
 
   // Overridden in victory-core-native
@@ -55,6 +60,8 @@ export default class Point extends React.Component {
   }
 
   render() {
-    return this.renderPoint(this.getPath(this.props), this.props.style, this.props.events);
+    const {style, datum, active, events} = this.props;
+    const evaluatedStyle = Helpers.evaluateStyle(style, datum, active);
+    return this.renderPoint(this.getPath(this.props), evaluatedStyle, events);
   }
 }
