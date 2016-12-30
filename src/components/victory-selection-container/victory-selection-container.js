@@ -1,6 +1,6 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
-import Helpers from "./helper-methods";
+import { isFunction, assign } from "lodash";
 
 
 export default class VictorySelectionContainer extends VictoryContainer {
@@ -8,7 +8,8 @@ export default class VictorySelectionContainer extends VictoryContainer {
   static propTypes = {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,
-    onSelection: React.PropTypes.func
+    onSelection: React.PropTypes.func,
+    onSelectionCleared: React.PropTypes.func
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
@@ -24,6 +25,9 @@ export default class VictorySelectionContainer extends VictoryContainer {
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+        if (isFunction(targetProps.onSelectionCleared)) {
+          targetProps.onSelectionCleared();
+        }
         return [
           {
             target: "parent",
@@ -38,8 +42,8 @@ export default class VictorySelectionContainer extends VictoryContainer {
           }
         ];
       },
-      onMouseMove: (evt, containerProps) => {
-        if (!containerProps.select) {
+      onMouseMove: (evt, targetProps) => {
+        if (!targetProps.select) {
           return {};
         } else {
           const {x, y} = Selection.getSVGEventCoordinates(evt);
@@ -62,15 +66,17 @@ export default class VictorySelectionContainer extends VictoryContainer {
         if (!x2 || !y2) {
           return parentMutation;
         }
-        const bounds = Helpers.getBounds(targetProps);
-        const datasets = Helpers.getDatasets(targetProps);
-        const selectedData = Helpers.filterDatasets(datasets, bounds);
+        const bounds = Selection.getBounds(targetProps);
+        const datasets = Selection.getDatasets(targetProps);
+        const selectedData = Selection.filterDatasets(datasets, bounds);
+        const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
+          targetProps.onSelection(selectedData) : {};
         const dataMutation = selectedData ?
           selectedData.map((d) => {
             return {
               childName: d.childName, eventKey: d.eventKey, target: "data",
               mutation: () => {
-                return {active: true, symbol: "square", size: 6}
+                return assign({active: true}, callbackMutation);
               }
             };
           }) : [];

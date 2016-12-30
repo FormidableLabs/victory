@@ -133,7 +133,7 @@ export default {
       [0, 1] : [min, max];
   },
 
-  getDataFromChildren(props, childComponents) {
+  getDataFromChildren(props, childComponents) { // eslint-disable-line max-statements
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
@@ -152,7 +152,8 @@ export default {
     while (childrenLength > 0) {
       const child = children[--childrenLength];
       if (child.type && child.type.role === "axis") {
-      } else if (child.type && isFunction(child.type.getData)) {
+        dataArrLength = dataArrLength;
+      } else if (child.type && child.type.role !== "axis" && isFunction(child.type.getData)) {
         dataArr[dataArrLength++] = child.type.getData(child.props);
       } else if (child.props && child.props.children) {
         const newChildren = React.Children.toArray(child.props.children);

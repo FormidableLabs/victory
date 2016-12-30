@@ -1,36 +1,40 @@
 import React from "react";
 import { VictoryChart, VictoryScatter, VictorySelectionContainer } from "../../src/index";
-import { range, random } from "lodash";
-
 
 class App extends React.Component {
 
-  getGroupData() {
-    return range(5).map(() => {
-      return [
-        {
-          x: "rabbits",
-          y: random(1, 5)
-        },
-        {
-          x: "cats",
-          y: random(1, 10)
-        },
-        {
-          x: "dogs",
-          y: random(1, 15)
-        }
-      ];
-    });
+  constructor() {
+    super();
+    this.state = {
+      points: []
+    };
   }
 
-  getMultiData() {
-    const bars = random(3, 5);
-    return range(4).map(() => {
-      return range(bars).map((bar) => {
-        return {x: bar + 1, y: random(2, 10)};
-      });
+  handleSelection(datasets) {
+    const points = datasets.reduce((memo, dataset) => {
+      memo = memo.concat(dataset.data);
+      return memo;
+    }, []);
+    this.setState({points});
+  }
+
+  handleClearSelection() {
+    this.setState({points: []});
+  }
+
+  listData() {
+    const points = this.state.points.map((point, index) => {
+      return <li key={index}>{`${point.x}, ${point.y}`}</li>;
     });
+
+    return (
+      <div>
+        <p>Points</p>
+        <ul>
+          {points}
+        </ul>
+      </div>
+    );
   }
 
   render() {
@@ -47,13 +51,15 @@ class App extends React.Component {
     return (
       <div className="demo">
         <div style={containerStyle}>
-
+          {this.listData()}
           <VictoryChart style={chartStyle}
             containerComponent={
               <VictorySelectionContainer
                 selectionStyle={{
                   stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
                 }}
+                onSelection={this.handleSelection.bind(this)}
+                onSelectionCleared={this.handleClearSelection.bind(this)}
               />
             }
           >
@@ -61,6 +67,7 @@ class App extends React.Component {
               style={{
                 data: {fill: "tomato"}
               }}
+              size={(datum, active) => active ? 5 : 3}
               data={[
                 {x: 1, y: -5},
                 {x: 2, y: 4},
@@ -75,6 +82,7 @@ class App extends React.Component {
               style={{
                 data: {fill: "blue"}
               }}
+              size={(datum, active) => active ? 5 : 3}
               data={[
                 {x: 1, y: -3},
                 {x: 2, y: 5},
@@ -95,11 +103,17 @@ class App extends React.Component {
                 {x: 6, y: 3},
                 {x: 7, y: -3}
               ]}
+              size={(datum, active) => active ? 5 : 3}
             />
           </VictoryChart>
 
             <VictoryScatter
-              style={chartStyle}
+              style={{
+                parent: chartStyle.parent,
+                data: {
+                  fill: (datum, active) => active ? "tomato" : "black"
+                }
+              }}
               containerComponent={
                 <VictorySelectionContainer
                   selectionStyle={{
@@ -107,6 +121,7 @@ class App extends React.Component {
                   }}
                 />
               }
+              size={(datum, active) => active ? 5 : 3}
               data={[
                 {x: 1, y: -5},
                 {x: 2, y: 4},
