@@ -2,7 +2,7 @@ import { defaults } from "lodash";
 import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
-  VictoryTheme, Scale, Events
+  VictoryTheme, Scale
 } from "victory-core";
 import VictoryAxis from "../victory-axis/victory-axis";
 import ChartHelpers from "./helper-methods";
@@ -109,29 +109,19 @@ export default class VictoryChart extends React.Component {
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
-    this.events = this.getAllEvents(props);
+    this.events = Wrapper.getAllEvents(props);
   }
 
   componentWillMount() {
-    this.events = this.getAllEvents(this.props);
+    this.events = Wrapper.getAllEvents(this.props);
     this.getContainerRef = (component) => this.containerRef = component;
-  }
-
-  getAllEvents(props) {
-    const components = ["groupComponent", "containerComponent"];
-    this.componentEvents = Events.getComponentEvents(props, components);
-    if (Array.isArray(this.componentEvents)) {
-      return Array.isArray(props.events) ?
-        this.componentEvents.concat(...props.events) : this.componentEvents;
-    }
-    return props.events;
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
     }
-    this.events = this.getAllEvents(nextProps);
+    this.events = Wrapper.getAllEvents(nextProps);
   }
 
   getStyles(props) {

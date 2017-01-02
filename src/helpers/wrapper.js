@@ -1,7 +1,7 @@
 import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";
-import { Style, Transitions, Collection, Data, Domain } from "victory-core";
+import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
 
 
 export default {
@@ -64,6 +64,16 @@ export default {
         continuous
       });
     }
+  },
+
+  getAllEvents(props) {
+    const components = ["groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
+    if (Array.isArray(this.componentEvents)) {
+      return Array.isArray(props.events) ?
+        this.componentEvents.concat(...props.events) : this.componentEvents;
+    }
+    return props.events;
   },
 
   getAnimationProps(props, child, index) {

@@ -1,5 +1,8 @@
 import React from "react";
-import { VictoryChart, VictoryScatter, VictorySelectionContainer } from "../../src/index";
+import {
+  VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
+  VictorySelectionContainer
+} from "../../src/index";
 
 class App extends React.Component {
 
@@ -63,6 +66,82 @@ class App extends React.Component {
               />
             }
           >
+            <VictoryLine
+              style={{
+                data: {stroke: "tomato"}
+              }}
+              data={[
+                {x: 1, y: -5},
+                {x: 2, y: 4},
+                {x: 3, y: 2},
+                {x: 4, y: 3},
+                {x: 5, y: 1},
+                {x: 6, y: -3},
+                {x: 7, y: 3}
+              ]}
+            />
+            <VictoryLine
+              style={{
+                data: {stroke: "blue"}
+              }}
+              data={[
+                {x: 1, y: -3},
+                {x: 2, y: 5},
+                {x: 3, y: 3},
+                {x: 4, y: 0},
+                {x: 5, y: -2},
+                {x: 6, y: -2},
+                {x: 7, y: 5}
+              ]}
+            />
+            <VictoryLine
+              data={[
+                {x: 1, y: 5},
+                {x: 2, y: -4},
+                {x: 3, y: -2},
+                {x: 4, y: -3},
+                {x: 5, y: -1},
+                {x: 6, y: 3},
+                {x: 7, y: -3}
+              ]}
+            />
+          </VictoryChart>
+
+          <VictoryScatter
+            style={{
+              parent: chartStyle.parent,
+              data: {
+                fill: (datum, active) => active ? "tomato" : "black"
+              }
+            }}
+            containerComponent={
+              <VictorySelectionContainer
+                selectionStyle={{
+                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                }}
+              />
+            }
+            size={(datum, active) => active ? 5 : 3}
+            data={[
+              {x: 1, y: -5},
+              {x: 2, y: 4},
+              {x: 3, y: 2},
+              {x: 4, y: 3},
+              {x: 5, y: 1},
+              {x: 6, y: -3},
+              {x: 7, y: 3}
+            ]}
+          />
+
+          <VictoryGroup style={chartStyle}
+            containerComponent={
+              <VictorySelectionContainer
+                selectionStyle={{
+                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                }}
+              />
+            }
+          >
             <VictoryScatter
               style={{
                 data: {fill: "tomato"}
@@ -105,22 +184,25 @@ class App extends React.Component {
               ]}
               size={(datum, active) => active ? 5 : 3}
             />
-          </VictoryChart>
+          </VictoryGroup>
 
-            <VictoryScatter
+          <VictoryStack style={chartStyle}
+            containerComponent={
+              <VictorySelectionContainer
+                selectionStyle={{
+                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                }}
+              />
+            }
+          >
+            <VictoryBar
               style={{
-                parent: chartStyle.parent,
                 data: {
-                  fill: (datum, active) => active ? "tomato" : "black"
+                  fill: "tomato",
+                  stroke: (d, active) => active ? "black" : "none",
+                  strokeWidth: 2
                 }
               }}
-              containerComponent={
-                <VictorySelectionContainer
-                  selectionStyle={{
-                    stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                  }}
-                />
-              }
               size={(datum, active) => active ? 5 : 3}
               data={[
                 {x: 1, y: -5},
@@ -132,6 +214,44 @@ class App extends React.Component {
                 {x: 7, y: 3}
               ]}
             />
+            <VictoryBar
+              style={{
+                data: {
+                  fill: "orange",
+                  stroke: (d, active) => active ? "black" : "none",
+                  strokeWidth: 2
+                }
+              }}
+              size={(datum, active) => active ? 5 : 3}
+              data={[
+                {x: 1, y: -3},
+                {x: 2, y: 5},
+                {x: 3, y: 3},
+                {x: 4, y: 0},
+                {x: 5, y: -2},
+                {x: 6, y: -2},
+                {x: 7, y: 5}
+              ]}
+            />
+            <VictoryBar
+              style={{
+                data: {
+                  fill: "gold",
+                  stroke: (d, active) => active ? "black" : "none",
+                  strokeWidth: 2
+                }
+              }}
+              data={[
+                {x: 1, y: 5},
+                {x: 2, y: -4},
+                {x: 3, y: -2},
+                {x: 4, y: -3},
+                {x: 5, y: -1},
+                {x: 6, y: 3},
+                {x: 7, y: -3}
+              ]}
+            />
+          </VictoryStack>
         </div>
       </div>
     );
