@@ -34,8 +34,8 @@
   "dependencies": {
     "builder": "^3.1.0",
     "builder-victory-component": "^3.1.0",
-    "victory-chart": "^14.0.3",
-    "victory-core": "^10.0.2",
+    "victory-chart": "git+https://github.com/formidablelabs/victory-chart#feature/select-box",
+    "victory-core": "git+https://github.com/formidablelabs/victory-core#container-events",
     "victory-pie": "^7.2.0"
   },
   "devDependencies": {
