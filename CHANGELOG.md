@@ -1,5 +1,14 @@
 # Victory Changelog
 
+## 0.15.0 (2017-01-03)
+
+- Adds `VictorySelectionContainer`
+- Changes when functional styles and props are evaluated (this may be a breaking change)
+  Functional styles and props are now evaluated in the primitive components (`Point`, `Bar` etc.)
+- Supports an `active` prop on all primitive components that is used when evaluating functional styles and props
+- Tooltips now trigger `active: true` on both labels and data components
+- `defaultEvents` are supported for `containerComponents`
+
 ## 0.14.2 (2016-12-13)
 
 - Fixes date handling in VictoryZoom
