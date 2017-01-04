@@ -20,8 +20,7 @@ export default {
     const { style, colors } = calculatedValues;
     const fill = this.getColor(style, colors, index);
     const dataStyles = omit(datum, ["x", "y", "label"]);
-    const sliceStyle = defaults({}, {fill}, style.data, dataStyles);
-    return Helpers.evaluateStyle(sliceStyle, datum);
+    return defaults({}, {fill}, style.data, dataStyles);
   },
 
   getBaseProps(props, fallbackProps) {
@@ -52,7 +51,7 @@ export default {
   getLabelProps(props, dataProps, calculatedValues) {
     const { index, datum, data, slice } = dataProps;
     const { style, radius } = calculatedValues;
-    const labelStyle = Helpers.evaluateStyle(assign({padding: 0}, style.labels), datum);
+    const labelStyle = assign({padding: 0}, style.labels);
     const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
     const labelPosition = this.getLabelPosition(radius, labelRadius, labelStyle);
     const position = labelPosition.centroid(slice);
