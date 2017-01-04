@@ -145,7 +145,7 @@ export default class VictorySharedEvents extends React.Component {
         getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
         getEventState: partialRight(this.getEventState, null)
       } : null;
-    const container = this.props.container || this.props.groupComponent;
+    const container = this.props.container;
     const boundGetEvents = Events.getEvents.bind(this);
     const parentEvents = sharedEvents && boundGetEvents({sharedEvents}, "parent");
     const parentProps = defaults(
