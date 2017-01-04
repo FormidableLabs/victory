@@ -133,6 +133,24 @@ class App extends React.Component {
             ]}
           />
 
+          <VictoryScatter
+            style={{
+              parent: chartStyle.parent,
+              data: {
+                fill: (datum, active) => active ? "tomato" : "black"
+              }
+            }}
+            containerComponent={
+              <VictorySelectionContainer
+                selectionStyle={{
+                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+                }}
+              />
+            }
+            size={(datum, active) => active ? 5 : 3}
+            y={(d) => d.x * d.x}
+          />
+
           <VictoryGroup style={chartStyle}
             containerComponent={
               <VictorySelectionContainer

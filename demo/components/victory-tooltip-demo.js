@@ -44,6 +44,7 @@ class App extends React.Component {
             style={{parent: parentStyle}}
             labelComponent={<VictoryTooltip/>}
             labels={(d) => `hello #${d.x}`}
+            size={(d, active) => active ? 5 : 3}
             data={[
               {x: 1, y: 1},
               {x: 2, y: 2},
