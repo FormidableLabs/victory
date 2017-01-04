@@ -1,5 +1,12 @@
 # VictoryPie Changelog
 
+## 9.0.0 (2017-01-03)
+
+- Changes when functional styles and props are evaluated.
+  - They are now evaluated on the primitive components
+- Updates victory-core
+- Supports `defaultEvents` on `containerComponents`
+
 ## 8.0.0 (2016-12-20)
 
 - Changes how the positioning of the Pie is calculated so that VictoryPie is centered when padding is equal
