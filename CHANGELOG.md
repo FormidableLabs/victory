@@ -1,6 +1,15 @@
 VictoryCore Changelog
 =====================
 
+## 11.0.0 (2017-01-03)
+
+- Adds support for `active` boolean prop on all primitive components
+- Tooltips trigger `active` on both data and label components
+- Adds selection helpers to support `VictorySelectionContainer`
+- Changes when functional styles / props are evaluated
+  - they will now be evaluated from the primitive components so they can be evaluated with `active`
+- Better support for `defaultEvents` on container components
+
 ## 10.0.3 (2016-12-13)
 
 - Add support for `className` on all primitive components
