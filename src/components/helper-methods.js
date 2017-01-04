@@ -20,7 +20,7 @@ export default {
     const { style, colors } = calculatedValues;
     const fill = this.getColor(style, colors, index);
     const dataStyles = omit(datum, ["x", "y", "label"]);
-    return sliceStyle = defaults({}, {fill}, style.data, dataStyles);
+    return defaults({}, {fill}, style.data, dataStyles);
   },
 
   getBaseProps(props, fallbackProps) {
