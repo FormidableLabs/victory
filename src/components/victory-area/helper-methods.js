@@ -13,8 +13,8 @@ export default {
       key: "area",
       data,
       scale,
-      interpolation: Helpers.evaluateProp(interpolation, data),
-      style: Helpers.evaluateStyle(style.data, data)
+      interpolation,
+      style: style.data
     };
 
     const baseProps = {
@@ -24,9 +24,8 @@ export default {
       }
     };
 
-    const text = Helpers.evaluateProp(label, data);
-    if (text !== undefined && text !== null || props.events || props.sharedEvents) {
-      baseProps.all.labels = this.getLabelProps(dataProps, text, style);
+    if (label !== undefined && label !== null || props.events || props.sharedEvents) {
+      baseProps.all.labels = this.getLabelProps(dataProps, label, style);
     }
 
     return baseProps;
@@ -43,7 +42,7 @@ export default {
       x: lastData ? scale.x(lastData.x) + labelPadding : 0,
       y: lastData ? scale.y(lastData.y1) : 0,
       y0: lastData ? scale.y(lastData.y0) : 0,
-      style: labelStyle,
+      style: calculatedStyle.labels,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
       angle: labelStyle.angle,

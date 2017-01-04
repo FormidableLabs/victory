@@ -1,7 +1,7 @@
 import { assign, defaults, flatten, isFunction, partialRight, uniq, some } from "lodash";
 import React from "react";
 import Axis from "./axis";
-import { Style, Transitions, Collection, Data, Domain } from "victory-core";
+import { Style, Transitions, Collection, Data, Domain, Events } from "victory-core";
 
 
 export default {
@@ -64,6 +64,16 @@ export default {
         continuous
       });
     }
+  },
+
+  getAllEvents(props) {
+    const components = ["groupComponent", "containerComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
+    if (Array.isArray(this.componentEvents)) {
+      return Array.isArray(props.events) ?
+        this.componentEvents.concat(...props.events) : this.componentEvents;
+    }
+    return props.events;
   },
 
   getAnimationProps(props, child, index) {
@@ -133,7 +143,7 @@ export default {
       [0, 1] : [min, max];
   },
 
-  getDataFromChildren(props, childComponents) {
+  getDataFromChildren(props, childComponents) { // eslint-disable-line max-statements
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
@@ -149,12 +159,12 @@ export default {
 
     const dataArr = [];
     let dataArrLength = 0;
-
     while (childrenLength > 0) {
       const child = children[--childrenLength];
-
-      if (child.type && isFunction(child.type.getData)) {
-        dataArr[dataArrLength++] = child.props && child.type.getData(child.props);
+      if (child.type && child.type.role === "axis") {
+        dataArrLength = dataArrLength;
+      } else if (child.type && child.type.role !== "axis" && isFunction(child.type.getData)) {
+        dataArr[dataArrLength++] = child.type.getData(child.props);
       } else if (child.props && child.props.children) {
         const newChildren = React.Children.toArray(child.props.children);
         const newChildrenLength = newChildren.length;

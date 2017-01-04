@@ -11,19 +11,17 @@ export default {
     const { scale, dataset, dataSegments } = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const {interpolation, label, width, height, events, sharedEvents} = props;
-    const dataStyle = Helpers.evaluateStyle(style.data, dataset);
     const childProps = { parent: {
       style: style.parent, scale, data: dataset, height, width
     }};
     for (let index = 0, len = dataSegments.length; index < len; index++) {
       const dataProps = {
         scale,
-        interpolation: Helpers.evaluateProp(interpolation, dataset),
-        style: dataStyle,
+        interpolation,
+        style: style.data,
         data: dataSegments[index]
       };
-      const text = index === dataSegments.length - 1 ?
-        Helpers.evaluateProp(label, dataset) : undefined;
+      const text = index === dataSegments.length - 1 ? label : undefined;
       const addLabels = (text !== undefined && text !== null) || events || sharedEvents;
       const labelProps = addLabels ?
         this.getLabelProps(dataProps, text, calculatedValues, style) : undefined;
@@ -37,8 +35,7 @@ export default {
     const { dataSegments, dataset, scale } = calculatedValues;
     const { style: dataStyle } = dataProps;
     const lastData = last(last(dataSegments));
-    const baseLabelStyle = Helpers.evaluateStyle(style.labels, dataset) || {};
-    const labelStyle = this.getLabelStyle(baseLabelStyle, dataStyle);
+    const labelStyle = this.getLabelStyle(style.labels, dataStyle);
 
     return {
       x: lastData ? scale.x(lastData.x1 || lastData.x) + (labelStyle.padding || 0) : 0,

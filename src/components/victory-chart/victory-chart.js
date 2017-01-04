@@ -72,6 +72,10 @@ export default class VictoryChart extends React.Component {
       CustomPropTypes.scale,
       PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
     ]),
+    sharedEvents: PropTypes.shape({
+      events: PropTypes.array,
+      getEventState: PropTypes.func
+    }),
     standalone: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
@@ -90,8 +94,13 @@ export default class VictoryChart extends React.Component {
     }
   };
 
+  static expectedComponents = [
+    "groupComponent", "containerComponent"
+  ];
+
   constructor(props) {
     super(props);
+    this.state = {};
     if (props.animate) {
       this.state = {
         nodesShouldLoad: false,
@@ -100,9 +109,11 @@ export default class VictoryChart extends React.Component {
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
     }
+    this.events = Wrapper.getAllEvents(props);
   }
 
   componentWillMount() {
+    this.events = Wrapper.getAllEvents(this.props);
     this.getContainerRef = (component) => this.containerRef = component;
   }
 
@@ -110,6 +121,7 @@ export default class VictoryChart extends React.Component {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
     }
+    this.events = Wrapper.getAllEvents(nextProps);
   }
 
   getStyles(props) {
@@ -272,7 +284,7 @@ export default class VictoryChart extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
-    const { standalone, events, eventKey } = modifiedProps;
+    const { standalone, eventKey } = modifiedProps;
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
@@ -282,9 +294,9 @@ export default class VictoryChart extends React.Component {
     }
     const group = this.renderGroup(newChildren, calculatedProps.style.parent);
     const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
-    if (events) {
+    if (this.events) {
       return (
-        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
+        <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );

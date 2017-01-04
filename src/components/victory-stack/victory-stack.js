@@ -117,13 +117,19 @@ export default class VictoryStack extends React.Component {
         animating: true
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
+      this.events = Wrapper.getAllEvents(props);
     }
+  }
+
+  componentWillMount() {
+    this.events = Wrapper.getAllEvents(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
     }
+    this.events = Wrapper.getAllEvents(nextProps);
   }
 
   getCalculatedProps(props, childComponents, style) {
@@ -250,7 +256,7 @@ export default class VictoryStack extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "stack");
-    const { theme, standalone, events, eventKey} = modifiedProps;
+    const { theme, standalone, eventKey} = modifiedProps;
     const fallbackStyle = theme && theme.stack && theme.stack.style ?
       theme.stack.style : {};
     const style = Helpers.getStyles(modifiedProps.style, fallbackStyle, "auto", "100%");
@@ -259,9 +265,9 @@ export default class VictoryStack extends React.Component {
     const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const group = this.renderGroup(newChildren, style.parent);
     const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
-    if (events) {
+    if (this.events) {
       return (
-        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
+        <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );

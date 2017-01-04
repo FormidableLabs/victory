@@ -133,23 +133,26 @@ export default class VictoryGroup extends React.Component {
         animating: true
       };
       this.setAnimationState = Wrapper.setAnimationState.bind(this);
+      this.events = Wrapper.getAllEvents(props);
     }
   }
 
   componentWillMount() {
     this.getContainerRef = (component) => this.containerRef = component;
+    this.events = Wrapper.getAllEvents(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.animate) {
       this.setAnimationState(this.props, nextProps);
     }
+    this.events = Wrapper.getAllEvents(nextProps);
   }
 
   getCalculatedProps(props, childComponents, style) {
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const horizontal = modifiedProps.horizontal || childComponents.every(
-      (component) => component.props.horizontal
+      (component) => component.props && component.props.horizontal
     );
     const datasets = Wrapper.getDataFromChildren(modifiedProps);
     const domain = {
@@ -300,7 +303,7 @@ export default class VictoryGroup extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "group");
-    const { theme, standalone, events, eventKey } = modifiedProps;
+    const { theme, standalone, eventKey } = modifiedProps;
     const defaultStyle = theme && theme.group && theme.group.style ? theme.group.style : {};
     const style = Helpers.getStyles(modifiedProps.style, defaultStyle, "auto", "100%");
     const childComponents = React.Children.toArray(modifiedProps.children);
@@ -313,9 +316,9 @@ export default class VictoryGroup extends React.Component {
     const group = this.renderGroup(newChildren, style.parent);
     const container = standalone ?
       this.getContainer(modifiedProps, calculatedProps) : group;
-    if (events) {
+    if (this.events) {
       return (
-        <VictorySharedEvents events={events} eventKey={eventKey} container={container}>
+        <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
           {newChildren}
         </VictorySharedEvents>
       );
