@@ -24,6 +24,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
+        evt.preventDefault();
         const {x, y} = Selection.getSVGEventCoordinates(evt);
         if (isFunction(targetProps.onSelectionCleared)) {
           targetProps.onSelectionCleared();
