@@ -94,20 +94,26 @@ export default class VictoryTooltip extends React.Component {
     target: "data",
     eventHandlers: {
       onMouseOver: () => {
-        return {
-          target: "labels",
-          mutation: () => {
-            return { active: true };
+        return [
+          {
+            target: "labels",
+            mutation: () => ({ active: true })
+          }, {
+            target: "data",
+            mutation: () => ({ active: true })
           }
-        };
+        ];
       },
       onMouseOut: () => {
-        return {
-          target: "labels",
-          mutation: () => {
-            return { active: false };
+        return [
+          {
+            target: "labels",
+            mutation: () => ({ active: false })
+          }, {
+            target: "data",
+            mutation: () => ({ active: false })
           }
-        };
+        ];
       }
     }
   }];
