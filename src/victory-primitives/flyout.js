@@ -1,8 +1,10 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 
 export default class Flyout extends React.Component {
 
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
@@ -96,6 +98,8 @@ export default class Flyout extends React.Component {
 
   render() {
     const path = this.getFlyoutPath(this.props);
-    return this.renderFlyout(path, this.props.style, this.props.events);
+    const {style, datum, active, events} = this.props;
+    const flyoutStyle = Helpers.evaluateStyle(style, datum, active);
+    return this.renderFlyout(path, flyoutStyle, events);
   }
 }

@@ -8,6 +8,7 @@ import Helpers from "./helpers";
 import Log from "./log";
 import PropTypes from "./prop-types";
 import Scale from "./scale";
+import Selection from "./selection";
 import Style from "./style";
 import TextSize from "./textsize";
 import Timer from "./timer";
@@ -24,6 +25,7 @@ export {
   Log,
   PropTypes,
   Scale,
+  Selection,
   Style,
   TextSize,
   Timer,

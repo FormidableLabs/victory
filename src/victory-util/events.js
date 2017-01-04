@@ -1,4 +1,4 @@
-import { assign, extend, merge, partial, isEmpty } from "lodash";
+import { assign, extend, merge, partial, isEmpty, isFunction, without } from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -48,7 +48,8 @@ export default {
     };
 
     const allEvents = getAllEvents();
-    const ownEvents = allEvents && getScopedEvents(getEventsByTarget(allEvents), target);
+    const ownEvents = allEvents && isFunction(getScopedEvents) ?
+      getScopedEvents(getEventsByTarget(allEvents), target) : undefined;
     if (!props.sharedEvents) {
       return ownEvents;
     }
@@ -73,7 +74,8 @@ export default {
     const getTargetProps = (identifier, type) => {
       const { childName, target, key } = identifier;
       const baseType = type === "props" ? baseProps : this.state;
-      const base = (!childName || !baseType[childName]) ? baseType : baseType[childName];
+      const base = (childName === undefined || childName === null || !baseType[childName]) ?
+        baseType : baseType[childName];
       return key === "parent" ? base.parent : base[key] && base[key][target];
     };
 
@@ -90,7 +92,8 @@ export default {
           return "all";
         } else if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
-            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+            without(Object.keys(baseProps[childName]), "parent") :
+            without(Object.keys(baseProps), "parent");
         } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
           return baseProps[childName] ?
             Object.keys(baseProps[childName]) : Object.keys(baseProps);
@@ -108,15 +111,13 @@ export default {
           assign({}, mutationTargetProps, mutationTargetState), baseProps
         );
         const childState = this.state[childName] || {};
-        return childName ?
-          extend(this.state, {
-            [childName]: extend(childState, {
-              [key]: extend(childState[key], {[target]: mutatedProps})
-            })
-          }) :
-          extend(this.state, {
-            [key]: extend(this.state[key], {[target]: mutatedProps})
-          });
+        const extendState = (state) => {
+          return target === "parent" ?
+            extend(state[key], mutatedProps) : extend(state[key], {[target]: mutatedProps});
+        };
+        return childName !== undefined && childName !== null ?
+          extend(this.state, {[childName]: extend(childState, {[key]: extendState(childState)})}) :
+          extend(this.state, {[key]: extendState(this.state)});
       };
 
       // returns entire mutated state for a given childName
@@ -130,9 +131,11 @@ export default {
       };
 
       // returns an entire mutated state for all children
-      return Array.isArray(childNames) ? childNames.reduce((memo, childName) => {
+      const allChildNames = childNames === "all" ?
+        without(Object.keys(baseProps), "parent") : childNames;
+      return Array.isArray(allChildNames) ? allChildNames.reduce((memo, childName) => {
         return assign(memo, getReturnByChild(childName));
-      }, {}) : getReturnByChild(childNames);
+      }, {}) : getReturnByChild(allChildNames);
     };
 
     // Parses an array of event returns into a single state mutation
@@ -185,7 +188,7 @@ export default {
    */
   getEventState(eventKey, namespace, childType) {
     if (!childType) {
-      return this.state[eventKey] && this.state[eventKey][namespace];
+      return this.state[eventKey] && this.state[eventKey][namespace] || this.state[eventKey];
     }
     return this.state[childType] &&
       this.state[childType][eventKey] &&

@@ -42,7 +42,7 @@ export default class VictorySharedEvents extends React.Component {
 
   constructor() {
     super();
-    this.state = {};
+    this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
   }
@@ -55,11 +55,24 @@ export default class VictorySharedEvents extends React.Component {
     this.setUpChildren(newProps);
   }
 
+  getAllEvents(props) {
+    const components = ["container", "groupComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
+    if (Array.isArray(this.componentEvents)) {
+      return Array.isArray(props.events) ?
+        this.componentEvents.concat(...props.events) : this.componentEvents;
+    }
+    return props.events;
+  }
+
   setUpChildren(props) {
-    this.childComponents = React.Children.toArray(props.children);
-    const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-    const parentBaseProps = props.container ? { parent: props.container.props } : {};
-    this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+    this.events = this.getAllEvents(props);
+    if (this.events) {
+      this.childComponents = React.Children.toArray(props.children);
+      const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
+      const parentBaseProps = props.container ? props.container.props : {};
+      this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+    }
   }
 
   getBasePropsFromChildren(childComponents) {
@@ -92,6 +105,9 @@ export default class VictorySharedEvents extends React.Component {
           const name = child.props.name || childNames.shift() || index;
           const childEvents = Array.isArray(events) &&
             events.filter((event) => {
+              if (event.target === "parent") {
+                return false;
+              }
               return Array.isArray(event.childName) ?
                 event.childName.indexOf(name) > -1 :
                 event.childName === name || event.childName === "all";
@@ -121,34 +137,37 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getContainer(props, children) {
-    const parents = Array.isArray(props.events) &&
-      props.events.filter((event) => event.target === "parent");
+    const parents = Array.isArray(this.events) &&
+      this.events.filter((event) => event.target === "parent");
     const sharedEvents = parents.length > 0 ?
       {
         events: parents,
         getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
         getEventState: partialRight(this.getEventState, null)
       } : null;
-    const container = this.props.container || this.props.groupComponent;
+    const container = this.props.container;
     const boundGetEvents = Events.getEvents.bind(this);
-    const parentEvents = boundGetEvents({sharedEvents}, "parent");
+    const parentEvents = sharedEvents && boundGetEvents({sharedEvents}, "parent");
     const parentProps = defaults(
       {},
       this.getEventState("parent", "parent"),
       container.props,
-      this.baseProps.parent
+      this.baseProps.parent,
+      { children }
     );
     return React.cloneElement(
       container,
       assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      children
+      )
     );
   }
 
   render() {
-    const children = this.getNewChildren(this.props);
-    return this.getContainer(this.props, children);
+    if (this.events) {
+      const children = this.getNewChildren(this.props);
+      return this.getContainer(this.props, children);
+    }
+    return React.cloneElement(this.props.container, { children: this.props.children });
   }
 }

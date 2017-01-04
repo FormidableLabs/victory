@@ -1,9 +1,11 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
@@ -81,8 +83,8 @@ export default class Area extends React.Component {
   }
 
   render() {
-    const { events, groupComponent } = this.props;
-    const style = assign({fill: "black"}, this.props.style);
+    const { events, groupComponent, data, active } = this.props;
+    const style = Helpers.evaluateStyle(assign({fill: "black"}, this.props.style), data, active);
     const area = this.renderArea(this.getAreaPath(this.props), style, events);
     const line = this.renderLine(this.getLinePath(this.props), style, events);
     return React.cloneElement(groupComponent, {}, area, line);

@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import { assign, omit } from "lodash";
 import Portal from "../victory-portal/portal";
-import { Timer } from "../victory-util";
+import { Timer } from "../victory-util/index";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";

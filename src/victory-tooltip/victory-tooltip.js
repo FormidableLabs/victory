@@ -94,20 +94,26 @@ export default class VictoryTooltip extends React.Component {
     target: "data",
     eventHandlers: {
       onMouseOver: () => {
-        return {
-          target: "labels",
-          mutation: () => {
-            return { active: true };
+        return [
+          {
+            target: "labels",
+            mutation: () => ({ active: true })
+          }, {
+            target: "data",
+            mutation: () => ({ active: true })
           }
-        };
+        ];
       },
       onMouseOut: () => {
-        return {
-          target: "labels",
-          mutation: () => {
-            return { active: false };
+        return [
+          {
+            target: "labels",
+            mutation: () => ({ active: false })
+          }, {
+            target: "data",
+            mutation: () => ({ active: false })
           }
-        };
+        ];
       }
     }
   }];
@@ -117,8 +123,8 @@ export default class VictoryTooltip extends React.Component {
       horizontal, datum, pointerLength, pointerWidth, cornerRadius,
       width, height, orientation, dx, dy, text, active
     } = props;
-    const style = Helpers.evaluateStyle(props.style, datum);
-    const flyoutStyle = Helpers.evaluateStyle(props.flyoutStyle, datum);
+    const style = Helpers.evaluateStyle(props.style, datum, active);
+    const flyoutStyle = Helpers.evaluateStyle(props.flyoutStyle, datum, active);
     const padding = flyoutStyle && flyoutStyle.padding || 0;
     const defaultDx = horizontal ? padding : 0;
     const defaultDy = horizontal ? 0 : padding;
@@ -133,16 +139,16 @@ export default class VictoryTooltip extends React.Component {
       {
         style,
         flyoutStyle,
-        dx: dx !== undefined ? Helpers.evaluateProp(dx, datum) : defaultDx,
-        dy: dy !== undefined ? Helpers.evaluateProp(dy, datum) : defaultDy,
-        cornerRadius: Helpers.evaluateProp(cornerRadius, datum),
-        pointerLength: Helpers.evaluateProp(pointerLength, datum),
-        pointerWidth: Helpers.evaluateProp(pointerWidth, datum),
-        orientation: Helpers.evaluateProp(orientation, datum) || getDefaultOrientation(),
-        width: Helpers.evaluateProp(width, datum),
-        height: Helpers.evaluateProp(height, datum),
-        active: Helpers.evaluateProp(active, datum),
-        text: Helpers.evaluateProp(text, datum)
+        dx: dx !== undefined ? Helpers.evaluateProp(dx, datum, active) : defaultDx,
+        dy: dy !== undefined ? Helpers.evaluateProp(dy, datum, active) : defaultDy,
+        cornerRadius: Helpers.evaluateProp(cornerRadius, datum, active),
+        pointerLength: Helpers.evaluateProp(pointerLength, datum, active),
+        pointerWidth: Helpers.evaluateProp(pointerWidth, datum, active),
+        orientation: Helpers.evaluateProp(orientation, datum, active) || getDefaultOrientation(),
+        width: Helpers.evaluateProp(width, datum, active),
+        height: Helpers.evaluateProp(height, datum, active),
+        active: Helpers.evaluateProp(active, datum, active),
+        text: Helpers.evaluateProp(text, datum, active)
       }
     );
   }
@@ -151,10 +157,9 @@ export default class VictoryTooltip extends React.Component {
     const { style, text, datum } = props;
     const baseLabelStyle = style ?
       defaults({}, style, defaultLabelStyles) : defaultLabelStyles;
-    const baseFlyoutStyle = props.flyoutStyle ?
+    const flyoutStyle = props.flyoutStyle ?
       defaults({}, props.flyoutStyle, defaultStyles) : defaultStyles;
     const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
-    const flyoutStyle = Helpers.evaluateStyle(baseFlyoutStyle, datum);
     const labelSize = TextSize.approximateTextSize(text, labelStyle);
     const flyoutDimensions = this.getDimensions(props, labelSize, labelStyle);
     const flyoutCenter = this.getFlyoutCenter(props, flyoutDimensions);

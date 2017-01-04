@@ -13,6 +13,7 @@ export default class VictoryLabel extends React.Component {
   static displayName = "VictoryLabel";
 
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     angle: PropTypes.oneOfType([
       PropTypes.string,
@@ -82,19 +83,19 @@ export default class VictoryLabel extends React.Component {
   getStyles(props) {
     const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
     const datum = props.datum || props.data;
-    const baseStyles = Helpers.evaluateStyle(style, datum);
+    const baseStyles = Helpers.evaluateStyle(style, datum, props.active);
     return assign({}, baseStyles, {fontSize: this.getFontSize(baseStyles)});
   }
 
   getHeight(props, type) {
     const datum = props.datum || props.data;
-    return Helpers.evaluateProp(props[type], datum);
+    return Helpers.evaluateProp(props[type], datum, props.active);
   }
 
   getContent(props) {
     if (props.text !== undefined) {
       const datum = props.datum || props.data;
-      const child = Helpers.evaluateProp(props.text, datum);
+      const child = Helpers.evaluateProp(props.text, datum, props.active);
       return `${child}`.split("\n");
     }
     return [" "];

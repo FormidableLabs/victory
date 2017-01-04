@@ -1,5 +1,6 @@
 /* eslint-disable max-statements */
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 
 export default class ErrorBar extends React.Component {
@@ -8,6 +9,7 @@ export default class ErrorBar extends React.Component {
   }
 
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     index: PropTypes.number,
     datum: PropTypes.object,
@@ -89,7 +91,7 @@ export default class ErrorBar extends React.Component {
   render() {
     const {
       x, y, borderWidth, groupComponent, events, errorX, errorY, scale, role,
-      shapeRendering, style, className
+      shapeRendering, style, className, datum, active
     } = this.props;
     let rangeX;
     let rangeY;
@@ -121,7 +123,7 @@ export default class ErrorBar extends React.Component {
       x, y, borderWidth, groupComponent, events, className,
       role: role || "presentation",
       shapeRendering: shapeRendering || "auto",
-      style: assign({stroke: "black"}, style)
+      style: Helpers.evaluateStyle(assign({stroke: "black"}, style), datum, active)
     };
     return React.cloneElement(
       this.props.groupComponent,

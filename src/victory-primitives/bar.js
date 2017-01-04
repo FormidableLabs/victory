@@ -1,9 +1,11 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 
 export default class Bar extends React.Component {
 
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     datum: PropTypes.object,
     events: PropTypes.object,
@@ -75,10 +77,13 @@ export default class Bar extends React.Component {
 
   render() {
     // TODO better bar width calculation
+    const {datum, active} = this.props;
     const barWidth = this.getBarWidth(this.props);
     const path = typeof this.props.x === "number" ?
       this.getBarPath(this.props, barWidth) : undefined;
-    const style = assign({fill: "black", stroke: "none"}, this.props.style);
+    const style = Helpers.evaluateStyle(
+      assign({fill: "black", stroke: "none"}, this.props.style), datum, active
+    );
     return this.renderBar(path, style, this.props.events);
   }
 }

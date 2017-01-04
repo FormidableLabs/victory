@@ -1,9 +1,11 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 
 
 export default class Candle extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     index: PropTypes.number,
     x: PropTypes.number,
@@ -37,8 +39,8 @@ export default class Candle extends React.Component {
   }
 
   getCandleProps(props) {
-    const { width, candleHeight, x, y, data, events, role, className} = props;
-    const style = assign({stroke: "black"}, props.style);
+    const { width, candleHeight, x, y, data, events, role, className, datum, active} = props;
+    const style = Helpers.evaluateStyle(assign({stroke: "black"}, props.style), datum, active);
     const padding = props.padding.left || props.padding;
     const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
     const candleX = x - candleWidth / 2;
@@ -50,8 +52,8 @@ export default class Candle extends React.Component {
   }
 
   getWickProps(props) {
-    const { x, y1, y2, events, className } = props;
-    const style = assign({stroke: "black"}, props.style);
+    const { x, y1, y2, events, className, datum, active } = props;
+    const style = Helpers.evaluateStyle(assign({stroke: "black"}, props.style), datum, active);
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
     return assign({x1: x, x2: x, y1, y2, style, role, shapeRendering, className}, events);

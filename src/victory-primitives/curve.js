@@ -1,9 +1,11 @@
 import React, { PropTypes } from "react";
+import Helpers from "../victory-util/helpers";
 import { assign } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class Curve extends React.Component {
   static propTypes = {
+    active: PropTypes.bool,
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
@@ -38,14 +40,16 @@ export default class Curve extends React.Component {
   }
 
   render() {
-    const { data, events, interpolation, scale, style } = this.props;
+    const { data, events, interpolation, scale, style, active } = this.props;
     const xScale = scale.x;
     const yScale = scale.y;
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
       .x((d) => xScale(d.x1 || d.x))
       .y((d) => yScale(d.y1 || d.y));
-    const lineStyle = assign({fill: "none", stroke: "black"}, style);
+    const lineStyle = Helpers.evaluateStyle(
+      assign({fill: "none", stroke: "black"}, style), data, active
+    );
     return this.renderLine(lineFunction(data), lineStyle, events);
   }
 }
