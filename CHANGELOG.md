@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 15.0.0 (2017-01-03)
+
+- Adds `VictorySelectionContainer`
+- All functional styles and props are evaluated at the level of the primitive component rather than eariler
+- Adds support for `defaultEvents` on `containerComponents`
+
 ## 14.0.4 (2016-12-13)
 
 - Fixes date handling in VictoryZoom
