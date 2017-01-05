@@ -1,5 +1,8 @@
 VictoryCore Changelog
 =====================
+## 11.0.1 (2017-01-05)
+
+- Fixes a bug in VictorySharedEvents
 
 ## 11.0.0 (2017-01-03)
 
