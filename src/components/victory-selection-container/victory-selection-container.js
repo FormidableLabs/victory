@@ -71,7 +71,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
         const datasets = Selection.getDatasets(targetProps);
         const selectedData = Selection.filterDatasets(datasets, bounds);
         const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
-          targetProps.onSelection(selectedData) : {};
+          targetProps.onSelection(selectedData, bounds) : {};
         const dataMutation = selectedData ?
           selectedData.map((d) => {
             return {
