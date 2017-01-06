@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 15.0.1 (2017-01-06)
+
+- Add `bounds` as the second argument for VictorySelectionContainer `onSelection` callback
+
 ## 15.0.0 (2017-01-03)
 
 - Adds `VictorySelectionContainer`
