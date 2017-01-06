@@ -1,6 +1,7 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
 import pathHelpers from "./path-helpers";
+import { isEqual } from "lodash";
 
 export default class Point extends React.Component {
   static propTypes = {
@@ -27,6 +28,31 @@ export default class Point extends React.Component {
     x: PropTypes.number,
     y: PropTypes.number
   };
+
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path === this.path && isEqual(style, this.style)) {
+      return false;
+    } else {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+  }
+
+  calculateAttributes(props) {
+    const { style, datum, active } = props;
+    return {
+      style: Helpers.evaluateStyle(style, datum, active),
+      path: this.getPath(props)
+    };
+  }
 
   getPath(props) {
     const {datum, active, x, y} = props;
@@ -60,8 +86,6 @@ export default class Point extends React.Component {
   }
 
   render() {
-    const {style, datum, active, events} = this.props;
-    const evaluatedStyle = Helpers.evaluateStyle(style, datum, active);
-    return this.renderPoint(this.getPath(this.props), evaluatedStyle, events);
+    return this.renderPoint(this.path, this.style, this.props.events);
   }
 }

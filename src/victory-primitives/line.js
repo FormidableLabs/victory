@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isEqual } from "lodash";
 
 export default class Line extends React.Component {
   static propTypes = {
@@ -19,6 +19,30 @@ export default class Line extends React.Component {
     shapeRendering: PropTypes.string
   };
 
+  componentWillMount() {
+    this.style = this.getStyle(this.props);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {x1, x2, y1, y2} = this.props;
+    const style = this.getStyle(nextProps);
+    if (x1 !== nextProps.x1 || x2 !== nextProps.x2 || y1 !== nextProps.y1 || y2 !== nextProps.y2) {
+      this.style = style;
+      return true;
+    }
+    if (isEqual(style, this.style)) {
+      return false;
+    } else {
+      this.style = style;
+      return true;
+    }
+  }
+
+  getStyle(props) {
+    const { style, datum, active} = props;
+    return Helpers.evaluateStyle(assign({stroke: "black"}, style), datum, active);
+  }
+
   // Overridden in victory-core-native
   renderAxisLine(props, style, events) {
     const { role, shapeRendering, className } = this.props;
@@ -36,8 +60,7 @@ export default class Line extends React.Component {
   }
 
   render() {
-    const { x1, x2, y1, y2, events, datum, active} = this.props;
-    const style = Helpers.evaluateStyle(assign({stroke: "black"}, this.props.style), datum, active);
-    return this.renderAxisLine({x1, x2, y1, y2}, style, events);
+    const { x1, x2, y1, y2, events } = this.props;
+    return this.renderAxisLine({x1, x2, y1, y2}, this.style, events);
   }
 }

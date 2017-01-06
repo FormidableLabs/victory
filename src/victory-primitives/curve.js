@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class Curve extends React.Component {
@@ -16,6 +16,40 @@ export default class Curve extends React.Component {
     shapeRendering: PropTypes.string,
     style: PropTypes.object
   };
+
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path === this.path && isEqual(style, this.style)) {
+      return false;
+    } else {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+  }
+
+  calculateAttributes(props) {
+    const {style, data, active, scale, interpolation} = props;
+    const xScale = scale.x;
+    const yScale = scale.y;
+    const lineFunction = d3Shape.line()
+      .curve(d3Shape[this.toNewName(interpolation)])
+      .x((d) => xScale(d.x1 || d.x))
+      .y((d) => yScale(d.y1 || d.y));
+    return {
+      style: Helpers.evaluateStyle(
+        assign({fill: "none", stroke: "black"}, style), data, active
+      ),
+      path: lineFunction(data)
+    };
+  }
 
   toNewName(interpolation) {
     // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
@@ -40,16 +74,6 @@ export default class Curve extends React.Component {
   }
 
   render() {
-    const { data, events, interpolation, scale, style, active } = this.props;
-    const xScale = scale.x;
-    const yScale = scale.y;
-    const lineFunction = d3Shape.line()
-      .curve(d3Shape[this.toNewName(interpolation)])
-      .x((d) => xScale(d.x1 || d.x))
-      .y((d) => yScale(d.y1 || d.y));
-    const lineStyle = Helpers.evaluateStyle(
-      assign({fill: "none", stroke: "black"}, style), data, active
-    );
-    return this.renderLine(lineFunction(data), lineStyle, events);
+    return this.renderLine(this.path, this.style, this.props.events);
   }
 }

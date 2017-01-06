@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isEqual } from "lodash";
 
 export default class ErrorBar extends React.Component {
   constructor(props) {
@@ -37,6 +37,35 @@ export default class ErrorBar extends React.Component {
 
   static defaultProps = {
     borderWidth: 10
+  }
+
+  componentWillMount() {
+    this.style = this.getStyle(this.props);
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {x, y, errorX, errorY} = this.props;
+    const style = this.getStyle(nextProps);
+    if (
+      x !== nextProps.x ||
+      y !== nextProps.y ||
+      !isEqual(errorX, nextProps.errorX) ||
+      !isEqual(errorY, nextProps.errorY)
+    ) {
+      this.style = style;
+      return true;
+    }
+    if (isEqual(style, this.style)) {
+      return false;
+    } else {
+      this.style = style;
+      return true;
+    }
+  }
+
+  getStyle(props) {
+    const { style, datum, active } = props;
+    return Helpers.evaluateStyle(assign({stroke: "black"}, style), datum, active);
   }
 
   // Overridden in victory-core-native
@@ -91,7 +120,7 @@ export default class ErrorBar extends React.Component {
   render() {
     const {
       x, y, borderWidth, groupComponent, events, errorX, errorY, scale, role,
-      shapeRendering, style, className, datum, active
+      shapeRendering, className
     } = this.props;
     let rangeX;
     let rangeY;
@@ -123,7 +152,7 @@ export default class ErrorBar extends React.Component {
       x, y, borderWidth, groupComponent, events, className,
       role: role || "presentation",
       shapeRendering: shapeRendering || "auto",
-      style: Helpers.evaluateStyle(assign({stroke: "black"}, style), datum, active)
+      style: this.style
     };
     return React.cloneElement(
       this.props.groupComponent,

@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
 
 export default class Area extends React.Component {
@@ -16,6 +16,35 @@ export default class Area extends React.Component {
     scale: PropTypes.object,
     style: PropTypes.object
   };
+
+  componentWillMount() {
+    const {style, areaPath, linePath} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.areaPath = areaPath;
+    this.linePath = linePath;
+  }
+
+
+  shouldComponentUpdate(nextProps) {
+    const {style, areaPath, linePath} = this.calculateAttributes(nextProps);
+    if (areaPath === this.areaPath && linePath === this.linePath && isEqual(style, this.style)) {
+      return false;
+    } else {
+      this.style = style;
+      this.areaPath = areaPath;
+      this.linePath = linePath;
+      return true;
+    }
+  }
+
+  calculateAttributes(props) {
+    const {style, data, active} = props;
+    return {
+      style: Helpers.evaluateStyle(assign({fill: "black"}, style), data, active),
+      areaPath: this.getAreaPath(props),
+      linePath: this.getLinePath(props)
+    };
+  }
 
   toNewName(interpolation) {
     // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
@@ -83,10 +112,9 @@ export default class Area extends React.Component {
   }
 
   render() {
-    const { events, groupComponent, data, active } = this.props;
-    const style = Helpers.evaluateStyle(assign({fill: "black"}, this.props.style), data, active);
-    const area = this.renderArea(this.getAreaPath(this.props), style, events);
-    const line = this.renderLine(this.getLinePath(this.props), style, events);
+    const { events, groupComponent } = this.props;
+    const area = this.renderArea(this.areaPath, this.style, events);
+    const line = this.renderLine(this.linePath, this.style, events);
     return React.cloneElement(groupComponent, {}, area, line);
   }
 }
