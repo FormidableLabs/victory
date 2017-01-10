@@ -1,4 +1,5 @@
 /* eslint no-unused-expressions: 0 */
+/* eslint max-nested-callbacks: 0 */
 /* global sinon */
 
 import { Data, Domain, Helpers } from "src/index";
@@ -14,10 +15,16 @@ describe("helpers/domain", () => {
 
     it("pads the domain a particular number of pixels", () => {
       const domain = [0, 100];
-      const domainPadding = {x: 10};
-      const props = {...baseProps, domainPadding};
-      const paddedDomain = Domain.padDomain(domain, props, "x");
-      expect(paddedDomain).to.eql([0, 110]);
+      const padding = [5, 10, 20];
+      padding.forEach((pad) => {
+        const domainPadding = {x: pad};
+        const props = {...baseProps, domainPadding};
+        const paddedDomain = Domain.padDomain(domain, props, "x");
+        const percentPad = pad / baseProps.width;
+        const totalPadding = (domain[1] * (1 + percentPad)) * percentPad;
+        expect(paddedDomain).to.eql([0, domain[1] + totalPadding]);
+      }
+      );
     });
   });
 
