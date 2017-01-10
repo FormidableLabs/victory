@@ -29,14 +29,13 @@ export default class Voronoi extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {style, circle, voronoi} = this.calculateAttributes(nextProps);
-    if (circle === this.circle && voronoi === this.voronoi && isEqual(style, this.style)) {
-      return false;
-    } else {
+    if (circle !== this.circle || voronoi !== this.voronoi || !isEqual(style, this.style)) {
       this.style = style;
       this.circle = circle;
       this.voronoi = voronoi;
       return true;
     }
+    return false;
   }
 
   calculateAttributes(props) {

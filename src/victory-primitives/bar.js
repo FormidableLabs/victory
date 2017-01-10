@@ -34,13 +34,12 @@ export default class Bar extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {style, path} = this.calculateAttributes(nextProps);
-    if (path === this.path && isEqual(style, this.style)) {
-      return false;
-    } else {
+    if (path !== this.path || !isEqual(style, this.style)) {
       this.style = style;
       this.path = path;
       return true;
     }
+    return false;
   }
 
   calculateAttributes(props) {

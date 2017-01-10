@@ -49,20 +49,19 @@ export default class ClipPath extends React.Component {
     const { x, y, width, height } = this.calculateAttributes(nextProps);
     const { clipId } = this.props;
     if (
-      x === this.x &&
-      y === this.y &&
-      width === this.width &&
-      height === this.height &&
-      clipId === nextProps.clipId
+      x !== this.x ||
+      y !== this.y ||
+      width !== this.width ||
+      height !== this.height ||
+      clipId !== nextProps.clipId
     ) {
-      return false;
-    } else {
       this.x = x;
       this.y = y;
       this.width = width;
       this.height = height;
       return true;
     }
+    return false;
   }
 
   calculateAttributes(props) {

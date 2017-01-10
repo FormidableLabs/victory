@@ -42,13 +42,12 @@ export default class Candle extends React.Component {
       this.candleWidth = candleWidth;
       return true;
     }
-    if (candleWidth === this.candleWidth && isEqual(style, this.style)) {
-      return false;
-    } else {
+    if (candleWidth !== this.candleWidth || !isEqual(style, this.style)) {
       this.style = style;
       this.candleWidth = candleWidth;
       return true;
     }
+    return false;
   }
 
   calculateAttributes(props) {

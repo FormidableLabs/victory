@@ -24,17 +24,15 @@ export default class Area extends React.Component {
     this.linePath = linePath;
   }
 
-
   shouldComponentUpdate(nextProps) {
     const {style, areaPath, linePath} = this.calculateAttributes(nextProps);
-    if (areaPath === this.areaPath && linePath === this.linePath && isEqual(style, this.style)) {
-      return false;
-    } else {
+    if (areaPath !== this.areaPath || !isEqual(style, this.style)) {
       this.style = style;
       this.areaPath = areaPath;
       this.linePath = linePath;
       return true;
     }
+    return false;
   }
 
   calculateAttributes(props) {
@@ -106,6 +104,6 @@ export default class Area extends React.Component {
     const { events, groupComponent } = this.props;
     const area = this.renderArea(this.areaPath, this.style, events);
     const line = this.renderLine(this.linePath, this.style, events);
-    return React.cloneElement(groupComponent, {}, area, line);
+    return line ? React.cloneElement(groupComponent, {}, area, line) : area;
   }
 }
