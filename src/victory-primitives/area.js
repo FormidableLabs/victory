@@ -38,11 +38,23 @@ export default class Area extends React.Component {
   }
 
   calculateAttributes(props) {
-    const {style, data, active} = props;
+    const {style, data, active, scale} = props;
+    const xScale = scale.x;
+    const yScale = scale.y;
+    const interpolation = this.toNewName(props.interpolation);
+    const areaFunction = d3Shape.area()
+      .curve(d3Shape[interpolation])
+      .x((d) => xScale(d.x1 || d.x))
+      .y1((d) => yScale(d.y1 || d.y))
+      .y0((d) => yScale(d.y0));
+    const lineFunction = d3Shape.line()
+      .curve(d3Shape[interpolation])
+      .x((d) => xScale(d.x1 || d.x))
+      .y((d) => yScale(d.y1));
     return {
       style: Helpers.evaluateStyle(assign({fill: "black"}, style), data, active),
-      areaPath: this.getAreaPath(props),
-      linePath: this.getLinePath(props)
+      areaPath: areaFunction(data),
+      linePath: lineFunction(data)
     };
   }
 
@@ -50,27 +62,6 @@ export default class Area extends React.Component {
     // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
     const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
     return `curve${capitalize(interpolation)}`;
-  }
-
-  getAreaPath(props) {
-    const xScale = props.scale.x;
-    const yScale = props.scale.y;
-    const areaFunction = d3Shape.area()
-      .curve(d3Shape[this.toNewName(props.interpolation)])
-      .x((data) => xScale(data.x1 || data.x))
-      .y1((data) => yScale(data.y1 || data.y))
-      .y0((data) => yScale(data.y0));
-    return areaFunction(props.data);
-  }
-
-  getLinePath(props) {
-    const xScale = props.scale.x;
-    const yScale = props.scale.y;
-    const lineFunction = d3Shape.line()
-      .curve(d3Shape[this.toNewName(props.interpolation)])
-      .x((data) => xScale(data.x1 || data.x))
-      .y((data) => yScale(data.y1));
-    return lineFunction(props.data);
   }
 
   // Overridden in victory-core-native
