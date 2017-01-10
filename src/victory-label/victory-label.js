@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Helpers, Style, Log } from "../victory-util/index";
-import { assign, merge, pick } from "lodash";
+import { assign, merge, isEqual } from "lodash";
 
 const defaultStyles = {
   fill: "#252525",
@@ -80,6 +80,59 @@ export default class VictoryLabel extends React.Component {
     lineHeight: 1
   };
 
+  componentWillMount() {
+    this.cacheAttributes(this.calculateAttributes(this.props));
+  }
+
+  cacheAttributes(attrs) {
+    const { style, dx, dy, content, textAnchor, transform, lineHeight, fontSize } = attrs;
+    this.style = style;
+    this.dx = dx;
+    this.dy = dy;
+    this.content = content;
+    this.textAnchor = textAnchor;
+    this.lineHeight = lineHeight;
+    this.transform = transform;
+    this.fontSize = fontSize;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const attrs = this.calculateAttributes(nextProps);
+    const { style, dx, dy, content, lineHeight, textAnchor, transform, fontSize } = attrs;
+    const {x, y} = this.props;
+    if (
+      x !== nextProps.x ||
+      y !== nextProps.y ||
+      dx !== this.dx ||
+      dy !== this.dy ||
+      lineHeight !== this.lineHeight ||
+      transform !== this.transform ||
+      textAnchor !== this.textAnchor ||
+      fontSize !== this.fontSize ||
+      !isEqual(content, this.content) ||
+      !isEqual(style, this.style)
+    ) {
+      this.cacheAttributes(attrs);
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const style = this.getStyles(props);
+    const fontSize = this.getFontSize(style);
+    const lineHeight = this.getHeight(props, "lineHeight");
+    const textAnchor = props.textAnchor ?
+      Helpers.evaluateProp(props.textAnchor, props.datum) : "start";
+    const content = this.getContent(props);
+    const dx = props.dx ? Helpers.evaluateProp(this.props.dx, props.datum) : 0;
+    const dy = this.getDy(props, content, lineHeight) * fontSize;
+    const transform = this.getTransform(props, style);
+    return {
+      style, dx, dy, content, lineHeight, textAnchor, transform, fontSize
+    };
+  }
+
   getStyles(props) {
     const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
     const datum = props.datum || props.data;
@@ -118,8 +171,7 @@ export default class VictoryLabel extends React.Component {
     }
   }
 
-  getTransform(props) {
-    const style = this.getStyles(props);
+  getTransform(props, style) {
     const {datum, x, y} = props;
     const angle = props.angle || style.angle;
     const transform = props.transform || style.transform;
@@ -148,19 +200,19 @@ export default class VictoryLabel extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderElements(props, content) {
-    const transform = this.getTransform(props);
-    const textProps = pick(props, ["dx", "dy", "x", "y", "style", "textAnchor", "className"]);
-    const fontSize = this.getFontSize(props.style);
+  renderElements(props) {
+    const textProps = {
+      dx: this.dx, dy: this.dy, x: props.x, y: props.y, style: this.style,
+      textAnchor: this.textAnchor, transform: this.transform, className: props.className
+    };
     return (
       <text {...textProps}
-        transform={transform}
         {...props.events}
       >
-        {content.map((line, i) => {
-          const dy = i ? props.lineHeight * fontSize : undefined;
+        {this.content.map((line, i) => {
+          const dy = i ? this.lineHeight * this.fontSize : undefined;
           return (
-            <tspan key={i} x={props.x} dy={dy} dx={props.dx}>
+            <tspan key={i} x={props.x} dy={dy} dx={this.dx}>
               {line}
             </tspan>
           );
@@ -170,17 +222,6 @@ export default class VictoryLabel extends React.Component {
   }
 
   render() {
-    const { datum, events } = this.props;
-    const style = this.getStyles(this.props);
-    const lineHeight = this.getHeight(this.props, "lineHeight");
-    const textAnchor = this.props.textAnchor ?
-      Helpers.evaluateProp(this.props.textAnchor, datum) : "start";
-    const content = this.getContent(this.props);
-    const dx = this.props.dx ? Helpers.evaluateProp(this.props.dx, datum) : 0;
-    const dy = this.getDy(this.props, content, lineHeight) * style.fontSize;
-    const labelProps = assign(
-      {}, this.props, { dy, dx, datum, lineHeight, textAnchor, style }, events
-    );
-    return this.renderElements(labelProps, content);
+    return this.renderElements(this.props);
   }
 }
