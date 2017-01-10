@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
+import { isEqual } from "lodash";
 
 export default class Voronoi extends React.Component {
   static propTypes = {
@@ -19,11 +20,42 @@ export default class Voronoi extends React.Component {
     role: PropTypes.string
   };
 
+  componentWillMount() {
+    const {style, circle, voronoi} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.circle = circle;
+    this.voronoi = voronoi;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, circle, voronoi} = this.calculateAttributes(nextProps);
+    if (circle !== this.circle || voronoi !== this.voronoi || !isEqual(style, this.style)) {
+      this.style = style;
+      this.circle = circle;
+      this.voronoi = voronoi;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const { style, datum, active } = props;
+    return {
+      style: Helpers.evaluateStyle(style, datum, active),
+      circle: this.getCirclePath(props),
+      voronoi: this.getVoronoiPath(props)
+    };
+  }
+
+
   getVoronoiPath(props) {
     return `M ${props.polygon.join("L")} Z`;
   }
 
   getCirclePath(props) {
+    if (!props.size) {
+      return null;
+    }
     const { x, y, datum, active } = props;
     const size = Helpers.evaluateProp(props.size, datum, active);
     return `M ${x}, ${y} m ${-size}, 0
@@ -63,11 +95,9 @@ export default class Voronoi extends React.Component {
 
   render() {
     const paths = {
-      circle: this.props.size && this.getCirclePath(this.props),
-      voronoi: this.getVoronoiPath(this.props)
+      circle: this.circle,
+      voronoi: this.voronoi
     };
-    const { style, events, datum, active } = this.props;
-    const evaluatedStyle = Helpers.evaluateStyle(style, datum, active);
-    return this.renderPoint(paths, evaluatedStyle, events);
-  }
+    return this.renderPoint(paths, this.style, this.props.events);
+  }t
 }

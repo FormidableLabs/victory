@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isEqual } from "lodash";
 
 
 export default class Candle extends React.Component {
@@ -28,6 +28,36 @@ export default class Candle extends React.Component {
     role: PropTypes.string
   }
 
+  componentWillMount() {
+    const {style, candleWidth } = this.calculateAttributes(this.props);
+    this.style = style;
+    this.candleWidth = candleWidth;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {x, y, y1, y2} = this.props;
+    const {style, candleWidth} = this.calculateAttributes(nextProps);
+    if (x !== nextProps.x || y !== nextProps.y || y1 !== nextProps.y1 || y2 !== nextProps.y2) {
+      this.style = style;
+      this.candleWidth = candleWidth;
+      return true;
+    }
+    if (candleWidth !== this.candleWidth || !isEqual(style, this.style)) {
+      this.style = style;
+      this.candleWidth = candleWidth;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {data, datum, active, width} = props;
+    const style = Helpers.evaluateStyle(assign({stroke: "black"}, props.style), datum, active);
+    const padding = props.padding.left || props.padding;
+    const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
+    return { style, candleWidth };
+  }
+
   // Overridden in victory-core-native
   renderWick(wickProps) {
     return <line {...wickProps}/>;
@@ -39,24 +69,23 @@ export default class Candle extends React.Component {
   }
 
   getCandleProps(props) {
-    const { width, candleHeight, x, y, data, events, role, className, datum, active} = props;
-    const style = Helpers.evaluateStyle(assign({stroke: "black"}, props.style), datum, active);
-    const padding = props.padding.left || props.padding;
-    const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
-    const candleX = x - candleWidth / 2;
+    const { candleHeight, x, y, events, role, className } = props;
     const shapeRendering = props.shapeRendering || "auto";
+    const candleX = x - this.candleWidth / 2;
     return assign({
-      x: candleX, y, style, role, width: candleWidth, height: candleHeight,
+      x: candleX, y, style: this.style, role, width: this.candleWidth, height: candleHeight,
       shapeRendering, className
     }, events);
   }
 
   getWickProps(props) {
-    const { x, y1, y2, events, className, datum, active } = props;
-    const style = Helpers.evaluateStyle(assign({stroke: "black"}, props.style), datum, active);
+    const { x, y1, y2, events, className } = props;
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
-    return assign({x1: x, x2: x, y1, y2, style, role, shapeRendering, className}, events);
+    return assign(
+      {x1: x, x2: x, y1, y2, style: this.style, role, shapeRendering, className},
+      events
+    );
   }
 
   render() {

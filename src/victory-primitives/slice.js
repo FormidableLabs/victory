@@ -1,5 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
+import { isEqual } from "lodash";
 
 export default class Slice extends React.Component {
   static propTypes = {
@@ -15,6 +16,30 @@ export default class Slice extends React.Component {
     role: PropTypes.string,
     shapeRendering: PropTypes.string
   };
+
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path !== this.path || !isEqual(style, this.style)) {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const { style, datum, active, pathFunction, slice } = props;
+    return {
+      style: Helpers.evaluateStyle(style, datum, active),
+      path: pathFunction(slice)
+    };
+  }
 
   // Overridden in victory-core-native
   renderSlice(path, style, events) {
@@ -32,9 +57,6 @@ export default class Slice extends React.Component {
   }
 
   render() {
-    const { style, events, datum, active, slice } = this.props;
-    const path = this.props.pathFunction(slice);
-    const evaluatedStyle = Helpers.evaluateStyle(style, datum, active);
-    return this.renderSlice(path, evaluatedStyle, events);
+    return this.renderSlice(this.path, this.style, this.props.events);
   }
 }

@@ -37,6 +37,56 @@ export default class ClipPath extends React.Component {
     }
   }
 
+  componentWillMount() {
+    const { x, y, width, height } = this.calculateAttributes(this.props);
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { x, y, width, height } = this.calculateAttributes(nextProps);
+    const { clipId } = this.props;
+    if (
+      x !== this.x ||
+      y !== this.y ||
+      width !== this.width ||
+      height !== this.height ||
+      clipId !== nextProps.clipId
+    ) {
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {
+      clipWidth,
+      clipHeight,
+      translateX,
+      clipPadding
+    } = props;
+
+    const padding = Helpers.getPadding(props);
+
+    const totalPadding = (side) => {
+      const total = +padding[side] - (clipPadding[side] || 0);
+      return typeof total === "number" ? total : 0;
+    };
+
+    return {
+      x: totalPadding("left") + translateX,
+      y: totalPadding("top"),
+      width: Math.max(+clipWidth - totalPadding("left") - totalPadding("right"), 0),
+      height: Math.max(+clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
+    };
+  }
+
   // Overridden in victory-core-native
   renderClipPath(props, id) {
     return (
@@ -49,30 +99,8 @@ export default class ClipPath extends React.Component {
   }
 
   render() {
-    const {
-      clipId,
-      clipWidth,
-      clipHeight,
-      translateX,
-      clipPadding,
-      className
-    } = this.props;
-
-    const padding = Helpers.getPadding(this.props);
-
-    const totalPadding = (side) => {
-      const total = +padding[side] - (clipPadding[side] || 0);
-      return typeof total === "number" ? total : 0;
-    };
-
-    const clipProps = {
-      className,
-      x: totalPadding("left") + translateX,
-      y: totalPadding("top"),
-      width: Math.max(+clipWidth - totalPadding("left") - totalPadding("right"), 0),
-      height: Math.max(+clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
-    };
-
+    const { clipId, className } = this.props;
+    const clipProps = { className, x: this.x, y: this.y, width: this.width, height: this.height };
     return this.renderClipPath(clipProps, clipId);
   }
 }

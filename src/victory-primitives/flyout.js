@@ -1,4 +1,5 @@
 import React, { PropTypes } from "react";
+import { isEqual } from "lodash";
 import Helpers from "../victory-util/helpers";
 
 export default class Flyout extends React.Component {
@@ -24,6 +25,31 @@ export default class Flyout extends React.Component {
     shapeRendering: PropTypes.string,
     role: PropTypes.string
   };
+
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path !== this.path || !isEqual(style, this.style)) {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {datum, active, style} = props;
+    return {
+      style: Helpers.evaluateStyle(style, datum, active),
+      path: this.getFlyoutPath(props)
+    };
+  }
+
 
   getVerticalPath(props) {
     const { pointerLength, pointerWidth, cornerRadius, orientation, width, height } = props;
@@ -97,9 +123,6 @@ export default class Flyout extends React.Component {
   }
 
   render() {
-    const path = this.getFlyoutPath(this.props);
-    const {style, datum, active, events} = this.props;
-    const flyoutStyle = Helpers.evaluateStyle(style, datum, active);
-    return this.renderFlyout(path, flyoutStyle, events);
+    return this.renderFlyout(this.path, this.style, this.props.events);
   }
 }

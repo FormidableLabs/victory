@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import Helpers from "../victory-util/helpers";
-import { assign } from "lodash";
+import { assign, isEqual } from "lodash";
 
 export default class Bar extends React.Component {
 
@@ -25,6 +25,31 @@ export default class Bar extends React.Component {
     ]),
     data: PropTypes.array
   };
+
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path !== this.path || !isEqual(style, this.style)) {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {data, active, x, y} = props;
+    const style = Helpers.evaluateStyle(assign({fill: "black"}, props.style), data, active);
+    const width = this.getBarWidth(props, style);
+    const path = typeof x === "number" && typeof y === "number" ?
+      this.getBarPath(props, width) : undefined;
+    return { style, path };
+  }
 
   getVerticalBarPath(props, width) {
     const {x, y0, y} = props;
@@ -53,8 +78,8 @@ export default class Bar extends React.Component {
       this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
   }
 
-  getBarWidth(props) {
-    const {style, width, data} = props;
+  getBarWidth(props, style) {
+    const {width, data} = props;
     const padding = props.padding.left || props.padding;
     const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
     return style && style.width ? style.width : defaultWidth;
@@ -76,14 +101,6 @@ export default class Bar extends React.Component {
   }
 
   render() {
-    // TODO better bar width calculation
-    const {datum, active} = this.props;
-    const barWidth = this.getBarWidth(this.props);
-    const path = typeof this.props.x === "number" ?
-      this.getBarPath(this.props, barWidth) : undefined;
-    const style = Helpers.evaluateStyle(
-      assign({fill: "black", stroke: "none"}, this.props.style), datum, active
-    );
-    return this.renderBar(path, style, this.props.events);
+    return this.renderBar(this.path, this.style, this.props.events);
   }
 }
