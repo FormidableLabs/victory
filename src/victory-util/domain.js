@@ -286,17 +286,36 @@ export default {
     const range = Helpers.getRange(props, axis);
     const rangeExtent = Math.abs(Math.max(...range) - Math.min(...range));
 
-    const paddingLeft = Math.abs(domainMax - domainMin) * padding.left / rangeExtent;
-    const paddingRight = Math.abs(domainMax - domainMin) * padding.right / rangeExtent;
-    // don't make the axes cross if they aren't already
-    const adjustedMin = (domainMin >= 0 && (domainMin - paddingLeft) <= 0) ?
-      0 : domainMin.valueOf() - paddingLeft;
+    // Naive initial padding calculation
+    const initialPadding = {
+      left: Math.abs(domainMax - domainMin) * padding.left / rangeExtent,
+      right: Math.abs(domainMax - domainMin) * padding.right / rangeExtent
+    };
 
-    const adjustedMax = (domainMax <= 0 && (domainMax + paddingRight) >= 0) ?
-      0 : domainMax.valueOf() + paddingRight;
+    // Adjust the domain by the initial padding
+    const adjustedDomain = {
+      min: (domainMin >= 0 && (domainMin - initialPadding.left) <= 0) ?
+        0 : domainMin.valueOf() - initialPadding.left,
+      max: (domainMax <= 0 && (domainMax + initialPadding.right) >= 0) ?
+        0 : domainMax.valueOf() + initialPadding.right
+    };
+
+    // re-calculate padding, taking the adjusted domain into account
+    const finalPadding = {
+      left: Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.left / rangeExtent,
+      right: Math.abs(adjustedDomain.max - adjustedDomain.min) * padding.right / rangeExtent
+    };
+
+    // Adjust the domain by the final padding
+    const finalDomain = {
+      min: (domainMin >= 0 && (domainMin - finalPadding.left) <= 0) ?
+        0 : domainMin.valueOf() - finalPadding.left,
+      max: (domainMax >= 0 && (domainMax + finalPadding.right) <= 0) ?
+        0 : domainMax.valueOf() + finalPadding.right
+    };
 
     return domainMin instanceof Date || domainMax instanceof Date ?
-      [new Date(adjustedMin), new Date(adjustedMax)] : [adjustedMin, adjustedMax];
+      [new Date(finalDomain.min), new Date(finalDomain.max)] : [finalDomain.min, finalDomain.max];
   },
 
   /**
