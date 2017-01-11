@@ -1,0 +1,114 @@
+import React from "react";
+import { isFunction } from "lodash";
+import Data from "./data";
+import Collection from "./collection";
+
+export default {
+  getParentSVG(target) {
+    if (target.nodeName === "svg") {
+      return target;
+    } else {
+      return this.getParentSVG(target.parentNode);
+    }
+  },
+
+  getSVGEventCoordinates(evt) {
+    const svg = this.getParentSVG(evt.target);
+    const matrix = svg.getScreenCTM().inverse();
+    const {a, d, e, f} = matrix;
+    return {
+      x: a * evt.clientX + e,
+      y: d * evt.clientY + f
+    };
+  },
+
+  getDataCoordinates(scale, x, y) {
+    return {
+      x: scale.x.invert(x),
+      y: scale.y.invert(y)
+    };
+  },
+
+  getBounds(props) {
+    const {x1, x2, y1, y2, scale} = props;
+    const point1 = this.getDataCoordinates(scale, x1, y1);
+    const point2 = this.getDataCoordinates(scale, x2, y2);
+    const makeBound = (a, b) => {
+      return [ Collection.getMinValue([a, b]), Collection.getMaxValue([a, b]) ];
+    };
+
+    return {
+      x: makeBound(point1.x, point2.x),
+      y: makeBound(point1.y, point2.y)
+    };
+  },
+
+  getDatasets(props) { // eslint-disable-line max-statements
+    if (props.data) {
+      return [{data: props.data}];
+    }
+    const getData = (childProps) => {
+      const data = Data.getData(childProps);
+      return Array.isArray(data) && data.length > 0 ? data : undefined;
+    };
+
+    // Reverse the child array to maintain correct order when looping over
+    // children starting from the end of the array.
+    const children = React.Children.toArray(props.children).reverse();
+    let childrenLength = children.length;
+    const dataArr = [];
+    let dataArrLength = 0;
+    let childIndex = 0;
+    while (childrenLength > 0) {
+      const child = children[--childrenLength];
+      const childName = child.props.name || childIndex;
+      childIndex++;
+      if (child.type && child.type.role === "axis") {
+        childIndex++;
+      } else if (child.type && isFunction(child.type.getData)) {
+        dataArr[dataArrLength++] = {childName, data: child.type.getData(child.props)};
+      } else if (child.props && child.props.children) {
+        const newChildren = React.Children.toArray(child.props.children);
+        const newChildrenLength = newChildren.length;
+        for (let index = 0; index < newChildrenLength; index++) {
+          children[childrenLength++] = newChildren[index];
+        }
+      } else {
+        dataArr[dataArrLength++] = {childName, data: getData(child.props)};
+      }
+    }
+    return dataArr;
+  },
+
+  filterDatasets(datasets, bounds) {
+    const filtered = datasets.reduce((memo, dataset) => {
+      const selectedData = this.getSelectedData(dataset.data, bounds);
+      memo = selectedData ?
+        memo.concat({
+          childName: dataset.childName, eventKey: selectedData.eventKey, data: selectedData.data
+        }) :
+        memo;
+      return memo;
+    }, []);
+    return filtered.length ? filtered : null;
+  },
+
+  getSelectedData(dataset, bounds) {
+    const {x, y} = bounds;
+    const withinBounds = (d) => {
+      return d.x >= x[0] && d.x <= x[1] && d.y >= y[0] && d.y <= y[1];
+    };
+    const eventKey = [];
+    const data = [];
+    let count = 0;
+    for (let index = 0, len = dataset.length; index < len; index++) {
+      const datum = dataset[index];
+      if (withinBounds(datum)) {
+        data[count] = datum;
+        eventKey[count] = datum.eventKey === undefined ? index : datum.eventKey;
+        count++;
+      }
+    }
+    return count > 0 ? {eventKey, data} : null;
+  }
+};

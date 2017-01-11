@@ -1,11 +1,125 @@
 VictoryCore Changelog
 =====================
+## 11.0.1 (2017-01-05)
+
+- Fixes a bug in VictorySharedEvents
+
+## 11.0.0 (2017-01-03)
+
+- Adds support for `active` boolean prop on all primitive components
+- Tooltips trigger `active` on both data and label components
+- Adds selection helpers to support `VictorySelectionContainer`
+- Changes when functional styles / props are evaluated
+  - they will now be evaluated from the primitive components so they can be evaluated with `active`
+- Better support for `defaultEvents` on container components
+
+## 10.0.3 (2016-12-13)
+
+- Add support for `className` on all primitive components
+
+## 10.0.2 (2016-12-12)
+
+- Add `pointerEvents: "none"` to tooltip themes
+
+## 10.0.1 (2016-12-09)
+
+- Fix bug related to duplicate keys in shared event children
+
+## 10.0.0 (2016-12-01)
+
+- Change how continuous animations behave
+  - clipPath curtain will never be smaller than the range except onLoad
+- Simplify transitions code
+- Ensure that animations and transitions use the global timer passed in context or create their own
+- Fix `bypassAnimation` bug
+- Ensure that clipPath width and height are never negative
+
+## 9.2.4 (2016-11-21)
+
+- Change how data is generated for accessors to handle edge cases like https://github.com/FormidableLabs/victory/issues/397
+
+## 9.2.3 (2016-11-21)
+
+- Fix Transition domain bug
+
+## 9.2.2 (2016-11-09)
+
+- Create timer only when needed
+
+## 9.2.1 (2016-11-09)
+
+- Code style consistency
+
+## 9.2.0 (2016-11-09)
+
+- Adds a global animation timer (non-breaking change)
+
+## 9.1.1 (2016-10-31)
+
+- Stricter npmignore
+
+## 9.1.0 (2016-10-28)
+
+- Uses `publishr` to reduce npm installed package size [#413](https://github.com/FormidableLabs/victory/issues/413)
+- Fixes a bug where label padding was not being applied to tick labels [#408](https://github.com/FormidableLabs/victory/issues/408)
+- Removes default tick padding in themes
+- Changes how the domain is calculated when there is only one data point, or when the minimum and maximum of the data is equal in a given dimension [#407](https://github.com/FormidableLabs/victory/issues/407)
+- Removes hard-codes `<g>` from `VictorySharedEvents` [#402](https://github.com/FormidableLabs/victory/issues/402)
+
+## 9.0.3 (2016-10-26)
+
+- Fix aria role bug
+- Allow npm 2 install
+
+## 9.0.2 (2016-10-18)
+
+- Refactor rendered components for ease of native versions
+- Fix bugs in exit transitions for continuous data components (line, area)
+- Fix `dx` bug in `VictoryLabel` Thanks to @gcedo
+
+## 9.0.1 (2016-10-12)
+
+- Simplify cleanData so accessors are called only once
+
+## 9.0.0 (2016-10-12)
+
+- removes support for `children` for VictoryLabel. Use `text` instead
+- upgrades all d3 packages
+- renames `VictoryGroupContainer` -> `VictoryClipContainer`
+- refactors `VictoryClipContainer` for ease of native implementation
+- consistency of props for primitive components and VictoryLabel
+- refactors ErrorBar primitive for clarity and ease of native implementation
+- fixes a 0/falsey bug in transitions to allow for durations of 0 rather than falling back to defaults
+- Fixes date related  domain bugs
+
+## 8.0.1 (2016-10-07)
+
+- Adds fallbacks to `formatData` so that data accessor props are optional
+
+## 8.0.0 (2016-10-06)
+
+- Adds `VictoryPortal` which renders a single child in a top level portal container if it exists. Thanks to @nfcampos
+- Adds `VictoryGroupContainer` which renders children in a group container with a `clipPath` if clipPath props exist
+- Removes `clipPath` properties from `Curve` and `Area` primitives
+- `VictoryTransition` only passes `clipPath` props to continuous children (_i.e._ `VictoryLine`, `VictoryArea`)
+- Adds an aggressive `shouldComponentUpdate` check to `VictoryTransition` to prevent unnecessary rendering
+- Extracts event logic into a new inverted inheritance higher order component `addEvents`
+- Moves `Data`, `Domain`, and `Scale` helpers from `victory-chart` to `victory-core`
+
+## 7.0.2 (2016-09-18)
+
+- Minor changes in VictoryTooltip to support native version
+
+## 7.0.1 (2016-09-15)
+
+- Fixes minor bugs related to tooltips
+
 ## 7.0.0 (2016-09-09)
 
 **Breaking Changes for `VictoryPie` themes**
 
 - This PR alters the label padding for `VictoryPie` in themes to work with the new `labelRadius` prop.
- 
+
 ## 6.1.1 (2016-09-08)
 
 - Fix axis themes
@@ -58,7 +172,7 @@ VictoryCore Changelog
 ## 5.0.0 (2016-08-17)
 
 ** This is a breaking change for themes **
-- Alters the `VictoryTheme` API to match props. 
+- Alters the `VictoryTheme` API to match props.
 - Adds `VictoryTheme.grayscale`
 
 ## 4.6.1 (2016-08-11)
@@ -78,7 +192,7 @@ VictoryCore Changelog
 
 ## 4.5.0 (2016-07-29)
 
-- Remove `reduce-calc-css` dependency. 
+- Remove `reduce-calc-css` dependency.
 
 ## 4.4.2 (2016-7-26)
 
@@ -132,7 +246,7 @@ VictoryCore Changelog
   unless the child component standalone prop is set to true. Helps add roles and optional titles/descriptions to make
   Victory charts more accessible to users using screen readers.
 
-## 3.0.0 (2016-06-01) 
+## 3.0.0 (2016-06-01)
 
 - Adds `VictorySharedEvents` wrapper for coordinating events between supported Victory Components. An annotated example of the new events API:
 
@@ -140,15 +254,15 @@ VictoryCore Changelog
 <VictorySharedEvents
   events={[
     {
-      childName: "firstBar", // if a child name is not provided, event will be attached to all children. 
+      childName: "firstBar", // if a child name is not provided, event will be attached to all children.
       target: "data", // what type of element to attach to. Matches the style namespaces
-      eventKey: 1, // What event key of element to attach to. Defaults to the index in data. 
+      eventKey: 1, // What event key of element to attach to. Defaults to the index in data.
       eventHandlers: {
         onClick: () => {
           return {
             childName: "secondBar", // the child to be modified
             // props here are the props that define the targeted component i.e. what is passed to an individual bar
-            mutation: (props) => { 
+            mutation: (props) => {
               return {style: merge({}, props.style, {fill: "blue"})}; // Whatever is returned here will override the existing props
             }
           };
@@ -215,7 +329,7 @@ VictoryCore Changelog
 events: {
  data: {
   onClick: () => {
-   return { data: { style: {fill: "red"} }, labels: { style: {fill: "black"} } };  
+   return { data: { style: {fill: "red"} }, labels: { style: {fill: "black"} } };
   }
  }
 }

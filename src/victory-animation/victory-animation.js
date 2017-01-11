@@ -1,28 +1,14 @@
 import React from "react";
-import d3Ease from "d3-ease";
-import d3Interpolate from "d3-interpolate";
-import { timer } from "d3-timer";
-import { addVictoryInterpolator } from "./util";
-
-
-addVictoryInterpolator();
+import * as d3Ease from "d3-ease";
+import { victoryInterpolator } from "./util";
+import Timer from "../victory-util/timer";
 
 export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
 
   static propTypes = {
-    /**
-     * The child of should be a function that takes an object of tweened values
-     * and returns a component to render.
-     */
     children: React.PropTypes.func,
-    /**
-     * The number of milliseconds the animation should take to complete.
-     */
     duration: React.PropTypes.number,
-    /**
-     * The easing prop specifies an easing function name to use for tweening.
-     */
     easing: React.PropTypes.oneOf([
       "back", "backIn", "backOut", "backInOut",
       "bounce", "bounceIn", "bounceOut", "bounceInOut",
@@ -35,23 +21,8 @@ export default class VictoryAnimation extends React.Component {
       "quad", "quadIn", "quadOut", "quadInOut",
       "sin", "sinIn", "sinOut", "sinInOut"
     ]),
-    /**
-     * The delay prop specifies a delay in milliseconds before the animation
-     * begins. If multiple values are in the animation queue, it is the delay
-     * between each animation.
-     */
     delay: React.PropTypes.number,
-    /**
-     * The onEnd prop specifies a function to run when the animation ends. If
-     * multiple animations are in the queue, it is called after the last
-     * animation.
-     */
     onEnd: React.PropTypes.func,
-    /**
-     * The data prop specifies the latest set of values to tween to. When this
-     * prop changes, VictoryAnimation will begin animating from the current
-     * value to the new value.
-     */
     data: React.PropTypes.oneOfType([
       React.PropTypes.object,
       React.PropTypes.array
@@ -59,14 +30,14 @@ export default class VictoryAnimation extends React.Component {
   };
 
   static defaultProps = {
-    /* length of animation */
     duration: 1000,
-    /* easing modifies step each frame */
     easing: "quadInOut",
-    /* delay between transitions */
     delay: 0,
-    /* we got nothin' */
     data: {}
+  };
+
+  static contextTypes = {
+    getTimer: React.PropTypes.func
   };
 
   constructor(props) {
@@ -84,25 +55,37 @@ export default class VictoryAnimation extends React.Component {
     this.queue = Array.isArray(this.props.data) ?
       this.props.data.slice(1) : [];
     /* build easing function */
-    this.ease = d3Ease[this.props.easing];
+    this.ease = d3Ease[this.toNewName(this.props.easing)];
     /*
       unlike React.createClass({}), there is no autobinding of this in ES6 classes
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
+    this.getTimer = this.getTimer.bind(this);
   }
+
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
+    }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
+  }
+
   componentDidMount() {
     // Length check prevents us from triggering `onEnd` in `traverseQueue`.
     if (this.queue.length) {
       this.traverseQueue();
     }
   }
+
   /* lifecycle */
   componentWillReceiveProps(nextProps) {
     /* cancel existing loop if it exists */
-    if (this.timer) {
-      this.timer.stop();
-    }
+    this.getTimer().unsubscribe(this.loopID);
+
     /* If an object was supplied */
     if (!Array.isArray(nextProps.data)) {
       // Replace the tween queue. Could set `this.queue = [nextProps.data]`,
@@ -117,32 +100,52 @@ export default class VictoryAnimation extends React.Component {
     /* Start traversing the tween queue */
     this.traverseQueue();
   }
+
   componentWillUnmount() {
-    if (this.timer) {
-      this.timer.stop();
+    if (this.loopID) {
+      this.getTimer().unsubscribe(this.loopID);
+    } else {
+      this.getTimer().stop();
     }
   }
+
+  toNewName(ease) {
+    // d3-ease changed the naming scheme for ease from "linear" -> "easeLinear" etc.
+    const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
+    return `ease${capitalize(ease)}`;
+  }
+
   /* Traverse the tween queue */
   traverseQueue() {
     if (this.queue.length) {
       /* Get the next index */
       const data = this.queue[0];
       /* compare cached version to next props */
-      this.interpolator = d3Interpolate.value(this.state.data, data);
+      this.interpolator = victoryInterpolator(this.state.data, data);
       /* reset step to zero */
-      this.timer = timer(this.functionToBeRunEachFrame, this.props.delay);
+      if (this.props.delay) {
+        setTimeout(() => { // eslint-disable-line no-undef
+          this.loopID = this.getTimer().subscribe(
+            this.functionToBeRunEachFrame, this.props.duration
+          );
+        }, this.props.delay);
+      } else {
+        this.loopID = this.getTimer().subscribe(
+          this.functionToBeRunEachFrame, this.props.duration
+        );
+      }
     } else if (this.props.onEnd) {
       this.props.onEnd();
     }
   }
   /* every frame we... */
-  functionToBeRunEachFrame(elapsed) {
+  functionToBeRunEachFrame(elapsed, duration) {
     /*
       step can generate imprecise values, sometimes greater than 1
       if this happens set the state to 1 and return, cancelling the timer
     */
-    const step = elapsed / this.props.duration;
-
+    duration = duration !== undefined ? duration : this.props.duration;
+    const step = duration ? elapsed / duration : 1;
     if (step >= 1) {
       this.setState({
         data: this.interpolator(1),
@@ -151,9 +154,11 @@ export default class VictoryAnimation extends React.Component {
           animating: false
         }
       });
-      this.timer.stop();
+      if (this.loopID) {
+        this.getTimer().unsubscribe(this.loopID);
+      }
       this.queue.shift();
-      this.traverseQueue(); // Will take care of calling `onEnd`.
+      this.traverseQueue();
       return;
     }
     /*
@@ -169,6 +174,7 @@ export default class VictoryAnimation extends React.Component {
       }
     });
   }
+
   render() {
     return this.props.children(this.state.data, this.state.animationInfo);
   }

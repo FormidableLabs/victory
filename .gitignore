@@ -29,8 +29,7 @@ $RECYCLE.BIN/
 .tmp
 bower_components
 coverage
-docs/build
-dist/*.map
+dist
 lib
 node_modules
 npm-debug.log*

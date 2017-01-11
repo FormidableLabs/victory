@@ -1,6 +1,6 @@
 {
   "name": "victory-core",
-  "version": "7.0.0",
+  "version": "11.0.1",
   "description": "Victory Core",
   "main": "lib/index.js",
   "repository": {
@@ -13,39 +13,46 @@
     "url": "https://github.com/FormidableLabs/victory-core/issues"
   },
   "homepage": "https://github.com/FormidableLabs/victory-core",
-  "engineStrict": true,
   "engines": {
-    "npm": ">=3.0.0"
+    "npm": ">=2.0.0"
   },
   "scripts": {
     "postinstall": "cd lib || builder run npm:postinstall",
     "preversion": "builder run npm:preversion",
+    "postversion": "builder run npm:postversion",
+    "postpublish": "builder run npm:postpublish",
     "start": "builder run hot",
     "test": "builder run check",
-    "version": "builder run npm:version && git add dist && git commit -m \"Commit 'dist/' for publishing\"",
-    "docs-build-static": "echo 'Static docs generation for victory-core is not supported.'"
+    "version": "builder run npm:version"
   },
   "dependencies": {
-    "builder": "~2.9.1",
-    "builder-victory-component": "^2.4.0",
-    "d3-ease": "^0.3.0",
-    "d3-interpolate": "0.2.0",
+    "builder": "^3.1.0",
+    "builder-victory-component": "^3.1.0",
+    "d3-ease": "^1.0.0",
+    "d3-interpolate": "^1.1.1",
+    "d3-scale": "^1.0.0",
     "d3-shape": "^1.0.0",
-    "d3-timer": "^0.0.6",
+    "d3-timer": "^1.0.0",
     "lodash": "^4.12.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^2.4.0",
+    "builder-victory-component-dev": "^3.1.0",
     "chai": "^3.2.0",
-    "ecology": "^1.6.0",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
-    "radium": "^0.16.2",
     "react": "~15.1.0",
     "react-addons-test-utils": "~15.1.0",
     "react-dom": "~15.1.0",
     "react-router": "^2.4.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
+  },
+  "publishr": {
+    "dependencies": [
+      "^builder"
+    ],
+    "files": {
+      ".npmignore": ".npmignore.publishr"
+    }
   }
 }

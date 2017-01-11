@@ -1,21 +1,55 @@
 import React, { PropTypes } from "react";
+import { isEqual } from "lodash";
+import Helpers from "../victory-util/helpers";
 
 export default class Flyout extends React.Component {
 
   static propTypes = {
+    active: PropTypes.bool,
+    className: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
     dx: PropTypes.number,
     dy: PropTypes.number,
+    datum: PropTypes.object,
+    data: PropTypes.array,
+    index: PropTypes.number,
     width: PropTypes.number,
     height: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     pointerLength: PropTypes.number,
     pointerWidth: PropTypes.number,
     cornerRadius: PropTypes.number,
-    events: PropTypes.object
+    events: PropTypes.object,
+    shapeRendering: PropTypes.string,
+    role: PropTypes.string
   };
+
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path !== this.path || !isEqual(style, this.style)) {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {datum, active, style} = props;
+    return {
+      style: Helpers.evaluateStyle(style, datum, active),
+      path: this.getFlyoutPath(props)
+    };
+  }
+
 
   getVerticalPath(props) {
     const { pointerLength, pointerWidth, cornerRadius, orientation, width, height } = props;
@@ -73,14 +107,22 @@ export default class Flyout extends React.Component {
       this.getHorizontalPath(props) : this.getVerticalPath(props);
   }
 
+  // Overridden in victory-core-native
   renderFlyout(path, style, events) {
+    const { role, shapeRendering, className } = this.props;
     return (
-      <path d={path} style={style} {...events}/>
+      <path
+        className={className}
+        d={path}
+        style={style}
+        shapeRendering={shapeRendering || "auto"}
+        role={role || "presentation"}
+        {...events}
+      />
     );
   }
 
   render() {
-    const path = this.getFlyoutPath(this.props);
-    return this.renderFlyout(path, this.props.style, this.props.events);
+    return this.renderFlyout(this.path, this.style, this.props.events);
   }
 }

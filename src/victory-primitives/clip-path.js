@@ -5,37 +5,16 @@ import {
 
 export default class ClipPath extends React.Component {
   static propTypes = {
-    /**
-     * A unique ID for clipPath so, it could make sure using specific clipPath on
-     * specific chart
-     * @type {Number}
-     */
+    className: PropTypes.string,
     clipId: PropTypes.number,
-    /**
-     * The clipPadding props specifies the paddings in clipPath
-     * @type {Number}
-     */
     clipPadding: PropTypes.shape({
       top: PropTypes.number,
       bottom: PropTypes.number,
       left: PropTypes.number,
       right: PropTypes.number
     }),
-    /**
-     * The clipHeight props specifies the height of the clipPath
-     * This value should be given as a number of pixels
-     */
     clipHeight: CustomPropTypes.nonNegative,
-    /**
-     * The clipWidth props specifies the width of the clipPath
-     * This value should be given as a number of pixels
-     */
     clipWidth: CustomPropTypes.nonNegative,
-    /**
-     * The padding props specifies the amount of padding in number of pixels between
-     * the edge of the chart and any rendered child components. This prop should be given
-     * as an object with padding specified for top, bottom, left and right.
-     */
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -45,9 +24,6 @@ export default class ClipPath extends React.Component {
         right: PropTypes.number
       })
     ]),
-    /**
-     * The translateX props specifies the x-axis translation of the clipPath
-     */
     translateX: PropTypes.number
   };
 
@@ -61,6 +37,57 @@ export default class ClipPath extends React.Component {
     }
   }
 
+  componentWillMount() {
+    const { x, y, width, height } = this.calculateAttributes(this.props);
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const { x, y, width, height } = this.calculateAttributes(nextProps);
+    const { clipId } = this.props;
+    if (
+      x !== this.x ||
+      y !== this.y ||
+      width !== this.width ||
+      height !== this.height ||
+      clipId !== nextProps.clipId
+    ) {
+      this.x = x;
+      this.y = y;
+      this.width = width;
+      this.height = height;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {
+      clipWidth,
+      clipHeight,
+      translateX,
+      clipPadding
+    } = props;
+
+    const padding = Helpers.getPadding(props);
+
+    const totalPadding = (side) => {
+      const total = +padding[side] - (clipPadding[side] || 0);
+      return typeof total === "number" ? total : 0;
+    };
+
+    return {
+      x: totalPadding("left") + translateX,
+      y: totalPadding("top"),
+      width: Math.max(+clipWidth - totalPadding("left") - totalPadding("right"), 0),
+      height: Math.max(+clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
+    };
+  }
+
+  // Overridden in victory-core-native
   renderClipPath(props, id) {
     return (
       <defs>
@@ -72,25 +99,8 @@ export default class ClipPath extends React.Component {
   }
 
   render() {
-    const {
-      clipId,
-      clipWidth,
-      clipHeight,
-      translateX,
-      clipPadding
-    } = this.props;
-
-    const padding = Helpers.getPadding(this.props);
-
-    const totalPadding = (side) => padding[side] - (clipPadding[side] || 0);
-
-    const clipProps = {
-      x: totalPadding("left") + translateX,
-      y: totalPadding("top"),
-      width: clipWidth - totalPadding("left") - totalPadding("right"),
-      height: clipHeight - totalPadding("top") - totalPadding("bottom")
-    };
-
+    const { clipId, className } = this.props;
+    const clipProps = { className, x: this.x, y: this.y, width: this.width, height: this.height };
     return this.renderClipPath(clipProps, clipId);
   }
 }

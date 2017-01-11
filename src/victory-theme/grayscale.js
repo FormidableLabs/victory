@@ -60,7 +60,7 @@ export default {
   axis: assign({
     style: {
       axis: {
-        fill: "none",
+        fill: "transparent",
         stroke: charcoal,
         strokeWidth: 1,
         strokeLinecap,
@@ -70,12 +70,11 @@ export default {
         padding: 25
       }),
       grid: {
-        fill: "none",
+        fill: "transparent",
         stroke: "transparent"
       },
       ticks: {
-        fill: "none",
-        padding: 10,
+        fill: "transparent",
         size: 1,
         stroke: "transparent"
       },
@@ -111,7 +110,7 @@ export default {
   errorbar: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         stroke: charcoal,
         strokeWidth: 2
       },
@@ -124,7 +123,7 @@ export default {
   line: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         stroke: charcoal,
         strokeWidth: 2
       },
@@ -137,7 +136,7 @@ export default {
     style: {
       data: {
         padding: 10,
-        stroke: "none",
+        stroke: "transparent",
         strokeWidth: 1
       },
       labels: assign({}, baseLabelStyles, {
@@ -165,15 +164,18 @@ export default {
   tooltip: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: centeredLabelStyles,
+      labels: assign({}, centeredLabelStyles, {
+        pointerEvents: "none"
+      }),
       flyout: {
         stroke: charcoal,
         strokeWidth: 1,
-        fill: "#f0f0f0"
+        fill: "#f0f0f0",
+        pointerEvents: "none"
       }
     },
     flyoutProps: {
@@ -184,7 +186,7 @@ export default {
   voronoi: assign({
     style: {
       data: {
-        fill: "none",
+        fill: "transparent",
         stroke: "transparent",
         strokeWidth: 0
       },

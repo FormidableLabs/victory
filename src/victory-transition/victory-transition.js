@@ -1,56 +1,52 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
-import { Transitions, Collection } from "../victory-util/index";
-import { defaults, isFunction, pick, filter, identity } from "lodash";
+import { Transitions, Collection, Timer } from "../victory-util/index";
+import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
   static displayName = "VictoryTransition";
 
   static propTypes = {
-    /**
-     * The animate prop specifies an animation config for the transition.
-     * This prop should be given as an object.
-     */
     animate: React.PropTypes.object,
-    /**
-     * VictoryTransition animates a single child component
-     */
     children: React.PropTypes.node,
-    /**
-     * This prop specifies which of the child's props are safe to interpolate.
-     * This props should be given as an array.
-     */
     animationWhitelist: React.PropTypes.array
   };
 
   constructor(props) {
     super(props);
-
     this.state = {
       nodesShouldLoad: false,
-      nodesDoneLoad: false,
-      nodesDoneClipPathLoad: false,
-      animating: true
+      nodesDoneLoad: false
     };
-
+    const child = this.props.children;
+    this.continuous = child.type && child.type.continuous === true;
     this.getTransitionState = this.getTransitionState.bind(this);
+    this.getTimer = this.getTimer.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState(this.getTransitionState(this.props, nextProps));
-  }
-
-  componentWillUpdate(nextProps, nextState) {
-    if (nextState.animating !== this.state.animating && nextState.animating === false) {
-      const onEnd = nextProps && nextProps.animate && nextProps.animate.onEnd || identity;
-      onEnd();
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
     }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
   }
 
   componentDidMount() {
-    if (this.transitionProps && this.transitionProps.cb) {
-      this.transitionProps.cb();
-    }
+    this.setState({nodesShouldLoad: true}); //eslint-disable-line react/no-did-mount-set-state
+  }
+
+  componentWillUnmount() {
+    this.getTimer().stop();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.getTimer().bypassAnimation();
+    this.setState(
+      this.getTransitionState(this.props, nextProps), () => this.getTimer().resumeAnimation()
+    );
   }
 
   getTransitionState(props, nextProps) {
@@ -58,8 +54,9 @@ export default class VictoryTransition extends React.Component {
     if (!animate) {
       return {};
     } else if (animate.parentState) {
-      const oldProps = animate.parentState.nodesWillExit ? props : null;
-      return {oldProps};
+      const state = animate.parentState;
+      const oldProps = state.nodesWillExit ? props : null;
+      return {oldProps, nextProps};
     } else {
       const oldChildren = React.Children.toArray(props.children);
       const nextChildren = React.Children.toArray(nextProps.children);
@@ -67,27 +64,15 @@ export default class VictoryTransition extends React.Component {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
-        nodesShouldEnter,
-        nodesShouldLoad,
-        nodesDoneLoad,
-        nodesDoneClipPathLoad,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit,
-        animating
+        nodesShouldEnter
       } = Transitions.getInitialTransitionState(oldChildren, nextChildren);
-
       return {
         nodesWillExit,
         nodesWillEnter,
         childrenTransitions,
         nodesShouldEnter,
-        nodesDoneClipPathEnter,
-        nodesDoneClipPathExit,
-        nodesShouldLoad: nodesShouldLoad || this.state.nodesShouldLoad,
-        nodesDoneClipPathLoad: nodesDoneClipPathLoad || this.state.nodesDoneClipPathLoad,
-        nodesDoneLoad: nodesDoneLoad || this.state.nodesDoneLoad,
-        animating: animating || this.state.animating,
-        oldProps: nodesWillExit ? props : null
+        oldProps: nodesWillExit ? props : null,
+        nextProps
       };
     }
   }
@@ -105,19 +90,48 @@ export default class VictoryTransition extends React.Component {
       }, []);
     };
 
-    const childComponents = React.Children.toArray(props.children);
-    if (props.domain && (Array.isArray(props.domain) || props.domain[axis])) {
-      return Array.isArray(props.domain) ? props.domain : props.domain[axis];
+    const child = React.Children.toArray(props.children)[0];
+    const childProps = child.props || {};
+    const domain = Array.isArray(childProps.domain) ?
+      childProps.domain : childProps.domain && childProps.domain[axis];
+    if (!childProps.children && domain) {
+      return domain;
     } else {
-      const childDomains = getChildDomains(childComponents);
+      const childDomains = getChildDomains([child]);
       return childDomains.length === 0 ?
         [0, 1] : [Collection.getMinValue(childDomains), Collection.getMaxValue(childDomains)];
     }
   }
 
+  pickProps() {
+    if (!this.state) {
+      return this.props;
+    }
+    return this.state.nodesWillExit ? this.state.oldProps || this.props : this.props;
+  }
+
+  pickDomainProps(props) {
+    const parentState = props.animate && props.animate.parentState;
+    if (parentState && parentState.nodesWillExit) {
+      return this.continous || parentState.continuous ?
+        parentState.nextProps || this.state.nextProps || props : props;
+    }
+    return this.continuous && this.state.nodesWillExit ? this.state.nextProps || props : props;
+  }
+
+  getClipProps(props, child) {
+    if (!this.continuous) {
+      return {};
+    }
+    const clipWidth = this.transitionProps && this.transitionProps.clipWidth;
+    return {
+      clipHeight: child.props.height,
+      clipWidth: clipWidth !== undefined ? clipWidth : child.props.width
+    };
+  }
+
   render() {
-    const props = this.state && this.state.nodesWillExit ?
-      this.state.oldProps : this.props;
+    const props = this.pickProps();
     const getTransitionProps = this.props.animate && this.props.animate.getTransitions ?
       this.props.animate.getTransitions :
       Transitions.getTransitionPropsFactory(
@@ -129,34 +143,33 @@ export default class VictoryTransition extends React.Component {
     const transitionProps = getTransitionProps(child);
     this.transitionProps = transitionProps;
     const domain = {
-      x: this.getDomainFromChildren(props, "x"),
+      x: this.getDomainFromChildren(this.pickDomainProps(props), "x"),
       y: this.getDomainFromChildren(props, "y")
     };
+    const clipProps = this.getClipProps(props, child);
     const combinedProps = defaults(
-      {domain}, transitionProps, child.props
+      {domain}, clipProps, transitionProps, child.props
     );
-    const animationWhitelist = props.animationWhitelist;
-    let clipPathWhitelist = ["clipWidth", "clipHeight", "translateX"];
-
-    if ((this.state && this.state.nodesDoneClipPathExit && this.state.nodesWillExit)
-      || (transitionProps.animate
-        && transitionProps.animate.parentState
-        && transitionProps.animate.parentState.nodesDoneClipPathExit
-        && transitionProps.animate.parentState.nodesWillExit)) {
-      clipPathWhitelist = filter(clipPathWhitelist, (list) => {
-        return list !== "clipWidth";
-      });
-    }
-
-    const propsToAnimate = animationWhitelist ?
-      pick(combinedProps, animationWhitelist.concat(clipPathWhitelist)) : combinedProps;
-
+    const animationWhitelist = props.animationWhitelist || [];
+    const whitelist = this.continuous ?
+      animationWhitelist.concat(["clipWidth", "clipHeight", "translateX"]) : animationWhitelist;
+    const propsToAnimate = whitelist.length ? pick(combinedProps, whitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
-          const component = React.cloneElement(
-            child, defaults({animate: null}, newProps, combinedProps));
-          return component;
+          if (this.continuous) {
+            const { clipWidth, clipHeight, translateX, padding } = newProps;
+            const groupComponent = React.cloneElement(
+              child.props.groupComponent,
+              { clipWidth, clipHeight, translateX, padding }
+            );
+            return React.cloneElement(
+              child, defaults({animate: null, groupComponent}, newProps, combinedProps)
+            );
+          }
+          return React.cloneElement(
+            child, defaults({animate: null}, newProps, combinedProps)
+          );
         }}
       </VictoryAnimation>
     );

@@ -8,62 +8,12 @@ export default class VictorySharedEvents extends React.Component {
   static role = "shared-event-wrapper";
 
   static propTypes = {
-    /**
-     * VictoryEvents is a wrapper component that coordinates events between child components,
-     */
     children: React.PropTypes.oneOfType([
       React.PropTypes.arrayOf(React.PropTypes.node),
       React.PropTypes.node
     ]),
-    /**
-     * The container prop specifies a container for the children to be rendered into.
-     * If no container is provided, a <g> tag will be used. Shared parent events will only
-     * be attached when a container prop is provided.
-     */
     container: React.PropTypes.node,
-    /**
-     * The event prop take an array of event objects. Event objects are composed of
-     * a childName, target, eventKey, and eventHandlers. Targets may be any valid style namespace
-     * for a given component, (i.e. "data" and "labels"). The childName will refer to an
-     * individual child, either by its name prop, or by index. Only Victory components
-     * that actually render data should be targeted for use with shared events. The eventKey
-     * may optionally be used to select a single element by index or eventKey rather than
-     * an entire set. The eventHandlers object should be given as an object whose keys are standard
-     * event names (i.e. onClick) and whose values are event callbacks. The return value
-     * of an event handler is used to modify elemnts. The return value should be given
-     * as an object or an array of objects with optional target and eventKey and childName keys,
-     * and a mutation key whose value is a function. The target and eventKey and childName keys
-     * will default to those corresponding to the element the event handler was attached to.
-     * The mutation function will be called with the calculated props for the individual selected
-     * element (i.e. a single bar), and the object returned from the mutation function
-     * will override the props of the selected element via object assignment.
-     * @examples
-     * events={[
-     *   {
-     *     target: "data",
-     *     childName: "firstBar",
-     *     eventHandlers: {
-     *       onClick: () => {
-     *         return [
-     *            {
-     *              childName: "secondBar",
-     *              mutation: (props) => {
-     *                return {style: merge({}, props.style, {fill: "orange"})};
-     *              }
-     *            }, {
-     *              childName: "secondBar",
-     *              target: "labels",
-     *              mutation: () => {
-     *                return {text: "hey"};
-     *              }
-     *            }
-     *          ];
-     *       }
-     *     }
-     *   }
-     * ]}
-     *}}
-     */
+    groupComponent: React.PropTypes.node,
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.oneOfType([
         PropTypes.string,
@@ -78,10 +28,6 @@ export default class VictorySharedEvents extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
-    /**
-     * Similar to data accessor props `x` and `y`, this prop may be used to functionally
-     * assign eventKeys to data
-     */
     eventKey: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.func,
@@ -90,9 +36,13 @@ export default class VictorySharedEvents extends React.Component {
     ])
   };
 
+  static defaultProps = {
+    groupComponent: <g/>
+  };
+
   constructor() {
     super();
-    this.state = {};
+    this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
   }
@@ -105,26 +55,40 @@ export default class VictorySharedEvents extends React.Component {
     this.setUpChildren(newProps);
   }
 
+  getAllEvents(props) {
+    const components = ["container", "groupComponent"];
+    this.componentEvents = Events.getComponentEvents(props, components);
+    if (Array.isArray(this.componentEvents)) {
+      return Array.isArray(props.events) ?
+        this.componentEvents.concat(...props.events) : this.componentEvents;
+    }
+    return props.events;
+  }
+
   setUpChildren(props) {
-    this.childComponents = React.Children.toArray(props.children);
-    const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
-    const parentBaseProps = props.container ? { parent: props.container.props } : {};
-    this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+    this.events = this.getAllEvents(props);
+    if (this.events) {
+      this.childComponents = React.Children.toArray(props.children);
+      const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
+      const parentBaseProps = props.container ? props.container.props : {};
+      this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+    }
   }
 
   getBasePropsFromChildren(childComponents) {
-    const getBaseProps = (children) => {
+    const getBaseProps = (children, childIndex) => {
       return children.reduce((memo, child, index) => {
-        if (child.type && isFunction(child.type.getBaseProps)) {
+        if (child.props && child.props.children) {
+          return getBaseProps(React.Children.toArray(child.props.children), index);
+        } else if (child.type && isFunction(child.type.getBaseProps)) {
           const baseChildProps = child.props && child.type.getBaseProps(child.props);
           if (baseChildProps) {
-            const childKey = child.props.name || index;
+            const key = childIndex ? `${childIndex}-${index}` : index;
+            const childKey = child.props.name || key;
             memo[childKey] = baseChildProps;
             return memo;
           }
           return memo;
-        } else if (child.props && child.props.children) {
-          return getBaseProps(React.Children.toArray(child.props.children));
         }
         return memo;
       }, {});
@@ -135,13 +99,15 @@ export default class VictorySharedEvents extends React.Component {
   getNewChildren(props) {
     const {events, eventKey} = props;
     const childNames = Object.keys(this.baseProps);
-
     const alterChildren = (children) => {
-      return children.reduce((memo, child) => {
+      return children.reduce((memo, child, index) => {
         if (child.type && isFunction(child.type.getBaseProps)) {
-          const name = child.props.name || childNames.shift();
+          const name = child.props.name || childNames.shift() || index;
           const childEvents = Array.isArray(events) &&
             events.filter((event) => {
+              if (event.target === "parent") {
+                return false;
+              }
               return Array.isArray(event.childName) ?
                 event.childName.indexOf(name) > -1 :
                 event.childName === name || event.childName === "all";
@@ -171,34 +137,37 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getContainer(props, children) {
-    const parents = Array.isArray(props.events) &&
-      props.events.filter((event) => event.target === "parent");
+    const parents = Array.isArray(this.events) &&
+      this.events.filter((event) => event.target === "parent");
     const sharedEvents = parents.length > 0 ?
       {
         events: parents,
         getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
         getEventState: partialRight(this.getEventState, null)
       } : null;
+    const container = this.props.container || this.props.groupComponent;
     const boundGetEvents = Events.getEvents.bind(this);
-    const parentEvents = boundGetEvents({sharedEvents}, "parent");
+    const parentEvents = sharedEvents && boundGetEvents({sharedEvents}, "parent");
     const parentProps = defaults(
       {},
       this.getEventState("parent", "parent"),
-      props.container.props,
-      this.baseProps.parent
+      container.props,
+      this.baseProps.parent,
+      { children }
     );
     return React.cloneElement(
-      props.container,
+      container,
       assign(
         {}, parentProps, {events: Events.getPartialEvents(parentEvents, "parent", parentProps)}
-      ),
-      children
+      )
     );
   }
 
   render() {
-    const children = this.getNewChildren(this.props);
-    return this.props.container ? this.getContainer(this.props, children) : <g>{children}</g>;
-
+    if (this.events) {
+      const children = this.getNewChildren(this.props);
+      return this.getContainer(this.props, children);
+    }
+    return React.cloneElement(this.props.container, { children: this.props.children });
   }
 }

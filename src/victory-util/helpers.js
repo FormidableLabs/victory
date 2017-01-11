@@ -1,4 +1,5 @@
-import { defaults, isFunction, merge, partial, property, omit } from "lodash";
+import { defaults, isFunction, property, omit } from "lodash";
+import Collection from "./collection";
 
 export default {
   getPadding(props) {
@@ -28,16 +29,16 @@ export default {
     };
   },
 
-  evaluateProp(prop, data, index) {
-    return isFunction(prop) ? prop(data, index) : prop;
+  evaluateProp(prop, data, active) {
+    return isFunction(prop) ? prop(data, active) : prop;
   },
 
-  evaluateStyle(style, data, index) {
+  evaluateStyle(style, data, active) {
     if (!style || !Object.keys(style).some((value) => isFunction(style[value]))) {
       return style;
     }
     return Object.keys(style).reduce((prev, curr) => {
-      prev[curr] = this.evaluateProp(style[curr], data, index);
+      prev[curr] = this.evaluateProp(style[curr], data, active);
       return prev;
     }, {});
   },
@@ -50,68 +51,6 @@ export default {
       return [props.height - padding.bottom, padding.top];
     }
     return [padding.left, props.width - padding.right];
-  },
-
-  // for components that take single datasets
-  getData(props) {
-    if (props.data) {
-      return this.formatData(props.data, props);
-    }
-  },
-
-  formatData(dataset, props, stringMap) {
-    if (!dataset) {
-      return [];
-    }
-    stringMap = stringMap || {
-      x: this.createStringMap(props, "x"),
-      y: this.createStringMap(props, "y")
-    };
-    const accessor = {
-      x: this.createAccessor(props.x),
-      y: this.createAccessor(props.y)
-    };
-
-    return dataset.map((datum) => {
-      const x = accessor.x(datum);
-      const y = accessor.y(datum);
-      const xName = typeof x === "string" ? {xName: x} : undefined;
-      const yName = typeof y === "string" ? {yName: y} : undefined;
-      return defaults({
-        // map string data to numeric values, and add names
-        x: typeof x === "string" ? stringMap.x[x] : x,
-        y: typeof y === "string" ? stringMap.y[y] : y
-      }, xName, yName, datum);
-    });
-  },
-
-  createStringMap(props, axis) {
-    const stringsFromData = this.getStringsFromData(props, axis);
-    if (stringsFromData.length) {
-      return stringsFromData.reduce((acc, string, index) => {
-        acc[string] = index + 1;
-        return acc;
-      }, {});
-    }
-    return null;
-  },
-
-  getStringsFromData(props, axis) {
-    if (!props.data) {
-      return [];
-    }
-    const key = typeof props[axis] === "undefined" ? axis : props[axis];
-    const accessor = this.createAccessor(key);
-    const dataStrings = (props.data)
-        .map((datum) => accessor(datum))
-        .filter((datum) => typeof datum === "string");
-    // return a unique set of strings
-    return dataStrings.reduce((prev, curr) => {
-      if (typeof curr !== "undefined" && curr !== null && prev.indexOf(curr) === -1) {
-        prev.push(curr);
-      }
-      return prev;
-    }, []);
   },
 
   createAccessor(key) {
@@ -127,22 +66,6 @@ export default {
     return property(key);
   },
 
-  getPartialEvents(events, index, childProps) {
-    return events ?
-      Object.keys(events).reduce((memo, eventName) => {
-        /* eslint max-params: 0 */
-        memo[eventName] = partial(
-          events[eventName],
-          partial.placeholder, // evt will still be the first argument for event handlers
-          childProps, // event handlers will have access to data component props, including data
-          index, // used in setting a unique state property
-          eventName // used in setting a unique state property
-        );
-        return memo;
-      }, {}) :
-      {};
-  },
-
   modifyProps(props, fallbackProps, role) {
     const theme = props.theme && props.theme[role] ? props.theme[role] : {};
     const themeProps = omit(theme, ["style"]);
@@ -150,27 +73,34 @@ export default {
     return defaults({}, baseProps, {clipWidth: baseProps.width, clipHeight: baseProps.height});
   },
 
-  getEvents(events, namespace) {
-    const onEvent = (evt, childProps, index, eventName) => {
-      if (this.props.events[namespace] && this.props.events[namespace][eventName]) {
-        this.setState({
-          [index]: merge(
-            {},
-            this.state[index],
-            this.props.events[namespace][eventName](evt, childProps, index)
-          )
-        });
-      }
-    };
+  // Axis helpers
 
-    return events ?
-      Object.keys(this.props.events[namespace]).reduce((memo, event) => {
-        memo[event] = onEvent;
-        return memo;
-      }, {}) : {};
+  /**
+   * Returns the given axis or the opposite axis when horizontal
+   * @param {string} axis: the given axis, either "x" pr "y"
+   * @param {Boolean} horizontal: true when the chart is flipped to the horizontal orientation
+   * @returns {String} the dimension appropriate for the axis given its props "x" or "y"
+   */
+  getCurrentAxis(axis, horizontal) {
+    const otherAxis = axis === "x" ? "y" : "x";
+    return horizontal ? otherAxis : axis;
   },
 
-  getEventState(index, namespace) {
-    return this.state[index] && this.state[index][namespace];
+  /**
+   * @param {Object} props: axis component props
+   * @returns {Boolean} true when the axis is vertical
+   */
+  isVertical(props) {
+    const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
+    const vertical = {top: false, bottom: false, left: true, right: true};
+    return vertical[orientation];
+  },
+
+  /**
+   * @param {Object} props: axis component props
+   * @returns {Boolean} true when tickValues contain strings
+   */
+  stringTicks(props) {
+    return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
   }
 };

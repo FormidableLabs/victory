@@ -1,16 +1,19 @@
 import React, { PropTypes } from "react";
-import { assign } from "lodash";
+import Helpers from "../victory-util/helpers";
+import { assign, isEqual } from "lodash";
 
 export default class Bar extends React.Component {
 
   static propTypes = {
-    clipId: PropTypes.number,
+    active: PropTypes.bool,
+    className: PropTypes.string,
     datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
     index: PropTypes.number,
     role: PropTypes.string,
     scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
     style: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
@@ -23,6 +26,31 @@ export default class Bar extends React.Component {
     data: PropTypes.array
   };
 
+  componentWillMount() {
+    const {style, path} = this.calculateAttributes(this.props);
+    this.style = style;
+    this.path = path;
+  }
+
+  shouldComponentUpdate(nextProps) {
+    const {style, path} = this.calculateAttributes(nextProps);
+    if (path !== this.path || !isEqual(style, this.style)) {
+      this.style = style;
+      this.path = path;
+      return true;
+    }
+    return false;
+  }
+
+  calculateAttributes(props) {
+    const {data, active, x, y} = props;
+    const style = Helpers.evaluateStyle(assign({fill: "black"}, props.style), data, active);
+    const width = this.getBarWidth(props, style);
+    const path = typeof x === "number" && typeof y === "number" ?
+      this.getBarPath(props, width) : undefined;
+    return { style, path };
+  }
+
   getVerticalBarPath(props, width) {
     const {x, y0, y} = props;
     const size = width / 2;
@@ -30,7 +58,8 @@ export default class Bar extends React.Component {
       L ${x - size}, ${y}
       L ${x + size}, ${y}
       L ${x + size}, ${y0}
-      L ${x - size}, ${y0}`;
+      L ${x - size}, ${y0}
+      z`;
   }
 
   getHorizontalBarPath(props, width) {
@@ -40,7 +69,8 @@ export default class Bar extends React.Component {
       L ${y0}, ${x + size}
       L ${y}, ${x + size}
       L ${y}, ${x - size}
-      L ${y0}, ${x - size}`;
+      L ${y0}, ${x - size}
+      z`;
   }
 
   getBarPath(props, width) {
@@ -48,33 +78,29 @@ export default class Bar extends React.Component {
       this.getHorizontalBarPath(props, width) : this.getVerticalBarPath(props, width);
   }
 
-  getBarWidth(props) {
-    const {style, width, data} = props;
+  getBarWidth(props, style) {
+    const {width, data} = props;
     const padding = props.padding.left || props.padding;
     const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
     return style && style.width ? style.width : defaultWidth;
   }
 
+  // Overridden in victory-core-native
   renderBar(path, style, events) {
-    const { role, clipId } = this.props;
+    const { role, shapeRendering, className } = this.props;
     return (
       <path
         d={path}
+        className={className}
         style={style}
-        role={role}
-        shapeRendering="optimizeSpeed"
+        role={role || "presentation"}
+        shapeRendering={shapeRendering || "auto"}
         {...events}
-        clipPath={`url(#${clipId})`}
       />
     );
   }
 
   render() {
-    // TODO better bar width calculation
-    const barWidth = this.getBarWidth(this.props);
-    const path = typeof this.props.x === "number" ?
-      this.getBarPath(this.props, barWidth) : undefined;
-    const style = assign({fill: "black", stroke: "none"}, this.props.style);
-    return this.renderBar(path, style, this.props.events);
+    return this.renderBar(this.path, this.style, this.props.events);
   }
 }
