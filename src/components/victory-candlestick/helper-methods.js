@@ -11,7 +11,7 @@ export default {
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
-      const x = scale.x(datum.x1 || datum.x);
+      const x = scale.x(datum.x1 !== undefined ? datum.x1 : datum.x);
       const y1 = scale.y(datum.high);
       const y2 = scale.y(datum.low);
       const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));

@@ -13,8 +13,8 @@ export default {
       const datum = data[index];
       const polygon = without(polygons[index], "data");
       const eventKey = datum.eventKey;
-      const x = scale.x(datum.x1 || datum.x);
-      const y = scale.y(datum.y1 || datum.y);
+      const x = scale.x(datum.x1 !== undefined ? datum.x1 : datum.x);
+      const y = scale.y(datum.y1 !== undefined ? datum.y1 : datum.y);
       const dataProps = {
         x, y, datum, data, index, scale, polygon,
         size: props.size,
@@ -74,8 +74,8 @@ export default {
     const minRange = [Math.min(...range.x), Math.min(...range.y)];
     const maxRange = [Math.max(...range.x), Math.max(...range.y)];
     return d3Voronoi()
-      .x((d) => scale.x(d.x1 || d.x))
-      .y((d) => scale.y(d.y1 || d.y))
+      .x((d) => scale.x(d.x1 !== undefined ? d.x1 : d.x))
+      .y((d) => scale.y(d.y1 !== undefined ? d.y1 : d.y))
       .extent([minRange, maxRange]);
   },
 
