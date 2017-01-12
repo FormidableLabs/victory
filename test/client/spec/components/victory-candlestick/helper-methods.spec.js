@@ -8,7 +8,7 @@ describe("victory-candlestick/helper-methods", () => {
     it("returns an object with an array of y values", () => {
       const dataResult = Helpers.getData({data: dataSet, x: "x", open: "open",
       close: "close", high: "high", low: "low"});
-      expect(dataResult[0].y).to.eql([10, 20, 25, 5]);
+      expect(dataResult[0]._y).to.eql([10, 20, 25, 5]);
     });
   });
 
