@@ -126,7 +126,7 @@ export default class VictoryLabel extends React.Component {
       Helpers.evaluateProp(props.textAnchor, props.datum) : "start";
     const content = this.getContent(props);
     const dx = props.dx ? Helpers.evaluateProp(this.props.dx, props.datum) : 0;
-    const dy = this.getDy(props, content, lineHeight) * fontSize;
+    const dy = this.getDy(props, style, content, lineHeight) * fontSize;
     const transform = this.getTransform(props, style);
     return {
       style, dx, dy, content, lineHeight, textAnchor, transform, fontSize
@@ -154,14 +154,15 @@ export default class VictoryLabel extends React.Component {
     return [" "];
   }
 
-  getDy(props, content, lineHeight) {
+  getDy(props, style, content, lineHeight) { //eslint-disable-line max-params
     const datum = props.datum || props.data;
     const dy = props.dy ? Helpers.evaluateProp(props.dy, datum) : 0;
     const length = content.length;
     const capHeight = this.getHeight(props, "capHeight");
-    const verticalAnchor = props.verticalAnchor ?
-      Helpers.evaluateProp(props.verticalAnchor, datum) : "middle";
-    switch (verticalAnchor) {
+    const verticalAnchor = style.verticalAnchor || props.verticalAnchor;
+    const anchor = verticalAnchor ?
+      Helpers.evaluateProp(verticalAnchor, datum) : "middle";
+    switch (anchor) {
     case "end":
       return dy + capHeight / 2 + (0.5 - length) * lineHeight;
     case "middle":
@@ -173,7 +174,7 @@ export default class VictoryLabel extends React.Component {
 
   getTransform(props, style) {
     const {datum, x, y} = props;
-    const angle = props.angle || style.angle;
+    const angle = style.angle || props.angle;
     const transform = props.transform || style.transform;
     const transformPart = transform && Helpers.evaluateProp(transform, datum);
     const rotatePart = angle && {rotate: [angle, x, y]};

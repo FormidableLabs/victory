@@ -1,22 +1,15 @@
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, TextSize, Helpers } from "../victory-util/index";
 import { default as VictoryLabel } from "../victory-label/victory-label";
+import { default as VictoryTheme } from "../victory-theme/victory-theme";
 import { Flyout } from "../victory-primitives/index";
 import { default as VictoryPortal} from "../victory-portal/victory-portal";
 import { assign, defaults } from "lodash";
 
-const defaultStyles = {
-  stroke: "black",
-  strokeWidth: 1,
-  fill: "#f0f0f0"
-};
-
-const defaultLabelStyles = {
-  fill: "#252525",
-  fontSize: 14,
-  fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-  stroke: "transparent",
-  padding: 5
+const fallbackProps = {
+  cornerRadius: 5,
+  pointerLength: 10,
+  pointerWidth: 10
 };
 
 export default class VictoryTooltip extends React.Component {
@@ -76,15 +69,14 @@ export default class VictoryTooltip extends React.Component {
     flyoutComponent: PropTypes.element,
     groupComponent: PropTypes.element,
     index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-    renderInPortal: PropTypes.bool
+    renderInPortal: PropTypes.bool,
+    theme: PropTypes.object
   };
 
   static defaultProps = {
+    theme: VictoryTheme.grayscale,
     active: false,
     renderInPortal: true,
-    cornerRadius: 5,
-    pointerLength: 10,
-    pointerWidth: 10,
     labelComponent: <VictoryLabel/>,
     flyoutComponent: <Flyout/>,
     groupComponent: <g/>
@@ -123,6 +115,7 @@ export default class VictoryTooltip extends React.Component {
       horizontal, datum, pointerLength, pointerWidth, cornerRadius,
       width, height, orientation, dx, dy, text, active
     } = props;
+
     const style = Helpers.evaluateStyle(props.style, datum, active);
     const flyoutStyle = Helpers.evaluateStyle(props.flyoutStyle, datum, active);
     const padding = flyoutStyle && flyoutStyle.padding || 0;
@@ -154,11 +147,15 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getCalculatedValues(props) {
-    const { style, text, datum } = props;
+    const { style, text, datum, theme } = props;
+    const defaultLabelStyles = theme && theme.tooltip && theme.tooltip.style ?
+      theme.tooltip.style : {};
     const baseLabelStyle = style ?
       defaults({}, style, defaultLabelStyles) : defaultLabelStyles;
+    const defaultFlyoutStyles = theme && theme.tooltip && theme.tooltip.flyoutStyle ?
+      theme.tooltip.flyoutStyle : {};
     const flyoutStyle = props.flyoutStyle ?
-      defaults({}, props.flyoutStyle, defaultStyles) : defaultStyles;
+      defaults({}, props.flyoutStyle, defaultFlyoutStyles) : defaultFlyoutStyles;
     const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
     const labelSize = TextSize.approximateTextSize(text, labelStyle);
     const flyoutDimensions = this.getDimensions(props, labelSize, labelStyle);
@@ -255,8 +252,9 @@ export default class VictoryTooltip extends React.Component {
 
   // Overridden in victory-core-native
   render() {
-    const { active, renderInPortal } = this.props;
-    const tooltip = active ? this.renderTooltip(this.props) : null;
+    const props = Helpers.modifyProps((this.props), fallbackProps, "tooltip");
+    const { active, renderInPortal } = props;
+    const tooltip = active ? this.renderTooltip(props) : null;
     return renderInPortal ? <VictoryPortal>{tooltip}</VictoryPortal> : tooltip;
   }
 }

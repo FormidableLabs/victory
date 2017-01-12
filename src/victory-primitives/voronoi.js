@@ -47,9 +47,10 @@ export default class Voronoi extends React.Component {
     };
   }
 
-
   getVoronoiPath(props) {
-    return `M ${props.polygon.join("L")} Z`;
+    const { polygon } = props;
+    return Array.isArray(polygon) && polygon.length ?
+      `M ${props.polygon.join("L")} Z` : "";
   }
 
   getCirclePath(props) {

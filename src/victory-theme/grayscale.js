@@ -161,28 +161,20 @@ export default {
   stack: assign({
     colorScale: colors
   }, baseProps),
-  tooltip: assign({
-    style: {
-      data: {
-        fill: "transparent",
-        stroke: "transparent",
-        strokeWidth: 0
-      },
-      labels: assign({}, centeredLabelStyles, {
-        pointerEvents: "none"
-      }),
-      flyout: {
-        stroke: charcoal,
-        strokeWidth: 1,
-        fill: "#f0f0f0",
-        pointerEvents: "none"
-      }
+  tooltip: {
+    style: assign({}, centeredLabelStyles, {
+      padding: 5,
+      pointerEvents: "none"
+    }),
+    flyoutStyle: {
+      stroke: charcoal,
+      strokeWidth: 1,
+      fill: "#f0f0f0",
+      pointerEvents: "none"
     },
-    flyoutProps: {
-      cornerRadius: 10,
-      pointerLength: 10
-    }
-  }, baseProps),
+    cornerRadius: 5,
+    pointerLength: 10
+  },
   voronoi: assign({
     style: {
       data: {
