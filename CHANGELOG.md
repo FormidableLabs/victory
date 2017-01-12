@@ -1,5 +1,18 @@
 VictoryCore Changelog
 =====================
+
+## 12.0.0 (2017-01-12)
+
+- [183](https://github.com/FormidableLabs/victory-core/pull/183) Adds `shouldComponentUpdate` logic to all primitive components
+- [184](https://github.com/FormidableLabs/victory-core/pull/184) Fixes a bugs related to tooltip themes
+  - Fixes [471](https://github.com/FormidableLabs/victory/issues/471)
+- [185](https://github.com/FormidableLabs/victory-core/pull/185) Uses "_x" and "_y" instead of "x" and "y" for storing formatted data on data objects
+  - Fixes [451](https://github.com/FormidableLabs/victory/issues/451)
+  - Fixes [350](https://github.com/FormidableLabs/victory/issues/350)
+  - **This is a breaking change for anyone using data accessors and functional styles / props that reference datum.x, datum.y**
+- [186](https://github.com/FormidableLabs/victory-core/pull/186) Adds a custom interpolator for objects so that properties are correctly interpolated
+  - Fixes [460](https://github.com/FormidableLabs/victory/issues/460)
+
 ## 11.0.1 (2017-01-05)
 
 - Fixes a bug in VictorySharedEvents
