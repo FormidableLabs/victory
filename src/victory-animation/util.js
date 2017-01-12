@@ -88,6 +88,58 @@ export const interpolateFunction = function (a, b) {
 };
 
 /**
+ * Interpolate to or from an object. This method is a modification of the object interpolator in
+ * d3-interpolate https://github.com/d3/d3-interpolate/blob/master/src/object.js. This interpolator
+ * differs in that it uses our custom interpolators when interpolating the value of each property in
+ * an object. This allows the correct interpolation of nested objects, including styles
+ *
+ * @param {any} a - Start value.
+ * @param {any} b - End value.
+ * @returns {Function} An interpolation function.
+ */
+export const interpolateObject = function (a, b) {
+  const interpolateTypes = (x, y) => {
+    if (x === y || !isInterpolatable(x) || !isInterpolatable(y)) {
+      return interpolateImmediate(x, y);
+    }
+    if (typeof x === "function" || typeof y === "function") {
+      return interpolateFunction(x, y);
+    }
+    if (typeof x === "object" && isPlainObject(x) || typeof y === "object" && isPlainObject(y)) {
+      return interpolateObject(x, y);
+    }
+    return interpolate(x, y);
+  };
+
+  const i = {};
+  const c = {};
+  let k;
+
+  if (a === null || typeof a !== "object") {
+    a = {};
+  }
+  if (b === null || typeof b !== "object") {
+    b = {};
+  }
+
+  for (k in b) {
+    if (k in a) {
+      i[k] = interpolateTypes(a[k], b[k]);
+    } else {
+      c[k] = b[k];
+    }
+  }
+
+  return function (t) {
+    for (k in i) {
+      c[k] = i[k](t);
+    }
+    return c;
+  };
+};
+
+
+/**
  * By default, the list of interpolators used by `d3.interpolate` has a few
  * downsides:
  *
@@ -119,6 +171,9 @@ export const victoryInterpolator = function (a, b) {
   }
   if (typeof a === "function" || typeof b === "function") {
     return interpolateFunction(a, b);
+  }
+  if (isPlainObject(a) || isPlainObject(b)) {
+    return interpolateObject(a, b);
   }
   return interpolate(a, b);
 };
