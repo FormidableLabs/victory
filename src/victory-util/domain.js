@@ -105,7 +105,7 @@ export default {
    */
   getDomainFromData(props, axis, dataset) {
     const currentAxis = Helpers.getCurrentAxis(axis, props.horizontal);
-    const allData = flatten(dataset).map((datum) => datum[currentAxis]);
+    const allData = flatten(dataset).map((datum) => datum[`_${currentAxis}`]);
 
     if (allData.length < 1) {
       return Scale.getBaseScale(props, axis).domain();
@@ -241,7 +241,7 @@ export default {
 
     const _dataByIndex = () => {
       return axisValues.map((value, index) => {
-        return datasets.map((data) => data[index] && data[index][currentAxis]);
+        return datasets.map((data) => data[index] && data[index][`_${currentAxis}`]);
       });
     };
 

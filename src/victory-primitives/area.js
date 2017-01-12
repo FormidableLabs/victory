@@ -42,13 +42,13 @@ export default class Area extends React.Component {
     const interpolation = this.toNewName(props.interpolation);
     const areaFunction = d3Shape.area()
       .curve(d3Shape[interpolation])
-      .x((d) => xScale(d.x1 || d.x))
-      .y1((d) => yScale(d.y1 || d.y))
-      .y0((d) => yScale(d.y0));
+      .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
+      .y1((d) => yScale(d._y1 !== undefined ? d._y1 : d._y))
+      .y0((d) => yScale(d._y0));
     const lineFunction = d3Shape.line()
       .curve(d3Shape[interpolation])
-      .x((d) => xScale(d.x1 || d.x))
-      .y((d) => yScale(d.y1));
+      .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
+      .y((d) => yScale(d._y1));
     return {
       style: Helpers.evaluateStyle(assign({fill: "black"}, style), data, active),
       areaPath: areaFunction(data),
