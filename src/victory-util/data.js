@@ -77,17 +77,17 @@ export default {
       y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
     };
     const data = dataset.map((datum, index) => {
-      const evaluatedX = accessor.x(datum);
-      const evaluatedY = accessor.y(datum);
+      const evaluatedX = datum._x !== undefined ? datum._x : accessor.x(datum);
+      const evaluatedY = datum._y !== undefined ? datum._y : accessor.y(datum);
       const x = evaluatedX !== undefined ? evaluatedX : index;
       const y = evaluatedY !== undefined ? evaluatedY : datum;
       return assign(
           {},
           datum,
-          { x, y },
+          { _x: x, _y: y },
           // map string data to numeric values, and add names
-          typeof x === "string" ? { x: stringMap.x[x], xName: x } : {},
-          typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
+          typeof x === "string" ? { _x: stringMap.x[x], xName: x } : {},
+          typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {}
         );
     });
     return this.cleanData(data, props);
@@ -110,7 +110,7 @@ export default {
       return dataset;
     }
     const rules = (datum, axis) => {
-      return scaleType[axis] === "log" ? datum[axis] !== 0 : true;
+      return scaleType[axis] === "log" ? datum[`_${axis}`] !== 0 : true;
     };
     return dataset.filter((datum) => {
       return rules(datum, "x") && rules(datum, "y");

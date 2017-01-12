@@ -105,7 +105,7 @@ describe("helpers/domain", () => {
 
   describe("getDomainFromData", () => {
     it("returns a domain from a dataset", () => {
-      const dataset = [{x: 1, y: 3}, {x: 3, y: 5}];
+      const dataset = [{_x: 1, _y: 3}, {_x: 3, _y: 5}];
       const resultDomain = Domain.getDomainFromData({}, "x", dataset);
       expect(resultDomain).to.eql([1, 3]);
     });
@@ -162,9 +162,9 @@ describe("helpers/domain", () => {
     });
 
     const data = [
-      [{x: 1, y: 0}, {x: 2, y: 0}, {x: 3, y: 0}],
-      [{x: 1, y: 1}, {x: 2, y: 1}, {x: 3, y: 1}],
-      [{x: 1, y: 2}, {x: 2, y: 2}, {x: 3, y: 2}]
+      [{_x: 1, _y: 0}, {_x: 2, _y: 0}, {_x: 3, _y: 0}],
+      [{_x: 1, _y: 1}, {_x: 2, _y: 1}, {_x: 3, _y: 1}],
+      [{_x: 1, _y: 2}, {_x: 2, _y: 2}, {_x: 3, _y: 2}]
     ];
 
     it("calculates a domain from categories for the independent axis", () => {

@@ -39,8 +39,8 @@ export default class Curve extends React.Component {
     const yScale = scale.y;
     const lineFunction = d3Shape.line()
       .curve(d3Shape[this.toNewName(interpolation)])
-      .x((d) => xScale(d.x1 || d.x))
-      .y((d) => yScale(d.y1 || d.y));
+      .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
+      .y((d) => yScale(d._y1 !== undefined ? d._y1 : d._y));
     return {
       style: Helpers.evaluateStyle(
         assign({fill: "none", stroke: "black"}, style), data, active

@@ -129,12 +129,12 @@ describe("helpers/data", () => {
     });
 
     it("formats a single dataset", () => {
-      const dataset = [{x: 1, y: 3}, {x: 2, y: 5}];
-      const props = {};
+      const dataset = [{_x: 1, _y: 3}, {_x: 2, _y: 5}];
+      const props = {data: dataset, x: "_x", y: "_y"};
       const formatted = Data.formatData(dataset, props);
       expect(Data.cleanData).called.and.returned(dataset);
       expect(formatted).to.be.an.array;
-      expect(formatted[0]).to.have.keys(["x", "y"]);
+      expect(formatted[0]).to.have.keys(["_x", "_y"]);
     });
   });
 
@@ -155,10 +155,12 @@ describe("helpers/data", () => {
       const data = [{x: "kittens", y: 3}, {x: "cats", y: 5}];
       const props = {data, x: "x", y: "y"};
       const expectedReturn = [
-        {x: 1, xName: "kittens", y: 3}, {x: 2, xName: "cats", y: 5}
+        {_x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3},
+        {_x: 2, x: "cats", xName: "cats", _y: 5, y: 5}
       ];
       const expectedReturnWithEventKeys = [
-        {x: 1, xName: "kittens", y: 3, eventKey: 0}, {x: 2, xName: "cats", y: 5, eventKey: 1}
+         {_x: 1, x: "kittens", xName: "kittens", _y: 3, y: 3, eventKey: 0},
+         {_x: 2, x: "cats", xName: "cats", _y: 5, y: 5, eventKey: 1}
       ];
       const returnData = Data.getData(props);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
@@ -167,26 +169,32 @@ describe("helpers/data", () => {
     });
 
     it("generates a dataset from domain", () => {
-      const expectedReturn = [{x: 0, y: 0}, {x: 10, y: 10}];
+      const generatedReturn = [{x: 0, y: 0}, {x: 10, y: 10}];
+      const expectedReturn = [{_x: 0, x: 0, _y: 0, y: 0}, {_x: 10, x: 10, _y: 10, y: 10}];
       const expectedReturnWithEventKeys = [
-        {x: 0, y: 0, eventKey: 0}, {x: 10, y: 10, eventKey: 1}
+        {_x: 0, x: 0, _y: 0, y: 0, eventKey: 0}, {_x: 10, x: 10, _y: 10, y: 10, eventKey: 1}
       ];
       const props = {x: "x", y: "y", domain: {x: [0, 10], y: [0, 10]}};
       const returnData = Data.getData(props);
-      expect(Data.generateData).calledOnce.and.returned(expectedReturn);
+      expect(Data.generateData).calledOnce.and.returned(generatedReturn);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
       expect(Data.addEventKeys).calledOnce.and.returned(expectedReturnWithEventKeys);
       expect(returnData).to.eql(expectedReturnWithEventKeys);
     });
 
     it("generates a dataset from domain and samples", () => {
-      const expectedReturn = [{x: 0, y: 0}, {x: 5, y: 5}, {x: 10, y: 10}];
+      const generatedReturn = [{x: 0, y: 0}, {x: 5, y: 5}, {x: 10, y: 10}];
+      const expectedReturn = [
+        {_x: 0, x: 0, _y: 0, y: 0}, {_x: 5, x: 5, _y: 5, y: 5}, {_x: 10, x: 10, _y: 10, y: 10}
+      ];
       const expectedReturnWithEventKeys = [
-        {x: 0, y: 0, eventKey: 0}, {x: 5, y: 5, eventKey: 1}, {x: 10, y: 10, eventKey: 2}
+        {_x: 0, x: 0, _y: 0, y: 0, eventKey: 0},
+        {_x: 5, x: 5, _y: 5, y: 5, eventKey: 1},
+        {_x: 10, x: 10, _y: 10, y: 10, eventKey: 2}
       ];
       const props = {x: "x", y: "y", domain: {x: [0, 10], y: [0, 10]}, samples: 2};
       const returnData = Data.getData(props);
-      expect(Data.generateData).calledOnce.and.returned(expectedReturn);
+      expect(Data.generateData).calledOnce.and.returned(generatedReturn);
       expect(Data.formatData).calledOnce.and.returned(expectedReturn);
       expect(Data.addEventKeys).calledOnce.and.returned(expectedReturnWithEventKeys);
       expect(returnData).to.eql(expectedReturnWithEventKeys);
