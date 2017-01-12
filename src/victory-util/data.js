@@ -65,7 +65,7 @@ export default {
    * @returns {Array} the formatted data
    */
   formatData(dataset, props, stringMap) {
-    if (!dataset) {
+    if (!Array.isArray(dataset)) {
       return [];
     }
     stringMap = stringMap || {
@@ -165,7 +165,7 @@ export default {
    * @returns {Array} an array of strings
    */
   getStringsFromData(props, axis) {
-    if (!props.data) {
+    if (!Array.isArray(props.data)) {
       return [];
     }
     const key = typeof props[axis] === "undefined" ? axis : props[axis];
