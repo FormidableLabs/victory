@@ -33,12 +33,12 @@ export default {
     const defaultMin = Scale.getType(scale.y) === "log" ?
       1 / Number.MAX_SAFE_INTEGER : 0;
 
-    const y0 = datum.y0 !== undefined ? datum.y0 : defaultMin;
+    const y0 = datum._y0 !== undefined ? datum._y0 : defaultMin;
     const formatValue = (value, axis) => {
       return datum[axis] instanceof Date ? new Date(value) : value;
     };
-    const x = datum.x1 !== undefined ? datum.x1 : datum.x;
-    const y1 = datum.y1 !== undefined ? datum.y1 : datum.y;
+    const x = datum._x1 !== undefined ? datum._x1 : datum._x;
+    const y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
     return {
       x: scale.x(formatValue(x, "x")),
       y0: scale.y(formatValue(y0, "y")),
@@ -67,7 +67,7 @@ export default {
   },
 
   getLabelAnchors(datum, horizontal) {
-    const sign = datum.y >= 0 ? 1 : -1;
+    const sign = datum._y >= 0 ? 1 : -1;
     if (!horizontal) {
       return {
         vertical: sign >= 0 ? "end" : "start",
@@ -83,7 +83,7 @@ export default {
 
   getlabelPadding(style, datum, horizontal) {
     const defaultPadding = style.padding || 0;
-    const sign = datum.y < 0 ? -1 : 1;
+    const sign = datum._y < 0 ? -1 : 1;
     return {
       x: horizontal ? sign * defaultPadding : 0,
       y: horizontal ? 0 : sign * defaultPadding

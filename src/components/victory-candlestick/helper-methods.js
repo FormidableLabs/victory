@@ -11,11 +11,11 @@ export default {
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
-      const x = scale.x(datum.x1 !== undefined ? datum.x1 : datum.x);
-      const y1 = scale.y(datum.high);
-      const y2 = scale.y(datum.low);
-      const candleHeight = Math.abs(scale.y(datum.open) - scale.y(datum.close));
-      const y = scale.y(Math.max(datum.open, datum.close));
+      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
+      const y1 = scale.y(datum._high);
+      const y2 = scale.y(datum._low);
+      const candleHeight = Math.abs(scale.y(datum._open) - scale.y(datum._close));
+      const y = scale.y(Math.max(datum._open, datum._close));
       const dataStyle = this.getDataStyles(datum, style.data, props);
       const dataProps = {
         x, y, y1, y2, candleHeight, scale, data, datum, groupComponent,
@@ -90,17 +90,17 @@ export default {
     };
     return props.data.map((datum, index) => {
       const evaluatedX = accessor.x(datum);
-      const x = evaluatedX !== undefined ? evaluatedX : index;
-      const open = accessor.open(datum);
-      const close = accessor.close(datum);
-      const high = accessor.high(datum);
-      const low = accessor.low(datum);
-      const y = [open, close, high, low];
+      const _x = evaluatedX !== undefined ? evaluatedX : index;
+      const _open = accessor.open(datum);
+      const _close = accessor.close(datum);
+      const _high = accessor.high(datum);
+      const _low = accessor.low(datum);
+      const _y = [_open, _close, _high, _low];
       return assign(
         {},
         datum,
-        {x, y, open, close, high, low},
-        typeof x === "string" ? { x: stringMap.x[x], xName: x } : {}
+        {_x, _y, _open, _close, _high, _low},
+        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
 
         );
     });
@@ -115,8 +115,8 @@ export default {
     } else {
       const dataset = this.getData(props);
       const allData = dataset.reduce((memo, datum) => {
-        return Array.isArray(datum[axis]) ?
-         memo.concat(...datum[axis]) : memo.concat(datum[axis]);
+        return Array.isArray(datum[`_${axis}`]) ?
+         memo.concat(...datum[`_${axis}`]) : memo.concat(datum[`_${axis}`]);
       },
       []);
 

@@ -79,7 +79,7 @@ export default class App extends React.Component {
   getBarTransitionData() {
     const bars = random(6, 10);
     return range(bars).map((bar) => {
-      return {x: bar + 1, y: random(2, 10)};
+      return {a: bar + 1, b: random(2, 10)};
     });
   }
 
@@ -246,6 +246,8 @@ export default class App extends React.Component {
             }
           }]}
           data={this.state.barTransitionData}
+          x="a"
+          y="b"
         />
         <VictoryStack
           style={{parent: parentStyle}}
