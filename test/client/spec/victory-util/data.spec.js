@@ -129,12 +129,12 @@ describe("helpers/data", () => {
     });
 
     it("formats a single dataset", () => {
-      const dataset = [{_x: 1, _y: 3}, {_x: 2, _y: 5}];
-      const props = {data: dataset, x: "_x", y: "_y"};
+      const dataset = [{_x: 1, _y: 3, x: 1, y: 3}, {_x: 2, _y: 5, x: 2, y: 5}];
+      const props = {data: dataset};
       const formatted = Data.formatData(dataset, props);
       expect(Data.cleanData).called.and.returned(dataset);
       expect(formatted).to.be.an.array;
-      expect(formatted[0]).to.have.keys(["_x", "_y"]);
+      expect(formatted[0]).to.have.keys(["_x", "_y", "x", "y"]);
     });
   });
 
