@@ -82,7 +82,7 @@ export default {
       const x = evaluatedX !== undefined ? evaluatedX : index;
       const y = evaluatedY !== undefined ? evaluatedY : datum;
       return assign(
-          {},
+          {x, y},
           datum,
           { _x: x, _y: y },
           // map string data to numeric values, and add names
