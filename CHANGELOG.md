@@ -1,8 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 12.0.2 (2017-01-14)
+
+- [188](https://github.com/FormidableLabs/victory-core/pull/188)
+- Retains "x" and "y" in addition to "_x" and "_y" in formatted data. See PR for rationale and details.
+
 ## 12.0.1 (2017-01-13)
 
+- [187](https://github.com/FormidableLabs/victory-core/pull/187)
 - Fix a bug in voronoi themes
 - Fix a bug in logic related to filtering data on selection.
 
