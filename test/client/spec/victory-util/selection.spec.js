@@ -77,7 +77,7 @@ describe("helpers/selection", () => {
 
     it("returns null when no datasets are within bounds", () => {
       const datasets = [
-        {childName: "a", data: [{eventKey: 0, x: 1, y: 3}, {eventKey: 1, x: 2, y: 5}]}
+        {childName: "a", data: [{eventKey: 0, _x: 1, _y: 3}, {eventKey: 1, _x: 2, _y: 5}]}
       ];
       const bounds = { x: [0, 1], y: [10, 15]};
       const filteredData = Selection.filterDatasets(datasets, bounds);
@@ -86,7 +86,7 @@ describe("helpers/selection", () => {
     });
 
     it("returns data points within bounds", () => {
-      const data = [{eventKey: 0, x: 1, y: 3}, {eventKey: 1, x: 2, y: 5}];
+      const data = [{eventKey: 0, _x: 1, _y: 3}, {eventKey: 1, _x: 2, _y: 5}];
       const childName = "a";
       const datasets = [{childName, data}];
       const bounds = {x: [0, 1], y: [0, 10]};

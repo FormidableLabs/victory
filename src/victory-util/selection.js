@@ -96,7 +96,7 @@ export default {
   getSelectedData(dataset, bounds) {
     const {x, y} = bounds;
     const withinBounds = (d) => {
-      return d.x >= x[0] && d.x <= x[1] && d.y >= y[0] && d.y <= y[1];
+      return d._x >= x[0] && d._x <= x[1] && d._y >= y[0] && d._y <= y[1];
     };
     const eventKey = [];
     const data = [];
