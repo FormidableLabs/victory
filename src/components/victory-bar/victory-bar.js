@@ -32,7 +32,7 @@ class VictoryBar extends React.Component {
     },
     onExit: {
       duration: 500,
-      before: () => ({ _y: 0, _y0: 0 })
+      before: () => ({ _y: 0, yOffset: 0 })
     },
     onEnter: {
       duration: 500,
