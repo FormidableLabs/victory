@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 12.0.1 (2017-01-13)
+
+- Fix a bug in voronoi themes
+- Fix a bug in logic related to filtering data on selection.
+
 ## 12.0.0 (2017-01-12)
 
 - [183](https://github.com/FormidableLabs/victory-core/pull/183) Adds `shouldComponentUpdate` logic to all primitive components
