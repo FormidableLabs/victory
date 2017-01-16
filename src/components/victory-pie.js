@@ -3,6 +3,7 @@ import { partialRight, assign } from "lodash";
 import {
   addEvents,
   Helpers,
+  Data,
   PropTypes as CustomPropTypes,
   Slice,
   VictoryContainer,
@@ -40,12 +41,12 @@ class VictoryPie extends React.Component {
   static defaultTransitions = {
     onExit: {
       duration: 500,
-      before: () => ({ y: 0, label: " " })
+      before: () => ({ _y: 0, label: " " })
     },
     onEnter: {
       duration: 500,
-      before: () => ({ y: 0, label: " " }),
-      after: (datum) => ({ y: datum.y, label: datum.label })
+      before: () => ({ _y: 0, label: " " }),
+      after: (datum) => ({ y_: datum._y, label: datum.label })
     }
   };
 
@@ -136,7 +137,7 @@ class VictoryPie extends React.Component {
   };
 
   static getBaseProps = partialRight(PieHelpers.getBaseProps.bind(PieHelpers), fallbackProps);
-
+  static getData = Data.getData.bind(Data);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
@@ -185,7 +186,7 @@ class VictoryPie extends React.Component {
 
     const { animate, standalone, width, height } = props;
     // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryBar` with nearly identical props, except (1) tweened
+    // a new `VictoryPie` with nearly identical props, except (1) tweened
     // and (2) `animate` set to null so we don't recurse forever.
     if (this.shouldAnimate()) {
       const whitelist = [

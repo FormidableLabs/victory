@@ -19,7 +19,7 @@ export default {
   getSliceStyle(datum, index, calculatedValues) {
     const { style, colors } = calculatedValues;
     const fill = this.getColor(style, colors, index);
-    const dataStyles = omit(datum, ["x", "y", "label"]);
+    const dataStyles = omit(datum, ["_x", "_y", "label"]);
     return defaults({}, {fill}, style.data, dataStyles);
   },
 
@@ -33,7 +33,7 @@ export default {
 
     for (let index = 0, len = slices.length; index < len; index++) {
       const slice = slices[index];
-      const datum = slice.data;
+      const datum = data[index];
       const eventKey = datum.eventKey || index;
       const dataProps = {
         index, slice, pathFunction, datum, data,
@@ -146,7 +146,7 @@ export default {
     } else if (Array.isArray(props.labels)) {
       text = props.labels[index];
     } else {
-      text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum.x;
+      text = isFunction(props.labels) ? props.labels(datum) : datum.xName || datum._x;
     }
     return this.checkForValidText(text);
   },
@@ -157,7 +157,7 @@ export default {
       .startAngle(this.degreesToRadians(props.startAngle))
       .endAngle(this.degreesToRadians(props.endAngle))
       .padAngle(this.degreesToRadians(props.padAngle))
-      .value((datum) => { return datum.y; });
+      .value((datum) => { return datum._y; });
     return layoutFunction(data);
   }
 };
