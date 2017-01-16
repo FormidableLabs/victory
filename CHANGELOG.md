@@ -1,5 +1,13 @@
 # VictoryPie Changelog
 
+## 10.0.0 (2017-01-16)
+
+- Uses "_x" and "_y" for internal data format rather than "x" and "y". Though "x" and "y" will
+still appear in the data object, they are no longer the source of truth for data values. This may be
+a breaking change for custom transitions, functional props, and functional styles.
+
+- Fixes functional style evaluation for enter and exit transitions
+
 ## 9.0.0 (2017-01-03)
 
 - Changes when functional styles and props are evaluated.
