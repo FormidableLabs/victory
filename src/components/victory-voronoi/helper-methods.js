@@ -13,8 +13,8 @@ export default {
       const datum = data[index];
       const polygon = without(polygons[index], "data");
       const eventKey = datum.eventKey;
-      const x = scale.x(datum.x1 || datum.x);
-      const y = scale.y(datum.y1 || datum.y);
+      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
+      const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
       const dataProps = {
         x, y, datum, data, index, scale, polygon,
         size: props.size,
@@ -74,14 +74,14 @@ export default {
     const minRange = [Math.min(...range.x), Math.min(...range.y)];
     const maxRange = [Math.max(...range.x), Math.max(...range.y)];
     return d3Voronoi()
-      .x((d) => scale.x(d.x1 || d.x))
-      .y((d) => scale.y(d.y1 || d.y))
+      .x((d) => scale.x(d._x1 !== undefined ? d._x1 : d._x))
+      .y((d) => scale.y(d._y1 !== undefined ? d._y1 : d._y))
       .extent([minRange, maxRange]);
   },
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
-      "x", "y", "name", "label"
+      "_x", "_y", "name", "label"
     ]);
     return defaults({}, stylesFromData, style);
   },

@@ -18,11 +18,11 @@ class PointedLine extends React.Component {
     const {index, data, scale} = props;
     return (data.map(
       (datum, pointIndex) => {
-        const {x, y} = datum;
+        const {_x, _y} = datum;
 
         const position = {
-          x: scale.x(x),
-          y: scale.y(y)
+          x: scale.x(_x),
+          y: scale.y(_y)
         };
 
         return (
@@ -113,24 +113,6 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryLine</h1>
 
-        <VictoryLine
-          style={{parent: parentStyle, data: this.state.style}}
-          data={this.state.transitionData}
-          animate={{duration: 800}}
-          containerComponent={
-            <VictoryContainer
-              title="Line Chart"
-              desc="This is a line chart for displaying data."
-            />
-          }
-        />
-
-        <VictoryLine
-          style={{parent: parentStyle, data: this.state.style}}
-          data={this.state.data}
-          label={"label\none"}
-          animate={{duration: 1500}}
-        />
 
         <VictoryLine
           style={{parent: parentStyle, data: {stroke: "blue"}}}
@@ -164,7 +146,6 @@ export default class App extends React.Component {
           }]}
           label={this.state.label}
           data={range(0, 100)}
-          x={null}
           y={(d) => d * d}
         />
 

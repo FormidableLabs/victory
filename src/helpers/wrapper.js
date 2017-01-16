@@ -310,14 +310,14 @@ export default {
 
   getY0(datum, index, calculatedProps) {
     const { datasets } = calculatedProps;
-    const y = datum.y;
+    const y = datum._y;
     const previousDataSets = datasets.slice(0, index);
     const previousPoints = previousDataSets.reduce((prev, dataset) => {
       return prev.concat(dataset
-        .filter((previousDatum) => datum.x instanceof Date
-          ? previousDatum.x.getTime() === datum.x.getTime()
-          : previousDatum.x === datum.x)
-        .map((previousDatum) => previousDatum.y || 0)
+        .filter((previousDatum) => datum._x instanceof Date
+          ? previousDatum._x.getTime() === datum._x.getTime()
+          : previousDatum._x === datum._x)
+        .map((previousDatum) => previousDatum._y || 0)
       );
     }, []);
     const y0 = previousPoints.length && previousPoints.reduce((memo, value) => {

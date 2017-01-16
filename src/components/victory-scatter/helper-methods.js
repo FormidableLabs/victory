@@ -12,8 +12,8 @@ export default {
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey;
-      const x = scale.x(datum.x1 || datum.x);
-      const y = scale.y(datum.y1 || datum.y);
+      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
+      const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
       const dataProps = {
         x, y, datum, data, index, scale,
         size: this.getSize(datum, props, calculatedValues),
@@ -71,7 +71,7 @@ export default {
 
   getDataStyles(datum, style) {
     const stylesFromData = omit(datum, [
-      "x", "y", "z", "size", "symbol", "name", "label", "eventKey"
+      "_x", "_y", "z", "size", "symbol", "name", "label", "eventKey"
     ]);
     return defaults({}, stylesFromData, style);
   },

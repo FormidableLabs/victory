@@ -168,9 +168,9 @@ export default class VictoryStack extends React.Component {
     return datasets[index].map((datum) => {
       const yOffset = Wrapper.getY0(datum, index, calculatedProps) || 0;
       return assign({}, datum, {
-        y0: datum.y instanceof Date ? yOffset && new Date(yOffset) || datum.y : yOffset,
-        y1: datum.y instanceof Date ? new Date(+datum.y + +yOffset) : datum.y + yOffset,
-        x1: datum.x instanceof Date ? new Date(+datum.x + +xOffset) : datum.x + xOffset
+        _y0: datum._y instanceof Date ? yOffset && new Date(yOffset) || datum._y : yOffset,
+        _y1: datum._y instanceof Date ? new Date(+datum._y + +yOffset) : datum._y + yOffset,
+        _x1: datum._x instanceof Date ? new Date(+datum._x + +xOffset) : datum._x + xOffset
       });
     });
   }

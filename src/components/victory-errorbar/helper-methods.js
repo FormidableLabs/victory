@@ -10,8 +10,8 @@ export default {
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
-      const x = scale.x(datum.x1 || datum.x);
-      const y = scale.y(datum.y1 || datum.y);
+      const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
+      const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
 
       const dataProps = {
         x, y, scale, datum, data, index, groupComponent, borderWidth,
@@ -80,9 +80,9 @@ export default {
     }
 
     return isArray(errors) ?
-      [ errors[0] === 0 ? false : scale[axis](errors[0] + datum[axis]),
-        errors[1] === 0 ? false : scale[axis](datum[axis] - errors[1]) ] :
-      [ scale[axis](errors + datum[axis]), scale[axis](datum[axis] - errors) ];
+      [ errors[0] === 0 ? false : scale[axis](errors[0] + datum[`_${axis}`]),
+        errors[1] === 0 ? false : scale[axis](datum[`_${axis}`] - errors[1]) ] :
+      [ scale[axis](errors + datum[`_${axis}`]), scale[axis](datum[`_${axis}`] - errors) ];
   },
 
   formatErrorData(dataset, props) {
@@ -110,18 +110,18 @@ export default {
     return dataset.map((datum, index) => {
       const evaluatedX = accessor.x(datum);
       const evaluatedY = accessor.y(datum);
-      const x = evaluatedX !== undefined ? evaluatedX : index;
-      const y = evaluatedY !== undefined ? evaluatedY : datum;
+      const _x = evaluatedX !== undefined ? evaluatedX : index;
+      const _y = evaluatedY !== undefined ? evaluatedY : datum;
       const errorX = replaceNegatives(accessor.errorX(datum));
       const errorY = replaceNegatives(accessor.errorY(datum));
 
       return assign(
         {},
         datum,
-        { x, y, errorX, errorY },
+        { _x, _y, errorX, errorY },
         // map string data to numeric values, and add names
-        typeof x === "string" ? { x: stringMap.x[x], xName: x } : {},
-        typeof y === "string" ? { y: stringMap.y[y], yName: y } : {}
+        typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
+        typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
       );
     });
   },
@@ -153,16 +153,16 @@ export default {
     } else if (currentAxis === "y") {
       error = "errorY";
     }
-    const axisData = flatten(dataset).map((datum) => datum[currentAxis]);
+    const axisData = flatten(dataset).map((datum) => datum[`_${currentAxis}`]);
     const errorData = flatten(flatten(dataset).map((datum) => {
       let errorMax;
       let errorMin;
       if (isArray(datum[error])) {
-        errorMax = datum[error][0] + datum[currentAxis];
-        errorMin = datum[currentAxis] - datum[error][1];
+        errorMax = datum[error][0] + datum[`_${currentAxis}`];
+        errorMin = datum[`_${currentAxis}`] - datum[error][1];
       } else {
-        errorMax = datum[error] + datum[currentAxis];
-        errorMin = datum[currentAxis] - datum[error];
+        errorMax = datum[error] + datum[`_${currentAxis}`];
+        errorMin = datum[`_${currentAxis}`] - datum[error];
       }
       return [errorMax, errorMin];
     }));

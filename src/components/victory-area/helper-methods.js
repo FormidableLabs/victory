@@ -39,9 +39,9 @@ export default {
 
     return {
       key: "area-label",
-      x: lastData ? scale.x(lastData.x) + labelPadding : 0,
-      y: lastData ? scale.y(lastData.y1) : 0,
-      y0: lastData ? scale.y(lastData.y0) : 0,
+      x: lastData ? scale.x(lastData._x) + labelPadding : 0,
+      y: lastData ? scale.y(lastData._y1) : 0,
+      y0: lastData ? scale.y(lastData._y0) : 0,
       style: calculatedStyle.labels,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
@@ -90,9 +90,9 @@ export default {
     const minY = Math.min(...domainY) > 0 ? Math.min(...domainY) : defaultMin;
 
     return data.map((datum) => {
-      const y1 = datum.y1 || datum.y;
-      const y0 = datum.y0 || minY;
-      return assign({}, datum, {y0, y1});
+      const _y1 = datum._y1 !== undefined ? datum._y1 : datum._y;
+      const _y0 = datum._y0 !== undefined ? datum._y0 : minY;
+      return assign({}, datum, {_y0, _y1});
     });
   }
 };

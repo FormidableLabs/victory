@@ -38,8 +38,8 @@ export default {
     const labelStyle = this.getLabelStyle(style.labels, dataStyle);
 
     return {
-      x: lastData ? scale.x(lastData.x1 || lastData.x) + (labelStyle.padding || 0) : 0,
-      y: lastData ? scale.y(lastData.y1 || lastData.y) : 0,
+      x: lastData ? scale.x(lastData._x1 || lastData._x) + (labelStyle.padding || 0) : 0,
+      y: lastData ? scale.y(lastData._y1 || lastData._y) : 0,
       style: labelStyle,
       textAnchor: labelStyle.textAnchor || "start",
       verticalAnchor: labelStyle.verticalAnchor || "middle",
@@ -95,13 +95,13 @@ export default {
   },
 
   getDataSegments(dataset, sortKey = "x") {
-    const orderedData = sortBy(dataset, sortKey);
+    const orderedData = sortBy(dataset, `_${sortKey}`);
     const segments = [];
     let segmentStartIndex = 0;
     let segmentIndex = 0;
     for (let index = 0, len = orderedData.length; index < len; index++) {
       const datum = orderedData[index];
-      if (datum.y === null || typeof datum.y === "undefined") {
+      if (datum._y === null || typeof datum._y === "undefined") {
         segments[segmentIndex] = orderedData.slice(segmentStartIndex, index);
         segmentIndex++;
         segmentStartIndex = index + 1;
