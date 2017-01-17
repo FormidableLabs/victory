@@ -114,7 +114,6 @@ export default class VictoryChart extends React.Component {
 
   componentWillMount() {
     this.events = Wrapper.getAllEvents(this.props);
-    this.getContainerRef = (component) => this.containerRef = component;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -246,7 +245,6 @@ export default class VictoryChart extends React.Component {
         domainPadding: child.props.domainPadding ||
           props.domainPadding || calculatedProps.defaultDomainPadding,
         padding: Helpers.getPadding(props),
-        ref: index,
         key: index,
         theme: props.theme,
         standalone: false,
@@ -257,25 +255,21 @@ export default class VictoryChart extends React.Component {
     return newChildren;
   }
 
-  getSvgBounds() {
-    return this.containerRef.svgRef.getBoundingClientRect();
-  }
-
   getContainer(props, calculatedProps) {
     const { width, height, containerComponent } = props;
     const { scale, style } = calculatedProps;
     const parentProps = defaults(
       {},
       containerComponent.props,
-      {style: style.parent, scale, width, height, ref: this.getContainerRef}
+      {style: style.parent, scale, width, height}
     );
     return React.cloneElement(containerComponent, parentProps);
   }
 
-  renderGroup(children, style) {
+  renderGroup(children, style, scale) {
     return React.cloneElement(
       this.props.groupComponent,
-      { role: "presentation", style},
+      { role: "presentation", style, scale, standalone: false},
       children
     );
   }
@@ -292,7 +286,7 @@ export default class VictoryChart extends React.Component {
     if (this.props.modifyChildren) {
       newChildren = this.props.modifyChildren(newChildren, modifiedProps);
     }
-    const group = this.renderGroup(newChildren, calculatedProps.style.parent);
+    const group = this.renderGroup(newChildren, calculatedProps.style.parent, calculatedProps.scale);
     const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
     if (this.events) {
       return (

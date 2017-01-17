@@ -80,11 +80,14 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryZoom</h1>
 
+                  <svg width={350} height={300}>
+
         <VictoryZoom>
-          <VictoryGroup style={{parent: parentStyle}} data={this.state.transitionData}>
+          <VictoryGroup standalone={false} style={{parent: parentStyle}} data={this.state.transitionData}>
             <VictoryLine style={{data: this.state.style}} />
           </VictoryGroup>
         </VictoryZoom>
+                  </svg>
 
         <VictoryZoom>
           <VictoryChart style={{parent: parentStyle}}

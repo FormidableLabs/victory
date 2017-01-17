@@ -1,17 +1,16 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
-import { isFunction, assign, omit } from "lodash";
+import { isFunction } from "lodash";
 
 
-export default class VictorySelectionContainer extends VictoryContainer {
+export default class VictoryBrushContainer extends VictoryContainer {
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,
     onSelection: React.PropTypes.func,
     onSelectionCleared: React.PropTypes.func,
-    dimension: React.PropTypes.oneOf(["x", "y"]),
-    standalone: React.PropTypes.bool
+    dimension: React.PropTypes.oneOf(["x", "y"])
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
@@ -19,8 +18,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
       stroke: "black",
       fill: "black",
       fillOpacity: 0.2
-    },
-    standalone: true
+    }
   };
 
   static defaultEvents = [{
@@ -43,11 +41,6 @@ export default class VictorySelectionContainer extends VictoryContainer {
             mutation: () => {
               return {x1, y1, select: true, x2, y2};
             }
-          }, {
-            target: "data",
-            childName: targetProps.children ? "all" : undefined,
-            eventKey: "all",
-            mutation: () => null
           }
         ];
       },
@@ -72,27 +65,12 @@ export default class VictorySelectionContainer extends VictoryContainer {
         const parentMutation = [{
           target: "parent",
           mutation: () => {
-            return { select: false, x1: null, x2: null, y1: null, y2: null, foo: "bar" };
+            return { select: false, x1: null, x2: null, y1: null, y2: null };
           }
         }];
         if (!x2 || !y2) {
           return parentMutation;
         }
-        const bounds = Selection.getBounds(targetProps);
-        const datasets = Selection.getDatasets(targetProps);
-        const selectedData = Selection.filterDatasets(datasets, bounds);
-        const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
-          targetProps.onSelection(selectedData, bounds) : {};
-        const dataMutation = selectedData ?
-          selectedData.map((d) => {
-            return {
-              childName: d.childName, eventKey: d.eventKey, target: "data",
-              mutation: () => {
-                return assign({active: true}, callbackMutation);
-              }
-            };
-          }) : [];
-        return parentMutation.concat(dataMutation);
       }
     }
   }];
@@ -107,22 +85,15 @@ export default class VictorySelectionContainer extends VictoryContainer {
       <rect x={x} y={y} width={width} height={height} style={selectionStyle}/> : null;
   }
   renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent, className, standalone } = props;
-    const containerProps = standalone ? svgProps : omit(svgProps, ["width", "height", "viewBox"]);
-    return standalone ?
-      (
-        <svg {...containerProps} style={style} className={className}>
-          <title id="title">{title}</title>
-          <desc id="desc">{desc}</desc>
-          {this.getRect(props)}
-          {children}
-          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-        </svg>
-      ) : (
-        <g {...containerProps} style={style} className={className}>
-          {this.getRect(props)}
-          {children}
-        </g>
-      );
+    const { title, desc, children, portalComponent, className } = props;
+    return (
+      <g {...svgProps} style={style} className={className}>
+        <title id="title">{title}</title>
+        <desc id="desc">{desc}</desc>
+        {this.getRect(props)}
+        {children}
+        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+      </g>
+    );
   }
 }

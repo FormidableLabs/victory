@@ -3,7 +3,7 @@ import { assign, isEqual } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
 import {
-  VictoryClipContainer, Helpers, PropTypes as CustomPropTypes, Timer, Selection
+  VictoryContainer, VictoryClipContainer, Helpers, PropTypes as CustomPropTypes, Timer
 } from "victory-core";
 
 const fallbackProps = {
@@ -12,9 +12,9 @@ const fallbackProps = {
   padding: 50
 };
 
-class VictoryZoom extends Component {
-  static displayName = "VictoryZoom";
-  static role = "zoom";
+class VictoryBrush extends Component {
+  static displayName = "VictoryBrush";
+  static role = "brush";
 
   static propTypes = {
     children: PropTypes.node,
@@ -24,16 +24,21 @@ class VictoryZoom extends Component {
     }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired,
-    allowZoom: PropTypes.bool
-  }
-
-  static childContextTypes = {
-    getTimer: React.PropTypes.func
+    allowZoom: PropTypes.bool,
+    miniMapComponent: PropTypes.element,
+    miniMapGroupComponent: PropTypes.element,
+    groupComponent: PropTypes.element,
+    containerComponent: PropTypes.element
   }
 
   static defaultProps = {
     clipContainerComponent: <VictoryClipContainer/>,
+    containerComponent: <VictoryContainer/>,
     allowZoom: true
+  }
+
+  static childContextTypes = {
+    getTimer: React.PropTypes.func
   }
 
   constructor(props) {
@@ -44,14 +49,15 @@ class VictoryZoom extends Component {
       Helpers.modifyProps(chart.props, {}, "chart"), // TODO: Don't presume chart role
       "x"
     );
-
+    const originalDomain = this.getDataDomain();
     this.plottableWidth = rangex0 - rangex1;
     this.width = chart.props.width || fallbackProps.width;
-    this.state = { domain: props.zoomDomain || this.getDataDomain() };
+    this.state = { originalDomain, domain: props.zoomDomain || originalDomain };
 
     this.events = this.getEvents(props.allowZoom);
     this.clipDataComponents = this.clipDataComponents.bind(this);
     this.getTimer = this.getTimer.bind(this);
+    this.miniMapEvents = this.getMiniMapEvents();
   }
 
   getChildContext() {
@@ -65,6 +71,11 @@ class VictoryZoom extends Component {
       this.timer = new Timer();
     }
     return this.timer;
+  }
+
+  componentWillMount() {
+    this.getChartRef = (chart) => { this.chartRef = chart; };
+    this.getMiniMaptRef = (miniMap) => { this.miniMapRef = miniMap; };
   }
 
  componentWillUnmount() {
@@ -87,33 +98,28 @@ class VictoryZoom extends Component {
     const chartChildren = React.Children.toArray(chart);
 
     return {
-      x: ChartHelpers.getDomain(chart.props, "x", chartChildren)
+      x: ChartHelpers.getDomain(chart.props, "x", chartChildren),
+      y: ChartHelpers.getDomain(chart.props, "y", chartChildren)
     };
   }
 
   getEvents(allowZoom) {
     const standardEvents = {
       onMouseDown: (evt) => {
-        const svg = this.svg || Selection.getParentSVG(evt.target);
-        this.svg = svg;
-        const matrix = this.matrix || Selection.getTransformationMatrix(svg);
-        this.matrix = matrix;
+        this.targetBounds = this.chartRef.getSvgBounds();
+        const x = evt.clientX - this.targetBounds.left;
         this.isPanning = true;
-        this.startX = Selection.transformTarget(evt.clientX, this.matrix, "x");
+        this.startX = x;
         this.lastDomain = this.state.domain;
       },
       onMouseUp: () => { this.isPanning = false; },
       onMouseLeave: () => { this.isPanning = false; },
       onMouseMove: (evt) => {
-        const svg = this.svg || Selection.getParentSVG(evt.target);
-        this.svg = svg;
-        const matrix = this.matrix || Selection.getTransformationMatrix(svg);
-        this.matrix = matrix;
         const clientX = evt.clientX;
         if (this.isPanning) {
           requestAnimationFrame(() => { // eslint-disable-line no-undef
             const domain = this.getDataDomain();
-            const delta = this.startX - Selection.transformTarget(clientX, this.matrix, "x");
+            const delta = this.startX - (clientX - this.targetBounds.left);
             const calculatedDx = delta / this.getDomainScale();
             const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, domain.x, calculatedDx);
             this.setDomain({x: nextXDomain});
@@ -143,6 +149,39 @@ class VictoryZoom extends Component {
     }];
   }
 
+  getMiniMapEvents() {
+    const standardEvents = {
+      onMouseDown: (evt) => {
+        this.targetBounds = this.chartRef.getSvgBounds();
+        const x = evt.clientX - this.targetBounds.left;
+        this.isPanning = true;
+        this.startX = x;
+        this.lastDomain = this.state.domain;
+      },
+      onMouseUp: () => { this.isPanning = false; },
+      onMouseLeave: () => { this.isPanning = false; },
+      onMouseMove: (evt) => {
+        const clientX = evt.clientX;
+        if (this.isPanning) {
+          requestAnimationFrame(() => { // eslint-disable-line no-undef
+            const domain = this.getDataDomain();
+            const delta = this.startX - (clientX - this.targetBounds.left);
+            const calculatedDx = delta / this.getDomainScale();
+            const nextXDomain = ZoomHelpers.pan(this.lastDomain.x, domain.x, calculatedDx);
+            this.setDomain({x: nextXDomain});
+            this.setState({domain: {x: nextXDomain}});
+          });
+        }
+      }
+    };
+
+
+    return [{
+      target: "parent",
+      eventHandlers: standardEvents
+    }];
+  }
+
   setDomain(domain) {
     const {onDomainChange} = this.props;
     this.getTimer().bypassAnimation();
@@ -152,7 +191,9 @@ class VictoryZoom extends Component {
 
   getDomainScale() {
     const {x: [from, to]} = this.lastDomain;
-    return this.plottableWidth / (to - from);
+    const ratio = this.targetBounds.width / this.width;
+    const absoluteAxisWidth = ratio * this.plottableWidth;
+    return absoluteAxisWidth / (to - from);
   }
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
@@ -194,24 +235,45 @@ class VictoryZoom extends Component {
     return childComponents;
   }
 
-  renderChart(chartElement, props) {
-    return React.cloneElement(chartElement, props);
-  }
-
-  render() {
-    const chart = React.Children.only(this.props.children);
+  renderChart(props) {
+    const chart = React.Children.only(props.children);
     const events = chart.props.events
       ? (this.events || []).concat(chart.props.events)
       : this.events;
 
     const nextProps = assign({}, chart.props, {
       events,
+      standalone: false,
       domain: this.state.domain,
+      ref: this.getChartRef,
       modifyChildren: this.clipDataComponents
     });
 
-    return this.renderChart(chart, nextProps);
+    return React.cloneElement(chart, nextProps);
+  }
+
+  renderMiniMap(props) {
+    const chart = React.Children.only(props.children);
+    const events = chart.props.events
+      ? (this.events || []).concat(chart.props.events)
+      : this.events;
+
+    const nextProps = assign({}, chart.props, {
+      events,
+      groupContainer: props.groupContainer,
+      standalone: false,
+      domain: this.state.originalDomain,
+      ref: this.getChartRef,
+      modifyChildren: this.clipDataComponents
+    });
+
+    return React.cloneElement(chart, nextProps);
+  }
+
+  render() {
+    const chart = this.renderChart(this.props);
+    const miniMap = this.renderMiniMap(this.props);
   }
 
 }
-export default VictoryZoom;
+export default VictoryBrush;

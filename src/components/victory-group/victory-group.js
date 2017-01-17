@@ -138,7 +138,6 @@ export default class VictoryGroup extends React.Component {
   }
 
   componentWillMount() {
-    this.getContainerRef = (component) => this.containerRef = component;
     this.events = Wrapper.getAllEvents(this.props);
   }
 
@@ -282,13 +281,9 @@ export default class VictoryGroup extends React.Component {
     const parentProps = defaults(
       {},
       containerComponent.props,
-      {style: style.parent, scale, width, height, ref: this.getContainerRef}
+      {style: style.parent, scale, width, height}
     );
     return React.cloneElement(containerComponent, parentProps);
-  }
-
-  getSvgBounds() {
-    return this.containerRef.svgRef.getBoundingClientRect();
   }
 
   renderGroup(children, style) {
