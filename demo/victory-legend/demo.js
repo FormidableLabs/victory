@@ -1,71 +1,53 @@
 import React from "react";
 import { VictoryLegend } from "../../src/index";
 
-export default class App extends React.Component {
-  render() {
-    const svgStyle = { border: "1px solid #ccc", padding: 20 };
-    const legendSize = {
-      width: 500,
-      height: 300
-    };
-    const data = [{
-      name: "Series 1",
-      label: {
-        fontSize: 10
-      },
-      symbol: {
-        type: "circle"
-      }
-    }, {
-      name: "Long Series Name",
-      label: {
-        fontSize: 12
-      },
-      symbol: {
-        type: "triangleUp",
-        style: {
-          fill: "blue"
-        }
-      }
-    }, {
-      name: "Series 3",
-      label: {
-        fontSize: 14
-      },
-      symbol: {
-        type: "diamond",
-        style: {
-          fill: "pink"
-        }
-      }
-    }, {
-      name: "Series 4",
-      label: {
-        fontSize: 16
-      },
-      symbol: {
-        type: "plus"
-      }
-    }, {
-      name: "Series 5",
-      label: {
-        fontSize: 18
-      },
-      symbol: {
-        type: "star",
-        style: {
-          fill: "red"
-        }
-      }
-    }];
-
-    return (
-      <div className="demo">
-        <VictoryLegend {...legendSize} data={data} style={svgStyle} />
-        <svg {...legendSize} style={svgStyle}>
-          <VictoryLegend {...legendSize} orientation="horizontal" data={data} standalone={false}/>
-        </svg>
-      </div>
-    );
+const svgStyle = { border: "1px solid #ccc" };
+const data = [{
+  name: "Series 1",
+  symbol: {
+    type: "circle",
+    fill: "green"
   }
-}
+}, {
+  name: "Long Series Name",
+  symbol: {
+    type: "triangleUp",
+    fill: "blue"
+  }
+}, {
+  name: "Series 3",
+  symbol: {
+    type: "diamond",
+    fill: "pink"
+  }
+}, {
+  name: "Series 4",
+  symbol: { type: "plus" }
+}, {
+  name: "Series 5",
+  symbol: {
+    type: "star",
+    fill: "red"
+  }
+}];
+
+const App = () => (
+  <div className="demo">
+    <VictoryLegend data={data} />
+    <svg
+      height={56}
+      width={525}
+      style={svgStyle}
+    >
+      <VictoryLegend
+        standalone
+        data={data}
+        padding={20}
+        orientation="horizontal"
+        style={{ label: { fill: "#ccc" }}}
+      />
+    </svg>
+  </div>
+);
+
+export default App;
