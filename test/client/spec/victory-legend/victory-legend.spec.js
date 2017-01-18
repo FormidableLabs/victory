@@ -17,106 +17,94 @@ const initialData = [{
   },
   symbol: {
     type: "triangleUp",
-    style: {
-      fill: "blue"
-    }
+    fill: "blue"
   }
 }];
 
 describe("components/victory-legend", () => {
-  let wrapper = shallow(
-    <VictoryLegend data={initialData} />
-  );
+  let wrapper = shallow(<VictoryLegend data={initialData} />);
 
   it("has expected content with shallow render", () => {
     const output = wrapper.find("VictoryLabel");
-    expect(output.length).to.be.equal(2);
+    expect(output.length).to.equal(2);
   });
 
   it("has expected horizontal symbol position", () => {
     const wrappedLegend = shallow(<VictoryLegend data={initialData} orientation="horizontal" />);
     const output = wrappedLegend.find("Point");
 
-    expect(output.at(0).prop("x")).to.be.equal(0);
-    expect(output.at(1).prop("x")).to.be.equal(87.68016194331983);
-    expect(output.at(0).prop("y")).to.be.equal(0);
-    expect(output.at(1).prop("y")).to.be.equal(0);
+    expect(output.at(0).prop("x")).to.equal(7);
+    expect(output.at(1).prop("x")).to.equal(95.68016194331983);
+    expect(output.at(0).prop("y")).to.equal(7);
+    expect(output.at(1).prop("y")).to.equal(7);
   });
 
   it("has expected vertical symbol position", () => {
     const wrappedLegend = shallow(<VictoryLegend data={initialData} orientation="vertical" />);
     const output = wrappedLegend.find("Point");
 
-    expect(output.at(0).prop("x")).to.be.equal(0);
-    expect(output.at(1).prop("x")).to.be.equal(0);
-    expect(output.at(0).prop("y")).to.be.equal(0);
-    expect(output.at(1).prop("y")).to.be.equal(22);
+    expect(output.at(0).prop("x")).to.equal(7);
+    expect(output.at(1).prop("x")).to.equal(7);
+    expect(output.at(0).prop("y")).to.equal(7);
+    expect(output.at(1).prop("y")).to.equal(31);
   });
 
   it("has expected horizontal legend labels position", () => {
     const wrappedLegend = render(<VictoryLegend data={initialData} orientation="horizontal" />);
     const output = wrappedLegend.find("text");
 
-    expect(output.eq(0).prop("x")).to.be.equal("12.18");
-    expect(output.eq(1).prop("x")).to.be.equal("99.86016194331984");
-
-    expect(output.eq(0).prop("y")).to.be.equal("0");
-    expect(output.eq(1).prop("y")).to.be.equal("0");
+    expect(output.eq(0).prop("x")).to.equal("22");
+    expect(output.eq(1).prop("x")).to.equal("110.68016194331983");
+    expect(output.eq(0).prop("y")).to.equal("7");
+    expect(output.eq(1).prop("y")).to.equal("7");
   });
 
   it("has expected vertical legend labels position", () => {
     const wrappedLegend = render(<VictoryLegend data={initialData} orientation="vertical" />);
     const output = wrappedLegend.find("text");
-    expect(output.eq(0).prop("x")).to.be.equal("12.18");
-    expect(output.eq(1).prop("x")).to.be.equal("12.18");
 
-    expect(output.eq(0).prop("y")).to.be.equal("0");
-    expect(output.eq(1).prop("y")).to.be.equal("22");
+    expect(output.eq(0).prop("x")).to.equal("22");
+    expect(output.eq(1).prop("x")).to.equal("22");
+    expect(output.eq(0).prop("y")).to.equal("7");
+    expect(output.eq(1).prop("y")).to.equal("31");
   });
 
   describe("symbols", () => {
     const legendData = [{
-      name: "Seria 1",
+      name: "Series 1",
       label: {
         fontSize: 10
       },
       symbol: {
         type: "circle",
-        style: {
-          fill: "red"
-        }
+        fill: "red"
       }
     }, {
-      name: "Long Seria Name",
+      name: "Long Series Name",
       label: {
         fontSize: 12
       },
       symbol: {
         type: "triangleUp",
-        style: {
-          fill: "blue"
-        }
+        fill: "blue"
       }
     }];
 
-    wrapper = shallow(
-      <VictoryLegend data={legendData} />
-    );
-
+    wrapper = shallow(<VictoryLegend data={legendData} />);
     const output = wrapper.find("Point");
 
     it("has expected symbols length", () => {
-      expect(output.length).to.be.equal(2);
+      expect(output.length).to.equal(2);
     });
 
     it("has expected symbol colors", () => {
-      expect(output.get(0).props.style.fill).to.be.equal("red");
-      expect(output.get(1).props.style.fill).to.be.equal("blue");
+      expect(output.get(0).props.style.fill).to.equal("red");
+      expect(output.get(1).props.style.fill).to.equal("blue");
     });
 
     it("has expected symbol type", () => {
-      expect(output.get(0).props.symbol).to.be.equal("circle");
-      expect(output.get(1).props.symbol).to.be.equal("triangleUp");
+      expect(output.get(0).props.symbol).to.equal("circle");
+      expect(output.get(1).props.symbol).to.equal("triangleUp");
     });
   });
 
@@ -132,30 +120,28 @@ describe("components/victory-legend", () => {
         type: "triangleUp",
         fill: "green"
       },
-      labels: {
+      label: {
         fontSize: 16
       }
     };
 
-    wrapper = shallow(
-      <VictoryLegend data={legendData} style={styleObject} />
-    );
+    wrapper = shallow(<VictoryLegend data={legendData} style={styleObject} />);
     const outputPoints = wrapper.find("Point");
     const outputLabels = wrapper.find("VictoryLabel");
 
     it("has expected symbol type", () => {
-      expect(outputPoints.at(0).prop("type")).to.be.equal("triangleUp");
-      expect(outputPoints.at(1).prop("type")).to.be.equal("triangleUp");
+      expect(outputPoints.at(0).prop("symbol")).to.equal("triangleUp");
+      expect(outputPoints.at(1).prop("symbol")).to.equal("triangleUp");
     });
 
     it("has expected symbol colors", () => {
-      expect(outputPoints.at(0).prop("fill")).to.be.equal("green");
-      expect(outputPoints.at(1).prop("fill")).to.be.equal("green");
+      expect(outputPoints.get(0).props.style.fill).to.equal("green");
+      expect(outputPoints.get(1).props.style.fill).to.equal("green");
     });
 
     it("has expected symbol colors", () => {
-      expect(outputLabels.at(0).prop("color")).to.be.equal("#252525");
-      expect(outputLabels.at(1).prop("color")).to.be.equal("#252525");
+      expect(outputLabels.get(0).props.style.color).to.equal("#252525");
+      expect(outputLabels.get(1).props.style.color).to.equal("#252525");
     });
   });
 });
