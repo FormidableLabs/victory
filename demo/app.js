@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import AnimationDemo from "./victory-animation-demo";
 import LabelDemo from "./victory-label-demo";
-import LegendDemo from "./victory-legend/demo";
+import LegendDemo from "./victory-legend-demo";
 import TooltipDemo from "./victory-tooltip-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
 

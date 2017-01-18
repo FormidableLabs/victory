@@ -1,5 +1,5 @@
 import React from "react";
-import { VictoryLegend } from "../../src/index";
+import { VictoryLegend } from "../src/index";
 
 const svgStyle = { border: "1px solid #ccc" };
 const data = [{
@@ -31,7 +31,7 @@ const data = [{
   }
 }];
 
-const App = () => (
+const LegendDemo = () => (
   <div className="demo">
     <VictoryLegend data={data} />
     <svg
@@ -50,4 +50,4 @@ const App = () => (
   </div>
 );
 
-export default App;
+export default LegendDemo;
