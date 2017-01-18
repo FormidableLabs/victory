@@ -55,11 +55,12 @@ export default class VictoryLegend extends React.Component {
         symbol: PropTypes.object
       })
     ),
+    containerComponent: PropTypes.element,
     dataComponent: PropTypes.element,
+    groupComponent: PropTypes.element,
     labelComponent: PropTypes.element,
     symbolSpacer: PropTypes.number,
     gutter: PropTypes.number,
-    groupComponent: PropTypes.element,
     standalone: PropTypes.bool,
     style: PropTypes.shape({
       symbol: PropTypes.object,
@@ -92,7 +93,7 @@ export default class VictoryLegend extends React.Component {
   }
 
   calculateLegendHeight(props, textSizes, padding) {
-    const { orientation, data, gutter, height } = props;
+    const { data, gutter, height, orientation } = props;
 
     if (!height) {
       const contentHeight = orientation === "horizontal"
@@ -105,7 +106,7 @@ export default class VictoryLegend extends React.Component {
   }
 
   calculateLegendWidth(props, textSizes, padding) {
-    const { gutter, orientation, data, symbolSpacer, width } = props;
+    const { data, gutter, orientation, symbolSpacer, width } = props;
 
     if (!width) {
       const contentWidth = orientation === "horizontal"
@@ -122,6 +123,7 @@ export default class VictoryLegend extends React.Component {
   }
 
   getLegendState(props) {
+    const padding = Helpers.getPadding(props);
     const symbolStyles = [];
     const labelStyles = [];
     let leftOffset = 0;
@@ -138,7 +140,6 @@ export default class VictoryLegend extends React.Component {
       return textSize;
     });
 
-    const padding = Helpers.getPadding(props);
     const height = this.calculateLegendHeight(props, textSizes, padding);
     const width = this.calculateLegendWidth(props, textSizes, padding);
 
@@ -197,15 +198,17 @@ export default class VictoryLegend extends React.Component {
     };
   }
 
-  renderLegendItems(data) {
-    const { dataComponent, labelComponent, orientation } = this.props;
+  renderLegendItems() {
+    const { data, dataComponent, labelComponent, orientation } = this.props;
+    const legendData = isEmpty(data) ? defaultLegendData : data;
     const isHorizontal = orientation === "horizontal";
-    const length = data.length;
+    const length = legendData.length;
     const dataComponents = [];
     const labelComponents = [];
 
     for (let i = 0; i < length; i++) {
-      const datum = data[i];
+      const datum = legendData[i];
+
       dataComponents[i] = React.cloneElement(
         dataComponent,
         this.getSymbolProps(datum, isHorizontal, i)
@@ -219,24 +222,20 @@ export default class VictoryLegend extends React.Component {
     return [...dataComponents, ...labelComponents];
   }
 
-  renderGroup(props, children) {
+  renderGroup(children) {
+    const { groupComponent, standalone, x, y } = this.props;
     const { height, width } = this.state;
-    const { groupComponent, x, y } = props;
     const groupProps = { role: "presentation" };
 
-    if (!props.standalone) {
+    if (!standalone) {
       Object.assign(groupProps, { height, width, x, y });
     }
 
-    return React.cloneElement(
-      groupComponent,
-      groupProps,
-      children
-    );
+    return React.cloneElement(groupComponent, groupProps, children);
   }
 
-  renderContainer(props, children) {
-    const { containerComponent, x, y, style } = props;
+  renderContainer(children) {
+    const { containerComponent, x, y, style } = this.props;
     const { height, width } = this.state;
 
     return React.cloneElement(
@@ -247,10 +246,7 @@ export default class VictoryLegend extends React.Component {
   }
 
   render() {
-    const { data, standalone } = this.props;
-    const legendData = isEmpty(data) ? defaultLegendData : data;
-    const group = this.renderGroup(this.props, this.renderLegendItems(legendData));
-
-    return standalone ? this.renderContainer(this.props, group) : group;
+    const group = this.renderGroup(this.renderLegendItems());
+    return this.props.standalone ? this.renderContainer(group) : group;
   }
 }
