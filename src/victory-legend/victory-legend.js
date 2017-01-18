@@ -91,32 +91,6 @@ export default class VictoryLegend extends React.Component {
     this.setState(this.getLegendState(nextProps));
   }
 
-  getLegendState(props) {
-    const symbolStyles = [];
-    const labelStyles = [];
-
-    const textSizes = props.data.map((datum, i) => {
-      const styles = this.getComponentStyles(datum, "label");
-      symbolStyles[i] = this.getComponentStyles(datum, "symbol");
-      labelStyles[i] = styles;
-      return TextSize.approximateTextSize(datum.name, styles);
-    });
-
-    const padding = Helpers.getPadding(props);
-    const height = this.calculateLegendHeight(props, textSizes, padding);
-    const width = this.calculateLegendWidth(props, textSizes, padding);
-
-    return { padding, textSizes, height, width, labelStyles, symbolStyles };
-  }
-
-  getSymbolSize(datum, fontSize) {
-    return datum.symbol && datum.symbol.size ? datum.symbol.size : fontSize / 2.5;
-  }
-
-  getComponentStyles(datum, key) {
-    return merge({}, defaultStyles[key], this.props.style[key], datum[key]);
-  }
-
   calculateLegendHeight(props, textSizes, padding) {
     const { orientation, data, gutter, height } = props;
 
@@ -143,31 +117,30 @@ export default class VictoryLegend extends React.Component {
     return width;
   }
 
-  renderContainer(props, children) {
-    const { containerComponent, x, y, style } = props;
-    const { height, width } = this.state;
-
-    return React.cloneElement(
-      containerComponent,
-      { x, y, height, width, style: defaults({}, style) },
-      children
-    );
+  getComponentStyles(datum, key) {
+    return merge({}, defaultStyles[key], this.props.style[key], datum[key]);
   }
 
-  renderGroup(props, children) {
-    const { height, width } = this.state;
-    const { groupComponent, x, y } = props;
-    const groupProps = { role: "presentation" };
+  getLegendState(props) {
+    const symbolStyles = [];
+    const labelStyles = [];
 
-    if (!props.standalone) {
-      Object.assign(groupProps, { height, width, x, y });
-    }
+    const textSizes = props.data.map((datum, i) => {
+      const styles = this.getComponentStyles(datum, "label");
+      symbolStyles[i] = this.getComponentStyles(datum, "symbol");
+      labelStyles[i] = styles;
+      return TextSize.approximateTextSize(datum.name, styles);
+    });
 
-    return React.cloneElement(
-      groupComponent,
-      groupProps,
-      children
-    );
+    const padding = Helpers.getPadding(props);
+    const height = this.calculateLegendHeight(props, textSizes, padding);
+    const width = this.calculateLegendWidth(props, textSizes, padding);
+
+    return { padding, textSizes, height, width, labelStyles, symbolStyles };
+  }
+
+  getSymbolSize(datum, fontSize) {
+    return datum.symbol && datum.symbol.size ? datum.symbol.size : fontSize / 2.5;
   }
 
   getSymbolProps(datum, isHorizontal, i) {
@@ -239,6 +212,33 @@ export default class VictoryLegend extends React.Component {
     }
 
     return [...dataComponents, ...labelComponents];
+  }
+
+  renderGroup(props, children) {
+    const { height, width } = this.state;
+    const { groupComponent, x, y } = props;
+    const groupProps = { role: "presentation" };
+
+    if (!props.standalone) {
+      Object.assign(groupProps, { height, width, x, y });
+    }
+
+    return React.cloneElement(
+      groupComponent,
+      groupProps,
+      children
+    );
+  }
+
+  renderContainer(props, children) {
+    const { containerComponent, x, y, style } = props;
+    const { height, width } = this.state;
+
+    return React.cloneElement(
+      containerComponent,
+      { x, y, height, width, style: defaults({}, style) },
+      children
+    );
   }
 
   render() {
