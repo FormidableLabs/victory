@@ -124,12 +124,18 @@ export default class VictoryLegend extends React.Component {
   getLegendState(props) {
     const symbolStyles = [];
     const labelStyles = [];
+    let leftOffset = 0;
 
     const textSizes = props.data.map((datum, i) => {
       const styles = this.getComponentStyles(datum, "label");
       symbolStyles[i] = this.getComponentStyles(datum, "symbol");
       labelStyles[i] = styles;
-      return TextSize.approximateTextSize(datum.name, styles);
+
+      const textSize = TextSize.approximateTextSize(datum.name, styles);
+      textSize.leftOffset = leftOffset;
+      leftOffset += textSize.width;
+
+      return textSize;
     });
 
     const padding = Helpers.getPadding(props);
@@ -146,10 +152,10 @@ export default class VictoryLegend extends React.Component {
   getSymbolProps(datum, isHorizontal, i) {
     const { gutter, symbolSpacer } = this.props;
     const { padding, textSizes, labelStyles, symbolStyles } = this.state;
-    const style = symbolStyles[i];
+    const { leftOffset } = textSizes[i];
     const { fontSize } = labelStyles[i];
     const symbolShift = fontSize / 2;
-    const leftOffset = sumBy(textSizes.slice(0, i), "width");
+    const style = symbolStyles[i];
 
     const symbolCoords = isHorizontal ? {
       x: padding.left + leftOffset + symbolShift + (fontSize + symbolSpacer + gutter) * i,
@@ -174,10 +180,9 @@ export default class VictoryLegend extends React.Component {
     const style = labelStyles[i];
     const { fontSize } = style;
     const symbolShift = fontSize / 2;
-    const leftOffset = sumBy(textSizes.slice(0, i), "width");
 
     const labelCoords = isHorizontal ? {
-      x: padding.left + leftOffset + (fontSize + symbolSpacer) * (i + 1) + gutter * i,
+      x: padding.left + textSizes[i].leftOffset + (fontSize + symbolSpacer) * (i + 1) + gutter * i,
       y: padding.top + symbolShift
     } : {
       x: padding.left + fontSize + symbolSpacer,
