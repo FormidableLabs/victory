@@ -40,9 +40,9 @@ const App = () => (
       style={svgStyle}
     >
       <VictoryLegend
-        standalone
         data={data}
         padding={20}
+        standalone={false}
         orientation="horizontal"
         style={{ label: { fill: "#ccc" }}}
       />
