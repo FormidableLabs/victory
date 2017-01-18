@@ -63,22 +63,22 @@ const getFontCharacterConstant = (fontFamily) => {
 const splitToLines = (text) => text.toString().split(/\r\n|\r|\n/g);
 
 const getWidestString = (strings) => strings.reduce((max, elem) =>
-      max.length >= elem.length ? max : elem
-  );
+  max.length >= elem.length ? max : elem
+);
 
 const getSizeWithRotate = (axisSize, dependentSize, angle) => {
   const angleInRadian = degreeToRadian(angle);
   return Math.abs(Math.cos(angleInRadian) * axisSize)
-  + Math.abs(Math.sin(angleInRadian) * dependentSize);
+    + Math.abs(Math.sin(angleInRadian) * dependentSize);
 };
 
-const aproximateTextWidthInternal = (text, style) => {
+const approximateTextWidthInternal = (text, style) => {
   const strLength = getWidestString(splitToLines(text.toString())).length;
   return (strLength * style.fontSize / style.characterConstant)
-     + style.letterSpacing * (Math.max(strLength - 1, 0));
+    + style.letterSpacing * (Math.max(strLength - 1, 0));
 };
 
-const aproximateTextHeightInternal = (text, style) => {
+const approximateTextHeightInternal = (text, style) => {
   const splittedTextArray = splitToLines(text);
   const lineCount = splittedTextArray.length;
   const lineHeightNumber = style.fontSize * coefficients.lineCapitalCoef;
@@ -132,8 +132,8 @@ const prepareParams = (inputStyle) => {
 */
 const approximateTextSize = (text, style) => {
   const params = prepareParams(style);
-  const height = aproximateTextHeightInternal(text, params);
-  const width = aproximateTextWidthInternal(text, params);
+  const height = approximateTextHeightInternal(text, params);
+  const width = approximateTextWidthInternal(text, params);
   const widthWithRotate = getSizeWithRotate(width, height, params.angle);
   const heightWithRotate = getSizeWithRotate(height, width, params.angle);
   return {
