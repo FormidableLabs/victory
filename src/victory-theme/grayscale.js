@@ -196,7 +196,6 @@ export default {
   legend: assign({
     style: {
       symbol: {
-        fill: charcoal,
         type: "circle"
       },
       labels: baseLabelStyles

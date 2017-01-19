@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, TextSize, Helpers } from "../victory-util/index";
+import { PropTypes as CustomPropTypes, Style, TextSize, Helpers } from "../victory-util/index";
 import { merge, isEmpty, defaults, sumBy, maxBy } from "lodash";
 import VictoryLabel from "../victory-label/victory-label";
 import VictoryContainer from "../victory-container/victory-container";
@@ -44,6 +44,12 @@ export default class VictoryLegend extends React.Component {
         symbol: PropTypes.object
       })
     ),
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+      ])
+    ]),
     containerComponent: PropTypes.element,
     dataComponent: PropTypes.element,
     groupComponent: PropTypes.element,
@@ -92,12 +98,24 @@ export default class VictoryLegend extends React.Component {
     return padding.left + contentWidth + padding.right;
   }
 
-  getCalculatedProps() {
+  getColorScale(theme) {
+    const { colorScale } = this.props;
+    let colorScaleOptions = colorScale || theme.colorScale;
+
+    if (typeof colorScaleOptions === "string") {
+      colorScaleOptions = Style.getColorScale(colorScaleOptions);
+    }
+
+    return !isEmpty(theme) ? colorScaleOptions || theme.colorScale : colorScaleOptions || [];
+  }
+
+  getCalculatedProps() { // eslint-disable-line max-statements
     const { role } = this.constructor;
     const { data, orientation, theme } = this.props;
     let { height, width } = this.props;
 
-    const legendTheme = theme && theme[role] && theme[role].style ? theme[role].style : {};
+    const legendTheme = theme && theme[role] ? theme[role] : {};
+    const colorScale = this.getColorScale(legendTheme);
     const isHorizontal = orientation === "horizontal";
     const padding = Helpers.getPadding(this.props);
     const symbolStyles = [];
@@ -105,11 +123,11 @@ export default class VictoryLegend extends React.Component {
     let leftOffset = 0;
 
     const textSizes = data.map((datum, i) => {
-      const styles = this.getStyles(datum, legendTheme, "labels");
-      symbolStyles[i] = this.getStyles(datum, legendTheme, "symbol");
-      labelStyles[i] = styles;
+      const labelStyle = this.getStyles(datum, legendTheme, "labels");
+      symbolStyles[i] = this.getStyles(datum, legendTheme, "symbol", colorScale[i]);
+      labelStyles[i] = labelStyle;
 
-      const textSize = TextSize.approximateTextSize(datum.name, styles);
+      const textSize = TextSize.approximateTextSize(datum.name, labelStyle);
       textSize.leftOffset = leftOffset;
       leftOffset += textSize.width;
 
@@ -123,13 +141,15 @@ export default class VictoryLegend extends React.Component {
       width = this.calculateLegendWidth(textSizes, padding, isHorizontal);
     }
 
-    return Object.assign({}, this.props, {
-      isHorizontal, padding, textSizes, height, width, labelStyles, symbolStyles, theme: legendTheme
-    });
+    return Object.assign({},
+      this.props,
+      { isHorizontal, padding, textSizes, height, width, labelStyles, symbolStyles }
+    );
   }
 
-  getStyles(datum, theme, key) {
-    return merge({}, theme[key], this.props.style[key], datum[key]);
+  getStyles(datum, theme, key, color) { // eslint-disable-line max-params
+    const colorScale = color ? { fill: color } : {};
+    return merge({}, theme.style[key], colorScale, this.props.style[key], datum[key]);
   }
 
   getSymbolSize(datum, fontSize) {

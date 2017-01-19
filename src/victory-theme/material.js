@@ -221,7 +221,6 @@ export default {
   legend: assign({
     style: {
       symbol: {
-        fill: blueGrey700,
         type: "circle"
       },
       labels: baseLabelStyles
