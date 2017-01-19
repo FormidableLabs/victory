@@ -17,16 +17,29 @@ export default class VictoryLegend extends React.Component {
   static role = "legend";
 
   static propTypes = {
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
-    width: PropTypes.oneOfType([
-      CustomPropTypes.nonNegative,
-      PropTypes.func
+    colorScale: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.string),
+      PropTypes.oneOf([
+        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+      ])
     ]),
+    containerComponent: PropTypes.element,
+    data: PropTypes.arrayOf(
+      PropTypes.shape({
+        name: PropTypes.string.isRequired,
+        label: PropTypes.object,
+        symbol: PropTypes.object
+      })
+    ),
+    dataComponent: PropTypes.element,
+    groupComponent: PropTypes.element,
+    gutter: PropTypes.number,
     height: PropTypes.oneOfType([
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
+    labelComponent: PropTypes.element,
+    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -36,32 +49,19 @@ export default class VictoryLegend extends React.Component {
         right: PropTypes.number
       })
     ]),
-    orientation: PropTypes.oneOf(["horizontal", "vertical"]),
-    data: PropTypes.arrayOf(
-      PropTypes.shape({
-        name: PropTypes.string.isRequired,
-        label: PropTypes.object,
-        symbol: PropTypes.object
-      })
-    ),
-    colorScale: PropTypes.oneOfType([
-      PropTypes.arrayOf(PropTypes.string),
-      PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
-      ])
-    ]),
-    containerComponent: PropTypes.element,
-    dataComponent: PropTypes.element,
-    groupComponent: PropTypes.element,
-    labelComponent: PropTypes.element,
-    symbolSpacer: PropTypes.number,
-    gutter: PropTypes.number,
-    theme: PropTypes.object,
     standalone: PropTypes.bool,
     style: PropTypes.shape({
       symbol: PropTypes.object,
       label: PropTypes.object
-    })
+    }),
+    symbolSpacer: PropTypes.number,
+    theme: PropTypes.object,
+    width: PropTypes.oneOfType([
+      CustomPropTypes.nonNegative,
+      PropTypes.func
+    ]),
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired
   };
 
   static defaultProps = {
