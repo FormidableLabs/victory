@@ -12,7 +12,7 @@ const initialData = [{
   }
 }, {
   name: "Series 2",
-  label: {
+  labels: {
     fill: "red"
   },
   symbol: {
@@ -72,7 +72,7 @@ describe("components/victory-legend", () => {
   describe("symbols", () => {
     const legendData = [{
       name: "Series 1",
-      label: {
+      labels: {
         fontSize: 10
       },
       symbol: {
@@ -81,7 +81,7 @@ describe("components/victory-legend", () => {
       }
     }, {
       name: "Long Series Name",
-      label: {
+      labels: {
         fontSize: 12
       },
       symbol: {
@@ -120,7 +120,7 @@ describe("components/victory-legend", () => {
         type: "triangleUp",
         fill: "green"
       },
-      label: {
+      labels: {
         fontSize: 16
       }
     };
@@ -139,9 +139,9 @@ describe("components/victory-legend", () => {
       expect(outputPoints.get(1).props.style.fill).to.equal("green");
     });
 
-    it("has expected symbol colors", () => {
-      expect(outputLabels.get(0).props.style.color).to.equal("#252525");
-      expect(outputLabels.get(1).props.style.color).to.equal("#252525");
+    it("has expected label colors", () => {
+      expect(outputLabels.get(0).props.style.fill).to.equal("#252525");
+      expect(outputLabels.get(1).props.style.fill).to.equal("#252525");
     });
   });
 });
