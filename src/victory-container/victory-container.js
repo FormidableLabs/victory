@@ -47,7 +47,6 @@ export default class VictoryContainer extends React.Component {
 
   componentWillMount() {
     this.savePortalRef = (portal) => this.portalRef = portal;
-    this.saveSvgRef = (svg) => this.svgRef = svg;
     this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
@@ -97,8 +96,7 @@ export default class VictoryContainer extends React.Component {
     const svgProps = assign(
       {
         "aria-labelledby": "title desc", role: "img", width, height,
-        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
-        ref: this.saveSvgRef
+        viewBox: responsive ? `0 0 ${width} ${height}` : undefined
       },
       events
     );
