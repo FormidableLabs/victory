@@ -5,6 +5,7 @@ export { default as VictoryTransition } from "./victory-transition/victory-trans
 export { default as VictorySharedEvents } from "./victory-shared-events/victory-shared-events";
 export { default as VictoryClipContainer } from "./victory-clip-container/victory-clip-container";
 export { default as VictoryTheme } from "./victory-theme/victory-theme";
+export { default as VictoryLegend } from "./victory-legend/victory-legend";
 export { default as VictoryTooltip } from "./victory-tooltip/victory-tooltip";
 export { default as VictoryPortal } from "./victory-portal/victory-portal";
 export { default as Portal } from "./victory-portal/portal";

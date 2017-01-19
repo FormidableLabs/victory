@@ -193,5 +193,13 @@ export default {
         pointerEvents: "none"
       }
     }
+  }, baseProps),
+  legend: assign({
+    style: {
+      symbol: {
+        type: "circle"
+      },
+      labels: baseLabelStyles
+    }
   }, baseProps)
 };
