@@ -65,19 +65,18 @@ export default class VictoryLegend extends React.Component {
   };
 
   static defaultProps = {
-    x: 0,
-    y: 0,
-    padding: 0,
-    symbolSpacer: 8,
-    gutter: 10,
-    orientation: "vertical",
-    dataComponent: <Point/>,
-    labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
+    dataComponent: <Point/>,
     groupComponent: <g/>,
-    theme: VictoryTheme.grayscale,
+    gutter: 10,
+    labelComponent: <VictoryLabel/>,
+    orientation: "vertical",
     standalone: true,
-    style: {}
+    style: {},
+    symbolSpacer: 8,
+    theme: VictoryTheme.grayscale,
+    x: 0,
+    y: 0
   };
 
   calculateLegendHeight(textSizes, padding, isHorizontal) {
