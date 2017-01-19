@@ -3,21 +3,9 @@ import { PropTypes as CustomPropTypes, TextSize, Helpers } from "../victory-util
 import { merge, isEmpty, defaults, sumBy, maxBy } from "lodash";
 import VictoryLabel from "../victory-label/victory-label";
 import VictoryContainer from "../victory-container/victory-container";
+import VictoryTheme from "../victory-theme/victory-theme";
 import Point from "../victory-primitives/point";
 
-const defaultStyles = {
-  symbol: {
-    fill: "black",
-    type: "circle"
-  },
-  label: {
-    fontSize: 14,
-    fontFamily: "'Gill Sans', 'Gill Sans MT', 'Ser­avek', 'Trebuchet MS', sans-serif",
-    color: "#252525",
-    backgroundColor: "#d9d9d9",
-    stroke: "transparent"
-  }
-};
 const defaultLegendData = [
   { name: "Series 1" },
   { name: "Series 2" }
@@ -62,6 +50,7 @@ export default class VictoryLegend extends React.Component {
     labelComponent: PropTypes.element,
     symbolSpacer: PropTypes.number,
     gutter: PropTypes.number,
+    theme: PropTypes.object,
     standalone: PropTypes.bool,
     style: PropTypes.shape({
       symbol: PropTypes.object,
@@ -80,6 +69,7 @@ export default class VictoryLegend extends React.Component {
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    theme: VictoryTheme.grayscale,
     standalone: true,
     style: {}
   };
@@ -102,17 +92,21 @@ export default class VictoryLegend extends React.Component {
     return padding.left + contentWidth + padding.right;
   }
 
-  getCalculatedProps(props) {
-    let { height, width } = props;
-    const isHorizontal = props.orientation === "horizontal";
-    const padding = Helpers.getPadding(props);
+  getCalculatedProps() {
+    const { role } = this.constructor;
+    const { data, orientation, theme } = this.props;
+    let { height, width } = this.props;
+
+    const legendTheme = theme && theme[role] && theme[role].style ? theme[role].style : {};
+    const isHorizontal = orientation === "horizontal";
+    const padding = Helpers.getPadding(this.props);
     const symbolStyles = [];
     const labelStyles = [];
     let leftOffset = 0;
 
-    const textSizes = props.data.map((datum, i) => {
-      const styles = this.getComponentStyles(datum, props, "label");
-      symbolStyles[i] = this.getComponentStyles(datum, props, "symbol");
+    const textSizes = data.map((datum, i) => {
+      const styles = this.getStyles(datum, legendTheme, "labels");
+      symbolStyles[i] = this.getStyles(datum, legendTheme, "symbol");
       labelStyles[i] = styles;
 
       const textSize = TextSize.approximateTextSize(datum.name, styles);
@@ -129,14 +123,13 @@ export default class VictoryLegend extends React.Component {
       width = this.calculateLegendWidth(textSizes, padding, isHorizontal);
     }
 
-    return Object.assign({},
-      props,
-      { isHorizontal, padding, textSizes, height, width, labelStyles, symbolStyles }
-    );
+    return Object.assign({}, this.props, {
+      isHorizontal, padding, textSizes, height, width, labelStyles, symbolStyles, theme: legendTheme
+    });
   }
 
-  getComponentStyles(datum, props, key) {
-    return merge({}, defaultStyles[key], props.style[key], datum[key]);
+  getStyles(datum, theme, key) {
+    return merge({}, theme[key], this.props.style[key], datum[key]);
   }
 
   getSymbolSize(datum, fontSize) {
@@ -236,7 +229,7 @@ export default class VictoryLegend extends React.Component {
   }
 
   render() {
-    const props = this.getCalculatedProps(this.props);
+    const props = this.getCalculatedProps();
     const group = this.renderGroup(props, this.renderLegendItems(props));
     return props.standalone ? this.renderContainer(props, group) : group;
   }

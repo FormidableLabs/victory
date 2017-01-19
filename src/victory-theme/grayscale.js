@@ -192,5 +192,14 @@ export default {
       },
       labels: centeredLabelStyles
     }
+  }, baseProps),
+  legend: assign({
+    style: {
+      symbol: {
+        fill: charcoal,
+        type: "circle"
+      },
+      labels: baseLabelStyles
+    }
   }, baseProps)
 };

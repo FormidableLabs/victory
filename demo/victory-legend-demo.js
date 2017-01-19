@@ -44,7 +44,7 @@ const LegendDemo = () => (
         padding={20}
         standalone={false}
         orientation="horizontal"
-        style={{ label: { fill: "#ccc" }}}
+        style={{ labels: { fill: "#ccc" }}}
       />
     </svg>
   </div>

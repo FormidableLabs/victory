@@ -217,5 +217,14 @@ export default {
       },
       labels: centeredLabelStyles
     }
+  }, baseProps),
+  legend: assign({
+    style: {
+      symbol: {
+        fill: blueGrey700,
+        type: "circle"
+      },
+      labels: baseLabelStyles
+    }
   }, baseProps)
 };
