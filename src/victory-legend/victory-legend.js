@@ -84,18 +84,18 @@ export default class VictoryLegend extends React.Component {
     style: {}
   };
 
-  calculateLegendHeight(props, textSizes, padding) {
-    const { data, gutter, orientation } = props;
-    const contentHeight = orientation === "horizontal"
+  calculateLegendHeight(textSizes, padding, isHorizontal) {
+    const { data, gutter } = this.props;
+    const contentHeight = isHorizontal
       ? maxBy(textSizes, "height").height
       : sumBy(textSizes, "height") + gutter * (data.length - 1);
 
     return padding.top + contentHeight + padding.bottom;
   }
 
-  calculateLegendWidth(props, textSizes, padding) {
-    const { data, gutter, orientation, symbolSpacer } = props;
-    const contentWidth = orientation === "horizontal"
+  calculateLegendWidth(textSizes, padding, isHorizontal) {
+    const { data, gutter, symbolSpacer } = this.props;
+    const contentWidth = isHorizontal
       ? sumBy(textSizes, "width") + (gutter + symbolSpacer * 3) * (data.length - 1)
       : maxBy(textSizes, "width").width + symbolSpacer * 2;
 
@@ -104,6 +104,7 @@ export default class VictoryLegend extends React.Component {
 
   getCalculatedProps(props) {
     let { height, width } = props;
+    const isHorizontal = props.orientation === "horizontal";
     const padding = Helpers.getPadding(props);
     const symbolStyles = [];
     const labelStyles = [];
@@ -122,15 +123,15 @@ export default class VictoryLegend extends React.Component {
     });
 
     if (!height) {
-      height = this.calculateLegendHeight(props, textSizes, padding);
+      height = this.calculateLegendHeight(textSizes, padding, isHorizontal);
     }
     if (!width) {
-      width = this.calculateLegendWidth(props, textSizes, padding);
+      width = this.calculateLegendWidth(textSizes, padding, isHorizontal);
     }
 
     return Object.assign({},
       props,
-      { padding, textSizes, height, width, labelStyles, symbolStyles }
+      { isHorizontal, padding, textSizes, height, width, labelStyles, symbolStyles }
     );
   }
 
@@ -144,14 +145,14 @@ export default class VictoryLegend extends React.Component {
 
   getSymbolProps(datum, props, i) {
     const {
-      gutter, labelStyles, orientation, padding, symbolSpacer, symbolStyles, textSizes
+      gutter, labelStyles, isHorizontal, padding, symbolSpacer, symbolStyles, textSizes
     } = props;
     const { leftOffset } = textSizes[i];
     const { fontSize } = labelStyles[i];
     const symbolShift = fontSize / 2;
     const style = symbolStyles[i];
 
-    const symbolCoords = orientation === "horizontal" ? {
+    const symbolCoords = isHorizontal ? {
       x: padding.left + leftOffset + symbolShift + (fontSize + symbolSpacer + gutter) * i,
       y: padding.top + symbolShift
     } : {
@@ -169,12 +170,12 @@ export default class VictoryLegend extends React.Component {
   }
 
   getLabelProps(datum, props, i) {
-    const { gutter, orientation, symbolSpacer, labelStyles, textSizes, padding } = props;
+    const { gutter, isHorizontal, symbolSpacer, labelStyles, textSizes, padding } = props;
     const style = labelStyles[i];
     const { fontSize } = style;
     const symbolShift = fontSize / 2;
 
-    const labelCoords = orientation === "horizontal" ? {
+    const labelCoords = isHorizontal ? {
       x: padding.left + textSizes[i].leftOffset + (fontSize + symbolSpacer) * (i + 1) + gutter * i,
       y: padding.top + symbolShift
     } : {
