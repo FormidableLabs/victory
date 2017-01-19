@@ -111,15 +111,17 @@ export default class VictoryLegend extends React.Component {
   getCalculatedProps() { // eslint-disable-line max-statements
     const { role } = this.constructor;
     const { data, orientation, theme } = this.props;
-    let { height, width } = this.props;
-
+    let { height, padding, width } = this.props;
     const legendTheme = theme && theme[role] ? theme[role] : {};
     const colorScale = this.getColorScale(legendTheme);
     const isHorizontal = orientation === "horizontal";
-    const padding = Helpers.getPadding(this.props);
     const symbolStyles = [];
     const labelStyles = [];
     let leftOffset = 0;
+
+    padding = Helpers.getPadding({ padding: padding || theme.padding });
+    height = height || theme.height;
+    width = width || theme.width;
 
     const textSizes = data.map((datum, i) => {
       const labelStyle = this.getStyles(datum, legendTheme, "labels");
@@ -142,7 +144,7 @@ export default class VictoryLegend extends React.Component {
 
     return Object.assign({},
       this.props,
-      { isHorizontal, padding, textSizes, height, width, labelStyles, symbolStyles }
+      { isHorizontal, height, labelStyles, padding, symbolStyles, textSizes, width }
     );
   }
 
