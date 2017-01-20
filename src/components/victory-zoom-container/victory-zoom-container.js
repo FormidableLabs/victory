@@ -26,7 +26,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
-      onMouseDown: (evt, targetProps, eventKey, ctx) => {
+      onMouseDown: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
         const { scale, zoomDomain } = targetProps;
@@ -39,7 +39,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
         return [{
           target: "parent",
           mutation: () => {
-            return {svg, matrix, originalDomain, startX, lastDomain, domain, getTimer, isPanning: true};
+            return {
+              svg, matrix, originalDomain, startX, lastDomain, domain, getTimer, isPanning: true
+            };
           }
         }];
       },
@@ -59,15 +61,14 @@ export default class VictoryZoomContainer extends VictoryContainer {
           }
         }];
       },
-      onMouseMove: (evt, targetProps, eventKey, ctx) => {
+      onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
         if (targetProps.isPanning) {
           const { scale, startX, onDomainChange } = targetProps;
           const svg = targetProps.svg || Selection.getParentSVG(evt.target);
           const matrix = targetProps.matrix = matrix || Selection.getTransformationMatrix(svg);
           const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
           const lastDomain = targetProps.lastDomain || targetProps.domain || originalDomain;
-          const clientX = evt.clientX;
-          const delta = startX - Selection.transformTarget(clientX, matrix, "x");
+          const delta = startX - Selection.transformTarget(evt.clientX, matrix, "x");
           const calculatedDx = delta / ZoomHelpers.getDomainScale(lastDomain, scale);
           const nextXDomain = ZoomHelpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
           const domain = { x: nextXDomain, y: lastDomain.y };
@@ -90,7 +91,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
           }];
         }
       },
-      onWheel: (evt, targetProps, eventKey, ctx) => {
+      onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
         evt.preventDefault();
         const deltaY = evt.deltaY;
         const { scale, onDomainChange, zoomDomain } = targetProps;
@@ -124,7 +125,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
 
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
-    const {scale} = props;
+    const { scale, height, clipContainerComponent } = props;
     const rangeX = scale.x.range();
     const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
     const childComponents = [];
@@ -132,10 +133,10 @@ export default class VictoryZoomContainer extends VictoryContainer {
     let groupNumber = 0;
 
     const makeGroup = (arr, index) => {
-      return React.cloneElement(props.clipContainerComponent, {
+      return React.cloneElement(clipContainerComponent, {
         key: `ZoomClipContainer-${index}`,
         clipWidth: plottableWidth,
-        clipHeight: props.height,
+        clipHeight: height,
         translateX: rangeX[0],
         children: arr
       });
