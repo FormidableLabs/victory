@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
-import { defaults, isFunction, identity } from "lodash";
-import ZoomHelpers from "./helper-methods";
+import { defaults, isFunction } from "lodash";
+import ZoomHelpers from "./zoom-helper-methods";
 import {
   VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes, Selection, Timer
 } from "victory-core";

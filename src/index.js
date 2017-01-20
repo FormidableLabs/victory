@@ -14,7 +14,7 @@ export {
 } from "./components/victory-voronoi-tooltip/victory-voronoi-tooltip";
 export {
   default as VictorySelectionContainer
-} from "./components/victory-selection-container/victory-selection-container";
+} from "./components/containers/victory-selection-container";
 export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";
@@ -22,7 +22,5 @@ export { default as VictoryBrush } from "./components/victory-brush/victory-brus
 export {
   default as VictoryBrushContainer
 } from "./components/victory-brush/victory-brush-container";
-export {
-  default as VictoryZoomContainer
-} from "./components/victory-zoom-container/victory-zoom-container";
+export { default as VictoryZoomContainer } from "./components/containers/victory-zoom-container";
 
