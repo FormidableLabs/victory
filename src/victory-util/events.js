@@ -151,7 +151,7 @@ export default {
     // A function that calls a particular event handler, parses its return
     // into a state mutation, and calls setState
     const onEvent = (evt, childProps, eventKey, eventName) => {
-      const eventReturn = events[eventName](evt, childProps, eventKey);
+      const eventReturn = events[eventName](evt, childProps, eventKey, this);
       if (eventReturn) {
         this.setState(parseEventReturn(eventReturn, eventKey));
       }
