@@ -22,3 +22,7 @@ export { default as VictoryBrush } from "./components/victory-brush/victory-brus
 export {
   default as VictoryBrushContainer
 } from "./components/victory-brush/victory-brush-container";
+export {
+  default as VictoryZoomContainer
+} from "./components/victory-zoom-container/victory-zoom-container";
+
