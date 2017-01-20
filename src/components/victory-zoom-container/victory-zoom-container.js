@@ -1,12 +1,12 @@
 import React, {PropTypes} from "react";
-import { assign, isFunction } from "lodash";
+import { defaults, isFunction, identity } from "lodash";
 import ZoomHelpers from "./helper-methods";
 import {
-  VictoryContainer, VictoryClipContainer, Helpers, PropTypes as CustomPropTypes, Selection
+  VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes, Selection, Timer
 } from "victory-core";
 
-export default class VictorySelectionContainer extends VictoryContainer {
-  static displayName = "VictorySelectionContainer";
+export default class VictoryZoomContainer extends VictoryContainer {
+  static displayName = "VictoryZoomContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
     zoomDomain: PropTypes.shape({
@@ -26,18 +26,20 @@ export default class VictorySelectionContainer extends VictoryContainer {
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
-      onMouseDown: (evt, targetProps) => {
+      onMouseDown: (evt, targetProps, eventKey, ctx) => {
         evt.preventDefault();
-        const { domain, scale, zoomDomain } = targetProps;
+        const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
+        const { scale, zoomDomain } = targetProps;
         const svg = targetProps.svg || Selection.getParentSVG(evt.target);
         const matrix = targetProps.matrix = matrix || Selection.getTransformationMatrix(svg);
         const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
+        const domain = targetProps.domain || zoomDomain || originalDomain;
         const startX = Selection.transformTarget(evt.clientX, matrix, "x");
-        const lastDomain = domain || zoomDomain || originalDomain;
+        const lastDomain = domain;
         return [{
           target: "parent",
           mutation: () => {
-            return {svg, matrix, originalDomain, startX, lastDomain, isPanning: true};
+            return {svg, matrix, originalDomain, startX, lastDomain, domain, getTimer, isPanning: true};
           }
         }];
       },
@@ -57,60 +59,74 @@ export default class VictorySelectionContainer extends VictoryContainer {
           }
         }];
       },
-      onMouseMove: (evt, targetProps) => {
+      onMouseMove: (evt, targetProps, eventKey, ctx) => {
         if (targetProps.isPanning) {
           const { scale, startX, onDomainChange } = targetProps;
           const svg = targetProps.svg || Selection.getParentSVG(evt.target);
           const matrix = targetProps.matrix = matrix || Selection.getTransformationMatrix(svg);
           const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
-          const lastDomain = targetProps.domain || targetProps.lastDomain;
+          const lastDomain = targetProps.lastDomain || targetProps.domain || originalDomain;
           const clientX = evt.clientX;
-          requestAnimationFrame(() => { // eslint-disable-line no-undef
-            const delta = startX - Selection.transformTarget(clientX, matrix, "x");
-            const calculatedDx = delta / ZoomHelpers.getDomainScale(targetProps.domain, scale);
-            const nextXDomain = ZoomHelpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
-            const domain = { x: nextXDomain, y: lastDomain.y };
-            if (isFunction(onDomainChange)) {
-              onDomainChange(domain);
-            }
-            return [{
-              target: "parent",
-              mutation: () => {
-                return {domain};
-              }
-            }];
-          });
-        }
-      },
-      onWheel: (evt, targetProps) => {
-        evt.preventDefault();
-        const deltaY = evt.deltaY;
-        const { scale, onDomainChange } = targetProps;
-        const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
-        const lastDomain = targetProps.domain || targetProps.lastDomain || originalDomain;
-        requestAnimationFrame(() => { // eslint-disable-line no-undef
-          const {x} = targetProps.domain;
-          const xBounds = originalDomain.x;
-          // TODO: Check scale factor
-          const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
+          const delta = startX - Selection.transformTarget(clientX, matrix, "x");
+          const calculatedDx = delta / ZoomHelpers.getDomainScale(lastDomain, scale);
+          const nextXDomain = ZoomHelpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
           const domain = { x: nextXDomain, y: lastDomain.y };
+          const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
+          let resumeAnimation;
+          if (getTimer && isFunction(getTimer().bypassAnimation)) {
+            getTimer().bypassAnimation();
+            resumeAnimation = isFunction(getTimer().resumeAnimation) ?
+              () => getTimer().resumeAnimation() : undefined;
+          }
           if (isFunction(onDomainChange)) {
             onDomainChange(domain);
           }
           return [{
             target: "parent",
+            callback: resumeAnimation,
             mutation: () => {
-              return {domain};
+              return {domain, originalDomain};
             }
           }];
-        });
+        }
+      },
+      onWheel: (evt, targetProps, eventKey, ctx) => {
+        evt.preventDefault();
+        const deltaY = evt.deltaY;
+        const { scale, onDomainChange, zoomDomain } = targetProps;
+        const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
+        const lastDomain = targetProps.domain || zoomDomain || originalDomain;
+        const {x} = lastDomain;
+        const xBounds = originalDomain.x;
+        // TODO: Check scale factor
+        const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
+        const domain = { x: nextXDomain, y: originalDomain.y };
+        const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
+        let resumeAnimation;
+        if (getTimer && isFunction(getTimer().bypassAnimation)) {
+          getTimer().bypassAnimation();
+          resumeAnimation = isFunction(getTimer().resumeAnimation) ?
+            () => getTimer().resumeAnimation() : undefined;
+        }
+        if (isFunction(onDomainChange)) {
+          onDomainChange(domain);
+        }
+        return [{
+          target: "parent",
+          callback: resumeAnimation,
+          mutation: () => {
+            return {domain, originalDomain};
+          }
+        }];
       }
     }
   }];
 
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
-    const [rangex0, rangex1] = Helpers.getRange(props, "x");
+    const {scale} = props;
+    const rangeX = scale.x.range();
+    const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
     const childComponents = [];
     let group = [];
     let groupNumber = 0;
@@ -118,9 +134,9 @@ export default class VictorySelectionContainer extends VictoryContainer {
     const makeGroup = (arr, index) => {
       return React.cloneElement(props.clipContainerComponent, {
         key: `ZoomClipContainer-${index}`,
-        clipWidth: rangex1 - rangex0,
+        clipWidth: plottableWidth,
         clipHeight: props.height,
-        translateX: rangex0,
+        translateX: rangeX[0],
         children: arr
       });
     };
@@ -148,22 +164,27 @@ export default class VictorySelectionContainer extends VictoryContainer {
     return childComponents;
   }
 
-  renderChart(chartElement, props) {
-    return React.cloneElement(chartElement, props);
+  modifyChildren(props) {
+    const childComponents = React.Children.toArray(props.children);
+    const newChildren = [];
+    for (let index = 0, len = childComponents.length; index < len; index++) {
+      const child = childComponents[index];
+      newChildren[index] = React.cloneElement(child, defaults({domain: props.domain}, child.props));
+    }
+    return newChildren;
   }
 
-  render() {
-    const chart = React.Children.only(this.props.children);
-    const events = chart.props.events
-      ? (this.events || []).concat(chart.props.events)
-      : this.events;
-
-    const nextProps = assign({}, chart.props, {
-      events,
-      domain: this.props.domain,
-      modifyChildren: this.clipDataComponents
-    });
-
-    return this.renderChart(chart, nextProps);
+  renderContainer(props, svgProps, style) {
+    const { title, desc, portalComponent, className } = props;
+    const children = this.modifyChildren(props);
+    const childGroups = this.clipDataComponents(children, props);
+    return (
+      <svg {...svgProps} style={style} className={className}>
+        <title id="title">{title}</title>
+        <desc id="desc">{desc}</desc>
+        {childGroups}
+        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+      </svg>
+    );
   }
 }

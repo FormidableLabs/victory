@@ -1,6 +1,6 @@
 import { Collection } from "victory-core";
 export default {
-  /**
+ /**
    * Generates a new domain scaled by factor and constrained by the original domain.
    * @param  {[Number, Number]} currentDomain  The domain to be scaled.
    * @param  {[Number, Number]} originalDomain The original domain for the data set.
