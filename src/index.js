@@ -18,7 +18,6 @@ export {
 export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";
-export { default as VictoryBrush } from "./components/victory-brush/victory-brush";
 export {
   default as VictoryBrushContainer
 } from "./components/victory-brush/victory-brush-container";

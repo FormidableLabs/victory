@@ -13,7 +13,7 @@ import EventsDemo from "./components/events-demo";
 import GroupDemo from "./components/group-demo";
 import VoronoiDemo from "./components/victory-voronoi-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
-import BrushDemo from "./components/victory-brush-demo";
+import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 import ZoomDemo from "./components/victory-zoom-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
@@ -43,7 +43,7 @@ const App = React.createClass({
           <li><Link to="/group">Group Demo</Link></li>
           <li><Link to="/voronoi">Victory Voronoi Demo</Link></li>
           <li><Link to="/tooltip">Victory Tooltip Demo</Link></li>
-          <li><Link to="/brush">Victory Brush Demo</Link></li>
+          <li><Link to="/zoom-container">Victory Zoom Container Demo</Link></li>
           <li><Link to="/zoom">Victory Zoom Demo</Link></li>
           <li><Link to="/animation">Animation Demo</Link></li>
           <li><Link to="/selection">Selection Demo</Link></li>
@@ -69,7 +69,7 @@ ReactDOM.render((
       <Route path="group" component={GroupDemo}/>
       <Route path="voronoi" component={VoronoiDemo}/>
       <Route path="tooltip" component={TooltipDemo}/>
-      <Route path="brush" component={BrushDemo}/>
+      <Route path="zoom-container" component={ZoomContainerDemo}/>
       <Route path="zoom" component={ZoomDemo}/>
       <Route path="animation" component={AnimationDemo}/>
       <Route path="selection" component={SelectionDemo}/>
