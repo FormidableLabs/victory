@@ -3,7 +3,7 @@ import {
   VictoryContainer, Selection, PropTypes as CustomPropTypes, Domain
 } from "victory-core";
 import Helpers from "./container-helper-methods";
-import { isFunction, isEqual, assign } from "lodash";
+import { isFunction, isEqual } from "lodash";
 
 
 export default class VictoryRangeContainer extends VictoryContainer {
@@ -39,70 +39,57 @@ export default class VictoryRangeContainer extends VictoryContainer {
         const fullDomain = targetProps.fullDomain || Helpers.getOriginalDomain(scale);
         const fullDomainBox = Helpers.getDomainBox(targetProps, fullDomain);
         const domainBox = Helpers.getDomainBox(targetProps, fullDomain, selectedDomain);
-        const box = targetProps.box || domainBox;
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+        const {x1, y1, x2, y2} = domainBox;
         if (!selectedDomain || isEqual(selectedDomain, fullDomain)) {
-          const x1 = dimension !== "y" ? x : domainBox.x[0];
-          const y1 = dimension !== "x" ? y : domainBox.y[0];
-          const x2 = dimension !== "y" ? x : domainBox.x[1];
-          const y2 = dimension !== "x" ? y : domainBox.y[1];
           return [{
             target: "parent",
             mutation: () => {
               return {
                 startX: x, startY: y, isSelecting: true, domainBox, fullDomainBox,
-                box: {
-                  x: [ Math.min(x1, x2), Math.max(x1, x2) ],
-                  y: [ Math.min(y1, y2), Math.max(y1, y2) ]
-                }
+                x1: dimension !== "y" ? x : x1,
+                y1: dimension !== "x" ? y : y1,
+                x2: dimension !== "y" ? x : x2,
+                y2: dimension !== "x" ? y : y2
               };
             }
           }];
         }
         const handles = Helpers.getHandles(targetProps, domainBox);
         if (Helpers.withinBounds({x, y}, handles.left)) {
-          const x1 = dimension !== "y" ? x : domainBox.x[0];
-          const x2 = Math.max(...domainBox.x);
           return [{
             target: "parent",
             mutation: () => {
               return {
                 isSelecting: true, negativeSelection: true, fullDomainBox, domainBox,
-                box: assign({}, box, { x: [ Math.min(x1, x2), Math.max(x1, x2) ]})
+                x1: dimension !== "y" ? x : x1
               };
             }
           }];
         } else if (Helpers.withinBounds({x, y}, handles.right)) {
-          const x2 = dimension !== "y" ? x : domainBox.x[1];
-          const x1 = Math.min(...domainBox.x);
           return [{
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, fullDomainBox, domainBox,
-                box: assign({}, box, { x: [ Math.min(x1, x2), Math.max(x1, x2) ]})
+                isSelecting: true, fullDomainBox, domainBox, x2: dimension !== "y" ? x : x2
               };
             }
           }];
         } else if (Helpers.withinBounds({x, y}, domainBox)) {
           return [{
             target: "parent",
-            mutation: () => ({ isPanning: true, startX: x, startY: y, fullDomain, selectedDomain, box })
+            mutation: () => ({ isPanning: true, startX: x, startY: y, fullDomain, selectedDomain })
           }];
         } else {
-          const x1 = dimension !== "y" ? x : domainBox.x[0];
-          const y1 = dimension !== "x" ? y : domainBox.y[0];
-          const x2 = dimension !== "y" ? x : domainBox.x[1];
-          const y2 = dimension !== "x" ? y : domainBox.y[1];
           return [{
             target: "parent",
             mutation: () => {
               return {
                 startX: x, startY: y, isSelecting: true, domainBox,
-                box: {
-                  x: [ Math.min(x1, x2), Math.max(x1, x2) ],
-                  y: [ Math.min(y1, y2), Math.max(y1, y2) ]
-                }
+                x1: dimension !== "y" ? x : x1,
+                y1: dimension !== "x" ? y : y1,
+                x2: dimension !== "y" ? x : x2,
+                y2: dimension !== "x" ? y : y2
               };
             }
           }];
@@ -113,7 +100,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
           return {};
         }
         const {
-          dimension, scale, isPanning, isSelecting, startX, startY, fullDomainBox, box
+          dimension, scale, isPanning, isSelecting, startX, startY, fullDomainBox
         } = targetProps;
         const {x, y} = Selection.getSVGEventCoordinates(evt);
         if (isPanning) {
@@ -121,65 +108,58 @@ export default class VictoryRangeContainer extends VictoryContainer {
             x: startX ? startX - x : 0,
             y: startY ? startY - y : 0
           };
-          const x1 = dimension !== "y" ? box.x[0] - delta.x : box.x[0];
-          const x2 = dimension !== "y" ? box.x[1] - delta.x : box.x[1];
-          const y1 = dimension !== "x" ? box.y[0] - delta.y : box.y[0];
-          const y2 = dimension !== "x" ? box.y[1] - delta.y : box.y[1];
+          const x1 = dimension !== "y" ? targetProps.x1 - delta.x : targetProps.x1;
+          const x2 = dimension !== "y" ? targetProps.x2 - delta.x : targetProps.x2;
+          const y1 = dimension !== "x" ? targetProps.y1 - delta.y : targetProps.y1;
+          const y2 = dimension !== "x" ? targetProps.y2 - delta.y : targetProps.y2;
           const selectedDomain = Selection.getBounds({x1, y1, x2, y2, scale});
-          const newBox = {
-            x: [Math.min(x1, x2), Math.max(x1, x2)], y: [Math.min(y1, y2), Math.max(y1, y2)]
-          };
+
           return [{
             target: "parent",
             mutation: () => {
               return {
                 selectedDomain, startX: x, startY: y,
-                box: {
-                  x: [
-                    Math.max(newBox.x[0], fullDomainBox.x[0]),
-                    Math.min(newBox.x[1], fullDomainBox.x[1])
-                  ],
-                  y: [
-                    Math.max(newBox.y[0], fullDomainBox.y[0]),
-                    Math.min(newBox.y[1], fullDomainBox.y[1])
-                  ]
-                }
+                x1: Math.max(x1, fullDomainBox.x1),
+                y1: Math.max(y1, fullDomainBox.y1),
+                x2: Math.min(x2, fullDomainBox.x2),
+                y2: Math.min(y2, fullDomainBox.y2)
               };
             }
           }];
         } else if (isSelecting) {
-          const x2 = dimension !== "y" ? x : box.x[1];
-          const y2 = dimension !== "x" ? y : box.y[1];
-          const x1 = dimension !== "y" ? x : box.x[0];
-          const y1 = dimension !== "x" ? y : box.y[0];
+          const x2 = dimension !== "y" ? x : targetProps.x2;
+          const y2 = dimension !== "x" ? y : targetProps.y2;
+          const x1 = dimension !== "y" ? x : targetProps.x1;
+          const y1 = dimension !== "x" ? y : targetProps.y1;
           const { negativeSelection } = targetProps;
           const selectedDomain = negativeSelection ?
-            Selection.getBounds({x1, y1, x2: box.x[1], y2: box.y[1], scale}) :
-            Selection.getBounds({x2, y2, x1: box.x[0], y1: box.y[0], scale});
-          const newBox = {
-            x: negativeSelection ?
-              [Math.max(x1, fullDomainBox.x[0]), fullDomainBox.x[1]] :
-              [fullDomainBox.x[0], Math.min(x2, fullDomainBox.x[1])],
-            y: negativeSelection ?
-              [Math.max(y1, fullDomainBox.y[0]), fullDomainBox.y[1]] :
-              [fullDomainBox.y[0], Math.min(y2, fullDomainBox.y[1])],
-          }
+            Selection.getBounds({x1, y1, x2: targetProps.x2, y2: targetProps.y2, scale}) :
+            Selection.getBounds({x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale});
           return [{
             target: "parent",
             mutation: () => {
-              return {box: newBox, selectedDomain}
+              return negativeSelection ?
+                {
+                  x1: Math.max(x1, fullDomainBox.x1),
+                  y1: Math.max(y1, fullDomainBox.y1),
+                  selectedDomain
+                } : {
+                  x2: Math.min(x2, fullDomainBox.x2),
+                y2: Math.min(y2, fullDomainBox.y2),
+                  selectedDomain
+                };
             }
           }];
         }
       },
       onMouseUp: (evt, targetProps) => {
-        const {box, fullDomainBox} = targetProps;
-        if (box.x[0] === box.x[1] || box.y[0] === box.y[1]) {
+        const {x1, y1, x2, y2, fullDomainBox} = targetProps;
+        if (x1 === x2 || y1 === y2) {
           return [{
             target: "parent",
             mutation: () => {
               return {
-                isPanning: false, isSelecting: false
+                isPanning: false, isSelecting: false, ...fullDomainBox
               };
             }
           }];
@@ -198,31 +178,23 @@ export default class VictoryRangeContainer extends VictoryContainer {
     }
   }];
 
-  getRect(x, y, style) {
-    const width = Math.abs(x[1] - x[0]) || 1;
-    const height = Math.abs(y[1] - y[0]) || 1;
-    return y[1] && x[1] ?
-      <rect x={x[0]} y={y[0]} width={width} height={height} style={style}/> : null;
+  getRect(props) {
+    const {x1, x2, y1, y2, selectionStyle, selectedDomain} = props;
+
+    const width = Math.abs(x2 - x1) || 1;
+    const height = Math.abs(y2 - y1) || 1;
+    const x = Math.min(x1, x2);
+    const y = Math.min(y1, y2);
+    return y2 && x2 && x1 && y1 ?
+      <rect x={x} y={y} width={width} height={height} style={selectionStyle}/> : null;
   }
-
-  renderRect(props) {
-    const {selectionStyle, selectedDomain, fullDomain, scale, box} = props;
-    if (!box) {
-      const domain = selectedDomain || fullDomain || Helpers.getOriginalDomain(scale);
-      const {x, y} = Selection.getDomainCoordinates(scale, domain);
-      return this.getRect(x, y, selectionStyle);
-    }
-    return this.getRect(box.x, box.y, selectionStyle);
-
-  }
-
   renderContainer(props, svgProps, style) {
     const { title, desc, children, portalComponent, className } = props;
     return (
       <svg {...svgProps} style={style} className={className}>
         <title id="title">{title}</title>
         <desc id="desc">{desc}</desc>
-        {this.renderRect(props)}
+        {this.getRect(props)}
         {children}
         {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
       </svg>

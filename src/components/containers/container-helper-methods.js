@@ -2,9 +2,6 @@ import { Selection } from "victory-core";
 export default {
 
   getOriginalDomain(scale) {
-    if (!scale) {
-      return {};
-    }
     return {
       x: scale.x.domain(),
       y: scale.y.domain()
@@ -12,40 +9,37 @@ export default {
   },
 
   withinBounds(point, bounds)  {
-    const {x, y} = bounds;
-    return point.x >= Math.min(...x) &&
-      point.x <= Math.max(...x) &&
-      point.y >= Math.min(...y) &&
-      point.y <= Math.max(...y);
+    const {x1, x2, y1, y2} = bounds;
+    const {x, y} = point;
+    return x >= Math.min(x1, x2) &&
+      x <= Math.max(x1, x2) &&
+      y >= Math.min(y1, y2) &&
+      y <= Math.max(y1, y2);
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
     const { dimension, scale } = props;
     fullDomain = fullDomain || this.getOriginalDomain(props);
     selectedDomain = selectedDomain || props.selectedDomain || fullDomain;
-    const fullCoords = Selection.getDomainCoordinates(scale, fullDomain);
-    const selectedCoords = Selection.getDomainCoordinates(scale, selectedDomain);
-    const x1 = dimension !== "y" ? Math.min(...selectedCoords.x) : Math.min(...fullCoords.x);
-    const x2 = dimension !== "y" ? Math.max(...selectedCoords.x) : Math.max(...fullCoords.x);
-    const y1 = dimension !== "x" ? Math.min(...selectedCoords.y) : Math.min(...fullCoords.y);
-    const y2 = dimension !== "x" ? Math.max(...selectedCoords.y) : Math.max(...fullCoords.y);
+    const fullCoordinates = Selection.getDomainCoordinates(scale, fullDomain);
+    const selectedCoordinates = Selection.getDomainCoordinates(scale, selectedDomain);
+
     return {
-      x: [Math.min(x1, x2), Math.max(x1, x2)], y: [Math.min(y1, y2), Math.max(y1, y2)]
+      x1: dimension !== "y" ? Math.min(...selectedCoordinates.x) : Math.min(...fullCoordinates.x),
+      x2: dimension !== "y" ? Math.max(...selectedCoordinates.x) : Math.max(...fullCoordinates.x),
+      y1: dimension !== "x" ? Math.min(...selectedCoordinates.y) : Math.min(...fullCoordinates.y),
+      y2: dimension !== "x" ? Math.max(...selectedCoordinates.y) : Math.max(...fullCoordinates.y)
     };
   },
 
   getHandles(props, domainBox) {
-    if (!domainBox) {
-      return {};
-    }
     const {handleWidth} = props;
-    const {x, y} = domainBox;
+    const {x1, x2, y1, y2} = domainBox;
     return {
-      left: {x: [ Math.min(...x) - handleWidth, Math.min(...x) + handleWidth ], y},
-      right: {x: [ Math.max(...x) - handleWidth, Math.max(...x) + handleWidth ], y},
-      top: {x, y: [ Math.min(...y) - handleWidth, Math.min(...y) + handleWidth ]},
-      bottom: {x, y: [ Math.max(...y) - handleWidth, Math.max(...y) + handleWidth ]}
+      left: {x1: x1 - handleWidth, x2: x1 + handleWidth, y1, y2},
+      right: {x1: x2 - handleWidth, x2: x2 + handleWidth, y1, y2},
+      top: {x1, x2, y1: y1 + handleWidth, y2: y1 - handleWidth},
+      bottom: {x1, x2, y1: y1 + handleWidth, y2: y1 - handleWidth}
     };
   }
-
 };
