@@ -18,7 +18,8 @@ export default class VictoryBrushContainer extends VictoryContainer {
       stroke: "black",
       fill: "black",
       fillOpacity: 0.2
-    }
+    },
+    dimension: "x"
   };
 
   static defaultEvents = [{

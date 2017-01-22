@@ -30,17 +30,15 @@ export default class VictoryZoomContainer extends VictoryContainer {
         evt.preventDefault();
         const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
         const { scale } = targetProps;
-        const svg = targetProps.svg || Selection.getParentSVG(evt.target);
-        const matrix = targetProps.matrix = matrix || Selection.getTransformationMatrix(svg);
         const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
         const zoomDomain = targetProps.zoomDomain || originalDomain;
-        const startX = Selection.transformTarget(evt.clientX, matrix, "x");
+        const {x} = Selection.getSVGEventCoordinates(evt);
         const lastDomain = zoomDomain;
         return [{
           target: "parent",
           mutation: () => {
             return {
-              svg, matrix, originalDomain, startX, lastDomain, zoomDomain, getTimer, isPanning: true
+              originalDomain, startX: x, lastDomain, zoomDomain, getTimer, isPanning: true
             };
           }
         }];
@@ -64,12 +62,10 @@ export default class VictoryZoomContainer extends VictoryContainer {
       onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
         if (targetProps.isPanning) {
           const { scale, startX, onDomainChange } = targetProps;
-          const svg = targetProps.svg || Selection.getParentSVG(evt.target);
-          const matrix = targetProps.matrix = matrix || Selection.getTransformationMatrix(svg);
+          const {x} = Selection.getSVGEventCoordinates(evt);
           const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
           const lastDomain = targetProps.lastDomain || targetProps.zoomDomain || originalDomain;
-          const delta = startX - Selection.transformTarget(evt.clientX, matrix, "x");
-          const calculatedDx = delta / ZoomHelpers.getDomainScale(lastDomain, scale);
+          const calculatedDx = (startX - x) / ZoomHelpers.getDomainScale(lastDomain, scale);
           const nextXDomain = ZoomHelpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
           const zoomDomain = { x: nextXDomain, y: lastDomain.y };
           const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
