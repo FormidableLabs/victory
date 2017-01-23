@@ -26,7 +26,6 @@ export default class VictoryRangeContainer extends VictoryContainer {
       fill: "black",
       fillOpacity: 0.2
     },
-    dimension: "x",
     handleWidth: 5
   };
 
@@ -46,7 +45,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                startX: x, startY: y, isSelecting: true, fullDomain, domainBox, fullDomainBox,
+                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
                 x1: dimension !== "y" ? x : x1,
                 y1: dimension !== "x" ? y : y1,
                 x2: dimension !== "y" ? x : x2,
@@ -61,7 +60,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, fullDomain, fullDomainBox, domainBox,
+                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
                 x1: Math.max(x1, x2), x2: Math.min(x1, x2)
               };
             }
@@ -71,7 +70,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, fullDomainBox, domainBox,
+                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
                 x1: Math.min(x1, x2), x2: Math.max(x1, x2)
               };
             }
@@ -79,14 +78,16 @@ export default class VictoryRangeContainer extends VictoryContainer {
         } else if (Helpers.withinBounds({x, y}, domainBox)) {
           return [{
             target: "parent",
-            mutation: () => ({ isPanning: true, startX: x, startY: y, fullDomain, selectedDomain, domainBox })
+            mutation: () => ({
+              isPanning: true, startX: x, startY: y, selectedDomain, domainBox, fullDomainBox
+            })
           }];
         } else {
           return [{
             target: "parent",
             mutation: () => {
               return {
-                startX: x, startY: y, isSelecting: true, domainBox,
+                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
                 x1: dimension !== "y" ? x : x1,
                 y1: dimension !== "x" ? y : y1,
                 x2: dimension !== "y" ? x : x2,
@@ -113,17 +114,26 @@ export default class VictoryRangeContainer extends VictoryContainer {
           const x2 = dimension !== "y" ? targetProps.x2 - delta.x : targetProps.x2;
           const y1 = dimension !== "x" ? targetProps.y1 - delta.y : targetProps.y1;
           const y2 = dimension !== "x" ? targetProps.y2 - delta.y : targetProps.y2;
-          const selectedDomain = Selection.getBounds({x1, y1, x2, y2, scale});
+          const constrainedDimensions = {
+            x1: x2 > fullDomainBox.x2 ?
+              fullDomainBox.x2 - Math.abs(x2 - x1) : Math.max(x1, fullDomainBox.x1),
+            y1: y2 > fullDomainBox.y2 ?
+              fullDomainBox.y2 - Math.abs(y2 - y1) : Math.max(y1, fullDomainBox.y1),
+            x2: x1 < fullDomainBox.x1 ?
+              fullDomainBox.x1 + Math.abs(x2 - x1) : Math.min(x2, fullDomainBox.x2),
+            y2: y1 < fullDomainBox.y1 ?
+              fullDomainBox.y1 + Math.abs(y2 - y1) : Math.min(y2, fullDomainBox.y2)
+          };
+          const selectedDomain = Selection.getBounds({...constrainedDimensions, scale});
 
           return [{
             target: "parent",
             mutation: () => {
               return {
-                selectedDomain, startX: x, startY: y,
-                x1: Math.max(x1, fullDomainBox.x1),
-                y1: Math.max(y1, fullDomainBox.y1),
-                x2: Math.min(x2, fullDomainBox.x2),
-                y2: Math.min(y2, fullDomainBox.y2)
+                selectedDomain,
+                startX: x2 >= fullDomainBox.x2 || x1 <= fullDomainBox.x1 ? startX : x,
+                startY: y2 >= fullDomainBox.y2 || y1 <= fullDomainBox.y1 ? startY : y,
+                ...constrainedDimensions
               };
             }
           }];
