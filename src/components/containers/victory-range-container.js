@@ -37,7 +37,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
         evt.preventDefault();
         const { dimension, scale, selectedDomain } = targetProps;
         const fullDomain = targetProps.fullDomain || Helpers.getOriginalDomain(scale);
-        const fullDomainBox = Helpers.getDomainBox(targetProps, fullDomain);
+        const fullDomainBox = targetProps.fullDomainBox || Helpers.getDomainBox(targetProps, fullDomain);
         const domainBox = Helpers.getDomainBox(targetProps, fullDomain, selectedDomain);
         const {x, y} = Selection.getSVGEventCoordinates(evt);
         const {x1, y1, x2, y2} = domainBox;
@@ -46,7 +46,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                startX: x, startY: y, isSelecting: true, domainBox, fullDomainBox,
+                startX: x, startY: y, isSelecting: true, fullDomain, domainBox, fullDomainBox,
                 x1: dimension !== "y" ? x : x1,
                 y1: dimension !== "x" ? y : y1,
                 x2: dimension !== "y" ? x : x2,
@@ -61,8 +61,8 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, negativeSelection: true, fullDomainBox, domainBox,
-                x1: dimension !== "y" ? x : x1
+                isSelecting: true, fullDomain, fullDomainBox, domainBox,
+                x1: Math.max(x1, x2), x2: Math.min(x1, x2)
               };
             }
           }];
@@ -71,14 +71,15 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, fullDomainBox, domainBox, x2: dimension !== "y" ? x : x2
+                isSelecting: true, fullDomainBox, domainBox,
+                x1: Math.min(x1, x2), x2: Math.max(x1, x2)
               };
             }
           }];
         } else if (Helpers.withinBounds({x, y}, domainBox)) {
           return [{
             target: "parent",
-            mutation: () => ({ isPanning: true, startX: x, startY: y, fullDomain, selectedDomain })
+            mutation: () => ({ isPanning: true, startX: x, startY: y, fullDomain, selectedDomain, domainBox })
           }];
         } else {
           return [{
@@ -138,16 +139,9 @@ export default class VictoryRangeContainer extends VictoryContainer {
           return [{
             target: "parent",
             mutation: () => {
-              return negativeSelection ?
-                {
-                  x1: Math.max(x1, fullDomainBox.x1),
-                  y1: Math.max(y1, fullDomainBox.y1),
-                  selectedDomain
-                } : {
-                  x2: Math.min(x2, fullDomainBox.x2),
-                y2: Math.min(y2, fullDomainBox.y2),
-                  selectedDomain
-                };
+              return {
+                x2, y2, selectedDomain
+              };
             }
           }];
         }

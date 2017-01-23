@@ -35,11 +35,15 @@ export default {
   getHandles(props, domainBox) {
     const {handleWidth} = props;
     const {x1, x2, y1, y2} = domainBox;
+    const minX = Math.min(x1, x2);
+    const maxX = Math.max(x1, x2);
+    const minY = Math.min(y1, y2);
+    const maxY = Math.max(y1, y2);
     return {
-      left: {x1: x1 - handleWidth, x2: x1 + handleWidth, y1, y2},
-      right: {x1: x2 - handleWidth, x2: x2 + handleWidth, y1, y2},
-      top: {x1, x2, y1: y1 + handleWidth, y2: y1 - handleWidth},
-      bottom: {x1, x2, y1: y1 + handleWidth, y2: y1 - handleWidth}
+      left: {x1: minX - handleWidth, x2: minX + handleWidth, y1, y2},
+      right: {x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2},
+      top: {x1, x2, y1: minY + handleWidth, y2: minY - handleWidth},
+      bottom: {x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth}
     };
   }
 };
