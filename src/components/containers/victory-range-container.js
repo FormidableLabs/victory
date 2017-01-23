@@ -1,9 +1,7 @@
 import React from "react";
-import {
-  VictoryContainer, Selection, PropTypes as CustomPropTypes, Domain
-} from "victory-core";
+import { VictoryContainer, Selection } from "victory-core";
 import Helpers from "./container-helper-methods";
-import { isFunction, isEqual } from "lodash";
+import { isEqual } from "lodash";
 
 
 export default class VictoryRangeContainer extends VictoryContainer {
@@ -37,45 +35,34 @@ export default class VictoryRangeContainer extends VictoryContainer {
         evt.preventDefault();
         const { dimension, scale, selectedDomain } = targetProps;
         const fullDomain = targetProps.fullDomain || Helpers.getOriginalDomain(scale);
-        const fullDomainBox = targetProps.fullDomainBox || Helpers.getDomainBox(targetProps, fullDomain);
+        const fullDomainBox = targetProps.fullDomainBox ||
+          Helpers.getDomainBox(targetProps, fullDomain);
         const {x, y} = Selection.getSVGEventCoordinates(evt);
         if (!Helpers.withinBounds({x, y}, fullDomainBox)) {
           return {};
         }
         const domainBox = Helpers.getDomainBox(targetProps, fullDomain, selectedDomain);
-        const {x1, y1, x2, y2} = domainBox;
+        const standardMutation = Helpers.getStandardMutation({x, y}, domainBox, dimension);
         if (!selectedDomain || isEqual(selectedDomain, fullDomain)) {
           return [{
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
-                x1: dimension !== "y" ? x : x1,
-                y1: dimension !== "x" ? y : y1,
-                x2: dimension !== "y" ? x : x2,
-                y2: dimension !== "x" ? y : y2
+                isSelecting: true, selectedDomain, domainBox, fullDomainBox, ...standardMutation
               };
             }
           }];
         }
         const handles = Helpers.getHandles(targetProps, domainBox);
-        if (Helpers.withinBounds({x, y}, handles.left)) {
+        const activeHandles = Helpers.pickHandles({x, y}, handles);
+        if (activeHandles) {
+          const mutation = Helpers.getHandleMutation(domainBox, activeHandles);
           return [{
             target: "parent",
             mutation: () => {
               return {
                 isSelecting: true, selectedDomain, domainBox, fullDomainBox,
-                x1: Math.max(x1, x2), x2: Math.min(x1, x2)
-              };
-            }
-          }];
-        } else if (Helpers.withinBounds({x, y}, handles.right)) {
-          return [{
-            target: "parent",
-            mutation: () => {
-              return {
-                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
-                x1: Math.min(x1, x2), x2: Math.max(x1, x2)
+                ...mutation
               };
             }
           }];
@@ -91,11 +78,8 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
-                x1: dimension !== "y" ? x : x1,
-                y1: dimension !== "x" ? y : y1,
-                x2: dimension !== "y" ? x : x2,
-                y2: dimension !== "x" ? y : y2
+                isSelecting: true, selectedDomain, domainBox, fullDomainBox, ...standardMutation
+
               };
             }
           }];
@@ -117,30 +101,33 @@ export default class VictoryRangeContainer extends VictoryContainer {
             x: startX ? startX - x : 0,
             y: startY ? startY - y : 0
           };
-          const x1 = dimension !== "y" ? targetProps.x1 - delta.x : targetProps.x1;
-          const x2 = dimension !== "y" ? targetProps.x2 - delta.x : targetProps.x2;
-          const y1 = dimension !== "x" ? targetProps.y1 - delta.y : targetProps.y1;
-          const y2 = dimension !== "x" ? targetProps.y2 - delta.y : targetProps.y2;
-          const constrainedDimensions = {
-            x1: x2 > fullDomainBox.x2 ?
-              fullDomainBox.x2 - Math.abs(x2 - x1) : Math.max(x1, fullDomainBox.x1),
-            y1: y2 > fullDomainBox.y2 ?
-              fullDomainBox.y2 - Math.abs(y2 - y1) : Math.max(y1, fullDomainBox.y1),
-            x2: x1 < fullDomainBox.x1 ?
-              fullDomainBox.x1 + Math.abs(x2 - x1) : Math.min(x2, fullDomainBox.x2),
-            y2: y1 < fullDomainBox.y1 ?
-              fullDomainBox.y1 + Math.abs(y2 - y1) : Math.min(y2, fullDomainBox.y2)
+          const {x1, y1, x2, y2} = targetProps;
+          const box = {
+            x1: dimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
+            x2: dimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
+            y1: dimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
+            y2: dimension !== "x" ? Math.max(y1, y2) - delta.y : Math.max(y1, y2)
           };
-          const selectedDomain = Selection.getBounds({...constrainedDimensions, scale});
+          const constrainedBox = {
+            x1: box.x2 > fullDomainBox.x2 ?
+              fullDomainBox.x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, fullDomainBox.x1),
+            y1: box.y1 > fullDomainBox.y2 ?
+              fullDomainBox.y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, fullDomainBox.y1),
+            x2: box.x1 < fullDomainBox.x1 ?
+              fullDomainBox.x1 + Math.abs(box.x2 - box.x1) : Math.min(box.x2, fullDomainBox.x2),
+            y2: box.y1 < fullDomainBox.y1 ?
+              fullDomainBox.y1 + Math.abs(box.y2 - box.y1) : Math.min(box.y2, fullDomainBox.y2)
+          };
+          const selectedDomain = Selection.getBounds({...constrainedBox, scale});
 
           return [{
             target: "parent",
             mutation: () => {
               return {
                 selectedDomain,
-                startX: x2 >= fullDomainBox.x2 || x1 <= fullDomainBox.x1 ? startX : x,
-                startY: y2 >= fullDomainBox.y2 || y1 <= fullDomainBox.y1 ? startY : y,
-                ...constrainedDimensions
+                startX: box.x2 >= fullDomainBox.x2 || box.x1 <= fullDomainBox.x1 ? startX : x,
+                startY: box.y2 >= fullDomainBox.y2 || box.y1 <= fullDomainBox.y1 ? startY : y,
+                ...constrainedBox
               };
             }
           }];

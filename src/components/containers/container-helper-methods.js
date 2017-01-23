@@ -1,6 +1,7 @@
 import { Selection } from "victory-core";
-export default {
+import { assign } from "lodash";
 
+export default {
   getOriginalDomain(scale) {
     return {
       x: scale.x.domain(),
@@ -44,6 +45,39 @@ export default {
       right: {x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2},
       top: {x1, x2, y1: minY + handleWidth, y2: minY - handleWidth},
       bottom: {x1, x2, y1: maxY + handleWidth, y2: maxY - handleWidth}
+    };
+  },
+
+  pickHandles(point, handles) {
+    const options = ["top", "bottom", "left", "right"];
+    const activeHandles = options.reduce((memo, opt) => {
+      memo = this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
+      return memo;
+    }, []);
+    return activeHandles.length && activeHandles;
+  },
+
+  getHandleMutation(box, handles) {
+    const {x1, y1, x2, y2} = box;
+    const mutations = {
+      left: {x1: Math.max(x1, x2), x2: Math.min(x1, x2)},
+      right: {x1: Math.min(x1, x2), x2: Math.max(x1, x2)},
+      top: {y1: Math.max(y1, y2), y2: Math.min(y1, y2)},
+      bottom: {y1: Math.min(y1, y2), y2: Math.max(y1, y2)}
+    };
+    return handles.reduce((memo, current) => {
+      return assign(memo, mutations[current]);
+    }, {});
+  },
+
+  getStandardMutation(point, box, dimension) {
+    const {x, y} = point;
+    const {x1, x2, y1, y2} = box;
+    return {
+      x1: dimension !== "y" ? x : x1,
+      y1: dimension !== "x" ? y : y1,
+      x2: dimension !== "y" ? x : x2,
+      y2: dimension !== "x" ? y : y2
     };
   }
 };
