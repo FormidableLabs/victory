@@ -77,7 +77,10 @@ class VictoryVoronoiTooltip extends React.Component {
     size: CustomPropTypes.nonNegative,
     standalone: PropTypes.bool,
     style: PropTypes.shape({
-      parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
+      parent: PropTypes.object,
+      data: PropTypes.object,
+      labels: PropTypes.object,
+      flyout: PropTypes.object
     }),
     theme: PropTypes.object,
     width: CustomPropTypes.nonNegative,
