@@ -49,7 +49,8 @@ export default {
     };
   },
 
-  pickHandles(point, handles) {
+  getActiveHandles(point, props, domainBox) {
+    const handles = this.getHandles(props, domainBox);
     const options = ["top", "bottom", "left", "right"];
     const activeHandles = options.reduce((memo, opt) => {
       memo = this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
@@ -58,7 +59,7 @@ export default {
     return activeHandles.length && activeHandles;
   },
 
-  getHandleMutation(box, handles) {
+  getResizeMutation(box, handles) {
     const {x1, y1, x2, y2} = box;
     const mutations = {
       left: {x1: Math.max(x1, x2), x2: Math.min(x1, x2), y1, y2},
@@ -75,7 +76,7 @@ export default {
     return {x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER]};
   },
 
-  getStandardMutation(point, box, dimension) {
+  getSelectionMutation(point, box, dimension) {
     const {x, y} = point;
     const {x1, x2, y1, y2} = box;
     return {
@@ -83,6 +84,31 @@ export default {
       y1: dimension !== "x" ? y : y1,
       x2: dimension !== "y" ? x : x2,
       y2: dimension !== "x" ? y : y2
+    };
+  },
+
+  panBox(props, point) {
+    const {x1, x2, y1, y2, dimension, startX, startY} = props;
+    const {x, y} = point;
+    const delta = {
+      x: startX ? startX - x : 0,
+      y: startY ? startY - y : 0
+    };
+    return {
+      x1: dimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
+      x2: dimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
+      y1: dimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
+      y2: dimension !== "x" ? Math.max(y1, y2) - delta.y : Math.max(y1, y2)
+    };
+  },
+
+  constrainBox(box, fullDomainBox) {
+    const {x1, y1, x2, y2} = fullDomainBox;
+    return {
+      x1: box.x2 > x2 ? x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, x1),
+      y1: box.y2 > y2 ? y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, y1),
+      x2: box.x1 < x1 ? x1 + Math.abs(box.x2 - box.x1) : Math.min(box.x2, x2),
+      y2: box.y1 < y1 ? y1 + Math.abs(box.y2 - box.y1) : Math.min(box.y2, y2)
     };
   }
 };

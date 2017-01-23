@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import Helpers from "./container-helper-methods";
-import { assign, isEqual } from "lodash";
+import { assign, isEqual, isFunction } from "lodash";
 
 
 export default class VictoryRangeContainer extends VictoryContainer {
@@ -23,9 +23,9 @@ export default class VictoryRangeContainer extends VictoryContainer {
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     selectionStyle: {
-      stroke: "black",
+      stroke: "transparent",
       fill: "black",
-      fillOpacity: 0.2
+      fillOpacity: 0.1
     },
     handleStyle: {
       stroke: "transparent",
@@ -33,7 +33,8 @@ export default class VictoryRangeContainer extends VictoryContainer {
     },
     handleWidth: 8,
     selectionComponent: <rect/>,
-    handleComponent: <rect/>
+    handleComponent: <rect/>,
+    dimension: "x"
   };
 
   static defaultEvents = [{
@@ -41,91 +42,89 @@ export default class VictoryRangeContainer extends VictoryContainer {
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
         evt.preventDefault();
-        const { dimension, selectedDomain, domain, handleWidth } = targetProps;
+        const { dimension, selectedDomain, domain, handleWidth, onDomainChange } = targetProps;
         const fullDomainBox = targetProps.fullDomainBox ||
           Helpers.getDomainBox(targetProps, domain);
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+        // Ignore events that occur outside of the maximum domain region
         if (!Helpers.withinBounds({x, y}, fullDomainBox, handleWidth)) {
           return {};
         }
-
         const domainBox = Helpers.getDomainBox(targetProps, domain, selectedDomain);
-        const handles = Helpers.getHandles(targetProps, domainBox);
-        const activeHandles = Helpers.pickHandles({x, y}, handles);
-        const standardMutation = Helpers.getStandardMutation({x, y}, domainBox, dimension);
+        const activeHandles = Helpers.getActiveHandles({x, y}, targetProps, domainBox);
+        // If the event occurs in any of the handle regions, start a resize
         if (activeHandles) {
-          const mutation = Helpers.getHandleMutation(domainBox, activeHandles);
           return [{
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, selectedDomain, domainBox, fullDomainBox,
-                ...mutation
+                isSelecting: true, domainBox, fullDomainBox,
+                ...Helpers.getResizeMutation(domainBox, activeHandles)
               };
             }
           }];
-        } else if (selectedDomain && !isEqual(domain, selectedDomain)) {
+        } else if (
+            Helpers.withinBounds({x, y}, domainBox) &&
+            selectedDomain &&
+            !isEqual(domain, selectedDomain
+          )) {
+          // if the event occurs within a selected region start a panning event, unless the whole
+          // domain is selected
           return [{
             target: "parent",
             mutation: () => ({
-              isPanning: true, startX: x, startY: y, selectedDomain, domainBox, fullDomainBox
+              isPanning: true, startX: x, startY: y, domainBox, fullDomainBox
             })
           }];
         } else {
+          // if the event occurs outside the region, or if the whole domain is selected,
+          // start a new selection
+          const minimumDomain = Helpers.getMinimumDomain();
+          if (isFunction(onDomainChange)) {
+            onDomainChange(minimumDomain);
+          }
           return [{
             target: "parent",
             mutation: () => {
               return {
                 isSelecting: true, domainBox, fullDomainBox,
                 selectedDomain: Helpers.getMinimumDomain(),
-                ...standardMutation
+                ...Helpers.getSelectionMutation({x, y}, domainBox, dimension)
               };
             }
           }];
         }
       },
-      onMouseMove: (evt, targetProps) => {
+      onMouseMove: (evt, targetProps) => { // eslint-disable-line max-statements
+        // if a panning or selection has not been started, ignore the event
         if (!targetProps.isPanning && !targetProps.isSelecting) {
           return {};
         }
         const {
-          dimension, scale, isPanning, isSelecting, startX, startY, fullDomainBox
+          dimension, scale, isPanning, isSelecting, fullDomainBox, onDomainChange
         } = targetProps;
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+         // Ignore events that occur outside of the maximum domain region
         if (!Helpers.withinBounds({x, y}, fullDomainBox)) {
           return {};
         }
         if (isPanning) {
-          const delta = {
-            x: startX ? startX - x : 0,
-            y: startY ? startY - y : 0
-          };
-          const {x1, y1, x2, y2} = targetProps;
-          const box = {
-            x1: dimension !== "y" ? Math.min(x1, x2) - delta.x : Math.min(x1, x2),
-            x2: dimension !== "y" ? Math.max(x1, x2) - delta.x : Math.max(x1, x2),
-            y1: dimension !== "x" ? Math.min(y1, y2) - delta.y : Math.min(y1, y2),
-            y2: dimension !== "x" ? Math.max(y1, y2) - delta.y : Math.max(y1, y2)
-          };
-          const constrainedBox = {
-            x1: box.x2 > fullDomainBox.x2 ?
-              fullDomainBox.x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, fullDomainBox.x1),
-            y1: box.y2 > fullDomainBox.y2 ?
-              fullDomainBox.y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, fullDomainBox.y1),
-            x2: box.x1 < fullDomainBox.x1 ?
-              fullDomainBox.x1 + Math.abs(box.x2 - box.x1) : Math.min(box.x2, fullDomainBox.x2),
-            y2: box.y1 < fullDomainBox.y1 ?
-              fullDomainBox.y1 + Math.abs(box.y2 - box.y1) : Math.min(box.y2, fullDomainBox.y2)
-          };
+          const {startX, startY} = targetProps;
+          const pannedBox = Helpers.panBox(targetProps, {x, y});
+          const constrainedBox = Helpers.constrainBox(pannedBox, fullDomainBox);
           const selectedDomain = Selection.getBounds({...constrainedBox, scale});
-
+          if (isFunction(onDomainChange)) {
+            onDomainChange(selectedDomain);
+          }
           return [{
             target: "parent",
             mutation: () => {
               return {
                 selectedDomain,
-                startX: box.x2 >= fullDomainBox.x2 || box.x1 <= fullDomainBox.x1 ? startX : x,
-                startY: box.y2 >= fullDomainBox.y2 || box.y1 <= fullDomainBox.y1 ? startY : y,
+                startX: pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1 ?
+                  startX : x,
+                startY: pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1 ?
+                  startY : y,
                 ...constrainedBox
               };
             }
@@ -135,6 +134,9 @@ export default class VictoryRangeContainer extends VictoryContainer {
           const y2 = dimension !== "x" ? y : targetProps.y2;
           const selectedDomain =
             Selection.getBounds({x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale});
+          if (isFunction(onDomainChange)) {
+            onDomainChange(selectedDomain);
+          }
           return [{
             target: "parent",
             mutation: () => {
@@ -146,8 +148,12 @@ export default class VictoryRangeContainer extends VictoryContainer {
         }
       },
       onMouseUp: (evt, targetProps) => {
-        const {x1, y1, x2, y2, domain} = targetProps;
+        const {x1, y1, x2, y2, domain, onDomainChange} = targetProps;
+        // if the mouse hasn't moved since a mouseDown event, select the whole domain region
         if (x1 === x2 || y1 === y2) {
+          if (isFunction(onDomainChange)) {
+            onDomainChange(domain);
+          }
           return [{
             target: "parent",
             mutation: () => {
@@ -230,8 +236,8 @@ export default class VictoryRangeContainer extends VictoryContainer {
       <svg {...svgProps} style={style} className={className}>
         <title id="title">{title}</title>
         <desc id="desc">{desc}</desc>
-        {this.getRect(props)}
         {children}
+        {this.getRect(props)}
         {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
       </svg>
     );

@@ -58,9 +58,6 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}
             containerComponent={
               <VictoryRangeContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
                 onSelection={this.handleSelection.bind(this)}
                 onSelectionCleared={this.handleClearSelection.bind(this)}
               />
@@ -118,9 +115,6 @@ class App extends React.Component {
             containerComponent={
               <VictoryRangeContainer
                 selectedDomain={{x: [0, 10], y: [-5, 5]}}
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
               />
             }
             size={(datum, active) => active ? 5 : 3}
@@ -144,9 +138,6 @@ class App extends React.Component {
             }}
             containerComponent={
               <VictoryRangeContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
               />
             }
             size={(datum, active) => active ? 5 : 3}
@@ -156,9 +147,6 @@ class App extends React.Component {
           <VictoryGroup style={chartStyle}
             containerComponent={
               <VictoryRangeContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
               />
             }
           >
@@ -209,9 +197,7 @@ class App extends React.Component {
           <VictoryStack style={chartStyle}
             containerComponent={
               <VictoryRangeContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
+
               />
             }
           >
