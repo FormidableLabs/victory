@@ -9,13 +9,14 @@ export default {
     };
   },
 
-  withinBounds(point, bounds)  {
+  withinBounds(point, bounds, padding)  {
     const {x1, x2, y1, y2} = bounds;
     const {x, y} = point;
-    return x >= Math.min(x1, x2) &&
-      x <= Math.max(x1, x2) &&
-      y >= Math.min(y1, y2) &&
-      y <= Math.max(y1, y2);
+    padding = padding ? padding / 2 : 0;
+    return x + padding >= Math.min(x1, x2) &&
+      x - padding <= Math.max(x1, x2) &&
+      y + padding >= Math.min(y1, y2) &&
+      y - padding <= Math.max(y1, y2);
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
@@ -34,12 +35,12 @@ export default {
   },
 
   getHandles(props, domainBox) {
-    const {handleWidth} = props;
     const {x1, x2, y1, y2} = domainBox;
     const minX = Math.min(x1, x2);
     const maxX = Math.max(x1, x2);
     const minY = Math.min(y1, y2);
     const maxY = Math.max(y1, y2);
+    const handleWidth = props.handleWidth / 2;
     return {
       left: {x1: minX - handleWidth, x2: minX + handleWidth, y1, y2},
       right: {x1: maxX - handleWidth, x2: maxX + handleWidth, y1, y2},
@@ -60,10 +61,10 @@ export default {
   getHandleMutation(box, handles) {
     const {x1, y1, x2, y2} = box;
     const mutations = {
-      left: {x1: Math.max(x1, x2), x2: Math.min(x1, x2)},
-      right: {x1: Math.min(x1, x2), x2: Math.max(x1, x2)},
-      top: {y1: Math.max(y1, y2), y2: Math.min(y1, y2)},
-      bottom: {y1: Math.min(y1, y2), y2: Math.max(y1, y2)}
+      left: {x1: Math.max(x1, x2), x2: Math.min(x1, x2), y1, y2},
+      right: {x1: Math.min(x1, x2), x2: Math.max(x1, x2), y1, y2},
+      top: {y1: Math.max(y1, y2), y2: Math.min(y1, y2), x1, x2},
+      bottom: {y1: Math.min(y1, y2), y2: Math.max(y1, y2), x1, x2}
     };
     return handles.reduce((memo, current) => {
       return assign(memo, mutations[current]);
@@ -71,7 +72,7 @@ export default {
   },
 
   getMinimumDomain() {
-    return  {x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER]};
+    return {x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER]};
   },
 
   getStandardMutation(point, box, dimension) {

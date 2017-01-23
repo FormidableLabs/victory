@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import Helpers from "./container-helper-methods";
-import { isEqual } from "lodash";
+import { assign, isEqual } from "lodash";
 
 
 export default class VictoryRangeContainer extends VictoryContainer {
@@ -9,13 +9,16 @@ export default class VictoryRangeContainer extends VictoryContainer {
   static propTypes = {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,
+    handleStyle: React.PropTypes.object,
     dimension: React.PropTypes.oneOf(["x", "y"]),
     selectedDomain: React.PropTypes.shape({
       x: React.PropTypes.array,
       y: React.PropTypes.array
     }),
     onDomainChange: React.PropTypes.func,
-    handleWidth: React.PropTypes.number
+    handleWidth: React.PropTypes.number,
+    selectionComponent: React.PropTypes.element,
+    handleComponent: React.PropTypes.element
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
@@ -24,8 +27,13 @@ export default class VictoryRangeContainer extends VictoryContainer {
       fill: "black",
       fillOpacity: 0.2
     },
-    dimension: "x",
-    handleWidth: 5
+    handleStyle: {
+      stroke: "transparent",
+      fill: "transparent"
+    },
+    handleWidth: 8,
+    selectionComponent: <rect/>,
+    handleComponent: <rect/>
   };
 
   static defaultEvents = [{
@@ -33,30 +41,18 @@ export default class VictoryRangeContainer extends VictoryContainer {
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
         evt.preventDefault();
-        const { dimension, scale, selectedDomain } = targetProps;
-        const fullDomain = targetProps.fullDomain || Helpers.getOriginalDomain(scale);
+        const { dimension, selectedDomain, domain, handleWidth } = targetProps;
         const fullDomainBox = targetProps.fullDomainBox ||
-          Helpers.getDomainBox(targetProps, fullDomain);
+          Helpers.getDomainBox(targetProps, domain);
         const {x, y} = Selection.getSVGEventCoordinates(evt);
-        if (!Helpers.withinBounds({x, y}, fullDomainBox)) {
+        if (!Helpers.withinBounds({x, y}, fullDomainBox, handleWidth)) {
           return {};
         }
-        const domainBox = Helpers.getDomainBox(targetProps, fullDomain, selectedDomain);
-        const standardMutation = Helpers.getStandardMutation({x, y}, domainBox, dimension);
-        if (!selectedDomain || isEqual(selectedDomain, fullDomain)) {
-          return [{
-            target: "parent",
-            mutation: () => {
-              return {
-                isSelecting: true, domainBox, fullDomainBox,
-                selectedDomain: Helpers.getMinimumDomain(),
-                ...standardMutation
-              };
-            }
-          }];
-        }
+
+        const domainBox = Helpers.getDomainBox(targetProps, domain, selectedDomain);
         const handles = Helpers.getHandles(targetProps, domainBox);
         const activeHandles = Helpers.pickHandles({x, y}, handles);
+        const standardMutation = Helpers.getStandardMutation({x, y}, domainBox, dimension);
         if (activeHandles) {
           const mutation = Helpers.getHandleMutation(domainBox, activeHandles);
           return [{
@@ -68,7 +64,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
               };
             }
           }];
-        } else if (Helpers.withinBounds({x, y}, domainBox)) {
+        } else if (selectedDomain && !isEqual(domain, selectedDomain)) {
           return [{
             target: "parent",
             mutation: () => ({
@@ -114,7 +110,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
           const constrainedBox = {
             x1: box.x2 > fullDomainBox.x2 ?
               fullDomainBox.x2 - Math.abs(box.x2 - box.x1) : Math.max(box.x1, fullDomainBox.x1),
-            y1: box.y1 > fullDomainBox.y2 ?
+            y1: box.y2 > fullDomainBox.y2 ?
               fullDomainBox.y2 - Math.abs(box.y2 - box.y1) : Math.max(box.y1, fullDomainBox.y1),
             x2: box.x1 < fullDomainBox.x1 ?
               fullDomainBox.x1 + Math.abs(box.x2 - box.x1) : Math.min(box.x2, fullDomainBox.x2),
@@ -150,13 +146,13 @@ export default class VictoryRangeContainer extends VictoryContainer {
         }
       },
       onMouseUp: (evt, targetProps) => {
-        const {x1, y1, x2, y2, fullDomain} = targetProps;
+        const {x1, y1, x2, y2, domain} = targetProps;
         if (x1 === x2 || y1 === y2) {
           return [{
             target: "parent",
             mutation: () => {
               return {
-                isPanning: false, isSelecting: false, selectedDomain: fullDomain
+                isPanning: false, isSelecting: false, selectedDomain: domain
               };
             }
           }];
@@ -175,17 +171,59 @@ export default class VictoryRangeContainer extends VictoryContainer {
     }
   }];
 
-  getRect(props) {
-    const {selectionStyle, selectedDomain, scale} = props;
-    const domain = selectedDomain || Helpers.getOriginalDomain(scale);
-    const {x, y} = Selection.getDomainCoordinates(scale, domain);
+  getSelectBox(props, coordinates) {
+    const {x, y} = coordinates;
+    const {selectionStyle, selectionComponent} = props;
+    return x[0] !== x[1] && y[0] !== y[1] ?
+      React.cloneElement(selectionComponent, {
+        width: Math.abs(x[1] - x[0]) || 1,
+        height: Math.abs(y[1] - y[0]) || 1,
+        x: Math.min(x[0], x[1]),
+        y: Math.min(y[0], y[1]),
+        cursor: "move",
+        style: selectionStyle
+      }) : null;
+  }
+
+  getHandles(props, coordinates) {
+    const {dimension, handleWidth, handleStyle, handleComponent} = props;
+    const {x, y} = coordinates;
     const width = Math.abs(x[1] - x[0]) || 1;
     const height = Math.abs(y[1] - y[0]) || 1;
-    const xVal = Math.min(x[0], x[1]);
-    const yVal = Math.min(y[0], y[1]);
-    return x[0] !== x[1] && y[0] !== y[1] ?
-      <rect x={xVal} y={yVal} width={width} height={height} style={selectionStyle}/> : null;
+    const options = ["top", "bottom", "left", "right"];
+    const yProps = { style: handleStyle, width, height: handleWidth, cursor: "ns-resize"};
+    const xProps = { style: handleStyle, width: handleWidth, height, cursor: "ew-resize"};
+    const handleProps = {
+      top: dimension !== "x" && assign({x: x[0], y: y[1] - (handleWidth / 2)}, yProps),
+      bottom: dimension !== "x" && assign({x: x[0], y: y[0] - (handleWidth / 2)}, yProps),
+      left: dimension !== "y" && assign({y: y[1], x: x[0] - (handleWidth / 2)}, xProps),
+      right: dimension !== "y" && assign({y: y[1], x: x[1] - (handleWidth / 2)}, xProps)
+    };
+    const handles = options.reduce((memo, curr) => {
+      memo = handleProps[curr] ?
+        memo.concat(React.cloneElement(
+          handleComponent,
+          assign({key: `handle-${curr}`}, handleProps[curr]
+        ))) : memo;
+      return memo;
+    }, []);
+    return handles.length ? handles : null;
   }
+
+  getRect(props) {
+    const {selectedDomain, scale} = props;
+    const domain = selectedDomain || props.domain;
+    const coordinates = Selection.getDomainCoordinates(scale, domain);
+    const selectBox = this.getSelectBox(props, coordinates);
+    return selectBox ?
+      (
+        <g>
+          {selectBox}
+          {this.getHandles(props, coordinates)}
+        </g>
+      ) : null;
+  }
+
   renderContainer(props, svgProps, style) {
     const { title, desc, children, portalComponent, className } = props;
     return (
