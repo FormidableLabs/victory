@@ -48,7 +48,9 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, selectedDomain, domainBox, fullDomainBox, ...standardMutation
+                isSelecting: true, domainBox, fullDomainBox,
+                selectedDomain: Helpers.getMinimumDomain(),
+                ...standardMutation
               };
             }
           }];
@@ -78,8 +80,9 @@ export default class VictoryRangeContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isSelecting: true, selectedDomain, domainBox, fullDomainBox, ...standardMutation
-
+                isSelecting: true, domainBox, fullDomainBox,
+                selectedDomain: Helpers.getMinimumDomain(),
+                ...standardMutation
               };
             }
           }];
@@ -147,13 +150,13 @@ export default class VictoryRangeContainer extends VictoryContainer {
         }
       },
       onMouseUp: (evt, targetProps) => {
-        const {x1, y1, x2, y2, fullDomainBox} = targetProps;
+        const {x1, y1, x2, y2, fullDomain} = targetProps;
         if (x1 === x2 || y1 === y2) {
           return [{
             target: "parent",
             mutation: () => {
               return {
-                isPanning: false, isSelecting: false, ...fullDomainBox
+                isPanning: false, isSelecting: false, selectedDomain: fullDomain
               };
             }
           }];
@@ -173,14 +176,15 @@ export default class VictoryRangeContainer extends VictoryContainer {
   }];
 
   getRect(props) {
-    const {x1, x2, y1, y2, selectionStyle} = props;
-
-    const width = Math.abs(x2 - x1) || 1;
-    const height = Math.abs(y2 - y1) || 1;
-    const x = Math.min(x1, x2);
-    const y = Math.min(y1, y2);
-    return y2 && x2 && x1 && y1 ?
-      <rect x={x} y={y} width={width} height={height} style={selectionStyle}/> : null;
+    const {selectionStyle, selectedDomain, scale} = props;
+    const domain = selectedDomain || Helpers.getOriginalDomain(scale);
+    const {x, y} = Selection.getDomainCoordinates(scale, domain);
+    const width = Math.abs(x[1] - x[0]) || 1;
+    const height = Math.abs(y[1] - y[0]) || 1;
+    const xVal = Math.min(x[0], x[1]);
+    const yVal = Math.min(y[0], y[1]);
+    return x[0] !== x[1] && y[0] !== y[1] ?
+      <rect x={xVal} y={yVal} width={width} height={height} style={selectionStyle}/> : null;
   }
   renderContainer(props, svgProps, style) {
     const { title, desc, children, portalComponent, className } = props;

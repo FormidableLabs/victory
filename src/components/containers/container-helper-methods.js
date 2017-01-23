@@ -70,6 +70,10 @@ export default {
     }, {});
   },
 
+  getMinimumDomain() {
+    return  {x: [0, 1 / Number.MAX_SAFE_INTEGER], y: [0, 1 / Number.MAX_SAFE_INTEGER]};
+  },
+
   getStandardMutation(point, box, dimension) {
     const {x, y} = point;
     const {x1, x2, y1, y2} = box;
