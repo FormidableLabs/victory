@@ -26,6 +26,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
       fill: "black",
       fillOpacity: 0.2
     },
+    dimension: "x",
     handleWidth: 5
   };
 
@@ -37,8 +38,11 @@ export default class VictoryRangeContainer extends VictoryContainer {
         const { dimension, scale, selectedDomain } = targetProps;
         const fullDomain = targetProps.fullDomain || Helpers.getOriginalDomain(scale);
         const fullDomainBox = targetProps.fullDomainBox || Helpers.getDomainBox(targetProps, fullDomain);
-        const domainBox = Helpers.getDomainBox(targetProps, fullDomain, selectedDomain);
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+        if (!Helpers.withinBounds({x, y}, fullDomainBox)) {
+          return {};
+        }
+        const domainBox = Helpers.getDomainBox(targetProps, fullDomain, selectedDomain);
         const {x1, y1, x2, y2} = domainBox;
         if (!selectedDomain || isEqual(selectedDomain, fullDomain)) {
           return [{
@@ -105,6 +109,9 @@ export default class VictoryRangeContainer extends VictoryContainer {
           dimension, scale, isPanning, isSelecting, startX, startY, fullDomainBox
         } = targetProps;
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+        if (!Helpers.withinBounds({x, y}, fullDomainBox)) {
+          return {};
+        }
         if (isPanning) {
           const delta = {
             x: startX ? startX - x : 0,
@@ -140,11 +147,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
         } else if (isSelecting) {
           const x2 = dimension !== "y" ? x : targetProps.x2;
           const y2 = dimension !== "x" ? y : targetProps.y2;
-          const x1 = dimension !== "y" ? x : targetProps.x1;
-          const y1 = dimension !== "x" ? y : targetProps.y1;
-          const { negativeSelection } = targetProps;
-          const selectedDomain = negativeSelection ?
-            Selection.getBounds({x1, y1, x2: targetProps.x2, y2: targetProps.y2, scale}) :
+          const selectedDomain =
             Selection.getBounds({x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale});
           return [{
             target: "parent",
@@ -183,7 +186,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
   }];
 
   getRect(props) {
-    const {x1, x2, y1, y2, selectionStyle, selectedDomain} = props;
+    const {x1, x2, y1, y2, selectionStyle} = props;
 
     const width = Math.abs(x2 - x1) || 1;
     const height = Math.abs(y2 - y1) || 1;
