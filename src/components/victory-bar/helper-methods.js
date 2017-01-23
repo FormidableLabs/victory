@@ -3,25 +3,6 @@ import { Helpers, Data, Domain, Scale } from "victory-core";
 
 export default {
 
-  getScale(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "bar");
-    const { horizontal } = props;
-    const range = {
-      x: Helpers.getRange(props, "x"),
-      y: Helpers.getRange(props, "y")
-    };
-    const domain = {
-      x: Domain.getDomainWithZero(props, "x"),
-      y: Domain.getDomainWithZero(props, "y")
-    };
-    const xScale = Scale.getBaseScale(props, "x").domain(domain.x).range(range.x);
-    const yScale = Scale.getBaseScale(props, "y").domain(domain.y).range(range.y);
-    return {
-      x: horizontal ? yScale : xScale,
-      y: horizontal ? xScale : yScale
-    };
-  },
-
   getBarWidth(props) {
     const {style, width, data} = props;
     const padding = props.padding.left || props.padding;
@@ -91,19 +72,32 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const { theme } = props;
+    const { theme, horizontal } = props;
     const defaultStyles = theme && theme.bar && theme.bar.style ? theme.bar.style : {};
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const data = Data.getData(props);
-    const scale = this.getScale(props);
-    return { style, data, scale };
+    const range = {
+      x: Helpers.getRange(props, "x"),
+      y: Helpers.getRange(props, "y")
+    };
+    const domain = {
+      x: Domain.getDomainWithZero(props, "x"),
+      y: Domain.getDomainWithZero(props, "y")
+    };
+    const xScale = Scale.getBaseScale(props, "x").domain(domain.x).range(range.x);
+    const yScale = Scale.getBaseScale(props, "y").domain(domain.y).range(range.y);
+    const scale = {
+      x: horizontal ? yScale : xScale,
+      y: horizontal ? xScale : yScale
+    };
+    return { style, data, scale, domain };
   },
 
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
-    const {style, data, scale } = this.getCalculatedValues(props);
+    const {style, data, scale, domain } = this.getCalculatedValues(props);
     const { horizontal, width, height, padding } = props;
-    const childProps = {parent: { scale, width, height, data, style: style.parent }};
+    const childProps = {parent: { domain, scale, width, height, data, style: style.parent }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;

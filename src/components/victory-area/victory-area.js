@@ -105,8 +105,6 @@ class VictoryArea extends React.Component {
   static getDomain = Domain.getDomainWithZero.bind(Domain);
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(AreaHelpers.getBaseProps.bind(AreaHelpers), fallbackProps);
-  static getScale = partialRight(AreaHelpers.getScale.bind(AreaHelpers),
-    fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

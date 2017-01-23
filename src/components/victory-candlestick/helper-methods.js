@@ -5,9 +5,9 @@ export default {
   getBaseProps(props, fallbackProps) { // eslint-disable-line max-statements
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale } = calculatedValues;
+    const { data, style, scale, domain } = calculatedValues;
     const { groupComponent, width, height, padding } = props;
-    const childProps = {parent: {scale, width, height, data, style: style.parent}};
+    const childProps = {parent: {domain, scale, width, height, data, style: style.parent}};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
@@ -69,7 +69,7 @@ export default {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-    return {data, scale, style};
+    return {domain, data, scale, style};
   },
 
   getData(props) {

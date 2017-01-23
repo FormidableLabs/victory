@@ -4,9 +4,9 @@ import { Helpers, Log, Scale, Domain, Data } from "victory-core";
 export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "errorbar");
-    const { data, style, scale } = this.getCalculatedValues(props, fallbackProps);
+    const { data, style, scale, domain } = this.getCalculatedValues(props, fallbackProps);
     const { groupComponent, height, width, borderWidth } = props;
-    const childProps = { parent: {style: style.parent, scale, data, height, width} };
+    const childProps = { parent: {domain, style: style.parent, scale, data, height, width} };
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;
@@ -198,7 +198,7 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
 
-    return {data, scale, style};
+    return {domain, data, scale, style};
   },
 
   getDataStyles(datum, style) {

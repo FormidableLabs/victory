@@ -114,8 +114,6 @@ class VictoryLine extends React.Component {
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
     fallbackProps);
-  static getScale = partialRight(LineHelpers.getScale.bind(LineHelpers),
-    fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];

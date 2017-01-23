@@ -187,7 +187,7 @@ export default {
     props = this.modifyProps(props, fallbackProps, role);
     const calculatedValues = this.getCalculatedValues(props);
     const {
-      style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors
+      style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors, domain
     } = calculatedValues;
 
     const {
@@ -198,7 +198,7 @@ export default {
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
 
     const childProps = { parent: {
-      style: style.parent, ticks, scale, width: props.width, height: props.height
+      style: style.parent, ticks, scale, width: props.width, height: props.height, domain
     }};
     for (let index = 0, len = ticks.length; index < len; index++) {
       const tick = stringTicks ? props.tickValues[(ticks[index]) - 1] : ticks[index];
@@ -240,13 +240,14 @@ export default {
     const labelPadding = this.getLabelPadding(props, style);
     const stringTicks = Helpers.stringTicks(props);
     const scale = this.getScale(props);
+    const domain = this.getDomain(props);
     const ticks = this.getTicks(props, scale);
     const tickFormat = this.getTickFormat(props, scale, ticks);
     const anchors = this.getAnchors(orientation, isVertical);
 
     return {
       style, padding, orientation, isVertical, labelPadding, stringTicks,
-      anchors, scale, ticks, tickFormat
+      anchors, scale, ticks, tickFormat, domain
     };
   },
 

@@ -148,7 +148,9 @@ export default class VictoryGroup extends React.Component {
     this.events = Wrapper.getAllEvents(nextProps);
   }
 
-  getCalculatedProps(props, childComponents, style) {
+  getCalculatedProps(props, childComponents) {
+    const { role } = this.constructor;
+    const style = this.getStyle(props.theme, props.style, role);
     const modifiedProps = Helpers.modifyProps(props, fallbackProps);
     const horizontal = modifiedProps.horizontal || childComponents.every(
       (component) => component.props && component.props.horizontal
@@ -275,42 +277,44 @@ export default class VictoryGroup extends React.Component {
     return newChildren;
   }
 
-  getContainer(props, calculatedProps) {
-    const { width, height, containerComponent } = props;
-    const { scale, style } = calculatedProps;
-    const parentProps = defaults(
-      {},
-      containerComponent.props,
-      {style: style.parent, scale, width, height}
-    );
-    return React.cloneElement(containerComponent, parentProps);
+  renderContainer(containerComponent, props) {
+    const containerProps = defaults({}, containerComponent.props, props);
+    return React.cloneElement(containerComponent, containerProps);
   }
 
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
+  renderGroup(groupComponent, props, children) {
+    const groupProps = defaults({}, groupComponent.props, props, {role: "presentation"});
+    return React.cloneElement(groupComponent, groupProps, children);
+  }
+
+  getContainerProps(props, calculatedProps) {
+    const { width, height } = props;
+    const { domain, scale, style } = calculatedProps;
+    return {
+      domain, scale, width, height, style: style.parent
+    };
+  }
+
+  getStyle(theme, style, role) {
+    const defaultStyle = theme && theme[role] && theme[role].style ? theme[role].style : {};
+    return Helpers.getStyles(style, defaultStyle, "auto", "100%");
   }
 
   render() {
+    const {role} = this.constructor;
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
-    const modifiedProps = Helpers.modifyProps(props, fallbackProps, "group");
-    const { theme, standalone, eventKey } = modifiedProps;
-    const defaultStyle = theme && theme.group && theme.group.style ? theme.group.style : {};
-    const style = Helpers.getStyles(modifiedProps.style, defaultStyle, "auto", "100%");
+    const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
+    const { standalone, eventKey, groupComponent, containerComponent } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
-    const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents, style,
-      fallbackProps.props);
+    const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (this.props.modifyChildren) {
+    if (this.props.modifyChildren) { // required by VictoryZoom deprecate
       newChildren = this.props.modifyChildren(newChildren, modifiedProps);
     }
-    const group = this.renderGroup(newChildren, style.parent);
-    const container = standalone ?
-      this.getContainer(modifiedProps, calculatedProps) : group;
+    const containerProps = this.getContainerProps(modifiedProps, calculatedProps);
+    const group = this.renderGroup(groupComponent, containerProps, newChildren);
+    const container = standalone ? this.renderContainer(containerComponent, containerProps) : group;
     if (this.events) {
       return (
         <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
