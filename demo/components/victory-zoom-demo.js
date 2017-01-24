@@ -2,7 +2,7 @@
 import React from "react";
 import { range, merge, random } from "lodash";
 import {
-  VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine, VictoryAxis, VictoryStack
+  VictoryChart, VictoryZoom, VictoryArea, VictoryLine, VictoryGroup, VictoryAxis, VictoryStack
 } from "../../src/index";
 import { VictoryTheme } from "victory-core";
 
@@ -78,15 +78,16 @@ export default class App extends React.Component {
     const parentStyle = {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"};
     return (
       <div className="demo">
-        <h1>VictoryZoomContainer</h1>
+        <h1>VictoryZoom</h1>
 
+        <VictoryZoom>
+          <VictoryGroup style={{parent: parentStyle}} data={this.state.transitionData}>
+            <VictoryLine style={{data: this.state.style}} />
+          </VictoryGroup>
+        </VictoryZoom>
 
+        <VictoryZoom zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}}>
           <VictoryChart style={{parent: parentStyle}}
-            containerComponent={
-              <VictoryZoomContainer
-                zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}} allowZoom={false}
-              />
-            }
             scale={{
               x: "time"
             }}
@@ -112,24 +113,24 @@ export default class App extends React.Component {
               ]}
             />
           </VictoryChart>
+        </VictoryZoom>
 
-          <VictoryChart style={{parent: parentStyle}}
-            animate={{duration: 1500}}
-            containerComponent={<VictoryZoomContainer/>}
-          >
+        <VictoryZoom>
+          <VictoryChart style={{parent: parentStyle}}>
             <VictoryLine
               style={{parent: parentStyle, data: this.state.style}}
               data={this.state.data}
+              label={"label\none"}
+              animate={{duration: 1500}}
             />
           </VictoryChart>
+        </VictoryZoom>
 
         <button onClick={() => this.setState({zoomDomain: this.getZoomDomain()})}>
           New domain
         </button>
-
+        <VictoryZoom zoomDomain={this.state.zoomDomain}>
           <VictoryChart
-            containerComponent={<VictoryZoomContainer zoomDomain={this.state.zoomDomain}/>}
-            animate={{duration: 1500}}
             style={{parent: parentStyle}}
             events={[{
               target: "data",
@@ -155,8 +156,10 @@ export default class App extends React.Component {
               sample={25}
             />
           </VictoryChart>
+        </VictoryZoom>
 
-          <VictoryChart style={{parent: parentStyle}} containerComponent={<VictoryZoomContainer/>}>
+        <VictoryZoom>
+          <VictoryChart style={{parent: parentStyle}}>
             <VictoryLine
               style={{
                 parent: parentStyle,
@@ -186,8 +189,10 @@ export default class App extends React.Component {
               y={(d) => d * d}
             />
           </VictoryChart>
+        </VictoryZoom>
 
-          <VictoryChart style={{parent: parentStyle}} containerComponent={<VictoryZoomContainer/>}>
+        <VictoryZoom>
+          <VictoryChart style={{parent: parentStyle}}>
             <VictoryArea
               style={{parent: parentStyle, data: {stroke: "#333", fill: "#888", opacity: 0.4}}}
               data={this.state.data}
@@ -197,9 +202,10 @@ export default class App extends React.Component {
             <VictoryLine data={this.state.data} interpolation="stepBefore"/>
             <VictoryAxis dependentAxis/>
           </VictoryChart>
+        </VictoryZoom>
 
+        <VictoryZoom>
           <VictoryChart style={{parent: parentStyle}}
-            containerComponent={<VictoryZoomContainer/>}
             theme={VictoryTheme.material}
             events={[{
               childName: "area-1",
@@ -260,6 +266,7 @@ export default class App extends React.Component {
             </VictoryStack>
             <VictoryAxis dependentAxis/>
           </VictoryChart>
+        </VictoryZoom>
       </div>
     );
   }

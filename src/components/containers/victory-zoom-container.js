@@ -29,8 +29,8 @@ export default class VictoryZoomContainer extends VictoryContainer {
       onMouseDown: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
-        const { scale } = targetProps;
-        const originalDomain = targetProps.originalDomain || Helpers.getOriginalDomain(scale);
+        const { scale, domain } = targetProps;
+        const originalDomain = domain || Helpers.getOriginalDomain(scale);
         const zoomDomain = targetProps.zoomDomain || originalDomain;
         const {x} = Selection.getSVGEventCoordinates(evt);
         const lastDomain = zoomDomain;
@@ -38,7 +38,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
           target: "parent",
           mutation: () => {
             return {
-              originalDomain, startX: x, lastDomain, zoomDomain, getTimer, isPanning: true
+              startX: x, lastDomain, zoomDomain, getTimer, isPanning: true
             };
           }
         }];
@@ -61,9 +61,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
       },
       onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
         if (targetProps.isPanning) {
-          const { scale, startX, onDomainChange } = targetProps;
+          const { scale, startX, onDomainChange, domain } = targetProps;
           const {x} = Selection.getSVGEventCoordinates(evt);
-          const originalDomain = targetProps.originalDomain || Helpers.getOriginalDomain(scale);
+          const originalDomain = domain || Helpers.getOriginalDomain(scale);
           const lastDomain = targetProps.lastDomain || targetProps.zoomDomain || originalDomain;
           const calculatedDx = (startX - x) / Helpers.getDomainScale(lastDomain, scale);
           const nextXDomain = Helpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
@@ -82,16 +82,19 @@ export default class VictoryZoomContainer extends VictoryContainer {
             target: "parent",
             callback: resumeAnimation,
             mutation: () => {
-              return {zoomDomain, originalDomain};
+              return {zoomDomain};
             }
           }];
         }
       },
       onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
+        if (!targetProps.allowZoom) {
+          return {};
+        }
         evt.preventDefault();
         const deltaY = evt.deltaY;
-        const { scale, onDomainChange } = targetProps;
-        const originalDomain = targetProps.originalDomain || Helpers.getOriginalDomain(scale);
+        const { scale, onDomainChange, domain } = targetProps;
+        const originalDomain = domain || Helpers.getOriginalDomain(scale);
         const lastDomain = targetProps.zoomDomain || originalDomain;
         const {x} = lastDomain;
         const xBounds = originalDomain.x;
@@ -112,13 +115,12 @@ export default class VictoryZoomContainer extends VictoryContainer {
           target: "parent",
           callback: resumeAnimation,
           mutation: () => {
-            return {zoomDomain, originalDomain};
+            return {zoomDomain};
           }
         }];
       }
     }
   }];
-
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
     const { scale, height, clipContainerComponent } = props;
