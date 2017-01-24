@@ -11,16 +11,18 @@ export default class VictorySelectionContainer extends VictoryContainer {
     onSelection: React.PropTypes.func,
     onSelectionCleared: React.PropTypes.func,
     dimension: React.PropTypes.oneOf(["x", "y"]),
-    standalone: React.PropTypes.bool
+    standalone: React.PropTypes.bool,
+    selectionComponent: React.PropTypes.element
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     selectionStyle: {
-      stroke: "black",
+      stroke: "transparent",
       fill: "black",
-      fillOpacity: 0.2
+      fillOpacity: 0.1
     },
-    standalone: true
+    standalone: true,
+    selectionComponent: <rect/>
   };
 
   static defaultEvents = [{
@@ -72,7 +74,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
         const parentMutation = [{
           target: "parent",
           mutation: () => {
-            return { select: false, x1: null, x2: null, y1: null, y2: null, foo: "bar" };
+            return { select: false, x1: null, x2: null, y1: null, y2: null };
           }
         }];
         if (!x2 || !y2) {
@@ -98,14 +100,15 @@ export default class VictorySelectionContainer extends VictoryContainer {
   }];
 
   getRect(props) {
-    const {x1, x2, y1, y2, selectionStyle} = props;
+    const {x1, x2, y1, y2, selectionStyle, selectionComponent} = props;
     const width = Math.abs(x2 - x1) || 1;
     const height = Math.abs(y2 - y1) || 1;
     const x = Math.min(x1, x2);
     const y = Math.min(y1, y2);
     return y2 && x2 && x1 && y1 ?
-      <rect x={x} y={y} width={width} height={height} style={selectionStyle}/> : null;
+      React.cloneElement(selectionComponent, {x, y, width, height, style: selectionStyle}) : null;
   }
+
   renderContainer(props, svgProps, style) {
     const { title, desc, children, portalComponent, className, standalone } = props;
     const containerProps = standalone ? svgProps : omit(svgProps, ["width", "height", "viewBox"]);

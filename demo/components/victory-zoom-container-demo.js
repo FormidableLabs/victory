@@ -2,7 +2,7 @@
 import React from "react";
 import { range, merge, random } from "lodash";
 import {
-  VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine, VictoryGroup, VictoryAxis, VictoryStack
+  VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine, VictoryAxis, VictoryStack
 } from "../../src/index";
 import { VictoryTheme } from "victory-core";
 

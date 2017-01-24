@@ -308,10 +308,7 @@ export default class VictoryGroup extends React.Component {
     const { standalone, eventKey, groupComponent, containerComponent } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
-    let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
-    if (this.props.modifyChildren) { // required by VictoryZoom deprecate
-      newChildren = this.props.modifyChildren(newChildren, modifiedProps);
-    }
+    const newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
     const containerProps = this.getContainerProps(modifiedProps, calculatedProps);
     const group = this.renderGroup(groupComponent, containerProps, newChildren);
     const container = standalone ? this.renderContainer(containerComponent, containerProps) : group;

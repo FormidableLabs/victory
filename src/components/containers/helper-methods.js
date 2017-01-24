@@ -64,7 +64,7 @@ export default {
     };
   },
 
-  withinBounds(point, bounds, padding)  {
+  withinBounds(point, bounds, padding) {
     const {x1, x2, y1, y2} = bounds;
     const {x, y} = point;
     padding = padding ? padding / 2 : 0;

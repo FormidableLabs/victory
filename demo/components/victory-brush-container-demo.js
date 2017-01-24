@@ -137,8 +137,7 @@ class App extends React.Component {
               }
             }}
             containerComponent={
-              <VictoryBrushContainer
-              />
+              <VictoryBrushContainer/>
             }
             size={(datum, active) => active ? 5 : 3}
             y={(d) => d.x * d.x}
@@ -146,8 +145,7 @@ class App extends React.Component {
 
           <VictoryGroup style={chartStyle}
             containerComponent={
-              <VictoryBrushContainer
-              />
+              <VictoryBrushContainer/>
             }
           >
             <VictoryScatter
@@ -196,9 +194,7 @@ class App extends React.Component {
 
           <VictoryStack style={chartStyle}
             containerComponent={
-              <VictoryBrushContainer
-
-              />
+              <VictoryBrushContainer/>
             }
           >
             <VictoryBar
