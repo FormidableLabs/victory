@@ -93,8 +93,8 @@ export default class VictoryZoomContainer extends VictoryContainer {
         }
         evt.preventDefault();
         const deltaY = evt.deltaY;
-        const { scale, onDomainChange, domain } = targetProps;
-        const originalDomain = domain || Helpers.getOriginalDomain(scale);
+        const { onDomainChange, domain } = targetProps;
+        const originalDomain = targetProps.originalDomain || domain;
         const lastDomain = targetProps.zoomDomain || originalDomain;
         const {x} = lastDomain;
         const xBounds = originalDomain.x;
@@ -115,7 +115,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
           target: "parent",
           callback: resumeAnimation,
           mutation: () => {
-            return {zoomDomain};
+            return {domain: zoomDomain, zoomDomain, originalDomain, lastDomain};
           }
         }];
       }

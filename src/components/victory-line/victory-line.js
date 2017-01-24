@@ -14,6 +14,8 @@ const fallbackProps = {
   interpolation: "linear"
 };
 
+const animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
+
 class VictoryLine extends React.Component {
   static displayName = "VictoryLine";
   static role = "line";
@@ -118,7 +120,7 @@ class VictoryLine extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-  renderData(props) { // eslint-disable-line max-statements
+  renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const dataComponents = [];
     const labelComponents = [];
@@ -136,48 +138,29 @@ class VictoryLine extends React.Component {
       dataComponents;
   }
 
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
-  }
-
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  render() {
-    const { role } = this.constructor;
-    const props = Helpers.modifyProps(this.props, fallbackProps, role);
-    const { animate, style, standalone, theme } = props;
+  renderContainer(component, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
+  }
 
+  render() {
+    const {role} = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+    const { animate, standalone, containerComponent, groupComponent } = props;
     if (this.shouldAnimate()) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      // TODO: extract into helper
-      const whitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-
-    const styleObject = theme && theme.line && theme.line.style ? theme.line.style : {};
-
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-    const group = this.renderGroup(this.renderData(props), baseStyles.parent);
-
-    return standalone ? this.renderContainer(props, group) : group;
+    const children = this.renderData(props);
+    const component = standalone ? containerComponent : groupComponent;
+    return this.renderContainer(component, children);
   }
 }
 export default addEvents(VictoryLine);

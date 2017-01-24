@@ -2,7 +2,8 @@
 import React from "react";
 import { range, merge, random } from "lodash";
 import {
-  VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine, VictoryAxis, VictoryStack
+  VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
+  VictoryAxis, VictoryGroup, VictoryStack
 } from "../../src/index";
 import { VictoryTheme } from "victory-core";
 
@@ -80,11 +81,23 @@ export default class App extends React.Component {
       <div className="demo">
         <h1>VictoryZoomContainer</h1>
 
+          <VictoryLine
+            containerComponent={<VictoryZoomContainer/>}
+            style={{parent: parentStyle, data: this.state.style}}
+            data={this.state.transitionData}
+          />
+
+          <VictoryGroup
+            containerComponent={<VictoryZoomContainer/>}
+            style={{parent: parentStyle}} data={this.state.transitionData}
+          >
+            <VictoryLine style={{data: this.state.style}} />
+          </VictoryGroup>
 
           <VictoryChart style={{parent: parentStyle}}
             containerComponent={
               <VictoryZoomContainer
-                zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}} allowZoom={false}
+                zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}}
               />
             }
             scale={{

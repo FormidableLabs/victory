@@ -14,6 +14,10 @@ const fallbackProps = {
   symbol: "circle"
 };
 
+const animationWhitelist = [
+  "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width"
+];
+
 class VictoryScatter extends React.Component {
   static displayName = "VictoryScatter";
   static role = "scatter";
@@ -123,20 +127,6 @@ class VictoryScatter extends React.Component {
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
-  }
-
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const dataComponents = [];
@@ -159,30 +149,25 @@ class VictoryScatter extends React.Component {
     return !!this.props.animate;
   }
 
-  render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+  renderContainer(component, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
+  }
 
+  render() {
+    const {role} = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
+    const { animate, standalone, containerComponent, groupComponent } = props;
     if (this.shouldAnimate()) {
-      const whitelist = [
-        "data", "domain", "height", "maxBubbleSize", "padding", "samples", "size", "style", "width"
-      ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-
-    const styleObject = modifiedProps.theme && modifiedProps.theme.scatter
-    ? modifiedProps.theme.scatter
-    : fallbackProps.style;
-
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
-
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    const children = this.renderData(props);
+    const component = standalone ? containerComponent : groupComponent;
+    return this.renderContainer(component, children);
   }
 }
 

@@ -13,6 +13,11 @@ const fallbackProps = {
   padding: 50
 };
 
+const animationWhitelist = [
+  "style", "domain", "range", "tickCount", "tickValues",
+  "offsetX", "offsetY", "padding", "width", "height"
+];
+
 class VictoryAxis extends React.Component {
   static displayName = "VictoryAxis";
 
@@ -99,7 +104,7 @@ class VictoryAxis extends React.Component {
     theme: VictoryTheme.grayscale,
     tickCount: 5,
     containerComponent: <VictoryContainer />,
-    groupComponent: <g/>,
+    groupComponent: <g role="presentation"/>,
     fixLabelOverlap: false
   };
 
@@ -179,18 +184,9 @@ class VictoryAxis extends React.Component {
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }
 
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      ...children
-    );
+  renderContainer(component, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   shouldAnimate() {
@@ -199,24 +195,15 @@ class VictoryAxis extends React.Component {
 
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
-    const { animate, standalone } = props;
+    const { animate, standalone, containerComponent, groupComponent } = props;
     if (this.shouldAnimate()) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const whitelist = [
-        "style", "domain", "range", "tickCount", "tickValues",
-        "offsetX", "offsetY", "padding", "width", "height"
-      ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
 
-    const styleObject = AxisHelpers.getStyleObject(props);
-    const style = AxisHelpers.getStyles(props, styleObject);
     const gridAndTicks = this.renderGridAndTicks(props);
     const modifiedGridAndTicks = props.fixLabelOverlap
       ? this.fixLabelOverlap(gridAndTicks, props)
@@ -226,10 +213,8 @@ class VictoryAxis extends React.Component {
       this.renderLine(props),
       this.renderLabel(props)
     ];
-
-    const group = this.renderGroup(children, style.parent);
-
-    return standalone ? this.renderContainer(props, group) : group;
+    const component = standalone ? containerComponent : groupComponent;
+    return this.renderContainer(component, children);
   }
 }
 

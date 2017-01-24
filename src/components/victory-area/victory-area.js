@@ -13,6 +13,8 @@ const fallbackProps = {
   interpolation: "linear"
 };
 
+const animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
+
 class VictoryArea extends React.Component {
 
   static propTypes = {
@@ -123,18 +125,9 @@ class VictoryArea extends React.Component {
     return areaComponent;
   }
 
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
+  renderContainer(component, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   shouldAnimate() {
@@ -144,24 +137,18 @@ class VictoryArea extends React.Component {
   render() {
     const { role } = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
-    const { animate, style, standalone, theme } = props;
+    const { animate, standalone, groupComponent, containerComponent} = props;
 
     if (this.shouldAnimate()) {
-      const whitelist = ["data", "domain", "height", "padding", "style", "width"];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-
-    const styleObject = theme && theme.area ? theme.area.style : {};
-
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(props), baseStyles.parent);
-
-    return standalone ? this.renderContainer(props, group) : group;
+    const children = this.renderData(props);
+    const component = standalone ? containerComponent : groupComponent;
+    return this.renderContainer(component, children);
   }
 }
 
