@@ -1,11 +1,11 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
-import Helpers from "./container-helper-methods";
+import Helpers from "./helper-methods";
 import { assign, isEqual, isFunction } from "lodash";
 
 
-export default class VictoryRangeContainer extends VictoryContainer {
-  static displayName = "VictoryRangeContainer";
+export default class VictoryBrushContainer extends VictoryContainer {
+  static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,
@@ -33,8 +33,7 @@ export default class VictoryRangeContainer extends VictoryContainer {
     },
     handleWidth: 8,
     selectionComponent: <rect/>,
-    handleComponent: <rect/>,
-    dimension: "x"
+    handleComponent: <rect/>
   };
 
   static defaultEvents = [{

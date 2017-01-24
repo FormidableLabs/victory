@@ -1,7 +1,7 @@
 import React from "react";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
-  VictoryRangeContainer
+  VictoryBrushContainer
 } from "../../src/index";
 
 class App extends React.Component {
@@ -57,7 +57,7 @@ class App extends React.Component {
           {this.listData()}
           <VictoryChart style={chartStyle}
             containerComponent={
-              <VictoryRangeContainer
+              <VictoryBrushContainer
                 onSelection={this.handleSelection.bind(this)}
                 onSelectionCleared={this.handleClearSelection.bind(this)}
               />
@@ -113,7 +113,7 @@ class App extends React.Component {
             }}
             domain={{x: [0, 10], y: [-5, 5]}}
             containerComponent={
-              <VictoryRangeContainer
+              <VictoryBrushContainer
                 selectedDomain={{x: [0, 10], y: [-5, 5]}}
               />
             }
@@ -137,7 +137,7 @@ class App extends React.Component {
               }
             }}
             containerComponent={
-              <VictoryRangeContainer
+              <VictoryBrushContainer
               />
             }
             size={(datum, active) => active ? 5 : 3}
@@ -146,7 +146,7 @@ class App extends React.Component {
 
           <VictoryGroup style={chartStyle}
             containerComponent={
-              <VictoryRangeContainer
+              <VictoryBrushContainer
               />
             }
           >
@@ -196,7 +196,7 @@ class App extends React.Component {
 
           <VictoryStack style={chartStyle}
             containerComponent={
-              <VictoryRangeContainer
+              <VictoryBrushContainer
 
               />
             }

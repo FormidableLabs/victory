@@ -1,6 +1,6 @@
 import React, {PropTypes} from "react";
 import { defaults, isFunction } from "lodash";
-import ZoomHelpers from "./zoom-helper-methods";
+import Helpers from "./helper-methods";
 import {
   VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes, Selection, Timer
 } from "victory-core";
@@ -30,7 +30,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
         evt.preventDefault();
         const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
         const { scale } = targetProps;
-        const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
+        const originalDomain = targetProps.originalDomain || Helpers.getOriginalDomain(scale);
         const zoomDomain = targetProps.zoomDomain || originalDomain;
         const {x} = Selection.getSVGEventCoordinates(evt);
         const lastDomain = zoomDomain;
@@ -63,10 +63,10 @@ export default class VictoryZoomContainer extends VictoryContainer {
         if (targetProps.isPanning) {
           const { scale, startX, onDomainChange } = targetProps;
           const {x} = Selection.getSVGEventCoordinates(evt);
-          const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
+          const originalDomain = targetProps.originalDomain || Helpers.getOriginalDomain(scale);
           const lastDomain = targetProps.lastDomain || targetProps.zoomDomain || originalDomain;
-          const calculatedDx = (startX - x) / ZoomHelpers.getDomainScale(lastDomain, scale);
-          const nextXDomain = ZoomHelpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
+          const calculatedDx = (startX - x) / Helpers.getDomainScale(lastDomain, scale);
+          const nextXDomain = Helpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
           const zoomDomain = { x: nextXDomain, y: lastDomain.y };
           const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
           let resumeAnimation;
@@ -91,12 +91,12 @@ export default class VictoryZoomContainer extends VictoryContainer {
         evt.preventDefault();
         const deltaY = evt.deltaY;
         const { scale, onDomainChange } = targetProps;
-        const originalDomain = targetProps.originalDomain || ZoomHelpers.getOriginalDomain(scale);
+        const originalDomain = targetProps.originalDomain || Helpers.getOriginalDomain(scale);
         const lastDomain = targetProps.zoomDomain || originalDomain;
         const {x} = lastDomain;
         const xBounds = originalDomain.x;
         // TODO: Check scale factor
-        const nextXDomain = ZoomHelpers.scale(x, xBounds, 1 + (deltaY / 300));
+        const nextXDomain = Helpers.scale(x, xBounds, 1 + (deltaY / 300));
         const zoomDomain = { x: nextXDomain, y: originalDomain.y };
         const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
         let resumeAnimation;
