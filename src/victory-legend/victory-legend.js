@@ -120,8 +120,8 @@ export default class VictoryLegend extends React.Component {
     let leftOffset = 0;
 
     padding = Helpers.getPadding({ padding: padding || theme.padding });
-    height = height || theme.height;
-    width = width || theme.width;
+    height = Helpers.evaluateProp(height || theme.height, data);
+    width = Helpers.evaluateProp(width || theme.width, data);
 
     const textSizes = data.map((datum, i) => {
       const labelStyle = this.getStyles(datum, legendTheme, "labels");
