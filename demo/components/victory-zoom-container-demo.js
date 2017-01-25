@@ -83,6 +83,7 @@ export default class App extends React.Component {
 
           <VictoryLine
             containerComponent={<VictoryZoomContainer/>}
+            animate={{duration: 1500}}
             style={{parent: parentStyle, data: this.state.style}}
             data={this.state.transitionData}
           />
@@ -91,7 +92,7 @@ export default class App extends React.Component {
             containerComponent={<VictoryZoomContainer/>}
             style={{parent: parentStyle}} data={this.state.transitionData}
           >
-            <VictoryLine style={{data: this.state.style}} />
+            <VictoryLine animate={{duration: 1500}} style={{data: this.state.style}} />
           </VictoryGroup>
 
           <VictoryChart style={{parent: parentStyle}}

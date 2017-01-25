@@ -29,8 +29,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
       onMouseDown: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
-        const { scale, domain } = targetProps;
-        const originalDomain = domain || Helpers.getOriginalDomain(scale);
+        const originalDomain = targetProps.originalDomain || targetProps.domain;
         const zoomDomain = targetProps.zoomDomain || originalDomain;
         const {x} = Selection.getSVGEventCoordinates(evt);
         const lastDomain = zoomDomain;
@@ -38,7 +37,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
           target: "parent",
           mutation: () => {
             return {
-              startX: x, lastDomain, zoomDomain, getTimer, isPanning: true
+              startX: x, domain: zoomDomain, lastDomain,
+              originalDomain, zoomDomain, getTimer, isPanning: true,
+              parentControlledProps: ["domain"]
             };
           }
         }];
@@ -63,11 +64,11 @@ export default class VictoryZoomContainer extends VictoryContainer {
         if (targetProps.isPanning) {
           const { scale, startX, onDomainChange, domain } = targetProps;
           const {x} = Selection.getSVGEventCoordinates(evt);
-          const originalDomain = domain || Helpers.getOriginalDomain(scale);
+          const originalDomain = targetProps.originalDomain || domain;
           const lastDomain = targetProps.lastDomain || targetProps.zoomDomain || originalDomain;
           const calculatedDx = (startX - x) / Helpers.getDomainScale(lastDomain, scale);
           const nextXDomain = Helpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
-          const zoomDomain = { x: nextXDomain, y: lastDomain.y };
+          const zoomDomain = { x: nextXDomain };
           const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
           let resumeAnimation;
           if (getTimer && isFunction(getTimer().bypassAnimation)) {
@@ -82,7 +83,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
             target: "parent",
             callback: resumeAnimation,
             mutation: () => {
-              return {zoomDomain};
+              return {domain: zoomDomain, zoomDomain, originalDomain};
             }
           }];
         }
@@ -100,7 +101,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
         const xBounds = originalDomain.x;
         // TODO: Check scale factor
         const nextXDomain = Helpers.scale(x, xBounds, 1 + (deltaY / 300));
-        const zoomDomain = { x: nextXDomain, y: originalDomain.y };
+        const zoomDomain = { x: nextXDomain };
         const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
         let resumeAnimation;
         if (getTimer && isFunction(getTimer().bypassAnimation)) {
@@ -115,7 +116,10 @@ export default class VictoryZoomContainer extends VictoryContainer {
           target: "parent",
           callback: resumeAnimation,
           mutation: () => {
-            return {domain: zoomDomain, zoomDomain, originalDomain, lastDomain};
+            return {
+              domain: zoomDomain, zoomDomain, originalDomain, lastDomain,
+              parentControlledProps: ["domain"]
+            };
           }
         }];
       }
