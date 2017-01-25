@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryLegend } from "../src/index";
 
-const svgStyle = { border: "1px solid #ccc" };
+const svgStyle = { border: "1px solid darkgray" };
 const data = [{
   name: "Series 1",
   symbol: {
@@ -22,12 +22,17 @@ const data = [{
   }
 }, {
   name: "Series 4",
-  symbol: { type: "plus" }
+  symbol: {
+    type: "plus"
+  }
 }, {
   name: "Series 5",
   symbol: {
     type: "star",
     fill: "red"
+  },
+  labels: {
+    fill: "purple"
   }
 }];
 
@@ -44,7 +49,7 @@ const LegendDemo = () => (
         padding={20}
         standalone={false}
         orientation="horizontal"
-        style={{ labels: { fill: "#ccc" }}}
+        style={{ labels: { fill: "darkgray" } }}
       />
     </svg>
   </div>

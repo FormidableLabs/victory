@@ -20,7 +20,7 @@ export default class VictoryLegend extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
     containerComponent: PropTypes.element,
