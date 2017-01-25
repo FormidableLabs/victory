@@ -145,7 +145,7 @@ export default class VictoryLegend extends React.Component {
       width = this.calculateLegendWidth(textSizes, padding, isHorizontal);
     }
 
-    return merge({},
+    return Object.assign({},
       this.props,
       { isHorizontal, height, labelStyles, padding, parentStyles, symbolStyles, textSizes, width }
     );
@@ -248,7 +248,7 @@ export default class VictoryLegend extends React.Component {
     let groupProps = { role: "presentation" };
 
     if (!standalone) {
-      groupProps = merge(groupProps, { height, width, x, y, style: parentStyles });
+      groupProps = Object.assign(groupProps, { height, width, x, y, style: parentStyles });
     }
 
     return React.cloneElement(groupComponent, groupProps, children);
