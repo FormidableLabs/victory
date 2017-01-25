@@ -19,14 +19,16 @@ export default class VictoryContainer extends React.Component {
     title: PropTypes.string,
     desc: PropTypes.string,
     portalComponent: PropTypes.element,
-    responsive: PropTypes.bool
+    responsive: PropTypes.bool,
+    standalone: PropTypes.bool
   }
 
   static defaultProps = {
     title: "Victory Chart",
     desc: "",
     portalComponent: <Portal/>,
-    responsive: true
+    responsive: true,
+    standalone: true
   }
 
   static contextTypes = {
@@ -77,26 +79,40 @@ export default class VictoryContainer extends React.Component {
     return this.timer;
   }
 
+  // overridden in custom containers
+  getChildren(props) {
+    return props.children;
+  }
+
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent, className } = props;
-    return (
-      <svg {...svgProps} style={style} className={className}>
-        <title id="title">{title}</title>
-        <desc id="desc">{desc}</desc>
-        {children}
-        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-      </svg>
-    );
+    const { title, desc, portalComponent, className, standalone } = props;
+    return standalone ?
+      (
+        <svg {...svgProps} style={style} className={className}>
+          <title id="title">{title}</title>
+          <desc id="desc">{desc}</desc>
+          {this.getChildren(props)}
+          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+        </svg>
+      ) :
+      (
+        <g {...svgProps} style={style} className={className}>
+          <title id="title">{title}</title>
+          <desc id="desc">{desc}</desc>
+          {this.getChildren(props)}
+          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+        </g>
+      );
   }
 
   render() {
-    const { width, height, responsive, events } = this.props;
+    const { width, height, responsive, events, standalone } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
     const svgProps = assign(
       {
         "aria-labelledby": "title desc", role: "img", width, height,
-        viewBox: responsive ? `0 0 ${width} ${height}` : undefined
+        viewBox: responsive && standalone ? `0 0 ${width} ${height}` : undefined
       },
       events
     );
