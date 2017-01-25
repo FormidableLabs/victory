@@ -219,12 +219,13 @@ export default {
       }
     }
   }, baseProps),
-  legend: assign({
+  legend: {
+    colorScale: colors,
     style: {
-      symbol: {
+      data: {
         type: "circle"
       },
       labels: baseLabelStyles
     }
-  }, baseProps)
+  }
 };

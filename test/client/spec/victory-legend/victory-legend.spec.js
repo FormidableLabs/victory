@@ -116,7 +116,7 @@ describe("components/victory-legend", () => {
     }];
 
     const styleObject = {
-      symbol: {
+      data: {
         type: "triangleUp",
         fill: "green"
       },

@@ -20,7 +20,7 @@ export default class VictoryLegend extends React.Component {
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
       PropTypes.oneOf([
-        "greyscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
+        "grayscale", "qualitative", "heatmap", "warm", "cool", "red", "green", "blue"
       ])
     ]),
     containerComponent: PropTypes.element,
@@ -51,8 +51,9 @@ export default class VictoryLegend extends React.Component {
     ]),
     standalone: PropTypes.bool,
     style: PropTypes.shape({
-      symbol: PropTypes.object,
-      label: PropTypes.object
+      data: PropTypes.object,
+      labels: PropTypes.object,
+      parent: PropTypes.object
     }),
     symbolSpacer: PropTypes.number,
     theme: PropTypes.object,
@@ -60,8 +61,8 @@ export default class VictoryLegend extends React.Component {
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   static defaultProps = {
@@ -112,7 +113,9 @@ export default class VictoryLegend extends React.Component {
     const { role } = this.constructor;
     const { data, orientation, theme } = this.props;
     let { height, padding, width } = this.props;
+
     const legendTheme = theme && theme[role] ? theme[role] : {};
+    const parentStyles = this.getStyles({}, legendTheme, "parent");
     const colorScale = this.getColorScale(legendTheme);
     const isHorizontal = orientation === "horizontal";
     const symbolStyles = [];
@@ -120,8 +123,8 @@ export default class VictoryLegend extends React.Component {
     let leftOffset = 0;
 
     padding = Helpers.getPadding({ padding: padding || theme.padding });
-    height = height || theme.height;
-    width = width || theme.width;
+    height = Helpers.evaluateProp(height || theme.height, data);
+    width = Helpers.evaluateProp(width || theme.width, data);
 
     const textSizes = data.map((datum, i) => {
       const labelStyle = this.getStyles(datum, legendTheme, "labels");
@@ -144,13 +147,16 @@ export default class VictoryLegend extends React.Component {
 
     return Object.assign({},
       this.props,
-      { isHorizontal, height, labelStyles, padding, symbolStyles, textSizes, width }
+      { isHorizontal, height, labelStyles, padding, parentStyles, symbolStyles, textSizes, width }
     );
   }
 
   getStyles(datum, theme, key, color) { // eslint-disable-line max-params
-    const colorScale = color ? { fill: color } : {};
-    return merge({}, theme.style[key], colorScale, this.props.style[key], datum[key]);
+    const { style } = this.props;
+    const styleKey = key === "symbol" ? "data" : key;
+    const colorScaleStyle = color ? { fill: color } : {};
+    const styles = merge({}, theme.style[styleKey], colorScaleStyle, style[styleKey], datum[key]);
+    return Helpers.evaluateStyle(styles, datum);
   }
 
   getSymbolSize(datum, fontSize) {
@@ -159,7 +165,8 @@ export default class VictoryLegend extends React.Component {
 
   getSymbolProps(datum, props, i) {
     const {
-      gutter, labelStyles, isHorizontal, padding, symbolSpacer, symbolStyles, textSizes
+      dataComponent, gutter, labelStyles, isHorizontal,
+      padding, symbolSpacer, symbolStyles, textSizes
     } = props;
     const { leftOffset } = textSizes[i];
     const { fontSize } = labelStyles[i];
@@ -174,17 +181,22 @@ export default class VictoryLegend extends React.Component {
       y: padding.top + symbolShift + (fontSize + gutter) * i
     };
 
-    return {
-      key: `symbol-${i}`,
-      style,
-      size: this.getSymbolSize(datum, fontSize),
-      symbol: style.type,
-      ...symbolCoords
-    };
+    return defaults({},
+      dataComponent.props,
+      {
+        key: `symbol-${i}`,
+        style,
+        size: this.getSymbolSize(datum, fontSize),
+        symbol: style.type,
+        ...symbolCoords
+      }
+    );
   }
 
   getLabelProps(datum, props, i) {
-    const { gutter, isHorizontal, symbolSpacer, labelStyles, textSizes, padding } = props;
+    const {
+      gutter, isHorizontal, symbolSpacer, labelComponent, labelStyles, textSizes, padding
+    } = props;
     const style = labelStyles[i];
     const { fontSize } = style;
     const symbolShift = fontSize / 2;
@@ -197,12 +209,15 @@ export default class VictoryLegend extends React.Component {
       y: padding.top + symbolShift + (fontSize + gutter) * i
     };
 
-    return {
-      key: `label-${i}`,
-      style,
-      text: datum.name,
-      ...labelCoords
-    };
+    return defaults({},
+      labelComponent.props,
+      {
+        key: `label-${i}`,
+        style,
+        text: datum.name,
+        ...labelCoords
+      }
+    );
   }
 
   renderLegendItems(props) {
@@ -229,22 +244,22 @@ export default class VictoryLegend extends React.Component {
   }
 
   renderGroup(props, children) {
-    const { groupComponent, height, width, standalone, x, y } = props;
-    const groupProps = { role: "presentation" };
+    const { groupComponent, height, parentStyles, standalone, width, x, y } = props;
+    let groupProps = { role: "presentation" };
 
     if (!standalone) {
-      Object.assign(groupProps, { height, width, x, y });
+      groupProps = Object.assign(groupProps, { height, width, x, y, style: parentStyles });
     }
 
     return React.cloneElement(groupComponent, groupProps, children);
   }
 
   renderContainer(props, children) {
-    const { containerComponent, height, width, x, y, style } = props;
+    const { containerComponent, height, parentStyles, width, x, y } = props;
 
     return React.cloneElement(
       containerComponent,
-      { x, y, height, width, style: defaults({}, style) },
+      { height, width, x, y, style: parentStyles },
       children
     );
   }
