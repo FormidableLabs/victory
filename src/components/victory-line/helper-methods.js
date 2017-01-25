@@ -10,9 +10,9 @@ export default {
     const calculatedValues = this.getCalculatedValues(props);
     const { scale, dataset, dataSegments, domain } = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height, events, sharedEvents} = props;
+    const {interpolation, label, width, height, events, sharedEvents, standalone} = props;
     const childProps = { parent: {
-      style: style.parent, scale, data: dataset, height, width, domain
+      style: style.parent, scale, data: dataset, height, width, domain, standalone
     }};
     for (let index = 0, len = dataSegments.length; index < len; index++) {
       const dataProps = {

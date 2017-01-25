@@ -7,7 +7,8 @@ export default {
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain } = calculatedValues;
     const childProps = { parent: {
-      style: style.parent, scale, domain, data, height: props.height, width: props.width
+      style: style.parent, scale, domain, data, height: props.height,
+      width: props.width, standalone: props.standalone
     }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];

@@ -6,7 +6,7 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "area");
     const {scale, style, data, domain} = this.getCalculatedValues(props);
-    const {interpolation, label, width, height, groupComponent} = props;
+    const {standalone, interpolation, label, width, height, groupComponent} = props;
 
     const dataProps = {
       groupComponent,
@@ -18,7 +18,7 @@ export default {
     };
 
     const baseProps = {
-      parent: { style: style.parent, width, height, scale, data, domain },
+      parent: { style: style.parent, width, height, scale, data, domain, standalone },
       all: {
         data: dataProps
       }

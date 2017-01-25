@@ -5,8 +5,10 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "errorbar");
     const { data, style, scale, domain } = this.getCalculatedValues(props, fallbackProps);
-    const { groupComponent, height, width, borderWidth } = props;
-    const childProps = { parent: {domain, style: style.parent, scale, data, height, width} };
+    const { groupComponent, height, width, borderWidth, standalone } = props;
+    const childProps = { parent: {
+      domain, style: style.parent, scale, data, height, width, standalone
+    }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;

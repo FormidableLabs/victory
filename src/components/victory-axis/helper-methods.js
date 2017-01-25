@@ -196,9 +196,9 @@ export default {
 
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
-
     const childProps = { parent: {
-      style: style.parent, ticks, scale, width: props.width, height: props.height, domain
+      style: style.parent, ticks, scale, width: props.width,
+      height: props.height, domain, standalone: props.standalone
     }};
     for (let index = 0, len = ticks.length; index < len; index++) {
       const tick = stringTicks ? props.tickValues[(ticks[index]) - 1] : ticks[index];

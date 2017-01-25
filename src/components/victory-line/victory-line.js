@@ -133,9 +133,7 @@ class VictoryLine extends React.Component {
         labelComponents[index] = React.cloneElement(labelComponent, labelProps);
       }
     }
-    return labelComponents.length > 0 ?
-      React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
-      dataComponents;
+    return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
   }
 
   shouldAnimate() {

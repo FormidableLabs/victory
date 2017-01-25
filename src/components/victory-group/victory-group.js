@@ -282,16 +282,11 @@ export default class VictoryGroup extends React.Component {
     return React.cloneElement(containerComponent, containerProps);
   }
 
-  renderGroup(groupComponent, props, children) {
-    const groupProps = defaults({}, groupComponent.props, props, {role: "presentation"});
-    return React.cloneElement(groupComponent, groupProps, children);
-  }
-
   getContainerProps(props, calculatedProps) {
-    const { width, height } = props;
+    const { width, height, standalone } = props;
     const { domain, scale, style } = calculatedProps;
     return {
-      domain, scale, width, height, style: style.parent
+      domain, scale, width, height, standalone, style: style.parent
     };
   }
 
@@ -305,7 +300,7 @@ export default class VictoryGroup extends React.Component {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, role);
-    const { standalone, eventKey, groupComponent, containerComponent } = modifiedProps;
+    const { eventKey, containerComponent } = modifiedProps;
     const childComponents = React.Children.toArray(modifiedProps.children);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
     let newChildren = this.getNewChildren(modifiedProps, childComponents, calculatedProps);
@@ -313,8 +308,7 @@ export default class VictoryGroup extends React.Component {
       newChildren = this.props.modifyChildren(newChildren, modifiedProps);
     }
     const containerProps = this.getContainerProps(modifiedProps, calculatedProps);
-    const group = this.renderGroup(groupComponent, containerProps, newChildren);
-    const container = standalone ? this.renderContainer(containerComponent, containerProps) : group;
+    const container = this.renderContainer(containerComponent, containerProps);
     if (this.events) {
       return (
         <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
@@ -322,6 +316,6 @@ export default class VictoryGroup extends React.Component {
         </VictorySharedEvents>
       );
     }
-    return standalone ? React.cloneElement(container, container.props, group) : group;
+    return React.cloneElement(container, container.props, newChildren);
   }
 }

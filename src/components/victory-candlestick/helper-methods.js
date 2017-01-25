@@ -6,8 +6,10 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "candlestick");
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain } = calculatedValues;
-    const { groupComponent, width, height, padding } = props;
-    const childProps = {parent: {domain, scale, width, height, data, style: style.parent}};
+    const { groupComponent, width, height, padding, standalone } = props;
+    const childProps = {parent: {
+      domain, scale, width, height, data, standalone, style: style.parent
+    }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;

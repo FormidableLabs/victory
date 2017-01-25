@@ -179,17 +179,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
     return newChildren;
   }
 
-  renderContainer(props, svgProps, style) {
-    const { title, desc, portalComponent, className } = props;
+  // Overrides method in VictoryContainer
+  getChildren(props) {
     const children = this.modifyChildren(props);
-    const childGroups = this.clipDataComponents(children, props);
-    return (
-      <svg {...svgProps} style={style} className={className}>
-        <title id="title">{title}</title>
-        <desc id="desc">{desc}</desc>
-        {childGroups}
-        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-      </svg>
-    );
+    return this.clipDataComponents(children, props);
   }
 }

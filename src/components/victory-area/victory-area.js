@@ -122,7 +122,7 @@ class VictoryArea extends React.Component {
       const areaLabel = React.cloneElement(labelComponent, labelProps);
       return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
     }
-    return areaComponent;
+    return React.cloneElement(groupComponent, {}, areaComponent);
   }
 
   renderContainer(component, children) {

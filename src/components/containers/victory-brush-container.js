@@ -229,16 +229,12 @@ export default class VictoryBrushContainer extends VictoryContainer {
       ) : null;
   }
 
-  renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent, className } = props;
-    return (
-      <svg {...svgProps} style={style} className={className}>
-        <title id="title">{title}</title>
-        <desc id="desc">{desc}</desc>
-        {children}
-        {this.getRect(props)}
-        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-      </svg>
-    );
+  // Overrides method in VictoryContainer
+  getChildren(props) {
+    const children = React.Children.toArray(props.children);
+    const components = [...children, this.getRect(props)];
+    return components.map((component, i) => {
+      return component ? React.cloneElement(component, {key: i}) : null;
+    });
   }
 }

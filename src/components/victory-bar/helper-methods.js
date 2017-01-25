@@ -96,8 +96,10 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
     const {style, data, scale, domain } = this.getCalculatedValues(props);
-    const { horizontal, width, height, padding } = props;
-    const childProps = {parent: { domain, scale, width, height, data, style: style.parent }};
+    const { horizontal, width, height, padding, standalone } = props;
+    const childProps = {parent: {
+      domain, scale, width, height, data, standalone, style: style.parent
+    }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
       const eventKey = datum.eventKey || index;

@@ -7,7 +7,8 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "voronoi");
     const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
     const childProps = { parent: {
-      style: style.parent, scale, domain, data, height: props.height, width: props.width
+      style: style.parent, scale, domain, data, standalone: props.standalone,
+      height: props.height, width: props.width
     }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];

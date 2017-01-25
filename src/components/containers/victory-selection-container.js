@@ -109,23 +109,12 @@ export default class VictorySelectionContainer extends VictoryContainer {
       React.cloneElement(selectionComponent, {x, y, width, height, style: selectionStyle}) : null;
   }
 
-  renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent, className, standalone } = props;
-    const containerProps = standalone ? svgProps : omit(svgProps, ["width", "height", "viewBox"]);
-    return standalone ?
-      (
-        <svg {...containerProps} style={style} className={className}>
-          <title id="title">{title}</title>
-          <desc id="desc">{desc}</desc>
-          {this.getRect(props)}
-          {children}
-          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-        </svg>
-      ) : (
-        <g {...containerProps} style={style} className={className}>
-          {this.getRect(props)}
-          {children}
-        </g>
-      );
+  // Overrides method in VictoryContainer
+  getChildren(props) {
+    const children = React.Children.toArray(props.children);
+    const components = [...children, this.getRect(props)];
+    return components.map((component, i) => {
+      return component ? React.cloneElement(component, {key: i}) : null;
+    });
   }
 }
