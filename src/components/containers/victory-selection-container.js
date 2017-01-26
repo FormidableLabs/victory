@@ -1,6 +1,6 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
-import { isFunction, assign, omit } from "lodash";
+import { isFunction, assign } from "lodash";
 
 
 export default class VictorySelectionContainer extends VictoryContainer {
