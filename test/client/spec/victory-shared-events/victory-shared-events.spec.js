@@ -6,7 +6,7 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import { curry, get, map } from "lodash";
+import { curry, forEach, get, map } from "lodash";
 import { mount } from "enzyme";
 import VictorySharedEvents from "src/victory-shared-events/victory-shared-events";
 import { VictoryPie } from "victory-pie";
@@ -57,44 +57,51 @@ describe("components/victory-shared-events", () => {
       </svg>
     );
 
-    const findDataComponent = (type, xName, wrapper) => {
+    const findDataComponent = (type, index, wrapper) => {
       return wrapper.find(type).filterWhere((dataComponent) => {
-        return get(dataComponent.props(), "datum.xName") === xName;
+        return get(dataComponent.props(), "index") === index;
       });
     };
 
-    const findDataComponentsByXName = (xName, wrapper) => {
-      return map([Slice, Bar, Point], (type) => {
-        return findDataComponent(type, xName, wrapper);
+    const expectEventEffects = (componentMatrix) => {
+      forEach(componentMatrix, (dataComponents, dataComponentType) => {
+        forEach(dataComponents, (eventExpectation, index) => {
+          const node = findDataComponent(dataComponentType, index, wrapper);
+          const eventTriggeredOnComponent = node.props().style.fill === 'tomato';
+
+          expect(eventTriggeredOnComponent).to.eql(eventExpectation);
+        });
       });
     };
 
-    const [sliceA, barA, pointA] = findDataComponentsByXName("a", wrapper);
-    const [sliceB, barB, pointB] = findDataComponentsByXName("b", wrapper);
-    const [sliceC, barC, pointC] = findDataComponentsByXName("c", wrapper);
+    expectEventEffects({
+      Slice: [false, false, false, false],
+      Bar: [false, false, false, false],
+      Point: [false, false, false, false]
+    });
 
-    expect(sliceA.props().style.fill).not.to.eql('tomato');
-    expect(barA.props().style.fill).not.to.eql('tomato');
-    expect(pointA.props().style.fill).not.to.eql('tomato');
-    sliceA.simulate("click");
-    expect(sliceA.props().style.fill).to.eql('tomato');
-    expect(barA.props().style.fill).to.eql('tomato');
-    expect(pointA.props().style.fill).not.to.eql('tomato');
+    findDataComponent(Slice, 0, wrapper).simulate("click");
 
-    expect(sliceB.props().style.fill).not.to.eql('tomato');
-    expect(barB.props().style.fill).not.to.eql('tomato');
-    expect(pointB.props().style.fill).not.to.eql('tomato');
-    barB.simulate("click");
-    expect(sliceB.props().style.fill).to.eql('tomato');
-    expect(barB.props().style.fill).to.eql('tomato');
-    expect(pointB.props().style.fill).not.to.eql('tomato');
+    expectEventEffects({
+      Slice: [true, false, false, false],
+      Bar: [true, false, false, false],
+      Point: [false, false, false, false]
+    });
 
-    expect(sliceC.props().style.fill).not.to.eql('tomato');
-    expect(barC.props().style.fill).not.to.eql('tomato');
-    expect(pointC.props().style.fill).not.to.eql('tomato');
-    pointC.simulate("click");
-    expect(sliceC.props().style.fill).not.to.eql('tomato');
-    expect(barC.props().style.fill).not.to.eql('tomato');
-    expect(pointC.props().style.fill).not.to.eql('tomato');
+    findDataComponent(Bar, 1, wrapper).simulate("click");
+
+    expectEventEffects({
+      Slice: [true, true, false, false],
+      Bar: [true, true, false, false],
+      Point: [false, false, false, false]
+    });
+
+    findDataComponent(Point, 2, wrapper).simulate("click");
+
+    expectEventEffects({
+      Slice: [true, true, false, false],
+      Bar: [true, true, false, false],
+      Point: [false, false, false, false]
+    });
   });
 });
