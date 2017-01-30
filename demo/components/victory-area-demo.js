@@ -112,17 +112,20 @@ export default class App extends React.Component {
           />
         </VictoryChart>
 
-        <VictoryArea
-          style={style} animate={{duration: 1000}}
-          data={this.state.areaTransitionData}
-          theme={VictoryTheme.material}
-          containerComponent={
-            <VictoryContainer
-              title="Area Chart"
-              desc="This is an animated area chart that displays data."
-            />
-          }
-        />
+        <svg viewBox="0 0 350 350" style={style.parent}>
+          <VictoryArea
+            standalone={false}
+            animate={{duration: 1000}}
+            data={this.state.areaTransitionData}
+            theme={VictoryTheme.material}
+            containerComponent={
+              <VictoryContainer
+                title="Area Chart"
+                desc="This is an animated area chart that displays data."
+              />
+            }
+          />
+        </svg>
 
         <VictoryStack
           style={style}

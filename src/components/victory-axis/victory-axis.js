@@ -184,9 +184,10 @@ class VictoryAxis extends React.Component {
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }
 
-  renderContainer(component, children) {
-    const parentProps = this.getComponentProps(component, "parent", "parent");
-    return React.cloneElement(component, parentProps, children);
+  renderContainer(props, children) {
+    const {containerComponent} = props;
+    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
+    return React.cloneElement(containerComponent, parentProps, children);
   }
 
   shouldAnimate() {
@@ -195,10 +196,9 @@ class VictoryAxis extends React.Component {
 
   render() {
     const props = Helpers.modifyProps(this.props, fallbackProps, "axis");
-    const { animate, standalone, containerComponent, groupComponent } = props;
     if (this.shouldAnimate()) {
       return (
-        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
@@ -213,8 +213,7 @@ class VictoryAxis extends React.Component {
       this.renderLine(props),
       this.renderLabel(props)
     ];
-    const component = standalone ? containerComponent : groupComponent;
-    return this.renderContainer(component, children);
+    return this.renderContainer(props, children);
   }
 }
 

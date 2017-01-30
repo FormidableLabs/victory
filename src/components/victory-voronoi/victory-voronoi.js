@@ -140,25 +140,24 @@ class VictoryVoronoi extends React.Component {
     return !!this.props.animate;
   }
 
-  renderContainer(component, children) {
-    const parentProps = this.getComponentProps(component, "parent", "parent");
-    return React.cloneElement(component, parentProps, children);
+  renderContainer(props, children) {
+    const {containerComponent} = props;
+    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
+    return React.cloneElement(containerComponent, parentProps, children);
   }
 
   render() {
     const {role} = this.constructor;
     const props = Helpers.modifyProps(this.props, fallbackProps, role);
-    const { animate, standalone, containerComponent, groupComponent } = props;
     if (this.shouldAnimate()) {
       return (
-        <VictoryTransition animate={animate} animationWhitelist={animationWhitelist}>
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
     const children = this.renderData(props);
-    const component = standalone ? containerComponent : groupComponent;
-    return this.renderContainer(component, children);
+    return this.renderContainer(props, children);
   }
 }
 
