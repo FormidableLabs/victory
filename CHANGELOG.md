@@ -1,11 +1,16 @@
 VictoryCore Changelog
 =====================
 
+## 13.0.1 (2017-01-30)
+
+- [193](https://github.com/FormidableLabs/victory-core/pull/193)
+  - Removes the default `standalone: true` from VictoryContainer so that parents can set the value
+
 ## 13.0.0 (2017-01-30)
 
 - [189](https://github.com/FormidableLabs/victory-core/pull/189) and [191](https://github.com/FormidableLabs/victory-core/pull/190)
   - Adds `VictoryLegend` component
-- [190](https://github.com/FormidableLabs/victory-core/pull/189)
+- [190](https://github.com/FormidableLabs/victory-core/pull/190)
   - Allows `VictoryContainer` to render either `<g>` or `<svg>` depending on the value of the standalone prop
   - Passes a timer down in context for `VictorySharedEvents`
   - Event handlers have access to the context they are being called from via an argument
