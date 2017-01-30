@@ -15,6 +15,12 @@ import { Slice, Bar, Area } from "src/victory-primitives";
 
 describe("components/victory-shared-events", () => {
   it.only("should trigger shared events on selected children", () => {
+    const data = [
+      {x: "a", y: 2},
+      {x: "b", y: 3},
+      {x: "c", y: 5},
+      {x: "d", y: 4}
+    ];
     const wrapper = mount(
       <svg>
         <VictorySharedEvents
@@ -36,21 +42,15 @@ describe("components/victory-shared-events", () => {
           }]}
         >
           <VictoryBar name="bar"
-            data={[
-              {x: "a", y: 2}, {x: "b", y: 3}, {x: "c", y: 5}, {x: "d", y: 4}
-            ]}
+            data={data}
             dataComponent= {< Bar />}
           />
           <VictoryPie name="pie"
-            data={[
-              {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
-            ]}
+            data={data}
             dataComponent={< Slice />}
           />
           <VictoryArea name="area"
-            data={[
-              {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
-            ]}
+            data={data}
             dataComponent={< Area />}
           />
         </VictorySharedEvents>
