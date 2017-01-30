@@ -27,8 +27,7 @@ export default class VictoryContainer extends React.Component {
     title: "Victory Chart",
     desc: "",
     portalComponent: <Portal/>,
-    responsive: true,
-    standalone: true
+    responsive: true
   }
 
   static contextTypes = {
@@ -87,7 +86,7 @@ export default class VictoryContainer extends React.Component {
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
     const { title, desc, portalComponent, className, standalone } = props;
-    return standalone ?
+    return standalone || standalone === undefined ?
       (
         <svg {...svgProps} style={style} className={className}>
           <title id="title">{title}</title>
@@ -109,10 +108,11 @@ export default class VictoryContainer extends React.Component {
   render() {
     const { width, height, responsive, events, standalone } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
+    const useViewBox = responsive ? standalone || standalone === undefined : false;
     const svgProps = assign(
       {
         "aria-labelledby": "title desc", role: "img", width, height,
-        viewBox: responsive && standalone ? `0 0 ${width} ${height}` : undefined
+        viewBox: useViewBox ? `0 0 ${width} ${height}` : undefined
       },
       events
     );
