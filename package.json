@@ -46,9 +46,8 @@
     "react-router": "^2.4.0",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0",
-    "victory-core": "^11.0.0",
+    "victory-chart": "^15.0.0",
     "victory-pie": "^9.0.0"
-
   },
   "publishr": {
     "dependencies": [
