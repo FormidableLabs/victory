@@ -1,4 +1,4 @@
-import { defaults, assign, isFunction, partialRight } from "lodash";
+import { defaults, assign, isFunction, partialRight, pick } from "lodash";
 import Events from "./events";
 
 export default (WrappedComponent) => {
@@ -15,7 +15,7 @@ export default (WrappedComponent) => {
       this.setupEvents(this.props);
     }
 
-    componentWillReceiveProps(newProps) {
+    componentWillUpdate(newProps) {
       if (isFunction(super.componentWillReceiveProps)) {
         super.componentWillReceiveProps();
       }
@@ -26,13 +26,23 @@ export default (WrappedComponent) => {
       const { sharedEvents } = props;
       const components = WrappedComponent.expectedComponents;
       this.componentEvents = Events.getComponentEvents(props, components);
-      this.baseProps = isFunction(WrappedComponent.getBaseProps) ?
-        WrappedComponent.getBaseProps(props) : {};
-      this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
       this.getSharedEventState = sharedEvents && isFunction(sharedEvents.getEventState) ?
         sharedEvents.getEventState : () => undefined;
+      this.baseProps = this.getBaseProps(props);
+      this.dataKeys = Object.keys(this.baseProps).filter((key) => key !== "parent");
       this.hasEvents = props.events || props.sharedEvents || this.componentEvents;
       this.events = this.getAllEvents(props);
+    }
+
+    getBaseProps(props) {
+      const sharedParentState = this.getSharedEventState("parent", "parent");
+      const parentState = this.getEventState("parent", "parent");
+      const baseParentProps = defaults({}, parentState, sharedParentState);
+      const parentPropsList = baseParentProps.parentControlledProps;
+      const parentProps = parentPropsList ? pick(baseParentProps, parentPropsList) : {};
+      const modifiedProps = defaults({}, parentProps, props);
+      return isFunction(WrappedComponent.getBaseProps) ?
+        WrappedComponent.getBaseProps(modifiedProps) : {};
     }
 
     getAllEvents(props) {

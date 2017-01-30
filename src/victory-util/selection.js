@@ -12,13 +12,30 @@ export default {
     }
   },
 
+  getTransformationMatrix(svg) {
+    return svg.getScreenCTM().inverse();
+  },
+
   getSVGEventCoordinates(evt) {
     const svg = this.getParentSVG(evt.target);
-    const matrix = svg.getScreenCTM().inverse();
-    const {a, d, e, f} = matrix;
+    const matrix = this.getTransformationMatrix(svg);
     return {
-      x: a * evt.clientX + e,
-      y: d * evt.clientY + f
+      x: this.transformTarget(evt.clientX, matrix, "x"),
+      y: this.transformTarget(evt.clientY, matrix, "y")
+    };
+  },
+
+  transformTarget(target, matrix, dimension) {
+    const {a, d, e, f} = matrix;
+    return dimension === "y" ?
+      d * target + f : a * target + e;
+  },
+
+  getDomainCoordinates(scale, domain) {
+    domain = domain || { x: scale.x.domain(), y: scale.y.domain()};
+    return {
+      x: [scale.x(domain.x[0]), scale.x(domain.x[1])],
+      y: [scale.y(domain.y[0]), scale.y(domain.y[1])]
     };
   },
 
