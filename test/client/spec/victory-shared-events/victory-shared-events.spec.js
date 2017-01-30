@@ -14,7 +14,7 @@ import { VictoryBar, VictoryScatter } from "victory-chart";
 import { Slice, Bar, Point } from "src/victory-primitives";
 
 describe("components/victory-shared-events", () => {
-  it.only("should trigger shared events on selected children", () => {
+  it.only("should trigger shared events on selected children only", () => {
     const data = [
       {x: "a", y: 2},
       {x: "b", y: 3},
@@ -30,7 +30,7 @@ describe("components/victory-shared-events", () => {
             eventHandlers: {
               onClick: () => {
                 return [{
-                  childName: ["pie", "bar"],
+                  childName: ["pie", "scatter"],
                   mutation: (props) => {
                     return {
                       style: Object.assign({}, props.style, {fill: "tomato"})
@@ -74,6 +74,7 @@ describe("components/victory-shared-events", () => {
       });
     };
 
+    // Expect no events triggered at beginning.
     expectEventEffects({
       Slice: [false, false, false, false],
       Bar: [false, false, false, false],
@@ -82,26 +83,29 @@ describe("components/victory-shared-events", () => {
 
     findDataComponent(Slice, 0, wrapper).simulate("click");
 
+    // Pie triggers effects on pie and scatter plot
     expectEventEffects({
       Slice: [true, false, false, false],
-      Bar: [true, false, false, false],
-      Point: [false, false, false, false]
+      Bar: [false, false, false, false],
+      Point: [true, false, false, false]
     });
 
     findDataComponent(Bar, 1, wrapper).simulate("click");
 
+    // Bar triggers effects on pie and scatter plot
     expectEventEffects({
       Slice: [true, true, false, false],
-      Bar: [true, true, false, false],
-      Point: [false, false, false, false]
+      Bar: [false, false, false, false],
+      Point: [true, true, false, false]
     });
 
     findDataComponent(Point, 2, wrapper).simulate("click");
 
+    // Scatter does not trigger effects
     expectEventEffects({
       Slice: [true, true, false, false],
-      Bar: [true, true, false, false],
-      Point: [false, false, false, false]
+      Bar: [false, false, false, false],
+      Point: [true, true, false, false]
     });
   });
 });
