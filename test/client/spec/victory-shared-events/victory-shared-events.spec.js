@@ -6,16 +6,15 @@
 /* eslint no-unused-expressions: 0 */
 
 import React from "react";
-import { get, curry } from "lodash";
+import { curry, get, map } from "lodash";
 import { mount } from "enzyme";
 import VictorySharedEvents from "src/victory-shared-events/victory-shared-events";
 import { VictoryPie } from "victory-pie";
-import { VictoryBar } from "victory-chart";
-import { Slice, Bar } from "src/victory-primitives";
+import { VictoryBar, VictoryArea } from "victory-chart";
+import { Slice, Bar, Area } from "src/victory-primitives";
 
 describe("components/victory-shared-events", () => {
-  it("should trigger shared events on children", () => {
-    const clickHandler = sinon.spy();
+  it.only("should trigger shared events on selected children", () => {
     const wrapper = mount(
       <svg>
         <VictorySharedEvents
@@ -27,7 +26,6 @@ describe("components/victory-shared-events", () => {
                 return [{
                   childName: ["pie", "bar"],
                   mutation: (props) => {
-                    clickHandler();
                     return {
                       style: Object.assign({}, props.style, {fill: "tomato"})
                     };
@@ -49,6 +47,12 @@ describe("components/victory-shared-events", () => {
             ]}
             dataComponent={< Slice />}
           />
+          <VictoryArea name="area"
+            data={[
+              {x: "a", y: 1}, {x: "b", y: 4}, {x: "c", y: 5}, {x: "d", y: 7}
+            ]}
+            dataComponent={< Area />}
+          />
         </VictorySharedEvents>
       </svg>
     );
@@ -59,17 +63,38 @@ describe("components/victory-shared-events", () => {
       });
     };
 
-    const sliceA = findDataComponent(Slice, "a", wrapper);
-    const barA = findDataComponent(Bar, "a", wrapper);
-    const sliceB = findDataComponent(Slice, "b", wrapper);
-    const barB = findDataComponent(Bar, "b", wrapper);
+    const findDataComponentsByXName = (xName, wrapper) => {
+      return map([Slice, Bar], (type) => {
+        return findDataComponent(type, xName, wrapper);
+      });
+    };
 
+    const [sliceA, barA] = findDataComponentsByXName("a", wrapper);
+    const [sliceB, barB] = findDataComponentsByXName("b", wrapper);
+    const [sliceC, barC] = findDataComponentsByXName("c", wrapper);
+
+    expect(sliceA.props().style.fill).not.to.eql('tomato');
     expect(barA.props().style.fill).not.to.eql('tomato');
+    // expect(areaA.props().style.fill).not.to.eql('tomato');
     sliceA.simulate("click");
+    expect(sliceA.props().style.fill).to.eql('tomato');
     expect(barA.props().style.fill).to.eql('tomato');
+    // expect(areaA.props().style.fill).not.to.eql('tomato');
 
     expect(sliceB.props().style.fill).not.to.eql('tomato');
+    expect(barB.props().style.fill).not.to.eql('tomato');
+    // expect(areaB.props().style.fill).not.to.eql('tomato');
     barB.simulate("click");
     expect(sliceB.props().style.fill).to.eql('tomato');
+    expect(barB.props().style.fill).to.eql('tomato');
+    // expect(areaB.props().style.fill).not.to.eql('tomato');
+
+    // expect(sliceC.props().style.fill).not.to.eql('tomato');
+    // expect(barC.props().style.fill).not.to.eql('tomato');
+    // expect(areaC.props().style.fill).not.to.eql('tomato');
+    // areaC.simulate("click");
+    // expect(sliceC.props().style.fill).not.to.eql('tomato');
+    // expect(barC.props().style.fill).not.to.eql('tomato');
+    // expect(areaC.props().style.fill).not.to.eql('tomato');
   });
 });
