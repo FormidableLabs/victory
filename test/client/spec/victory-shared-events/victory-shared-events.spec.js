@@ -1,10 +1,6 @@
 /**
  * Client tests
  */
-/* global sinon */
-/*eslint-disable max-nested-callbacks */
-/* eslint no-unused-expressions: 0 */
-
 import { memoize, forEach } from "lodash";
 import { mount } from "enzyme";
 import React from "react";
@@ -14,7 +10,7 @@ import { VictoryBar, VictoryScatter } from "victory-chart";
 import { Slice, Bar, Point } from "src/victory-primitives";
 
 describe("components/victory-shared-events", () => {
-  it.only("should trigger shared events on selected children only", () => {
+  it("should trigger shared events exclusively on selected children", () => {
     const data = [
       {x: "a", y: 2},
       {x: "b", y: 3},
@@ -57,19 +53,19 @@ describe("components/victory-shared-events", () => {
       </svg>
     );
 
-    const findDataComponent = memoize((type, index, wrapper) => {
-      return wrapper.find(type).filterWhere((dataComponent) => {
+    const findDataComponent = memoize((type, index, component) => {
+      return component.find(type).filterWhere((dataComponent) => {
         return dataComponent.props().index === index;
       });
-    }, (type, index, wrapper) => {
+    }, (type, index) => {
       return type + index;
     });
 
-    const expectEventEffects = (componentMatrix) => {
-      forEach(componentMatrix, (dataComponents, dataComponentType) => {
+    const expectEventEffects = (expectationMatrix, component) => {
+      forEach(expectationMatrix, (dataComponents, dataComponentType) => {
         forEach(dataComponents, (eventExpectation, index) => {
-          const node = findDataComponent(dataComponentType, index, wrapper);
-          const eventTriggeredOnComponent = node.props().style.fill === 'tomato';
+          const node = findDataComponent(dataComponentType, index, component);
+          const eventTriggeredOnComponent = node.props().style.fill === "tomato";
 
           expect(eventTriggeredOnComponent).to.eql(eventExpectation);
         });
@@ -81,7 +77,7 @@ describe("components/victory-shared-events", () => {
       Slice: [false, false, false, false],
       Bar: [false, false, false, false],
       Point: [false, false, false, false]
-    });
+    }, wrapper);
 
     findDataComponent(Slice, 0, wrapper).simulate("click");
 
@@ -90,7 +86,7 @@ describe("components/victory-shared-events", () => {
       Slice: [true, false, false, false],
       Bar: [false, false, false, false],
       Point: [true, false, false, false]
-    });
+    }, wrapper);
 
     findDataComponent(Bar, 1, wrapper).simulate("click");
 
@@ -99,7 +95,7 @@ describe("components/victory-shared-events", () => {
       Slice: [true, true, false, false],
       Bar: [false, false, false, false],
       Point: [true, true, false, false]
-    });
+    }, wrapper);
 
     findDataComponent(Point, 2, wrapper).simulate("click");
 
@@ -108,6 +104,6 @@ describe("components/victory-shared-events", () => {
       Slice: [true, true, false, false],
       Bar: [false, false, false, false],
       Point: [true, true, false, false]
-    });
+    }, wrapper);
   });
 });
