@@ -5,9 +5,9 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 
-import React from "react";
-import { curry, forEach, get, map } from "lodash";
+import { memoize, forEach } from "lodash";
 import { mount } from "enzyme";
+import React from "react";
 import VictorySharedEvents from "src/victory-shared-events/victory-shared-events";
 import { VictoryPie } from "victory-pie";
 import { VictoryBar, VictoryScatter } from "victory-chart";
@@ -57,11 +57,13 @@ describe("components/victory-shared-events", () => {
       </svg>
     );
 
-    const findDataComponent = (type, index, wrapper) => {
+    const findDataComponent = memoize((type, index, wrapper) => {
       return wrapper.find(type).filterWhere((dataComponent) => {
-        return get(dataComponent.props(), "index") === index;
+        return dataComponent.props().index === index;
       });
-    };
+    }, (type, index, wrapper) => {
+      return type + index;
+    });
 
     const expectEventEffects = (componentMatrix) => {
       forEach(componentMatrix, (dataComponents, dataComponentType) => {
