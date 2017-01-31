@@ -1,5 +1,19 @@
 # VictoryChart Changelog
 
+## 16.0.0 (2017-01-30)
+
+- [427](https://github.com/FormidableLabs/victory-chart/pull/427)
+- Adds `VictoryBrushContainer`
+- Adds `VictoryZoomContainer`
+- **Deprecates `VictoryZoom`**
+- Changes default styles for `VictorySelectionContainer`
+- Adds override-able `selectionComponent` for `VictorySelectionContainer`
+- Adds `domain` and `standalone` to list of props that get stored in parent state
+- Simplifies and standardizes container rendering across components.
+
+[See pull request for examples](https://github.com/FormidableLabs/victory-chart/pull/427)
+
+
 ## 15.0.1 (2017-01-06)
 
 - Add `bounds` as the second argument for VictorySelectionContainer `onSelection` callback
