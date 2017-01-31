@@ -3,6 +3,7 @@ import {
   VictoryAnimation,
   VictoryContainer,
   VictoryLabel,
+  VictoryLegend,
   VictorySharedEvents,
   VictoryTheme,
   VictoryTransition,
@@ -28,7 +29,9 @@ import {
   VictoryVoronoi,
   VictoryVoronoiTooltip,
   VictoryZoom,
-  VictorySelectionContainer
+  VictoryZoomContainer,
+  VictorySelectionContainer,
+  VictoryBrushContainer
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
@@ -46,6 +49,7 @@ export {
   VictoryGroup,
   VictoryLine,
   VictoryLabel,
+  VictoryLegend,
   VictoryPie,
   VictoryScatter,
   VictoryStack,
@@ -56,10 +60,12 @@ export {
   VictoryVoronoi,
   VictoryVoronoiTooltip,
   VictoryZoom,
+  VictoryZoomContainer,
   VictoryPortal,
   Portal,
   VictoryClipContainer,
   VictorySelectionContainer,
+  VictoryBrushContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions
 };
