@@ -1,5 +1,32 @@
 # Victory Changelog
 
+## 0.16.0 (2017-01-30)
+
+**This release includes major breaking changes related to `VictoryZoom`**
+
+- [189](https://github.com/FormidableLabs/victory-core/pull/189) and [191](https://github.com/FormidableLabs/victory-core/pull/190)
+  - Adds `VictoryLegend` component
+- [190](https://github.com/FormidableLabs/victory-core/pull/190)
+  - Allows `VictoryContainer` to render either `<g>` or `<svg>` depending on the value of the standalone prop
+  - Passes a timer down in context for `VictorySharedEvents`
+  - Event handlers have access to the context they are being called from via an argument
+    - _i.e._ `onClick: (event, targetProps, eventKey, context) => {...}`
+  - Enhances `addEvents` so that evented components can pick up "parentControllerProps" from parent state
+    - useful for `VictoryZoomContainer`
+  - Adds the ability to define callbacks in the events prop that will be called after `setState`
+    - useful for allowing `VictoryZoomContainer` to call methods like `resumeAnimation`
+- [427](https://github.com/FormidableLabs/victory-chart/pull/427)
+  - Adds `VictoryBrushContainer`
+  - Adds `VictoryZoomContainer` to replace `VictoryZoom`
+  - [See pull request for examples](https://github.com/FormidableLabs/victory-chart/pull/427)
+  - **Deprecates `VictoryZoom`**
+  - Changes default styles for `VictorySelectionContainer`
+  - Adds override-able `selectionComponent` for `VictorySelectionContainer`
+  - Adds `domain` and `standalone` to list of props that get stored in parent state
+  - Simplifies and standardizes container rendering across components.
+
+
+
 ## 0.15.0 (2017-01-03)
 
 - Adds `VictorySelectionContainer`
