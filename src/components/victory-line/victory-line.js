@@ -14,6 +14,8 @@ const fallbackProps = {
   interpolation: "linear"
 };
 
+const animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
+
 class VictoryLine extends React.Component {
   static displayName = "VictoryLine";
   static role = "line";
@@ -114,13 +116,11 @@ class VictoryLine extends React.Component {
   static getData = Data.getData.bind(Data);
   static getBaseProps = partialRight(LineHelpers.getBaseProps.bind(LineHelpers),
     fallbackProps);
-  static getScale = partialRight(LineHelpers.getScale.bind(LineHelpers),
-    fallbackProps);
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
 
-  renderData(props) { // eslint-disable-line max-statements
+  renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
     const dataComponents = [];
     const labelComponents = [];
@@ -133,53 +133,31 @@ class VictoryLine extends React.Component {
         labelComponents[index] = React.cloneElement(labelComponent, labelProps);
       }
     }
-    return labelComponents.length > 0 ?
-      React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
-      dataComponents;
-  }
-
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
+    return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
   }
 
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  render() {
-    const { role } = this.constructor;
-    const props = Helpers.modifyProps(this.props, fallbackProps, role);
-    const { animate, style, standalone, theme } = props;
+  renderContainer(props, children) {
+    const {containerComponent} = props;
+    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
+    return React.cloneElement(containerComponent, parentProps, children);
+  }
 
+  render() {
+    const {role} = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      // TODO: extract into helper
-      const whitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-
-    const styleObject = theme && theme.line && theme.line.style ? theme.line.style : {};
-
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-    const group = this.renderGroup(this.renderData(props), baseStyles.parent);
-
-    return standalone ? this.renderContainer(props, group) : group;
+    const children = this.renderData(props);
+    return this.renderContainer(props, children);
   }
 }
 export default addEvents(VictoryLine);

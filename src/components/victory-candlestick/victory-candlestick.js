@@ -27,6 +27,10 @@ const defaultData = [
   {x: new Date(2016, 6, 8), open: 40, close: 45, high: 50, low: 35}
 ];
 
+const animationWhitelist = [
+  "data", "domain", "height", "padding", "samples", "size", "style", "width"
+];
+
 class VictoryCandlestick extends React.Component {
   static displayName = "VictoryCandlestick";
   static role = "candlestick";
@@ -141,7 +145,7 @@ class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <g role="presentation"/>,
     theme: VictoryTheme.grayscale
   };
 
@@ -172,50 +176,28 @@ class VictoryCandlestick extends React.Component {
       dataComponents;
   }
 
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
-  }
-
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "candlestick");
+  renderContainer(props, children) {
+    const {containerComponent} = props;
+    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
+    return React.cloneElement(containerComponent, parentProps, children);
+  }
 
-    const { animate, standalone, style, theme } = props;
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryCandlestick` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
+  render() {
+    const {role} = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const whitelist = [
-        "data", "domain", "height", "padding", "samples", "size", "style", "width"
-      ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-    const styleObject = theme && theme.candlestick && theme.candlestick.style ?
-      theme.candlestick.style : {};
-    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
-    return standalone ? this.renderContainer(props, group) : group;
+    const children = this.renderData(props);
+    return this.renderContainer(props, children);
   }
 }
 

@@ -8,13 +8,16 @@ export { default as VictoryGroup } from "./components/victory-group/victory-grou
 export { default as VictoryStack } from "./components/victory-stack/victory-stack";
 export { default as VictoryErrorBar } from "./components/victory-errorbar/victory-errorbar";
 export { default as VictoryVoronoi } from "./components/victory-voronoi/victory-voronoi";
-export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
 export {
   default as VictoryVoronoiTooltip
 } from "./components/victory-voronoi-tooltip/victory-voronoi-tooltip";
 export {
   default as VictorySelectionContainer
-} from "./components/victory-selection-container/victory-selection-container";
+} from "./components/containers/victory-selection-container";
 export {
   default as VictoryCandlestick
 } from "./components/victory-candlestick/victory-candlestick";
+export { default as VictoryBrushContainer } from "./components/containers/victory-brush-container";
+export { default as VictoryZoomContainer } from "./components/containers/victory-zoom-container";
+export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
+

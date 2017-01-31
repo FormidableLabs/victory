@@ -9,15 +9,20 @@ export default class VictorySelectionContainer extends VictoryContainer {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,
     onSelection: React.PropTypes.func,
-    onSelectionCleared: React.PropTypes.func
+    onSelectionCleared: React.PropTypes.func,
+    dimension: React.PropTypes.oneOf(["x", "y"]),
+    standalone: React.PropTypes.bool,
+    selectionComponent: React.PropTypes.element
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
     selectionStyle: {
-      stroke: "black",
+      stroke: "transparent",
       fill: "black",
-      fillOpacity: 0.2
-    }
+      fillOpacity: 0.1
+    },
+    standalone: true,
+    selectionComponent: <rect/>
   };
 
   static defaultEvents = [{
@@ -25,7 +30,12 @@ export default class VictorySelectionContainer extends VictoryContainer {
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
         evt.preventDefault();
+        const { dimension, scale } = targetProps;
         const {x, y} = Selection.getSVGEventCoordinates(evt);
+        const x1 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[0];
+        const y1 = dimension !== "x" ? y : Selection.getDomainCoordinates(scale).y[0];
+        const x2 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[1];
+        const y2 = dimension !== "x" ? y : Selection.getDomainCoordinates(scale).y[1];
         if (isFunction(targetProps.onSelectionCleared)) {
           targetProps.onSelectionCleared();
         }
@@ -33,7 +43,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
           {
             target: "parent",
             mutation: () => {
-              return {x1: x, y1: y, select: true, x2: null, y2: null};
+              return {x1, y1, select: true, x2, y2};
             }
           }, {
             target: "data",
@@ -44,14 +54,17 @@ export default class VictorySelectionContainer extends VictoryContainer {
         ];
       },
       onMouseMove: (evt, targetProps) => {
-        if (!targetProps.select) {
+        const {dimension, scale, select} = targetProps;
+        if (!select) {
           return {};
         } else {
           const {x, y} = Selection.getSVGEventCoordinates(evt);
+          const x2 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[1];
+          const y2 = dimension !== "x" ? y : Selection.getDomainCoordinates(scale).y[1];
           return {
             target: "parent",
             mutation: () => {
-              return { x2: x, y2: y };
+              return { x2, y2 };
             }
           };
         }
@@ -87,24 +100,21 @@ export default class VictorySelectionContainer extends VictoryContainer {
   }];
 
   getRect(props) {
-    const {x1, x2, y1, y2, selectionStyle} = props;
-    const width = Math.abs(x2 - x1);
-    const height = Math.abs(y2 - y1);
+    const {x1, x2, y1, y2, selectionStyle, selectionComponent} = props;
+    const width = Math.abs(x2 - x1) || 1;
+    const height = Math.abs(y2 - y1) || 1;
     const x = Math.min(x1, x2);
     const y = Math.min(y1, y2);
     return y2 && x2 && x1 && y1 ?
-      <rect x={x} y={y} width={width} height={height} style={selectionStyle}/> : null;
+      React.cloneElement(selectionComponent, {x, y, width, height, style: selectionStyle}) : null;
   }
-  renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent, className } = props;
-    return (
-      <svg {...svgProps} style={style} className={className}>
-        <title id="title">{title}</title>
-        <desc id="desc">{desc}</desc>
-        {this.getRect(props)}
-        {children}
-        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-      </svg>
-    );
+
+  // Overrides method in VictoryContainer
+  getChildren(props) {
+    const children = React.Children.toArray(props.children);
+    const components = [...children, this.getRect(props)];
+    return components.map((component, i) => {
+      return component ? React.cloneElement(component, {key: i}) : null;
+    });
   }
 }

@@ -12,6 +12,10 @@ const fallbackProps = {
   padding: 50
 };
 
+const animationWhitelist = [
+  "data", "domain", "height", "padding", "samples", "size", "style", "width"
+];
+
 class VictoryVoronoi extends React.Component {
   static displayName = "VictoryVoronoi";
   static role = "voronoi";
@@ -102,7 +106,7 @@ class VictoryVoronoi extends React.Component {
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <g role="presentation"/>,
     theme: VictoryTheme.grayscale
   };
 
@@ -113,20 +117,6 @@ class VictoryVoronoi extends React.Component {
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
-
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
-  }
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
@@ -150,33 +140,24 @@ class VictoryVoronoi extends React.Component {
     return !!this.props.animate;
   }
 
-  render() {
-    const modifiedProps = Helpers.modifyProps(this.props, fallbackProps);
-    const { animate, style, standalone } = modifiedProps;
+  renderContainer(props, children) {
+    const {containerComponent} = props;
+    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
+    return React.cloneElement(containerComponent, parentProps, children);
+  }
 
+  render() {
+    const {role} = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const whitelist = [
-        "data", "domain", "height", "padding", "samples", "size", "style", "width"
-      ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
-          {React.createElement(this.constructor, modifiedProps)}
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
+          {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-
-    const styleObject = modifiedProps.theme && modifiedProps.theme.voronoi
-    ? modifiedProps.theme.voronoi
-    : fallbackProps.style;
-
-    const baseStyles = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(modifiedProps), baseStyles.parent);
-
-    return standalone ? this.renderContainer(modifiedProps, group) : group;
+    const children = this.renderData(props);
+    return this.renderContainer(props, children);
   }
 }
 

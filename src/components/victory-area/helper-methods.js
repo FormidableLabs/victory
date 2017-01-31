@@ -5,8 +5,8 @@ export default {
 
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "area");
-    const {scale, style, data} = this.getCalculatedValues(props, fallbackProps);
-    const {interpolation, label, width, height, groupComponent} = props;
+    const {scale, style, data, domain} = this.getCalculatedValues(props);
+    const {standalone, interpolation, label, width, height, groupComponent} = props;
 
     const dataProps = {
       groupComponent,
@@ -18,7 +18,7 @@ export default {
     };
 
     const baseProps = {
-      parent: { style: style.parent, width, height, scale, data },
+      parent: { style: style.parent, width, height, scale, data, domain, standalone },
       all: {
         data: dataProps
       }
@@ -52,8 +52,10 @@ export default {
     };
   },
 
-  getScale(props, fallbackProps) {
-    props = Helpers.modifyProps(props, fallbackProps, "area");
+  getCalculatedValues(props) {
+    const { theme } = props;
+    const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -62,20 +64,13 @@ export default {
       x: Domain.getDomainWithZero(props, "x"),
       y: Domain.getDomainWithZero(props, "y")
     };
-    return {
+    const scale = {
       x: Scale.getBaseScale(props, "x").domain(domain.x).range(range.x),
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
-  },
-
-  getCalculatedValues(props) {
-    const { theme } = props;
-    const defaultStyles = theme && theme.area && theme.area.style ? theme.area.style : {};
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const scale = this.getScale(props);
 
     const data = this.getDataWithBaseline(props, scale);
-    return { style, data, scale };
+    return { style, data, scale, domain };
   },
 
   getDataWithBaseline(props, scale) {

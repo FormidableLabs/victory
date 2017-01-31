@@ -19,6 +19,11 @@ const defaultData = [
   {x: 4, y: 4, errorX: 0.4, errorY: 0.4}
 ];
 
+const animationWhitelist = [
+  "data", "domain", "height", "padding", "samples",
+  "style", "width", "errorX", "errorY", "borderWidth"
+];
+
 class VictoryErrorBar extends React.Component {
   static displayName = "VictoryErrorBar";
   static role = "errorBar";
@@ -123,7 +128,7 @@ class VictoryErrorBar extends React.Component {
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
+    groupComponent: <g role="presentation"/>,
     theme: VictoryTheme.grayscale
   };
 
@@ -134,20 +139,6 @@ class VictoryErrorBar extends React.Component {
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
-
-  renderContainer(props, group) {
-    const { containerComponent } = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
-  }
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
@@ -171,31 +162,24 @@ class VictoryErrorBar extends React.Component {
     return !!this.props.animate;
   }
 
+  renderContainer(props, children) {
+    const {containerComponent} = props;
+    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
+    return React.cloneElement(containerComponent, parentProps, children);
+  }
+
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "errorbar");
-    const { animate, style, standalone, theme } = props;
+    const {role} = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      // Do less work by having `VictoryAnimation` tween only values that
-      // make sense to tween. In the future, allow customization of animated
-      // prop whitelist/blacklist?
-      const whitelist = [
-        "data", "domain", "height", "padding", "samples",
-        "style", "width", "errorX", "errorY", "borderWidth"
-      ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           {React.createElement(this.constructor, props)}
         </VictoryTransition>
       );
     }
-
-    const styleObject = theme && theme.errorbar && theme.errorbar.style ?
-      theme.errorbar.style : {};
-
-    const baseStyle = Helpers.getStyles(style, styleObject, "auto", "100%");
-
-    const group = this.renderGroup(this.renderData(props), baseStyle.parent);
-    return standalone ? this.renderContainer(props, group) : group;
+    const children = this.renderData(props);
+    return this.renderContainer(props, children);
   }
 }
 

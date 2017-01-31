@@ -81,12 +81,12 @@ export default class App extends React.Component {
         <h1>VictoryZoom</h1>
 
         <VictoryZoom>
-          <VictoryGroup data={this.state.transitionData}>
+          <VictoryGroup style={{parent: parentStyle}} data={this.state.transitionData}>
             <VictoryLine style={{data: this.state.style}} />
           </VictoryGroup>
         </VictoryZoom>
 
-        <VictoryZoom>
+        <VictoryZoom zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}}>
           <VictoryChart style={{parent: parentStyle}}
             scale={{
               x: "time"

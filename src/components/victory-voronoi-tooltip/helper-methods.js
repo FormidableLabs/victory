@@ -5,9 +5,10 @@ import { voronoi as d3Voronoi } from "d3-voronoi";
 export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "voronoi");
-    const { data, style, scale, polygons } = this.getCalculatedValues(props);
+    const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
     const childProps = { parent: {
-      style: style.parent, scale, data, height: props.height, width: props.width
+      style: style.parent, scale, domain, data, standalone: props.standalone,
+      height: props.height, width: props.width
     }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
@@ -72,7 +73,7 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
     const polygons = props.polygons || this.getPolygons(range, scale, data);
-    return {data, scale, style, polygons};
+    return {domain, data, scale, style, polygons};
   },
 
   getPolygons(range, scale, data) {

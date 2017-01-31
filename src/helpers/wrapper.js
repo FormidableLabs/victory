@@ -110,7 +110,9 @@ export default {
       : React.Children.toArray(props.children);
     let childrenLength = children.length;
 
-    const horizontalChildren = childComponents.some((child) => child.props.horizontal);
+    const horizontalChildren = childComponents.some((component) => {
+      return component.props && component.props.horizontal;
+    });
     const horizontal = props && props.horizontal || horizontalChildren.length > 0;
     const currentAxis = Axis.getCurrentAxis(axis, horizontal);
 

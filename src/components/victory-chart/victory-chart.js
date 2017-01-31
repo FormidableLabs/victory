@@ -114,7 +114,6 @@ export default class VictoryChart extends React.Component {
 
   componentWillMount() {
     this.events = Wrapper.getAllEvents(this.props);
-    this.getContainerRef = (component) => this.containerRef = component;
   }
 
   componentWillReceiveProps(nextProps) {
@@ -174,7 +173,9 @@ export default class VictoryChart extends React.Component {
 
   getCalculatedProps(props, childComponents) {
     const style = this.getStyles(props);
-    const horizontal = childComponents.some((component) => component.props.horizontal);
+    const horizontal = childComponents.some((component) => {
+      return component.props && component.props.horizontal;
+    });
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
       y: Axis.getAxisComponent(childComponents, "y")
@@ -246,7 +247,6 @@ export default class VictoryChart extends React.Component {
         domainPadding: child.props.domainPadding ||
           props.domainPadding || calculatedProps.defaultDomainPadding,
         padding: Helpers.getPadding(props),
-        ref: index,
         key: index,
         theme: props.theme,
         standalone: false,
@@ -257,34 +257,24 @@ export default class VictoryChart extends React.Component {
     return newChildren;
   }
 
-  getSvgBounds() {
-    return this.containerRef.svgRef.getBoundingClientRect();
+  renderContainer(containerComponent, props) {
+    const containerProps = defaults({}, containerComponent.props, props);
+    return React.cloneElement(containerComponent, containerProps);
   }
 
-  getContainer(props, calculatedProps) {
-    const { width, height, containerComponent } = props;
-    const { scale, style } = calculatedProps;
-    const parentProps = defaults(
-      {},
-      containerComponent.props,
-      {style: style.parent, scale, width, height, ref: this.getContainerRef}
-    );
-    return React.cloneElement(containerComponent, parentProps);
-  }
-
-  renderGroup(children, style) {
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style},
-      children
-    );
+  getContainerProps(props, calculatedProps) {
+    const { width, height, standalone } = props;
+    const { domain, scale, style } = calculatedProps;
+    return {
+      domain, scale, width, height, standalone, style: style.parent
+    };
   }
 
   render() {
     const props = this.state && this.state.nodesWillExit ?
       this.state.oldProps || this.props : this.props;
     const modifiedProps = Helpers.modifyProps(props, fallbackProps, "chart");
-    const { standalone, eventKey } = modifiedProps;
+    const { eventKey, containerComponent } = modifiedProps;
     const childComponents = ChartHelpers.getChildComponents(modifiedProps,
       modifiedProps.defaultAxes);
     const calculatedProps = this.getCalculatedProps(modifiedProps, childComponents);
@@ -292,8 +282,8 @@ export default class VictoryChart extends React.Component {
     if (this.props.modifyChildren) {
       newChildren = this.props.modifyChildren(newChildren, modifiedProps);
     }
-    const group = this.renderGroup(newChildren, calculatedProps.style.parent);
-    const container = standalone ? this.getContainer(modifiedProps, calculatedProps) : group;
+    const containerProps = this.getContainerProps(modifiedProps, calculatedProps);
+    const container = this.renderContainer(containerComponent, containerProps);
     if (this.events) {
       return (
         <VictorySharedEvents events={this.events} eventKey={eventKey} container={container}>
@@ -301,6 +291,6 @@ export default class VictoryChart extends React.Component {
         </VictorySharedEvents>
       );
     }
-    return standalone ? React.cloneElement(container, container.props, group) : group;
+    return React.cloneElement(container, container.props, newChildren);
   }
 }

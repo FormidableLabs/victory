@@ -5,9 +5,10 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "scatter");
     const calculatedValues = this.getCalculatedValues(props);
-    const { data, style, scale } = calculatedValues;
+    const { data, style, scale, domain } = calculatedValues;
     const childProps = { parent: {
-      style: style.parent, scale, data, height: props.height, width: props.width
+      style: style.parent, scale, domain, data, height: props.height,
+      width: props.width, standalone: props.standalone
     }};
     for (let index = 0, len = data.length; index < len; index++) {
       const datum = data[index];
@@ -66,7 +67,7 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
     const z = props.bubbleProperty || "z";
-    return {data, scale, style, z};
+    return {domain, data, scale, style, z};
   },
 
   getDataStyles(datum, style) {

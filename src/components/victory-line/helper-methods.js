@@ -8,11 +8,11 @@ export default {
     const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
       props.theme.line.style : {};
     const calculatedValues = this.getCalculatedValues(props);
-    const { scale, dataset, dataSegments } = calculatedValues;
+    const { scale, dataset, dataSegments, domain } = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height, events, sharedEvents} = props;
+    const {interpolation, label, width, height, events, sharedEvents, standalone} = props;
     const childProps = { parent: {
-      style: style.parent, scale, data: dataset, height, width
+      style: style.parent, scale, data: dataset, height, width, domain, standalone
     }};
     for (let index = 0, len = dataSegments.length; index < len; index++) {
       const dataProps = {
@@ -50,10 +50,16 @@ export default {
     };
   },
 
-  getScale(props, fallbackProps) {
-    if (fallbackProps) {
-      props = Helpers.modifyProps(props, fallbackProps);
+  getCalculatedValues(props) {
+    let dataset = Data.getData(props);
+
+    if (Data.getData(props).length < 2) {
+      Log.warn("VictoryLine needs at least two data points to render properly.");
+      dataset = [];
     }
+
+    const dataSegments = this.getDataSegments(dataset, props.sortKey);
+
     const range = {
       x: Helpers.getRange(props, "x"),
       y: Helpers.getRange(props, "y")
@@ -67,21 +73,7 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
 
-    return scale;
-  },
-
-  getCalculatedValues(props) {
-    let dataset = Data.getData(props);
-
-    if (Data.getData(props).length < 2) {
-      Log.warn("VictoryLine needs at least two data points to render properly.");
-      dataset = [];
-    }
-
-    const dataSegments = this.getDataSegments(dataset, props.sortKey);
-    const scale = this.getScale(props);
-
-    return { dataset, dataSegments, scale };
+    return { domain, dataset, dataSegments, scale };
   },
 
   getLabelStyle(labelStyle, dataStyle) {
