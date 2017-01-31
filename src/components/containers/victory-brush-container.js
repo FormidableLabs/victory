@@ -31,6 +31,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
       stroke: "transparent",
       fill: "transparent"
     },
+    dimension: "x",
     handleWidth: 8,
     selectionComponent: <rect/>,
     handleComponent: <rect/>
@@ -39,17 +40,21 @@ export default class VictoryBrushContainer extends VictoryContainer {
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
-      onMouseDown: (evt, targetProps) => {
+      onMouseDown: (evt, targetProps) => { // eslint-disable-line max-statements
         evt.preventDefault();
-        const { dimension, selectedDomain, domain, handleWidth, onDomainChange } = targetProps;
+        const {
+          dimension, selectedDomain, domain, handleWidth, onDomainChange, cachedSelectedDomain
+        } = targetProps;
         const fullDomainBox = targetProps.fullDomainBox ||
           Helpers.getDomainBox(targetProps, domain);
+        const currentDomain = isEqual(selectedDomain, cachedSelectedDomain) ?
+          targetProps.currentDomain || selectedDomain || domain : selectedDomain || domain;
         const {x, y} = Selection.getSVGEventCoordinates(evt);
         // Ignore events that occur outside of the maximum domain region
         if (!Helpers.withinBounds({x, y}, fullDomainBox, handleWidth)) {
           return {};
         }
-        const domainBox = Helpers.getDomainBox(targetProps, domain, selectedDomain);
+        const domainBox = Helpers.getDomainBox(targetProps, domain, currentDomain);
         const activeHandles = Helpers.getActiveHandles({x, y}, targetProps, domainBox);
         // If the event occurs in any of the handle regions, start a resize
         if (activeHandles) {
@@ -58,21 +63,22 @@ export default class VictoryBrushContainer extends VictoryContainer {
             mutation: () => {
               return {
                 isSelecting: true, domainBox, fullDomainBox,
+                cachedSelectedDomain: selectedDomain, currentDomain,
                 ...Helpers.getResizeMutation(domainBox, activeHandles)
               };
             }
           }];
         } else if (
             Helpers.withinBounds({x, y}, domainBox) &&
-            selectedDomain &&
-            !isEqual(domain, selectedDomain
-          )) {
+            !isEqual(domain, currentDomain)
+          ) {
           // if the event occurs within a selected region start a panning event, unless the whole
           // domain is selected
           return [{
             target: "parent",
             mutation: () => ({
-              isPanning: true, startX: x, startY: y, domainBox, fullDomainBox
+              isPanning: true, startX: x, startY: y, domainBox, fullDomainBox, currentDomain,
+              cachedSelectedDomain: selectedDomain
             })
           }];
         } else {
@@ -87,7 +93,8 @@ export default class VictoryBrushContainer extends VictoryContainer {
             mutation: () => {
               return {
                 isSelecting: true, domainBox, fullDomainBox,
-                selectedDomain: Helpers.getMinimumDomain(),
+                cachedSelectedDomain: selectedDomain,
+                currentDomain: Helpers.getMinimumDomain(),
                 ...Helpers.getSelectionMutation({x, y}, domainBox, dimension)
               };
             }
@@ -111,15 +118,15 @@ export default class VictoryBrushContainer extends VictoryContainer {
           const {startX, startY} = targetProps;
           const pannedBox = Helpers.panBox(targetProps, {x, y});
           const constrainedBox = Helpers.constrainBox(pannedBox, fullDomainBox);
-          const selectedDomain = Selection.getBounds({...constrainedBox, scale});
+          const currentDomain = Selection.getBounds({...constrainedBox, scale});
           if (isFunction(onDomainChange)) {
-            onDomainChange(selectedDomain);
+            onDomainChange(currentDomain);
           }
           return [{
             target: "parent",
             mutation: () => {
               return {
-                selectedDomain,
+                currentDomain,
                 startX: pannedBox.x2 >= fullDomainBox.x2 || pannedBox.x1 <= fullDomainBox.x1 ?
                   startX : x,
                 startY: pannedBox.y2 >= fullDomainBox.y2 || pannedBox.y1 <= fullDomainBox.y1 ?
@@ -131,16 +138,16 @@ export default class VictoryBrushContainer extends VictoryContainer {
         } else if (isSelecting) {
           const x2 = dimension !== "y" ? x : targetProps.x2;
           const y2 = dimension !== "x" ? y : targetProps.y2;
-          const selectedDomain =
+          const currentDomain =
             Selection.getBounds({x2, y2, x1: targetProps.x1, y1: targetProps.y1, scale});
           if (isFunction(onDomainChange)) {
-            onDomainChange(selectedDomain);
+            onDomainChange(currentDomain);
           }
           return [{
             target: "parent",
             mutation: () => {
               return {
-                x2, y2, selectedDomain
+                x2, y2, currentDomain
               };
             }
           }];
@@ -216,8 +223,9 @@ export default class VictoryBrushContainer extends VictoryContainer {
   }
 
   getRect(props) {
-    const {selectedDomain, scale} = props;
-    const domain = selectedDomain || props.domain;
+    const {selectedDomain, currentDomain, cachedSelectedDomain, scale} = props;
+    const domain = isEqual(selectedDomain, cachedSelectedDomain) ?
+      currentDomain || selectedDomain || props.domain : selectedDomain || props.domain;
     const coordinates = Selection.getDomainCoordinates(scale, domain);
     const selectBox = this.getSelectBox(props, coordinates);
     return selectBox ?

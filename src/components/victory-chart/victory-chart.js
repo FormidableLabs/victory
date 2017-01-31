@@ -173,7 +173,9 @@ export default class VictoryChart extends React.Component {
 
   getCalculatedProps(props, childComponents) {
     const style = this.getStyles(props);
-    const horizontal = childComponents.some((component) => component.props.horizontal);
+    const horizontal = childComponents.some((component) => {
+      return component.props && component.props.horizontal;
+    });
     const axisComponents = {
       x: Axis.getAxisComponent(childComponents, "x"),
       y: Axis.getAxisComponent(childComponents, "y")

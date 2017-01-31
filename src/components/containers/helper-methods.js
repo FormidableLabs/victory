@@ -75,8 +75,8 @@ export default {
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
-    const { dimension, scale } = props;
-    fullDomain = fullDomain || this.getOriginalDomain(props);
+    const { dimension, scale, domain } = props;
+    fullDomain = fullDomain || domain || this.getOriginalDomain(props);
     selectedDomain = selectedDomain || props.selectedDomain || fullDomain;
     const fullCoordinates = Selection.getDomainCoordinates(scale, fullDomain);
     const selectedCoordinates = Selection.getDomainCoordinates(scale, selectedDomain);
@@ -143,7 +143,10 @@ export default {
   },
 
   panBox(props, point) {
-    const {x1, x2, y1, y2, dimension, startX, startY} = props;
+    const {fullDomain, selectedDomain, dimension, startX, startY} = props;
+    const {x1, x2, y1, y2} = props.x1 ?
+      props : this.getDomainBox(props, fullDomain, selectedDomain);
+
     const {x, y} = point;
     const delta = {
       x: startX ? startX - x : 0,
