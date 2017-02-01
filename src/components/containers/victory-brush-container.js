@@ -164,7 +164,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
             target: "parent",
             mutation: () => {
               return {
-                isPanning: false, isSelecting: false, selectedDomain: domain
+                isPanning: false, isSelecting: false, currentDomain: domain
               };
             }
           }];
