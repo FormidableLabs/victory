@@ -2,13 +2,13 @@
 /* global sinon */
 
 import React from "react";
-import { defaults } from "lodash";
+import { defaults, reduce } from "lodash";
 import { mount } from "enzyme";
-import { addEvents } from "src/index";
+import { Data, addEvents } from "src/index";
 
 describe("victory-util/add-events", () => {
   class MockDataComponent extends React.Component {
-    // static displayName = "MockDataComponent";
+    static displayName = "MockDataComponent";
 
     render() {
       const datum = this.props.datum;
@@ -19,7 +19,7 @@ describe("victory-util/add-events", () => {
   }
 
   class MockLabel extends React.Component {
-    // static displayName = "MockLabel";
+    static displayName = "MockLabel";
 
     render() {
       return (
@@ -35,8 +35,28 @@ describe("victory-util/add-events", () => {
 
     static defaultProps = {
       dataComponent: MockDataComponent,
-      labelComponent: MockLabel,
+      labelComponent: React.createElement(MockLabel, { text: 'label' }),
       groupComponent: "div"
+    };
+
+    static getBaseProps = (props) => {
+      const data = Data.getData(props.data);
+      const childProps = reduce(data, (accum, datum, index) => {
+        return defaults({}, accum, {
+          [index]: {
+            data: {
+              index,
+              datum,
+              data
+            }
+          }
+        });
+      }, {});
+
+      return {
+        parent: { data },
+        ...childProps
+      };
     };
 
     render() {
@@ -44,10 +64,9 @@ describe("victory-util/add-events", () => {
       const { dataComponent, labelComponent, groupComponent } = props;
       const dataComponents = [];
       const labelComponents = [];
-      console.log(this.dataKeys);
       for (let index = 0, len = this.dataKeys.length; index < len; index++) {
         const dataProps = this.getComponentProps(dataComponent, "data", index);
-        dataComponents[index] = React.cloneElement(dataComponent, dataProps);
+        dataComponents[index] = React.createElement(dataComponent, dataProps);
 
         const labelProps = this.getComponentProps(labelComponent, "labels", index);
         if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
@@ -55,9 +74,7 @@ describe("victory-util/add-events", () => {
         }
       }
 
-      return labelComponents.length > 0 ?
-        React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
-        dataComponents;
+      return React.createElement(groupComponent, {}, ...dataComponents, ...labelComponents);
     }
   }
 
@@ -75,7 +92,9 @@ describe("victory-util/add-events", () => {
               onClick: () => {
                 return [{
                   target: "data",
-                  mutation: spy
+                  mutation: (props) => {
+                    spy();
+                  }
                 }];
               }
             }
