@@ -26,12 +26,10 @@ describe("victory-util/add-events", () => {
     static role = "label";
 
     render() {
-      const { events, text } = this.props;
+      const { text } = this.props;
 
       return (
-        <p {...events} >
-          `${text}`
-        </p>
+        <p>`${text}`</p>
       );
     }
   }
