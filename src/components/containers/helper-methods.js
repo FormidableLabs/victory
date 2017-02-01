@@ -77,7 +77,7 @@ export default {
   getDomainBox(props, fullDomain, selectedDomain) {
     const { dimension, scale, domain } = props;
     fullDomain = fullDomain || domain || this.getOriginalDomain(props);
-    selectedDomain = selectedDomain || props.selectedDomain || fullDomain;
+    selectedDomain = selectedDomain || fullDomain;
     const fullCoordinates = Selection.getDomainCoordinates(scale, fullDomain);
     const selectedCoordinates = Selection.getDomainCoordinates(scale, selectedDomain);
 
