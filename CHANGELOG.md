@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 16.0.1 (2017-02-01)
+
+- [428](https://github.com/FormidableLabs/victory-chart/pull/428)
+- Fixes a bug in `VictoryBrushContainer`
+
 ## 16.0.0 (2017-01-30)
 
 - [427](https://github.com/FormidableLabs/victory-chart/pull/427)
