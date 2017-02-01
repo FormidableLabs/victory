@@ -12,9 +12,11 @@ describe("victory-util/add-events", () => {
     static role = "dataComponent";
 
     render() {
-      const datum = this.props.datum;
+      const { datum, events, style } = this.props;
       return (
-        <p> `${datum.x}: ${datum.y}` </p>
+        <p style={style} {...events}>
+          `${datum.x}: ${datum.y}`
+        </p>
       );
     }
   }
@@ -24,8 +26,12 @@ describe("victory-util/add-events", () => {
     static role = "label";
 
     render() {
+      const { events, text } = this.props;
+
       return (
-        <p>`${this.props.text}`</p>
+        <p {...events} >
+          `${text}`
+        </p>
       );
     }
   }
