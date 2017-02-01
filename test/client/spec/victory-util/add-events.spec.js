@@ -9,6 +9,7 @@ import { Data, addEvents } from "src/index";
 describe("victory-util/add-events", () => {
   class MockDataComponent extends React.Component {
     static displayName = "MockDataComponent";
+    static role = "dataComponent";
 
     render() {
       const datum = this.props.datum;
@@ -20,6 +21,7 @@ describe("victory-util/add-events", () => {
 
   class MockLabel extends React.Component {
     static displayName = "MockLabel";
+    static role = "label";
 
     render() {
       return (
@@ -30,8 +32,7 @@ describe("victory-util/add-events", () => {
 
   class MockChart extends React.Component {
     static displayName = "MockChart";
-
-    static role = "bar";
+    static role = "chart";
 
     static defaultProps = {
       dataComponent: MockDataComponent,
