@@ -39,9 +39,9 @@ describe("victory-util/add-events", () => {
     static role = "chart";
 
     static defaultProps = {
-      dataComponent: MockDataComponent,
-      labelComponent: React.createElement(MockLabel, { text: 'label' }),
-      groupComponent: "div"
+      dataComponent: <MockDataComponent/>,
+      labelComponent: <MockLabel text='label'/>,
+      groupComponent: <div/>
     };
 
     static getBaseProps = (props) => {
@@ -70,7 +70,7 @@ describe("victory-util/add-events", () => {
       const labelComponents = [];
       for (let index = 0, len = this.dataKeys.length; index < len; index++) {
         const dataProps = this.getComponentProps(dataComponent, "data", index);
-        dataComponents[index] = React.createElement(dataComponent, dataProps);
+        dataComponents[index] = React.cloneElement(dataComponent, dataProps);
 
         const labelProps = this.getComponentProps(labelComponent, "labels", index);
         if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
@@ -78,7 +78,7 @@ describe("victory-util/add-events", () => {
         }
       }
 
-      return React.createElement(groupComponent, {}, ...dataComponents, ...labelComponents);
+      return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
     }
   }
 
