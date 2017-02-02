@@ -7,23 +7,27 @@ import { mount } from "enzyme";
 import { addEvents } from "src/index";
 import { MockChart, MockLabel, MockDataComponent } from "../mock-components";
 
-describe("victory-util/add-events", () => {
+describe.only("victory-util/add-events", () => {
   const EventedMockChart = addEvents(MockChart);
 
-  const findDataComponentByIndex = memoize((index, wrapper) => {
-    return wrapper.find(MockDataComponent).filterWhere((node) => {
-      return node.props().index === index;
-    });
-  });
+  const expectEventsTriggered = (scopeFn, testFn, expectations, wrapper) => {
+    const componentsToTest = scopeFn(wrapper);
+    expect(expectations.length).to.eql(componentsToTest.length);
 
-  const expectEventsTriggered = (testFn, expectations, wrapper) => {
     forEach(expectations, (expectation, index) => {
-      const dataComponent = findDataComponentByIndex(index, wrapper);
-      testFn(dataComponent, expectation);
+      testFn(componentsToTest.at(index), expectation);
     });
   };
 
-  it.only("should set up events on data components", () => {
+  const getDataComponents = (wrapper) => {
+    return wrapper.find(MockDataComponent);
+  };
+
+  const getLabelComponents = (wrapper) => {
+    return wrapper.find(MockLabel);
+  };
+
+  it("should set up events on data components to target themselves", () => {
     const wrapper = mount(
       <EventedMockChart
         data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
@@ -45,14 +49,48 @@ describe("victory-util/add-events", () => {
       />
     );
 
-    const expectPropsMutation = (component, expectation) => {
-      expect(get(component.props(), 'style.fill') === 'tomato').to.eql(expectation);
+    const expectPropsMutation = (dataComponent, expectation) => {
+      expect(get(dataComponent.props(), 'style.fill') === 'tomato').to.eql(expectation);
     };
 
-    expectEventsTriggered(expectPropsMutation, [false, false], wrapper);
-    findDataComponentByIndex(0).simulate('click');
-    expectEventsTriggered(expectPropsMutation, [true, false], wrapper);
-    findDataComponentByIndex(1).simulate('click');
-    expectEventsTriggered(expectPropsMutation, [true, true], wrapper);
+    expectEventsTriggered(getDataComponents, expectPropsMutation, [false, false], wrapper);
+    getDataComponents(wrapper).at(0).simulate('click');
+    expectEventsTriggered(getDataComponents, expectPropsMutation, [true, false], wrapper);
+    getDataComponents(wrapper).at(1).simulate('click');
+    expectEventsTriggered(getDataComponents, expectPropsMutation, [true, true], wrapper);
+  });
+
+  it("should set up events on data components to target labels", () => {
+    const wrapper = mount(
+      <EventedMockChart
+        data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
+        labelComponent={<MockLabel text='unaffected'/>}
+        events={[
+          {
+            target: "data",
+            eventHandlers: {
+              onClick: () => {
+                return [{
+                  target: "labels",
+                  mutation: (props) => {
+                    return { text: 'altered' };
+                  }
+                }];
+              }
+            }
+          }
+        ]}
+      />
+    );
+
+    const expectPropsMutation = (labelComponent, expectation) => {
+      expect(get(labelComponent.props(), 'text') === 'altered').to.eql(expectation);
+    };
+
+    expectEventsTriggered(getLabelComponents, expectPropsMutation, [false, false], wrapper);
+    getDataComponents(wrapper).at(0).simulate('click');
+    expectEventsTriggered(getLabelComponents, expectPropsMutation, [true, false], wrapper);
+    getDataComponents(wrapper).at(1).simulate('click');
+    expectEventsTriggered(getLabelComponents, expectPropsMutation, [true, true], wrapper);
   });
 });
