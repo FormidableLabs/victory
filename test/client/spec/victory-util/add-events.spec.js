@@ -103,12 +103,25 @@ describe("victory-util/add-events", () => {
       />
     );
 
-    const firstDataComponent = wrapper.find(MockDataComponent).filterWhere((node) => {
-      return node.props().datum.x === 1;
-    });
+    const findDataComponentByEventKey = (eventKey) => {
+      return wrapper.find(MockDataComponent).filterWhere((node) => {
+        return node.props().datum.eventKey === eventKey;
+      });
+    };
 
-    expect(get(firstDataComponent.props(), 'style.fill')).not.to.eql('tomato');
+    const expectEventTriggeredOn = (component, expectation) => {
+      expect(get(component.props(), 'style.fill') === 'tomato').to.eql(expectation);
+    };
+
+    const [firstDataComponent, secondDataComponent] = map([0, 1], findDataComponentByEventKey);
+
+    expectEventTriggeredOn(firstDataComponent, false);
+    expectEventTriggeredOn(secondDataComponent, false);
     firstDataComponent.simulate('click');
-    expect(get(firstDataComponent.props(), 'style.fill')).to.eql('tomato');
+    expectEventTriggeredOn(firstDataComponent, true);
+    expectEventTriggeredOn(secondDataComponent, false);
+    secondDataComponent.simulate('click');
+    expectEventTriggeredOn(firstDataComponent, true);
+    expectEventTriggeredOn(secondDataComponent, true);
   });
 });
