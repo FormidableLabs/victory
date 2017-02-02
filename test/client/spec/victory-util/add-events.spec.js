@@ -2,7 +2,7 @@
 /* global sinon */
 
 import React from "react";
-import { defaults, reduce, get } from "lodash";
+import { defaults, get, reduce, map } from "lodash";
 import { mount } from "enzyme";
 import { Data, addEvents } from "src/index";
 
@@ -58,25 +58,22 @@ describe("victory-util/add-events", () => {
         });
       }, {});
 
-      return {
-        ...childProps
-      };
+      return childProps;
     };
 
     render() {
       const props = defaults({}, this.props, this.defaultProps);
       const { dataComponent, labelComponent, groupComponent } = props;
-      const dataComponents = [];
-      const labelComponents = [];
-      for (let index = 0, len = this.dataKeys.length; index < len; index++) {
-        const dataProps = this.getComponentProps(dataComponent, "data", index);
-        dataComponents[index] = React.cloneElement(dataComponent, dataProps);
 
+      const dataComponents = map(this.dataKeys, (_key, index) => {
+        const dataProps = this.getComponentProps(dataComponent, "data", index);
+        return React.cloneElement(dataComponent, dataProps);
+      });
+
+      const labelComponents = map(this.dataKeys, (_key, index) => {
         const labelProps = this.getComponentProps(labelComponent, "labels", index);
-        if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-          labelComponents[index] = React.cloneElement(labelComponent, labelProps);
-        }
-      }
+        return get(labelProps, 'text') ? React.cloneElement(labelComponent, labelProps) : undefined;
+      });
 
       return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
     }
