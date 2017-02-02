@@ -35,7 +35,7 @@ class MockChart extends React.Component {
 
   static defaultProps = {
     dataComponent: <MockDataComponent/>,
-    labelComponent: <MockLabel text='label'/>,
+    labelComponent: <MockLabel/>,
     groupComponent: <div/>
   };
 

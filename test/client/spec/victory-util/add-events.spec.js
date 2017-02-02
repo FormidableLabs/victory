@@ -8,9 +8,13 @@ import { addEvents } from "src/index";
 import { MockChart, MockLabel, MockDataComponent } from "../mock-components";
 
 describe("victory-util/add-events", () => {
-  it.only("should set up events on data components", () => {
-    const EventedMockChart = addEvents(MockChart);
+  let EventedMockChart;
 
+  beforeEach(() => {
+    EventedMockChart = addEvents(MockChart);
+  });
+
+  it.only("should set up events on data components", () => {
     const wrapper = mount(
       <EventedMockChart
         data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
