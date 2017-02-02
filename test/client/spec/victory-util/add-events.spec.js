@@ -2,7 +2,7 @@
 /* global sinon */
 
 import React from "react";
-import { defaults, reduce } from "lodash";
+import { defaults, reduce, get } from "lodash";
 import { mount } from "enzyme";
 import { Data, addEvents } from "src/index";
 
@@ -12,10 +12,10 @@ describe("victory-util/add-events", () => {
     static role = "dataComponent";
 
     render() {
-      const { datum, events, style } = this.props;
+      const { datum: { x, y }, events, style } = this.props;
       return (
         <p style={style} {...events}>
-          `${datum.x}: ${datum.y}`
+          `${x}: ${y}`
         </p>
       );
     }
@@ -59,7 +59,6 @@ describe("victory-util/add-events", () => {
       }, {});
 
       return {
-        parent: { data },
         ...childProps
       };
     };
@@ -85,7 +84,6 @@ describe("victory-util/add-events", () => {
 
   it.only("do stuff", () => {
     const EventedMockChart = addEvents(MockChart);
-    const spy = sinon.spy();
 
     const wrapper = mount(
       <EventedMockChart
@@ -98,7 +96,7 @@ describe("victory-util/add-events", () => {
                 return [{
                   target: "data",
                   mutation: (props) => {
-                    spy();
+                    return { style: { fill: 'tomato' } };
                   }
                 }];
               }
@@ -112,8 +110,8 @@ describe("victory-util/add-events", () => {
       return node.props().datum.x === 1;
     });
 
-    expect(spy).not.to.have.been.called;
+    expect(get(firstDataComponent.props(), 'style.fill')).not.to.eql('tomato');
     firstDataComponent.simulate('click');
-    expect(spy).to.have.been.called;
+    expect(get(firstDataComponent.props(), 'style.fill')).to.eql('tomato');
   });
 });
