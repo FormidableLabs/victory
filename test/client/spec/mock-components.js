@@ -50,7 +50,7 @@ class MockChart extends React.Component {
   };
 
   static getBaseProps = (props) => {
-    const data = Data.getData(props.data);
+    const data = Data.getData(props);
     const childProps = reduce(data, (accum, datum, index) => {
       return defaults({}, accum, {
         [index]: {
