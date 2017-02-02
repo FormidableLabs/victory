@@ -8,11 +8,20 @@ import { addEvents } from "src/index";
 import { MockChart, MockLabel, MockDataComponent } from "../mock-components";
 
 describe("victory-util/add-events", () => {
-  let EventedMockChart;
+  const EventedMockChart = addEvents(MockChart);
 
-  beforeEach(() => {
-    EventedMockChart = addEvents(MockChart);
+  const findDataComponentByIndex = memoize((index, wrapper) => {
+    return wrapper.find(MockDataComponent).filterWhere((node) => {
+      return node.props().index === index;
+    });
   });
+
+  const expectEventsTriggered = (testFn, expectations, wrapper) => {
+    forEach(expectations, (expectation, index) => {
+      const dataComponent = findDataComponentByIndex(index, wrapper);
+      testFn(dataComponent, expectation);
+    });
+  };
 
   it.only("should set up events on data components", () => {
     const wrapper = mount(
@@ -36,27 +45,14 @@ describe("victory-util/add-events", () => {
       />
     );
 
-    const findDataComponentByIndex = memoize((eventKey) => {
-      return wrapper.find(MockDataComponent).filterWhere((node) => {
-        return node.props().datum.eventKey === eventKey;
-      });
-    });
-
-    const expectEventTriggeredOn = (component, expectation) => {
+    const expectPropsMutation = (component, expectation) => {
       expect(get(component.props(), 'style.fill') === 'tomato').to.eql(expectation);
     };
 
-    expectEventsTriggered = (expectations) => {
-      forEach(expectations, (expectation, index) => {
-        const dataComponent = findDataComponentByIndex(index);
-        expectEventTriggeredOn(dataComponent, expectation);
-      });
-    };
-
-    expectEventsTriggered([false, false]);
+    expectEventsTriggered(expectPropsMutation, [false, false], wrapper);
     findDataComponentByIndex(0).simulate('click');
-    expectEventsTriggered([true, false]);
+    expectEventsTriggered(expectPropsMutation, [true, false], wrapper);
     findDataComponentByIndex(1).simulate('click');
-    expectEventsTriggered([true, true]);
+    expectEventsTriggered(expectPropsMutation, [true, true], wrapper);
   });
 });
