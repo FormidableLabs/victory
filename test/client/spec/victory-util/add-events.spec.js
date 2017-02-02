@@ -1,13 +1,12 @@
-/* eslint no-unused-expressions: 0 */
-/* global sinon */
+/* eslint max-params: 0 */
 
 import React from "react";
-import { forEach, get, memoize } from "lodash";
+import { forEach, get } from "lodash";
 import { mount } from "enzyme";
 import { addEvents } from "src/index";
 import { MockChart, MockLabel, MockDataComponent } from "../mock-components";
 
-describe.only("victory-util/add-events", () => {
+describe("victory-util/add-events", () => {
   const EventedMockChart = addEvents(MockChart);
 
   const expectEventsTriggered = (scopeFn, testFn, expectations, wrapper) => {
@@ -38,8 +37,8 @@ describe.only("victory-util/add-events", () => {
               onClick: () => {
                 return [{
                   target: "data",
-                  mutation: (props) => {
-                    return { style: { fill: 'tomato' } };
+                  mutation: () => {
+                    return { style: { fill: "tomato" } };
                   }
                 }];
               }
@@ -50,13 +49,13 @@ describe.only("victory-util/add-events", () => {
     );
 
     const dataComponentIsAltered = (dataComponent) => {
-      return get(dataComponent.props(), 'style.fill') === 'tomato';
+      return get(dataComponent.props(), "style.fill") === "tomato";
     };
 
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper).at(0).simulate('click');
+    getDataComponents(wrapper).at(0).simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, false], wrapper);
-    getDataComponents(wrapper).at(1).simulate('click');
+    getDataComponents(wrapper).at(1).simulate("click");
     expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, true], wrapper);
   });
 
@@ -64,7 +63,7 @@ describe.only("victory-util/add-events", () => {
     const wrapper = mount(
       <EventedMockChart
         data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
-        labelComponent={<MockLabel text='unaffected'/>}
+        labelComponent={<MockLabel text="unaffected"/>}
         events={[
           {
             target: "data",
@@ -72,8 +71,8 @@ describe.only("victory-util/add-events", () => {
               onClick: () => {
                 return [{
                   target: "labels",
-                  mutation: (props) => {
-                    return { text: 'altered' };
+                  mutation: () => {
+                    return { text: "altered" };
                   }
                 }];
               }
@@ -84,13 +83,13 @@ describe.only("victory-util/add-events", () => {
     );
 
     const labelComponentIsAltered = (labelComponent) => {
-      return get(labelComponent.props(), 'text') === 'altered';
+      return get(labelComponent.props(), "text") === "altered";
     };
 
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [false, false], wrapper);
-    getDataComponents(wrapper).at(0).simulate('click');
+    getDataComponents(wrapper).at(0).simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, false], wrapper);
-    getDataComponents(wrapper).at(1).simulate('click');
+    getDataComponents(wrapper).at(1).simulate("click");
     expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, true], wrapper);
   });
 });

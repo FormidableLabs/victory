@@ -1,10 +1,16 @@
-import React from "react";
+import React, { PropTypes } from "react";
 import { Data } from "src/index";
 import { defaults, get, reduce, map } from "lodash";
 
 class MockDataComponent extends React.Component {
   static displayName = "MockDataComponent";
   static role = "dataComponent";
+
+  static propTypes = {
+    datum: PropTypes.object,
+    events: PropTypes.object,
+    style: PropTypes.object
+  };
 
   render() {
     const { datum: { x, y }, events, style } = this.props;
@@ -19,6 +25,10 @@ class MockDataComponent extends React.Component {
 class MockLabel extends React.Component {
   static displayName = "MockLabel";
   static role = "label";
+
+  static propTypes = {
+    text: PropTypes.string
+  };
 
   render() {
     const { text } = this.props;
@@ -67,7 +77,7 @@ class MockChart extends React.Component {
 
     const labelComponents = map(this.dataKeys, (_key, index) => {
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      return get(labelProps, 'text') ? React.cloneElement(labelComponent, labelProps) : undefined;
+      return get(labelProps, "text") ? React.cloneElement(labelComponent, labelProps) : undefined;
     });
 
     return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
