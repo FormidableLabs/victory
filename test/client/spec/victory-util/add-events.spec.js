@@ -15,7 +15,7 @@ describe.only("victory-util/add-events", () => {
     expect(expectations.length).to.eql(componentsToTest.length);
 
     forEach(expectations, (expectation, index) => {
-      testFn(componentsToTest.at(index), expectation);
+      expect(testFn(componentsToTest.at(index))).to.eql(expectation);
     });
   };
 
@@ -49,15 +49,15 @@ describe.only("victory-util/add-events", () => {
       />
     );
 
-    const expectPropsMutation = (dataComponent, expectation) => {
-      expect(get(dataComponent.props(), 'style.fill') === 'tomato').to.eql(expectation);
+    const dataComponentIsAltered = (dataComponent) => {
+      return get(dataComponent.props(), 'style.fill') === 'tomato';
     };
 
-    expectEventsTriggered(getDataComponents, expectPropsMutation, [false, false], wrapper);
+    expectEventsTriggered(getDataComponents, dataComponentIsAltered, [false, false], wrapper);
     getDataComponents(wrapper).at(0).simulate('click');
-    expectEventsTriggered(getDataComponents, expectPropsMutation, [true, false], wrapper);
+    expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, false], wrapper);
     getDataComponents(wrapper).at(1).simulate('click');
-    expectEventsTriggered(getDataComponents, expectPropsMutation, [true, true], wrapper);
+    expectEventsTriggered(getDataComponents, dataComponentIsAltered, [true, true], wrapper);
   });
 
   it("should set up events on data components to target labels", () => {
@@ -83,14 +83,14 @@ describe.only("victory-util/add-events", () => {
       />
     );
 
-    const expectPropsMutation = (labelComponent, expectation) => {
-      expect(get(labelComponent.props(), 'text') === 'altered').to.eql(expectation);
+    const labelComponentIsAltered = (labelComponent) => {
+      return get(labelComponent.props(), 'text') === 'altered';
     };
 
-    expectEventsTriggered(getLabelComponents, expectPropsMutation, [false, false], wrapper);
+    expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [false, false], wrapper);
     getDataComponents(wrapper).at(0).simulate('click');
-    expectEventsTriggered(getLabelComponents, expectPropsMutation, [true, false], wrapper);
+    expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, false], wrapper);
     getDataComponents(wrapper).at(1).simulate('click');
-    expectEventsTriggered(getLabelComponents, expectPropsMutation, [true, true], wrapper);
+    expectEventsTriggered(getLabelComponents, labelComponentIsAltered, [true, true], wrapper);
   });
 });
