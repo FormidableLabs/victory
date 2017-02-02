@@ -2,7 +2,7 @@
 /* global sinon */
 
 import React from "react";
-import { defaults, get, reduce, map } from "lodash";
+import { defaults, forEach, get, reduce, map, memoize } from "lodash";
 import { mount } from "enzyme";
 import { Data, addEvents } from "src/index";
 
@@ -103,25 +103,27 @@ describe("victory-util/add-events", () => {
       />
     );
 
-    const findDataComponentByEventKey = (eventKey) => {
+    const findDataComponentByIndex = memoize((eventKey) => {
       return wrapper.find(MockDataComponent).filterWhere((node) => {
         return node.props().datum.eventKey === eventKey;
       });
-    };
+    });
 
     const expectEventTriggeredOn = (component, expectation) => {
       expect(get(component.props(), 'style.fill') === 'tomato').to.eql(expectation);
     };
 
-    const [firstDataComponent, secondDataComponent] = map([0, 1], findDataComponentByEventKey);
+    expectEventsTriggered = (expectations) => {
+      forEach(expectations, (expectation, index) => {
+        const dataComponent = findDataComponentByIndex(index);
+        expectEventTriggeredOn(dataComponent, expectation);
+      });
+    };
 
-    expectEventTriggeredOn(firstDataComponent, false);
-    expectEventTriggeredOn(secondDataComponent, false);
-    firstDataComponent.simulate('click');
-    expectEventTriggeredOn(firstDataComponent, true);
-    expectEventTriggeredOn(secondDataComponent, false);
-    secondDataComponent.simulate('click');
-    expectEventTriggeredOn(firstDataComponent, true);
-    expectEventTriggeredOn(secondDataComponent, true);
+    expectEventsTriggered([false, false]);
+    findDataComponentByIndex(0).simulate('click');
+    expectEventsTriggered([true, false]);
+    findDataComponentByIndex(1).simulate('click');
+    expectEventsTriggered([true, true]);
   });
 });
