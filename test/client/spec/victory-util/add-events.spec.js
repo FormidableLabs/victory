@@ -4,10 +4,10 @@ import React from "react";
 import { forEach, get } from "lodash";
 import { mount } from "enzyme";
 import { addEvents } from "src/index";
-import { MockChart, MockLabel, MockDataComponent } from "../mock-components";
+import { MockVictoryComponent, MockLabel, MockDataComponent } from "../mock-components";
 
 describe("victory-util/add-events", () => {
-  const EventedMockChart = addEvents(MockChart);
+  const EventedMockVictoryComponent = addEvents(MockVictoryComponent);
 
   const expectEventsTriggered = (scopeFn, testFn, expectations, wrapper) => {
     const componentsToTest = scopeFn(wrapper);
@@ -28,7 +28,7 @@ describe("victory-util/add-events", () => {
 
   it("should set up events on data components to target themselves", () => {
     const wrapper = mount(
-      <EventedMockChart
+      <EventedMockVictoryComponent
         data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
         events={[
           {
@@ -61,7 +61,7 @@ describe("victory-util/add-events", () => {
 
   it("should set up events on data components to target labels", () => {
     const wrapper = mount(
-      <EventedMockChart
+      <EventedMockVictoryComponent
         data={[{ x: 1, y: 2 }, { x: 3, y: 4 }]}
         labelComponent={<MockLabel text="unaffected"/>}
         events={[

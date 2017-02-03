@@ -39,8 +39,8 @@ class MockLabel extends React.Component {
   }
 }
 
-class MockChart extends React.Component {
-  static displayName = "MockChart";
+class MockVictoryComponent extends React.Component {
+  static displayName = "MockVictoryComponent";
   static role = "chart";
 
   static defaultProps = {
@@ -63,7 +63,12 @@ class MockChart extends React.Component {
       });
     }, {});
 
-    return childProps;
+    return {
+      parent: {
+        data
+      },
+      ...childProps
+    };
   };
 
   render() {
@@ -84,4 +89,4 @@ class MockChart extends React.Component {
   }
 }
 
-export { MockChart, MockLabel, MockDataComponent };
+export { MockVictoryComponent, MockLabel, MockDataComponent };
