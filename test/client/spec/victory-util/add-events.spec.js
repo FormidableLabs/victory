@@ -1,7 +1,7 @@
 /* eslint max-params: 0 */
 
 import React from "react";
-import { forEach, get } from "lodash";
+import { get } from "lodash";
 import { mount } from "enzyme";
 import { addEvents } from "src/index";
 import { MockVictoryComponent, MockLabel, MockDataComponent } from "../mock-components";
@@ -9,13 +9,8 @@ import { MockVictoryComponent, MockLabel, MockDataComponent } from "../mock-comp
 describe("victory-util/add-events", () => {
   const EventedMockVictoryComponent = addEvents(MockVictoryComponent);
 
-  const expectEventsTriggered = (scopeFn, testFn, expectations, wrapper) => {
-    const componentsToTest = scopeFn(wrapper);
-    expect(expectations.length).to.eql(componentsToTest.length);
-
-    forEach(expectations, (expectation, index) => {
-      expect(testFn(componentsToTest.at(index))).to.eql(expectation);
-    });
+  const expectEventsTriggered = (getComponentsToTest, testFn, expectations, wrapper) => {
+    expect(getComponentsToTest(wrapper).map(testFn)).to.eql(expectations);
   };
 
   const getDataComponents = (wrapper) => {
