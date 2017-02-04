@@ -1,9 +1,7 @@
 import React, {PropTypes} from "react";
-import { defaults, isFunction, isEqual } from "lodash";
-import Helpers from "./helper-methods";
-import {
-  VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes, Selection, Timer
-} from "victory-core";
+import { defaults, isEqual } from "lodash";
+import ZoomHelpers from "./zoom-helpers";
+import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } from "victory-core";
 
 export default class VictoryZoomContainer extends VictoryContainer {
   static displayName = "VictoryZoomContainer";
@@ -26,103 +24,32 @@ export default class VictoryZoomContainer extends VictoryContainer {
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
-      onMouseDown: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
+      onMouseDown: (evt, targetProps) => {
+        ZoomHelpers.getHandlers().onMouseMove.cancel();
+        ZoomHelpers.getHandlers().onWheel.cancel();
+        return ZoomHelpers.getHandlers().onMouseDown(evt, targetProps);
+      },
+      onMouseUp: (evt, targetProps) => {
+        ZoomHelpers.getHandlers().onMouseMove.cancel();
+        ZoomHelpers.getHandlers().onWheel.cancel();
+        return ZoomHelpers.getHandlers().onMouseUp(evt, targetProps);
+      },
+      onMouseLeave: (evt, targetProps) => {
+        ZoomHelpers.getHandlers().onMouseMove.cancel();
+        ZoomHelpers.getHandlers().onWheel.cancel();
+        return ZoomHelpers.getHandlers().onMouseLeave(evt, targetProps);
+      },
+      onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
-        const getTimer = targetProps.getTimer || ctx.context && ctx.context.getTimer || new Timer();
-        const originalDomain = targetProps.originalDomain || targetProps.domain;
-        const currentDomain = targetProps.currentDomain || targetProps.zoomDomain || originalDomain;
-        const {x} = Selection.getSVGEventCoordinates(evt);
-        return [{
-          target: "parent",
-          mutation: () => {
-            return {
-              startX: x, domain: currentDomain, cachedZoomDomain: targetProps.zoomDomain,
-              originalDomain, currentDomain, getTimer, isPanning: true,
-              parentControlledProps: ["domain"]
-            };
-          }
-        }];
+        evt.persist();
+        ZoomHelpers.getHandlers().onWheel.cancel();
+        return ZoomHelpers.getHandlers().onMouseMove(evt, targetProps, eventKey, ctx);
       },
-      onMouseUp: () => {
-        return [{
-          target: "parent",
-          mutation: () => {
-            return {isPanning: false};
-          }
-        }];
-      },
-      onMouseLeave: () => {
-        return [{
-          target: "parent",
-          mutation: () => {
-            return {isPanning: false};
-          }
-        }];
-      },
-      onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
-        if (targetProps.isPanning) {
-          const { scale, startX, onDomainChange, domain, zoomDomain } = targetProps;
-          const {x} = Selection.getSVGEventCoordinates(evt);
-          const originalDomain = targetProps.originalDomain || domain;
-          const lastDomain = targetProps.currentDomain || targetProps.zoomDomain || originalDomain;
-          const calculatedDx = (startX - x) / Helpers.getDomainScale(lastDomain, scale);
-          const nextXDomain = Helpers.pan(lastDomain.x, originalDomain.x, calculatedDx);
-          const currentDomain = { x: nextXDomain, y: originalDomain.y };
-          const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
-          let resumeAnimation;
-          if (getTimer && isFunction(getTimer().bypassAnimation)) {
-            getTimer().bypassAnimation();
-            resumeAnimation = isFunction(getTimer().resumeAnimation) ?
-              () => getTimer().resumeAnimation() : undefined;
-          }
-          if (isFunction(onDomainChange)) {
-            onDomainChange(currentDomain);
-          }
-          return [{
-            target: "parent",
-            callback: resumeAnimation,
-            mutation: () => {
-              return {
-                domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
-              };
-            }
-          }];
-        }
-      },
-      onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params, max-statements, max-len
-        if (!targetProps.allowZoom) {
-          return {};
-        }
+      onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
-        const deltaY = evt.deltaY;
-        const { onDomainChange, domain, zoomDomain } = targetProps;
-        const originalDomain = targetProps.originalDomain || domain;
-        const lastDomain = targetProps.currentDomain || zoomDomain || originalDomain;
-        const {x} = lastDomain;
-        const xBounds = originalDomain.x;
-        // TODO: Check scale factor
-        const nextXDomain = Helpers.scale(x, xBounds, 1 + (deltaY / 300));
-        const currentDomain = { x: nextXDomain, y: originalDomain.y };
-        const getTimer = isFunction(ctx.getTimer) && ctx.getTimer.bind(ctx);
-        let resumeAnimation;
-        if (getTimer && isFunction(getTimer().bypassAnimation)) {
-          getTimer().bypassAnimation();
-          resumeAnimation = isFunction(getTimer().resumeAnimation) ?
-            () => getTimer().resumeAnimation() : undefined;
-        }
-        if (isFunction(onDomainChange)) {
-          onDomainChange(currentDomain);
-        }
-        return [{
-          target: "parent",
-          callback: resumeAnimation,
-          mutation: () => {
-            return {
-              domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain,
-              parentControlledProps: ["domain"]
-            };
-          }
-        }];
+        evt.persist();
+        ZoomHelpers.getHandlers().onMouseMove.cancel();
+        return ZoomHelpers.getHandlers().onWheel(evt, targetProps, eventKey, ctx);
       }
     }
   }];
