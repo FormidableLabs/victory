@@ -1,7 +1,7 @@
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction } from "lodash";
 
-export default {
+const Helpers = {
 
   /**
    * Generates a new domain scaled by factor and constrained by the original domain.
@@ -153,15 +153,14 @@ export default {
         };
       }
     }];
-  },
-
-  getEventHandlers() {
-    return {
-      onMouseDown: this.onMouseDown.bind(this),
-      onMouseUp: this.onMouseUp.bind(this),
-      onMouseLeave: this.onMouseLeave.bind(this),
-      onMouseMove: throttle(this.onMouseMove.bind(this), 16, {leading: true}),
-      onWheel: throttle(this.onWheel.bind(this), 16, {leading: true})
-    };
   }
+};
+
+
+export default {
+  onMouseDown: Helpers.onMouseDown.bind(Helpers),
+  onMouseUp: Helpers.onMouseUp.bind(Helpers),
+  onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
+  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true}),
+  onWheel: throttle(Helpers.onWheel.bind(Helpers), 16, {leading: true})
 };

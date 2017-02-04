@@ -2,7 +2,7 @@ import { Selection } from "victory-core";
 import { assign, throttle, isFunction, isEqual } from "lodash";
 
 
-export default {
+const Helpers = {
   withinBounds(point, bounds, padding) {
     const {x1, x2, y1, y2} = bounds;
     const {x, y} = point;
@@ -251,14 +251,12 @@ export default {
       target: "parent",
       mutation: () => ({ isPanning: false, isSelecting: false })
     }];
-  },
-
-  getEventHandlers() {
-    return {
-      onMouseDown: this.onMouseDown.bind(this),
-      onMouseUp: this.onMouseUp.bind(this),
-      onMouseLeave: this.onMouseLeave.bind(this),
-      onMouseMove: throttle(this.onMouseMove.bind(this), 16, {leading: true})
-    };
   }
+};
+
+export default {
+  onMouseDown: Helpers.onMouseDown.bind(Helpers),
+  onMouseUp: Helpers.onMouseUp.bind(Helpers),
+  onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
+  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true})
 };

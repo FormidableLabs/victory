@@ -25,31 +25,31 @@ export default class VictoryZoomContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
-        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
-        ZoomHelpers.getEventHandlers().onWheel.cancel();
-        return ZoomHelpers.getEventHandlers().onMouseDown(evt, targetProps);
+        ZoomHelpers.onMouseMove.cancel();
+        ZoomHelpers.onWheel.cancel();
+        return ZoomHelpers.onMouseDown(evt, targetProps);
       },
       onMouseUp: (evt, targetProps) => {
-        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
-        ZoomHelpers.getEventHandlers().onWheel.cancel();
-        return ZoomHelpers.getEventHandlers().onMouseUp(evt, targetProps);
+        ZoomHelpers.onMouseMove.cancel();
+        ZoomHelpers.onWheel.cancel();
+        return ZoomHelpers.onMouseUp(evt, targetProps);
       },
       onMouseLeave: (evt, targetProps) => {
-        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
-        ZoomHelpers.getEventHandlers().onWheel.cancel();
-        return ZoomHelpers.getEventHandlers().onMouseLeave(evt, targetProps);
+        ZoomHelpers.onMouseMove.cancel();
+        ZoomHelpers.onWheel.cancel();
+        return ZoomHelpers.onMouseLeave(evt, targetProps);
       },
       onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         evt.persist();
-        ZoomHelpers.getEventHandlers().onWheel.cancel();
-        return ZoomHelpers.getEventHandlers().onMouseMove(evt, targetProps, eventKey, ctx);
+        ZoomHelpers.onWheel.cancel();
+        return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
       },
       onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         evt.persist();
-        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
-        return ZoomHelpers.getEventHandlers().onWheel(evt, targetProps, eventKey, ctx);
+        ZoomHelpers.onMouseMove.cancel();
+        return ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
       }
     }
   }];

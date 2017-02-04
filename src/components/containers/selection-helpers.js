@@ -2,7 +2,7 @@ import { Selection, Data } from "victory-core";
 import { assign, throttle, isFunction } from "lodash";
 import React from "react";
 
-export default {
+const Helpers = {
   getDatasets(props) { // eslint-disable-line max-statements
     if (props.data) {
       return [{data: props.data}];
@@ -141,13 +141,11 @@ export default {
         };
       }) : [];
     return parentMutation.concat(dataMutation);
-  },
-
-  getEventHandlers() {
-    return {
-      onMouseDown: this.onMouseDown.bind(this),
-      onMouseUp: this.onMouseUp.bind(this),
-      onMouseMove: throttle(this.onMouseMove.bind(this), 16, {leading: true})
-    };
   }
+};
+
+export default {
+  onMouseDown: Helpers.onMouseDown.bind(Helpers),
+  onMouseUp: Helpers.onMouseUp.bind(Helpers),
+  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true})
 };
