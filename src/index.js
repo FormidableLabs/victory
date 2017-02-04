@@ -31,7 +31,10 @@ import {
   VictoryZoom,
   VictoryZoomContainer,
   VictorySelectionContainer,
-  VictoryBrushContainer
+  VictoryBrushContainer,
+  ZoomHelpers,
+  BrushHelpers,
+  SelectionHelpers
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
@@ -66,6 +69,7 @@ export {
   VictoryClipContainer,
   VictorySelectionContainer,
   VictoryBrushContainer,
+  ZoomHelpers, BrushHelpers, SelectionHelpers,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions
 };

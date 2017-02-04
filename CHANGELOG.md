@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 0.16.1 (2017-02-03)
+
+- [429](https://github.com/FormidableLabs/victory-chart/pull/429)
+- Throttles `onWheel` and `onMouseMove` events on Victory container components
+- Exports container event helpers
+
 ## 0.16.0 (2017-01-30)
 
 **This release includes major breaking changes related to `VictoryZoom`**
