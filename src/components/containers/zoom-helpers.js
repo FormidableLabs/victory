@@ -155,7 +155,7 @@ export default {
     }];
   },
 
-  getHandlers() {
+  getEventHandlers() {
     return {
       onMouseDown: this.onMouseDown.bind(this),
       onMouseUp: this.onMouseUp.bind(this),

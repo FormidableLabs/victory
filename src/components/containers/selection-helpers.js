@@ -143,7 +143,7 @@ export default {
     return parentMutation.concat(dataMutation);
   },
 
-  getHandlers() {
+  getEventHandlers() {
     return {
       onMouseDown: this.onMouseDown.bind(this),
       onMouseUp: this.onMouseUp.bind(this),

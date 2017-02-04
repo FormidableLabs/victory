@@ -29,16 +29,16 @@ export default class VictorySelectionContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
-        SelectionHelpers.getHandlers().onMouseMove.cancel();
-        return SelectionHelpers.getHandlers().onMouseDown(evt, targetProps);
+        SelectionHelpers.getEventHandlers().onMouseMove.cancel();
+        return SelectionHelpers.getEventHandlers().onMouseDown(evt, targetProps);
       },
       onMouseMove: (evt, targetProps) => {
         evt.persist();
-        return SelectionHelpers.getHandlers().onMouseMove(evt, targetProps);
+        return SelectionHelpers.getEventHandlers().onMouseMove(evt, targetProps);
       },
       onMouseUp: (evt, targetProps) => {
-        SelectionHelpers.getHandlers().onMouseMove.cancel();
-        return SelectionHelpers.getHandlers().onMouseUp(evt, targetProps);
+        SelectionHelpers.getEventHandlers().onMouseMove.cancel();
+        return SelectionHelpers.getEventHandlers().onMouseUp(evt, targetProps);
       }
     }
   }];

@@ -20,4 +20,8 @@ export {
 export { default as VictoryBrushContainer } from "./components/containers/victory-brush-container";
 export { default as VictoryZoomContainer } from "./components/containers/victory-zoom-container";
 export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
+export { default as BrushHelpers } from "./components/containers/brush-helpers";
+export { default as Selectionelpers } from "./components/containers/selection-helpers";
+export { default as ZoomHelpers } from "./components/containers/zoom-helpers";
+
 

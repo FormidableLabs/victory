@@ -41,20 +41,20 @@ export default class VictoryBrushContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
-        BrushHelpers.getHandlers().onMouseMove.cancel();
-        return BrushHelpers.getHandlers().onMouseDown(evt, targetProps);
+        BrushHelpers.getEventHandlers().onMouseMove.cancel();
+        return BrushHelpers.getEventHandlers().onMouseDown(evt, targetProps);
       },
       onMouseMove: (evt, targetProps) => {
         evt.persist();
-        return BrushHelpers.getHandlers().onMouseMove(evt, targetProps);
+        return BrushHelpers.getEventHandlers().onMouseMove(evt, targetProps);
       },
       onMouseUp: (evt, targetProps) => {
-        BrushHelpers.getHandlers().onMouseMove.cancel();
-        return BrushHelpers.getHandlers().onMouseUp(evt, targetProps);
+        BrushHelpers.getEventHandlers().onMouseMove.cancel();
+        return BrushHelpers.getEventHandlers().onMouseUp(evt, targetProps);
       },
       onMouseLeave: (evt, targetProps) => {
-        BrushHelpers.getHandlers().onMouseMove.cancel();
-        return BrushHelpers.getHandlers().onMouseLeave(evt, targetProps);
+        BrushHelpers.getEventHandlers().onMouseMove.cancel();
+        return BrushHelpers.getEventHandlers().onMouseLeave(evt, targetProps);
       }
     }
   }];

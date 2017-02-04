@@ -25,31 +25,31 @@ export default class VictoryZoomContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
-        ZoomHelpers.getHandlers().onMouseMove.cancel();
-        ZoomHelpers.getHandlers().onWheel.cancel();
-        return ZoomHelpers.getHandlers().onMouseDown(evt, targetProps);
+        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
+        ZoomHelpers.getEventHandlers().onWheel.cancel();
+        return ZoomHelpers.getEventHandlers().onMouseDown(evt, targetProps);
       },
       onMouseUp: (evt, targetProps) => {
-        ZoomHelpers.getHandlers().onMouseMove.cancel();
-        ZoomHelpers.getHandlers().onWheel.cancel();
-        return ZoomHelpers.getHandlers().onMouseUp(evt, targetProps);
+        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
+        ZoomHelpers.getEventHandlers().onWheel.cancel();
+        return ZoomHelpers.getEventHandlers().onMouseUp(evt, targetProps);
       },
       onMouseLeave: (evt, targetProps) => {
-        ZoomHelpers.getHandlers().onMouseMove.cancel();
-        ZoomHelpers.getHandlers().onWheel.cancel();
-        return ZoomHelpers.getHandlers().onMouseLeave(evt, targetProps);
+        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
+        ZoomHelpers.getEventHandlers().onWheel.cancel();
+        return ZoomHelpers.getEventHandlers().onMouseLeave(evt, targetProps);
       },
       onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         evt.persist();
-        ZoomHelpers.getHandlers().onWheel.cancel();
-        return ZoomHelpers.getHandlers().onMouseMove(evt, targetProps, eventKey, ctx);
+        ZoomHelpers.getEventHandlers().onWheel.cancel();
+        return ZoomHelpers.getEventHandlers().onMouseMove(evt, targetProps, eventKey, ctx);
       },
       onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
         evt.persist();
-        ZoomHelpers.getHandlers().onMouseMove.cancel();
-        return ZoomHelpers.getHandlers().onWheel(evt, targetProps, eventKey, ctx);
+        ZoomHelpers.getEventHandlers().onMouseMove.cancel();
+        return ZoomHelpers.getEventHandlers().onWheel(evt, targetProps, eventKey, ctx);
       }
     }
   }];
