@@ -57,5 +57,8 @@ describe("victory", () => {
     expect(Victory.VictoryZoomContainer).not.to.equal(undefined);
     expect(Victory.VictorySelectionContainer).not.to.equal(undefined);
     expect(Victory.VictoryBrushContainer).not.to.equal(undefined);
+    expect(Victory.BrushHelpers).not.to.equal(undefined);
+    expect(Victory.SelectionHelpers).not.to.equal(undefined);
+    expect(Victory.ZoomHelpers).not.to.equal(undefined);
   });
 });
