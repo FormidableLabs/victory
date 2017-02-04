@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 16.1.1 (2017-02-03)
+
+- Correct export of `SelectionHelpers`
+
 ## 16.1.0 (2017-02-03)
 
 - [429](https://github.com/FormidableLabs/victory-chart/pull/429)
