@@ -15,11 +15,16 @@ const Helpers = {
     const [from, to] = currentDomain;
     const range = Math.abs(from - to);
     const midpoint = +from + (range / 2);
-    const newRange = (range * factor) / 2;
-    return [
+    const newRange = (range * Math.abs(factor)) / 2;
+    const minDomain = Collection.containsDates(originalDomain) ?
+      [ new Date(midpoint - 4), new Date(midpoint) ] : // 4ms is standard browser date precision
+      [ midpoint - 1 / Number.MAX_SAFE_INTEGER, midpoint ];
+    const newDomain = [
       Collection.getMaxValue([midpoint - newRange, fromBound]),
       Collection.getMinValue([midpoint + newRange, toBound])
     ];
+    return Math.abs(minDomain[1] - minDomain[0]) > Math.abs(newDomain[1] - newDomain[0]) ?
+      minDomain : newDomain;
   },
 
   /**
@@ -127,7 +132,7 @@ const Helpers = {
     }
   },
 
-  onWheel(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
+  onWheel(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params, max-statements
     if (!targetProps.allowZoom) {
       return {};
     }
@@ -136,8 +141,10 @@ const Helpers = {
     const lastDomain = targetProps.currentDomain || zoomDomain || originalDomain;
     const {x} = lastDomain;
     const xBounds = originalDomain.x;
-    // TODO: Check scale factor
-    const nextXDomain = this.scale(x, xBounds, 1 + (evt.deltaY / 300));
+    const delta = evt.deltaY / 300; // TODO: Check scale factor
+    const maxDelta = delta > 0 ? 0.75 : -0.75; // TODO: Check max scale factor
+    const factor = Math.abs(delta) > 1 ? 1 + maxDelta : 1 + delta;
+    const nextXDomain = this.scale(x, xBounds, factor);
     const currentDomain = { x: nextXDomain, y: originalDomain.y };
     const resumeAnimation = this.handleAnimation(ctx);
     if (isFunction(onDomainChange)) {

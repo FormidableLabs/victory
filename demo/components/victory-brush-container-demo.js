@@ -8,9 +8,7 @@ class App extends React.Component {
 
   constructor() {
     super();
-    this.state = {
-      points: []
-    };
+    this.state = {};
   }
 
   handleZoom(domain) {
