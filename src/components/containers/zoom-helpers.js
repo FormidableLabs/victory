@@ -132,7 +132,7 @@ const Helpers = {
     }
   },
 
-  onWheel(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params, max-statements
+  onWheel(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (!targetProps.allowZoom) {
       return {};
     }
@@ -141,10 +141,9 @@ const Helpers = {
     const lastDomain = targetProps.currentDomain || zoomDomain || originalDomain;
     const {x} = lastDomain;
     const xBounds = originalDomain.x;
-    const delta = evt.deltaY / 300; // TODO: Check scale factor
-    const maxDelta = delta > 0 ? 0.75 : -0.75; // TODO: Check max scale factor
-    const factor = Math.abs(delta) > 1 ? 1 + maxDelta : 1 + delta;
-    const nextXDomain = this.scale(x, xBounds, factor);
+    const sign = evt.deltaY > 0 ? 1 : -1;
+    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
+    const nextXDomain = this.scale(x, xBounds, 1 + sign * delta);
     const currentDomain = { x: nextXDomain, y: originalDomain.y };
     const resumeAnimation = this.handleAnimation(ctx);
     if (isFunction(onDomainChange)) {
