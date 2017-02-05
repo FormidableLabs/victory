@@ -19,7 +19,8 @@ export default class VictoryContainer extends React.Component {
     title: PropTypes.string,
     desc: PropTypes.string,
     portalComponent: PropTypes.element,
-    responsive: PropTypes.bool
+    responsive: PropTypes.bool,
+    standalone: PropTypes.bool
   }
 
   static defaultProps = {
@@ -47,7 +48,6 @@ export default class VictoryContainer extends React.Component {
 
   componentWillMount() {
     this.savePortalRef = (portal) => this.portalRef = portal;
-    this.saveSvgRef = (svg) => this.svgRef = svg;
     this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
@@ -78,27 +78,41 @@ export default class VictoryContainer extends React.Component {
     return this.timer;
   }
 
+  // overridden in custom containers
+  getChildren(props) {
+    return props.children;
+  }
+
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
-    const { title, desc, children, portalComponent, className } = props;
-    return (
-      <svg {...svgProps} style={style} className={className}>
-        <title id="title">{title}</title>
-        <desc id="desc">{desc}</desc>
-        {children}
-        {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
-      </svg>
-    );
+    const { title, desc, portalComponent, className, standalone } = props;
+    return standalone || standalone === undefined ?
+      (
+        <svg {...svgProps} style={style} className={className}>
+          <title id="title">{title}</title>
+          <desc id="desc">{desc}</desc>
+          {this.getChildren(props)}
+          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+        </svg>
+      ) :
+      (
+        <g {...svgProps} style={style} className={className}>
+          <title id="title">{title}</title>
+          <desc id="desc">{desc}</desc>
+          {this.getChildren(props)}
+          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+        </g>
+      );
   }
 
   render() {
-    const { width, height, responsive, events } = this.props;
+    const { width, height, responsive, events, standalone } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
+    const useViewBox = responsive ? standalone || standalone === undefined : false;
     const svgProps = assign(
       {
         "aria-labelledby": "title desc", role: "img", width, height,
-        viewBox: responsive ? `0 0 ${width} ${height}` : undefined,
-        ref: this.saveSvgRef
+        viewBox: useViewBox ? `0 0 ${width} ${height}` : undefined
       },
       events
     );

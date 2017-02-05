@@ -148,12 +148,22 @@ export default {
         parseEvent(eventReturn, eventKey);
     };
 
+    const compileCallbacks = (eventReturn) => {
+      const getCallback = (obj) => isFunction(obj.callback) && obj.callback;
+      const callbacks = Array.isArray(eventReturn) ?
+        eventReturn.map((evtObj) => getCallback(evtObj)) : [getCallback(eventReturn)];
+      const callbackArray = callbacks.filter((callback) => callback !== false);
+      return callbackArray.length ?
+        () => callbackArray.forEach((callback) => callback()) : undefined;
+    };
+
     // A function that calls a particular event handler, parses its return
     // into a state mutation, and calls setState
     const onEvent = (evt, childProps, eventKey, eventName) => {
-      const eventReturn = events[eventName](evt, childProps, eventKey);
+      const eventReturn = events[eventName](evt, childProps, eventKey, this);
       if (eventReturn) {
-        this.setState(parseEventReturn(eventReturn, eventKey));
+        const callbacks = compileCallbacks(eventReturn);
+        this.setState(parseEventReturn(eventReturn, eventKey), callbacks);
       }
     };
 

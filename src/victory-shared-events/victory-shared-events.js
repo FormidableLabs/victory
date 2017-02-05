@@ -1,6 +1,6 @@
 import { assign, isFunction, partialRight, defaults } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Events } from "../victory-util/index";
+import { PropTypes as CustomPropTypes, Events, Timer } from "../victory-util/index";
 
 export default class VictorySharedEvents extends React.Component {
   static displayName = "VictorySharedEvents";
@@ -40,11 +40,36 @@ export default class VictorySharedEvents extends React.Component {
     groupComponent: <g/>
   };
 
+  static contextTypes = {
+    getTimer: React.PropTypes.func
+  };
+
+  static childContextTypes = {
+    getTimer: React.PropTypes.func
+  };
+
   constructor() {
     super();
     this.state = this.state || {};
     this.getScopedEvents = Events.getScopedEvents.bind(this);
     this.getEventState = Events.getEventState.bind(this);
+    this.getTimer = this.getTimer.bind(this);
+  }
+
+  getChildContext() {
+    return {
+      getTimer: this.getTimer
+    };
+  }
+
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
+    }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
   }
 
   componentWillMount() {
