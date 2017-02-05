@@ -81,7 +81,8 @@ export default class Bar extends React.Component {
   getBarWidth(props, style) {
     const {width, data} = props;
     const padding = props.padding.left || props.padding;
-    const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
+    const length = Array.isArray(data) ? data.length : 0;
+    const defaultWidth = length === 0 ? 8 : (width - 2 * padding) / length;
     return style && style.width ? style.width : defaultWidth;
   }
 
