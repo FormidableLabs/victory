@@ -86,6 +86,15 @@ const Helpers = {
     });
   },
 
+  getVoronoiFunction(props, dataset) {
+    const {x1, y1, x2, y2} = this.getDomainBox(props);
+    const voronoiFunction = d3Voronoi()
+      .x((d) => d.x)
+      .y((d) => d.y)
+      .extent([[x1, y1], [x2, y2]]);
+    return voronoiFunction(dataset);
+  },
+
   // filterDatasets(datasets, bounds) {
   //   const filtered = datasets.reduce((memo, dataset) => {
   //     const selectedData = this.getSelectedData(dataset.data, bounds);
@@ -121,8 +130,10 @@ const Helpers = {
   onMouseMove(evt, targetProps) {
     const datasets = this.getDatasets(targetProps);
     const voronoiDataset = this.mergeDatasets(targetProps, datasets);
-    console.log(voronoiDataset);
+    const voronoi = this.getVoronoiFunction(targetProps, voronoiDataset);
     const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const nearestPoint = voronoi.find(x, y, targetProps.size);
+    console.log(nearestPoint);
   }
 };
 
