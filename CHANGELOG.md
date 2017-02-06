@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 13.0.2 (2017-02-05)
+
+- [195](https://github.com/FormidableLabs/victory-core/pull/195)
+  - Fixes null event state bug
+
 ## 13.0.1 (2017-01-30)
 
 - [193](https://github.com/FormidableLabs/victory-core/pull/193)
