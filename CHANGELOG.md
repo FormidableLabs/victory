@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 16.1.2 (2017-03-05)
+
+- [431](https://github.com/FormidableLabs/victory-chart/pull/431)
+- Sets a maximum amount of scale per zoom event for smoother interaction with fast onWheel events
+
 ## 16.1.1 (2017-02-03)
 
 - Correct export of `SelectionHelpers`
