@@ -37,6 +37,7 @@ const Helpers = {
         dataArr[dataArrLength++] = {childName, data: getData(child.props)};
       }
     }
+    console.log(dataArr)
     return dataArr;
   },
 
