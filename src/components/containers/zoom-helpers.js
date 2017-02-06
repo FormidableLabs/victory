@@ -15,11 +15,16 @@ const Helpers = {
     const [from, to] = currentDomain;
     const range = Math.abs(from - to);
     const midpoint = +from + (range / 2);
-    const newRange = (range * factor) / 2;
-    return [
+    const newRange = (range * Math.abs(factor)) / 2;
+    const minDomain = Collection.containsDates(originalDomain) ?
+      [ new Date(midpoint - 4), new Date(midpoint) ] : // 4ms is standard browser date precision
+      [ midpoint - 1 / Number.MAX_SAFE_INTEGER, midpoint ];
+    const newDomain = [
       Collection.getMaxValue([midpoint - newRange, fromBound]),
       Collection.getMinValue([midpoint + newRange, toBound])
     ];
+    return Math.abs(minDomain[1] - minDomain[0]) > Math.abs(newDomain[1] - newDomain[0]) ?
+      minDomain : newDomain;
   },
 
   /**
@@ -136,8 +141,9 @@ const Helpers = {
     const lastDomain = targetProps.currentDomain || zoomDomain || originalDomain;
     const {x} = lastDomain;
     const xBounds = originalDomain.x;
-    // TODO: Check scale factor
-    const nextXDomain = this.scale(x, xBounds, 1 + (evt.deltaY / 300));
+    const sign = evt.deltaY > 0 ? 1 : -1;
+    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
+    const nextXDomain = this.scale(x, xBounds, 1 + sign * delta);
     const currentDomain = { x: nextXDomain, y: originalDomain.y };
     const resumeAnimation = this.handleAnimation(ctx);
     if (isFunction(onDomainChange)) {
