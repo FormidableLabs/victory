@@ -198,11 +198,14 @@ export default {
    */
   getEventState(eventKey, namespace, childType) {
     if (!childType) {
-      return this.state[eventKey] && this.state[eventKey][namespace] || this.state[eventKey];
+      return eventKey === "parent" ?
+        this.state[eventKey] && this.state[eventKey][namespace] || this.state[eventKey] :
+        this.state[eventKey] && this.state[eventKey][namespace];
     }
     return this.state[childType] &&
       this.state[childType][eventKey] &&
       this.state[childType][eventKey][namespace];
+
   },
 
   /* Returns an array of defaultEvents from sub-components of a given component.
