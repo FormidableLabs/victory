@@ -1,5 +1,12 @@
 # Victory Changelog
 
+## 0.16.2 (2017-02-05)
+
+- [195](https://github.com/FormidableLabs/victory-core/pull/195)
+  - Fixes null event state bug
+- [431](https://github.com/FormidableLabs/victory-chart/pull/431)
+  - Sets a maximum amount of scale per zoom event for smoother interaction with fast onWheel events
+
 ## 0.16.1 (2017-02-03)
 
 - [429](https://github.com/FormidableLabs/victory-chart/pull/429)
