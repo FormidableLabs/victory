@@ -1,7 +1,7 @@
 /**
  * Client tests
  */
-import { memoize, forEach } from "lodash";
+import { curry, flow, forEach } from "lodash";
 import { mount } from "enzyme";
 import React from "react";
 import { addEvents } from "src/index";
@@ -11,7 +11,7 @@ import { MockVictoryComponent, MockLabel, MockDataComponent } from "../mock-comp
 describe("components/victory-shared-events", () => {
   const EventedMockVictoryComponent = addEvents(MockVictoryComponent);
 
-  it.only("should trigger shared events exclusively on selected children", () => {
+  it("should trigger shared events exclusively on selected children", () => {
     const data = [
       {x: "a", y: 2},
       {x: "b", y: 3},
@@ -45,29 +45,51 @@ describe("components/victory-shared-events", () => {
       </svg>
     );
 
-    const findDataComponent = memoize((name, index, component) => {
+    const findVictoryComponentByName = curry((name, component) => {
       return component
         .find(EventedMockVictoryComponent)
         .filterWhere((victoryComponent) => {
           return victoryComponent.props().name === name;
         })
-        .find(MockDataComponent)
-        .filterWhere((dataComponent) => {
-          return dataComponent.props().index === index;
-        });
-    }, (name, index) => {
-      return name + index;
     });
 
-    const expectEventEffects = (expectationMatrix, component) => {
-      forEach(expectationMatrix, (dataComponents, parentComponentName) => {
-        forEach(dataComponents, (eventExpectation, index) => {
-          const node = findDataComponent(parentComponentName, index, component);
-          const eventTriggeredOnComponent = node.props().style.fill === "tomato";
+    const findDataComponents = (component) => {
+      return component.find(MockDataComponent);
+    };
 
-          expect(eventTriggeredOnComponent).to.eql(eventExpectation);
-        });
+    const findByIndex = curry((index, component) => {
+      return component.at(index);
+    });
+
+    const mapToEventEffects = curry((testFn, components) => {
+      return components.map(testFn);
+    });
+
+    const expectEqual = curry((expectation, data) => {
+      expect(data).to.eql(expectation);
+    });
+
+    const expectEventEffects = (expectationMatrix, testFn, component) => {
+      forEach(expectationMatrix, (dataComponentExpectations, parentComponentName) => {
+        flow([
+          findVictoryComponentByName(parentComponentName),
+          findDataComponents,
+          mapToEventEffects(testFn),
+          expectEqual(dataComponentExpectations)
+        ])(component);
       });
+    };
+
+    const eventTriggeredOnComponent = (component) => {
+      return component.props().style.fill === "tomato";
+    }
+
+    const findDataComponent = (parentName, index, component) => {
+      return flow([
+        findVictoryComponentByName(parentName),
+        findDataComponents,
+        findByIndex(index)
+      ])(component);
     };
 
     // Expect no events triggered at beginning.
@@ -75,33 +97,33 @@ describe("components/victory-shared-events", () => {
       one: [false, false, false, false],
       two: [false, false, false, false],
       three: [false, false, false, false]
-    }, wrapper);
+    }, eventTriggeredOnComponent, wrapper);
 
     findDataComponent('one', 0, wrapper).simulate("click");
 
-    // Pie triggers effects on pie and scatter plot
+    // First child data components trigger effects on first and third
     expectEventEffects({
       one: [true, false, false, false],
       two: [false, false, false, false],
       three: [true, false, false, false]
-    }, wrapper);
+    }, eventTriggeredOnComponent, wrapper);
 
     findDataComponent('two', 1, wrapper).simulate("click");
 
-    // Bar triggers effects on pie and scatter plot
+    // Second child data components trigger effects on first and third
     expectEventEffects({
       one: [true, true, false, false],
       two: [false, false, false, false],
       three: [true, true, false, false]
-    }, wrapper);
+    }, eventTriggeredOnComponent, wrapper);
 
     findDataComponent('three', 2, wrapper).simulate("click");
 
-    // Scatter does not trigger effects
+    // Third child data components do not trigger effects
     expectEventEffects({
       one: [true, true, false, false],
       two: [false, false, false, false],
       three: [true, true, false, false]
-    }, wrapper);
+    }, eventTriggeredOnComponent, wrapper);
   });
 });
