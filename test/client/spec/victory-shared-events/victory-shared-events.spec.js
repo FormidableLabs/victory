@@ -8,50 +8,31 @@ import { addEvents } from "src/index";
 import VictorySharedEvents from "src/victory-shared-events/victory-shared-events";
 import { MockVictoryComponent, MockDataComponent } from "../mock-components";
 
-describe("components/victory-shared-events", () => {
+describe.only("components/victory-shared-events", () => {
   const EventedMockVictoryComponent = addEvents(MockVictoryComponent);
 
-  const findVictoryComponentByName = curry((name, component) => {
-    return component
-      .find(EventedMockVictoryComponent)
-      .filterWhere((victoryComponent) => {
-        return victoryComponent.props().name === name;
-      });
-  });
-
-  const findDataComponents = (component) => {
-    return component.find(MockDataComponent);
+  const findComponentByName = (name, component) => {
+    // workaround for nonfunctional prop selector on mounted components
+    // https://github.com/airbnb/enzyme/issues/534
+    return component.findWhere((node) => {
+      return node.prop('name') === name;
+    });
   };
-
-  const findByIndex = curry((index, component) => {
-    return component.at(index);
-  });
-
-  const mapToEventEffects = curry((testFn, components) => {
-    return components.map(testFn);
-  });
-
-  const expectEqual = curry((expectation, testData) => {
-    expect(testData).to.eql(expectation);
-  });
 
   const expectEventEffects = (expectationMatrix, testFn, component) => {
     forEach(expectationMatrix, (dataComponentExpectations, parentComponentName) => {
-      flow([
-        findVictoryComponentByName(parentComponentName),
-        findDataComponents,
-        mapToEventEffects(testFn),
-        expectEqual(dataComponentExpectations)
-      ])(component);
+      const dataComponentTests = findComponentByName(parentComponentName, component)
+        .find(MockDataComponent)
+        .map(testFn);
+
+      expect(dataComponentTests).to.eql(dataComponentExpectations);
     });
   };
 
   const findDataComponent = (parentName, index, component) => {
-    return flow([
-      findVictoryComponentByName(parentName),
-      findDataComponents,
-      findByIndex(index)
-    ])(component);
+    return findComponentByName(parentName, component)
+      .find(MockDataComponent)
+      .at(index);
   };
 
   it("should trigger shared events exclusively on selected children", () => {
