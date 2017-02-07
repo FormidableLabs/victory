@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults } from "lodash";
+import { assign, isFunction, partialRight, defaults, keys } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Events, Timer } from "../victory-util/index";
 
@@ -101,24 +101,28 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getBasePropsFromChildren(childComponents) {
-    const getBaseProps = (children, childIndex) => {
+    const getBaseProps = (children, childIndex, parent) => {
       return children.reduce((memo, child, index) => {
         if (child.props && child.props.children) {
-          return getBaseProps(React.Children.toArray(child.props.children), index);
+          const nestedChildren = React.Children.toArray(child.props.children);
+          const nestedProps = getBaseProps(nestedChildren, index, child);
+          keys(nestedProps).map((key) => {
+            memo[key] = nestedProps[key];
+          });
         } else if (child.type && isFunction(child.type.getBaseProps)) {
+          child = parent ? React.cloneElement(child, parent.props) : child;
           const baseChildProps = child.props && child.type.getBaseProps(child.props);
           if (baseChildProps) {
             const key = childIndex ? `${childIndex}-${index}` : index;
             const childKey = child.props.name || key;
             memo[childKey] = baseChildProps;
-            return memo;
           }
-          return memo;
         }
         return memo;
       }, {});
     };
     return getBaseProps(childComponents);
+
   }
 
   getNewChildren(props) {
