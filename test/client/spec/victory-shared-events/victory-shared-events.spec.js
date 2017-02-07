@@ -70,7 +70,7 @@ describe.only("components/victory-shared-events", () => {
     );
 
     const eventTriggeredOnComponent = (component) => {
-      return component.props().style.fill === "tomato";
+      return component.prop('style').fill === "tomato";
     };
 
     // Expect no events triggered at beginning.
