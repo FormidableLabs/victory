@@ -100,10 +100,10 @@ export default class VictoryTooltip extends React.Component {
         return [
           {
             target: "labels",
-            mutation: () => ({ active: false })
+            mutation: () => null
           }, {
             target: "data",
-            mutation: () => ({ active: false })
+            mutation: () => null
           }
         ];
       }
