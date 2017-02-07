@@ -57,7 +57,8 @@ class MockVictoryComponent extends React.Component {
           data: {
             index,
             datum,
-            data
+            data,
+            style: {}
           }
         }
       });
