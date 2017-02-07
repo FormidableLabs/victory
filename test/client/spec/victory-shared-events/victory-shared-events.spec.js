@@ -1,25 +1,25 @@
 /**
  * Client tests
  */
-import { curry, flow, forEach } from "lodash";
+import { forEach } from "lodash";
 import { mount } from "enzyme";
 import React from "react";
 import { addEvents } from "src/index";
 import VictorySharedEvents from "src/victory-shared-events/victory-shared-events";
 import { MockVictoryComponent, MockDataComponent } from "../mock-components";
 
-describe.only("components/victory-shared-events", () => {
+describe("components/victory-shared-events", () => {
   const EventedMockVictoryComponent = addEvents(MockVictoryComponent);
 
   const findComponentByName = (name, component) => {
     // workaround for nonfunctional prop selector on mounted components
     // https://github.com/airbnb/enzyme/issues/534
     return component.findWhere((node) => {
-      return node.prop('name') === name;
+      return node.prop("name") === name;
     });
   };
 
-  const expectEventEffects = (expectationMatrix, testFn, component) => {
+  const expectOnDataComponents = (expectationMatrix, testFn, component) => {
     forEach(expectationMatrix, (dataComponentExpectations, parentComponentName) => {
       const dataComponentTests = findComponentByName(parentComponentName, component)
         .find(MockDataComponent)
@@ -69,42 +69,42 @@ describe.only("components/victory-shared-events", () => {
       </svg>
     );
 
-    const eventTriggeredOnComponent = (component) => {
-      return component.prop('style').fill === "tomato";
+    const componentReceivedChange = (component) => {
+      return component.prop("style").fill === "tomato";
     };
 
     // Expect no events triggered at beginning.
-    expectEventEffects({
+    expectOnDataComponents({
       one: [false, false, false, false],
       two: [false, false, false, false],
       three: [false, false, false, false]
-    }, eventTriggeredOnComponent, wrapper);
+    }, componentReceivedChange, wrapper);
 
     findDataComponent("one", 0, wrapper).simulate("click");
 
     // First child data components trigger effects on first and third
-    expectEventEffects({
+    expectOnDataComponents({
       one: [true, false, false, false],
       two: [false, false, false, false],
       three: [true, false, false, false]
-    }, eventTriggeredOnComponent, wrapper);
+    }, componentReceivedChange, wrapper);
 
     findDataComponent("two", 1, wrapper).simulate("click");
 
     // Second child data components trigger effects on first and third
-    expectEventEffects({
+    expectOnDataComponents({
       one: [true, true, false, false],
       two: [false, false, false, false],
       three: [true, true, false, false]
-    }, eventTriggeredOnComponent, wrapper);
+    }, componentReceivedChange, wrapper);
 
     findDataComponent("three", 2, wrapper).simulate("click");
 
     // Third child data components do not trigger effects
-    expectEventEffects({
+    expectOnDataComponents({
       one: [true, true, false, false],
       two: [false, false, false, false],
       three: [true, true, false, false]
-    }, eventTriggeredOnComponent, wrapper);
+    }, componentReceivedChange, wrapper);
   });
 });
