@@ -3,6 +3,7 @@ import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictorySelectionContainer
 } from "../../src/index";
+import { VictoryTooltip } from "victory-core";
 
 class App extends React.Component {
 
@@ -105,6 +106,52 @@ class App extends React.Component {
                 {x: 7, y: -3}
               ]}
             />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}
+            containerComponent={<VictorySelectionContainer/>}
+          >
+            <VictoryGroup
+              data={[
+                {x: 1, y: 5, label: "one"},
+                {x: 2, y: 4, label: "two"},
+                {x: 3, y: -2, label: "three"}
+              ]}
+            >
+              <VictoryLine name="line-1" style={{ data: {stroke: "tomato"}}}/>
+              <VictoryScatter name="scatter-1"
+                style={{ data: {fill: (d, active) => active ? "tomato" : "gray"}}}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                {x: 1, y: -3, label: "red"},
+                {x: 2, y: 5, label: "green"},
+                {x: 3, y: 3, label: "blue"}
+              ]}
+            >
+              <VictoryLine name="line-2" style={{ data: {stroke: "blue"}}}/>
+              <VictoryScatter name="scatter-2"
+                style={{ data: {fill: (d, active) => active ? "blue" : "gray"}}}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                {x: 1, y: 5, label: "cat"},
+                {x: 2, y: -4, label: "dog"},
+                {x: 3, y: -2, label: "bird"}
+              ]}
+            >
+              <VictoryLine name="line-3" style={{ data: {stroke: "black"}}}/>
+              <VictoryScatter name="scatter-3"
+                style={{ data: {fill: (d, active) => active ? "black" : "gray"}}}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
           </VictoryChart>
 
           <VictoryScatter
