@@ -1,4 +1,6 @@
-import { assign, extend, merge, partial, isEmpty, isFunction, without } from "lodash";
+import {
+  assign, extend, merge, partial, isEmpty, isFunction, without, reduce, map, keys
+} from "lodash";
 
 export default {
   /* Returns all own and shared events that should be attached to a single target element,
@@ -11,7 +13,7 @@ export default {
     // Returns all events that apply to a particular target element
     const getEventsByTarget = (events) => {
       const getSelectedEvents = () => {
-        const targetEvents = events.reduce((memo, event) => {
+        const targetEvents = reduce(events, (memo, event) => {
           if (event.target !== undefined) {
             return `${event.target}` === `${target}` ? memo.concat(event) : memo;
           }
@@ -30,7 +32,7 @@ export default {
       };
 
       const selectedEvents = getSelectedEvents();
-      return Array.isArray(selectedEvents) && selectedEvents.reduce((memo, event) => {
+      return Array.isArray(selectedEvents) && reduce(selectedEvents, (memo, event) => {
         return event ? assign(memo, event.eventHandlers) : memo;
       }, {});
     };
@@ -92,11 +94,11 @@ export default {
           return "all";
         } else if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
-            without(Object.keys(baseProps[childName]), "parent") :
-            without(Object.keys(baseProps), "parent");
+            without(keys(baseProps[childName]), "parent") :
+            without(keys(baseProps), "parent");
         } else if (eventReturn.eventKey === undefined && eventKey === "parent") {
           return baseProps[childName] ?
-            Object.keys(baseProps[childName]) : Object.keys(baseProps);
+            keys(baseProps[childName]) : keys(baseProps);
         }
         return eventReturn.eventKey !== undefined ? eventReturn.eventKey : eventKey;
       };
@@ -124,7 +126,7 @@ export default {
       const getReturnByChild = (childName) => {
         const mutationKeys = getKeys(childName);
         return Array.isArray(mutationKeys) ?
-          mutationKeys.reduce((memo, key) => {
+          reduce(mutationKeys, (memo, key) => {
             return assign(memo, getMutationObject(key, childName));
           }, {}) :
           getMutationObject(mutationKeys, childName);
@@ -132,8 +134,8 @@ export default {
 
       // returns an entire mutated state for all children
       const allChildNames = childNames === "all" ?
-        without(Object.keys(baseProps), "parent") : childNames;
-      return Array.isArray(allChildNames) ? allChildNames.reduce((memo, childName) => {
+        without(keys(baseProps), "parent") : childNames;
+      return Array.isArray(allChildNames) ? reduce(allChildNames, (memo, childName) => {
         return assign(memo, getReturnByChild(childName));
       }, {}) : getReturnByChild(allChildNames);
     };
@@ -141,7 +143,7 @@ export default {
     // Parses an array of event returns into a single state mutation
     const parseEventReturn = (eventReturn, eventKey) => {
       return Array.isArray(eventReturn) ?
-        eventReturn.reduce((memo, props) => {
+        reduce(eventReturn, (memo, props) => {
           memo = merge({}, memo, parseEvent(props, eventKey));
           return memo;
         }, {}) :
@@ -151,7 +153,7 @@ export default {
     const compileCallbacks = (eventReturn) => {
       const getCallback = (obj) => isFunction(obj.callback) && obj.callback;
       const callbacks = Array.isArray(eventReturn) ?
-        eventReturn.map((evtObj) => getCallback(evtObj)) : [getCallback(eventReturn)];
+        map(eventReturn, (evtObj) => getCallback(evtObj)) : [getCallback(eventReturn)];
       const callbackArray = callbacks.filter((callback) => callback !== false);
       return callbackArray.length ?
         () => callbackArray.forEach((callback) => callback()) : undefined;
@@ -168,7 +170,7 @@ export default {
     };
 
     // returns a new events object with enhanced event handlers
-    return Object.keys(events).reduce((memo, event) => {
+    return reduce(keys(events), (memo, event) => {
       memo[event] = onEvent;
       return memo;
     }, {});
@@ -179,7 +181,7 @@ export default {
    */
   getPartialEvents(events, eventKey, childProps) {
     return events ?
-      Object.keys(events).reduce((memo, eventName) => {
+      reduce(keys(events), (memo, eventName) => {
         /* eslint max-params: 0 */
         memo[eventName] = partial(
           events[eventName],
@@ -212,7 +214,7 @@ export default {
    * i.e. any static `defaultEvents` on `labelComponent` will be returned
   */
   getComponentEvents(props, components) {
-    const events = Array.isArray(components) && components.reduce((memo, componentName) => {
+    const events = Array.isArray(components) && reduce(components, (memo, componentName) => {
       const component = props[componentName];
       const componentEvents = component && component.type && component.type.defaultEvents;
       memo = Array.isArray(componentEvents) ? memo.concat(...componentEvents) : memo;
