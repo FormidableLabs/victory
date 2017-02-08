@@ -1,5 +1,5 @@
 import { Selection } from "victory-core";
-import { assign, throttle, isFunction, isEqual } from "lodash";
+import { assign, throttle, isFunction, isEqual, reduce } from "lodash";
 
 
 const Helpers = {
@@ -46,7 +46,7 @@ const Helpers = {
   getActiveHandles(point, props, domainBox) {
     const handles = this.getHandles(props, domainBox);
     const options = ["top", "bottom", "left", "right"];
-    const activeHandles = options.reduce((memo, opt) => {
+    const activeHandles = reduce(options, (memo, opt) => {
       memo = this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
       return memo;
     }, []);
@@ -61,7 +61,7 @@ const Helpers = {
       top: {y1: Math.max(y1, y2), y2: Math.min(y1, y2), x1, x2},
       bottom: {y1: Math.min(y1, y2), y2: Math.max(y1, y2), x1, x2}
     };
-    return handles.reduce((memo, current) => {
+    return reduce(handles, (memo, current) => {
       return assign(memo, mutations[current]);
     }, {});
   },

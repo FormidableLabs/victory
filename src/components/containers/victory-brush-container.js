@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
-import { assign, isEqual } from "lodash";
+import { assign, isEqual, map, reduce } from "lodash";
 
 
 export default class VictoryBrushContainer extends VictoryContainer {
@@ -87,7 +87,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
       left: dimension !== "y" && assign({y: y[1], x: x[0] - (handleWidth / 2)}, xProps),
       right: dimension !== "y" && assign({y: y[1], x: x[1] - (handleWidth / 2)}, xProps)
     };
-    const handles = options.reduce((memo, curr) => {
+    const handles = reduce(options, (memo, curr) => {
       memo = handleProps[curr] ?
         memo.concat(React.cloneElement(
           handleComponent,
@@ -117,7 +117,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
   getChildren(props) {
     const children = React.Children.toArray(props.children);
     const components = [...children, this.getRect(props)];
-    return components.map((component, i) => {
+    return map(components, (component, i) => {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }
