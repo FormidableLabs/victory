@@ -1,5 +1,5 @@
 import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction, omit, defaults, keys } from "lodash";
+import { assign, throttle, isFunction } from "lodash";
 import React from "react";
 
 const Helpers = {
@@ -7,71 +7,35 @@ const Helpers = {
     if (props.data) {
       return [{data: props.data}];
     }
-    const getData = (children, childIndex, parent) => {
+
+    const getData = (childProps) => {
+      const data = Data.getData(childProps);
+      return Array.isArray(data) && data.length > 0 ? data : undefined;
+    };
+
+    const getDataset = (children, childIndex, parent) => {
       return children.reduce((memo, child, index) => {
+        const key = childIndex ? `${childIndex}-${index}` : index;
+        const childName = child.props.name || key;
         if (child.type && child.type.role === "axis") {
           return memo;
         } else if (child.props && child.props.children) {
           const nestedChildren = React.Children.toArray(child.props.children);
-          const nestedDatasets = getData(nestedChildren, index, child);
+          const nestedDatasets = getDataset(nestedChildren, index, child);
           memo = memo.concat(nestedDatasets);
         } else if (child.type && isFunction(child.type.getData)) {
           child = parent ? React.cloneElement(child, parent.props) : child;
           const childData = child.props && child.type.getData(child.props);
-          if (childData) {
-            const key = childIndex ? `${childIndex}-${index}` : index;
-            const childName = child.props.name || key;
-            memo = memo.concat([{childName, data: childData}]);
-          }
+          memo = childData ? memo.concat([{childName, data: childData}]) : memo;
+        } else {
+          const childData = getData(child.props);
+          memo = childData ? memo.concat([{childName, data: childData}]) : memo;
         }
         return memo;
       }, []);
     };
-    return getData(React.Children.toArray(props.children));
+    return getDataset(React.Children.toArray(props.children));
   },
-
-  // getDatasets(props) { // eslint-disable-line max-statements
-  //   if (props.data) {
-  //     return [{data: props.data}];
-  //   }
-  //   const getData = (childProps) => {
-  //     const data = Data.getData(childProps);
-  //     return Array.isArray(data) && data.length > 0 ? data : undefined;
-  //   };
-
-  //   // Reverse the child array to maintain correct order when looping over
-  //   // children starting from the end of the array.
-  //   const children = React.Children.toArray(props.children).reverse();
-  //   let childrenLength = children.length;
-  //   const dataArr = [];
-  //   let dataArrLength = 0;
-  //   let childIndex = 0;
-  //   while (childrenLength > 0) {
-  //     const child = children[--childrenLength];
-  //     const childName = child.props.name || childIndex;
-  //     if (child.type && child.type.role === "axis") {
-  //       childIndex++;
-  //     } else if (child.props && child.props.children) {
-  //       const newChildren = React.Children.toArray(child.props.children).reverse();
-  //       const newChildrenLength = newChildren.length;
-  //       childIndex++;
-  //       for (let index = 0; index < newChildrenLength; index++) {
-  //         const newChild = newChildren[index];
-  //         const proxiedProps = defaults({}, newChild.props, omit(child.props, "children"));
-  //         children[childrenLength++] = React.cloneElement(newChild, proxiedProps);
-  //       }
-  //     } else if (child.type && isFunction(child.type.getData)) {
-  //       dataArr[dataArrLength++] = {childName, data: child.type.getData(child.props)};
-  //       childIndex++;
-
-  //     } else {
-  //       dataArr[dataArrLength++] = {childName, data: getData(child.props)};
-  //       childIndex++;
-
-  //     }
-  //   }
-  //   return dataArr;
-  // },
 
   filterDatasets(datasets, bounds) {
     const filtered = datasets.reduce((memo, dataset) => {
