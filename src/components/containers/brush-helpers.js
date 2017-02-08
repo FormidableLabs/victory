@@ -45,8 +45,7 @@ const Helpers = {
 
   getActiveHandles(point, props, domainBox) {
     const handles = this.getHandles(props, domainBox);
-    const options = ["top", "bottom", "left", "right"];
-    const activeHandles = reduce(options, (memo, opt) => {
+    const activeHandles = reduce(["top", "bottom", "left", "right"], (memo, opt) => {
       memo = this.withinBounds(point, handles[opt]) ? memo.concat(opt) : memo;
       return memo;
     }, []);

@@ -57,8 +57,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
   // Overrides method in VictoryContainer
   getChildren(props) {
     const children = React.Children.toArray(props.children);
-    const components = [...children, this.getRect(props)];
-    return map(components, (component, i) => {
+    return map([...children, this.getRect(props)], (component, i) => {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }
