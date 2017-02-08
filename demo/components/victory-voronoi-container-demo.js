@@ -4,6 +4,7 @@ import {
   VictoryVoronoiContainer
 } from "../../src/index";
 
+import { VictoryTooltip } from "victory-core";
 class App extends React.Component {
 
   constructor() {
@@ -47,33 +48,47 @@ class App extends React.Component {
               />
             }
           >
-            <VictoryLine
-              style={{
-                data: {stroke: "tomato"}
-              }}
+            <VictoryGroup
               data={[
-                {x: 1, y: 5},
-                {x: 2, y: 4},
-                {x: 3, y: -2}
+                {x: 1, y: 5, label: "one"},
+                {x: 2, y: 4, label: "two"},
+                {x: 3, y: -2, label: "three"}
               ]}
-            />
-            <VictoryLine
-              style={{
-                data: {stroke: "blue"}
-              }}
+            >
+              <VictoryLine style={{ data: {stroke: "tomato"}}}/>
+              <VictoryScatter
+                style={{ data: {fill: (d, active) => active ? "tomato" : "none"}}}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
               data={[
-                {x: 1, y: -3},
-                {x: 2, y: 5},
-                {x: 3, y: 3}
+                {x: 1, y: -3, label: "red"},
+                {x: 2, y: 5, label: "green"},
+                {x: 3, y: 3, label: "blue"}
               ]}
-            />
-            <VictoryLine
+            >
+              <VictoryLine style={{ data: {stroke: "blue"}}}/>
+              <VictoryScatter
+                style={{ data: {fill: (d, active) => active ? "blue" : "none"}}}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
               data={[
-                {x: 1, y: 5},
-                {x: 2, y: -4},
-                {x: 3, y: -2}
+                {x: 1, y: 5, label: "cat"},
+                {x: 2, y: -4, label: "dog"},
+                {x: 3, y: -2, label: "bird"}
               ]}
-            />
+            >
+              <VictoryLine style={{ data: {stroke: "black"}}}/>
+              <VictoryScatter
+                style={{ data: {fill: (d, active) => active ? "black" : "none"}}}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
           </VictoryChart>
 
           <VictoryScatter
@@ -120,68 +135,54 @@ class App extends React.Component {
             y={(d) => d.x * d.x}
           />
 
-          <VictoryGroup style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
+          <VictoryChart style={chartStyle} containerComponent={<VictoryVoronoiContainer/>}>
+            <VictoryGroup style={chartStyle}>
+              <VictoryScatter
+                style={{
+                  data: {fill: "tomato"}
                 }}
+                size={(datum, active) => active ? 5 : 3}
+                data={[
+                  {x: 1, y: -5},
+                  {x: 2, y: 4},
+                  {x: 3, y: 2},
+                  {x: 4, y: 0},
+                  {x: 5, y: 1},
+                  {x: 6, y: -3},
+                  {x: 7, y: 3}
+                ]}
               />
-            }
-          >
-            <VictoryScatter
-              style={{
-                data: {fill: "tomato"}
-              }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                {x: 1, y: -5},
-                {x: 2, y: 4},
-                {x: 3, y: 2},
-                {x: 4, y: 0},
-                {x: 5, y: 1},
-                {x: 6, y: -3},
-                {x: 7, y: 3}
-              ]}
-            />
-            <VictoryScatter
-              style={{
-                data: {fill: "blue"}
-              }}
-              size={(datum, active) => active ? 5 : 3}
-              data={[
-                {x: 1, y: -3},
-                {x: 2, y: 5},
-                {x: 3, y: 3},
-                {x: 4, y: 0},
-                {x: 5, y: -2},
-                {x: 6, y: -2},
-                {x: 7, y: 5}
-              ]}
-            />
-            <VictoryScatter
-              data={[
-                {x: 1, y: 5},
-                {x: 2, y: -4},
-                {x: 3, y: -2},
-                {x: 4, y: -3},
-                {x: 5, y: -1},
-                {x: 6, y: 3},
-                {x: 7, y: -3}
-              ]}
-              size={(datum, active) => active ? 5 : 3}
-            />
-          </VictoryGroup>
+              <VictoryScatter
+                style={{
+                  data: {fill: "blue"}
+                }}
+                size={(datum, active) => active ? 5 : 3}
+                data={[
+                  {x: 1, y: -3},
+                  {x: 2, y: 5},
+                  {x: 3, y: 3},
+                  {x: 4, y: 0},
+                  {x: 5, y: -2},
+                  {x: 6, y: -2},
+                  {x: 7, y: 5}
+                ]}
+              />
+              <VictoryScatter
+                data={[
+                  {x: 1, y: 5},
+                  {x: 2, y: -4},
+                  {x: 3, y: -2},
+                  {x: 4, y: -3},
+                  {x: 5, y: -1},
+                  {x: 6, y: 3},
+                  {x: 7, y: -3}
+                ]}
+                size={(datum, active) => active ? 5 : 3}
+              />
+            </VictoryGroup>
+          </VictoryChart>
 
-          <VictoryStack style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
-              />
-            }
-          >
+          <VictoryStack style={chartStyle} containerComponent={<VictoryVoronoiContainer/>}>
             <VictoryBar
               style={{
                 data: {

@@ -1,5 +1,5 @@
 import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys } from "lodash";
+import { assign, throttle, isFunction, groupBy, keys, defaults, omit } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 
@@ -24,8 +24,7 @@ const Helpers = {
     };
   },
 
-  // returns an array of data objects with eventKey and childName added
-  getDatasets(props) { // eslint-disable-line max-statements
+  getDatasets(props) {
     const addMeta = (data, name) => {
       return data.map((datum, index) => {
         return assign({childName: name, eventKey: index}, datum);
@@ -35,36 +34,34 @@ const Helpers = {
     if (props.data) {
       return addMeta(props.data);
     }
+
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
-    // Reverse the child array to maintain correct order when looping over
-    // children starting from the end of the array.
-    const children = React.Children.toArray(props.children).reverse();
-    let childrenLength = children.length;
-    const dataArr = [];
-    let childIndex = 0;
-    while (childrenLength > 0) {
-      const child = children[--childrenLength];
-      const childName = child.props.name || childIndex;
-      childIndex++;
-      if (child.type && child.type.role === "axis") {
-        childIndex++;
-      } else if (child.type && isFunction(child.type.getData)) {
-        dataArr.push(...addMeta(child.type.getData(child.props), childName));
-      } else if (child.props && child.props.children) {
-        const newChildren = React.Children.toArray(child.props.children);
-        const newChildrenLength = newChildren.length;
-        for (let index = 0; index < newChildrenLength; index++) {
-          children[childrenLength++] = newChildren[index];
+    const getDataset = (children, childIndex, parent) => {
+      return children.reduce((memo, child, index) => {
+        const key = childIndex ? `${childIndex}-${index}` : index;
+        const childName = child.props.name || key;
+        if (child.type && child.type.role === "axis") {
+          return memo;
+        } else if (child.props && child.props.children) {
+          const nestedChildren = React.Children.toArray(child.props.children);
+          const nestedDatasets = getDataset(nestedChildren, index, child);
+          memo = memo.concat(nestedDatasets);
+        } else if (child.type && isFunction(child.type.getData)) {
+          child = parent ? React.cloneElement(child, parent.props) : child;
+          const childData = child.props && child.type.getData(child.props);
+          memo = childData ? memo.concat(addMeta(childData, childName)) : memo;
+        } else {
+          const childData = getData(child.props);
+          memo = childData ? memo.concat(addMeta(childData, childName)) : memo;
         }
-      } else {
-        dataArr.push(...addMeta(getData(child.props), childName));
-      }
-    }
-    return dataArr;
+        return memo;
+      }, []);
+    };
+    return getDataset(React.Children.toArray(props.children));
   },
 
   // returns an array of objects with point and data where point is an x, y coordinate, and data is
@@ -72,8 +69,8 @@ const Helpers = {
   mergeDatasets(props, datasets) {
     const {scale} = props;
     const points = groupBy(datasets, (datum) => {
-      const x = scale.x(datum._x);
-      const y = scale.y(datum._y);
+      const x = scale.x(datum ._x1 !== undefined ? datum ._x1 : datum ._x);
+      const y = scale.y(datum ._y1 !== undefined ? datum ._y1 : datum ._y);
       return `${x},${y}`;
     });
     return keys(points).map((key) => {
@@ -81,7 +78,7 @@ const Helpers = {
       return {
         x: +point[0],
         y: +point[1],
-        data: points[key]
+        points: points[key]
       };
     });
   },
@@ -128,12 +125,47 @@ const Helpers = {
   // },
 
   onMouseMove(evt, targetProps) {
+    const { activePoints } = targetProps
     const datasets = this.getDatasets(targetProps);
     const voronoiDataset = this.mergeDatasets(targetProps, datasets);
     const voronoi = this.getVoronoiFunction(targetProps, voronoiDataset);
     const {x, y} = Selection.getSVGEventCoordinates(evt);
-    const nearestPoint = voronoi.find(x, y, targetProps.size);
-    console.log(nearestPoint);
+    const nearestVoronoi = voronoi.find(x, y, targetProps.size);
+    const points = nearestVoronoi.data.points;
+    const parentMutations = [{
+      target: "parent",
+      mutation: () => {
+        return { activePoints: points };
+      }
+    }];
+    return points.reduce((memo, point) => {
+      const otherChild = point.childName !== undefined ? "all" : undefined;
+      const mutations = [
+        {
+          childName: otherChild, eventKey: "all", target: "data",
+          mutation: () => {
+            return {active: false};
+          }
+        }, {
+          childName: point.childName, eventKey: point.eventKey, target: "data",
+          mutation: () => {
+            return {active: true};
+          }
+        }, {
+          childName: otherChild, eventKey: "all", target: "labels",
+          mutation: () => {
+            return {active: false};
+          }
+        }, {
+          childName: point.childName, eventKey: point.eventKey, target: "labels",
+          mutation: () => {
+            return {active: true};
+          }
+        }
+      ];
+      memo = memo.concat(mutations);
+      return memo;
+    }, parentMutations);
   }
 };
 
