@@ -1,6 +1,7 @@
 import React from "react";
 import { VictoryContainer } from "victory-core";
 import SelectionHelpers from "./selection-helpers";
+import { map } from "lodash";
 
 
 export default class VictorySelectionContainer extends VictoryContainer {
@@ -56,8 +57,7 @@ export default class VictorySelectionContainer extends VictoryContainer {
   // Overrides method in VictoryContainer
   getChildren(props) {
     const children = React.Children.toArray(props.children);
-    const components = [...children, this.getRect(props)];
-    return components.map((component, i) => {
+    return map([...children, this.getRect(props)], (component, i) => {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }

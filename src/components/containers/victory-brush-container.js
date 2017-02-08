@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
-import { assign, isEqual } from "lodash";
+import { assign, isEqual, map, reduce } from "lodash";
 
 
 export default class VictoryBrushContainer extends VictoryContainer {
@@ -78,7 +78,6 @@ export default class VictoryBrushContainer extends VictoryContainer {
     const {x, y} = coordinates;
     const width = Math.abs(x[1] - x[0]) || 1;
     const height = Math.abs(y[1] - y[0]) || 1;
-    const options = ["top", "bottom", "left", "right"];
     const yProps = { style: handleStyle, width, height: handleWidth, cursor: "ns-resize"};
     const xProps = { style: handleStyle, width: handleWidth, height, cursor: "ew-resize"};
     const handleProps = {
@@ -87,7 +86,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
       left: dimension !== "y" && assign({y: y[1], x: x[0] - (handleWidth / 2)}, xProps),
       right: dimension !== "y" && assign({y: y[1], x: x[1] - (handleWidth / 2)}, xProps)
     };
-    const handles = options.reduce((memo, curr) => {
+    const handles = reduce(["top", "bottom", "left", "right"], (memo, curr) => {
       memo = handleProps[curr] ?
         memo.concat(React.cloneElement(
           handleComponent,
@@ -116,8 +115,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
   // Overrides method in VictoryContainer
   getChildren(props) {
     const children = React.Children.toArray(props.children);
-    const components = [...children, this.getRect(props)];
-    return components.map((component, i) => {
+    return map([...children, this.getRect(props)], (component, i) => {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }

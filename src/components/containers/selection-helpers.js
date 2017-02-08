@@ -1,5 +1,5 @@
 import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction } from "lodash";
+import { assign, throttle, isFunction, reduce, map } from "lodash";
 import React from "react";
 
 const Helpers = {
@@ -38,7 +38,7 @@ const Helpers = {
   },
 
   filterDatasets(datasets, bounds) {
-    const filtered = datasets.reduce((memo, dataset) => {
+    const filtered = reduce(datasets, (memo, dataset) => {
       const selectedData = this.getSelectedData(dataset.data, bounds);
       memo = selectedData ?
         memo.concat({
@@ -138,7 +138,7 @@ const Helpers = {
     }];
 
     const dataMutation = selectedData ?
-      selectedData.map((d) => {
+      map(selectedData, (d) => {
         return {
           childName: d.childName, eventKey: d.eventKey[0], target: "data",
           mutation: () => {

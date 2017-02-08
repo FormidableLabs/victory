@@ -1,5 +1,5 @@
 import { Selection, Collection } from "victory-core";
-import { throttle, isFunction } from "lodash";
+import { throttle, isFunction, map } from "lodash";
 
 const Helpers = {
 
@@ -35,8 +35,8 @@ const Helpers = {
    * @return {[Number, Number]}                The translated domain
    */
   pan(currentDomain, originalDomain, delta) {
-    const [fromCurrent, toCurrent] = currentDomain.map((val) => +val);
-    const [fromOriginal, toOriginal] = originalDomain.map((val) => +val);
+    const [fromCurrent, toCurrent] = map(currentDomain, (val) => +val);
+    const [fromOriginal, toOriginal] = map(originalDomain, (val) => +val);
     const lowerBound = fromCurrent + delta;
     const upperBound = toCurrent + delta;
     let newDomain;
@@ -52,7 +52,7 @@ const Helpers = {
       newDomain = currentDomain;
     }
     return Collection.containsDates(currentDomain) || Collection.containsDates(originalDomain) ?
-      newDomain.map((val) => new Date(val)) : newDomain;
+      map(newDomain, (val) => new Date(val)) : newDomain;
   },
 
   getDomainScale(domain, scale) {
