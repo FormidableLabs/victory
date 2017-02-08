@@ -118,8 +118,8 @@ class App extends React.Component {
                 {x: 3, y: -2, label: "three"}
               ]}
             >
-              <VictoryLine name="line-1" style={{ data: {stroke: "tomato"}}}/>
-              <VictoryScatter name="scatter-1"
+              <VictoryLine style={{ data: {stroke: "tomato"}}}/>
+              <VictoryScatter
                 style={{ data: {fill: (d, active) => active ? "tomato" : "gray"}}}
                 labelComponent={<VictoryTooltip/>}
               />
@@ -132,8 +132,8 @@ class App extends React.Component {
                 {x: 3, y: 3, label: "blue"}
               ]}
             >
-              <VictoryLine name="line-2" style={{ data: {stroke: "blue"}}}/>
-              <VictoryScatter name="scatter-2"
+              <VictoryLine style={{ data: {stroke: "blue"}}}/>
+              <VictoryScatter
                 style={{ data: {fill: (d, active) => active ? "blue" : "gray"}}}
                 labelComponent={<VictoryTooltip/>}
               />
@@ -146,8 +146,8 @@ class App extends React.Component {
                 {x: 3, y: -2, label: "bird"}
               ]}
             >
-              <VictoryLine name="line-3" style={{ data: {stroke: "black"}}}/>
-              <VictoryScatter name="scatter-3"
+              <VictoryLine style={{ data: {stroke: "black"}}}/>
+              <VictoryScatter
                 style={{ data: {fill: (d, active) => active ? "black" : "gray"}}}
                 labelComponent={<VictoryTooltip/>}
               />

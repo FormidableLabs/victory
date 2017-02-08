@@ -15,7 +15,7 @@ const Helpers = {
 
     const getDataset = (children, childIndex, parent) => {
       return children.reduce((memo, child, index) => {
-        const key = childIndex ? `${childIndex}-${index}` : index;
+        const key = childIndex !== undefined ? `${childIndex}-${index}` : index;
         const childName = child.props.name || key;
         if (child.type && child.type.role === "axis") {
           return memo;
@@ -126,6 +126,7 @@ const Helpers = {
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(datasets, bounds);
+    console.log(selectedData)
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
       targetProps.onSelection(selectedData, bounds) : {};
 
@@ -139,7 +140,7 @@ const Helpers = {
     const dataMutation = selectedData ?
       selectedData.map((d) => {
         return {
-          childName: d.childName, eventKey: d.eventKey, target: "data",
+          childName: d.childName, eventKey: d.eventKey[0], target: "data",
           mutation: () => {
             return assign({active: true}, callbackMutation);
           }

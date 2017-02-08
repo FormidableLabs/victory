@@ -1,11 +1,11 @@
 import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys, defaults, omit } from "lodash";
+import { assign, throttle, isFunction, groupBy, keys, isEqual, omit, defaults } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 
 const Helpers = {
-  withinDomain(props, point) {
-    const {x1, x2, y1, y2} = this.getDomainBox(props);
+  withinDomain(point, domainBox) {
+    const {x1, x2, y1, y2} = domainBox;
     const {x, y} = point;
     return x >= Math.min(x1, x2) &&
       x <= Math.max(x1, x2) &&
@@ -42,7 +42,7 @@ const Helpers = {
 
     const getDataset = (children, childIndex, parent) => {
       return children.reduce((memo, child, index) => {
-        const key = childIndex ? `${childIndex}-${index}` : index;
+        const key = childIndex !== undefined ? `${childIndex}-${index}` : index;
         const childName = child.props.name || key;
         if (child.type && child.type.role === "axis") {
           return memo;
@@ -83,92 +83,92 @@ const Helpers = {
     });
   },
 
-  getVoronoiFunction(props, dataset) {
-    const {x1, y1, x2, y2} = this.getDomainBox(props);
-    const voronoiFunction = d3Voronoi()
+  getVoronoiFunction(domainBox) {
+    const {x1, y1, x2, y2} = domainBox;
+    return d3Voronoi()
       .x((d) => d.x)
       .y((d) => d.y)
       .extent([[x1, y1], [x2, y2]]);
-    return voronoiFunction(dataset);
   },
 
-  // filterDatasets(datasets, bounds) {
-  //   const filtered = datasets.reduce((memo, dataset) => {
-  //     const selectedData = this.getSelectedData(dataset.data, bounds);
-  //     memo = selectedData ?
-  //       memo.concat({
-  //         childName: dataset.childName, eventKey: selectedData.eventKey, data: selectedData.data
-  //       }) :
-  //       memo;
-  //     return memo;
-  //   }, []);
-  //   return filtered.length ? filtered : null;
-  // },
+  getActiveMutations(point) {
+    const {childName, eventKey} = point;
+    return ["data", "labels"].map((target) => {
+      return {
+        childName, eventKey, target, mutation: () => ({active: true})
+      };
+    });
+  },
 
-  // getSelectedData(dataset, bounds) {
-  //   const {x, y} = bounds;
-  //   const withinBounds = (d) => {
-  //     return d._x >= x[0] && d._x <= x[1] && d._y >= y[0] && d._y <= y[1];
-  //   };
-  //   const eventKey = [];
-  //   const data = [];
-  //   let count = 0;
-  //   for (let index = 0, len = dataset.length; index < len; index++) {
-  //     const datum = dataset[index];
-  //     if (withinBounds(datum)) {
-  //       data[count] = datum;
-  //       eventKey[count] = datum.eventKey === undefined ? index : datum.eventKey;
-  //       count++;
-  //     }
-  //   }
-  //   return count > 0 ? {eventKey, data} : null;
-  // },
+  getInactiveMutations(point) {
+    const {childName, eventKey} = point;
+    return ["data", "labels"].map((target) => {
+      return {
+        childName, eventKey, target, mutation: () => null
+      };
+    });
+  },
 
-  onMouseMove(evt, targetProps) {
-    const { activePoints } = targetProps
-    const datasets = this.getDatasets(targetProps);
-    const voronoiDataset = this.mergeDatasets(targetProps, datasets);
-    const voronoi = this.getVoronoiFunction(targetProps, voronoiDataset);
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
-    const nearestVoronoi = voronoi.find(x, y, targetProps.size);
-    const points = nearestVoronoi.data.points;
+  onMouseLeave(evt, targetProps) {
+    const activePoints = targetProps.activePoints || [];
     const parentMutations = [{
       target: "parent",
       mutation: () => {
-        return { activePoints: points };
+        return { activePoints: [] };
       }
     }];
-    return points.reduce((memo, point) => {
-      const otherChild = point.childName !== undefined ? "all" : undefined;
-      const mutations = [
-        {
-          childName: otherChild, eventKey: "all", target: "data",
-          mutation: () => {
-            return {active: false};
-          }
-        }, {
-          childName: point.childName, eventKey: point.eventKey, target: "data",
-          mutation: () => {
-            return {active: true};
-          }
-        }, {
-          childName: otherChild, eventKey: "all", target: "labels",
-          mutation: () => {
-            return {active: false};
-          }
-        }, {
-          childName: point.childName, eventKey: point.eventKey, target: "labels",
-          mutation: () => {
-            return {active: true};
-          }
-        }
-      ];
-      memo = memo.concat(mutations);
+    return activePoints.reduce((memo, point) => {
+      memo = memo.concat(this.getInactiveMutations(point));
       return memo;
-    }, parentMutations);
+    }, [parentMutations]);
+  },
+
+  onMouseMove(evt, targetProps) {
+    const domainBox = targetProps.domainBox || this.getDomainBox(targetProps);
+    const activePoints = targetProps.activePoints || [];
+    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    if (!this.withinDomain({x, y}, domainBox)) {
+      const parentMutations = [{
+        target: "parent",
+        eventKey: "parent",
+        mutation: () => {
+          return { domainBox };
+        }
+      }];
+      return activePoints.reduce((memo, point) => {
+        memo = memo.concat(this.getInactiveMutations(point));
+        return memo;
+      }, parentMutations);
+    }
+    const datasets = this.getDatasets(targetProps);
+    const voronoiDataset = this.mergeDatasets(targetProps, datasets);
+    const voronoiFunction = this.getVoronoiFunction(domainBox);
+    const voronoi = voronoiFunction(voronoiDataset);
+    const polygons = voronoiFunction.polygons(voronoiDataset);
+    const nearestVoronoi = voronoi.find(x, y, targetProps.size);
+    console.log(nearestVoronoi)
+    const points = nearestVoronoi ? nearestVoronoi.data.points : [];
+    const parentMutations = [{
+      target: "parent",
+      eventKey: "parent",
+      mutation: () => {
+        return { activePoints: points, domainBox, polygons };
+      }
+    }];
+    if (isEqual(points, activePoints)) {
+      return parentMutations;
+    } else {
+      const activeMutations = points.map((point) => this.getActiveMutations(point));
+      console.log(activeMutations)
+      const inactiveMutations = activePoints.map((point) => this.getInactiveMutations(point));
+
+      const result =  parentMutations.concat(...inactiveMutations, ...activeMutations);
+      return result
+    }
   }
 };
 
 export default {
+  onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
   onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true})
 };

@@ -142,6 +142,8 @@ class App extends React.Component {
                   data: {fill: "tomato"}
                 }}
                 size={(datum, active) => active ? 5 : 3}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
                 data={[
                   {x: 1, y: -5},
                   {x: 2, y: 4},
@@ -157,6 +159,8 @@ class App extends React.Component {
                   data: {fill: "blue"}
                 }}
                 size={(datum, active) => active ? 5 : 3}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
                 data={[
                   {x: 1, y: -3},
                   {x: 2, y: 5},
@@ -177,6 +181,8 @@ class App extends React.Component {
                   {x: 6, y: 3},
                   {x: 7, y: -3}
                 ]}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
                 size={(datum, active) => active ? 5 : 3}
               />
             </VictoryGroup>
