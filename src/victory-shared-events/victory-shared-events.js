@@ -1,7 +1,6 @@
-import { assign, isFunction, partialRight, defaults, keys, reduce } from "lodash";
-import { assign, isFunction, partialRight, defaults, reduce } from "lodash";
+import { assign, isFunction, partialRight, defaults, fromPairs, reduce } from "lodash";
 import React, { PropTypes } from "react";
-import { PropTypes as CustomPropTypes, Events, Timer } from "../victory-util/index";
+import { PropTypes as CustomPropTypes, Events, Timer, Helpers } from "../victory-util/index";
 
 export default class VictorySharedEvents extends React.Component {
   static displayName = "VictorySharedEvents";
@@ -102,28 +101,18 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getBasePropsFromChildren(childComponents) {
-    const getBaseProps = (children, childIndex, parent) => {
-      return reduce(children, (memo, child, index) => {
-        if (child.props && child.props.children) {
-          const nestedChildren = React.Children.toArray(child.props.children);
-          const nestedProps = getBaseProps(nestedChildren, index, child);
-          keys(nestedProps).map((key) => {
-            memo[key] = nestedProps[key];
-          });
-        } else if (child.type && isFunction(child.type.getBaseProps)) {
-          child = parent ? React.cloneElement(child, parent.props) : child;
-          const baseChildProps = child.props && child.type.getBaseProps(child.props);
-          if (baseChildProps) {
-            const key = childIndex ? `${childIndex}-${index}` : index;
-            const childKey = child.props.name || key;
-            memo[childKey] = baseChildProps;
-          }
-        }
-        return memo;
-      }, {});
+    const iteratee = (child, childName, parent) => {
+      if (child.type && isFunction(child.type.getBaseProps)) {
+        child = parent ? React.cloneElement(child, parent.props) : child;
+        const baseProps = child.props && child.type.getBaseProps(child.props);
+        return baseProps ? [[childName, baseProps]] : null;
+      } else {
+        return null;
+      }
     };
-    return getBaseProps(childComponents);
 
+    const baseProps = Helpers.reduceChildren(childComponents, iteratee);
+    return fromPairs(baseProps);
   }
 
   getNewChildren(props) {
@@ -131,7 +120,13 @@ export default class VictorySharedEvents extends React.Component {
     const childNames = Object.keys(this.baseProps);
     const alterChildren = (children) => {
       return reduce(children, (memo, child, index) => {
-        if (child.type && isFunction(child.type.getBaseProps)) {
+        if (child.props.children) {
+          return memo.concat(React.cloneElement(
+            child,
+            child.props,
+            alterChildren(React.Children.toArray(child.props.children))
+          ));
+        } else if (child.type && isFunction(child.type.getBaseProps)) {
           const name = child.props.name || childNames.shift() || index;
           const childEvents = Array.isArray(events) &&
             events.filter((event) => {
@@ -151,12 +146,6 @@ export default class VictorySharedEvents extends React.Component {
             { key: `events-${name}`, sharedEvents, eventKey },
             child.props
           )));
-        } else if (child.props.children) {
-          return memo.concat(React.cloneElement(
-            child,
-            child.props,
-            alterChildren(React.Children.toArray(child.props.children))
-          ));
         } else {
           return memo.concat(child);
         }

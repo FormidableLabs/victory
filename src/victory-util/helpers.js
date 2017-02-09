@@ -106,14 +106,14 @@ export default {
   },
 
   /**
-   * @param {Object} props: axis component props
+   * @param {Array} children: an array of child components
    * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
    * @returns {Array} returns an array of results from calling the iteratee on all nested children
    */
-  reduceChildren(props, iteratee) {
+  reduceChildren(children, iteratee) {
     let childIndex = 0;
-    const traverseChildren = (children, parent) => {
-      return reduce(children, (memo, child) => {
+    const traverseChildren = (childArray, parent) => {
+      return reduce(childArray, (memo, child) => {
         const childName = child.props.name || childIndex;
         childIndex++;
         if (child.props && child.props.children) {
@@ -127,6 +127,6 @@ export default {
         return memo;
       }, []);
     };
-    return traverseChildren(React.Children.toArray(props.children));
+    return traverseChildren(children);
   }
 };
