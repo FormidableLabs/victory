@@ -1,4 +1,4 @@
-import { assign, isFunction, partialRight, defaults, fromPairs, reduce } from "lodash";
+import { assign, isFunction, partialRight, defaults, fromPairs } from "lodash";
 import React, { PropTypes } from "react";
 import { PropTypes as CustomPropTypes, Events, Timer, Helpers } from "../victory-util/index";
 
@@ -119,7 +119,7 @@ export default class VictorySharedEvents extends React.Component {
     const {events, eventKey} = props;
     const childNames = Object.keys(this.baseProps);
     const alterChildren = (children) => {
-      return reduce(children, (memo, child, index) => {
+      return children.reduce((memo, child, index) => {
         if (child.props.children) {
           return memo.concat(React.cloneElement(
             child,
