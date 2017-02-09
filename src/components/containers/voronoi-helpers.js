@@ -1,9 +1,9 @@
-import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys, isEqual, omit, defaults } from "lodash";
+import { Selection, Data, Helpers } from "victory-core";
+import { assign, throttle, isFunction, groupBy, keys, isEqual } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 
-const Helpers = {
+const VoronoiHelpers = {
   withinDomain(point, domainBox) {
     const {x1, x2, y1, y2} = domainBox;
     const {x, y} = point;
@@ -40,28 +40,19 @@ const Helpers = {
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
-    const getDataset = (children, childIndex, parent) => {
-      return children.reduce((memo, child, index) => {
-        const key = childIndex !== undefined ? `${childIndex}-${index}` : index;
-        const childName = child.props.name || key;
-        if (child.type && child.type.role === "axis") {
-          return memo;
-        } else if (child.props && child.props.children) {
-          const nestedChildren = React.Children.toArray(child.props.children);
-          const nestedDatasets = getDataset(nestedChildren, index, child);
-          memo = memo.concat(nestedDatasets);
-        } else if (child.type && isFunction(child.type.getData)) {
-          child = parent ? React.cloneElement(child, parent.props) : child;
-          const childData = child.props && child.type.getData(child.props);
-          memo = childData ? memo.concat(addMeta(childData, childName)) : memo;
-        } else {
-          const childData = getData(child.props);
-          memo = childData ? memo.concat(addMeta(childData, childName)) : memo;
-        }
-        return memo;
-      }, []);
+    const iteratee = (child, childName, parent) => {
+      if (child.type && child.type.role === "axis") {
+        return null;
+      } else if (child.type && isFunction(child.type.getData)) {
+        child = parent ? React.cloneElement(child, parent.props) : child;
+        const childData = child.props && child.type.getData(child.props);
+        return childData ? addMeta(childData, childName) : null;
+      } else {
+        const childData = getData(child.props);
+        return childData ? addMeta(childData, childName) : null;
+      }
     };
-    return getDataset(React.Children.toArray(props.children));
+    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
   },
 
   // returns an array of objects with point and data where point is an x, y coordinate, and data is
@@ -83,19 +74,20 @@ const Helpers = {
     });
   },
 
-  getVoronoiFunction(domainBox) {
-    const {x1, y1, x2, y2} = domainBox;
+  getVoronoiFunction(targetProps) {
+    const {width, height, voronoiPadding} = targetProps;
+    const padding = voronoiPadding || 0;
     return d3Voronoi()
       .x((d) => d.x)
       .y((d) => d.y)
-      .extent([[x1, y1], [x2, y2]]);
+      .extent([[padding, padding], [width - padding, height - padding]]);
   },
 
   getActiveMutations(point) {
     const {childName, eventKey} = point;
     return ["data", "labels"].map((target) => {
       return {
-        childName, eventKey, target, mutation: () => ({active: true})
+        childName, eventKey, target, mutation: () => ({active: true })
       };
     });
   },
@@ -127,26 +119,25 @@ const Helpers = {
     const domainBox = targetProps.domainBox || this.getDomainBox(targetProps);
     const activePoints = targetProps.activePoints || [];
     const {x, y} = Selection.getSVGEventCoordinates(evt);
-    if (!this.withinDomain({x, y}, domainBox)) {
-      const parentMutations = [{
-        target: "parent",
-        eventKey: "parent",
-        mutation: () => {
-          return { domainBox };
-        }
-      }];
-      return activePoints.reduce((memo, point) => {
-        memo = memo.concat(this.getInactiveMutations(point));
-        return memo;
-      }, parentMutations);
-    }
+    // if (!this.withinDomain({x, y}, domainBox)) {
+    //   const parentMutations = [{
+    //     target: "parent",
+    //     eventKey: "parent",
+    //     mutation: () => {
+    //       return { domainBox };
+    //     }
+    //   }];
+    //   return activePoints.reduce((memo, point) => {
+    //     memo = memo.concat(this.getInactiveMutations(point));
+    //     return memo;
+    //   }, parentMutations);
+    // }
     const datasets = this.getDatasets(targetProps);
     const voronoiDataset = this.mergeDatasets(targetProps, datasets);
-    const voronoiFunction = this.getVoronoiFunction(domainBox);
+    const voronoiFunction = this.getVoronoiFunction(targetProps);
     const voronoi = voronoiFunction(voronoiDataset);
     const polygons = voronoiFunction.polygons(voronoiDataset);
     const nearestVoronoi = voronoi.find(x, y, targetProps.size);
-    console.log(nearestVoronoi)
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
     const parentMutations = [{
       target: "parent",
@@ -159,16 +150,14 @@ const Helpers = {
       return parentMutations;
     } else {
       const activeMutations = points.map((point) => this.getActiveMutations(point));
-      console.log(activeMutations)
       const inactiveMutations = activePoints.map((point) => this.getInactiveMutations(point));
 
-      const result =  parentMutations.concat(...inactiveMutations, ...activeMutations);
-      return result
+      return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
   }
 };
 
 export default {
-  onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
-  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true})
+  onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
+  onMouseMove: throttle(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers), 16, {leading: true})
 };

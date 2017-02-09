@@ -1,8 +1,8 @@
-import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction, reduce, map } from "lodash";
+import { Selection, Data, Helpers } from "victory-core";
+import { assign, throttle, isFunction } from "lodash";
 import React from "react";
 
-const Helpers = {
+const SelectionHelpers = {
   getDatasets(props) {
     if (props.data) {
       return [{data: props.data}];
@@ -13,32 +13,23 @@ const Helpers = {
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
-    const getDataset = (children, childIndex, parent) => {
-      return children.reduce((memo, child, index) => {
-        const key = childIndex !== undefined ? `${childIndex}-${index}` : index;
-        const childName = child.props.name || key;
-        if (child.type && child.type.role === "axis") {
-          return memo;
-        } else if (child.props && child.props.children) {
-          const nestedChildren = React.Children.toArray(child.props.children);
-          const nestedDatasets = getDataset(nestedChildren, index, child);
-          memo = memo.concat(nestedDatasets);
-        } else if (child.type && isFunction(child.type.getData)) {
-          child = parent ? React.cloneElement(child, parent.props) : child;
-          const childData = child.props && child.type.getData(child.props);
-          memo = childData ? memo.concat([{childName, data: childData}]) : memo;
-        } else {
-          const childData = getData(child.props);
-          memo = childData ? memo.concat([{childName, data: childData}]) : memo;
-        }
-        return memo;
-      }, []);
+    const iteratee = (child, childName, parent) => {
+      if (child.type && child.type.role === "axis") {
+        return null;
+      } else if (child.type && isFunction(child.type.getData)) {
+        child = parent ? React.cloneElement(child, parent.props) : child;
+        const childData = child.props && child.type.getData(child.props);
+        return childData ? {childName, data: childData} : null;
+      } else {
+        const childData = getData(child.props);
+        return childData ? {childName, data: childData} : null;
+      }
     };
-    return getDataset(React.Children.toArray(props.children));
+    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
   },
 
   filterDatasets(datasets, bounds) {
-    const filtered = reduce(datasets, (memo, dataset) => {
+    const filtered = datasets.reduce((memo, dataset) => {
       const selectedData = this.getSelectedData(dataset.data, bounds);
       memo = selectedData ?
         memo.concat({
@@ -126,7 +117,6 @@ const Helpers = {
     const datasets = this.getDatasets(targetProps);
     const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(datasets, bounds);
-    console.log(selectedData)
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
       targetProps.onSelection(selectedData, bounds) : {};
 
@@ -138,9 +128,9 @@ const Helpers = {
     }];
 
     const dataMutation = selectedData ?
-      map(selectedData, (d) => {
+      selectedData.map((d) => {
         return {
-          childName: d.childName, eventKey: d.eventKey[0], target: "data",
+          childName: d.childName, eventKey: d.eventKey, target: "data",
           mutation: () => {
             return assign({active: true}, callbackMutation);
           }
@@ -152,7 +142,7 @@ const Helpers = {
 };
 
 export default {
-  onMouseDown: Helpers.onMouseDown.bind(Helpers),
-  onMouseUp: Helpers.onMouseUp.bind(Helpers),
-  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true})
+  onMouseDown: SelectionHelpers.onMouseDown.bind(SelectionHelpers),
+  onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
+  onMouseMove: throttle(SelectionHelpers.onMouseMove.bind(SelectionHelpers), 16, {leading: true})
 };
