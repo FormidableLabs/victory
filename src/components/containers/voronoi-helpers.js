@@ -4,24 +4,11 @@ import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
 
 const VoronoiHelpers = {
-  withinDomain(point, domainBox) {
-    const {x1, x2, y1, y2} = domainBox;
+  withinBounds(props, point) {
+    const {width, height, voronoiPadding} = props;
+    const padding = voronoiPadding || 0;
     const {x, y} = point;
-    return x >= Math.min(x1, x2) &&
-      x <= Math.max(x1, x2) &&
-      y >= Math.min(y1, y2) &&
-      y <= Math.max(y1, y2);
-  },
-
-  getDomainBox(props) {
-    const { scale, domain } = props;
-    const fullCoordinates = Selection.getDomainCoordinates(scale, domain);
-    return {
-      x1: Math.min(...fullCoordinates.x),
-      x2: Math.max(...fullCoordinates.x),
-      y1: Math.min(...fullCoordinates.y),
-      y2: Math.max(...fullCoordinates.y)
-    };
+    return x >= padding && x <= width - padding && y >= padding && y <= height - padding;
   },
 
   getDatasets(props) {
@@ -74,13 +61,15 @@ const VoronoiHelpers = {
     });
   },
 
-  getVoronoiFunction(targetProps) {
-    const {width, height, voronoiPadding} = targetProps;
+  getVoronoi(props) {
+    const {width, height, voronoiPadding} = props;
     const padding = voronoiPadding || 0;
-    return d3Voronoi()
+    const voronoiFunction = d3Voronoi()
       .x((d) => d.x)
       .y((d) => d.y)
       .extent([[padding, padding], [width - padding, height - padding]]);
+    const datasets = this.getDatasets(props);
+    return voronoiFunction(this.mergeDatasets(props, datasets));
   },
 
   getActiveMutations(point) {
@@ -116,34 +105,22 @@ const VoronoiHelpers = {
   },
 
   onMouseMove(evt, targetProps) {
-    const domainBox = targetProps.domainBox || this.getDomainBox(targetProps);
     const activePoints = targetProps.activePoints || [];
     const {x, y} = Selection.getSVGEventCoordinates(evt);
-    // if (!this.withinDomain({x, y}, domainBox)) {
-    //   const parentMutations = [{
-    //     target: "parent",
-    //     eventKey: "parent",
-    //     mutation: () => {
-    //       return { domainBox };
-    //     }
-    //   }];
-    //   return activePoints.reduce((memo, point) => {
-    //     memo = memo.concat(this.getInactiveMutations(point));
-    //     return memo;
-    //   }, parentMutations);
-    // }
-    const datasets = this.getDatasets(targetProps);
-    const voronoiDataset = this.mergeDatasets(targetProps, datasets);
-    const voronoiFunction = this.getVoronoiFunction(targetProps);
-    const voronoi = voronoiFunction(voronoiDataset);
-    const polygons = voronoiFunction.polygons(voronoiDataset);
+    if (!this.withinBounds(targetProps, {x, y})) {
+      return activePoints.length && activePoints.reduce((memo, point) => {
+        memo = memo.concat(this.getInactiveMutations(point));
+        return memo;
+      }, []);
+    }
+    const voronoi = targetProps.voronoi || this.getVoronoi(targetProps); // TODO: animation
     const nearestVoronoi = voronoi.find(x, y, targetProps.size);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
     const parentMutations = [{
       target: "parent",
       eventKey: "parent",
       mutation: () => {
-        return { activePoints: points, domainBox, polygons };
+        return { activePoints: points, voronoi };
       }
     }];
     if (isEqual(points, activePoints)) {
