@@ -60,12 +60,13 @@ export default class VictoryContainer extends React.Component {
   }
 
   getChildContext() {
-    return {
-      portalUpdate: this.portalUpdate,
-      portalRegister: this.portalRegister,
-      portalDeregister: this.portalDeregister,
-      getTimer: this.getTimer
-    };
+    return this.props.standalone === true || this.props.standalone === undefined ?
+      {
+        portalUpdate: this.portalUpdate,
+        portalRegister: this.portalRegister,
+        portalDeregister: this.portalDeregister,
+        getTimer: this.getTimer
+      } : {};
   }
 
   getTimer() {
@@ -100,7 +101,6 @@ export default class VictoryContainer extends React.Component {
           <title id="title">{title}</title>
           <desc id="desc">{desc}</desc>
           {this.getChildren(props)}
-          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
         </g>
       );
   }
