@@ -34,10 +34,11 @@ export default {
   getLabelProps(dataProps, text, calculatedStyle) {
     const { x, y, index, scale, datum, data } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
+    const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
     return {
       style: labelStyle,
       x,
-      y: y - (labelStyle.padding || 0),
+      y: y - sign * (labelStyle.padding || 0),
       text,
       index,
       scale,
