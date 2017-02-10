@@ -60,12 +60,13 @@ export default class VictoryContainer extends React.Component {
   }
 
   getChildContext() {
-    return {
-      portalUpdate: this.portalUpdate,
-      portalRegister: this.portalRegister,
-      portalDeregister: this.portalDeregister,
-      getTimer: this.getTimer
-    };
+    return this.props.standalone !== false ?
+      {
+        portalUpdate: this.portalUpdate,
+        portalRegister: this.portalRegister,
+        portalDeregister: this.portalDeregister,
+        getTimer: this.getTimer
+      } : {};
   }
 
   getTimer() {
@@ -86,7 +87,7 @@ export default class VictoryContainer extends React.Component {
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
     const { title, desc, portalComponent, className, standalone } = props;
-    return standalone || standalone === undefined ?
+    return standalone !== false ?
       (
         <svg {...svgProps} style={style} className={className}>
           <title id="title">{title}</title>
@@ -97,10 +98,7 @@ export default class VictoryContainer extends React.Component {
       ) :
       (
         <g {...svgProps} style={style} className={className}>
-          <title id="title">{title}</title>
-          <desc id="desc">{desc}</desc>
           {this.getChildren(props)}
-          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
         </g>
       );
   }
@@ -108,11 +106,12 @@ export default class VictoryContainer extends React.Component {
   render() {
     const { width, height, responsive, events, standalone } = this.props;
     const style = responsive ? this.props.style : omit(this.props.style, ["height", "width"]);
-    const useViewBox = responsive ? standalone || standalone === undefined : false;
     const svgProps = assign(
       {
-        "aria-labelledby": "title desc", role: "img", width, height,
-        viewBox: useViewBox ? `0 0 ${width} ${height}` : undefined
+        width, height,
+        "aria-labelledby": standalone !== false ? "title desc" : undefined,
+        role: standalone !== false ? "img" : "presentation",
+        viewBox: responsive && standalone !== false ? `0 0 ${width} ${height}` : undefined
       },
       events
     );
