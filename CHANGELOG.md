@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 13.0.3 (2017-02-09)
+
+-[198](https://github.com/FormidableLabs/victory-core/pull/198)
+  - Fixes a regression in `VictoryPortal`. Only top level containers should register and render portals
+
 ## 13.0.2 (2017-02-05)
 
 - [195](https://github.com/FormidableLabs/victory-core/pull/195)
