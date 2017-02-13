@@ -215,7 +215,7 @@ export default class VictoryStack extends React.Component {
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
-    const newChildren = childComponents.map((child, index) => {
+    return childComponents.map((child, index) => {
       const data = this.addLayoutData(props, calculatedProps, datasets, index);
       const style = Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;

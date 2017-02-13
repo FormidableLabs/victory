@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { compact, get, partialRight } from "lodash";
+import { compact, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
