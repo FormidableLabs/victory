@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { partialRight } from "lodash";
+import { compact, get, partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
@@ -120,17 +120,19 @@ class VictoryVoronoi extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
-    const dataComponents = [];
-    const labelComponents = [];
-    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      dataComponents[index] = React.cloneElement(dataComponent, dataProps);
 
+    const dataComponents = this.dataKeys.map((_dataKey, index) => {
+      const dataProps = this.getComponentProps(dataComponent, "data", index);
+      return React.cloneElement(dataComponent, dataProps);
+    });
+
+    const labelComponents = compact(this.dataKeys.map((_dataKey, index) => {
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-        labelComponents[index] = React.cloneElement(labelComponent, labelProps);
+      if (labelProps.text !== undefined && labelProps.text !== null) {
+        return React.cloneElement(labelComponent, labelProps);
       }
-    }
+    }));
+
     return labelComponents.length > 0 ?
       React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
       dataComponents;
