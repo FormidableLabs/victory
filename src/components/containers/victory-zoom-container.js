@@ -97,17 +97,16 @@ export default class VictoryZoomContainer extends VictoryContainer {
 
   modifyChildren(props) {
     const childComponents = React.Children.toArray(props.children);
-    const newChildren = [];
-    for (let index = 0, len = childComponents.length; index < len; index++) {
-      const child = childComponents[index];
+
+    return childComponents.map((child, index) => {
       const {zoomDomain, cachedZoomDomain, currentDomain} = props;
       const domain = isEqual(zoomDomain, cachedZoomDomain) ?
         currentDomain || zoomDomain : zoomDomain;
-      newChildren[index] = React.cloneElement(
+
+      return React.cloneElement(
         child, defaults({domain}, child.props)
       );
-    }
-    return newChildren;
+    });
   }
 
   // Overrides method in VictoryContainer

@@ -7,11 +7,11 @@ export default {
     const calculatedValues = this.getCalculatedValues(props);
     const { data, style, scale, domain } = calculatedValues;
     const { groupComponent, width, height, padding, standalone } = props;
-    const childProps = {parent: {
+    const initialChildProps = {parent: {
       domain, scale, width, height, data, standalone, style: style.parent
     }};
-    for (let index = 0, len = data.length; index < len; index++) {
-      const datum = data[index];
+
+    return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
       const y1 = scale.y(datum._high);
@@ -31,8 +31,9 @@ export default {
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
-    }
-    return childProps;
+
+      return childProps;
+    }, initialChildProps);
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {

@@ -11,24 +11,26 @@ export default {
     const { scale, dataset, dataSegments, domain } = calculatedValues;
     const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
     const {interpolation, label, width, height, events, sharedEvents, standalone} = props;
-    const childProps = { parent: {
+    const initialChildProps = { parent: {
       style: style.parent, scale, data: dataset, height, width, domain, standalone
     }};
-    for (let index = 0, len = dataSegments.length; index < len; index++) {
+
+    return dataSegments.reduce((childProps, dataSegment, index) => {
       const dataProps = {
         scale,
         interpolation,
         style: style.data,
-        data: dataSegments[index]
+        data: dataSegment
       };
       const text = index === dataSegments.length - 1 ? label : undefined;
       const addLabels = (text !== undefined && text !== null) || events || sharedEvents;
       const labelProps = addLabels ?
         this.getLabelProps(dataProps, text, calculatedValues, style) : undefined;
-      childProps[index] = { data: dataProps, labels: labelProps };
-    }
 
-    return childProps;
+      childProps[index] = { data: dataProps, labels: labelProps };
+
+      return childProps;
+    }, initialChildProps);
   },
 
   getLabelProps(dataProps, text, calculatedValues, style) { // eslint-disable-line max-params
