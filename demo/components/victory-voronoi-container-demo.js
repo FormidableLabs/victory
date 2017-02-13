@@ -1,8 +1,10 @@
+/*global window:false*/
 import React from "react";
 import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictoryVoronoiContainer
 } from "../../src/index";
+import { random, range } from "lodash";
 
 import { VictoryTooltip } from "victory-core";
 class App extends React.Component {
@@ -10,20 +12,29 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = {
-      points: []
+      data: this.getData()
     };
   }
 
-  handleSelection(datasets) {
-    const points = datasets.reduce((memo, dataset) => {
-      memo = memo.concat(dataset.data);
-      return memo;
-    }, []);
-    this.setState({points});
+  componentDidMount() {
+    /* eslint-disable react/no-did-mount-set-state */
+    this.setStateInterval = window.setInterval(() => {
+      this.setState({
+        data: this.getData()
+      });
+    }, 3000);
   }
 
-  handleClearSelection() {
-    this.setState({points: []});
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
+
+  getData() {
+    const bars = random(6, 10);
+    return range(bars).map((bar) => {
+      return {a: bar + 1, b: random(2, 10)};
+    });
   }
 
   render() {
@@ -41,12 +52,7 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
-            containerComponent={
-              <VictoryVoronoiContainer
-                onSelection={this.handleSelection.bind(this)}
-                onSelectionCleared={this.handleClearSelection.bind(this)}
-              />
-            }
+            containerComponent={<VictoryVoronoiContainer/>}
           >
             <VictoryGroup
               data={[
@@ -92,29 +98,18 @@ class App extends React.Component {
           </VictoryChart>
 
           <VictoryScatter
+            animate={{duration: 1000}}
             style={{
               parent: chartStyle.parent,
               data: {
                 fill: (datum, active) => active ? "tomato" : "black"
               }
             }}
-            containerComponent={
-              <VictoryVoronoiContainer
-                selectionStyle={{
-                  stroke: "tomato", strokeWidth: 2, fill: "tomato", fillOpacity: 0.1
-                }}
-              />
-            }
+            containerComponent={<VictoryVoronoiContainer size={20}/>}
             size={(datum, active) => active ? 5 : 3}
-            data={[
-              {x: 1, y: -5},
-              {x: 2, y: 4},
-              {x: 3, y: 2},
-              {x: 4, y: 3},
-              {x: 5, y: 1},
-              {x: 6, y: -3},
-              {x: 7, y: 3}
-            ]}
+            data={this.state.data}
+            x="a"
+            y="b"
           />
 
           <VictoryScatter

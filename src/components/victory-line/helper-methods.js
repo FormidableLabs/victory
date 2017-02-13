@@ -2,63 +2,33 @@ import { sortBy, defaults, last } from "lodash";
 import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
 export default {
-
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "line");
-    const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
-      props.theme.line.style : {};
     const calculatedValues = this.getCalculatedValues(props);
-    const { scale, dataset, dataSegments, domain } = calculatedValues;
-    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
-    const {interpolation, label, width, height, events, sharedEvents, standalone} = props;
-    const childProps = { parent: {
-      style: style.parent, scale, data: dataset, height, width, domain, standalone
-    }};
-    for (let index = 0, len = dataSegments.length; index < len; index++) {
-      const dataProps = {
-        scale,
-        interpolation,
-        style: style.data,
-        data: dataSegments[index]
-      };
-      const text = index === dataSegments.length - 1 ? label : undefined;
-      const addLabels = (text !== undefined && text !== null) || events || sharedEvents;
-      const labelProps = addLabels ?
-        this.getLabelProps(dataProps, text, calculatedValues, style) : undefined;
-      childProps[index] = { data: dataProps, labels: labelProps };
-    }
-
-    return childProps;
-  },
-
-  getLabelProps(dataProps, text, calculatedValues, style) { // eslint-disable-line max-params
-    const { dataSegments, dataset, scale } = calculatedValues;
-    const { style: dataStyle } = dataProps;
-    const lastData = last(last(dataSegments));
-    const labelStyle = this.getLabelStyle(style.labels, dataStyle);
-
-    return {
-      x: lastData ? scale.x(lastData._x1 || lastData._x) + (labelStyle.padding || 0) : 0,
-      y: lastData ? scale.y(lastData._y1 || lastData._y) : 0,
-      style: labelStyle,
-      textAnchor: labelStyle.textAnchor || "start",
-      verticalAnchor: labelStyle.verticalAnchor || "middle",
-      angle: labelStyle.angle,
-      data: dataset,
-      scale,
-      text
+    const { scale, data, domain, style } = calculatedValues;
+    const {interpolation, width, height, events, sharedEvents, standalone} = props;
+    const initialChildProps = {
+      parent: { style: style.parent, scale, data, height, width, domain, standalone },
+      all: { data: { scale, data, interpolation, style: style.data } }
     };
+    return data.reduce((childProps, datum, index) => {
+      const text = this.getLabelText(props, datum, index);
+      if (text !== undefined && text !== null || events || sharedEvents) {
+        const eventKey = datum.eventKey || index;
+        childProps[eventKey] = {labels: this.getLabelProps(text, index, calculatedValues)};
+      }
+      return childProps;
+    }, initialChildProps);
   },
 
   getCalculatedValues(props) {
-    let dataset = Data.getData(props);
+    const sortKey = props.sortKey || "x";
+    let data = sortBy(Data.getData(props), sortKey);
 
     if (Data.getData(props).length < 2) {
       Log.warn("VictoryLine needs at least two data points to render properly.");
-      dataset = [];
+      data = [];
     }
-
-    const dataSegments = this.getDataSegments(dataset, props.sortKey);
 
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -73,10 +43,49 @@ export default {
       y: Scale.getBaseScale(props, "y").domain(domain.y).range(range.y)
     };
 
-    return { domain, dataset, dataSegments, scale };
+    const defaultStyles = props.theme && props.theme.line && props.theme.line.style ?
+      props.theme.line.style : {};
+    const style = Helpers.getStyles(props.style, defaultStyles, "auto", "100%");
+
+    return { domain, data, scale, style };
   },
 
-  getLabelStyle(labelStyle, dataStyle) {
+  getLabelText(props, datum, index) {
+    return datum.label || (Array.isArray(props.labels) ?
+      props.labels[index] : props.labels);
+  },
+
+  getLabelProps(text, index, calculatedProps) {
+    const { scale, data, style } = calculatedProps;
+    const datum = data[index];
+    const {x, y} = this.getLabelPosition(datum, scale);
+    const labelStyle = this.getLabelStyle(style) || {};
+    const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
+    return {
+      style: labelStyle,
+      x,
+      y: y - sign * (labelStyle.padding || 0),
+      text,
+      index,
+      scale,
+      datum,
+      data,
+      textAnchor: labelStyle.textAnchor,
+      verticalAnchor: labelStyle.verticalAnchor || "end",
+      angle: labelStyle.angle
+    };
+  },
+
+  getLabelPosition(datum, scale) {
+    return {
+      x: scale.x(datum._x1 !== undefined ? datum._x1 : datum._x),
+      y: scale.y(datum._y1 !== undefined ? datum._y1 : datum._y)
+    };
+  },
+
+  getLabelStyle(style) {
+    const dataStyle = style.data || {};
+    const labelStyle = style.labels || {};
     // match labels styles to data style by default (fill, opacity, others?)
     const opacity = dataStyle.opacity;
     // match label color to data color if it is not given.
@@ -84,24 +93,5 @@ export default {
     const fill = dataStyle.stroke;
     const padding = labelStyle.padding || 0;
     return defaults({}, labelStyle, {opacity, fill, padding});
-  },
-
-  getDataSegments(dataset, sortKey = "x") {
-    const orderedData = sortBy(dataset, `_${sortKey}`);
-    const segments = [];
-    let segmentStartIndex = 0;
-    let segmentIndex = 0;
-    for (let index = 0, len = orderedData.length; index < len; index++) {
-      const datum = orderedData[index];
-      if (datum._y === null || typeof datum._y === "undefined") {
-        segments[segmentIndex] = orderedData.slice(segmentStartIndex, index);
-        segmentIndex++;
-        segmentStartIndex = index + 1;
-      }
-    }
-    segments[segmentIndex] = orderedData.slice(segmentStartIndex, orderedData.length);
-    return segments.filter((segment) => {
-      return Array.isArray(segment) && segment.length > 0;
-    });
   }
 };

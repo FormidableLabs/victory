@@ -1,7 +1,6 @@
 import React from "react";
 import { VictoryContainer } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
-import { without } from "lodash";
 
 
 export default class VictoryVoronoiContainer extends VictoryContainer {
@@ -11,7 +10,8 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     onSelection: React.PropTypes.func,
     onSelectionCleared: React.PropTypes.func,
     standalone: React.PropTypes.bool,
-    radius: React.PropTypes.number
+    radius: React.PropTypes.number,
+    voronoiPadding: React.PropTypes.number
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,

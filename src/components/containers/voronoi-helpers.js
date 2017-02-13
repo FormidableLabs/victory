@@ -113,7 +113,7 @@ const VoronoiHelpers = {
         return memo;
       }, []);
     }
-    const voronoi = targetProps.voronoi || this.getVoronoi(targetProps); // TODO: animation
+    const voronoi = this.getVoronoi(targetProps); // TODO: animation
     const nearestVoronoi = voronoi.find(x, y, targetProps.size);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
     const parentMutations = [{

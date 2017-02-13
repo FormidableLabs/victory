@@ -55,7 +55,7 @@ class VictoryLine extends React.Component {
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
-    label: PropTypes.string,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
@@ -122,18 +122,16 @@ class VictoryLine extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
-    const dataComponents = [];
     const labelComponents = [];
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      dataComponents[index] = React.cloneElement(dataComponent, dataProps);
-
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
       if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
         labelComponents[index] = React.cloneElement(labelComponent, labelProps);
       }
     }
-    return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
+    const dataProps = this.getComponentProps(dataComponent, "data", "all");
+    const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
+    return React.cloneElement(groupComponent, {}, children);
   }
 
   shouldAnimate() {
