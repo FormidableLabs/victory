@@ -88,9 +88,7 @@ export default {
 
       // returns all eventKeys to modify for a targeted childName
       const getKeys = (childName) => {
-        if (baseProps.all || baseProps[childName] && baseProps[childName].all) {
-          return "all";
-        } else if (eventReturn.eventKey === "all") {
+        if (eventReturn.eventKey === "all") {
           return baseProps[childName] ?
             without(Object.keys(baseProps[childName]), "parent") :
             without(Object.keys(baseProps), "parent");
