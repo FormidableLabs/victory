@@ -201,24 +201,25 @@ export default {
     }
 
     const values = props[propName];
+    if (values.length < 2) {
+      return;
+    }
 
-    if (values.length > 1) {
-      const comparisonConstructor = getConstructor(values[0]);
+    const comparisonConstructor = getConstructor(values[0]);
 
-      const typeMismatchedValue = find(values, (value) => {
-        return comparisonConstructor !== getConstructor(value);
-      });
+    const typeMismatchedValue = find(values, (value) => {
+      return comparisonConstructor !== getConstructor(value);
+    });
 
-      if (typeMismatchedValue) {
-        const constructorName = getConstructorName(values[0]);
-        const otherConstructorName = getConstructorName(typeMismatchedValue);
+    if (typeMismatchedValue) {
+      const constructorName = getConstructorName(values[0]);
+      const otherConstructorName = getConstructorName(typeMismatchedValue);
 
-        return new Error(
-          `Expected \`${propName}\` in \`${componentName}\` to be a ` +
-          `homogeneous array, but found types \`${constructorName}\` and ` +
-          `\`${otherConstructorName}\`.`
-        );
-      }
+      return new Error(
+        `Expected \`${propName}\` in \`${componentName}\` to be a ` +
+        `homogeneous array, but found types \`${constructorName}\` and ` +
+        `\`${otherConstructorName}\`.`
+      );
     }
   }),
 
