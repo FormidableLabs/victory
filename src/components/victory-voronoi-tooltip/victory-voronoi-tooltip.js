@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { compact, partialRight } from "lodash";
+import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryTooltip, addEvents,
   VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
@@ -129,12 +129,12 @@ class VictoryVoronoiTooltip extends React.Component {
       return React.cloneElement(dataComponent, dataProps);
     });
 
-    const labelComponents = compact(this.dataKeys.map((_dataKey, index) => {
+    const labelComponents = this.dataKeys.map((_dataKey, index) => {
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
       if (labelProps.text !== undefined && labelProps.text !== null) {
         return React.cloneElement(labelComponent, labelProps);
       }
-    }));
+    }).filter(Boolean);
 
     return labelComponents.length > 0 ?
       React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
