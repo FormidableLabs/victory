@@ -84,7 +84,8 @@ export default {
         stroke: blueGrey50,
         strokeDasharray,
         strokeLinecap,
-        strokeLinejoin
+        strokeLinejoin,
+        pointerEvents: "none"
       },
       ticks: {
         fill: "transparent",

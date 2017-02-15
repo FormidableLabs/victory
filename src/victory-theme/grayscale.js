@@ -71,7 +71,8 @@ export default {
       }),
       grid: {
         fill: "transparent",
-        stroke: "transparent"
+        stroke: "transparent",
+        pointerEvents: "none"
       },
       ticks: {
         fill: "transparent",
