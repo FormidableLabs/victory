@@ -127,9 +127,7 @@ export default {
         stroke: charcoal,
         strokeWidth: 2
       },
-      labels: assign({}, baseLabelStyles, {
-        textAnchor: "start"
-      })
+      labels: centeredLabelStyles
     }
   }, baseProps),
   pie: {
@@ -139,9 +137,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 1
       },
-      labels: assign({}, baseLabelStyles, {
-        padding: 20
-      })
+      labels: assign({}, baseLabelStyles, { padding: 20 })
     },
     colorScale: colors,
     width: 400,
@@ -162,10 +158,7 @@ export default {
     colorScale: colors
   }, baseProps),
   tooltip: {
-    style: assign({}, centeredLabelStyles, {
-      padding: 5,
-      pointerEvents: "none"
-    }),
+    style: assign({}, centeredLabelStyles, { padding: 5, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: charcoal,
       strokeWidth: 1,
@@ -182,10 +175,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: assign({}, centeredLabelStyles, {
-        padding: 5,
-        pointerEvents: "none"
-      }),
+      labels: assign({}, centeredLabelStyles, { padding: 5, pointerEvents: "none" }),
       flyout: {
         stroke: charcoal,
         strokeWidth: 1,
