@@ -97,11 +97,11 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "bar");
     const {style, data, scale, domain } = this.getCalculatedValues(props);
     const { horizontal, width, height, padding, standalone } = props;
-    const childProps = {parent: {
+    const initialChildProps = {parent: {
       domain, scale, width, height, data, standalone, style: style.parent
     }};
-    for (let index = 0, len = data.length; index < len; index++) {
-      const datum = data[index];
+
+    return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
       const position = this.getBarPosition(props, datum, scale);
       const dataProps = assign(
@@ -125,8 +125,9 @@ export default {
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
-    }
-    return childProps;
+
+      return childProps;
+    }, initialChildProps);
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {

@@ -132,20 +132,19 @@ class VictoryAxis extends React.Component {
 
   renderGridAndTicks(props) {
     const { tickComponent, tickLabelComponent, gridComponent } = props;
-    const gridAndTickComponents = [];
-    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
-      const key = this.dataKeys[index];
+
+    return this.dataKeys.map((key, index) => {
       const tickProps = this.getComponentProps(tickComponent, "ticks", index);
       const TickComponent = React.cloneElement(tickComponent, tickProps);
       const gridProps = this.getComponentProps(gridComponent, "grid", index);
       const GridComponent = React.cloneElement(gridComponent, gridProps);
       const tickLabelProps = this.getComponentProps(tickLabelComponent, "tickLabels", index);
       const TickLabel = React.cloneElement(tickLabelComponent, tickLabelProps);
-      gridAndTickComponents[index] = React.cloneElement(
+
+      return React.cloneElement(
         props.groupComponent, {key: `tick-group-${key}`}, GridComponent, TickComponent, TickLabel
       );
-    }
-    return gridAndTickComponents;
+    });
   }
 
   fixLabelOverlap(gridAndTicks, props) {
