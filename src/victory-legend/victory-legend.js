@@ -223,22 +223,20 @@ export default class VictoryLegend extends React.Component {
   renderLegendItems(props) {
     const { data, dataComponent, labelComponent } = props;
     const legendData = isEmpty(data) ? defaultLegendData : data;
-    const length = legendData.length;
-    const dataComponents = [];
-    const labelComponents = [];
 
-    for (let i = 0; i < length; i++) {
-      const datum = legendData[i];
-
-      dataComponents[i] = React.cloneElement(
+    const dataComponents = legendData.map((datum, i) => {
+      return React.cloneElement(
         dataComponent,
         this.getSymbolProps(datum, props, i)
       );
-      labelComponents[i] = React.cloneElement(
+    });
+
+    const labelComponents = legendData.map((datum, i) => {
+      return React.cloneElement(
         labelComponent,
         this.getLabelProps(datum, props, i)
       );
-    }
+    });
 
     return [...dataComponents, ...labelComponents];
   }
