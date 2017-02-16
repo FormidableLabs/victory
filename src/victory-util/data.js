@@ -97,18 +97,18 @@ export default {
   },
 
   /**
-   * Returns sorted data. If no sort function is provided, dataset is returned unaltered.
-   *
+   * Returns sorted data. If no comparator is provided, dataset is returned unaltered.
+   * Comparator function must conform to the standard javascript comparator.
    * @param {Array} dataset: the original domain
-   * @param {Function} sortFn: the sort function
+   * @param {Function} comparator: the sort function
    * @returns {Array} the sorted data
    */
-  sortData(dataset, sortFn) {
-    if (!sortFn || !isFunction(sortFn)) {
+  sortData(dataset, comparator) {
+    if (!comparator || !isFunction(comparator)) {
       return dataset;
     }
 
-    return dataset.sort(sortFn);
+    return dataset.sort(comparator);
   },
 
   /**
