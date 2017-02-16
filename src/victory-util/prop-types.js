@@ -202,7 +202,7 @@ export default {
 
     const values = props[propName];
     if (values.length < 2) {
-      return;
+      return undefined;
     }
 
     const comparisonConstructor = getConstructor(values[0]);
