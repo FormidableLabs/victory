@@ -177,7 +177,7 @@ describe("helpers/data", () => {
       expect(returnData).to.eql([
         {_x: 2, x: 2, _y: 2, y: 2, eventKey: 0},
         {_x: 1, x: 1, _y: 3, y: 3, eventKey: 1},
-        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2},
+        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2}
       ]);
     });
 
@@ -191,7 +191,7 @@ describe("helpers/data", () => {
       expect(returnData).to.eql([
         {_x: 1, x: 1, _y: 3, y: 3, eventKey: 0},
         {_x: 2, x: 2, _y: 2, y: 2, eventKey: 1},
-        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2},
+        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2}
       ]);
     });
 
