@@ -20,6 +20,7 @@ export default class VictoryTooltip extends React.Component {
       PropTypes.bool,
       PropTypes.func
     ]),
+    activateData: PropTypes.bool,
     datum: PropTypes.object,
     data: PropTypes.array,
     events: PropTypes.object,
@@ -85,14 +86,14 @@ export default class VictoryTooltip extends React.Component {
   static defaultEvents = [{
     target: "data",
     eventHandlers: {
-      onMouseOver: () => {
+      onMouseOver: (targetProps) => {
         return [
           {
             target: "labels",
             mutation: () => ({ active: true })
           }, {
             target: "data",
-            mutation: () => ({ active: true })
+            mutation: () => targetProps.activateData ? ({ active: true }) : ({active: undefined})
           }
         ];
       },
@@ -100,10 +101,10 @@ export default class VictoryTooltip extends React.Component {
         return [
           {
             target: "labels",
-            mutation: () => null
+            mutation: () => ({active: undefined})
           }, {
             target: "data",
-            mutation: () => null
+            mutation: () => ({active: undefined})
           }
         ];
       }
