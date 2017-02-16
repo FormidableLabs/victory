@@ -90,7 +90,25 @@ export default {
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {}
         );
     });
-    return this.cleanData(data, props);
+
+    const sortedData = this.sortData(data, props.dataSort);
+
+    return this.cleanData(sortedData, props);
+  },
+
+  /**
+   * Returns sorted data. If no sort function is provided, dataset is returned unaltered.
+   *
+   * @param {Array} dataset: the original domain
+   * @param {Function} sortFn: the sort function
+   * @returns {Array} the sorted data
+   */
+  sortData(dataset, sortFn) {
+    if (!sortFn || !isFunction(sortFn)) {
+      return dataset;
+    }
+
+    return dataset.sort(sortFn);
   },
 
   /**

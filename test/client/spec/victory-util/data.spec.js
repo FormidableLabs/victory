@@ -168,6 +168,33 @@ describe("helpers/data", () => {
       expect(returnData).to.eql(expectedReturnWithEventKeys);
     });
 
+    it("does not sort data when function not passed", () => {
+      const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
+      const props = {data};
+
+      const returnData = Data.getData(props);
+
+      expect(returnData).to.eql([
+        {_x: 2, x: 2, _y: 2, y: 2, eventKey: 0},
+        {_x: 1, x: 1, _y: 3, y: 3, eventKey: 1},
+        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2},
+      ]);
+    });
+
+    it("sorts data according to passed function", () => {
+      const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
+      const sortFn = (datumA, datumB) => { return datumA._x - datumB._x; };
+      const props = {data, dataSort: sortFn};
+
+      const returnData = Data.getData(props);
+
+      expect(returnData).to.eql([
+        {_x: 1, x: 1, _y: 3, y: 3, eventKey: 0},
+        {_x: 2, x: 2, _y: 2, y: 2, eventKey: 1},
+        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2},
+      ]);
+    });
+
     it("generates a dataset from domain", () => {
       const generatedReturn = [{x: 0, y: 0}, {x: 10, y: 10}];
       const expectedReturn = [{_x: 0, x: 0, _y: 0, y: 0}, {_x: 10, x: 10, _y: 10, y: 10}];
