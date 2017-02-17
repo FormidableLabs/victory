@@ -1,5 +1,5 @@
 /* global console */
-import { isFunction } from "lodash";
+import { isFunction, find } from "lodash";
 import { PropTypes } from "react";
 
 /**
@@ -199,21 +199,27 @@ export default {
     if (error) {
       return error;
     }
-    const value = props[propName];
-    if (value.length > 1) {
-      const constructor = getConstructor(value[0]);
-      for (let i = 1; i < value.length; i++) {
-        const otherConstructor = getConstructor(value[i]);
-        if (constructor !== otherConstructor) {
-          const constructorName = getConstructorName(value[0]);
-          const otherConstructorName = getConstructorName(value[i]);
-          return new Error(
-            `Expected \`${propName}\` in \`${componentName}\` to be a ` +
-            `homogeneous array, but found types \`${constructorName}\` and ` +
-            `\`${otherConstructorName}\`.`
-          );
-        }
-      }
+
+    const values = props[propName];
+    if (values.length < 2) {
+      return undefined;
+    }
+
+    const comparisonConstructor = getConstructor(values[0]);
+
+    const typeMismatchedValue = find(values, (value) => {
+      return comparisonConstructor !== getConstructor(value);
+    });
+
+    if (typeMismatchedValue) {
+      const constructorName = getConstructorName(values[0]);
+      const otherConstructorName = getConstructorName(typeMismatchedValue);
+
+      return new Error(
+        `Expected \`${propName}\` in \`${componentName}\` to be a ` +
+        `homogeneous array, but found types \`${constructorName}\` and ` +
+        `\`${otherConstructorName}\`.`
+      );
     }
   }),
 
