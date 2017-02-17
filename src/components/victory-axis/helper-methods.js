@@ -196,28 +196,30 @@ export default {
 
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
-    const childProps = { parent: {
+    const initialChildProps = { parent: {
       style: style.parent, ticks, scale, width: props.width,
       height: props.height, domain, standalone: props.standalone
     }};
-    for (let index = 0, len = ticks.length; index < len; index++) {
-      const tick = stringTicks ? props.tickValues[(ticks[index]) - 1] : ticks[index];
+
+    return ticks.reduce((childProps, indexedTick, index) => {
+      const tick = stringTicks ? props.tickValues[indexedTick - 1] : indexedTick;
 
       const styles = this.getEvaluatedStyles(style, tick, index);
       const tickLayout = {
         position: this.getTickPosition(styles, orientation, isVertical),
-        transform: this.getTickTransform(scale(ticks[index]), globalTransform, isVertical)
+        transform: this.getTickTransform(scale(indexedTick), globalTransform, isVertical)
       };
 
       const gridLayout = {
         edge: gridEdge,
         transform: {
           x: isVertical ?
-            -gridOffset.x + globalTransform.x : scale(ticks[index]) + globalTransform.x,
+            -gridOffset.x + globalTransform.x : scale(indexedTick) + globalTransform.x,
           y: isVertical ?
-            scale(ticks[index]) + globalTransform.y : gridOffset.y + globalTransform.y
+            scale(indexedTick) + globalTransform.y : gridOffset.y + globalTransform.y
         }
       };
+
       childProps[index] = {
         axis: axisProps,
         axisLabel: axisLabelProps,
@@ -227,8 +229,9 @@ export default {
         ),
         grid: this.getGridProps(gridLayout, styles.gridStyle, tick)
       };
-    }
-    return childProps;
+
+      return childProps;
+    }, initialChildProps);
   },
 
   getCalculatedValues(props) {

@@ -6,11 +6,11 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "errorbar");
     const { data, style, scale, domain } = this.getCalculatedValues(props, fallbackProps);
     const { groupComponent, height, width, borderWidth, standalone } = props;
-    const childProps = { parent: {
+    const initialChildProps = { parent: {
       domain, style: style.parent, scale, data, height, width, standalone
     }};
-    for (let index = 0, len = data.length; index < len; index++) {
-      const datum = data[index];
+
+    return data.reduce((childProps, datum, index) => {
       const eventKey = datum.eventKey || index;
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
       const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
@@ -29,8 +29,9 @@ export default {
       if (text !== undefined && text !== null || props.events || props.sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
-    }
-    return childProps;
+
+      return childProps;
+    }, initialChildProps);
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {

@@ -251,9 +251,8 @@ export default class VictoryGroup extends React.Component {
     const { offset, theme, labelComponent } = props;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
-    const newChildren = [];
-    for (let index = 0, len = childComponents.length; index < len; index++) {
-      const child = childComponents[index];
+
+    return childComponents.map((child, index) => {
       const role = child.type && child.type.role;
       const xOffset = this.getXO(props, calculatedProps, index);
       const style = role === "voronoi" || role === "tooltip" ?
@@ -264,7 +263,7 @@ export default class VictoryGroup extends React.Component {
         {x: (offset * childComponents.length) / 2};
       const domainPadding = child.props.domainPadding ||
         props.domainPadding || defaultDomainPadding;
-      newChildren[index] = React.cloneElement(child, assign({
+      return React.cloneElement(child, assign({
         domainPadding, labels, style, theme, horizontal,
         data: this.getDataWithOffset(props, datasets[index], xOffset),
         animate: getAnimationProps(props, child, index),
@@ -273,8 +272,7 @@ export default class VictoryGroup extends React.Component {
         labelComponent: labelComponent || child.props.labelComponent,
         xOffset: role === "stack" ? xOffset : undefined
       }, childProps));
-    }
-    return newChildren;
+    });
   }
 
   renderContainer(containerComponent, props) {
