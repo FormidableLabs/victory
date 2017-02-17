@@ -1,4 +1,4 @@
-import { assign, uniq, range, last, isFunction, property } from "lodash";
+import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Log from "./log";
@@ -97,18 +97,18 @@ export default {
   },
 
   /**
-   * Returns sorted data. If no comparator is provided, dataset is returned unaltered.
-   * Comparator function must conform to the standard javascript comparator.
+   * Returns sorted data. If no sort keys are provided, data is returned unaltered.
+   * Sort keys should correspond to the `iteratees` argument in lodash `sortBy` function.
    * @param {Array} dataset: the original domain
-   * @param {Function} comparator: the sort function
+   * @param {Function} sortKeys: the sort keys
    * @returns {Array} the sorted data
    */
-  sortData(dataset, comparator) {
-    if (!comparator || !isFunction(comparator)) {
+  sortData(dataset, sortKeys) {
+    if (!sortKeys) {
       return dataset;
     }
 
-    return dataset.sort(comparator);
+    return sortBy(dataset, sortKeys);
   },
 
   /**
