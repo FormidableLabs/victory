@@ -115,17 +115,19 @@ export default {
     const withinBounds = (d) => {
       return d._x >= x[0] && d._x <= x[1] && d._y >= y[0] && d._y <= y[1];
     };
-    const eventKey = [];
-    const data = [];
-    let count = 0;
-    for (let index = 0, len = dataset.length; index < len; index++) {
-      const datum = dataset[index];
+
+    const selectedData = dataset.reduce((accum, datum, index) => {
       if (withinBounds(datum)) {
-        data[count] = datum;
-        eventKey[count] = datum.eventKey === undefined ? index : datum.eventKey;
-        count++;
+        accum.data.push(datum);
+        accum.eventKey.push(datum.eventKey === undefined ? index : datum.eventKey);
       }
-    }
-    return count > 0 ? {eventKey, data} : null;
+
+      return accum;
+    }, {
+      data: [],
+      eventKey: []
+    });
+
+    return selectedData.data.length > 0 ? selectedData : null;
   }
 };

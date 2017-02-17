@@ -282,6 +282,11 @@ describe("prop-types", () => {
       expect(result).not.to.be.an.instanceOf(Error);
     });
 
+    it("does not return an error for arrays with one item", () => {
+      const result = validate(["a"]);
+      expect(result).not.to.be.an.instanceOf(Error);
+    });
+
     it("does not return an error for arrays where all elements are the same type", () => {
       const result = validate([1, 0]);
       expect(result).not.to.be.an.instanceOf(Error);
