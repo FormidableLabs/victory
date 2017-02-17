@@ -52,49 +52,37 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer/>}
+            containerComponent={<VictoryVoronoiContainer radius={50}/>}
           >
-            <VictoryGroup
+            <VictoryLine
               data={[
                 {x: 1, y: 5, label: "one"},
                 {x: 2, y: 4, label: "two"},
                 {x: 3, y: -2, label: "three"}
               ]}
-            >
-              <VictoryLine style={{ data: {stroke: "tomato"}}}/>
-              <VictoryScatter
-                style={{ data: {fill: (d, active) => active ? "tomato" : "none"}}}
-                labelComponent={<VictoryTooltip/>}
-              />
-            </VictoryGroup>
+              labelComponent={<VictoryTooltip/>}
+              style={{ data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2}}}
+            />
 
-            <VictoryGroup
+            <VictoryLine
               data={[
                 {x: 1, y: -3, label: "red"},
                 {x: 2, y: 5, label: "green"},
                 {x: 3, y: 3, label: "blue"}
               ]}
-            >
-              <VictoryLine style={{ data: {stroke: "blue"}}}/>
-              <VictoryScatter
-                style={{ data: {fill: (d, active) => active ? "blue" : "none"}}}
-                labelComponent={<VictoryTooltip/>}
-              />
-            </VictoryGroup>
+              style={{ data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2}}}
+              labelComponent={<VictoryTooltip/>}
+            />
 
-            <VictoryGroup
+            <VictoryLine
               data={[
                 {x: 1, y: 5, label: "cat"},
                 {x: 2, y: -4, label: "dog"},
                 {x: 3, y: -2, label: "bird"}
               ]}
-            >
-              <VictoryLine style={{ data: {stroke: "black"}}}/>
-              <VictoryScatter
-                style={{ data: {fill: (d, active) => active ? "black" : "none"}}}
-                labelComponent={<VictoryTooltip/>}
-              />
-            </VictoryGroup>
+              style={{ data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2}}}
+              labelComponent={<VictoryTooltip/>}
+            />
           </VictoryChart>
 
           <VictoryScatter

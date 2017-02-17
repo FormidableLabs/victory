@@ -166,6 +166,7 @@ export default class App extends React.Component {
 
         <VictoryLine
           style={{parent: parentStyle}}
+          labels={(d) => Math.round(d.y)}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},

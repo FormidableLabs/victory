@@ -1,7 +1,7 @@
 import React from "react";
 import {
   VictoryChart, VictoryLine, VictoryBar, VictoryArea,
-  VictoryScatter, VictoryStack, VictoryGroup,
+  VictoryScatter, VictoryStack, VictoryGroup, VictoryAxis,
   VictoryCandlestick, VictoryErrorBar
 } from "../../src/index";
 import { VictoryTooltip } from "victory-core";
@@ -111,8 +111,9 @@ class App extends React.Component {
               labels={["a", "b", "c"]}
               labelComponent={<VictoryTooltip/>}
               horizontal
-              offset={20}
+              offset={35}
               colorScale={"qualitative"}
+              style={{ data: {width: 20, pointerEvents: "all"}}}
             >
               <VictoryBar
                 data={[
@@ -139,10 +140,12 @@ class App extends React.Component {
          </VictoryChart>
 
          <VictoryChart style={{parent: parentStyle}}>
+            <VictoryAxis/>
             <VictoryStack
               colorScale={"qualitative"}
               labels={["a", "b", "c"]}
               labelComponent={<VictoryTooltip/>}
+              style={{ data: {width: 30, pointerEvents: "visible"}}}
             >
               <VictoryBar
                 data={[

@@ -1,4 +1,4 @@
-import { sortBy, defaults, last } from "lodash";
+import { sortBy, defaults } from "lodash";
 import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -6,10 +6,10 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "line");
     const calculatedValues = this.getCalculatedValues(props);
     const { scale, data, domain, style } = calculatedValues;
-    const {interpolation, width, height, events, sharedEvents, standalone} = props;
+    const {interpolation, width, height, events, sharedEvents, standalone, groupComponent} = props;
     const initialChildProps = {
       parent: { style: style.parent, scale, data, height, width, domain, standalone },
-      all: { data: { scale, data, interpolation, style: style.data } }
+      all: { data: { scale, data, interpolation, groupComponent, style: style.data } }
     };
     return data.reduce((childProps, datum, index) => {
       const text = this.getLabelText(props, datum, index);

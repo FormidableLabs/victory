@@ -46,7 +46,11 @@ class VictoryLine extends React.Component {
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOf(["all"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
       eventHandlers: PropTypes.object
     })),
     groupComponent: PropTypes.element,
@@ -122,13 +126,13 @@ class VictoryLine extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
-    const labelComponents = [];
-    for (let index = 0, len = this.dataKeys.length; index < len; index++) {
-      const labelProps = this.getComponentProps(labelComponent, "labels", index);
+    const labelComponents = this.dataKeys.reduce((memo, key) => {
+      const labelProps = this.getComponentProps(labelComponent, "labels", key);
       if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-        labelComponents[index] = React.cloneElement(labelComponent, labelProps);
+        memo = memo.concat(React.cloneElement(labelComponent, labelProps));
       }
-    }
+      return memo;
+    }, []);
     const dataProps = this.getComponentProps(dataComponent, "data", "all");
     const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
     return React.cloneElement(groupComponent, {}, children);

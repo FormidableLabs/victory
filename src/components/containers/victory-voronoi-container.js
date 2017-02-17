@@ -30,5 +30,12 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
         return VoronoiHelpers.onMouseMove(evt, targetProps);
       }
     }
+  }, {
+    target: "data",
+    eventHandlers: {
+      onMouseOver: () => null,
+      onMouseOut: () => null,
+      onMouseMove: () => null
+    }
   }];
 }

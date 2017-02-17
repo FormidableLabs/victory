@@ -101,6 +101,7 @@ export default class App extends React.Component {
         <VictoryChart style={style} scale={{y: "log"}}>
           <VictoryArea
             style={{data: {fill: "cyan", stroke: "cyan"}}}
+            labels={(d) => Math.round(d.y)}
             data={[{x: 1, y: 0.2}, {x: 2, y: 3}, {x: 3, y: 50}, {x: 4, y: 400}, {x: 5, y: 70}]}
           />
         </VictoryChart>

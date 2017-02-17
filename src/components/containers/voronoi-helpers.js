@@ -12,9 +12,9 @@ const VoronoiHelpers = {
   },
 
   getDatasets(props) {
-    const addMeta = (data, name) => {
+    const addMeta = (data, name, continuous) => {
       return data.map((datum, index) => {
-        return assign({childName: name, eventKey: index}, datum);
+        return assign({childName: name, eventKey: index, continuous}, datum);
       });
     };
 
@@ -33,10 +33,12 @@ const VoronoiHelpers = {
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
         const childData = child.props && child.type.getData(child.props);
-        return childData ? addMeta(childData, childName) : null;
+        const continuous = child.type && child.type.continuous;
+        return childData ? addMeta(childData, childName, continuous) : null;
       } else {
         const childData = getData(child.props);
-        return childData ? addMeta(childData, childName) : null;
+        const continuous = child.type && child.type.continuous;
+        return childData ? addMeta(childData, childName, continuous) : null;
       }
     };
     return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
@@ -73,8 +75,9 @@ const VoronoiHelpers = {
   },
 
   getActiveMutations(point) {
-    const {childName, eventKey} = point;
+    const {childName, continuous} = point;
     return ["data", "labels"].map((target) => {
+      const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
         childName, eventKey, target, mutation: () => ({active: true })
       };
@@ -82,8 +85,9 @@ const VoronoiHelpers = {
   },
 
   getInactiveMutations(point) {
-    const {childName, eventKey} = point;
+    const {childName, continuous} = point;
     return ["data", "labels"].map((target) => {
+      const eventKey = continuous && target === "data" ? "all" : point.eventKey;
       return {
         childName, eventKey, target, mutation: () => null
       };
@@ -98,23 +102,25 @@ const VoronoiHelpers = {
         return { activePoints: [] };
       }
     }];
-    return activePoints.reduce((memo, point) => {
-      memo = memo.concat(this.getInactiveMutations(point));
-      return memo;
-    }, [parentMutations]);
+    return activePoints.length ?
+      activePoints.reduce((memo, point) => {
+        memo = memo.concat(this.getInactiveMutations(point));
+        return memo;
+      }, [parentMutations]) : parentMutations;
   },
 
   onMouseMove(evt, targetProps) {
     const activePoints = targetProps.activePoints || [];
     const {x, y} = Selection.getSVGEventCoordinates(evt);
     if (!this.withinBounds(targetProps, {x, y})) {
-      return activePoints.length && activePoints.reduce((memo, point) => {
-        memo = memo.concat(this.getInactiveMutations(point));
-        return memo;
-      }, []);
+      return activePoints.length ?
+        activePoints.reduce((memo, point) => {
+          memo = memo.concat(this.getInactiveMutations(point));
+          return memo;
+        }, []) : [];
     }
     const voronoi = this.getVoronoi(targetProps); // TODO: animation
-    const nearestVoronoi = voronoi.find(x, y, targetProps.size);
+    const nearestVoronoi = voronoi.find(x, y, targetProps.radius);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
     const parentMutations = [{
       target: "parent",
@@ -123,12 +129,13 @@ const VoronoiHelpers = {
         return { activePoints: points, voronoi };
       }
     }];
-    if (isEqual(points, activePoints)) {
+    if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {
-      const activeMutations = points.map((point) => this.getActiveMutations(point));
-      const inactiveMutations = activePoints.map((point) => this.getInactiveMutations(point));
-
+      const activeMutations = points.length ?
+        points.map((point) => this.getActiveMutations(point)) : [];
+      const inactiveMutations = activePoints.length ?
+        activePoints.map((point) => this.getInactiveMutations(point)) : [];
       return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
   }
@@ -136,5 +143,5 @@ const VoronoiHelpers = {
 
 export default {
   onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
-  onMouseMove: throttle(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers), 16, {leading: true})
+  onMouseMove: throttle(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers), 1, {leading: true})
 };

@@ -41,7 +41,11 @@ class VictoryArea extends React.Component {
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOf(["all"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
       eventHandlers: PropTypes.object
     })),
     groupComponent: PropTypes.element,
@@ -50,7 +54,7 @@ class VictoryArea extends React.Component {
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
-    label: PropTypes.string,
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
@@ -114,15 +118,16 @@ class VictoryArea extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
+    const labelComponents = this.dataKeys.reduce((memo, key) => {
+      const labelProps = this.getComponentProps(labelComponent, "labels", key);
+      if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
+        memo = memo.concat(React.cloneElement(labelComponent, labelProps));
+      }
+      return memo;
+    }, []);
     const dataProps = this.getComponentProps(dataComponent, "data", "all");
-    const areaComponent = React.cloneElement(dataComponent, dataProps);
-
-    const labelProps = this.getComponentProps(labelComponent, "labels", "all");
-    if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
-      const areaLabel = React.cloneElement(labelComponent, labelProps);
-      return React.cloneElement(groupComponent, {}, areaComponent, areaLabel);
-    }
-    return React.cloneElement(groupComponent, {}, areaComponent);
+    const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
+    return React.cloneElement(groupComponent, {}, children);
   }
 
   renderContainer(props, children) {

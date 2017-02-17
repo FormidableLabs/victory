@@ -1,55 +1,28 @@
-import { assign, last } from "lodash";
+import { assign, defaults } from "lodash";
 import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
 export default {
 
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "area");
-    const {scale, style, data, domain} = this.getCalculatedValues(props);
-    const {standalone, interpolation, label, width, height, groupComponent} = props;
+    const calculatedValues = this.getCalculatedValues(props);
+    const {scale, style, data, domain} = calculatedValues;
+    const {standalone, interpolation, events, sharedEvents, width, height, groupComponent} = props;
 
-    const dataProps = {
-      groupComponent,
-      key: "area",
-      data,
-      scale,
-      interpolation,
-      style: style.data
-    };
-
-    const baseProps = {
+    const initialChildProps = {
       parent: { style: style.parent, width, height, scale, data, domain, standalone },
       all: {
-        data: dataProps
+        data: { scale, data, interpolation, groupComponent, style: style.data }
       }
     };
-
-    if (label !== undefined && label !== null || props.events || props.sharedEvents) {
-      baseProps.all.labels = this.getLabelProps(dataProps, label, style);
-    }
-
-    return baseProps;
-  },
-
-  getLabelProps(dataProps, text, calculatedStyle) {
-    const { data, scale } = dataProps;
-    const lastData = last(data);
-    const labelStyle = Helpers.evaluateStyle(calculatedStyle.labels, data) || {};
-    const labelPadding = labelStyle.padding || 0;
-
-    return {
-      key: "area-label",
-      x: lastData ? scale.x(lastData._x) + labelPadding : 0,
-      y: lastData ? scale.y(lastData._y1) : 0,
-      y0: lastData ? scale.y(lastData._y0) : 0,
-      style: calculatedStyle.labels,
-      textAnchor: labelStyle.textAnchor || "start",
-      verticalAnchor: labelStyle.verticalAnchor || "middle",
-      angle: labelStyle.angle,
-      data,
-      scale,
-      text
-    };
+    return data.reduce((childProps, datum, index) => {
+      const text = this.getLabelText(props, datum, index);
+      if (text !== undefined && text !== null || events || sharedEvents) {
+        const eventKey = datum.eventKey || index;
+        childProps[eventKey] = {labels: this.getLabelProps(text, index, calculatedValues)};
+      }
+      return childProps;
+    }, initialChildProps);
   },
 
   getCalculatedValues(props) {
@@ -72,6 +45,52 @@ export default {
     const data = this.getDataWithBaseline(props, scale);
     return { style, data, scale, domain };
   },
+
+  getLabelProps(text, index, calculatedProps) {
+    const { scale, data, style } = calculatedProps;
+    const datum = data[index];
+    const {x, y} = this.getLabelPosition(datum, scale);
+    const labelStyle = this.getLabelStyle(style) || {};
+    const sign = (datum._y1 || datum._y) < 0 ? -1 : 1;
+    return {
+      style: labelStyle,
+      x,
+      y: y - sign * (labelStyle.padding || 0),
+      text,
+      index,
+      scale,
+      datum,
+      data,
+      textAnchor: labelStyle.textAnchor,
+      verticalAnchor: labelStyle.verticalAnchor || "end",
+      angle: labelStyle.angle
+    };
+  },
+
+  getLabelText(props, datum, index) {
+    return datum.label || (Array.isArray(props.labels) ?
+      props.labels[index] : props.labels);
+  },
+
+  getLabelPosition(datum, scale) {
+    return {
+      x: scale.x(datum._x1 !== undefined ? datum._x1 : datum._x),
+      y: scale.y(datum._y1 !== undefined ? datum._y1 : datum._y)
+    };
+  },
+
+  getLabelStyle(style) {
+    const dataStyle = style.data || {};
+    const labelStyle = style.labels || {};
+    // match labels styles to data style by default (fill, opacity, others?)
+    const opacity = dataStyle.opacity;
+    // match label color to data color if it is not given.
+    // use fill instead of stroke for text
+    const fill = dataStyle.stroke;
+    const padding = labelStyle.padding || 0;
+    return defaults({}, labelStyle, {opacity, fill, padding});
+  },
+
 
   getDataWithBaseline(props, scale) {
     let data = Data.getData(props);
