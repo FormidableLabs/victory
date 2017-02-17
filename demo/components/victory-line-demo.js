@@ -5,11 +5,6 @@ import {VictoryLine, VictoryChart} from "../../src/index";
 import { VictoryContainer, VictoryTheme, Curve, Point } from "victory-core";
 
 class PointedLine extends React.Component {
-  static propTypes = {
-    ...Curve.propTypes,
-    index: React.PropTypes.number
-  };
-
   renderLine(props) {
     return <Curve {...props} />;
   }
