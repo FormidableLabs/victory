@@ -61,6 +61,7 @@ class VictoryPie extends React.Component {
     containerComponent: PropTypes.element,
     cornerRadius: CustomPropTypes.nonNegative,
     data: PropTypes.array,
+    dataSort: PropTypes.func,
     dataComponent: PropTypes.element,
     endAngle: PropTypes.number,
     events: PropTypes.arrayOf(PropTypes.shape({
