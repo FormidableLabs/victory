@@ -1,5 +1,11 @@
 # VictoryPie Changelog
 
+## 10.1.0 (2017-01-30)
+
+- [128](https://github.com/FormidableLabs/victory-pie/pull/128)
+  - Updates `victory-core`
+  - Code consistency with other Victory components
+
 ## 10.0.0 (2017-01-16)
 
 - Uses "_x" and "_y" for internal data format rather than "x" and "y". Though "x" and "y" will

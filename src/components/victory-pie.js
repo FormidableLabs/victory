@@ -35,6 +35,11 @@ const fallbackProps = {
   ]
 };
 
+const animationWhitelist = [
+  "data", "endAngle", "height", "innerRadius", "cornerRadius", "padAngle", "padding",
+  "colorScale", "startAngle", "style", "width"
+];
+
 class VictoryPie extends React.Component {
   static displayName = "VictoryPie";
 
@@ -144,7 +149,7 @@ class VictoryPie extends React.Component {
   ];
 
   renderData(props) {
-    const { dataComponent, labelComponent, groupComponent } = props;
+    const { dataComponent, labelComponent } = props;
     const dataComponents = [];
     const labelComponents = [];
     for (let index = 0, len = this.dataKeys.length; index < len; index++) {
@@ -158,24 +163,30 @@ class VictoryPie extends React.Component {
           );
       }
     }
+    const transform = this.getTransform(props);
+    const groupComponent = React.cloneElement(props.groupComponent, {transform});
     return labelComponents.length > 0 ?
       React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
-      dataComponents;
+      React.cloneElement(groupComponent, {}, ...dataComponents);
   }
 
-  renderContainer(props, group) {
-    const { containerComponent } = props;
+  getTransform(props) {
+    const { width, height } = props;
+    const calculatedProps = PieHelpers.getCalculatedValues(props);
+    const { padding, radius } = calculatedProps;
+    const offsetWidth = width / 2 + padding.left - padding.right;
+    const offsetHeight = height / 2 + padding.top - padding.bottom;
+    const offset = {
+      x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
+      y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
+    };
+    return `translate(${offset.x}, ${offset.y})`;
+  }
+
+  renderContainer(props, children) {
+    const {containerComponent} = props;
     const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, group);
-  }
-
-  renderGroup(children, style, offset) {
-    const { x, y } = offset;
-    return React.cloneElement(
-      this.props.groupComponent,
-      { role: "presentation", style, transform: `translate(${x}, ${y})`},
-      children
-    );
+    return React.cloneElement(containerComponent, parentProps, children);
   }
 
   shouldAnimate() {
@@ -183,35 +194,18 @@ class VictoryPie extends React.Component {
   }
 
   render() {
-    const props = Helpers.modifyProps(this.props, fallbackProps, "pie");
-
-    const { animate, standalone, width, height } = props;
-    // If animating, return a `VictoryAnimation` element that will create
-    // a new `VictoryPie` with nearly identical props, except (1) tweened
-    // and (2) `animate` set to null so we don't recurse forever.
+    const { role } = this.constructor;
+    const props = Helpers.modifyProps(this.props, fallbackProps, role);
     if (this.shouldAnimate()) {
-      const whitelist = [
-        "data", "endAngle", "height", "innerRadius", "cornerRadius", "padAngle", "padding",
-        "colorScale", "startAngle", "style", "width"
-      ];
       return (
-        <VictoryTransition animate={animate} animationWhitelist={whitelist}>
+        <VictoryTransition animate={props.animate} animationWhitelist={animationWhitelist}>
           { React.createElement(this.constructor, props) }
         </VictoryTransition>
       );
     }
 
-    const calculatedProps = PieHelpers.getCalculatedValues(props, fallbackProps);
-    const { style, padding, radius } = calculatedProps;
-    const offsetWidth = width / 2 + padding.left - padding.right;
-    const offsetHeight = height / 2 + padding.top - padding.bottom;
-    const offset = {
-      x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
-      y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
-    };
     const children = this.renderData(props);
-    const group = this.renderGroup(children, style.parent, offset);
-    return standalone ? this.renderContainer(props, group) : group;
+    return this.renderContainer(props, children);
   }
 }
 
