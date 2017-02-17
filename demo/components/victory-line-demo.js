@@ -136,6 +136,7 @@ export default class App extends React.Component {
                     }
                   }, {
                     target: "labels",
+                    eventKey: 99,
                     mutation: () => {
                       return {text: "hey"};
                     }

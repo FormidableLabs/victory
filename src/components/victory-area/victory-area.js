@@ -1,4 +1,4 @@
-import { partialRight } from "lodash";
+import { partialRight, without } from "lodash";
 import React, { PropTypes } from "react";
 import AreaHelpers from "./helper-methods";
 import {
@@ -118,7 +118,8 @@ class VictoryArea extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
-    const labelComponents = this.dataKeys.reduce((memo, key) => {
+    const dataKeys = without(this.dataKeys, "all");
+    const labelComponents = dataKeys.reduce((memo, key) => {
       const labelProps = this.getComponentProps(labelComponent, "labels", key);
       if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
         memo = memo.concat(React.cloneElement(labelComponent, labelProps));
