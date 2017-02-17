@@ -134,7 +134,7 @@ describe("components/victory-pie", () => {
         <VictoryPie data={data}/>
       );
       const xValues = wrapper.find(Slice).map((slice) => {
-        return slice.prop('datum')._x;
+        return slice.prop("datum")._x;
       });
 
       expect(xValues).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8]);
@@ -149,7 +149,7 @@ describe("components/victory-pie", () => {
         <VictoryPie data={data} dataSort={comparator}/>
       );
       const xValues = wrapper.find(Slice).map((slice) => {
-        return slice.prop('datum')._x;
+        return slice.prop("datum")._x;
       });
 
       expect(xValues).to.eql([8, 7, 6, 5, 4, 3, 2, 1, 0]);
