@@ -6,6 +6,7 @@ import * as d3Shape from "d3-shape";
 export default class Curve extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
