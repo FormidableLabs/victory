@@ -1,4 +1,4 @@
-import { assign, uniq, range, last, isFunction, property } from "lodash";
+import { assign, uniq, range, last, isFunction, property, sortBy } from "lodash";
 import Helpers from "./helpers";
 import Collection from "./collection";
 import Log from "./log";
@@ -90,7 +90,25 @@ export default {
           typeof y === "string" ? { _y: stringMap.y[y], yName: y } : {}
         );
     });
-    return this.cleanData(data, props);
+
+    const sortedData = this.sortData(data, props.sortKey);
+
+    return this.cleanData(sortedData, props);
+  },
+
+  /**
+   * Returns sorted data. If no sort keys are provided, data is returned unaltered.
+   * Sort key should correspond to the `iteratees` argument in lodash `sortBy` function.
+   * @param {Array} dataset: the original domain
+   * @param {Function} sortKey: the sort key
+   * @returns {Array} the sorted data
+   */
+  sortData(dataset, sortKey) {
+    if (!sortKey) {
+      return dataset;
+    }
+
+    return sortBy(dataset, sortKey);
   },
 
   /**
