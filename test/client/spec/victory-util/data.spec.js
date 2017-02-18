@@ -183,8 +183,8 @@ describe("helpers/data", () => {
 
     it("sorts data according to passed function", () => {
       const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
-      const sortKeys = ["_x"];
-      const props = {data, dataSort: sortKeys};
+      const sortKey = ["_x"];
+      const props = {data, sortKey};
 
       const returnData = Data.getData(props);
 

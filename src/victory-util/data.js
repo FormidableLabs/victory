@@ -91,24 +91,24 @@ export default {
         );
     });
 
-    const sortedData = this.sortData(data, props.dataSort);
+    const sortedData = this.sortData(data, props.sortKey);
 
     return this.cleanData(sortedData, props);
   },
 
   /**
    * Returns sorted data. If no sort keys are provided, data is returned unaltered.
-   * Sort keys should correspond to the `iteratees` argument in lodash `sortBy` function.
+   * Sort key should correspond to the `iteratees` argument in lodash `sortBy` function.
    * @param {Array} dataset: the original domain
-   * @param {Function} sortKeys: the sort keys
+   * @param {Function} sortKey: the sort key
    * @returns {Array} the sorted data
    */
-  sortData(dataset, sortKeys) {
-    if (!sortKeys) {
+  sortData(dataset, sortKey) {
+    if (!sortKey) {
       return dataset;
     }
 
-    return sortBy(dataset, sortKeys);
+    return sortBy(dataset, sortKey);
   },
 
   /**
