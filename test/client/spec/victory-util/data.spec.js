@@ -168,7 +168,7 @@ describe("helpers/data", () => {
       expect(returnData).to.eql(expectedReturnWithEventKeys);
     });
 
-    it("does not sort data when function not passed", () => {
+    it("does not sort data when sort key not passed", () => {
       const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
       const props = {data};
 
@@ -181,9 +181,9 @@ describe("helpers/data", () => {
       ]);
     });
 
-    it("sorts data according to passed function", () => {
+    it("sorts data according to sort key", () => {
       const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
-      const sortKey = ["_x"];
+      const sortKey = "_x";
       const props = {data, sortKey};
 
       const returnData = Data.getData(props);
