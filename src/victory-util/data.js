@@ -109,6 +109,7 @@ export default {
       return dataset;
     }
 
+    // Ensures previous VictoryLine api for sortKey prop stays consistent
     if (sortKey === "x" || sortKey === "y") {
       sortKey = `_${sortKey}`;
     }

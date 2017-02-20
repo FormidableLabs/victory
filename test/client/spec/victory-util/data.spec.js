@@ -196,6 +196,7 @@ describe("helpers/data", () => {
       ]);
     });
 
+    // Ensures previous VictoryLine api for sortKey prop stays consistent
     it("sorts data according to evaluated sort key when sort key is x or y", () => {
       const data = [
         {_x: 2, x: 10, _y: 2, y: 10},
