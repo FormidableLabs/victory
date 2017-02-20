@@ -108,7 +108,10 @@ export default {
       return dataset;
     }
 
-    sortKey = Array(sortKey);
+    if (!Array.isArray(sortKey)) {
+      sortKey = [sortKey];
+    }
+
 
     return sortBy(dataset, sortKey);
   },

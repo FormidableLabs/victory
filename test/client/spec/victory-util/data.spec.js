@@ -183,6 +183,20 @@ describe("helpers/data", () => {
 
     it("sorts data according to sort key", () => {
       const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
+      const sortKey = ["_x"];
+      const props = {data, sortKey};
+
+      const returnData = Data.getData(props);
+
+      expect(returnData).to.eql([
+        {_x: 1, x: 1, _y: 3, y: 3, eventKey: 0},
+        {_x: 2, x: 2, _y: 2, y: 2, eventKey: 1},
+        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2}
+      ]);
+    });
+
+    it("sorts data according to sort key when sort key is not array", () => {
+      const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
       const sortKey = "_x";
       const props = {data, sortKey};
 
