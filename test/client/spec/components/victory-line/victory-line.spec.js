@@ -39,6 +39,18 @@ describe("components/victory-line", () => {
   });
 
   describe("rendering with data", () => {
+    it("renders no line segments for single data points", () => {
+      const warningStub = sinon.stub(console, "warn");
+      const data = [{x: 1, y: 1}];
+      const wrapper = shallow(
+        <VictoryLine data={data}/>
+      );
+      const lines = wrapper.find(Curve);
+      expect(lines.length).to.equal(0);
+      expect(warningStub).to.have.been.called;
+      console.warn.restore();
+    });
+
     it("renders one dataComponent for the line", () => {
       const data = [
         {x: 1, y: 1},
@@ -339,6 +351,5 @@ describe("components/victory-line", () => {
         expect(roleValue).to.equal("presentation");
       });
     });
-
   });
 });
