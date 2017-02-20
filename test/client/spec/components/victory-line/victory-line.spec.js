@@ -2,6 +2,7 @@
  * Client tests
  */
 /* global sinon */
+/* global console */
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 
@@ -40,7 +41,8 @@ describe("components/victory-line", () => {
 
   describe("rendering with data", () => {
     it("renders no line segments for single data points", () => {
-      const warningStub = sinon.stub(console, "warn");
+      const log = console;
+      const warningStub = sinon.stub(log, "warn");
       const data = [{x: 1, y: 1}];
       const wrapper = shallow(
         <VictoryLine data={data}/>
@@ -48,7 +50,7 @@ describe("components/victory-line", () => {
       const lines = wrapper.find(Curve);
       expect(lines.length).to.equal(0);
       expect(warningStub).to.have.been.called;
-      console.warn.restore();
+      log.warn.restore();
     });
 
     it("renders one dataComponent for the line", () => {
