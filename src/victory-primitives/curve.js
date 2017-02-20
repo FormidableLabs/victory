@@ -63,7 +63,7 @@ export default class Curve extends React.Component {
         memo = memo.concat([data.slice(segmentStartIndex, index)]);
         segmentStartIndex = index + 1;
       } else if (index === data.length - 1) {
-        memo = memo.concat([data.slice(segmentStartIndex, data.length)])
+        memo = memo.concat([data.slice(segmentStartIndex, data.length)]);
       }
       return memo;
     }, []);
