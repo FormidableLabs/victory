@@ -72,6 +72,7 @@ export default {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
+
     const accessor = {
       x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
       y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
@@ -108,10 +109,9 @@ export default {
       return dataset;
     }
 
-    if (!Array.isArray(sortKey)) {
-      sortKey = [sortKey];
+    if (sortKey === "x" || sortKey === "y") {
+      sortKey = `_${sortKey}`;
     }
-
 
     return sortBy(dataset, sortKey);
   },
