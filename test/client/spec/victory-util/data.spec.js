@@ -207,9 +207,9 @@ describe("helpers/data", () => {
       const returnDataX = Data.getData({data, sortKey: "x"});
 
       expect(returnDataX).to.eql([
-        {_x: 1, x: 20, _y: 3, y: 3, y: 20, eventKey: 0},
-        {_x: 2, x: 10, _y: 2, y: 2, y: 10, eventKey: 1},
-        {_x: 3, x: 30, _y: 1, y: 1, y: 30, eventKey: 2}
+        {_x: 1, x: 20, _y: 3, y: 20, eventKey: 0},
+        {_x: 2, x: 10, _y: 2, y: 10, eventKey: 1},
+        {_x: 3, x: 30, _y: 1, y: 30, eventKey: 2}
       ]);
 
       const returnDataY = Data.getData({data, sortKey: "y"});
