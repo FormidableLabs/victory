@@ -100,8 +100,8 @@ export default {
   /**
    * Returns sorted data. If no sort keys are provided, data is returned unaltered.
    * Sort key should correspond to the `iteratees` argument in lodash `sortBy` function.
-   * @param {Array} dataset: the original domain
-   * @param {Array} sortKey: the sort key
+   * @param {Array} dataset: the original dataset
+   * @param {mixed} sortKey: the sort key. Type is whatever lodash permits for `sortBy`
    * @returns {Array} the sorted data
    */
   sortData(dataset, sortKey) {
