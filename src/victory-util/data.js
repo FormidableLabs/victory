@@ -72,7 +72,6 @@ export default {
       x: this.createStringMap(props, "x"),
       y: this.createStringMap(props, "y")
     };
-
     const accessor = {
       x: Helpers.createAccessor(props.x !== undefined ? props.x : "x"),
       y: Helpers.createAccessor(props.y !== undefined ? props.y : "y")
