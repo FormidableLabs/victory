@@ -37,7 +37,11 @@ export default class App extends React.Component {
         </svg>
 
         <svg {...svgProps}>
-          <VictoryTooltip {...baseTooltipProps} text={"o shit\nwaddup"} orientation="bottom"/>
+          <VictoryTooltip {...baseTooltipProps}
+            text={["o shit", "waddup"]}
+            style={[{fill: "red"}, {fill: "blue"}]}
+            orientation="bottom"
+          />
           <circle cx="75" cy="75" r="2" fill="red"/>
         </svg>
 

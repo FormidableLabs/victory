@@ -121,7 +121,9 @@ export default class VictoryTooltip extends React.Component {
       width, height, orientation, dx, dy, text, active
     } = props;
 
-    const style = Helpers.evaluateStyle(props.style, datum, active);
+    const style = Array.isArray(props.style) ?
+      props.style.map((s) => Helpers.evaluateStyle(s, datum, active)) :
+      Helpers.evaluateStyle(props.style, datum, active);
     const flyoutStyle = Helpers.evaluateStyle(props.flyoutStyle, datum, active);
     const padding = flyoutStyle && flyoutStyle.padding || 0;
     const defaultDx = horizontal ? padding : 0;
@@ -152,16 +154,19 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getCalculatedValues(props) {
-    const { style, text, datum, theme } = props;
+    const { style, text, datum, theme, active } = props;
     const defaultLabelStyles = theme && theme.tooltip && theme.tooltip.style ?
       theme.tooltip.style : {};
-    const baseLabelStyle = style ?
-      defaults({}, style, defaultLabelStyles) : defaultLabelStyles;
+    const baseLabelStyle = Array.isArray(style) ?
+      style.map((s) => defaults({}, s, defaultLabelStyles)) :
+      defaults({}, style, defaultLabelStyles);
     const defaultFlyoutStyles = theme && theme.tooltip && theme.tooltip.flyoutStyle ?
       theme.tooltip.flyoutStyle : {};
     const flyoutStyle = props.flyoutStyle ?
       defaults({}, props.flyoutStyle, defaultFlyoutStyles) : defaultFlyoutStyles;
-    const labelStyle = Helpers.evaluateStyle(baseLabelStyle, datum);
+    const labelStyle = Array.isArray(baseLabelStyle) ?
+      baseLabelStyle.map((s) => Helpers.evaluateStyle(s, datum, active)) :
+      Helpers.evaluateStyle(baseLabelStyle, datum, active);
     const labelSize = TextSize.approximateTextSize(text, labelStyle);
     const flyoutDimensions = this.getDimensions(props, labelSize, labelStyle);
     const flyoutCenter = this.getFlyoutCenter(props, flyoutDimensions);
@@ -180,9 +185,17 @@ export default class VictoryTooltip extends React.Component {
     };
   }
 
+  getLabelPadding(style) {
+    if (!style) {
+      return 0;
+    }
+    const paddings = Array.isArray(style) ? style.map((s) => s.padding) : [style.padding];
+    return Math.max(...paddings, 0);
+  }
+
   getDimensions(props, labelSize, labelStyle) {
     const { orientation, cornerRadius, pointerLength, pointerWidth } = props;
-    const padding = labelStyle && labelStyle.padding || 0;
+    const padding = this.getLabelPadding(labelStyle);
     const getHeight = () => {
       const calculatedHeight = labelSize.height + padding;
       const minHeight = orientation === "top" || orientation === "bottom" ?
@@ -209,6 +222,7 @@ export default class VictoryTooltip extends React.Component {
       const sign = textAnchor === "end" ? -1 : 1;
       return flyoutCenter.x - sign * (flyoutDimensions.width - labelSize.width);
     };
+    const padding = this.getLabelPadding(labelStyle);
     return defaults(
       {},
       labelComponent.props,
@@ -218,7 +232,7 @@ export default class VictoryTooltip extends React.Component {
         style: labelStyle,
         x: !labelStyle.textAnchor || labelStyle.textAnchor === "middle" ?
           flyoutCenter.x : getLabelX(),
-        y: flyoutCenter.y,
+        y: flyoutCenter.y - padding,
         verticalAnchor: "middle",
         angle: labelStyle.angle
       }
