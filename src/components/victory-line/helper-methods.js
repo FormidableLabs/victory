@@ -55,7 +55,7 @@ export default {
   getCalculatedValues(props) {
     let dataset = Data.getData(props);
 
-    if (Data.getData(props).length < 2) {
+    if (dataset.length < 2) {
       Log.warn("VictoryLine needs at least two data points to render properly.");
       dataset = [];
     }
