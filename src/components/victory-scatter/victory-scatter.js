@@ -82,6 +82,12 @@ class VictoryScatter extends React.Component {
       events: PropTypes.array,
       getEventState: PropTypes.func
     }),
+    sortKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     standalone: PropTypes.bool,
     style: PropTypes.shape({
       parent: PropTypes.object, data: PropTypes.object, labels: PropTypes.object
