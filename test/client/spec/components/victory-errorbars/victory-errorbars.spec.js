@@ -12,7 +12,6 @@ import VictoryErrorBar from "src/components/victory-errorbar/victory-errorbar";
 import { ErrorBar } from "victory-core";
 
 class MyErrorBar extends React.Component {
-
   render() { }
 }
 
@@ -64,6 +63,15 @@ describe("components/victory-errorbar", () => {
       );
       const errors = wrapper.find(ErrorBar);
       expect(errors.length).to.equal(10);
+    });
+
+    it.only("sorts data by sortKey prop", () => {
+      const data = range(5).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2})).reverse();
+      const wrapper = shallow(
+        <VictoryErrorBar data={data} sortKey="x"/>
+      );
+      const xValues = wrapper.find(ErrorBar).map((errorBar) => errorBar.prop('datum')._x);
+      expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
     it("renders errors with error bars, check total svg lines", () => {
