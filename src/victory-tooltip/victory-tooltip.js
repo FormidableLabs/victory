@@ -222,7 +222,6 @@ export default class VictoryTooltip extends React.Component {
       const sign = textAnchor === "end" ? -1 : 1;
       return flyoutCenter.x - sign * (flyoutDimensions.width - labelSize.width);
     };
-    const padding = this.getLabelPadding(labelStyle);
     return defaults(
       {},
       labelComponent.props,
@@ -232,7 +231,7 @@ export default class VictoryTooltip extends React.Component {
         style: labelStyle,
         x: !labelStyle.textAnchor || labelStyle.textAnchor === "middle" ?
           flyoutCenter.x : getLabelX(),
-        y: flyoutCenter.y - padding,
+        y: flyoutCenter.y,
         verticalAnchor: "middle",
         angle: labelStyle.angle
       }

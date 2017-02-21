@@ -21,7 +21,7 @@ export default class App extends React.Component {
     };
 
     const baseTooltipProps = {
-      x: 75, y: 75, cornerRadius: 3, active: true
+      x: 75, y: 75, cornerRadius: 3, active: true, style: {padding: 5}
     };
 
     return (

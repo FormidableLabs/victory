@@ -35,7 +35,8 @@ export default class App extends React.Component {
             text={"Victory is awesome.\nThis is (end, start) anchoring.\nOK?"}
           />
           <circle cx="300" cy="300" r="2" fill="blue"/>
-          <VictoryLabel x={300} y={300} lineHeight={2} textAnchor="middle" verticalAnchor="start"
+          <VictoryLabel x={300} y={300} textAnchor="middle" verticalAnchor="start"
+            style={{padding: 15}}
             text={"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
           />
 

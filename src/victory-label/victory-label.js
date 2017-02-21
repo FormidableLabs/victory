@@ -222,11 +222,10 @@ export default class VictoryLabel extends React.Component {
       >
         {this.content.map((line, i) => {
           const style = this.style[i] || this.style[0];
-          const padding = style.padding || 0;
           const lastStyle = this.style[i - 1] || this.style[0];
           const fontSize = (style.fontSize + lastStyle.fontSize) / 2;
           const textAnchor = style.textAnchor || this.textAnchor;
-          const dy = i ? (this.lineHeight * fontSize) + padding : undefined;
+          const dy = i ? (this.lineHeight * fontSize) : undefined;
           return (
             <tspan key={i} x={props.x} dy={dy} dx={this.dx} style={style} textAnchor={textAnchor}>
               {line}
