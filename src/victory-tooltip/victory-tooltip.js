@@ -27,9 +27,13 @@ export default class VictoryTooltip extends React.Component {
     text: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
-      PropTypes.func
+      PropTypes.func,
+      PropTypes.array
     ]),
-    style: PropTypes.object,
+    style: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     flyoutStyle: PropTypes.object,
     x: PropTypes.number,
     y: PropTypes.number,
