@@ -12,14 +12,16 @@ const VoronoiHelpers = {
   },
 
   getDatasets(props) {
-    const addMeta = (data, name, continuous) => {
+    const addMeta = (data, name, child) => {
+      const continuous = child.type && child.type.continuous;
+      const style = child.props && child.props.style;
       return data.map((datum, index) => {
-        return assign({childName: name, eventKey: index, continuous}, datum);
+        return assign({childName: name, eventKey: index, continuous, style}, datum);
       });
     };
 
     if (props.data) {
-      return addMeta(props.data);
+      return props.data;
     }
 
     const getData = (childProps) => {
@@ -33,12 +35,10 @@ const VoronoiHelpers = {
       } else if (child.type && isFunction(child.type.getData)) {
         child = parent ? React.cloneElement(child, parent.props) : child;
         const childData = child.props && child.type.getData(child.props);
-        const continuous = child.type && child.type.continuous;
-        return childData ? addMeta(childData, childName, continuous) : null;
+        return childData ? addMeta(childData, childName, child) : null;
       } else {
         const childData = getData(child.props);
-        const continuous = child.type && child.type.continuous;
-        return childData ? addMeta(childData, childName, continuous) : null;
+        return childData ? addMeta(childData, childName, child) : null;
       }
     };
     return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
@@ -74,9 +74,10 @@ const VoronoiHelpers = {
     return voronoiFunction(this.mergeDatasets(props, datasets));
   },
 
-  getActiveMutations(point) {
+  getActiveMutations(props, point) {
     const {childName, continuous} = point;
-    return ["data", "labels"].map((target) => {
+    const targets = props.labels ? ["data"] : ["data", "labels"];
+    return targets.map((target) => {
       const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
         childName, eventKey, target, mutation: () => ({active: true })
@@ -84,9 +85,10 @@ const VoronoiHelpers = {
     });
   },
 
-  getInactiveMutations(point) {
+  getInactiveMutations(props, point) {
     const {childName, continuous} = point;
-    return ["data", "labels"].map((target) => {
+    const targets = props.labels ? ["data"] : ["data", "labels"];
+    return targets.map((target) => {
       const eventKey = continuous && target === "data" ? "all" : point.eventKey;
       return {
         childName, eventKey, target, mutation: () => null
@@ -104,7 +106,7 @@ const VoronoiHelpers = {
     }];
     return activePoints.length ?
       activePoints.reduce((memo, point) => {
-        memo = memo.concat(this.getInactiveMutations(point));
+        memo = memo.concat(this.getInactiveMutations(targetProps, point));
         return memo;
       }, [parentMutations]) : parentMutations;
   },
@@ -133,9 +135,9 @@ const VoronoiHelpers = {
       return parentMutations;
     } else {
       const activeMutations = points.length ?
-        points.map((point) => this.getActiveMutations(point)) : [];
+        points.map((point) => this.getActiveMutations(targetProps, point)) : [];
       const inactiveMutations = activePoints.length ?
-        activePoints.map((point) => this.getInactiveMutations(point)) : [];
+        activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
       return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
   }

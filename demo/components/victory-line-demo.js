@@ -1,10 +1,14 @@
 /*global window:false */
-import React from "react";
+import React, { PropTypes } from "react";
 import { merge, random, range } from "lodash";
 import {VictoryLine, VictoryChart} from "../../src/index";
 import { VictoryContainer, VictoryTheme, Curve, Point } from "victory-core";
 
 class PointedLine extends React.Component {
+  static propTypes = {
+    index: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+  };
+
   renderLine(props) {
     return <Curve {...props} />;
   }

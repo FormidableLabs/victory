@@ -52,36 +52,44 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
-            containerComponent={<VictoryVoronoiContainer radius={50}/>}
+            containerComponent={
+              <VictoryVoronoiContainer radius={50} labels={(d) => d.l}/>
+            }
           >
             <VictoryLine
               data={[
-                {x: 1, y: 5, label: "one"},
-                {x: 2, y: 4, label: "two"},
-                {x: 3, y: -2, label: "three"}
+                {x: 1, y: 5, l: "one"},
+                {x: 2, y: 4, l: "two"},
+                {x: 3, y: -2, l: "three"}
               ]}
-              labelComponent={<VictoryTooltip/>}
-              style={{ data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2}}}
+              style={{
+                data: { stroke: "tomato", strokeWidth: (d, active) => active ? 4 : 2},
+                labels: {fill: "tomato"}
+              }}
             />
 
             <VictoryLine
               data={[
-                {x: 1, y: -3, label: "red"},
-                {x: 2, y: 5, label: "green"},
-                {x: 3, y: 3, label: "blue"}
+                {x: 1, y: -3, l: "red"},
+                {x: 2, y: 5, l: "green"},
+                {x: 3, y: 3, l: "blue"}
               ]}
-              style={{ data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2}}}
-              labelComponent={<VictoryTooltip/>}
+              style={{
+                data: { stroke: "blue", strokeWidth: (d, active) => active ? 4 : 2},
+                labels: {fill: "blue"}
+              }}
             />
 
             <VictoryLine
               data={[
-                {x: 1, y: 5, label: "cat"},
-                {x: 2, y: -4, label: "dog"},
-                {x: 3, y: -2, label: "bird"}
+                {x: 1, y: 5, l: "cat"},
+                {x: 2, y: -4, l: "dog"},
+                {x: 3, y: -2, l: "bird"}
               ]}
-              style={{ data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2}}}
-              labelComponent={<VictoryTooltip/>}
+              style={{
+                data: { stroke: "black", strokeWidth: (d, active) => active ? 4 : 2},
+                labels: {fill: "black"}
+              }}
             />
           </VictoryChart>
 
