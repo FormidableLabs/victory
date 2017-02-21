@@ -66,7 +66,6 @@ class VictoryPie extends React.Component {
     containerComponent: PropTypes.element,
     cornerRadius: CustomPropTypes.nonNegative,
     data: PropTypes.array,
-    dataSort: PropTypes.func,
     dataComponent: PropTypes.element,
     endAngle: PropTypes.number,
     events: PropTypes.arrayOf(PropTypes.shape({
@@ -103,6 +102,12 @@ class VictoryPie extends React.Component {
       events: PropTypes.array,
       getEventState: PropTypes.func
     }),
+    sortKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     standalone: PropTypes.bool,
     startAngle: PropTypes.number,
     style: PropTypes.shape({

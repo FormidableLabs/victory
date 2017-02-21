@@ -140,19 +140,17 @@ describe("components/victory-pie", () => {
       expect(xValues).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8]);
     });
 
-    it("renders data values sorted by dataSort prop", () => {
-      const data = range(9).map((i) => ({x: i, y: i}));
-      // reverse numerical sort
-      const comparator = (a, b) => { return -(a._x - b._x); };
+    it("renders data values sorted by sortKey prop", () => {
+      const data = range(9).map((i) => ({x: i, y: i})).reverse();
 
       const wrapper = shallow(
-        <VictoryPie data={data} dataSort={comparator}/>
+        <VictoryPie data={data} sortKey={"x"}/>
       );
       const xValues = wrapper.find(Slice).map((slice) => {
         return slice.prop("datum")._x;
       });
 
-      expect(xValues).to.eql([8, 7, 6, 5, 4, 3, 2, 1, 0]);
+      expect(xValues).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8]);
     });
   });
 
