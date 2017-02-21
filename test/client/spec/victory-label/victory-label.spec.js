@@ -28,7 +28,7 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel style={{fontSize: "10px"}} text={"such text, wow"}/>
     );
-    const output = wrapper.find("text");
+    const output = wrapper.find("tspan");
     expect(output.prop("style")).to.contain({fontSize: 10});
   });
 
@@ -36,8 +36,37 @@ describe("components/victory-label", () => {
     const wrapper = shallow(
       <VictoryLabel style={{fontSize: "foo"}} text={"such text, wow"}/>
     );
-    const output = wrapper.find("text");
+    const output = wrapper.find("tspan");
     expect(output.prop("style")).to.contain({fontSize: 14});
+  });
+
+  it("renders an array of text as seperate tspans", () => {
+    const wrapper = shallow(
+      <VictoryLabel text={["one", "two", "three"]}/>
+    );
+    const output = wrapper.find("tspan");
+    expect(output.length).to.equal(3);
+  });
+
+  it("renders splits newlines into tspans", () => {
+    const wrapper = shallow(
+      <VictoryLabel text={"one\ntwo\nthree"}/>
+    );
+    const output = wrapper.find("tspan");
+    expect(output.length).to.equal(3);
+  });
+
+  it("renders styles tspand independently when `style` is an array", () => {
+    const fill = ["red", "green", "blue"];
+    const wrapper = shallow(
+      <VictoryLabel text={"one\ntwo\nthree"}
+        style={[{fill: fill[0]}, {fill: fill[1]}, {fill: fill[2]}]}
+      />
+    );
+    const output = wrapper.find("tspan");
+    output.forEach((tspan, index) => {
+      expect(tspan.prop("style")).to.contain({fill: fill[index]});
+    });
   });
 
   describe("event handling", () => {

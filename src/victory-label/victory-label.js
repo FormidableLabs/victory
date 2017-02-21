@@ -31,14 +31,18 @@ export default class VictoryLabel extends React.Component {
     text: PropTypes.oneOfType([
       PropTypes.string,
       PropTypes.number,
-      PropTypes.func
+      PropTypes.func,
+      PropTypes.array
     ]),
     lineHeight: PropTypes.oneOfType([
       PropTypes.string,
       CustomPropTypes.nonNegative,
       PropTypes.func
     ]),
-    style: PropTypes.object,
+    style: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
+    ]),
     textAnchor: PropTypes.oneOfType([
       PropTypes.oneOf([
         "start",
@@ -85,7 +89,7 @@ export default class VictoryLabel extends React.Component {
   }
 
   cacheAttributes(attrs) {
-    const { style, dx, dy, content, textAnchor, transform, lineHeight, fontSize } = attrs;
+    const { style, dx, dy, content, textAnchor, transform, lineHeight } = attrs;
     this.style = style;
     this.dx = dx;
     this.dy = dy;
@@ -93,12 +97,11 @@ export default class VictoryLabel extends React.Component {
     this.textAnchor = textAnchor;
     this.lineHeight = lineHeight;
     this.transform = transform;
-    this.fontSize = fontSize;
   }
 
   shouldComponentUpdate(nextProps) {
     const attrs = this.calculateAttributes(nextProps);
-    const { style, dx, dy, content, lineHeight, textAnchor, transform, fontSize } = attrs;
+    const { style, dx, dy, content, lineHeight, textAnchor, transform } = attrs;
     const {x, y} = this.props;
     if (
       x !== nextProps.x ||
@@ -108,7 +111,6 @@ export default class VictoryLabel extends React.Component {
       lineHeight !== this.lineHeight ||
       transform !== this.transform ||
       textAnchor !== this.textAnchor ||
-      fontSize !== this.fontSize ||
       !isEqual(content, this.content) ||
       !isEqual(style, this.style)
     ) {
@@ -120,7 +122,7 @@ export default class VictoryLabel extends React.Component {
 
   calculateAttributes(props) {
     const style = this.getStyles(props);
-    const fontSize = this.getFontSize(style);
+    const fontSize = style[0].fontSize;
     const lineHeight = this.getHeight(props, "lineHeight");
     const textAnchor = props.textAnchor ?
       Helpers.evaluateProp(props.textAnchor, props.datum) : "start";
@@ -129,15 +131,20 @@ export default class VictoryLabel extends React.Component {
     const dy = this.getDy(props, style, content, lineHeight) * fontSize;
     const transform = this.getTransform(props, style);
     return {
-      style, dx, dy, content, lineHeight, textAnchor, transform, fontSize
+      style, dx, dy, content, lineHeight, textAnchor, transform
     };
   }
 
-  getStyles(props) {
-    const style = props.style ? merge({}, defaultStyles, props.style) : defaultStyles;
+  getStyle(props, style) {
+    style = style ? merge({}, defaultStyles, style) : defaultStyles;
     const datum = props.datum || props.data;
     const baseStyles = Helpers.evaluateStyle(style, datum, props.active);
     return assign({}, baseStyles, {fontSize: this.getFontSize(baseStyles)});
+  }
+
+  getStyles(props) {
+    return Array.isArray(props.style) ?
+      props.style.map((style) => this.getStyle(props, style)) : [this.getStyle(props, props.style)];
   }
 
   getHeight(props, type) {
@@ -146,12 +153,15 @@ export default class VictoryLabel extends React.Component {
   }
 
   getContent(props) {
-    if (props.text !== undefined) {
-      const datum = props.datum || props.data;
-      const child = Helpers.evaluateProp(props.text, datum, props.active);
-      return `${child}`.split("\n");
+    if (props.text === undefined || props.text === null) {
+      return [" "];
     }
-    return [" "];
+    const datum = props.datum || props.data;
+    if (Array.isArray(props.text)) {
+      return props.text.map((line) => Helpers.evaluateProp(line, datum, props.active));
+    }
+    const child = Helpers.evaluateProp(props.text, datum, props.active);
+    return `${child}`.split("\n");
   }
 
   getDy(props, style, content, lineHeight) { //eslint-disable-line max-params
@@ -203,17 +213,22 @@ export default class VictoryLabel extends React.Component {
   // Overridden in victory-core-native
   renderElements(props) {
     const textProps = {
-      dx: this.dx, dy: this.dy, x: props.x, y: props.y, style: this.style,
-      textAnchor: this.textAnchor, transform: this.transform, className: props.className
+      dx: this.dx, dy: this.dy, x: props.x, y: props.y,
+      transform: this.transform, className: props.className
     };
     return (
       <text {...textProps}
         {...props.events}
       >
         {this.content.map((line, i) => {
-          const dy = i ? this.lineHeight * this.fontSize : undefined;
+          const style = this.style[i] || this.style[0];
+          const padding = style.padding || 0;
+          const lastStyle = this.style[i - 1] || this.style[0];
+          const fontSize = (style.fontSize + lastStyle.fontSize) / 2;
+          const textAnchor = style.textAnchor || this.textAnchor;
+          const dy = i ? (this.lineHeight * fontSize) + padding : undefined;
           return (
-            <tspan key={i} x={props.x} dy={dy} dx={this.dx}>
+            <tspan key={i} x={props.x} dy={dy} dx={this.dx} style={style} textAnchor={textAnchor}>
               {line}
             </tspan>
           );
