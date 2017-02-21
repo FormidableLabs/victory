@@ -60,7 +60,7 @@ export default {
       dataset = [];
     }
 
-    const dataSegments = this.getDataSegments(dataset, props.sortKey);
+    const dataSegments = this.getDataSegments(dataset);
 
     const range = {
       x: Helpers.getRange(props, "x"),
@@ -88,20 +88,19 @@ export default {
     return defaults({}, labelStyle, {opacity, fill, padding});
   },
 
-  getDataSegments(dataset, sortKey = "x") {
-    const orderedData = sortBy(dataset, `_${sortKey}`);
+  getDataSegments(dataset) {
     const segments = [];
     let segmentStartIndex = 0;
     let segmentIndex = 0;
-    for (let index = 0, len = orderedData.length; index < len; index++) {
-      const datum = orderedData[index];
+    for (let index = 0, len = dataset.length; index < len; index++) {
+      const datum = dataset[index];
       if (datum._y === null || typeof datum._y === "undefined") {
-        segments[segmentIndex] = orderedData.slice(segmentStartIndex, index);
+        segments[segmentIndex] = dataset.slice(segmentStartIndex, index);
         segmentIndex++;
         segmentStartIndex = index + 1;
       }
     }
-    segments[segmentIndex] = orderedData.slice(segmentStartIndex, orderedData.length);
+    segments[segmentIndex] = dataset.slice(segmentStartIndex, dataset.length);
     return segments.filter((segment) => {
       return Array.isArray(segment) && segment.length > 0;
     });
