@@ -24,8 +24,6 @@ export default class VictoryContainer extends React.Component {
   }
 
   static defaultProps = {
-    title: "Victory Chart",
-    desc: "",
     portalComponent: <Portal/>,
     responsive: true
   }
@@ -90,8 +88,8 @@ export default class VictoryContainer extends React.Component {
     return standalone !== false ?
       (
         <svg {...svgProps} style={style} className={className}>
-          <title id="title">{title}</title>
-          <desc id="desc">{desc}</desc>
+          {title ? <title id="title">{title}</title> : null}
+          {desc ? <desc id="desc">{desc}</desc> : null}
           {this.getChildren(props)}
           {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
         </svg>
