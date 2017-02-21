@@ -58,6 +58,13 @@ describe("components/victory-bar", () => {
       expect(bars.length).to.equal(10);
     });
 
+    it("renders ordered bars when sortKey is passed", () => {
+      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const wrapper = shallow(<VictoryBar data={data} sortKey="x"/>);
+      const xValues = wrapper.find(Bar).map((bar) => bar.prop("datum")._x);
+      expect(xValues).to.eql([0, 1, 2, 3, 4]);
+    });
+
     it("renders bars for array-shaped data", () => {
       const data = range(20).map((i) => [i, i]);
       const wrapper = shallow(<VictoryBar data={data} x={0} y={1}/>);
