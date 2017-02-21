@@ -99,13 +99,18 @@ export default {
   /**
    * Returns sorted data. If no sort keys are provided, data is returned unaltered.
    * Sort key should correspond to the `iteratees` argument in lodash `sortBy` function.
-   * @param {Array} dataset: the original domain
-   * @param {Function} sortKey: the sort key
+   * @param {Array} dataset: the original dataset
+   * @param {mixed} sortKey: the sort key. Type is whatever lodash permits for `sortBy`
    * @returns {Array} the sorted data
    */
   sortData(dataset, sortKey) {
     if (!sortKey) {
       return dataset;
+    }
+
+    // Ensures previous VictoryLine api for sortKey prop stays consistent
+    if (sortKey === "x" || sortKey === "y") {
+      sortKey = `_${sortKey}`;
     }
 
     return sortBy(dataset, sortKey);

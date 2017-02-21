@@ -168,11 +168,10 @@ describe("helpers/data", () => {
       expect(returnData).to.eql(expectedReturnWithEventKeys);
     });
 
-    it("does not sort data when function not passed", () => {
+    it("does not sort data when sort key not passed", () => {
       const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
-      const props = {data};
 
-      const returnData = Data.getData(props);
+      const returnData = Data.getData({data});
 
       expect(returnData).to.eql([
         {_x: 2, x: 2, _y: 2, y: 2, eventKey: 0},
@@ -181,17 +180,44 @@ describe("helpers/data", () => {
       ]);
     });
 
-    it("sorts data according to passed function", () => {
-      const data = [{x: 2, y: 2}, {x: 1, y: 3}, {x: 3, y: 1}];
-      const sortKey = ["_x"];
-      const props = {data, sortKey};
+    it("sorts data according to sort key", () => {
+      const data = [
+        {x: 1, y: 1, order: 2},
+        {x: 3, y: 3, order: 1},
+        {x: 2, y: 2, order: 3}
+      ];
 
-      const returnData = Data.getData(props);
+      const returnData = Data.getData({data, sortKey: "order"});
 
       expect(returnData).to.eql([
-        {_x: 1, x: 1, _y: 3, y: 3, eventKey: 0},
-        {_x: 2, x: 2, _y: 2, y: 2, eventKey: 1},
-        {_x: 3, x: 3, _y: 1, y: 1, eventKey: 2}
+        {_x: 3, x: 3, _y: 3, y: 3, order: 1, eventKey: 0},
+        {_x: 1, x: 1, _y: 1, y: 1, order: 2, eventKey: 1},
+        {_x: 2, x: 2, _y: 2, y: 2, order: 3, eventKey: 2}
+      ]);
+    });
+
+    // Ensures previous VictoryLine api for sortKey prop stays consistent
+    it("sorts data according to evaluated sort key when sort key is x or y", () => {
+      const data = [
+        {_x: 2, x: 10, _y: 2, y: 10},
+        {_x: 1, x: 20, _y: 3, y: 20},
+        {_x: 3, x: 30, _y: 1, y: 30}
+      ];
+
+      const returnDataX = Data.getData({data, sortKey: "x"});
+
+      expect(returnDataX).to.eql([
+        {_x: 1, x: 20, _y: 3, y: 20, eventKey: 0},
+        {_x: 2, x: 10, _y: 2, y: 10, eventKey: 1},
+        {_x: 3, x: 30, _y: 1, y: 30, eventKey: 2}
+      ]);
+
+      const returnDataY = Data.getData({data, sortKey: "y"});
+
+      expect(returnDataY).to.eql([
+        {_x: 3, x: 30, _y: 1, y: 30, eventKey: 0},
+        {_x: 2, x: 10, _y: 2, y: 10, eventKey: 1},
+        {_x: 1, x: 20, _y: 3, y: 20, eventKey: 2}
       ]);
     });
 
