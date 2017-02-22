@@ -59,6 +59,10 @@ class VictoryLine extends React.Component {
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
+    Label: CustomPropTypes.deprecated(
+      PropTypes.string,
+      "Use `labels` instead for individual data labels"
+    ),
     labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
     name: PropTypes.string,

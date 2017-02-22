@@ -144,7 +144,6 @@ export default class App extends React.Component {
               }
             }
           }]}
-          label={this.state.label}
           data={range(0, 100)}
           y={(d) => d * d}
         />
@@ -206,7 +205,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle}}
           data={this.state.arrayData}
-          label="Hello"
           x={0}
           y={1}
           theme={VictoryTheme.grayscale}
@@ -218,7 +216,6 @@ export default class App extends React.Component {
           <VictoryLine
             style={{parent: parentStyle}}
             data={this.state.arrayData}
-            label="Hello"
             x={0}
             y={1}
           />
@@ -268,7 +265,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle}}
           data={this.state.arrayData}
-          label="Hello"
           x={0}
           domainPadding={{x: [0, 100]}}
           y={1}
