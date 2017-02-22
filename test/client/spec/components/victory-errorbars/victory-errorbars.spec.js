@@ -65,7 +65,7 @@ describe("components/victory-errorbar", () => {
       expect(errors.length).to.equal(10);
     });
 
-    it.only("sorts data by sortKey prop", () => {
+    it("sorts data by sortKey prop", () => {
       const data = range(5).map((i) => ({x: i, y: i, errorX: 0.1, errorY: 0.2})).reverse();
       const wrapper = shallow(
         <VictoryErrorBar data={data} sortKey="x"/>

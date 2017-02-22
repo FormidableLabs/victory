@@ -65,14 +65,5 @@ describe("victory-area/helper-methods", () => {
       const expectedResult = stackedData;
       expect(result).to.eql(expectedResult);
     });
-
-    it("should sort dataset when sortKey is provided", () => {
-      const props = {data: data.reverse()};
-      const result = AreaHelpers.getDataWithBaseline(props, scale(defaultDomain));
-      const expectedResult = [
-        {_y0: 0, _y1: 1, _x: 1, _y: 1}, {_y0: 0, _y1: 1, _x: 2, _y: 1}
-      ];
-      expect(result).to.eql(expectedResult);
-    });
   });
 });
