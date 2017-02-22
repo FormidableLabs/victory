@@ -13,15 +13,21 @@ const VoronoiHelpers = {
 
   getDatasets(props) {
     const addMeta = (data, name, child) => {
-      const continuous = child.type && child.type.continuous;
-      const style = child.props && child.props.style;
+      const continuous = child && child.type && child.type.continuous;
+      const style = child ? child.props && child.props.style : props.style;
       return data.map((datum, index) => {
-        return assign({childName: name, eventKey: index, continuous, style}, datum);
+        const x = datum._x1 !== undefined ? datum._x1 : datum._x;
+        const y = datum._y1 !== undefined ? datum._y1 : datum._y;
+        return assign({
+          _voronoiX: props.dimension === "y" ? 0 : x,
+          _voronoiY: props.dimension === "x" ? 0 : y,
+          childName: name, eventKey: index, continuous, style
+        }, datum);
       });
     };
 
     if (props.data) {
-      return props.data;
+      return addMeta(props.data);
     }
 
     const getData = (childProps) => {
@@ -49,8 +55,8 @@ const VoronoiHelpers = {
   mergeDatasets(props, datasets) {
     const {scale} = props;
     const points = groupBy(datasets, (datum) => {
-      const x = scale.x(datum ._x1 !== undefined ? datum ._x1 : datum ._x);
-      const y = scale.y(datum ._y1 !== undefined ? datum ._y1 : datum ._y);
+      const x = scale.x(datum ._voronoiX);
+      const y = scale.y(datum ._voronoiY);
       return `${x},${y}`;
     });
     return keys(points).map((key) => {
@@ -97,38 +103,40 @@ const VoronoiHelpers = {
   },
 
   onMouseLeave(evt, targetProps) {
-    const activePoints = targetProps.activePoints || [];
-    const parentMutations = [{
-      target: "parent",
-      mutation: () => {
-        return { activePoints: [] };
-      }
-    }];
-    return activePoints.length ?
-      activePoints.reduce((memo, point) => {
-        memo = memo.concat(this.getInactiveMutations(targetProps, point));
-        return memo;
-      }, [parentMutations]) : parentMutations;
+    // const activePoints = targetProps.activePoints || [];
+    // const parentMutations = [{
+    //   target: "parent",
+    //   mutation: () => {
+    //     return { activePoints: []};
+    //   }
+    // }];
+    // const inactiveMutations = activePoints.length ?
+    //   activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+    // return parentMutations.concat(...inactiveMutations);
   },
 
   onMouseMove(evt, targetProps) {
     const activePoints = targetProps.activePoints || [];
     const {x, y} = Selection.getSVGEventCoordinates(evt);
-    if (!this.withinBounds(targetProps, {x, y})) {
-      return activePoints.length ?
-        activePoints.reduce((memo, point) => {
-          memo = memo.concat(this.getInactiveMutations(point));
-          return memo;
-        }, []) : [];
-    }
-    const voronoi = this.getVoronoi(targetProps); // TODO: animation
-    const nearestVoronoi = voronoi.find(x, y, targetProps.radius);
+    // if (!this.withinBounds(targetProps, {x, y})) {
+    //   const parentMutations = [{
+    //     target: "parent",
+    //     mutation: () => {
+    //       return { activePoints: [], mousePosition: {x, y}};
+    //     }
+    //   }];
+    //   const inactiveMutations = activePoints.length ?
+    //   activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+    //   return parentMutations.concat(...inactiveMutations);
+    // }
+    const voronoi = this.getVoronoi(targetProps);
+    const size = targetProps.dimension ? undefined : targetProps.radius;
+    const nearestVoronoi = voronoi.find(x, y, size);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
     const parentMutations = [{
       target: "parent",
-      eventKey: "parent",
       mutation: () => {
-        return { activePoints: points, voronoi };
+        return { activePoints: points, mousePosition: {x, y}};
       }
     }];
     if (activePoints.length && isEqual(points, activePoints)) {
@@ -145,5 +153,5 @@ const VoronoiHelpers = {
 
 export default {
   onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
-  onMouseMove: throttle(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers), 1, {leading: true})
+  onMouseMove: throttle(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers), 16, {leading: true})
 };

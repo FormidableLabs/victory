@@ -53,7 +53,10 @@ class App extends React.Component {
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
             containerComponent={
-              <VictoryVoronoiContainer radius={50} labels={(d) => d.l}/>
+              <VictoryVoronoiContainer dimension="x"
+                labels={(d) => d.l}
+                labelComponent={<VictoryTooltip pointerLength={0} cornerRadius={0}/>}
+              />
             }
           >
             <VictoryLine
@@ -101,7 +104,7 @@ class App extends React.Component {
                 fill: (datum, active) => active ? "tomato" : "black"
               }
             }}
-            containerComponent={<VictoryVoronoiContainer size={20}/>}
+            containerComponent={<VictoryVoronoiContainer dimension="x"/>}
             size={(datum, active) => active ? 5 : 3}
             data={this.state.data}
             x="a"
