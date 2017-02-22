@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
-import { omit } from "lodash";
+import { omit, defaults } from "lodash";
 
 
 export default class VictoryVoronoiContainer extends VictoryContainer {
@@ -23,6 +23,8 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     labelComponent: <VictoryTooltip/>,
     voronoiPadding: 5
   };
+
+  static role = "voronoi";
 
   static defaultEvents = [{
     target: "parent",
@@ -62,51 +64,38 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     };
   }
 
-  getFlyoutExtent(props, point, flyoutSize) {
-    const {labelComponent, mousePosition} = props;
-    const dataX = point._x1 !== undefined ? point._x1 : point._x;
-    const dataY = point._y1 !== undefined ? point._y1 : point._y;
-    const {x, y} = mousePosition;
-    const orientation = labelComponent.props && labelComponent.props.orientation;
-    const horizontal = labelComponent.props && labelComponent.props.horizontal;
-    const signs = { left: 1, right: -1, top: 1, bottom: -1 };
-    const pointSigns = { x: dataX < 0 ? -1 : 1, y: dataY < 0 ? -1 : 1};
-    const multiplier = {
-      x: horizontal ? signs[orientation] || pointSigns.x : 0,
-      y: horizontal ? 0 : signs[orientation] || pointSigns.y
-    };
-    const extent = {
-      x: horizontal ?
-        [x, x + multiplier.x * flyoutSize.x] : [x - (flyoutSize.x / 2), x + (flyoutSize.x / 2)],
-      y: horizontal ?
-        [y - (flyoutSize.y / 2), y + (flyoutSize.y / 2)] : [y, y + multiplier.y * flyoutSize.y]
-    };
+  getFlyoutExtent(position, flyoutSize) {
+    const {x, y} = position;
+    const width = flyoutSize.x / 2;
+    const height = flyoutSize.y;
+    const extent = {x: [x - width, x + width], y: [y - height, y]};
     return {
       x: [Math.min(...extent.x), Math.max(...extent.x)],
       y: [Math.min(...extent.y), Math.max(...extent.y)]
     };
   }
 
-  getLabelPosition(props, point, text, style) { // eslint-disable-line max-params
-    const { mousePosition, dimension, scale, labelComponent } = props;
-    const dataX = point._x1 !== undefined ? point._x1 : point._x;
-    const dataY = point._y1 !== undefined ? point._y1 : point._y;
+  getLabelPosition(props, points, text, style) { // eslint-disable-line max-params
+    const { mousePosition, dimension, scale, labelComponent, voronoiPadding } = props;
+    const dataX = points[0]._x1 !== undefined ? points[0]._x1 : points[0]._x;
+    const dataY = points[0]._y1 !== undefined ? points[0]._y1 : points[0]._y;
     const basePosition = {
       x: scale.x(dataX),
       y: scale.y(dataY)
     };
-    if (!dimension) {
+    if (!dimension || points.length < 2) {
       return basePosition;
     }
+
     const x = dimension === "y" ? mousePosition.x : basePosition.x;
     const y = dimension === "x" ? mousePosition.y : basePosition.y;
     const flyoutSize = this.getFlyoutSize(labelComponent, text, style);
-    const range = { x: scale.x.range, y: scale.y.range };
+    const range = { x: scale.x.range(), y: scale.y.range() };
     const extent = {
-      x: [range.x[0] + flyoutSize.x, range.x[1] - flyoutSize.x],
-      y: [range.y[0] + flyoutSize.y, range.y[1] - flyoutSize.y],
+      x: [Math.min(...range.x) + voronoiPadding, Math.max(...range.x) - voronoiPadding],
+      y: [Math.min(...range.y) + voronoiPadding, Math.max(...range.y) - voronoiPadding]
     };
-    const flyoutExtent = this.getFlyoutExtent(props, point, flyoutSize);
+    const flyoutExtent = this.getFlyoutExtent({x, y}, flyoutSize);
     const adjustments = {
       x: [
         flyoutExtent.x[0] < extent.x[0] ? extent.x[0] - flyoutExtent.x[0] : 0,
@@ -118,32 +107,48 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
       ]
     };
     return {
-      x: x + adjustments.x[0] - adjustments.x[1], y: y + adjustments.y[0] - adjustments.y[1]
+      x: Math.round(x + adjustments.x[0] - adjustments.x[1]),
+      y: Math.round(y + adjustments.y[0] - adjustments.y[1])
     };
   }
 
-  getLabelStyle(points) {
+  getLabelStyle(props, points) {
+    const { labelComponent, theme } = props;
+    const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
+    const defaultStyles = defaults({}, labelComponent.style, themeStyles.labels);
     return points.map((point) => {
-      const baseStyle = point.style && point.style.labels;
-      return Helpers.evaluateStyle(baseStyle, point, true);
+      const style = point.style && point.style.labels || {};
+      return Helpers.evaluateStyle(defaults({}, style, defaultStyles), point, true);
     });
   }
 
-  getLabelProps(props, points) {
-    const {labels, scale} = props;
-    const text = points.map((point) => Helpers.evaluateProp(labels, point, true));
-    const style = this.getLabelStyle(points);
-    const labelPosition = this.getLabelPosition(props, points[0], text, style);
-    console.log(labelPosition, text)
+  getDefaultLabelProps(props, points) {
+    const {dimension} = props;
+    const multiPoint = dimension && points.length > 1;
     return {
-      active: true,
-      renderInPortal: false,
-      style,
-      text,
-      datum: omit(points[0], ["childName", "style", "continuous"]),
-      scale,
-      ...labelPosition
+      orientation: multiPoint ? "top" : undefined,
+      pointerLength: multiPoint ? 0 : undefined
     };
+  }
+
+  getLabelProps(props, points) {
+    const {labels, scale, labelComponent} = props;
+    const text = points.map((point) => Helpers.evaluateProp(labels, point, true));
+    const style = this.getLabelStyle(props, points);
+    const labelPosition = this.getLabelPosition(props, points, text, style);
+    return defaults(
+      {
+        active: true,
+        renderInPortal: false,
+        style,
+        text,
+        datum: omit(points[0], ["childName", "style", "continuous"]),
+        scale,
+        ...labelPosition
+      },
+      labelComponent.props,
+      this.getDefaultLabelProps(props, points)
+    );
   }
 
   getTooltip(props) {

@@ -55,13 +55,13 @@ class App extends React.Component {
             containerComponent={
               <VictoryVoronoiContainer dimension="x"
                 labels={(d) => d.l}
-                labelComponent={<VictoryTooltip pointerLength={0} cornerRadius={0}/>}
               />
             }
           >
             <VictoryLine
               data={[
                 {x: 1, y: 5, l: "one"},
+                {x: 1.5, y: -7, l: "one point five"},
                 {x: 2, y: 4, l: "two"},
                 {x: 3, y: -2, l: "three"}
               ]}

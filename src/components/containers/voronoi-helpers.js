@@ -102,43 +102,34 @@ const VoronoiHelpers = {
     });
   },
 
+  getParentMutation(activePoints, mousePosition) {
+    return [{
+      target: "parent",
+      eventKey: "parent",
+      mutation: () => ({ activePoints, mousePosition })
+    }];
+  },
+
   onMouseLeave(evt, targetProps) {
-    // const activePoints = targetProps.activePoints || [];
-    // const parentMutations = [{
-    //   target: "parent",
-    //   mutation: () => {
-    //     return { activePoints: []};
-    //   }
-    // }];
-    // const inactiveMutations = activePoints.length ?
-    //   activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
-    // return parentMutations.concat(...inactiveMutations);
+    const activePoints = targetProps.activePoints || [];
+    const inactiveMutations = activePoints.length ?
+      activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+    return this.getParentMutation([]).concat(...inactiveMutations);
   },
 
   onMouseMove(evt, targetProps) {
     const activePoints = targetProps.activePoints || [];
-    const {x, y} = Selection.getSVGEventCoordinates(evt);
-    // if (!this.withinBounds(targetProps, {x, y})) {
-    //   const parentMutations = [{
-    //     target: "parent",
-    //     mutation: () => {
-    //       return { activePoints: [], mousePosition: {x, y}};
-    //     }
-    //   }];
-    //   const inactiveMutations = activePoints.length ?
-    //   activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
-    //   return parentMutations.concat(...inactiveMutations);
-    // }
+    const mousePosition = Selection.getSVGEventCoordinates(evt);
+    if (!this.withinBounds(targetProps, mousePosition)) {
+      const inactiveMutations = activePoints.length ?
+        activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
+      return this.getParentMutation([], mousePosition).concat(...inactiveMutations);
+    }
     const voronoi = this.getVoronoi(targetProps);
     const size = targetProps.dimension ? undefined : targetProps.radius;
-    const nearestVoronoi = voronoi.find(x, y, size);
+    const nearestVoronoi = voronoi.find(mousePosition.x, mousePosition.y, size);
     const points = nearestVoronoi ? nearestVoronoi.data.points : [];
-    const parentMutations = [{
-      target: "parent",
-      mutation: () => {
-        return { activePoints: points, mousePosition: {x, y}};
-      }
-    }];
+    const parentMutations = this.getParentMutation(points, mousePosition);
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {
