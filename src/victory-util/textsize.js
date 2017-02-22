@@ -93,7 +93,7 @@ const convertLengthToPixels = (length, fontSize) => {
 
 const _prepareParams = (inputStyle, index) => {
   const lineStyle = Array.isArray(inputStyle) ? inputStyle[index] : inputStyle;
-  const style = defaults(lineStyle, defaultStyle);
+  const style = defaults({}, lineStyle, defaultStyle);
   return merge({}, style, {
     characterConstant: style.characterConstant || _getFontCharacterConstant(style.fontFamily),
     letterSpacing: convertLengthToPixels(style.letterSpacing, style.fontSize),
