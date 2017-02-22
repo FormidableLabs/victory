@@ -5,7 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { omit } from "lodash";
+import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryVoronoi from "src/components/victory-voronoi/victory-voronoi";
@@ -50,6 +50,16 @@ describe("components/victory-voronoi", () => {
       voronoi.forEach((node, index) => {
         SvgTestHelper.expectCorrectD3Path(node, props, "voronoi", index);
       });
+    });
+
+    it("sorts data by sortKey prop", () => {
+      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const wrapper = shallow(
+        <VictoryVoronoi data={data} sortKey="x"/>
+      );
+
+      const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop('datum')._x);
+      expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
   });
 
