@@ -1,4 +1,4 @@
-import { sortBy, defaults, last } from "lodash";
+import { defaults, last } from "lodash";
 import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
 export default {

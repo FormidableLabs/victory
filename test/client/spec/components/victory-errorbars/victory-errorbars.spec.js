@@ -70,7 +70,7 @@ describe("components/victory-errorbar", () => {
       const wrapper = shallow(
         <VictoryErrorBar data={data} sortKey="x"/>
       );
-      const xValues = wrapper.find(ErrorBar).map((errorBar) => errorBar.prop('datum')._x);
+      const xValues = wrapper.find(ErrorBar).map((errorBar) => errorBar.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 

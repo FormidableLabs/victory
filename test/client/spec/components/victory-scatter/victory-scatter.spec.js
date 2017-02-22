@@ -78,7 +78,7 @@ describe("components/victory-scatter", () => {
       const wrapper = shallow(
         <VictoryScatter data={data} sortKey="x"/>
       );
-      const xValues = wrapper.find(Point).map((point) => point.prop('datum')._x);
+      const xValues = wrapper.find(Point).map((point) => point.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 

@@ -58,7 +58,7 @@ describe("components/victory-voronoi-tooltip", () => {
         <VictoryVoronoiTooltip data={data} sortKey="x"/>
       );
 
-      const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop('datum')._x);
+      const xValues = wrapper.find(Voronoi).map((voronoi) => voronoi.prop("datum")._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
   });

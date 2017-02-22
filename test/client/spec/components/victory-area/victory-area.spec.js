@@ -51,7 +51,7 @@ describe("components/victory-area", () => {
       SvgTestHelper.expectCorrectD3Path(area, props, "area");
     });
 
-    it.only("sorts data according to sortKey prop", () => {
+    it("sorts data according to sortKey prop", () => {
       const props = {
         scale: "linear",
         interpolation: "linear",
@@ -65,7 +65,7 @@ describe("components/victory-area", () => {
       const xValues = wrapper
         .find(Area)
         .first()
-        .prop('data')
+        .prop("data")
         .map((datum) => datum._x);
       expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
