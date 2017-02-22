@@ -78,6 +78,12 @@ class VictoryVoronoiTooltip extends React.Component {
       events: PropTypes.array,
       getEventState: PropTypes.func
     }),
+    sortKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string,
+      PropTypes.arrayOf(PropTypes.string)
+    ]),
     size: CustomPropTypes.nonNegative,
     standalone: PropTypes.bool,
     style: PropTypes.shape({
