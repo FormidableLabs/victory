@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryTooltip, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain, Log
 } from "victory-core";
 import TooltipHelpers from "./helper-methods";
 
@@ -120,6 +120,12 @@ class VictoryVoronoiTooltip extends React.Component {
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
+
+  componentDidMount() {
+    Log.warn(
+      "`VictoryVoronoiTooltip` will be deprecated in victory@0.20.0, use `VictoryVoronoiContainer`"
+    );
+  }
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;

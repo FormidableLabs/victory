@@ -2,7 +2,7 @@ import React, { PropTypes } from "react";
 import { partialRight } from "lodash";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
-  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain
+  VictoryContainer, VictoryTheme, DefaultTransitions, Voronoi, Data, Domain, Log
 } from "victory-core";
 import VoronoiHelpers from "./helper-methods";
 
@@ -117,6 +117,12 @@ class VictoryVoronoi extends React.Component {
   static expectedComponents = [
     "dataComponent", "labelComponent", "groupComponent", "containerComponent"
   ];
+
+  componentDidMount() {
+    Log.warn(
+      "`VictoryVoronoi` will be deprecated in victory@0.20.0, use `VictoryVoronoiContainer` instead"
+    );
+  }
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
