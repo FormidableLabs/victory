@@ -7,10 +7,12 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "area");
     const calculatedValues = this.getCalculatedValues(props);
     const {scale, style, data, domain} = calculatedValues;
-    const {standalone, interpolation, events, sharedEvents, width, height, groupComponent} = props;
+    const {
+      standalone, interpolation, events, sharedEvents, width, height, groupComponent, theme
+    } = props;
 
     const initialChildProps = {
-      parent: { style: style.parent, width, height, scale, data, domain, standalone },
+      parent: { style: style.parent, width, height, scale, data, domain, standalone, theme },
       all: {
         data: { scale, data, interpolation, groupComponent, style: style.data }
       }

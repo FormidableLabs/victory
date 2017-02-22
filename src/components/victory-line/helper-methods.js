@@ -6,10 +6,12 @@ export default {
     props = Helpers.modifyProps(props, fallbackProps, "line");
     const calculatedValues = this.getCalculatedValues(props);
     const { scale, data, domain, style } = calculatedValues;
-    const {interpolation, width, height, events, sharedEvents, standalone, groupComponent} = props;
+    const {
+      interpolation, width, height, events, sharedEvents, standalone, groupComponent, theme
+    } = props;
     const initialChildProps = {
       parent: { style: style.parent, scale, data, height, width, domain, standalone },
-      all: { data: { scale, data, interpolation, groupComponent, style: style.data } }
+      all: { data: { scale, data, interpolation, groupComponent, theme, style: style.data } }
     };
     return data.reduce((childProps, datum, index) => {
       const text = this.getLabelText(props, datum, index);
