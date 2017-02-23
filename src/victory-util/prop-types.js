@@ -76,7 +76,7 @@ export default {
       if (process.env.NODE_ENV !== "production") {
         /* eslint-disable no-console */
         if (typeof console !== "undefined" && console.error) {
-          if (props[propName] !== null) {
+          if (props[propName] !== null && props[propName] !== undefined) {
             console.error(false,
               `"${propName}" property of "${componentName}" has been deprecated ${explanation}`);
           }
