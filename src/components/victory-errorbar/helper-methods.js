@@ -1,4 +1,4 @@
-import { assign, omit, defaults, isArray, flatten, pick } from "lodash";
+import { assign, omit, defaults, isArray, flatten, sortBy, pick } from "lodash";
 import { Helpers, Log, Scale, Domain, Data } from "victory-core";
 
 export default {
@@ -110,7 +110,7 @@ export default {
       y: Data.createStringMap(props, "y")
     };
 
-    return dataset.map((datum, index) => {
+    return this.sortData(dataset.map((datum, index) => {
       const evaluatedX = accessor.x(datum);
       const evaluatedY = accessor.y(datum);
       const _x = evaluatedX !== undefined ? evaluatedX : index;
@@ -126,7 +126,19 @@ export default {
         typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {},
         typeof _y === "string" ? { _y: stringMap.y[_y], y: _y } : {}
       );
-    });
+    }), props.sortKey);
+  },
+
+  sortData(dataset, sortKey) {
+    if (!sortKey) {
+      return dataset;
+    }
+
+    if (sortKey === "x" || sortKey === "y") {
+      sortKey = `_${sortKey}`;
+    }
+
+    return sortBy(dataset, sortKey);
   },
 
   getDomain(props, axis) {
