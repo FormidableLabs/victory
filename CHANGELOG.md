@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 13.0.4 (2017-02-21)
+
+- Supports sorting data with a `sortKey` prop.
+- Styles gridlines with `pointerEvents: "none"` in all themes
+
 ## 13.0.3 (2017-02-09)
 
 -[198](https://github.com/FormidableLabs/victory-core/pull/198)
