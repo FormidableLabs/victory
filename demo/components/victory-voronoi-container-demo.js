@@ -54,14 +54,14 @@ class App extends React.Component {
           <VictoryChart style={chartStyle}
             containerComponent={
               <VictoryVoronoiContainer dimension="x"
-                labels={(d) => d.l}
+                labels={(d) => `y: ${d.y}`}
+                labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{fill: "white"}}/>}
               />
             }
           >
             <VictoryLine
               data={[
                 {x: 1, y: 5, l: "one"},
-                {x: 1.5, y: -7, l: "one point five"},
                 {x: 2, y: 4, l: "two"},
                 {x: 3, y: -2, l: "three"}
               ]}
