@@ -1,12 +1,13 @@
+/* global sinon */
+
 import React from "react";
 import { shallow } from "enzyme";
 import Point from "src/victory-primitives/point";
 import pathHelpers from "src/victory-primitives/path-helpers";
-import { keys } from "lodash";
 
 describe("victory-primitives/point", () => {
-  var sandbox;
-  var baseProps;
+  let sandbox;
+  let baseProps;
 
   beforeEach(() => {
     sandbox = sinon.sandbox.create();
@@ -31,14 +32,14 @@ describe("victory-primitives/point", () => {
       "plus",
       "star"
     ].forEach((symbol) => {
-      const stub = sandbox.stub(pathHelpers, symbol).returns(symbol + " symbol");
+      const stub = sandbox.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
       const props = Object.assign({}, baseProps, {symbol});
       const wrapper = shallow(<Point {...props}/>);
       const directions = wrapper.render().find("path").attr("d");
 
       expect(stub.callCount).to.eql(1);
       expect(stub.getCall(0).args).to.eql([5, 10, 1]);
-      expect(directions).to.eql(symbol + " symbol");
+      expect(directions).to.eql(`${symbol} symbol`);
     });
   });
 });
