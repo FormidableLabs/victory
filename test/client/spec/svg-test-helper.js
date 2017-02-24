@@ -1,4 +1,7 @@
+import { property, max, min } from "lodash";
+
 const FLYOUT_SEQUENCE = ["M", "L", "L", "L", "A", "L", "A", "L", "A", "L", "A", "z"];
+const RECTANGLE_SEQUENCE = ["M", "L", "L", "L", "L", "z"];
 
 const parseSvgPathCommands = (commandStr) => {
   const matches = commandStr.match(
@@ -24,13 +27,11 @@ const getPathCommandsFromWrapper = (wrapper) => {
   return parseSvgPathCommands(commandStr);
 };
 
-const exhibitsShapeSequence = (wrapper, shapeSequence) => {
-  const commands = getPathCommandsFromWrapper(wrapper);
+const exhibitsShapeSequence = (wrapper, expectedSequence, commands) => {
   return commands.every((command, index) => {
-    return command.name === shapeSequence[index];
+    return command.name === expectedSequence[index];
   });
 };
-
 
 const expectations = {
 
@@ -41,7 +42,30 @@ const expectations = {
    * @returns {undefined}
    */
   expectIsFlyout(wrapper) {
-    expect(exhibitsShapeSequence(wrapper, FLYOUT_SEQUENCE)).to.equal(true);
+    const commands = getPathCommandsFromWrapper(wrapper);
+    expect(exhibitsShapeSequence(wrapper, FLYOUT_SEQUENCE, commands)).to.equal(true);
+  },
+  expectIsVerticalBar(wrapper, yValue) {
+    const commands = getPathCommandsFromWrapper(wrapper);
+
+    expect(exhibitsShapeSequence(wrapper, RECTANGLE_SEQUENCE, commands)).to.equal(true);
+
+    const points = commands.filter((command) => { return command.name !== "z"; });
+    const verticalPoints = points.map(property("args.1"));
+    const height = max(verticalPoints) - min(verticalPoints);
+
+    expect(height).to.eql(yValue);
+  },
+  expectIsHorizontalBar(wrapper, yValue) {
+    const commands = getPathCommandsFromWrapper(wrapper);
+
+    expect(exhibitsShapeSequence(wrapper, RECTANGLE_SEQUENCE, commands)).to.equal(true);
+
+    const points = commands.filter((command) => { return command.name !== "z"; });
+    const horizontalPoints = points.map(property("args.0"));
+    const width = max(horizontalPoints) - min(horizontalPoints);
+
+    expect(width).to.eql(yValue);
   }
 };
 
