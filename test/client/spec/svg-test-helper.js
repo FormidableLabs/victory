@@ -49,7 +49,7 @@ const expectations = {
    * Assert the wrapper renders a 4-sided shape and return dimensions.
    *
    * @param {ShallowWrapper} wrapper - An enzyme wrapper.
-   * @returns {Object}
+   * @returns {Object}                 Dimensions of the shape
    */
   getBarShape(wrapper) {
     const commands = getPathCommandsFromWrapper(wrapper);
