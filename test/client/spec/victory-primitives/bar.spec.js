@@ -4,40 +4,48 @@ import Bar from "src/victory-primitives/bar";
 import SvgTestHelper from "../svg-test-helper";
 
 describe("victory-primitives/bar", () => {
-  it("should render a vertical bar", () => {
-    const props = {
-      data: [
-        {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-        {_x: 3, x: 3, _y: 5, y: 5, eventKey: 1},
-      ],
-      datum: {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-      x: 2,
-      y: 4,
-      y0: 0,
-      width: 5,
-      padding: 2
-    };
+  const baseProps = {
+    data: [
+      {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
+      {_x: 3, x: 3, _y: 5, y: 5, eventKey: 1},
+    ],
+    datum: {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
+    x: 2,
+    y: 10,
+    y0: 0,
+    width: 5,
+    padding: 2
+  };
 
-    const wrapper = shallow(<Bar {...props}/>);
-    SvgTestHelper.expectIsVerticalBar(wrapper, 4);
+  it("should render a vertical bar", () => {
+    const wrapper = shallow(<Bar {...baseProps}/>);
+    const barShape = SvgTestHelper.getBarShape(wrapper);
+
+    expect(barShape.height).to.eql(10);
   });
 
   it("should render a horizontal bar", () => {
-    const props = {
-      data: [
-        {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-        {_x: 3, x: 3, _y: 5, y: 5, eventKey: 1},
-      ],
-      datum: {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-      x: 2,
-      y: 4,
-      y0: 0,
-      width: 5,
-      padding: 2,
-      horizontal: true
-    };
+    const props = Object.assign({}, baseProps, {horizontal: true});
 
     const wrapper = shallow(<Bar {...props}/>);
-    SvgTestHelper.expectIsHorizontalBar(wrapper, 4);
+    const barShape = SvgTestHelper.getBarShape(wrapper);
+
+    expect(barShape.width).to.eql(10);
+  });
+
+  it("should apply a default width", () => {
+    const wrapper = shallow(<Bar {...baseProps}/>);
+    const barShape = SvgTestHelper.getBarShape(wrapper);
+
+    expect(barShape.width).to.eql(0.5);
+  });
+
+  it("should allow override of width by passing a style", () => {
+    const props = Object.assign({}, baseProps, {style: {width: 2}});
+
+    const wrapper = shallow(<Bar {...props}/>);
+    const barShape = SvgTestHelper.getBarShape(wrapper);
+
+    expect(barShape.width).to.eql(2);
   });
 });

@@ -79,10 +79,14 @@ export default class Bar extends React.Component {
   }
 
   getBarWidth(props, style) {
+    if (style.width) {
+      return style.width;
+    }
+
     const {width, data} = props;
     const padding = props.padding.left || props.padding;
     const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
-    return style && style.width ? style.width : defaultWidth;
+    return defaultWidth;
   }
 
   // Overridden in victory-core-native
