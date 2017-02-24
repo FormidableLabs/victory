@@ -45,6 +45,12 @@ const expectations = {
     const commands = getPathCommandsFromWrapper(wrapper);
     expect(exhibitsShapeSequence(wrapper, FLYOUT_SEQUENCE, commands)).to.equal(true);
   },
+  /**
+   * Assert the wrapper renders a 4-sided shape and return dimensions.
+   *
+   * @param {ShallowWrapper} wrapper - An enzyme wrapper.
+   * @returns {Object}
+   */
   getBarShape(wrapper) {
     const commands = getPathCommandsFromWrapper(wrapper);
 
