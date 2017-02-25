@@ -62,6 +62,7 @@ class App extends React.Component {
             <VictoryLine
               data={[
                 {x: 1, y: 5, l: "one"},
+                {x: 1.5, y: 5, l: "one point five"},
                 {x: 2, y: 4, l: "two"},
                 {x: 3, y: -2, l: "three"}
               ]}

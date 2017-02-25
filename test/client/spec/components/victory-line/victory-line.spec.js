@@ -44,10 +44,10 @@ describe("components/victory-line", () => {
       const log = console;
       const warningStub = sinon.stub(log, "warn");
       const data = [{x: 1, y: 1}];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(0);
       expect(warningStub).to.have.been.called;
       log.warn.restore();

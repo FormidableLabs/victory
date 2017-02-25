@@ -27,7 +27,7 @@ export default {
     const sortKey = props.sortKey || "x";
     let data = sortBy(Data.getData(props), sortKey);
 
-    if (dataset.length < 2) {
+    if (data.length < 2) {
       Log.warn("VictoryLine needs at least two data points to render properly.");
       data = [];
     }
