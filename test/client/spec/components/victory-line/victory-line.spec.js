@@ -44,10 +44,10 @@ describe("components/victory-line", () => {
       const log = console;
       const warningStub = sinon.stub(log, "warn");
       const data = [{x: 1, y: 1}];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(0);
       expect(warningStub).to.have.been.called;
       log.warn.restore();
@@ -119,10 +119,10 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(2);
     });
 
@@ -136,10 +136,10 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(2);
     });
 
@@ -153,10 +153,10 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: 6}
       ];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(2);
     });
 
@@ -170,10 +170,10 @@ describe("components/victory-line", () => {
         {x: 6, y: 4},
         {x: 7, y: null}
       ];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(2);
     });
 
@@ -188,10 +188,10 @@ describe("components/victory-line", () => {
         {x: 7, y: 5},
         {x: 8, y: 3}
       ];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data}/>
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(3);
     });
   });
@@ -202,10 +202,10 @@ describe("components/victory-line", () => {
         [1, 2],
         [3, 4]
       ];
-      const wrapper = shallow(
+      const wrapper = mount(
         <VictoryLine data={data} x={0} y={1} />
       );
-      const lines = wrapper.find(Curve);
+      const lines = wrapper.find("path");
       expect(lines.length).to.equal(1);
     });
 

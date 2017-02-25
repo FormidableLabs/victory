@@ -3,6 +3,7 @@ import {
   VictoryChart, VictoryGroup, VictoryStack, VictoryScatter, VictoryBar, VictoryLine,
   VictorySelectionContainer
 } from "../../src/index";
+import { VictoryTooltip } from "victory-core";
 
 class App extends React.Component {
 
@@ -105,6 +106,55 @@ class App extends React.Component {
                 {x: 7, y: -3}
               ]}
             />
+          </VictoryChart>
+
+          <VictoryChart style={chartStyle}
+            containerComponent={<VictorySelectionContainer/>}
+          >
+            <VictoryGroup
+              data={[
+                {x: 1, y: 5},
+                {x: 2, y: 4},
+                {x: 3, y: -2}
+              ]}
+            >
+              <VictoryLine style={{ data: {stroke: "tomato"}}}/>
+              <VictoryScatter
+                style={{ data: {fill: (d, active) => active ? "tomato" : "gray"}}}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                {x: 1, y: -3},
+                {x: 2, y: 5},
+                {x: 3, y: 3}
+              ]}
+            >
+              <VictoryLine style={{ data: {stroke: "blue"}}}/>
+              <VictoryScatter
+                style={{ data: {fill: (d, active) => active ? "blue" : "gray"}}}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
+
+            <VictoryGroup
+              data={[
+                {x: 1, y: 5},
+                {x: 2, y: -4},
+                {x: 3, y: -2}
+              ]}
+            >
+              <VictoryLine style={{ data: {stroke: "black"}}}/>
+              <VictoryScatter
+                style={{ data: {fill: (d, active) => active ? "black" : "gray"}}}
+                labels={(d) => d.y}
+                labelComponent={<VictoryTooltip/>}
+              />
+            </VictoryGroup>
           </VictoryChart>
 
           <VictoryScatter

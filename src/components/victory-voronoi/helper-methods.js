@@ -6,9 +6,9 @@ export default {
   getBaseProps(props, fallbackProps) {
     props = Helpers.modifyProps(props, fallbackProps, "voronoi");
     const { data, style, scale, polygons, domain } = this.getCalculatedValues(props);
+    const { width, height, standalone, theme, events, sharedEvents } = props;
     const initialChildProps = { parent: {
-      style: style.parent, scale, domain, data, standalone: props.standalone,
-      height: props.height, width: props.width
+      style: style.parent, scale, domain, data, standalone, height, width, theme
     }};
 
     return data.reduce((childProps, datum, index) => {
@@ -24,7 +24,7 @@ export default {
 
       childProps[eventKey] = { data: dataProps };
       const text = this.getLabelText(props, datum, index);
-      if (text !== undefined && text !== null || props.events || props.sharedEvents) {
+      if (text !== undefined && text !== null || events || sharedEvents) {
         childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
 

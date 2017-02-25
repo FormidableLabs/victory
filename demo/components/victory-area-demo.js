@@ -101,6 +101,7 @@ export default class App extends React.Component {
         <VictoryChart style={style} scale={{y: "log"}}>
           <VictoryArea
             style={{data: {fill: "cyan", stroke: "cyan"}}}
+            labels={(d) => Math.round(d.y)}
             data={[{x: 1, y: 0.2}, {x: 2, y: 3}, {x: 3, y: 50}, {x: 4, y: 400}, {x: 5, y: 70}]}
           />
         </VictoryChart>
@@ -156,21 +157,20 @@ export default class App extends React.Component {
         <VictoryArea
           style={{parent: style.parent, data: this.state.style}}
           data={this.state.data}
-          label={"label\none"}
           animate={{duration: 2000}}
         />
 
       <VictoryStack style={{parent: style.parent}}>
-          <VictoryArea label={"one"}
+          <VictoryArea
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
-          <VictoryArea label={"two"}
+          <VictoryArea
             data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
           />
-          <VictoryArea label={"three"}
+          <VictoryArea
             data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
           />
-          <VictoryArea label={"four"}
+          <VictoryArea
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
         </VictoryStack>
@@ -225,6 +225,7 @@ export default class App extends React.Component {
                     }
                   }, {
                     target: "labels",
+                    eventKey: 0,
                     mutation: () => {
                       return {text: "hey"};
                     }
@@ -324,16 +325,16 @@ export default class App extends React.Component {
         </VictoryStack>
 
         <VictoryStack style={{parent: style.parent}} theme={VictoryTheme.material}>
-          <VictoryArea label={"one"}
+          <VictoryArea
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 5}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
-          <VictoryArea label={"two"}
+          <VictoryArea
             data={[{x: 1, y: 1}, {x: 2, y: 4}, {x: 3, y: 5}, {x: 4, y: 7}, {x: 5, y: 5}]}
           />
-          <VictoryArea label={"three"}
+          <VictoryArea
             data={[{x: 1, y: 3}, {x: 2, y: 2}, {x: 3, y: 6}, {x: 4, y: 2}, {x: 5, y: 6}]}
           />
-          <VictoryArea label={"four"}
+          <VictoryArea
             data={[{x: 1, y: 2}, {x: 2, y: 3}, {x: 3, y: 3}, {x: 4, y: 4}, {x: 5, y: 7}]}
           />
         </VictoryStack>

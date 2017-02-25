@@ -189,7 +189,7 @@ export default {
     const {
       style, orientation, isVertical, scale, ticks, tickFormat, stringTicks, anchors, domain
     } = calculatedValues;
-
+    const { width, height, standalone, theme, tickValues } = props;
     const {
       globalTransform, gridOffset, gridEdge
     } = this.getLayoutProps(props, calculatedValues);
@@ -197,12 +197,11 @@ export default {
     const axisProps = this.getAxisProps(props, calculatedValues, globalTransform);
     const axisLabelProps = this.getAxisLabelProps(props, calculatedValues, globalTransform);
     const initialChildProps = { parent: {
-      style: style.parent, ticks, scale, width: props.width,
-      height: props.height, domain, standalone: props.standalone
+      style: style.parent, ticks, scale, width, height, domain, standalone, theme
     }};
 
     return ticks.reduce((childProps, indexedTick, index) => {
-      const tick = stringTicks ? props.tickValues[indexedTick - 1] : indexedTick;
+      const tick = stringTicks ? tickValues[indexedTick - 1] : indexedTick;
 
       const styles = this.getEvaluatedStyles(style, tick, index);
       const tickLayout = {
@@ -279,15 +278,16 @@ export default {
   },
 
   getTicks(props, scale) {
+    const { tickValues, tickCount, crossAxis } = props;
     if (props.tickValues) {
       if (Helpers.stringTicks(props)) {
         return range(1, props.tickValues.length + 1);
       }
-      return props.tickValues.length ? props.tickValues : scale.domain();
+      return tickValues.length ? tickValues : scale.domain();
     } else if (scale.ticks && isFunction(scale.ticks)) {
-      const scaleTicks = scale.ticks(props.tickCount);
+      const scaleTicks = scale.ticks(tickCount);
       const ticks = Array.isArray(scaleTicks) && scaleTicks.length ? scaleTicks : scale.domain();
-      if (props.crossAxis) {
+      if (crossAxis) {
         const filteredTicks = includes(ticks, 0) ? without(ticks, 0) : ticks;
         return filteredTicks.length ? filteredTicks : ticks;
       }

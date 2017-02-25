@@ -1,47 +1,35 @@
-import { Selection, Data } from "victory-core";
-import { assign, throttle, isFunction, reduce, map } from "lodash";
+import { Selection, Data, Helpers } from "victory-core";
+import { assign, throttle, isFunction } from "lodash";
 import React from "react";
 
-const Helpers = {
-  getDatasets(props) { // eslint-disable-line max-statements
+const SelectionHelpers = {
+  getDatasets(props) {
     if (props.data) {
       return [{data: props.data}];
     }
+
     const getData = (childProps) => {
       const data = Data.getData(childProps);
       return Array.isArray(data) && data.length > 0 ? data : undefined;
     };
 
-    // Reverse the child array to maintain correct order when looping over
-    // children starting from the end of the array.
-    const children = React.Children.toArray(props.children).reverse();
-    let childrenLength = children.length;
-    const dataArr = [];
-    let dataArrLength = 0;
-    let childIndex = 0;
-    while (childrenLength > 0) {
-      const child = children[--childrenLength];
-      const childName = child.props.name || childIndex;
-      childIndex++;
+    const iteratee = (child, childName, parent) => {
       if (child.type && child.type.role === "axis") {
-        childIndex++;
+        return null;
       } else if (child.type && isFunction(child.type.getData)) {
-        dataArr[dataArrLength++] = {childName, data: child.type.getData(child.props)};
-      } else if (child.props && child.props.children) {
-        const newChildren = React.Children.toArray(child.props.children);
-        const newChildrenLength = newChildren.length;
-        for (let index = 0; index < newChildrenLength; index++) {
-          children[childrenLength++] = newChildren[index];
-        }
+        child = parent ? React.cloneElement(child, parent.props) : child;
+        const childData = child.props && child.type.getData(child.props);
+        return childData ? {childName, data: childData} : null;
       } else {
-        dataArr[dataArrLength++] = {childName, data: getData(child.props)};
+        const childData = getData(child.props);
+        return childData ? {childName, data: childData} : null;
       }
-    }
-    return dataArr;
+    };
+    return Helpers.reduceChildren(React.Children.toArray(props.children), iteratee);
   },
 
   filterDatasets(datasets, bounds) {
-    const filtered = reduce(datasets, (memo, dataset) => {
+    const filtered = datasets.reduce((memo, dataset) => {
       const selectedData = this.getSelectedData(dataset.data, bounds);
       memo = selectedData ?
         memo.concat({
@@ -75,6 +63,7 @@ const Helpers = {
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
     const { dimension, scale } = targetProps;
+    const datasets = targetProps.datasets || [];
     const {x, y} = Selection.getSVGEventCoordinates(evt);
     const x1 = dimension !== "y" ? x : Selection.getDomainCoordinates(scale).x[0];
     const y1 = dimension !== "x" ? y : Selection.getDomainCoordinates(scale).y[0];
@@ -91,7 +80,7 @@ const Helpers = {
         }
       }, {
         target: "data",
-        childName: targetProps.children ? "all" : undefined,
+        childName: targetProps.children || datasets.length ? "all" : undefined,
         eventKey: "all",
         mutation: () => null
       }
@@ -117,22 +106,29 @@ const Helpers = {
 
   onMouseUp(evt, targetProps) {
     const {x2, y2} = targetProps;
-    const parentMutation = [{
-      target: "parent",
-      mutation: () => {
-        return { select: false, x1: null, x2: null, y1: null, y2: null };
-      }
-    }];
     if (!x2 || !y2) {
-      return parentMutation;
+      return [{
+        target: "parent",
+        mutation: () => {
+          return { select: false, x1: null, x2: null, y1: null, y2: null };
+        }
+      }];
     }
-    const bounds = Selection.getBounds(targetProps);
     const datasets = this.getDatasets(targetProps);
+    const bounds = Selection.getBounds(targetProps);
     const selectedData = this.filterDatasets(datasets, bounds);
     const callbackMutation = selectedData && isFunction(targetProps.onSelection) ?
       targetProps.onSelection(selectedData, bounds) : {};
+
+    const parentMutation = [{
+      target: "parent",
+      mutation: () => {
+        return { datasets, select: false, x1: null, x2: null, y1: null, y2: null };
+      }
+    }];
+
     const dataMutation = selectedData ?
-      map(selectedData, (d) => {
+      selectedData.map((d) => {
         return {
           childName: d.childName, eventKey: d.eventKey, target: "data",
           mutation: () => {
@@ -140,12 +136,13 @@ const Helpers = {
           }
         };
       }) : [];
+
     return parentMutation.concat(dataMutation);
   }
 };
 
 export default {
-  onMouseDown: Helpers.onMouseDown.bind(Helpers),
-  onMouseUp: Helpers.onMouseUp.bind(Helpers),
-  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true})
+  onMouseDown: SelectionHelpers.onMouseDown.bind(SelectionHelpers),
+  onMouseUp: SelectionHelpers.onMouseUp.bind(SelectionHelpers),
+  onMouseMove: throttle(SelectionHelpers.onMouseMove.bind(SelectionHelpers), 16, {leading: true})
 };

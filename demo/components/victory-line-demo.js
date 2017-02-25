@@ -1,13 +1,12 @@
 /*global window:false */
-import React from "react";
+import React, { PropTypes } from "react";
 import { merge, random, range } from "lodash";
 import {VictoryLine, VictoryChart} from "../../src/index";
 import { VictoryContainer, VictoryTheme, Curve, Point } from "victory-core";
 
 class PointedLine extends React.Component {
   static propTypes = {
-    ...Curve.propTypes,
-    index: React.PropTypes.number
+    index: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
   };
 
   renderLine(props) {
@@ -136,6 +135,7 @@ export default class App extends React.Component {
                     }
                   }, {
                     target: "labels",
+                    eventKey: 99,
                     mutation: () => {
                       return {text: "hey"};
                     }
@@ -144,7 +144,6 @@ export default class App extends React.Component {
               }
             }
           }]}
-          label={this.state.label}
           data={range(0, 100)}
           y={(d) => d * d}
         />
@@ -166,6 +165,7 @@ export default class App extends React.Component {
 
         <VictoryLine
           style={{parent: parentStyle}}
+          labels={(d) => Math.round(d.y)}
           data={[
             {x: new Date(1982, 1, 1), y: 125},
             {x: new Date(1987, 1, 1), y: 257},
@@ -205,7 +205,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle}}
           data={this.state.arrayData}
-          label="Hello"
           x={0}
           y={1}
           theme={VictoryTheme.grayscale}
@@ -217,7 +216,6 @@ export default class App extends React.Component {
           <VictoryLine
             style={{parent: parentStyle}}
             data={this.state.arrayData}
-            label="Hello"
             x={0}
             y={1}
           />
@@ -267,7 +265,6 @@ export default class App extends React.Component {
         <VictoryLine
           style={{parent: parentStyle}}
           data={this.state.arrayData}
-          label="Hello"
           x={0}
           domainPadding={{x: [0, 100]}}
           y={1}

@@ -1,4 +1,4 @@
-import { partialRight } from "lodash";
+import { partialRight, without } from "lodash";
 import React, { PropTypes } from "react";
 import LineHelpers from "./helper-methods";
 import {
@@ -46,7 +46,11 @@ class VictoryLine extends React.Component {
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
-      eventKey: PropTypes.oneOf(["all"]),
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
       eventHandlers: PropTypes.object
     })),
     groupComponent: PropTypes.element,
@@ -55,7 +59,11 @@ class VictoryLine extends React.Component {
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
-    label: PropTypes.string,
+    Label: CustomPropTypes.deprecated(
+      PropTypes.string,
+      "Use `labels` instead for individual data labels"
+    ),
+    labels: PropTypes.oneOfType([ PropTypes.func, PropTypes.array ]),
     labelComponent: PropTypes.element,
     name: PropTypes.string,
     padding: PropTypes.oneOfType([
@@ -122,20 +130,17 @@ class VictoryLine extends React.Component {
 
   renderData(props) {
     const { dataComponent, labelComponent, groupComponent } = props;
-
-    const dataComponents = this.dataKeys.map((_dataKey, index) => {
-      const dataProps = this.getComponentProps(dataComponent, "data", index);
-      return React.cloneElement(dataComponent, dataProps);
-    });
-
-    const labelComponents = this.dataKeys.map((_dataKey, index) => {
-      const labelProps = this.getComponentProps(labelComponent, "labels", index);
-      if (labelProps.text !== undefined && labelProps.text !== null) {
-        return React.cloneElement(labelComponent, labelProps);
+    const dataKeys = without(this.dataKeys, "all");
+    const labelComponents = dataKeys.reduce((memo, key) => {
+      const labelProps = this.getComponentProps(labelComponent, "labels", key);
+      if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
+        memo = memo.concat(React.cloneElement(labelComponent, labelProps));
       }
-    }).filter(Boolean);
-
-    return React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents);
+      return memo;
+    }, []);
+    const dataProps = this.getComponentProps(dataComponent, "data", "all");
+    const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
+    return React.cloneElement(groupComponent, {}, children);
   }
 
   shouldAnimate() {
