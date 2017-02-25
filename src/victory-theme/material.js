@@ -44,7 +44,9 @@ const baseLabelStyles = {
   fontSize,
   letterSpacing,
   padding,
-  fill: blueGrey700
+  fill: blueGrey700,
+  stroke: "transparent",
+  strokeWidth: 0
 };
 
 const centeredLabelStyles = assign({ textAnchor: "middle" }, baseLabelStyles);
@@ -94,8 +96,7 @@ export default {
         strokeLinejoin
       },
       tickLabels: assign({}, baseLabelStyles, {
-        fill: blueGrey700,
-        stroke: "transparent"
+        fill: blueGrey700
       })
     }
   }, baseProps),
@@ -132,10 +133,7 @@ export default {
         stroke: blueGrey700,
         strokeWidth: 2
       },
-      labels: assign({}, centeredLabelStyles, {
-        stroke: "transparent",
-        strokeWidth: 0
-      })
+      labels: centeredLabelStyles
     }
   }, baseProps),
   group: assign({
@@ -149,11 +147,7 @@ export default {
         stroke: blueGrey700,
         strokeWidth: 2
       },
-      labels: assign({}, baseLabelStyles, {
-        stroke: "transparent",
-        strokeWidth: 0,
-        textAnchor: "start"
-      })
+      labels: centeredLabelStyles
     }
   }, baseProps),
   pie: assign({
@@ -164,11 +158,7 @@ export default {
         stroke: blueGrey50,
         strokeWidth: 1
       },
-      labels: assign({}, baseLabelStyles, {
-        padding: 20,
-        stroke: "transparent",
-        strokeWidth: 0
-      })
+      labels: assign({}, baseLabelStyles, { padding: 20 })
     }
   }, baseProps),
   scatter: assign({
@@ -179,19 +169,14 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: assign({}, centeredLabelStyles, {
-        stroke: "transparent"
-      })
+      labels: centeredLabelStyles
     }
   }, baseProps),
   stack: assign({
     colorScale: colors
   }, baseProps),
   tooltip: {
-    style: assign({}, centeredLabelStyles, {
-      padding: 5,
-      pointerEvents: "none"
-    }),
+    style: assign({}, centeredLabelStyles, { padding: 5, pointerEvents: "none" }),
     flyoutStyle: {
       stroke: grey900,
       strokeWidth: 1,
@@ -208,10 +193,7 @@ export default {
         stroke: "transparent",
         strokeWidth: 0
       },
-      labels: assign({}, centeredLabelStyles, {
-        padding: 5,
-        pointerEvents: "none"
-      }),
+      labels: assign({}, centeredLabelStyles, { padding: 5, pointerEvents: "none" }),
       flyout: {
         stroke: grey900,
         strokeWidth: 1,

@@ -1,5 +1,6 @@
-import { defaults, isFunction, property, omit } from "lodash";
+import { defaults, isFunction, property, omit, reduce } from "lodash";
 import Collection from "./collection";
+import React from "react";
 
 export default {
   getPadding(props) {
@@ -102,5 +103,30 @@ export default {
    */
   stringTicks(props) {
     return props.tickValues !== undefined && Collection.containsStrings(props.tickValues);
+  },
+
+  /**
+   * @param {Array} children: an array of child components
+   * @param {Function} iteratee: a function with arguments "child", "childName", and "parent"
+   * @returns {Array} returns an array of results from calling the iteratee on all nested children
+   */
+  reduceChildren(children, iteratee) {
+    let childIndex = 0;
+    const traverseChildren = (childArray, parent) => {
+      return reduce(childArray, (memo, child) => {
+        const childName = child.props.name || childIndex;
+        childIndex++;
+        if (child.props && child.props.children) {
+          const nestedChildren = React.Children.toArray(child.props.children);
+          const nestedResults = traverseChildren(nestedChildren, child);
+          memo = memo.concat(nestedResults);
+        } else {
+          const result = iteratee(child, childName, parent);
+          memo = result ? memo.concat(result) : memo;
+        }
+        return memo;
+      }, []);
+    };
+    return traverseChildren(children);
   }
 };

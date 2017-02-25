@@ -6,6 +6,7 @@ import * as d3Shape from "d3-shape";
 export default class Area extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
@@ -18,18 +19,18 @@ export default class Area extends React.Component {
   };
 
   componentWillMount() {
-    const {style, areaPath, linePath} = this.calculateAttributes(this.props);
+    const {style, areaPaths, linePaths} = this.calculateAttributes(this.props);
     this.style = style;
-    this.areaPath = areaPath;
-    this.linePath = linePath;
+    this.areaPaths = areaPaths;
+    this.linePaths = linePaths;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, areaPath, linePath} = this.calculateAttributes(nextProps);
-    if (areaPath !== this.areaPath || !isEqual(style, this.style)) {
+    const {style, areaPaths, linePaths} = this.calculateAttributes(nextProps);
+    if (!isEqual(linePaths, this.linePaths) || !isEqual(style, this.style)) {
       this.style = style;
-      this.areaPath = areaPath;
-      this.linePath = linePath;
+      this.areaPaths = areaPaths;
+      this.linePaths = linePaths;
       return true;
     }
     return false;
@@ -37,6 +38,7 @@ export default class Area extends React.Component {
 
   calculateAttributes(props) {
     const {style, data, active, scale} = props;
+    const dataSegments = this.getDataSegments(data);
     const xScale = scale.x;
     const yScale = scale.y;
     const interpolation = this.toNewName(props.interpolation);
@@ -51,9 +53,27 @@ export default class Area extends React.Component {
       .y((d) => yScale(d._y1));
     return {
       style: Helpers.evaluateStyle(assign({fill: "black"}, style), data, active),
-      areaPath: areaFunction(data),
-      linePath: lineFunction(data)
+      areaPaths: dataSegments.map((segment) => areaFunction(segment)),
+      linePaths: dataSegments.map((segment) => lineFunction(segment))
     };
+  }
+
+  getDataSegments(data) {
+    let segmentStartIndex = 0;
+    const segments = data.reduce((memo, datum, index) => {
+      const yDatum = datum.y1 !== undefined ? datum._y1 : datum._y;
+      if (yDatum === null || typeof yDatum === "undefined") {
+        memo = memo.concat([data.slice(segmentStartIndex, index)]);
+        segmentStartIndex = index + 1;
+      } else if (index === data.length - 1) {
+        memo = memo.concat([data.slice(segmentStartIndex, data.length)]);
+      }
+      return memo;
+    }, []);
+
+    return segments.filter((segment) => {
+      return Array.isArray(segment) && segment.length > 1;
+    });
   }
 
   toNewName(interpolation) {
@@ -63,47 +83,52 @@ export default class Area extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderArea(path, style, events) {
+  renderArea(paths, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
     const areaStyle = assign({}, style, {stroke: areaStroke});
     const { role, shapeRendering, className } = this.props;
-    return (
-      <path
-        key="area"
-        style={areaStyle}
-        shapeRendering={shapeRendering || "auto"}
-        role={role || "presentation"}
-        d={path}
-        className={className}
-        {...events}
-      />
-    );
+    return paths.map((path, index) => {
+      return (
+        <path
+          key={`area-${index}`}
+          style={areaStyle}
+          shapeRendering={shapeRendering || "auto"}
+          role={role || "presentation"}
+          d={path}
+          className={className}
+          {...events}
+        />
+      );
+    });
   }
 
   // Overridden in victory-core-native
-  renderLine(path, style, events) {
+  renderLine(paths, style, events) {
     if (!style.stroke || style.stroke === "none" || style.stroke === "transparent") {
-      return undefined;
+      return [];
     }
     const { role, shapeRendering, className } = this.props;
     const lineStyle = assign({}, style, {fill: "none"});
-    return (
-      <path
-        key="area-stroke"
-        shapeRendering={shapeRendering || "auto"}
-        style={lineStyle}
-        role={role || "presentation"}
-        d={path}
-        className={className}
-        {...events}
-      />
-    );
+    return paths.map((path, index) => {
+      return (
+        <path
+          key={`area-stroke-${index}`}
+          style={lineStyle}
+          shapeRendering={shapeRendering || "auto"}
+          role={role || "presentation"}
+          d={path}
+          className={className}
+          {...events}
+        />
+      );
+    });
   }
 
   render() {
     const { events, groupComponent } = this.props;
-    const area = this.renderArea(this.areaPath, this.style, events);
-    const line = this.renderLine(this.linePath, this.style, events);
-    return line ? React.cloneElement(groupComponent, {}, area, line) : area;
+    const areas = this.renderArea(this.areaPaths, this.style, events);
+    const lines = this.renderLine(this.linePaths, this.style, events);
+    const children = [...lines, ...areas];
+    return children.length === 1 ? children[0] : React.cloneElement(groupComponent, {}, children);
   }
 }

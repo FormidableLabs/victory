@@ -53,37 +53,21 @@ const defaultStyle = {
   fontFamily: ""
 };
 
-const degreeToRadian = (angle) => angle * Math.PI / 180;
+const _degreeToRadian = (angle) => angle * Math.PI / 180;
 
-const getFontCharacterConstant = (fontFamily) => {
+const _getFontCharacterConstant = (fontFamily) => {
   const firstFont = fontFamily.split(",")[0].replace(/'|"/g, "");
   return fontDictionary[firstFont] || coefficients.averageFontConstant;
 };
 
-const splitToLines = (text) => text.toString().split(/\r\n|\r|\n/g);
+const _splitToLines = (text) => {
+  return Array.isArray(text) ? text : text.toString().split(/\r\n|\r|\n/g);
+};
 
-const getWidestString = (strings) => strings.reduce((max, elem) =>
-  max.length >= elem.length ? max : elem
-);
-
-const getSizeWithRotate = (axisSize, dependentSize, angle) => {
-  const angleInRadian = degreeToRadian(angle);
+const _getSizeWithRotate = (axisSize, dependentSize, angle) => {
+  const angleInRadian = _degreeToRadian(angle);
   return Math.abs(Math.cos(angleInRadian) * axisSize)
     + Math.abs(Math.sin(angleInRadian) * dependentSize);
-};
-
-const approximateTextWidthInternal = (text, style) => {
-  const strLength = getWidestString(splitToLines(text.toString())).length;
-  return (strLength * style.fontSize / style.characterConstant)
-    + style.letterSpacing * (Math.max(strLength - 1, 0));
-};
-
-const approximateTextHeightInternal = (text, style) => {
-  const splittedTextArray = splitToLines(text);
-  const lineCount = splittedTextArray.length;
-  const lineHeightNumber = style.fontSize * coefficients.lineCapitalCoef;
-  const emptySpace = style.fontSize * coefficients.lineSpaceHeightCoef;
-  return style.lineHeight * (lineHeightNumber * lineCount + emptySpace * (lineCount - 1));
 };
 
 /**
@@ -107,15 +91,34 @@ const convertLengthToPixels = (length, fontSize) => {
   return result;
 };
 
-const prepareParams = (inputStyle) => {
-  const style = defaults(inputStyle, defaultStyle);
+const _prepareParams = (inputStyle, index) => {
+  const lineStyle = Array.isArray(inputStyle) ? inputStyle[index] : inputStyle;
+  const style = defaults({}, lineStyle, defaultStyle);
   return merge({}, style, {
-    characterConstant: style.characterConstant || getFontCharacterConstant(style.fontFamily),
+    characterConstant: style.characterConstant || _getFontCharacterConstant(style.fontFamily),
     letterSpacing: convertLengthToPixels(style.letterSpacing, style.fontSize),
     fontSize: typeof (style.fontSize) === "number"
       ? style.fontSize
       : convertLengthToPixels(String(style.fontSize))
   });
+};
+
+const _approximateTextWidthInternal = (text, style) => {
+  const widths = _splitToLines(text).map((line, index) => {
+    const len = line.toString().length;
+    const {fontSize, characterConstant, letterSpacing} = _prepareParams(style, index);
+    return (len * fontSize / characterConstant) + letterSpacing * (Math.max(len - 1, 0));
+  });
+  return Math.max(...widths);
+};
+
+const _approximateTextHeightInternal = (text, style) => {
+  return _splitToLines(text).reduce((total, line, index) => {
+    const lineStyle = _prepareParams(style, index);
+    const height = lineStyle.fontSize * coefficients.lineCapitalCoef;
+    const emptySpace = index === 0 ? 0 : lineStyle.fontSize * coefficients.lineSpaceHeightCoef;
+    return total + lineStyle.lineHeight * (height + emptySpace);
+  }, 0);
 };
 
 /**
@@ -131,11 +134,11 @@ const prepareParams = (inputStyle) => {
  * @returns {number} Approximate text label height.
 */
 const approximateTextSize = (text, style) => {
-  const params = prepareParams(style);
-  const height = approximateTextHeightInternal(text, params);
-  const width = approximateTextWidthInternal(text, params);
-  const widthWithRotate = getSizeWithRotate(width, height, params.angle);
-  const heightWithRotate = getSizeWithRotate(height, width, params.angle);
+  const angle = Array.isArray(style) ? style[0] && style[0].angle : style && style.angle;
+  const height = _approximateTextHeightInternal(text, style);
+  const width = _approximateTextWidthInternal(text, style);
+  const widthWithRotate = angle ? _getSizeWithRotate(width, height, angle) : width;
+  const heightWithRotate = angle ? _getSizeWithRotate(height, width, angle) : height;
   return {
     width: widthWithRotate * coefficients.widthOverlapCoef,
     height: heightWithRotate * coefficients.heightOverlapCoef

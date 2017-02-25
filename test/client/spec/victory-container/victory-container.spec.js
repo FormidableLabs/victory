@@ -18,9 +18,9 @@ describe("components/victory-container", () => {
     expect(output.prop("role")).to.contain("img");
   });
 
-  it("renders an svg with a default title node", () => {
+  it("renders an svg with a title node", () => {
     const wrapper = shallow(
-      <VictoryContainer />
+      <VictoryContainer title="Victory Chart"/>
     );
     const output = wrapper.find("title");
     expect(output.html()).to.contain("Victory Chart");

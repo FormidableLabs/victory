@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import { assign, omit } from "lodash";
 import Portal from "../victory-portal/portal";
 import { Timer } from "../victory-util/index";
+import { default as VictoryTheme } from "../victory-theme/victory-theme";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -20,14 +21,14 @@ export default class VictoryContainer extends React.Component {
     desc: PropTypes.string,
     portalComponent: PropTypes.element,
     responsive: PropTypes.bool,
-    standalone: PropTypes.bool
+    standalone: PropTypes.bool,
+    theme: PropTypes.object
   }
 
   static defaultProps = {
-    title: "Victory Chart",
-    desc: "",
     portalComponent: <Portal/>,
-    responsive: true
+    responsive: true,
+    theme: VictoryTheme.grayscale
   }
 
   static contextTypes = {
@@ -90,8 +91,8 @@ export default class VictoryContainer extends React.Component {
     return standalone !== false ?
       (
         <svg {...svgProps} style={style} className={className}>
-          <title id="title">{title}</title>
-          <desc id="desc">{desc}</desc>
+          {title ? <title id="title">{title}</title> : null}
+          {desc ? <desc id="desc">{desc}</desc> : null}
           {this.getChildren(props)}
           {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
         </svg>

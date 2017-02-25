@@ -6,28 +6,33 @@ import * as d3Shape from "d3-shape";
 export default class Curve extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
-    index: PropTypes.number,
     interpolation: PropTypes.string,
     role: PropTypes.string,
     scale: PropTypes.object,
     shapeRendering: PropTypes.string,
-    style: PropTypes.object
+    style: PropTypes.object,
+    groupComponent: PropTypes.element
+  };
+
+  static defaultProps = {
+    groupComponent: <g/>
   };
 
   componentWillMount() {
-    const {style, path} = this.calculateAttributes(this.props);
+    const {style, paths} = this.calculateAttributes(this.props);
     this.style = style;
-    this.path = path;
+    this.paths = paths;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, path} = this.calculateAttributes(nextProps);
-    if (path !== this.path || !isEqual(style, this.style)) {
+    const {style, paths} = this.calculateAttributes(nextProps);
+    if (!isEqual(paths, this.paths) || !isEqual(style, this.style)) {
       this.style = style;
-      this.path = path;
+      this.paths = paths;
       return true;
     }
     return false;
@@ -35,6 +40,7 @@ export default class Curve extends React.Component {
 
   calculateAttributes(props) {
     const {style, data, active, scale, interpolation} = props;
+    const dataSegments = this.getDataSegments(data);
     const xScale = scale.x;
     const yScale = scale.y;
     const lineFunction = d3Shape.line()
@@ -45,9 +51,28 @@ export default class Curve extends React.Component {
       style: Helpers.evaluateStyle(
         assign({fill: "none", stroke: "black"}, style), data, active
       ),
-      path: lineFunction(data)
+      paths: dataSegments.map((d) => lineFunction(d))
     };
   }
+
+  getDataSegments(data) {
+    let segmentStartIndex = 0;
+    const segments = data.reduce((memo, datum, index) => {
+      const yDatum = datum.y1 !== undefined ? datum._y1 : datum._y;
+      if (yDatum === null || typeof yDatum === "undefined") {
+        memo = memo.concat([data.slice(segmentStartIndex, index)]);
+        segmentStartIndex = index + 1;
+      } else if (index === data.length - 1) {
+        memo = memo.concat([data.slice(segmentStartIndex, data.length)]);
+      }
+      return memo;
+    }, []);
+
+    return segments.filter((segment) => {
+      return Array.isArray(segment) && segment.length > 1;
+    });
+  }
+
 
   toNewName(interpolation) {
     // d3 shape changed the naming scheme for interpolators from "basis" -> "curveBasis" etc.
@@ -56,10 +81,14 @@ export default class Curve extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderLine(path, style, events) {
+  renderLine(path, style, events, index) { // eslint-disable-line max-params
+    if (!path) {
+      return null;
+    }
     const { role, shapeRendering, className } = this.props;
     return (
       <path
+        key={index}
         className={className}
         style={style}
         shapeRendering={shapeRendering || "auto"}
@@ -72,6 +101,12 @@ export default class Curve extends React.Component {
   }
 
   render() {
-    return this.renderLine(this.path, this.style, this.props.events);
+    const {groupComponent, events} = this.props;
+    return this.paths.length > 1 ?
+      React.cloneElement(
+        groupComponent, {},
+        this.paths.map((path, index) => this.renderLine(path, this.style, events, index))
+      ) :
+      this.renderLine(this.paths[0], this.style, events);
   }
 }
