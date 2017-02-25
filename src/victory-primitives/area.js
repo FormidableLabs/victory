@@ -72,7 +72,7 @@ export default class Area extends React.Component {
     }, []);
 
     return segments.filter((segment) => {
-      return Array.isArray(segment) && segment.length > 0;
+      return Array.isArray(segment) && segment.length > 1;
     });
   }
 

@@ -69,7 +69,7 @@ export default class Curve extends React.Component {
     }, []);
 
     return segments.filter((segment) => {
-      return Array.isArray(segment) && segment.length > 0;
+      return Array.isArray(segment) && segment.length > 1;
     });
   }
 
@@ -82,6 +82,9 @@ export default class Curve extends React.Component {
 
   // Overridden in victory-core-native
   renderLine(path, style, events, index) { // eslint-disable-line max-params
+    if (!path) {
+      return null;
+    }
     const { role, shapeRendering, className } = this.props;
     return (
       <path
