@@ -1,6 +1,16 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.0 (2017-02-24)
+
+- Adds a `theme` prop to `VictoryContainer` so that custom containers may pick up themes from their parents
+- Removes default `title` and `desc` props from `VictoryContainer`
+- Adds support for providing `text` as an array for `VictoryLabel`
+- Adds support for providing `style` as an array for `VictoryLabel` so that each line of a multi-line label may be styled independently
+- Changes how null data values are handled by `Area` and `Curve` primitives
+- Adds a `reduceChildren` method to `Helpers` to ensure order consistency when working with nested children
+- `VictoryTooltip` no longer automatically adds the `active` prop to data when hovered. To turn this behavior on, set the new `activateData` boolean prop on `VictoryTooltip`
+
 ## 13.0.4 (2017-02-21)
 
 - Supports sorting data with a `sortKey` prop.
