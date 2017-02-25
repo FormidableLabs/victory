@@ -12,7 +12,7 @@ import {
   Portal,
   VictoryClipContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions
+  PropTypes, Scale, Style, TextSize, Transitions, Selection
 } from "victory-core";
 
 import {
@@ -32,9 +32,11 @@ import {
   VictoryZoomContainer,
   VictorySelectionContainer,
   VictoryBrushContainer,
+  VictoryVoronoiContainer,
   ZoomHelpers,
   BrushHelpers,
-  SelectionHelpers
+  SelectionHelpers,
+  VoronoiHelpers
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
@@ -69,7 +71,8 @@ export {
   VictoryClipContainer,
   VictorySelectionContainer,
   VictoryBrushContainer,
-  ZoomHelpers, BrushHelpers, SelectionHelpers,
+  VictoryVoronoiContainer,
+  ZoomHelpers, BrushHelpers, SelectionHelpers, VoronoiHelpers,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
-  PropTypes, Scale, Style, TextSize, Transitions
+  PropTypes, Scale, Style, TextSize, Transitions, Selection
 };
