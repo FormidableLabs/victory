@@ -1,6 +1,23 @@
 # VictoryChart Changelog
 
-## 16.1.2 (2017-03-05)
+## 17.0.0 (2017-02-25)
+
+[432](https://github.com/FormidableLabs/victory-chart/pull/432)
+
+**This is a breaking change for `VictoryLine` and `VictoryArea` charts using the `label` prop**
+
+- Adds `VictoryVoronoiContainer` for hover events (tooltips). `VictoryVoronoiContainer` has several benefits over `VictoryVoronoi` and `VictoryVoronoiTooltip`
+  - Supports multi-dataset voronoi
+  - Much better performance (voronoi polygons are not actually rendered, so the number of nodes rendered is dramatically lower)
+  - Supports multi-data tooltips
+  - Supports rectangular selections with a dimension prop
+    _i.e._ `dimension="x"` creates vertical hover areas for every unique x value in all child data
+
+- Deprecates `label` in favor of `labels` in `VictoryLine` and `VictoryArea`, allowing individual data labels for these components like in other Victory components. This will be a breaking change for anyone using the `label` prop in `VictoryLine` or `VictoryArea`. Series labels will need to be configured manually
+
+- Changes how null values are handled in `VictoryArea`, and groups all line and area segments (i.e. split by null values) into the same `eventKey`, so that they operate as a single line for the purposes of events.
+
+## 16.1.2 (2017-02-05)
 
 - [431](https://github.com/FormidableLabs/victory-chart/pull/431)
 - Sets a maximum amount of scale per zoom event for smoother interaction with fast onWheel events
