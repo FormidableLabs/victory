@@ -2,6 +2,7 @@ import React from "react";
 import { shallow } from "enzyme";
 import Bar from "src/victory-primitives/bar";
 import SvgTestHelper from "../svg-test-helper";
+import { merge } from "lodash";
 
 describe("victory-primitives/bar", () => {
   const baseProps = {
@@ -25,7 +26,7 @@ describe("victory-primitives/bar", () => {
   });
 
   it("should render a horizontal bar", () => {
-    const props = Object.assign({}, baseProps, {horizontal: true});
+    const props = merge({}, baseProps, {horizontal: true});
 
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
@@ -33,19 +34,27 @@ describe("victory-primitives/bar", () => {
     expect(barShape.width).to.eql(10);
   });
 
-  it("should apply a default width", () => {
-    const wrapper = shallow(<Bar {...baseProps}/>);
-    const barShape = SvgTestHelper.getBarShape(wrapper);
+  it("should render a default bar width when one is not provided", () => {
+    // defaultWidth = (width - (2 * padding)) / data.length
 
-    expect(barShape.width).to.eql(0.5);
-  });
-
-  it("should allow override of width by passing a style", () => {
-    const props = Object.assign({}, baseProps, {style: {width: 2}});
+    const props = merge({}, baseProps, {
+      width: 10,
+      padding: 1,
+      data: Array(4)
+    });
 
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
 
     expect(barShape.width).to.eql(2);
+  });
+
+  it("should allow override of width by passing a style", () => {
+    const props = Object.assign({}, baseProps, {style: {width: 1}});
+
+    const wrapper = shallow(<Bar {...props}/>);
+    const barShape = SvgTestHelper.getBarShape(wrapper);
+
+    expect(barShape.width).to.eql(1);
   });
 });
