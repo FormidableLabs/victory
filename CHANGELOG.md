@@ -1,5 +1,13 @@
 # VictoryPie Changelog
 
+## 10.2.0 (2017-02-25)
+
+Updates `victory-core` to include the following changes:
+- Removes default `title` and `desc` props from `VictoryContainer`
+- Adds support for providing `text` as an array for `VictoryLabel`
+- Adds support for providing `style` as an array for `VictoryLabel` so that each line of a multi-line label may be styled independently
+- `VictoryTooltip` no longer automatically adds the `active` prop to data when hovered. To turn this behavior on, set the new `activateData` boolean prop on `VictoryTooltip`
+
 ## 10.1.0 (2017-01-30)
 
 - [128](https://github.com/FormidableLabs/victory-pie/pull/128)
