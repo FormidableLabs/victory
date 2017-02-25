@@ -1,4 +1,4 @@
-import { sortBy, defaults } from "lodash";
+import { defaults } from "lodash";
 import { Helpers, Log, Data, Domain, Scale } from "victory-core";
 
 export default {
@@ -24,8 +24,7 @@ export default {
   },
 
   getCalculatedValues(props) {
-    const sortKey = props.sortKey || "x";
-    let data = sortBy(Data.getData(props), sortKey);
+    let data = Data.getData(props);
 
     if (data.length < 2) {
       Log.warn("VictoryLine needs at least two data points to render properly.");

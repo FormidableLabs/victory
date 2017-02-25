@@ -1,4 +1,4 @@
-import { assign, pick, omit, defaults } from "lodash";
+import { assign, pick, sortBy, omit, defaults } from "lodash";
 import { Helpers, Log, Scale, Domain, Data } from "victory-core";
 
 export default {
@@ -91,7 +91,7 @@ export default {
       high: Helpers.createAccessor(props.high !== undefined ? props.high : "high"),
       low: Helpers.createAccessor(props.low !== undefined ? props.low : "low")
     };
-    return props.data.map((datum, index) => {
+    return this.sortData(props.data.map((datum, index) => {
       const evaluatedX = accessor.x(datum);
       const _x = evaluatedX !== undefined ? evaluatedX : index;
       const _open = accessor.open(datum);
@@ -104,9 +104,20 @@ export default {
         datum,
         {_x, _y, _open, _close, _high, _low},
         typeof _x === "string" ? { _x: stringMap.x[_x], x: _x } : {}
+      );
+    }), props.sortKey);
+  },
 
-        );
-    });
+  sortData(dataset, sortKey) {
+    if (!sortKey) {
+      return dataset;
+    }
+
+    if (sortKey === "x" || sortKey === "y") {
+      sortKey = `_${sortKey}`;
+    }
+
+    return sortBy(dataset, sortKey);
   },
 
   getDomain(props, axis) {

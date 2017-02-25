@@ -12,7 +12,6 @@ import VictoryScatter from "src/components/victory-scatter/victory-scatter";
 import { VictoryLabel, Point } from "victory-core";
 
 class MyPoint extends React.Component {
-
   render() { }
 }
 
@@ -72,6 +71,15 @@ describe("components/victory-scatter", () => {
       );
       const points = wrapper.find(Point);
       expect(points.length).to.equal(10);
+    });
+
+    it("sorts data by sortKey prop", () => {
+      const data = range(5).map((i) => ({x: i, y: i})).reverse();
+      const wrapper = shallow(
+        <VictoryScatter data={data} sortKey="x"/>
+      );
+      const xValues = wrapper.find(Point).map((point) => point.prop("datum")._x);
+      expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
 
     it("renders points for array-shaped data", () => {

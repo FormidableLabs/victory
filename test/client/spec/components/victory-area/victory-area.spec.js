@@ -5,7 +5,7 @@
 /*eslint-disable max-nested-callbacks */
 /* eslint no-unused-expressions: 0 */
 import React from "react";
-import { omit } from "lodash";
+import { range, omit } from "lodash";
 import { shallow, mount } from "enzyme";
 import SvgTestHelper from "../../../../svg-test-helper";
 import VictoryArea from "src/components/victory-area/victory-area";
@@ -49,6 +49,25 @@ describe("components/victory-area", () => {
 
       const area = wrapper.find(Area);
       SvgTestHelper.expectCorrectD3Path(area, props, "area");
+    });
+
+    it("sorts data according to sortKey prop", () => {
+      const props = {
+        scale: "linear",
+        interpolation: "linear",
+        sortKey: "x",
+        data: range(5).map((i) => ({x: i, y: i, y0: 0})).reverse()
+      };
+      const wrapper = shallow(
+        <VictoryArea {...props}/>
+      );
+
+      const xValues = wrapper
+        .find(Area)
+        .first()
+        .prop("data")
+        .map((datum) => datum._x);
+      expect(xValues).to.eql([0, 1, 2, 3, 4]);
     });
   });
 
