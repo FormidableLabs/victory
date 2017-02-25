@@ -112,12 +112,12 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     };
   }
 
-  getLabelStyle(props, points) {
+  getStyle(props, points, type) {
     const { labelComponent, theme } = props;
     const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
-    const defaultStyles = defaults({}, labelComponent.style, themeStyles.labels);
+    const defaultStyles = defaults({}, labelComponent.style, themeStyles[type]);
     return points.map((point) => {
-      const style = point.style && point.style.labels || {};
+      const style = point.style && point.style[type] || {};
       return Helpers.evaluateStyle(defaults({}, style, defaultStyles), point, true);
     });
   }
@@ -134,13 +134,14 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
   getLabelProps(props, points) {
     const {labels, scale, labelComponent} = props;
     const text = points.map((point) => Helpers.evaluateProp(labels, point, true));
-    const style = this.getLabelStyle(props, points);
+    const style = this.getStyle(props, points, "labels");
     const labelPosition = this.getLabelPosition(props, points, text, style);
     return defaults(
       {
         active: true,
         renderInPortal: false,
         style,
+        flyoutStyle: this.getStyle(props, points, "flyout"),
         text,
         datum: omit(points[0], ["childName", "style", "continuous"]),
         scale,
