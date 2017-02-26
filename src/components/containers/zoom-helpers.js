@@ -124,7 +124,7 @@ const Helpers = {
         callback: resumeAnimation,
         mutation: () => {
           return {
-            parentControlledProps: ["domain"],
+            parentControlledProps: ["domain"], startX: x,
             domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
           };
         }
