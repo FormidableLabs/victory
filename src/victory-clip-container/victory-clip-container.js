@@ -25,6 +25,7 @@ export default class VictoryClipContainer extends React.Component {
     ]),
     clipPathComponent: PropTypes.element,
     translateX: PropTypes.number,
+    translateY: PropTypes.number,
     transform: PropTypes.string
   }
 
@@ -73,10 +74,10 @@ export default class VictoryClipContainer extends React.Component {
 
   // Overridden in victory-core-native
   renderClipComponent(props, clipId) {
-    const { padding, translateX, clipHeight, clipWidth, clipPathComponent } = props;
+    const { padding, translateX, translateY, clipHeight, clipWidth, clipPathComponent } = props;
     return React.cloneElement(
       clipPathComponent,
-      { padding, clipId, translateX, clipWidth, clipHeight }
+      { padding, clipId, translateX, translateY, clipWidth, clipHeight }
     );
   }
 

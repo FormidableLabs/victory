@@ -152,16 +152,17 @@ export default class VictoryTransition extends React.Component {
     );
     const animationWhitelist = props.animationWhitelist || [];
     const whitelist = this.continuous ?
-      animationWhitelist.concat(["clipWidth", "clipHeight", "translateX"]) : animationWhitelist;
+      animationWhitelist.concat(["clipWidth", "clipHeight", "translateX", "translateY"]) :
+      animationWhitelist;
     const propsToAnimate = whitelist.length ? pick(combinedProps, whitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
           if (this.continuous) {
-            const { clipWidth, clipHeight, translateX, padding } = newProps;
+            const { clipWidth, clipHeight, translateX, translateY, padding } = newProps;
             const groupComponent = React.cloneElement(
               child.props.groupComponent,
-              { clipWidth, clipHeight, translateX, padding }
+              { clipWidth, clipHeight, translateX, translateY, padding }
             );
             return React.cloneElement(
               child, defaults({animate: null, groupComponent}, newProps, combinedProps)
