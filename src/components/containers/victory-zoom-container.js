@@ -13,7 +13,8 @@ export default class VictoryZoomContainer extends VictoryContainer {
     }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired,
-    allowZoom: PropTypes.bool
+    allowZoom: PropTypes.bool,
+    dimension: PropTypes.oneOf(["x", "y", null])
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
@@ -55,9 +56,11 @@ export default class VictoryZoomContainer extends VictoryContainer {
   }];
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
-    const { scale, height, clipContainerComponent } = props;
+    const { scale, clipContainerComponent } = props;
     const rangeX = scale.x.range();
+    const rangeY = scale.y.range();
     const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
+    const plottableHeight = Math.abs(rangeY[0] - rangeY[1]);
     const childComponents = [];
     let group = [];
     let groupNumber = 0;
@@ -66,8 +69,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
       return React.cloneElement(clipContainerComponent, {
         key: `ZoomClipContainer-${index}`,
         clipWidth: plottableWidth,
-        clipHeight: height,
-        translateX: rangeX[0],
+        clipHeight: plottableHeight,
+        translateX: Math.min(...rangeX),
+        translateY: Math.min(...rangeY),
         children: arr
       });
     };

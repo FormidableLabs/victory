@@ -1,5 +1,5 @@
 import { Selection, Collection } from "victory-core";
-import { throttle, isFunction } from "lodash";
+import { throttle, isFunction, defaults } from "lodash";
 
 const Helpers = {
 
@@ -55,10 +55,11 @@ const Helpers = {
       newDomain.map((val) => new Date(val)) : newDomain;
   },
 
-  getDomainScale(domain, scale) {
-    const {x: [from, to]} = domain;
-    const rangeX = scale.x.range();
-    const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
+  getDomainScale(domain, scale, axis) {
+    const axisDomain = Array.isArray(domain) ? domain : domain[axis];
+    const [from, to] = axisDomain;
+    const range = scale[axis].range();
+    const plottableWidth = Math.abs(range[0] - range[1]);
     return plottableWidth / (to - from);
   },
 
@@ -73,14 +74,15 @@ const Helpers = {
 
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const originalDomain = targetProps.originalDomain || targetProps.domain;
-    const currentDomain = targetProps.currentDomain || targetProps.zoomDomain || originalDomain;
-    const {x} = Selection.getSVGEventCoordinates(evt);
+    const {zoomDomain, domain} = targetProps;
+    const originalDomain = defaults({}, targetProps.originalDomain, domain);
+    const currentDomain = defaults({}, targetProps.currentDomain, zoomDomain, originalDomain);
+    const {x, y} = Selection.getSVGEventCoordinates(evt);
     return [{
       target: "parent",
       mutation: () => {
         return {
-          startX: x, domain: currentDomain, cachedZoomDomain: targetProps.zoomDomain,
+          startX: x, startY: y, domain: currentDomain, cachedZoomDomain: zoomDomain,
           originalDomain, currentDomain, panning: true,
           parentControlledProps: ["domain"]
         };
@@ -108,13 +110,18 @@ const Helpers = {
 
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (targetProps.panning) {
-      const { scale, startX, onDomainChange, domain, zoomDomain } = targetProps;
-      const {x} = Selection.getSVGEventCoordinates(evt);
-      const originalDomain = targetProps.originalDomain || domain;
-      const lastDomain = targetProps.currentDomain || targetProps.zoomDomain || originalDomain;
-      const calculatedDx = (startX - x) / this.getDomainScale(lastDomain, scale);
+      const { scale, domain, startX, startY, zoomDomain, onDomainChange, dimension } = targetProps;
+      const {x, y} = Selection.getSVGEventCoordinates(evt);
+      const originalDomain = defaults({}, targetProps.originalDomain, domain);
+      const lastDomain = defaults({}, targetProps.currentDomain, zoomDomain, originalDomain);
+      const calculatedDx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
+      const calculatedDy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
       const nextXDomain = this.pan(lastDomain.x, originalDomain.x, calculatedDx);
-      const currentDomain = { x: nextXDomain, y: originalDomain.y };
+      const nextYDomain = this.pan(lastDomain.y, originalDomain.y, calculatedDy);
+      const currentDomain = {
+        x: dimension === "y" ? originalDomain.x : nextXDomain,
+        y: dimension === "x" ? originalDomain.y : nextYDomain
+      };
       const resumeAnimation = this.handleAnimation(ctx);
       if (isFunction(onDomainChange)) {
         onDomainChange(currentDomain);
@@ -124,7 +131,7 @@ const Helpers = {
         callback: resumeAnimation,
         mutation: () => {
           return {
-            parentControlledProps: ["domain"], startX: x,
+            parentControlledProps: ["domain"], startX: x, startY: y,
             domain: currentDomain, currentDomain, originalDomain, cachedZoomDomain: zoomDomain
           };
         }
@@ -136,15 +143,18 @@ const Helpers = {
     if (!targetProps.allowZoom) {
       return {};
     }
-    const { onDomainChange, domain, zoomDomain } = targetProps;
-    const originalDomain = targetProps.originalDomain || domain;
-    const lastDomain = targetProps.currentDomain || zoomDomain || originalDomain;
-    const {x} = lastDomain;
-    const xBounds = originalDomain.x;
+    const { onDomainChange, zoomDomain, domain, dimension } = targetProps;
+    const originalDomain = defaults({}, targetProps.originalDomain, domain);
+    const lastDomain = defaults({}, targetProps.currentDomain, zoomDomain, originalDomain);
+    const {x, y} = lastDomain;
     const sign = evt.deltaY > 0 ? 1 : -1;
     const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
-    const nextXDomain = this.scale(x, xBounds, 1 + sign * delta);
-    const currentDomain = { x: nextXDomain, y: originalDomain.y };
+    const nextXDomain = this.scale(x, originalDomain.x, 1 + sign * delta);
+    const nextYDomain = this.scale(y, originalDomain.y, 1 + sign * delta);
+    const currentDomain = {
+      x: dimension === "y" ? originalDomain.x : nextXDomain,
+      y: dimension === "x" ? originalDomain.y : nextYDomain
+    };
     const resumeAnimation = this.handleAnimation(ctx);
     if (isFunction(onDomainChange)) {
       onDomainChange(currentDomain);

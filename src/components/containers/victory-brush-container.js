@@ -101,10 +101,9 @@ export default class VictoryBrushContainer extends VictoryContainer {
 
   getRect(props) {
     const {currentDomain, cachedSelectedDomain, scale} = props;
-    const selectedDomain = BrushHelpers.getDomain(props.selectedDomain, props);
-    const propsDomain = BrushHelpers.getDomain(props.domain, props);
+    const selectedDomain = defaults({}, props.selectedDomain, props.domain);
     const domain = isEqual(selectedDomain, cachedSelectedDomain) ?
-      currentDomain || selectedDomain || propsDomain : selectedDomain || propsDomain;
+      defaults({}, currentDomain, selectedDomain) : selectedDomain;
     const coordinates = Selection.getDomainCoordinates(scale, domain);
     const selectBox = this.getSelectBox(props, coordinates);
     return selectBox ?
