@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 17.0.1 (2017-02-25)
+
+[437](https://github.com/FormidableLabs/victory-chart/pull/437)
+- Fixes a bug with `VictoryZoomContainer` panning behavior
+
 ## 17.0.0 (2017-02-25)
 
 [432](https://github.com/FormidableLabs/victory-chart/pull/432)
