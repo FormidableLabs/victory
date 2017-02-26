@@ -153,7 +153,7 @@ class App extends React.Component {
             domain={{x: [0, 10], y: [-5, 5]}}
             containerComponent={
               <VictoryBrushContainer
-                selectedDomain={{x: [0, 10], y: [-5, 5]}}
+                selectedDomain={{x: [0, 10]}}
               />
             }
             size={(datum, active) => active ? 5 : 3}
@@ -293,6 +293,27 @@ class App extends React.Component {
               ]}
             />
           </VictoryStack>
+
+          <VictoryLine style={chartStyle}
+            containerComponent={
+              <VictoryBrushContainer
+                selectedDomain={{y: [-3, 3]}}
+                selectionComponent={<rect style={{fill: "teal"}}/>}
+              />
+            }
+            style={{
+              data: {stroke: "teal"}
+            }}
+            data={[
+              {x: 1, y: -3},
+              {x: 2, y: 5},
+              {x: 3, y: -3},
+              {x: 4, y: 0},
+              {x: 5, y: -5},
+              {x: 6, y: 2},
+              {x: 7, y: 0}
+            ]}
+          />
         </div>
       </div>
     );
