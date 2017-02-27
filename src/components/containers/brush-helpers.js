@@ -1,5 +1,5 @@
-import { Selection } from "victory-core";
-import { assign, throttle, isFunction, isEqual } from "lodash";
+import { Selection} from "victory-core";
+import { assign, throttle, isFunction, isEqual, defaults } from "lodash";
 
 
 const Helpers = {
@@ -14,9 +14,9 @@ const Helpers = {
   },
 
   getDomainBox(props, fullDomain, selectedDomain) {
-    const { dimension, scale, domain } = props;
-    fullDomain = fullDomain || domain || this.getOriginalDomain(props);
-    selectedDomain = selectedDomain || fullDomain;
+    const { dimension, scale } = props;
+    fullDomain = defaults({}, fullDomain, props.domain);
+    selectedDomain = defaults({}, selectedDomain, fullDomain);
     const fullCoordinates = Selection.getDomainCoordinates(scale, fullDomain);
     const selectedCoordinates = Selection.getDomainCoordinates(scale, selectedDomain);
 
@@ -81,7 +81,9 @@ const Helpers = {
   },
 
   panBox(props, point) {
-    const {fullDomain, selectedDomain, dimension, startX, startY} = props;
+    const {dimension, domain, startX, startY} = props;
+    const selectedDomain = defaults({}, props.selectedDomain, domain);
+    const fullDomain = defaults({}, props.fullDomain, domain);
     const {x1, x2, y1, y2} = props.x1 ?
       props : this.getDomainBox(props, fullDomain, selectedDomain);
 
@@ -111,8 +113,9 @@ const Helpers = {
   onMouseDown(evt, targetProps) { // eslint-disable-line max-statements
     evt.preventDefault();
     const {
-      dimension, selectedDomain, domain, handleWidth, onDomainChange, cachedSelectedDomain
+      dimension, handleWidth, onDomainChange, cachedSelectedDomain, domain
     } = targetProps;
+    const selectedDomain = defaults({}, targetProps.selectedDomain, domain);
     const fullDomainBox = targetProps.fullDomainBox ||
       this.getDomainBox(targetProps, domain);
     const currentDomain = isEqual(selectedDomain, cachedSelectedDomain) ?
@@ -224,7 +227,7 @@ const Helpers = {
   },
 
   onMouseUp(evt, targetProps) {
-    const {x1, y1, x2, y2, domain, onDomainChange} = targetProps;
+    const {x1, y1, x2, y2, onDomainChange, domain} = targetProps;
     // if the mouse hasn't moved since a mouseDown event, select the whole domain region
     if (x1 === x2 || y1 === y2) {
       if (isFunction(onDomainChange)) {

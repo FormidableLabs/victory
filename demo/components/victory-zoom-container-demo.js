@@ -99,7 +99,6 @@ export default class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer
                 zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}}
-                allowZoom={false}
               />
             }
             scale={{
@@ -111,10 +110,8 @@ export default class App extends React.Component {
             />
             <VictoryLine
               style={{
-                data: {stroke: "red", strokeWidth: 5},
-                labels: {fontSize: 12}
+                data: {stroke: "red", strokeWidth: 5}
               }}
-              label={this.state.label}
               data={[
                 {x: new Date(1982, 1, 1), y: 125},
                 {x: new Date(1987, 1, 1), y: 257},
@@ -130,7 +127,9 @@ export default class App extends React.Component {
 
           <VictoryChart style={{parent: parentStyle}}
             animate={{duration: 1500}}
-            containerComponent={<VictoryZoomContainer/>}
+            containerComponent={
+              <VictoryZoomContainer zoomDomain={{x: [0, 50]}} minimumZoom={{x: 5}}/>
+            }
           >
             <VictoryLine
               style={{parent: parentStyle, data: this.state.style}}
@@ -196,7 +195,6 @@ export default class App extends React.Component {
                   }
                 }
               }]}
-              label={this.state.label}
               data={range(0, 100)}
               y={(d) => d * d}
             />

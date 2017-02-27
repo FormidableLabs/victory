@@ -1,7 +1,7 @@
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
-import { assign, isEqual } from "lodash";
+import { assign, defaults, isEqual } from "lodash";
 
 
 export default class VictoryBrushContainer extends VictoryContainer {
@@ -31,7 +31,6 @@ export default class VictoryBrushContainer extends VictoryContainer {
       stroke: "transparent",
       fill: "transparent"
     },
-    dimension: "x",
     handleWidth: 8,
     selectionComponent: <rect/>,
     handleComponent: <rect/>
@@ -62,6 +61,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
   getSelectBox(props, coordinates) {
     const {x, y} = coordinates;
     const {selectionStyle, selectionComponent} = props;
+    const selectionComponentStyle = selectionComponent.props && selectionComponent.props.style;
     return x[0] !== x[1] && y[0] !== y[1] ?
       React.cloneElement(selectionComponent, {
         width: Math.abs(x[1] - x[0]) || 1,
@@ -69,7 +69,7 @@ export default class VictoryBrushContainer extends VictoryContainer {
         x: Math.min(x[0], x[1]),
         y: Math.min(y[0], y[1]),
         cursor: "move",
-        style: selectionStyle
+        style: defaults({}, selectionComponentStyle, selectionStyle)
       }) : null;
   }
 
@@ -78,8 +78,10 @@ export default class VictoryBrushContainer extends VictoryContainer {
     const {x, y} = coordinates;
     const width = Math.abs(x[1] - x[0]) || 1;
     const height = Math.abs(y[1] - y[0]) || 1;
-    const yProps = { style: handleStyle, width, height: handleWidth, cursor: "ns-resize"};
-    const xProps = { style: handleStyle, width: handleWidth, height, cursor: "ew-resize"};
+    const handleComponentStyle = handleComponent.props && handleComponent.props.style || {};
+    const style = defaults({}, handleComponentStyle, handleStyle);
+    const yProps = { style, width, height: handleWidth, cursor: "ns-resize"};
+    const xProps = { style, width: handleWidth, height, cursor: "ew-resize"};
     const handleProps = {
       top: dimension !== "x" && assign({x: x[0], y: y[1] - (handleWidth / 2)}, yProps),
       bottom: dimension !== "x" && assign({x: x[0], y: y[0] - (handleWidth / 2)}, yProps),
@@ -98,9 +100,10 @@ export default class VictoryBrushContainer extends VictoryContainer {
   }
 
   getRect(props) {
-    const {selectedDomain, currentDomain, cachedSelectedDomain, scale} = props;
+    const {currentDomain, cachedSelectedDomain, scale} = props;
+    const selectedDomain = defaults({}, props.selectedDomain, props.domain);
     const domain = isEqual(selectedDomain, cachedSelectedDomain) ?
-      currentDomain || selectedDomain || props.domain : selectedDomain || props.domain;
+      defaults({}, currentDomain, selectedDomain) : selectedDomain;
     const coordinates = Selection.getDomainCoordinates(scale, domain);
     const selectBox = this.getSelectBox(props, coordinates);
     return selectBox ?

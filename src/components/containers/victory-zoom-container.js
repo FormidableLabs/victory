@@ -11,9 +11,14 @@ export default class VictoryZoomContainer extends VictoryContainer {
       x: CustomPropTypes.domain,
       y: CustomPropTypes.domain
     }),
+    minimumZoom: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number
+    }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired,
-    allowZoom: PropTypes.bool
+    allowZoom: PropTypes.bool,
+    dimension: PropTypes.oneOf(["x", "y"])
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
@@ -55,9 +60,11 @@ export default class VictoryZoomContainer extends VictoryContainer {
   }];
 
   clipDataComponents(children, props) { //eslint-disable-line max-statements
-    const { scale, height, clipContainerComponent } = props;
+    const { scale, clipContainerComponent } = props;
     const rangeX = scale.x.range();
+    const rangeY = scale.y.range();
     const plottableWidth = Math.abs(rangeX[0] - rangeX[1]);
+    const plottableHeight = Math.abs(rangeY[0] - rangeY[1]);
     const childComponents = [];
     let group = [];
     let groupNumber = 0;
@@ -66,8 +73,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
       return React.cloneElement(clipContainerComponent, {
         key: `ZoomClipContainer-${index}`,
         clipWidth: plottableWidth,
-        clipHeight: height,
-        translateX: rangeX[0],
+        clipHeight: plottableHeight,
+        translateX: Math.min(...rangeX),
+        translateY: Math.min(...rangeY),
         children: arr
       });
     };
@@ -99,10 +107,12 @@ export default class VictoryZoomContainer extends VictoryContainer {
     const childComponents = React.Children.toArray(props.children);
 
     return childComponents.map((child) => {
-      const {zoomDomain, cachedZoomDomain, currentDomain} = props;
+      const {currentDomain} = props;
+      const originalDomain = defaults({}, props.original, props.domain);
+      const zoomDomain = defaults({}, props.zoomDomain, props.domain);
+      const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
       const domain = isEqual(zoomDomain, cachedZoomDomain) ?
-        currentDomain || zoomDomain : zoomDomain;
-
+        defaults({}, currentDomain, originalDomain) : zoomDomain;
       return React.cloneElement(
         child, defaults({domain}, child.props)
       );

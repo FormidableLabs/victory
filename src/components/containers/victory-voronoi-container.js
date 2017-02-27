@@ -141,7 +141,7 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
         active: true,
         renderInPortal: false,
         style,
-        flyoutStyle: this.getStyle(props, points, "flyout"),
+        flyoutStyle: this.getStyle(props, points, "flyout")[0],
         text,
         datum: omit(points[0], ["childName", "style", "continuous"]),
         scale,

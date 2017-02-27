@@ -75,7 +75,10 @@ class VictoryAxis extends React.Component {
         left: PropTypes.number, right: PropTypes.number
       })
     ]),
-    scale: CustomPropTypes.scale,
+    scale: PropTypes.oneOfType([
+      CustomPropTypes.scale,
+      PropTypes.shape({ x: CustomPropTypes.scale, y: CustomPropTypes.scale })
+    ]),
     sharedEvents: PropTypes.shape({ events: PropTypes.array, getEventState: PropTypes.func }),
     standalone: PropTypes.bool,
     style: PropTypes.shape({
