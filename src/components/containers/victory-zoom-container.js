@@ -14,7 +14,7 @@ export default class VictoryZoomContainer extends VictoryContainer {
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired,
     allowZoom: PropTypes.bool,
-    dimension: PropTypes.oneOf(["x", "y", null])
+    dimension: PropTypes.oneOf(["x", "y"])
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,

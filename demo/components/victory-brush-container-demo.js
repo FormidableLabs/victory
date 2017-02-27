@@ -99,7 +99,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle}
             containerComponent={
-              <VictoryBrushContainer/>
+              <VictoryBrushContainer dimension={null}/>
             }
           >
             <VictoryLine
