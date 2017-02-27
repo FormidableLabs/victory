@@ -1,11 +1,15 @@
 # Victory Changelog
 
-## 0.18.0 (2017-02-25)
+## 0.18.0 (2017-02-27)
 **(VictoryVoronoiContainer)**
 
 **BREAKING CHANGES**
   - `VictoryTooltip` no longer automatically adds the `active` prop to data when hovered. To turn this behavior on, set the new `activateData` boolean prop on `VictoryTooltip`
   - Deprecates `label` in favor of `labels` in `VictoryLine` and `VictoryArea`, allowing individual data labels for these components like in other Victory components. This will be a breaking change for anyone using the `label` prop in `VictoryLine` or `VictoryArea`. Series labels will need to be configured manually.
+  - `VictoryZoomContainer` now zooms both x and y dimensions, use the prop `dimension="x"` to return to the old behavior
+  - `VictoryZoomContainer` now centers zoom behavior on the mouse position rather than the center of the chart
+  - `VictoryZoomContainer` has a minimum zoom level of the extent of the domain / 1000. Set a custom minimum with the `minimumZoom` prop, which takes an object with numeric values for x and/ or y.
+  - `VictoryBrushContainer` no longer has `dimension="x"` as the default value.
 
 **Deprecation Notice**
 `VictoryVoronoi` and `VictoryVoronoiTooltip` have been replaced by `VictoryVoronoiContainer` and will be deprecated in version 0.20.0
@@ -32,6 +36,14 @@
 - Deprecates `label` in favor of `labels` in `VictoryLine` and `VictoryArea`, allowing individual data labels for these components like in other Victory components. This will be a breaking change for anyone using the `label` prop in `VictoryLine` or `VictoryArea`. Series labels will need to be configured manually
 - Changes how null values are handled in `VictoryArea`, and groups all line and area segments (i.e. split by null values) into the same `eventKey`, so that they operate as a single line for the purposes of events.
 
+[victory-chart/438](https://github.com/FormidableLabs/victory-chart/pull/438)
+- Supports x and y dimension zooming in `VictoryZoomContainer`
+- Adds a `minimumZoom` prop for `VictoryZoomContainer`
+- Zooming centers on mouse position rather than in the center of the chart
+
+[victory-core/207](https://github.com/FormidableLabs/victory-core/pull/207)
+- Adds a `translateY` prop for `ClipPath` to support x, y zoom behavior
+- Removes default `clipPadding` in `ClipPath`
 
 ## 0.17.0 (2017-02-05)
 
