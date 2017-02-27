@@ -68,7 +68,7 @@ export default class App extends React.Component {
         transitionData: this.getTransitionData(),
         style: this.getStyles()
       });
-    }, 3000);
+    }, 30000);
   }
 
   componentWillUnmount() {
@@ -99,7 +99,6 @@ export default class App extends React.Component {
             containerComponent={
               <VictoryZoomContainer
                 zoomDomain={{x: [new Date(1993, 1, 1), new Date(2005, 1, 1)]}}
-                allowZoom={false}
               />
             }
             scale={{

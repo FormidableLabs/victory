@@ -6,25 +6,53 @@ const Helpers = {
   /**
    * Generates a new domain scaled by factor and constrained by the original domain.
    * @param  {[Number, Number]} currentDomain  The domain to be scaled.
-   * @param  {[Number, Number]} originalDomain The original domain for the data set.
-   * @param  {Number}           factor         The delta to translate by
+   * @param  {Object} evt the event object
+   * @param  {Object} props the props of the targeted component
+   * @param  {String} axis the desired dimension (either x or y)
    * @return {[Number, Number]}                The scale domain
    */
-  scale(currentDomain, originalDomain, factor) {
+  scale(currentDomain, evt, props, axis) { // eslint-disable-line max-params
+    const originalDomain = this.getOriginalDomain(props)[axis];
     const [fromBound, toBound] = originalDomain;
     const [from, to] = currentDomain;
-    const range = Math.abs(from - to);
-    const midpoint = +from + (range / 2);
-    const newRange = (range * Math.abs(factor)) / 2;
+    const range = Math.abs(to - from);
+    const diff = range - (range * this.getScaleFactor(evt));
+    const percent = this.getScalePercent(evt, props, axis);
     const minDomain = Collection.containsDates(originalDomain) ?
-      [ new Date(midpoint - 4), new Date(midpoint) ] : // 4ms is standard browser date precision
-      [ midpoint - 1 / Number.MAX_SAFE_INTEGER, midpoint ];
+      [ new Date(+from - 4), new Date(+from) ] : // 4ms is standard browser date precision
+      [ +from - 1 / Number.MAX_SAFE_INTEGER, +from ];
+    const newMin = +from + (diff * percent);
+    const newMax = +to - (diff * (1 - percent));
     const newDomain = [
-      Collection.getMaxValue([midpoint - newRange, fromBound]),
-      Collection.getMinValue([midpoint + newRange, toBound])
+      Collection.getMaxValue([Math.min(newMin, newMax), fromBound]),
+      Collection.getMinValue([Math.max(newMin, newMax), toBound])
     ];
-    return Math.abs(minDomain[1] - minDomain[0]) > Math.abs(newDomain[1] - newDomain[0]) ?
+    const domain = Math.abs(minDomain[1] - minDomain[0]) > Math.abs(newDomain[1] - newDomain[0]) ?
       minDomain : newDomain;
+    return Collection.containsDates(originalDomain) ?
+      [ new Date(domain[0]), new Date(domain[1]) ] : domain;
+  },
+
+  getScaleFactor(evt) {
+    const sign = evt.deltaY > 0 ? 1 : -1;
+    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
+    return Math.abs(1 + sign * delta);
+  },
+
+  getScalePercent(evt, props, axis) {
+    const originalDomain = this.getOriginalDomain(props);
+    const [from, to] = originalDomain[axis];
+    const position = this.getPosition(evt, props, originalDomain);
+    return (position[axis] - from) / Math.abs(to - from);
+  },
+
+  getPosition(evt, props, originalDomain) {
+    const {x, y} = Selection.getSVGEventCoordinates(evt);
+    const originalScale = {
+      x: props.scale.x.domain(originalDomain.x),
+      y: props.scale.y.domain(originalDomain.y)
+    };
+    return Selection.getDataCoordinates(originalScale, x, y);
   },
 
   /**
@@ -72,11 +100,18 @@ const Helpers = {
     }
   },
 
+  getOriginalDomain(props) {
+    const {originalDomain, domain, scale} = props;
+    const scaleDomain = { x: scale.x.domain(), y: scale.y.domain() };
+    return defaults({}, originalDomain, domain, scaleDomain);
+  },
+
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const {zoomDomain, domain} = targetProps;
-    const originalDomain = defaults({}, targetProps.originalDomain, domain);
-    const currentDomain = defaults({}, targetProps.currentDomain, zoomDomain, originalDomain);
+    const originalDomain = this.getOriginalDomain(targetProps);
+    const zoomDomain = defaults({}, targetProps.zoomDomain, originalDomain);
+    const currentDomain = targetProps.currentDomain ?
+      defaults({}, targetProps.currentDomain, zoomDomain) : zoomDomain;
     const {x, y} = Selection.getSVGEventCoordinates(evt);
     return [{
       target: "parent",
@@ -110,17 +145,17 @@ const Helpers = {
 
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (targetProps.panning) {
-      const { scale, domain, startX, startY, zoomDomain, onDomainChange, dimension } = targetProps;
+      const { scale, startX, startY, onDomainChange, dimension } = targetProps;
       const {x, y} = Selection.getSVGEventCoordinates(evt);
-      const originalDomain = defaults({}, targetProps.originalDomain, domain);
-      const lastDomain = defaults({}, targetProps.currentDomain, zoomDomain, originalDomain);
-      const calculatedDx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
-      const calculatedDy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
-      const nextXDomain = this.pan(lastDomain.x, originalDomain.x, calculatedDx);
-      const nextYDomain = this.pan(lastDomain.y, originalDomain.y, calculatedDy);
+      const originalDomain = this.getOriginalDomain(targetProps);
+      const zoomDomain = defaults({}, targetProps.zoomDomain, originalDomain);
+      const lastDomain = targetProps.currentDomain ?
+        defaults({}, targetProps.currentDomain, zoomDomain) : zoomDomain;
+      const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
+      const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
       const currentDomain = {
-        x: dimension === "y" ? originalDomain.x : nextXDomain,
-        y: dimension === "x" ? originalDomain.y : nextYDomain
+        x: dimension === "y" ? originalDomain.x : this.pan(lastDomain.x, originalDomain.x, dx),
+        y: dimension === "x" ? originalDomain.y : this.pan(lastDomain.y, originalDomain.y, dy)
       };
       const resumeAnimation = this.handleAnimation(ctx);
       if (isFunction(onDomainChange)) {
@@ -143,17 +178,15 @@ const Helpers = {
     if (!targetProps.allowZoom) {
       return {};
     }
-    const { onDomainChange, zoomDomain, domain, dimension } = targetProps;
-    const originalDomain = defaults({}, targetProps.originalDomain, domain);
-    const lastDomain = defaults({}, targetProps.currentDomain, zoomDomain, originalDomain);
+    const { onDomainChange, dimension } = targetProps;
+    const originalDomain = this.getOriginalDomain(targetProps);
+    const zoomDomain = defaults({}, targetProps.zoomDomain, originalDomain);
+    const lastDomain = targetProps.currentDomain ?
+      defaults({}, targetProps.currentDomain, zoomDomain) : zoomDomain;
     const {x, y} = lastDomain;
-    const sign = evt.deltaY > 0 ? 1 : -1;
-    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
-    const nextXDomain = this.scale(x, originalDomain.x, 1 + sign * delta);
-    const nextYDomain = this.scale(y, originalDomain.y, 1 + sign * delta);
     const currentDomain = {
-      x: dimension === "y" ? originalDomain.x : nextXDomain,
-      y: dimension === "x" ? originalDomain.y : nextYDomain
+      x: dimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
+      y: dimension === "x" ? lastDomain.y : this.scale(y, evt, targetProps, "y")
     };
     const resumeAnimation = this.handleAnimation(ctx);
     if (isFunction(onDomainChange)) {

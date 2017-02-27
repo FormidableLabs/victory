@@ -11,6 +11,10 @@ export default class VictoryZoomContainer extends VictoryContainer {
       x: CustomPropTypes.domain,
       y: CustomPropTypes.domain
     }),
+    minimumDomain: PropTypes.shape({
+      x: CustomPropTypes.domain,
+      y: CustomPropTypes.domain
+    }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired,
     allowZoom: PropTypes.bool,
@@ -103,11 +107,12 @@ export default class VictoryZoomContainer extends VictoryContainer {
     const childComponents = React.Children.toArray(props.children);
 
     return childComponents.map((child) => {
-      const {cachedZoomDomain, currentDomain} = props;
+      const {currentDomain} = props;
+      const originalDomain = defaults({}, props.original, props.domain);
       const zoomDomain = defaults({}, props.zoomDomain, props.domain);
+      const cachedZoomDomain = defaults({}, props.cachedZoomDomain, props.domain);
       const domain = isEqual(zoomDomain, cachedZoomDomain) ?
-        defaults({}, currentDomain, zoomDomain) : zoomDomain;
-
+        defaults({}, currentDomain, originalDomain) : zoomDomain;
       return React.cloneElement(
         child, defaults({domain}, child.props)
       );
