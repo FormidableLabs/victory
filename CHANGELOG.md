@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.1
+
+[207](https://github.com/FormidableLabs/victory-core/pull/207)
+  - Adds a `translateY` prop for clipPath to support x, y zoom behavior
+  - Removes default clipPadding
+
 ## 14.0.0 (2017-02-24)
 
 - Adds a `theme` prop to `VictoryContainer` so that custom containers may pick up themes from their parents
