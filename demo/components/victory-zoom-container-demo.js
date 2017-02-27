@@ -111,10 +111,8 @@ export default class App extends React.Component {
             />
             <VictoryLine
               style={{
-                data: {stroke: "red", strokeWidth: 5},
-                labels: {fontSize: 12}
+                data: {stroke: "red", strokeWidth: 5}
               }}
-              label={this.state.label}
               data={[
                 {x: new Date(1982, 1, 1), y: 125},
                 {x: new Date(1987, 1, 1), y: 257},
@@ -196,7 +194,6 @@ export default class App extends React.Component {
                   }
                 }
               }]}
-              label={this.state.label}
               data={range(0, 100)}
               y={(d) => d * d}
             />
