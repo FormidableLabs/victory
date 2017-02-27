@@ -1,15 +1,60 @@
 # Victory Changelog
 
-## 0.16.2 (2017-02-05)
+## 0.18.0 (2017-02-27)
+**(VictoryVoronoiContainer)**
 
-- [195](https://github.com/FormidableLabs/victory-core/pull/195)
+**BREAKING CHANGES**
+  - `VictoryTooltip` no longer automatically adds the `active` prop to data when hovered. To turn this behavior on, set the new `activateData` boolean prop on `VictoryTooltip`
+  - Deprecates `label` in favor of `labels` in `VictoryLine` and `VictoryArea`, allowing individual data labels for these components like in other Victory components. This will be a breaking change for anyone using the `label` prop in `VictoryLine` or `VictoryArea`. Series labels will need to be configured manually.
+  - `VictoryZoomContainer` now zooms both x and y dimensions, use the prop `dimension="x"` to return to the old behavior
+  - `VictoryZoomContainer` now centers zoom behavior on the mouse position rather than the center of the chart
+  - `VictoryZoomContainer` has a minimum zoom level of the extent of the domain / 1000. Set a custom minimum with the `minimumZoom` prop, which takes an object with numeric values for x and/ or y.
+  - `VictoryBrushContainer` no longer has `dimension="x"` as the default value.
+
+**Deprecation Notice**
+`VictoryVoronoi` and `VictoryVoronoiTooltip` have been replaced by `VictoryVoronoiContainer` and will be deprecated in version 0.20.0
+
+[victory-core/196](https://github.com/FormidableLabs/victory-core/pull/196)
+- `VictoryTooltip` no longer automatically adds the `active` prop to data when hovered. To turn this behavior on, set the new `activateData` boolean prop on `VictoryTooltip`
+- Adds a `theme` prop to `VictoryContainer` so that custom containers may pick up themes from their parents
+- Removes default `title` and `desc` props from `VictoryContainer`
+- Adds support for providing `text` as an array for `VictoryLabel`
+- Adds support for providing `style` as an array for `VictoryLabel` so that each line of a multi-line label may be styled independently
+- Changes how null data values are handled by `Area` and `Curve` primitives
+- Adds a `reduceChildren` method to `Helpers` to ensure order consistency when working with nested children
+
+[victory-core/201](https://github.com/FormidableLabs/victory-core/pull/201)
+- implements data sorting for all components with a `sortKey` props
+
+[victory-chart/432](https://github.com/FormidableLabs/victory-chart/pull/432)
+- Adds `VictoryVoronoiContainer` for hover events (tooltips). `VictoryVoronoiContainer` has several benefits over `VictoryVoronoi` and `VictoryVoronoiTooltip`
+  - Supports multi-dataset voronoi
+  - Much better performance (voronoi polygons are not actually rendered, so the number of nodes rendered is dramatically lower)
+  - Supports multi-data tooltips
+  - Supports rectangular selections with a dimension prop
+    _i.e._ `dimension="x"` creates vertical hover areas for every unique x value in all child data
+- Deprecates `label` in favor of `labels` in `VictoryLine` and `VictoryArea`, allowing individual data labels for these components like in other Victory components. This will be a breaking change for anyone using the `label` prop in `VictoryLine` or `VictoryArea`. Series labels will need to be configured manually
+- Changes how null values are handled in `VictoryArea`, and groups all line and area segments (i.e. split by null values) into the same `eventKey`, so that they operate as a single line for the purposes of events.
+
+[victory-chart/438](https://github.com/FormidableLabs/victory-chart/pull/438)
+- Supports x and y dimension zooming in `VictoryZoomContainer`
+- Adds a `minimumZoom` prop for `VictoryZoomContainer`
+- Zooming centers on mouse position rather than in the center of the chart
+
+[victory-core/207](https://github.com/FormidableLabs/victory-core/pull/207)
+- Adds a `translateY` prop for `ClipPath` to support x, y zoom behavior
+- Removes default `clipPadding` in `ClipPath`
+
+## 0.17.0 (2017-02-05)
+
+- [victory-core/195](https://github.com/FormidableLabs/victory-core/pull/195)
   - Fixes null event state bug
-- [431](https://github.com/FormidableLabs/victory-chart/pull/431)
+- [victory-chart/431](https://github.com/FormidableLabs/victory-chart/pull/431)
   - Sets a maximum amount of scale per zoom event for smoother interaction with fast onWheel events
 
 ## 0.16.1 (2017-02-03)
 
-- [429](https://github.com/FormidableLabs/victory-chart/pull/429)
+- [victory-chart/429](https://github.com/FormidableLabs/victory-chart/pull/429)
 - Throttles `onWheel` and `onMouseMove` events on Victory container components
 - Exports container event helpers
 
@@ -17,9 +62,9 @@
 
 **This release includes major breaking changes related to `VictoryZoom`**
 
-- [189](https://github.com/FormidableLabs/victory-core/pull/189) and [191](https://github.com/FormidableLabs/victory-core/pull/190)
+- [victory-core/189](https://github.com/FormidableLabs/victory-core/pull/189) and [191](https://github.com/FormidableLabs/victory-core/pull/190)
   - Adds `VictoryLegend` component
-- [190](https://github.com/FormidableLabs/victory-core/pull/190)
+- [victory-core/190](https://github.com/FormidableLabs/victory-core/pull/190)
   - Allows `VictoryContainer` to render either `<g>` or `<svg>` depending on the value of the standalone prop
   - Passes a timer down in context for `VictorySharedEvents`
   - Event handlers have access to the context they are being called from via an argument
@@ -28,7 +73,7 @@
     - useful for `VictoryZoomContainer`
   - Adds the ability to define callbacks in the events prop that will be called after `setState`
     - useful for allowing `VictoryZoomContainer` to call methods like `resumeAnimation`
-- [427](https://github.com/FormidableLabs/victory-chart/pull/427)
+- [victory-chart/427](https://github.com/FormidableLabs/victory-chart/pull/427)
   - Adds `VictoryBrushContainer`
   - Adds `VictoryZoomContainer` to replace `VictoryZoom`
   - [See pull request for examples](https://github.com/FormidableLabs/victory-chart/pull/427)

@@ -53,12 +53,15 @@ describe("victory", () => {
     expect(Victory.Style).not.to.equal(undefined);
     expect(Victory.TextSize).not.to.equal(undefined);
     expect(Victory.Transitions).not.to.equal(undefined);
+    expect(Victory.Selection).not.to.equal(undefined);
     expect(Victory.VictoryZoom).not.to.equal(undefined);
     expect(Victory.VictoryZoomContainer).not.to.equal(undefined);
     expect(Victory.VictorySelectionContainer).not.to.equal(undefined);
     expect(Victory.VictoryBrushContainer).not.to.equal(undefined);
+    expect(Victory.VictoryVoronoiContainer).not.to.equal(undefined);
     expect(Victory.BrushHelpers).not.to.equal(undefined);
     expect(Victory.SelectionHelpers).not.to.equal(undefined);
     expect(Victory.ZoomHelpers).not.to.equal(undefined);
+    expect(Victory.VoronoiHelpers).not.to.equal(undefined);
   });
 });
