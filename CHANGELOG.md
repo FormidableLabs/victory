@@ -1,5 +1,14 @@
 # VictoryChart Changelog
 
+## 18.0.0 (2017-02-27)
+
+[438](https://github.com/FormidableLabs/victory-chart/pull/438)
+**Breaking Changes**
+- `VictoryZoomContainer` now zooms both x and y dimensions, use the prop `dimension="x"` to return to the old behavior
+- `VictoryZoomContainer` now centers zoom behavior on the mouse position rather than the center of the chart
+- `VictoryZoomContainer` has a minimum zoom level of the extent of the domain / 1000. Set a custom minimum with the `minimumZoom` prop, which takes an object with numeric values for x and/ or y.
+- `VictoryBrushContainer` no longer has `dimension="x"` as the default value.
+
 ## 17.0.1 (2017-02-25)
 
 [437](https://github.com/FormidableLabs/victory-chart/pull/437)
