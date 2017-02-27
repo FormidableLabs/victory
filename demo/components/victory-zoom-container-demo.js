@@ -127,7 +127,7 @@ export default class App extends React.Component {
 
           <VictoryChart style={{parent: parentStyle}}
             animate={{duration: 1500}}
-            containerComponent={<VictoryZoomContainer/>}
+            containerComponent={<VictoryZoomContainer zoomDomain={{x: [0, 50]}}/>}
           >
             <VictoryLine
               style={{parent: parentStyle, data: this.state.style}}

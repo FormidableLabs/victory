@@ -108,10 +108,11 @@ const Helpers = {
 
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
-    const originalDomain = this.getOriginalDomain(targetProps);
-    const zoomDomain = defaults({}, targetProps.zoomDomain, originalDomain);
-    const currentDomain = targetProps.currentDomain ?
-      defaults({}, targetProps.currentDomain, zoomDomain) : zoomDomain;
+    const {domain, zoomDomain} = targetProps;
+    const originalDomain = defaults({}, targetProps.originalDomain, domain);
+    const currentDomain = defaults(
+      {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
+    );
     const {x, y} = Selection.getSVGEventCoordinates(evt);
     return [{
       target: "parent",
@@ -145,12 +146,12 @@ const Helpers = {
 
   onMouseMove(evt, targetProps, eventKey, ctx) { // eslint-disable-line max-params
     if (targetProps.panning) {
-      const { scale, startX, startY, onDomainChange, dimension } = targetProps;
+      const { scale, startX, startY, onDomainChange, dimension, domain, zoomDomain } = targetProps;
       const {x, y} = Selection.getSVGEventCoordinates(evt);
-      const originalDomain = this.getOriginalDomain(targetProps);
-      const zoomDomain = defaults({}, targetProps.zoomDomain, originalDomain);
-      const lastDomain = targetProps.currentDomain ?
-        defaults({}, targetProps.currentDomain, zoomDomain) : zoomDomain;
+      const originalDomain = defaults({}, targetProps.originalDomain, domain);
+      const lastDomain = defaults(
+        {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
+      );
       const dx = (startX - x) / this.getDomainScale(lastDomain, scale, "x");
       const dy = (y - startY) / this.getDomainScale(lastDomain, scale, "y");
       const currentDomain = {
@@ -178,11 +179,11 @@ const Helpers = {
     if (!targetProps.allowZoom) {
       return {};
     }
-    const { onDomainChange, dimension } = targetProps;
-    const originalDomain = this.getOriginalDomain(targetProps);
-    const zoomDomain = defaults({}, targetProps.zoomDomain, originalDomain);
-    const lastDomain = targetProps.currentDomain ?
-      defaults({}, targetProps.currentDomain, zoomDomain) : zoomDomain;
+    const { onDomainChange, dimension, domain, zoomDomain } = targetProps;
+    const originalDomain = defaults({}, targetProps.originalDomain, domain);
+    const lastDomain = defaults(
+      {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
+    );
     const {x, y} = lastDomain;
     const currentDomain = {
       x: dimension === "y" ? lastDomain.x : this.scale(x, evt, targetProps, "x"),
