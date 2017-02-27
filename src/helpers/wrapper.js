@@ -311,6 +311,9 @@ export default {
   },
 
   getY0(datum, index, calculatedProps) {
+    if (datum.y0) {
+      return datum.y0;
+    }
     const { datasets } = calculatedProps;
     const y = datum._y;
     const previousDataSets = datasets.slice(0, index);
