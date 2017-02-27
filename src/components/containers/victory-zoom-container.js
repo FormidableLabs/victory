@@ -11,9 +11,9 @@ export default class VictoryZoomContainer extends VictoryContainer {
       x: CustomPropTypes.domain,
       y: CustomPropTypes.domain
     }),
-    minimumDomain: PropTypes.shape({
-      x: CustomPropTypes.domain,
-      y: CustomPropTypes.domain
+    minimumZoom: PropTypes.shape({
+      x: PropTypes.number,
+      y: PropTypes.number
     }),
     onDomainChange: PropTypes.func,
     clipContainerComponent: PropTypes.element.isRequired,

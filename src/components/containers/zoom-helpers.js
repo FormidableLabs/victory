@@ -12,25 +12,50 @@ const Helpers = {
    * @return {[Number, Number]}                The scale domain
    */
   scale(currentDomain, evt, props, axis) { // eslint-disable-line max-params
-    const originalDomain = this.getOriginalDomain(props)[axis];
-    const [fromBound, toBound] = originalDomain;
     const [from, to] = currentDomain;
     const range = Math.abs(to - from);
-    const diff = range - (range * this.getScaleFactor(evt));
+    const minimumZoom = props.minimumZoom && props.minimumZoom[axis];
+    const factor = this.getScaleFactor(evt);
+    if (minimumZoom && range <= minimumZoom && factor < 1) {
+      return currentDomain;
+    }
+    const [fromBound, toBound] = this.getOriginalDomain(props)[axis];
     const percent = this.getScalePercent(evt, props, axis);
-    const minDomain = Collection.containsDates(originalDomain) ?
-      [ new Date(+from - 4), new Date(+from) ] : // 4ms is standard browser date precision
-      [ +from - 1 / Number.MAX_SAFE_INTEGER, +from ];
-    const newMin = +from + (diff * percent);
-    const newMax = +to - (diff * (1 - percent));
+    const point = (factor * from) + percent * (factor * range);
+    const minDomain = this.getMinimumDomain(point, props, axis);
+    const [newMin, newMax] = this.getScaledDomain(currentDomain, factor, percent);
     const newDomain = [
-      Collection.getMaxValue([Math.min(newMin, newMax), fromBound]),
-      Collection.getMinValue([Math.max(newMin, newMax), toBound])
+      newMin > fromBound && newMin < toBound ? newMin : fromBound,
+      newMax < toBound && newMax > fromBound ? newMax : toBound
     ];
     const domain = Math.abs(minDomain[1] - minDomain[0]) > Math.abs(newDomain[1] - newDomain[0]) ?
       minDomain : newDomain;
-    return Collection.containsDates(originalDomain) ?
+    return Collection.containsDates([fromBound, toBound]) ?
       [ new Date(domain[0]), new Date(domain[1]) ] : domain;
+  },
+
+  getScaledDomain(currentDomain, factor, percent) {
+    const [from, to] = currentDomain;
+    const range = Math.abs(to - from);
+    const diff = range - (range * factor);
+    const newMin = +from + (diff * percent);
+    const newMax = +to - (diff * (1 - percent));
+    return [ Math.min(newMin, newMax), Math.max(newMin, newMax) ];
+  },
+
+  getMinimumDomain(point, props, axis) {
+    const {minimumZoom } = props;
+    const originalDomain = this.getOriginalDomain(props)[axis];
+    const [from, to] = originalDomain;
+    // 4ms is standard browser date precision
+    const defaultMin = Math.abs(from - to) / 1000;
+    const extent = minimumZoom ? minimumZoom[axis] || defaultMin : defaultMin;
+    const minExtent = point - (extent / 2);
+    const maxExtent = point + (extent / 2);
+    return [
+      minExtent > from && minExtent < to ? minExtent : from,
+      maxExtent < to && maxExtent > from ? maxExtent : +from + extent / 2
+    ];
   },
 
   getScaleFactor(evt) {
