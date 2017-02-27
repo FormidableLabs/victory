@@ -68,7 +68,7 @@ export default class App extends React.Component {
         transitionData: this.getTransitionData(),
         style: this.getStyles()
       });
-    }, 30000);
+    }, 3000);
   }
 
   componentWillUnmount() {
