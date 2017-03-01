@@ -140,17 +140,16 @@ class VictoryLine extends React.Component {
     }, []);
     const dataProps = this.getComponentProps(dataComponent, "data", "all");
     const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
-    return React.cloneElement(groupComponent, {}, children);
+    return this.renderContainer(groupComponent, props, children);
   }
 
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  renderContainer(props, children) {
-    const {containerComponent} = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, children);
+  renderContainer(component, props, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   render() {
@@ -164,7 +163,7 @@ class VictoryLine extends React.Component {
       );
     }
     const children = this.renderData(props);
-    return this.renderContainer(props, children);
+    return this.renderContainer(props.containerComponent, props, children);
   }
 }
 export default addEvents(VictoryLine);

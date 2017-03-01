@@ -148,19 +148,17 @@ class VictoryScatter extends React.Component {
       }
     }).filter(Boolean);
 
-    return labelComponents.length > 0 ?
-      React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
-      dataComponents;
+    const children = [...dataComponents, ...labelComponents];
+    return this.renderContainer(groupComponent, props, children);
   }
 
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  renderContainer(props, children) {
-    const {containerComponent} = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, children);
+  renderContainer(component, props, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   render() {
@@ -174,7 +172,7 @@ class VictoryScatter extends React.Component {
       );
     }
     const children = this.renderData(props);
-    return this.renderContainer(props, children);
+    return this.renderContainer(props.containerComponent, props, children);
   }
 }
 

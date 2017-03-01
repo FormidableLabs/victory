@@ -186,10 +186,9 @@ class VictoryAxis extends React.Component {
     return sorted.filter((gridAndTick, index) => index % divider === 0);
   }
 
-  renderContainer(props, children) {
-    const {containerComponent} = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, children);
+  renderContainer(component, props, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   shouldAnimate() {
@@ -215,7 +214,7 @@ class VictoryAxis extends React.Component {
       this.renderLine(props),
       this.renderLabel(props)
     ];
-    return this.renderContainer(props, children);
+    return this.renderContainer(props.containerComponent, props, children);
   }
 }
 
