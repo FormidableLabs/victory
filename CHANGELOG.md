@@ -1,7 +1,12 @@
 VictoryCore Changelog
 =====================
 
-## 14.0.1
+## 14.0.2 (2017-02-28)
+
+[208](https://github.com/FormidableLabs/victory-core/pull/208)
+  - Add `clipPadding` prop to `VictoryClipContainer` to match the prop on `ClipPath`
+
+## 14.0.1 (2017-02-26)
 
 [207](https://github.com/FormidableLabs/victory-core/pull/207)
   - Adds a `translateY` prop for clipPath to support x, y zoom behavior
