@@ -30,12 +30,13 @@ export default class Line extends React.Component {
       this.style = style;
       return true;
     }
-    if (isEqual(style, this.style)) {
-      return false;
-    } else {
+
+    if (!isEqual(style, this.style)) {
       this.style = style;
       return true;
     }
+
+    return false;
   }
 
   getStyle(props) {
