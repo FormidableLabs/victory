@@ -59,7 +59,7 @@ const Helpers = {
 
   getScaleFactor(evt) {
     const sign = evt.deltaY > 0 ? 1 : -1;
-    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
+    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.5); // TODO: Check scale factor
     return Math.abs(1 + sign * delta);
   },
 
