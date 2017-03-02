@@ -52,6 +52,7 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
+            domainPadding={{y: 2}}
             containerComponent={
               <VictoryVoronoiContainer dimension="x"
                 labels={(d) => `y: ${d.y}`}

@@ -8,8 +8,8 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    onSelection: React.PropTypes.func,
-    onSelectionCleared: React.PropTypes.func,
+    onActivated: React.PropTypes.func,
+    onDeactivated: React.PropTypes.func,
     standalone: React.PropTypes.bool,
     radius: React.PropTypes.number,
     voronoiPadding: React.PropTypes.number,
@@ -115,7 +115,7 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
   getStyle(props, points, type) {
     const { labelComponent, theme } = props;
     const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
-    const defaultStyles = defaults({}, labelComponent.style, themeStyles[type]);
+    const defaultStyles = defaults({}, labelComponent.props.style, themeStyles[type]);
     return points.map((point) => {
       const style = point.style && point.style[type] || {};
       return Helpers.evaluateStyle(defaults({}, style, defaultStyles), point, true);
