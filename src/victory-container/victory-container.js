@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import { assign, omit } from "lodash";
+import { assign, omit, defaults } from "lodash";
 import Portal from "../victory-portal/portal";
 import { Timer } from "../victory-util/index";
 import { default as VictoryTheme } from "../victory-theme/victory-theme";
@@ -88,20 +88,19 @@ export default class VictoryContainer extends React.Component {
   // Overridden in victory-core-native
   renderContainer(props, svgProps, style) {
     const { title, desc, portalComponent, className, standalone } = props;
+    const children = this.getChildren(props);
+    const parentProps = defaults({style, className}, svgProps);
+    const groupComponent = props.groupComponent || <g/>;
     return standalone !== false ?
       (
-        <svg {...svgProps} style={style} className={className}>
+        <svg {...parentProps}>
           {title ? <title id="title">{title}</title> : null}
           {desc ? <desc id="desc">{desc}</desc> : null}
-          {this.getChildren(props)}
+          {children}
           {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
         </svg>
       ) :
-      (
-        <g {...svgProps} style={style} className={className}>
-          {this.getChildren(props)}
-        </g>
-      );
+      React.cloneElement(groupComponent, parentProps, children);
   }
 
   render() {

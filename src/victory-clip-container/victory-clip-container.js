@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
-import { defaults } from "lodash";
+import { defaults, isFunction } from "lodash";
 import { ClipPath } from "../victory-primitives/index";
-import { Helpers } from "../victory-util/index";
 
 export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
@@ -18,8 +17,6 @@ export default class VictoryClipContainer extends React.Component {
         right: PropTypes.number
       })
     ]),
-    width: PropTypes.number,
-    height: PropTypes.number,
     clipPadding: PropTypes.shape({
       top: PropTypes.number,
       bottom: PropTypes.number,
@@ -112,22 +109,21 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   getRange(props, axis) {
-    const {width, height} = props;
-    if ((axis === "x" && width === "undefined") || (axis === "y" && height === "undefined")) {
+    const scale = props.scale || {};
+    if (!scale[axis]) {
       return undefined;
     }
-    return Helpers.getRange(props, axis);
+    return isFunction(scale[axis].range) ? scale[axis].range() : undefined;
   }
 
   render() {
-    const clipHeight = this.getClipValue(this.props, "x");
-    const clipWidth = this.getClipValue(this.props, "y");
+    const clipHeight = this.getClipValue(this.props, "y");
+    const clipWidth = this.getClipValue(this.props, "x");
     if (clipWidth === undefined || clipHeight === undefined) {
       return this.renderGroup(this.props);
     }
     const translateX = this.getTranslateValue(this.props, "x");
     const translateY = this.getTranslateValue(this.props, "y");
-    console.log(clipHeight, clipWidth, translateX, translateY)
     const clipProps = defaults({}, this.props, {clipHeight, clipWidth, translateX, translateY});
     return this.renderClippedGroup(clipProps, this.clipId);
   }
