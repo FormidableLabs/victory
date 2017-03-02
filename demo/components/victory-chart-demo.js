@@ -5,7 +5,7 @@ import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
   VictoryScatter, VictoryStack, VictoryGroup
 } from "../../src/index";
-import { VictoryLabel, VictoryTheme } from "victory-core";
+import { VictoryLabel, VictoryTheme, VictoryClipContainer } from "victory-core";
 import { assign } from "lodash";
 
 
@@ -205,10 +205,10 @@ class App extends React.Component {
             />
           </VictoryChart>
 
-          <VictoryChart style={chartStyle} domainPadding={{y: [0, 20]}}>
+          <VictoryChart style={chartStyle}>
             <VictoryBar
-              horizontal
-              style={{data: {fill: "tomato"}}}
+              groupComponent={<VictoryClipContainer/>}
+              style={{data: {fill: "tomato", width: 20}}}
               data={[
                 {x: 1, y: 1},
                 {x: 2, y: 2},
@@ -477,6 +477,7 @@ class App extends React.Component {
 
           <VictoryChart style={chartStyle} animate={{ duration: 2000 }}>
             <VictoryScatter
+              groupComponent={<VictoryClipContainer/>}
               data={this.state.scatterData}
               animate={{
                 onExit: {

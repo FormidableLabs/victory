@@ -169,10 +169,9 @@ class VictoryBar extends React.Component {
     return !!this.props.animate;
   }
 
-  renderContainer(container, props, children) {
-    const {containerComponent} = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, children);
+  renderContainer(component, props, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   render() {
