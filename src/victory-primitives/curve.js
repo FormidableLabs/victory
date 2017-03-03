@@ -76,10 +76,10 @@ export default class Curve extends React.Component {
    * @param {Function} delimiterFn  A function indicating values to be used as delimiters
    * @returns {Object}              Array of subarrays
    */
-  splitArray(array, splitValueFn) {
+  splitArray(array, delimiterFn) {
     let segmentStartIndex = 0;
     const segments = array.reduce((memo, item, index) => {
-      if (splitValueFn(item)) {
+      if (delimiterFn(item)) {
         memo = memo.concat([array.slice(segmentStartIndex, index)]);
         segmentStartIndex = index + 1;
       } else if (index === array.length - 1) {
