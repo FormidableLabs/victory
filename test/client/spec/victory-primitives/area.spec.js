@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import Area from "src/victory-primitives/area";
 import { merge } from "lodash";
 
-describe.only("victory-primitives/area", () => {
+describe("victory-primitives/area", () => {
   const baseProps = {
     data: [
       {_x1: 1, x1: 1, _y1: 4, y1: 4, _y0: 0, eventKey: 0},
