@@ -17,7 +17,6 @@ describe("victory-primitives/area", () => {
       y: (y) => y
     },
     interpolation: "basis",
-    groupComponent: <g/>,
     style: {
       stroke: "tomato"
     }

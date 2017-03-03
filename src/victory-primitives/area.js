@@ -19,6 +19,10 @@ export default class Area extends React.Component {
     style: PropTypes.object
   };
 
+  static defaultProps = {
+    groupComponent: <g/>
+  };
+
   componentWillMount() {
     const {style, areaPaths, linePaths} = this.calculateAttributes(this.props);
     this.style = style;
