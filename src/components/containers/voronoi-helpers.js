@@ -83,12 +83,8 @@ const VoronoiHelpers = {
   },
 
   getActiveMutations(props, point) {
-    const {labels, onActivated} = props;
     const {childName, continuous} = point;
-    if (isFunction(onActivated)) {
-      onActivated(point);
-    }
-    const targets = labels ? ["data"] : ["data", "labels"];
+    const targets = props.labels ? ["data"] : ["data", "labels"];
     return targets.map((target) => {
       const eventKey = continuous === true && target === "data" ? "all" : point.eventKey;
       return {
@@ -98,12 +94,8 @@ const VoronoiHelpers = {
   },
 
   getInactiveMutations(props, point) {
-    const {labels, onDeactivated} = props;
     const {childName, continuous} = point;
-    if (isFunction(onDeactivated)) {
-      onDeactivated(point);
-    }
-    const targets = labels ? ["data"] : ["data", "labels"];
+    const targets = props.labels ? ["data"] : ["data", "labels"];
     return targets.map((target) => {
       const eventKey = continuous && target === "data" ? "all" : point.eventKey;
       return {
@@ -120,17 +112,31 @@ const VoronoiHelpers = {
     }];
   },
 
+  onActivated(props, points) {
+    if (isFunction(props.onActivated)) {
+      props.onActivated(points);
+    }
+  },
+
+  onDeactivated(props, points) {
+    if (isFunction(props.onDeactivated)) {
+      props.onDeactivated(points);
+    }
+  },
+
   onMouseLeave(evt, targetProps) {
     const activePoints = targetProps.activePoints || [];
+    this.onDeactivated(targetProps, activePoints);
     const inactiveMutations = activePoints.length ?
       activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
     return this.getParentMutation([]).concat(...inactiveMutations);
   },
 
-  onMouseMove(evt, targetProps) {
+  onMouseMove(evt, targetProps) { // eslint-disable-line max-statements
     const activePoints = targetProps.activePoints || [];
     const mousePosition = Selection.getSVGEventCoordinates(evt);
     if (!this.withinBounds(targetProps, mousePosition)) {
+      this.onDeactivated(targetProps, activePoints);
       const inactiveMutations = activePoints.length ?
         activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
       return this.getParentMutation([], mousePosition).concat(...inactiveMutations);
@@ -141,6 +147,8 @@ const VoronoiHelpers = {
     if (activePoints.length && isEqual(points, activePoints)) {
       return parentMutations;
     } else {
+      this.onActivated(targetProps, points);
+      this.onDeactivated(targetProps, activePoints);
       const activeMutations = points.length ?
         points.map((point) => this.getActiveMutations(targetProps, point)) : [];
       const inactiveMutations = activePoints.length ?
