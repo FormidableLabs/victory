@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 18.1.0 (2017-03-03)
+
+- Adds `onActivated` and `onDeactivated` callbacks for `VictoryVoronoiContainer`
+- Supports `VictoryClipContainer` on all components (as groupComponent)
+
 ## 18.0.0 (2017-02-27)
 
 [438](https://github.com/FormidableLabs/victory-chart/pull/438)
