@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.3 (2017-03-03)
+
+[210](https://github.com/FormidableLabs/victory-core/pull/210)
+- Support `VictoryClipContainer` for all x, y components
+
 ## 14.0.2 (2017-02-28)
 
 [208](https://github.com/FormidableLabs/victory-core/pull/208)
