@@ -29,8 +29,6 @@ export default class ClipPath extends React.Component {
   };
 
   static defaultProps = {
-    translateX: 0,
-    translateY: 0,
     clipPadding: {
       top: 0,
       bottom: 0,
@@ -75,8 +73,8 @@ export default class ClipPath extends React.Component {
       return typeof total === "number" ? total : 0;
     };
     return {
-      x: totalPadding("left") + translateX,
-      y: totalPadding("top") + translateY,
+      x: totalPadding("left") + (translateX || 0),
+      y: totalPadding("top") + (translateY || 0),
       width: Math.max(+clipWidth - totalPadding("left") - totalPadding("right"), 0),
       height: Math.max(+clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
     };

@@ -71,8 +71,6 @@ function getChildData(child) {
  *                                    - nodesWillEnter
  *                                    - childrenTransitions
  *                                    - nodesShouldEnter
- *                                    - nodesDoneClipPathEnter
- *                                    - nodesDoneClipPathExit
  */
 export function getInitialTransitionState(oldChildren, nextChildren) {
   let nodesWillExit = false;

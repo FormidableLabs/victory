@@ -1,6 +1,6 @@
 import React from "react";
 import VictoryAnimation from "../victory-animation/victory-animation";
-import { Transitions, Collection, Timer } from "../victory-util/index";
+import { Transitions, Collection, Timer, Helpers } from "../victory-util/index";
 import { defaults, isFunction, pick } from "lodash";
 
 export default class VictoryTransition extends React.Component {
@@ -119,15 +119,13 @@ export default class VictoryTransition extends React.Component {
     return this.continuous && this.state.nodesWillExit ? this.state.nextProps || props : props;
   }
 
-  getClipProps(props, child) {
-    if (!this.continuous) {
-      return {};
-    }
-    const clipWidth = this.transitionProps && this.transitionProps.clipWidth;
-    return {
-      clipHeight: child.props.height,
-      clipWidth: clipWidth !== undefined ? clipWidth : child.props.width
+  getClipWidth(props, child) {
+    const getDefaultClipWidth = () => {
+      const range = Helpers.getRange(child.props, "x");
+      return range ? Math.abs(range[1] - range[0]) : props.width;
     };
+    const clipWidth = this.transitionProps ? this.transitionProps.clipWidth : undefined;
+    return clipWidth !== undefined ? clipWidth : getDefaultClipWidth();
   }
 
   render() {
@@ -146,23 +144,18 @@ export default class VictoryTransition extends React.Component {
       x: this.getDomainFromChildren(this.pickDomainProps(props), "x"),
       y: this.getDomainFromChildren(props, "y")
     };
-    const clipProps = this.getClipProps(props, child);
-    const combinedProps = defaults(
-      {domain}, clipProps, transitionProps, child.props
-    );
+    const clipWidth = this.getClipWidth(props, child);
+    const combinedProps = defaults({domain, clipWidth}, transitionProps, child.props);
     const animationWhitelist = props.animationWhitelist || [];
-    const whitelist = this.continuous ?
-      animationWhitelist.concat(["clipWidth", "clipHeight", "translateX", "translateY"]) :
-      animationWhitelist;
+    const whitelist = animationWhitelist.concat(["clipWidth"]);
     const propsToAnimate = whitelist.length ? pick(combinedProps, whitelist) : combinedProps;
     return (
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
-          if (this.continuous) {
-            const { clipWidth, clipHeight, translateX, translateY, padding } = newProps;
+          if (child.props.groupComponent) {
             const groupComponent = React.cloneElement(
               child.props.groupComponent,
-              { clipWidth, clipHeight, translateX, translateY, padding }
+              { clipWidth: newProps.clipWidth }
             );
             return React.cloneElement(
               child, defaults({animate: null, groupComponent}, newProps, combinedProps)
