@@ -3,9 +3,9 @@ import React from "react";
 import { range, merge, random } from "lodash";
 import {
   VictoryChart, VictoryZoomContainer, VictoryArea, VictoryLine,
-  VictoryAxis, VictoryGroup, VictoryStack
+  VictoryAxis, VictoryGroup, VictoryStack, VictoryScatter
 } from "../../src/index";
-import { VictoryTheme } from "victory-core";
+import { VictoryTheme, VictoryClipContainer } from "victory-core";
 
 export default class App extends React.Component {
 
@@ -43,7 +43,7 @@ export default class App extends React.Component {
   getData() {
     return range(100).map((i) => {
       return {
-        x: i,
+        x: i + 20,
         y: Math.random()
       };
     });
@@ -127,12 +127,19 @@ export default class App extends React.Component {
 
           <VictoryChart style={{parent: parentStyle}}
             animate={{duration: 1500}}
+            domainPadding={{x: 20, y: 0}}
             containerComponent={
-              <VictoryZoomContainer zoomDomain={{x: [0, 50]}} minimumZoom={{x: 5}}/>
+              <VictoryZoomContainer
+                minimumZoom={{x: 5}}
+                clipContainerComponent={
+                  <VictoryClipContainer clipPadding={{top: 15, bottom: 15}}/>
+                }
+              />
             }
           >
-            <VictoryLine
-              style={{parent: parentStyle, data: this.state.style}}
+            <VictoryScatter
+              style={{parent: parentStyle, data: {fill: "orange"}}}
+              size={15}
               data={this.state.data}
             />
           </VictoryChart>

@@ -19,7 +19,7 @@ const Helpers = {
     if (minimumZoom && range <= minimumZoom && factor < 1) {
       return currentDomain;
     }
-    const [fromBound, toBound] = this.getOriginalDomain(props)[axis];
+    const [fromBound, toBound] = this.getDomain(props)[axis];
     const percent = this.getScalePercent(evt, props, axis);
     const point = (factor * from) + percent * (factor * range);
     const minDomain = this.getMinimumDomain(point, props, axis);
@@ -45,9 +45,8 @@ const Helpers = {
 
   getMinimumDomain(point, props, axis) {
     const {minimumZoom } = props;
-    const originalDomain = this.getOriginalDomain(props)[axis];
+    const originalDomain = this.getDomain(props)[axis];
     const [from, to] = originalDomain;
-    // 4ms is standard browser date precision
     const defaultMin = Math.abs(from - to) / 1000;
     const extent = minimumZoom ? minimumZoom[axis] || defaultMin : defaultMin;
     const minExtent = point - (extent / 2);
@@ -60,12 +59,12 @@ const Helpers = {
 
   getScaleFactor(evt) {
     const sign = evt.deltaY > 0 ? 1 : -1;
-    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.75); // TODO: Check scale factor
+    const delta = Math.min(Math.abs(evt.deltaY / 300), 0.5); // TODO: Check scale factor
     return Math.abs(1 + sign * delta);
   },
 
   getScalePercent(evt, props, axis) {
-    const originalDomain = this.getOriginalDomain(props);
+    const originalDomain = this.getDomain(props);
     const [from, to] = originalDomain[axis];
     const position = this.getPosition(evt, props, originalDomain);
     return (position[axis] - from) / Math.abs(to - from);
@@ -125,7 +124,7 @@ const Helpers = {
     }
   },
 
-  getOriginalDomain(props) {
+  getDomain(props) {
     const {originalDomain, domain, scale} = props;
     const scaleDomain = { x: scale.x.domain(), y: scale.y.domain() };
     return defaults({}, originalDomain, domain, scaleDomain);
@@ -134,7 +133,7 @@ const Helpers = {
   onMouseDown(evt, targetProps) {
     evt.preventDefault();
     const {domain, zoomDomain} = targetProps;
-    const originalDomain = defaults({}, targetProps.originalDomain, domain);
+    const originalDomain = this.getDomain(targetProps);
     const currentDomain = defaults(
       {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
     );
@@ -173,7 +172,7 @@ const Helpers = {
     if (targetProps.panning) {
       const { scale, startX, startY, onDomainChange, dimension, domain, zoomDomain } = targetProps;
       const {x, y} = Selection.getSVGEventCoordinates(evt);
-      const originalDomain = defaults({}, targetProps.originalDomain, domain);
+      const originalDomain = this.getDomain(targetProps);
       const lastDomain = defaults(
         {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
       );
@@ -205,7 +204,7 @@ const Helpers = {
       return {};
     }
     const { onDomainChange, dimension, domain, zoomDomain } = targetProps;
-    const originalDomain = defaults({}, targetProps.originalDomain, domain);
+    const originalDomain = this.getDomain(targetProps);
     const lastDomain = defaults(
       {}, targetProps.currentDomain || zoomDomain || originalDomain, domain
     );
