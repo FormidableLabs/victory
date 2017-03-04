@@ -162,11 +162,10 @@ class VictoryPie extends React.Component {
           );
       }
     }
+    const children = [...dataComponents, ...labelComponents];
     const transform = this.getTransform(props);
     const groupComponent = React.cloneElement(props.groupComponent, {transform});
-    return labelComponents.length > 0 ?
-      React.cloneElement(groupComponent, {}, ...dataComponents, ...labelComponents) :
-      React.cloneElement(groupComponent, {}, ...dataComponents);
+    return this.renderContainer(groupComponent, props, children);
   }
 
   getTransform(props) {
@@ -182,10 +181,9 @@ class VictoryPie extends React.Component {
     return `translate(${offset.x}, ${offset.y})`;
   }
 
-  renderContainer(props, children) {
-    const {containerComponent} = props;
-    const parentProps = this.getComponentProps(containerComponent, "parent", "parent");
-    return React.cloneElement(containerComponent, parentProps, children);
+  renderContainer(component, props, children) {
+    const parentProps = this.getComponentProps(component, "parent", "parent");
+    return React.cloneElement(component, parentProps, children);
   }
 
   shouldAnimate() {
@@ -204,7 +202,7 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderData(props);
-    return this.renderContainer(props, children);
+    return this.renderContainer(props.containerComponent, props, children);
   }
 }
 
