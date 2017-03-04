@@ -1,5 +1,5 @@
 import React, { PropTypes } from "react";
-import Helpers from "../victory-util/helpers";
+import { Collection, Helpers } from "../victory-util";
 import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
 
@@ -16,6 +16,10 @@ export default class Area extends React.Component {
     role: PropTypes.string,
     scale: PropTypes.object,
     style: PropTypes.object
+  };
+
+  static defaultProps = {
+    groupComponent: <g/>
   };
 
   componentWillMount() {
@@ -59,21 +63,11 @@ export default class Area extends React.Component {
   }
 
   getDataSegments(data) {
-    let segmentStartIndex = 0;
-    const segments = data.reduce((memo, datum, index) => {
+    return Collection.splitArray(data, (datum) => {
       const yDatum = datum.y1 !== undefined ? datum._y1 : datum._y;
-      if (yDatum === null || typeof yDatum === "undefined") {
-        memo = memo.concat([data.slice(segmentStartIndex, index)]);
-        segmentStartIndex = index + 1;
-      } else if (index === data.length - 1) {
-        memo = memo.concat([data.slice(segmentStartIndex, data.length)]);
-      }
-      return memo;
-    }, []);
 
-    return segments.filter((segment) => {
-      return Array.isArray(segment) && segment.length > 1;
-    });
+      return yDatum === null || typeof yDatum === "undefined";
+    }).filter((segment) => segment.length > 1);
   }
 
   toNewName(interpolation) {
