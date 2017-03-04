@@ -1,6 +1,5 @@
 import React, { PropTypes } from "react";
-import Helpers from "../victory-util/helpers";
-import Utils from "./utils";
+import { Collection, Helpers } from "../victory-util";
 import { assign, isEqual } from "lodash";
 import * as d3Shape from "d3-shape";
 
@@ -57,7 +56,7 @@ export default class Curve extends React.Component {
   }
 
   getDataSegments(data) {
-    return Utils.splitArray(data, (datum) => {
+    return Collection.splitArray(data, (datum) => {
       const yDatum = datum.y1 !== undefined ? datum._y1 : datum._y;
 
       return yDatum === null || typeof yDatum === "undefined";
