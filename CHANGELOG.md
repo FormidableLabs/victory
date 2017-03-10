@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.4 (2017-03-10)
+
+[214](https://github.com/FormidableLabs/victory-core/pull/214)
+- Allows simple events directly on container components
+
 ## 14.0.3 (2017-03-03)
 
 [210](https://github.com/FormidableLabs/victory-core/pull/210)
