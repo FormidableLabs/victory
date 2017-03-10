@@ -1,5 +1,9 @@
 # VictoryChart Changelog
 
+## 18.1.1 (2017-03-10)
+
+- Fixes a bug that was causing unnecessary `VictoryClipContainer` components to be rendered by `VictoryZoomContainer`
+
 ## 18.1.0 (2017-03-03)
 
 - Adds `onActivated` and `onDeactivated` callbacks for `VictoryVoronoiContainer`
