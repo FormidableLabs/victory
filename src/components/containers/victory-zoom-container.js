@@ -70,14 +70,16 @@ export default class VictoryZoomContainer extends VictoryContainer {
     let groupNumber = 0;
 
     const makeGroup = (arr, index) => {
-      return React.cloneElement(clipContainerComponent, {
-        key: `ZoomClipContainer-${index}`,
-        clipWidth: plottableWidth,
-        clipHeight: plottableHeight,
-        translateX: Math.min(...rangeX),
-        translateY: Math.min(...rangeY),
-        children: arr
-      });
+      return Array.isArray(arr) && arr.length ?
+        React.cloneElement(clipContainerComponent, {
+          key: `ZoomClipContainer-${index}`,
+          clipWidth: plottableWidth,
+          clipHeight: plottableHeight,
+          translateX: Math.min(...rangeX),
+          translateY: Math.min(...rangeY),
+          children: arr
+        }) :
+        null;
     };
 
     const findNextAxis = (start) => {
@@ -96,11 +98,12 @@ export default class VictoryZoomContainer extends VictoryContainer {
         axisIndex = findNextAxis(i + 1);
         group = [];
         groupNumber++;
+      } else {
+        group.push(children[i]);
       }
-      group.push(children[i]);
     }
     childComponents.push(makeGroup(group, groupNumber));
-    return childComponents;
+    return childComponents.filter(Boolean);
   }
 
   modifyChildren(props) {
