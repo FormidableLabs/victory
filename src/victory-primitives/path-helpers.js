@@ -56,22 +56,19 @@ export default {
   },
 
   plus(x, y, size) {
-    const baseSize = Math.round(1.1 * size);
-    const halfSize = Math.round(1.1 * size / 3.5);
-    x = Math.round(x);
-    y = Math.round(y);
-    return `M ${x - baseSize / 2.5}, ${y + baseSize}
-      L ${x + halfSize}, ${y + baseSize}
-      L ${x + halfSize}, ${y + halfSize}
-      L ${x + baseSize}, ${y + halfSize}
-      L ${x + baseSize}, ${y - halfSize}
-      L ${x + halfSize}, ${y - halfSize}
-      L ${x + halfSize}, ${y - baseSize}
-      L ${x - halfSize}, ${y - baseSize}
-      L ${x - halfSize}, ${y - halfSize}
-      L ${x - baseSize}, ${y - halfSize}
-      L ${x - baseSize}, ${y + halfSize}
-      L ${x - halfSize}, ${y + halfSize}
+    const baseSize = 1.1 * size;
+    return `M ${Math.round(x - baseSize / 2.5)}, ${Math.round(y + baseSize)}
+      L ${Math.round(x + baseSize / 2.5)}, ${Math.round(y + baseSize)}
+      L ${Math.round(x + baseSize / 2.5)}, ${Math.round(y + baseSize / 2.5)}
+      L ${Math.round(x + baseSize)}, ${Math.round(y + baseSize / 2.5)}
+      L ${Math.round(x + baseSize)}, ${Math.round(y - baseSize / 2.5)}
+      L ${Math.round(x + baseSize / 2.5)}, ${Math.round(y - baseSize / 2.5)}
+      L ${Math.round(x + baseSize / 2.5)}, ${Math.round(y - baseSize)}
+      L ${Math.round(x - baseSize / 2.5)}, ${Math.round(y - baseSize)}
+      L ${Math.round(x - baseSize / 2.5)}, ${Math.round(y - baseSize / 2.5)}
+      L ${Math.round(x - baseSize)}, ${Math.round(y - baseSize / 2.5)}
+      L ${Math.round(x - baseSize)}, ${Math.round(y + baseSize / 2.5)}
+      L ${Math.round(x - baseSize / 2.5)}, ${Math.round(y + baseSize / 2.5)}
       z`;
   },
 
