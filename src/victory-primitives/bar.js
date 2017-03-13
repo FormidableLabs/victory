@@ -44,7 +44,8 @@ export default class Bar extends React.Component {
 
   calculateAttributes(props) {
     const {datum, active, x, y} = props;
-    const style = Helpers.evaluateStyle(assign({fill: "black"}, props.style), datum, active);
+    const stroke = props.style && props.style.fill;
+    const style = Helpers.evaluateStyle(assign({fill: "black", stroke}, props.style), datum, active);
     const width = this.getBarWidth(props, style);
     const path = typeof x === "number" && typeof y === "number" ?
       this.getBarPath(props, width) : undefined;
