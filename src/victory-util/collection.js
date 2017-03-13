@@ -91,7 +91,7 @@ export default {
     const length = itemSets.length;
     let equality;
 
-    for (i = 0; i < length; i++) {
+    for (let i = 0; i < length; i++) {
       equality = isEqual(itemSets[i][0], itemSets[i][1]);
       if (equality === false) {
         return false;

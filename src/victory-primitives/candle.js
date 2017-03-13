@@ -1,6 +1,6 @@
 import React, { PropTypes } from "react";
 import { Helpers, Collection } from "../victory-util";
-import { assign, isEqual } from "lodash";
+import { assign } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {

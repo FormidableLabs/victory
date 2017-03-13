@@ -158,7 +158,7 @@ describe("collections", () => {
       const comparisons = [
         [1, 1],
         ["wow", "wow"],
-        [{ stuff: 43 }, { stuff: 43 }],
+        [{ stuff: 43 }, { stuff: 43 }]
       ];
 
       expect(Collection.allSetsEqual(comparisons)).to.eql(true);
