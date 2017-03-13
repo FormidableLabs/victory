@@ -88,22 +88,8 @@ export default {
    * @returns {Boolean}             Whether all item comparisons are equal
    */
   allSetsEqual(itemSets) {
-    return this.all(itemSets, (comparisonSet) => {
+    return itemSets.every((comparisonSet) => {
       return isEqual(comparisonSet[0], comparisonSet[1]);
     });
   },
-
-  all(array, assertionFn) {
-    const length = array.length;
-    let assertionPassed;
-
-    for (let i = 0; i < length; i++) {
-      assertionPassed = assertionFn(array[i]);
-      if (assertionPassed === false) {
-        return false;
-      }
-    }
-
-    return true;
-  }
 };
