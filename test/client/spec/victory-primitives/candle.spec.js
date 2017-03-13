@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Candle from "src/victory-primitives/candle";
+import { Candle } from "src/victory-primitives";
 import { merge } from "lodash";
 
 describe("victory-primitives/candle", () => {

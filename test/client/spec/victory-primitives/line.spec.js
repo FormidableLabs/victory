@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Line from "src/victory-primitives/line";
+import { Line } from "src/victory-primitives";
 
 describe("victory-primitives/line", () => {
   const baseProps = {

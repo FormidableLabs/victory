@@ -2,7 +2,7 @@
 
 import React from "react";
 import { shallow } from "enzyme";
-import Point from "src/victory-primitives/point";
+import { Point } from "src/victory-primitives";
 import pathHelpers from "src/victory-primitives/path-helpers";
 
 describe("victory-primitives/point", () => {

@@ -1,7 +1,7 @@
 /*eslint-disable max-nested-callbacks,no-unused-expressions,max-len */
 import React from "react";
 import { shallow } from "enzyme";
-import Slice from "src/victory-primitives/slice";
+import { Slice } from "src/victory-primitives";
 
 describe("victory-primitives/slice", () => {
   describe("rendering", () => {
