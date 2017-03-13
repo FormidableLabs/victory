@@ -1,60 +1,62 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Bar from "src/victory-primitives/bar";
+import Candle from "src/victory-primitives/candle";
 import SvgTestHelper from "../svg-test-helper";
 import { merge } from "lodash";
 
-describe("victory-primitives/bar", () => {
+describe("victory-primitives/candle", () => {
   const baseProps = {
     data: [
-      {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-      {_x: 3, x: 3, _y: 5, y: 5, eventKey: 1}
+      {x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0},
+      {x: 2, open: 40, close: 80, high: 100, low: 10, eventKey: 1}
     ],
-    datum: {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-    x: 2,
-    y: 10,
-    y0: 0,
-    width: 5,
-    padding: 2
+    datum: {x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0},
+    x: 5,
+    y: 30,
+    y1: 50,
+    y2: 5,
+    candleHeight: 20,
+    width: 10,
+    padding: 1
   };
 
-  it("should render a vertical bar", () => {
-    const wrapper = shallow(<Bar {...baseProps}/>);
-    const barShape = SvgTestHelper.getBarShape(wrapper);
+  it("should render a wick line", () => {
+    const wrapper = shallow(<Candle {...baseProps}/>);
+    const wick = wrapper.render().find("line");
 
-    expect(barShape.height).to.eql(10);
+    expect(wick.attr("x1")).to.eql("5");
+    expect(wick.attr("x2")).to.eql("5");
+    expect(wick.attr("y1")).to.eql("50");
+    expect(wick.attr("y2")).to.eql("5");
   });
 
-  it("should render a horizontal bar", () => {
-    const props = merge({}, baseProps, {horizontal: true});
+  it("should render a candle rectangle", () => {
+    const wrapper = shallow(<Candle {...baseProps}/>);
+    const rect = wrapper.render().find("rect");
 
-    const wrapper = shallow(<Bar {...props}/>);
-    const barShape = SvgTestHelper.getBarShape(wrapper);
+    // width = style.width || 0.5 * (width - 2 * padding) / data.length;
 
-    expect(barShape.width).to.eql(10);
+    expect(rect.attr("width")).to.eql("2");
+    expect(rect.attr("height")).to.eql("20");
+    // x = x - width / 2
+    expect(rect.attr("x")).to.eql("4");
+    expect(rect.attr("y")).to.eql("30");
   });
 
-  it("should render a default bar width when one is not provided", () => {
-    // defaultWidth = (width - (2 * padding)) / data.length
-
+  it("should allow style to override width", () => {
     const props = merge({}, baseProps, {
-      width: 10,
-      padding: 1,
-      data: Array(4)
+      style: {
+        width: 5
+      }
     });
 
-    const wrapper = shallow(<Bar {...props}/>);
-    const barShape = SvgTestHelper.getBarShape(wrapper);
+    const wrapper = shallow(<Candle {...props}/>);
+    const rect = wrapper.render().find("rect");
 
-    expect(barShape.width).to.eql(2);
-  });
-
-  it("should allow override of width by passing a style", () => {
-    const props = Object.assign({}, baseProps, {style: {width: 1}});
-
-    const wrapper = shallow(<Bar {...props}/>);
-    const barShape = SvgTestHelper.getBarShape(wrapper);
-
-    expect(barShape.width).to.eql(1);
+    expect(rect.attr("width")).to.eql("5");
+    expect(rect.attr("height")).to.eql("20");
+    // x = x - width / 2
+    expect(rect.attr("x")).to.eql("2.5");
+    expect(rect.attr("y")).to.eql("30");
   });
 });

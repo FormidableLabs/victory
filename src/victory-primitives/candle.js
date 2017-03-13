@@ -27,6 +27,10 @@ export default class Candle extends React.Component {
     role: PropTypes.string
   }
 
+  static defaultProps = {
+    groupComponent: <div/>
+  };
+
   componentWillMount() {
     const {style, candleWidth } = this.calculateAttributes(this.props);
     this.style = style;
