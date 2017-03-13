@@ -1,3 +1,5 @@
+import { isEqual } from "lodash";
+
 export default {
   isNonEmptyArray(collection) {
     return Array.isArray(collection) && collection.length > 0;
@@ -66,5 +68,36 @@ export default {
     return segments.filter((segment) => {
       return Array.isArray(segment) && segment.length > 0;
     });
+  },
+
+  /**
+   * Takes an array of arrays. Returns whether each subarray has equivalent items.
+   * Each subarray should have two items. Used for componentShouldUpdate functions.
+   *
+   * Example:
+   * const propComparisons = [
+   *   [x, nextProps.x],
+   *   [y, nextProps.y],
+   *   [style, this.style]
+   * ];
+   *
+   * allSetsEqual(propComparisons);
+   * => true
+   *
+   * @param {Array}    itemSets     An array of item sets
+   * @returns {Boolean}             Whether all item comparisons are equal
+   */
+  allSetsEqual(itemSets) {
+    const length = itemSets.length;
+    let equality;
+
+    for (i = 0; i < length; i++) {
+      equality = isEqual(itemSets[i][0], itemSets[i][1]);
+      if (equality === false) {
+        return false;
+      }
+    }
+
+    return true;
   }
 };

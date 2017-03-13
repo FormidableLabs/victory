@@ -151,4 +151,27 @@ describe("collections", () => {
       expect(Collection.getMinValue(array, 1, 20)).to.eql(1);
     });
   });
+
+  describe("allSetsEqual", () => {
+
+    it("returns true when all sets are equal", () => {
+      const comparisons = [
+        [1, 1],
+        ["wow", "wow"],
+        [{ stuff: 43 }, { stuff: 43 }],
+      ];
+
+      expect(Collection.allSetsEqual(comparisons)).to.eql(true);
+    });
+
+    it("returns false when not all sets are equal", () => {
+      const comparisons = [
+        [1, 1],
+        ["wow", "wow"],
+        [{ stuff: 1 }, { stuff: 43 }]
+      ];
+
+      expect(Collection.allSetsEqual(comparisons)).to.eql(false);
+    });
+  });
 });
