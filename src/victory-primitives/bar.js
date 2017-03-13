@@ -44,7 +44,9 @@ export default class Bar extends React.Component {
 
   calculateAttributes(props) {
     const {datum, active, x, y} = props;
-    const style = Helpers.evaluateStyle(assign({fill: "black"}, props.style), datum, active);
+    const stroke = props.style && props.style.fill || "black";
+    const baseStyle = {fill: "black", stroke};
+    const style = Helpers.evaluateStyle(assign(baseStyle, props.style), datum, active);
     const width = this.getBarWidth(props, style);
     const path = typeof x === "number" && typeof y === "number" ?
       this.getBarPath(props, width) : undefined;
@@ -52,24 +54,30 @@ export default class Bar extends React.Component {
   }
 
   getVerticalBarPath(props, width) {
-    const {x, y0, y} = props;
     const size = width / 2;
-    return `M ${x - size}, ${y0}
-      L ${x - size}, ${y}
-      L ${x + size}, ${y}
-      L ${x + size}, ${y0}
-      L ${x - size}, ${y0}
+    const y0 = Math.round(props.y0);
+    const y1 = Math.round(props.y);
+    const x0 = Math.round(props.x - size);
+    const x1 = Math.round(props.x + size);
+    return `M ${x0}, ${y0}
+      L ${x0}, ${y1}
+      L ${x1}, ${y1}
+      L ${x1}, ${y0}
+      L ${x0}, ${y0}
       z`;
   }
 
   getHorizontalBarPath(props, width) {
-    const {x, y0, y} = props;
     const size = width / 2;
-    return `M ${y0}, ${x - size}
-      L ${y0}, ${x + size}
-      L ${y}, ${x + size}
-      L ${y}, ${x - size}
-      L ${y0}, ${x - size}
+    const y0 = Math.round(props.y0);
+    const y1 = Math.round(props.y);
+    const x0 = Math.round(props.x - size);
+    const x1 = Math.round(props.x + size);
+    return `M ${y0}, ${x0}
+      L ${y0}, ${x1}
+      L ${y1}, ${x1}
+      L ${y1}, ${x0}
+      L ${y0}, ${x0}
       z`;
   }
 

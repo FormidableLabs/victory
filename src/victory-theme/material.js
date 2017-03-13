@@ -105,7 +105,6 @@ export default {
       data: {
         fill: blueGrey700,
         padding,
-        stroke: "transparent",
         strokeWidth: 0,
         width: 5
       },

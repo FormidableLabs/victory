@@ -87,7 +87,6 @@ export default {
       data: {
         fill: charcoal,
         padding: 10,
-        stroke: "transparent",
         strokeWidth: 0,
         width: 8
       },
