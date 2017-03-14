@@ -91,5 +91,5 @@ export default {
     return itemSets.every((comparisonSet) => {
       return isEqual(comparisonSet[0], comparisonSet[1]);
     });
-  },
+  }
 };
