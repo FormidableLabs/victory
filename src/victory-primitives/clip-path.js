@@ -29,12 +29,8 @@ export default class ClipPath extends React.Component {
   };
 
   static defaultProps = {
-    clipPadding: {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-    }
+    translateX: 0,
+    translateY: 0
   }
 
   componentWillMount() {
@@ -65,18 +61,18 @@ export default class ClipPath extends React.Component {
   }
 
   calculateAttributes(props) {
-    const { clipWidth, clipHeight, translateX, translateY, clipPadding } = props;
+    const { clipWidth, clipHeight, translateX, translateY } = props;
     const padding = Helpers.getPadding(props);
+    const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
 
     const totalPadding = (side) => {
-      const total = +padding[side] - (clipPadding[side] || 0);
-      return typeof total === "number" ? total : 0;
+      return padding[side] - clipPadding[side];
     };
     return {
-      x: totalPadding("left") + (translateX || 0),
-      y: totalPadding("top") + (translateY || 0),
-      width: Math.max(+clipWidth - totalPadding("left") - totalPadding("right"), 0),
-      height: Math.max(+clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
+      x: totalPadding("left") + translateX,
+      y: totalPadding("top") + translateY,
+      width: Math.max(clipWidth - totalPadding("left") - totalPadding("right"), 0),
+      height: Math.max(clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
     };
   }
 
