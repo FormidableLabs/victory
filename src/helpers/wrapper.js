@@ -13,6 +13,26 @@ export default {
     return this.getDataFromChildren(childComponents);
   },
 
+  getDefaultDomainPadding(props, axis, childComponents) {
+    const horizontalChildren = childComponents.some((component) => {
+      return component.props && component.props.horizontal;
+    });
+    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
+
+    const groupComponent = childComponents.filter((child) => {
+      return child.type && child.type.role && child.type.role === "group";
+    });
+
+    if (groupComponent.length < 1) {
+      return undefined;
+    }
+    const { offset, children } = groupComponent[0].props;
+    const defaultDomainPadding = horizontal ?
+      {y: (offset * children.length) / 2} :
+      {x: (offset * children.length) / 2};
+    return defaultDomainPadding[axis];
+  },
+
   getDomain(props, axis, childComponents) {
     childComponents = childComponents || React.Children.toArray(props.children);
     const propsDomain = Domain.getDomainFromProps(props, axis);
@@ -24,7 +44,10 @@ export default {
     const childDomain = this.getDomainFromChildren(props, axis, childComponents);
     const min = Collection.getMinValue([...dataDomain, ...childDomain]);
     const max = Collection.getMaxValue([...dataDomain, ...childDomain]);
-    return Domain.cleanDomain([min, max], props, axis);
+    const domainPadding = this.getDefaultDomainPadding(props, axis, childComponents);
+    const paddedDomain = Domain.padDomain([min, max], assign({domainPadding}, props), axis);
+    return Domain.cleanDomain(paddedDomain, props, axis);
+
   },
 
   setAnimationState(props, nextProps) {

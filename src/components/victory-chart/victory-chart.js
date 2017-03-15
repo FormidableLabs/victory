@@ -243,8 +243,6 @@ export default class VictoryChart extends React.Component {
         width: props.width,
         clipWidth: props.width,
         clipHeight: props.height,
-        domainPadding: child.props.domainPadding ||
-          props.domainPadding || calculatedProps.defaultDomainPadding,
         padding: Helpers.getPadding(props),
         key: index,
         theme: props.theme,
