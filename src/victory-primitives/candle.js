@@ -28,7 +28,7 @@ export default class Candle extends React.Component {
   }
 
   static defaultProps = {
-    groupComponent: <div/>
+    groupComponent: <g/>
   };
 
   componentWillMount() {
