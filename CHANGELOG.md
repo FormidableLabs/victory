@@ -1,6 +1,14 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.5 (2017-03-14)
+
+[217](https://github.com/FormidableLabs/victory-core/pull/217)
+- Adds support for multi-repo tooling
+
+[215](https://github.com/FormidableLabs/victory-core/pull/215)
+- Rounds path values to prevent sub-pixel rendering
+
 ## 14.0.4 (2017-03-10)
 
 [214](https://github.com/FormidableLabs/victory-core/pull/214)
