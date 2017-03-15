@@ -1,5 +1,10 @@
 # Victory Changelog
 
+## 0.18.1 (2017-03-14)
+
+[518](https://github.com/FormidableLabs/victory/pull/518)
+  - Support multi-repo tooling
+
 ## 0.18.0 (2017-02-27)
 **(VictoryVoronoiContainer)**
 
