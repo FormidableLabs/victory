@@ -97,8 +97,8 @@ describe("components/victory-bar", () => {
       const bars = wrapper.find(Bar);
       const heights = bars.map(SvgTestHelper.getBarHeight);
 
-      expect(heights[1] / 2).to.be.closeTo(heights[0], 0.01);
-      expect(heights[2] / 3 * 2).to.be.closeTo(heights[1], 0.01);
+      expect(heights[1] / 2).to.be.closeTo(heights[0], 0.5);
+      expect(heights[2] / 3 * 2).to.be.closeTo(heights[1], 0.5);
     });
   });
 
