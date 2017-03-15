@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 18.1.2 (2017-03-14)
+
+[441](https://github.com/FormidableLabs/victory-chart/pull/441)
+- Support for better multi-repo tooling
+
 ## 18.1.1 (2017-03-10)
 
 - Fixes a bug that was causing unnecessary `VictoryClipContainer` components to be rendered by `VictoryZoomContainer`
