@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 10.2.1 (2017-03-14)
+
+[132](https://github.com/FormidableLabs/victory-pie/pull/132)
+- support multi-repo tooling
+
 ## 10.2.0 (2017-02-25)
 
 Updates `victory-core` to include the following changes:
