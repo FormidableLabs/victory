@@ -1,6 +1,6 @@
 import React from "react";
 import { shallow } from "enzyme";
-import Curve from "src/victory-primitives/curve";
+import { Curve } from "src/victory-primitives";
 import { merge } from "lodash";
 
 describe("victory-primitives/curve", () => {

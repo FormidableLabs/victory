@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
-import Helpers from "../victory-util/helpers";
-import { assign, isEqual } from "lodash";
-
+import { Helpers, Collection } from "../victory-util";
+import { assign } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {
@@ -28,6 +27,10 @@ export default class Candle extends React.Component {
     role: PropTypes.string
   }
 
+  static defaultProps = {
+    groupComponent: <g/>
+  };
+
   componentWillMount() {
     const {style, candleWidth } = this.calculateAttributes(this.props);
     this.style = style;
@@ -37,12 +40,15 @@ export default class Candle extends React.Component {
   shouldComponentUpdate(nextProps) {
     const {x, y, y1, y2} = this.props;
     const {style, candleWidth} = this.calculateAttributes(nextProps);
-    if (x !== nextProps.x || y !== nextProps.y || y1 !== nextProps.y1 || y2 !== nextProps.y2) {
-      this.style = style;
-      this.candleWidth = candleWidth;
-      return true;
-    }
-    if (candleWidth !== this.candleWidth || !isEqual(style, this.style)) {
+
+    if (!Collection.allEqual([
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [y1, nextProps.y1],
+      [y2, nextProps.y2],
+      [candleWidth, this.candleWidth],
+      [style, this.style]
+    ])) {
       this.style = style;
       this.candleWidth = candleWidth;
       return true;
