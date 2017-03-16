@@ -179,15 +179,15 @@ class VictoryCandlestick extends React.Component {
     }).filter(Boolean);
 
     const children = [...dataComponents, ...labelComponents];
-    return this.renderContainer(groupComponent, props, children);
+    return this.renderContainer(groupComponent, children, {});
   }
 
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  renderContainer(component, props, children) {
-    const parentProps = this.getComponentProps(component, "parent", "parent");
+  renderContainer(component, children, props) {
+    const parentProps = props || this.getComponentProps(component, "parent", "parent");
     return React.cloneElement(component, parentProps, children);
   }
 
@@ -202,7 +202,7 @@ class VictoryCandlestick extends React.Component {
       );
     }
     const children = this.renderData(props);
-    return this.renderContainer(props.containerComponent, props, children);
+    return this.renderContainer(props.containerComponent, children);
   }
 }
 
