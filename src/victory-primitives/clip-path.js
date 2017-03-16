@@ -2,6 +2,7 @@ import React, { PropTypes } from "react";
 import {
   PropTypes as CustomPropTypes, Helpers
 } from "../victory-util/index";
+import { merge } from "lodash";
 
 export default class ClipPath extends React.Component {
   static propTypes = {
@@ -34,27 +35,19 @@ export default class ClipPath extends React.Component {
   }
 
   componentWillMount() {
-    const { x, y, width, height } = this.calculateAttributes(this.props);
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    merge(this, this.calculateAttributes(this.props));
   }
 
   shouldComponentUpdate(nextProps) {
-    const { x, y, width, height } = this.calculateAttributes(nextProps);
-    const { clipId } = this.props;
-    if (
-      x !== this.x ||
-      y !== this.y ||
-      width !== this.width ||
-      height !== this.height ||
-      clipId !== nextProps.clipId
-    ) {
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
+    const calculatedAttributes = this.calculateAttributes(nextProps);
+    if (!Collection.allSetsEqual([
+      [this.props.clipId, nextProps.clipId],
+      [this.x, calculatedAttributes.x],
+      [this.y, calculatedAttributes.y],
+      [this.height, calculatedAttributes.height],
+      [this.width, calculatedAttributes.width]
+    ])) {
+      merge(this, calculatedAttributes);
       return true;
     }
     return false;
