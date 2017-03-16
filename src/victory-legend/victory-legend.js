@@ -66,6 +66,7 @@ export default class VictoryLegend extends React.Component {
   };
 
   static defaultProps = {
+    data: defaultLegendData,
     containerComponent: <VictoryContainer/>,
     dataComponent: <Point/>,
     groupComponent: <g/>,
@@ -242,22 +243,23 @@ export default class VictoryLegend extends React.Component {
   }
 
   renderGroup(props, children) {
-    const { groupComponent, height, parentStyles, standalone, width, x, y } = props;
+    const { groupComponent, height, standalone, width, x, y } = props;
+    const style = props.style || {};
     let groupProps = { role: "presentation" };
-
+    const transform = `translate(${x}, ${y})`;
     if (!standalone) {
-      groupProps = Object.assign(groupProps, { height, width, x, y, style: parentStyles });
+      groupProps = Object.assign(groupProps, { height, width, transform, style: style.parent });
     }
 
     return React.cloneElement(groupComponent, groupProps, children);
   }
 
   renderContainer(props, children) {
-    const { containerComponent, height, parentStyles, width, x, y } = props;
-
+    const { containerComponent, height, width } = props;
+    const style = props.style || {};
     return React.cloneElement(
       containerComponent,
-      { height, width, x, y, style: parentStyles },
+      { height, width, style: style.parent },
       children
     );
   }
