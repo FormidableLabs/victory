@@ -247,8 +247,8 @@ export default class VictoryGroup extends React.Component {
 
   // the old ones were bad
   getNewChildren(props, childComponents, calculatedProps) {
-    const { datasets, horizontal } = calculatedProps;
-    const { offset, theme, labelComponent } = props;
+    const { datasets, horizontal, domain } = calculatedProps;
+    const { theme, labelComponent } = props;
     const childProps = this.getChildProps(props, calculatedProps);
     const getAnimationProps = Wrapper.getAnimationProps.bind(this);
 
@@ -258,13 +258,8 @@ export default class VictoryGroup extends React.Component {
       const style = role === "voronoi" || role === "tooltip" ?
         child.props.style : Wrapper.getChildStyle(child, index, calculatedProps);
       const labels = props.labels ? this.getLabels(props, datasets, index) : child.props.labels;
-      const defaultDomainPadding = horizontal ?
-        {y: (offset * childComponents.length) / 2} :
-        {x: (offset * childComponents.length) / 2};
-      const domainPadding = child.props.domainPadding ||
-        props.domainPadding || defaultDomainPadding;
       return React.cloneElement(child, assign({
-        domainPadding, labels, style, theme, horizontal,
+        domain, labels, style, theme, horizontal,
         data: this.getDataWithOffset(props, datasets[index], xOffset),
         animate: getAnimationProps(props, child, index),
         colorScale: this.getColorScale(props, child),
