@@ -138,11 +138,11 @@ class VictoryArea extends React.Component {
     }, []);
     const dataProps = this.getComponentProps(dataComponent, "data", "all");
     const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
-    return this.renderContainer(groupComponent, props, children);
+    return this.renderContainer(groupComponent, children, {});
   }
 
-  renderContainer(component, props, children) {
-    const parentProps = this.getComponentProps(component, "parent", "parent");
+  renderContainer(component, children, props) {
+    const parentProps = props || this.getComponentProps(component, "parent", "parent");
     return React.cloneElement(component, parentProps, children);
   }
 
@@ -162,7 +162,7 @@ class VictoryArea extends React.Component {
       );
     }
     const children = this.renderData(props);
-    return this.renderContainer(props.containerComponent, props, children);
+    return this.renderContainer(props.containerComponent, children);
   }
 }
 
