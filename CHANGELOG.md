@@ -1,6 +1,11 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.6 (2017-03-15)
+
+- Fixes clipPath bugs
+- FIxes VictoryLegend bugs
+
 ## 14.0.5 (2017-03-14)
 
 [217](https://github.com/FormidableLabs/victory-core/pull/217)
