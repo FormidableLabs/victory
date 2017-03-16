@@ -3,7 +3,7 @@ import { shallow } from "enzyme";
 import { ClipPath } from "src/victory-primitives";
 import { forEach, merge } from "lodash";
 
-describe.only("victory-primitives/clip-path", () => {
+describe("victory-primitives/clip-path", () => {
   const baseProps = {
     clipId: 4,
     clipPadding: {
@@ -33,6 +33,13 @@ describe.only("victory-primitives/clip-path", () => {
     forEach(expectedAttrs, (expectedValue, attrName) => {
       expect(parseFloat(rect.attr(attrName), 10)).to.eql(expectedValue);
     });
+  });
+
+  it("should successfully re-render", () => {
+    const wrapper = shallow(<ClipPath {...baseProps}/>);
+
+    wrapper.render();
+    wrapper.setProps(baseProps);
   });
 
   it("should render a clipPath with the passed id", () => {

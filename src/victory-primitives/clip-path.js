@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers
-} from "../victory-util/index";
+  PropTypes as CustomPropTypes, Helpers, Collection
+} from "../victory-util";
 import { merge } from "lodash";
 
 export default class ClipPath extends React.Component {
