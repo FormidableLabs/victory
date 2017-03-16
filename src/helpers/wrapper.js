@@ -17,8 +17,7 @@ export default {
     const horizontalChildren = childComponents.some((component) => {
       return component.props && component.props.horizontal;
     });
-    const horizontal = props && props.horizontal || horizontalChildren.length > 0;
-
+    const horizontal = props && props.horizontal || horizontalChildren;
     const groupComponent = childComponents.filter((child) => {
       return child.type && child.type.role && child.type.role === "group";
     });
