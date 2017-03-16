@@ -28,15 +28,6 @@ export default class ClipPath extends React.Component {
     translateY: PropTypes.number
   };
 
-  static defaultProps = {
-    clipPadding: {
-      top: 0,
-      bottom: 0,
-      left: 0,
-      right: 0
-    }
-  }
-
   componentWillMount() {
     const { x, y, width, height } = this.calculateAttributes(this.props);
     this.x = x;
@@ -65,9 +56,9 @@ export default class ClipPath extends React.Component {
   }
 
   calculateAttributes(props) {
-    const { clipWidth, clipHeight, translateX, translateY, clipPadding } = props;
+    const { clipWidth, clipHeight, translateX, translateY } = props;
     const padding = Helpers.getPadding(props);
-
+    const clipPadding = props.clipPadding || {};
     const totalPadding = (side) => {
       const total = +padding[side] - (clipPadding[side] || 0);
       return typeof total === "number" ? total : 0;
