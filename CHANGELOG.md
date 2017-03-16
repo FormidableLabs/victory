@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 18.1.3 (2017-03-15)
+
+- Removes unnecessary props from group components
+- Fixes a bug with domainPadding in grouped bar charts
+
 ## 18.1.2 (2017-03-14)
 
 [441](https://github.com/FormidableLabs/victory-chart/pull/441)
