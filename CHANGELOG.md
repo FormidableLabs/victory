@@ -1,5 +1,14 @@
 # Victory Changelog
 
+## 0.18.2 (2017-03-15)
+
+Minor bug fixes
+-[508](https://github.com/FormidableLabs/victory/issues/508)
+-[509](https://github.com/FormidableLabs/victory/issues/509)
+-[510](https://github.com/FormidableLabs/victory/issues/510)
+-[517](https://github.com/FormidableLabs/victory/issues/517)
+-[520](https://github.com/FormidableLabs/victory/issues/520)
+
 ## 0.18.1 (2017-03-14)
 
 [518](https://github.com/FormidableLabs/victory/pull/518)
