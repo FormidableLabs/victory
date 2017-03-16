@@ -165,7 +165,7 @@ class VictoryPie extends React.Component {
     const children = [...dataComponents, ...labelComponents];
     const transform = this.getTransform(props);
     const groupComponent = React.cloneElement(props.groupComponent, {transform});
-    return this.renderContainer(groupComponent, props, children);
+    return this.renderContainer(groupComponent, children, {});
   }
 
   getTransform(props) {
@@ -181,8 +181,8 @@ class VictoryPie extends React.Component {
     return `translate(${offset.x}, ${offset.y})`;
   }
 
-  renderContainer(component, props, children) {
-    const parentProps = this.getComponentProps(component, "parent", "parent");
+  renderContainer(component, children, props) {
+    const parentProps = props || this.getComponentProps(component, "parent", "parent");
     return React.cloneElement(component, parentProps, children);
   }
 
@@ -202,7 +202,7 @@ class VictoryPie extends React.Component {
     }
 
     const children = this.renderData(props);
-    return this.renderContainer(props.containerComponent, props, children);
+    return this.renderContainer(props.containerComponent, children);
   }
 }
 
