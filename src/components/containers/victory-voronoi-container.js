@@ -35,7 +35,12 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
       },
       onMouseMove: (evt, targetProps) => {
         evt.persist();
-        return VoronoiHelpers.onMouseMove(evt, targetProps);
+        const mutations = VoronoiHelpers.onMouseMove(evt, targetProps);
+
+        if (mutations.id !== this.mutationId) { // eslint-disable-line
+          this.mutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
       }
     }
   }, {
