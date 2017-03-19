@@ -126,6 +126,32 @@ describe("components/victory-pie", () => {
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(8);
     });
+
+    it("renders data values in their given order", () => {
+      const data = range(9).map((i) => ({x: i, y: i}));
+
+      const wrapper = shallow(
+        <VictoryPie data={data}/>
+      );
+      const xValues = wrapper.find(Slice).map((slice) => {
+        return slice.prop("datum")._x;
+      });
+
+      expect(xValues).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    });
+
+    it("renders data values sorted by sortKey prop", () => {
+      const data = range(9).map((i) => ({x: i, y: i})).reverse();
+
+      const wrapper = shallow(
+        <VictoryPie data={data} sortKey={"x"}/>
+      );
+      const xValues = wrapper.find(Slice).map((slice) => {
+        return slice.prop("datum")._x;
+      });
+
+      expect(xValues).to.eql([0, 1, 2, 3, 4, 5, 6, 7, 8]);
+    });
   });
 
   describe("the `startAngle` prop", () => {
