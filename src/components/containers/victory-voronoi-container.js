@@ -6,7 +6,6 @@ import { omit, defaults } from "lodash";
 
 export default class VictoryVoronoiContainer extends VictoryContainer {
   static displayName = "VictoryVoronoiContainer";
-  static role = "container";
   static propTypes = {
     ...VictoryContainer.propTypes,
     onActivated: React.PropTypes.func,
@@ -24,8 +23,6 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     labelComponent: <VictoryTooltip/>,
     voronoiPadding: 5
   };
-
-  static role = "voronoi";
 
   static defaultEvents = [{
     target: "parent",
