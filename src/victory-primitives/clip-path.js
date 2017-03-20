@@ -1,7 +1,7 @@
 import React, { PropTypes } from "react";
 import {
-  PropTypes as CustomPropTypes, Helpers
-} from "../victory-util/index";
+  PropTypes as CustomPropTypes, Helpers, Collection
+} from "../victory-util";
 
 export default class ClipPath extends React.Component {
   static propTypes = {
@@ -29,45 +29,37 @@ export default class ClipPath extends React.Component {
   };
 
   componentWillMount() {
-    const { x, y, width, height } = this.calculateAttributes(this.props);
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
+    Object.assign(this, this.calculateAttributes(this.props));
   }
 
   shouldComponentUpdate(nextProps) {
-    const { x, y, width, height } = this.calculateAttributes(nextProps);
-    const { clipId } = this.props;
-    if (
-      x !== this.x ||
-      y !== this.y ||
-      width !== this.width ||
-      height !== this.height ||
-      clipId !== nextProps.clipId
-    ) {
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
+    const calculatedAttributes = this.calculateAttributes(nextProps);
+    if (!Collection.allSetsEqual([
+      [this.props.clipId, nextProps.clipId],
+      [this.x, calculatedAttributes.x],
+      [this.y, calculatedAttributes.y],
+      [this.height, calculatedAttributes.height],
+      [this.width, calculatedAttributes.width]
+    ])) {
+      Object.assign(this, calculatedAttributes);
       return true;
     }
     return false;
   }
 
   calculateAttributes(props) {
-    const { clipWidth, clipHeight, translateX, translateY } = props;
+    const { clipWidth = 0, clipHeight = 0, translateX = 0, translateY = 0 } = props;
     const padding = Helpers.getPadding(props);
-    const clipPadding = props.clipPadding || {};
+    const clipPadding = Helpers.getPadding({ padding: props.clipPadding });
+
     const totalPadding = (side) => {
-      const total = +padding[side] - (clipPadding[side] || 0);
-      return typeof total === "number" ? total : 0;
+      return padding[side] - clipPadding[side];
     };
     return {
-      x: totalPadding("left") + (translateX || 0),
-      y: totalPadding("top") + (translateY || 0),
-      width: Math.max(+clipWidth - totalPadding("left") - totalPadding("right"), 0),
-      height: Math.max(+clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
+      x: totalPadding("left") + translateX,
+      y: totalPadding("top") + translateY,
+      width: Math.max(clipWidth - totalPadding("left") - totalPadding("right"), 0),
+      height: Math.max(clipHeight - totalPadding("top") - totalPadding("bottom"), 0)
     };
   }
 
