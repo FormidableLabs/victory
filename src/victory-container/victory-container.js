@@ -6,7 +6,7 @@ import { default as VictoryTheme } from "../victory-theme/victory-theme";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
-
+  static role = "container";
   static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,

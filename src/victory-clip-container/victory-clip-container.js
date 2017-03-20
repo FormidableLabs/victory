@@ -5,7 +5,7 @@ import { Helpers } from "../victory-util/index";
 
 export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
-
+  static role = "container";
   static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
@@ -97,7 +97,7 @@ export default class VictoryClipContainer extends React.Component {
       return clipValues[axis];
     }
     const range = Helpers.getRange(props, axis);
-    return range ? Math.abs(range[0] - range[1]) : undefined;
+    return range ? Math.abs(range[0] - range[1]) || undefined : undefined;
   }
 
   getTranslateValue(props, axis) {
