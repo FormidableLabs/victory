@@ -1,7 +1,8 @@
 import { Selection, Data, Helpers } from "victory-core";
-import { assign, throttle, isFunction, groupBy, keys, isEqual, uniqueId } from "lodash";
+import { assign, throttle, isFunction, groupBy, keys, isEqual } from "lodash";
 import { voronoi as d3Voronoi } from "d3-voronoi";
 import React from "react";
+import { attachId } from "../../helpers/event-handlers.js";
 
 const VoronoiHelpers = {
   withinBounds(props, point) {
@@ -153,15 +154,15 @@ const VoronoiHelpers = {
         points.map((point) => this.getActiveMutations(targetProps, point)) : [];
       const inactiveMutations = activePoints.length ?
         activePoints.map((point) => this.getInactiveMutations(targetProps, point)) : [];
-      return {
-        mutations: parentMutations.concat(...inactiveMutations, ...activeMutations),
-        id: uniqueId("mutationId")
-      };
+      return parentMutations.concat(...inactiveMutations, ...activeMutations);
     }
   }
 };
 
 export default {
   onMouseLeave: VoronoiHelpers.onMouseLeave.bind(VoronoiHelpers),
-  onMouseMove: throttle(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers), 32, {leading: true})
+  onMouseMove: throttle(
+    attachId(VoronoiHelpers.onMouseMove.bind(VoronoiHelpers)),
+    32,
+    {leading: true, trailing: false})
 };
