@@ -1,7 +1,6 @@
 import React, { PropTypes } from "react";
-import { defaults } from "lodash";
+import { defaults, isFunction } from "lodash";
 import { ClipPath } from "../victory-primitives/index";
-import { Helpers } from "../victory-util/index";
 
 export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
@@ -96,7 +95,7 @@ export default class VictoryClipContainer extends React.Component {
     if (clipValues[axis] !== undefined) {
       return clipValues[axis];
     }
-    const range = Helpers.getRange(props, axis);
+    const range = this.getRange(props, axis);
     return range ? Math.abs(range[0] - range[1]) || undefined : undefined;
   }
 
@@ -105,8 +104,16 @@ export default class VictoryClipContainer extends React.Component {
     if (translateValues[axis] !== undefined) {
       return translateValues[axis];
     }
-    const range = Helpers.getRange(props, axis);
+    const range = this.getRange(props, axis);
     return range ? Math.min(...range) : undefined;
+  }
+
+  getRange(props, axis) {
+    const scale = props.scale || {};
+    if (!scale[axis]) {
+      return undefined;
+    }
+    return isFunction(scale[axis].range) ? scale[axis].range() : undefined;
   }
 
   render() {
