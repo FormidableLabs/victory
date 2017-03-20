@@ -40,19 +40,20 @@ export default class VictoryBrushContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
-        BrushHelpers.onMouseMove.cancel();
         return BrushHelpers.onMouseDown(evt, targetProps);
       },
       onMouseMove: (evt, targetProps) => {
-        evt.persist();
-        return BrushHelpers.onMouseMove(evt, targetProps);
+        const mutations = BrushHelpers.onMouseMove(evt, targetProps);
+
+        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
+          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
       },
       onMouseUp: (evt, targetProps) => {
-        BrushHelpers.onMouseMove.cancel();
         return BrushHelpers.onMouseUp(evt, targetProps);
       },
       onMouseLeave: (evt, targetProps) => {
-        BrushHelpers.onMouseMove.cancel();
         return BrushHelpers.onMouseLeave(evt, targetProps);
       }
     }
