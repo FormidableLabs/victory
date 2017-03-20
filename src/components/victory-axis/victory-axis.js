@@ -153,7 +153,7 @@ class VictoryAxis extends React.Component {
   fixLabelOverlap(gridAndTicks, props) {
     const isVertical = Helpers.isVertical(props);
     const size = isVertical ? props.height : props.width;
-    const isVictoryLabel = (child) => child.type.name === "VictoryLabel";
+    const isVictoryLabel = (child) => child.type && child.type.role === "label";
     const labels = gridAndTicks.map((gridAndTick) => gridAndTick.props.children)
      .reduce((accumulator, childArr) => accumulator.concat(childArr))
      .filter(isVictoryLabel)
