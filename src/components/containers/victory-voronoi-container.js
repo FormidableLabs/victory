@@ -6,6 +6,7 @@ import { omit, defaults } from "lodash";
 
 export default class VictoryVoronoiContainer extends VictoryContainer {
   static displayName = "VictoryVoronoiContainer";
+  static role = "container";
   static propTypes = {
     ...VictoryContainer.propTypes,
     onActivated: React.PropTypes.func,

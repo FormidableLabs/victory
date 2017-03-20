@@ -4,6 +4,7 @@ import SelectionHelpers from "./selection-helpers";
 
 export default class VictorySelectionContainer extends VictoryContainer {
   static displayName = "VictorySelectionContainer";
+  static role = "container";
   static propTypes = {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,

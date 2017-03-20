@@ -140,15 +140,16 @@ class VictoryLine extends React.Component {
     }, []);
     const dataProps = this.getComponentProps(dataComponent, "data", "all");
     const children = [React.cloneElement(dataComponent, dataProps), ...labelComponents];
-    return this.renderContainer(groupComponent, children, {});
+    return this.renderContainer(groupComponent, children);
   }
 
   shouldAnimate() {
     return !!this.props.animate;
   }
 
-  renderContainer(component, children, props) {
-    const parentProps = props || this.getComponentProps(component, "parent", "parent");
+  renderContainer(component, children) {
+    const isContainer = component.type && component.type.role === "container";
+    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
     return React.cloneElement(component, parentProps, children);
   }
 
