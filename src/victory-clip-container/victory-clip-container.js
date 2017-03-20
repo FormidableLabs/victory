@@ -87,7 +87,7 @@ export default class VictoryClipContainer extends React.Component {
     } = props;
     return React.cloneElement(
       clipPathComponent,
-      { padding, clipPadding, clipId, translateX, translateY, clipWidth, clipHeight }
+      { clipPadding, clipId, translateX, translateY, clipWidth, clipHeight }
     );
   }
 
