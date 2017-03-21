@@ -1,6 +1,6 @@
 /* eslint-disable max-statements */
 import React, { PropTypes } from "react";
-import Helpers from "../victory-util/helpers";
+import { Helpers, Collection } from "../victory-util";
 import { assign, isEqual } from "lodash";
 
 export default class ErrorBar extends React.Component {
@@ -45,22 +45,20 @@ export default class ErrorBar extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {x, y, errorX, errorY} = this.props;
-    const style = this.getStyle(nextProps);
-    if (
-      x !== nextProps.x ||
-      y !== nextProps.y ||
-      !isEqual(errorX, nextProps.errorX) ||
-      !isEqual(errorY, nextProps.errorY)
-    ) {
+    const nextStyle = this.getStyle(nextProps);
+
+    if (!Collection.allSetsEqual([
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [errorX, nextProps.errorX],
+      [errorY, nextProps.errorY],
+      [this.style, nextStyle]
+    ])) {
       this.style = style;
       return true;
     }
-    if (isEqual(style, this.style)) {
-      return false;
-    } else {
-      this.style = style;
-      return true;
-    }
+
+    return false;
   }
 
   getStyle(props) {
