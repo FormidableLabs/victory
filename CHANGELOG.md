@@ -1,5 +1,10 @@
 # VictoryPie Changelog
 
+## 10.2.3 (2017-03-21)
+
+- Updates `victory-core`
+- Code consistency with other Victory components
+
 ## 10.2.2 (2017-03-14)
 
 - Removes unnecessary props from groupComponent
