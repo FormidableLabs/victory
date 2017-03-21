@@ -4,19 +4,10 @@ import { ClipPath } from "../victory-primitives/index";
 
 export default class VictoryClipContainer extends React.Component {
   static displayName = "VictoryClipContainer";
-
+  static role = "container";
   static propTypes = {
     className: PropTypes.string,
     style: PropTypes.object,
-    padding: PropTypes.oneOfType([
-      PropTypes.number,
-      PropTypes.shape({
-        top: PropTypes.number,
-        bottom: PropTypes.number,
-        left: PropTypes.number,
-        right: PropTypes.number
-      })
-    ]),
     clipPadding: PropTypes.shape({
       top: PropTypes.number,
       bottom: PropTypes.number,
@@ -82,11 +73,11 @@ export default class VictoryClipContainer extends React.Component {
   // Overridden in victory-core-native
   renderClipComponent(props, clipId) {
     const {
-      padding, clipPadding, translateX, translateY, clipHeight, clipWidth, clipPathComponent
+      clipPadding, translateX, translateY, clipHeight, clipWidth, clipPathComponent
     } = props;
     return React.cloneElement(
       clipPathComponent,
-      { padding, clipPadding, clipId, translateX, translateY, clipWidth, clipHeight }
+      { clipPadding, clipId, translateX, translateY, clipWidth, clipHeight }
     );
   }
 
@@ -96,7 +87,7 @@ export default class VictoryClipContainer extends React.Component {
       return clipValues[axis];
     }
     const range = this.getRange(props, axis);
-    return range ? Math.abs(range[0] - range[1]) : undefined;
+    return range ? Math.abs(range[0] - range[1]) || undefined : undefined;
   }
 
   getTranslateValue(props, axis) {

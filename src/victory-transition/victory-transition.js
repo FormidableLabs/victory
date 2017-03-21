@@ -153,9 +153,10 @@ export default class VictoryTransition extends React.Component {
       <VictoryAnimation {...combinedProps.animate} data={propsToAnimate}>
         {(newProps) => {
           if (child.props.groupComponent) {
+            const newClipWidth = this.continuous ? newProps.clipWidth : undefined;
             const groupComponent = React.cloneElement(
               child.props.groupComponent,
-              { clipWidth: newProps.clipWidth }
+              { clipWidth: newClipWidth }
             );
             return React.cloneElement(
               child, defaults({animate: null, groupComponent}, newProps, combinedProps)
