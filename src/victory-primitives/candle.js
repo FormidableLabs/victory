@@ -41,7 +41,7 @@ export default class Candle extends React.Component {
     const {x, y, y1, y2} = this.props;
     const {style, candleWidth} = this.calculateAttributes(nextProps);
 
-    if (!Collection.allEqual([
+    if (!Collection.allSetsEqual([
       [x, nextProps.x],
       [y, nextProps.y],
       [y1, nextProps.y1],
