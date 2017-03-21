@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 0.18.3 (2017-03-21)
+
+[victory-chart/447](https://github.com/FormidableLabs/victory-chart/pull/447) Improves performance for container components
+- Fixes [#511](https://github.com/FormidableLabs/victory/issues/511)
+- Fixes [#526](https://github.com/FormidableLabs/victory/issues/526)
+
 ## 0.18.2 (2017-03-15)
 
 Minor bug fixes
