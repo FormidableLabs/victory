@@ -5,7 +5,6 @@ import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } 
 
 export default class VictoryZoomContainer extends VictoryContainer {
   static displayName = "VictoryZoomContainer";
-  static role = "container";
   static propTypes = {
     ...VictoryContainer.propTypes,
     zoomDomain: PropTypes.shape({

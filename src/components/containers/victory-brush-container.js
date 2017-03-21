@@ -6,7 +6,6 @@ import { assign, defaults, isEqual } from "lodash";
 
 export default class VictoryBrushContainer extends VictoryContainer {
   static displayName = "VictoryBrushContainer";
-  static role = "container";
   static propTypes = {
     ...VictoryContainer.propTypes,
     selectionStyle: React.PropTypes.object,
