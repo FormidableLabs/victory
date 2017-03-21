@@ -1,5 +1,9 @@
 # VictoryPie Changelog
 
+## 10.2.2 (2017-03-14)
+
+- Removes unnecessary props from groupComponent
+
 ## 10.2.1 (2017-03-14)
 
 [132](https://github.com/FormidableLabs/victory-pie/pull/132)
