@@ -1,7 +1,7 @@
 /* eslint-disable max-statements */
 import React, { PropTypes } from "react";
-import Helpers from "../victory-util/helpers";
-import { assign, isEqual } from "lodash";
+import { Helpers, Collection } from "../victory-util";
+import { assign } from "lodash";
 
 export default class ErrorBar extends React.Component {
   constructor(props) {
@@ -36,7 +36,8 @@ export default class ErrorBar extends React.Component {
   };
 
   static defaultProps = {
-    borderWidth: 10
+    borderWidth: 10,
+    groupComponent: <g/>
   }
 
   componentWillMount() {
@@ -45,22 +46,20 @@ export default class ErrorBar extends React.Component {
 
   shouldComponentUpdate(nextProps) {
     const {x, y, errorX, errorY} = this.props;
-    const style = this.getStyle(nextProps);
-    if (
-      x !== nextProps.x ||
-      y !== nextProps.y ||
-      !isEqual(errorX, nextProps.errorX) ||
-      !isEqual(errorY, nextProps.errorY)
-    ) {
-      this.style = style;
+    const nextStyle = this.getStyle(nextProps);
+
+    if (!Collection.allSetsEqual([
+      [x, nextProps.x],
+      [y, nextProps.y],
+      [errorX, nextProps.errorX],
+      [errorY, nextProps.errorY],
+      [this.style, nextStyle]
+    ])) {
+      this.style = nextStyle;
       return true;
     }
-    if (isEqual(style, this.style)) {
-      return false;
-    } else {
-      this.style = style;
-      return true;
-    }
+
+    return false;
   }
 
   getStyle(props) {
@@ -73,32 +72,32 @@ export default class ErrorBar extends React.Component {
     return <line {...props} style={style} {...events}/>;
   }
 
-  renderBorder(props, errors, type) {
+  renderBorder(props, error, type) {
     const {x, y, borderWidth, events, style, role, shapeRendering, className} = props;
     const vertical = type === "Right" || type === "Left";
-    const error = errors[`error${type}`];
+    const errorPortion = error[`error${type}`];
     const borderProps = {
       role, shapeRendering, className,
       key: `border${type}`,
-      x1: vertical ? error : x - borderWidth,
-      x2: vertical ? error : x + borderWidth,
-      y1: vertical ? y - borderWidth : error,
-      y2: vertical ? y + borderWidth : error
+      x1: vertical ? errorPortion : x - borderWidth,
+      x2: vertical ? errorPortion : x + borderWidth,
+      y1: vertical ? y - borderWidth : errorPortion,
+      y2: vertical ? y + borderWidth : errorPortion
     };
     return this.renderLine(borderProps, style, events);
   }
 
-  renderCross(props, errors, type) {
+  renderCross(props, error, type) {
     const {x, y, events, style, role, shapeRendering, className} = props;
     const vertical = type === "Top" || type === "Bottom";
-    const error = errors[`error${type}`];
+    const errorPortion = error[`error${type}`];
     const borderProps = {
       role, shapeRendering, className,
       key: `cross${type}`,
       x1: x,
-      x2: vertical ? x : error,
+      x2: vertical ? x : errorPortion,
       y1: y,
-      y2: vertical ? error : y
+      y2: vertical ? errorPortion : y
     };
     return this.renderLine(borderProps, style, events);
   }
