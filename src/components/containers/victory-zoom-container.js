@@ -30,31 +30,31 @@ export default class VictoryZoomContainer extends VictoryContainer {
     target: "parent",
     eventHandlers: {
       onMouseDown: (evt, targetProps) => {
-        ZoomHelpers.onMouseMove.cancel();
-        ZoomHelpers.onWheel.cancel();
         return ZoomHelpers.onMouseDown(evt, targetProps);
       },
       onMouseUp: (evt, targetProps) => {
-        ZoomHelpers.onMouseMove.cancel();
-        ZoomHelpers.onWheel.cancel();
         return ZoomHelpers.onMouseUp(evt, targetProps);
       },
       onMouseLeave: (evt, targetProps) => {
-        ZoomHelpers.onMouseMove.cancel();
-        ZoomHelpers.onWheel.cancel();
         return ZoomHelpers.onMouseLeave(evt, targetProps);
       },
       onMouseMove: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
-        evt.persist();
-        ZoomHelpers.onWheel.cancel();
-        return ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
+        const mutations = ZoomHelpers.onMouseMove(evt, targetProps, eventKey, ctx);
+
+        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
+          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
       },
       onWheel: (evt, targetProps, eventKey, ctx) => { // eslint-disable-line max-params
         evt.preventDefault();
-        evt.persist();
-        ZoomHelpers.onMouseMove.cancel();
-        return ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
+        const mutations = ZoomHelpers.onWheel(evt, targetProps, eventKey, ctx);
+
+        if (mutations.id !== this.wheelMutationId) { // eslint-disable-line
+          this.wheelMutationId = mutations.id; // eslint-disable-line
+          return mutations.mutations;
+        }
       }
     }
   }];
