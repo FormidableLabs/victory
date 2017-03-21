@@ -24,8 +24,6 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     voronoiPadding: 5
   };
 
-  static role = "voronoi";
-
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
