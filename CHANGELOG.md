@@ -1,6 +1,13 @@
 VictoryCore Changelog
 =====================
 
+## 14.0.7 (2017-03-21)
+
+- Fixes a bug in s`houldComponentUpdate` logic in `Candle`
+- Adds static roles for `VictoryContainer`, `VictoryClipContainer`, and `VictoryLabel`
+- Fixes a bug in `VictoryClipContainer`
+- Prevents unknown prop `clipWidth` on `<g>` tags
+
 ## 14.0.6 (2017-03-15)
 
 - Fixes clipPath bugs
