@@ -21,7 +21,7 @@
     "preversion": "builder run npm:preversion",
     "postversion": "builder run npm:postversion",
     "postpublish": "builder run npm:postpublish",
-    "start": "builder run hot",
+    "start": "builder run dev",
     "test": "builder run check",
     "version": "builder run npm:version",
     "storybook": "start-storybook -p 3001"
