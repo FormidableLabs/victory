@@ -114,13 +114,20 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
   }
 
   getStyle(props, points, type) {
-    const { labelComponent, theme } = props;
+    const { labels, labelComponent, theme } = props;
+    const componentProps = labelComponent.props || {};
     const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
-    const defaultStyles = defaults({}, labelComponent.props.style, themeStyles[type]);
-    return points.map((point) => {
-      const style = point.style && point.style[type] || {};
-      return Helpers.evaluateStyle(defaults({}, style, defaultStyles), point, true);
-    });
+    const componentStyle = type === "flyout" ? componentProps.flyoutStyle : componentProps.style;
+    const defaultStyles = defaults({}, componentStyle, themeStyles[type]);
+    return points.reduce((memo, point) => {
+      const text = Helpers.evaluateProp(labels, point, true);
+      const textArray = text ? `${text}`.split("\n") : [];
+      const baseStyle = point.style && point.style[type] || {};
+      const style = Helpers.evaluateStyle(defaults({}, baseStyle, defaultStyles), point, true);
+      const styleArray = textArray.length ? textArray.map(() => style) : [style];
+      memo = memo.concat(styleArray);
+      return memo;
+    }, []);
   }
 
   getDefaultLabelProps(props, points) {
@@ -134,7 +141,11 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
 
   getLabelProps(props, points) {
     const {labels, scale, labelComponent} = props;
-    const text = points.map((point) => Helpers.evaluateProp(labels, point, true));
+    const text = points.reduce((memo, point) => {
+      const t = Helpers.evaluateProp(labels, point, true);
+      memo = memo.concat(`${t}`.split("\n"));
+      return memo;
+    }, []);
     const style = this.getStyle(props, points, "labels");
     const labelPosition = this.getLabelPosition(props, points, text, style);
     return defaults(

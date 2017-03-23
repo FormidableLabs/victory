@@ -55,8 +55,14 @@ class App extends React.Component {
             domainPadding={{y: 2}}
             containerComponent={
               <VictoryVoronoiContainer dimension="x"
-                labels={(d) => `y: ${d.y}`}
-                labelComponent={<VictoryTooltip cornerRadius={0} flyoutStyle={{fill: "white"}}/>}
+                labels={(d) => `y:${d.y}`}
+                labelComponent={
+                  <VictoryTooltip
+                    cornerRadius={0}
+                    flyoutStyle={{fill: "white"}}
+                    style={{fontSize: 10}}
+                  />
+                }
               />
             }
           >
