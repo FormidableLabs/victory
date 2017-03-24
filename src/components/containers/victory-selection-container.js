@@ -20,7 +20,6 @@ export default class VictorySelectionContainer extends VictoryContainer {
       fill: "black",
       fillOpacity: 0.1
     },
-    standalone: true,
     selectionComponent: <rect/>
   };
 

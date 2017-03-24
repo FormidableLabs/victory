@@ -19,7 +19,6 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
-    standalone: true,
     labelComponent: <VictoryTooltip/>,
     voronoiPadding: 5
   };
