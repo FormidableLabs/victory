@@ -15,6 +15,7 @@ import VoronoiDemo from "./components/victory-voronoi-demo";
 import TooltipDemo from "./components/victory-tooltip-demo";
 import ZoomContainerDemo from "./components/victory-zoom-container-demo";
 import VoronoiContainerDemo from "./components/victory-voronoi-container-demo";
+import VoronoiZoomContainerDemo from "./components/victory-voronoi-zoom-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
@@ -59,6 +60,7 @@ const App = React.createClass({
           <li><Link to="/tooltip">Victory Tooltip Demo</Link></li>
           <li><Link to="/zoom-container">Victory Zoom Container Demo</Link></li>
           <li><Link to="/voronoi-container">Victory Voronoi Container Demo</Link></li>
+          <li><Link to="/voronoi-zoom-container">Victory Voronoi Zoom Container Demo</Link></li>
           <li><Link to="/brush-container">Victory Brush Container Demo</Link></li>
           <li><Link to="/animation">Animation Demo</Link></li>
           <li><Link to="/selection-container">Victory Selection Container Demo</Link></li>
@@ -86,6 +88,7 @@ ReactDOM.render((
       <Route path="tooltip" component={TooltipDemo}/>
       <Route path="zoom-container" component={ZoomContainerDemo}/>
       <Route path="voronoi-container" component={VoronoiContainerDemo}/>
+      <Route path="voronoi-zoom-container" component={VoronoiZoomContainerDemo}/>
       <Route path="brush-container" component={BrushContainerDemo}/>
       <Route path="animation" component={AnimationDemo}/>
       <Route path="selection-container" component={SelectionDemo}/>

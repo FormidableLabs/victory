@@ -21,11 +21,12 @@ export { default as VictoryBrushContainer } from "./components/containers/victor
 export {
   default as VictoryVoronoiContainer
 } from "./components/containers/victory-voronoi-container";
+export {
+  default as VictoryVoronoiZoomContainer
+} from "./components/containers/victory-voronoi-zoom-container";
 export { default as VictoryZoomContainer } from "./components/containers/victory-zoom-container";
 export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
 export { default as BrushHelpers } from "./components/containers/brush-helpers";
 export { default as SelectionHelpers } from "./components/containers/selection-helpers";
 export { default as VoronoiHelpers } from "./components/containers/voronoi-helpers";
 export { default as ZoomHelpers } from "./components/containers/zoom-helpers";
-
-

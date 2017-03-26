@@ -2,7 +2,7 @@ import React from "react";
 import { VictoryContainer } from "victory-core";
 import SelectionHelpers from "./selection-helpers";
 
-export default class VictorySelectionContainer extends VictoryContainer {
+export const selectionContainerMixin = (base) => class VictorySelectionContainer extends base {
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
@@ -59,4 +59,6 @@ export default class VictorySelectionContainer extends VictoryContainer {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }
-}
+};
+
+export default selectionContainerMixin(VictoryContainer);
