@@ -1,4 +1,4 @@
-/*global document:false */
+/*global document:false window */
 import React from "react";
 import ReactDOM from "react-dom";
 import AreaDemo from "./components/victory-area-demo";
@@ -19,12 +19,25 @@ import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
+import { startCase } from "lodash";
 
 const content = document.getElementById("content");
 
 const App = React.createClass({
   propTypes: {
     children: React.PropTypes.element
+  },
+
+  componentWillUpdate() {
+    this.setTitle();
+  },
+
+  componentWillMount() {
+    this.setTitle();
+  },
+
+  setTitle() {
+    document.title = startCase(window.location.hash.match(/\/(.*)\?/)[1] || "Victory Chart Demos");
   },
 
   render() {
@@ -48,7 +61,7 @@ const App = React.createClass({
           <li><Link to="/voronoi-container">Victory Voronoi Container Demo</Link></li>
           <li><Link to="/brush-container">Victory Brush Container Demo</Link></li>
           <li><Link to="/animation">Animation Demo</Link></li>
-          <li><Link to="/selection">Victory Selection Container Demo</Link></li>
+          <li><Link to="/selection-container">Victory Selection Container Demo</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -75,7 +88,7 @@ ReactDOM.render((
       <Route path="voronoi-container" component={VoronoiContainerDemo}/>
       <Route path="brush-container" component={BrushContainerDemo}/>
       <Route path="animation" component={AnimationDemo}/>
-      <Route path="selection" component={SelectionDemo}/>
+      <Route path="selection-container" component={SelectionDemo}/>
     </Route>
   </Router>
 ), content);
