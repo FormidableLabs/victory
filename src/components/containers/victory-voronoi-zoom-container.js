@@ -1,8 +1,3 @@
-import { combineContainerMixins } from "./combine-container-mixins";
-import { voronoiContainerMixin } from "./victory-voronoi-container";
-import { zoomContainerMixin } from "./victory-zoom-container";
+import createContainer from "./create-container";
 
-export default combineContainerMixins(
-  voronoiContainerMixin,
-  zoomContainerMixin
-);
+export default createContainer("zoom", "voronoi");

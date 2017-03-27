@@ -1,6 +1,11 @@
 import { toPairs, groupBy, forOwn } from "lodash";
 import { VictoryContainer } from "victory-core";
 
+import { voronoiContainerMixin } from "./victory-voronoi-container";
+import { zoomContainerMixin } from "./victory-zoom-container";
+import { selectionContainerMixin } from "./victory-selection-container";
+import { brushContainerMixin } from "./victory-brush-container";
+
 const ensureArray = (thing) => {
   if (!thing) {
     return [];
@@ -81,3 +86,27 @@ export const combineContainerMixins = (mixinA, mixinB, displayName = "CustomVict
     }
   };
 };
+
+export const createContainer = (firstBehavior, secondBehavior) => {
+  const containerMixins = {
+    voronoi: voronoiContainerMixin,
+    zoom: zoomContainerMixin,
+    selection: selectionContainerMixin,
+    brush: brushContainerMixin
+  };
+
+  const firstMixin = containerMixins[firstBehavior];
+  const secondMixin = containerMixins[secondBehavior];
+
+  if (!firstMixin) {
+    return VictoryContainer;
+  }
+
+  if (!secondMixin) {
+    return firstMixin(VictoryContainer); // container inherits from VictoryContainer
+  }
+
+  return combineContainerMixins(firstMixin, secondMixin);
+};
+
+export default createContainer;
