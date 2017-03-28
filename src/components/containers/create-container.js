@@ -1,5 +1,5 @@
-import { toPairs, groupBy, forOwn } from "lodash";
-import { VictoryContainer } from "victory-core";
+import { toPairs, groupBy, forOwn, includes } from "lodash";
+import { VictoryContainer, Log } from "victory-core";
 
 import { voronoiContainerMixin } from "./victory-voronoi-container";
 import { zoomContainerMixin } from "./victory-zoom-container";
@@ -87,13 +87,29 @@ export const combineContainerMixins = (mixinA, mixinB, displayName = "CustomVict
   };
 };
 
-export const createContainer = (firstBehavior, secondBehavior) => {
+const checkBehaviorName = (behavior, behaviors) => {
+  if (behavior && !includes(behaviors, behavior)) {
+    Log.warn(
+      `"${behavior}" is not a valid behavior. Choose from [${behaviors.join(", ")}].`
+    );
+  }
+};
+
+export const createContainer = (firstBehavior, secondBehavior, ...invalidParams) => {
   const containerMixins = {
     voronoi: voronoiContainerMixin,
     zoom: zoomContainerMixin,
     selection: selectionContainerMixin,
     brush: brushContainerMixin
   };
+  const behaviors = Object.keys(containerMixins);
+
+  checkBehaviorName(firstBehavior, behaviors);
+  checkBehaviorName(secondBehavior, behaviors);
+
+  if (invalidParams.length) {
+    Log.warn("too many arguments given to createContainer (maximum accepted: 2).");
+  }
 
   const firstMixin = containerMixins[firstBehavior];
   const secondMixin = containerMixins[secondBehavior];
