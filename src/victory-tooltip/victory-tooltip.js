@@ -215,7 +215,7 @@ export default class VictoryTooltip extends React.Component {
   }
 
   getLabelProps(props, calculatedValues) {
-    const { flyoutCenter, labelStyle, labelSize, flyoutDimensions } = calculatedValues;
+    const { flyoutCenter, labelStyle, labelSize, flyoutDimensions, dy, dx } = calculatedValues;
     const { text, datum, labelComponent, index } = props;
     const textAnchor = labelStyle.textAnchor || "middle";
     const getLabelX = () => {
@@ -227,7 +227,7 @@ export default class VictoryTooltip extends React.Component {
       labelComponent.props,
       {
         key: `label-${index}`,
-        text, datum, textAnchor,
+        text, datum, textAnchor, dy, dx,
         style: labelStyle,
         x: !labelStyle.textAnchor || labelStyle.textAnchor === "middle" ?
           flyoutCenter.x : getLabelX(),
