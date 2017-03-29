@@ -142,6 +142,9 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
     const {labels, scale, labelComponent} = props;
     const text = points.reduce((memo, point) => {
       const t = Helpers.evaluateProp(labels, point, true);
+      if (t === null || t === undefined) {
+        return memo;
+      }
       memo = memo.concat(`${t}`.split("\n"));
       return memo;
     }, []);
