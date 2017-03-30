@@ -161,7 +161,7 @@ class VictoryBar extends React.Component {
     }).filter(Boolean);
 
     const children = [...dataComponents, ...labelComponents];
-    return this.renderContainer(groupComponent, children, {});
+    return this.renderContainer(groupComponent, children);
 
   }
 
@@ -169,8 +169,9 @@ class VictoryBar extends React.Component {
     return !!this.props.animate;
   }
 
-  renderContainer(component, children, props) {
-    const parentProps = props || this.getComponentProps(component, "parent", "parent");
+  renderContainer(component, children) {
+    const isContainer = component.type && component.type.role === "container";
+    const parentProps = isContainer ? this.getComponentProps(component, "parent", "parent") : {};
     return React.cloneElement(component, parentProps, children);
   }
 

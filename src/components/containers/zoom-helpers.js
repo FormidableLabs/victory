@@ -1,5 +1,6 @@
 import { Selection, Collection } from "victory-core";
 import { throttle, isFunction, defaults } from "lodash";
+import { attachId } from "../../helpers/event-handlers.js";
 
 const Helpers = {
 
@@ -235,6 +236,14 @@ export default {
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
   onMouseUp: Helpers.onMouseUp.bind(Helpers),
   onMouseLeave: Helpers.onMouseLeave.bind(Helpers),
-  onMouseMove: throttle(Helpers.onMouseMove.bind(Helpers), 16, {leading: true}),
-  onWheel: throttle(Helpers.onWheel.bind(Helpers), 16, {leading: true})
+  onMouseMove: throttle(
+    attachId(Helpers.onMouseMove.bind(Helpers)),
+    16,
+    {leading: true, trailing: false}
+  ),
+  onWheel: throttle(
+    attachId(Helpers.onWheel.bind(Helpers)),
+    16,
+    {leading: true, trailing: false}
+  )
 };

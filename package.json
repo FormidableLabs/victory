@@ -1,6 +1,6 @@
 {
   "name": "victory-chart",
-  "version": "18.1.3",
+  "version": "18.1.4",
   "description": "Chart Component for Victory",
   "main": "lib/index.js",
   "repository": {
@@ -21,7 +21,7 @@
     "preversion": "builder run npm:preversion",
     "postversion": "builder run npm:postversion",
     "postpublish": "builder run npm:postpublish",
-    "start": "builder run hot",
+    "start": "builder run dev",
     "test": "builder run check",
     "benchmark": "builder run check-perf",
     "version": "builder run npm:version"
@@ -31,7 +31,7 @@
     "builder-victory-component": "^3.1.0",
     "d3-voronoi": "^1.1.2",
     "lodash": "^4.12.0",
-    "victory-core": "^14.0.3"
+    "victory-core": "^14.0.7"
   },
   "devDependencies": {
     "builder-victory-component-dev": "^3.1.0",

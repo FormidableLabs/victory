@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 18.1.4 (2017-03-21)
+
+- [447](https://github.com/FormidableLabs/victory-chart/pull/447) Improves performance for container components
+- Fixes [#511](https://github.com/FormidableLabs/victory/issues/511)
+- Fixes [#526](https://github.com/FormidableLabs/victory/issues/526)
+
 ## 18.1.3 (2017-03-15)
 
 - Removes unnecessary props from group components

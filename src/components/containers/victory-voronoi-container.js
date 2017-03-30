@@ -18,26 +18,21 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
-    standalone: true,
     labelComponent: <VictoryTooltip/>,
     voronoiPadding: 5
   };
-
-  static role = "voronoi";
 
   static defaultEvents = [{
     target: "parent",
     eventHandlers: {
       onMouseLeave: (evt, targetProps) => {
-        VoronoiHelpers.onMouseMove.cancel();
         return VoronoiHelpers.onMouseLeave(evt, targetProps);
       },
       onMouseMove: (evt, targetProps) => {
-        evt.persist();
         const mutations = VoronoiHelpers.onMouseMove(evt, targetProps);
 
-        if (mutations.id !== this.mutationId) { // eslint-disable-line
-          this.mutationId = mutations.id; // eslint-disable-line
+        if (mutations.id !== this.mouseMoveMutationId) { // eslint-disable-line
+          this.mouseMoveMutationId = mutations.id; // eslint-disable-line
           return mutations.mutations;
         }
       }
@@ -117,13 +112,20 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getStyle(props, points, type) {
-    const { labelComponent, theme } = props;
+    const { labels, labelComponent, theme } = props;
+    const componentProps = labelComponent.props || {};
     const themeStyles = theme && theme.voronoi && theme.voronoi.style ? theme.voronoi.style : {};
-    const defaultStyles = defaults({}, labelComponent.props.style, themeStyles[type]);
-    return points.map((point) => {
-      const style = point.style && point.style[type] || {};
-      return Helpers.evaluateStyle(defaults({}, style, defaultStyles), point, true);
-    });
+    const componentStyle = type === "flyout" ? componentProps.flyoutStyle : componentProps.style;
+    const defaultStyles = defaults({}, componentStyle, themeStyles[type]);
+    return points.reduce((memo, point) => {
+      const text = Helpers.evaluateProp(labels, point, true);
+      const textArray = text ? `${text}`.split("\n") : [];
+      const baseStyle = point.style && point.style[type] || {};
+      const style = Helpers.evaluateStyle(defaults({}, baseStyle, defaultStyles), point, true);
+      const styleArray = textArray.length ? textArray.map(() => style) : [style];
+      memo = memo.concat(styleArray);
+      return memo;
+    }, []);
   }
 
   getDefaultLabelProps(props, points) {
@@ -137,7 +139,14 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
   getLabelProps(props, points) {
     const {labels, scale, labelComponent} = props;
-    const text = points.map((point) => Helpers.evaluateProp(labels, point, true));
+    const text = points.reduce((memo, point) => {
+      const t = Helpers.evaluateProp(labels, point, true);
+      if (t === null || t === undefined) {
+        return memo;
+      }
+      memo = memo.concat(`${t}`.split("\n"));
+      return memo;
+    }, []);
     const style = this.getStyle(props, points, "labels");
     const labelPosition = this.getLabelPosition(props, points, text, style);
     return defaults(
