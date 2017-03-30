@@ -9,7 +9,8 @@ import {
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
+  theme: VictoryTheme.grayscale
 };
 
 const defaultData = [
@@ -134,8 +135,7 @@ class VictoryBar extends React.Component {
     scale: "linear",
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g role="presentation"/>,
-    theme: VictoryTheme.grayscale
+    groupComponent: <g role="presentation"/>
   };
 
   static getDomain = Domain.getDomainWithZero.bind(Domain);

@@ -9,7 +9,8 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  offset: 0
+  offset: 0,
+  theme: VictoryTheme.grayscale
 };
 
 export default class VictoryGroup extends React.Component {
@@ -117,8 +118,7 @@ export default class VictoryGroup extends React.Component {
     scale: "linear",
     standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    theme: VictoryTheme.grayscale
+    groupComponent: <g/>
   };
 
   static getDomain = Wrapper.getDomain.bind(Wrapper);

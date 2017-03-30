@@ -11,7 +11,8 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  interpolation: "linear"
+  interpolation: "linear",
+  theme: VictoryTheme.grayscale
 };
 
 const animationWhitelist = ["data", "domain", "height", "padding", "samples", "style", "width"];
@@ -116,8 +117,7 @@ class VictoryLine extends React.Component {
     dataComponent: <Curve/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <VictoryClipContainer/>,
-    theme: VictoryTheme.grayscale
+    groupComponent: <VictoryClipContainer/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);

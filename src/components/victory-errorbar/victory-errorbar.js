@@ -9,7 +9,8 @@ import ErrorBarHelpers from "./helper-methods";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
+  theme: VictoryTheme.grayscale
 };
 
 const defaultData = [
@@ -134,8 +135,7 @@ class VictoryErrorBar extends React.Component {
     dataComponent: <ErrorBar/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g role="presentation"/>,
-    theme: VictoryTheme.grayscale
+    groupComponent: <g role="presentation"/>
   };
 
   static getDomain = ErrorBarHelpers.getDomain.bind(ErrorBarHelpers);
