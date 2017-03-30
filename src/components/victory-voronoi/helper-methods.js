@@ -17,7 +17,7 @@ export default {
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
       const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
       const dataProps = {
-        x, y, datum, data, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon, theme,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };
@@ -25,15 +25,15 @@ export default {
       childProps[eventKey] = { data: dataProps };
       const text = this.getLabelText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
-        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style, theme);
+        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
       }
 
       return childProps;
     }, initialChildProps);
   },
 
-  getLabelProps(dataProps, text, calculatedStyle, theme) {
-    const { x, y, index, scale, datum, data } = dataProps;
+  getLabelProps(dataProps, text, calculatedStyle) {
+    const { x, y, index, scale, datum, data, theme } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
       style: labelStyle,

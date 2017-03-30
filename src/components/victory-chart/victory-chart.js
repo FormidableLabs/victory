@@ -13,7 +13,7 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  theme: VictoryTheme.grayscale,
+  theme: VictoryTheme.grayscale
 };
 
 export default class VictoryChart extends React.Component {
