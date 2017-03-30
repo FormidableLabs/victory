@@ -3,7 +3,7 @@ import { defaults, isEqual } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
 import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } from "victory-core";
 
-export default class VictoryZoomContainer extends VictoryContainer {
+export const zoomContainerMixin = (base) => class VictoryZoomContainer extends base {
   static displayName = "VictoryZoomContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
@@ -127,4 +127,6 @@ export default class VictoryZoomContainer extends VictoryContainer {
     const children = this.modifyChildren(props);
     return this.clipDataComponents(children, props);
   }
-}
+};
+
+export default zoomContainerMixin(VictoryContainer);

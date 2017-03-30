@@ -3,8 +3,7 @@ import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-cor
 import VoronoiHelpers from "./voronoi-helpers";
 import { omit, defaults } from "lodash";
 
-
-export default class VictoryVoronoiContainer extends VictoryContainer {
+export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer extends base {
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
@@ -185,4 +184,6 @@ export default class VictoryVoronoiContainer extends VictoryContainer {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }
-}
+};
+
+export default voronoiContainerMixin(VictoryContainer);

@@ -3,8 +3,7 @@ import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
 import { assign, defaults, isEqual } from "lodash";
 
-
-export default class VictoryBrushContainer extends VictoryContainer {
+export const brushContainerMixin = (base) => class VictoryBrushContainer extends base {
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
@@ -123,4 +122,6 @@ export default class VictoryBrushContainer extends VictoryContainer {
       return component ? React.cloneElement(component, {key: i}) : null;
     });
   }
-}
+};
+
+export default brushContainerMixin(VictoryContainer);
