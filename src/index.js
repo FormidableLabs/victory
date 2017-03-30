@@ -12,19 +12,28 @@ export {
   default as VictoryVoronoiTooltip
 } from "./components/victory-voronoi-tooltip/victory-voronoi-tooltip";
 export {
+  default as VictoryCandlestick
+} from "./components/victory-candlestick/victory-candlestick";
+export {
+  selectionContainerMixin,
   default as VictorySelectionContainer
 } from "./components/containers/victory-selection-container";
 export {
-  default as VictoryCandlestick
-} from "./components/victory-candlestick/victory-candlestick";
-export { default as VictoryBrushContainer } from "./components/containers/victory-brush-container";
+  brushContainerMixin,
+  default as VictoryBrushContainer
+} from "./components/containers/victory-brush-container";
 export {
+  voronoiContainerMixin,
   default as VictoryVoronoiContainer
 } from "./components/containers/victory-voronoi-container";
 export {
-  default as VictoryVoronoiZoomContainer
-} from "./components/containers/victory-voronoi-zoom-container";
-export { default as VictoryZoomContainer } from "./components/containers/victory-zoom-container";
+  zoomContainerMixin,
+  default as VictoryZoomContainer
+} from "./components/containers/victory-zoom-container";
+export {
+  combineContainerMixins,
+  default as createContainer
+} from "./components/containers/create-container";
 export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
 export { default as BrushHelpers } from "./components/containers/brush-helpers";
 export { default as SelectionHelpers } from "./components/containers/selection-helpers";
