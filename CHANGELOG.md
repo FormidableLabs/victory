@@ -1,5 +1,10 @@
 # VictoryChart Changelog
 
+## 18.2.0 (2017-03-30)
+
+- Adds `createContainer` for creating containers with multiple behaviors (e.g. Zoom and Voronoi)
+- Adds `combineContainerMixins` and mixins for all containers for combining custom containers
+
 ## 18.1.4 (2017-03-21)
 
 - [447](https://github.com/FormidableLabs/victory-chart/pull/447) Improves performance for container components
@@ -13,7 +18,7 @@
 
 ## 18.1.2 (2017-03-14)
 
-[441](https://github.com/FormidableLabs/victory-chart/pull/441)
+- [441](https://github.com/FormidableLabs/victory-chart/pull/441)
 - Support for better multi-repo tooling
 
 ## 18.1.1 (2017-03-10)
