@@ -25,14 +25,14 @@ export default {
       childProps[eventKey] = { data: dataProps };
       const text = this.getLabelText(props, datum, index);
       if (text !== undefined && text !== null || events || sharedEvents) {
-        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style);
+        childProps[eventKey].labels = this.getLabelProps(dataProps, text, style, theme);
       }
 
       return childProps;
     }, initialChildProps);
   },
 
-  getLabelProps(dataProps, text, calculatedStyle) {
+  getLabelProps(dataProps, text, calculatedStyle, theme) {
     const { x, y, index, scale, datum, data } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
@@ -46,7 +46,8 @@ export default {
       data,
       textAnchor: labelStyle.textAnchor,
       verticalAnchor: labelStyle.verticalAnchor || "end",
-      angle: labelStyle.angle
+      angle: labelStyle.angle,
+      theme
     };
   },
 
