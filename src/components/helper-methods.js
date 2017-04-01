@@ -19,8 +19,8 @@ export default {
   getSliceStyle(datum, index, calculatedValues) {
     const { style, colors } = calculatedValues;
     const fill = this.getColor(style, colors, index);
-    const dataStyles = omit(datum, ["_x", "_y", "label"]);
-    return defaults({}, {fill}, style.data, dataStyles);
+    const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
+    return defaults({}, dataStyles, {fill}, style.data);
   },
 
   getBaseProps(props, fallbackProps) {

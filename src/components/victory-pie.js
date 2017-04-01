@@ -138,8 +138,6 @@ class VictoryPie extends React.Component {
       { x: "E", y: 2 }
     ],
     standalone: true,
-    x: "x",
-    y: "y",
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
