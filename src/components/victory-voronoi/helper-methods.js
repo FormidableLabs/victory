@@ -17,7 +17,7 @@ export default {
       const x = scale.x(datum._x1 !== undefined ? datum._x1 : datum._x);
       const y = scale.y(datum._y1 !== undefined ? datum._y1 : datum._y);
       const dataProps = {
-        x, y, datum, data, index, scale, polygon,
+        x, y, datum, data, index, scale, polygon, theme,
         size: props.size,
         style: this.getDataStyles(datum, style.data)
       };
@@ -33,7 +33,7 @@ export default {
   },
 
   getLabelProps(dataProps, text, calculatedStyle) {
-    const { x, y, index, scale, datum, data } = dataProps;
+    const { x, y, index, scale, datum, data, theme } = dataProps;
     const labelStyle = this.getLabelStyle(calculatedStyle.labels, dataProps) || {};
     return {
       style: labelStyle,
@@ -46,7 +46,8 @@ export default {
       data,
       textAnchor: labelStyle.textAnchor,
       verticalAnchor: labelStyle.verticalAnchor || "end",
-      angle: labelStyle.angle
+      angle: labelStyle.angle,
+      theme
     };
   },
 

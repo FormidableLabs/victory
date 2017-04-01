@@ -11,7 +11,8 @@ const fallbackProps = {
   height: 300,
   padding: 50,
   size: 3,
-  symbol: "circle"
+  symbol: "circle",
+  theme: VictoryTheme.grayscale
 };
 
 const animationWhitelist = [
@@ -121,8 +122,7 @@ class VictoryScatter extends React.Component {
     dataComponent: <Point/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    theme: VictoryTheme.grayscale
+    groupComponent: <g/>
   };
 
   static getDomain = Domain.getDomain.bind(Domain);

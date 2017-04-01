@@ -10,7 +10,8 @@ import Axis from "../../helpers/axis";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50
+  padding: 50,
+  theme: VictoryTheme.grayscale
 };
 
 const animationWhitelist = [
@@ -104,7 +105,6 @@ class VictoryAxis extends React.Component {
     gridComponent: <Line type={"grid"}/>,
     scale: "linear",
     standalone: true,
-    theme: VictoryTheme.grayscale,
     tickCount: 5,
     containerComponent: <VictoryContainer />,
     groupComponent: <g role="presentation"/>,
