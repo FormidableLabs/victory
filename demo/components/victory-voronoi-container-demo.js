@@ -6,7 +6,7 @@ import {
 } from "../../src/index";
 import { random, range } from "lodash";
 
-import { VictoryTooltip } from "victory-core";
+import { VictoryTooltip, VictoryTheme } from "victory-core";
 class App extends React.Component {
 
   constructor() {
@@ -52,13 +52,13 @@ class App extends React.Component {
       <div className="demo">
         <div style={containerStyle}>
           <VictoryChart style={chartStyle}
+            theme={VictoryTheme.material}
             domainPadding={{y: 2}}
             containerComponent={
               <VictoryVoronoiContainer dimension="x"
                 labels={(d) => `y:${d.y}`}
                 labelComponent={
                   <VictoryTooltip
-                    cornerRadius={0}
                     flyoutStyle={{fill: "white"}}
                     style={{fontSize: 10}}
                   />

@@ -138,7 +138,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getLabelProps(props, points) {
-    const {labels, scale, labelComponent} = props;
+    const {labels, scale, labelComponent, theme} = props;
     const text = points.reduce((memo, point) => {
       const t = Helpers.evaluateProp(labels, point, true);
       if (t === null || t === undefined) {
@@ -151,13 +151,11 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     const labelPosition = this.getLabelPosition(props, points, text, style);
     return defaults(
       {
+        theme, style, text, scale,
         active: true,
         renderInPortal: false,
-        style,
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
-        text,
         datum: omit(points[0], ["childName", "style", "continuous"]),
-        scale,
         ...labelPosition
       },
       labelComponent.props,
