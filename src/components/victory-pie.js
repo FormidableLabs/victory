@@ -138,8 +138,6 @@ class VictoryPie extends React.Component {
       { x: "E", y: 2 }
     ],
     standalone: true,
-    x: "x",
-    y: "y",
     dataComponent: <Slice/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
@@ -169,22 +167,27 @@ class VictoryPie extends React.Component {
       }
     }
     const children = [...dataComponents, ...labelComponents];
-    const transform = this.getTransform(props);
+    return this.renderGroup(props, children);
+  }
+
+  // Overridden in victory-native
+  renderGroup(props, children) {
+    const offset = this.getOffset(props);
+    const transform = `translate(${offset.x}, ${offset.y})`;
     const groupComponent = React.cloneElement(props.groupComponent, {transform});
     return this.renderContainer(groupComponent, children);
   }
 
-  getTransform(props) {
+  getOffset(props) {
     const { width, height } = props;
     const calculatedProps = PieHelpers.getCalculatedValues(props);
     const { padding, radius } = calculatedProps;
     const offsetWidth = width / 2 + padding.left - padding.right;
     const offsetHeight = height / 2 + padding.top - padding.bottom;
-    const offset = {
+    return {
       x: offsetWidth + radius > width ? radius + padding.left - padding.right : offsetWidth,
       y: offsetHeight + radius > height ? radius + padding.top - padding.bottom : offsetHeight
     };
-    return `translate(${offset.x}, ${offset.y})`;
   }
 
   renderContainer(component, children) {
