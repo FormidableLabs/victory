@@ -2,7 +2,6 @@ import React, { PropTypes } from "react";
 import { assign, omit, defaults } from "lodash";
 import Portal from "../victory-portal/portal";
 import { Timer } from "../victory-util/index";
-import { default as VictoryTheme } from "../victory-theme/victory-theme";
 
 export default class VictoryContainer extends React.Component {
   static displayName = "VictoryContainer";
@@ -27,8 +26,7 @@ export default class VictoryContainer extends React.Component {
 
   static defaultProps = {
     portalComponent: <Portal/>,
-    responsive: true,
-    theme: VictoryTheme.grayscale
+    responsive: true
   }
 
   static contextTypes = {
