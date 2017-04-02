@@ -9,8 +9,7 @@ import TooltipHelpers from "./helper-methods";
 const fallbackProps = {
   width: 450,
   height: 300,
-  padding: 50,
-  theme: VictoryTheme.grayscale
+  padding: 50
 };
 
 const animationWhitelist = [
@@ -116,7 +115,8 @@ class VictoryVoronoiTooltip extends React.Component {
     dataComponent: <Voronoi/>,
     labelComponent: <VictoryTooltip/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g role="presentation"/>
+    groupComponent: <g role="presentation"/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = Domain.getDomain.bind(Domain);

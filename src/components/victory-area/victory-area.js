@@ -10,8 +10,7 @@ const fallbackProps = {
   width: 450,
   height: 300,
   padding: 50,
-  interpolation: "linear",
-  theme: VictoryTheme.grayscale
+  interpolation: "linear"
 };
 
 const animationWhitelist = ["data", "domain", "height", "padding", "style", "width"];
@@ -111,7 +110,8 @@ class VictoryArea extends React.Component {
     samples: 50,
     standalone: true,
     containerComponent: <VictoryContainer />,
-    groupComponent: <VictoryClipContainer/>
+    groupComponent: <VictoryClipContainer/>,
+    theme: VictoryTheme.grayscale
   };
 
   static displayName = "VictoryArea";
