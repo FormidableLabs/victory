@@ -13,8 +13,7 @@ const fallbackProps = {
   candleColors: {
     positive: "#ffffff",
     negative: "#252525"
-  },
-  theme: VictoryTheme.grayscale
+  }
 };
 
 const defaultData = [
@@ -152,7 +151,8 @@ class VictoryCandlestick extends React.Component {
     dataComponent: <Candle/>,
     labelComponent: <VictoryLabel/>,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g role="presentation"/>
+    groupComponent: <g role="presentation"/>,
+    theme: VictoryTheme.grayscale
   };
 
   static getDomain = CandlestickHelpers.getDomain.bind(CandlestickHelpers);
