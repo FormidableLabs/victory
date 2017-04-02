@@ -61,18 +61,18 @@ export default class Flyout extends React.Component {
     const rightEdge = x + (width / 2);
     const leftEdge = x - (width / 2);
     const direction = orientation === "top" ? "0 0 0" : "0 0 1";
-    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
-    return `M ${x - pointerWidth / 2}, ${pointerEdge}
-      L ${x}, ${y}
-      L ${x + pointerWidth / 2}, ${pointerEdge}
-      L ${rightEdge - cornerRadius}, ${pointerEdge}
-      A ${arc} ${rightEdge}, ${pointerEdge - sign * cornerRadius}
-      L ${rightEdge}, ${oppositeEdge + sign * cornerRadius}
-      A ${arc} ${rightEdge - cornerRadius}, ${oppositeEdge}
-      L ${leftEdge + cornerRadius}, ${oppositeEdge}
-      A ${arc} ${leftEdge}, ${oppositeEdge + sign * cornerRadius}
-      L ${leftEdge}, ${pointerEdge - sign * cornerRadius}
-      A ${arc} ${leftEdge + cornerRadius}, ${pointerEdge}
+    const arc = `${Math.round(cornerRadius)} ${Math.round(cornerRadius)} ${direction}`;
+    return `M ${Math.round(x - pointerWidth / 2)}, ${Math.round(pointerEdge)}
+      L ${Math.round(x)}, ${Math.round(y)}
+      L ${Math.round(x + pointerWidth / 2)}, ${Math.round(pointerEdge)}
+      L ${Math.round(rightEdge - cornerRadius)}, ${Math.round(pointerEdge)}
+      A ${arc} ${Math.round(rightEdge)}, ${Math.round(pointerEdge - sign * cornerRadius)}
+      L ${Math.round(rightEdge)}, ${Math.round(oppositeEdge + sign * cornerRadius)}
+      A ${arc} ${Math.round(rightEdge - cornerRadius)}, ${Math.round(oppositeEdge)}
+      L ${Math.round(leftEdge + cornerRadius)}, ${Math.round(oppositeEdge)}
+      A ${arc} ${Math.round(leftEdge)}, ${Math.round(oppositeEdge + sign * cornerRadius)}
+      L ${Math.round(leftEdge)}, ${Math.round(pointerEdge - sign * cornerRadius)}
+      A ${arc} ${Math.round(leftEdge + cornerRadius)}, ${Math.round(pointerEdge)}
       z`;
   }
 
@@ -86,18 +86,18 @@ export default class Flyout extends React.Component {
     const bottomEdge = y + height / 2;
     const topEdge = y - height / 2;
     const direction = orientation === "right" ? "0 0 0" : "0 0 1";
-    const arc = `${cornerRadius} ${cornerRadius} ${direction}`;
-    return `M ${pointerEdge}, ${y - pointerWidth / 2}
-      L ${x}, ${y}
-      L ${pointerEdge}, ${y + pointerWidth / 2}
-      L ${pointerEdge}, ${bottomEdge - cornerRadius}
-      A ${arc} ${pointerEdge + sign * cornerRadius}, ${bottomEdge}
+    const arc = `${Math.round(cornerRadius)} ${Math.round(cornerRadius)} ${direction}`;
+    return `M ${Math.round(pointerEdge)}, ${Math.round(y - pointerWidth / 2)}
+      L ${Math.round(x)}, ${Math.round(y)}
+      L ${Math.round(pointerEdge)}, ${Math.round(y + pointerWidth / 2)}
+      L ${Math.round(pointerEdge)}, ${Math.round(bottomEdge - cornerRadius)}
+      A ${arc} ${Math.round(pointerEdge + sign * cornerRadius)}, ${Math.round(bottomEdge)}
       L ${oppositeEdge - sign * cornerRadius}, ${bottomEdge}
-      A ${arc} ${oppositeEdge}, ${bottomEdge - cornerRadius}
+      A ${arc} ${Math.round(oppositeEdge)}, ${Math.round(bottomEdge - cornerRadius)}
       L ${oppositeEdge}, ${topEdge + cornerRadius}
-      A ${arc} ${oppositeEdge - sign * cornerRadius}, ${topEdge}
-      L ${pointerEdge + sign * cornerRadius}, ${topEdge}
-      A ${arc} ${pointerEdge}, ${topEdge + cornerRadius}
+      A ${arc} ${Math.round(oppositeEdge - sign * cornerRadius)}, ${Math.round(topEdge)}
+      L ${Math.round(pointerEdge + sign * cornerRadius)}, ${Math.round(topEdge)}
+      A ${arc} ${Math.round(pointerEdge)}, ${Math.round(topEdge + cornerRadius)}
       z`;
   }
 

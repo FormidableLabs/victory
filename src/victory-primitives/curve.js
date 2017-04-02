@@ -70,32 +70,26 @@ export default class Curve extends React.Component {
   }
 
   // Overridden in victory-core-native
-  renderLine(path, style, events, index) { // eslint-disable-line max-params
-    if (!path) {
-      return null;
-    }
+  renderLine(paths, style, events) {
     const { role, shapeRendering, className } = this.props;
-    return (
-      <path
-        key={index}
-        className={className}
-        style={style}
-        shapeRendering={shapeRendering || "auto"}
-        d={path}
-        role={role || "presentation"}
-        {...events}
-        vectorEffect="non-scaling-stroke"
-      />
-    );
+    return paths.map((path, index) => {
+      return (
+        <path
+          key={`area-stroke-${index}`}
+          style={style}
+          shapeRendering={shapeRendering || "auto"}
+          role={role || "presentation"}
+          d={path}
+          className={className}
+          {...events}
+        />
+      );
+    });
   }
 
   render() {
-    const {groupComponent, events} = this.props;
-    return this.paths.length > 1 ?
-      React.cloneElement(
-        groupComponent, {},
-        this.paths.map((path, index) => this.renderLine(path, this.style, events, index))
-      ) :
-      this.renderLine(this.paths[0], this.style, events);
+    const { events, groupComponent } = this.props;
+    const children = this.renderLine(this.paths, this.style, events);
+    return children.length === 1 ? children[0] : React.cloneElement(groupComponent, {}, children);
   }
 }

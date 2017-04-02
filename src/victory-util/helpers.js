@@ -70,8 +70,7 @@ export default {
   modifyProps(props, fallbackProps, role) {
     const theme = props.theme && props.theme[role] ? props.theme[role] : {};
     const themeProps = omit(theme, ["style"]);
-    const baseProps = defaults({}, props, themeProps, fallbackProps);
-    return defaults({}, baseProps, {clipWidth: baseProps.width, clipHeight: baseProps.height});
+    return defaults({}, props, themeProps, fallbackProps);
   },
 
   // Axis helpers
