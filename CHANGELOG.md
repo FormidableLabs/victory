@@ -1,5 +1,11 @@
 # Victory Changelog
 
+## 0.18.4 (2017-04-04)
+
+- Supports combining container behaviors with the `createContainer` method.
+- Individual `combineContainerMixins` are also exported.
+- For more detail, see [victory-chart/453](https://github.com/FormidableLabs/victory-chart/pull/453)
+
 ## 0.18.3 (2017-03-21)
 
 [victory-chart/447](https://github.com/FormidableLabs/victory-chart/pull/447) Improves performance for container components
