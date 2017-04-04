@@ -1,9 +1,12 @@
 # VictoryChart Changelog
 
-## 18.2.0 (2017-03-30)
+## 18.2.0 (2017-04-04)
 
 - Adds `createContainer` for creating containers with multiple behaviors (e.g. Zoom and Voronoi)
 - Adds `combineContainerMixins` and mixins for all containers for combining custom containers
+- Correct styling bug for containers
+- Correct theme propagation for containers
+- Support `victory-native` upgrade.
 
 ## 18.1.4 (2017-03-21)
 
