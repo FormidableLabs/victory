@@ -1,6 +1,12 @@
 VictoryCore Changelog
 =====================
 
+## 14.1.0 (2017-04-04)
+
+- Remove default container theme
+- Fix clipWidth bug
+- Support `victory-native` upgrade
+
 ## 14.0.7 (2017-03-21)
 
 - Fixes a bug in s`houldComponentUpdate` logic in `Candle`
