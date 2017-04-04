@@ -29,14 +29,11 @@ import {
   VictoryVoronoi,
   VictoryVoronoiTooltip,
   VictoryZoom,
-  VictoryZoomContainer,
-  VictorySelectionContainer,
-  VictoryBrushContainer,
-  VictoryVoronoiContainer,
-  ZoomHelpers,
-  BrushHelpers,
-  SelectionHelpers,
-  VoronoiHelpers
+  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin,
+  VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
+  VictoryBrushContainer, BrushHelpers, brushContainerMixin,
+  VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
+  combineContainerMixins, createContainer
 } from "victory-chart";
 
 import { VictoryPie } from "victory-pie";
@@ -49,7 +46,6 @@ export {
   VictoryBar,
   VictoryCandlestick,
   VictoryChart,
-  VictoryContainer,
   VictoryErrorBar,
   VictoryGroup,
   VictoryLine,
@@ -65,14 +61,14 @@ export {
   VictoryVoronoi,
   VictoryVoronoiTooltip,
   VictoryZoom,
-  VictoryZoomContainer,
   VictoryPortal,
   Portal,
-  VictoryClipContainer,
-  VictorySelectionContainer,
-  VictoryBrushContainer,
-  VictoryVoronoiContainer,
-  ZoomHelpers, BrushHelpers, SelectionHelpers, VoronoiHelpers,
+  VictoryContainer, VictoryClipContainer,
+  VictoryZoomContainer, ZoomHelpers, zoomContainerMixin,
+  VictorySelectionContainer, SelectionHelpers, selectionContainerMixin,
+  VictoryBrushContainer, BrushHelpers, brushContainerMixin,
+  VictoryVoronoiContainer, VoronoiHelpers, voronoiContainerMixin,
+  combineContainerMixins, createContainer,
   addEvents, Collection, Data, DefaultTransitions, Domain, Events, Helpers, Log,
   PropTypes, Scale, Style, TextSize, Transitions, Selection
 };
