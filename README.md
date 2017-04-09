@@ -22,11 +22,11 @@ $ open http://localhost:3000
 # Run tests
 $ npm test
 ```
-For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/DEVELOPMENT.md) in the project builder archetype.
+For more on the development environment, see [DEVELOPMENT](https://github.com/FormidableLabs/builder-victory-component-dev/blob/master/DEVELOPMENT.md) in the project builder archetype.
 
 ## Contributing
 
-Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component/blob/master/dev/CONTRIBUTING.md) in the project builder archetype.
+Please see [CONTRIBUTING](https://github.com/FormidableLabs/builder-victory-component-dev/blob/master/CONTRIBUTING.md) in the project builder archetype.
 
 [Victory]: https://github.com/FormidableLabs/victory
 [trav_img]: https://api.travis-ci.org/FormidableLabs/victory-core.svg
