@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
 import { victoryInterpolator } from "./util";
 import Timer from "../victory-util/timer";
@@ -7,9 +8,9 @@ export default class VictoryAnimation extends React.Component {
   static displayName = "VictoryAnimation";
 
   static propTypes = {
-    children: React.PropTypes.func,
-    duration: React.PropTypes.number,
-    easing: React.PropTypes.oneOf([
+    children: PropTypes.func,
+    duration: PropTypes.number,
+    easing: PropTypes.oneOf([
       "back", "backIn", "backOut", "backInOut",
       "bounce", "bounceIn", "bounceOut", "bounceInOut",
       "circle", "circleIn", "circleOut", "circleInOut",
@@ -21,11 +22,11 @@ export default class VictoryAnimation extends React.Component {
       "quad", "quadIn", "quadOut", "quadInOut",
       "sin", "sinIn", "sinOut", "sinInOut"
     ]),
-    delay: React.PropTypes.number,
-    onEnd: React.PropTypes.func,
-    data: React.PropTypes.oneOfType([
-      React.PropTypes.object,
-      React.PropTypes.array
+    delay: PropTypes.number,
+    onEnd: PropTypes.func,
+    data: PropTypes.oneOfType([
+      PropTypes.object,
+      PropTypes.array
     ])
   };
 
@@ -37,7 +38,7 @@ export default class VictoryAnimation extends React.Component {
   };
 
   static contextTypes = {
-    getTimer: React.PropTypes.func
+    getTimer: PropTypes.func
   };
 
   constructor(props) {

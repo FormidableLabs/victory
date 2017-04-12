@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { defaults, isFunction } from "lodash";
 import { ClipPath } from "../victory-primitives/index";
 
@@ -17,9 +18,9 @@ export default class VictoryClipContainer extends React.Component {
     clipHeight: PropTypes.number,
     clipWidth: PropTypes.number,
     events: PropTypes.object,
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ]),
     clipPathComponent: PropTypes.element,
     translateX: PropTypes.number,

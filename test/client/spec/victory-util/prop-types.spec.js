@@ -1,6 +1,6 @@
 /* global sinon */
 /* global console */
-import {PropTypes} from "react";
+import PropTypes from "prop-types";
 import {PropTypes as CustomPropTypes} from "src/index";
 
 describe("prop-types", () => {

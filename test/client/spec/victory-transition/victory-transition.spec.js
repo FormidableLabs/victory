@@ -2,14 +2,11 @@
  * Client tests
  */
 import React from "react";
+import PropTypes from "prop-types";
 import { mount } from "enzyme";
 import VictoryTransition from "src/victory-transition/victory-transition";
 
-const TestComponent = React.createClass({
-  propTypes: {
-    message: React.PropTypes.array
-  },
-
+class TestComponent extends React.Component {
   render() {
     return (
       <text className="foo">
@@ -17,7 +14,11 @@ const TestComponent = React.createClass({
       </text>
     );
   }
-});
+}
+
+TestComponent.propTypes = {
+  message: PropTypes.array
+};
 
 describe("components/victory-transition", () => {
   it("renders a child component", () => {

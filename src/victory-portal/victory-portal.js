@@ -1,16 +1,17 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { Log } from "../victory-util/index";
 import { defaults, omit } from "lodash";
 
 export default class VictoryPortal extends React.Component {
   static propTypes = {
-    children: React.PropTypes.node
+    children: PropTypes.node
   };
 
   static contextTypes = {
-    portalUpdate: React.PropTypes.func,
-    portalRegister: React.PropTypes.func,
-    portalDeregister: React.PropTypes.func
+    portalUpdate: PropTypes.func,
+    portalRegister: PropTypes.func,
+    portalDeregister: PropTypes.func
   }
 
   componentDidMount() {

@@ -1,5 +1,6 @@
 /*global document:false */
 import React from "react";
+import PropTypes from "prop-types";
 import ReactDOM from "react-dom";
 import AnimationDemo from "./victory-animation-demo";
 import LabelDemo from "./victory-label-demo";
@@ -9,11 +10,7 @@ import { Router, Route, Link, hashHistory } from "react-router";
 
 const content = document.getElementById("content");
 
-const App = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element
-  },
-
+class App extends React.Component {
   render() {
     return (
       <div>
@@ -28,7 +25,12 @@ const App = React.createClass({
       </div>
     );
   }
-});
+}
+
+App.propTypes = {
+  children: PropTypes.element
+};
+
 
 ReactDOM.render((
   <Router history={hashHistory}>

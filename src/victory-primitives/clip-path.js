@@ -1,4 +1,5 @@
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import {
   PropTypes as CustomPropTypes, Helpers, Collection
 } from "../victory-util";
