@@ -1,5 +1,6 @@
 import { defaults } from "lodash";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
   VictoryTheme, Scale
@@ -20,9 +21,9 @@ export default class VictoryChart extends React.Component {
 
   static propTypes = {
     animate: PropTypes.object,
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ]),
     containerComponent: PropTypes.element,
     defaultAxes: PropTypes.shape({

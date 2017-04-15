@@ -1,5 +1,6 @@
 import { assign, defaults } from "lodash";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import { PropTypes as CustomPropTypes, Helpers, VictorySharedEvents,
   VictoryContainer, VictoryTheme, Scale, Data
 } from "victory-core";
@@ -25,8 +26,8 @@ export default class VictoryGroup extends React.Component {
         x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
       })
     ]),
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node), React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node), PropTypes.node
     ]),
     color: PropTypes.string,
     colorScale: PropTypes.oneOfType([

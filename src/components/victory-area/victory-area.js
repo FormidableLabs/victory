@@ -1,5 +1,6 @@
 import { partialRight, without } from "lodash";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import AreaHelpers from "./helper-methods";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, VictoryContainer,

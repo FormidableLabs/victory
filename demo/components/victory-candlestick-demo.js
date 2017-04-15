@@ -1,5 +1,6 @@
 /*global window:false */
 import React from "react";
+import PropTypes from "prop-types";
 import { random, range, merge } from "lodash";
 import {VictoryCandlestick, VictoryChart, VictoryAxis} from "../../src/index";
 import { VictoryTheme } from "victory-core";
@@ -189,7 +190,7 @@ export default class App extends React.Component {
 }
 
 App.propTypes = {
-  data: React.PropTypes.arrayOf(React.PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object)
 };
 
 App.defaultProps = {

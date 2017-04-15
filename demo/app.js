@@ -1,6 +1,7 @@
 /*global document:false window */
 import React from "react";
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
@@ -26,7 +27,7 @@ const content = document.getElementById("content");
 
 const App = React.createClass({
   propTypes: {
-    children: React.PropTypes.element
+    children: PropTypes.element
   },
 
   componentWillUpdate() {

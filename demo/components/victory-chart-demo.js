@@ -1,5 +1,6 @@
 /*global window:false */
 import React from "react";
+import PropTypes from "prop-types";
 import { merge, random, range, omit } from "lodash";
 import {
   VictoryChart, VictoryLine, VictoryAxis, VictoryBar, VictoryArea,
@@ -13,9 +14,9 @@ const UPDATE_INTERVAL = 3000;
 
 class Wrapper extends React.Component {
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ])
   };
 

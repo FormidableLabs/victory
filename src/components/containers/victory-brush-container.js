@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
@@ -7,17 +8,17 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    selectionStyle: React.PropTypes.object,
-    handleStyle: React.PropTypes.object,
-    dimension: React.PropTypes.oneOf(["x", "y"]),
-    selectedDomain: React.PropTypes.shape({
-      x: React.PropTypes.array,
-      y: React.PropTypes.array
+    selectionStyle: PropTypes.object,
+    handleStyle: PropTypes.object,
+    dimension: PropTypes.oneOf(["x", "y"]),
+    selectedDomain: PropTypes.shape({
+      x: PropTypes.array,
+      y: PropTypes.array
     }),
-    onDomainChange: React.PropTypes.func,
-    handleWidth: React.PropTypes.number,
-    selectionComponent: React.PropTypes.element,
-    handleComponent: React.PropTypes.element
+    onDomainChange: PropTypes.func,
+    handleWidth: PropTypes.number,
+    selectionComponent: PropTypes.element,
+    handleComponent: PropTypes.element
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,

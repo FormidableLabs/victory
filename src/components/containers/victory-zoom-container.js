@@ -1,4 +1,5 @@
-import React, {PropTypes} from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import { defaults, isEqual } from "lodash";
 import ZoomHelpers from "./zoom-helpers";
 import { VictoryContainer, VictoryClipContainer, PropTypes as CustomPropTypes } from "victory-core";

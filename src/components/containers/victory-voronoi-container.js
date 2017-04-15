@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, VictoryTooltip, Helpers, TextSize } from "victory-core";
 import VoronoiHelpers from "./voronoi-helpers";
@@ -7,14 +8,14 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   static displayName = "VictoryVoronoiContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    onActivated: React.PropTypes.func,
-    onDeactivated: React.PropTypes.func,
-    standalone: React.PropTypes.bool,
-    radius: React.PropTypes.number,
-    voronoiPadding: React.PropTypes.number,
-    labelComponent: React.PropTypes.element,
-    labels: React.PropTypes.func,
-    dimension: React.PropTypes.oneOf(["x", "y"])
+    onActivated: PropTypes.func,
+    onDeactivated: PropTypes.func,
+    standalone: PropTypes.bool,
+    radius: PropTypes.number,
+    voronoiPadding: PropTypes.number,
+    labelComponent: PropTypes.element,
+    labels: PropTypes.func,
+    dimension: PropTypes.oneOf(["x", "y"])
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
