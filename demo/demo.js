@@ -1,5 +1,6 @@
 /*global window:false*/
 import { merge, random, range } from "lodash";
+import PropTypes from "prop-types";
 import React from "react";
 import { VictoryPie } from "../src/index";
 import {
@@ -9,7 +10,7 @@ import {
 class BorderLabelSlice extends React.Component {
   static propTypes = {
     ...Slice.propTypes,
-    index: React.PropTypes.number
+    index: PropTypes.number
   };
 
   render() {
