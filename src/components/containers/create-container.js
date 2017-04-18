@@ -1,4 +1,4 @@
-import { toPairs, groupBy, forOwn, includes } from "lodash";
+import { toPairs, groupBy, forOwn, includes, flow } from "lodash";
 import { VictoryContainer, Log } from "victory-core";
 
 import { voronoiContainerMixin } from "./victory-voronoi-container";
@@ -53,36 +53,43 @@ const combineDefaultEvents = (defaultEvents) => {
   );
 };
 
-export const combineContainerMixins = (mixinA, mixinB, displayName = "CustomVictoryContainer") => {
+export const combineContainerMixins = (mixins, Container) => {
   // similar to Object.assign(A, B), this function will decide conflicts in favor mixinB.
   // this applies to propTypes and defaultProps.
   // getChildren will call A's getChildren() and pass the resulting children to B's.
   // defaultEvents attempts to resolve any conflicts between A and B's defaultEvents.
 
-  const ClassA = mixinA(VictoryContainer);
-  const ClassB = mixinB(VictoryContainer);
-  const instanceA = new ClassA();
-  const instanceB = new ClassB();
+  const Classes = mixins.map((mixin) => mixin(Container));
+  const instances = Classes.map((Class) => new Class());
+  const NaiveCombinedContainer = flow(mixins)(Container);
 
-  const NaiveCombinedContainer = mixinA(mixinB(VictoryContainer));
   return class VictoryCombinedContainer extends NaiveCombinedContainer {
-    static displayName = displayName;
+    static displayName = "CustomVictoryContainer";
 
-    static propTypes = {
-      ...ClassA.propTypes,
-      ...ClassB.propTypes
-    };
+    static propTypes =
+      Classes.reduce(
+        (propTypes, Class) => ({...propTypes, ...Class.propTypes}),
+        {}
+      );
 
-    static defaultProps = {
-      ...ClassA.defaultProps,
-      ...ClassB.defaultProps
-    };
+    static defaultProps =
+      Classes.reduce(
+        (defaultProps, Class) => ({...defaultProps, ...Class.defaultProps}),
+        {}
+      );
 
-    static defaultEvents = combineDefaultEvents([...ClassA.defaultEvents, ...ClassB.defaultEvents]);
+    static defaultEvents = combineDefaultEvents(
+      Classes.reduce(
+        (defaultEvents, Class) => ([...defaultEvents, ...Class.defaultEvents]),
+        []
+      )
+    );
 
     getChildren(props) {
-      const children = instanceA.getChildren.call(this, props);
-      return instanceB.getChildren.call(this, {...props, children});
+      return instances.reduce(
+        (children, instance) => instance.getChildren({ ...props, children }),
+        props.children
+      );
     }
   };
 };
@@ -95,34 +102,29 @@ const checkBehaviorName = (behavior, behaviors) => {
   }
 };
 
-export const createContainer = (firstBehavior, secondBehavior, ...invalidParams) => {
-  const containerMixins = {
-    voronoi: voronoiContainerMixin,
-    zoom: zoomContainerMixin,
-    selection: selectionContainerMixin,
-    brush: brushContainerMixin
-  };
-  const behaviors = Object.keys(containerMixins);
+export const makeCreateContainerFunction = (mixinMap, Container) => (behaviorA, behaviorB, ...invalid) => { // eslint-disable-line
+  const behaviors = Object.keys(mixinMap);
 
-  checkBehaviorName(firstBehavior, behaviors);
-  checkBehaviorName(secondBehavior, behaviors);
+  checkBehaviorName(behaviorA, behaviors);
+  checkBehaviorName(behaviorB, behaviors);
 
-  if (invalidParams.length) {
+  if (invalid.length) {
     Log.warn("too many arguments given to createContainer (maximum accepted: 2).");
   }
 
-  const firstMixin = containerMixins[firstBehavior];
-  const secondMixin = containerMixins[secondBehavior];
+  const firstMixins = mixinMap[behaviorA];
+  const secondMixins = mixinMap[behaviorB] || [];
 
-  if (!firstMixin) {
-    return VictoryContainer;
+  if (!firstMixins) {
+    return Container;
   }
 
-  if (!secondMixin) {
-    return firstMixin(VictoryContainer); // container inherits from VictoryContainer
-  }
-
-  return combineContainerMixins(firstMixin, secondMixin);
+  return combineContainerMixins([...firstMixins, ...secondMixins], Container);
 };
 
-export default createContainer;
+export default makeCreateContainerFunction({
+  zoom: [zoomContainerMixin],
+  voronoi: [voronoiContainerMixin],
+  selection: [selectionContainerMixin],
+  brush: [brushContainerMixin]
+}, VictoryContainer);
