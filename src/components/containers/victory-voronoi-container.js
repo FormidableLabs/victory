@@ -64,22 +64,23 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getLabelCornerRadius(props, labelProps) {
-    if (typeof labelProps.cornerRadius !== 'undefined') {
+    if (typeof labelProps.cornerRadius !== "undefined") {
       return labelProps.cornerRadius;
     }
     const theme = props.theme || labelProps.theme;
     return theme.tooltip && theme.tooltip.cornerRadius || 0;
   }
 
-  getFlyoutExtent(position, flyoutSize, props, labelProps) {
+  getFlyoutExtent(position, props, labelProps) {
+    const {text, style} = labelProps;
     const {orientation, dx = 0, dy = 0} = labelProps;
+    const flyoutSize = this.getFlyoutSize(props.labelComponent, text, style);
     const cornerRadius = this.getLabelCornerRadius(props, labelProps);
     const x = position.x + dx + 2 * cornerRadius;
     const y = position.y + dy + 2 * cornerRadius;
     const width = orientation === "top" || orientation === "bottom" ?
       flyoutSize.x / 2 :
       flyoutSize.x;
-    const height = flyoutSize.y;
     const horizontalSign = orientation === "left" ? -1 : 1;
     const verticalSign = orientation === "bottom" ? 1 : -1;
     const extent = {};
@@ -88,7 +89,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     } else {
       extent.x = [x, x + horizontalSign * width];
     }
-    extent.y = [y, y + verticalSign * height];
+    extent.y = [y, y + verticalSign * flyoutSize.y];
     return {
       x: [Math.min(...extent.x), Math.max(...extent.x)],
       y: [Math.min(...extent.y), Math.max(...extent.y)]
@@ -96,8 +97,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
   }
 
   getLabelPosition(props, points, labelProps) {
-    const {text, style} = labelProps;
-    const { mousePosition, dimension, scale, labelComponent, voronoiPadding } = props;
+    const { mousePosition, dimension, scale, voronoiPadding } = props;
     const dataX = points[0]._x1 !== undefined ? points[0]._x1 : points[0]._x;
     const dataY = points[0]._y1 !== undefined ? points[0]._y1 : points[0]._y;
     const basePosition = {
@@ -110,13 +110,12 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
 
     const x = dimension === "y" ? mousePosition.x : basePosition.x;
     const y = dimension === "x" ? mousePosition.y : basePosition.y;
-    const flyoutSize = this.getFlyoutSize(labelComponent, text, style);
     const range = { x: scale.x.range(), y: scale.y.range() };
     const extent = {
       x: [Math.min(...range.x) + voronoiPadding, Math.max(...range.x) - voronoiPadding],
       y: [Math.min(...range.y) + voronoiPadding, Math.max(...range.y) - voronoiPadding]
     };
-    const flyoutExtent = this.getFlyoutExtent({x, y}, flyoutSize, props, labelProps);
+    const flyoutExtent = this.getFlyoutExtent({x, y}, props, labelProps);
     const adjustments = {
       x: [
         flyoutExtent.x[0] < extent.x[0] ? extent.x[0] - flyoutExtent.x[0] : 0,
