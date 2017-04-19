@@ -54,7 +54,8 @@ class App extends React.Component {
           <VictoryPolarAxis
             theme={VictoryTheme.material}
             style={chartStyle}
-            tickValues={[0, 45, 90, 135, 180, 225, 270, 315]}
+            labelRotation={90}
+            tickValues={[0, 20, 45, 65, 90, 120, 135, 180, 225, 250, 270, 300, 315]}
           />
 
           <VictoryPolarAxis dependentAxis
@@ -77,8 +78,8 @@ class App extends React.Component {
               axisAngle={200}
               theme={VictoryTheme.material}
               style={chartStyle}
-              domain={[0, 100]}
-              tickValues={[20, 40, 60, 80, 100]}
+              domain={[0, 10]}
+              tickValues={[2, 4, 6, 8, 10]}
             />
           </svg>
 

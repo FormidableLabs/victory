@@ -92,7 +92,8 @@ class VictoryAxis extends React.Component {
     tickValues: CustomPropTypes.homogeneousArray,
     width: CustomPropTypes.nonNegative,
     radius: PropTypes.number,
-    axisAngle: PropTypes.number
+    axisAngle: PropTypes.number,
+    labelRotation: PropTypes.number
   };
 
   static defaultProps = {
@@ -108,8 +109,7 @@ class VictoryAxis extends React.Component {
     theme: VictoryTheme.grayscale,
     tickCount: 5,
     containerComponent: <VictoryContainer />,
-    groupComponent: <g role="presentation"/>,
-    radius: 1
+    groupComponent: <g role="presentation"/>
   };
 
   static getDomain = AxisHelpers.getDomain.bind(AxisHelpers);
