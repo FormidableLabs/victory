@@ -19,6 +19,7 @@ import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
+import PolarDemo from "./components/victory-polar-chart-demo";
 import { Router, Route, Link, hashHistory } from "react-router";
 import { startCase } from "lodash";
 
@@ -64,6 +65,7 @@ const App = React.createClass({
           <li><Link to="/animation">Animation Demo</Link></li>
           <li><Link to="/selection-container">Victory Selection Container Demo</Link></li>
           <li><Link to="/create-container">createContainer Demo</Link></li>
+          <li><Link to="/polar">Polar Demo</Link></li>
         </ul>
         {this.props.children}
       </div>
@@ -92,6 +94,7 @@ ReactDOM.render((
       <Route path="animation" component={AnimationDemo}/>
       <Route path="selection-container" component={SelectionDemo}/>
       <Route path="create-container" component={CreateContainerDemo}/>
+      <Route path="polar" component={PolarDemo}/>
     </Route>
   </Router>
 ), content);
