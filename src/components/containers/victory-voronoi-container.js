@@ -63,18 +63,40 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
     };
   }
 
-  getFlyoutExtent(position, flyoutSize) {
-    const {x, y} = position;
-    const width = flyoutSize.x / 2;
+  getLabelCornerRadius(props, labelProps) {
+    if (typeof labelProps.cornerRadius !== 'undefined') {
+      return labelProps.cornerRadius;
+    }
+    const theme = props.theme || labelProps.theme;
+    return theme.tooltip && theme.tooltip.cornerRadius || 0;
+  }
+
+  getFlyoutExtent(position, flyoutSize, props, labelProps) {
+    const {orientation, dx = 0, dy = 0} = labelProps;
+    const cornerRadius = this.getLabelCornerRadius(props, labelProps);
+    const x = position.x + dx + 2 * cornerRadius;
+    const y = position.y + dy + 2 * cornerRadius;
+    const width = orientation === "top" || orientation === "bottom" ?
+      flyoutSize.x / 2 :
+      flyoutSize.x;
     const height = flyoutSize.y;
-    const extent = {x: [x - width, x + width], y: [y - height, y]};
+    const horizontalSign = orientation === "left" ? -1 : 1;
+    const verticalSign = orientation === "bottom" ? 1 : -1;
+    const extent = {};
+    if (orientation === "top" || orientation === "bottom") {
+      extent.x = [x - width, x + width];
+    } else {
+      extent.x = [x, x + horizontalSign * width];
+    }
+    extent.y = [y, y + verticalSign * height];
     return {
       x: [Math.min(...extent.x), Math.max(...extent.x)],
       y: [Math.min(...extent.y), Math.max(...extent.y)]
     };
   }
 
-  getLabelPosition(props, points, text, style) { // eslint-disable-line max-params
+  getLabelPosition(props, points, labelProps) {
+    const {text, style} = labelProps;
     const { mousePosition, dimension, scale, labelComponent, voronoiPadding } = props;
     const dataX = points[0]._x1 !== undefined ? points[0]._x1 : points[0]._x;
     const dataY = points[0]._y1 !== undefined ? points[0]._y1 : points[0]._y;
@@ -94,7 +116,7 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       x: [Math.min(...range.x) + voronoiPadding, Math.max(...range.x) - voronoiPadding],
       y: [Math.min(...range.y) + voronoiPadding, Math.max(...range.y) - voronoiPadding]
     };
-    const flyoutExtent = this.getFlyoutExtent({x, y}, flyoutSize);
+    const flyoutExtent = this.getFlyoutExtent({x, y}, flyoutSize, props, labelProps);
     const adjustments = {
       x: [
         flyoutExtent.x[0] < extent.x[0] ? extent.x[0] - flyoutExtent.x[0] : 0,
@@ -148,19 +170,19 @@ export const voronoiContainerMixin = (base) => class VictoryVoronoiContainer ext
       return memo;
     }, []);
     const style = this.getStyle(props, points, "labels");
-    const labelPosition = this.getLabelPosition(props, points, text, style);
-    return defaults(
+    const labelProps = defaults(
       {
         theme, style, text, scale,
         active: true,
         renderInPortal: false,
         flyoutStyle: this.getStyle(props, points, "flyout")[0],
-        datum: omit(points[0], ["childName", "style", "continuous"]),
-        ...labelPosition
+        datum: omit(points[0], ["childName", "style", "continuous"])
       },
       labelComponent.props,
       this.getDefaultLabelProps(props, points)
     );
+    const labelPosition = this.getLabelPosition(props, points, labelProps);
+    return {...labelProps, ...labelPosition};
   }
 
   getTooltip(props) {
