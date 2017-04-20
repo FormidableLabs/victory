@@ -17,6 +17,14 @@ export default {
   },
 
   getSVGEventCoordinates(evt) {
+    if (typeof document === "undefined") {
+      // react-native override. relies on the RN.View being the _exact_ same size as its child SVG.
+      // this should be fine: the svg is the only child of View and the View shirks to its children
+      return {
+        x: evt.nativeEvent.locationX,
+        y: evt.nativeEvent.locationY
+      };
+    }
     const svg = this.getParentSVG(evt.target);
     const matrix = this.getTransformationMatrix(svg);
     return {
