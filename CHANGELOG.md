@@ -1,6 +1,10 @@
 VictoryCore Changelog
 =====================
 
+## 14.1.1 (2017-04-20)
+
+- Add `victory-native` support to getSVGEventCoordinates
+
 ## 14.1.0 (2017-04-04)
 
 - Remove default container theme
