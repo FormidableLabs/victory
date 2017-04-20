@@ -32,10 +32,11 @@ export {
 } from "./components/containers/victory-zoom-container";
 export {
   combineContainerMixins,
+  makeCreateContainerFunction,
   default as createContainer
 } from "./components/containers/create-container";
 export { default as VictoryZoom } from "./components/victory-zoom/victory-zoom";
 export { default as BrushHelpers } from "./components/containers/brush-helpers";
 export { default as SelectionHelpers } from "./components/containers/selection-helpers";
 export { default as VoronoiHelpers } from "./components/containers/voronoi-helpers";
-export { default as ZoomHelpers } from "./components/containers/zoom-helpers";
+export { default as ZoomHelpers, RawZoomHelpers } from "./components/containers/zoom-helpers";

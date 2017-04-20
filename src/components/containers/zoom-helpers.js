@@ -231,6 +231,7 @@ const Helpers = {
   }
 };
 
+export { Helpers as RawZoomHelpers }; // allow victory-native to extend these helpers
 
 export default {
   onMouseDown: Helpers.onMouseDown.bind(Helpers),
