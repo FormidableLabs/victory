@@ -1,5 +1,11 @@
 # VictoryChart Changelog
 
+## 18.2.1 (2017-04-20)
+
+- add `RawZoomHelpers` and `makeCreateContainerFunction`
+- `combineContainerMixins` handles arbitrary number of mixins
+- upgrade `victory-core` to get `getSVGEventCoordinates` native support
+
 ## 18.2.0 (2017-04-04)
 
 - Adds `createContainer` for creating containers with multiple behaviors (e.g. Zoom and Voronoi)
