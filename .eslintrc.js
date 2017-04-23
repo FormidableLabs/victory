@@ -1,5 +1,6 @@
-const path = require("path");
-let base;
+/* eslint-disable no-var */
+var path = require("path");
+var base;
 try {
   // Normal resolution
   base = path.dirname(require.resolve("builder-victory-component/package.json"));
