@@ -61,7 +61,7 @@ describe("prop-types", () => {
       const result = validate(-1);
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-          "`testProp` in `TestComponent` must be non-negative."
+          "`testProp` in `TestComponent` must be a non-negative number."
       );
     });
 
@@ -88,7 +88,7 @@ describe("prop-types", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-        "`string` supplied to `TestComponent`, expected `number`."
+         "`testProp` in `TestComponent` must be a non-negative number."
       );
     });
 
@@ -96,7 +96,7 @@ describe("prop-types", () => {
       const result = validate(-1);
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).to.contain(
-        "`testProp` in `TestComponent` must be non-negative."
+         "`testProp` in `TestComponent` must be a non-negative number."
       );
     });
 
@@ -120,7 +120,7 @@ describe("prop-types", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-          "`string` supplied to `TestComponent`, expected `number`."
+          "`testProp` in `TestComponent` must be an integer."
       );
     });
 
@@ -151,7 +151,7 @@ describe("prop-types", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-          "`string` supplied to `TestComponent`, expected `number`."
+          "`testProp` in `TestComponent` must be a number greater than zero."
       );
     });
 
@@ -159,7 +159,7 @@ describe("prop-types", () => {
       const result = validate(0);
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).to.contain(
-          "`testProp` in `TestComponent` must be greater than zero."
+          "`testProp` in `TestComponent` must be a number greater than zero."
       );
     });
 
@@ -167,7 +167,7 @@ describe("prop-types", () => {
       const result = validate(-3);
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).to.contain(
-          "`testProp` in `TestComponent` must be greater than zero."
+          "`testProp` in `TestComponent` must be a number greater than zero."
       );
     });
 
@@ -190,7 +190,7 @@ describe("prop-types", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-        "`string` supplied to `TestComponent`, expected `array`."
+       "`testProp` in `TestComponent` must be an array of two unique numeric values."
       );
     });
 
@@ -264,7 +264,7 @@ describe("prop-types", () => {
       const result = validate("a");
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-        "`string` supplied to `TestComponent`, expected `array`."
+         "`testProp` in `TestComponent` must be an array."
       );
     });
 
