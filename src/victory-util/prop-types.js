@@ -1,6 +1,5 @@
 /* global console */
 import { isFunction, find } from "lodash";
-import { PropTypes } from "react";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -11,7 +10,7 @@ import { PropTypes } from "react";
  */
 const makeChainable = function (validator) {
   /* eslint-disable max-params */
-  const _chainable = function (isRequired, props, propName, componentName, ...rest) {
+  const _chainable = function (isRequired, props, propName, componentName) {
     const value = props[propName];
     if (typeof value === "undefined" || value === null) {
       if (isRequired) {
@@ -21,7 +20,7 @@ const makeChainable = function (validator) {
       }
       return null;
     }
-    return validator(props, propName, componentName, ...rest);
+    return validator(props, propName, componentName);
   };
   const chainable = _chainable.bind(null, false);
   chainable.isRequired = _chainable.bind(null, true);
@@ -72,7 +71,7 @@ export default {
    * @returns {Function} Validator which logs usage of this propType
    */
   deprecated(propType, explanation) {
-    return (props, propName, componentName, ...rest) => {
+    return (props, propName, componentName) => {
       if (process.env.NODE_ENV !== "production") {
         /* eslint-disable no-console */
         if (typeof console !== "undefined" && console.error) {
@@ -83,7 +82,7 @@ export default {
         }
         /* eslint-enable no-console */
       }
-      return propType(props, propName, componentName, ...rest);
+      return propType(props, propName, componentName);
     };
   },
 
@@ -95,9 +94,9 @@ export default {
    * @returns {Function} Combined validator function
    */
   allOfType(validators) {
-    return makeChainable((props, propName, componentName, ...rest) => {
+    return makeChainable((props, propName, componentName) => {
       const error = validators.reduce((result, validator) => {
-        return result || validator(props, propName, componentName, ...rest);
+        return result || validator(props, propName, componentName);
       }, undefined);
       if (error) {
         return error;
@@ -108,15 +107,11 @@ export default {
   /**
    * Check that the value is a non-negative number.
    */
-  nonNegative: makeChainable((props, propName, componentName, ...rest) => {
-    const error = PropTypes.number(props, propName, componentName, ...rest);
-    if (error) {
-      return error;
-    }
+  nonNegative: makeChainable((props, propName, componentName) => {
     const value = props[propName];
-    if (value < 0) {
+    if (typeof value !== "number" || value < 0) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be non-negative.`
+        `\`${propName}\` in \`${componentName}\` must be a non-negative number.`
       );
     }
   }),
@@ -124,13 +119,9 @@ export default {
   /**
    * Check that the value is an integer.
    */
-  integer: makeChainable((props, propName, componentName, ...rest) => {
-    const error = PropTypes.number(props, propName, componentName, ...rest);
-    if (error) {
-      return error;
-    }
+  integer: makeChainable((props, propName, componentName) => {
     const value = props[propName];
-    if (value % 1 !== 0) {
+    if (typeof value !== "number" || value % 1 !== 0) {
       return new Error(
         `\`${propName}\` in \`${componentName}\` must be an integer.`
       );
@@ -140,15 +131,11 @@ export default {
   /**
    * Check that the value is greater than zero.
    */
-  greaterThanZero: makeChainable((props, propName, componentName, ...rest) => {
-    const error = PropTypes.number(props, propName, componentName, ...rest);
-    if (error) {
-      return error;
-    }
+  greaterThanZero: makeChainable((props, propName, componentName) => {
     const value = props[propName];
-    if (value <= 0) {
+    if (typeof value !== "number" || value <= 0) {
       return new Error(
-        `\`${propName}\` in \`${componentName}\` must be greater than zero.`
+        `\`${propName}\` in \`${componentName}\` must be a number greater than zero.`
       );
     }
   }),
@@ -156,13 +143,9 @@ export default {
   /**
    * Check that the value is an Array of two unique values.
    */
-  domain: makeChainable((props, propName, componentName, ...rest) => {
-    const error = PropTypes.array(props, propName, componentName, ...rest);
-    if (error) {
-      return error;
-    }
+  domain: makeChainable((props, propName, componentName) => {
     const value = props[propName];
-    if (value.length !== 2 || value[1] === value[0]) {
+    if (!Array.isArray(value) || value.length !== 2 || value[1] === value[0]) {
       return new Error(
         `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`
       );
@@ -194,13 +177,14 @@ export default {
   /**
    * Check that an array contains items of the same type.
    */
-  homogeneousArray: makeChainable((props, propName, componentName, ...rest) => {
-    const error = PropTypes.array(props, propName, componentName, ...rest);
-    if (error) {
-      return error;
+  homogeneousArray: makeChainable((props, propName, componentName) => {
+    const values = props[propName];
+    if (!Array.isArray(values)) {
+      return new Error(
+        `\`${propName}\` in \`${componentName}\` must be an array.`
+      );
     }
 
-    const values = props[propName];
     if (values.length < 2) {
       return undefined;
     }
