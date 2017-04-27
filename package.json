@@ -44,7 +44,6 @@
     "react": "~15.5.4",
     "react-addons-test-utils": "~15.5.1",
     "react-dom": "~15.5.4",
-    "react-router": "^2.4.0",
     "react-test-renderer": "~15.5.4",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
