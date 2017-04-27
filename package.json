@@ -40,7 +40,7 @@
     "chai": "^3.2.0",
     "enzyme": "^2.3.0",
     "mocha": "^2.2.5",
-    "prop-types": "^15.5.8",
+    "prop-types": "~15.5.8",
     "react": "~15.5.4",
     "react-addons-test-utils": "~15.5.1",
     "react-dom": "~15.5.4",
