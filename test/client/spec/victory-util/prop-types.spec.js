@@ -32,8 +32,8 @@ describe("prop-types", () => {
 
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.spy(console, "warn");
-      sandbox.spy(console, "error");
+      sandbox.stub(console, "warn");
+      sandbox.stub(console, "error");
     });
 
     afterEach(() => {

@@ -1,5 +1,4 @@
-/*global document:false */
-/*global window:false */
+/*global document:false, window:false */
 import React from "react";
 import ReactDOM from "react-dom";
 import AnimationDemo from "./victory-animation-demo";
