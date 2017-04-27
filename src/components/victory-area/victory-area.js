@@ -55,7 +55,7 @@ class VictoryArea extends React.Component {
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
-    Label: CustomPropTypes.deprecated(
+    label: CustomPropTypes.deprecated(
       PropTypes.string,
       "Use `labels` instead for individual data labels"
     ),
