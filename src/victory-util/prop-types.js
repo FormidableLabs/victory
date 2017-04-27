@@ -1,5 +1,6 @@
-/* global console */
 import { isFunction, find } from "lodash";
+import Log from "./log";
+import PropTypes from "prop-types";
 
 /**
  * Return a new validator based on `validator` but with the option to chain
@@ -10,7 +11,7 @@ import { isFunction, find } from "lodash";
  */
 const makeChainable = function (validator) {
   /* eslint-disable max-params */
-  const _chainable = function (isRequired, props, propName, componentName) {
+  const _chainable = function (isRequired, props, propName, componentName, ...rest) {
     const value = props[propName];
     if (typeof value === "undefined" || value === null) {
       if (isRequired) {
@@ -20,7 +21,7 @@ const makeChainable = function (validator) {
       }
       return null;
     }
-    return validator(props, propName, componentName);
+    return validator(props, propName, componentName, ...rest);
   };
   const chainable = _chainable.bind(null, false);
   chainable.isRequired = _chainable.bind(null, true);
@@ -72,17 +73,13 @@ export default {
    */
   deprecated(propType, explanation) {
     return (props, propName, componentName) => {
-      if (process.env.NODE_ENV !== "production") {
-        /* eslint-disable no-console */
-        if (typeof console !== "undefined" && console.error) {
-          if (props[propName] !== null && props[propName] !== undefined) {
-            console.error(false,
-              `"${propName}" property of "${componentName}" has been deprecated ${explanation}`);
-          }
-        }
-        /* eslint-enable no-console */
+      const value = props[propName];
+      if (value !== null && value !== undefined) {
+        Log.warn(
+          `"${propName}" property of "${componentName}" has been deprecated ${explanation}`
+        );
       }
-      return propType(props, propName, componentName);
+      return PropTypes.checkPropTypes({[propName]: propType}, props, propName, componentName);
     };
   },
 
@@ -94,9 +91,9 @@ export default {
    * @returns {Function} Combined validator function
    */
   allOfType(validators) {
-    return makeChainable((props, propName, componentName) => {
+    return makeChainable((props, propName, componentName, ...rest) => {
       const error = validators.reduce((result, validator) => {
-        return result || validator(props, propName, componentName);
+        return result || validator(props, propName, componentName, ...rest);
       }, undefined);
       if (error) {
         return error;

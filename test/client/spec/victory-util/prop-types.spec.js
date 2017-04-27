@@ -1,4 +1,5 @@
 /* global sinon */
+/* eslint no-unused-expressions: 0 */
 /* global console */
 import PropTypes from "prop-types";
 import {PropTypes as CustomPropTypes} from "src/index";
@@ -6,13 +7,21 @@ import {PropTypes as CustomPropTypes} from "src/index";
 describe("prop-types", () => {
 
   /* eslint-disable no-console */
-  // Directly lifted from https://github.com/react-bootstrap/react-prop-types
-  // And then adapted to work with our linter, and sinon sandbox
   describe("deprecated", () => {
     let sandbox;
 
-    const shouldError = () => {
-      sinon.assert.calledOnce(console.error);
+    const shouldWarn = (message) => {
+      expect(console.warn).calledOnce;
+      expect(console.warn).calledWith(message);
+    };
+
+    const shouldError = (message) => {
+      expect(console.error).calledOnce;
+      expect(console.error).calledWith(message);
+    };
+
+    const shouldNotError = () => {
+      expect(console.error).notCalled;
     };
 
     const validate = (prop) => {
@@ -23,29 +32,30 @@ describe("prop-types", () => {
 
     beforeEach(() => {
       sandbox = sinon.sandbox.create();
-      sandbox.stub(console, "error");
+      sandbox.spy(console, "warn");
+      sandbox.spy(console, "error");
     });
 
     afterEach(() => {
+      console.warn.restore();
       console.error.restore();
       sandbox.reset();
     });
 
     it("Should warn about deprecation and validate OK", () => {
-
-      const err = validate("value");
-      shouldError("`pName` property of `ComponentName1 has been deprecated.\nRead more at link");
-      expect(err).to.not.be.an.instanceOf(Error);
+      validate("value");
+      shouldWarn(`"pName" property of "ComponentName" has been deprecated Read more at link`);
+      shouldNotError();
     });
 
     it(`Should warn about deprecation and throw validation error when property
        value is not OK`, () => {
-
-      const err = validate({});
-      shouldError("`pName` property of `ComponentName` has been deprecated.\nRead more at link");
-      expect(err).to.be.an.instanceOf(Error);
-      expect(err.message).to.include(
-        "Invalid undefined `pName` of type `object` supplied to `ComponentName`");
+      validate({});
+      shouldWarn(`"pName" property of "ComponentName" has been deprecated Read more at link`);
+      shouldError(
+       "Warning: Failed pName type: Invalid pName `pName` of type `object` supplied to " +
+       "`ComponentName`, expected `string`."
+      );
     });
   });
   /* eslint-enable no-console */

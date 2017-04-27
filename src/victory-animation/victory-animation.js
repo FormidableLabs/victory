@@ -58,7 +58,7 @@ export default class VictoryAnimation extends React.Component {
     /* build easing function */
     this.ease = d3Ease[this.toNewName(this.props.easing)];
     /*
-      unlike React.createClass({}), there is no autobinding of this in ES6 classes
+      There is no autobinding of this in ES6 classes
       so we bind functionToBeRunEachFrame to current instance of victory animation class
     */
     this.functionToBeRunEachFrame = this.functionToBeRunEachFrame.bind(this);
