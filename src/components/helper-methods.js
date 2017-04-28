@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2, 45, 135, 180, 225, 315] }]*/
 import { assign, defaults, isFunction, omit } from "lodash";
 import * as d3Shape from "d3-shape";
 
@@ -20,7 +21,7 @@ export default {
     const { style, colors } = calculatedValues;
     const fill = this.getColor(style, colors, index);
     const dataStyles = omit(datum, ["_x", "_y", "x", "y", "label"]);
-    return defaults({}, dataStyles, {fill}, style.data);
+    return defaults({}, dataStyles, { fill }, style.data);
   },
 
   getBaseProps(props, fallbackProps) {
@@ -54,7 +55,7 @@ export default {
   getLabelProps(props, dataProps, calculatedValues) {
     const { index, datum, data, slice } = dataProps;
     const { style, radius } = calculatedValues;
-    const labelStyle = assign({padding: 0}, style.labels);
+    const labelStyle = assign({ padding: 0 }, style.labels);
     const labelRadius = Helpers.evaluateProp(props.labelRadius, datum);
     const labelPosition = this.getLabelPosition(radius, labelRadius, labelStyle);
     const position = labelPosition.centroid(slice);
@@ -84,7 +85,7 @@ export default {
       .cornerRadius(props.cornerRadius)
       .outerRadius(radius)
       .innerRadius(props.innerRadius);
-    return {style, colors, padding, radius, data, slices, pathFunction};
+    return { style, colors, padding, radius, data, slices, pathFunction };
   },
 
   getColor(style, colors, index) {

@@ -84,7 +84,7 @@ describe("components/victory-pie", () => {
 
   describe("rendering data", () => {
     it("renders dataComponents for {x, y} shaped data (default)", () => {
-      const data = range(5).map((i) => ({x: i, y: i}));
+      const data = range(5).map((i) => ({ x: i, y: i }));
       const wrapper = shallow(
         <VictoryPie
           data={data}
@@ -96,7 +96,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders points for {x, y} shaped data (default)", () => {
-      const data = range(5).map((i) => ({x: i, y: i}));
+      const data = range(5).map((i) => ({ x: i, y: i }));
       const wrapper = shallow(<VictoryPie data={data}/>);
       const slices = wrapper.find(Slice);
       expect(slices.length).to.equal(5);
@@ -110,7 +110,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders points for deeply-nested data", () => {
-      const data = range(7).map((i) => ({a: {b: [{x: i, y: i}]}}));
+      const data = range(7).map((i) => ({ a: { b: [{ x: i, y: i }] } }));
       const wrapper = shallow(
         <VictoryPie data={data} x="a.b[0].x" y="a.b[0].y"/>
       );
@@ -128,7 +128,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values in their given order", () => {
-      const data = range(9).map((i) => ({x: i, y: i}));
+      const data = range(9).map((i) => ({ x: i, y: i }));
 
       const wrapper = shallow(
         <VictoryPie data={data}/>
@@ -141,7 +141,7 @@ describe("components/victory-pie", () => {
     });
 
     it("renders data values sorted by sortKey prop", () => {
-      const data = range(9).map((i) => ({x: i, y: i})).reverse();
+      const data = range(9).map((i) => ({ x: i, y: i })).reverse();
 
       const wrapper = shallow(
         <VictoryPie data={data} sortKey={"x"}/>
@@ -298,7 +298,7 @@ describe("components/victory-pie", () => {
         <VictoryPie
           events={[{
             target: "parent",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -316,7 +316,7 @@ describe("components/victory-pie", () => {
         <VictoryPie
           events={[{
             target: "data",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );
@@ -337,7 +337,7 @@ describe("components/victory-pie", () => {
         <VictoryPie
           events={[{
             target: "labels",
-            eventHandlers: {onClick: clickHandler}
+            eventHandlers: { onClick: clickHandler }
           }]}
         />
       );

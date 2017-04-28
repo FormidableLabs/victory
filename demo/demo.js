@@ -1,4 +1,5 @@
 /*global window:false*/
+/*eslint-disable no-magic-numbers,react/no-multi-comp*/
 import { merge, random, range } from "lodash";
 import PropTypes from "prop-types";
 import React from "react";
@@ -13,25 +14,14 @@ class BorderLabelSlice extends React.Component {
     index: PropTypes.number
   };
 
-  render() {
-    const {index} = this.props;
-
-    return (
-      <g key={`slice-and-label-${index}`}>
-        {this.renderSlice(this.props)}
-        {this.renderLabel(this.props)}
-      </g>
-    );
-  }
-
   renderSlice(props) {
     return <Slice {...props} />;
   }
 
   renderLabel(props) {
-    const {pathFunction, datum, slice, index} = props;
+    const { pathFunction, datum, slice, index } = props;
 
-    const path = pathFunction({...slice, endAngle: slice.startAngle});
+    const path = pathFunction({ ...slice, endAngle: slice.startAngle });
 
     const pathId = `textPath-path-${index}`;
 
@@ -47,6 +37,16 @@ class BorderLabelSlice extends React.Component {
     );
   }
 
+  render() {
+    const { index } = this.props;
+
+    return (
+      <g key={`slice-and-label-${index}`}>
+        {this.renderSlice(this.props)}
+        {this.renderLabel(this.props)}
+      </g>
+    );
+  }
 }
 
 export default class App extends React.Component {
@@ -86,6 +86,10 @@ export default class App extends React.Component {
     }, 4000);
   }
 
+  componentWillUnmount() {
+    window.clearInterval(this.setStateInterval);
+  }
+
   getTransitionData() {
     const data = random(6, 9);
     return range(data).map((datum) => {
@@ -110,10 +114,6 @@ export default class App extends React.Component {
     ];
   }
 
-  componentWillUnmount() {
-    window.clearInterval(this.setStateInterval);
-  }
-
   render() {
     const containerStyle = {
       display: "flex",
@@ -136,20 +136,20 @@ export default class App extends React.Component {
 
         <div style={containerStyle}>
           <VictoryPie
-            style={{parent: parentStyle}}
+            style={{ parent: parentStyle }}
             width={400} height={200}
           />
 
           <VictoryPie
-            style={{parent: parentStyle}}
+            style={{ parent: parentStyle }}
             width={200} height={400}
           />
 
           <VictoryPie
-            style={{parent: parentStyle}}
+            style={{ parent: parentStyle }}
           />
 
-          <VictoryPie animate={{duration: 1000}}
+          <VictoryPie animate={{ duration: 1000 }}
             style={{
               parent: parentStyle,
               labels: {
@@ -183,14 +183,14 @@ export default class App extends React.Component {
                     {
                       mutation: (props) => {
                         return {
-                          style: merge({}, props.style, {fill: "#F50057"})
+                          style: merge({}, props.style, { fill: "#F50057" })
                         };
                       }
                     }, {
                       target: "labels",
                       eventKey: [0, 2, 4],
                       mutation: () => {
-                        return {text: "Nice."};
+                        return { text: "Nice." };
                       }
                     }
                   ];
@@ -200,7 +200,7 @@ export default class App extends React.Component {
           />
 
           <VictoryPie
-            style={{parent: parentStyle}}
+            style={{ parent: parentStyle }}
             theme={VictoryTheme.material}
             events={[{
               target: "parent",
@@ -210,7 +210,7 @@ export default class App extends React.Component {
                     {
                       target: "labels",
                       mutation: () => {
-                        return {text: "parent click"};
+                        return { text: "parent click" };
                       }
                     }
                   ];
@@ -222,14 +222,14 @@ export default class App extends React.Component {
           <VictoryPie
             style={{
               parent: parentStyle,
-              labels: {fontSize: 10, padding: 10}
+              labels: { fontSize: 10, padding: 10 }
             }}
             labelComponent={<VictoryTooltip/>}
             colorScale="grayscale"
           />
 
           <VictoryPie
-            style={{...this.state.style}}
+            style={{ ...this.state.style }}
             labelRadius={120}
             innerRadius={140}
           />
@@ -237,32 +237,32 @@ export default class App extends React.Component {
           <VictoryPie
             style={{
               parent: parentStyle,
-              data: {stroke: "transparent", opacity: 0.4}
+              data: { stroke: "transparent", opacity: 0.4 }
             }}
           />
 
           <VictoryPie style={this.state.style} startAngle={-90} endAngle={90} />
 
           <VictoryPie
-            style={{...this.state.style, labels: {fontSize: 0}}}
+            style={{ ...this.state.style, labels: { fontSize: 0 } }}
             data={this.state.data}
             innerRadius={100}
-            animate={{duration: 2000}}
+            animate={{ duration: 2000 }}
             colorScale={this.state.colorScale}
             dataComponent={<BorderLabelSlice />}
           />
 
           <VictoryPie
-            style={{...this.state.style, labels: {padding: 0}}}
+            style={{ ...this.state.style, labels: { padding: 0 } }}
             data={this.state.data}
             innerRadius={100}
             labelRadius={110}
-            animate={{duration: 2000}}
+            animate={{ duration: 2000 }}
             colorScale={this.state.colorScale}
           />
 
           <VictoryPie
-            style={{...this.state.style}}
+            style={{ ...this.state.style }}
             endAngle={90}
             innerRadius={140}
             padAngle={5}
@@ -273,8 +273,8 @@ export default class App extends React.Component {
             data={range(0, 6).map((i) => [i, Math.random()])}
             x={0}
             y={1}
-            animate={{duration: 2000}}
-            style={{...this.state.style, data: {stroke: "#252525", strokeWidth: 2}}}
+            animate={{ duration: 2000 }}
+            style={{ ...this.state.style, data: { stroke: "#252525", strokeWidth: 2 } }}
             colorScale="warm"
           />
 
@@ -283,8 +283,8 @@ export default class App extends React.Component {
             x={0}
             y={1}
             theme={VictoryTheme.material}
-            style={{parent: {maxWidth: "40%"}}}
-            animate={{duration: 2000}}
+            style={{ parent: { maxWidth: "40%" } }}
+            animate={{ duration: 2000 }}
           />
 
           <VictoryPie style={this.state.style}
@@ -295,7 +295,7 @@ export default class App extends React.Component {
             labels={[]}
             cornerRadius={20}
             startAngle={-6}
-            animate={{duration: 2000}}
+            animate={{ duration: 2000 }}
             innerRadius={140}
           />
 

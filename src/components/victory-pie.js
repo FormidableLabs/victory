@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { partialRight, assign } from "lodash";
@@ -69,6 +70,11 @@ class VictoryPie extends React.Component {
     data: PropTypes.array,
     dataComponent: PropTypes.element,
     endAngle: PropTypes.number,
+    eventKey: PropTypes.oneOfType([
+      PropTypes.func,
+      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+      PropTypes.string
+    ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       target: PropTypes.oneOf(["data", "labels", "parent"]),
       eventKey: PropTypes.oneOfType([
@@ -78,12 +84,6 @@ class VictoryPie extends React.Component {
       ]),
       eventHandlers: PropTypes.object
     })),
-
-    eventKey: PropTypes.oneOfType([
-      PropTypes.func,
-      CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-      PropTypes.string
-    ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
     innerRadius: CustomPropTypes.nonNegative,
@@ -163,7 +163,7 @@ class VictoryPie extends React.Component {
       const labelProps = this.getComponentProps(labelComponent, "labels", index);
       if (labelProps && labelProps.text !== undefined && labelProps.text !== null) {
         labelComponents[index] = React.cloneElement(
-          labelComponent, assign({}, labelProps, {renderInPortal: false})
+          labelComponent, assign({}, labelProps, { renderInPortal: false })
           );
       }
     }
@@ -175,7 +175,7 @@ class VictoryPie extends React.Component {
   renderGroup(props, children) {
     const offset = this.getOffset(props);
     const transform = `translate(${offset.x}, ${offset.y})`;
-    const groupComponent = React.cloneElement(props.groupComponent, {transform});
+    const groupComponent = React.cloneElement(props.groupComponent, { transform });
     return this.renderContainer(groupComponent, children);
   }
 
