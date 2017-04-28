@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer } from "victory-core";
 import SelectionHelpers from "./selection-helpers";
@@ -6,21 +7,21 @@ export const selectionContainerMixin = (base) => class VictorySelectionContainer
   static displayName = "VictorySelectionContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    selectionStyle: React.PropTypes.object,
-    onSelection: React.PropTypes.func,
-    onSelectionCleared: React.PropTypes.func,
-    dimension: React.PropTypes.oneOf(["x", "y"]),
-    standalone: React.PropTypes.bool,
-    selectionComponent: React.PropTypes.element
+    dimension: PropTypes.oneOf(["x", "y"]),
+    onSelection: PropTypes.func,
+    onSelectionCleared: PropTypes.func,
+    selectionComponent: PropTypes.element,
+    selectionStyle: PropTypes.object,
+    standalone: PropTypes.bool
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
+    selectionComponent: <rect/>,
     selectionStyle: {
       stroke: "transparent",
       fill: "black",
       fillOpacity: 0.1
-    },
-    selectionComponent: <rect/>
+    }
   };
 
   static defaultEvents = [{

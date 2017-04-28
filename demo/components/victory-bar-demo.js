@@ -1,5 +1,6 @@
 /*global window:false*/
 import React from "react";
+import PropTypes from "prop-types";
 import {VictoryBar, VictoryChart, VictoryGroup, VictoryStack } from "../../src/index";
 import { VictorySharedEvents } from "victory-core";
 import { assign, random, range, merge } from "lodash";
@@ -7,9 +8,9 @@ import { VictoryContainer, VictoryTheme } from "victory-core";
 
 class Wrapper extends React.Component {
   static propTypes = {
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ])
   };
 
@@ -529,13 +530,13 @@ export default class App extends React.Component {
 
 class ChartWrap extends React.Component {
   static propTypes = {
-    width: React.PropTypes.number,
-    height: React.PropTypes.number,
-    children: React.PropTypes.any
+    children: PropTypes.any,
+    height: PropTypes.number,
+    width: PropTypes.number
   };
   static defaultProps = {
-    width: 350,
-    height: 250
+    height: 250,
+    width: 350
   };
   // renders both a standalone chart, and a version wrapped in VictoryChart,
   // to test both cases at once

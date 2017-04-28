@@ -1,5 +1,6 @@
 /*global window:false */
 import React from "react";
+import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
 import {VictoryScatter, VictoryChart} from "../../src/index";
 import {VictoryLabel} from "victory-core";
@@ -43,9 +44,9 @@ const symbolStyle = {
 
 class CatPoint extends React.Component {
   static propTypes = {
-    x: React.PropTypes.number,
-    y: React.PropTypes.number,
-    symbol: React.PropTypes.string
+    symbol: PropTypes.string,
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   render() {
@@ -250,7 +251,7 @@ export default class App extends React.Component {
 }
 
 App.propTypes = {
-  data: React.PropTypes.arrayOf(React.PropTypes.object)
+  data: PropTypes.arrayOf(PropTypes.object)
 };
 
 App.defaultProps = {

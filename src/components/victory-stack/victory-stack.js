@@ -1,5 +1,6 @@
 import { assign, defaults } from "lodash";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
   VictoryTheme, Scale
@@ -25,8 +26,8 @@ export default class VictoryStack extends React.Component {
         x: PropTypes.arrayOf(PropTypes.string), y: PropTypes.arrayOf(PropTypes.string)
       })
     ]),
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node), React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node), PropTypes.node
     ]),
     colorScale: PropTypes.oneOfType([
       PropTypes.arrayOf(PropTypes.string),
@@ -35,17 +36,17 @@ export default class VictoryStack extends React.Component {
       ])
     ]),
     containerComponent: PropTypes.element,
+    dataComponent: PropTypes.element,
+    domain: PropTypes.oneOfType([
+      CustomPropTypes.domain,
+      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
+    ]),
     domainPadding: PropTypes.oneOfType([
       PropTypes.shape({
         x: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ]),
         y: PropTypes.oneOfType([ PropTypes.number, CustomPropTypes.domain ])
       }),
       PropTypes.number
-    ]),
-    dataComponent: PropTypes.element,
-    domain: PropTypes.oneOfType([
-      CustomPropTypes.domain,
-      PropTypes.shape({ x: CustomPropTypes.domain, y: CustomPropTypes.domain })
     ]),
     events: PropTypes.arrayOf(PropTypes.shape({
       childName: PropTypes.oneOfType([
@@ -98,10 +99,10 @@ export default class VictoryStack extends React.Component {
   };
 
   static defaultProps = {
-    scale: "linear",
-    standalone: true,
     containerComponent: <VictoryContainer/>,
     groupComponent: <g/>,
+    scale: "linear",
+    standalone: true,
     theme: VictoryTheme. grayscale
   };
 

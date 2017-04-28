@@ -1,5 +1,6 @@
 import { partialRight, without } from "lodash";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import LineHelpers from "./helper-methods";
 import {
   PropTypes as CustomPropTypes, Helpers, VictoryTransition, VictoryLabel, addEvents,
@@ -59,7 +60,7 @@ class VictoryLine extends React.Component {
       "basis", "bundle", "cardinal", "catmullRom", "linear", "monotoneX",
       "monotoneY", "natural", "radial", "step", "stepAfter", "stepBefore"
     ]),
-    Label: CustomPropTypes.deprecated(
+    label: CustomPropTypes.deprecated(
       PropTypes.string,
       "Use `labels` instead for individual data labels"
     ),

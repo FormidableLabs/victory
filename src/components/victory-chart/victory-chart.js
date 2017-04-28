@@ -1,5 +1,6 @@
 import { defaults } from "lodash";
-import React, { PropTypes } from "react";
+import PropTypes from "prop-types";
+import React from "react";
 import {
   PropTypes as CustomPropTypes, Helpers, VictorySharedEvents, VictoryContainer,
   VictoryTheme, Scale
@@ -20,9 +21,9 @@ export default class VictoryChart extends React.Component {
 
   static propTypes = {
     animate: PropTypes.object,
-    children: React.PropTypes.oneOfType([
-      React.PropTypes.arrayOf(React.PropTypes.node),
-      React.PropTypes.node
+    children: PropTypes.oneOfType([
+      PropTypes.arrayOf(PropTypes.node),
+      PropTypes.node
     ]),
     containerComponent: PropTypes.element,
     defaultAxes: PropTypes.shape({
@@ -61,6 +62,7 @@ export default class VictoryChart extends React.Component {
     ]),
     groupComponent: PropTypes.element,
     height: CustomPropTypes.nonNegative,
+    modifyChildren: PropTypes.func,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.shape({
@@ -79,19 +81,18 @@ export default class VictoryChart extends React.Component {
     standalone: PropTypes.bool,
     style: PropTypes.object,
     theme: PropTypes.object,
-    width: CustomPropTypes.nonNegative,
-    modifyChildren: PropTypes.func
+    width: CustomPropTypes.nonNegative
   };
 
   static defaultProps = {
-    standalone: true,
     containerComponent: <VictoryContainer/>,
-    groupComponent: <g/>,
-    theme: VictoryTheme.grayscale,
     defaultAxes: {
       independent: <VictoryAxis/>,
       dependent: <VictoryAxis dependentAxis/>
-    }
+    },
+    groupComponent: <g/>,
+    standalone: true,
+    theme: VictoryTheme.grayscale
   };
 
   static expectedComponents = [

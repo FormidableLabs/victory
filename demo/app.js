@@ -1,6 +1,8 @@
-/*global document:false window */
+/*global window*/
+/*global document*/
 import React from "react";
 import ReactDOM from "react-dom";
+
 import AreaDemo from "./components/victory-area-demo";
 import AxisDemo from "./components/victory-axis-demo";
 import BarDemo from "./components/victory-bar-demo";
@@ -19,79 +21,86 @@ import CreateContainerDemo from "./components/create-container-demo";
 import BrushContainerDemo from "./components/victory-brush-container-demo";
 import AnimationDemo from "./components/animation-demo";
 import SelectionDemo from "./components/selection-demo";
-import { Router, Route, Link, hashHistory } from "react-router";
-import { startCase } from "lodash";
 
-const content = document.getElementById("content");
-
-const App = React.createClass({
-  propTypes: {
-    children: React.PropTypes.element
-  },
-
-  componentWillUpdate() {
-    this.setTitle();
-  },
-
-  componentWillMount() {
-    this.setTitle();
-  },
-
-  setTitle() {
-    document.title = startCase(window.location.hash.match(/\/(.*)\?/)[1] || "Victory Chart Demos");
-  },
-
+class Home extends React.Component {
   render() {
     return (
+      <h1>Pick A Demo</h1>
+    );
+  }
+}
+
+class App extends React.Component {
+  constructor() {
+    super();
+    this.state = {
+      route: window.location.hash.substr(1)
+    };
+  }
+
+  componentWillMount() {
+    window.addEventListener("hashchange", () => {
+      this.setState({
+        route: window.location.hash.substr(1)
+      });
+    });
+  }
+
+  getDemo() { // eslint-disable-line complexity
+    let Child;
+    switch (this.state.route) {
+    case "/axis": Child = AxisDemo; break;
+    case "/area": Child = AreaDemo; break;
+    case "/bar": Child = BarDemo; break;
+    case "/chart": Child = ChartDemo; break;
+    case "/line": Child = LineDemo; break;
+    case "/scatter": Child = ScatterDemo; break;
+    case "/errorbar": Child = ErrorBarDemo; break;
+    case "/candlestick": Child = CandlestickDemo; break;
+    case "/events": Child = EventsDemo; break;
+    case "/group": Child = GroupDemo; break;
+    case "/voronoi": Child = VoronoiDemo; break;
+    case "/tooltip": Child = TooltipDemo; break;
+    case "/zoom-container": Child = ZoomContainerDemo; break;
+    case "/voronoi-container": Child = VoronoiContainerDemo; break;
+    case "/brush-container": Child = BrushContainerDemo; break;
+    case "/animation": Child = AnimationDemo; break;
+    case "/selection-container": Child = SelectionDemo; break;
+    case "/create-container": Child = CreateContainerDemo; break;
+    default: Child = Home;
+    }
+    return Child;
+  }
+
+  render() {
+    const Child = this.getDemo();
+    return (
       <div>
-        <h1>Victory Chart and Friends Demo</h1>
+        <h1>Demos</h1>
         <ul>
-          <li><Link to="/chart">Victory Chart Demo</Link></li>
-          <li><Link to="/axis">Victory Axis Demo</Link></li>
-          <li><Link to="/area">Victory Area Demo</Link></li>
-          <li><Link to="/bar">Victory Bar Demo</Link></li>
-          <li><Link to="/line">Victory Line Demo</Link></li>
-          <li><Link to="/scatter">Victory Scatter Demo</Link></li>
-          <li><Link to="/errorbar">Victory Error Bar Demo</Link></li>
-          <li><Link to="/candlestick">Victory Candlestick Demo</Link></li>
-          <li><Link to="/events">Events Demo</Link></li>
-          <li><Link to="/group">Group Demo</Link></li>
-          <li><Link to="/voronoi">Victory Voronoi Demo</Link></li>
-          <li><Link to="/tooltip">Victory Tooltip Demo</Link></li>
-          <li><Link to="/zoom-container">Victory Zoom Container Demo</Link></li>
-          <li><Link to="/voronoi-container">Victory Voronoi Container Demo</Link></li>
-          <li><Link to="/brush-container">Victory Brush Container Demo</Link></li>
-          <li><Link to="/animation">Animation Demo</Link></li>
-          <li><Link to="/selection-container">Victory Selection Container Demo</Link></li>
-          <li><Link to="/create-container">createContainer Demo</Link></li>
+          <li><a href="#/chart">Victory Chart Demo</a></li>
+          <li><a href="#/axis">Victory Axis Demo</a></li>
+          <li><a href="#/area">Victory Area Demo</a></li>
+          <li><a href="#/bar">Victory Bar Demo</a></li>
+          <li><a href="#/line">Victory Line Demo</a></li>
+          <li><a href="#/scatter">Victory Scatter Demo</a></li>
+          <li><a href="#/errorbar">Victory Error Bar Demo</a></li>
+          <li><a href="#/candlestick">Victory Candlestick Demo</a></li>
+          <li><a href="#/events">Events Demo</a></li>
+          <li><a href="#/group">Group Demo</a></li>
+          <li><a href="#/voronoi">Victory Voronoi Demo</a></li>
+          <li><a href="#/tooltip">Victory Tooltip Demo</a></li>
+          <li><a href="#/zoom-container">Victory Zoom Container Demo</a></li>
+          <li><a href="#/voronoi-container">Victory Voronoi Container Demo</a></li>
+          <li><a href="#/brush-container">Victory Brush Container Demo</a></li>
+          <li><a href="#/animation">Animation Demo</a></li>
+          <li><a href="#/selection-container">Victory Selection Container Demo</a></li>
+          <li><a href="#/create-container">createContainer Demo</a></li>
         </ul>
-        {this.props.children}
+        <Child/>
       </div>
     );
   }
-});
+}
 
-ReactDOM.render((
-  <Router history={hashHistory}>
-    <Route path="/" component={App}>
-      <Route path="axis" component={AxisDemo}/>
-      <Route path="area" component={AreaDemo}/>
-      <Route path="bar" component={BarDemo}/>
-      <Route path="chart" component={ChartDemo}/>
-      <Route path="line" component={LineDemo}/>
-      <Route path="scatter" component={ScatterDemo}/>
-      <Route path="errorbar" component={ErrorBarDemo}/>
-      <Route path="candlestick" component={CandlestickDemo}/>
-      <Route path="events" component={EventsDemo}/>
-      <Route path="group" component={GroupDemo}/>
-      <Route path="voronoi" component={VoronoiDemo}/>
-      <Route path="tooltip" component={TooltipDemo}/>
-      <Route path="zoom-container" component={ZoomContainerDemo}/>
-      <Route path="voronoi-container" component={VoronoiContainerDemo}/>
-      <Route path="brush-container" component={BrushContainerDemo}/>
-      <Route path="animation" component={AnimationDemo}/>
-      <Route path="selection-container" component={SelectionDemo}/>
-      <Route path="create-container" component={CreateContainerDemo}/>
-    </Route>
-  </Router>
-), content);
+ReactDOM.render(<App/>, document.getElementById("content"));

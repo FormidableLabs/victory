@@ -1,7 +1,8 @@
 /*
   This component is being temporarily re-added to suppprt an upgrade to `victory-native`
 */
-import React, {Component, PropTypes} from "react";
+import React, { Component } from "react";
+import PropTypes from "prop-types";
 import { assign, isEqual } from "lodash";
 import ChartHelpers from "../victory-chart/helper-methods";
 import ZoomHelpers from "./helper-methods";
@@ -31,7 +32,7 @@ class VictoryZoom extends Component {
   }
 
   static childContextTypes = {
-    getTimer: React.PropTypes.func
+    getTimer: PropTypes.func
   }
 
   static defaultProps = {

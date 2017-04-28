@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { VictoryContainer, Selection } from "victory-core";
 import BrushHelpers from "./brush-helpers";
@@ -7,32 +8,32 @@ export const brushContainerMixin = (base) => class VictoryBrushContainer extends
   static displayName = "VictoryBrushContainer";
   static propTypes = {
     ...VictoryContainer.propTypes,
-    selectionStyle: React.PropTypes.object,
-    handleStyle: React.PropTypes.object,
-    dimension: React.PropTypes.oneOf(["x", "y"]),
-    selectedDomain: React.PropTypes.shape({
-      x: React.PropTypes.array,
-      y: React.PropTypes.array
+    dimension: PropTypes.oneOf(["x", "y"]),
+    handleComponent: PropTypes.element,
+    handleStyle: PropTypes.object,
+    handleWidth: PropTypes.number,
+    onDomainChange: PropTypes.func,
+    selectedDomain: PropTypes.shape({
+      x: PropTypes.array,
+      y: PropTypes.array
     }),
-    onDomainChange: React.PropTypes.func,
-    handleWidth: React.PropTypes.number,
-    selectionComponent: React.PropTypes.element,
-    handleComponent: React.PropTypes.element
+    selectionComponent: PropTypes.element,
+    selectionStyle: PropTypes.object
   };
   static defaultProps = {
     ...VictoryContainer.defaultProps,
-    selectionStyle: {
-      stroke: "transparent",
-      fill: "black",
-      fillOpacity: 0.1
-    },
+    handleComponent: <rect/>,
     handleStyle: {
       stroke: "transparent",
       fill: "transparent"
     },
     handleWidth: 8,
     selectionComponent: <rect/>,
-    handleComponent: <rect/>
+    selectionStyle: {
+      stroke: "transparent",
+      fill: "black",
+      fillOpacity: 0.1
+    }
   };
 
   static defaultEvents = [{

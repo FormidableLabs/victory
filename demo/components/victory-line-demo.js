@@ -1,5 +1,6 @@
 /*global window:false */
-import React, { PropTypes } from "react";
+import React from "react";
+import PropTypes from "prop-types";
 import { merge, random, range } from "lodash";
 import {VictoryLine, VictoryChart} from "../../src/index";
 import { VictoryContainer, VictoryTheme, Curve, Point } from "victory-core";
