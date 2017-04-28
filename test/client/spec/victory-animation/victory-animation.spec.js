@@ -12,7 +12,7 @@ describe("components/victory-animation", () => {
     //
     // https://facebook.github.io/react/docs/test-utils.html#shallow-rendering
     const wrapper = shallow(
-      <Component data={{test: true}}>
+      <Component data={{ test: true }}>
         {() => {
           return <div>I rendered!</div>;
         }}

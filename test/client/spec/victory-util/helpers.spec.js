@@ -3,7 +3,7 @@
 import Helpers from "src/victory-util/helpers";
 describe("helpers", () => {
   describe("evaluateProp", () => {
-    const data = {x: 3, y: 2};
+    const data = { x: 3, y: 2 };
     it("evaluates functional props", () => {
       const testProp = (datum) => datum.y > 0 ? "red" : "blue";
       expect(Helpers.evaluateProp(testProp, data)).to.equal("red");
@@ -15,13 +15,13 @@ describe("helpers", () => {
   });
 
   describe("evaluateStyle", () => {
-    const data = {x: 3, y: 2};
+    const data = { x: 3, y: 2 };
     it("evaluates functional styles, without altering others", () => {
       const style = {
         color: (datum) => datum.y > 0 ? "red" : "blue",
         size: 5
       };
-      expect(Helpers.evaluateStyle(style, data)).to.deep.equal({color: "red", size: 5});
+      expect(Helpers.evaluateStyle(style, data)).to.deep.equal({ color: "red", size: 5 });
     });
   });
 
@@ -43,44 +43,44 @@ describe("helpers", () => {
 
   describe("getStyles", () => {
     const defaultStyles = {
-      parent: {border: "black"},
-      data: {fill: "blue", stroke: "black"},
-      labels: {fontSize: 10, fontFamily: "Helvetica"}
+      parent: { border: "black" },
+      data: { fill: "blue", stroke: "black" },
+      labels: { fontSize: 10, fontFamily: "Helvetica" }
     };
     it("merges styles", () => {
-      const style = {data: {fill: "red"}, labels: {fontSize: 12}};
+      const style = { data: { fill: "red" }, labels: { fontSize: 12 } };
       const width = 500;
       const height = 500;
       const styles = Helpers.getStyles(style, defaultStyles, height, width);
-      expect(styles.parent).to.deep.equal({border: "black", width: 500, height: 500});
-      expect(styles.data).to.deep.equal({fill: "red", stroke: "black"});
-      expect(styles.labels).to.deep.equal({fontSize: 12, fontFamily: "Helvetica"});
+      expect(styles.parent).to.deep.equal({ border: "black", width: 500, height: 500 });
+      expect(styles.data).to.deep.equal({ fill: "red", stroke: "black" });
+      expect(styles.labels).to.deep.equal({ fontSize: 12, fontFamily: "Helvetica" });
     });
   });
 
   describe("getPadding", () => {
     it("sets padding from a single number", () => {
-      const props = {padding: 40};
-      expect(Helpers.getPadding(props)).to.deep.equal({top: 40, bottom: 40, left: 40, right: 40});
+      const props = { padding: 40 };
+      expect(Helpers.getPadding(props)).to.deep.equal({ top: 40, bottom: 40, left: 40, right: 40 });
     });
     it("sets padding from a complete object", () => {
       const props = {
-        padding: {top: 20, bottom: 40, left: 60, right: 80}
+        padding: { top: 20, bottom: 40, left: 60, right: 80 }
       };
       expect(Helpers.getPadding(props)).to.deep.equal(props.padding);
     });
     it("fills missing values with 0", () => {
       const props = {
-        padding: {top: 40, bottom: 40}
+        padding: { top: 40, bottom: 40 }
       };
-      expect(Helpers.getPadding(props)).to.deep.equal({top: 40, bottom: 40, left: 0, right: 0});
+      expect(Helpers.getPadding(props)).to.deep.equal({ top: 40, bottom: 40, left: 0, right: 0 });
     });
   });
 
   describe("createAccessor", () => {
     it("creates a valid object accessor from a property key", () => {
       const accessor = Helpers.createAccessor("k");
-      expect(accessor({k: 42})).to.eql(42);
+      expect(accessor({ k: 42 })).to.eql(42);
     });
 
     it("creates a valid array accessor from an index", () => {
@@ -90,7 +90,7 @@ describe("helpers", () => {
 
     it("creates a valid array accessor from a deeply nested path", () => {
       const accessor = Helpers.createAccessor("x.y[0].0.z");
-      expect(accessor({x: {y: [[{z: 1987}]]}})).to.eql(1987);
+      expect(accessor({ x: { y: [[{ z: 1987 }]] } })).to.eql(1987);
     });
 
     it("creates a value (passthrough) accessor from null/undefined", () => {
@@ -103,13 +103,13 @@ describe("helpers", () => {
 
   describe("isVertical", () => {
     it("returns true when the orientation is vertical", () => {
-      const props = {orientation: "left"};
+      const props = { orientation: "left" };
       const verticalResult = Helpers.isVertical(props);
       expect(verticalResult).to.equal(true);
     });
 
     it("returns false when the orientation is horizontal", () => {
-      const props = {orientation: "bottom"};
+      const props = { orientation: "bottom" };
       const verticalResult = Helpers.isVertical(props);
       expect(verticalResult).to.equal(false);
     });

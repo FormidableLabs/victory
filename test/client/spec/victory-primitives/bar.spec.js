@@ -7,10 +7,10 @@ import { merge } from "lodash";
 describe("victory-primitives/bar", () => {
   const baseProps = {
     data: [
-      {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
-      {_x: 3, x: 3, _y: 5, y: 5, eventKey: 1}
+      { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
+      { _x: 3, x: 3, _y: 5, y: 5, eventKey: 1 }
     ],
-    datum: {_x: 2, x: 2, _y: 4, y: 4, eventKey: 0},
+    datum: { _x: 2, x: 2, _y: 4, y: 4, eventKey: 0 },
     x: 2,
     y: 10,
     y0: 0,
@@ -26,7 +26,7 @@ describe("victory-primitives/bar", () => {
   });
 
   it("should render a horizontal bar", () => {
-    const props = merge({}, baseProps, {horizontal: true});
+    const props = merge({}, baseProps, { horizontal: true });
 
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);
@@ -50,7 +50,7 @@ describe("victory-primitives/bar", () => {
   });
 
   it("should allow override of width by passing a style", () => {
-    const props = Object.assign({}, baseProps, {style: {width: 1}});
+    const props = Object.assign({}, baseProps, { style: { width: 1 } });
 
     const wrapper = shallow(<Bar {...props}/>);
     const barShape = SvgTestHelper.getBarShape(wrapper);

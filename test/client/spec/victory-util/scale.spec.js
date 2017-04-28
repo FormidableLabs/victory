@@ -17,7 +17,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a scale from `getScaleFromProps` when string props are provided", () => {
-      const props = {scale: "log"};
+      const props = { scale: "log" };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(Scale.getScaleFromProps).to.be.calledOnce;
       expect(Scale.getScaleTypeFromData).not.to.be.called;
@@ -26,7 +26,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a scale from `getScaleFromProps` when a d3 scale is provided", () => {
-      const props = {scale: d3Scale.scaleLog()};
+      const props = { scale: d3Scale.scaleLog() };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(Scale.getScaleFromProps).to.be.calledOnce;
       expect(Scale.getScaleTypeFromData).not.to.be.called;
@@ -35,7 +35,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a default scale when data is provided", () => {
-      const props = {data: [{x: 0, y: 1}]};
+      const props = { data: [{ x: 0, y: 1 }] };
       const baseScale = Scale.getBaseScale(props, "x");
       expect(Scale.getScaleFromProps).to.be.calledOnce;
       expect(Scale.getScaleTypeFromData).to.be.calledOnce;
@@ -64,7 +64,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a scale when a single scale is provided in props", () => {
-      const props = {scale: "log"};
+      const props = { scale: "log" };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(Scale.isScaleDefined).calledWith(props, "x").and.returned(true);
       expect(propsScale).to.be.a.function;
@@ -72,7 +72,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a scale when a scale object contains a scale for an axis", () => {
-      const props = {scale: {x: "log"}};
+      const props = { scale: { x: "log" } };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(Scale.isScaleDefined).calledWith(props, "x").and.returned(true);
       expect(propsScale).to.be.a.function;
@@ -80,14 +80,14 @@ describe("helpers/scale", () => {
     });
 
     it("returns undefined when a scale object does not contain a scale for an axis", () => {
-      const props = {scale: {y: "log"}};
+      const props = { scale: { y: "log" } };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(Scale.isScaleDefined).calledWith(props, "x").and.returned(false);
       expect(propsScale).to.be.undefined;
     });
 
     it("returns undefined when an invalid scale is provided in props", () => {
-      const props = {scale: "foo"};
+      const props = { scale: "foo" };
       const propsScale = Scale.getScaleFromProps(props, "x");
       expect(Scale.isScaleDefined).calledWith(props, "x").and.returned(true);
       expect(Scale.validScale).calledWith(props.scale).and.returned(false);
@@ -113,7 +113,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns 'log' for log scales", () => {
-      const props = {scale: {x: d3Scale.scaleLog()}};
+      const props = { scale: { x: d3Scale.scaleLog() } };
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleTypeFromProps).calledWith(props, "x").and.returned("log");
       expect(Scale.getScaleTypeFromData).not.called;
@@ -121,7 +121,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns a string value given a string prop", () => {
-      const props = {scale: {x: "linear"}};
+      const props = { scale: { x: "linear" } };
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleTypeFromProps).calledWith(props, "x").and.returned(props.scale.x);
       expect(Scale.getScaleTypeFromData).not.called;
@@ -129,7 +129,7 @@ describe("helpers/scale", () => {
     });
 
     it("uses data to distinguish between time and linear scales", () => {
-      const props = {scale: {x: d3Scale.scaleLinear()}};
+      const props = { scale: { x: d3Scale.scaleLinear() } };
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleTypeFromProps).calledWith(props, "x").and.returned(undefined);
       expect(Scale.getScaleTypeFromData).calledWith(props, "x").and.returned("linear");
@@ -145,7 +145,7 @@ describe("helpers/scale", () => {
     });
 
     it("returns 'time' when no scale is set, and data contains dates", () => {
-      const props = {x: "x", y: "y", data: [{x: new Date("2016-01-13"), y: 1}]};
+      const props = { x: "x", y: "y", data: [{ x: new Date("2016-01-13"), y: 1 }] };
       const scaleType = Scale.getScaleType(props, "x");
       expect(Scale.getScaleTypeFromProps).calledWith(props, "x").and.returned(undefined);
       expect(Scale.getScaleTypeFromData).calledWith(props, "x").and.returned("time");

@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import { isFunction, find } from "lodash";
 import Log from "./log";
 import PropTypes from "prop-types";
@@ -60,7 +61,7 @@ const getConstructorName = (value) => {
   } else if (value === null) {
     return "null";
   }
-  return Object.prototype.toString.call(value).slice(8, -1);
+  return Object.prototype.toString.call(value).slice(8, -1); // eslint-disable-line no-magic-numbers
 };
 
 export default {
@@ -79,7 +80,7 @@ export default {
           `"${propName}" property of "${componentName}" has been deprecated ${explanation}`
         );
       }
-      return PropTypes.checkPropTypes({[propName]: propType}, props, propName, componentName);
+      return PropTypes.checkPropTypes({ [propName]: propType }, props, propName, componentName);
     };
   },
 
@@ -91,14 +92,12 @@ export default {
    * @returns {Function} Combined validator function
    */
   allOfType(validators) {
-    return makeChainable((props, propName, componentName, ...rest) => {
-      const error = validators.reduce((result, validator) => {
-        return result || validator(props, propName, componentName, ...rest);
-      }, undefined);
-      if (error) {
-        return error;
-      }
-    });
+    return makeChainable((props, propName, componentName, ...rest) =>
+      validators.reduce(
+        (result, validator) => result || validator(props, propName, componentName, ...rest),
+        undefined
+      )
+    );
   },
 
   /**
@@ -111,6 +110,7 @@ export default {
         `\`${propName}\` in \`${componentName}\` must be a non-negative number.`
       );
     }
+    return undefined;
   }),
 
   /**
@@ -123,6 +123,7 @@ export default {
         `\`${propName}\` in \`${componentName}\` must be an integer.`
       );
     }
+    return undefined;
   }),
 
   /**
@@ -135,6 +136,7 @@ export default {
         `\`${propName}\` in \`${componentName}\` must be a number greater than zero.`
       );
     }
+    return undefined;
   }),
 
   /**
@@ -147,6 +149,7 @@ export default {
         `\`${propName}\` in \`${componentName}\` must be an array of two unique numeric values.`
       );
     }
+    return undefined;
   }),
 
   /**
@@ -169,6 +172,7 @@ export default {
         `\`${propName}\` in \`${componentName}\` must be a d3 scale.`
       );
     }
+    return undefined;
   }),
 
   /**
@@ -202,6 +206,7 @@ export default {
         `\`${otherConstructorName}\`.`
       );
     }
+    return undefined;
   }),
 
   /**
@@ -215,5 +220,6 @@ export default {
     ) {
       return new Error(`Length of data and ${propName} arrays must match.`);
     }
+    return undefined;
   })
 };

@@ -1,4 +1,5 @@
-//http://www.pearsonified.com/2012/01/characters-per-line.php
+// http://www.pearsonified.com/2012/01/characters-per-line.php
+/*eslint-disable no-magic-numbers */
 import { merge, defaults } from "lodash";
 
 const fontDictionary = {
@@ -106,7 +107,7 @@ const _prepareParams = (inputStyle, index) => {
 const _approximateTextWidthInternal = (text, style) => {
   const widths = _splitToLines(text).map((line, index) => {
     const len = line.toString().length;
-    const {fontSize, characterConstant, letterSpacing} = _prepareParams(style, index);
+    const { fontSize, characterConstant, letterSpacing } = _prepareParams(style, index);
     return (len * fontSize / characterConstant) + letterSpacing * (Math.max(len - 1, 0));
   });
   return Math.max(...widths);

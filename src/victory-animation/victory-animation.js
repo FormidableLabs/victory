@@ -1,3 +1,4 @@
+/*global setTimeout:false */
 import React from "react";
 import PropTypes from "prop-types";
 import * as d3Ease from "d3-ease";
@@ -65,16 +66,6 @@ export default class VictoryAnimation extends React.Component {
     this.getTimer = this.getTimer.bind(this);
   }
 
-  getTimer() {
-    if (this.context.getTimer) {
-      return this.context.getTimer();
-    }
-    if (!this.timer) {
-      this.timer = new Timer();
-    }
-    return this.timer;
-  }
-
   componentDidMount() {
     // Length check prevents us from triggering `onEnd` in `traverseQueue`.
     if (this.queue.length) {
@@ -110,6 +101,16 @@ export default class VictoryAnimation extends React.Component {
     }
   }
 
+  getTimer() {
+    if (this.context.getTimer) {
+      return this.context.getTimer();
+    }
+    if (!this.timer) {
+      this.timer = new Timer();
+    }
+    return this.timer;
+  }
+
   toNewName(ease) {
     // d3-ease changed the naming scheme for ease from "linear" -> "easeLinear" etc.
     const capitalize = (s) => s && s[0].toUpperCase() + s.slice(1);
@@ -125,7 +126,7 @@ export default class VictoryAnimation extends React.Component {
       this.interpolator = victoryInterpolator(this.state.data, data);
       /* reset step to zero */
       if (this.props.delay) {
-        setTimeout(() => { // eslint-disable-line no-undef
+        setTimeout(() => {
           this.loopID = this.getTimer().subscribe(
             this.functionToBeRunEachFrame, this.props.duration
           );

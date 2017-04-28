@@ -52,6 +52,7 @@ export default {
     if (this.validScale(scale)) {
       return isFunction(scale) ? scale : d3Scale[this.toNewName(scale)]();
     }
+    return undefined;
   },
 
   getScaleTypeFromData(props, axis) {
@@ -74,11 +75,11 @@ export default {
 
   getType(scale) {
     const duckTypes = [
-      {name: "log", method: "base"},
-      {name: "ordinal", method: "unknown"},
-      {name: "pow-sqrt", method: "exponent"},
-      {name: "quantile", method: "quantiles"},
-      {name: "quantize-threshold", method: "invertExtent"}
+      { name: "log", method: "base" },
+      { name: "ordinal", method: "unknown" },
+      { name: "pow-sqrt", method: "exponent" },
+      { name: "quantile", method: "quantiles" },
+      { name: "quantize-threshold", method: "invertExtent" }
     ];
     const scaleType = duckTypes.filter((type) => {
       return scale[type.method] !== undefined;

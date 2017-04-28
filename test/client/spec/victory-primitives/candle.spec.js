@@ -6,10 +6,10 @@ import { merge } from "lodash";
 describe("victory-primitives/candle", () => {
   const baseProps = {
     data: [
-      {x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0},
-      {x: 2, open: 40, close: 80, high: 100, low: 10, eventKey: 1}
+      { x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0 },
+      { x: 2, open: 40, close: 80, high: 100, low: 10, eventKey: 1 }
     ],
-    datum: {x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0},
+    datum: { x: 1, open: 10, close: 30, high: 50, low: 5, eventKey: 0 },
     x: 5,
     y: 30,
     y1: 50,

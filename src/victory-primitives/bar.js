@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
@@ -8,33 +9,33 @@ export default class Bar extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
+    data: PropTypes.array,
     datum: PropTypes.object,
     events: PropTypes.object,
     horizontal: PropTypes.bool,
     index: PropTypes.number,
-    role: PropTypes.string,
-    scale: PropTypes.object,
-    shapeRendering: PropTypes.string,
-    style: PropTypes.object,
-    x: PropTypes.number,
-    y: PropTypes.number,
-    y0: PropTypes.number,
-    width: PropTypes.number,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.object
     ]),
-    data: PropTypes.array
+    role: PropTypes.string,
+    scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
+    style: PropTypes.object,
+    width: PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number,
+    y0: PropTypes.number
   };
 
   componentWillMount() {
-    const {style, path} = this.calculateAttributes(this.props);
+    const { style, path } = this.calculateAttributes(this.props);
     this.style = style;
     this.path = path;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, path} = this.calculateAttributes(nextProps);
+    const { style, path } = this.calculateAttributes(nextProps);
     if (path !== this.path || !isEqual(style, this.style)) {
       this.style = style;
       this.path = path;
@@ -44,9 +45,9 @@ export default class Bar extends React.Component {
   }
 
   calculateAttributes(props) {
-    const {datum, active, x, y} = props;
+    const { datum, active, x, y } = props;
     const stroke = props.style && props.style.fill || "black";
-    const baseStyle = {fill: "black", stroke};
+    const baseStyle = { fill: "black", stroke };
     const style = Helpers.evaluateStyle(assign(baseStyle, props.style), datum, active);
     const width = this.getBarWidth(props, style);
     const path = typeof x === "number" && typeof y === "number" ?
@@ -92,8 +93,9 @@ export default class Bar extends React.Component {
       return style.width;
     }
 
-    const {width, data} = props;
+    const { width, data } = props;
     const padding = props.padding.left || props.padding;
+    // eslint-disable-next-line no-magic-numbers
     const defaultWidth = data.length === 0 ? 8 : (width - 2 * padding) / data.length;
     return defaultWidth;
   }

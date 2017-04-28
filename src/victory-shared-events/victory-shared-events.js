@@ -14,26 +14,26 @@ export default class VictorySharedEvents extends React.Component {
       PropTypes.node
     ]),
     container: PropTypes.node,
-    events: PropTypes.arrayOf(PropTypes.shape({
-      childName: PropTypes.oneOfType([
-        PropTypes.string,
-        PropTypes.array
-      ]),
-      target: PropTypes.string,
-      eventKey: PropTypes.oneOfType([
-        PropTypes.array,
-        PropTypes.func,
-        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
-        PropTypes.string
-      ]),
-      eventHandlers: PropTypes.object
-    })),
     eventKey: PropTypes.oneOfType([
       PropTypes.array,
       PropTypes.func,
       CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
       PropTypes.string
     ]),
+    events: PropTypes.arrayOf(PropTypes.shape({
+      childName: PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.array
+      ]),
+      eventHandlers: PropTypes.object,
+      eventKey: PropTypes.oneOfType([
+        PropTypes.array,
+        PropTypes.func,
+        CustomPropTypes.allOfType([CustomPropTypes.integer, CustomPropTypes.nonNegative]),
+        PropTypes.string
+      ]),
+      target: PropTypes.string
+    })),
     groupComponent: PropTypes.node
   };
 
@@ -63,6 +63,14 @@ export default class VictorySharedEvents extends React.Component {
     };
   }
 
+  componentWillMount() {
+    this.setUpChildren(this.props);
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.setUpChildren(newProps);
+  }
+
   getTimer() {
     if (this.context.getTimer) {
       return this.context.getTimer();
@@ -71,14 +79,6 @@ export default class VictorySharedEvents extends React.Component {
       this.timer = new Timer();
     }
     return this.timer;
-  }
-
-  componentWillMount() {
-    this.setUpChildren(this.props);
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setUpChildren(newProps);
   }
 
   getAllEvents(props) {
@@ -97,7 +97,7 @@ export default class VictorySharedEvents extends React.Component {
       this.childComponents = React.Children.toArray(props.children);
       const childBaseProps = this.getBasePropsFromChildren(this.childComponents);
       const parentBaseProps = props.container ? props.container.props : {};
-      this.baseProps = assign({}, childBaseProps, {parent: parentBaseProps});
+      this.baseProps = assign({}, childBaseProps, { parent: parentBaseProps });
     }
   }
 
@@ -117,7 +117,7 @@ export default class VictorySharedEvents extends React.Component {
   }
 
   getNewChildren(props) {
-    const {events, eventKey} = props;
+    const { events, eventKey } = props;
     const childNames = Object.keys(this.baseProps);
     const alterChildren = (children) => {
       return children.reduce((memo, child, index) => {
@@ -160,15 +160,15 @@ export default class VictorySharedEvents extends React.Component {
     const parents = Array.isArray(this.events) &&
       this.events.filter((event) => event.target === "parent");
     const sharedEvents = parents.length > 0 ?
-      {
-        events: parents,
-        getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
-        getEventState: partialRight(this.getEventState, null)
-      } : null;
+    {
+      events: parents,
+      getEvents: partialRight(this.getScopedEvents, null, this.baseProps),
+      getEventState: partialRight(this.getEventState, null)
+    } : null;
     const container = this.props.container || this.props.groupComponent;
     const containerProps = container.props || {};
     const boundGetEvents = Events.getEvents.bind(this);
-    const parentEvents = sharedEvents && boundGetEvents({sharedEvents}, "parent");
+    const parentEvents = sharedEvents && boundGetEvents({ sharedEvents }, "parent");
     const parentProps = defaults(
       {},
       this.getEventState("parent", "parent"),
@@ -179,7 +179,7 @@ export default class VictorySharedEvents extends React.Component {
     const events = defaults(
       {}, Events.getPartialEvents(parentEvents, "parent", parentProps), containerProps.events
     );
-    return React.cloneElement(container, assign({}, parentProps, {events}));
+    return React.cloneElement(container, assign({}, parentProps, { events }));
   }
 
   render() {

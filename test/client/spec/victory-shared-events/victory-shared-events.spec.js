@@ -37,10 +37,10 @@ describe("components/victory-shared-events", () => {
 
   it("should trigger shared events exclusively on selected children", () => {
     const data = [
-      {x: "a", y: 2},
-      {x: "b", y: 3},
-      {x: "c", y: 5},
-      {x: "d", y: 4}
+      { x: "a", y: 2 },
+      { x: "b", y: 3 },
+      { x: "c", y: 5 },
+      { x: "d", y: 4 }
     ];
     const wrapper = mount(
       <svg>
@@ -54,7 +54,7 @@ describe("components/victory-shared-events", () => {
                   childName: ["one", "three"],
                   mutation: (props) => {
                     return {
-                      style: Object.assign({}, props.style, {fill: "tomato"})
+                      style: Object.assign({}, props.style, { fill: "tomato" })
                     };
                   }
                 }];

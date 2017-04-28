@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import Helpers from "../victory-util/helpers";
@@ -7,29 +8,29 @@ export default class Voronoi extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
-    datum: PropTypes.object,
     data: PropTypes.array,
+    datum: PropTypes.object,
     events: PropTypes.object,
     index: PropTypes.number,
     polygon: PropTypes.array,
+    role: PropTypes.string,
     scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
     size: PropTypes.number,
     style: PropTypes.object,
     x: PropTypes.number,
-    y: PropTypes.number,
-    shapeRendering: PropTypes.string,
-    role: PropTypes.string
+    y: PropTypes.number
   };
 
   componentWillMount() {
-    const {style, circle, voronoi} = this.calculateAttributes(this.props);
+    const { style, circle, voronoi } = this.calculateAttributes(this.props);
     this.style = style;
     this.circle = circle;
     this.voronoi = voronoi;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, circle, voronoi} = this.calculateAttributes(nextProps);
+    const { style, circle, voronoi } = this.calculateAttributes(nextProps);
     if (circle !== this.circle || voronoi !== this.voronoi || !isEqual(style, this.style)) {
       this.style = style;
       this.circle = circle;
@@ -101,5 +102,5 @@ export default class Voronoi extends React.Component {
       voronoi: this.voronoi
     };
     return this.renderPoint(paths, this.style, this.props.events);
-  }t
+  }
 }

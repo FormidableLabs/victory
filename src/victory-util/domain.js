@@ -94,6 +94,7 @@ export default {
     } else if (props.domain && Array.isArray(props.domain)) {
       return props.domain;
     }
+    return undefined;
   },
 
   /**
@@ -257,7 +258,7 @@ export default {
   getDomainPadding(props, axis) {
     const formatPadding = (padding) => {
       return Array.isArray(padding) ?
-        {left: padding[0], right: padding[1]} : {left: padding, right: padding};
+        { left: padding[0], right: padding[1] } : { left: padding, right: padding };
     };
 
     return isPlainObject(props.domainPadding) ?

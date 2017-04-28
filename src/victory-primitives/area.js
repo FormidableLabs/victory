@@ -7,15 +7,15 @@ import * as d3Shape from "d3-shape";
 export default class Area extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
-    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     className: PropTypes.string,
     data: PropTypes.array,
     events: PropTypes.object,
     groupComponent: PropTypes.element,
+    index: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
     interpolation: PropTypes.string,
-    shapeRendering: PropTypes.string,
     role: PropTypes.string,
     scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
     style: PropTypes.object
   };
 
@@ -24,14 +24,14 @@ export default class Area extends React.Component {
   };
 
   componentWillMount() {
-    const {style, areaPaths, linePaths} = this.calculateAttributes(this.props);
+    const { style, areaPaths, linePaths } = this.calculateAttributes(this.props);
     this.style = style;
     this.areaPaths = areaPaths;
     this.linePaths = linePaths;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, areaPaths, linePaths} = this.calculateAttributes(nextProps);
+    const { style, areaPaths, linePaths } = this.calculateAttributes(nextProps);
     if (!isEqual(linePaths, this.linePaths) || !isEqual(style, this.style)) {
       this.style = style;
       this.areaPaths = areaPaths;
@@ -42,7 +42,7 @@ export default class Area extends React.Component {
   }
 
   calculateAttributes(props) {
-    const {style, data, active, scale} = props;
+    const { style, data, active, scale } = props;
     const dataSegments = this.getDataSegments(data);
     const xScale = scale.x;
     const yScale = scale.y;
@@ -57,7 +57,7 @@ export default class Area extends React.Component {
       .x((d) => xScale(d._x1 !== undefined ? d._x1 : d._x))
       .y((d) => yScale(d._y1));
     return {
-      style: Helpers.evaluateStyle(assign({fill: "black"}, style), data, active),
+      style: Helpers.evaluateStyle(assign({ fill: "black" }, style), data, active),
       areaPaths: dataSegments.map((segment) => areaFunction(segment)),
       linePaths: dataSegments.map((segment) => lineFunction(segment))
     };
@@ -80,7 +80,7 @@ export default class Area extends React.Component {
   // Overridden in victory-core-native
   renderArea(paths, style, events) {
     const areaStroke = style.stroke ? "none" : style.fill;
-    const areaStyle = assign({}, style, {stroke: areaStroke});
+    const areaStyle = assign({}, style, { stroke: areaStroke });
     const { role, shapeRendering, className } = this.props;
     return paths.map((path, index) => {
       return (
@@ -103,7 +103,7 @@ export default class Area extends React.Component {
       return [];
     }
     const { role, shapeRendering, className } = this.props;
-    const lineStyle = assign({}, style, {fill: "none"});
+    const lineStyle = assign({}, style, { fill: "none" });
     return paths.map((path, index) => {
       return (
         <path

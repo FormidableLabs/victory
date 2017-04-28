@@ -9,7 +9,7 @@ export default class App extends React.Component {
           VictoryLabel demo! The little circles show the anchor points for
           each label.
         </p>
-        <svg width="600" height="1800" style={{ border: "1px solid #ccc", padding: 40}}>
+        <svg width="600" height="1800" style={{ border: "1px solid #ccc", padding: 40 }}>
 
           <circle cx="0" cy="0" r="2" fill="red"/>
           <VictoryLabel
@@ -36,7 +36,7 @@ export default class App extends React.Component {
           />
           <circle cx="300" cy="300" r="2" fill="blue"/>
           <VictoryLabel x={300} y={300} textAnchor="middle" verticalAnchor="start"
-            style={{padding: 15}}
+            style={{ padding: 15 }}
             text={"Victory is awesome.\nThis is (middle, start) anchoring.\nGot it?"}
           />
 

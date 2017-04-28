@@ -49,7 +49,7 @@ describe("components/victory-container", () => {
   it("attaches an event to the container", () => {
     const clickHandler = sinon.spy();
     const wrapper = mount(
-      <VictoryContainer events={{onClick: clickHandler}}/>
+      <VictoryContainer events={{ onClick: clickHandler }}/>
     );
     const svg = wrapper.find("svg");
     svg.simulate("click");

@@ -7,17 +7,17 @@ export default class Line extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
-    index: PropTypes.number,
-    datum: PropTypes.any,
     data: PropTypes.array,
+    datum: PropTypes.any,
+    events: PropTypes.object,
+    index: PropTypes.number,
+    role: PropTypes.string,
+    shapeRendering: PropTypes.string,
+    style: PropTypes.object,
     x1: PropTypes.number,
     x2: PropTypes.number,
     y1: PropTypes.number,
-    y2: PropTypes.number,
-    style: PropTypes.object,
-    events: PropTypes.object,
-    role: PropTypes.string,
-    shapeRendering: PropTypes.string
+    y2: PropTypes.number
   };
 
   componentWillMount() {
@@ -25,7 +25,7 @@ export default class Line extends React.Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    const {x1, x2, y1, y2} = this.props;
+    const { x1, x2, y1, y2 } = this.props;
     const style = this.getStyle(nextProps);
     if (x1 !== nextProps.x1 || x2 !== nextProps.x2 || y1 !== nextProps.y1 || y2 !== nextProps.y2) {
       this.style = style;
@@ -41,8 +41,8 @@ export default class Line extends React.Component {
   }
 
   getStyle(props) {
-    const { style, datum, active} = props;
-    return Helpers.evaluateStyle(assign({stroke: "black"}, style), datum, active);
+    const { style, datum, active } = props;
+    return Helpers.evaluateStyle(assign({ stroke: "black" }, style), datum, active);
   }
 
   // Overridden in victory-core-native
@@ -63,6 +63,6 @@ export default class Line extends React.Component {
 
   render() {
     const { x1, x2, y1, y2, events } = this.props;
-    return this.renderAxisLine({x1, x2, y1, y2}, this.style, events);
+    return this.renderAxisLine({ x1, x2, y1, y2 }, this.style, events);
   }
 }

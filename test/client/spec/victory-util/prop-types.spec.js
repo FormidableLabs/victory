@@ -1,8 +1,7 @@
-/* global sinon */
+/* global sinon:false, console */
 /* eslint no-unused-expressions: 0 */
-/* global console */
 import PropTypes from "prop-types";
-import {PropTypes as CustomPropTypes} from "src/index";
+import { PropTypes as CustomPropTypes } from "src/index";
 
 describe("prop-types", () => {
 
@@ -44,14 +43,14 @@ describe("prop-types", () => {
 
     it("Should warn about deprecation and validate OK", () => {
       validate("value");
-      shouldWarn(`"pName" property of "ComponentName" has been deprecated Read more at link`);
+      shouldWarn("\"pName\" property of \"ComponentName\" has been deprecated Read more at link");
       shouldNotError();
     });
 
     it(`Should warn about deprecation and throw validation error when property
        value is not OK`, () => {
       validate({});
-      shouldWarn(`"pName" property of "ComponentName" has been deprecated Read more at link`);
+      shouldWarn("\"pName\" property of \"ComponentName\" has been deprecated Read more at link");
       shouldError(
        "Warning: Failed pName type: Invalid pName `pName` of type `object` supplied to " +
        "`ComponentName`, expected `string`."
@@ -64,7 +63,7 @@ describe("prop-types", () => {
     const validate = function (prop) {
       return CustomPropTypes.allOfType(
         [CustomPropTypes.nonNegative, CustomPropTypes.integer]
-      )({testProp: prop}, "testProp", "TestComponent");
+      )({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error if the first validator is false", () => {
@@ -79,7 +78,7 @@ describe("prop-types", () => {
       const result = validate(1.3);
       expect(result).to.be.an.instanceOf(Error);
       expect(result.message).contain(
-          "`testProp` in `TestComponent` must be an integer."
+        "`testProp` in `TestComponent` must be an integer."
       );
     });
 
@@ -91,7 +90,7 @@ describe("prop-types", () => {
 
   describe("nonNegative", () => {
     const validate = function (prop) {
-      return CustomPropTypes.nonNegative({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.nonNegative({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error for non numeric values", () => {
@@ -123,7 +122,7 @@ describe("prop-types", () => {
 
   describe("integer", () => {
     const validate = function (prop) {
-      return CustomPropTypes.integer({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.integer({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error for non numeric values", () => {
@@ -154,7 +153,7 @@ describe("prop-types", () => {
 
   describe("greaterThanZero", () => {
     const validate = function (prop) {
-      return CustomPropTypes.greaterThanZero({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.greaterThanZero({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error for non numeric values", () => {
@@ -193,7 +192,7 @@ describe("prop-types", () => {
 
   describe("domain", () => {
     const validate = function (prop) {
-      return CustomPropTypes.domain({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.domain({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error for non array values", () => {
@@ -238,7 +237,7 @@ describe("prop-types", () => {
 
   describe("scale", () => {
     const validate = function (prop) {
-      return CustomPropTypes.scale({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.scale({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error for non function values", () => {
@@ -267,7 +266,7 @@ describe("prop-types", () => {
 
   describe("homogeneousArray", () => {
     const validate = function (prop) {
-      return CustomPropTypes.homogeneousArray({testProp: prop}, "testProp", "TestComponent");
+      return CustomPropTypes.homogeneousArray({ testProp: prop }, "testProp", "TestComponent");
     };
 
     it("returns an error for non array values", () => {
@@ -305,7 +304,7 @@ describe("prop-types", () => {
 
   describe("matchDataLength", () => {
     const validate = function (prop, dataProp) {
-      const props = {testProp: prop, data: dataProp};
+      const props = { testProp: prop, data: dataProp };
       return CustomPropTypes.matchDataLength(props, "testProp", "TestComponent");
     };
 

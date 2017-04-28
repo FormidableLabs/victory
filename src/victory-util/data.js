@@ -52,7 +52,7 @@ export default {
     const xValues = this.generateDataArray(props, "x");
     const yValues = this.generateDataArray(props, "y");
     const values = xValues.map((x, i) => {
-      return { x, y: yValues[i]};
+      return { x, y: yValues[i] };
     });
     return values;
   },
@@ -82,7 +82,7 @@ export default {
       const x = evaluatedX !== undefined ? evaluatedX : index;
       const y = evaluatedY !== undefined ? evaluatedY : datum;
       return assign(
-          {x, y},
+          { x, y },
           datum,
           { _x: x, _y: y },
           // map string data to numeric values, and add names
@@ -158,7 +158,7 @@ export default {
     const eventKeyAccessor = this.getEventKey(props.eventKey);
     return data.map((datum, index) => {
       const eventKey = datum.eventKey || eventKeyAccessor(datum) || index;
-      return assign({eventKey}, datum);
+      return assign({ eventKey }, datum);
     });
   },
 

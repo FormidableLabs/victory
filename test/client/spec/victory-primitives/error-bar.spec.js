@@ -29,21 +29,21 @@ describe("victory-primitives/error-bar", () => {
 
     const expectedCoordinates = [
       // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
-      {x1: 1, x2: 1, y1: -15, y2: 25},
+      { x1: 1, x2: 1, y1: -15, y2: 25 },
       // Left Border(negativeErrorX, negativeErrorX, y - borderWidth, y + borderWidth)
-      {x1: 3, x2: 3, y1: -15, y2: 25},
+      { x1: 3, x2: 3, y1: -15, y2: 25 },
       // Bottom Border(x - borderWidth, x + borderWidth, negativeErrorY, negativeErrorY)
-      {x1: -16, x2: 24, y1: 0.2, y2: 0.2},
+      { x1: -16, x2: 24, y1: 0.2, y2: 0.2 },
       // Top Border(x - borderWidth, x + borderWidth, positiveErrorY, positiveErrorY)
-      {x1: -16, x2: 24, y1: 2, y2: 2},
+      { x1: -16, x2: 24, y1: 2, y2: 2 },
       // Right Cross(x, positiveErrorX, y, y)
-      {x1: 4, x2: 1, y1: 5, y2: 5},
+      { x1: 4, x2: 1, y1: 5, y2: 5 },
       // Left Cross(x, negativeErrorX, y, y)
-      {x1: 4, x2: 3, y1: 5, y2: 5},
+      { x1: 4, x2: 3, y1: 5, y2: 5 },
       // Bottom Cross(x, x, y, negativeErrorY)
-      {x1: 4, x2: 4, y1: 5, y2: 0.2},
+      { x1: 4, x2: 4, y1: 5, y2: 0.2 },
       // Bottom Cross(x, x, y, positiveErrorY)
-      {x1: 4, x2: 4, y1: 5, y2: 2}
+      { x1: 4, x2: 4, y1: 5, y2: 2 }
     ];
 
     expect(lines.length).to.eql(8);
@@ -60,13 +60,13 @@ describe("victory-primitives/error-bar", () => {
 
     const expectedCoordinates = [
       // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
-      {x1: 1, x2: 1, y1: -15, y2: 25},
+      { x1: 1, x2: 1, y1: -15, y2: 25 },
       // Left Border(negativeErrorX, negativeErrorX, y - borderWidth, y + borderWidth)
-      {x1: 3, x2: 3, y1: -15, y2: 25},
+      { x1: 3, x2: 3, y1: -15, y2: 25 },
       // Right Cross(x, positiveErrorX, y, y)
-      {x1: 4, x2: 1, y1: 5, y2: 5},
+      { x1: 4, x2: 1, y1: 5, y2: 5 },
       // Left Cross(x, negativeErrorX, y, y)
-      {x1: 4, x2: 3, y1: 5, y2: 5}
+      { x1: 4, x2: 3, y1: 5, y2: 5 }
     ];
 
     expect(lines.length).to.eql(4);
@@ -83,13 +83,13 @@ describe("victory-primitives/error-bar", () => {
 
     const expectedCoordinates = [
       // Bottom Border(x - borderWidth, x + borderWidth, negativeErrorY, negativeErrorY)
-      {x1: -16, x2: 24, y1: 0.2, y2: 0.2},
+      { x1: -16, x2: 24, y1: 0.2, y2: 0.2 },
       // Top Border(x - borderWidth, x + borderWidth, positiveErrorY, positiveErrorY)
-      {x1: -16, x2: 24, y1: 2, y2: 2},
+      { x1: -16, x2: 24, y1: 2, y2: 2 },
       // Bottom Cross(x, x, y, negativeErrorY)
-      {x1: 4, x2: 4, y1: 5, y2: 0.2},
+      { x1: 4, x2: 4, y1: 5, y2: 0.2 },
       // Bottom Cross(x, x, y, positiveErrorY)
-      {x1: 4, x2: 4, y1: 5, y2: 2}
+      { x1: 4, x2: 4, y1: 5, y2: 2 }
     ];
 
     expect(lines.length).to.eql(4);
@@ -110,21 +110,21 @@ describe("victory-primitives/error-bar", () => {
 
     const expectedCoordinates = [
       // Right Border (positiveErrorX, positiveErrorX, y - borderWidth, y + borderWidth)
-      {x1: -100, x2: -100, y1: -15, y2: 25},
+      { x1: -100, x2: -100, y1: -15, y2: 25 },
       // Left Border(negativeErrorX, negativeErrorX, y - borderWidth, y + borderWidth)
-      {x1: 100, x2: 100, y1: -15, y2: 25},
+      { x1: 100, x2: 100, y1: -15, y2: 25 },
       // Bottom Border(x - borderWidth, x + borderWidth, negativeErrorY, negativeErrorY)
-      {x1: -16, x2: 24, y1: 100, y2: 100},
+      { x1: -16, x2: 24, y1: 100, y2: 100 },
       // Top Border(x - borderWidth, x + borderWidth, positiveErrorY, positiveErrorY)
-      {x1: -16, x2: 24, y1: -100, y2: -100},
+      { x1: -16, x2: 24, y1: -100, y2: -100 },
       // Right Cross(x, positiveErrorX, y, y)
-      {x1: 4, x2: -100, y1: 5, y2: 5},
+      { x1: 4, x2: -100, y1: 5, y2: 5 },
       // Left Cross(x, negativeErrorX, y, y)
-      {x1: 4, x2: 100, y1: 5, y2: 5},
+      { x1: 4, x2: 100, y1: 5, y2: 5 },
       // Bottom Cross(x, x, y, negativeErrorY)
-      {x1: 4, x2: 4, y1: 5, y2: 100},
+      { x1: 4, x2: 4, y1: 5, y2: 100 },
       // Bottom Cross(x, x, y, positiveErrorY)
-      {x1: 4, x2: 4, y1: 5, y2: -100}
+      { x1: 4, x2: 4, y1: 5, y2: -100 }
     ];
 
     expect(lines.length).to.eql(8);

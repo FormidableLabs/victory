@@ -26,18 +26,18 @@ describe("components/victory-label", () => {
 
   it("strips px from fontSize", () => {
     const wrapper = shallow(
-      <VictoryLabel style={{fontSize: "10px"}} text={"such text, wow"}/>
+      <VictoryLabel style={{ fontSize: "10px" }} text={"such text, wow"}/>
     );
     const output = wrapper.find("tspan");
-    expect(output.prop("style")).to.contain({fontSize: 10});
+    expect(output.prop("style")).to.contain({ fontSize: 10 });
   });
 
   it("uses a default fontSize when an invalid fontSize is given", () => {
     const wrapper = shallow(
-      <VictoryLabel style={{fontSize: "foo"}} text={"such text, wow"}/>
+      <VictoryLabel style={{ fontSize: "foo" }} text={"such text, wow"}/>
     );
     const output = wrapper.find("tspan");
-    expect(output.prop("style")).to.contain({fontSize: 14});
+    expect(output.prop("style")).to.contain({ fontSize: 14 });
   });
 
   it("renders an array of text as seperate tspans", () => {
@@ -60,12 +60,12 @@ describe("components/victory-label", () => {
     const fill = ["red", "green", "blue"];
     const wrapper = shallow(
       <VictoryLabel text={"one\ntwo\nthree"}
-        style={[{fill: fill[0]}, {fill: fill[1]}, {fill: fill[2]}]}
+        style={[{ fill: fill[0] }, { fill: fill[1] }, { fill: fill[2] }]}
       />
     );
     const output = wrapper.find("tspan");
     output.forEach((tspan, index) => {
-      expect(tspan.prop("style")).to.contain({fill: fill[index]});
+      expect(tspan.prop("style")).to.contain({ fill: fill[index] });
     });
   });
 
@@ -73,7 +73,7 @@ describe("components/victory-label", () => {
     it("attaches an to the parent object", () => {
       const clickHandler = sinon.spy();
       const wrapper = mount(
-        <VictoryLabel events={{onClick: clickHandler}}/>
+        <VictoryLabel events={{ onClick: clickHandler }}/>
       );
       wrapper.find("text").simulate("click");
       expect(clickHandler.called).to.equal(true);

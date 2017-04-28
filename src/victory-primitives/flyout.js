@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { isEqual } from "lodash";
@@ -8,33 +9,33 @@ export default class Flyout extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
-    style: PropTypes.object,
-    x: PropTypes.number,
-    y: PropTypes.number,
+    cornerRadius: PropTypes.number,
+    data: PropTypes.array,
+    datum: PropTypes.object,
     dx: PropTypes.number,
     dy: PropTypes.number,
-    datum: PropTypes.object,
-    data: PropTypes.array,
-    index: PropTypes.number,
-    width: PropTypes.number,
+    events: PropTypes.object,
     height: PropTypes.number,
+    index: PropTypes.number,
     orientation: PropTypes.oneOf(["top", "bottom", "left", "right"]),
     pointerLength: PropTypes.number,
     pointerWidth: PropTypes.number,
-    cornerRadius: PropTypes.number,
-    events: PropTypes.object,
+    role: PropTypes.string,
     shapeRendering: PropTypes.string,
-    role: PropTypes.string
+    style: PropTypes.object,
+    width: PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number
   };
 
   componentWillMount() {
-    const {style, path} = this.calculateAttributes(this.props);
+    const { style, path } = this.calculateAttributes(this.props);
     this.style = style;
     this.path = path;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, path} = this.calculateAttributes(nextProps);
+    const { style, path } = this.calculateAttributes(nextProps);
     if (path !== this.path || !isEqual(style, this.style)) {
       this.style = style;
       this.path = path;
@@ -44,7 +45,7 @@ export default class Flyout extends React.Component {
   }
 
   calculateAttributes(props) {
-    const {datum, active, style} = props;
+    const { datum, active, style } = props;
     return {
       style: Helpers.evaluateStyle(style, datum, active),
       path: this.getFlyoutPath(props)

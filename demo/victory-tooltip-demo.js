@@ -9,7 +9,7 @@ export default class App extends React.Component {
       viewBox: "0 0 150 150",
       width: 150,
       height: 150,
-      style: {border: "1px solid #ccc", margin: "2%", maxWidth: "40%"}
+      style: { border: "1px solid #ccc", margin: "2%", maxWidth: "40%" }
     };
 
     const containerStyle = {
@@ -21,7 +21,7 @@ export default class App extends React.Component {
     };
 
     const baseTooltipProps = {
-      x: 75, y: 75, cornerRadius: 3, active: true, style: {padding: 5}
+      x: 75, y: 75, cornerRadius: 3, active: true, style: { padding: 5 }
     };
 
     return (
@@ -39,7 +39,7 @@ export default class App extends React.Component {
         <svg {...svgProps}>
           <VictoryTooltip {...baseTooltipProps}
             text={["o shit", "waddup"]}
-            style={[{fill: "red"}, {fill: "blue"}]}
+            style={[{ fill: "red" }, { fill: "blue" }]}
             orientation="bottom"
           />
           <circle cx="75" cy="75" r="2" fill="red"/>

@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0.5, 2] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { Helpers, Collection } from "../victory-util";
@@ -5,27 +6,28 @@ import { assign } from "lodash";
 
 export default class Candle extends React.Component {
   static propTypes = {
+
     active: PropTypes.bool,
-    className: PropTypes.string,
-    index: PropTypes.number,
-    x: PropTypes.number,
-    y1: PropTypes.number,
-    y2: PropTypes.number,
-    y: PropTypes.number,
-    events: PropTypes.object,
     candleHeight: PropTypes.number,
-    shapeRendering: PropTypes.string,
-    scale: PropTypes.object,
-    style: PropTypes.object,
+    className: PropTypes.string,
+    data: PropTypes.array,
     datum: PropTypes.object,
-    width: PropTypes.number,
+    events: PropTypes.object,
+    groupComponent: PropTypes.element,
+    index: PropTypes.number,
     padding: PropTypes.oneOfType([
       PropTypes.number,
       PropTypes.object
     ]),
-    data: PropTypes.array,
-    groupComponent: PropTypes.element,
-    role: PropTypes.string
+    role: PropTypes.string,
+    scale: PropTypes.object,
+    shapeRendering: PropTypes.string,
+    style: PropTypes.object,
+    width: PropTypes.number,
+    x: PropTypes.number,
+    y: PropTypes.number,
+    y1: PropTypes.number,
+    y2: PropTypes.number
   }
 
   static defaultProps = {
@@ -33,14 +35,14 @@ export default class Candle extends React.Component {
   };
 
   componentWillMount() {
-    const {style, candleWidth } = this.calculateAttributes(this.props);
+    const { style, candleWidth } = this.calculateAttributes(this.props);
     this.style = style;
     this.candleWidth = candleWidth;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {x, y, y1, y2} = this.props;
-    const {style, candleWidth} = this.calculateAttributes(nextProps);
+    const { x, y, y1, y2 } = this.props;
+    const { style, candleWidth } = this.calculateAttributes(nextProps);
 
     if (!Collection.allSetsEqual([
       [x, nextProps.x],
@@ -58,8 +60,8 @@ export default class Candle extends React.Component {
   }
 
   calculateAttributes(props) {
-    const {data, datum, active, width} = props;
-    const style = Helpers.evaluateStyle(assign({stroke: "black"}, props.style), datum, active);
+    const { data, datum, active, width } = props;
+    const style = Helpers.evaluateStyle(assign({ stroke: "black" }, props.style), datum, active);
     const padding = props.padding.left || props.padding;
     const candleWidth = style.width || 0.5 * (width - 2 * padding) / data.length;
     return { style, candleWidth };
@@ -90,7 +92,7 @@ export default class Candle extends React.Component {
     const shapeRendering = props.shapeRendering || "auto";
     const role = props.role || "presentation";
     return assign(
-      {x1: x, x2: x, y1, y2, style: this.style, role, shapeRendering, className},
+      { x1: x, x2: x, y1, y2, style: this.style, role, shapeRendering, className },
       events
     );
   }

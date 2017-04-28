@@ -102,8 +102,8 @@ export default {
       // returns the state object with mutated props applied for a single key
       const getMutationObject = (key, childName) => {
         const nullFunction = () => null;
-        const mutationTargetProps = getTargetProps({childName, key, target}, "props");
-        const mutationTargetState = getTargetProps({childName, key, target}, "state");
+        const mutationTargetProps = getTargetProps({ childName, key, target }, "props");
+        const mutationTargetState = getTargetProps({ childName, key, target }, "state");
         const mutation = eventReturn.mutation || nullFunction;
         const mutatedProps = mutation(
           assign({}, mutationTargetProps, mutationTargetState), baseProps
@@ -111,11 +111,13 @@ export default {
         const childState = this.state[childName] || {};
         const extendState = (state) => {
           return target === "parent" ?
-            extend(state[key], mutatedProps) : extend(state[key], {[target]: mutatedProps});
+            extend(state[key], mutatedProps) : extend(state[key], { [target]: mutatedProps });
         };
         return childName !== undefined && childName !== null ?
-          extend(this.state, {[childName]: extend(childState, {[key]: extendState(childState)})}) :
-          extend(this.state, {[key]: extendState(this.state)});
+          extend(this.state, {
+            [childName]: extend(childState, { [key]: extendState(childState) })
+          }) :
+          extend(this.state, { [key]: extendState(this.state) });
       };
 
       // returns entire mutated state for a given childName

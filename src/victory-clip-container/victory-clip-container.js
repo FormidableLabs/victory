@@ -32,7 +32,7 @@ export default class VictoryClipContainer extends React.Component {
 
   constructor(props) {
     super(props);
-    this.clipId = Math.round(Math.random() * 10000);
+    this.clipId = Math.round(Math.random() * 10000); // eslint-disable-line no-magic-numbers
   }
 
   // Overridden in victory-core-native
@@ -81,7 +81,7 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   getClipValue(props, axis) {
-    const clipValues = {x: props.clipWidth, y: props.clipHeight};
+    const clipValues = { x: props.clipWidth, y: props.clipHeight };
     if (clipValues[axis] !== undefined) {
       return clipValues[axis];
     }
@@ -90,7 +90,7 @@ export default class VictoryClipContainer extends React.Component {
   }
 
   getTranslateValue(props, axis) {
-    const translateValues = {x: props.translateX, y: props.translateY};
+    const translateValues = { x: props.translateX, y: props.translateY };
     if (translateValues[axis] !== undefined) {
       return translateValues[axis];
     }
@@ -114,7 +114,7 @@ export default class VictoryClipContainer extends React.Component {
     }
     const translateX = this.getTranslateValue(this.props, "x");
     const translateY = this.getTranslateValue(this.props, "y");
-    const clipProps = defaults({}, this.props, {clipHeight, clipWidth, translateX, translateY});
+    const clipProps = defaults({}, this.props, { clipHeight, clipWidth, translateX, translateY });
     return this.renderClippedGroup(clipProps, this.clipId);
   }
 }

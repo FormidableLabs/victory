@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [0, 1, 2, 2.5, 3] }]*/
 import { range } from "lodash";
 
 export default {
@@ -9,7 +10,7 @@ export default {
   },
 
   square(x, y, size) {
-    const baseSize = 0.87 * size;
+    const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const x0 = Math.round(x - baseSize);
     const x1 = Math.round(x + baseSize);
     const y0 = Math.round(y - baseSize);
@@ -22,7 +23,7 @@ export default {
   },
 
   diamond(x, y, size) {
-    const baseSize = 0.87 * size;
+    const baseSize = 0.87 * size; // eslint-disable-line no-magic-numbers
     const length = Math.sqrt(2 * (baseSize * baseSize));
     return `M ${Math.round(x)}, ${Math.round(y + length)}
       L ${Math.round(x + length)}, ${Math.round(y)}
@@ -56,7 +57,7 @@ export default {
   },
 
   plus(x, y, size) {
-    const baseSize = 1.1 * size;
+    const baseSize = 1.1 * size; // eslint-disable-line no-magic-numbers
     return `M ${Math.round(x - baseSize / 2.5)}, ${Math.round(y + baseSize)}
       L ${Math.round(x + baseSize / 2.5)}, ${Math.round(y + baseSize)}
       L ${Math.round(x + baseSize / 2.5)}, ${Math.round(y + baseSize / 2.5)}
@@ -73,9 +74,9 @@ export default {
   },
 
   star(x, y, size) {
-    const baseSize = 1.35 * size;
-    const angle = Math.PI / 5;
-    const starCoords = range(10).map((index) => {
+    const baseSize = 1.35 * size; // eslint-disable-line no-magic-numbers
+    const angle = Math.PI / 5; // eslint-disable-line no-magic-numbers
+    const starCoords = range(10).map((index) => { // eslint-disable-line no-magic-numbers
       const length = index % 2 === 0 ? baseSize : baseSize / 2;
       return `${length * Math.sin(angle * (index + 1)) + x},
         ${length * Math.cos(angle * (index + 1)) + y}`;

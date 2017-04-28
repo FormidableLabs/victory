@@ -33,7 +33,7 @@ describe("victory-primitives/point", () => {
       "star"
     ].forEach((symbol) => {
       const stub = sandbox.stub(pathHelpers, symbol).returns(`${symbol} symbol`);
-      const props = Object.assign({}, baseProps, {symbol});
+      const props = Object.assign({}, baseProps, { symbol });
       const wrapper = shallow(<Point {...props}/>);
       const directions = wrapper.render().find("path").attr("d");
 

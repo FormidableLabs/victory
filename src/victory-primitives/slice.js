@@ -7,25 +7,25 @@ export default class Slice extends React.Component {
   static propTypes = {
     active: PropTypes.bool,
     className: PropTypes.string,
-    index: PropTypes.number,
-    slice: PropTypes.object,
-    pathFunction: PropTypes.func,
-    style: PropTypes.object,
-    datum: PropTypes.object,
     data: PropTypes.array,
+    datum: PropTypes.object,
     events: PropTypes.object,
+    index: PropTypes.number,
+    pathFunction: PropTypes.func,
     role: PropTypes.string,
-    shapeRendering: PropTypes.string
+    shapeRendering: PropTypes.string,
+    slice: PropTypes.object,
+    style: PropTypes.object
   };
 
   componentWillMount() {
-    const {style, path} = this.calculateAttributes(this.props);
+    const { style, path } = this.calculateAttributes(this.props);
     this.style = style;
     this.path = path;
   }
 
   shouldComponentUpdate(nextProps) {
-    const {style, path} = this.calculateAttributes(nextProps);
+    const { style, path } = this.calculateAttributes(nextProps);
     if (path !== this.path || !isEqual(style, this.style)) {
       this.style = style;
       this.path = path;

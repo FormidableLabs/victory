@@ -42,7 +42,7 @@ export default class Portal extends React.Component {
       {},
       Object.keys(this.map).map((key) => {
         const el = this.map[key];
-        return el ? React.cloneElement(el, {key}) : el;
+        return el ? React.cloneElement(el, { key }) : el;
       })
     );
   }

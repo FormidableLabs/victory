@@ -13,13 +13,13 @@ describe("toTransformString", () => {
 
   it("returns a string with two transform instructions when two objects are given", () => {
     expect(Style.toTransformString(
-      {rotate: [45, 0, 1]}, {skewY: [65]}
+      { rotate: [45, 0, 1] }, { skewY: [65] }
     )).to.equal("rotate(45,0,1) skewY(65)");
   });
 
   it("returns at least the subsequent transforms if the first is undefined", () => {
     expect(Style.toTransformString(
-      null, {skewY: [65]}
+      null, { skewY: [65] }
     )).to.contain("skewY(65)");
   });
 });

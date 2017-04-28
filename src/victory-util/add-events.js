@@ -63,7 +63,7 @@ export default (WrappedComponent) => {
       if (this.hasEvents) {
         const baseEvents = this.getEvents(this.props, type, key);
         const componentProps = defaults(
-          {index, key: `${role}-${type}-${key}`},
+          { index, key: `${role}-${type}-${key}` },
           this.getEventState(key, type),
           this.getSharedEventState(key, type),
           component.props,
@@ -73,11 +73,11 @@ export default (WrappedComponent) => {
           {}, Events.getPartialEvents(baseEvents, key, componentProps), componentProps.events
         );
         return assign(
-          {}, componentProps, {events}
+          {}, componentProps, { events }
         );
       }
       return defaults(
-        {index, key: `${role}-${type}-${key}`},
+        { index, key: `${role}-${type}-${key}` },
         component.props,
         baseProps
       );

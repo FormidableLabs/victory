@@ -30,7 +30,7 @@ describe("collections", () => {
     it("returns false for collections of non-strings", () => {
       expect(Collection.containsStrings([0, 1])).to.equal(false);
       expect(Collection.containsStrings([undefined, null, NaN])).to.equal(false);
-      expect(Collection.containsStrings([{}, {a: "foo"}])).to.equal(false);
+      expect(Collection.containsStrings([{}, { a: "foo" }])).to.equal(false);
     });
 
     it("returns false for collections with strings", () => {
@@ -53,7 +53,7 @@ describe("collections", () => {
     it("returns false for collections of non-strings", () => {
       expect(Collection.containsOnlyStrings([0, 1])).to.equal(false);
       expect(Collection.containsOnlyStrings([undefined, null, NaN])).to.equal(false);
-      expect(Collection.containsOnlyStrings([{}, {a: "foo"}])).to.equal(false);
+      expect(Collection.containsOnlyStrings([{}, { a: "foo" }])).to.equal(false);
     });
 
     it("returns false for collections with some strings", () => {

@@ -19,7 +19,7 @@ export default {
       return defaults({ parent: { height, width } }, defaultStyles);
     }
 
-    const {data, labels, parent} = style;
+    const { data, labels, parent } = style;
     const defaultParent = defaultStyles && defaultStyles.parent || {};
     const defaultLabels = defaultStyles && defaultStyles.labels || {};
     const defaultData = defaultStyles && defaultStyles.data || {};
@@ -92,7 +92,7 @@ export default {
    */
   isVertical(props) {
     const orientation = props.orientation || (props.dependentAxis ? "left" : "bottom");
-    const vertical = {top: false, bottom: false, left: true, right: true};
+    const vertical = { top: false, bottom: false, left: true, right: true };
     return vertical[orientation];
   },
 

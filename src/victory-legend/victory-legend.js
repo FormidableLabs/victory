@@ -1,3 +1,4 @@
+/*eslint no-magic-numbers: ["error", { "ignore": [1, 2, 2.5, 3] }]*/
 import React from "react";
 import PropTypes from "prop-types";
 import { PropTypes as CustomPropTypes, Style, TextSize, Helpers } from "../victory-util/index";

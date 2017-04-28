@@ -1,4 +1,5 @@
 /*global document:false, window:false */
+/*eslint-disable react/no-multi-comp */
 import React from "react";
 import ReactDOM from "react-dom";
 import AnimationDemo from "./victory-animation-demo";
@@ -15,6 +16,7 @@ class Home extends React.Component {
 }
 
 class App extends React.Component {
+
   constructor() {
     super();
     this.state = {

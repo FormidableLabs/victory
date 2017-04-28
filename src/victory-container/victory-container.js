@@ -46,8 +46,21 @@ export default class VictoryContainer extends React.Component {
     this.getTimer = this.getTimer.bind(this);
   }
 
+  getChildContext() {
+    return this.props.standalone !== false ?
+      {
+        portalUpdate: this.portalUpdate,
+        portalRegister: this.portalRegister,
+        portalDeregister: this.portalDeregister,
+        getTimer: this.getTimer
+      } : {};
+  }
+
   componentWillMount() {
-    this.savePortalRef = (portal) => this.portalRef = portal;
+    this.savePortalRef = (portal) => {
+      this.portalRef = portal;
+      return portal;
+    };
     this.portalUpdate = (key, el) => this.portalRef.portalUpdate(key, el);
     this.portalRegister = () => this.portalRef.portalRegister();
     this.portalDeregister = (key) => this.portalRef.portalDeregister(key);
@@ -57,16 +70,6 @@ export default class VictoryContainer extends React.Component {
     if (!this.context.getTimer) {
       this.getTimer().stop();
     }
-  }
-
-  getChildContext() {
-    return this.props.standalone !== false ?
-      {
-        portalUpdate: this.portalUpdate,
-        portalRegister: this.portalRegister,
-        portalDeregister: this.portalDeregister,
-        getTimer: this.getTimer
-      } : {};
   }
 
   getTimer() {
@@ -88,7 +91,7 @@ export default class VictoryContainer extends React.Component {
   renderContainer(props, svgProps, style) {
     const { title, desc, portalComponent, className, standalone } = props;
     const children = this.getChildren(props);
-    const parentProps = defaults({style, className}, svgProps);
+    const parentProps = defaults({ style, className }, svgProps);
     const groupComponent = props.groupComponent || <g/>;
     return standalone !== false ?
       (
@@ -96,7 +99,7 @@ export default class VictoryContainer extends React.Component {
           {title ? <title id="title">{title}</title> : null}
           {desc ? <desc id="desc">{desc}</desc> : null}
           {children}
-          {React.cloneElement(portalComponent, {ref: this.savePortalRef})}
+          {React.cloneElement(portalComponent, { ref: this.savePortalRef })}
         </svg>
       ) :
       React.cloneElement(groupComponent, parentProps, children);

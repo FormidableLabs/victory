@@ -1,10 +1,11 @@
+/*eslint-disable no-magic-numbers*/
 import React from "react";
-import {VictoryAnimation} from "../src/index";
+import { VictoryAnimation } from "../src/index";
 
 export default class App extends React.Component {
   constructor() {
     super();
-    this.clickHandler = this.clickHandler.bind(this);
+    this.handleClick = this.handleClick.bind(this);
     this.state = {
       x: 0,
       w: 500,
@@ -14,7 +15,7 @@ export default class App extends React.Component {
       rotate: 0
     };
   }
-  clickHandler() {
+  handleClick() {
     this.setState({
       x: this.state.x === 0 ? 150 : 0,
       w: this.state.w === 500 ? 200 : 500,
@@ -28,7 +29,7 @@ export default class App extends React.Component {
     return (
       <div>
         <div style={{ float: "left", width: 520, height: 520 }}>
-          <button type="button" onClick={this.clickHandler}>Toggle X</button>
+          <button type="button" onClick={this.handleClick}>Toggle X</button>
           <VictoryAnimation data={
             {
               x: this.state.x,
@@ -59,7 +60,7 @@ export default class App extends React.Component {
                     transform: `rotate(${data.rotate}deg)`
                   }}
                 >
-                  <div style={{textAlign: "center", width: "100%"}}>Test</div>
+                  <div style={{ textAlign: "center", width: "100%" }}>Test</div>
                 </div>
               );
             }}
@@ -78,8 +79,7 @@ export default class App extends React.Component {
                 height: 100,
                 borderRadius: 50,
                 ...style }}
-              >
-              </div>
+              />
             )}
           </VictoryAnimation>
         </div>

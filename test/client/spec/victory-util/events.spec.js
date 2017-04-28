@@ -8,11 +8,11 @@ describe("helpers/events", () => {
     it("returns a set of new event functions with partially applied arguments", () => {
       const events = {
         onClick: (evt, childProps, index) => {
-          return {evt, childProps, index};
+          return { evt, childProps, index };
         }
       };
       const index = 0;
-      const childProps = {style: {fill: "green"}};
+      const childProps = { style: { fill: "green" } };
       const result = Events.getPartialEvents(events, index, childProps);
       expect(result).to.have.keys(["onClick"]);
       expect(result.onClick()).to.have.keys(["evt", "childProps", "index"]);
@@ -34,7 +34,7 @@ describe("helpers/events", () => {
               onClick: () => {
                 return {
                   mutation: () => {
-                    return {foo: "foo"};
+                    return { foo: "foo" };
                   }
                 };
               }
@@ -42,8 +42,8 @@ describe("helpers/events", () => {
           }]
         },
         baseProps: { 0: {
-          data: {foo: "bar"}
-        }},
+          data: { foo: "bar" }
+        } },
         setState: (x) => x,
         state: {}
       };
@@ -65,7 +65,7 @@ describe("helpers/events", () => {
       partialEvents.onClick();
       expect(fake.setState).returned({
         [index]: {
-          data: {foo: "foo"}
+          data: { foo: "foo" }
         }
       });
     });

@@ -34,13 +34,13 @@ export default {
   },
 
   transformTarget(target, matrix, dimension) {
-    const {a, d, e, f} = matrix;
+    const { a, d, e, f } = matrix;
     return dimension === "y" ?
       d * target + f : a * target + e;
   },
 
   getDomainCoordinates(scale, domain) {
-    domain = domain || { x: scale.x.domain(), y: scale.y.domain()};
+    domain = domain || { x: scale.x.domain(), y: scale.y.domain() };
     return {
       x: [scale.x(domain.x[0]), scale.x(domain.x[1])],
       y: [scale.y(domain.y[0]), scale.y(domain.y[1])]
@@ -55,7 +55,7 @@ export default {
   },
 
   getBounds(props) {
-    const {x1, x2, y1, y2, scale} = props;
+    const { x1, x2, y1, y2, scale } = props;
     const point1 = this.getDataCoordinates(scale, x1, y1);
     const point2 = this.getDataCoordinates(scale, x2, y2);
     const makeBound = (a, b) => {
@@ -70,7 +70,7 @@ export default {
 
   getDatasets(props) { // eslint-disable-line max-statements
     if (props.data) {
-      return [{data: props.data}];
+      return [{ data: props.data }];
     }
     const getData = (childProps) => {
       const data = Data.getData(childProps);
@@ -91,7 +91,7 @@ export default {
       if (child.type && child.type.role === "axis") {
         childIndex++;
       } else if (child.type && isFunction(child.type.getData)) {
-        dataArr[dataArrLength++] = {childName, data: child.type.getData(child.props)};
+        dataArr[dataArrLength++] = { childName, data: child.type.getData(child.props) };
       } else if (child.props && child.props.children) {
         const newChildren = React.Children.toArray(child.props.children);
         const newChildrenLength = newChildren.length;
@@ -99,7 +99,7 @@ export default {
           children[childrenLength++] = newChildren[index];
         }
       } else {
-        dataArr[dataArrLength++] = {childName, data: getData(child.props)};
+        dataArr[dataArrLength++] = { childName, data: getData(child.props) };
       }
     }
     return dataArr;
@@ -119,7 +119,7 @@ export default {
   },
 
   getSelectedData(dataset, bounds) {
-    const {x, y} = bounds;
+    const { x, y } = bounds;
     const withinBounds = (d) => {
       return d._x >= x[0] && d._x <= x[1] && d._y >= y[0] && d._y <= y[1];
     };
