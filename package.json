@@ -33,19 +33,19 @@
   },
   "dependencies": {
     "builder": "^3.2.1",
-    "builder-victory-component": "^3.1.0",
+    "builder-victory-component": "^3.2.2",
     "victory-chart": "^18.2.1",
     "victory-core": "^14.1.1",
     "victory-pie": "^10.3.0"
   },
   "devDependencies": {
-    "builder-victory-component-dev": "^3.1.0",
+    "builder-victory-component-dev": "^3.2.1",
     "chai": "^3.5.0",
     "lodash": "^4.17.4",
     "mocha": "^3.0.2",
-    "react": "^15.3.0",
-    "react-addons-test-utils": "^15.3.0",
-    "react-dom": "^15.3.0",
+    "react": "^15.5.4",
+    "react-addons-test-utils": "^15.5.1",
+    "react-dom": "^15.5.4",
     "sinon": "^1.17.5",
     "sinon-chai": "^2.8.0"
   },
